@@ -7,11 +7,11 @@ def get(u, t=40):
 def safe(s): return s.replace(KEY, "***") if KEY else s
 ids = {}
 for u in ["https://data.go.kr/data/15056968/openapi.do", "https://www.data.go.kr/data/15160375/fileData.do",
-          "https://lofin.mois.go.kr/portal/service/openInfPage.do?infId=DY0VO3AMKXCLGZYEM3X9933183"]:
+          "https://www.lofin365.go.kr/portal/LF8310100.do?dtsSnum=655943&curPage=1", "https://www.lofin365.go.kr/portal/LF5100000.do", "https://www.lofin365.go.kr/portal/LF5110000.do"]:
     try:
         h = get(u)
         print("PAGE", u[:60], len(h))
-        for m in sorted(set(re.findall(r".{0,80}(?:lofin|fileDownload|atchFileId|HUB/|pdtaId).{0,120}", h)))[:15]: print("  ", safe(m.strip())[:220])
+        for m in sorted(set(re.findall(r".{0,80}(?:\.xlsx|fileDown|[A-Za-z/]+\.do|HUB/|pdtaId|ajax|url\s*:).{0,120}", h)))[:40]: print("  ", safe(m.strip())[:220])
     except Exception as e: print("PAGE err", u[:60], e)
 for dn in ["15056968", "15138715", "15138721", "15057384"]:
     try:
