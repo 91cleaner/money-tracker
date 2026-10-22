@@ -5,8 +5,8 @@ out = []
 with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page()
     pg.on("response", lambda r: out.append(r.url) if ".do" in r.url else None)
-    pg.goto("https://www.lofin365.go.kr/portal/LF8310100.do?dtsSnum=655943&curPage=1", wait_until="networkidle", timeout=60000)
-    pg.wait_for_timeout(3000)
+    pg.goto("https://www.lofin365.go.kr/portal/LF8310100.do?dtsSnum=655943&curPage=1", wait_until="domcontentloaded", timeout=90000)
+    pg.wait_for_timeout(10000)
     t = pg.inner_text("body")
     print("XHR:", sorted(set(u.split("?")[0] for u in out))[:30])
     for l in t.splitlines():
