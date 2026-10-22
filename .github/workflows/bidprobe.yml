@@ -22,18 +22,9 @@ jobs:
                       print('##',path,h,'n',len(it));return it
                   except Exception: print('##',path,'RAW',t[:300]);return []
               except Exception as e: print('##',path,'ERR',e);return []
-          c=[]
-          for pg in range(1,40):
-              it=g('ao/PubDataOpnStdService/getDataSetOpnStdCntrctInfo',cntrctCnclsBgnDate='20260923',cntrctCnclsEndDate='20260923',numOfRows=999,pageNo=pg)
-              c+=[x for x in it if str(x.get('cntrctNo','')).startswith('R26TA01354404')]
-              if len(it)<999 or c: break
-          bn=None
-          for x in c:
-              print({a:x.get(a) for a in ['cntrctNo','cntrctOrd','bidNtceNo','bidNtceOrd','cntrctCnclsMthdNm','cntrctNm']});bn=bn or x.get('bidNtceNo')
-          print('BID',bn)
-          if not bn: raise SystemExit
-          for path in ['ad/BidPublicInfoService/getBidPblancListInfoCnstwk','ad/BidPublicInfoService/getBidPblancListInfoPrtcptPsblRgn','ad/BidPublicInfoService/getBidPblancListInfoLicenseLimit','as/ScsbidInfoService/getScsbidListSttusCnstwk','as/ScsbidInfoService/getOpengResultListInfoCnstwk','as/ScsbidInfoService/getOpengResultListInfoOpengCompt','as/ScsbidInfoService/getOpengResultListInfoCnstwkPreparPcDetail']:
-              for x in g(path,inqryDiv=1 if 'BidPublic' in path else 4,bidNtceNo=bn,numOfRows=100)[:60]:
+          bn='20221229877'
+          for path in ['ad/BidPublicInfoService/getBidPblancListInfoCnstwk','ad/BidPublicInfoService/getBidPblancListInfoPrtcptPsblRgn','ad/BidPublicInfoService/getBidPblancListInfoLicenseLimit','as/ScsbidInfoService/getScsbidListSttusCnstwk','as/ScsbidInfoService/getOpengResultListInfoCnstwk','as/ScsbidInfoService/getOpengResultListInfoOpengCompt','as/ScsbidInfoService/getOpengResultListInfoCnstwkPreparPcDetail','ad/BidPublicInfoService/getBidPblancListInfoCnstwkBsisAmount']:
+              for x in g(path,inqryDiv=1 if 'BidPublic' in path else 4,bidNtceNo=bn,numOfRows=100)[:40]:
                   print(json.dumps({k:v for k,v in x.items() if v not in (None,'') and 'Ofcl' not in k and 'Tel' not in k and 'Email' not in k},ensure_ascii=False))
           PY
           python3 p.py
