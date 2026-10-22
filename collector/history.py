@@ -2,14 +2,14 @@
 
 출처: 조달청 나라장터 계약정보서비스 getCntrctInfoList{Cnstwk|Servc|Thng}PPSSrch (조회구분 2 = 확정계약번호).
 확정계약번호 = 계약번호 + 2자리 차수이므로 차수마다 1건씩 조회한다.
-개발계정 하루 1,000건이라 DAY_CAP(기본 800) 안에서, 금액이 큰 계약부터 조금씩 채운다.
+개발계정 하루 1,000건이라 DAY_CAP(기본 650, backfill.py 150과 합쳐 800) 안에서, 금액이 큰 계약부터 조금씩 채운다.
 업체목록에서 업체 이름·역할·단독/공동·지분만 쓰고, 대표자 이름과 사업자번호는 버린다(사업자번호는 해시만).
 """
 import hashlib, json, os, time
 
 BASE = "https://apis.data.go.kr/1230000/ao/CntrctInfoService/"
 OP = {"공사": "getCntrctInfoListCnstwkPPSSrch", "용역": "getCntrctInfoListServcPPSSrch", "물품": "getCntrctInfoListThngPPSSrch"}
-DAY_CAP = int(os.environ.get("CHG_DAY_CAP", "800"))
+DAY_CAP = int(os.environ.get("CHG_DAY_CAP", "650"))
 PER_RUN = int(os.environ.get("CHG_PER_RUN", "60"))
 BUDGET = int(os.environ.get("CHG_BUDGET", "600"))  # 이 단계 시간 상한(초)
 JV_MIN = int(os.environ.get("CHG_JV_MIN", "1000000000"))  # 1차 계약도 업체목록(공동도급)을 볼 최소 금액

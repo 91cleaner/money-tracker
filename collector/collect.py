@@ -15,6 +15,7 @@ import flows
 import vendors_agg
 import corp
 import history
+import backfill
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA = os.path.join(ROOT, "data")
@@ -451,6 +452,11 @@ def main():
             chg = history.run(DATA, allrows, state, get_json, items_of, mask, now)
         except Exception as e:
             print(f"::warning::계약 이력 단계 실패: {type(e).__name__}", flush=True)
+        try:  # 과거 계약 거꾸로 채우기 (수집 기간 바로 전날부터)
+            start = (now - timedelta(days=KEEP_DAYS + 1)).strftime("%Y-%m-%d")
+            backfill.run(DATA, state, get_json, items_of, mask, now, start)
+        except Exception as e:
+            print(f"::warning::과거 계약 단계 실패: {type(e).__name__}", flush=True)
     index = []
     for c in CITIES:
         path = os.path.join(DATA, "city", c["slug"] + ".json")

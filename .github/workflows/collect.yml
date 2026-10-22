@@ -36,4 +36,8 @@ jobs:
           git add data c || git add data
           if git diff --cached --quiet; then echo "변경 없음"; exit 0; fi
           git commit -m "데이터 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
-          git push
+          for i in 1 2 3 4; do
+            git pull --rebase -X theirs origin main && git push && exit 0
+            git rebase --abort 2>/dev/null; sleep $((i*10))
+          done
+          exit 1

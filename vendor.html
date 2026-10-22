@@ -22,11 +22,17 @@
     <div class="stat"><span class="v" id="k-total">—</span><span class="k">받은 돈</span><span class="s" id="k-count">—</span></div>
     <div class="stat"><span class="v" id="k-nc">—</span><span class="k">돈을 준 시</span><span class="s" id="k-ni">—</span></div>
   </section>
+  <section class="sec" id="v-past-sec" hidden>
+    <h2>과거 계약 이력</h2>
+    <p class="note" id="v-past-note"></p>
+    <div class="cards" id="v-past"></div>
+    <p class="src">출처: 조달청 나라장터 계약정보서비스(공공데이터포털 15129427). 계약마다 확인된 가장 최근 차수 기준입니다. 대표자 이름 등 개인 정보는 싣지 않습니다.</p>
+  </section>
   <section class="sec" id="v-corp-sec">
     <h2>업체 정보</h2>
     <div class="facts" id="v-corp"></div>
     <div class="inds" id="v-inds"></div>
-    <p class="note" id="v-hist-note">과거 계약 이력: 이 페이지의 계약은 위 수집 기간 안의 85개 시 계약만입니다. 공개 API(공공데이터개방표준 계약정보, 나라장터 계약정보서비스)는 날짜·계약번호·기관·계약명으로만 찾을 수 있고 업체(사업자번호·업체명)로 찾는 기능이 없어(외자 계약 제외), 업체별 과거 이력은 보여주지 않습니다.</p>
+    <p class="note" id="v-hist-note">과거 계약 이력: 이 페이지의 계약은 위 수집 기간 안의 85개 시 계약만입니다. 공개 API(공공데이터개방표준 계약정보, 나라장터 계약정보서비스)는 날짜·계약번호·기관·계약명으로만 찾을 수 있고 업체(사업자번호·업체명)로 찾는 기능이 없어(외자 계약 제외), 업체별 과거 이력은 날짜를 하루씩 거슬러 올라가며 모으고 있습니다(위 「과거 계약 이력」).</p>
     <p class="src" id="v-corp-src">출처: 조달청 나라장터 사용자정보 서비스(업체 기본정보·업종정보), 공공데이터포털. 대표자 이름 등 개인 정보는 싣지 않습니다.</p>
   </section>
   <section class="sec">

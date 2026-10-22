@@ -323,8 +323,35 @@ function contractExtra(r) {
   return out;
 }
 
+async function pastHistory(id) {
+  let p = null, m = null;
+  try { m = await getJSON('data/past/_meta.json'); } catch (e) { return; }
+  try { p = await getJSON('data/past/' + id + '.json'); } catch (e) { p = null; }
+  const sec = $('#v-past-sec'); if (!sec) return; sec.hidden = false;
+  const range = m && m.oldest ? `${m.oldest.replaceAll('-', '.')} ~ ${m.newest.replaceAll('-', '.')}` : '';
+  $('#v-past-note').textContent = range ? `지금까지 ${range} (${m.days_done}일치)를 모았습니다. 매일 조금씩 더 과거로 채워집니다.` : '과거 계약을 하루씩 거슬러 올라가며 모으는 중입니다.';
+  const box = $('#v-past'); box.replaceChildren();
+  const rows = (p && p.rows) || [];
+  if (!rows.length) { box.append(el('p', 'note', '아직 모은 기간 안에서 찾은 계약이 없습니다.')); return; }
+  const tot = rows.reduce((a, r) => a + (r.tot || 0), 0);
+  box.append(el('p', 'note', `${rows.length.toLocaleString('ko-KR')}건 · 총 계약금액 합계 ${krw(tot)}`));
+  for (const r of rows.slice(0, 200)) {
+    const c = el('div', 'cc');
+    const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', `${r.date} · ${r.city || '기타 기관'} · ${r.kind}`), el('b', 'cc-a', r.tot != null ? krw(r.tot) : '—'));
+    const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
+    c.append(top, t, el('span', 'cc-i', r.inst + (r.ord ? ` · ${+r.ord}차` : '') + (r.lt === '장기' && r.this && r.this !== r.tot ? ` · 장기계속(이번 연차분 ${krw(r.this)})` : '')));
+    if (r.m && r.m.length > 1) {
+      const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '공동도급 (지분)'));
+      for (const x of r.m) { const a = el(x.id && x.id !== id ? 'a' : 'span', '', `${x.name} ${x.share != null ? x.share + '%' : ''}`); if (x.id && x.id !== id) a.href = 'vendor.html?v=' + x.id; j.append(a); }
+      c.append(j);
+    }
+    box.append(c);
+  }
+}
+
 async function vendorPage() {
   const id = new URLSearchParams(location.search).get('v');
+  pastHistory(id);
   let d;
   try { if (!/^[0-9a-zn]+$/.test(id || '')) throw 0; d = await getJSON('data/vendor/' + id + '.json'); } catch (e) {
     $('#title').textContent = '업체를 찾지 못했어요'; document.querySelectorAll('.sec, .stats').forEach((x) => x.remove()); return;
@@ -445,6 +472,9 @@ async function cityPage() {
     for (const r of list) {
       const tr = el('tr');
       const title = el('td', 'ttl'); if (r.url) { const a = el('a', '', r.title); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; title.append(a); } else title.textContent = r.title;
+      if (r.orig && r.orig !== r.amount) { const up = r.amount - r.orig; title.append(el('small', 'cc-hist', ` 1차 ${krw(r.orig)} → ${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%`)); }
+      else if (r.vers && r.vers.length > 1) title.append(el('small', 'cc-tags', ` ${r.vers.length}개 차수 확인 · 총액 변화 없음`));
+      if (r.jvm && r.jvm.length > 1) title.append(el('small', 'cc-tags', ' 공동도급: ' + r.jvm.map((m) => `${m.name} ${m.share != null ? m.share + '%' : ''}`).join(', ')));
       tr.append(el('td', '', r.date), el('td', 'hide-narrow', r.inst), title, el('td', '', r.vendor), el('td', 'hide-narrow', r.vregion || '—'), el('td', 'num', r.amount.toLocaleString('ko-KR')));
       tb.append(tr);
     }
