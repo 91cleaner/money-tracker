@@ -6,6 +6,13 @@ def get(u, t=40):
     with urllib.request.urlopen(req, timeout=t) as r: return r.read().decode("utf-8", "replace")
 def safe(s): return s.replace(KEY, "***") if KEY else s
 ids = {}
+for u in ["https://data.go.kr/data/15056968/openapi.do", "https://www.data.go.kr/data/15160375/fileData.do",
+          "https://lofin.mois.go.kr/portal/service/openInfPage.do?infId=DY0VO3AMKXCLGZYEM3X9933183"]:
+    try:
+        h = get(u)
+        print("PAGE", u[:60], len(h))
+        for m in sorted(set(re.findall(r".{0,80}(?:lofin|fileDownload|atchFileId|HUB/|pdtaId).{0,120}", h)))[:15]: print("  ", safe(m.strip())[:220])
+    except Exception as e: print("PAGE err", u[:60], e)
 for dn in ["15056968", "15138715", "15138721", "15057384"]:
     try:
         h = get(f"https://www.data.go.kr/data/{dn}/openapi.do")
