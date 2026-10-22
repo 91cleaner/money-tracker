@@ -18,9 +18,9 @@ with sync_playwright() as p:
             pg.locator("a:has-text('다운로드'), button:has-text('다운로드'), a:has-text('.xlsx')").first.click()
         path = dl.value.path(); print("DL", dl.value.suggested_filename)
         import openpyxl
-        wb = openpyxl.load_workbook(path, read_only=True)
+        import shutil; shutil.copy(path, "/tmp/list.xlsx"); wb = openpyxl.load_workbook("/tmp/list.xlsx", read_only=True)
         for ws in wb.worksheets:
             for row in ws.iter_rows(values_only=True):
                 s = " | ".join(str(c) for c in row if c)
-                if re.search(r"행사|축제|보조금", s): print("ROW", s[:300])
+                if re.search(r"행사|축제|보조|원가", s): print("ROW", s[:300])
     except Exception as e: print("DL err", e)
