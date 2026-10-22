@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-page="home">
+<header class="stickybar"><a class="brand" href="./">우리 시 돈 추적기</a><nav><a href="#map">지도</a><a href="#find">우리 시</a></nav></header>
 <main class="wrap">
   <header class="hero">
     <p class="eyebrow">우리 시 돈 추적기</p>
@@ -22,6 +23,14 @@
     </div>
     <p class="meta"><span id="nat-count">—</span> · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
   </header>
+
+  <section class="sec mapsec" id="map">
+    <h2>돈이 어디로 가나</h2>
+    <p class="sub">원을 누르면 그 시가 계약으로 쓴 돈이 어느 지역 업체로 갔는지 선으로 보여줍니다. 선이 굵을수록 큰 돈입니다.</p>
+    <div class="maptools"><div class="seg" role="group" aria-label="보기 고르기"><button type="button" data-v="city">시 하나</button><button type="button" data-v="nation">전국 큰 흐름</button></div>
+      <select class="cityselect" aria-label="시 고르기"><option value="">시 고르기</option></select></div>
+    <div class="mapgrid"><div class="map" aria-live="polite"></div><div class="flowpanel"></div></div>
+  </section>
 
   <section class="sec" id="find">
     <h2>우리 시 찾기</h2>
@@ -61,5 +70,7 @@
   </footer>
 </main>
 <script src="assets/app.js"></script>
+<script src="assets/map.js"></script>
+<script>moneyMap(document.getElementById('map')).catch(() => document.getElementById('map').remove());</script>
 </body>
 </html>

@@ -140,3 +140,88 @@ footer { border-top: 1px solid var(--line); padding-top: 26px; display: grid; ga
 @media (min-width: 900px) { .chips.center { justify-content: center; } }
 [hidden] { display: none !important; }
 .sharebtn.big { display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+
+/* ---------- 돈의 흐름 지도 ---------- */
+:root { --flow-out: #ff6b3d; --land: #f0f0f3; --land-line: #fff; }
+@media (prefers-color-scheme: dark) { :root { --flow-out: #ff8a5c; --land: #1c1c1e; --land-line: #000; } }
+.mapsec h2 { margin-bottom: 6px; }
+.maptools { display: flex; gap: 10px; align-items: center; margin: 6px 0 12px; flex-wrap: wrap; }
+.seg { display: inline-flex; background: var(--bg2); border-radius: 12px; padding: 3px; }
+.seg button { all: unset; min-height: 44px; padding: 0 16px; border-radius: 10px; font: 600 15px var(--sans); color: var(--muted); cursor: pointer; display: inline-flex; align-items: center; -webkit-tap-highlight-color: transparent; }
+.seg button[aria-pressed="true"] { background: var(--bg); color: var(--fg); box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+.cityselect { flex: 1; min-width: 140px; height: 50px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font: 600 16px var(--sans); padding: 0 12px; }
+.map { width: 100%; aspect-ratio: 1 / 1.1; max-height: 72vh; background: var(--bg); border-radius: 20px; overflow: hidden; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+.map svg { width: 100%; height: 100%; display: block; }
+.provs path { fill: var(--land); stroke: var(--land-line); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.cdot { fill: var(--accent); fill-opacity: .28; stroke: var(--accent); stroke-width: 1; vector-effect: non-scaling-stroke; cursor: pointer; transition: fill-opacity .3s; }
+.picked .cdot { fill-opacity: .12; stroke-opacity: .35; }
+.cdot.on, .picked .cdot.on { fill-opacity: .9; stroke-opacity: 1; stroke: var(--bg); stroke-width: 2; }
+.fl { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .85; stroke-dasharray: 2000; stroke-dashoffset: 2000; animation: draw 1.1s ease-out forwards; pointer-events: none; }
+.fl.in { stroke: var(--in); } .fl.out { stroke: var(--flow-out); }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .fl { animation: none; stroke-dashoffset: 0; } }
+.dd { stroke: var(--bg); stroke-width: 1.5; vector-effect: non-scaling-stroke; pointer-events: none; }
+.dd.in { fill: var(--in); } .dd.out { fill: var(--flow-out); }
+.dot.out2 { background: var(--flow-out); }
+.flowpanel { padding: 18px 0 0; display: grid; gap: 14px; }
+.fh { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.fh-n { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+.fh-v { font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fq { margin: 0; font-size: 15px; font-weight: 700; color: var(--muted); }
+.fsplit .legend { font-size: 15px; }
+.frow { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: end; }
+.fl-l { min-width: 0; display: grid; }
+.fn { font-size: 16px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fs { font-size: 13px; color: var(--muted); }
+.fa { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fb { grid-column: 1 / -1; height: 6px; border-radius: 999px; background: var(--in); display: block; }
+.frow.out .fb { background: var(--flow-out); }
+.sub.small { font-size: 13px; margin: 0; }
+.gobtn { display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 14px; background: var(--accent); color: #fff; font-weight: 700; font-size: 17px; }
+@media (min-width: 900px) {
+  .mapgrid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 32px; align-items: start; }
+  .flowpanel { padding-top: 0; }
+  .map { max-height: 680px; }
+}
+
+/* ---------- 모바일 다듬기 ---------- */
+html, body { overflow-x: hidden; }
+.stickybar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px;
+  padding: 0 max(18px, env(safe-area-inset-left)); padding-top: env(safe-area-inset-top);
+  background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px); border-bottom: 1px solid var(--line); }
+.stickybar .brand { font-weight: 800; font-size: 16px; color: var(--fg); letter-spacing: -0.02em; min-height: 44px; display: inline-flex; align-items: center; }
+.stickybar nav { display: flex; gap: 4px; }
+.stickybar nav a, .stickybar .back { min-height: 44px; display: inline-flex; align-items: center; padding: 0 10px; font-size: 15px; font-weight: 600; }
+.stickybar .upd { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.chip { height: 44px; }
+.topbar { display: none; }
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .hero { padding: 36px 0 28px; }
+  .big { margin-top: 28px; }
+  .sec { padding: 32px 0; }
+  .alert { padding: 18px; border-radius: 18px; }
+  .alert .a { font-size: 26px; }
+  .map { aspect-ratio: 1 / 1.15; border-radius: 16px; }
+  /* 계약 표 → 카드 */
+  .tablewrap { overflow: visible; margin: 0; padding: 0 0 12px; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  thead tr { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 10px; }
+  thead th { display: block; padding: 0; border: 0; }
+  thead th button { min-height: 40px; padding: 0 12px; border-radius: 999px; background: var(--bg); display: inline-flex; align-items: center; font-size: 14px; }
+  thead .hide-narrow { display: none; }
+  tbody tr { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; background: var(--bg); border-radius: 14px; padding: 14px; margin-bottom: 10px; }
+  tbody td { padding: 0; border: 0; }
+  tbody td.hide-narrow { display: block; }
+  tbody td:nth-child(1) { grid-column: 1; color: var(--muted); font-size: 13px; }
+  tbody td:nth-child(6) { grid-column: 2; grid-row: 1; font-weight: 800; font-size: 15px; }
+  tbody td:nth-child(3) { grid-column: 1 / -1; font-size: 16px; font-weight: 600; min-width: 0; }
+  tbody td:nth-child(4) { grid-column: 1 / -1; font-size: 14px; }
+  tbody td:nth-child(2), tbody td:nth-child(5) { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+  tbody td:nth-child(6)::after { content: "원"; font-weight: 600; }
+}
+.lb { fill: var(--fg); font-weight: 700; text-anchor: middle; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+.lb.me { fill: var(--accent); }
+.sharebtn { min-height: 44px; }
+.alert .src, .alert a.go { min-height: 44px; display: inline-flex; align-items: center; }
+footer a { display: inline-block; min-height: 44px; line-height: 44px; }

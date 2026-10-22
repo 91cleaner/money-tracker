@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, timezone
 sys.path.insert(0, os.path.dirname(__file__))
 from cities import CITIES, city_of
 import share
+import flows
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA = os.path.join(ROOT, "data")
@@ -376,6 +377,10 @@ def main():
                       "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "local_share": summ["local_share"], "by_cat": dict(by_cat),
                       "top_alert": flagged[0] if flagged else None})
     save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": KEEP_DAYS, "cities": index})
+    try:
+        flows.build(now)  # 지도용 돈의 흐름 (시 → 업체 소재지 시·군·구)
+    except Exception as e:
+        print(f"::warning::흐름 집계 실패: {e}", flush=True)
     # 처음 기간의 업체 주소를 다 조회할 때까지는 다음 실행에서도 같은 기간을 다시 읽어 남은 업체를 이어서 조회한다.
     # (원래 사업자번호는 저장하지 않으므로 다시 읽어야 알 수 있음.) 요청이 실패해 비었으면 완료로 치지 않는다.
     done = state.get("backfilled") or (raw and left == 0 and not FAILS)

@@ -10,8 +10,8 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-page="city">
+<header class="stickybar"><a class="back" href="./">‹ 전체</a><span class="upd">갱신 <span id="updated">—</span></span></header>
 <main class="wrap">
-  <nav class="topbar"><a href="./">‹ 전체 시</a><span>갱신 <span id="updated">—</span></span></nav>
 
   <header class="hero">
     <p class="eyebrow" id="range">최근 90일</p>
@@ -41,6 +41,12 @@
       </ul>
     </details>
     <div class="alerts" id="alerts-list"></div>
+  </section>
+
+  <section class="sec mapsec" id="map">
+    <h2>돈이 어디로 갔나</h2>
+    <p class="sub">이 시가 계약으로 쓴 돈이 어느 지역(시·군·구) 업체로 갔는지 보여줍니다. 파란 선은 우리 시 업체, 주황 선은 다른 지역 업체입니다.</p>
+    <div class="mapgrid"><div class="map" aria-live="polite"></div><div class="flowpanel"></div></div>
   </section>
 
   <section class="sec">
@@ -92,5 +98,7 @@
   </footer>
 </main>
 <script src="assets/app.js"></script>
+<script src="assets/map.js"></script>
+<script>{ const s = new URLSearchParams(location.search).get('c'); moneyMap(document.getElementById('map'), {fixed: s, rows: 5}).catch(() => document.getElementById('map').remove()); }</script>
 </body>
 </html>
