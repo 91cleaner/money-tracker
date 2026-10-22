@@ -14,6 +14,7 @@ from privacy import mask
 import flows
 import vendors_agg
 import corp
+import history
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA = os.path.join(ROOT, "data")
@@ -277,12 +278,14 @@ def alerts_for(rows, explanations):
             insts = Counter(x["inst"] for x in rs).most_common(3)
             out.append({"key": "rep-" + hid(v if v != "개인사업자" else vk), "kind": "repeat", "title": f"같은 업체 {len(rs)}건 반복 (최근 {KEEP_DAYS}일)",
                         "detail": f"{v} · " + ", ".join(i for i, _ in insts), "amount": sum(x["amount"] for x in rs), "ids": [x["id"] for x in rs][:20]})
-    for r in rows:  # 변경 계약: 처음 차수보다 금액이 크게 늘어난 경우 (중립 표시)
+    for r in rows:  # 변경 계약: 1차(없으면 확인된 첫 차수) 총 계약금액보다 크게 늘어난 경우 (중립 표시)
         h = r.get("hist") or []
+        if r.get("orig"):
+            h = [{"ord": "01", "amount": r["orig"]}]
         if h and h[0]["amount"] > 0:
             o = h[0]["amount"]; up = r["amount"] - o
             if up >= 10_000_000 and up / o >= 0.1:
-                out.append({"key": "inc-" + cno(r), "kind": "increase", "title": f"데이터상 이상 징후: 계약 금액 증가 (확인된 첫 {h[0]['ord']}차 대비 +{up / o * 100:.0f}%)",
+                out.append({"key": "inc-" + cno(r), "kind": "increase", "title": f"데이터상 이상 징후: 계약 금액 증가 ({'1차' if r.get('orig') else '확인된 첫 ' + str(int(h[0]['ord'])) + '차'} 대비 +{up / o * 100:.0f}%)",
                             "detail": f"{r['date']} · {r['inst']} · {r['title']} · {r['vendor']}", "amount": r["amount"], "orig": o, "ids": [r["id"]]})
     big = sorted([r for r in rows if r["amount"] >= 100_000_000], key=lambda r: -r["amount"])[:10]
     for r in big:
@@ -323,6 +326,25 @@ def merge_orders(rows):
         cur["hist"] = sorted(h.values(), key=lambda x: x["ord"])
         out[cur["id"]] = cur
     return out
+
+
+def annotate(r, c, vendors):
+    """계약정보서비스 결과를 행에 붙임: 차수별 금액(vers), 1차 총액(orig), 장기계속 구분(lt), 공동도급 참여 업체(jvm)."""
+    for k in ("vers", "orig", "lt", "jvm"):
+        r.pop(k, None)
+    if not c or not c.get("v"):
+        return
+    vs = c["v"]
+    r["vers"] = [{k: v.get(k) for k in ("ord", "date", "tot", "this")} for v in vs]
+    if vs[0]["ord"] == "01" and vs[0].get("tot"):
+        r["orig"] = vs[0]["tot"]
+    r["lt"] = vs[-1].get("lt")
+    m = c.get("corps") or []
+    if len(m) > 1:
+        r["jv"] = True
+        r["jvm"] = [dict(x, region=(vendors.get(x["id"]) or {}).get("region") if x.get("id") else None) for x in m]
+    elif m:
+        r["jv"] = False
 
 
 def corp_step(now, state, biz_by_hash):
@@ -413,6 +435,22 @@ def main():
     save(os.path.join(DATA, "vendors.json"), vendors)
 
     cutoff = (now - timedelta(days=KEEP_DAYS)).strftime("%Y-%m-%d")
+    chg = load(os.path.join(DATA, "chg.json"), {})
+    if KEY:  # 계약정보서비스: 차수별 금액·공동도급 지분 (하루 한도 따로)
+        try:
+            allrows = []
+            for c in CITIES:
+                old = load(os.path.join(DATA, "city", c["slug"] + ".json"), {"rows": []})
+                rr = {r["id"]: r for r in old.get("rows", []) if r["date"] >= cutoff}
+                rr.update({r["id"]: r for r in fresh.get(c["slug"], [])})
+                for r in rr.values():
+                    if not r.get("ord") and re.fullmatch(r"[A-Z0-9]{13}\d{2}", r["id"]):
+                        r["ord"] = r["id"][-2:]
+                    r["no"] = cno(r)
+                allrows += merge_orders(rr).values()
+            chg = history.run(DATA, allrows, state, get_json, items_of, mask, now)
+        except Exception as e:
+            print(f"::warning::계약 이력 단계 실패: {type(e).__name__}", flush=True)
     index = []
     for c in CITIES:
         path = os.path.join(DATA, "city", c["slug"] + ".json")
@@ -431,6 +469,7 @@ def main():
                 r["vregion"] = (vendors.get(r["bh"]) or {}).get("region")
             else:
                 r.setdefault("vregion", None)
+            annotate(r, chg.get(cno(r)), vendors)
         rows = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)
         al = alerts_for(rows, explanations)
         summ = summarize(c, rows, vendors)

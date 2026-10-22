@@ -288,6 +288,41 @@ function corpInfo(c) {
   $('#v-corp-src').textContent += ` 받은 날: ${c.at}.`;
 }
 
+// 계약 한 건의 차수 이력·공동도급 (조달청 나라장터 계약정보서비스)
+function contractExtra(r) {
+  const out = [];
+  const sgn = (x) => (x > 0 ? '+' : x < 0 ? '−' : '±') + krw(Math.abs(x));
+  if (r.jvm && r.jvm.length) {
+    const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '공동도급 참여 업체 (지분)'));
+    for (const m of r.jvm) {
+      const t = m.id ? el('a', '', `${m.name} ${m.share != null ? m.share + '%' : ''}`) : el('span', '', `${m.name} ${m.share != null ? m.share + '%' : ''}`);
+      if (m.id) t.href = 'vendor.html?v=' + m.id;
+      j.append(t);
+    }
+    out.push(j);
+  } else if (r.jv) out.push(el('span', 'cc-tags', '공동도급 · 금액은 대표 업체 기준'));
+  if (r.lt === '장기' && r.this && r.this !== r.amount) out.push(el('span', 'cc-tags', `장기계속계약 · 총 계약금액 ${krw(r.amount)} 기준 (이번 연차분 ${krw(r.this)})`));
+  if (r.vers && r.vers.length > 1) {
+    if (r.orig) { const up = r.amount - r.orig; out.push(el('span', 'cc-hist', `처음 ${krw(r.orig)} → 지금 ${krw(r.amount)} (${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%)`)); }
+    const ol = el('ol', 'tl');
+    r.vers.forEach((v, i) => {
+      const p = r.vers[i - 1]; const li = el('li');
+      const d = p && v.tot != null && p.tot != null ? v.tot - p.tot : null;
+      li.append(el('b', '', `${+v.ord}차`), el('span', '', `${v.date || ''} · 총 ${v.tot != null ? krw(v.tot) : '—'}` + (v.this && v.this !== v.tot ? ` (이번 연차분 ${krw(v.this)})` : '')),
+        el('small', '', i === 0 ? '처음 계약' : d ? '금액 변경 ' + sgn(d) : '총액 변화 없음 (기간·조건 등 변경)'));
+      ol.append(li);
+    });
+    out.push(ol);
+  } else if (r.hist && r.hist.length) {
+    const o = r.hist[0], up = r.amount - o.amount;
+    out.push(el('span', 'cc-hist', `확인된 첫 ${+o.ord}차(${o.date}) ${krw(o.amount)} → 지금 ${krw(r.amount)}` + (o.amount ? ` (${up >= 0 ? '+' : ''}${Math.round(up / o.amount * 100)}%)` : '')));
+  } else if (r.ord && +r.ord > 1) {
+    out.push(el('span', 'cc-tags', `${+r.ord}차 계약 · 차수별 금액은 계약정보서비스에서 금액 큰 계약부터 차례로 받는 중입니다.`));
+  }
+  if (r.vers || r.jvm) out.push(el('span', 'cc-src', '차수·참여 업체 출처: 조달청 나라장터 계약정보서비스'));
+  return out;
+}
+
 async function vendorPage() {
   const id = new URLSearchParams(location.search).get('v');
   let d;
@@ -329,17 +364,7 @@ async function vendorPage() {
       const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', r.date + ' · ' + r.cat), el('b', 'cc-a', krw(r.amount)));
       const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
       c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : '')));
-      const tags = [];
-      if (r.jv) tags.push('공동도급 · 금액은 대표 업체 기준');
-      if (r.ord && +r.ord > 1) tags.push(`${+r.ord}차 계약(변경·연차 차수)`);
-      if (r.this && r.this !== r.amount) tags.push(`이번 차수 금액 ${krw(r.this)} · 총 계약금액 ${krw(r.amount)}`);
-      if (tags.length) c.append(el('span', 'cc-tags', tags.join(' · ')));
-      if (r.hist && r.hist.length) {
-        const o = r.hist[0], up = r.amount - o.amount;
-        c.append(el('span', 'cc-hist', `확인된 첫 ${+o.ord}차(${o.date}) ${krw(o.amount)} → 지금 ${krw(r.amount)}` + (o.amount ? ` (${up >= 0 ? '+' : ''}${Math.round(up / o.amount * 100)}%)` : '')));
-      } else if (r.ord && +r.ord > 1) {
-        c.append(el('span', 'cc-hist', '처음 차수 금액은 수집 기간 밖이라 확인되지 않았습니다.'));
-      }
+      c.append(...contractExtra(r));
       if (r.url) { const s2 = el('a', 'src', '출처: 조달청 나라장터 원문 ›'); s2.href = r.url; s2.target = '_blank'; s2.rel = 'noopener'; c.append(s2); }
       box.append(c);
     }

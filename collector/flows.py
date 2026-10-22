@@ -54,11 +54,21 @@ def is_local(city, vregion):
     return city["name"] in vregion or (metro and vregion.startswith(key))
 
 
+def parts(r):
+    """계약 금액을 지역별로 나눔. 공동도급 참여 업체와 지분(나라장터 계약정보서비스 업체목록)이 있고
+    모든 참여 업체 소재지를 알면 지분대로, 아니면 대표 업체 기준으로 한 곳에 전부."""
+    m = r.get("jvm") or []
+    if len(m) > 1 and all(x.get("region") and x.get("share") for x in m) and 99 <= sum(x["share"] for x in m) <= 101:
+        tot = sum(x["share"] for x in m)
+        return [(x["region"], round(r["amount"] * x["share"] / tot), x.get("id") or vendors_agg.vid(r), x["name"]) for x in m]
+    return [(r.get("vregion"), r["amount"], vendors_agg.vid(r), r["vendor"])]
+
+
 def build(now=None):
     now = now or datetime.now(timezone(timedelta(hours=9)))
     loc = Locator()
     idx = json.load(open(os.path.join(DATA, "index.json")))
-    out = {"updated": now.isoformat(), "days": idx.get("days"), "basis": "업체 사업자 등록 주소의 시·군·구 (조달청 나라장터)",
+    out = {"updated": now.isoformat(), "days": idx.get("days"), "basis": "업체 사업자 등록 주소의 시·군·구 (조달청 나라장터). 공동도급은 지분이 확인된 계약만 지분대로, 나머지는 대표 업체 기준",
            "cities": {}, "nation": []}
     pairs = defaultdict(lambda: [0, 0])
     pts = {}
@@ -77,13 +87,14 @@ def build(now=None):
         total = unknown = local = 0
         for r in d["rows"]:
             total += r["amount"]
-            if not r.get("vregion"):
-                unknown += r["amount"]; continue
-            a = agg[r["vregion"]]; a[0] += r["amount"]; a[1] += 1
-            a[2] = is_local(city, r["vregion"])
-            vv = ven[r["vregion"]][vendors_agg.vid(r)]; vv[0] += r["amount"]; vv[1] += 1; vv[2] = r["vendor"]
-            if a[2]:
-                local += r["amount"]
+            for vr, amt, k, nm in parts(r):
+                if not vr:
+                    unknown += amt; continue
+                a = agg[vr]; a[0] += amt; a[1] += 1
+                a[2] = is_local(city, vr)
+                vv = ven[vr][k]; vv[0] += amt; vv[1] += 1; vv[2] = nm
+                if a[2]:
+                    local += amt
         flows = []
         for reg, (amt, n, lo) in sorted(agg.items(), key=lambda x: -x[1][0]):
             label, pt = loc(reg)
@@ -101,10 +112,11 @@ def build(now=None):
             ct = r.get("cat") or "기타"
             b = bc.setdefault(ct, {"total": 0, "known": 0, "local": 0, "count": 0, "f": defaultdict(lambda: [0, 0])})
             b["total"] += r["amount"]; b["count"] += 1
-            if r.get("vregion"):
-                b["known"] += r["amount"]; ff = b["f"][r["vregion"]]; ff[0] += r["amount"]; ff[1] += 1
-                if is_local(city, r["vregion"]):
-                    b["local"] += r["amount"]
+            for vr, amt, _, _ in parts(r):
+                if vr:
+                    b["known"] += amt; ff = b["f"][vr]; ff[0] += amt; ff[1] += 1
+                    if is_local(city, vr):
+                        b["local"] += amt
         by_cat = {}
         for ct, b in bc.items():
             fl_ = []

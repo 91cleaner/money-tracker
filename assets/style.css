@@ -328,3 +328,11 @@ table.rcpt tbody td.num { text-align: right; font-weight: 800; padding-right: 0;
 table.rcpt tbody td.num::after { content: none; }
 table.rcpt tbody td:first-child { color: var(--muted); font-size: 13px; }
 .rcpt td:first-child { color: var(--muted); font-size: 13px; }
+
+.cc-jv { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 14px; align-items: baseline; }
+.cc-jv .cc-tags { flex-basis: 100%; }
+.tl { list-style: none; margin: 6px 0 2px; padding: 0 0 0 14px; border-left: 2px solid var(--line, rgba(0,0,0,.12)); display: grid; gap: 8px; }
+.tl li { display: grid; gap: 1px; font-size: 13px; position: relative; }
+.tl li::before { content: ''; position: absolute; left: -19px; top: 5px; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.tl b { font-size: 13px; } .tl small { color: var(--muted); }
+.cc-src { font-size: 11px; color: var(--muted); }
