@@ -1,0 +1,11 @@
+name: 지방재정365 탐색
+on: {workflow_dispatch: {}}
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - env: {LOFIN_KEY: "${{ secrets.LOFIN_KEY }}"}
+        run: python collector/sections/lofin_probe.py
