@@ -19,6 +19,7 @@ jobs:
         run: python collector/sections/lofin.py
       - env: {DATA_GO_KR_KEY: "${{ secrets.DATA_GO_KR_KEY }}"}
         continue-on-error: true
+        timeout-minutes: 10
         run: python collector/sections/bid.py
       - run: |
           git config user.name "money-tracker-bot"

@@ -17,6 +17,8 @@ OP = {"공사": "Cnstwk", "용역": "Servc", "물품": "Thng"}
 MIN = 1_000_000_000
 CNTR_CAP = int(os.environ.get("BID_CNTR_CAP", "40"))
 BID_CAP = int(os.environ.get("BID_CAP", "300"))
+BUDGET = int(os.environ.get("BID_BUDGET", "420"))  # 초. collect 동시실행 그룹을 오래 잡지 않도록
+T0 = time.monotonic()
 OUT = "data/sec_bid.json"
 # 계약정보에 공고번호가 비어 있는 장기계속공사(옛 나라장터 공고)를 위해, 원문으로 확인한 것만 적는다.
 KNOWN = {"R26TA01354404": "20221229877"}  # 강서구 통합신청사: 나라장터 입찰공고 20221229877-000, 낙찰 한백종합건설(88.016%)
@@ -25,12 +27,12 @@ used = {"c": 0, "b": 0}
 
 
 def g(path, kind, **q):
-    if used[kind] >= (CNTR_CAP if kind == "c" else BID_CAP):
+    if used[kind] >= (CNTR_CAP if kind == "c" else BID_CAP) or time.monotonic() - T0 > BUDGET:
         raise StopIteration
     used[kind] += 1
     q.setdefault("numOfRows", 10); q.setdefault("pageNo", 1); q.update(ServiceKey=K, type="json")
     try:
-        t = urllib.request.urlopen(B + path + "?" + urllib.parse.urlencode(q), timeout=40).read().decode()
+        t = urllib.request.urlopen(B + path + "?" + urllib.parse.urlencode(q), timeout=15).read().decode()
         d = json.loads(t)
     except Exception as e:
         print(f"  {path.split('/')[-1]}: {type(e).__name__}", flush=True); return None
