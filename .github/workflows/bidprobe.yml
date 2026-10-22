@@ -1,0 +1,34 @@
+name: 입찰공고 조회(임시)
+on: workflow_dispatch
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    steps:
+      - env: {K: "${{ secrets.DATA_GO_KR_KEY }}"}
+        run: |
+          cat > p.py <<'PY'
+          import os,json,urllib.request,urllib.parse
+          K=os.environ['K']
+          def g(path,**q):
+              q.update(serviceKey=K,type='json',numOfRows=q.get('numOfRows',50),pageNo=1)
+              u='https://apis.data.go.kr/1230000/'+path+'?'+urllib.parse.urlencode(q)
+              try:
+                  t=urllib.request.urlopen(u,timeout=60).read().decode()
+                  try:
+                      d=json.loads(t);b=d.get('response',{}).get('body',{});h=d.get('response',{}).get('header',{})
+                      it=b.get('items') or []
+                      if isinstance(it,dict):it=it.get('item',[])
+                      print('##',path,h,'n',len(it));return it
+                  except Exception: print('##',path,'RAW',t[:300]);return []
+              except Exception as e: print('##',path,'ERR',e);return []
+          c=g('ao/CntrctInfoService/getCntrctInfoListCnstwk',inqryDiv=2,cntrctNo='R26TA01354404')
+          bn=None
+          for x in c:
+              print({a:x.get(a) for a in ['cntrctNo','cntrctOrd','bidNtceNo','bidNtceOrd','cntrctCnclsMthdNm','cntrctNm']});bn=bn or x.get('bidNtceNo')
+          print('BID',bn)
+          if not bn: raise SystemExit
+          for path in ['ad/BidPublicInfoService/getBidPblancListInfoCnstwk','ad/BidPublicInfoService/getBidPblancListInfoPrtcptPsblRgn','ad/BidPublicInfoService/getBidPblancListInfoLicenseLimit','as/ScsbidInfoService/getScsbidListSttusCnstwk','as/ScsbidInfoService/getOpengResultListInfoCnstwk','as/ScsbidInfoService/getOpengResultListInfoOpengCompt','as/ScsbidInfoService/getOpengResultListInfoCnstwkPreparPcDetail']:
+              for x in g(path,inqryDiv=1 if 'BidPublic' in path else 4,bidNtceNo=bn,numOfRows=100)[:60]:
+                  print(json.dumps({k:v for k,v in x.items() if v not in (None,'') and 'Ofcl' not in k and 'Tel' not in k and 'Email' not in k},ensure_ascii=False))
+          PY
+          python3 p.py
