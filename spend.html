@@ -39,8 +39,23 @@
     <div class="ccards" id="paybox"></div>
     <p class="src">출처: 알리오(재정경제부 공공기관 경영정보 공개시스템) 주요통계 · 2024년 12월 말 기준 · 단위 천원 · <a href="https://www.alio.go.kr/statistics/employeeAvg.do" target="_blank">원문</a></p>
   </section>
-  <section class="sec" id="fest"><h2>🎪 축제·행사 원가</h2><div class="pend">데이터 연결 준비 중 · 공식 API 활용신청이 필요합니다.<br><a href="https://www.data.go.kr/data/15056968/openapi.do" target="_blank">행정안전부_지방재정365_행사축제원가회계정보 (15056968)</a></div></section>
-  <section class="sec" id="subsidy"><h2>🤝 지방보조금</h2><div class="pend">데이터 연결 준비 중 · 공식 API 활용신청이 필요합니다.<br><a href="https://www.data.go.kr/data/15138715/openapi.do" target="_blank">행정안전부_지방재정365_지방보조금(2021년 이후) (15138715)</a></div></section>
+  <section class="sec" id="fest">
+    <h2>🎪 축제·행사 원가 추적</h2>
+    <div class="counter"><span>추적한 축제·행사 비용</span><b id="f-sum">—</b><small id="f-meta"></small></div>
+    <pre class="term" id="f-feed">TRACKING…</pre>
+    <div id="f-spot"></div>
+    <h3 class="h3">💸 가장 비싼 행사 (중앙값 대비)</h3><div id="f-top"></div>
+    <h3 class="h3">⏱️ 하루당 비용이 큰 행사</h3><div id="f-day"></div>
+    <h3 class="h3">📊 예산 중 행사·축제경비 비율</h3><div id="f-ratio"></div>
+    <h3 class="h3">🏛️ 청사 신축 ㎡당 단가 비교</h3><p class="sub small">같은 종류 청사(주민센터·본청 등)끼리 공시된 ㎡당 사업비를 비교했습니다. 증축·승강기처럼 성격이 다른 공사도 섞여 있어 참고용입니다.</p><div id="f-hall"></div>
+    <p class="src">방문객 수는 이 공식 자료에 없어 '1인당 비용'은 계산하지 않았습니다.</p>
+  </section>
+  <section class="sec" id="subsidy">
+    <h2>🤝 지방보조금 추적</h2>
+    <div class="counter"><span>올해 편성된 지방보조금 (추적 중인 시)</span><b id="s-sum">—</b><small id="s-meta"></small></div>
+    <p class="sub small">지방보조금은 법으로 '총액한도'가 정해져 있습니다. 한도 밖 편성(법령·국비 매칭 등 예외)이 큰 곳을 위로 올렸습니다. 받은 단체별 명단은 이 API에 없습니다(보탬e에서 화면 조회만 가능).</p>
+    <div id="s-rows"></div>
+  </section>
   <section class="sec" id="exp"><h2>💳 업무추진비 (서울)</h2><div class="pend">데이터 연결 준비 중 · 서울 열린데이터광장 인증키가 필요합니다.<br><a href="https://data.seoul.go.kr/dataList/OA-22156/S/1/datasetView.do" target="_blank">서울시 본청 업무추진비 목록 (OA-22156)</a></div></section>
   <footer>
     <span><b>개인이 만든 비공식 사이트</b> · 정부·지자체와 관계없음</span>
@@ -48,5 +63,6 @@
   </footer>
 </main>
 <script src="assets/sec.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>
