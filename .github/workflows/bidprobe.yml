@@ -10,4 +10,4 @@ jobs:
           ls -l a.hwp; file a.hwp
           hwp5txt a.hwp > a.txt 2>/dev/null || true
           wc -c a.txt
-          grep -n -E "시공능력|합산|지분|공동수급|지역|49|51|최소|대표사|업종|PQ|사전심사|종합심사|낙찰자" a.txt | cut -c1-300 | head -120
+          grep -n -E "시공능력|합산|지분|공동수급|지역|49|51|최소|대표사|업종|PQ|사전심사|종합심사|낙찰자" a.txt >/dev/null; sed -n "80,90p;113p;117p;186,192p;390,400p" a.txt
