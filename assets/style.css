@@ -151,7 +151,7 @@ footer { border-top: 1px solid var(--line); padding-top: 26px; display: grid; ga
 .seg button[aria-pressed="true"] { background: var(--bg); color: var(--fg); box-shadow: 0 1px 4px rgba(0,0,0,.12); }
 .cityselect { flex: 1; min-width: 140px; height: 50px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font: 600 16px var(--sans); padding: 0 12px; }
 .map { width: 100%; aspect-ratio: 1 / 1.1; max-height: 72vh; background: var(--bg); border-radius: 20px; overflow: hidden; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
-.map svg { width: 100%; height: 100%; display: block; }
+.map:not(.sat) > svg { width: 100%; height: 100%; display: block; }
 .provs path { fill: var(--land); stroke: var(--land-line); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
 .cdot { fill: var(--accent); fill-opacity: .28; stroke: var(--accent); stroke-width: 1; vector-effect: non-scaling-stroke; cursor: pointer; transition: fill-opacity .3s; }
 .picked .cdot { fill-opacity: .12; stroke-opacity: .35; }
@@ -225,3 +225,18 @@ html, body { overflow-x: hidden; }
 .sharebtn { min-height: 44px; }
 .alert .src, .alert a.go { min-height: 44px; display: inline-flex; align-items: center; }
 footer a { display: inline-block; min-height: 44px; line-height: 44px; }
+
+/* 위성 지도 */
+.placeform { flex: 1; min-width: 180px; }
+.placeq { width: 100%; height: 50px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font: 600 16px var(--sans); padding: 0 14px; }
+.map.sat { background: #0b1a2a; }
+.map .leaflet-container, .map.sat { font: 13px var(--sans); }
+.sfl { stroke-dasharray: 3000; stroke-dashoffset: 3000; animation: draw 1.3s ease-out forwards; filter: drop-shadow(0 0 3px rgba(0,0,0,.5)); }
+@media (prefers-reduced-motion: reduce) { .sfl { animation: none; stroke-dashoffset: 0; } }
+.sdot { cursor: pointer; }
+.stip { background: rgba(255,255,255,.92); border: 0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.3); font: 700 13px var(--sans); color: #1d1d1f; padding: 3px 8px; }
+.stip.me { background: #0a84ff; color: #fff; }
+.stip.me::before { border-top-color: #0a84ff; }
+.leaflet-touch .leaflet-bar a { width: 44px; height: 44px; line-height: 44px; }
+.leaflet-control-attribution { font-size: 10px; }
+.ghostbtn { min-height: 48px; border: 0; border-radius: 14px; background: var(--bg2); color: var(--accent); font: 600 16px var(--sans); cursor: pointer; }

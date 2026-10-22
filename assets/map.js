@@ -1,84 +1,158 @@
-// 돈의 흐름 지도 — 시를 누르면 그 시의 계약금이 어느 시·군·구 업체로 갔는지 선으로 보여준다. 외부 라이브러리 없음.
+// 돈의 흐름 지도 — 위성 지도(Leaflet + Esri 위성 타일) 위에 시 원과 돈의 흐름 선을 겹친다.
+// 타일을 못 받으면 가벼운 SVG 지도로 바뀐다. 검색어·주소는 어디에도 보내지 않는다(타일 요청은 좌표만).
 const NS = 'http://www.w3.org/2000/svg';
 const sv = (tag, attrs = {}) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+// geo.json 좌표(SVG) ↔ 위경도. build_geo.py 와 같은 식.
+const GK = Math.cos(36 * Math.PI / 180), GSX = 600 / (6.5 * GK);
+const toLL = (p) => [38.7 - p[1] / GSX, 124.5 + p[0] / (GK * GSX)];
 
-async function moneyMap(root, opts = {}) {
-  const [geo, fl] = await Promise.all([getJSON('assets/geo.json'), getJSON('data/flows.json')]);
-  const box = $('.map', root), panel = $('.flowpanel', root);
-  const full = [0, 0, geo.w, geo.h];
-  const svg = sv('svg', {viewBox: full.join(' '), role: 'img', 'aria-label': '대한민국 지도 위 돈의 흐름'});
-  const gP = sv('g', {class: 'provs'}), gF = sv('g', {class: 'flows'}), gD = sv('g', {class: 'dests'}), gL = sv('g', {class: 'labels'}), gC = sv('g', {class: 'cits'});
-  for (const p of geo.provinces) gP.append(sv('path', {d: p.d}));
-  svg.append(gP, gF, gD, gC, gL); box.replaceChildren(svg);
+// ---------- 위성 지도 ----------
+function satView(box, geo, cities, onPick) {
+  if (!window.L) throw new Error('no leaflet');
+  box.classList.add('sat');
+  const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 17, zoomSnap: 0.25, tap: true,
+    maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false});
+  L.control.zoom({position: 'topright'}).addTo(map);
+  map.attributionControl.setPrefix(false);
+  const korea = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]);
+  map.fitBounds(korea, {animate: false});
+  let ok = false, errs = 0, failed = false;
+  const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 17, attribution: '위성: Tiles &copy; Esri — Esri, Maxar, Earthstar Geographics, GIS User Community', crossOrigin: false});
+  tiles.on('tileload', () => { ok = true; });
+  tiles.on('tileerror', () => { if (++errs >= 4 && !ok && !failed) { failed = true; view.onfail && view.onfail(); } });
+  tiles.addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {maxZoom: 17, opacity: 0.85}).addTo(map);
+  setTimeout(() => { if (!ok && !failed) { failed = true; view.onfail && view.onfail(); } }, 8000);
 
-  const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.total > 0).sort((a, b) => b.total - a.total);
   const maxT = cities[0] ? cities[0].total : 1;
   const dots = new Map();
+  const gC = L.layerGroup().addTo(map), gF = L.layerGroup().addTo(map);
   for (const c of cities) {
-    const e = sv('circle', {cx: c.p[0], cy: c.p[1], class: 'cdot'}); e.dataset.r = 2.5 + 16 * Math.sqrt(c.total / maxT);
-    gC.append(e); dots.set(c.slug, e);
+    const m = L.circleMarker(toLL(c.p), {radius: 4 + 18 * Math.sqrt(c.total / maxT), className: 'sdot', weight: 1.5, color: '#fff', fillColor: '#0a84ff', fillOpacity: 0.55, bubblingMouseEvents: false});
+    m.on('click', () => onPick(c.slug)); m.addTo(gC); dots.set(c.slug, m);
   }
-  let vb = full.slice(), cur = null;
+  const bez = (a, b) => {
+    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
+    const mx = (a[0] + b[0]) / 2 - (dy / d) * o, my = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
+    for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mx + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * my + t * t * b[1]]));
+    return pts;
+  };
+  const view = {
+    select(slug) { dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
+    lines(list, maxA, labels) {
+      gF.clearLayers();
+      list.forEach((f, i) => {
+        const w = 2 + 9 * Math.sqrt(f.amount / maxA), col = f.local ? '#0a84ff' : '#ff6b3d';
+        if (Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) >= 0.5) {
+          const pl = L.polyline(bez(f.a, f.p), {color: col, weight: w, opacity: 0.9, lineCap: 'round', className: 'sfl', interactive: false}).addTo(gF);
+          const el2 = pl.getElement && pl.getElement(); if (el2) el2.style.animationDelay = i * 60 + 'ms';
+        }
+        L.circleMarker(toLL(f.p), {radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false}).addTo(gF);
+      });
+      for (const [p, t, me] of labels) L.tooltip({permanent: true, direction: 'top', className: 'stip' + (me ? ' me' : ''), offset: [0, -6]}).setLatLng(toLL(p)).setContent(t).addTo(gF);
+    },
+    fly(p, z) { map.flyTo(toLL(p), z, {duration: 1.6, easeLinearity: 0.2}); },
+    fit(pts) { map.flyToBounds(L.latLngBounds(pts.map(toLL)).pad(0.25), {duration: 1.2, maxZoom: 11}); },
+    home() { map.flyToBounds(korea, {duration: 1.2}); },
+    once(fn) { map.once('moveend', fn); },
+    destroy() { map.remove(); box.classList.remove('sat'); box.replaceChildren(); },
+  };
+  return view;
+}
+
+// ---------- 가벼운 SVG 지도(대체) ----------
+function svgView(box, geo, cities, onPick) {
+  const full = [0, 0, geo.w, geo.h];
+  const svg = sv('svg', {viewBox: full.join(' '), role: 'img', 'aria-label': '대한민국 지도 위 돈의 흐름'});
+  const gP = sv('g', {class: 'provs'}), gF = sv('g', {class: 'flows'}), gD = sv('g', {class: 'dests'}), gC = sv('g', {class: 'cits'}), gL = sv('g', {class: 'labels'});
+  for (const p of geo.provinces) gP.append(sv('path', {d: p.d}));
+  svg.append(gP, gF, gD, gC, gL); box.replaceChildren(svg);
+  const maxT = cities[0] ? cities[0].total : 1, dots = new Map();
+  for (const c of cities) { const e = sv('circle', {cx: c.p[0], cy: c.p[1], class: 'cdot'}); e.dataset.r = 2.5 + 16 * Math.sqrt(c.total / maxT); gC.append(e); dots.set(c.slug, e); }
+  let vb = full.slice(), anim = 0;
   const sizes = () => {
     const k = vb[2] / geo.w;
-    dots.forEach((e) => e.setAttribute('r', (+e.dataset.r) * Math.max(k, 0.35)));
-    gD.querySelectorAll('circle').forEach((e) => e.setAttribute('r', (+e.dataset.r) * Math.max(k, 0.35)));
+    svg.querySelectorAll('.cdot, .dd').forEach((e) => e.setAttribute('r', (+e.dataset.r) * Math.max(k, 0.35)));
     gL.querySelectorAll('text').forEach((t) => { t.setAttribute('font-size', 12 * k); t.setAttribute('dy', -7 * k); });
   };
-  let anim = 0;
   const zoomTo = (t) => {
     cancelAnimationFrame(anim);
     const from = vb.slice(), t0 = performance.now(), dur = matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 650;
-    const step = (now) => {
-      const u = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - u, 3);
-      vb = from.map((v, i) => v + (t[i] - v) * e); svg.setAttribute('viewBox', vb.join(' ')); sizes();
-      if (u < 1) anim = requestAnimationFrame(step);
-    };
+    const step = (now) => { const u = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - u, 3);
+      vb = from.map((v, i) => v + (t[i] - v) * e); svg.setAttribute('viewBox', vb.join(' ')); sizes(); if (u < 1) anim = requestAnimationFrame(step); };
     anim = requestAnimationFrame(step);
   };
-  const fit = (pts) => {
+  const fitBox = (pts, minS = 90) => {
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
     for (const [x, y] of pts) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
     const ar = box.clientHeight / box.clientWidth || geo.h / geo.w;
-    let w = Math.max(x1 - x0, 90) * 1.35, h = Math.max(y1 - y0, 90) * 1.35;
+    let w = Math.max(x1 - x0, minS) * 1.35, h = Math.max(y1 - y0, minS) * 1.35;
     if (h / w > ar) w = h / ar; else h = w * ar;
     w = Math.min(w, geo.w); h = Math.min(h, geo.h);
     const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
     return [Math.max(0, Math.min(geo.w - w, cx - w / 2)), Math.max(0, Math.min(geo.h - h, cy - h / 2)), w, h];
   };
-  const curve = (a, b) => {
-    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
-    const mx = (a[0] + b[0]) / 2 - (dy / d) * o, my = (a[1] + b[1]) / 2 + (dx / d) * o;
-    return `M${a[0]},${a[1]} Q${mx},${my} ${b[0]},${b[1]}`;
+  const curve = (a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
+    return `M${a[0]},${a[1]} Q${(a[0] + b[0]) / 2 - (dy / d) * o},${(a[1] + b[1]) / 2 + (dx / d) * o} ${b[0]},${b[1]}`; };
+  svg.addEventListener('click', (ev) => {
+    const m = svg.getScreenCTM(); if (!m) return; let best = null, bd = 30;
+    for (const c of cities) { const r = (+dots.get(c.slug).getAttribute('r') || 0) * m.a;
+      const d = Math.hypot(ev.clientX - (c.p[0] * m.a + m.e), ev.clientY - (c.p[1] * m.d + m.f)) - r; if (d < bd) { bd = d; best = c; } }
+    if (best) onPick(best.slug);
+  });
+  sizes();
+  return {
+    select(slug) { dots.forEach((e, s) => e.classList.toggle('on', s === slug)); svg.classList.toggle('picked', !!slug); },
+    lines(list, maxA, labels) {
+      gF.replaceChildren(); gD.replaceChildren(); gL.replaceChildren();
+      list.forEach((f, i) => { const w = 1.5 + 9 * Math.sqrt(f.amount / maxA);
+        if (Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) >= 2) { const p = sv('path', {d: curve(f.a, f.p), class: 'fl ' + (f.local ? 'in' : 'out'), 'stroke-width': w.toFixed(1)}); p.style.animationDelay = i * 60 + 'ms'; gF.append(p); }
+        const d = sv('circle', {cx: f.p[0], cy: f.p[1], class: 'dd ' + (f.local ? 'in' : 'out')}); d.dataset.r = 2 + w / 3; gD.append(d); });
+      for (const [p, t, me] of labels) { const e = sv('text', {x: p[0], y: p[1], class: 'lb' + (me ? ' me' : '')}); e.textContent = t; gL.append(e); }
+      sizes();
+    },
+    fly(p) { zoomTo(fitBox([p], 40)); },
+    fit(pts) { zoomTo(fitBox(pts)); },
+    home() { zoomTo(full); },
+    once(fn) { setTimeout(fn, 700); },
+    destroy() { box.replaceChildren(); },
   };
-  const label = (p, text, cls) => { const t = sv('text', {x: p[0], y: p[1], class: 'lb ' + (cls || '')}); t.textContent = text; gL.append(t); };
-  const lines = (list, maxA) => {
-    gF.replaceChildren(); gD.replaceChildren(); gL.replaceChildren();
-    list.forEach((f, i) => {
-      const w = 1.5 + 9 * Math.sqrt(f.amount / maxA);
-      const same = Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) < 2;
-      if (!same) {
-        const p = sv('path', {d: curve(f.a, f.p), class: 'fl ' + (f.local ? 'in' : 'out'), 'stroke-width': w.toFixed(1)});
-        p.style.animationDelay = (i * 60) + 'ms'; gF.append(p);
-      }
-      const d = sv('circle', {cx: f.p[0], cy: f.p[1], class: 'dd ' + (f.local ? 'in' : 'out')}); d.dataset.r = 2 + w / 3; gD.append(d);
-    });
+}
+
+// ---------- 화면 ----------
+async function moneyMap(root, opts = {}) {
+  const [geo, fl] = await Promise.all([getJSON('assets/geo.json'), getJSON('data/flows.json')]);
+  const box = $('.map', root), panel = $('.flowpanel', root);
+  const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.total > 0).sort((a, b) => b.total - a.total);
+  let cur = null, mode = 'city', view;
+  const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {fly: true}); };
+  const mount = (kind) => {
+    view = (kind === 'svg' ? svgView : satView)(box, geo, cities, pickCity);
+    view.onfail = () => { view.destroy(); mount('svg'); redraw(false); };
   };
+  try { mount('sat'); } catch (e) { mount('svg'); }
+
   const share = (x, t) => (t ? Math.round((x / t) * 100) + '%' : '—');
   const row = (name, sub, amt, frac, cls) => {
     const r = el('div', 'frow ' + (cls || '')); const l = el('div', 'fl-l');
     l.append(el('span', 'fn', name), el('span', 'fs', sub)); r.append(l, el('span', 'fa', amt));
     const b = el('i', 'fb'); b.style.width = Math.max(2, frac * 100) + '%'; r.append(b); return r;
   };
-
-  const showCity = (slug, zoom = true) => {
-    const c = fl.cities[slug]; if (!c) return;
-    cur = slug; dots.forEach((e, s) => e.classList.toggle('on', s === slug)); svg.classList.add('picked');
+  const drawCity = (c) => {
     const list = c.flows.map((f) => ({...f, a: c.p}));
-    lines(list, Math.max(...list.map((f) => f.amount), 1));
-    list.filter((f) => !f.local).slice(0, 3).forEach((f) => label(f.p, f.to.split(' ').slice(1).join(' ') || f.to));
-    label(c.p, c.name.split(' ').pop(), 'me'); sizes();
-    if (zoom) zoomTo(fit([c.p, ...list.slice(0, 8).map((f) => f.p)]));
+    const labels = list.filter((f) => !f.local).slice(0, 3).map((f) => [f.p, f.to.split(' ').slice(1).join(' ') || f.to]);
+    labels.push([c.p, c.name.split(' ').pop(), true]);
+    view.lines(list, Math.max(...list.map((f) => f.amount), 1), labels);
+    return list;
+  };
+  // where: 고른 시·군·구 좌표(있으면 그곳으로 날아간 뒤 흐름을 그린다)
+  const showCity = (slug, o = {}) => {
+    const c = fl.cities[slug]; if (!c) return;
+    cur = slug; mode = 'city'; view.select(slug);
+    const list = c.flows.map((f) => ({...f, a: c.p}));
+    if (o.fly) { view.lines([], 1, []); view.fly(o.where || c.p, o.where ? 12 : 11); view.once(() => { if (cur === slug && mode === 'city') drawCity(c); }); }
+    else { drawCity(c); if (o.zoom !== false) view.fit([c.p, ...list.slice(0, 8).map((f) => f.p)]); }
     panel.replaceChildren();
     const h = el('div', 'fh'); h.append(el('span', 'fh-n', c.name), el('span', 'fh-v', krw(c.total)));
     panel.append(h, el('p', 'fq', '이 돈은 어디로 갔나'));
@@ -92,49 +166,56 @@ async function moneyMap(root, opts = {}) {
     const restN = list.length - top.length + (c.other ? c.other.n : 0);
     if (restN > 0) panel.append(el('p', 'sub small', `그 밖의 ${restN}곳`));
     if (c.known < c.total) panel.append(el('p', 'sub small', `주소가 확인된 계약 ${share(c.known, c.total)} 기준`));
+    const all = el('button', 'ghostbtn', '흐름 전체 보기'); all.type = 'button';
+    all.addEventListener('click', () => { view.fit([c.p, ...list.slice(0, 8).map((f) => f.p)]); root.scrollIntoView({behavior: 'smooth'}); });
+    panel.append(all);
     if (!opts.fixed) { const g = el('a', 'gobtn', c.name + ' 자세히 보기'); g.href = 'city.html?c=' + slug; panel.append(g); }
   };
   const showNation = () => {
-    cur = null; dots.forEach((e) => e.classList.remove('on')); svg.classList.remove('picked');
+    cur = null; mode = 'nation'; view.select(null);
     const list = fl.nation.slice(0, 25).map((f) => ({...f, a: fl.cities[f.from].p, local: false}));
-    lines(list, Math.max(...list.map((f) => f.amount), 1));
-    sizes(); zoomTo(full);
-    panel.replaceChildren();
-    panel.append(el('p', 'fq', '시 밖으로 나간 가장 큰 돈'));
+    view.lines(list, Math.max(...list.map((f) => f.amount), 1), []);
+    view.home();
+    panel.replaceChildren(el('p', 'fq', '시 밖으로 나간 가장 큰 돈'));
     const maxA = list[0] ? list[0].amount : 1;
     for (const f of list.slice(0, 6)) panel.append(row(`${fl.cities[f.from].name} → ${f.to}`, f.count.toLocaleString('ko-KR') + '건', krw(f.amount), f.amount / maxA, 'out'));
     panel.append(el('p', 'sub small', '지도의 원을 누르면 그 시의 돈이 어디로 갔는지 보여줍니다.'));
   };
-
-  // 터치: 가장 가까운 원을 고른다 (작은 원도 손가락으로 쉽게)
-  const pick = (ev) => {
-    if (opts.fixed) return;
-    const m = svg.getScreenCTM(); if (!m) return;
-    const scale = m.a; let best = null, bd = 30;
-    for (const c of cities) {
-      const r = (+dots.get(c.slug).getAttribute('r') || 0) * scale;
-      const x = c.p[0] * m.a + m.e, y = c.p[1] * m.d + m.f;
-      const d = Math.hypot(ev.clientX - x, ev.clientY - y) - r;
-      if (d < bd) { bd = d; best = c; }
-    }
-    if (best) { showCity(best.slug); setSeg('city'); }
-  };
-  svg.addEventListener('click', pick);
+  const redraw = (zoom) => (mode === 'nation' ? showNation() : cur && showCity(cur, {zoom}));
 
   const seg = $('.seg', root);
   const setSeg = (v) => seg && seg.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === v));
   if (seg) seg.addEventListener('click', (e) => {
-    const b = e.target.closest('button'); if (!b) return;
-    setSeg(b.dataset.v);
-    if (b.dataset.v === 'nation') showNation(); else showCity(cur || opts.start || cities[0].slug);
+    const b = e.target.closest('button'); if (!b) return; setSeg(b.dataset.v);
+    if (b.dataset.v === 'nation') showNation(); else showCity(cur || cities[0].slug, {fly: true});
   });
-  const pickSel = $('select', root);
-  if (pickSel) {
-    for (const c of cities.slice().sort((a, b) => a.name.localeCompare(b.name, 'ko'))) { const o = el('option', '', c.name); o.value = c.slug; pickSel.append(o); }
-    pickSel.addEventListener('change', () => { if (pickSel.value) { showCity(pickSel.value); setSeg('city'); } });
+
+  // 지역 찾기: 시 이름 또는 시·군·구 이름. 브라우저 안에서만 맞춰 본다(아무 데도 보내지 않음).
+  const places = [];
+  for (const c of cities) places.push({label: c.name, slug: c.slug, p: c.p});
+  for (const [k, p] of Object.entries(geo.points)) {
+    const t = k.split(' '); if (t.length < 2) continue;
+    const si = t[1].match(/^(.+?시)(.+구)?$/);
+    const owner = cities.find((c) => c.name === t[0] + ' ' + (si ? si[1] : t[1])) || cities.find((c) => c.name === t[0]);
+    const label = t[0] + ' ' + (si && si[2] ? si[1] + ' ' + si[2] : t[1]);
+    if (!places.some((x) => x.label === label)) places.push({label, slug: owner ? owner.slug : null, p});
   }
-  sizes();
-  if (opts.fixed) showCity(opts.fixed);
-  else { setSeg('city'); showCity(opts.start || cities[0].slug); }
-  const src = el('p', 'sub small', `업체 위치: ${fl.basis}. 지도 경계: ${geo.source}. 갱신 ${when(fl.updated)}`); root.append(src);
+  const input = $('.placeq', root), dl = $('datalist', root);
+  if (input && dl) {
+    for (const x of places) { const o = el('option'); o.value = x.label; dl.append(o); }
+    const go = () => {
+      const q = input.value.trim().replace(/\s+/g, ' '); if (!q) return;
+      const x = places.find((x) => x.label === q) || places.find((x) => x.label.replace(/ /g, '').includes(q.replace(/ /g, '')));
+      if (!x) { input.setCustomValidity('찾는 지역이 없어요'); input.reportValidity(); return; }
+      input.setCustomValidity(''); input.blur(); setSeg('city');
+      if (x.slug) showCity(x.slug, {fly: true, where: x.p});
+      else { cur = null; mode = 'city'; view.select(null); view.lines([], 1, [[x.p, x.label.split(' ').pop(), true]]); view.fly(x.p, 12);
+        panel.replaceChildren(el('p', 'fq', x.label), el('p', 'sub', '이곳은 시가 아니라서(군 지역) 계약을 따로 모으지 않습니다. 가까운 시의 원을 눌러 보세요.')); }
+    };
+    input.addEventListener('change', go);
+    input.form && input.form.addEventListener('submit', (e) => { e.preventDefault(); go(); });
+  }
+  if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); view.fly(c.p, 10); } }
+  else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); }
+  root.append(el('p', 'sub small', `업체 위치: ${fl.basis}. 지도: Esri 위성 사진, 경계 ${geo.source}. 갱신 ${when(fl.updated)}`));
 }
