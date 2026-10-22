@@ -5,35 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>우리 시 돈 추적기</title>
 <meta name="description" content="전국 85개 시의 공개 계약을 모아 어디에 얼마를 썼는지, 데이터상 이상 징후는 없는지 쉽게 보여줍니다.">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-page="home">
 <main class="wrap">
-  <header>
-    <h1>우리 시 돈 추적기</h1>
-    <p class="lede">전국 85개 시가 맺은 계약을 조달청 나라장터 공개 데이터로 모았습니다. 어느 부서가 어느 업체에 얼마를 썼는지, 그리고 데이터상 눈에 띄는 패턴이 있는지 한눈에 볼 수 있습니다.</p>
-    <p class="note">최근 <span id="days">90</span>일 계약 · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
+  <header class="hero">
+    <p class="eyebrow">우리 시 돈 추적기</p>
+    <h1>우리 세금,<br>어디에 쓰였을까요?</h1>
+    <div class="big" id="hero-num">
+      <span class="v" id="nat-total">—</span>
+      <span class="k">전국 85개 시가 최근 <span id="days">90</span>일 동안 <span id="hero-k">계약으로 쓴 돈</span></span>
+      <div class="chips center" id="hero-chips"></div>
+    </div>
+    <p class="meta"><span id="nat-count">—</span> · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
   </header>
 
-  <section class="tiles">
-    <div class="tile"><span class="k">전국 시 계약 합계</span><span class="v" id="nat-total">—</span><span class="s">85개 시, 공개된 계약 기준</span></div>
-    <div class="tile"><span class="k">계약 건수</span><span class="v" id="nat-count">—</span><span class="s">구청·사업소 계약 포함</span></div>
-    <div class="tile"><span class="k">데이터상 이상 징후</span><span class="v" id="nat-alerts">—</span><span class="s">위법을 뜻하지 않음</span></div>
-  </section>
-
-  <section class="card">
-    <h2>요즘 눈에 띄는 패턴</h2>
-    <p class="note">시마다 가장 먼저 볼 만한 것 하나씩. 자동으로 찾은 숫자 패턴이며 위법이나 비리를 뜻하지 않습니다.</p>
-    <div class="alerts" id="nat-alerts-list"></div>
-  </section>
-
-  <section class="card">
-    <div class="row"><h2>우리 시 찾기</h2><input class="search" id="q" type="search" placeholder="예: 수원, 인천, 경남" aria-label="시 검색"></div>
+  <section class="sec" id="find">
+    <h2>우리 시 찾기</h2>
+    <label class="searchbox"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="시 이름을 입력하세요 (예: 수원)" aria-label="시 검색" autocomplete="off"></label>
     <div class="cities" id="cities"></div>
   </section>
 
-  <section class="card" id="principles">
+  <section class="sec home-alerts">
+    <h2>이번 주 눈에 띄는 패턴</h2>
+    <p class="sub">숫자에서 자동으로 찾은 <b>데이터상 이상 징후</b>입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있습니다. <span id="nat-alerts-n"></span></p>
+    <div class="alerts" id="nat-alerts-list"></div>
+  </section>
+
+  <section class="sec how">
+    <h2>어떻게 만드나요?</h2>
+    <ol class="steps">
+      <li><b>모으고</b><span>조달청 나라장터에 공개된 시·구청 계약을 매시간 모읍니다.</span></li>
+      <li><b>살피고</b><span>쪼개진 계약, 같은 업체 반복 같은 숫자 패턴을 자동으로 찾습니다.</span></li>
+      <li><b>보여줍니다</b><span>모든 항목에 출처를 달고, 해명이 오면 그대로 싣습니다.</span></li>
+    </ol>
+  </section>
+
+  <section class="sec" id="principles">
     <h2>이 사이트의 원칙</h2>
     <ul class="principles">
       <li>정부·지자체가 이미 공개한 데이터만 쓰고, 모든 항목에 출처를 답니다.</li>
@@ -41,7 +52,7 @@
       <li>개인 이름은 다루지 않습니다. 업체명과 계약 정보만 보여주고, 업체 주소는 시·군·구까지만 표시합니다.</li>
       <li>기관이나 업체가 해명을 보내면 해당 항목 바로 아래에 그대로 싣습니다.</li>
     </ul>
-    <p class="note">해명·정정 요청: <span id="contact">연락처 준비 중</span></p>
+    <p class="sub">해명·정정 요청: <span id="contact">연락처 준비 중</span></p>
   </section>
 
   <footer>
