@@ -11,7 +11,7 @@ const krw = (n) => {
 };
 const pct = (x) => (x == null ? '—' : Math.round(x * 100) + '%');
 const when = (iso) => { if (!iso) return '—'; return new Date(iso).toLocaleString('ko-KR', {month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}); };
-const LABEL = {split: '같은 날 나눠진 계약', threshold: '금액선 근처', repeat: '같은 업체 반복', big: '1억 이상'};
+const LABEL = {split: '같은 날 나눠진 계약', threshold: '금액선 근처', increase: '계약 금액 증가', repeat: '같은 업체 반복', big: '1억 이상'};
 const CATS = ['전체', '청소', '시설관리', '경비', '건설·공사', '용역·연구', '인쇄·홍보', '물품', '기타'];
 const SOURCE = 'https://www.g2b.go.kr';
 const BASE = location.href.replace(/[^/]*([?#].*)?$/, '');
@@ -87,6 +87,80 @@ function chips(box, cats, onPick) {
 }
 
 // ---------- 전국 ----------
+const MINWAGE = 10320; // 2026년 최저임금(고용노동부 고시 제2025-41호)
+const whenNear = (node, fn) => {
+  if (!('IntersectionObserver' in window)) return fn();
+  let done = false; const io = new IntersectionObserver((es) => { if (!done && es.some((e) => e.isIntersecting)) { done = true; io.disconnect(); fn(); } }, {rootMargin: '400px'});
+  io.observe(node);
+};
+function countUp(node, to) {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !node.dataset.done) { /* 첫 표시만 애니메이션 */ }
+  const from = Number(node.dataset.v || 0), t0 = performance.now(), D = node.dataset.done ? 450 : 1400;
+  node.dataset.v = to; node.dataset.done = 1;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { node.textContent = krw(to); return; }
+  const step = (t) => { const k = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - k, 3); node.textContent = krw(from + (to - from) * e); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+function receiptCard(r, city) {
+  const c = el('article', 'receipt');
+  c.append(el('small', 'pill', '계약 영수증 · ' + (r.cat || '기타')), el('div', 'amt', krw(r.amount)), el('b', '', r.title));
+  const dl = el('dl');
+  for (const [k, v] of [['날짜', r.date], ['발주', r.inst], ['업체', r.vendor], ['업체 소재', r.vregion || '확인 중'], ['방식', r.method]]) { dl.append(el('dt', '', k), el('dd', '', v || '—')); }
+  const acts = el('div', 'acts');
+  if (r.url) { const a = el('a', '', '나라장터 원본 ↗'); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; acts.append(a); }
+  acts.append(shareBtn(shareURL(city.slug), `${city.short} · ${r.title} ${krw(r.amount)}`));
+  c.append(dl, acts); return c;
+}
+async function funHome(idx, getCat) {
+  // 지난 방문 이후 새 계약 (이 기기에만 숫자 하나 저장)
+  try {
+    const tot = idx.cities.reduce((s, c) => s + (c.count || 0), 0), prev = Number(localStorage.getItem('mt-seen') || 0);
+    const b = $('#newbadge');
+    if (prev && tot > prev && b) { b.textContent = `지난 방문 이후 새 계약 ${(tot - prev).toLocaleString('ko-KR')}건`; b.hidden = false; }
+    localStorage.setItem('mt-seen', String(tot));
+  } catch (e) {}
+  const live = idx.cities.filter((c) => c.count);
+  // 아무 계약이나 하나
+  const lb = $('#lucky-btn'), lc = $('#lucky-card');
+  if (lb) lb.addEventListener('click', async () => {
+    lb.disabled = true; lb.textContent = '뽑는 중…';
+    try {
+      let pick = Math.random() * live.reduce((s, c) => s + c.count, 0), city = live[0];
+      for (const c of live) { pick -= c.count; if (pick <= 0) { city = c; break; } }
+      const d = await getJSON('data/city/' + city.slug + '.json');
+      const r = d.rows[Math.floor(Math.random() * d.rows.length)];
+      lc.replaceChildren(receiptCard(r, city));
+    } catch (e) { lc.replaceChildren(emptyBox('불러오지 못했어요', '잠시 후 다시 눌러 보세요.')); }
+    lb.disabled = false; lb.textContent = '하나 더 뽑기';
+  });
+  // 이번 주 영수증: 보일 때만 시 데이터를 불러옴
+  const tb = $('#rcpt tbody'); if (!tb) return;
+  tb.append(Object.assign(el('tr'), {innerHTML: '<td colspan="3">영수증을 모으는 중…</td>'}));
+  whenNear($('#receipts'), async () => {
+    const all = [];
+    const last = idx.updated ? new Date(idx.updated) : new Date(); const cut = new Date(last - 7 * 864e5).toISOString().slice(0, 10);
+    await Promise.all(live.map((c) => getJSON('data/city/' + c.slug + '.json').then((d) => { for (const r of d.rows) if (r.date >= cut) all.push({...r, city: c}); }).catch(() => {})));
+    let key = 'amount', n = 10, lastCat = null;
+    const btns = document.querySelectorAll('#rcpt th button');
+    const draw = () => {
+      const cat = getCat(); if (cat !== lastCat) { lastCat = cat; }
+      const list = all.filter((r) => cat === '전체' || r.cat === cat).sort((a, b) => key === 'amount' ? b.amount - a.amount : (b.date > a.date ? 1 : b.date < a.date ? -1 : b.amount - a.amount));
+      tb.replaceChildren();
+      for (const r of list.slice(0, n)) {
+        const tr = el('tr'), a = el('a'); a.href = r.url || shareURL(r.city.slug); a.target = '_blank'; a.rel = 'noopener';
+        a.append(el('b', '', r.title), el('small', '', `${r.city.short} · ${r.inst} → ${r.vendor || '—'}`));
+        const t2 = el('td'); t2.append(a);
+        tr.append(el('td', '', (r.date || '').slice(5).replace('-', '.')), t2, el('td', 'num', krw(r.amount))); tb.append(tr);
+      }
+      if (!list.length) tb.append(Object.assign(el('tr'), {innerHTML: '<td colspan="3">이번 주 해당 계약이 없어요</td>'}));
+      const m = $('#rcpt-more'); m.hidden = list.length <= n;
+    };
+    btns.forEach((b) => b.addEventListener('click', () => { key = b.dataset.k; btns.forEach((x) => { x.setAttribute('aria-pressed', x === b); x.textContent = (x.dataset.k === 'date' ? '날짜' : '금액') + (x === b ? ' ↓' : ''); }); draw(); }));
+    $('#rcpt-more').addEventListener('click', () => { n += 20; draw(); });
+    document.querySelectorAll('#hero-chips button').forEach((b) => b.addEventListener('click', () => setTimeout(draw)));
+    draw();
+  });
+}
 async function homePage() {
   let idx;
   try { idx = await getJSON('data/index.json'); } catch (e) { idx = null; }
@@ -115,7 +189,8 @@ async function homePage() {
   let mapCtl = null, draw = () => {}, alertsDraw = () => {};
   const setCat = (c) => {
     cat = c;
-    $('#nat-total').textContent = krw(sum(T));
+    countUp($('#nat-total'), sum(T));
+    const w = $('#wage'); if (w) { w.replaceChildren(); w.append(`최저임금으로 ${Math.round(sum(T) / MINWAGE / 8 / 365).toLocaleString('ko-KR')}년 일해야 버는 돈`); w.append(el('small', '', '2026년 최저임금 시간당 10,320원(고용노동부 고시), 하루 8시간·매일 일한다고 가정')); }
     $('#hero-k').textContent = cat === '전체' ? '계약으로 쓴 돈' : cat + ' 계약에 쓴 돈';
     $('#nat-count').textContent = (cat === '전체' ? '' : cat + ' ') + '계약 ' + sum(N).toLocaleString('ko-KR') + '건';
     $('#nat-alerts-n').textContent = `전국 ${sum(A).toLocaleString('ko-KR')}건 중 시마다 하나씩.`;
@@ -147,7 +222,8 @@ async function homePage() {
     alertList($('#nat-alerts-list'), top, {link: true});
   };
   setCat('전체');
-  if (window.moneyMap && $('#map')) moneyMap($('#map')).then((m) => { mapCtl = m; if (cat !== '전체') m.setCat(cat); }).catch(() => $('#map').remove());
+  if (window.moneyMap && $('#map')) whenNear($('#map'), () => moneyMap($('#map')).then((m) => { mapCtl = m; if (cat !== '전체') m.setCat(cat); }).catch(() => $('#map').remove()));
+  funHome(idx, () => cat);
   if ($('#rank-list')) getJSON('data/rank.json').then((d) => rankList($('#rank-list'), d, {limit: 10, home: true})).catch(() => $('#ranksec').remove());
 }
 
@@ -192,6 +268,25 @@ async function rankPage() {
 }
 
 // ---------- 업체 모아 보기 ----------
+function corpInfo(c) {
+  const box = $('#v-corp'), ib = $('#v-inds');
+  if (!c) { box.append(el('p', 'sub', '이 업체의 나라장터 등록 정보는 아직 받지 않았습니다(순위 상위·이상 징후 업체부터 차례로 받습니다).')); return; }
+  const now = new Date(), y = (s) => +s.slice(0, 4);
+  const age = (s) => now.getFullYear() - y(s) + 1;
+  const fact = (k, v) => { const f = el('div', 'fact'); f.append(el('span', 'fk', k), el('span', 'fv', v)); box.append(f); };
+  if (c.opbiz) fact('설립', `${y(c.opbiz)}년 · ${age(c.opbiz)}년차`);
+  if (c.rgst) fact('나라장터 등록', `${c.rgst.slice(0, 7).replace('-', '.')} · ${age(c.rgst)}년차`);
+  if (c.bsns) fact('조달 구분', c.bsns);
+  if (c.emp) fact('종업원 수', c.emp.toLocaleString('ko-KR') + '명');
+  if (c.inds && c.inds.length) {
+    ib.append(el('h3', '', `등록 업종 ${c.inds.length}개`));
+    const ul = el('ul', 'indlist');
+    for (const i of c.inds) { const li = el('li', i.rep ? 'rep' : ''); li.append(el('span', '', i.n + (i.rep ? ' · 대표' : '')), el('small', '', i.d ? i.d.slice(0, 4) + '년 등록' : '')); ul.append(li); }
+    ib.append(ul);
+  }
+  $('#v-corp-src').textContent += ` 받은 날: ${c.at}.`;
+}
+
 async function vendorPage() {
   const id = new URLSearchParams(location.search).get('v');
   let d;
@@ -204,6 +299,7 @@ async function vendorPage() {
   $('#period').textContent = `수집된 기간 기준: ${d.period.first} ~ ${d.period.last}, ${d.period.cities}개 시`;
   $('#k-total').textContent = krw(d.total); $('#k-count').textContent = d.count.toLocaleString('ko-KR') + '건';
   $('#k-nc').textContent = d.cities.length + '개 시'; $('#k-ni').textContent = `기관 ${d.insts.length}곳`;
+  corpInfo(d.corp);
   bars($('#v-cities'), d.cities.slice(0, 10), (r) => r.name, (r) => r.amount, (r) => r.count + '건');
   bars($('#v-insts'), d.insts.slice(0, 10), (r) => r.name, (r) => r.amount, (r) => r.count + '건');
   // 달별
@@ -232,6 +328,17 @@ async function vendorPage() {
       const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', r.date + ' · ' + r.cat), el('b', 'cc-a', krw(r.amount)));
       const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
       c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : '')));
+      const tags = [];
+      if (r.jv) tags.push('공동도급 · 금액은 대표 업체 기준');
+      if (r.ord && +r.ord > 1) tags.push(`${+r.ord}차 변경 계약`);
+      if (r.this && r.this !== r.amount) tags.push(`이번 차수 금액 ${krw(r.this)} · 총 계약금액 ${krw(r.amount)}`);
+      if (tags.length) c.append(el('span', 'cc-tags', tags.join(' · ')));
+      if (r.hist && r.hist.length) {
+        const o = r.hist[0], up = r.amount - o.amount;
+        c.append(el('span', 'cc-hist', `확인된 첫 ${+o.ord}차(${o.date}) ${krw(o.amount)} → 지금 ${krw(r.amount)}` + (o.amount ? ` (${up >= 0 ? '+' : ''}${Math.round(up / o.amount * 100)}%)` : '')));
+      } else if (r.ord && +r.ord > 1) {
+        c.append(el('span', 'cc-hist', '처음 차수 금액은 수집 기간 밖이라 확인되지 않았습니다.'));
+      }
       if (r.url) { const s2 = el('a', 'src', '출처: 조달청 나라장터 원문 ›'); s2.href = r.url; s2.target = '_blank'; s2.rel = 'noopener'; c.append(s2); }
       box.append(c);
     }

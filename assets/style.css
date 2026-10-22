@@ -278,3 +278,53 @@ body { padding-bottom: env(safe-area-inset-bottom); }
 .ccard .src { min-height: 44px; display: inline-flex; align-items: center; font-size: 14px; }
 .chips { scroll-snap-type: x proximity; } .chip { scroll-snap-align: start; }
 @media (min-width: 900px) { .stats:has(> :nth-child(2):last-child) { grid-template-columns: 1fr 1fr; } }
+/* ---- 영수증 스타일 (흑백, 큰 숫자) ---- */
+.hero.dark { background: #000; color: #fff; margin: 0 calc(50% - 50vw); padding-left: calc(50vw - 50%); padding-right: calc(50vw - 50%); text-align: left; }
+.hero.dark .eyebrow { color: #a1a1a6; letter-spacing: .02em; }
+.hero.dark .k, .hero.dark .meta { color: #a1a1a6; }
+.hero.dark .chips button { min-height: 44px; }
+.wage { margin: 18px 0 0; font-size: 17px; color: #f5f5f7; }
+.wage small { display: block; color: #8e8e93; font-size: 12px; margin-top: 4px; }
+.newbadge { display: inline-block; margin: 18px 0 0; padding: 8px 14px; border: 1px solid #fff; border-radius: 999px; font-weight: 700; font-size: 15px; }
+.rcpt-wrap { overflow-x: hidden; }
+.rcpt { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 15px; }
+.rcpt th { text-align: left; font-size: 13px; color: var(--muted); border-bottom: 2px solid var(--fg); padding: 0; }
+.rcpt th:first-child { width: 64px; } .rcpt th.num { width: 96px; text-align: right; }
+.rcpt th button { all: unset; cursor: pointer; display: block; min-height: 44px; line-height: 44px; font-weight: 700; }
+.rcpt td { border-bottom: 1px solid var(--line); padding: 12px 4px 12px 0; vertical-align: top; overflow-wrap: anywhere; }
+.rcpt td.num { text-align: right; font-weight: 800; font-variant-numeric: tabular-nums; }
+.rcpt td a { color: var(--fg); display: block; min-height: 44px; }
+.rcpt td small { display: block; color: var(--muted); font-size: 13px; }
+.receipt { background: var(--bg2); border-radius: 4px; padding: 22px; font-variant-numeric: tabular-nums; border-top: 6px dashed var(--line); margin-bottom: 14px; display: grid; gap: 6px; }
+.receipt .amt { font-size: 40px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+.receipt dl { display: grid; grid-template-columns: 72px 1fr; gap: 4px 10px; margin: 8px 0 0; font-size: 15px; }
+.receipt dt { color: var(--muted); } .receipt dd { margin: 0; overflow-wrap: anywhere; }
+.receipt .acts { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.receipt .acts a, .receipt .acts button { min-height: 44px; display: inline-flex; align-items: center; }
+#lucky-btn { border: 0; cursor: pointer; font: inherit; width: 100%; min-height: 52px; }
+@media (prefers-reduced-motion: reduce) { .receipt { animation: none; } }
+
+/* 업체 정보 */
+.facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.fact { background: var(--bg2); border-radius: 14px; padding: 14px; display: grid; gap: 2px; }
+.fk { font-size: 13px; color: var(--muted); } .fv { font-weight: 600; font-size: 17px; }
+.inds h3 { font-size: 15px; margin: 18px 0 8px; }
+.indlist { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
+.indlist li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line, rgba(0,0,0,.08)); font-size: 15px; }
+.indlist li.rep span { font-weight: 600; } .indlist small { color: var(--muted); white-space: nowrap; }
+.note { font-size: 13px; color: var(--muted); margin-top: 14px; line-height: 1.6; }
+#v-corp-src { font-size: 12px; color: var(--muted); }
+.cc-tags { font-size: 12px; color: var(--muted); } .cc-hist { font-size: 13px; font-weight: 600; }
+@media (min-width: 900px) { .facts { grid-template-columns: repeat(4, 1fr); } }
+.map { position: relative; }
+.maphint { position: absolute; z-index: 800; left: 50%; bottom: 14px; transform: translateX(-50%); background: rgba(0,0,0,.75); color: #fff; padding: 10px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; min-height: 44px; box-sizing: border-box; display: flex; align-items: center; white-space: nowrap; }
+table.rcpt { display: table; width: 100%; } table.rcpt thead { display: table-header-group; } table.rcpt tbody { display: table-row-group; }
+table.rcpt tr, table.rcpt thead tr, table.rcpt tbody tr { display: table-row; background: none; padding: 0; margin: 0; border-radius: 0; }
+table.rcpt th, table.rcpt td, table.rcpt tbody td { display: table-cell; width: auto; font-size: 15px; font-weight: 400; color: var(--fg); padding: 12px 6px 12px 0; border-bottom: 1px solid var(--line); }
+table.rcpt th { padding: 0; border-bottom: 2px solid var(--fg); color: var(--muted); font-size: 13px; }
+table.rcpt th:first-child { width: 52px; } table.rcpt th.num { width: 92px; text-align: right; }
+table.rcpt th button { all: unset; cursor: pointer; display: block; min-height: 44px; line-height: 44px; font-weight: 700; background: none; padding: 0; }
+table.rcpt tbody td.num { text-align: right; font-weight: 800; padding-right: 0; }
+table.rcpt tbody td.num::after { content: none; }
+table.rcpt tbody td:first-child { color: var(--muted); font-size: 13px; }
+.rcpt td:first-child { color: var(--muted); font-size: 13px; }

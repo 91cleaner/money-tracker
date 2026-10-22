@@ -13,6 +13,14 @@ function satView(box, geo, cities, onPick) {
   const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 17, zoomSnap: 0.25, tap: true,
     maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false});
   L.control.zoom({position: 'topright'}).addTo(map);
+  // 페이지 스크롤을 빼앗지 않도록: 터치 기기에서는 지도를 한 번 눌러야 움직임
+  if (matchMedia('(pointer: coarse)').matches) {
+    map.dragging.disable(); map.touchZoom.disable();
+    const hint = document.createElement('div'); hint.className = 'maphint'; hint.textContent = '지도를 눌러서 움직이기';
+    box.append(hint);
+    const on = () => { map.dragging.enable(); map.touchZoom.enable(); hint.remove(); };
+    map.once('click', on); hint.addEventListener('click', on);
+  }
   map.attributionControl.setPrefix(false);
   const korea = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]);
   map.fitBounds(korea, {animate: false});

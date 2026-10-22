@@ -12,31 +12,47 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-page="home">
-<header class="stickybar"><a class="brand" href="./">우리 시 돈 추적기</a><nav><a href="#map">지도</a><a href="rank.html">순위</a><a href="#find">우리 시</a></nav></header>
+<header class="stickybar"><a class="brand" href="./">우리 시 돈 추적기</a><nav><a href="#find">우리 시</a><a href="#map">지도</a><a href="#receipts">영수증</a><a href="rank.html">순위</a></nav></header>
 <main class="wrap">
-  <header class="hero">
-    <p class="eyebrow">우리 시 돈 추적기</p>
+  <header class="hero dark">
+    <p class="eyebrow">우리 시 돈 추적기 · 개인이 만든 비공식 사이트</p>
     <h1>우리 세금,<br>어디에 쓰였을까요?</h1>
     <div class="big" id="hero-num">
       <span class="v" id="nat-total">—</span>
       <span class="k">전국 85개 시가 최근 <span id="days">90</span>일 동안 <span id="hero-k">계약으로 쓴 돈</span></span>
       <div class="chips center" id="hero-chips"></div>
     </div>
+    <p class="newbadge" id="newbadge" hidden></p>
+    <p class="wage" id="wage"></p>
     <p class="meta"><span id="nat-count">—</span> · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
   </header>
-
-  <section class="sec mapsec" id="map">
-    <h2>돈이 어디로 가나</h2>
-    <p class="sub">원을 누르면 그 시가 계약으로 쓴 돈이 어느 지역 업체로 갔는지 선으로 보여줍니다. 선이 굵을수록 큰 돈입니다.</p>
-    <div class="maptools"><div class="seg" role="group" aria-label="보기 고르기"><button type="button" data-v="city">시 하나</button><button type="button" data-v="nation">전국 큰 흐름</button></div>
-      <form class="placeform" role="search"><input class="placeq" type="search" list="mt-places" placeholder="우리 동네 찾기 (예: 강남구)" aria-label="지역 찾기" autocomplete="off" enterkeyhint="search"><datalist id="mt-places"></datalist></form></div>
-    <div class="mapgrid"><div class="map" aria-live="polite"></div><div class="flowpanel"></div></div>
-  </section>
 
   <section class="sec" id="find">
     <h2>우리 시 찾기</h2>
     <label class="searchbox"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="시 이름을 입력하세요 (예: 수원)" aria-label="시 검색" autocomplete="off"></label>
     <div class="cities" id="cities"></div>
+  </section>
+
+  <section class="sec mapsec" id="map">
+    <h2>돈이 어디로 가나</h2>
+    <p class="sub">원을 누르면 그 시가 계약으로 쓴 돈이 어느 지역 업체로 갔는지 선으로 보여줍니다. 선이 굵을수록 큰 돈입니다. 공동도급 계약은 대표 업체 기준(공개 자료에 참여 업체별 지분이 없음).</p>
+    <div class="maptools"><div class="seg" role="group" aria-label="보기 고르기"><button type="button" data-v="city">시 하나</button><button type="button" data-v="nation">전국 큰 흐름</button></div>
+      <form class="placeform" role="search"><input class="placeq" type="search" list="mt-places" placeholder="우리 동네 찾기 (예: 강남구)" aria-label="지역 찾기" autocomplete="off" enterkeyhint="search"><datalist id="mt-places"></datalist></form></div>
+    <div class="mapgrid"><div class="map" aria-live="polite"></div><div class="flowpanel"></div></div>
+  </section>
+
+  <section class="sec" id="receipts">
+    <h2>이번 주 영수증</h2>
+    <p class="sub">최근 7일 계약 중 금액이 큰 순서입니다. 머리글을 누르면 정렬이 바뀝니다. 모든 줄은 나라장터 원본으로 연결됩니다.</p>
+    <div class="rcpt-wrap"><table class="rcpt" id="rcpt"><thead><tr><th><button type="button" data-k="date">날짜</button></th><th>내용</th><th class="num"><button type="button" data-k="amount" aria-pressed="true">금액 ↓</button></th></tr></thead><tbody></tbody></table></div>
+    <button class="more" type="button" id="rcpt-more" hidden>더 보기</button>
+  </section>
+
+  <section class="sec" id="lucky">
+    <h2>아무 계약이나 하나</h2>
+    <p class="sub">85개 시 계약 중 하나를 무작위로 뽑아 영수증으로 보여줍니다.</p>
+    <div id="lucky-card"></div>
+    <button class="gobtn" type="button" id="lucky-btn">하나 뽑기</button>
   </section>
 
   <section class="sec home-alerts">
@@ -74,6 +90,7 @@
 
   <footer>
     <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있습니다.</span>
+    <span><b>개인이 만든 비공식 사이트</b>입니다. 정부·지자체와 관계없습니다 · 출처 나라장터</span>
     <span>만든 사람: @청소부</span>
   </footer>
 </main>

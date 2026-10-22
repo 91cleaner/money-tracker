@@ -22,6 +22,13 @@
     <div class="stat"><span class="v" id="k-total">—</span><span class="k">받은 돈</span><span class="s" id="k-count">—</span></div>
     <div class="stat"><span class="v" id="k-nc">—</span><span class="k">돈을 준 시</span><span class="s" id="k-ni">—</span></div>
   </section>
+  <section class="sec" id="v-corp-sec">
+    <h2>업체 정보</h2>
+    <div class="facts" id="v-corp"></div>
+    <div class="inds" id="v-inds"></div>
+    <p class="note" id="v-hist-note">이 페이지의 계약은 위 수집 기간 안의 85개 시 계약만입니다. 승인된 공개 API(공공데이터개방표준 계약정보)는 날짜로만 조회되고 사업자번호로 과거 계약을 찾는 기능이 없어, 그 이전 이력은 보여주지 않습니다.</p>
+    <p class="src" id="v-corp-src">출처: 조달청 나라장터 사용자정보 서비스(업체 기본정보·업종정보), 공공데이터포털. 대표자 이름 등 개인 정보는 싣지 않습니다.</p>
+  </section>
   <section class="sec">
     <h2>분야별</h2>
     <p class="sub">누르면 아래 계약 목록이 그 분야만 보입니다.</p>
@@ -48,6 +55,7 @@
     <div class="ccards" id="v-rows"></div>
   </section>
   <footer>
+    <span><b>개인이 만든 비공식 사이트</b> · 정부·지자체와 관계없음 · 출처 나라장터</span>
     <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있습니다.</span>
     <span>업체 이름은 나라장터에 공개된 그대로 쓰되, 사람 이름처럼 보이면 '개인사업자'로 가립니다. 소재지는 사업자 등록 주소의 시·군·구까지만 씁니다. <a href="./#principles">사이트 원칙 보기</a></span>
   </footer>
