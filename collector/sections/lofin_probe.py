@@ -1,39 +1,17 @@
-"""지방재정365 탐색: data.go.kr 상세 페이지에서 lofin 주소(pdtaId)를 찾고 키로 호출해 필드 이름·건수만 출력. 키는 절대 출력하지 않음."""
+"""지방재정365 hub API 탐색: 필드 이름·건수만 출력. 키는 출력 안 함."""
 import os, re, json, urllib.request, urllib.parse
-KEY = os.environ.get("LOFIN_KEY", "")
-def get(u, t=40):
-    req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=t) as r: return r.read().decode("utf-8", "replace")
-def safe(s): return s.replace(KEY, "***") if KEY else s
-ids = {}
-for u in ["https://data.go.kr/data/15056968/openapi.do", "https://www.data.go.kr/data/15160375/fileData.do",
-          "https://www.lofin365.go.kr/portal/LF8310100.do?dtsSnum=655943&curPage=1", "https://www.lofin365.go.kr/portal/LF5100000.do", "https://www.lofin365.go.kr/portal/LF5110000.do"]:
-    try:
-        h = get(u)
-        print("PAGE", u[:60], len(h))
-        for m in sorted(set(re.findall(r".{0,80}(?:\.xlsx|fileDown|[A-Za-z/]+\.do|HUB/|pdtaId|ajax|url\s*:).{0,120}", h)))[:40]: print("  ", safe(m.strip())[:220])
-    except Exception as e: print("PAGE err", u[:60], e)
-for dn in ["15056968", "15138715", "15138721", "15057384"]:
-    try:
-        h = get(f"https://www.data.go.kr/data/{dn}/openapi.do")
-        found = sorted(set(re.findall(r"(?:pdtaId|infId)=([A-Z0-9]{20,40})", h)))
-        print(dn, "ids:", found); ids[dn] = found
-    except Exception as e: print(dn, "page err", e)
-for dn, fl in ids.items():
-    for pid in fl:
-        for base in ["https://www.lofin365.go.kr/portal/LF5110000.do"]:
-            q = urllib.parse.urlencode({"pdtaId": pid, "key": KEY, "type": "json", "pindex": 1, "psize": 5})
-            try:
-                b = get(base + "?" + q)
-                try:
-                    d = json.loads(b)
-                    def walk(o, p=""):
-                        if isinstance(o, dict):
-                            for k, v in o.items():
-                                if isinstance(v, (dict, list)): walk(v, p + k + ".")
-                                elif k.lower() in ("list_total_count", "code", "message", "result", "totalcount"): print("   ", p + k, "=", safe(str(v))[:120])
-                            if all(not isinstance(v, (dict, list)) for v in o.values()) and len(o) > 4: print("    row keys:", list(o)); print("    sample:", safe(json.dumps(o, ensure_ascii=False))[:400])
-                        elif isinstance(o, list) and o: walk(o[0], p + "[0].")
-                    print(dn, pid, "json ok"); walk(d)
-                except ValueError: print(dn, pid, "non-json:", safe(re.sub(r"\s+", " ", b))[:300])
-            except Exception as e: print(dn, pid, "err", safe(str(e)))
+KEY = os.environ["LOFIN_KEY"]
+def safe(s): return s.replace(KEY, "***")
+for code in ["EVFTCT", "UCMZQA", "UCMZQK", "YCEHF", "GVBDAC"]:
+    for yr in ["2024", "2023"]:
+        q = urllib.parse.urlencode({"Key": KEY, "Type": "json", "pIndex": 1, "pSize": 3, "accnut_year": yr})
+        u = f"https://www.lofin365.go.kr/lf/hub/{code}?{q}"
+        try:
+            b = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=40).read().decode("utf-8", "replace")
+        except Exception as e:
+            print(code, yr, "err", safe(str(e))); continue
+        try: d = json.loads(b)
+        except ValueError: print(code, yr, "non-json", safe(re.sub(r"\s+", " ", b))[:300]); continue
+        print(code, yr, "top", list(d) if isinstance(d, dict) else type(d))
+        print("  ", safe(json.dumps(d, ensure_ascii=False))[:900])
+        break
