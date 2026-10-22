@@ -1,11 +1,26 @@
-name: 지방재정365 탐색
-on: {workflow_dispatch: {}}
+name: 지방재정365 수집
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "37 20 * * *"   # 매일 05:37 KST
+permissions:
+  contents: write
+concurrency:
+  group: collect
+  cancel-in-progress: false
 jobs:
-  probe:
+  lofin:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.11"}
       - env: {LOFIN_KEY: "${{ secrets.LOFIN_KEY }}"}
-        run: python collector/sections/lofin_probe.py
+        run: python collector/sections/lofin.py
+      - run: |
+          git config user.name "money-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/sec_fest.json data/sec_subsidy.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "지방재정365 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
