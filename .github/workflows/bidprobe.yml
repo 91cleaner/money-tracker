@@ -10,18 +10,23 @@ jobs:
           import os,json,urllib.request,urllib.parse
           K=os.environ['K']
           def g(path,**q):
-              q.update(serviceKey=K,type='json',numOfRows=q.get('numOfRows',50),pageNo=1)
+              q.setdefault('numOfRows',50);q.setdefault('pageNo',1);q.update(serviceKey=K,type='json')
               u='https://apis.data.go.kr/1230000/'+path+'?'+urllib.parse.urlencode(q)
               try:
                   t=urllib.request.urlopen(u,timeout=60).read().decode()
                   try:
                       d=json.loads(t);b=d.get('response',{}).get('body',{});h=d.get('response',{}).get('header',{})
-                      it=b.get('items') or []
+                      it=b.get('items') or d.get('items') or []
+                      if not it: print('KEYS',list(d)[:5],str(h)[:200])
                       if isinstance(it,dict):it=it.get('item',[])
                       print('##',path,h,'n',len(it));return it
                   except Exception: print('##',path,'RAW',t[:300]);return []
               except Exception as e: print('##',path,'ERR',e);return []
-          c=g('ao/CntrctInfoService/getCntrctInfoListCnstwk',inqryDiv=2,cntrctNo='R26TA01354404')
+          c=[]
+          for pg in range(1,40):
+              it=g('ao/PubDataOpnStdService/getDataSetOpnStdCntrctInfo',cntrctCnclsBgnDate='20260923',cntrctCnclsEndDate='20260923',numOfRows=999,pageNo=pg)
+              c+=[x for x in it if str(x.get('cntrctNo','')).startswith('R26TA01354404')]
+              if len(it)<999 or c: break
           bn=None
           for x in c:
               print({a:x.get(a) for a in ['cntrctNo','cntrctOrd','bidNtceNo','bidNtceOrd','cntrctCnclsMthdNm','cntrctNm']});bn=bn or x.get('bidNtceNo')
