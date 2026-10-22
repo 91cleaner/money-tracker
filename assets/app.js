@@ -36,12 +36,13 @@ function emptyBox(title, text, live) {
   b.append(title); p.append(b, el('span', '', text)); return p;
 }
 
-function bars(box, rows, label, value, sub) {
+function bars(box, rows, label, value, sub, href) {
   box.replaceChildren();
   if (!rows.length) { box.append(emptyBox('아직 데이터가 없습니다', '계약이 모이면 여기에 나타납니다.')); return; }
   const max = Math.max(...rows.map(value));
   for (const r of rows) {
-    const row = el('div', 'barrow'), l = el('div', 'l'), name = el('span', '', label(r));
+    const row = el(href && href(r) ? 'a' : 'div', 'barrow' + (href && href(r) ? ' link' : '')); if (href && href(r)) row.href = href(r);
+    const l = el('div', 'l'), name = el('span', '', label(r));
     name.title = label(r); if (sub && sub(r)) name.append(el('small', '', sub(r)));
     l.append(name, el('span', 'amt', krw(value(r))));
     const b = el('div', 'b'), i = el('i'); i.style.width = Math.max(2, (max > 0 ? value(r) / max : 0) * 100) + '%'; b.append(i);
@@ -100,29 +101,39 @@ async function homePage() {
   }
   $('#updated').textContent = when(idx.updated);
   $('#days').textContent = idx.days;
-  const cities = idx.cities.slice().sort((a, b) => b.alerts - a.alerts || b.total - a.total);
+  let cat = '전체';
+  // 분야를 고르면 그 분야 숫자로 바꿔 보는 값들
+  const T = (c) => (cat === '전체' ? c.total : (c.by_cat || {})[cat] || 0);
+  const N = (c) => (cat === '전체' ? c.count : (c.n_cat || {})[cat] || 0);
+  const A = (c) => (cat === '전체' ? c.alerts : (c.alerts_cat || {})[cat] || 0);
+  const TA = (c) => (cat === '전체' ? c.top_alert : (c.top_alert_cat || {})[cat]);
+  let cities = idx.cities.slice();
   const sum = (f) => cities.reduce((s, c) => s + (f(c) || 0), 0);
-  const setHero = (cat) => {
-    const clean = cat !== '전체';
-    const f = (c) => (clean ? ((c.by_cat || {})['청소'] || 0) + ((c.by_cat || {})['시설관리'] || 0) : c.total);
-    $('#nat-total').textContent = krw(sum(f));
-    $('#hero-k').textContent = clean ? '청소·시설관리 계약에 쓴 돈' : '계약으로 쓴 돈';
+  const catTot = {};
+  for (const c of cities) for (const [k, v] of Object.entries(c.by_cat || {})) catTot[k] = (catTot[k] || 0) + v;
+  const catList = Object.keys(catTot).filter((k) => catTot[k] > 0).sort((a, b) => catTot[b] - catTot[a]);
+  let mapCtl = null, draw = () => {}, alertsDraw = () => {};
+  const setCat = (c) => {
+    cat = c;
+    $('#nat-total').textContent = krw(sum(T));
+    $('#hero-k').textContent = cat === '전체' ? '계약으로 쓴 돈' : cat + ' 계약에 쓴 돈';
+    $('#nat-count').textContent = (cat === '전체' ? '' : cat + ' ') + '계약 ' + sum(N).toLocaleString('ko-KR') + '건';
+    $('#nat-alerts-n').textContent = `전국 ${sum(A).toLocaleString('ko-KR')}건 중 시마다 하나씩.`;
+    cities.sort((a, b) => A(b) - A(a) || T(b) - T(a));
+    draw($('#q').value.trim()); alertsDraw();
+    if (mapCtl) mapCtl.setCat(cat);
   };
-  if (cities.some((c) => c.by_cat)) chips($('#hero-chips'), ['전체', '청소·시설관리'], setHero); else $('#hero-chips').remove();
-  setHero('전체');
-  $('#nat-count').textContent = '계약 ' + sum((c) => c.count).toLocaleString('ko-KR') + '건';
-  const al = sum((c) => c.alerts);
-  $('#nat-alerts-n').textContent = `전국 ${al.toLocaleString('ko-KR')}건 중 시마다 하나씩.`;
+  if (catList.length) chips($('#hero-chips'), ['전체', ...catList], setCat); else $('#hero-chips').remove();
 
   let showAll = false;
-  const draw = (q) => {
+  draw = (q) => {
     const box = $('#cities'); box.replaceChildren();
     const list = cities.filter((c) => !q || (c.name + c.short + c.province).includes(q));
     const shown = q || showAll ? list : list.slice(0, 6);
     for (const c of shown) {
       const a = el('a', 'city'); a.href = 'city.html?c=' + c.slug;
-      const n = el('span', 'n', c.short); n.append(el('span', 'm', `${krw(c.total)} · ${c.count.toLocaleString('ko-KR')}건`));
-      const r = el('span', 'r'); r.append(el('span', 'badge ' + (c.alerts ? 'on' : 'off'), c.alerts ? `징후 ${c.alerts}` : '징후 없음'), el('span', 'chev', '›'));
+      const n = el('span', 'n', c.short); n.append(el('span', 'm', `${krw(T(c))} · ${N(c).toLocaleString('ko-KR')}건`));
+      const r = el('span', 'r'); r.append(el('span', 'badge ' + (A(c) ? 'on' : 'off'), A(c) ? `징후 ${A(c)}` : '징후 없음'), el('span', 'chev', '›'));
       a.append(n, r); box.append(a);
     }
     if (!list.length) box.append(emptyBox('찾는 시가 없어요', '시 이름만 입력해 보세요. 예: 수원, 창원'));
@@ -131,9 +142,103 @@ async function homePage() {
     }
   };
   $('#q').addEventListener('input', (e) => draw(e.target.value.trim()));
-  draw('');
-  const top = cities.filter((c) => c.top_alert).slice(0, 6).map((c) => ({...c.top_alert, slug: c.slug, city: c.short, detail: c.short + ' · ' + c.top_alert.detail}));
-  alertList($('#nat-alerts-list'), top, {link: true});
+  alertsDraw = () => {
+    const top = cities.filter((c) => TA(c)).slice(0, 6).map((c) => ({...TA(c), slug: c.slug, city: c.short, detail: c.short + ' · ' + TA(c).detail}));
+    alertList($('#nat-alerts-list'), top, {link: true});
+  };
+  setCat('전체');
+  if (window.moneyMap && $('#map')) moneyMap($('#map')).then((m) => { mapCtl = m; if (cat !== '전체') m.setCat(cat); }).catch(() => $('#map').remove());
+  if ($('#rank-list')) getJSON('data/rank.json').then((d) => rankList($('#rank-list'), d, {limit: 10, home: true})).catch(() => $('#ranksec').remove());
+}
+
+// ---------- 전국 업체 순위 ----------
+function rankList(box, d, opts = {}) {
+  let sortK = 'total', prov = '';
+  const PROV = (r) => (r.region || '').split(' ')[0];
+  const draw = () => {
+    box.replaceChildren();
+    let list = d.vendors.filter((v) => !prov || PROV(v) === prov);
+    list = list.slice().sort((a, b) => b[sortK] - a[sortK] || b.total - a.total).slice(0, opts.limit || 100);
+    list.forEach((v, i) => {
+      const a = el('a', 'rrow'); a.href = 'vendor.html?v=' + v.id;
+      const n = el('span', 'rn', String(i + 1));
+      const m = el('span', 'rm'); m.append(el('b', '', v.name), el('small', '', (v.region || '소재지 확인 중') + ` · ${v.count.toLocaleString('ko-KR')}건 · ${v.nc}개 시`));
+      a.append(n, m, el('span', 'ra', sortK === 'count' ? v.count.toLocaleString('ko-KR') + '건' : sortK === 'nc' ? v.nc + '개 시' : krw(v.total)), el('span', 'chev', '›'));
+      box.append(a);
+    });
+    if (!list.length) box.append(emptyBox('해당하는 업체가 없어요', '다른 시·도를 골라 보세요.'));
+  };
+  const tools = $('#rank-tools');
+  if (tools && !opts.home) {
+    const seg = el('div', 'seg'); seg.setAttribute('role', 'group');
+    for (const [k, t] of [['total', '받은 돈'], ['count', '계약 수'], ['nc', '돈 준 시 수']]) {
+      const b = el('button', '', t); b.type = 'button'; b.dataset.v = k; b.setAttribute('aria-pressed', k === sortK);
+      b.addEventListener('click', () => { sortK = k; seg.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b)); draw(); }); seg.append(b);
+    }
+    const sel = el('select', 'cityselect'); sel.setAttribute('aria-label', '업체 소재 시·도');
+    sel.append(Object.assign(el('option', '', '전국 업체'), {value: ''}));
+    [...new Set(d.vendors.map(PROV).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ko')).forEach((p) => sel.append(Object.assign(el('option', '', p + ' 업체'), {value: p})));
+    sel.addEventListener('change', () => { prov = sel.value; draw(); });
+    tools.append(seg, sel);
+  }
+  const pr = d.period || {};
+  document.querySelectorAll('.rank-period').forEach((e) => (e.textContent = `수집된 기간 기준: ${pr.first || '—'} ~ ${pr.last || '—'}, ${pr.cities || 85}개 시 · 업체 ${(d.total_vendors || d.vendors.length).toLocaleString('ko-KR')}곳`));
+  draw();
+}
+
+async function rankPage() {
+  try { const d = await getJSON('data/rank.json'); $('#updated').textContent = when(d.updated); rankList($('#rank-list'), d); }
+  catch (e) { $('#rank-list').append(emptyBox('순위를 준비하고 있어요', '첫 집계가 끝나면 나타납니다.')); }
+}
+
+// ---------- 업체 모아 보기 ----------
+async function vendorPage() {
+  const id = new URLSearchParams(location.search).get('v');
+  let d;
+  try { if (!/^[0-9a-zn]+$/.test(id || '')) throw 0; d = await getJSON('data/vendor/' + id + '.json'); } catch (e) {
+    $('#title').textContent = '업체를 찾지 못했어요'; document.querySelectorAll('.sec, .stats').forEach((x) => x.remove()); return;
+  }
+  document.title = d.name + ' · 우리 시 돈 추적기';
+  $('#title').textContent = d.name;
+  $('#vregion').textContent = (d.region || '소재지 확인 중') + (d.name === '개인사업자' ? ' · 개인 이름일 수 있어 가렸습니다' : '');
+  $('#period').textContent = `수집된 기간 기준: ${d.period.first} ~ ${d.period.last}, ${d.period.cities}개 시`;
+  $('#k-total').textContent = krw(d.total); $('#k-count').textContent = d.count.toLocaleString('ko-KR') + '건';
+  $('#k-nc').textContent = d.cities.length + '개 시'; $('#k-ni').textContent = `기관 ${d.insts.length}곳`;
+  bars($('#v-cities'), d.cities.slice(0, 10), (r) => r.name, (r) => r.amount, (r) => r.count + '건');
+  bars($('#v-insts'), d.insts.slice(0, 10), (r) => r.name, (r) => r.amount, (r) => r.count + '건');
+  // 달별
+  const mb = $('#v-months'); const ms = Object.entries(d.months); const mx = Math.max(1, ...ms.map((x) => x[1]));
+  for (const [m, a] of ms) { const c = el('div', 'mcol'); const i = el('i'); i.style.height = Math.max(3, (a / mx) * 100) + '%'; c.append(el('span', 'mv', krw(a)), el('div', 'mbar'), el('span', 'mk', +m.slice(5) + '월')); c.children[1].append(i); mb.append(c); }
+  // 분야별 → 누르면 계약 목록이 그 분야로
+  let cat = null;
+  const cb = $('#v-cats');
+  const drawCats = () => {
+    cb.replaceChildren();
+    for (const c of d.cats) {
+      const b = el('button', 'catrow' + (cat === c.cat ? ' on' : '')); b.type = 'button'; b.setAttribute('aria-pressed', cat === c.cat);
+      const l = el('span', 'cn', c.cat); l.append(el('small', '', c.count.toLocaleString('ko-KR') + '건'));
+      b.append(l, el('span', 'cp', pct(c.amount / (d.total || 1))), el('span', 'ca', krw(c.amount)));
+      const bar = el('i', 'cbar'); bar.style.width = Math.max(2, (c.amount / (d.total || 1)) * 100) + '%'; b.append(bar);
+      b.addEventListener('click', () => { cat = cat === c.cat ? null : c.cat; drawCats(); drawRows(); $('#v-rows-sec').scrollIntoView({behavior: 'smooth'}); });
+      cb.append(b);
+    }
+  };
+  const drawRows = () => {
+    const box = $('#v-rows'); box.replaceChildren();
+    const rows = cat ? d.rows.filter((r) => r.cat === cat) : d.rows;
+    $('#v-rows-n').textContent = (cat ? cat + ' · ' : '') + rows.length.toLocaleString('ko-KR') + '건' + (cat ? ' (다시 누르면 전체)' : '');
+    for (const r of rows.slice(0, 300)) {
+      const c = el('article', 'ccard');
+      const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', r.date + ' · ' + r.cat), el('b', 'cc-a', krw(r.amount)));
+      const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
+      c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : '')));
+      if (r.url) { const s2 = el('a', 'src', '출처: 조달청 나라장터 원문 ›'); s2.href = r.url; s2.target = '_blank'; s2.rel = 'noopener'; c.append(s2); }
+      box.append(c);
+    }
+  };
+  drawCats(); drawRows();
+  alertList($('#v-alerts'), d.alerts.filter((a) => a.kind !== 'big'), {link: true, limit: 4, empty: emptyBox('데이터상 이상 징후 없음', '이 업체가 들어간 자동 패턴이 없습니다.')});
+  $('#share-v').replaceWith(shareBtn(location.href, d.name + ' · 우리 시 돈 추적기', 'sharebtn big'));
 }
 
 // ---------- 시 상세 ----------
@@ -143,7 +248,7 @@ function stats(city, rows) {
   for (const r of rows) {
     total += r.amount;
     (inst[r.inst] ||= {name: r.inst, amount: 0, count: 0}); inst[r.inst].amount += r.amount; inst[r.inst].count++;
-    if (r.vendor) { (ven[r.vendor] ||= {name: r.vendor, amount: 0, count: 0}); ven[r.vendor].amount += r.amount; ven[r.vendor].count++; ven[r.vendor].region = r.vregion; }
+    if (r.vendor) { const k = r.bh || r.vendor; (ven[k] ||= {name: r.vendor, id: r.bh, amount: 0, count: 0}); ven[k].amount += r.amount; ven[k].count++; ven[k].region = r.vregion; }
     if (r.vregion) {
       known += r.amount; const p = r.vregion.split(' ')[0]; reg[p] = (reg[p] || 0) + r.amount;
       if (r.vregion.includes(city.name) || r.vregion.startsWith(key)) local += r.amount;
@@ -190,7 +295,7 @@ async function cityPage() {
     $('#share-in-t').textContent = s.local == null ? '—' : pct(s.local);
     $('#share-out-t').textContent = s.local == null ? '—' : pct(1 - s.local);
     bars($('#regions'), s.reg, (r) => r.region, (r) => r.amount);
-    bars($('#vendors'), s.ven, (r) => r.name, (r) => r.amount, (r) => (r.region || '주소 확인 중') + ` · ${r.count}건`);
+    bars($('#vendors'), s.ven, (r) => r.name, (r) => r.amount, (r) => (r.region || '주소 확인 중') + ` · ${r.count}건`, (r) => r.id && 'vendor.html?v=' + r.id);
     bars($('#insts'), s.inst, (r) => r.name, (r) => r.amount, (r) => r.count + '건');
     table(rows);
   };
@@ -214,12 +319,19 @@ async function cityPage() {
   tbl.querySelectorAll('th button').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.k; if (k === sortK) dir *= -1; else { sortK = k; dir = k === 'amount' || k === 'date' ? -1 : 1; } table(); }));
   $('#cq').addEventListener('input', (e) => { q = e.target.value.trim(); table(); });
   if (hasCat) {
-    const present = CATS.filter((c) => c === '전체' || d.rows.some((r) => r.cat === c));
+    const amt = {}; for (const r of d.rows) amt[r.cat] = (amt[r.cat] || 0) + r.amount;
+    const present = ['전체', ...Object.keys(amt).filter((c) => c && amt[c] > 0).sort((x, y) => amt[y] - amt[x])];
     chips($('#cats'), present, (c) => { cat = c; render(); });
   } else $('#cats').remove();
   render();
+  if (window.moneyMap && $('#map')) moneyMap($('#map'), {fixed: slug, rows: 5}).catch(() => $('#map').remove());
   if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
 }
 
-if (document.body.dataset.page === 'home') homePage();
-if (document.body.dataset.page === 'city') cityPage();
+document.addEventListener('DOMContentLoaded', () => {
+  const pg = document.body.dataset.page;
+  if (pg === 'home') homePage();
+  if (pg === 'city') cityPage();
+  if (pg === 'rank') rankPage();
+  if (pg === 'vendor') vendorPage();
+});

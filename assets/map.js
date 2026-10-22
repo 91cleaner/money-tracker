@@ -38,7 +38,10 @@ function satView(box, geo, cities, onPick) {
     for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mx + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * my + t * t * b[1]]));
     return pts;
   };
+  let hl = null;
   const view = {
+    resize(tot) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((m, s) => { const t = tot[s] || 0; m.setRadius(t ? 4 + 18 * Math.sqrt(t / mx) : 0); }); },
+    highlight(p) { if (hl) hl.remove(); hl = p ? L.circleMarker(toLL(p), {radius: 16, className: 'hlring', color: '#ffd60a', weight: 3, fill: false, interactive: false}).addTo(map) : null; if (p) map.panTo(toLL(p)); },
     select(slug) { dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
       gF.clearLayers();
@@ -103,6 +106,8 @@ function svgView(box, geo, cities, onPick) {
   });
   sizes();
   return {
+    resize(tot) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((e, s) => { const t = tot[s] || 0; e.dataset.r = t ? 2.5 + 16 * Math.sqrt(t / mx) : 0; }); sizes(); },
+    highlight(p) { gL.querySelectorAll('.hl').forEach((x) => x.remove()); if (p) { const c = sv('circle', {cx: p[0], cy: p[1], class: 'hl dd'}); c.dataset.r = 9; gL.prepend(c); sizes(); } },
     select(slug) { dots.forEach((e, s) => e.classList.toggle('on', s === slug)); svg.classList.toggle('picked', !!slug); },
     lines(list, maxA, labels) {
       gF.replaceChildren(); gD.replaceChildren(); gL.replaceChildren();
@@ -125,11 +130,13 @@ async function moneyMap(root, opts = {}) {
   const [geo, fl] = await Promise.all([getJSON('assets/geo.json'), getJSON('data/flows.json')]);
   const box = $('.map', root), panel = $('.flowpanel', root);
   const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.total > 0).sort((a, b) => b.total - a.total);
-  let cur = null, mode = 'city', view;
+  let cur = null, mode = 'city', view, cat = '전체';
+  const dataOf = (slug) => { const c = fl.cities[slug]; if (!c || cat === '전체') return c;
+    const b = (c.by_cat || {})[cat] || {total: 0, known: 0, local: 0, count: 0, flows: []}; return {...c, ...b, other: null, cat}; };
   const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {fly: true}); };
   const mount = (kind) => {
     view = (kind === 'svg' ? svgView : satView)(box, geo, cities, pickCity);
-    view.onfail = () => { view.destroy(); mount('svg'); redraw(false); };
+    view.onfail = () => { view.destroy(); mount('svg'); if (cat !== '전체') ctl.setCat(cat); else redraw(false); };
   };
   try { mount('sat'); } catch (e) { mount('svg'); }
 
@@ -148,13 +155,13 @@ async function moneyMap(root, opts = {}) {
   };
   // where: 고른 시·군·구 좌표(있으면 그곳으로 날아간 뒤 흐름을 그린다)
   const showCity = (slug, o = {}) => {
-    const c = fl.cities[slug]; if (!c) return;
+    const c = dataOf(slug); if (!c) return;
     cur = slug; mode = 'city'; view.select(slug);
     const list = c.flows.map((f) => ({...f, a: c.p}));
     if (o.fly) { view.lines([], 1, []); view.fly(o.where || c.p, o.where ? 12 : 11); view.once(() => { if (cur === slug && mode === 'city') drawCity(c); }); }
     else { drawCity(c); if (o.zoom !== false) view.fit([c.p, ...list.slice(0, 8).map((f) => f.p)]); }
     panel.replaceChildren();
-    const h = el('div', 'fh'); h.append(el('span', 'fh-n', c.name), el('span', 'fh-v', krw(c.total)));
+    const h = el('div', 'fh'); h.append(el('span', 'fh-n', c.name + (c.cat ? ' · ' + c.cat : '')), el('span', 'fh-v', krw(c.total)));
     panel.append(h, el('p', 'fq', '이 돈은 어디로 갔나'));
     if (!c.known) { panel.append(el('p', 'sub', '업체 주소를 확인하는 중입니다.')); return; }
     const out = c.known - c.local;
@@ -162,7 +169,18 @@ async function moneyMap(root, opts = {}) {
     const lg = el('div', 'legend'); lg.innerHTML = `<span><b class="dot in"></b>우리 시 업체 <b>${share(c.local, c.known)}</b></span><span><b class="dot out2"></b>다른 지역 업체 <b>${share(out, c.known)}</b></span>`;
     sp.append(bar, lg); panel.append(sp);
     const top = list.slice(0, opts.rows || 6);
-    for (const f of top) panel.append(row(f.to, `${f.count.toLocaleString('ko-KR')}건 · ${f.local ? '우리 시' : '다른 지역'}`, `${share(f.amount, c.known)} · ${krw(f.amount)}`, f.amount / c.known, f.local ? 'in' : 'out'));
+    for (const f of top) {
+      const r = row(f.to, `${f.count.toLocaleString('ko-KR')}건 · ${f.local ? '우리 시' : '다른 지역'}`, `${share(f.amount, c.known)} · ${krw(f.amount)}`, f.amount / c.known, f.local ? 'in' : 'out');
+      if (f.vendors && f.vendors.length) {
+        const btn = el('button', 'frow-btn'); btn.type = 'button'; btn.setAttribute('aria-expanded', 'false'); btn.append(r);
+        const vl = el('div', 'vlist'); vl.hidden = true;
+        for (const v of f.vendors) { const a = el('a', 'vrow'); a.href = 'vendor.html?v=' + v.id;
+          const l = el('span', 'vn', v.name); l.append(el('small', '', v.count.toLocaleString('ko-KR') + '건')); a.append(l, el('span', 'va', krw(v.amount)), el('span', 'chev', '›')); vl.append(a); }
+        btn.addEventListener('click', () => { const open = vl.hidden; panel.querySelectorAll('.vlist').forEach((x) => (x.hidden = true)); panel.querySelectorAll('.frow-btn').forEach((x) => x.setAttribute('aria-expanded', 'false'));
+          vl.hidden = !open; btn.setAttribute('aria-expanded', String(open)); view.highlight(open ? f.p : null); });
+        panel.append(btn, vl);
+      } else panel.append(r);
+    }
     const restN = list.length - top.length + (c.other ? c.other.n : 0);
     if (restN > 0) panel.append(el('p', 'sub small', `그 밖의 ${restN}곳`));
     if (c.known < c.total) panel.append(el('p', 'sub small', `주소가 확인된 계약 ${share(c.known, c.total)} 기준`));
@@ -173,12 +191,12 @@ async function moneyMap(root, opts = {}) {
   };
   const showNation = () => {
     cur = null; mode = 'nation'; view.select(null);
-    const list = fl.nation.slice(0, 25).map((f) => ({...f, a: fl.cities[f.from].p, local: false}));
+    const list = (cat === '전체' ? fl.nation : (fl.nation_cat || {})[cat] || []).slice(0, 25).map((f) => ({...f, a: fl.cities[f.from].p, local: false}));
     view.lines(list, Math.max(...list.map((f) => f.amount), 1), []);
     view.home();
-    panel.replaceChildren(el('p', 'fq', '시 밖으로 나간 가장 큰 돈'));
+    panel.replaceChildren(el('p', 'fq', '시 밖으로 나간 가장 큰 돈' + (cat === '전체' ? '' : ' · ' + cat)));
     const maxA = list[0] ? list[0].amount : 1;
-    for (const f of list.slice(0, 6)) panel.append(row(`${fl.cities[f.from].name} → ${f.to}`, f.count.toLocaleString('ko-KR') + '건', krw(f.amount), f.amount / maxA, 'out'));
+    for (const f of list.slice(0, 6)) panel.append(row(`${fl.cities[f.from].name} → ${f.to}`, f.count ? f.count.toLocaleString('ko-KR') + '건' : '', krw(f.amount), f.amount / maxA, 'out'));
     panel.append(el('p', 'sub small', '지도의 원을 누르면 그 시의 돈이 어디로 갔는지 보여줍니다.'));
   };
   const redraw = (zoom) => (mode === 'nation' ? showNation() : cur && showCity(cur, {zoom}));
@@ -217,5 +235,7 @@ async function moneyMap(root, opts = {}) {
   }
   if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); view.fly(c.p, 10); } }
   else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); }
+  const ctl = {setCat(c) { cat = c; view.resize(Object.fromEntries(cities.map((x) => [x.slug, (dataOf(x.slug) || {}).total || 0]))); view.highlight(null); redraw(true); }};
   root.append(el('p', 'sub small', `업체 위치: ${fl.basis}. 지도: Esri 위성 사진, 경계 ${geo.source}. 갱신 ${when(fl.updated)}`));
+  return ctl;
 }

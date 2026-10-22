@@ -10,7 +10,9 @@ from datetime import datetime, timedelta, timezone
 sys.path.insert(0, os.path.dirname(__file__))
 from cities import CITIES, city_of
 import share
+from privacy import mask
 import flows
+import vendors_agg
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA = os.path.join(ROOT, "data")
@@ -252,8 +254,9 @@ def alerts_for(rows, explanations):
     out = []
     by = defaultdict(list)
     for r in rows:
-        by[(r["date"], r["vendor"], r["title"])].append(r)
-    for (d, v, t), rs in by.items():
+        by[(r["date"], r.get("bh") or r["vendor"], r["title"])].append(r)
+    for (d, _, t), rs in by.items():
+        v = rs[0]["vendor"]
         if len(rs) > 1 and v:
             key = "split-" + hid(f"{d}|{v}|{t}")  # 날짜+업체+계약명 기준이라 건이 늘어도 키가 그대로
             out.append({"key": key, "kind": "split", "title": f"같은 날 같은 업체에 같은 이름 계약 {len(rs)}건",
@@ -266,11 +269,12 @@ def alerts_for(rows, explanations):
     cnt = defaultdict(list)
     for r in rows:
         if r["vendor"] and "조달청" not in r["vendor"]:
-            cnt[r["vendor"]].append(r)
-    for v, rs in cnt.items():
+            cnt[r.get("bh") or r["vendor"]].append(r)
+    for vk, rs in cnt.items():
+        v = rs[0]["vendor"]
         if len(rs) >= 5:
             insts = Counter(x["inst"] for x in rs).most_common(3)
-            out.append({"key": "rep-" + hid(v), "kind": "repeat", "title": f"같은 업체 {len(rs)}건 반복 (최근 {KEEP_DAYS}일)",
+            out.append({"key": "rep-" + hid(v if v != "개인사업자" else vk), "kind": "repeat", "title": f"같은 업체 {len(rs)}건 반복 (최근 {KEEP_DAYS}일)",
                         "detail": f"{v} · " + ", ".join(i for i, _ in insts), "amount": sum(x["amount"] for x in rs), "ids": [x["id"] for x in rs][:20]})
     big = sorted([r for r in rows if r["amount"] >= 100_000_000], key=lambda r: -r["amount"])[:10]
     for r in big:
@@ -290,7 +294,7 @@ def summarize(city, rows, vendors):
     region_amt = defaultdict(int)
     for r in rows:
         inst[r["inst"]][0] += r["amount"]; inst[r["inst"]][1] += 1
-        v = ven[r["vendor"]]; v[0] += r["amount"]; v[1] += 1; v[2] = r.get("vregion")
+        v = ven[(r["vendor"], r.get("bh"))]; v[0] += r["amount"]; v[1] += 1; v[2] = r.get("vregion")
         if r.get("vregion"):
             known_amt += r["amount"]
             region_amt[r["vregion"].split()[0]] += r["amount"]
@@ -301,20 +305,21 @@ def summarize(city, rows, vendors):
     return {
         "count": len(rows), "total": total, "first": dates[0] if dates else None, "last": dates[-1] if dates else None,
         "top_inst": [{"name": k, "amount": a, "count": c} for k, (a, c) in sorted(inst.items(), key=lambda x: -x[1][0])[:10]],
-        "top_vendors": [{"name": k, "amount": a, "count": c, "region": rg} for k, (a, c, rg) in sorted(ven.items(), key=lambda x: -x[1][0]) if k][:10],
+        "top_vendors": [{"name": k[0], "id": k[1], "amount": a, "count": c, "region": rg} for k, (a, c, rg) in sorted(ven.items(), key=lambda x: -x[1][0]) if k[0]][:10],
         "local_share": (local_amt / known_amt) if known_amt else None, "region_known_share": (known_amt / total) if total else None,
         "by_region": [{"region": k, "amount": a} for k, a in sorted(region_amt.items(), key=lambda x: -x[1])[:8]],
     }
 
 
 def main():
-    if not KEY:
+    rebuild = bool(os.environ.get("REBUILD_ONLY"))  # 새로 받지 않고 저장된 자료로 집계만 다시
+    if not KEY and not rebuild:
         sys.exit("DATA_GO_KR_KEY 환경변수가 없습니다.")
     now = datetime.now(KST)
     state = load(os.path.join(DATA, "state.json"), {})
     days = RECENT_DAYS if state.get("backfilled") else BACKFILL_DAYS
     raw = []
-    for i in range(0, days, 7):  # 일주일씩 나눠 요청
+    for i in (range(0) if rebuild else range(0, days, 7)):  # 일주일씩 나눠 요청
         s = (now - timedelta(days=min(days, i + 7))).date()
         e = (now - timedelta(days=i)).date()
         raw += fetch_contracts(datetime.combine(s, datetime.min.time()), datetime.combine(e, datetime.min.time()))
@@ -355,6 +360,7 @@ def main():
             rows[r["id"]] = r
         for r in rows.values():  # 예전 계약도 주소가 새로 확인됐으면 채운다
             r.pop("_b", None)
+            r["vendor"] = mask(r.get("vendor"))  # 사람 이름처럼 보이면 '개인사업자'
             r["cat"] = category(r.get("title"), r.get("kind"))
             if r.get("bh"):
                 r["vregion"] = (vendors.get(r["bh"]) or {}).get("region")
@@ -366,23 +372,32 @@ def main():
         save(path, {"city": {k: c[k] for k in ("slug", "name", "short", "province")}, "updated": now.isoformat(), "summary": summ,
                     "alerts": al, "rows": rows})
         flagged = [a for a in al if a["kind"] != "big"]
-        by_cat = defaultdict(int)
+        by_cat = defaultdict(int); n_cat = defaultdict(int); cat_of = {}
         for r in rows:
-            by_cat[r["cat"]] += r["amount"]
+            by_cat[r["cat"]] += r["amount"]; n_cat[r["cat"]] += 1; cat_of[r["id"]] = r["cat"]
+        alert_cat = {}  # 분야별 대표 징후 하나씩
+        for a in flagged:
+            for ct in {cat_of.get(i) for i in a.get("ids", [])} - {None}:
+                alert_cat.setdefault(ct, a)
         try:
             share.build(ROOT, c, summ, al, now.strftime("%Y%m%d%H"))
         except Exception as e:  # 공유 카드가 실패해도 데이터 저장은 계속
             print(f"::warning::{c['slug']} 공유 카드 실패: {e}", flush=True)
         index.append({"slug": c["slug"], "name": c["name"], "short": c["short"], "province": c["province"], "count": summ["count"],
-                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "local_share": summ["local_share"], "by_cat": dict(by_cat),
+                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "local_share": summ["local_share"], "by_cat": dict(by_cat), "n_cat": dict(n_cat),
+                      "alerts_cat": {k: sum(1 for a in flagged if k in {cat_of.get(i) for i in a.get("ids", [])}) for k in by_cat},
+                      "top_alert_cat": alert_cat,
                       "top_alert": flagged[0] if flagged else None})
     save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": KEEP_DAYS, "cities": index})
     try:
         flows.build(now)  # 지도용 돈의 흐름 (시 → 업체 소재지 시·군·구)
+        vendors_agg.build(now)  # 업체별 모아 보기·전국 순위
     except Exception as e:
         print(f"::warning::흐름 집계 실패: {e}", flush=True)
     # 처음 기간의 업체 주소를 다 조회할 때까지는 다음 실행에서도 같은 기간을 다시 읽어 남은 업체를 이어서 조회한다.
     # (원래 사업자번호는 저장하지 않으므로 다시 읽어야 알 수 있음.) 요청이 실패해 비었으면 완료로 치지 않는다.
+    if rebuild:
+        print("저장된 자료로 다시 집계함"); return
     done = state.get("backfilled") or (raw and left == 0 and not FAILS)
     state.update({"backfilled": bool(done), "last_run": now.isoformat(), "fetched": len(raw), "lookups_left": left,
                   "failed_requests": len(FAILS)})

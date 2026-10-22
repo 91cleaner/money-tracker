@@ -4,6 +4,9 @@ collect.py 가 매시간 끝에 부른다. 혼자 돌려도 된다: python3 coll
 사람이 아니라 업체 주소의 시·군·구까지만 다루고, 지역에 다른 꼬리표는 붙이지 않는다.
 """
 import json, os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import vendors_agg
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 
@@ -59,6 +62,7 @@ def build(now=None):
            "cities": {}, "nation": []}
     pairs = defaultdict(lambda: [0, 0])
     pts = {}
+    natc = defaultdict(lambda: defaultdict(int))
     for c in idx["cities"]:
         try:
             d = json.load(open(os.path.join(DATA, "city", c["slug"] + ".json")))
@@ -69,6 +73,7 @@ def build(now=None):
         if not here:
             continue
         agg = defaultdict(lambda: [0, 0, False])
+        ven = defaultdict(lambda: defaultdict(lambda: [0, 0, ""]))  # 지역별 업체
         total = unknown = local = 0
         for r in d["rows"]:
             total += r["amount"]
@@ -76,6 +81,7 @@ def build(now=None):
                 unknown += r["amount"]; continue
             a = agg[r["vregion"]]; a[0] += r["amount"]; a[1] += 1
             a[2] = is_local(city, r["vregion"])
+            vv = ven[r["vregion"]][vendors_agg.vid(r)]; vv[0] += r["amount"]; vv[1] += 1; vv[2] = r["vendor"]
             if a[2]:
                 local += r["amount"]
         flows = []
@@ -84,17 +90,40 @@ def build(now=None):
             if not pt:
                 continue
             pts[label] = pt
-            flows.append({"to": label, "p": pt, "amount": amt, "count": n, "local": lo})
+            flows.append({"to": label, "p": pt, "amount": amt, "count": n, "local": lo,
+                          "vendors": [{"id": k, "name": nm, "amount": va, "count": vc} for k, (va, vc, nm) in sorted(ven[reg].items(), key=lambda x: -x[1][0])[:20]]})
             if not lo:
                 pr = pairs[(c["slug"], label)]; pr[0] += amt; pr[1] += n
         known = total - unknown
+        # 분야별 흐름(지도에서 분야를 고를 때)
+        bc = {}
+        for r in d["rows"]:
+            ct = r.get("cat") or "기타"
+            b = bc.setdefault(ct, {"total": 0, "known": 0, "local": 0, "count": 0, "f": defaultdict(lambda: [0, 0])})
+            b["total"] += r["amount"]; b["count"] += 1
+            if r.get("vregion"):
+                b["known"] += r["amount"]; ff = b["f"][r["vregion"]]; ff[0] += r["amount"]; ff[1] += 1
+                if is_local(city, r["vregion"]):
+                    b["local"] += r["amount"]
+        by_cat = {}
+        for ct, b in bc.items():
+            fl_ = []
+            for reg, (amt, n) in sorted(b["f"].items(), key=lambda x: -x[1][0])[:8]:
+                label, pt = loc(reg)
+                if pt:
+                    fl_.append({"to": label, "p": pt, "amount": amt, "count": n, "local": is_local(city, reg)})
+                    if not is_local(city, reg):
+                        natc[ct][(c["slug"], label)] += amt; pts[label] = pt
+            by_cat[ct] = {"total": b["total"], "known": b["known"], "local": b["local"], "count": b["count"], "flows": fl_}
         rest = flows[TOP_CITY:]
         out["cities"][c["slug"]] = {"name": city["short"], "p": here, "total": total, "known": known, "local": local,
                                     "count": len(d["rows"]), "flows": flows[:TOP_CITY],
-                                    "other": {"n": len(rest), "amount": sum(f["amount"] for f in rest)}}
+                                    "other": {"n": len(rest), "amount": sum(f["amount"] for f in rest)}, "by_cat": by_cat}
     for (slug, label), (amt, n) in sorted(pairs.items(), key=lambda x: -x[1][0])[:TOP_NATION]:
         out["nation"].append({"from": slug, "to": label, "p": pts[label],
                               "amount": amt, "count": n})
+    out["nation_cat"] = {ct: [{"from": s_, "to": lb, "p": pts[lb], "amount": a} for (s_, lb), a in sorted(m.items(), key=lambda x: -x[1])[:25]]
+                         for ct, m in natc.items()}
     with open(os.path.join(DATA, "flows.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
     return out

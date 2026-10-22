@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>전국 업체 순위 · 우리 시 돈 추적기</title>
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="rank">
+<header class="stickybar"><a class="back" href="./">‹ 전체</a><span class="upd">갱신 <span id="updated">—</span></span></header>
+<main class="wrap">
+  <header class="hero">
+    <p class="eyebrow">전국 업체 순위</p>
+    <h1>누가 가장 많이<br>받았을까요?</h1>
+    <p class="lede">85개 시의 공개 계약을 업체별로 모았습니다. 많이 받았다고 문제가 있다는 뜻은 아닙니다.</p>
+    <p class="meta rank-period"></p>
+  </header>
+  <section class="sec">
+    <div class="maptools" id="rank-tools"></div>
+    <div class="rank" id="rank-list"></div>
+    <p class="sub small">상위 100곳까지 보여줍니다. 업체를 누르면 어느 시·기관에서 얼마를 받았는지 볼 수 있습니다.</p>
+  </section>
+  <footer>
+    <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있습니다.</span>
+    <span>업체 이름은 나라장터에 공개된 그대로 쓰되, 사람 이름처럼 보이면 '개인사업자'로 가립니다. 소재지는 사업자 등록 주소의 시·군·구까지만 씁니다. <a href="./#principles">사이트 원칙 보기</a></span>
+  </footer>
+</main>
+<script src="assets/app.js"></script>
+</body>
+</html>

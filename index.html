@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-page="home">
-<header class="stickybar"><a class="brand" href="./">우리 시 돈 추적기</a><nav><a href="#map">지도</a><a href="#find">우리 시</a></nav></header>
+<header class="stickybar"><a class="brand" href="./">우리 시 돈 추적기</a><nav><a href="#map">지도</a><a href="rank.html">순위</a><a href="#find">우리 시</a></nav></header>
 <main class="wrap">
   <header class="hero">
     <p class="eyebrow">우리 시 돈 추적기</p>
@@ -45,6 +45,13 @@
     <div class="alerts" id="nat-alerts-list"></div>
   </section>
 
+  <section class="sec" id="ranksec">
+    <h2>전국 업체 순위</h2>
+    <p class="sub">85개 시의 계약을 가장 많이 받은 업체입니다. 많이 받았다고 문제가 있다는 뜻은 아닙니다. <span class="rank-period"></span></p>
+    <div class="rank" id="rank-list"></div>
+    <a class="gobtn" href="rank.html">100위까지 보기</a>
+  </section>
+
   <section class="sec how">
     <h2>어떻게 만드나요?</h2>
     <ol class="steps">
@@ -73,6 +80,5 @@
 <script src="assets/app.js"></script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/map.js"></script>
-<script>moneyMap(document.getElementById('map')).catch(() => document.getElementById('map').remove());</script>
 </body>
 </html>
