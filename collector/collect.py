@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
 from cities import CITIES, city_of
+import share
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA = os.path.join(ROOT, "data")
@@ -38,6 +39,30 @@ F = {
     "kind": ["bsnsDivNm", "prcrmntDivNm", "cntrctBsnsDivNm"],
     "url": ["cntrctInfoUrl", "cntrctDtlInfoUrl", "dtlsInfoUrl"],
 }
+
+
+# 업종 분류: 계약명(과 업무 구분)에 들어 있는 낱말로 단순하게 나눈다. 위에서부터 먼저 맞는 것.
+CATS = [
+    ("청소", ["청소", "미화", "방역", "소독", "세척", "세탁", "분뇨", "정화조", "폐기물", "쓰레기", "환경정비"]),
+    ("경비", ["경비", "보안", "경호", "주차관리", "순찰", "당직"]),
+    ("시설관리", ["시설관리", "시설물", "유지관리", "유지보수", "승강기", "엘리베이터", "냉난방", "공조", "전기안전", "소방", "보수"]),
+    ("건설·공사", ["공사", "건설", "포장", "도로", "정비사업", "설치", "철거", "토목", "조경"]),
+    ("인쇄·홍보", ["인쇄", "홍보", "광고", "디자인", "영상", "책자", "현수막", "행사", "축제", "제작"]),
+    ("용역·연구", ["연구", "용역", "조사", "설계", "컨설팅", "감리", "평가", "교육", "개발", "시스템"]),
+    ("물품", ["구매", "구입", "물품", "임차", "차량", "장비", "기기", "비품", "소모품"]),
+]
+
+
+def category(title, kind):
+    t = title or ""
+    for name, words in CATS:
+        if any(w in t for w in words):
+            return name
+    if kind and ("물품" in kind):
+        return "물품"
+    if kind and ("공사" in kind):
+        return "건설·공사"
+    return "기타"
 
 
 def pick(item, field):
@@ -317,6 +342,7 @@ def main():
             rows[r["id"]] = r
         for r in rows.values():  # 예전 계약도 주소가 새로 확인됐으면 채운다
             r.pop("_b", None)
+            r["cat"] = category(r.get("title"), r.get("kind"))
             if r.get("bh"):
                 r["vregion"] = (vendors.get(r["bh"]) or {}).get("region")
             else:
@@ -327,8 +353,15 @@ def main():
         save(path, {"city": {k: c[k] for k in ("slug", "name", "short", "province")}, "updated": now.isoformat(), "summary": summ,
                     "alerts": al, "rows": rows})
         flagged = [a for a in al if a["kind"] != "big"]
+        by_cat = defaultdict(int)
+        for r in rows:
+            by_cat[r["cat"]] += r["amount"]
+        try:
+            share.build(ROOT, c, summ, al, now.strftime("%Y%m%d%H"))
+        except Exception as e:  # 공유 카드가 실패해도 데이터 저장은 계속
+            print(f"::warning::{c['slug']} 공유 카드 실패: {e}", flush=True)
         index.append({"slug": c["slug"], "name": c["name"], "short": c["short"], "province": c["province"], "count": summ["count"],
-                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "local_share": summ["local_share"],
+                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "local_share": summ["local_share"], "by_cat": dict(by_cat),
                       "top_alert": flagged[0] if flagged else None})
     save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": KEEP_DAYS, "cities": index})
     # 처음 기간의 업체 주소를 다 조회할 때까지는 다음 실행에서도 같은 기간을 다시 읽어 남은 업체를 이어서 조회한다.

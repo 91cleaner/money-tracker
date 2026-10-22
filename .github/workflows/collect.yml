@@ -21,6 +21,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: 공유 카드용 한글 글꼴과 Pillow 설치
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+          pip install -q pillow
       - name: 나라장터 계약 수집
         env:
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
@@ -29,7 +33,7 @@ jobs:
         run: |
           git config user.name "money-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data
+          git add data c || git add data
           if git diff --cached --quiet; then echo "변경 없음"; exit 0; fi
           git commit -m "데이터 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
           git push
