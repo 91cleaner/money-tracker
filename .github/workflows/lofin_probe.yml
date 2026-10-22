@@ -7,5 +7,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.11"}
+      - run: pip install -q playwright openpyxl && python -m playwright install --with-deps chromium >/dev/null
+      - run: python collector/sections/lofin_browse.py
       - env: {LOFIN_KEY: "${{ secrets.LOFIN_KEY }}"}
         run: python collector/sections/lofin_probe.py
