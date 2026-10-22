@@ -18,6 +18,8 @@ BACKFILL_DAYS = int(os.environ.get("BACKFILL_DAYS", "30"))
 RECENT_DAYS = int(os.environ.get("RECENT_DAYS", "3"))
 KEEP_DAYS = 90
 MAX_VENDOR_LOOKUPS = int(os.environ.get("MAX_VENDOR_LOOKUPS", "300"))
+LOOKUP_TIMEOUT = int(os.environ.get("LOOKUP_TIMEOUT", "15"))  # 업체 조회 1건당 대기 시간(초)
+LOOKUP_BUDGET = int(os.environ.get("LOOKUP_BUDGET", "1200"))  # 업체 조회 전체 시간 상한(초), 40분 제한 안에 끝내기 위함
 
 CNTRCT_URL = "https://apis.data.go.kr/1230000/ao/PubDataOpnStdService/getDataSetOpnStdCntrctInfo"
 CORP_BASE = "https://apis.data.go.kr/1230000/ao/UsrInfoService02/"
@@ -46,17 +48,52 @@ def pick(item, field):
     return None
 
 
-def get_json(url, params, tries=3):
+class ApiError(RuntimeError):
+    """API가 오류 코드를 돌려준 경우 (인증키 문제 등). 다시 시도해도 소용없음."""
+
+
+def api_error_of(body):
+    """응답 본문에서 오류 코드·메시지를 찾는다. 정상이면 None."""
+    import re
+    try:
+        resp = json.loads(body)
+    except ValueError:
+        resp = None
+    if isinstance(resp, dict):
+        head = ((resp.get("response") or {}).get("header") or resp.get("header") or {})
+        code = str(head.get("resultCode") or "")
+        if code and code not in ("00", "0", "0000"):
+            return f"resultCode={code} resultMsg={head.get('resultMsg')}"
+        return None
+    # JSON이 아니면 XML 오류 응답인 경우가 많다 (인증키 오류는 type=json이어도 XML로 옴)
+    got = {}
+    for tag in ("returnReasonCode", "returnAuthMsg", "errMsg", "resultCode", "resultMsg"):
+        m = re.search(rf"<{tag}>(.*?)</{tag}>", body, re.S)
+        if m:
+            got[tag] = m.group(1).strip()
+    if got:
+        return " ".join(f"{k}={v}" for k, v in got.items())
+    return "JSON이 아닌 응답: " + body[:200].replace("\n", " ")
+
+
+def get_json(url, params, tries=3, timeout=60):
     q = urllib.parse.urlencode({**params, "ServiceKey": KEY, "type": "json"})
     last = None
     for i in range(tries):
         try:
-            with urllib.request.urlopen(url + "?" + q, timeout=60) as r:
+            with urllib.request.urlopen(url + "?" + q, timeout=timeout) as r:
                 body = r.read().decode("utf-8", "replace")
-            return json.loads(body)
-        except Exception as e:  # 네트워크·형식 오류는 잠시 쉬고 다시
+        except Exception as e:  # 네트워크 오류는 잠시 쉬고 다시
             last = e
-            time.sleep(3 * (i + 1))
+            if i + 1 < tries:
+                time.sleep(3 * (i + 1))
+            continue
+        err = api_error_of(body)
+        if err:
+            hint = " (인증키가 틀렸거나 아직 활성화되지 않았을 수 있습니다. 공공데이터포털에서 '디코딩' 키를 넣었는지, 활용신청이 승인됐는지 확인하세요.)" \
+                if any(w in err for w in ("SERVICE_KEY", "KEY_IS_NOT", "Code=30", "인증")) else ""
+            raise ApiError(f"API 오류: {url.rsplit('/', 1)[-1]} {err}{hint}")
+        return json.loads(body)
     raise RuntimeError(f"요청 실패: {url} ({last})")
 
 
@@ -71,11 +108,22 @@ def items_of(resp):
     return items, total
 
 
+FAILS = []  # 건너뛴 요청의 오류 메시지
+
+
 def fetch_contracts(start, end):
     out, page = [], 1
     while True:
-        resp = get_json(CNTRCT_URL, {"cntrctCnclsBgnDate": start.strftime("%Y%m%d"), "cntrctCnclsEndDate": end.strftime("%Y%m%d"),
-                                     "numOfRows": 999, "pageNo": page})
+        try:
+            resp = get_json(CNTRCT_URL, {"cntrctCnclsBgnDate": start.strftime("%Y%m%d"), "cntrctCnclsEndDate": end.strftime("%Y%m%d"),
+                                         "numOfRows": 999, "pageNo": page})
+        except Exception as e:
+            print(f"::warning::{start:%Y-%m-%d}~{end:%Y-%m-%d} {page}쪽 건너뜀: {e}", flush=True)
+            FAILS.append(str(e))
+            if isinstance(e, ApiError) or page > 200:
+                return out  # 인증 오류면 같은 요청을 반복해도 소용없음
+            page += 1
+            continue
         items, total = items_of(resp)
         out += items
         if not items or len(out) >= total or page > 200:
@@ -132,26 +180,37 @@ def region_from_address(adrs):
 
 
 def lookup_regions(biznos, vendors):
-    """사업자번호로 업체 소재지(시·군·구) 조회. 결과는 해시 키로만 저장."""
-    n = 0
+    """사업자번호로 업체 소재지(시·군·구) 조회. 결과는 해시 키로만 저장.
+    조회 건수(MAX_VENDOR_LOOKUPS)와 전체 시간(LOOKUP_BUDGET)에 상한이 있고, 남은 것은 다음 실행에서 이어서 조회한다.
+    돌려주는 값: 아직 조회하지 못한 사업자번호 수."""
+    n, t0, left = 0, time.monotonic(), 0
     for b in biznos:
         k = hid(b)
-        if k in vendors or n >= MAX_VENDOR_LOOKUPS:
+        if k in vendors:
+            continue
+        if n >= MAX_VENDOR_LOOKUPS or time.monotonic() - t0 > LOOKUP_BUDGET:
+            left += 1
             continue
         n += 1
-        region = None
+        region, answered = None, False
         for op in CORP_OPS:
             try:
-                resp = get_json(CORP_BASE + op, {"inqryDiv": 3, "bizno": b, "numOfRows": 1, "pageNo": 1}, tries=1)
-                items, _ = items_of(resp)
-                if items:
-                    it = items[0]
-                    region = region_from_address(it.get("adrs")) or (it.get("rgnNm") or None)
-                    break
+                resp = get_json(CORP_BASE + op, {"inqryDiv": 3, "bizno": b, "numOfRows": 1, "pageNo": 1}, tries=1, timeout=LOOKUP_TIMEOUT)
             except Exception:
                 continue
-        vendors[k] = {"region": region, "at": datetime.now(KST).strftime("%Y-%m-%d")}
+            answered = True
+            items, _ = items_of(resp)
+            if items:
+                it = items[0]
+                region = region_from_address(it.get("adrs")) or (it.get("rgnNm") or None)
+                break
+        if answered:  # 응답을 받았을 때만 저장 (네트워크 실패는 다음에 다시 시도)
+            vendors[k] = {"region": region, "at": datetime.now(KST).strftime("%Y-%m-%d")}
+        else:
+            left += 1
         time.sleep(0.2)
+    print(f"업체 주소 조회 {n}건, 남은 것 {left}건", flush=True)
+    return left
 
 
 def alerts_for(rows, explanations):
@@ -161,7 +220,7 @@ def alerts_for(rows, explanations):
         by[(r["date"], r["vendor"], r["title"])].append(r)
     for (d, v, t), rs in by.items():
         if len(rs) > 1 and v:
-            key = "split-" + "-".join(sorted(x["id"] for x in rs))
+            key = "split-" + hid(f"{d}|{v}|{t}")  # 날짜+업체+계약명 기준이라 건이 늘어도 키가 그대로
             out.append({"key": key, "kind": "split", "title": f"같은 날 같은 업체에 같은 이름 계약 {len(rs)}건",
                         "detail": f"{d} · {rs[0]['inst']} · {t} · {v}", "amount": sum(x["amount"] for x in rs), "ids": [x["id"] for x in rs]})
     for r in rows:
@@ -241,11 +300,11 @@ def main():
         b = pick(it, "bizno")
         row = {"id": str(pick(it, "id") or hid(json.dumps(it, sort_keys=True, ensure_ascii=False))), "date": d, "inst": pick(it, "inst"),
                "title": pick(it, "title") or "", "kind": pick(it, "kind"), "method": pick(it, "method"), "amount": amt,
-               "vendor": pick(it, "vendor") or "", "url": pick(it, "url"), "_b": b}
+               "vendor": pick(it, "vendor") or "", "url": pick(it, "url"), "bh": hid(str(b).replace("-", "")) if b else None}
         if b:
             biznos.add(str(b).replace("-", ""))
         fresh[slug].append(row)
-    lookup_regions(sorted(biznos), vendors)
+    left = lookup_regions(sorted(biznos), vendors)
     save(os.path.join(DATA, "vendors.json"), vendors)
 
     cutoff = (now - timedelta(days=KEEP_DAYS)).strftime("%Y-%m-%d")
@@ -255,9 +314,13 @@ def main():
         old = load(path, {"rows": []})
         rows = {r["id"]: r for r in old.get("rows", []) if r["date"] >= cutoff}
         for r in fresh.get(c["slug"], []):
-            b = r.pop("_b", None)
-            r["vregion"] = (vendors.get(hid(str(b).replace("-", ""))) or {}).get("region") if b else None
             rows[r["id"]] = r
+        for r in rows.values():  # 예전 계약도 주소가 새로 확인됐으면 채운다
+            r.pop("_b", None)
+            if r.get("bh"):
+                r["vregion"] = (vendors.get(r["bh"]) or {}).get("region")
+            else:
+                r.setdefault("vregion", None)
         rows = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)
         al = alerts_for(rows, explanations)
         summ = summarize(c, rows, vendors)
@@ -268,9 +331,15 @@ def main():
                       "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "local_share": summ["local_share"],
                       "top_alert": flagged[0] if flagged else None})
     save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": KEEP_DAYS, "cities": index})
-    state.update({"backfilled": True, "last_run": now.isoformat(), "fetched": len(raw)})
+    # 처음 기간의 업체 주소를 다 조회할 때까지는 다음 실행에서도 같은 기간을 다시 읽어 남은 업체를 이어서 조회한다.
+    # (원래 사업자번호는 저장하지 않으므로 다시 읽어야 알 수 있음.) 요청이 실패해 비었으면 완료로 치지 않는다.
+    done = state.get("backfilled") or (raw and left == 0 and not FAILS)
+    state.update({"backfilled": bool(done), "last_run": now.isoformat(), "fetched": len(raw), "lookups_left": left,
+                  "failed_requests": len(FAILS)})
     save(os.path.join(DATA, "state.json"), state)
-    print(f"계약 {len(raw)}건 읽음, 시 단위 {sum(len(v) for v in fresh.values())}건 반영")
+    print(f"계약 {len(raw)}건 읽음, 시 단위 {sum(len(v) for v in fresh.values())}건 반영, 건너뛴 요청 {len(FAILS)}건")
+    if FAILS and not raw:
+        sys.exit("모든 요청이 실패했습니다. 첫 오류: " + FAILS[0])
 
 
 if __name__ == "__main__":

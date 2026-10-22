@@ -28,7 +28,7 @@ function bars(box, rows, label, value, sub) {
     const row = el('div', 'barrow');
     const l = el('div', 'l', label(r)); l.title = label(r);
     if (sub && sub(r)) l.append(el('small', '', sub(r)));
-    const b = el('div', 'b'); const i = el('i'); i.style.width = Math.max(1, (value(r) / max) * 70) + '%';
+    const b = el('div', 'b'); const i = el('i'); i.style.width = Math.max(1, (max > 0 ? value(r) / max : 0) * 70) + '%';
     b.append(i, el('span', '', krw(value(r)))); row.append(l, b); box.append(row);
   }
 }
