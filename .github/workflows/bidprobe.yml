@@ -1,0 +1,36 @@
+name: 입찰공고 조회(임시)
+on: workflow_dispatch
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - env: {K: "${{ secrets.DATA_GO_KR_KEY }}"}
+        run: |
+          cat > p.py <<'PY'
+          import os,json,urllib.request,urllib.parse,sys
+          K=os.environ['K'];BN='20221229877'
+          def g(path,**q):
+              q.setdefault('numOfRows',100);q.setdefault('pageNo',1);q.update(ServiceKey=K,type='json')
+              u='https://apis.data.go.kr/1230000/'+path+'?'+urllib.parse.urlencode(q)
+              try: t=urllib.request.urlopen(u,timeout=60).read().decode()
+              except Exception as e: print('##',path,q.get('inqryDiv'),'ERR',e);return None
+              try: d=json.loads(t)
+              except Exception: print('##',path,'RAW',t[:200]);return []
+              b=d.get('response',{}).get('body',{});it=b.get('items') or []
+              if isinstance(it,dict):it=it.get('item',[])
+              if isinstance(it,dict):it=[it]
+              print('##',path,q.get('inqryDiv'),d.get('response',{}).get('header'),'n',len(it),'total',b.get('totalCount'));return it
+          def show(it,n=40):
+              for x in (it or [])[:n]: print(json.dumps({k:v for k,v in x.items() if v not in (None,'') and not any(s in k for s in ('Ofcl','Tel','Email','Nm2'))},ensure_ascii=False))
+          r=g('ad/BidPublicInfoService/getBidPblancListInfoCnstwk',inqryDiv=2,bidNtceNo=BN)
+          if r is None: sys.exit(3)
+          show(r,3)
+          for p in ['getBidPblancListInfoPrtcptPsblRgn','getBidPblancListInfoLicenseLimit','getBidPblancListInfoCnstwkBsisAmount']:
+              show(g('ad/BidPublicInfoService/'+p,inqryDiv=2,bidNtceNo=BN),20)
+          for p in ['getScsbidListSttusCnstwk','getOpengResultListInfoCnstwk','getOpengResultListInfoOpengCompt','getOpengResultListInfoCnstwkPreparPcDetail']:
+              for d in (4,2,1):
+                  it=g('as/ScsbidInfoService/'+p,inqryDiv=d,bidNtceNo=BN)
+                  if it: show(it,40);break
+          PY
+          for i in $(seq 1 13); do python3 p.py && exit 0; echo "retry $i"; sleep 300; done; exit 1
