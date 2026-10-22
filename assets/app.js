@@ -272,7 +272,7 @@ function corpInfo(c) {
   const box = $('#v-corp'), ib = $('#v-inds');
   if (!c) { box.append(el('p', 'sub', '이 업체의 나라장터 등록 정보는 아직 받지 않았습니다(순위 상위·이상 징후 업체부터 차례로 받습니다).')); return; }
   const now = new Date(), y = (s) => +s.slice(0, 4);
-  const age = (s) => now.getFullYear() - y(s) + 1;
+  const age = (s) => now.getFullYear() - y(s);
   const fact = (k, v) => { const f = el('div', 'fact'); f.append(el('span', 'fk', k), el('span', 'fv', v)); box.append(f); };
   if (c.opbiz) fact('설립', `${y(c.opbiz)}년 · ${age(c.opbiz)}년차`);
   if (c.rgst) fact('나라장터 등록', `${c.rgst.slice(0, 7).replace('-', '.')} · ${age(c.rgst)}년차`);
@@ -281,8 +281,9 @@ function corpInfo(c) {
   if (c.inds && c.inds.length) {
     ib.append(el('h3', '', `등록 업종 ${c.inds.length}개`));
     const ul = el('ul', 'indlist');
-    for (const i of c.inds) { const li = el('li', i.rep ? 'rep' : ''); li.append(el('span', '', i.n + (i.rep ? ' · 대표' : '')), el('small', '', i.d ? i.d.slice(0, 4) + '년 등록' : '')); ul.append(li); }
+    c.inds.forEach((i, n) => { const li = el('li', i.rep ? 'rep' : ''); li.append(el('span', '', i.n + (i.rep ? ' · 대표' : '')), el('small', '', i.d ? i.d.slice(0, 4) + '년 등록' : '')); if (n >= 6) li.hidden = true; ul.append(li); });
     ib.append(ul);
+    if (c.inds.length > 6) { const m = el('button', 'more', `업종 ${c.inds.length - 6}개 더 보기`); m.type = 'button'; m.onclick = () => { ul.querySelectorAll('li[hidden]').forEach((x) => (x.hidden = false)); m.remove(); }; ib.append(m); }
   }
   $('#v-corp-src').textContent += ` 받은 날: ${c.at}.`;
 }
@@ -330,7 +331,7 @@ async function vendorPage() {
       c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : '')));
       const tags = [];
       if (r.jv) tags.push('공동도급 · 금액은 대표 업체 기준');
-      if (r.ord && +r.ord > 1) tags.push(`${+r.ord}차 변경 계약`);
+      if (r.ord && +r.ord > 1) tags.push(`${+r.ord}차 계약(변경·연차 차수)`);
       if (r.this && r.this !== r.amount) tags.push(`이번 차수 금액 ${krw(r.this)} · 총 계약금액 ${krw(r.amount)}`);
       if (tags.length) c.append(el('span', 'cc-tags', tags.join(' · ')));
       if (r.hist && r.hist.length) {

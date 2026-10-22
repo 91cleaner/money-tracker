@@ -51,12 +51,17 @@ def build(now=None):
             v["months"][r["date"][:7]] += r["amount"]
             ca = v["cats"][r.get("cat") or "기타"]; ca[0] += r["amount"]; ca[1] += 1
             v["rows"].append({"id": r["id"], "date": r["date"], "title": r["title"], "amount": r["amount"], "inst": r["inst"], "city": c["short"],
-                              "slug": c["slug"], "cat": r.get("cat") or "기타", "method": r.get("method"), "url": r.get("url")})
+                              "slug": c["slug"], "cat": r.get("cat") or "기타", "method": r.get("method"), "url": r.get("url"),
+                              **{f: r[f] for f in ("no", "ord", "this", "jv", "hist") if r.get(f) not in (None, [])}})
             dates.append(r["date"])
         for a in d.get("alerts", []):
             for k in {byid[i] for i in a.get("ids", []) if i in byid}:
                 V[k]["alerts"].append({"key": a["key"], "kind": a["kind"], "title": a["title"], "detail": a["detail"], "amount": a.get("amount"),
                                        "slug": c["slug"], "city": c["short"], "explanation": a.get("explanation")})
+    try:
+        CORP = json.load(open(os.path.join(DATA, "corp.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        CORP = {}
     period = {"first": min(dates) if dates else None, "last": max(dates) if dates else None, "cities": len(idx["cities"])}
     vdir = os.path.join(DATA, "vendor"); os.makedirs(vdir, exist_ok=True)
     keep = set()
@@ -67,7 +72,7 @@ def build(now=None):
                 "insts": [{"name": n, "amount": a, "count": c} for n, (a, c) in sorted(v["insts"].items(), key=lambda x: -x[1][0])],
                 "months": dict(sorted(v["months"].items())),
                 "cats": [{"cat": n, "amount": a, "count": c} for n, (a, c) in sorted(v["cats"].items(), key=lambda x: -x[1][0])],
-                "alerts": v["alerts"], "rows": sorted(v["rows"], key=lambda r: (r["date"], r["id"]), reverse=True)}
+                "alerts": v["alerts"], "corp": CORP.get(k), "rows": sorted(v["rows"], key=lambda r: (r["date"], r["id"]), reverse=True)}
         save(os.path.join(vdir, k + ".json"), prof); keep.add(k + ".json")
         rank.append({"id": k, "name": v["name"], "region": v["region"], "total": v["total"], "count": v["count"], "nc": len(v["cities"]), "ni": len(v["insts"])})
     for f in os.listdir(vdir):

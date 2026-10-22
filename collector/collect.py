@@ -3,7 +3,7 @@
 환경변수 DATA_GO_KR_KEY: 공공데이터포털 일반 인증키(디코딩된 키).
 처음 실행하면 최근 BACKFILL_DAYS일, 그 뒤로는 최근 RECENT_DAYS일만 다시 읽어 새 계약을 더한다.
 """
-import hashlib, json, os, sys, time, urllib.parse, urllib.request
+import hashlib, json, os, re, sys, time, urllib.parse, urllib.request
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 
@@ -13,6 +13,7 @@ import share
 from privacy import mask
 import flows
 import vendors_agg
+import corp
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA = os.path.join(ROOT, "data")
@@ -276,14 +277,70 @@ def alerts_for(rows, explanations):
             insts = Counter(x["inst"] for x in rs).most_common(3)
             out.append({"key": "rep-" + hid(v if v != "개인사업자" else vk), "kind": "repeat", "title": f"같은 업체 {len(rs)}건 반복 (최근 {KEEP_DAYS}일)",
                         "detail": f"{v} · " + ", ".join(i for i, _ in insts), "amount": sum(x["amount"] for x in rs), "ids": [x["id"] for x in rs][:20]})
+    for r in rows:  # 변경 계약: 처음 차수보다 금액이 크게 늘어난 경우 (중립 표시)
+        h = r.get("hist") or []
+        if h and h[0]["amount"] > 0:
+            o = h[0]["amount"]; up = r["amount"] - o
+            if up >= 10_000_000 and up / o >= 0.1:
+                out.append({"key": "inc-" + cno(r), "kind": "increase", "title": f"데이터상 이상 징후: 계약 금액 증가 (확인된 첫 {h[0]['ord']}차 대비 +{up / o * 100:.0f}%)",
+                            "detail": f"{r['date']} · {r['inst']} · {r['title']} · {r['vendor']}", "amount": r["amount"], "orig": o, "ids": [r["id"]]})
     big = sorted([r for r in rows if r["amount"] >= 100_000_000], key=lambda r: -r["amount"])[:10]
     for r in big:
         out.append({"key": "big-" + r["id"], "kind": "big", "title": "1억원 이상 계약",
                     "detail": f"{r['date']} · {r['inst']} · {r['title']} · {r['vendor']}", "amount": r["amount"], "ids": [r["id"]]})
-    order = {"split": 1, "threshold": 2, "repeat": 3, "big": 4}
+    order = {"split": 1, "threshold": 2, "increase": 3, "repeat": 4, "big": 5}
     for a in out:
         a["explanation"] = explanations.get(a["key"])
     return sorted(out, key=lambda a: (order[a["kind"]], -(a["amount"] or 0)))
+
+
+def cno(r):
+    """계약번호(차수 제외). 예전 행은 id(통합계약번호 = 계약번호 + 2자리 차수)에서 구한다."""
+    if r.get("no"):
+        return r["no"]
+    i = r["id"]
+    return i[:-2] if re.fullmatch(r"[A-Z0-9]{13}\d{2}", i) else i
+
+
+def merge_orders(rows):
+    """같은 계약의 여러 차수(변경 계약)는 최신 차수 하나만 세고, 이전 차수 금액은 hist 에 남긴다(중복 합산 방지)."""
+    g = defaultdict(list)
+    for r in rows.values():
+        g[cno(r)].append(r)
+    out = {}
+    for no, rs in g.items():
+        if len(rs) == 1:
+            out[rs[0]["id"]] = rs[0]; continue
+        rs.sort(key=lambda r: (r.get("ord") or r["id"][-2:], r["date"]))
+        cur = dict(rs[-1]); cur["no"] = no
+        h = {x["ord"]: x for x in cur.get("hist", [])}
+        for r in rs[:-1]:
+            for x in r.get("hist", []):
+                h.setdefault(x["ord"], x)
+            o = r.get("ord") or r["id"][-2:]
+            h[o] = {"ord": o, "amount": r["amount"], "date": r["date"]}
+        h.pop(cur.get("ord") or cur["id"][-2:], None)
+        cur["hist"] = sorted(h.values(), key=lambda x: x["ord"])
+        out[cur["id"]] = cur
+    return out
+
+
+def corp_step(now, state, biz_by_hash):
+    """업체 설립일·등록 업종 캐시(data/corp.json). 대상 업체의 사업자번호가 이번 실행에 없으면
+    보관 기간 안의 날짜를 하루씩 돌아가며 다시 읽어 번호를 얻는다(번호는 메모리에만)."""
+    left = corp.run(DATA, biz_by_hash, state, get_json, items_of, now)
+    scans = int(os.environ.get("CORP_SCAN_DAYS", "1"))
+    while left and scans > 0 and any(k not in biz_by_hash for k in left):
+        scans -= 1
+        i = state.get("corp_scan", 0) % KEEP_DAYS
+        state["corp_scan"] = i + 1
+        d = datetime.combine((now - timedelta(days=i)).date(), datetime.min.time())
+        for it in fetch_contracts(d, d):
+            b = pick(it, "bizno")
+            if b:
+                biz_by_hash.setdefault(hid(str(b).replace("-", "")), str(b).replace("-", ""))
+        left = corp.run(DATA, biz_by_hash, state, get_json, items_of, now)
+    save(os.path.join(DATA, "state.json"), state)
 
 
 def summarize(city, rows, vendors):
@@ -330,6 +387,7 @@ def main():
     explanations = load(os.path.join(DATA, "explanations.json"), {})
     fresh = defaultdict(list)
     biznos = set()
+    biz_by_hash = {}  # 메모리에만: 업체 정보 조회용 (저장하지 않음)
     for it in raw:
         slug = city_of(pick(it, "inst"))
         if not slug:
@@ -340,7 +398,11 @@ def main():
         b = pick(it, "bizno")
         row = {"id": str(pick(it, "id") or hid(json.dumps(it, sort_keys=True, ensure_ascii=False))), "date": d, "inst": pick(it, "inst"),
                "title": pick(it, "title") or "", "kind": pick(it, "kind"), "method": pick(it, "method"), "amount": amt,
-               "vendor": pick(it, "vendor") or "", "url": pick(it, "url"), "bh": hid(str(b).replace("-", "")) if b else None}
+               "vendor": pick(it, "vendor") or "", "url": pick(it, "url"), "bh": hid(str(b).replace("-", "")) if b else None,
+               "no": it.get("cntrctNo") or None, "ord": it.get("cntrctOrd") or None, "this": to_int(it.get("cntrctAmt")),
+               "jv": (it.get("cmmnCntrctYn") == "Y") if it.get("cmmnCntrctYn") in ("Y", "N") else None}
+        if b:
+            biz_by_hash[row["bh"]] = str(b).replace("-", "")
         if b:
             biznos.add(str(b).replace("-", ""))
             reg = region_from_address(pick(it, "adrs"))  # 계약 자료에 들어 있는 업체 주소 → 시·군·구만
@@ -358,8 +420,11 @@ def main():
         rows = {r["id"]: r for r in old.get("rows", []) if r["date"] >= cutoff}
         for r in fresh.get(c["slug"], []):
             rows[r["id"]] = r
+        rows = merge_orders(rows)
         for r in rows.values():  # 예전 계약도 주소가 새로 확인됐으면 채운다
             r.pop("_b", None)
+            if not r.get("ord") and re.fullmatch(r"[A-Z0-9]{13}\d{2}", r["id"]):
+                r["ord"] = r["id"][-2:]  # 통합계약번호 끝 2자리 = 차수
             r["vendor"] = mask(r.get("vendor"))  # 사람 이름처럼 보이면 '개인사업자'
             r["cat"] = category(r.get("title"), r.get("kind"))
             if r.get("bh"):
@@ -389,6 +454,11 @@ def main():
                       "top_alert_cat": alert_cat,
                       "top_alert": flagged[0] if flagged else None})
     save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": KEEP_DAYS, "cities": index})
+    if KEY:
+        try:
+            corp_step(now, state, biz_by_hash)
+        except Exception as e:
+            print(f"::warning::업체 정보 단계 실패: {type(e).__name__}", flush=True)
     try:
         flows.build(now)  # 지도용 돈의 흐름 (시 → 업체 소재지 시·군·구)
         vendors_agg.build(now)  # 업체별 모아 보기·전국 순위
