@@ -134,22 +134,30 @@ def items_of(resp):
     return items, total
 
 
+T0 = time.monotonic()
+FETCH_BUDGET = int(os.environ.get("FETCH_BUDGET", "900"))  # 계약 목록 수집 시간 상한(초)
 FAILS = []  # 건너뛴 요청의 오류 메시지
 
 
 def fetch_contracts(start, end):
-    out, page = [], 1
+    out, page, fails = [], 1, 0
     while True:
+        if time.monotonic() - T0 > FETCH_BUDGET:
+            print(f"::warning::{start:%Y-%m-%d}~{end:%Y-%m-%d} 수집 시간 상한 도달, 다음 실행에서 이어서", flush=True)
+            FAILS.append("budget")
+            return out
         try:
             resp = get_json(CNTRCT_URL, {"cntrctCnclsBgnDate": start.strftime("%Y%m%d"), "cntrctCnclsEndDate": end.strftime("%Y%m%d"),
                                          "numOfRows": 999, "pageNo": page})
         except Exception as e:
             print(f"::warning::{start:%Y-%m-%d}~{end:%Y-%m-%d} {page}쪽 건너뜀: {e}", flush=True)
             FAILS.append(str(e))
-            if isinstance(e, ApiError) or page > 200:
+            fails += 1
+            if isinstance(e, ApiError) or page > 200 or fails >= 2:  # 연속 실패면 서버 문제, 이 주는 다음 실행에서
                 return out  # 인증 오류면 같은 요청을 반복해도 소용없음
             page += 1
             continue
+        fails = 0
         items, total = items_of(resp)
         out += items
         if not items or len(out) >= total or page > 200:
