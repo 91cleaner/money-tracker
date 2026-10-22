@@ -30,13 +30,14 @@ CORP_OPS = ["getPrcrmntCorpBasicInfo02", "getPrcrmntCorpBasicInfo"]
 F = {
     "id": ["untyCntrctNo", "cntrctNo", "dcsnCntrctNo", "cntrctRefNo"],
     "title": ["cntrctNm", "cntrctNm1"],
-    "amount": ["totCntrctAmt", "cntrctAmt", "thtmCntrctAmt", "cntrctAmount"],
+    "amount": ["ttalCntrctAmt", "totCntrctAmt", "cntrctAmt", "thtmCntrctAmt", "cntrctAmount"],
     "date": ["cntrctCnclsDate", "cntrctCnclsDt", "cntrctDate"],
     "inst": ["dmndInsttNm", "dminsttNm", "cntrctInsttNm"],
     "vendor": ["rprsntCorpNm", "corpNm", "cntrctCorpNm"],
     "bizno": ["rprsntCorpBizrno", "corpBizrno", "bizno", "bizrno"],
-    "method": ["cntrctMthdNm", "cntrctMthd"],
+    "method": ["cntrctCnclsMthdNm", "cntrctMthdNm", "cntrctMthd"],
     "kind": ["bsnsDivNm", "prcrmntDivNm", "cntrctBsnsDivNm"],
+    "adrs": ["rprsntCorpAdrs", "corpAdrs"],
     "url": ["cntrctInfoUrl", "cntrctDtlInfoUrl", "dtlsInfoUrl"],
 }
 
@@ -328,6 +329,9 @@ def main():
                "vendor": pick(it, "vendor") or "", "url": pick(it, "url"), "bh": hid(str(b).replace("-", "")) if b else None}
         if b:
             biznos.add(str(b).replace("-", ""))
+            reg = region_from_address(pick(it, "adrs"))  # 계약 자료에 들어 있는 업체 주소 → 시·군·구만
+            if reg and row["bh"] and not (vendors.get(row["bh"]) or {}).get("region"):
+                vendors[row["bh"]] = {"region": reg, "at": now.strftime("%Y-%m-%d")}
         fresh[slug].append(row)
     left = lookup_regions(sorted(biznos), vendors)
     save(os.path.join(DATA, "vendors.json"), vendors)
