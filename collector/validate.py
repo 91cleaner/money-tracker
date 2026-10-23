@@ -294,6 +294,18 @@ def check(root, prev=None):
     if os.path.exists(qp):
         for k, v in _load(qp).items():
             if v.get("to", "") >= k: E(f"[26 오늘의 문제] {k} 기간 끝날짜 {v.get('to')}가 문제 날짜 이후")
+        mp = os.path.join(root, "daily_q_meta.json")
+        qm = _load(mp) if os.path.exists(mp) else {}
+        for k, v in _load(qp).items():
+            m = qm.get(k)
+            if not m or not m.get("fixed"):
+                E(f"[26 오늘의 문제] {k} 고정한 날 기록(daily_q_meta.json) 없음"); continue
+            lim = (D.date.fromisoformat(m["fixed"]) - D.timedelta(days=1)).isoformat()
+            if v.get("to", "") > lim and not m.get("legacy"):
+                E(f"[26 오늘의 문제] {k} 끝날짜 {v.get('to')}가 고정한 날 {m['fixed']} 전날({lim})보다 늦음(아직 안 끝난 날)")
+        if prev and os.path.exists(os.path.join(prev, "daily_q_meta.json")):
+            for k, v in _load(os.path.join(prev, "daily_q_meta.json")).items():
+                if qm.get(k) != v: E(f"[26 오늘의 문제] {k} 고정 기록(daily_q_meta.json)이 바뀌거나 사라짐")
     if os.path.exists(qp):
         dq = _load(qp)
         for k, v in dq.items():
@@ -301,7 +313,8 @@ def check(root, prev=None):
                 E(f"[26 오늘의 문제] {k} 형식이 맞지 않음")
         if prev and os.path.exists(os.path.join(prev, "daily_q.json")):
             for k, v in _load(os.path.join(prev, "daily_q.json")).items():
-                fixed_once = REVISE_ONCE.get(k) == v.get("to") and (dq.get(k) or {}).get("to", "9") < v["to"]
+                nv = dq.get(k) or {}
+                fixed_once = REVISE_ONCE.get(k) == v.get("to") and nv.get("to", "9") < v["to"] and (nv.get("a"), nv.get("b")) == (v.get("a"), v.get("b"))
                 if dq.get(k) != v and not fixed_once:
                     E(f"[26 오늘의 문제] {k} 고정된 문제가 바뀌거나 사라짐: {v} → {dq.get(k)}")
     elif prev and os.path.exists(os.path.join(prev, "daily_q.json")):

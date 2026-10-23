@@ -41,6 +41,7 @@ def build(spec, d):
         json.dump({"last": "2026-10-23", "c": daily}, open(os.path.join(d, "daily.json"), "w"), ensure_ascii=False)
     if "dq" in spec:
         json.dump(spec["dq"], open(os.path.join(d, "daily_q.json"), "w"), ensure_ascii=False)
+        json.dump(spec.get("dqm") or {k: {"fixed": k} for k in spec["dq"]}, open(os.path.join(d, "daily_q_meta.json"), "w"), ensure_ascii=False)
     json.dump(spec["sole"], open(os.path.join(d, "sec_sole.json"), "w"), ensure_ascii=False)
     json.dump(spec["fest"], open(os.path.join(d, "sec_fest.json"), "w"), ensure_ascii=False)
 
@@ -134,6 +135,19 @@ class Gate(unittest.TestCase):
             s = copy.deepcopy(BASE); s["dq"] = copy.deepcopy(Q); bad(s["dq"])
             with tempfile.TemporaryDirectory() as d, tempfile.TemporaryDirectory() as p:
                 build(s, d); build(prev, p); self.assertTrue(any("[26 오늘의 문제]" in e for e in validate.check(d, p)[0]))
+
+    def test_26_unfinished_end_day_and_revise_once(self):
+        E25 = {"a": "suwon", "b": "gyeongsan", "av": 2, "bv": 1, "from": "2026-09-25", "to": "2026-10-24"}
+        # 10/24에 고정했는데 끝날짜가 10/24(아직 안 끝난 날) → 실패
+        self.assertTag(lambda s: s.update(dq={"2026-10-25": dict(E25)}, dqm={"2026-10-25": {"fixed": "2026-10-24"}}), "[26 오늘의 문제]")
+        prev = copy.deepcopy(BASE); prev["dq"] = {"2026-10-25": dict(E25)}; prev["dqm"] = {"2026-10-25": {"fixed": "2026-10-24"}}
+        def gate(new):
+            s = copy.deepcopy(BASE); s["dq"] = {"2026-10-25": new}; s["dqm"] = {"2026-10-25": {"fixed": "2026-10-24"}}
+            with tempfile.TemporaryDirectory() as d, tempfile.TemporaryDirectory() as p:
+                build(s, d); build(prev, p); return [e for e in validate.check(d, p)[0] if "[26" in e]
+        good = {**E25, "from": "2026-09-24", "to": "2026-10-23"}
+        self.assertEqual(gate(good), [])  # REVISE_ONCE: 같은 두 도시면 허용
+        self.assertTrue(gate({**good, "b": "iksan"}))  # 도시가 바뀌면 실패
 
     def test_daily_q_never_overwrites(self):
         import sys; sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "collector", "sections"))

@@ -82,20 +82,31 @@ def main(data="data", days=None):
     if days is None:
         today = kst_today()
         days = [today, add(today, 1)]
+    mp = os.path.join(data, "daily_q_meta.json")  # 항목별 고정한 날(KST)·메모. daily_q.json 형식은 그대로 두고 따로 둔다(이것도 append-only)
+    try:
+        meta = json.load(open(mp, encoding="utf-8"))
+    except (OSError, ValueError):
+        meta = {}
+    fixed_on = kst_today() if days is None else None
     added = []
     for D, bad_to in REVISE_ONCE.items():
         if D in q and q[D]["to"] == bad_to:
             x = build(D, dl, ix)
             if x and x["to"] < bad_to:
                 q[D] = x; added.append(D + "(재계산)")
+                if fixed_on: meta[D] = {"fixed": fixed_on, "note": "끝날짜가 아직 안 끝난 날로 고정됐던 것을 한 번 재계산(두 도시 같음)"}
     for D in days:
         if D in q:
             continue  # 이미 있는 날짜는 절대 덮어쓰지 않음
         x = build(D, dl, ix)
         if x:
             q[D] = x; added.append(D)
+            if fixed_on and D not in meta: meta[D] = {"fixed": fixed_on}
     json.dump(dict(sorted(q.items())), open(p + ".tmp", "w", encoding="utf-8"), ensure_ascii=False, indent=0)
     os.replace(p + ".tmp", p)
+    with open(mp + ".tmp", "w", encoding="utf-8") as f:
+        json.dump(dict(sorted(meta.items())), f, ensure_ascii=False, indent=0)
+    os.replace(mp + ".tmp", mp)
     print("daily_q 추가", added or "없음")
     return q
 
