@@ -325,7 +325,7 @@ function contractExtra(r) {
     }
     out.push(j);
   } else if (r.jv) out.push(el('span', 'cc-tags', '여러 업체가 함께 맡음 · 금액은 대표 업체 기준'));
-  if ((r.ltc || /^장기/.test(r.lt||'')) && r.tot_amt && r.tot_amt !== r.amount) out.push(el('span', 'cc-tags', `장기계속계약 · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액 ${krw(r.tot_amt)})`));
+  if ((r.ltc || /^장기/.test(r.lt||'')) ) out.push(el('span', 'cc-tags', `장기계속계약 · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액 ${krw(r.tot_amt || r.amount)})`));
   if (r.vers && r.vers.length > 1) {
     if (r.orig) { const up = r.amount - r.orig; out.push(el('span', 'cc-hist', `처음 ${krw(r.orig)} → 지금 ${krw(r.amount)} (${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%)`)); }
     const ol = el('ol', 'tl');
@@ -363,7 +363,7 @@ async function pastHistory(id) {
     const c = el('div', 'cc');
     const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', `${r.date} · ${r.city || '기타 기관'} · ${r.kind}`), el('b', 'cc-a', r.tot != null ? krw(r.tot) : '—'));
     const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
-    c.append(top, t, el('span', 'cc-i', r.inst + (r.atype && r.atype !== '본청' ? ` [${r.atype}]` : '') + (r.ord ? ` · ${+r.ord}차` : '') + ((r.ltc || /^장기/.test(r.lt||'')) && r.tot_amt && r.tot_amt !== r.amount ? ` · 장기계속(전체 계약금액 ${krw(r.tot_amt)})` : '')));
+    c.append(top, t, el('span', 'cc-i', r.inst + (r.atype && r.atype !== '본청' ? ` [${r.atype}]` : '') + (r.ord ? ` · ${+r.ord}차` : '') + ((r.ltc || /^장기/.test(r.lt||'')) ? ` · 장기계속(전체 계약금액 ${krw(r.tot_amt || r.amount)})` : '')));
     if (r.m && r.m.length > 1) {
       const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '함께 맡은 업체 (나눈 비율)'));
       for (const x of r.m) { const a = el(x.id && x.id !== id ? 'a' : 'span', '', `${x.name} ${x.share != null ? x.share + '%' : ''}`); if (x.id && x.id !== id) a.href = 'vendor.html?v=' + x.id; j.append(a); }
