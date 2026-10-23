@@ -45,6 +45,11 @@
   window.__dvBlink = (ss) => { gB.clearLayers(); (ss || []).forEach((s, i) => { const m = dots.get(s); if (!m) return;
     const col = i ? '#ffb020' : '#5ac8fa'; L.circleMarker(m.getLatLng(), {radius: Math.max(18, m.getRadius() + 10), color: col, weight: 4, fill: false, interactive: false, className: 'dv-blink'}).addTo(gB);
     const nm = (BY[s] || {}).short || (BY[s] || {}).name || ''; L.tooltip({permanent: true, direction: i ? 'right' : 'left', offset: [i ? 20 : -20, 0], className: 'klab gm-tip gm-tip' + i, interactive: false}).setLatLng(m.getLatLng()).setContent(esc(nm)).addTo(gB); });
+    // 게임 이름표가 다른 이름표(금액 라벨 등)를 가리면 반대쪽으로, 그래도 겹치면 숨김
+    requestAnimationFrame(() => { const ov = (a, b) => !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+      const others = [...box.querySelectorAll('.leaflet-tooltip:not(.gm-tip)')].filter((e) => e.offsetParent).map((e) => e.getBoundingClientRect());
+      gB.eachLayer((l) => { if (!(l instanceof L.Tooltip)) return; const e = l.getElement(); if (!e) return; const hit = () => others.some((r) => ov(e.getBoundingClientRect(), r));
+        if (hit()) { const d = l.options.direction === 'left' ? 'right' : 'left'; l.options.direction = d; l.options.offset = L.point(d === 'left' ? -20 : 20, 0); l.update && l.update(); e.className = e.className.replace(/leaflet-tooltip-(left|right)/, 'leaflet-tooltip-' + d); if (hit()) e.style.display = 'none'; } }); });
     if (ss && ss.length === 2 && !cur) { const b = L.latLngBounds(ss.map((s) => dots.get(s)).filter(Boolean).map((m) => m.getLatLng())); if (b.isValid() && !map.getBounds().pad(-0.1).contains(b)) map.fitBounds(b.pad(0.6), {maxZoom: 9, animate: !RM}); } };
   // 홈: 큰 시 8곳에 '이름 금액' 라벨
   const gL = L.layerGroup();

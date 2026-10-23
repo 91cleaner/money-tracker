@@ -21,7 +21,11 @@
       <div class="gm-bar"><span class="gm-st">${streak ? `연속 <b>${streak}</b>개 맞힘 · ` : ''}${best ? `최고 기록 <b>${best}</b>개` : ''}</span><span class="gm-act"></span></div>
       <p class="src">지도에서 파란 원과 주황 원이 두 도시예요 · ${esc(label())} 맺은 계약 · ${SRC}</p>`;
     root.querySelectorAll('.gm-c').forEach((btn) => (btn.onclick = () => answer(+btn.dataset.i)));
-    window.__dvBlink && window.__dvBlink([a.slug, b.slug]); };
+    ring(); };
+  // 지도 링은 게임 카드가 화면에 보이거나 #game일 때만
+  let seen = location.hash === '#game'; const ring = () => window.__dvBlink && window.__dvBlink(seen && pair ? [pair[0].slug, pair[1].slug] : []);
+  if ('IntersectionObserver' in window) new IntersectionObserver((es) => { const v = es.some((e) => e.isIntersecting) || location.hash === '#game'; if (v !== seen) { seen = v; ring(); } }, {threshold: 0.15}).observe(root);
+  addEventListener('hashchange', () => { if (location.hash === '#game') { seen = true; ring(); } });
   const next = () => { done = false; pair = pick(); draw(); };
   const answer = (i) => { if (done || !pair) return; done = true; const [a, b] = pair, win = (pair[i].total >= pair[1 - i].total);
     if (win) { streak++; if (streak > best) { best = streak; try { localStorage.setItem(K, String(best)); } catch (e) {} } }

@@ -338,3 +338,5 @@ i.ann-y,#rcpt .rc-chips i.ann-y{font-style:normal;font-size:12px;padding:2px 7px
 i.ann-n,#rcpt .rc-chips i.ann-n{font-style:normal;font-size:12px;font-weight:700;padding:2px 7px;border-radius:9px;background:rgba(255,159,10,.18);color:#ffc266;border:1px solid #ff9f0a;margin-left:4px}
 .dv-incl{font-size:12px;font-weight:500;color:#8fa0b3;margin-left:4px;white-space:nowrap}
 small.dv-tag,.ttl small.dv-tag{display:inline-block!important;width:auto!important;border-radius:9px;padding:2px 7px;margin:3px 4px 0 0;font-size:12px;background:#1a2028;color:#d6e0ea;border:1px solid #3a4856}
+#rcpt tr.rc3{display:flex!important;width:100%}#rcpt tr.rc3 td.rc-no{flex:0 0 32px}#rcpt tr.rc3 td:not(.rc-no){flex:1 1 auto;min-width:0}
+#rcpt,#rcpt thead,#rcpt tbody{display:block!important;width:100%!important}#rcpt thead tr{display:flex!important;width:100%}#rcpt thead th.rc-no{flex:0 0 32px}#rcpt thead th:not(.rc-no){flex:1 1 auto}#rcpt tbody tr:not(.rc3){display:block}
