@@ -658,8 +658,8 @@ def main():
                       "alerts_cat": {k: sum(1 for a in flagged if k in {cat_of.get(i) for i in a.get("ids", [])}) for k in by_cat},
                       "top_alert_cat": alert_cat,
                       "top_alert": flagged[0] if flagged else None})
-    save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": KEEP_DAYS, "cities": index})
     save(os.path.join(DATA, "daily.json"), daily_agg(now))  # 기간 슬라이더용: 시·날짜(원계약일)·분야별 건수·금액
+    save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": KEEP_DAYS, "daily": now.isoformat(), "cities": index})  # daily: 슬라이더 켜는 신호
     if KEY:
         try:
             corp_step(now, state, biz_by_hash)

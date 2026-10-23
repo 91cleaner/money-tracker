@@ -30,7 +30,7 @@ def build(spec, d):
         json.dump(c, open(os.path.join(d, "city", slug + ".json"), "w"), ensure_ascii=False)
         cities.append({"slug": slug, "count": len(c["rows"]), "total": sum(r["amount"] for r in c["rows"]), "changes": len(c["changes"]),
                        **spec.get("idx_over", {}).get(slug, {})})
-    json.dump({"updated": "2026-10-23T10:00", "days": 90, "cities": cities}, open(os.path.join(d, "index.json"), "w"))
+    json.dump({"updated": "2026-10-23T10:00", "days": 90, "cities": cities, **({} if spec.get("no_daily") else {"daily": "2026-10-23T10:00"})}, open(os.path.join(d, "index.json"), "w"))
     daily = {}
     for slug, c in spec["city"].items():
         m = daily.setdefault(slug, {})

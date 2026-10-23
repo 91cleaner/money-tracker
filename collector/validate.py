@@ -85,6 +85,8 @@ def check(root, prev=None):
                 byday[r.get("odate") or r["date"]] = byday.get(r.get("odate") or r["date"], 0) + 1
             if any(m.get(k, [0])[0] != v for k, v in byday.items()):
                 E(f"[17 일별 집계] {slug} 날짜별 건수가 도시 파일과 다름")
+        if "daily" not in idx:
+            E("[17 일별 집계] index.json 에 daily 필드 없음(슬라이더가 꺼짐)")
         if cities and not dl.get("last"):
             E("[17 일별 집계] daily.json 에 last 없음")
     elif cities:
