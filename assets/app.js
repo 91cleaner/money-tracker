@@ -350,7 +350,9 @@ function contractExtra(r) {
 async function pastHistory(id) {
   let p = null, m = null;
   try { m = await getJSON('data/past/_meta.json'); } catch (e) { return; }
-  try { p = await getJSON('data/past/' + id + '.json'); } catch (e) { p = null; }
+  let ids = m && (Array.isArray(m.ids) ? m.ids : null);
+  if (!ids && m && typeof m.ids_url === 'string' && /^[\w./-]+\.json$/.test(m.ids_url)) { try { const x = await getJSON('data/past/' + m.ids_url.replace(/^.*\//, '')); ids = Array.isArray(x) ? x : x && x.ids; } catch (e) { ids = null; } }
+  if (/^[0-9a-f]{16}$/.test(id || '') && (!ids || ids.includes(id))) { try { p = await getJSON('data/past/' + id + '.json'); } catch (e) { p = null; } }
   const sec = $('#v-past-sec'); if (!sec) return;
   const range = m && m.oldest ? `${m.oldest.replaceAll('-', '.')} ~ ${m.newest.replaceAll('-', '.')}` : '';
   $('#v-past-note').textContent = range ? `지금까지 ${range} (${m.days_done}일치)를 모았습니다. 매일 조금씩 더 과거로 채워집니다.` : '과거 계약을 하루씩 거슬러 올라가며 모으는 중입니다.';
@@ -375,7 +377,9 @@ async function pastHistory(id) {
 
 async function vendorPage() {
   const id = new URLSearchParams(location.search).get('v');
-  pastHistory(id);
+  // 오래된 계약은 그 칸이 화면에 보일 때만 불러온다(없는 파일 404를 처음 열 때 만들지 않게).
+  // data/past/_meta.json 에 ids(목록)가 있으면 목록에 없는 업체는 아예 부르지 않는다.
+  { const sec = $('#v-past-sec'); if (sec && 'IntersectionObserver' in window) { const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); pastHistory(id); } }); io.observe(sec); } else pastHistory(id); }
   let d;
   try { if (!/^[0-9a-zn]+$/.test(id || '')) throw 0; d = await getJSON('data/vendor/' + id + '.json'); } catch (e) {
     $('#title').textContent = '없는 업체입니다'; $('#vregion').replaceChildren('주소가 바뀌었거나 수집 기간에 계약이 없어요. ', Object.assign(el('a', '', '순위 보기 ›'), {href: 'rank.html'})); document.querySelectorAll('.sec, .stats, #stabs').forEach((x) => x.remove()); return;
