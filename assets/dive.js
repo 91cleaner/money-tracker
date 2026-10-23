@@ -16,7 +16,7 @@
   const box = root.querySelector('.dv-map'), sheet = root.querySelector('.dv-sheet'), body = root.querySelector('.dv-body'), form = root.querySelector('.dv-q'), inp = form.querySelector('input');
   const touch = matchMedia('(pointer: coarse)').matches;
   const map = L.map(box, {zoomControl: false, attributionControl: false, dragging: true, tap: false, minZoom: 5, maxZoom: 12, zoomSnap: 0.25});
-  L.control.attribution({position: 'topright', prefix: false}).addTo(map); if (!touch && innerWidth >= 900) L.control.zoom({position: 'bottomleft'}).addTo(map);
+  L.control.attribution({position: 'bottomright', prefix: false}).addTo(map); if (!touch && innerWidth >= 900) L.control.zoom({position: 'bottomleft'}).addTo(map);
   const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자'}).addTo(map);
   tiles.once('tileload', () => box.classList.remove('loading'));
   const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]); const krPad = () => (innerWidth >= 900 ? {paddingTopLeft: [10, 60], paddingBottomRight: [400, 10]} : {paddingTopLeft: [10, 64], paddingBottomRight: [10, 10]}); map.fitBounds(KR, {...krPad(), animate: false});
