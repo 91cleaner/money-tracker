@@ -319,3 +319,9 @@ small,.src small,.row small,.rcp small,.case small,.est small,sub,sup{font-size:
 @media (prefers-reduced-motion:reduce){.dv-blink{animation:none}}
 html{scroll-padding-bottom:72px}
 .gm{position:relative;z-index:2;background:#0b0f13;border-radius:16px}
+.dv-wrap .wr-n{float:right;color:#8fa0b3;font-weight:500}
+.wr-row{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 0 8px;scrollbar-width:none;touch-action:pan-x pan-y;margin-bottom:10px}.wr-row::-webkit-scrollbar{display:none}
+.wr-c{flex:0 0 86%;scroll-snap-align:start;background:linear-gradient(160deg,#121b25,#0a0f14);border:1px solid #243140;border-radius:16px;padding:16px;min-height:190px;display:flex;flex-direction:column}
+.wr-t{margin:0;color:#8fa0b3;font-size:14px}.wr-b{margin:6px 0;color:#ffb020;font-size:34px;font-weight:800;line-height:1.15}.wr-s{margin:0;color:#e8eef5;font-size:14px;line-height:1.5;flex:1}
+.wr-src{margin:10px 0 0;color:#6b7785;font-size:12px}.wr-share img{width:100%;border-radius:10px;margin:8px 0}.wr-btn{min-height:44px;border-radius:999px}
+@media (min-width:900px){.wr-c{flex-basis:78%}}

@@ -268,6 +268,23 @@
       const vid = r.bh || r.vendor; const v = g._v[vid] || (g._v[vid] = {id: r.bh || '', name: r.vendor || '', amount: 0, count: 0}); v.amount += a; v.count++; }
     const flows = Object.values(m).map((g) => { g.vendors = Object.values(g._v).sort((a, b) => b.amount - a.amount); delete g._v; return g; }).sort((a, b) => b.amount - a.amount);
     return Object.assign({}, o, {flows, known, local, total, count, by_cat: {}, __re: 1}); };
+  const KN = {split: '같은 날 나눠진 계약', threshold: '금액선 바로 아래 계약', increase: '계약 금액이 늘어난 경우', repeat: '같은 업체와 여러 번 계약'};
+  const wrapFill = (slug, A) => { const el = body.querySelector('.dv-wrap'); if (!el) return; const k = CARD(slug); if (!k) return; const c = BY[slug], f = fl.cities[slug];
+    const outEl = body.querySelector('.dv-out'), out = outEl ? outEl.textContent.replace(/[^0-9]/g, '') : '';
+    const fd = (x) => (x ? x.replace(/-/g, '.') : ''), rng = `${fd(k.fr)} ~ ${fd(k.to)}`, SR = '출처: 조달청 나라장터 공공데이터';
+    const cats = Object.entries(c.by_cat || {}).filter((x) => x[1] > 0).sort((a, b) => b[1] - a[1]); const top = cats[0];
+    const kc = {}; for (const a of A) kc[a.kind] = (kc[a.kind] || 0) + 1; const tk = Object.entries(kc).sort((a, b) => b[1] - a[1])[0];
+    const card = (t, big, sub, src) => `<div class="wr-c"><p class="wr-t">${t}</p><p class="wr-b">${big}</p><p class="wr-s">${sub}</p><p class="wr-src">${src}</p></div>`;
+    const cs = [
+      card(`${esc(k.name)}는 ${esc(k.label)} 동안`, krw(k.total), `계약으로 쓴 돈이에요. (${rng}, 계약일 기준)`, SR),
+      card('전국 85개 시 중에서', `${k.rank}번째`, `${k.label} 동안 계약에 쓴 돈이 ${k.of}개 시 중 ${k.rank}번째로 많아요.`, SR),
+      card('다른 지역 업체가 받은 돈', out ? out + '%' : '확인 중', out ? `주소가 확인된 계약 금액 중 ${out}%가 다른 지역 업체에 갔어요.` : '업체 주소를 아직 확인하고 있어요.', SR + ' · 업체 주소 기준'),
+      card('가장 많이 쓴 계약 종류', top ? esc(top[0]) : '자료 없음', top ? `${krw(top[1])}, 전체의 ${Math.round(top[1] / (k.total || 1) * 100)}%예요.` : '', SR + ' · 제목으로 나눈 종류'),
+      card('데이터상 이상 징후', `${k.n.toLocaleString('ko-KR')}건`, k.n ? `가장 많은 유형: ${esc(KN[tk[0]] || tk[0])} ${tk[1]}건. 위법을 뜻하지 않고, 정상적인 이유가 있을 수 있어요.` : '이 기간에는 자동으로 찾은 패턴이 없어요.', SR + ' · 자동 패턴 검사'),
+      `<div class="wr-c wr-share"><p class="wr-t">친구에게 보여 주기</p><img alt="${esc(k.name)} 공유 이미지" src="${drawCard(k).toDataURL('image/png')}"><button type="button" class="wr-btn dv-shc">이 카드 공유</button><p class="wr-src">${SR}</p></div>`];
+    el.innerHTML = `<p class="dv-k">우리 시 한눈에 보기 <span class="wr-n">1 / ${cs.length}</span></p><div class="wr-row">${cs.join('')}</div>`;
+    const row = el.querySelector('.wr-row'), n = el.querySelector('.wr-n'); row.onscroll = () => { const w = row.firstElementChild.offsetWidth + 10; n.textContent = `${Math.min(cs.length, Math.round(row.scrollLeft / w) + 1)} / ${cs.length}`; };
+    window.__wrLast = {slug, total: krw(k.total), rank: k.rank, out, n: k.n, top: top && top[0]}; };
   const L1 = async (slug, gu) => {
     const c = BY[slug], f = fl.cities[slug]; if (!c) return L0();
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
@@ -275,7 +292,7 @@
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
     body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)}</p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
       <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">다른 지역 업체 ${out}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}</span> <button type="button" class="dv-sh dv-shc" aria-label="이 지역 결과 공유">공유</button> <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
-      <div class="dv-more"><div class="dv-t3">${top3(f)}</div><p class="dv-k">데이터상 이상 징후</p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
+      <div class="dv-more"><div class="dv-wrap" aria-label="우리 시 한눈에 보기"></div><div class="dv-t3">${top3(f)}</div><p class="dv-k">데이터상 이상 징후</p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
     ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
     body.querySelectorAll('.dv-nav').forEach((b) => (b.onclick = () => go({c: sib(slug, +b.dataset.d)}, true)));
@@ -283,7 +300,7 @@
     try { const d = await get('data/city/' + slug + '.json'); if (cur !== slug) return;
       if (window.__pdCW && window.__pdCW() && d.rows) { const f2 = reFlow(slug, d.rows); fl.cities[slug] = f2; const o2 = f2.known ? Math.round((1 - f2.local / f2.known) * 100) : null; const mt = body.querySelector('.dv-meta'); if (mt) mt.innerHTML = `${PL()} · ${c.total ? (o2 != null ? `<b class="dv-out">다른 지역 업체 ${o2}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}`; const t3 = body.querySelector('.dv-t3'); if (t3) t3.innerHTML = top3(f2); drawFlows(slug); }
       const A = (d.alerts || []).filter((a) => a.kind !== 'big' && (!gu || (a.detail || '').includes(gu)));
-      body.querySelector('.dv-n').textContent = A.length; A.splice(8); body.querySelector('.dv-chip').hidden = !A.length;
+      body.querySelector('.dv-n').textContent = A.length; wrapFill(slug, A); A.splice(8); body.querySelector('.dv-chip').hidden = !A.length;
       box2.innerHTML = A.length ? A.map((a, i) => `<button type="button" class="dv-card" data-i="${i}"><b>${esc(a.title)}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}</span><em>${krw(a.amount)} ›</em></button>`).join('') : '<p class="small">최근 눈에 띄는 패턴이 없습니다.</p>';
       car(box2);
       box2.querySelectorAll('.dv-card').forEach((b) => (b.onclick = () => { const a = A[+b.dataset.i]; const r = d.rows.find((x) => (a.ids || []).includes(x.id)); if (r && r.bh) go({c: slug, v: r.bh, a: a.key}); else if (r) window.open(r.url, '_blank', 'noopener'); }));
