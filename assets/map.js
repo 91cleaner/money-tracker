@@ -69,7 +69,7 @@ function satView(box, geo, cities, onPick) {
     lines(list, maxA, labels) {
       gF.clearLayers();
       list.forEach((f, i) => {
-        const w = 2 + 9 * Math.sqrt(f.amount / maxA), col = f.local ? '#0a84ff' : '#ff6b3d';
+        const w = 2 + 9 * Math.sqrt(f.amount / maxA), col = f.local ? '#0a84ff' : '#ff9f0a';
         if (Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) >= 0.5) {
           const pl = L.polyline(bez(f.a, f.p), {color: col, weight: w, opacity: 0.9, lineCap: 'round', className: 'sfl', interactive: false}).addTo(gF);
           const el2 = pl.getElement && pl.getElement(); if (el2) { el2.setAttribute('pathLength', '1'); el2.style.animationDelay = i * 60 + 'ms'; }

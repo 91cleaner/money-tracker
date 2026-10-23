@@ -277,3 +277,13 @@ main.wrap{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
 /* v2 탭: 불투명 배경, 넘치지 않으면 균등 */
 .stabs{background:#07090c!important}
 .stabs.fit{gap:0}.stabs.fit a{flex:1 1 auto;justify-content:center;padding:8px 4px!important}
+.maplg{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;margin:6px 0 0;padding:5px 10px;font:500 12px/1.3 ui-monospace,Menlo,monospace;color:#9aa6b2;background:#0b0f13;border:1px solid #1f2933;border-radius:8px}
+.maplg i{display:inline-block;flex:none}.maplg .lg-ln{width:16px;height:3px;border-radius:2px;margin-left:4px}.maplg .lg-ln:first-child{margin-left:0}
+.maplg .lg-w{display:inline-flex;align-items:center;gap:2px;margin-left:4px}.maplg .lg-w i{width:12px;background:#9aa6b2;border-radius:2px}.maplg .lg-w i:first-child{height:2px}.maplg .lg-w i:last-child{height:6px}
+.maplg .lg-ring{width:10px;height:10px;border:2px solid #ffd60a;border-radius:50%;margin-left:4px}
+#dive .maplg{order:3;margin:6px 6px 0}
+/* 최소 12px(남은 10px 정리) + 하단 탭바 여백 */
+.leaflet-control-attribution,#dive .leaflet-control-attribution{font-size:12px!important}
+.rbar .rb-n::after{font-size:12px}
+.counter span::before,.case .no::after{font-size:12px}
+main,body.tabbed main{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}

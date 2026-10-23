@@ -25,3 +25,8 @@ document.addEventListener('click',e=>{const a=e.target.closest('.ticker a[data-c
 (()=>{const rot=(t)=>{if(!t||t.dataset.rot)return;const d=t.querySelector(':scope>div');if(!d)return;const its=[...d.children].filter(e=>/^(A|B)$/.test(e.tagName));if(!its.length)return;t.dataset.rot=1;t.classList.add('tk-rot');
 let i=0;const slot=document.createElement('div');slot.className='tk-slot';d.replaceWith(slot);slot.style.paddingLeft=((t.querySelector('.tk-brand')||{}).offsetWidth||0)+10+'px';const show=()=>{slot.replaceChildren(its[i%its.length].cloneNode(true));i++;};show();setInterval(()=>{if(!document.hidden&&!t.classList.contains('paused'))show();},5000);};
 const obs=new MutationObserver(()=>{const t=document.querySelector('.ticker');const d=t&&t.querySelector(':scope>div');if(t&&d&&d.children.length&&!t.dataset.rot)setTimeout(()=>rot(t),1500);});obs.observe(document.body,{childList:true,subtree:true});})();
+
+// 지도 범례: 지도 바로 아래 한 줄 (지도 위에 겹치지 않게)
+(()=>{const H='<i class="lg-ln" style="background:#0a84ff"></i>지역 업체<i class="lg-ln" style="background:#ff9f0a"></i>외지 업체<span class="lg-w"><i></i><i></i></span>굵기 = 금액<i class="lg-ring"></i>선택한 도시';
+const put=()=>document.querySelectorAll('.dv-map,.map').forEach(m=>{if(m.closest('.lg-skip')||!(m.classList.contains('leaflet-container')||m.querySelector('.leaflet-pane,svg')))return;const n=m.nextElementSibling;if(n&&n.classList.contains('maplg'))return;const p=document.createElement('p');p.className='maplg';p.setAttribute('aria-label','지도 범례');p.innerHTML=H;m.after(p);});
+put();new MutationObserver(put).observe(document.body,{childList:true,subtree:true});})();
