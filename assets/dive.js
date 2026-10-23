@@ -41,6 +41,9 @@
     const m = L.circleMarker(toLL(c.p), {radius: c.total ? 4 + 13 * Math.sqrt(c.total / maxT) : 4, weight: 1.5, color: c.total ? '#fff' : '#8b97a5', fillColor: c.total ? '#0a84ff' : '#3a4450', fillOpacity: c.total ? 0.5 : 0.3, interactive: false}).addTo(gC);
     dots.set(c.slug, m); const e = m.getElement(); if (e) e.setAttribute('data-s', c.slug);
   }
+  const gB = L.layerGroup().addTo(map);
+  window.__dvBlink = (ss) => { gB.clearLayers(); (ss || []).forEach((s, i) => { const m = dots.get(s); if (!m) return;
+    L.circleMarker(m.getLatLng(), {radius: m.getRadius() + 7, color: i ? '#ffb020' : '#5ac8fa', weight: 3, fill: false, interactive: false, className: 'dv-blink'}).addTo(gB); }); };
   // 홈: 큰 시 8곳에 '이름 금액' 라벨
   const gL = L.layerGroup();
   const HL = new Map(), gLead = L.layerGroup().addTo(map);
@@ -318,7 +321,7 @@
     for (const c of i2.cities) if (BY[c.slug]) { const o = BY[c.slug]; for (const k of Object.keys(o)) if (!(k in c)) delete o[k]; Object.assign(o, c); }
     for (const c of cities) { const n = f2.cities[c.slug]; if (n) c.total = n.total; }
     cities.sort((a, b) => b.total - a.total);
-    window.__mtPeriod && window.__mtPeriod(i2);
+    window.__mtPeriod && window.__mtPeriod(i2); window.__gmPeriod && window.__gmPeriod();
     const st = sheet.scrollTop; window.__dvCat(CAT); if (cur) { render(); sheet.scrollTop = st; } };
   // 시트: 아래로 끌면 한 층 위로, 좌우로 밀면 지역 이동
   let sy = null, sx = 0;
