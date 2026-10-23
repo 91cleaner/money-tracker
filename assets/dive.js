@@ -4,23 +4,29 @@
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const GK = Math.cos(36 * Math.PI / 180), GSX = 600 / (6.5 * GK);
   const toLL = (p) => [38.7 - p[1] / GSX, 124.5 + p[0] / (GK * GSX)];
+  const inKR = (ll) => ll[0] > 32.8 && ll[0] < 38.9 && ll[1] > 124.3 && ll[1] < 131.2;
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
   const krw = (n) => { if (n == null || isNaN(n)) return '—'; const a = Math.abs(n);
     if (a >= 1e12) return (a / 1e12).toFixed(1).replace(/\.0$/, '') + '조원';
     if (a >= 1e8) return (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원';
     if (a >= 1e4) return Math.round(a / 1e4).toLocaleString('ko-KR') + '만원'; return a.toLocaleString('ko-KR') + '원'; };
   const J = {}; const get = (u) => (J[u] ||= fetch(u).then((r) => { if (!r.ok) throw r.status; return r.json(); }));
-  root.innerHTML = `<div class="dv-map map loading"></div><h1 class="dv-h1">우리 시는 얼마 썼을까?</h1>
+  root.innerHTML = `<div class="dv-map map loading"></div><button type="button" class="dv-down" aria-label="아래 카드로">↓ 자세히</button><h1 class="dv-h1">우리 시는 얼마 썼을까?</h1>
     <form class="dv-q" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" placeholder="지역·업체 검색 (예: 수성구)" aria-label="지역 검색" enterkeyhint="search"><button type="button" class="dv-all" aria-label="전체 지역 목록">목록</button></form>
     <div class="dv-sheet" role="region" aria-label="지역 정보"><div class="dv-grab" aria-hidden="true"></div><div class="dv-body"></div></div>`;
   const box = root.querySelector('.dv-map'), sheet = root.querySelector('.dv-sheet'), body = root.querySelector('.dv-body'), form = root.querySelector('.dv-q'), inp = form.querySelector('input');
   const touch = matchMedia('(pointer: coarse)').matches;
-  const map = L.map(box, {zoomControl: false, attributionControl: false, dragging: true, tap: false, minZoom: 5, maxZoom: 12, zoomSnap: 0.25});
+  const map = L.map(box, {zoomControl: false, attributionControl: false, dragging: true, tap: false, scrollWheelZoom: false, minZoom: 5, maxZoom: 12, zoomSnap: 0.25});
   L.control.attribution({position: 'bottomright', prefix: false}).addTo(map); if (!touch && innerWidth >= 900) L.control.zoom({position: 'bottomleft'}).addTo(map);
   const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자'}).addTo(map);
   tiles.once('tileload', () => box.classList.remove('loading'));
   const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]); const krPad = () => (innerWidth >= 900 ? {paddingTopLeft: [10, 60], paddingBottomRight: [400, 10]} : {paddingTopLeft: [10, 64], paddingBottomRight: [10, 10]}); map.fitBounds(KR, {...krPad(), animate: false});
   window.__dvMap = map;
+  map.on('moveend', () => { if (cur && map.getZoom() < 8 && !map._dvFix) { map._dvFix = 1; const c = fl && fl.cities[cur]; c && map.setView(toLL(c.p), 8, {animate: false}); map._dvFix = 0; } });
+  // 휠은 페이지 스크롤 · Ctrl+휠 또는 지도를 클릭한 뒤에만 확대
+  box.addEventListener('wheel', (e) => { if (e.ctrlKey) { e.preventDefault(); map.setZoomAround(map.mouseEventToContainerPoint(e), map.getZoom() + (e.deltaY < 0 ? 0.5 : -0.5)); } }, {passive: false});
+  map.on('click', () => map.scrollWheelZoom.enable()); box.addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
+  root.querySelector('.dv-down').onclick = () => { const t = root.querySelector('.dv-sheet'); t && scrollTo({top: t.getBoundingClientRect().top + scrollY - 52, behavior: RM ? 'auto' : 'smooth'}); };
   { // 크기가 바뀌거나 다시 보일 때 타일이 깨지지 않게
     let t = 0; const inv = () => { clearTimeout(t); t = setTimeout(() => map.invalidateSize({pan: false}), 60); };
     if (window.ResizeObserver) new ResizeObserver(inv).observe(box);
@@ -47,7 +53,7 @@
   // 세금 길: 도시 → 업체 소재지 선 그리기
   const drawFlows = (slug) => {
     gF.clearLayers(); FX.set([]); const c = fl.cities[slug]; if (!c || !c.flows.length) return; const arcs = [];
-    const a = c.p, top = c.flows.filter((f) => f.p).slice(0, 10), mx = top[0] ? top[0].amount : 1;
+    const a = c.p, top = c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10), mx = top[0] ? top[0].amount : 1;
     top.forEach((f, i) => {
       const b = f.p, dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
       const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
@@ -82,9 +88,10 @@
       t0 = performance.now(); go(); }}; })();
   let seq = 0;
   const fly = (slug) => { const c = fl.cities[slug]; if (!c) return; const ll = toLL(c.p); const my = ++seq; gF.clearLayers(); map.stop();
-    const pts = [ll, ...c.flows.filter((f) => f.p).slice(0, 10).map((f) => toLL(f.p))], bd = L.latLngBounds(pts);
+    const pts = [ll, ...c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10).map((f) => toLL(f.p))]; let bd = L.latLngBounds(pts);
     const wide = innerWidth >= 900, sh = wide ? 0 : sheet.offsetHeight || Math.round(root.clientHeight * 0.25);
-    const o = {paddingTopLeft: [24, 76], paddingBottomRight: [wide ? 420 : 24, sh + 16], maxZoom: 9.5};
+    const o = {paddingTopLeft: [24, 76], paddingBottomRight: [wide ? 420 : 24, wide ? 16 : 24], maxZoom: 9.5};
+    if (map.getBoundsZoom(bd, false, L.point(wide ? 444 : 48, 92 + sh)) < 8) bd = L.latLngBounds([[ll[0] - 0.5, ll[1] - 0.6], [ll[0] + 0.5, ll[1] + 0.6]]);
     const near = L.latLngBounds([[ll[0] - 0.12, ll[1] - 0.12], [ll[0] + 0.12, ll[1] + 0.12]]), oz = {...o, maxZoom: 9.5};
     if (RM || !box.clientWidth) { map.fitBounds(bd, {...o, animate: false}); drawFlows(slug); return; }
     map.flyToBounds(near, {...oz, duration: 1});
@@ -148,9 +155,9 @@
   const multi = (slugs) => { setH(1); body.innerHTML = '<p class="dv-k">여러 시가 겹쳐 있어요. 하나를 고르세요</p><div class="pickrow">' + slugs.map((s) => `<button type="button" class="chip" data-s="${s}">${esc((BY[s] || {}).name || s)}</button>`).join('') + '</div>';
     body.querySelectorAll('button[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); };
   const sib = (slug, d) => { const me = BY[slug]; let g = C.filter((c) => c.province === me.province); if (g.length < 2) g = C; const i = g.findIndex((c) => c.slug === slug); return g[(i + d + g.length) % g.length].slug; };
-  const top3 = (f) => { if (!f) return ''; const m = {}; for (const x of f.flows || []) for (const v of x.vendors || []) { const o = m[v.id] || (m[v.id] = {id: v.id, name: v.name, amount: 0}); o.amount += v.amount; }
+  const top3 = (f) => { if (!f) return ''; const m = {}; for (const x of f.flows || []) for (const v of x.vendors || []) { const o = m[v.id] || (m[v.id] = {id: v.id, name: v.name, amount: 0, n: 0, to: x.local ? '지역 업체' : (x.to || '')}); o.amount += v.amount; o.n += v.count || 1; }
     const t = Object.values(m).sort((a, b) => b.amount - a.amount).slice(0, 3);
-    return t.length ? `<p class="dv-k">많이 받은 업체 3곳</p><ol class="dv-top">${t.map((v) => `<li><a href="?c=${cur}&v=${v.id}#map" data-v="${v.id}">${esc(v.name)}</a><b>${krw(v.amount)}</b></li>`).join('')}</ol>` : ''; };
+    return t.length ? `<p class="dv-k">많이 받은 업체 3곳</p><ol class="dv-top dv-top3">${t.map((v, i) => `<li><span class="dv-no">${i + 1}</span><a href="?c=${cur}&v=${v.id}#map" data-v="${v.id}"><span class="dv-tn">${esc(v.name)}</span><b>${krw(v.amount)}</b><span class="rc-chips"><i>${esc(v.to)}</i><i>${v.n}건</i></span></a></li>`).join('')}</ol>` : ''; };
   const L1 = async (slug, gu) => {
     const c = BY[slug], f = fl.cities[slug]; if (!c) return L0();
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }

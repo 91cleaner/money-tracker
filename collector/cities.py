@@ -78,6 +78,8 @@ def legacy(name):
                 return "광주광역시 " + rest
             if t[-1:] in ("시", "군") and len(t) >= 2:
                 return "전라남도 " + rest
+            if t.startswith("광주청사"):
+                return "광주광역시 " + rest  # 광주청사 계약은 옛 광주 몫으로 본다(무안·동부청사 등은 제외)
             return n  # 통합특별시 본청·청사·본부: 옛 광주·전남 어느 시에도 넣지 않음
     return n
 EXCLUDE_WORDS = ["교육청", "교육지원청", "경찰청", "경찰서"]
