@@ -446,7 +446,7 @@ def main():
             allrows = []
             for c in CITIES:
                 old = load(os.path.join(DATA, "city", c["slug"] + ".json"), {"rows": []})
-                rr = {r["id"]: r for r in old.get("rows", []) if r["date"] >= cutoff}
+                rr = {r["id"]: r for r in old.get("rows", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
                 rr.update({r["id"]: r for r in fresh.get(c["slug"], [])})
                 for r in rr.values():
                     if not r.get("ord") and re.fullmatch(r"[A-Z0-9]{13}\d{2}", r["id"]):
@@ -470,7 +470,7 @@ def main():
     for c in CITIES:
         path = os.path.join(DATA, "city", c["slug"] + ".json")
         old = load(path, {"rows": []})
-        rows = {r["id"]: r for r in old.get("rows", []) if r["date"] >= cutoff}
+        rows = {r["id"]: r for r in old.get("rows", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
         for r in fresh.get(c["slug"], []):
             rows[r["id"]] = r
         rows = merge_orders(rows)

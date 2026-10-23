@@ -65,7 +65,7 @@ JNGJ_GU = ("동구", "서구", "남구", "북구", "광산구")
 
 def legacy(name):
     """'전남광주통합특별시 서구' → '광주광역시 서구', '전남광주통합특별시 나주시' → '전라남도 나주시'.
-    통합특별시 본청·산하기관(시·군·구가 안 붙은 것)은 광주광역시로 묶는다(광주청사 기준, 화면에 따로 안내)."""
+    통합특별시 본청·청사·본부(시·군·구가 안 붙은 것)는 광주·전남 어느 한 시의 돈으로 볼 수 없어 빼고 원래 이름을 그대로 둔다."""
     if not name:
         return name
     n = str(name).strip()
@@ -73,11 +73,12 @@ def legacy(name):
         if n.startswith(p):
             rest = n[len(p):].strip()
             t = rest.split()[0] if rest else ""
-            if t in JNGJ_GU:
-                return ("광주광역시 " + rest).strip()
+            g = next((x for x in JNGJ_GU if t == x or (t.startswith(x) and not t.startswith(x[:-1] + "청"))), None)
+            if g:
+                return "광주광역시 " + rest
             if t[-1:] in ("시", "군") and len(t) >= 2:
                 return "전라남도 " + rest
-            return ("광주광역시 " + rest).strip()
+            return n  # 통합특별시 본청·청사·본부: 옛 광주·전남 어느 시에도 넣지 않음
     return n
 EXCLUDE_WORDS = ["교육청", "교육지원청", "경찰청", "경찰서"]
 
