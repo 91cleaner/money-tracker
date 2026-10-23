@@ -57,16 +57,21 @@
     if (inside.length > 1) multi(inside.map((h) => h[1])); else go({c: hits[0][1]}); });
 
   // 라벨 겹침: 발주 라벨 먼저 자리 잡고, 나머지는 위아래로 조금씩 밀어 보고 그래도 겹치면 숨김
-  const declutter = () => { const hit = (r, q) => !(r.right < q.left || r.left > q.right || r.bottom < q.top || r.top > q.bottom), seen = [];
+  const declutter = () => { const G = 8, hit = (r, q) => !(r.right + G < q.left || r.left - G > q.right || r.bottom + G < q.top || r.top - G > q.bottom), seen = [], miss = [];
     const bb = box.getBoundingClientRect(), inB = (r) => r.left >= bb.left + 2 && r.right <= bb.right - 2 && r.top >= bb.top + 2 && r.bottom <= bb.bottom - 18;
     const L_ = [...box.querySelectorAll('.dv-org'), ...box.querySelectorAll('.dv-amt')];
-    L_.forEach((t) => { t.style.visibility = ''; t.style.marginTop = '0px'; t.style.marginLeft = '0px'; const r0 = t.getBoundingClientRect();
-      const flip = t.classList.contains('dv-org') ? 0 : -(r0.width + 16);
-      // 지도 밖으로 나가면 반대쪽(왼쪽)으로 뒤집거나 안쪽으로 밀기
+    const place = (t) => { const r0 = t.getBoundingClientRect(), flip = t.classList.contains('dv-org') ? 0 : -(r0.width + 16);
       const pull = Math.min(0, bb.right - 4 - r0.right) || Math.max(0, bb.left + 4 - r0.left);
-      for (const dx of [0, flip, pull]) for (const dy of [0, 16, -16, 30, -30]) { const r = {left: r0.left + dx, right: r0.right + dx, top: r0.top + dy - 1, bottom: r0.bottom + dy + 1};
-        if (inB(r) && !seen.some((q) => hit(r, q))) { t.style.marginTop = dy + 'px'; t.style.marginLeft = dx + 'px'; seen.push(r); return; } }
-      t.style.visibility = 'hidden'; }); };
+      for (const dx of [0, flip, pull]) for (const dy of [0, 18, -18, 34, -34, 50, -50]) { const r = {left: r0.left + dx, right: r0.right + dx, top: r0.top + dy, bottom: r0.bottom + dy};
+        if (inB(r) && !seen.some((q) => hit(r, q))) { t.style.marginTop = dy + 'px'; t.style.marginLeft = dx + 'px'; seen.push(r); return true; } }
+      return false; };
+    L_.forEach((t) => { t.style.visibility = ''; t.style.marginTop = '0px'; t.style.marginLeft = '0px'; t.classList.remove('dv-sm');
+      if (place(t)) return;
+      if (t.classList.contains('dv-rc')) { t.classList.add('dv-sm'); if (place(t)) return; t.classList.remove('dv-sm'); }  // 작게 줄여서 한 번 더
+      t.style.visibility = 'hidden'; if (t.classList.contains('dv-rc')) miss.push(t.textContent); });
+    // 지도에 끝내 못 넣은 도착지 라벨은 지도 아래 줄에 (지도 위에 겹치지 않게)
+    let m = root.querySelector('.dv-miss'); if (!m) { m = document.createElement('p'); m.className = 'dv-miss'; const dn = root.querySelector('.dv-down'); dn ? dn.before(m) : box.after(m); }
+    m.textContent = miss.length ? '지도에 다 못 적은 도착지: ' + miss.map((x) => x.replace(/^→\s*/, '')).join(' · ') : ''; m.hidden = !miss.length; };
   map.on('zoomend moveend', () => setTimeout(declutter, 30));
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
   // 세금 길: 도시 → 업체 소재지 선 그리기
@@ -83,7 +88,7 @@
       if (p && !RM) { const len = p.getTotalLength ? p.getTotalLength() : 1000; p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.style.transition = `stroke-dashoffset .9s ease-out ${i * 0.12}s`; requestAnimationFrame(() => requestAnimationFrame(() => (p.style.strokeDashoffset = 0))); }
       arcs.push({pts, w, col, n: Math.max(1, Math.round(1 + 5 * Math.sqrt(f.amount / mx))), d: i * 0.12});
       L.circleMarker(toLL(b), {radius: 3 + w / 3, color: col, weight: 1, fillOpacity: 0.9, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
-      if (i < 6) L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + ' ' + krw(f.amount))).addTo(gF);
+      L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + ' ' + krw(f.amount))).addTo(gF);
     });
     const oc = BY[slug] || {}; L.circleMarker(toLL(a), {radius: 11, color: '#ffd60a', weight: 2.5, fill: false, interactive: false, className: 'dv-ring'}).addTo(gF);
     L.tooltip({permanent: true, direction: 'top', className: 'klab dv-org', offset: [0, -10], interactive: false}).setLatLng(toLL(a)).setContent(esc((oc.name || '') + ' (발주)')).addTo(gF);

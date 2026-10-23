@@ -266,3 +266,6 @@ main.wrap{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
 #dive .leaflet-control-attribution{font-size:11px!important;line-height:15px!important;padding:1px 5px!important;background:rgba(0,0,0,.5)!important;color:#9aa5b1!important;opacity:.85}
 #dive .leaflet-control-attribution a{color:#b8c2cc!important}
 .dv-leader{pointer-events:none}
+.dv-sm{font-size:9.5px!important;padding:1px 4px!important}
+.dv-miss{margin:6px 4px 0;color:#ffb020;font-size:12px;line-height:17px}
+#dive .dv-miss{order:3;margin:6px 6px 0}#dive .dv-map{order:3}

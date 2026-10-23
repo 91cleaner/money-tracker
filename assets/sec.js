@@ -32,12 +32,13 @@ LOAD('data/sec_sole.json').then(d=>{
   $('share').innerHTML=d.share.slice(0,10).map(s=>{const p=Math.round(s.sn/s.n*100);return `<div class="row"><b>${E(s.name)}</b> 새 계약 ${s.n}건 중 수의계약 ${s.sn}건 (${p}%)<div class="bar"><b style="width:${p}%"></b></div></div>`}).join('')+`<p class="src">나라장터 공개 계약 기준(소액·긴급 수의계약은 법에서 허용) · ${SRC}</p>`;
   // 비용 비교 + 추정
   $('comp').innerHTML=(d.comp||[]).map((c,i)=>`<div class="rcp"><div class="no">🧾 영수증 #${String(i+1).padStart(3,'0')} · '${E(c.kw)}' 계약</div>
-   <div class="l"><span>${E(c.city)} 중앙값 (${c.cn}건)</span><b>₩${W(c.cmed)}</b></div>
+   <div class="l"><span>${E(c.city)} 중앙값 (${c.cn}건)${c.small?' <span class="tag">표본 적음</span>':''}</span><b>₩${W(c.cmed)}</b></div>
    <div class="l"><span>전국 중앙값 (${c.cities}개 시, ${c.n}건)</span><b>₩${W(c.med)}</b></div>
    <div class="l"><span>중앙값 대비 <abbr title="중앙값 = 비슷한 계약을 금액순으로 줄 세웠을 때 딱 가운데 값. +100%면 가운데 값의 2배라는 뜻이에요.">ⓘ</abbr></span><b style="color:#e11d48">+${c.pct}%</b></div>
    <div class="l"><span>만약 중앙값이었다면 절감 가능액 <span class="tag">추정</span></span><span class="save">₩${W(c.save)}</span></div>
    <details class="est"><summary>AI 추산 적정 비용 <small>(공개 통계로 계산한 참고 범위)</small> · 추정치 · 공식 금액 아님 · 산출 근거 보기</summary>
-   범위 ₩${W(c.p25)} ~ ₩${W(c.p75)} (전국 비슷한 계약의 하위 25%~상위 25%)<br>기준: 제목에 '${E(c.kw)}'가 들어간 수의계약 ${c.n}건(계약번호별 최신 차수, 변경 계약 포함·모든 시 같은 기준)의 중앙값 ₩${W(c.med)}<br>${E(c.city)} 중앙값과의 차이: ₩${W(c.cmed-c.med)} / 건<br>한계: 면적·수량·기간을 모르기 때문에 큰 일이면 당연히 비쌉니다. 위법 판단이 아닙니다.</details>
+   범위 ₩${W(c.p25)} ~ ₩${W(c.p75)} (전국 비슷한 계약의 하위 25%~상위 25%)<br>기준: 제목에 '${E(c.kw)}'가 들어간 수의계약 ${c.n}건(기간 안에 처음 맺은 계약만, 기간 전 계약의 변경·1년/반기 단가계약 제외, 모든 시 같은 기준)의 중앙값 ₩${W(c.med)}<br>${E(c.city)} 중앙값과의 차이: ₩${W(c.cmed-c.med)} / 건<br>한계: 면적·수량·기간을 모르기 때문에 큰 일이면 당연히 비쌉니다. 위법 판단이 아닙니다.</details>
+   ${(c.ids||[]).length?`<details class="est"><summary>${E(c.city)} 계약 ${c.ids.length}건 보기 (계약번호·차수)</summary>${c.ids.map(x=>`${x.u?`<a href="${E(x.u)}" target="_blank" rel="noopener">`:''}${E(x.no||'')} · ${E(x.ord||'')}차 · ₩${W(x.a)}${x.u?'</a>':''}<br><small>${E(x.t)}</small>`).join('<br>')}</details>`:''}
    <p class="src">${SRC}</p></div>`).join('');
   EMPTY(['cases','share','comp']);
 });
