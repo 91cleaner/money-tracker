@@ -38,7 +38,7 @@ LOAD('data/sec_sole.json').then(d=>{
    <div class="l"><span>전국 중간 가격으로 샀다면 아낄 수 있었던 돈 <span class="tag">추정</span></span><span class="save">₩${W(c.save)}</span></div>
    <p class="calc">계산 방법: ${E(c.city)}가 실제로 쓴 돈에서 ‘전국 중간 가격 × ${c.cn}건’을 뺐어요. 중간 가격보다 싸게 산 계약도 빼지 않고 그대로 넣었어요.</p>
    <details class="est"><summary>AI 추산 적정 비용 <small>(공개 통계로 계산한 참고 범위)</small> · 추정치 · 공식 금액 아님 · 산출 근거 보기</summary>
-   범위 ₩${W(c.p25)} ~ ₩${W(c.p75)} (전국 비슷한 계약의 하위 25%~상위 25%)<br>기준: 제목에 '${E(c.kw)}'가 들어간 경쟁 없이 맺은 계약 ${c.n}건(기간 안에 처음 맺은 계약만, 기간 전 계약의 변경·1년/반기 단가계약 제외, 모든 시 같은 기준)의 중간 가격 ₩${W(c.med)}<br>${E(c.city)} 중간 가격과의 차이: ₩${W(c.cmed-c.med)} / 건<br>한계: 면적·수량·기간을 모르기 때문에 큰 일이면 당연히 비쌉니다. 위법 판단이 아닙니다.</details>
+   범위 ₩${W(c.p25)} ~ ₩${W(c.p75)} (전국 비슷한 계약의 하위 25%~상위 25%)<br>기준: 제목에 '${E(c.kw)}'가 들어간 경쟁 없이 맺은 계약 ${c.n}건(기간 안에 처음 맺은 계약만, 기간 전 계약을 바꾼 것과 1년·반년 동안 단가를 정해 두고 여러 번 사는 계약은 뺌, 모든 시 같은 기준)의 중간 가격 ₩${W(c.med)}<br>${E(c.city)} 중간 가격과의 차이: ₩${W(c.cmed-c.med)} / 건<br>한계: 면적·수량·기간을 모르기 때문에 큰 일이면 당연히 비쌉니다. 위법 판단이 아닙니다.</details>
    ${(c.ids||[]).length?`<details class="est"><summary>${E(c.city)} 계약 ${c.ids.length}건 보기 (계약번호·차수)</summary>${c.ids.map(x=>`${x.u?`<a href="${E(x.u)}" target="_blank" rel="noopener">`:''}${E(x.no||'')} · ${E(x.ord||'')}차 · ₩${W(x.a)}${x.u?'</a>':''}<br><small>${E(x.t)}</small>`).join('<br>')}</details>`:''}
    <p class="src">${SRC}</p></div>`).join('');
   EMPTY(['cases','share','comp']);

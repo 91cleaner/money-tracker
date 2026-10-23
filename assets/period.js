@@ -1,6 +1,9 @@
 /* 기간 슬라이더: 7일·14일·30일(기본)·60일·90일·전체. 일별 집계(data/daily.json)를 더해 합계를 다시 만든다.
    URL: ?d=30 (최근 30일, 매일 움직임) · ?d=30&to=2026-10-23 (고정: 공유 링크용) · ?from=2026-10-01&to=2026-10-23 (임의 기간).
    data/index.json, data/city/*.json 요청을 가로채 고른 기간만 남긴다(다른 스크립트는 그대로). */
+window.plainT = (t) => String(t == null ? '' : t)
+  .replace(/견적\s*1곳만 받아도 되는 금액선\(추정가\s*2천만원\)\s*근처/g, '2천만원 바로 아래 계약(이 금액 아래면 업체 한 곳 견적만으로 계약할 수 있어요)')
+  .replace(/금액선/g, '기준 금액').replace(/추정가격?/g, '미리 어림한 금액').replace(/수의계약/g, '경쟁 없이 맺은 계약').replace(/단가계약/g, '단가를 정해 두고 여러 번 사는 계약');
 (() => {
   const Q = new URLSearchParams(location.search), STOPS = [7, 14, 30, 60, 90, 0];  // 0 = 전체
   const rf = window.fetch.bind(window);
@@ -20,7 +23,8 @@
   });
   let CW = null; WIN.then(w => { CW = w; });
   window.__pdCW = () => CW;
-  window.__pdLabel = () => { const w = CW; if (!w || !w.from) return null; if (w.fixed && Q.has('from')) return `${span(w.from, w.to)}일 (${+w.from.slice(5, 7)}.${+w.from.slice(8)}~)`; return w.d ? `최근 ${w.d}일` : `전체 (${+w.lo.slice(5, 7)}.${+w.lo.slice(8)}~)`; };
+  window.__pdLabel = () => { const w = CW; if (!w || !w.from) return null; if (w.fixed && Q.has('from')) return `${span(w.from, w.to)}일 (${+w.from.slice(5, 7)}.${+w.from.slice(8)}~)`; return w.d ? `최근 ${w.d}일` : `${+w.lo.slice(5, 7)}월 ${+w.lo.slice(8)}일부터 지금까지`; };
+  window.__pdWhen = () => { const l = window.__pdLabel && window.__pdLabel(); return !l ? '최근 30일 동안' : /^최근/.test(l) ? l + ' 동안' : l; };
   window.PERIOD = WIN;
   const sumCity = (m, w) => { const o = {n: 0, t: 0, cat: {}}; for (const k in m) if (k >= w.from && k <= w.to) { const v = m[k]; o.n += v[0]; o.t += v[1]; for (const c in v[2]) { const x = o.cat[c] || (o.cat[c] = [0, 0]); x[0] += v[2][c][0]; x[1] += v[2][c][1]; } } return o; };
   const fixIndex = (x, w) => { for (const c of x.cities || []) { const s = sumCity(w.dl.c[c.slug] || {}, w); c.count = s.n; c.total = s.t; c.by_cat = {}; c.n_cat = {}; for (const k in s.cat) { c.n_cat[k] = s.cat[k][0]; c.by_cat[k] = s.cat[k][1]; } } x.period = {from: w.from, to: w.to, d: w.d}; x.days = span(w.from, w.to); return x; };
@@ -87,7 +91,7 @@
     const show = (k, fr, to) => { inp.style.setProperty('--p', `calc(10px + (100% - 20px) * ${stops.length > 1 ? k / (stops.length - 1) : 0})`);
       const s = stops[k]; fr = fr || (s ? day(w.dl.last, 1 - s) : w.lo); to = to || w.dl.last; if (fr < w.lo) fr = w.lo;
       el.querySelector('.pd-l').textContent = Q.has('from') && fr === w.from ? `${span(fr, to)}일` : (s ? `최근 ${s}일` : L0);
-      el.querySelector('.pd-r').textContent = `${fmt(fr)}~${fmt(to).slice(5)} 계약일 기준${to === w.dl.last && !w.fixed ? ' (늘어날 수 있음)' : ''}`;
+      el.querySelector('.pd-r').textContent = `${fmt(fr)}~${fmt(to).slice(5)} 맺은 계약${to === w.dl.last && !w.fixed ? ' (늘어날 수 있음)' : ''}`;
       let n = 0, t = 0; for (const c in w.dl.c) { const x = sumCity(w.dl.c[c], {from: fr, to}); n += x.n; t += x.t; }
       el.querySelector('.pd-sum').textContent = `전국 85개 시 · ${n.toLocaleString()}건 · ₩${W(t)}${fr > (s ? day(to, 1 - s) : fr) ? ' · 자료가 있는 날부터' : ''}`;
     };

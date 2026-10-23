@@ -43,7 +43,9 @@
   }
   const gB = L.layerGroup().addTo(map);
   window.__dvBlink = (ss) => { gB.clearLayers(); (ss || []).forEach((s, i) => { const m = dots.get(s); if (!m) return;
-    L.circleMarker(m.getLatLng(), {radius: m.getRadius() + 7, color: i ? '#ffb020' : '#5ac8fa', weight: 3, fill: false, interactive: false, className: 'dv-blink'}).addTo(gB); }); };
+    const col = i ? '#ffb020' : '#5ac8fa'; L.circleMarker(m.getLatLng(), {radius: Math.max(18, m.getRadius() + 10), color: col, weight: 4, fill: false, interactive: false, className: 'dv-blink'}).addTo(gB);
+    const nm = (BY[s] || {}).short || (BY[s] || {}).name || ''; L.tooltip({permanent: true, direction: i ? 'right' : 'left', offset: [i ? 20 : -20, 0], className: 'klab gm-tip gm-tip' + i, interactive: false}).setLatLng(m.getLatLng()).setContent(esc(nm)).addTo(gB); });
+    if (ss && ss.length === 2 && !cur) { const b = L.latLngBounds(ss.map((s) => dots.get(s)).filter(Boolean).map((m) => m.getLatLng())); if (b.isValid() && !map.getBounds().pad(-0.1).contains(b)) map.fitBounds(b.pad(0.6), {maxZoom: 9, animate: !RM}); } };
   // 홈: 큰 시 8곳에 '이름 금액' 라벨
   const gL = L.layerGroup();
   const HL = new Map(), gLead = L.layerGroup().addTo(map);
@@ -194,7 +196,7 @@
     const arr = Object.values(BY).filter((x) => x.total != null).sort((a, b) => (b.total || 0) - (a.total || 0)); const rank = arr.findIndex((x) => x.slug === slug) + 1;
     const nEl = body.querySelector('.dv-n'), n = nEl ? +nEl.textContent || 0 : 0; const d = w.d != null ? w.d : 30;
     const base = location.origin + location.pathname.replace(/[^/]*$/, ''); const link = `${base}?c=${slug}&d=${d}${to ? '&to=' + to : ''}`;
-    return {name: c.name, total: c.total || 0, fr, to, label: (window.__pdLabel && window.__pdLabel()) || `최근 ${d}일`, rank, of: arr.length, n, link}; };
+    return {name: c.name, total: c.total || 0, fr, to, label: (window.__pdLabel && window.__pdLabel()) || `최근 ${d}일`, when: (window.__pdWhen && window.__pdWhen()) || `최근 ${d}일 동안`, rank, of: arr.length, n, link}; };
   const drawCard = (k) => { const cv = document.createElement('canvas'); cv.width = 1200; cv.height = 675; const g = cv.getContext('2d'), F = '"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif';
     const bg = g.createLinearGradient(0, 0, 1200, 675); bg.addColorStop(0, '#0b1118'); bg.addColorStop(1, '#05080c'); g.fillStyle = bg; g.fillRect(0, 0, 1200, 675);
     g.strokeStyle = 'rgba(80,140,200,.08)'; g.lineWidth = 1; for (let x = 0; x <= 1200; x += 40) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 675); g.stroke(); } for (let y = 0; y <= 675; y += 40) { g.beginPath(); g.moveTo(0, y); g.lineTo(1200, y); g.stroke(); }
@@ -210,12 +212,12 @@
     return cv; };
   window.__mtCard = (slug) => { const k = CARD(slug || cur); return k ? drawCard(k).toDataURL('image/png') : null; };
   const shareCard = async (slug) => { const k = CARD(slug); if (!k) return; const cv = drawCard(k);
-    const text = `우리 시는 ${k.label} 동안 계약에 돈을 얼마나 썼을까? ${k.name}는 ${krw(k.total)}, 전국 ${k.of}개 시 중 ${k.rank}번째로 많이 썼어요. 데이터상 이상 징후 ${k.n}건, 우리 시는 어떨까?`;
+    const text = `우리 시는 ${k.when} 계약에 돈을 얼마나 썼을까? ${k.name}는 ${krw(k.total)}, 전국 ${k.of}개 시 중 ${k.rank}번째로 많이 썼어요. 데이터상 이상 징후 ${k.n}건, 우리 시는 어떨까?`;
     const blob = await new Promise((r) => cv.toBlob(r, 'image/png')); const file = blob && new File([blob], `money-tracker-${slug}.png`, {type: 'image/png'});
     if (file && navigator.canShare && navigator.canShare({files: [file]})) { try { await navigator.share({files: [file], text: text + ' ' + k.link, url: k.link}); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
-    window.open('https://x.com/intent/post?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(k.link), '_blank', 'noopener');
+    const xu = 'https://x.com/intent/post?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(k.link);
     const u = blob ? URL.createObjectURL(blob) : cv.toDataURL('image/png'); const m = document.createElement('div'); m.className = 'dv-shm'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-label', '공유 이미지');
-    m.innerHTML = `<div class="dv-shm-b"><img alt="${esc(k.name)} 공유 이미지" src="${u}"><div class="dv-shm-a"><a class="dv-shm-s" download="money-tracker-${slug}.png" href="${u}">이미지 저장</a><button type="button" class="dv-shm-x">닫기</button></div></div>`;
+    m.innerHTML = `<div class="dv-shm-b"><img alt="${esc(k.name)} 공유 이미지" src="${u}"><div class="dv-shm-a"><a class="dv-shm-s" download="money-tracker-${slug}.png" href="${u}">이미지 저장</a><a class="dv-shm-xp" href="${xu}" target="_blank" rel="noopener">X에 올리기</a><button type="button" class="dv-shm-x">닫기</button></div></div>`;
     m.onclick = (e) => { if (e.target === m || e.target.closest('.dv-shm-x')) m.remove(); }; document.body.append(m); };
   body.addEventListener('click', (e) => { const b = e.target.closest('.dv-shc'); if (b && cur) { e.stopPropagation(); shareCard(cur); } });
   box.addEventListener('click', (e) => { const b = e.target.closest('.dv-sh'); if (b) { e.stopPropagation(); share(b.dataset.t, b.dataset.u); } });
@@ -268,7 +270,7 @@
       const vid = r.bh || r.vendor; const v = g._v[vid] || (g._v[vid] = {id: r.bh || '', name: r.vendor || '', amount: 0, count: 0}); v.amount += a; v.count++; }
     const flows = Object.values(m).map((g) => { g.vendors = Object.values(g._v).sort((a, b) => b.amount - a.amount); delete g._v; return g; }).sort((a, b) => b.amount - a.amount);
     return Object.assign({}, o, {flows, known, local, total, count, by_cat: {}, __re: 1}); };
-  const KN = {split: '같은 날 나눠진 계약', threshold: '금액선 바로 아래 계약', increase: '계약 금액이 늘어난 경우', repeat: '같은 업체와 여러 번 계약'};
+  const KN = {split: '같은 날 나눠진 계약', threshold: '기준 금액 바로 아래 계약', increase: '계약 금액이 늘어난 경우', repeat: '같은 업체와 여러 번 계약'};
   const wrapFill = (slug, A) => { const el = body.querySelector('.dv-wrap'); if (!el) return; const k = CARD(slug); if (!k) return; const c = BY[slug], f = fl.cities[slug];
     const outEl = body.querySelector('.dv-out'), out = outEl ? outEl.textContent.replace(/[^0-9]/g, '') : '';
     const fd = (x) => (x ? x.replace(/-/g, '.') : ''), rng = `${fd(k.fr)} ~ ${fd(k.to)}`, SR = '출처: 조달청 나라장터 공공데이터';
@@ -276,8 +278,8 @@
     const kc = {}; for (const a of A) kc[a.kind] = (kc[a.kind] || 0) + 1; const tk = Object.entries(kc).sort((a, b) => b[1] - a[1])[0];
     const card = (t, big, sub, src) => `<div class="wr-c"><p class="wr-t">${t}</p><p class="wr-b">${big}</p><p class="wr-s">${sub}</p><p class="wr-src">${src}</p></div>`;
     const cs = [
-      card(`${esc(k.name)}는 ${esc(k.label)} 동안`, krw(k.total), `계약으로 쓴 돈이에요. (${rng}, 계약일 기준)`, SR),
-      card('전국 85개 시 중에서', `${k.rank}번째`, `${k.label} 동안 계약에 쓴 돈이 ${k.of}개 시 중 ${k.rank}번째로 많아요.`, SR),
+      card(`${esc(k.name)}는 ${esc(k.when)}`, krw(k.total), `계약으로 쓴 돈이에요. (${rng}에 맺은 계약)`, SR),
+      card('전국 85개 시 중에서', `${k.rank}번째`, `${k.when} 계약에 쓴 돈이 ${k.of}개 시 중 ${k.rank}번째로 많아요.`, SR),
       card('다른 지역 업체가 받은 돈', out ? out + '%' : '확인 중', out ? `주소가 확인된 계약 금액 중 ${out}%가 다른 지역 업체에 갔어요.` : '업체 주소를 아직 확인하고 있어요.', SR + ' · 업체 주소 기준'),
       card('가장 많이 쓴 계약 종류', top ? esc(top[0]) : '자료 없음', top ? `${krw(top[1])}, 전체의 ${Math.round(top[1] / (k.total || 1) * 100)}%예요.` : '', SR + ' · 제목으로 나눈 종류'),
       card('데이터상 이상 징후', `${k.n.toLocaleString('ko-KR')}건`, k.n ? `가장 많은 유형: ${esc(KN[tk[0]] || tk[0])} ${tk[1]}건. 위법을 뜻하지 않고, 정상적인 이유가 있을 수 있어요.` : '이 기간에는 자동으로 찾은 패턴이 없어요.', SR + ' · 자동 패턴 검사'),
@@ -301,7 +303,7 @@
       if (window.__pdCW && window.__pdCW() && d.rows) { const f2 = reFlow(slug, d.rows); fl.cities[slug] = f2; const o2 = f2.known ? Math.round((1 - f2.local / f2.known) * 100) : null; const mt = body.querySelector('.dv-meta'); if (mt) mt.innerHTML = `${PL()} · ${c.total ? (o2 != null ? `<b class="dv-out">다른 지역 업체 ${o2}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}`; const t3 = body.querySelector('.dv-t3'); if (t3) t3.innerHTML = top3(f2); drawFlows(slug); }
       const A = (d.alerts || []).filter((a) => a.kind !== 'big' && (!gu || (a.detail || '').includes(gu)));
       body.querySelector('.dv-n').textContent = A.length; wrapFill(slug, A); A.splice(8); body.querySelector('.dv-chip').hidden = !A.length;
-      box2.innerHTML = A.length ? A.map((a, i) => `<button type="button" class="dv-card" data-i="${i}"><b>${esc(a.title)}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}</span><em>${krw(a.amount)} ›</em></button>`).join('') : '<p class="small">최근 눈에 띄는 패턴이 없습니다.</p>';
+      box2.innerHTML = A.length ? A.map((a, i) => `<button type="button" class="dv-card" data-i="${i}"><b>${esc((window.plainT || String)(a.title))}</b><span>${esc((window.plainT || String)((window.maskT || ((x) => x))(a.detail)))}</span><em>${krw(a.amount)} ›</em></button>`).join('') : '<p class="small">최근 눈에 띄는 패턴이 없습니다.</p>';
       car(box2);
       box2.querySelectorAll('.dv-card').forEach((b) => (b.onclick = () => { const a = A[+b.dataset.i]; const r = d.rows.find((x) => (a.ids || []).includes(x.id)); if (r && r.bh) go({c: slug, v: r.bh, a: a.key}); else if (r) window.open(r.url, '_blank', 'noopener'); }));
     } catch (e) { box2.innerHTML = '<p class="small">불러오지 못했어요.</p>'; }
@@ -317,7 +319,7 @@
       const rows = (v.rows || []).slice(0, 8);
       body.innerHTML = `<div class="dv-vh"><button type="button" class="dv-back" aria-label="${esc(BY[slug].name)}로 돌아가기">‹</button><p class="dv-name">${esc(v.name)}</p>${shb(v.name + ' 계약', 'vendor.html?v=' + vid)}</div><p class="dv-v" style="text-align:center">${krw(v.total)}</p>
         <p class="dv-l">${esc((v.region || '소재지 확인 중').split(' ').slice(-1)[0])} · <button type="button" class="dv-chip">계약 ${v.count}건</button></p>
-        <div class="dv-more">${a ? `<div class="dv-card on"><b>${esc(a.title)}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}</span></div>` : ''}
+        <div class="dv-more">${a ? `<div class="dv-card on"><b>${esc((window.plainT || String)(a.title))}</b><span>${esc((window.plainT || String)((window.maskT || ((x) => x))(a.detail)))}</span></div>` : ''}
         <div class="dv-rows">${rows.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(r.date)} · ${esc((window.maskT || ((x) => x))(r.title))}${r.jshare ? ` <i class="jvb">함께 맡음 ${r.jshare}%</i>` : ''}</span><b>${krw(r.amount)} 원문 ›</b></a>`).join('')}</div>
         <a class="gobtn" href="vendor.html?v=${vid}">업체 전체 보기</a>${src}</div>`;
       ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
@@ -358,7 +360,7 @@
       setTimeout(() => {
         const d = document.createElement('div'); d.className = 'dv-pick';
         d.innerHTML = `<button type="button" class="dv-pk-line"><span>이번 주 데이터상 이상 징후</span> <b>${esc(pk.short || pk.name)} ${krw(A.amount)}</b> ›</button>
-          <div class="dv-pk-x"><p class="dv-pk-r">${esc(A.title)}</p><div class="dv-pk-b"><a href="https://www.g2b.go.kr" target="_blank" rel="noopener">나라장터 원문</a><button type="button" data-sh>공유</button><button type="button" data-x>닫기</button></div>
+          <div class="dv-pk-x"><p class="dv-pk-r">${esc((window.plainT || String)(A.title))}</p><div class="dv-pk-b"><a href="https://www.g2b.go.kr" target="_blank" rel="noopener">나라장터 원문</a><button type="button" data-sh>공유</button><button type="button" data-x>닫기</button></div>
           <p class="dv-pk-s">출처: 조달청 나라장터(공공데이터포털) · 위법을 뜻하지 않아요</p></div>`;
         d.querySelector('.dv-pk-line').onclick = () => { if (d.classList.toggle('open')) go({c: pk.slug, _pick: 1}); };
         sheet.append(d);

@@ -11,7 +11,7 @@ const krw = (n) => {
 };
 const pct = (x) => (x == null ? '—' : Math.round(x * 100) + '%');
 const when = (iso) => { if (!iso) return '—'; return new Date(iso).toLocaleString('ko-KR', {month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}); };
-const LABEL = {split: '같은 날 나눠진 계약', threshold: '금액선 근처', increase: '계약 금액 증가', repeat: '같은 업체 반복', big: '1억 이상'};
+const LABEL = {split: '같은 날 나눠진 계약', threshold: '기준 금액 바로 아래', increase: '계약 금액 증가', repeat: '같은 업체 반복', big: '1억 이상'};
 const CATS = ['전체', '청소', '시설관리', '경비', '건설·공사', '용역·연구', '인쇄·홍보', '축제 공연·섭외', '물품', '기타'];
 const FEST = '축제 공연·섭외';
 // 축제 공연 분야를 고르면 안내 한 줄 (출연자 이름은 수집 단계에서 지움)
@@ -70,9 +70,9 @@ function alertList(box, alerts, opts = {}) {
     const top = el('div', 'top'); top.append(el('span', 'pill ' + a.kind, LABEL[a.kind] || a.kind));
     const slug = a.slug || opts.slug;
     if (slug) top.append(shareBtn(shareURL(slug, a.key), a.title));
-    it.append(top, el('span', 't', a.title));
+    it.append(top, el('span', 't', (window.plainT || String)(a.title)));
     if (a.amount != null) it.append(el('span', 'a', krw(a.amount)));
-    it.append(el('span', 'd', a.detail));
+    it.append(el('span', 'd', (window.plainT || String)(a.detail)));
     if (a.explanation && a.explanation.text) {
       const x = el('div', 'x'); x.append(el('b', '', '기관·업체 해명 '), document.createTextNode(`(${a.explanation.by || ''}${a.explanation.date ? ', ' + a.explanation.date : ''}) ${a.explanation.text}`)); it.append(x);
     }
@@ -198,7 +198,7 @@ async function homePage() {
   const catTot = {};
   for (const c of cities) for (const [k, v] of Object.entries(c.by_cat || {})) catTot[k] = (catTot[k] || 0) + v;
   const catList = Object.keys(catTot).filter((k) => catTot[k] > 0).sort((a, b) => catTot[b] - catTot[a]);
-  const heroDays = () => { const l = window.__pdLabel && window.__pdLabel(); const k = $('#days') && $('#days').parentNode; if (l && k) { k.firstChild.textContent = '전국 85개 시가 '; $('#days').textContent = l; $('#days').nextSibling.textContent = ' 동안 '; } };
+  const heroDays = () => { const l = window.__pdLabel && window.__pdLabel(); const k = $('#days') && $('#days').parentNode; if (l && k) { k.firstChild.textContent = '전국 85개 시가 '; $('#days').textContent = l; $('#days').nextSibling.textContent = /^최근/.test(l) ? ' 동안 ' : ' '; } };
   window.__mtPeriod = (i2) => { const B = {}; for (const c of i2.cities || []) B[c.slug] = c; for (const c of cities) if (B[c.slug]) Object.assign(c, B[c.slug]); idx.days = i2.days; heroDays(); setCat(cat); };
   setTimeout(heroDays, 0); setTimeout(heroDays, 1500);
   let mapCtl = null, draw = () => {}, alertsDraw = () => {};
