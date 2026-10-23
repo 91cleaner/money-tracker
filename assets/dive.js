@@ -249,9 +249,18 @@
   const render = () => { const q = new URLSearchParams(location.search); const c = q.get('c'), v = q.get('v');
     if (c && BY[c] && v && /^[0-9a-z]+$/.test(v)) L2(c, v, q.get('a')); else if (c && BY[c]) L1(c, q.get('gu')); else L0(); };
   const go = (st, replace) => { const pk0 = root.querySelector('.dv-pick'); if (pk0 && !st._pick) pk0.remove(); const q = new URLSearchParams(); if (st.c) q.set('c', st.c); if (st.gu) q.set('gu', st.gu); if (st.v) q.set('v', st.v); if (st.a) q.set('a', st.a);
+    { const q0 = new URLSearchParams(location.search); for (const k of ['d', 'from', 'to']) if (q0.has(k)) q.set(k, q0.get(k)); }  // 기간 유지
     const u = location.pathname + (q.toString() ? '?' + q : '') + '#map'; history[replace ? 'replaceState' : 'pushState']({dv: 1}, '', u); render();
     sheet.scrollTop = 0; body.classList.remove('dv-in'); void body.offsetWidth; body.classList.add('dv-in'); };
   addEventListener('popstate', render); window.__dvGo = go;
+  // 기간 슬라이더: 새로고침 없이 그 자리에서 숫자·원·이름표·지역 카드를 바꾼다 (period.js가 호출)
+  window.__dvPeriod = async () => { for (const k in J) delete J[k];
+    const [f2, i2] = await Promise.all([get('data/flows.json'), get('data/index.json')]);
+    fl.cities = f2.cities; for (const k in i2) if (k !== 'cities') idx[k] = i2[k];
+    for (const c of i2.cities) if (BY[c.slug]) { const o = BY[c.slug]; for (const k of Object.keys(o)) if (!(k in c)) delete o[k]; Object.assign(o, c); }
+    for (const c of cities) { const n = f2.cities[c.slug]; if (n) c.total = n.total; }
+    cities.sort((a, b) => b.total - a.total);
+    const st = sheet.scrollTop; window.__dvCat(CAT); if (cur) { render(); sheet.scrollTop = st; } };
   // 시트: 아래로 끌면 한 층 위로, 좌우로 밀면 지역 이동
   let sy = null, sx = 0;
   sheet.addEventListener('touchstart', (e) => { if (sheet.scrollTop > 0) { sy = null; return; } sy = e.touches[0].clientY; sx = e.touches[0].clientX; }, {passive: true});

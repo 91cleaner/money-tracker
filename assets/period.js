@@ -18,6 +18,7 @@
     if (from < lo) from = lo;
     return {dl, lo, from, to, d, fixed: Q.has('to') || Q.has('from'), explicit: Q.has('d') || Q.has('to') || Q.has('from')};
   });
+  let CW = null; WIN.then(w => { CW = w; });
   window.PERIOD = WIN;
   const sumCity = (m, w) => { const o = {n: 0, t: 0, cat: {}}; for (const k in m) if (k >= w.from && k <= w.to) { const v = m[k]; o.n += v[0]; o.t += v[1]; for (const c in v[2]) { const x = o.cat[c] || (o.cat[c] = [0, 0]); x[0] += v[2][c][0]; x[1] += v[2][c][1]; } } return o; };
   const fixIndex = (x, w) => { for (const c of x.cities || []) { const s = sumCity(w.dl.c[c.slug] || {}, w); c.count = s.n; c.total = s.t; c.by_cat = {}; c.n_cat = {}; for (const k in s.cat) { c.n_cat[k] = s.cat[k][0]; c.by_cat[k] = s.cat[k][1]; } } x.period = {from: w.from, to: w.to, d: w.d}; x.days = span(w.from, w.to); return x; };
@@ -44,7 +45,7 @@
     const isI = /(^|\/)data\/index\.json/.test(s), isC = /(^|\/)data\/city\/[^/]+\.json/.test(s), isF = /(^|\/)data\/flows\.json/.test(s);
     if (!isI && !isC && !isF) return rf(u, o);
     return Promise.all([rf(u, o), WIN]).then(([res, w]) => {
-      if (!w || !res.ok) return res;
+      w = CW || w; if (!w || !res.ok) return res;
       return res.json().then(x => new Response(JSON.stringify(isF ? fixFlows(x, w) : isI ? fixIndex(x, w) : fixCity(x, w)), {status: 200, headers: {'Content-Type': 'application/json'}}));
     });
   };
@@ -63,31 +64,36 @@
   const css = `.pd{margin:8px 6px 4px;padding:8px 12px 10px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(10,16,24,.6);font:600 12px/1.4 var(--sans,system-ui);color:#cfd8e3}
 .pd-top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.pd-top b{color:#ffb020;font-size:14px}.pd-r{color:#8fa0b3;font-weight:500}
 .pd input{width:100%;margin:8px 0 2px;accent-color:#ffb020;height:28px;touch-action:pan-y}.pd-t{display:flex;justify-content:space-between;color:#6b7785;font-size:10.5px}
-.pd-sum{color:#e8eef5;font-weight:500;margin-top:2px}#dive .pd{order:3}`;
+.pd-sum{color:#e8eef5;font-weight:500;margin-top:2px}#dive .pd{order:3}
+.pd{padding:6px 10px 7px!important;margin:6px 6px 4px!important}.pd input{margin:2px 0 0!important;height:24px!important}.pd-sum{margin-top:0!important}
+@media (min-width:900px){#dive .pd{grid-column:1;grid-row:3!important;margin:0 0 8px}#dive .dv-map{grid-row:4!important;height:calc(100dvh - 400px)!important;min-height:340px!important}#dive .maplg{grid-column:1;grid-row:5}#dive .dv-sheet{grid-row:2/6!important}}`;
   const mount = w => {
     if (!w || document.querySelector('.pd')) return;
-    const cov = span(w.lo, w.dl.last), stops = STOPS.filter(s => s === 0 || s < cov);
+    const cov = span(w.lo, w.dl.last), stops = STOPS.filter(s => s === 0 || s <= cov), L0 = `전체 (${+w.lo.slice(5, 7)}.${+w.lo.slice(8)}~)`;
     let i = stops.indexOf(w.fixed && Q.has('from') ? -1 : w.d); if (i < 0) i = stops.indexOf(30) >= 0 ? stops.indexOf(30) : stops.length - 1;
     const st = document.createElement('style'); st.textContent = css; document.head.append(st);
     const el = document.createElement('div'); el.className = 'pd';
-    el.innerHTML = `<div class="pd-top"><b class="pd-l"></b><span class="pd-r"></span></div><input type="range" min="0" max="${stops.length - 1}" step="1" value="${i}" aria-label="기간"><div class="pd-t">${stops.map(s => `<span>${s ? s + '일' : '전체'}</span>`).join('')}</div><div class="pd-sum"></div>`;
+    el.innerHTML = `<div class="pd-top"><b class="pd-l"></b><span class="pd-r"></span></div><input type="range" min="0" max="${stops.length - 1}" step="1" value="${i}" aria-label="기간"><div class="pd-t">${stops.map(s => `<span>${s ? s + '일' : L0}</span>`).join('')}</div><div class="pd-sum"></div>`;
     const inp = el.querySelector('input');
     const show = (k, fr, to) => {
       const s = stops[k]; fr = fr || (s ? day(w.dl.last, 1 - s) : w.lo); to = to || w.dl.last; if (fr < w.lo) fr = w.lo;
-      el.querySelector('.pd-l').textContent = Q.has('from') && fr === w.from ? `${span(fr, to)}일` : (s ? `최근 ${s}일` : '전체');
+      el.querySelector('.pd-l').textContent = Q.has('from') && fr === w.from ? `${span(fr, to)}일` : (s ? `최근 ${s}일` : L0);
       el.querySelector('.pd-r').textContent = `${fmt(fr)}~${fmt(to).slice(5)} 계약일 기준${to === w.dl.last && !w.fixed ? ' (늘어날 수 있음)' : ''}`;
       let n = 0, t = 0; for (const c in w.dl.c) { const x = sumCity(w.dl.c[c], {from: fr, to}); n += x.n; t += x.t; }
       el.querySelector('.pd-sum').textContent = `전국 85개 시 · ${n.toLocaleString()}건 · ₩${W(t)}${fr > (s ? day(to, 1 - s) : fr) ? ' · 자료가 있는 날부터' : ''}`;
     };
     show(i, w.from, w.to);
-    let tl, tn;
-    inp.addEventListener('input', () => { clearTimeout(tl); tl = setTimeout(() => show(+inp.value), 60); });
-    inp.addEventListener('change', () => { clearTimeout(tn); tn = setTimeout(() => {
-      const s = stops[+inp.value], u = new URL(location.href); ['d', 'from', 'to'].forEach(k => u.searchParams.delete(k));
-      if (s !== 30) u.searchParams.set('d', String(s)); if (s !== 30 || w.explicit) u.searchParams.set('to', w.dl.last);
-      if (s === 30 && !w.explicit) u.searchParams.delete('to');
-      sessionStorage.setItem('pd-y', String(scrollY)); location.replace(u.toString());
-    }, 350); });
+    let tl, busy = Promise.resolve();
+    const apply = () => { const k = +inp.value, s = stops[k], to = w.dl.last, fr = s ? day(to, 1 - s) : w.lo;
+      show(k);
+      CW = {...(CW || w), from: fr < w.lo ? w.lo : fr, to, d: s, fixed: false, explicit: s !== 30};
+      const u = new URL(location.href); ['d', 'from', 'to'].forEach(x => u.searchParams.delete(x)); Q.delete('d'); Q.delete('from'); Q.delete('to');
+      if (s !== 30) { u.searchParams.set('d', String(s)); u.searchParams.set('to', to); Q.set('d', String(s)); Q.set('to', to); }
+      history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+      if (window.__dvPeriod) busy = busy.then(() => window.__dvPeriod()).catch(() => {});
+      else { sessionStorage.setItem('pd-y', String(scrollY)); location.replace(u.toString()); } };
+    inp.addEventListener('input', () => { show(+inp.value); clearTimeout(tl); tl = setTimeout(apply, window.__dvPeriod ? 120 : 400); });
+    inp.addEventListener('change', () => { clearTimeout(tl); apply(); });
     const map = document.querySelector('#dive .dv-map');
     if (map) map.parentNode.insertBefore(el, map);
     else { const h = document.querySelector('main h1, header + * h1, h1'); (h && h.parentNode ? h.parentNode.insertBefore(el, h.nextSibling) : document.body.prepend(el)); }
