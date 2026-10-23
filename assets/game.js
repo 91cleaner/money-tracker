@@ -25,9 +25,12 @@
     ring(); };
   // 지도 링은 게임 카드가 화면에 보이거나 #game일 때만
   // 폰: 지도와 게임 카드가 한 화면에 안 보이므로, 카드를 한 번 보면 답하거나 다른 도시를 고를 때까지 링 유지
+  // 첫 화면에서 카드가 잠깐 보이는 순간(레이아웃 전)은 무시: 손님이 스크롤한 뒤에만
+  let moved = false; ['wheel', 'touchmove', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, () => { moved = true; upd(); }, {capture: true, passive: true, once: true}));
   const MOB = matchMedia('(max-width:899px)');
   let seen = location.hash === '#game'; const ring = () => window.__dvBlink && window.__dvBlink(seen && pair ? [pair[0].slug, pair[1].slug] : []);
-  if ('IntersectionObserver' in window) new IntersectionObserver((es) => { const v = (es.some((e) => e.isIntersecting) && scrollY > 80) || location.hash === '#game'; if (MOB.matches && !v) return; if (v !== seen) { seen = v; ring(); } }, {threshold: 0.15}).observe(root);
+  let vis = false; function upd() { const v = (vis && moved) || location.hash === '#game'; if (MOB.matches && !v) return; if (v !== seen) { seen = v; ring(); } }
+  if ('IntersectionObserver' in window) new IntersectionObserver((es) => { vis = es[es.length - 1].isIntersecting; upd(); }, {threshold: 0.15}).observe(root);
   addEventListener('hashchange', () => { if (location.hash === '#game') { seen = true; ring(); } });
   const next = () => { done = false; pair = pick(); draw(); };
   const answer = (i) => { if (done || !pair) return; done = true; const [a, b] = pair, win = (pair[i].total >= pair[1 - i].total);
