@@ -52,7 +52,7 @@ LOAD('data/sec_fest.json').then(f=>{
   const $=id=>document.getElementById(id);
   $('f-sum').textContent='₩'+W(f.sum);
   $('f-meta').textContent=`${f.year}년 비용이 공개된 행사 ${f.n}건(추적 중인 시) · 전국 ${f.n_all}건 중 중간 비용 ₩${W(f.med)} · ${LSRC(f.year)} 행사축제원가회계정보`;
-  const top=f.top[0]||{cname:'',nm:'',cost:0};const L=['> 지방재정365 행사 비용 스캔…',`> ${f.year}년 행사 ${f.n_all}건 확인`,`> 최대: ${top.cname} '${top.nm}' ₩${W(top.cost)}`,`> 고비용 상위 중 사업수익 0원 ${f.zero.length}건 (무료 행사일 수 있음)`,'> 데이터상 이상 징후 분류 완료 · 기관 설명 확인 전','> TRACKING… █'];
+  const top=f.top[0]||{cname:'',nm:'',cost:0};const L=['> 지방재정365 행사 비용 스캔…',`> ${f.year}년 행사 ${f.n_all}건 확인`,`> 최대: ${top.cname} '${top.nm}' ₩${W(top.cost)}`,...(f.zero&&f.zero.length?[`> 고비용 상위 중 사업수익 0원 ${f.zero.length}건 (무료 행사일 수 있음)`]:[]),'> 데이터상 이상 징후 분류 완료 · 기관 설명 확인 전','> TRACKING… █'];
   let i=0;const fd=$('f-feed');fd.textContent='';const st=()=>{if(i<L.length){fd.textContent+=L[i++]+'\n';setTimeout(st,450)}};st();
   const sp=f.top[new Date().getDate()%Math.max(1,Math.min(5,f.top.length))];
   if(sp)$('f-spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(sp.cname)} · ${E(sp.nm)}</b><br>총비용 ₩${W(sp.cost)} · 사업수익 ${sp.rev==null?'기록 없음':'₩'+W(sp.rev)} · ${sp.days||'?'}일<p class="src">${LSRC(f.year)}</p></div>`;
