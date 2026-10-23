@@ -20,7 +20,7 @@
     const left = pa[0] <= pb[0] ? 0 : 1;
     const dot = (k) => { const [x, y] = P[k], nm = esc([a, b][k].name.replace(/(특별자치시|특별자치도|특별시|광역시)$/, '')), win = wi === k, lose = wi >= 0 && !win, L_ = k === left;
       const dy = Math.abs(pa[1] - pb[1]) < 26 ? (k ? 16 : -10) : 5;
-      return `<g opacity="${lose ? 0.45 : 1}">${win ? `<circle cx="${x}" cy="${y}" r="26" fill="none" stroke="${col[k]}" stroke-width="5"/>` : ''}<circle cx="${x}" cy="${y}" r="${win ? 15 : 11}" fill="${col[k]}" stroke="#03070b" stroke-width="4"/>`
+      return `<g opacity="${lose ? 0.45 : 1}">${win ? `<circle cx="${x}" cy="${y}" r="36" fill="none" stroke="${col[k]}" stroke-width="7"/>` : ''}<circle cx="${x}" cy="${y}" r="${win ? 20 : 15}" fill="${col[k]}" stroke="#03070b" stroke-width="4"/>`
         + `<text x="${x + (L_ ? -20 : 20)}" y="${y + dy}" text-anchor="${L_ ? 'end' : 'start'}" fill="${col[k]}" stroke="#03070b" stroke-width="8" paint-order="stroke" font-size="40" font-weight="800">${nm}${win ? ' 정답' : ''}</text></g>`; };
     return `<figure class="gm-mini" aria-hidden="true"><svg viewBox="110 10 440 640" style="overflow:visible" preserveAspectRatio="xMidYMid meet">${GEO.provinces.map((v) => `<path d="${v.d}"/>`).join('')}${dot(0)}${dot(1)}</svg></figure>`; };
   const draw = () => {
