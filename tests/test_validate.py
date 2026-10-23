@@ -39,8 +39,13 @@ def build(spec, d):
             ce = e[2].setdefault(r["cat"], [0, 0]); ce[0] += 1; ce[1] += r["amount"]
     if not spec.get("no_daily"):
         json.dump({"last": "2026-10-23", "c": daily}, open(os.path.join(d, "daily.json"), "w"), ensure_ascii=False)
+    if "dq" in spec:
+        json.dump(spec["dq"], open(os.path.join(d, "daily_q.json"), "w"), ensure_ascii=False)
     json.dump(spec["sole"], open(os.path.join(d, "sec_sole.json"), "w"), ensure_ascii=False)
     json.dump(spec["fest"], open(os.path.join(d, "sec_fest.json"), "w"), ensure_ascii=False)
+
+
+EXPECT_RNG = [0.667166447267, 0.590798220597, 0.605271923821]  # node 로 assets/daily.js rnd() 를 돌린 값
 
 
 class Gate(unittest.TestCase):
@@ -117,6 +122,33 @@ class Gate(unittest.TestCase):
         from privacy import kor
         a = kor("산림기술사사무소 아트(Art)林")
         self.assertEqual(kor(kor(a)), a)
+
+    def test_26_daily_q_frozen(self):
+        Q = {"2026-10-23": {"a": "paju", "b": "mungyeong", "av": 14209413250, "bv": 6322796400, "from": "2026-09-23", "to": "2026-10-22"}}
+        prev = copy.deepcopy(BASE); prev["dq"] = copy.deepcopy(Q)
+        ok = lambda s: s.update(dq={**copy.deepcopy(Q), "2026-10-24": {"a": "x", "b": "y", "av": 2, "bv": 1, "from": "2026-09-24", "to": "2026-10-23"}})
+        s = copy.deepcopy(BASE); ok(s)
+        with tempfile.TemporaryDirectory() as d, tempfile.TemporaryDirectory() as p:
+            build(s, d); build(prev, p); self.assertEqual([e for e in validate.check(d, p)[0] if "[26" in e], [])
+        for bad in (lambda q: q["2026-10-23"].update(av=1), lambda q: q.pop("2026-10-23")):
+            s = copy.deepcopy(BASE); s["dq"] = copy.deepcopy(Q); bad(s["dq"])
+            with tempfile.TemporaryDirectory() as d, tempfile.TemporaryDirectory() as p:
+                build(s, d); build(prev, p); self.assertTrue(any("[26 오늘의 문제]" in e for e in validate.check(d, p)[0]))
+
+    def test_daily_q_never_overwrites(self):
+        import sys; sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "collector", "sections"))
+        import daily_q
+        with tempfile.TemporaryDirectory() as d:
+            build(BASE, d)
+            json.dump({"2026-10-23": {"a": "keep", "b": "me", "av": 1, "bv": 2, "from": "x", "to": "y"}}, open(os.path.join(d, "daily_q.json"), "w"))
+            q = daily_q.main(d, ["2026-10-23"])
+            self.assertEqual(q["2026-10-23"]["a"], "keep")
+
+    def test_daily_q_rng_matches_js(self):
+        import sys; sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "collector", "sections"))
+        import daily_q
+        r = daily_q.rnd("mt-daily|2026-10-23")
+        self.assertEqual([round(r(), 12) for _ in range(3)], EXPECT_RNG)
 
     def test_sectors_narrow(self):
         self.assertIsNone(kw.sole_sector("생활폐기물 감량 연구용역"))

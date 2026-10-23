@@ -51,6 +51,7 @@ jobs:
         run: |
           mkdir -p /tmp/prev && git archive HEAD data | tar -x -C /tmp/prev
           python collector/sections/sole.py   # 비교 섹션을 새 도시 데이터와 맞춰 다시 계산
+          python collector/sections/daily_q.py   # 오늘의 한 문제: 오늘·내일 날짜를 없을 때만 고정(기존 날짜는 안 바꿈)
           python -m unittest discover -s tests
           python collector/validate.py data --prev /tmp/prev/data
       - name: 바뀐 데이터 저장

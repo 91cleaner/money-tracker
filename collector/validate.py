@@ -280,6 +280,20 @@ def check(root, prev=None):
         ids = [v.get("id") for v in _load(rp).get("vendors", [])]
         if len([i for i in ids if i]) != len({i for i in ids if i}): E("[1 중복] rank.json 같은 업체가 두 번")
 
+    # (26) 오늘의 한 문제 고정: 이전에 있던 날짜는 그대로여야 함(지워지거나 숫자·도시가 바뀌면 실패)
+    qp = os.path.join(root, "daily_q.json")
+    if os.path.exists(qp):
+        dq = _load(qp)
+        for k, v in dq.items():
+            if not re.fullmatch(r"\d{4}-\d\d-\d\d", k) or set(v) != {"a", "b", "av", "bv", "from", "to"} or v["a"] == v["b"]:
+                E(f"[26 오늘의 문제] {k} 형식이 맞지 않음")
+        if prev and os.path.exists(os.path.join(prev, "daily_q.json")):
+            for k, v in _load(os.path.join(prev, "daily_q.json")).items():
+                if dq.get(k) != v:
+                    E(f"[26 오늘의 문제] {k} 고정된 문제가 바뀌거나 사라짐: {v} → {dq.get(k)}")
+    elif prev and os.path.exists(os.path.join(prev, "daily_q.json")):
+        E("[26 오늘의 문제] daily_q.json 이 사라짐")
+
     # (7) 급변 경고
     if prev and os.path.exists(os.path.join(prev, "index.json")):
         pi = _load(os.path.join(prev, "index.json"))
