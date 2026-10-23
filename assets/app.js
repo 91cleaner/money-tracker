@@ -23,11 +23,17 @@ async function getJSON(path) {
   return r.json();
 }
 
-async function share(url, title, btn) {
-  if (navigator.share) { try { await navigator.share({title, url}); } catch (e) {} return; }
-  try { await navigator.clipboard.writeText(url); } catch (e) { prompt('링크를 복사하세요', url); return; }
-  const old = btn.textContent; btn.textContent = '링크 복사됨'; setTimeout(() => (btn.textContent = old), 1600);
-}
+// 공유 미지원 → 복사 + 자동으로 사라지는 토스트 (모달 없음)
+window.mtCopy = async (url) => { url = new URL(url, location.href).href;
+  try { await navigator.clipboard.writeText(url); } catch (e) { const t = document.createElement('textarea'); t.value = url; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;opacity:0'; document.body.append(t); t.select(); try { document.execCommand('copy'); } catch (_) {} t.remove(); }
+  const d = document.createElement('div'); d.className = 'mt-toast'; d.setAttribute('role', 'status'); d.textContent = '복사되었어요'; document.body.append(d); setTimeout(() => d.classList.add('out'), 1500); setTimeout(() => d.remove(), 1900); };
+window.mtShare = async (url, title) => { if (navigator.share) { try { await navigator.share({title, url: new URL(url, location.href).href}); } catch (e) {} return; } mtCopy(url); };
+async function share(url, title) { return mtShare(url, title); }
+// 팁·안내 배너: 닫으면 계속 닫힘
+document.addEventListener('DOMContentLoaded', () => document.querySelectorAll('.tipban[data-id]').forEach((b) => { const k = 'tip:' + b.dataset.id; if (localStorage.getItem(k)) return b.remove();
+  const x = document.createElement('button'); x.type = 'button'; x.className = 'tip-x'; x.setAttribute('aria-label', '닫기'); x.textContent = '×'; x.onclick = () => { try { localStorage.setItem(k, '1'); } catch (e) {} b.remove(); }; b.append(x); }));
+// 지도 아래 카드로 스크롤하면 헤더를 로고+티커 한 줄로
+{ let on = false; const f = () => { const m = document.querySelector('#dive .dv-map'); const v = !!m && m.getBoundingClientRect().bottom < 60; if (v !== on) { on = v; document.body.classList.toggle('hdr-min', v); } }; addEventListener('scroll', f, {passive: true}); }
 const shareBtn = (url, title, cls = 'sharebtn') => { const b = el('button', cls, '공유하기'); b.type = 'button'; b.addEventListener('click', () => share(url, title, b)); return b; };
 
 function emptyBox(title, text, live) {
@@ -135,7 +141,7 @@ async function funHome(idx, getCat) {
   });
   // 이번 주 영수증: 보일 때만 시 데이터를 불러옴
   const tb = $('#rcpt tbody'); if (!tb) return;
-  tb.append(Object.assign(el('tr'), {innerHTML: '<td colspan="3">영수증을 모으는 중…</td>'}));
+  tb.append(Object.assign(el('tr'), {innerHTML: '<td colspan="2">영수증을 모으는 중…</td>'}));
   whenNear($('#receipts'), async () => {
     const all = [];
     const last = idx.updated ? new Date(idx.updated) : new Date(); const cut = new Date(last - 7 * 864e5).toISOString().slice(0, 10);
@@ -147,12 +153,13 @@ async function funHome(idx, getCat) {
       const list = all.filter((r) => cat === '전체' || r.cat === cat).sort((a, b) => key === 'amount' ? b.amount - a.amount : (b.date > a.date ? 1 : b.date < a.date ? -1 : b.amount - a.amount));
       tb.replaceChildren();
       for (const r of list.slice(0, n)) {
-        const tr = el('tr'), a = el('a'); a.href = r.url || shareURL(r.city.slug); a.target = '_blank'; a.rel = 'noopener';
-        a.append(el('b', '', r.title), el('small', '', `${r.city.short} · ${r.inst} → ${r.vendor || '—'}`));
-        const t2 = el('td'); t2.append(a);
-        tr.append(el('td', '', (r.date || '').slice(5).replace('-', '.')), t2, el('td', 'num', krw(r.amount))); tb.append(tr);
+        const tr = el('tr', 'rc3'), a = el('a'); a.href = r.url || shareURL(r.city.slug); a.target = '_blank'; a.rel = 'noopener';
+        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.method && /수의/.test(r.method) ? '수의계약' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', '', x)));
+        a.append(el('small', 'rc-ag', r.inst || ''), el('b', 'rc-amt', krw(r.amount)), ch); a.title = r.title || '';
+        const t2 = el('td'); t2.colSpan = 2; t2.append(a);
+        tr.append(el('td', 'rc-no', String(tb.children.length + 1).padStart(2, '0')), t2); tb.append(tr);
       }
-      if (!list.length) tb.append(Object.assign(el('tr'), {innerHTML: '<td colspan="3">이번 주 해당 계약이 없어요</td>'}));
+      if (!list.length) tb.append(Object.assign(el('tr'), {innerHTML: '<td colspan="2">이번 주 해당 계약이 없어요</td>'}));
       const m = $('#rcpt-more'); m.hidden = list.length <= n;
     };
     btns.forEach((b) => b.addEventListener('click', () => { key = b.dataset.k; btns.forEach((x) => { x.setAttribute('aria-pressed', x === b); x.textContent = (x.dataset.k === 'date' ? '날짜' : '금액') + (x === b ? ' ↓' : ''); }); draw(); }));

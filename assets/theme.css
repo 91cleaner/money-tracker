@@ -188,3 +188,18 @@ body[data-page] .stickybar{display:none}
 .dv-rcv{animation:rcv 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes rcv{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.45);opacity:.55}}
 @media (prefers-reduced-motion:reduce){.dv-rcv{animation:none}#dive .dv-fx{display:none}}
+
+/* 토스트·배너·영수증 3줄·헤더 접기 */
+.mt-toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:3000;background:rgba(30,34,40,.96);color:#fff;font-size:14px;padding:10px 16px;border-radius:20px;border:1px solid #2a3038;transition:opacity .35s}
+.mt-toast.out{opacity:0}
+.tipban{position:relative;font-size:12px;padding:8px 36px 8px 12px;border-radius:10px;background:#11161c;border:1px solid #222a33;color:#aab4bf;margin:8px 0}
+.tip-x{position:absolute;right:0;top:0;width:44px;height:100%;min-height:32px;background:none;border:0;color:#8a95a1;font-size:16px}
+#rcpt tr.rc3 td{vertical-align:top;padding:10px 6px}
+#rcpt .rc-no{width:28px;color:#6b7682;font-size:12px;font-variant-numeric:tabular-nums}
+#rcpt .rc3 a{display:block;text-decoration:none;color:inherit}
+#rcpt .rc-ag{display:block;color:#9aa5b1;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#rcpt .rc-amt{display:block;font-size:17px;color:#fff;margin:2px 0 4px}
+#rcpt .rc-chips{display:flex;gap:4px;flex-wrap:wrap}
+#rcpt .rc-chips i{font-style:normal;font-size:11px;padding:2px 7px;border-radius:9px;background:#1a2028;color:#b9c3cd}
+body.hdr-min .dv-h1{visibility:hidden}
+body.hdr-min .ticker{box-shadow:0 1px 0 #222a33}

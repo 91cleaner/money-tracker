@@ -132,7 +132,7 @@
   const src = '<p class="dv-src"><abbr title="데이터상 이상 징후는 위법을 뜻하지 않으며 정상적인 이유가 있을 수 있습니다. 공동도급은 지분이 확인된 계약만 지분대로 나눕니다.">ⓘ</abbr> 출처 조달청 나라장터</p>';
   const share = (title, u) => { u = new URL(u, location.href).href;
     if (navigator.share) return navigator.share({title, url: u}).catch(() => {});
-    (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast('링크를 복사했어요'), () => prompt('링크', u)); };
+    window.mtCopy ? mtCopy(u) : toast('링크: ' + u); };
   const toast = (m) => { const d = document.createElement('div'); d.className = 'dv-toast'; d.textContent = m; box.append(d); setTimeout(() => d.remove(), 1800); };
   const shb = (t, u) => `<button type="button" class="dv-sh" data-t="${esc(t)}" data-u="${esc(u)}" aria-label="공유">공유</button>`;
   box.addEventListener('click', (e) => { const b = e.target.closest('.dv-sh'); if (b) { e.stopPropagation(); share(b.dataset.t, b.dataset.u); } });
@@ -219,7 +219,7 @@
         sheet.prepend(d);
         d.querySelector('[data-x]').onclick = () => { d.remove(); if (cur) go({}, true); };
         d.querySelector('[data-sh]').onclick = () => { const u = location.href.replace(/[^/]*([?#].*)?$/, '') + 'c/' + pk.slug + '.html#' + A.key;
-          navigator.share ? navigator.share({title: '데이터상 이상 징후 · ' + pk.name, url: u}).catch(() => {}) : navigator.clipboard && navigator.clipboard.writeText(u); };
+          navigator.share ? navigator.share({title: '데이터상 이상 징후 · ' + pk.name, url: u}).catch(() => {}) : window.mtCopy && mtCopy(u); };
         addEventListener('popstate', () => d.remove(), {once: true});
         const rm = () => { const c = new URLSearchParams(location.search).get('c'); if (c && c !== pk.slug) d.remove(); };
         addEventListener('click', () => setTimeout(rm, 50)); }, 600); }
