@@ -54,7 +54,7 @@
   map.on('zoomend moveend', () => setTimeout(declutter, 30));
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
   // 세금 길: 도시 → 업체 소재지 선 그리기
-  const drawFlows = (slug) => {
+  const drawFlows = (slug, hold) => {
     gF.clearLayers(); FX.set([]); const c = fl.cities[slug]; if (!c || !c.flows.length) return; const arcs = [];
     const a = c.p, top = c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10), mx = top[0] ? top[0].amount : 1;
     top.forEach((f, i) => {
@@ -67,25 +67,27 @@
       if (p && !RM) { const len = p.getTotalLength ? p.getTotalLength() : 1000; p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.style.transition = `stroke-dashoffset .9s ease-out ${i * 0.12}s`; requestAnimationFrame(() => requestAnimationFrame(() => (p.style.strokeDashoffset = 0))); }
       arcs.push({pts, w, col, n: Math.max(1, Math.round(1 + 5 * Math.sqrt(f.amount / mx))), d: i * 0.12});
       L.circleMarker(toLL(b), {radius: 3 + w / 3, color: col, weight: 1, fillOpacity: 0.9, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
-      if (i < 6) L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent(esc((f.local && i === 0 && !f.to ? '' : (f.to || '').split(' ').slice(-1)[0] + ' ') + krw(f.amount))).addTo(gF);
+      if (i < 6) L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + ' ' + krw(f.amount))).addTo(gF);
     });
-    setTimeout(declutter, 50); if (cur === slug || !cur) FX.set(arcs);
+    const oc = BY[slug] || {}; L.circleMarker(toLL(a), {radius: 11, color: '#ffd60a', weight: 2.5, fill: false, interactive: false, className: 'dv-ring'}).addTo(gF);
+    L.tooltip({permanent: true, direction: 'top', className: 'klab dv-org', offset: [0, -10], interactive: false}).setLatLng(toLL(a)).setContent(esc((oc.name || '') + ' (발주)')).addTo(gF);
+    setTimeout(declutter, 50); FX.set(arcs, hold);
   };
   // 돈 흐름 입자 (canvas · 도시 화면에서만)
-  const FX = (() => { const cv = document.createElement('canvas'); cv.className = 'dv-fx'; cv.setAttribute('aria-hidden', 'true'); box.append(cv);
+  const FX = (() => { const pane = map.createPane('fx'); pane.style.zIndex = 450; pane.style.pointerEvents = 'none'; const cv = document.createElement('canvas'); cv.className = 'dv-fx'; cv.setAttribute('aria-hidden', 'true'); pane.append(cv); let held = false;
     const g = cv.getContext('2d'), ph = matchMedia('(pointer:coarse)').matches, CAP = ph ? 40 : 120; let A = [], P = [], raf = 0, t0 = 0, moving = false;
     const size = () => { const r = devicePixelRatio || 1, w = box.clientWidth, h = box.clientHeight; cv.width = w * r; cv.height = h * r; cv.style.width = w + 'px'; cv.style.height = h + 'px'; g.setTransform(r, 0, 0, r, 0, 0); };
     const at = (pts, u) => { const k = u * (pts.length - 1), i = Math.min(pts.length - 2, Math.floor(k)), f = k - i, a = map.latLngToContainerPoint(pts[i]), b = map.latLngToContainerPoint(pts[i + 1]); return [a.x + (b.x - a.x) * f, a.y + (b.y - a.y) * f]; };
-    const loop = (ts) => { raf = 0; if (!A.length || document.hidden) return; g.clearRect(0, 0, cv.width, cv.height);
+    const loop = (ts) => { raf = 0; if (!A.length || document.hidden || held) return; L.DomUtil.setPosition(cv, map.containerPointToLayerPoint([0, 0])); g.clearRect(0, 0, cv.width, cv.height);
       if (!moving) { const el = (ts - t0) / 1000; g.globalCompositeOperation = 'lighter';
-        for (const p of P) { const a = A[p.a]; if (el < a.d + 0.9) continue; p.u += p.s; if (p.u > 1) p.u -= 1;
+        for (const p of P) { const a = A[p.a]; if (el < a.d * 0.5 + 0.1) continue; p.u += p.s; if (p.u > 1) p.u -= 1;
           const [x, y] = at(a.pts, p.u), r = 1.2 + a.w / 4; g.fillStyle = a.col; g.globalAlpha = 0.25; g.beginPath(); g.arc(x, y, r * 2.4, 0, 7); g.fill(); g.globalAlpha = 0.95; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); }
         g.globalAlpha = 1; g.globalCompositeOperation = 'source-over'; }
       raf = requestAnimationFrame(loop); };
     const go = () => { if (!raf && A.length) raf = requestAnimationFrame(loop); };
     map.on('movestart zoomstart', () => { moving = true; g.clearRect(0, 0, cv.width, cv.height); }); map.on('moveend zoomend', () => { moving = false; });
     map.on('resize', size); document.addEventListener('visibilitychange', go);
-    return {set(arcs) { A = RM ? [] : arcs; P = []; g.clearRect(0, 0, cv.width, cv.height); if (!A.length) return; size();
+     return {on() { if (!held) return; held = false; t0 = performance.now(); go(); }, set(arcs, hold) { held = !!hold; A = RM ? [] : arcs; P = []; g.clearRect(0, 0, cv.width, cv.height); if (!A.length) return; size();
       const tot = A.reduce((s, a) => s + a.n, 0), k = Math.min(1, CAP / tot);
       A.forEach((a, i) => { const n = Math.max(1, Math.round(a.n * k)); for (let j = 0; j < n; j++) P.push({a: i, u: j / n + Math.random() * 0.1, s: 0.004 + Math.random() * 0.002}); });
       t0 = performance.now(); go(); }}; })();
@@ -95,11 +97,11 @@
     const wide = innerWidth >= 900, sh = wide ? 0 : sheet.offsetHeight || Math.round(root.clientHeight * 0.25);
     const o = {paddingTopLeft: [24, 24], paddingBottomRight: [24, 24], maxZoom: 9.5};
     if (map.getBoundsZoom(bd, false, L.point(48, 48)) < 8) bd = L.latLngBounds([[ll[0] - 0.5, ll[1] - 0.6], [ll[0] + 0.5, ll[1] + 0.6]]);
-    const near = L.latLngBounds([[ll[0] - 0.12, ll[1] - 0.12], [ll[0] + 0.12, ll[1] + 0.12]]), oz = {...o, maxZoom: 9.5};
-    if (RM || !box.clientWidth) { map.fitBounds(bd, {...o, animate: false}); drawFlows(slug); return; }
-    map.flyToBounds(near, {...oz, duration: 1});
-    map.once('moveend', () => { if (my !== seq) return; map.invalidateSize({pan: false}); drawFlows(slug);
-      setTimeout(() => { if (my === seq && !map.getBounds().contains(bd)) map.flyToBounds(bd, {...o, duration: 1.1}); }, 1300); }); };
+    o.paddingBottomRight = [wide ? 140 : 110, 24]; o.paddingTopLeft = [wide ? 60 : 40, 30];
+    map.invalidateSize({pan: false}); drawFlows(slug, true);
+    if (RM || !box.clientWidth) { map.fitBounds(bd, {...o, animate: false}); FX.on(); return; }
+    map.flyToBounds(bd, {...o, duration: 0.7});
+    map.once('moveend', () => { if (my !== seq) return; map.invalidateSize({pan: false}); declutter(); FX.on(); }); setTimeout(() => { if (my === seq) FX.on(); }, 900); };
 
   // 검색: 시 이름·주소(시+구)
   const GU = {seoul: '종로 중 용산 성동 광진 동대문 중랑 성북 강북 도봉 노원 은평 서대문 마포 양천 강서 구로 금천 영등포 동작 관악 서초 강남 송파 강동', busan: '중 서 동 영도 부산진 동래 남 북 해운대 사하 금정 강서 연제 수영 사상', daegu: '중 동 서 남 북 수성 달서', incheon: '중 동 미추홀 연수 남동 부평 계양 서', gwangju: '동 서 남 북 광산', daejeon: '동 중 서 유성 대덕', ulsan: '중 남 동 북',
@@ -127,7 +129,7 @@
     const V_ = t.length >= 2 && VN ? VN.filter((v) => v.k.includes(t)).slice(0, 5) : [];
     sug.innerHTML = (L_.length || V_.length) ? L_.map((c) => `<button type="button" data-s="${c.slug}" data-g="${esc(gu)}"><b>${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</b><small>${esc(c.province)}</small></button>`).join('')
       + V_.map((v) => `<button type="button" data-v="${v.id}"><b>${esc(v.name)}</b><small>업체 · ${krw(v.total)}</small></button>`).join('') : '<p class="small">찾는 지역·업체가 없어요 · 85개 시만 추적해요</p>';
-    sug.hidden = false; const f0 = sug.querySelector('button'); f0 && f0.classList.add('on');
+    sug.hidden = false; const f0 = sug.querySelector('button'); f0 && f0.classList.add('on'); f0 && f0.dataset.s && get('data/city/' + f0.dataset.s + '.json').catch(() => {});
     sug.querySelectorAll('button').forEach((b) => (b.onclick = () => b.dataset.v ? pickV(b.dataset.v) : pickS({c: b.dataset.s, gu: /구$/.test(b.dataset.g) ? b.dataset.g : null}))); });
   inp.addEventListener('focus', loadV, {once: true});
   inp.addEventListener('focus', () => { if (inp.value.trim()) return; const q = C.filter((c) => c.alerts).sort((a, b) => b.alerts - a.alerts).slice(0, 5);
@@ -151,7 +153,7 @@
   const L0 = () => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
     if (box.clientWidth) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
     const tot = C.reduce((s, c) => s + (c.total || 0), 0);
-    body.innerHTML = `<p class="dv-k">전국 85개 시 · 최근 계약으로 쓴 돈</p><p class="dv-v">${krw(tot)}</p><p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
+    body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>전국 85개 시 · 최근 계약</small></p><p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
       + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 데이터상 이상 징후</p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc(c.top_alert.title.replace(/^데이터상 이상 징후:\s*/, ''))}</b><span>${esc(c.top_alert.detail || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
     const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); };
   const W = (() => { const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10); return C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk).sort((a, b) => (b.top_alert.amount || 0) - (a.top_alert.amount || 0)).slice(0, 9); })();
@@ -168,7 +170,7 @@
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
     body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)}</p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
       <p class="dv-l dv-l1"><span class="dv-meta">최근 ${idx.days || 90}일 · ${c.total ? (out != null ? `<b class="dv-out">외지 ${out}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'}</span> ${shb(c.name + ' 계약 돈', 'c/' + slug + '.html')} <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
-      <div class="dv-more">${top3(f)}<p class="dv-k">데이터상 이상 징후</p><div class="dv-cards dv-car"><div class="skel-box"></div><div class="skel-box"></div></div><p class="dv-cnt"></p>
+      <div class="dv-more">${top3(f)}<p class="dv-k">데이터상 이상 징후</p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
     ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
     body.querySelectorAll('.dv-nav').forEach((b) => (b.onclick = () => go({c: sib(slug, +b.dataset.d)}, true)));
@@ -226,7 +228,7 @@
           <div class="dv-pk-x"><p class="dv-pk-r">${esc(A.title)}</p><div class="dv-pk-b"><a href="https://www.g2b.go.kr" target="_blank" rel="noopener">나라장터 원문</a><button type="button" data-sh>공유</button><button type="button" data-x>닫기</button></div>
           <p class="dv-pk-s">출처: 조달청 나라장터(공공데이터포털) · 위법을 뜻하지 않아요</p></div>`;
         d.querySelector('.dv-pk-line').onclick = () => { if (d.classList.toggle('open')) go({c: pk.slug, _pick: 1}); };
-        sheet.prepend(d);
+        sheet.append(d);
         d.querySelector('[data-x]').onclick = () => { d.remove(); if (cur) go({}, true); };
         d.querySelector('[data-sh]').onclick = () => { const u = location.href.replace(/[^/]*([?#].*)?$/, '') + 'c/' + pk.slug + '.html#' + A.key;
           navigator.share ? navigator.share({title: '데이터상 이상 징후 · ' + pk.name, url: u}).catch(() => {}) : window.mtCopy && mtCopy(u); };
