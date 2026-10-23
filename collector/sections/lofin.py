@@ -7,6 +7,12 @@ KEY = os.environ.get("LOFIN_KEY", "")
 HUB = "https://www.lofin365.go.kr/lf/hub/"
 SRC = "행정안전부 지방재정365 OpenAPI"
 
+
+def parse_rev(r):
+    """사업수입: 빈 값 = 기록 없음(None). 0과 구분한다."""
+    v = str(r.get("biz_ern_amt") if r.get("biz_ern_amt") is not None else "").strip()
+    return int(float(v)) if v != "" else None
+
 def call(code, **p):
     rows, page = [], 1
     while True:
@@ -64,7 +70,7 @@ def fest(cities):
     allrows = []
     for r in ev:
         c = match(cities, r.get("wa_laf_hg_nm"), r.get("laf_hg_nm"))
-        cost, rev = int(r.get("tott_amt") or 0), (int(r["biz_ern_amt"]) if str(r.get("biz_ern_amt") or "").strip() != "" else None)  # 빈 값 = 기록 없음(null), 0과 구분
+        cost, rev = int(r.get("tott_amt") or 0), parse_rev(r)  # 빈 값 = 기록 없음(null), 0과 구분
         try:
             days = (D.date(*map(int, (r["hdmt_end_ymd"][:4], r["hdmt_end_ymd"][4:6], r["hdmt_end_ymd"][6:8]))) -
                     D.date(*map(int, (r["hdmt_bgng_ymd"][:4], r["hdmt_bgng_ymd"][4:6], r["hdmt_bgng_ymd"][6:8])))).days + 1

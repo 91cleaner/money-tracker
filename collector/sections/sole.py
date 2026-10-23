@@ -55,30 +55,12 @@ def main():
     big = sorted(rows, key=lambda r: -amt(r))[:15]
     import statistics as st
     comp = []
-    import re
+
     # 분야 정의: 공백을 없앤 제목에 include 가 맞고 exclude 가 안 맞는 계약만. 성격이 다른 일은 따로 묶는다.
-    SECT = [
-        ("건설재해예방", r"재해예방(기술)?지도|건설재해예방", None),
-        ("긴급누수", r"긴급누수", None),
-        ("아스콘 포장", r"아스콘", r"폐아스콘|폐기물"),
-        ("폐아스콘 처리", r"폐아스콘", None),
-        ("폐기물", r"폐기물", None),
-        ("방역", r"방역", None),
-        ("CCTV", r"CCTV", None),
-        ("청소", r"청소(?!년)", None),
-        ("제초", r"(?<!통)제초(?!소)", None),
-        ("가로등", r"가로등", None),
-        ("안전점검", r"안전점검", None),
-    ]
-    TERM = re.compile(r"단가|연간|년간|연중|1년|12개월|반기|분기")  # 1년·반기 단가계약은 단건 일과 섞지 않음
     MIN_CITY = 3
-    for kw, inc, exc in SECT:
-        ri, rx = re.compile(inc, re.I), re.compile(exc) if exc else None
-        g2 = []
-        for r in rows:  # 기간 안에 처음 맺은 계약만(합계와 같은 기준), 기간 전 계약의 변경분 제외
-            t = re.sub(r"\s+", "", r["title"] or "")
-            if amt(r) > 0 and ri.search(t) and not (rx and rx.search(t)) and not TERM.search(t):
-                g2.append(r)
+    for kw, _, _ in KW.SOLE_SECT:
+        # 기간 안에 처음 맺은 계약만(합계와 같은 기준), 기간 전 계약의 변경분 제외
+        g2 = [r for r in rows if amt(r) > 0 and KW.sole_hit(r["title"], kw)]
         if len(g2) < 8: continue
         med = st.median(amt(r) for r in g2)
         q = st.quantiles([amt(r) for r in g2], n=4)
@@ -91,7 +73,7 @@ def main():
         c, m, n, sm, v = max(ok or cs, key=lambda x: x[1] / med)
         comp.append({"kw": kw, "n": len(g2), "cities": len(byc), "med": med, "city": c, "cmed": m, "cn": n, "small": small,
                      "pct": round((m / med - 1) * 100), "p25": q[0], "p75": q[2], "save": 0 if small else max(0, sm - med * n),
-                     "ids": [{"no": x.get("no"), "ord": x.get("ord"), "a": amt(x), "d": x["date"], "t": x["title"][:40], "u": x.get("url")} for x in v]})
+                     "ids": [{"no": x.get("no"), "ord": x.get("ord"), "a": amt(x), "d": x["date"], "t": x["title"], "u": x.get("url")} for x in v]})
     comp.sort(key=lambda x: -x["save"])
     dates = [r.get("odate") or r["date"] for r in rows]
     out = {"updated": D.datetime.now(D.timezone(D.timedelta(hours=9))).isoformat(timespec="minutes"),

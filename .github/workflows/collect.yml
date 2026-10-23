@@ -29,6 +29,11 @@ jobs:
         env:
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
         run: python collector/collect.py
+      - name: 데이터 검증 게이트 (위반 시 커밋·배포 중단, 마지막 정상 데이터 유지)
+        run: |
+          mkdir -p /tmp/prev && git archive HEAD data | tar -x -C /tmp/prev
+          python -m unittest discover -s tests
+          python collector/validate.py data --prev /tmp/prev/data
       - name: 바뀐 데이터 저장
         run: |
           git config user.name "money-tracker-bot"
