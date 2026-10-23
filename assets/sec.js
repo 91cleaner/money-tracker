@@ -53,11 +53,11 @@ LOAD('data/sec_fest.json').then(f=>{
   const top=f.top[0]||{cname:'',nm:'',cost:0};const L=['> 지방재정365 행사 원가 스캔…',`> ${f.year}년 행사 ${f.n_all}건 확인`,`> 최대: ${top.cname} '${top.nm}' ₩${W(top.cost)}`,`> 고비용 상위 중 사업수익 0원 ${f.zero.length}건 (무료 행사일 수 있음)`,'> 데이터상 이상 징후 분류 완료 · 기관 설명 확인 전','> TRACKING… █'];
   let i=0;const fd=$('f-feed');fd.textContent='';const st=()=>{if(i<L.length){fd.textContent+=L[i++]+'\n';setTimeout(st,450)}};st();
   const sp=f.top[new Date().getDate()%Math.max(1,Math.min(5,f.top.length))];
-  if(sp)$('f-spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(sp.cname)} · ${E(sp.nm)}</b><br>총비용 ₩${W(sp.cost)} · 사업수익 ₩${W(sp.rev)} · ${sp.days||'?'}일<p class="src">${LSRC(f.year)}</p></div>`;
-  const card=(r,i,tag)=>`<div class="case"><span class="stamp">${r.rev>0?'수익 있음':'데이터상 이상 징후'}</span><div class="no">🔍 ${tag} #${String(i+1).padStart(3,'0')}</div>
+  if(sp)$('f-spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(sp.cname)} · ${E(sp.nm)}</b><br>총비용 ₩${W(sp.cost)} · 사업수익 ${sp.rev==null?'기록 없음':'₩'+W(sp.rev)} · ${sp.days||'?'}일<p class="src">${LSRC(f.year)}</p></div>`;
+  const card=(r,i,tag)=>`<div class="case"><span class="stamp">${r.rev==null?'수익 기록 없음':r.rev>0?'수익 있음':'데이터상 이상 징후'}</span><div class="no">🔍 ${tag} #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(r.cname)} · ${E(r.nm)}</h3><div class="amt">₩${W(r.cost)}</div>
    <small>${ymd(r.from)} ~ ${ymd(r.to)} · ${r.days||'?'}일${r.perday?` · 하루 ₩${W(r.perday)}`:''} · 주최 ${E(r.gov)}</small>
-   <div class="rcp"><div class="l"><span>사업수익(입장료 등)</span><b>₩${W(r.rev)}</b></div><div class="l"><span>순원가(세금 부담)</span><b>₩${W(r.net)}</b></div>
+   <div class="rcp"><div class="l"><span>사업수익(입장료 등)</span><b>${r.rev==null?'기록 없음':'₩'+W(r.rev)}</b></div><div class="l"><span>순원가(세금 부담)</span><b>₩${W(r.net)}</b></div>
    <div class="l"><span>전국 행사 중앙값 대비 <abbr title="중앙값 = 전국 행사를 비용순으로 줄 세웠을 때 가운데 값. +100%면 그 2배예요.">ⓘ</abbr></span><b style="color:#e11d48">${r.pct>=0?'+':''}${r.pct}%</b></div></div>
    <details class="est"><summary>AI 추산 적정 비용 <small>(공개 통계로 계산한 참고 범위)</small> · 추정치 · 공식 금액 아님 · 산출 근거 보기</summary>범위 ₩${W(f.p25)} ~ ₩${W(f.p75)} (${f.year}년 전국 원가 공개 행사 ${f.n_all}건의 하위 25%~상위 25%)<br>${r.days?`하루당 기준: 전국 중앙값 ₩${W(f.med_perday)} × ${r.days}일 = ₩${W(f.med_perday*r.days)}<br>`:''}한계: 국제 행사·체육대회처럼 규모가 큰 행사는 당연히 비쌉니다. 방문객 수가 없어 효율은 판단하지 않습니다.</details>
    <p class="src">참고 비교 · 위법 판단 아님 · ${LSRC(f.year)} 행사축제원가회계정보</p></div>`;

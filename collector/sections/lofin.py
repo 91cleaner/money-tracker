@@ -64,7 +64,7 @@ def fest(cities):
     allrows = []
     for r in ev:
         c = match(cities, r.get("wa_laf_hg_nm"), r.get("laf_hg_nm"))
-        cost, rev = int(r.get("tott_amt") or 0), int(r.get("biz_ern_amt") or 0)
+        cost, rev = int(r.get("tott_amt") or 0), (int(r["biz_ern_amt"]) if str(r.get("biz_ern_amt") or "").strip() != "" else None)  # 빈 값 = 기록 없음(null), 0과 구분
         try:
             days = (D.date(*map(int, (r["hdmt_end_ymd"][:4], r["hdmt_end_ymd"][4:6], r["hdmt_end_ymd"][6:8]))) -
                     D.date(*map(int, (r["hdmt_bgng_ymd"][:4], r["hdmt_bgng_ymd"][4:6], r["hdmt_bgng_ymd"][6:8])))).days + 1
@@ -77,12 +77,12 @@ def fest(cities):
     L = [r for r in allrows if r["y"] == last and r["cost"] > 0]
     med = st.median(r["cost"] for r in L); q = st.quantiles([r["cost"] for r in L], n=4)
     perday = [r["cost"] / r["days"] for r in L if r["days"]]; mpd = st.median(perday)
-    rr = [r["rev"] / r["cost"] for r in L]; mrr = st.median(rr)
+    rr = [r["rev"] / r["cost"] for r in L if r["rev"] is not None]; mrr = st.median(rr) if rr else 0
     T = [r for r in L if r["slug"]]
     for r in T:
         r["pct"] = round((r["cost"] / med - 1) * 100)
         r["perday"] = round(r["cost"] / r["days"]) if r["days"] else None
-        r["rr"] = round(r["rev"] / r["cost"] * 100, 1)
+        r["rr"] = round(r["rev"] / r["cost"] * 100, 1) if r["rev"] is not None else None
     top = sorted(T, key=lambda r: -r["cost"])[:30]
     zero = sorted([r for r in T if r["rev"] == 0], key=lambda r: -r["cost"])[:15]
     pdtop = sorted([r for r in T if r["perday"]], key=lambda r: -r["perday"])[:10]
@@ -118,7 +118,7 @@ def fest(cities):
                           "area": round(area) if area else None, "pct": round((r["puar_amt"] / m - 1) * 100),
                           "est_lo": round(area * qq[0]) if area else None, "est_hi": round(area * qq[2]) if area else None})
         halls.sort(key=lambda h: -h["pct"])
-    return {"updated": now(), "year": last, "n_all": len(L), "n": len(T), "sum": sum(r["cost"] for r in T), "rev": sum(r["rev"] for r in T),
+    return {"updated": now(), "year": last, "n_all": len(L), "n": len(T), "sum": sum(r["cost"] for r in T), "rev": sum(r["rev"] or 0 for r in T), "rev_none": sum(1 for r in T if r["rev"] is None),
             "med": med, "p25": q[0], "p75": q[2], "med_perday": mpd, "med_rr": round(mrr * 100, 1),
             "top": top, "zero": zero, "perday": pdtop, "ratio": ratio[:20], "halls": halls[:20],
             "visitors": False,
