@@ -20,7 +20,7 @@
   L.control.attribution({position: 'bottomright', prefix: false}).addTo(map); if (!touch && innerWidth >= 900) L.control.zoom({position: 'bottomleft'}).addTo(map);
   const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자'}).addTo(map);
   tiles.once('tileload', () => box.classList.remove('loading'));
-  const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]); const krPad = () => (innerWidth >= 900 ? {paddingTopLeft: [10, 60], paddingBottomRight: [400, 10]} : {paddingTopLeft: [10, 64], paddingBottomRight: [10, 10]}); map.fitBounds(KR, {...krPad(), animate: false});
+  const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]); const krPad = () => (innerWidth >= 900 ? {paddingTopLeft: [10, 10], paddingBottomRight: [10, 10]} : {paddingTopLeft: [10, 10], paddingBottomRight: [10, 10]}); map.fitBounds(KR, {...krPad(), animate: false});
   window.__dvMap = map;
   map.on('moveend', () => { if (cur && map.getZoom() < 8 && !map._dvFix) { map._dvFix = 1; const c = fl && fl.cities[cur]; c && map.setView(toLL(c.p), 8, {animate: false}); map._dvFix = 0; } });
   // 휠은 페이지 스크롤 · Ctrl+휠 또는 지도를 클릭한 뒤에만 확대
@@ -41,6 +41,9 @@
     const m = L.circleMarker(toLL(c.p), {radius: c.total ? 4 + 13 * Math.sqrt(c.total / maxT) : 4, weight: 1.5, color: c.total ? '#fff' : '#8b97a5', fillColor: c.total ? '#0a84ff' : '#3a4450', fillOpacity: c.total ? 0.5 : 0.3, interactive: false}).addTo(gC);
     dots.set(c.slug, m); const e = m.getElement(); if (e) e.setAttribute('data-s', c.slug);
   }
+  // 홈: 큰 시 8곳에 '이름 금액' 라벨
+  const gL = L.layerGroup();
+  cities.filter((c) => c.total).slice(0, 8).forEach((c) => L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt', offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(esc(((BY[c.slug] || {}).short || (BY[c.slug] || {}).name || '') + ' ' + krw(c.total))).addTo(gL));
   map.on('click', (e) => { const hits = [];
     dots.forEach((m, s) => { const d = e.containerPoint.distanceTo(map.latLngToContainerPoint(m.getLatLng())); const r = m.getRadius(); if (d <= Math.max(r + 6, 22)) hits.push([d - r, s]); });
     if (!hits.length) return; hits.sort((a, b) => a[0] - b[0]);
@@ -64,7 +67,7 @@
       if (p && !RM) { const len = p.getTotalLength ? p.getTotalLength() : 1000; p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.style.transition = `stroke-dashoffset .9s ease-out ${i * 0.12}s`; requestAnimationFrame(() => requestAnimationFrame(() => (p.style.strokeDashoffset = 0))); }
       arcs.push({pts, w, col, n: Math.max(1, Math.round(1 + 5 * Math.sqrt(f.amount / mx))), d: i * 0.12});
       L.circleMarker(toLL(b), {radius: 3 + w / 3, color: col, weight: 1, fillOpacity: 0.9, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
-      if (i < 6) L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent(esc((f.local ? '' : f.to.split(' ').slice(-1)[0] + ' ') + krw(f.amount))).addTo(gF);
+      if (i < 6) L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent(esc((f.local && i === 0 && !f.to ? '' : (f.to || '').split(' ').slice(-1)[0] + ' ') + krw(f.amount))).addTo(gF);
     });
     setTimeout(declutter, 50); if (cur === slug || !cur) FX.set(arcs);
   };
@@ -87,15 +90,15 @@
       A.forEach((a, i) => { const n = Math.max(1, Math.round(a.n * k)); for (let j = 0; j < n; j++) P.push({a: i, u: j / n + Math.random() * 0.1, s: 0.004 + Math.random() * 0.002}); });
       t0 = performance.now(); go(); }}; })();
   let seq = 0;
-  const fly = (slug) => { const c = fl.cities[slug]; if (!c) return; const ll = toLL(c.p); const my = ++seq; gF.clearLayers(); map.stop();
+  const fly = (slug) => { const c = fl.cities[slug]; if (!c) return; gL.remove(); const ll = toLL(c.p); const my = ++seq; gF.clearLayers(); map.stop();
     const pts = [ll, ...c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10).map((f) => toLL(f.p))]; let bd = L.latLngBounds(pts);
     const wide = innerWidth >= 900, sh = wide ? 0 : sheet.offsetHeight || Math.round(root.clientHeight * 0.25);
-    const o = {paddingTopLeft: [24, 76], paddingBottomRight: [wide ? 420 : 24, wide ? 16 : 24], maxZoom: 9.5};
-    if (map.getBoundsZoom(bd, false, L.point(wide ? 444 : 48, 92 + sh)) < 8) bd = L.latLngBounds([[ll[0] - 0.5, ll[1] - 0.6], [ll[0] + 0.5, ll[1] + 0.6]]);
+    const o = {paddingTopLeft: [24, 24], paddingBottomRight: [24, 24], maxZoom: 9.5};
+    if (map.getBoundsZoom(bd, false, L.point(48, 48)) < 8) bd = L.latLngBounds([[ll[0] - 0.5, ll[1] - 0.6], [ll[0] + 0.5, ll[1] + 0.6]]);
     const near = L.latLngBounds([[ll[0] - 0.12, ll[1] - 0.12], [ll[0] + 0.12, ll[1] + 0.12]]), oz = {...o, maxZoom: 9.5};
     if (RM || !box.clientWidth) { map.fitBounds(bd, {...o, animate: false}); drawFlows(slug); return; }
     map.flyToBounds(near, {...oz, duration: 1});
-    map.once('moveend', () => { if (my !== seq) return; drawFlows(slug);
+    map.once('moveend', () => { if (my !== seq) return; map.invalidateSize({pan: false}); drawFlows(slug);
       setTimeout(() => { if (my === seq && !map.getBounds().contains(bd)) map.flyToBounds(bd, {...o, duration: 1.1}); }, 1300); }); };
 
   // 검색: 시 이름·주소(시+구)
@@ -145,7 +148,7 @@
   box.addEventListener('click', (e) => { const b = e.target.closest('.dv-sh'); if (b) { e.stopPropagation(); share(b.dataset.t, b.dataset.u); } });
   const ex = (on) => { sheet.dataset.ex = on ? '1' : '0'; if (!on) sheet.scrollTop = 0; window.__inv && __inv(); };
   root.querySelector('.dv-grab').onclick = () => ex(sheet.dataset.ex !== '1');
-  const L0 = () => { cur = null; seq++; gF.clearLayers(); FX.set([]); setH(0); dim(null);
+  const L0 = () => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
     if (box.clientWidth) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
     const tot = C.reduce((s, c) => s + (c.total || 0), 0);
     body.innerHTML = `<p class="dv-k">전국 85개 시 · 최근 계약으로 쓴 돈</p><p class="dv-v">${krw(tot)}</p><p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
