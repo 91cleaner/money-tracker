@@ -36,6 +36,11 @@ jobs:
           REFILL_FROM: ${{ github.event.inputs.refill_from }}
           FETCH_BUDGET: ${{ github.event.inputs.refill_from && '8400' || '900' }}
         run: python collector/collect.py
+      - name: 지방재정365 섹션도 같은 규칙으로 다시 계산(검증이 서로 막지 않게)
+        if: github.event.inputs.refill_from != ''
+        continue-on-error: true
+        env: {LOFIN_KEY: "${{ secrets.LOFIN_KEY }}"}
+        run: python collector/sections/lofin.py
       - name: 데이터 검증 게이트 (위반 시 커밋·배포 중단, 마지막 정상 데이터 유지)
         run: |
           mkdir -p /tmp/prev && git archive HEAD data | tar -x -C /tmp/prev
