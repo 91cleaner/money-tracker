@@ -85,7 +85,7 @@
     let m = root.querySelector('.dv-miss'); if (!m) { m = document.createElement('p'); m.className = 'dv-miss'; const dn = root.querySelector('.dv-down'); dn ? dn.before(m) : box.after(m); }
     const rs = cur && map.hasLayer(gF) && REST.n ? `그 밖 ${REST.n}곳${REST.unk ? '(주소 미확인 포함)' : ''} ${krw(REST.amt)}` : '';
     const parts = miss.map((x) => x.replace(/^→\s*/, '')); if (rs) parts.push(rs);
-    m.textContent = parts.length ? (miss.length ? '지도에 다 못 적은 도착지: ' : '') + parts.join(' · ') : ''; m.hidden = !parts.length; };
+    m.textContent = [miss.length ? '이름표를 못 단 화살표: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '화살표 없는 곳: ' + rs : ''].filter(Boolean).join(' / '); m.hidden = !parts.length; };
   let REST = {n: 0, amt: 0};
   map.on('zoomend moveend', () => setTimeout(declutter, 30));
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
@@ -93,7 +93,9 @@
   const drawFlows = (slug, hold) => {
     gF.clearLayers(); FX.set([]); REST = {n: 0, amt: 0}; const c = fl.cities[slug]; if (!c || !c.flows.length) return; const arcs = [];
     const a = c.p, top = c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10), mx = top[0] ? top[0].amount : 1;
-    { const sh = top.reduce((t, f) => t + f.amount, 0), tot = c.total || 0; REST = {n: c.flows.length - top.length, amt: Math.max(0, tot - sh), unk: tot - (c.known || 0) > 0}; if (REST.amt > 0 && !REST.n) REST.n = 1; if (REST.amt <= 0) REST.n = 0; }
+    { const inTop = new Set(top), others = c.flows.filter((f) => !inTop.has(f)), sh = top.reduce((t, f) => t + f.amount, 0), unk = Math.max(0, (c.total || 0) - (c.known || 0));
+      REST = {n: others.length, amt: others.reduce((t, f) => t + f.amount, 0) + unk, unk: unk > 0}; if (REST.amt > 0 && !REST.n) REST.n = 1; if (REST.amt <= 0) REST.n = 0;
+      window.__dvLast = {slug, shown: sh, rest: REST.amt, tot: c.total, card: (BY[slug] || {}).total, re: !!c.__re, top: top.map((f) => [f.to, f.amount])}; }
     top.forEach((f, i) => {
       const b = f.p, dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60); // 아주 짧은 흐름도 휘어서 보이게
       const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
@@ -262,7 +264,7 @@
       const g = m[to] || (m[to] = {to, p: P[to] || P[to.split(' ').slice(0, 2).join(' ')] || null, amount: 0, count: 0, local: lo, _v: {}}); g.amount += a; g.count++;
       const vid = r.bh || r.vendor; const v = g._v[vid] || (g._v[vid] = {id: r.bh || '', name: r.vendor || '', amount: 0, count: 0}); v.amount += a; v.count++; }
     const flows = Object.values(m).map((g) => { g.vendors = Object.values(g._v).sort((a, b) => b.amount - a.amount); delete g._v; return g; }).sort((a, b) => b.amount - a.amount);
-    return Object.assign({}, o, {flows, known, local, total, count, by_cat: {}}); };
+    return Object.assign({}, o, {flows, known, local, total, count, by_cat: {}, __re: 1}); };
   const L1 = async (slug, gu) => {
     const c = BY[slug], f = fl.cities[slug]; if (!c) return L0();
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
