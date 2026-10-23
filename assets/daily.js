@@ -16,9 +16,16 @@
   const save = () => { try { localStorage.setItem(K, JSON.stringify(st)); } catch (e) {} };
   st.days = st.days || {};
   let Q = null;
+  window.__dq = () => (Q && !st.days[D] ? {el: box, ss: [Q.a.slug, Q.b.slug]} : null);
   const build = async () => {
     const rf = (u) => fetch(u, {cache: 'no-cache'}).then((r) => (r.ok ? r.json() : null));
-    const [dl, ix] = await Promise.all([rf('data/daily.json'), rf('data/index.json')]); if (!dl || !dl.c || !ix) return null;
+    const [dl, ix] = await Promise.all([rf('data/daily.json'), rf('data/index.json')]); if (!ix) return null;
+    // 데이터 담당이 고정한 문제(data/daily_q.json)가 있으면 그 값을 그대로 쓴다(예전 날짜 숫자 고정)
+    const fx = await fetch('data/daily_q.json', {cache: 'no-cache'}).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const nm0 = {}; for (const c of ix.cities || []) nm0[c.slug] = c.name;
+    const f = fx && fx[D]; if (f && nm0[f.a] && nm0[f.b] && f.av > 0 && f.bv > 0 && /^\d{4}-\d\d-\d\d$/.test(f.from) && /^\d{4}-\d\d-\d\d$/.test(f.to))
+      return {a: {slug: f.a, name: nm0[f.a], total: f.av}, b: {slug: f.b, name: nm0[f.b], total: f.bv}, from: f.from, to: f.to, fixed: true};
+    if (!dl || !dl.c) return null;
     let to = add(D, -1); if (to > dl.last) to = dl.last; const from = add(to, -29); if (from < (dl.cover_from || dl.first)) return null;
     const nm = {}; for (const c of ix.cities || []) nm[c.slug] = c.name;
     const C = Object.keys(dl.c).filter((s) => nm[s]).sort().map((s) => { let t = 0; for (const k in dl.c[s]) if (k >= from && k <= to) t += dl.c[s][k][1]; return {slug: s, name: nm[s], total: t}; }).filter((c) => c.total >= 1e8);
@@ -33,11 +40,12 @@
     const {a, b, from, to} = Q, me = st.days[D], done = !!me, win = a.total >= b.total ? 0 : 1;
     const past = D !== today ? `<p class="dq-old">${md(D)} 문제예요. 오늘 문제는 <a href="./#daily">여기</a>에서 풀 수 있어요.</p>` : '';
     box.innerHTML = `<div class="dq-h"><span class="dq-k">오늘의 한 문제</span><span class="dq-d">${md(D)}</span></div>${past}
-      <p class="dq-q">${md(from)}부터 ${md(to)}까지 30일 동안, 계약에 돈을 더 많이 쓴 시는?</p>
+      <p class="dq-q">${md(from)}부터 ${md(to)}까지 ${Math.round((Date.parse(to) - Date.parse(from)) / 864e5) + 1}일 동안, 계약에 돈을 더 많이 쓴 시는?</p>
       <div class="dq-pick">${[a, b].map((c, i) => `<button type="button" class="dq-c dq-c${i}${done ? (i === win ? ' dq-win' : ' dq-lose') + (me.pick === i ? ' dq-me' : '') : ''}" data-i="${i}"${done ? ' disabled' : ''}><b>${esc(c.name)}</b><span>${done ? krw(c.total) : '?'}</span></button>`).join('')}</div>
       ${done ? `<p class="dq-res" aria-live="polite">${me.ok ? '맞았어요!' : '아쉬워요.'} ${esc([a, b][win].name)}가 ${krw([a, b][win].total)}, ${esc([a, b][1 - win].name)}가 ${krw([a, b][1 - win].total)}을 썼어요. 내일 새 문제가 나와요.</p>
         <div class="dq-bar"><span class="dq-st">${streakText()}</span><button type="button" class="gm-btn dq-sh">결과 공유</button></div>` : `<p class="dq-st">${streakText() || '하루에 한 번만 풀 수 있어요.'}</p>`}
       <p class="src">한 업체랑만 맺은 계약(경쟁 없이)까지 모두 더한 돈 · 날짜별로 모두 같은 문제 · ${SRC}</p>`;
+    window.__gmRing && window.__gmRing();
     box.querySelectorAll('.dq-c:not([disabled])').forEach((x) => (x.onclick = () => answer(+x.dataset.i)));
     const sh = box.querySelector('.dq-sh'); if (sh) sh.onclick = share; };
   const answer = (i) => { if (!Q || st.days[D]) return; const ok = (Q.a.total >= Q.b.total ? 0 : 1) === i; st.days[D] = {pick: i, ok};

@@ -40,7 +40,16 @@
   // 첫 화면에서 카드가 잠깐 보이는 순간(레이아웃 전)은 무시: 손님이 스크롤한 뒤에만
   let moved = false; ['wheel', 'touchmove', 'keydown'].forEach((t) => addEventListener(t, () => { moved = true; upd(); }, {capture: true, passive: true, once: true}));
   const MOB = matchMedia('(max-width:899px)'), NAR = matchMedia('(max-width:699px)'); let btnOn = false;
-  let seen = location.hash === '#game'; const ring = () => window.__dvBlink && window.__dvBlink(seen && pair && !done && (!NAR.matches || btnOn) ? [pair[0].slug, pair[1].slug] : []);
+  let seen = location.hash === '#game'; let rk = null; const ring = () => { if (!window.__dvBlink) return;
+    // PC(900px 이상): 오늘의 한 문제 카드가 보이면 그 두 도시. 두 카드가 다 보이면 화면 가운데에 더 가까운 카드 쪽
+    let ss = seen && pair && !done && (!NAR.matches || btnOn) ? [pair[0].slug, pair[1].slug] : [];
+    const dq = !MOB.matches && moved && window.__dq && window.__dq();
+    if (dq) { const inV = (el) => { const r = el.getBoundingClientRect(), h = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0); return h > Math.min(r.height, innerHeight) * 0.15; };
+      const dist = (el) => { const r = el.getBoundingClientRect(); return Math.abs((r.top + r.bottom) / 2 - innerHeight / 2); };
+      if (inV(dq.el) && (!ss.length || !inV(root) || dist(dq.el) <= dist(root))) ss = dq.ss; }
+    const k = ss.join(); if (k === rk) return; rk = k; window.__dvBlink(ss); };
+  window.__gmRing = () => ring();
+  addEventListener('scroll', () => { if (MOB.matches || !window.__dq) return; cancelAnimationFrame(window.__gmRaf); window.__gmRaf = requestAnimationFrame(ring); }, {passive: true});
   let vis = false; function upd() { const v = (vis && moved) || location.hash === '#game'; if (MOB.matches && !v) return; if (v !== seen) { seen = v; ring(); } }
   if ('IntersectionObserver' in window) new IntersectionObserver((es) => { vis = es[es.length - 1].isIntersecting; upd(); }, {threshold: 0.15}).observe(root);
   addEventListener('hashchange', () => { if (location.hash === '#game') { seen = true; ring(); } });
@@ -48,7 +57,7 @@
   const answer = (i) => { if (done || !pair) return; done = true; const [a, b] = pair, win = (pair[i].total >= pair[1 - i].total);
     if (win) { streak++; if (streak > best) { best = streak; try { localStorage.setItem(K, String(best)); } catch (e) {} } }
     const lost = streak; seen = false; draw();
-    { const wi = pair[0].total >= pair[1].total ? 0 : 1, sl = pair[wi].slug; if (window.__dvBlink && !NAR.matches) { window.__dvBlink(wi ? [null, sl] : [sl]); clearTimeout(window.__gmHL); window.__gmHL = setTimeout(() => { if (done) window.__dvBlink([]); }, 1500); } }
+    { const wi = pair[0].total >= pair[1].total ? 0 : 1, sl = pair[wi].slug; if (window.__dvBlink && !NAR.matches) { rk = 'hl'; window.__dvBlink(wi ? [null, sl] : [sl]); clearTimeout(window.__gmHL); window.__gmHL = setTimeout(() => { if (done) { rk = null; ring(); } }, 1500); } }
     root.querySelectorAll('.gm-c').forEach((x, k) => { x.disabled = true; x.classList.add(pair[k].total >= pair[1 - k].total ? 'gm-win' : 'gm-lose'); if (k === i) x.classList.add('gm-me'); });
     const big = a.total >= b.total ? a : b, sm = big === a ? b : a;
     root.querySelector('.gm-res').textContent = (win ? '맞았어요! ' : '아쉬워요. ') + `${big.name}가 ${krw(big.total)}으로 ${sm.name}(${krw(sm.total)})보다 많이 썼어요. 기간: ${label()}.`;
