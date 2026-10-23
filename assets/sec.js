@@ -78,12 +78,12 @@ LOAD('data/sec_fest.json').then(f=>{
 LOAD('data/sec_subsidy.json').then(s=>{
   const $=id=>document.getElementById(id);
   $('s-sum').textContent='₩'+W(s.plan);
-  $('s-meta').textContent=`${s.year}년 당초예산 · ${s.n}곳 · 한도를 넘겨 예산에 넣은 돈 합계 ₩${W(s.outsum)} · ${LSRC()} 지방보조금(2021년 이후)`;
-  $('s-rows').innerHTML=s.rows.slice(0,25).map((o,i)=>{const mx=Math.max(...o.hist.map(h=>h[1]||0))||1;return `<div class="case"><span class="stamp">${o.over?'추적 중':'한도 안'}</span><div class="no">🔍 보조금 파일 #${String(i+1).padStart(3,'0')}</div>
+  $('s-meta').textContent=`${s.year}년 당초예산 · ${s.n}곳 · 한도 적용 밖으로 편성된 금액 합계 ₩${W(s.outsum)} · ${LSRC()} 지방보조금(2021년 이후)`;
+  $('s-rows').innerHTML=s.rows.slice(0,25).map((o,i)=>{const mx=Math.max(...o.hist.map(h=>h[1]||0))||1;return `<div class="case"><span class="stamp">${o.rt>100?'한도 초과':'한도 안'}</span><div class="no">🔍 보조금 파일 #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(o.cname)} <small>(${E(o.gov)})</small></h3>
-   <div class="rcp"><div class="l"><span>총액한도</span><b>₩${W(o.limit)}</b></div><div class="l"><span>예산에 넣은 돈</span><b>₩${W(o.plan)}</b></div><div class="l"><span>한도를 넘긴 예산</span><b style="color:#e11d48">₩${W(o.out||0)}</b></div></div>
+   <div class="rcp"><div class="l"><span>총액한도</span><b>₩${W(o.limit)}</b></div><div class="l"><span>예산에 넣은 돈</span><b>₩${W(o.plan)}</b></div><div class="l"><span>한도 적용 밖 예산</span><b>₩${W(o.out||0)}</b></div><div class="l"><span>한도 대비 (한도 안 예산 ÷ 총액한도)</span><b${o.rt>100?' style="color:#e11d48"':''}>${o.rt}%${o.rt>100?' · 한도 초과':''}</b></div></div>
    <div class="mini">${o.hist.map(h=>`<i title="${h[0]}" style="height:${(h[1]||0)/mx*100}%"></i>`).join('')}</div><small>${o.hist.map(h=>h[0]).join(' · ')} 예산 변화</small>
-   <p class="src">한도를 넘긴 예산은 법령·국고보조 매칭 등 허용된 예외일 수 있습니다 · ${LSRC()} 지방보조금 · ${s.year}년 당초예산</p></div>`}).join('');
+   <p class="src">한도 적용 밖 예산은 법령·국고보조 매칭 등으로 총액한도 계산에서 빠지는 예산일 수 있습니다 · ${LSRC()} 지방보조금 · ${s.year}년 당초예산</p></div>`}).join('');
   EMPTY(['s-rows']);
 }).catch(()=>{});
 // 탭 해시 동기화
