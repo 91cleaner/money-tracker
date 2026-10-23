@@ -20,7 +20,8 @@
   });
   window.PERIOD = WIN;
   const sumCity = (m, w) => { const o = {n: 0, t: 0, cat: {}}; for (const k in m) if (k >= w.from && k <= w.to) { const v = m[k]; o.n += v[0]; o.t += v[1]; for (const c in v[2]) { const x = o.cat[c] || (o.cat[c] = [0, 0]); x[0] += v[2][c][0]; x[1] += v[2][c][1]; } } return o; };
-  const fixIndex = (x, w) => { for (const c of x.cities || []) { const s = sumCity(w.dl.c[c.slug] || {}, w); c.count = s.n; c.total = s.t; c.by_cat = {}; c.n_cat = {}; for (const k in s.cat) { c.n_cat[k] = s.cat[k][0]; c.by_cat[k] = s.cat[k][1]; } } x.period = {from: w.from, to: w.to, d: w.d}; return x; };
+  const fixIndex = (x, w) => { for (const c of x.cities || []) { const s = sumCity(w.dl.c[c.slug] || {}, w); c.count = s.n; c.total = s.t; c.by_cat = {}; c.n_cat = {}; for (const k in s.cat) { c.n_cat[k] = s.cat[k][0]; c.by_cat[k] = s.cat[k][1]; } } x.period = {from: w.from, to: w.to, d: w.d}; x.days = span(w.from, w.to); return x; };
+  const fixFlows = (x, w) => { for (const k in x.cities || {}) x.cities[k].total = sumCity(w.dl.c[k] || {}, w).t; return x; };  // 지도 원 크기·이름표: 고른 기간 합계
   const fixCity = (x, w) => {
     const inw = r => { const k = r.odate || r.date; return k >= w.from && k <= w.to; };
     x.rows = (x.rows || []).filter(inw); x.changes = (x.changes || []).filter(r => r.date >= w.from && r.date <= w.to);
@@ -40,11 +41,11 @@
   };
   window.fetch = (u, o) => {
     const s = typeof u === 'string' ? u : (u && u.url) || '';
-    const isI = /(^|\/)data\/index\.json/.test(s), isC = /(^|\/)data\/city\/[^/]+\.json/.test(s);
-    if (!isI && !isC) return rf(u, o);
+    const isI = /(^|\/)data\/index\.json/.test(s), isC = /(^|\/)data\/city\/[^/]+\.json/.test(s), isF = /(^|\/)data\/flows\.json/.test(s);
+    if (!isI && !isC && !isF) return rf(u, o);
     return Promise.all([rf(u, o), WIN]).then(([res, w]) => {
       if (!w || !res.ok) return res;
-      return res.json().then(x => new Response(JSON.stringify(isI ? fixIndex(x, w) : fixCity(x, w)), {status: 200, headers: {'Content-Type': 'application/json'}}));
+      return res.json().then(x => new Response(JSON.stringify(isF ? fixFlows(x, w) : isI ? fixIndex(x, w) : fixCity(x, w)), {status: 200, headers: {'Content-Type': 'application/json'}}));
     });
   };
   // 링크에 기간 유지 (주소에 기간을 직접 넣은 경우)
