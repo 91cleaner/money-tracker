@@ -3,7 +3,12 @@ name: 계약 데이터 수집
 on:
   schedule:
     - cron: "17 * * * *"   # 매시 17분
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      refill_from:
+        description: "이 날짜(YYYY-MM-DD)부터 오늘까지 하루씩 다시 받기"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -15,7 +20,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 170
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -28,6 +33,8 @@ jobs:
       - name: 나라장터 계약 수집
         env:
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+          REFILL_FROM: ${{ github.event.inputs.refill_from }}
+          FETCH_BUDGET: ${{ github.event.inputs.refill_from && '8400' || '900' }}
         run: python collector/collect.py
       - name: 데이터 검증 게이트 (위반 시 커밋·배포 중단, 마지막 정상 데이터 유지)
         run: |

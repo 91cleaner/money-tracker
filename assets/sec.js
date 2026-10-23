@@ -65,7 +65,7 @@ LOAD('data/sec_fest.json').then(f=>{
   $('f-top').innerHTML=f.top.slice(0,8).map((r,i)=>card(r,i,'행사 파일')).join('');
   $('f-day').innerHTML=f.perday.slice(0,6).map(r=>`<div class="row"><b>${E(r.cname)}</b> ${E(r.nm)} · ${r.days}일 · 하루 ₩${W(r.perday)} <small>(전국 중앙값 하루 ₩${W(f.med_perday)})</small></div>`).join('')+`<p class="src">${LSRC(f.year)}</p>`;
   const mx=Math.max(1,...f.ratio.map(r=>r.rt));
-  $('f-ratio').innerHTML=f.ratio.slice(0,10).map(r=>`<div class="row"><b>${E(r.cname)}</b> 예산 ₩${W(r.budget)} 중 행사·축제 ₩${W(r.fest)} (${r.rt}%)<div class="bar"><b style="width:${r.rt/mx*100}%"></b></div></div>`).join('')+`<p class="src">${LSRC()} 행사·축제경비편성내역 · ${f.ratio[0]?.y||''}년 일반회계 당초예산</p>`;
+  $('f-ratio').innerHTML=f.ratio.slice(0,10).map(r=>`<div class="row"><b>${E(r.cname)}</b> <small>(${r.y||''}년${r.scope==='본청'?' · 본청 예산만, 구청 제외':''})</small> 예산 ₩${W(r.budget)} 중 행사·축제 ₩${W(r.fest)} (${r.rt}%)<div class="bar"><b style="width:${r.rt/mx*100}%"></b></div></div>`).join('')+`<p class="src">${LSRC()} 행사·축제경비편성내역 · ${f.ratio[0]?.y||''}년 일반회계 당초예산 · 위 행사 원가(${f.cost_year||f.year}년)와 연도가 달라 직접 비교하지 마세요</p>`;
   $('f-hall').innerHTML=f.halls.slice(0,6).map((h,i)=>`<div class="rcp"><div class="no">🧾 청사 영수증 #${String(i+1).padStart(3,'0')} · ${E(h.ty)}</div><b>${E(h.cname)} · ${E(h.nm)}</b> <small>(${h.y})</small>
    <div class="l"><span>총사업비</span><b>₩${W(h.amt)}</b></div><div class="l"><span>㎡당 사업비</span><b>₩${W(h.puar)}</b></div>
    <div class="l"><span>같은 종류 전국 중앙값 (${h.tyn}건)</span><b>₩${W(h.tymed)}</b></div><div class="l"><span>중앙값 대비 <abbr title="중앙값 = 비슷한 계약을 금액순으로 줄 세웠을 때 딱 가운데 값. +100%면 가운데 값의 2배라는 뜻이에요.">ⓘ</abbr></span><b style="color:#e11d48">+${h.pct}%</b></div>

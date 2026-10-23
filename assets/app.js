@@ -310,6 +310,7 @@ function corpInfo(c) {
 function contractExtra(r) {
   const out = [];
   const sgn = (x) => (x > 0 ? '+' : x < 0 ? '−' : '±') + krw(Math.abs(x));
+  if (r.jv && r.jvp && !(r.jvm && r.jvm.length)) out.push(el('span', 'cc-tags', '공동도급 계약 · 참여 업체 확인 중'));
   if (r.jvm && r.jvm.length) {
     const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '공동도급 참여 업체 (지분)'));
     for (const m of r.jvm) {
@@ -319,7 +320,7 @@ function contractExtra(r) {
     }
     out.push(j);
   } else if (r.jv) out.push(el('span', 'cc-tags', '공동도급 · 금액은 대표 업체 기준'));
-  if (r.lt === '장기' && r.this && r.this !== r.amount) out.push(el('span', 'cc-tags', `장기계속계약 · 총 계약금액 ${krw(r.amount)} 기준 (이번 연차분 ${krw(r.this)})`));
+  if ((r.ltc || /^장기/.test(r.lt||'')) && r.this && r.this !== r.amount) out.push(el('span', 'cc-tags', `장기계속계약 · 총 계약금액 ${krw(r.amount)} 기준 (이번 연차분 ${krw(r.this)})`));
   if (r.vers && r.vers.length > 1) {
     if (r.orig) { const up = r.amount - r.orig; out.push(el('span', 'cc-hist', `처음 ${krw(r.orig)} → 지금 ${krw(r.amount)} (${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%)`)); }
     const ol = el('ol', 'tl');
@@ -357,7 +358,7 @@ async function pastHistory(id) {
     const c = el('div', 'cc');
     const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', `${r.date} · ${r.city || '기타 기관'} · ${r.kind}`), el('b', 'cc-a', r.tot != null ? krw(r.tot) : '—'));
     const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
-    c.append(top, t, el('span', 'cc-i', r.inst + (r.ord ? ` · ${+r.ord}차` : '') + (r.lt === '장기' && r.this && r.this !== r.tot ? ` · 장기계속(이번 연차분 ${krw(r.this)})` : '')));
+    c.append(top, t, el('span', 'cc-i', r.inst + (r.atype && r.atype !== '본청' ? ` [${r.atype}]` : '') + (r.ord ? ` · ${+r.ord}차` : '') + ((r.ltc || /^장기/.test(r.lt||'')) && r.this && r.this !== r.amount ? ` · 장기계속(이번 연차분 ${krw(r.this)})` : '')));
     if (r.m && r.m.length > 1) {
       const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '공동도급 (지분)'));
       for (const x of r.m) { const a = el(x.id && x.id !== id ? 'a' : 'span', '', `${x.name} ${x.share != null ? x.share + '%' : ''}`); if (x.id && x.id !== id) a.href = 'vendor.html?v=' + x.id; j.append(a); }

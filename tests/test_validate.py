@@ -7,7 +7,7 @@ import kw, validate  # noqa: E402
 
 
 def row(no, title="도로 포장 공사", amount=1000, ord_="00", date="2026-10-20", odate="2026-10-20", cat="건설·공사", kind="공사"):
-    return {"id": no + ord_, "no": no, "ord": ord_, "title": title, "amount": amount, "date": date, "odate": odate, "cat": cat, "kind": kind}
+    return {"id": no + ord_, "no": no, "ord": ord_, "title": title, "amount": amount, "date": date, "odate": odate, "cat": cat, "kind": kind, "atype": "본청"}
 
 
 def ids(n, ord_="00", title="진해구 정수지 청소 용역"):
@@ -93,6 +93,11 @@ class Gate(unittest.TestCase):
         self.assertTag(lambda s: s.setdefault("idx_over", {}).update(a={"total": 1}), "[5 합계]")
         self.assertTag(lambda s: s.setdefault("idx_over", {}).update(a={"changes": 0}), "[5 합계]")
 
+    def test_6_rev_none_zero_regression(self):
+        def m(s):
+            s["fest"].update(n=417, rev_none=0)
+        self.assertTag(m, "[6 null]")
+
     def test_6_null_not_zero(self):
         self.assertTag(lambda s: s["fest"]["top"].append({"nm": "z", "rev": None, "rr": 0}), "[6 null]")
         self.assertTag(lambda s: s["fest"]["zero"].append({"nm": "z", "rev": None}), "[6 null]")
@@ -123,6 +128,79 @@ class Keywords(unittest.TestCase):
         self.assertFalse(kw.sole_hit("2026년 공공청사 청소 연간 단가계약", "청소"))
 
 
+class Fields(unittest.TestCase):
+    def test_jv_flag(self):
+        import collect
+        self.assertTrue(collect.jv_flag("Y")); self.assertTrue(collect.jv_flag("공동"))
+        self.assertFalse(collect.jv_flag("N")); self.assertIsNone(collect.jv_flag(None))
+
+    def test_sido(self):
+        import collect
+        self.assertEqual(collect.sido_fix("경북 포항시"), "경상북도 포항시")
+        self.assertEqual(collect.sido_fix("경기"), "경기도")
+        self.assertEqual(collect.sido_fix("강원도 춘천시"), "강원특별자치도 춘천시")
+        self.assertEqual(collect.sido_fix("서울특별시 중구"), "서울특별시 중구")
+
+    def test_agency(self):
+        import collect
+        self.assertEqual(collect.agency_type("서울시설공단", {"short": "서울"}), "산하기관")
+        self.assertEqual(collect.agency_type("서울특별시 서울시립대학교 산학협력단", {"short": "서울"}), "산하기관")
+        self.assertEqual(collect.agency_type("인천광역시 소방본부", {"short": "인천"}), "소방")
+        self.assertEqual(collect.agency_type("서울특별시 서대문구", {"short": "서울"}), "자치구")
+        self.assertEqual(collect.agency_type("경상남도 창원시 성산구", {"short": "경남 창원시"}), "일반구")
+        self.assertEqual(collect.agency_type("경기도 안성시", {"short": "경기 안성시"}), "본청")
+
+
+class Coverage(unittest.TestCase):
+    """감사에서 찾은 문제: 9/24~10/19 수집 공백, jv 0%, lt 전부 비어 있음, 원계약 없는 변경 차수, 비공식 시도 이름."""
+    def big(self, gap=False, jv=True, lt=True):
+        rows = []
+        import datetime as D
+        d = D.date(2026, 9, 21)
+        k = 0
+        while d <= D.date(2026, 10, 23):
+            if d.weekday() < 5 and not (gap and D.date(2026, 9, 28) <= d <= D.date(2026, 10, 16)):
+                for i in range(30):
+                    k += 1
+                    r = row(f"N{k}", date=d.isoformat(), odate=d.isoformat())
+                    r["jv"] = jv and i == 0; r["jvm"] = [{"name": "a"}, {"name": "b"}] if r["jv"] else []
+                    r["lt"] = ("장기계속" if i == 1 else "단년도") if lt else None
+                    rows.append(r)
+            d += D.timedelta(days=1)
+        return {"city": {"a": {"rows": rows, "changes": []}}, "sole": {"comp": []}, "fest": {"rev_none": 0}}
+
+    def gate(self, spec):
+        with tempfile.TemporaryDirectory() as d:
+            build(spec, d)
+            return validate.check(d)[0]
+
+    def test_ok(self):
+        self.assertEqual(self.gate(self.big()), [])
+
+    def test_gap(self):
+        self.assertTrue(any("[8 수집 공백]" in e for e in self.gate(self.big(gap=True))))
+
+    def test_jv_zero(self):
+        self.assertTrue(any("[9 공동도급]" in e for e in self.gate(self.big(jv=False))))
+
+    def test_lt_none(self):
+        self.assertTrue(any("[9 장기계속]" in e for e in self.gate(self.big(lt=False))))
+
+    def test_jv_without_members(self):
+        s = self.big(); s["city"]["a"]["rows"][0]["jvm"] = []
+        self.assertTrue(any("참여 업체" in e for e in self.gate(s)))
+        s["city"]["a"]["rows"][0]["jvp"] = True  # 조회 대기 표시가 있으면 경고만
+        self.assertFalse(any("참여 업체" in e for e in self.gate(s)))
+
+    def test_change_without_original(self):
+        s = self.big(); s["city"]["a"]["rows"][0].update(ord="01", hist=[])
+        self.assertTrue(any("[10 원계약]" in e for e in self.gate(s)))
+
+    def test_sido_name(self):
+        s = self.big(); s["city"]["a"]["rows"][0]["vregion"] = "경북 포항시"
+        self.assertTrue(any("[11 시도]" in e for e in self.gate(s)))
+
+
 class Lofin(unittest.TestCase):
     def test_empty_revenue_is_null(self):
         sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "collector", "sections"))
@@ -130,6 +208,7 @@ class Lofin(unittest.TestCase):
         self.assertIsNone(parse_rev({"biz_ern_amt": ""}))
         self.assertIsNone(parse_rev({"biz_ern_amt": None}))
         self.assertIsNone(parse_rev({}))
+        self.assertIsNone(parse_rev({"biz_ern_amt": 0}))  # 17:17 회귀: 숫자 0 이 0원으로 들어감
         self.assertEqual(parse_rev({"biz_ern_amt": "0"}), 0)
         self.assertEqual(parse_rev({"biz_ern_amt": "1200"}), 1200)
 

@@ -67,6 +67,54 @@ def check(root, prev=None):
         if sum(c.get("n_cat", {}).values()) not in (0, len(rows)):
             E(f"[5 합계] {slug} 분야별 건수 합 ≠ count")
 
+    # (8) 수집 공백: 기간 안 평일(공휴일 제외)마다 계약이 있고 최근 평일 평균의 20% 이상
+    from collect import HOLIDAYS, SIDO
+    cnt = {}
+    allrows = [r for d in cities.values() for r in d.get("rows", []) + d.get("changes", [])]
+    for r in allrows:
+        cnt[r["date"]] = cnt.get(r["date"], 0) + 1
+    newrows = [r for d in cities.values() for r in d.get("rows", [])]
+    if len(allrows) >= 200:
+        first = min(r.get("odate") or r["date"] for r in newrows)
+        last = max(cnt)
+        d0, d1 = D.date.fromisoformat(first), D.date.fromisoformat(last)
+        wd = [d0 + D.timedelta(days=k) for k in range((d1 - d0).days)]  # 마지막 날(수집 중일 수 있음) 제외
+        wd = [x.isoformat() for x in wd if x.weekday() < 5 and x.isoformat() not in HOLIDAYS]
+        rec = [cnt.get(x, 0) for x in wd[-10:]]
+        avg = sum(rec) / len(rec) if rec else 0
+        bad = [x for x in wd if cnt.get(x, 0) == 0 or cnt.get(x, 0) < 0.2 * avg]
+        if bad:
+            E(f"[8 수집 공백] 평일 {len(bad)}일 계약이 없거나 최근 평일 평균({avg:.0f}건)의 20% 미만: {', '.join(bad[:12])}{' …' if len(bad) > 12 else ''}")
+    # (9) 공동도급·장기계속 필드가 실제로 채워지는지
+    if len(newrows) >= 500:
+        if not any(r.get("jv") is True for r in newrows):
+            E("[9 공동도급] 공동도급(jv=True) 비율이 0% — cmmnCntrctYn 처리가 안 되는 것")
+        if all(r.get("lt") is None for r in newrows):
+            E("[9 장기계속] 모든 행의 lt 가 비어 있음 — lngtrmCtnuDivNm 처리가 안 되는 것")
+    lastd = max(cnt) if cnt else idx["updated"][:10]
+    pend = []
+    for slug, d in cities.items():
+        for r in d.get("rows", []):
+            if r.get("jv") is True and not r.get("jvm"):
+                if not r.get("jvp"):
+                    E(f"[9 공동도급] {slug} {r.get('no')} 공동도급인데 참여 업체(jvm) 없고 조회 대기 표시도 없음")
+                else:
+                    pend.append(r)
+            if r.get("ltc") and not (r.get("this") and r.get("amount")):
+                E(f"[9 장기계속] {slug} {r.get('no')} 장기계속인데 금차/총액 중 하나 없음")
+            if r.get("ord", "00") != "00" and "00" not in {x.get("ord") for x in r.get("hist") or []}:
+                E(f"[10 원계약] {slug} {r.get('no')} ord={r.get('ord')} 인데 hist 에 00 차수 없음")
+            v = r.get("vregion")
+            if v and v.split(" ")[0] not in SIDO:
+                E(f"[11 시도] {slug} {r.get('no')} 업체 소재지 '{v}' 가 공식 시도 이름 아님")
+            if not r.get("atype"):
+                E(f"[12 기관 종류] {slug} {r.get('no')} atype 없음"); break
+    if pend:
+        warn.append(f"[9 공동도급] 참여 업체 조회 대기 {len(pend)}건(화면엔 '참여 업체 확인 중' 표시)")
+    for c in idx["cities"]:
+        if "today_basis" in c and c["today_basis"] != c.get("last"):
+            E(f"[13 오늘 기준] {c['slug']} today_basis ≠ last")
+
     # sec_sole: (1)(2)(3)(4)
     sp = os.path.join(root, "sec_sole.json")
     if os.path.exists(sp):
@@ -99,6 +147,13 @@ def check(root, prev=None):
     if os.path.exists(fp):
         f = _load(fp)
         if "rev_none" not in f: E("[6 null] sec_fest 에 rev_none 없음")
+        elif f.get("n", 0) >= 50 and f["rev_none"] == 0:
+            E(f"[6 null] sec_fest 사업수입 '기록 없음'이 0건(행사 {f['n']}건) — 빈 값이 0원으로 바뀐 회귀")
+        if f.get("ratio") and not (f.get("cost_year") and f.get("ratio_year")):
+            E("[14 연도] sec_fest 에 cost_year/ratio_year 없음(원가 연도와 예산 연도 혼동)")
+        for r in f.get("ratio") or []:
+            if " " not in r.get("cname", "") and r.get("scope") != "본청":
+                E(f"[15 범위] 광역시 {r.get('cname')} 축제 예산 비율에 범위(본청) 표시 없음")
         for k in ("top", "perday", "ratio", "zero"):
             for r in f.get(k) or []:
                 if not isinstance(r, dict): continue

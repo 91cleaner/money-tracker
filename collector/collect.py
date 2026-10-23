@@ -73,6 +73,54 @@ def category(title, kind):
     return "기타"
 
 
+SIDO = ["서울특별시", "부산광역시", "대구광역시", "인천광역시", "광주광역시", "대전광역시", "울산광역시", "세종특별자치시", "경기도",
+        "강원특별자치도", "충청북도", "충청남도", "전북특별자치도", "전라남도", "경상북도", "경상남도", "제주특별자치도"]
+_SIDO_SHORT = {"서울": 0, "부산": 1, "대구": 2, "인천": 3, "광주": 4, "대전": 5, "울산": 6, "세종": 7, "경기": 8, "강원": 9, "강원도": 9,
+               "충북": 10, "충남": 11, "전북": 12, "전라북도": 12, "전남": 13, "경북": 14, "경남": 15, "제주": 16, "제주도": 16}
+
+
+def sido_fix(reg):
+    """업체 소재지 앞머리를 공식 시도 이름 17개 중 하나로 (예: '경북 포항시' → '경상북도 포항시')."""
+    if not reg:
+        return reg
+    a, _, b = str(reg).partition(" ")
+    if a in SIDO:
+        return reg
+    i = _SIDO_SHORT.get(a)
+    if i is None:
+        i = next((k for k, n in enumerate(SIDO) if n.startswith(a[:2])), None) if len(a) >= 2 else None
+    return (SIDO[i] + (" " + b if b else "")) if i is not None else None
+
+
+def jv_flag(v):
+    """공동계약 여부: 'Y'/'N' 또는 '공동'/'단독' 등 표기가 섞여 온다."""
+    if v is None:
+        return None
+    t = str(v).strip().upper()
+    if t in ("Y", "YES", "공동", "공동계약", "공동도급") or t.startswith("공동"):
+        return True
+    if t in ("N", "NO", "단독", "단독계약", ""):
+        return False if t else None
+    return None
+
+
+_ATYPE = [("산하기관", r"시설(관리)?공단|도시(개발)?공사|관광공사|산학협력단|평생교육원|공단$|공사$|재단|진흥원|의료원|문화원|연구원"),
+          ("소방", r"소방(본부|서|학교)"), ("교육", r"교육청|교육지원청|학교"), ("의회", r"의회")]
+
+
+def agency_type(inst, city):
+    """수요기관 종류: 본청 / 자치구 / 산하기관 / 소방 / 교육 / 의회 / 사업소. 광역시 계약은 본청+구청이 섞이므로 같은 범위끼리만 비교."""
+    t = inst or ""
+    for k, rx in _ATYPE:
+        if re.search(rx, t):
+            return k
+    if re.search(r"(?<!광역)(?<!특별)[가-힣]+구$", t.split(" ")[-1]) and t.count(" ") >= 1:
+        return "자치구" if city and " " not in city.get("short", " ") else "일반구"
+    if re.search(r"사업소|센터|관리소|보건소|도서관|박물관|미술관|병원|청사|수도|하수|농업기술", t):
+        return "사업소"
+    return "본청"
+
+
 def pick(item, field):
     for k in F[field]:
         v = item.get(k)
@@ -362,8 +410,10 @@ def method_label(r):
 
 def annotate(r, c, vendors):
     """계약정보서비스 결과를 행에 붙임: 차수별 금액(vers), 1차 총액(orig), 장기계속 구분(lt), 공동도급 참여 업체(jvm)."""
-    for k in ("vers", "orig", "lt", "jvm"):
+    for k in ("vers", "orig", "jvm"):
         r.pop(k, None)
+    r["ltc"] = bool((r.get("lt") or "").startswith("장기") or (r.get("this") and r.get("amount") and r["this"] < r["amount"]))  # 장기계속: 금차 < 총액
+    r["jvp"] = r.get("jv") is True  # 공동도급인데 참여 업체 목록은 계약정보서비스 조회 대기(아래에서 받으면 해제)
     if not c or not c.get("v"):
         return
     vs = list(c["v"])
@@ -373,12 +423,13 @@ def annotate(r, c, vendors):
     r["vers"] = [{k: v.get(k) for k in ("ord", "date", "tot", "this")} for v in vs]
     if vs[0]["ord"] == "01" and vs[0].get("tot"):
         r["orig"] = vs[0]["tot"]
-    r["lt"] = vs[-1].get("lt")
+    r["lt"] = vs[-1].get("lt") or r.get("lt")
+    r["ltc"] = bool((r.get("lt") or "").startswith("장기") or r["ltc"])
     m = c.get("corps") or []
     if len(m) > 1:
-        r["jv"] = True
-        r["jvm"] = [dict(x, region=legacy((vendors.get(x["id"]) or {}).get("region")) if x.get("id") else None) for x in m]
-    elif m:
+        r["jv"] = True; r["jvp"] = False
+        r["jvm"] = [dict(x, region=sido_fix(legacy((vendors.get(x["id"]) or {}).get("region"))) if x.get("id") else None) for x in m]
+    elif m and r.get("jv") is not True:
         r["jv"] = False
 
 
@@ -426,6 +477,32 @@ def summarize(city, rows, vendors):
     }
 
 
+# 평일 공휴일(계약이 거의 없어도 정상). 출처: 관공서의 공휴일에 관한 규정
+HOLIDAYS = {"2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", "2026-03-02", "2026-05-01", "2026-05-05", "2026-05-25", "2026-06-03",
+            "2026-08-17", "2026-09-24", "2026-09-25", "2026-10-05", "2026-10-09", "2026-12-25",
+            "2027-01-01", "2027-02-08", "2027-02-09", "2027-03-01", "2027-05-05", "2027-05-13", "2027-08-16", "2027-09-14", "2027-09-15", "2027-09-16",
+            "2027-10-04", "2027-10-11", "2027-12-27"}
+
+
+def gap_days(now, limit=int(os.environ.get("GAP_DAYS_PER_RUN", "4"))):
+    """저장된 자료에서 평일인데 계약이 거의 없는 날(최근 평일 평균의 20% 미만)을 찾아 다시 받는다(한 번에 limit일)."""
+    cnt = Counter()
+    for c in CITIES:
+        d = load(os.path.join(DATA, "city", c["slug"] + ".json"), {"rows": []})
+        for r in d.get("rows", []) + d.get("changes", []):
+            cnt[r["date"]] += 1
+    if not cnt:
+        return []
+    first = datetime.strptime(min(cnt), "%Y-%m-%d").date()
+    first = max(first, (now - timedelta(days=KEEP_DAYS - 1)).date())
+    wd = [first + timedelta(days=k) for k in range((now.date() - first).days)]
+    wd = [d for d in wd if d.weekday() < 5 and d.isoformat() not in HOLIDAYS]
+    if not wd:
+        return []
+    avg = sorted(cnt[d.isoformat()] for d in wd)[len(wd) * 3 // 4] or 1  # 상위 25% 지점(빠진 날에 끌려 내려가지 않게)
+    return [d for d in wd if cnt[d.isoformat()] < 0.2 * avg][:limit]
+
+
 def main():
     rebuild = bool(os.environ.get("REBUILD_ONLY"))  # 새로 받지 않고 저장된 자료로 집계만 다시
     if not KEY and not rebuild:
@@ -436,12 +513,21 @@ def main():
     if not state.get("jngj1"):  # 전남광주통합특별시 이름으로 빠졌던 계약을 한 번 다시 받음
         days = max(days, BACKFILL_DAYS)
     raw = []
-    for i in (range(0) if rebuild else range(0, days, 7)):  # 일주일씩 나눠 요청
-        s = (now - timedelta(days=min(days, i + 7))).date()
-        e = (now - timedelta(days=i)).date()
+    spans = []
+    for i in range(0, days, 7):  # 일주일씩 나눠 요청
+        spans.append(((now - timedelta(days=min(days, i + 7))).date(), (now - timedelta(days=i)).date()))
+    gaps = [] if rebuild else gap_days(now)
+    if os.environ.get("REFILL_FROM"):  # 수동: 이 날짜부터 오늘까지 하루씩 다시 받음(빠진 날 채우기·새 필드 채우기)
+        d0 = datetime.strptime(os.environ["REFILL_FROM"], "%Y-%m-%d").date()
+        gaps = [d0 + timedelta(days=k) for k in range((now.date() - d0).days + 1)]
+    spans = [(g, g) for g in gaps] + [x for x in spans if not gaps or x[1] > max(gaps)]
+    if gaps:
+        print(f"빠진 날 다시 받기: {len(gaps)}일 ({gaps[0]}~{gaps[-1]})", flush=True)
+    for s, e in ([] if rebuild else spans):
         raw += fetch_contracts(datetime.combine(s, datetime.min.time()), datetime.combine(e, datetime.min.time()))
     if raw:  # 필드 이름 확인용: 키와 값의 형태만 남김 (값은 저장하지 않음)
-        save(os.path.join(DATA, "_fields.json"), {"at": now.isoformat(), "keys": sorted({k for it in raw[:50] for k in it}),
+        vals = {k: dict(Counter(str(it.get(k)) for it in raw).most_common(8)) for k in ("cmmnCntrctYn", "lngtrmCtnuDivNm", "cntrctCnclsSttusNm")}
+        save(os.path.join(DATA, "_fields.json"), {"at": now.isoformat(), "vals": vals, "keys": sorted({k for it in raw[:50] for k in it}),
                                                     "types": {k: type(v).__name__ for k, v in raw[0].items()}})
     vendors = load(os.path.join(DATA, "vendors.json"), {})
     explanations = load(os.path.join(DATA, "explanations.json"), {})
@@ -460,7 +546,7 @@ def main():
                "title": loc(pick(it, "title") or ""), "kind": pick(it, "kind"), "method": pick(it, "method"), "amount": amt,
                "vendor": kor(pick(it, "vendor") or ""), "url": pick(it, "url"), "bh": hid(str(b).replace("-", "")) if b else None,
                "no": it.get("cntrctNo") or None, "ord": it.get("cntrctOrd") or None, "this": to_int(it.get("cntrctAmt")),
-               "jv": (it.get("cmmnCntrctYn") == "Y") if it.get("cmmnCntrctYn") in ("Y", "N") else None,
+               "jv": jv_flag(it.get("cmmnCntrctYn")), "lt": (str(it.get("lngtrmCtnuDivNm")).strip() or None) if it.get("lngtrmCtnuDivNm") else None,
                "ntce": next((str(it[k]) for k in ("ntceNo", "bidNtceNo", "untyNtceNo") if it.get(k)), None)}  # 입찰공고 번호(있으면 공고를 거친 계약)
         row["method"] = method_label(row)
         if b:
@@ -521,9 +607,10 @@ def main():
             else:
                 r["cat"] = category(r.get("title"), r.get("kind"))
             if r.get("bh"):
-                r["vregion"] = legacy((vendors.get(r["bh"]) or {}).get("region"))
+                r["vregion"] = sido_fix(legacy((vendors.get(r["bh"]) or {}).get("region")))
             else:
-                r["vregion"] = legacy(r.get("vregion"))
+                r["vregion"] = sido_fix(legacy(r.get("vregion")))
+            r["atype"] = agency_type(r.get("inst"), c)
             annotate(r, chg.get(cno(r)), vendors)
             set_odate(r)
         allr = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)
@@ -549,7 +636,8 @@ def main():
         except Exception as e:  # 공유 카드가 실패해도 데이터 저장은 계속
             print(f"::warning::{c['slug']} 공유 카드 실패: {e}", flush=True)
         index.append({"slug": c["slug"], "name": c["name"], "short": c["short"], "province": c["province"], "count": summ["count"],
-                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "today": sum(1 for r in rows if (r.get("odate") or r["date"]) == summ["last"]), "changes": len(changes), "local_share": summ["local_share"], "by_cat": dict(by_cat), "n_cat": dict(n_cat),
+                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "today": sum(1 for r in rows if (r.get("odate") or r["date"]) == summ["last"]), "changes": len(changes), "today_basis": summ["last"],
+                      "by_atype": {k: sum(r["amount"] or 0 for r in rows if r.get("atype") == k) for k in sorted({r.get("atype") for r in rows if r.get("atype")})}, "local_share": summ["local_share"], "by_cat": dict(by_cat), "n_cat": dict(n_cat),
                       "alerts_cat": {k: sum(1 for a in flagged if k in {cat_of.get(i) for i in a.get("ids", [])}) for k in by_cat},
                       "top_alert_cat": alert_cat,
                       "top_alert": flagged[0] if flagged else None})

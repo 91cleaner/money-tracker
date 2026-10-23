@@ -10,7 +10,7 @@ SRC = "행정안전부 지방재정365 OpenAPI"
 
 def parse_rev(r):
     """사업수입: 빈 값 = 기록 없음(None). 0과 구분한다."""
-    v = str(r.get("biz_ern_amt") if r.get("biz_ern_amt") is not None else "").strip()
+    v = str(r.get("biz_ern_amt") or "").strip()  # API 는 기록이 없으면 빈 값 또는 숫자 0 을 준다 → 둘 다 '기록 없음'(원래 규칙과 같음)
     return int(float(v)) if v != "" else None
 
 def call(code, **p):
@@ -102,7 +102,7 @@ def fest(cities):
             c = match(cities, r.get("wa_laf_hg_nm"), r.get("laf_hg_nm"))
             if not c: continue
             if " " not in c["short"] and not str(r.get("laf_hg_nm", "")).endswith("본청"): continue
-            ratio.append({"cname": c["short"], "gov": r["laf_hg_nm"], "y": ly, "budget": r["smy_cntt_amt"], "fest": r["smy_cntt_amt2"], "rt": r["smy_cntt_amt_rt"]})
+            ratio.append({"cname": c["short"], "gov": r["laf_hg_nm"], "y": ly, "budget": r["smy_cntt_amt"], "fest": r["smy_cntt_amt2"], "rt": r["smy_cntt_amt_rt"], "scope": "본청" if " " not in c["short"] else "시 전체"})
         ratio.sort(key=lambda x: -x["rt"])
     # 청사 신축(GVBDAC): ㎡당 단가
     gb = []
@@ -124,7 +124,7 @@ def fest(cities):
                           "area": round(area) if area else None, "pct": round((r["puar_amt"] / m - 1) * 100),
                           "est_lo": round(area * qq[0]) if area else None, "est_hi": round(area * qq[2]) if area else None})
         halls.sort(key=lambda h: -h["pct"])
-    return {"updated": now(), "year": last, "n_all": len(L), "n": len(T), "sum": sum(r["cost"] for r in T), "rev": sum(r["rev"] or 0 for r in T), "rev_none": sum(1 for r in T if r["rev"] is None),
+    return {"updated": now(), "year": last, "cost_year": last, "ratio_year": (ratio[0]["y"] if ratio else None), "n_all": len(L), "n": len(T), "sum": sum(r["cost"] for r in T), "rev": sum(r["rev"] or 0 for r in T), "rev_none": sum(1 for r in T if r["rev"] is None),
             "med": med, "p25": q[0], "p75": q[2], "med_perday": mpd, "med_rr": round(mrr * 100, 1),
             "top": top, "zero": zero, "perday": pdtop, "ratio": ratio[:20], "halls": halls[:20],
             "visitors": False,
