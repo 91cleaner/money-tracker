@@ -147,7 +147,44 @@ body.swl main{transition:transform .12s,opacity .12s;transform:translateX(-30px)
 .dv-body{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
 @media (max-width:899px){.dv-sheet[data-lv="1"][data-ex="0"],.dv-sheet[data-lv="2"][data-ex="0"]{max-height:40%}.dv-sheet[data-ex="1"]{max-height:calc(100% - 220px)!important}
 .dv-sheet:has(.dv-pick)[data-ex="0"]{max-height:52%}}
-#dive .dv-map{touch-action:pan-y}
 .dv-sh,.dv-nav,.dv-chip,.dv-back,.dv-all,.dv-pk-b a,.dv-pk-b button{min-height:44px;min-width:44px}
 .dv-sug button.on{background:#1a2632;box-shadow:inset 3px 0 0 #ffb020}
 .ticker.paused div{animation-play-state:paused}
+
+#dive .dv-map,.map{touch-action:none}
+
+/* 지도는 지도대로: 지도 블록 + 아래(PC는 옆) 카드. 지도 위에는 작은 검색창만 */
+#dive{height:auto!important;min-height:0!important;overflow:visible!important;border:0!important;display:block;position:relative}
+#dive .dv-h1{position:static!important;margin:0;padding:6px 2px 6px;font-size:20px!important;line-height:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:none;width:auto!important}
+#dive .dv-map{position:relative!important;inset:auto!important;height:calc(100vh - 200px)!important;height:calc(100svh - 200px)!important;height:calc(100dvh - 200px)!important;min-height:260px!important;max-height:760px;border-radius:14px;border:1px solid #1f2a33;touch-action:none}
+#dive .dv-q{top:46px!important;left:8px;right:8px;min-height:0}
+#dive .dv-q input{min-height:44px}
+#dive .dv-sug{top:98px!important}
+#dive .dv-sheet{position:static!important;max-height:none!important;overflow:visible!important;border-radius:14px!important;border:1px solid #1f2a33!important;margin-top:10px;padding:12px 14px 14px!important;width:auto!important;min-height:150px}
+#dive .dv-sheet .dv-more{display:block!important}
+#dive .dv-grab{display:none}
+#dive .dv-body{padding-bottom:0}
+.dv-pick{margin:0 0 10px;padding:0;border-radius:12px}
+.dv-pk-line{display:block;width:100%;min-height:44px;padding:10px 12px;background:none;border:0;color:#c9d3dd;font-size:14px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dv-pk-line span{color:#f5a524;font-size:12px}.dv-pk-line b{color:#fff}
+.dv-pk-x{display:none;padding:0 12px 10px}.dv-pick.open .dv-pk-x{display:block}
+/* 가로 넘김 카드 */
+.dv-car{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -14px;padding:0 14px 4px;scrollbar-width:none}
+.dv-car::-webkit-scrollbar{display:none}
+.dv-car>*{flex:0 0 82vw;max-width:340px;scroll-snap-align:start;min-height:120px;box-sizing:border-box}
+.dv-cnt{font:600 12px ui-monospace,monospace;color:#7b8794;text-align:right;margin:6px 0 0}
+.skel-box{min-height:120px;border-radius:12px;background:linear-gradient(90deg,#141b22,#1c252e,#141b22);background-size:200% 100%;animation:sk 1.2s linear infinite}
+@keyframes sk{to{background-position:-200% 0}}
+/* 상단 한 줄: 티커 + 이름 */
+body[data-page] .stickybar{display:none}
+.ticker{position:relative!important;height:44px!important;line-height:44px!important}
+.ticker .tk-brand{flex:0 0 auto;padding:0 10px!important;color:#fff!important;font:700 13px var(--sans,system-ui);background:#0b0f13;position:absolute;left:0;top:0;bottom:0;z-index:2;border-right:1px solid #1f2933;text-decoration:none}
+@media (min-width:900px){#dive{display:grid!important;grid-template-columns:1fr 380px;column-gap:12px}
+#dive .dv-h1{grid-column:1/3}#dive .dv-map{grid-column:1;height:640px!important}#dive .dv-sheet{grid-column:2;grid-row:2;margin-top:0;max-height:640px!important;overflow-y:auto!important}
+#dive .dv-q{right:auto;width:360px}#dive .dv-sug{right:auto;width:360px}.dv-car>*{flex-basis:300px}}
+
+/* 돈 흐름 입자 */
+#dive .dv-fx{position:absolute;inset:0;z-index:450;pointer-events:none}
+.dv-rcv{animation:rcv 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes rcv{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.45);opacity:.55}}
+@media (prefers-reduced-motion:reduce){.dv-rcv{animation:none}#dive .dv-fx{display:none}}

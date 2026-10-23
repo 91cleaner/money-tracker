@@ -21,9 +21,7 @@ function satView(box, geo, cities, onPick) {
   if (!matchMedia('(pointer: coarse)').matches) L.control.zoom({position: 'topright'}).addTo(map);
   // 페이지 스크롤을 빼앗지 않도록: 터치 기기에서는 지도를 한 번 눌러야 움직임
   if (matchMedia('(pointer: coarse)').matches) {
-    map.dragging.disable(); map.zoomControl && map.zoomControl.remove();
-    const hint = document.createElement('div'); hint.className = 'maphint'; hint.textContent = '두 손가락으로 지도 이동·확대';
-    box.append(hint); setTimeout(() => hint.remove(), 4000);
+    map.zoomControl && map.zoomControl.remove();  // 한 손가락 이동·두 손가락 확대(기본)
   }
   const declutter = () => { const seen = []; box.querySelectorAll('.leaflet-tooltip').forEach((t) => { t.style.visibility = ''; const r = t.getBoundingClientRect(); if (seen.some((q) => !(r.right < q.left || r.left > q.right || r.bottom < q.top || r.top > q.bottom))) t.style.visibility = 'hidden'; else seen.push(r); }); };
   map.on('zoomend moveend', () => setTimeout(declutter, 30)); setTimeout(declutter, 600); window.__declutter = declutter;
