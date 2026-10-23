@@ -53,7 +53,7 @@
         ${big()}
         <div class="dq-bar"><span class="dq-st">${streakText()}</span><button type="button" class="gm-btn dq-sh">결과 공유</button></div>` : `<p class="dq-st">${streakText() || '하루에 한 번만 풀 수 있어요.'}</p>`}
       ${done ? `<p class="dq-fn">시청과 사업소가 맺은 새 계약을 공공조달 공개 자료로 더한 값이에요. 여러 해 계약은 이번 차수 금액만 넣었어요. 계약 금액은 실제로 나간 돈과 다를 수 있어요. ${md(D)} 기준.</p>` : ''}
-      <p class="src">한 업체랑만 맺은 계약(경쟁 없이)까지 모두 더한 돈 · 날짜별로 모두 같은 문제 · ${SRC}</p>`;
+      <p class="src">경쟁 없이 한 업체와 맺은 계약도 포함 · 날짜별로 모두 같은 문제 · ${SRC}</p>`;
     window.__gmRing && window.__gmRing();
     box.querySelectorAll('.dq-c:not([disabled])').forEach((x) => (x.onclick = () => answer(+x.dataset.i)));
     const sh = box.querySelector('.dq-sh'); if (sh) sh.onclick = share; };

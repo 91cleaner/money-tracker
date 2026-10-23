@@ -27,7 +27,7 @@
     if (!pair) { root.innerHTML = '<h2>어디가 더 많게?</h2><p class="sub">문제를 만들 자료가 아직 없어요.</p>'; return; }
     const [a, b] = pair;
     root.innerHTML = `<h2>어디가 더 많게?</h2>
-      <p class="sub">${esc(when())} 계약에 돈을 더 많이 쓴 도시는 어디일까요? <span class="gm-note">(한 업체랑만 맺은 계약(경쟁 없이)까지 모두 더한 돈)</span></p>
+      <p class="sub">${esc(when())} 새로 맺은 계약 금액이 더 많은 도시는? <span class="gm-note">(경쟁 없이 한 업체와 맺은 계약도 포함)</span></p>
       <div class="gm-pick">${[a, b].map((c, i) => `<button type="button" class="gm-c gm-c${i}" data-i="${i}"><b>${esc(c.name)}</b><span class="gm-amt">${done ? krw(c.total) : '?'}</span></button>`).join('<span class="gm-vs">또는</span>')}</div>
       <p class="gm-res" aria-live="polite"></p>
       <div class="gm-bar"><span class="gm-st">${streak ? `연속 <b>${streak}</b>개 맞힘 · ` : ''}${best ? `최고 기록 <b>${best}</b>개` : ''}</span><span class="gm-act"></span></div>
@@ -60,7 +60,7 @@
     { const wi = pair[0].total >= pair[1].total ? 0 : 1, sl = pair[wi].slug; if (window.__dvBlink && !NAR.matches) { rk = 'hl'; window.__dvBlink(wi ? [null, sl] : [sl]); clearTimeout(window.__gmHL); window.__gmHL = setTimeout(() => { if (done) { rk = null; ring(); } }, 1500); } }
     root.querySelectorAll('.gm-c').forEach((x, k) => { x.disabled = true; x.classList.add(pair[k].total >= pair[1 - k].total ? 'gm-win' : 'gm-lose'); if (k === i) x.classList.add('gm-me'); });
     const big = a.total >= b.total ? a : b, sm = big === a ? b : a;
-    root.querySelector('.gm-res').textContent = (win ? '맞았어요! ' : '아쉬워요. ') + `${big.name}가 ${krw(big.total)}으로 ${sm.name}(${krw(sm.total)})보다 많이 썼어요. 기간: ${label()}.`;
+    root.querySelector('.gm-res').textContent = (win ? '맞았어요! ' : '아쉬워요. ') + `${big.name} 새 계약 ${krw(big.total)}, ${sm.name} 새 계약 ${krw(sm.total)}이에요. 기간: ${label()}.`;
     const act = root.querySelector('.gm-act');
     if (win) { act.innerHTML = '<button type="button" class="gm-btn gm-next">다음 문제</button>'; act.querySelector('.gm-next').onclick = next; }
     else { streak = 0; root.querySelector('.gm-st').innerHTML = `이번 기록 <b>${lost}</b>개${best ? ` · 최고 기록 <b>${best}</b>개` : ''}`;
@@ -73,14 +73,14 @@
     g.strokeStyle = 'rgba(80,140,200,.08)'; for (let x = 0; x <= 1200; x += 40) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 675); g.stroke(); } for (let y = 0; y <= 675; y += 40) { g.beginPath(); g.moveTo(0, y); g.lineTo(1200, y); g.stroke(); }
     const T = (t, x, y, sz, col, wt = 700, al = 'left') => { g.font = `${wt} ${sz}px ${F}`; g.fillStyle = col; g.textAlign = al; g.fillText(t, x, y); };
     g.fillStyle = '#ffb020'; g.fillRect(64, 64, 8, 52); T('우리 시 돈 추적기 · 어디가 더 많게?', 92, 102, 30, '#8fa0b3', 600); T(label(), 1136, 102, 30, '#ffb020', 700, 'right');
-    T('두 도시 중 계약에 돈을 더 많이 쓴 곳 맞히기', 64, 210, 40, '#e8eef5', 700);
+    T('두 도시 중 새로 맺은 계약 금액이 더 많은 곳 맞히기', 64, 210, 40, '#e8eef5', 700);
     T(`연속 ${n}개 맞힘`, 64, 360, 128, '#ffb020', 800);
     T(`최고 기록 ${best}개 · 나도 해 볼까?`, 64, 440, 40, '#cfd8e3', 600);
     g.fillStyle = 'rgba(255,255,255,.12)'; g.fillRect(64, 500, 1072, 2);
     T(SRC, 64, 600, 26, '#8fa0b3', 500); T(link().replace(/^https?:\/\//, '').replace(/[?#].*$/, ''), 1136, 600, 26, '#8fa0b3', 600, 'right');
     return cv; };
   window.__gmCard = (n) => card(n == null ? 7 : n).toDataURL('image/png');
-  const share = async (n) => { const cv = card(n), u = link(), text = `두 도시 중 계약에 돈을 더 많이 쓴 곳, 몇 개나 맞힐 수 있을까? 나는 연속 ${n}개 맞혔어요. 너도 해 볼래?`;
+  const share = async (n) => { const cv = card(n), u = link(), text = `두 도시 중 새로 맺은 계약 금액이 더 많은 곳, 몇 개나 맞힐 수 있을까? 나는 연속 ${n}개 맞혔어요. 너도 해 볼래?`;
     const blob = await new Promise((r) => cv.toBlob(r, 'image/png')); const file = blob && new File([blob], 'money-tracker-game.png', {type: 'image/png'});
     if (file && navigator.canShare && navigator.canShare({files: [file]})) { try { await navigator.share({files: [file], text: text + ' ' + u, url: u}); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     const xu = 'https://x.com/intent/post?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(u);
