@@ -30,7 +30,7 @@
     <p class="meta"><span id="nat-count">—</span> · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
   </header>
   <section class="addrsec">
-    <form id="addr" class="searchbox addrbox" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" list="addr-dl" placeholder="우리 동네 주소 입력 (예: 서울 강서구 화곡동)" aria-label="우리 동네 주소 입력" enterkeyhint="search"></form>
+    <form id="addr" class="searchbox addrbox" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" list="addr-dl" placeholder="우리 동네 입력 (예: 대구 수성구)" aria-label="우리 동네 주소 입력" enterkeyhint="search"></form>
     <datalist id="addr-dl"></datalist>
     <p class="small addrnote">주소는 저장되지 않아요 · 이 휴대폰 안에서만 찾고 어디에도 보내지 않아요</p>
     <div id="addr-out"></div>
@@ -78,7 +78,7 @@
       <span style="display:block;margin-top:10px;font-weight:700">추적 파일 열기 ›</span>
     </a>
     <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding:2px 0 6px"><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#sole">수의계약</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#cost">비용 비교</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#fest">축제·행사</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#subsidy">보조금</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#pay">공공기관 보수</a></div>
-    <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent='수의계약 ₩'+Math.round(d.sum/1e8).toLocaleString()+'억';document.getElementById('tt-line').textContent='> 데이터상 이상 징후 '+d.flag_n+'건 추적 중 · 출처 나라장터'}).catch(()=>{})</script>
+    <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent='최근 30일 수의계약 ₩'+Math.round(d.sum/1e8).toLocaleString()+'억';document.getElementById('tt-line').textContent='> '+d.period[0]+'~'+d.period[1]+' · 85개 시 · '+d.n.toLocaleString()+'건 · 데이터상 이상 징후 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
   </section>
   <section class="sec" id="ranksec">
     <h2>전국 업체 순위</h2>
@@ -113,6 +113,7 @@
     <span>만든 사람: @청소부</span>
   </footer>
 </main>
+<script src="assets/mask.js"></script>
 <script src="assets/app.js"></script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/map.js"></script>

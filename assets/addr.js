@@ -25,7 +25,7 @@ async function go(){const q=inp.value.trim();const my=++seq;if(q.length<2){out.i
 const p=parse(q);
 if(!p.c){if(p.prov){const alt=C.filter(x=>x.province===p.prov).sort((a,b)=>b.total-a.total).slice(0,3);
  out.innerHTML=`<div class="acard"><p>아직 이 지역은 추적하지 않아요. 같은 ${esc(p.prov)}에서 추적 중인 곳:</p>${alt.map(x=>`<a class="chip" style="display:inline-flex;align-items:center;margin:4px 4px 0 0" href="city.html?c=${x.slug}">${esc(x.name)}</a>`).join('')||'<p class="small">이 지역에 추적 중인 시가 없어요.</p>'}</div>`;}
- else out.innerHTML=`<div class="acard small">시·군·구 이름을 같이 넣어 주세요 (예: 서울 강서구 화곡동, 수원시 영통동). 지금은 주요 85개 시를 추적해요.</div>`;return;}
+ else out.innerHTML=`<div class="acard small">시·군·구 이름을 같이 넣어 주세요 (예: 대구 수성구, 수원시). 지금은 주요 85개 시를 추적해요.</div>`;return;}
 const d=await city(p.c.slug);if(my!==seq)return;let rows=d.rows||[],label=p.c.name,guNote='';
 if(p.gu){const g=rows.filter(r=>(r.inst||'').includes(p.gu));if(g.length){rows=g;label+=' '+p.gu;}else guNote=`<p class="small">${esc(p.gu)} 단위 자료가 따로 없어서 ${esc(p.c.name)} 전체로 보여드려요.</p>`;}
 const sum=rows.reduce((a,r)=>a+r.amount,0),cats=top3(rows);

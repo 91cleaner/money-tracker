@@ -1,9 +1,9 @@
 (()=>{const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const won=a=>a>=1e8?(a/1e8).toFixed(1)+'억':Math.round(a/1e4).toLocaleString()+'만';
 const mkT=(it,src)=>{let t=document.querySelector('.ticker');if(!t){t=document.createElement('div');t.className='ticker';document.body.prepend(t);}t.setAttribute('aria-label','최근 계약 흐름');t.innerHTML='<div>'+it.join(' &nbsp;//&nbsp; ')+' &nbsp;//&nbsp; '+src+'</div>';};
-window.__cityTick=(rows,name)=>{const r=rows.slice().sort((a,b)=>b.date<a.date?-1:1).slice(0,10);if(r.length)mkT(r.map(x=>`[TRACKING] ${name} · ${x.title.slice(0,22)} <b>₩${won(x.amount)}</b>`),'출처: 조달청 나라장터');};
-if(document.body.dataset.page!=='city')fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{const it=[];(d.flags||[]).slice(0,8).forEach(f=>it.push(`<i>[데이터상 이상 징후]</i> ${f.cname} ${f.inst.split(' ').pop()} · ${f.n}건 <b>₩${won(f.sum)}</b>`));
-(d.big||[]).slice(0,8).forEach(b=>it.push(`[TRACKING] ${b.cname} · ${b.t.slice(0,24)} <b>₩${won(b.a)}</b>`));
+window.__cityTick=(rows,name)=>{const r=rows.slice().sort((a,b)=>b.date<a.date?-1:1).slice(0,10);if(r.length){const ld=r[0].date,nn=rows.filter(x=>x.date===ld).length;mkT([`<b>${ld.slice(5).replace('-','/')} 새로 포착 ${nn}건</b>`,...r.map(x=>`<a href="${x.url||'#contracts'}" target="_blank" rel="noopener">${name} · ${x.title.slice(0,22)} <b>₩${won(x.amount)}</b></a>`)],'출처: 조달청 나라장터');}};
+if(document.body.dataset.page!=='city')fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{const it=[];(d.flags||[]).slice(0,8).forEach(f=>{const l=f.inst.split(' ').pop();const loc=/(시|군|구)$/.test(l)&&!f.cname.includes(l)?f.cname+' '+l:f.cname;it.push(`<a href="spend.html?c=${f.slug}#sole"><i>데이터상 이상 징후</i> ${loc} · 같은 업체 ${f.n}건 <b>₩${won(f.sum)}</b></a>`);});
+(d.big||[]).slice(0,8).forEach(b=>it.push(`<a href="${b.u||'spend.html'}" target="_blank" rel="noopener">큰 계약 · ${b.cname} · ${maskT?maskT(b.t).slice(0,24):b.t.slice(0,24)} <b>₩${won(b.a)}</b></a>`));
 if(!it.length)return;const t=document.createElement('div');t.className='ticker';t.setAttribute('aria-label','최근 계약 흐름 (출처: 나라장터)');
 t.innerHTML='<div>'+it.join(' &nbsp;//&nbsp; ')+' &nbsp;//&nbsp; 출처: 조달청 나라장터</div>';document.body.prepend(t);}).catch(()=>{});
 // count-up for big numbers

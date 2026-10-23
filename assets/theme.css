@@ -50,3 +50,12 @@ main.wrap{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
 .fclose{margin-left:auto;min-height:40px;padding:0 12px;border:1px solid #2a3540;border-radius:99px;background:none;color:var(--fg);font:600 13px var(--sans)}
 .fh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .cityf select{min-height:44px}.cc-t{display:block;padding:6px 0;min-height:40px}
+.ticker a{color:inherit;text-decoration:none}
+a.orig{display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0 8px;color:#ffb020}
+.steps{font:600 11px ui-monospace,monospace;color:#8b97a5;margin:8px 0 0}
+.map,.map.sat,.leaflet-container{background:#0b0f13!important}
+.map:empty::after{content:"지도 불러오는 중…";display:flex;height:100%;align-items:center;justify-content:center;color:#8b97a5;font-size:14px}
+.klab{background:none!important;border:0!important;box-shadow:none!important;color:#e8edf2!important;font:700 12px var(--sans)!important;text-shadow:0 1px 3px #000}.klab::before{display:none}
+.stabs{transition:transform .2s}.stabs.hid{transform:translateY(-110%)}
+.stabs a{padding:8px 10px!important;min-height:40px;display:inline-flex;align-items:center}
+@media(min-width:900px) and (max-width:1099px){.wrap{max-width:1040px}}

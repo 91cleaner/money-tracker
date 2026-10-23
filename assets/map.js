@@ -26,12 +26,11 @@ function satView(box, geo, cities, onPick) {
   const korea = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]);
   map.fitBounds(korea, {animate: false});
   let ok = false, errs = 0, failed = false;
-  const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 17, attribution: '위성: Tiles &copy; Esri — Esri, Maxar, Earthstar Geographics, GIS User Community', crossOrigin: false});
+  const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자', crossOrigin: false});
   tiles.on('tileload', () => { ok = true; });
   tiles.on('tileerror', () => { if (++errs >= 4 && !ok && !failed) { failed = true; view.onfail && view.onfail(); } });
   tiles.addTo(map);
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {maxZoom: 17, opacity: 0.85}).addTo(map);
   setTimeout(() => { if (!ok && !failed) { failed = true; view.onfail && view.onfail(); } }, 8000);
 
   const maxT = cities[0] ? cities[0].total : 1;
@@ -40,6 +39,7 @@ function satView(box, geo, cities, onPick) {
   for (const c of cities) {
     const m = L.circleMarker(toLL(c.p), {radius: 4 + 18 * Math.sqrt(c.total / maxT), className: 'sdot', weight: 1.5, color: '#fff', fillColor: '#0a84ff', fillOpacity: 0.55, bubblingMouseEvents: false});
     m.on('click', (e) => { L.DomEvent.stop(e); onPick(c.slug); }); m.addTo(gC); dots.set(c.slug, m);
+    if (cities.indexOf(c) < 14) L.tooltip({permanent: true, direction: 'right', className: 'klab', offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(c.name.split(' ').pop().replace(/(특별시|광역시|특별자치시)$/, '')).addTo(gC);
   }
   const bez = (a, b) => {
     const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
@@ -251,6 +251,6 @@ async function moneyMap(root, opts = {}) {
   if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); view.fly(c.p, 10); } }
   else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); }
   const ctl = {setCat(c) { cat = c; view.resize(Object.fromEntries(cities.map((x) => [x.slug, (dataOf(x.slug) || {}).total || 0]))); view.highlight(null); redraw(true); }};
-  root.append(el('p', 'sub small', `업체 위치: ${fl.basis}. 지도: Esri 위성 사진, 경계 ${geo.source}. 갱신 ${when(fl.updated)}`));
+  root.append(el('p', 'sub small', `업체 위치: ${fl.basis}. 지도: Esri 다크 그레이 베이스(라벨 없음) + 자체 한글 표기, 경계 ${geo.source}. 갱신 ${when(fl.updated)}`));
   return ctl;
 }

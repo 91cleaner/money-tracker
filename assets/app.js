@@ -356,7 +356,7 @@ async function vendorPage() {
   pastHistory(id);
   let d;
   try { if (!/^[0-9a-zn]+$/.test(id || '')) throw 0; d = await getJSON('data/vendor/' + id + '.json'); } catch (e) {
-    $('#title').textContent = '업체를 찾지 못했어요'; document.querySelectorAll('.sec, .stats').forEach((x) => x.remove()); return;
+    $('#title').textContent = '없는 업체입니다'; $('#vregion').replaceChildren('주소가 바뀌었거나 수집 기간에 계약이 없어요. ', Object.assign(el('a', '', '순위 보기 ›'), {href: 'rank.html'})); document.querySelectorAll('.sec, .stats, #stabs').forEach((x) => x.remove()); return;
   }
   document.title = d.name + ' · 우리 시 돈 추적기';
   $('#title').textContent = d.name;
@@ -426,8 +426,8 @@ async function cityPage() {
   const slug = new URLSearchParams(location.search).get('c');
   let d;
   try { d = await getJSON('data/city/' + slug + '.json'); } catch (e) {
-    $('#title').textContent = '아직 데이터가 없어요';
-    $('#lede').textContent = '첫 수집이 끝나면 이 시의 계약이 여기에 나타납니다. 조금만 기다려 주세요.';
+    $('#title').textContent = '없는 지역입니다';
+    $('#lede').replaceChildren('주소가 바뀌었거나 아직 추적하지 않는 곳이에요. ', Object.assign(el('a', '', '홈으로 가기 ›'), {href: './'}));
     document.querySelectorAll('.stats, .sec').forEach((s) => s.remove()); return;
   }
   const guQ = new URLSearchParams(location.search).get('gu');
@@ -450,12 +450,13 @@ async function cityPage() {
     const flagged = alerts.filter((a) => a.kind !== 'big').length;
     const what = cat === '전체' ? '' : `${cat} 분야에 `;
     $('#range').textContent = s.first ? `${s.first.replaceAll('-', '.')} ~ ${s.last.replaceAll('-', '.')}` : '최근 90일';
-    $('#lede').replaceChildren('최근 90일, ', name + '는 ' + what, el('b', '', krw(s.total)), '을 썼고, ',
+    const jo = (w) => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c <= 11171 && c % 28 ? '은' : '는'; };
+    $('#lede').replaceChildren('최근 90일, ', name + jo(name) + ' ' + what, el('b', '', krw(s.total)), '을 썼고, ',
       s.local == null ? '업체 주소는 확인 중입니다.' : el('b', '', `${pct(1 - s.local)}는 다른 지역 업체`), s.local == null ? '' : '로 갔습니다.');
     const mxr = rows.reduce((a, r) => (!a || r.amount > a.amount ? r : a), null);
     const big = mxr && s.total && mxr.amount / s.total > 0.3;
     let s2 = null; if (big) s2 = stats(d.city, rows.filter((r) => r !== mxr));
-    const frac = big ? (mxr.amount / s.total > 0.66 ? '대부분' : mxr.amount / s.total > 0.45 ? '절반' : pct(mxr.amount / s.total)) : '';
+    const fr = big ? mxr.amount / s.total : 0; const frac = big ? (fr >= 0.45 && fr <= 0.55 ? `절반(약 ${Math.round(fr * 100)}%)` : `약 ${Math.round(fr * 100)}%`) : '';
     $('#k-total').textContent = krw(s.total); $('#k-count').textContent = `계약 ${s.count.toLocaleString('ko-KR')}건` + (big ? ` · 이 중 1건(${krw(mxr.amount)})이 ${frac} · 최대 계약 빼면 ${krw(s2.total)}` : '');
     const bn = $('#bignote'); if (bn) { bn.hidden = !big; if (big) { bn.replaceChildren('참고: 가장 큰 계약 1건 ', mxr.url ? Object.assign(el('a', '', mxr.title.slice(0, 40)), {href: mxr.url, target: '_blank', rel: 'noopener'}) : mxr.title.slice(0, 40), ` (${krw(mxr.amount)})이 전체의 ${pct(mxr.amount / s.total)}예요. 이 1건을 빼면 ${krw(s2.total)}` + (s2.local != null && s.local != null ? `, 다른 지역 업체 비율은 ${pct(1 - s.local)} → ${pct(1 - s2.local)}` : '') + '이에요.'); } }
     $('#k-out').textContent = s.local == null ? '—' : pct(1 - s.local);

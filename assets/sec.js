@@ -14,20 +14,20 @@ LOAD('data/sec_sole.json').then(d=>{
   $('s-upd').textContent=d.updated.slice(5,16).replace('T',' ')+' KST';
   // 카운터
   let t0=performance.now();const tick=t=>{const p=Math.min(1,(t-t0)/1200);$('c-sum').textContent='₩'+W(d.sum*p);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);
-  $('c-meta').textContent=`${d.n.toLocaleString()}건 · 전체 새 계약의 ${Math.round(d.n/d.n_all*100)}% · ${d.period[0]}~${d.period[1]} · ${SRC}`;
+  $('c-meta').textContent=`최근 30일(${d.period[0]}~${d.period[1]}) · 85개 시 · ${d.n.toLocaleString()}건 · 같은 기간 새 계약 ${d.n_all.toLocaleString()}건 중 ${Math.round(d.n/d.n_all*100)}% (건수 기준) · ${SRC}`;
   // 터미널 피드
-  const lines=['> 85개 시 계약 스캔 중…',`> 수의계약 ${d.n.toLocaleString()}건 확인`,...d.flags.slice(0,5).map((f,i)=>`> [#${String(i+1).padStart(3,'0')}] ${f.cname} · ${f.n}건 묶음 ₩${W(f.sum)} 발견`),`> 데이터상 이상 징후 ${d.flag_n}건 · 해명 대기`,'> TRACKING… █'];
+  const lines=['> 85개 시 계약 스캔 중…',`> 수의계약 ${d.n.toLocaleString()}건 확인`,...d.flags.slice(0,5).map((f,i)=>`> [#${String(i+1).padStart(3,'0')}] ${f.cname} · ${f.n}건 묶음 ₩${W(f.sum)} 발견`),`> 데이터상 이상 징후 ${d.flag_n}건 · 기관 설명 확인 전`,'> TRACKING… █'];
   let i=0;const feed=$('feed');feed.textContent='';const step=()=>{if(i<lines.length){feed.textContent+=lines[i++]+'\n';setTimeout(step,450)}};step();
   // 오늘의 추적 대상
   if(d.flags.length){const f=d.flags[new Date().getDate()%Math.min(d.flags.length,7)];
-    $('spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 추적 대상</p><b>${E(f.inst)}</b> → <b>${E(f.vendor)}</b><br>30일 안에 ${f.n}건 · 합계 ₩${W(f.sum)}<p class="src">${SRC}</p></div>`}
+    $('spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(f.inst)}</b> → <b>${E(f.vendor)}</b><br>30일 안에 ${f.n}건 · 합계 ₩${W(f.sum)}<p class="src">${SRC}</p></div>`}
   // 추적 파일
-  $('cases').innerHTML=d.flags.map((f,i)=>`<div class="case"><span class="stamp">해명 대기</span><div class="no">🔍 추적 파일 #${String(i+1).padStart(3,'0')}</div>
+  $('cases').innerHTML=d.flags.map((f,i)=>`<div class="case"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 추적 파일 #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(f.cname)} · ${f.n}건 수의계약 묶음</h3>
    <div class="trail"><b>${E(f.inst)}</b><i></i><b>${E(f.vendor)}</b>${f.vregion?`<small>(${E(f.vregion.split(' ').slice(0,2).join(' '))})</small>`:''}</div>
    <div class="amt">₩${W(f.sum)}</div><small>${f.from} ~ ${f.to} · 건마다 2천만원 이하</small>
-   <ul>${f.items.map(x=>`<li>${x.d} ${E(x.t)} · ₩${W(x.a)} ${x.u?`<a href="${E(x.u)}" target="_blank">원문</a>`:''}</li>`).join('')}</ul>
-   <p class="src">데이터상 이상 징후 · 위법 판단 아님 · ${SRC}</p></div>`).join('')||'<p class="sub">아직 없습니다.</p>';
+   <ul>${f.items.map(x=>`<li>${x.d} ${E(x.t)} · ₩${W(x.a)} ${x.u?`<a class="orig" href="${E(x.u)}" target="_blank" rel="noopener">원문</a>`:''}</li>`).join('')}</ul>
+   <p class="steps">수집 ✓ → 분석 ✓ → 기관 설명 확인 전</p><p class="src">데이터상 이상 징후 · 위법 판단 아님 · ${SRC}</p></div>`).join('')||'<p class="sub">아직 없습니다.</p>';
   // 비율
   $('share').innerHTML=d.share.slice(0,10).map(s=>{const p=Math.round(s.sn/s.n*100);return `<div class="row"><b>${E(s.name)}</b> 새 계약 ${s.n}건 중 수의계약 ${s.sn}건 (${p}%)<div class="bar"><b style="width:${p}%"></b></div></div>`}).join('')+`<p class="src">나라장터 공개 계약 기준(소액·긴급 수의계약은 법에서 허용) · ${SRC}</p>`;
   // 비용 비교 + 추정
@@ -50,11 +50,11 @@ LOAD('data/sec_fest.json').then(f=>{
   const $=id=>document.getElementById(id);
   $('f-sum').textContent='₩'+W(f.sum);
   $('f-meta').textContent=`${f.year}년 원가 공개 행사 ${f.n}건(추적 중인 시) · 전국 ${f.n_all}건 중앙값 ₩${W(f.med)} · ${LSRC(f.year)} 행사축제원가회계정보`;
-  const top=f.top[0]||{cname:'',nm:'',cost:0};const L=['> 지방재정365 행사 원가 스캔…',`> ${f.year}년 행사 ${f.n_all}건 확인`,`> 최대: ${top.cname} '${top.nm}' ₩${W(top.cost)}`,`> 고비용 상위 중 사업수익 0원 ${f.zero.length}건 (무료 행사일 수 있음)`,'> 데이터상 이상 징후 분류 완료 · 해명 대기','> TRACKING… █'];
+  const top=f.top[0]||{cname:'',nm:'',cost:0};const L=['> 지방재정365 행사 원가 스캔…',`> ${f.year}년 행사 ${f.n_all}건 확인`,`> 최대: ${top.cname} '${top.nm}' ₩${W(top.cost)}`,`> 고비용 상위 중 사업수익 0원 ${f.zero.length}건 (무료 행사일 수 있음)`,'> 데이터상 이상 징후 분류 완료 · 기관 설명 확인 전','> TRACKING… █'];
   let i=0;const fd=$('f-feed');fd.textContent='';const st=()=>{if(i<L.length){fd.textContent+=L[i++]+'\n';setTimeout(st,450)}};st();
   const sp=f.top[new Date().getDate()%Math.max(1,Math.min(5,f.top.length))];
-  if(sp)$('f-spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 추적 대상</p><b>${E(sp.cname)} · ${E(sp.nm)}</b><br>총비용 ₩${W(sp.cost)} · 사업수익 ₩${W(sp.rev)} · ${sp.days||'?'}일<p class="src">${LSRC(f.year)}</p></div>`;
-  const card=(r,i,tag)=>`<div class="case"><span class="stamp">${r.rev>0?'수익 있음':'해명 대기'}</span><div class="no">🔍 ${tag} #${String(i+1).padStart(3,'0')}</div>
+  if(sp)$('f-spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(sp.cname)} · ${E(sp.nm)}</b><br>총비용 ₩${W(sp.cost)} · 사업수익 ₩${W(sp.rev)} · ${sp.days||'?'}일<p class="src">${LSRC(f.year)}</p></div>`;
+  const card=(r,i,tag)=>`<div class="case"><span class="stamp">${r.rev>0?'수익 있음':'데이터상 이상 징후'}</span><div class="no">🔍 ${tag} #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(r.cname)} · ${E(r.nm)}</h3><div class="amt">₩${W(r.cost)}</div>
    <small>${ymd(r.from)} ~ ${ymd(r.to)} · ${r.days||'?'}일${r.perday?` · 하루 ₩${W(r.perday)}`:''} · 주최 ${E(r.gov)}</small>
    <div class="rcp"><div class="l"><span>사업수익(입장료 등)</span><b>₩${W(r.rev)}</b></div><div class="l"><span>순원가(세금 부담)</span><b>₩${W(r.net)}</b></div>
