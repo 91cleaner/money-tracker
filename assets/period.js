@@ -68,16 +68,23 @@
 .pd input{width:100%;margin:8px 0 2px;accent-color:#ffb020;height:28px;touch-action:pan-y}.pd-t{display:flex;justify-content:space-between;color:#6b7785;font-size:10.5px}
 .pd-sum{color:#e8eef5;font-weight:500;margin-top:2px}#dive .pd{order:3}
 .pd{padding:6px 10px 7px!important;margin:6px 6px 4px!important}.pd input{margin:2px 0 0!important;height:24px!important}.pd-sum{margin-top:0!important}
-@media (min-width:900px){#dive .pd{grid-column:1;grid-row:3!important;margin:0 0 8px}#dive .dv-map{grid-row:4!important;height:calc(100dvh - 400px)!important;min-height:340px!important}#dive .maplg{grid-column:1;grid-row:5}#dive .dv-sheet{grid-row:2/6!important}}`;
+@media (min-width:900px){#dive .pd{grid-column:1;grid-row:3!important;margin:0 0 8px}#dive .dv-map{grid-row:4!important;height:calc(100dvh - 400px)!important;min-height:340px!important}#dive .maplg{grid-column:1;grid-row:5}#dive .dv-sheet{grid-row:2/6!important}}
+.pd input{-webkit-appearance:none;appearance:none;background:transparent;display:block;width:100%}
+.pd input::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(90deg,#ffb020 var(--p,50%),rgba(255,255,255,.18) var(--p,50%))}
+.pd input::-moz-range-track{height:6px;border-radius:3px;background:linear-gradient(90deg,#ffb020 var(--p,50%),rgba(255,255,255,.18) var(--p,50%))}
+.pd input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;margin-top:-7px;border-radius:50%;background:#ffb020;border:2px solid #0a1018;box-shadow:0 0 0 1px #ffb020}
+.pd input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#ffb020;border:2px solid #0a1018}
+.pd-t{position:relative;height:16px;display:block!important}.pd-t span{position:absolute;top:0;left:calc(10px + (100% - 20px) * var(--k));transform:translateX(-50%);white-space:nowrap;line-height:16px}
+@media (max-width:899px){.pd{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center;padding:6px 12px 4px!important;margin:4px 6px 4px!important}.pd-top{grid-column:1;grid-row:1/3;display:block}.pd-top b{white-space:nowrap}.pd-r,.pd-sum{display:none}.pd input{grid-column:2;grid-row:1;height:22px!important}.pd-t{grid-column:2;grid-row:2}}`;
   const mount = w => {
     if (!w || document.querySelector('.pd')) return;
     const cov = span(w.lo, w.dl.last), stops = STOPS.filter(s => s === 0 || s <= cov), L0 = `전체 (${+w.lo.slice(5, 7)}.${+w.lo.slice(8)}~)`;
     let i = stops.indexOf(w.fixed && Q.has('from') ? -1 : w.d); if (i < 0) i = stops.indexOf(30) >= 0 ? stops.indexOf(30) : stops.length - 1;
     const st = document.createElement('style'); st.textContent = css; document.head.append(st);
     const el = document.createElement('div'); el.className = 'pd';
-    el.innerHTML = `<div class="pd-top"><b class="pd-l"></b><span class="pd-r"></span></div><input type="range" min="0" max="${stops.length - 1}" step="1" value="${i}" id="pd-range" name="period" aria-label="기간"><div class="pd-t">${stops.map(s => `<span>${s ? s + '일' : L0}</span>`).join('')}</div><div class="pd-sum"></div>`;
+    el.innerHTML = `<div class="pd-top"><b class="pd-l"></b><span class="pd-r"></span></div><input type="range" min="0" max="${stops.length - 1}" step="1" value="${i}" id="pd-range" name="period" aria-label="기간"><div class="pd-t">${stops.map((s, k) => `<span style="--k:${stops.length > 1 ? k / (stops.length - 1) : 0}">${s ? s + '일' : '전체'}</span>`).join('')}</div><div class="pd-sum"></div>`;
     const inp = el.querySelector('input');
-    const show = (k, fr, to) => {
+    const show = (k, fr, to) => { inp.style.setProperty('--p', `calc(10px + (100% - 20px) * ${stops.length > 1 ? k / (stops.length - 1) : 0})`);
       const s = stops[k]; fr = fr || (s ? day(w.dl.last, 1 - s) : w.lo); to = to || w.dl.last; if (fr < w.lo) fr = w.lo;
       el.querySelector('.pd-l').textContent = Q.has('from') && fr === w.from ? `${span(fr, to)}일` : (s ? `최근 ${s}일` : L0);
       el.querySelector('.pd-r').textContent = `${fmt(fr)}~${fmt(to).slice(5)} 계약일 기준${to === w.dl.last && !w.fixed ? ' (늘어날 수 있음)' : ''}`;

@@ -43,12 +43,10 @@
   }
   // 홈: 큰 시 8곳에 '이름 금액' 라벨
   const gL = L.layerGroup();
+  const HL = new Map(), gLead = L.layerGroup().addTo(map);
   const homeLab = (c, v) => { const nm = (BY[c.slug] || {}).short || (BY[c.slug] || {}).name || '', ll = toLL(c.p);
-    // 수도권은 점이 몰려 있어 서울 라벨을 서해 쪽으로 빼고 지시선으로 서울 점을 가리킨다
-    if (nm === '서울') { const at = [ll[0] + 0.15, ll[1] - 1.05]; L.polyline([ll, at], {color: '#ffd60a', weight: 1.5, opacity: 0.9, interactive: false, className: 'dv-leader'}).addTo(gL);
-      L.circleMarker(ll, {radius: 3, color: '#ffd60a', weight: 2, fillColor: '#ffd60a', fillOpacity: 1, interactive: false}).addTo(gL);
-      L.tooltip({permanent: true, direction: 'left', className: 'klab dv-amt dv-seoul', offset: [-2, 0], interactive: false}).setLatLng(at).setContent(esc(nm + ' ' + krw(v))).addTo(gL); return; }
-    L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt', offset: [6, 0], interactive: false}).setLatLng(ll).setContent(esc(nm + ' ' + krw(v))).addTo(gL); };
+    const t = L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-hl', offset: [6, 0], interactive: false}).setLatLng(ll).setContent(esc(nm + ' ' + krw(v))).addTo(gL);
+    HL.set(t, ll); };
   cities.filter((c) => c.total).slice(0, 8).forEach((c) => homeLab(c, c.total));
   map.on('click', (e) => { const hits = [];
     dots.forEach((m, s) => { const d = e.containerPoint.distanceTo(map.latLngToContainerPoint(m.getLatLng())); const r = m.getRadius(); if (d <= Math.max(r + 6, 22)) hits.push([d - r, s]); });
@@ -59,25 +57,43 @@
   // 라벨 겹침: 발주 라벨 먼저 자리 잡고, 나머지는 위아래로 조금씩 밀어 보고 그래도 겹치면 숨김
   const declutter = () => { const G = 8, hit = (r, q) => !(r.right + G < q.left || r.left - G > q.right || r.bottom + G < q.top || r.top - G > q.bottom), seen = [], miss = [];
     const bb = box.getBoundingClientRect(), inB = (r) => r.left >= bb.left + 2 && r.right <= bb.right - 2 && r.top >= bb.top + 2 && r.bottom <= bb.bottom - 18;
+    const live = new Set(); for (const g of [gF, gL]) if (map.hasLayer(g)) g.eachLayer((l) => { const e = l.getElement && l.getElement(); if (e) live.add(e); });
+    box.querySelectorAll('.dv-org, .dv-amt').forEach((e) => { if (!live.has(e)) e.remove(); });
     const L_ = [...box.querySelectorAll('.dv-org'), ...box.querySelectorAll('.dv-amt')];
-    const place = (t) => { const r0 = t.getBoundingClientRect(), flip = t.classList.contains('dv-org') ? 0 : -(r0.width + 16);
+    gLead.clearLayers(); const tipOf = new Map(); HL.forEach((ll, tp) => { const e = tp.getElement(); if (e) tipOf.set(e, ll); });
+    const DOT = []; if (map.hasLayer(gL)) dots.forEach((m) => { const p = map.latLngToContainerPoint(m.getLatLng()); DOT.push([bb.left + p.x, bb.top + p.y, m.getRadius() + 2]); });
+    const onDot = (r, own) => DOT.some(([x, y, rr]) => (!own || Math.hypot(x - own[0], y - own[1]) > 2) && Math.max(r.left - x, 0, x - r.right) ** 2 + Math.max(r.top - y, 0, y - r.bottom) ** 2 < rr * rr);
+    const place = (t, strict) => { const r0 = t.getBoundingClientRect(), flip = t.classList.contains('dv-org') ? 0 : -(r0.width + 16), ll = tipOf.get(t);
       const pull = Math.min(0, bb.right - 4 - r0.right) || Math.max(0, bb.left + 4 - r0.left);
-      for (const dx of [0, flip, pull]) for (const dy of [0, 18, -18, 34, -34, 50, -50]) { const r = {left: r0.left + dx, right: r0.right + dx, top: r0.top + dy, bottom: r0.bottom + dy};
-        if (inB(r) && !seen.some((q) => hit(r, q))) { t.style.marginTop = dy + 'px'; t.style.marginLeft = dx + 'px'; seen.push(r); return true; } }
+      let own = null; if (ll) { const p = map.latLngToContainerPoint(ll); own = [bb.left + p.x, bb.top + p.y]; }
+      const C = []; if (ll) { for (const [dx, k] of [[0, 0], [flip, 0], [36, 36], [flip - 36, 36], [72, 72], [flip - 72, 72], [pull, 0]]) for (const dy of [0, 18, -18, 34, -34, 52, -52, 72, -72, 92, -92]) C.push([dx, dy, k + Math.abs(dy)]); C.sort((a, b) => a[2] - b[2]); }
+      else for (const dx of [0, flip, pull]) for (const dy of [0, 18, -18, 34, -34, 50, -50]) C.push([dx, dy, 0]);
+      for (const [dx, dy, k] of C) { const r = {left: r0.left + dx, right: r0.right + dx, top: r0.top + dy, bottom: r0.bottom + dy};
+        if (inB(r) && !seen.some((q) => hit(r, q)) && (!strict || !onDot(r, own))) { t.style.marginTop = dy + 'px'; t.style.marginLeft = dx + 'px'; seen.push(r);
+          if (own && k > 0) { const left = r.left > own[0], ex = left ? r.left : r.right, ey = Math.max(r.top + 4, Math.min(r.bottom - 4, own[1]));
+            const toL = (x, y) => map.containerPointToLatLng([x - bb.left, y - bb.top]);
+            L.polyline([ll, toL(ex, ey)], {color: '#ffd60a', weight: 1.5, opacity: 0.85, interactive: false, className: 'dv-leader'}).addTo(gLead);
+            L.circleMarker(ll, {radius: 2.5, color: '#ffd60a', weight: 1.5, fillColor: '#ffd60a', fillOpacity: 1, interactive: false}).addTo(gLead); }
+          return true; } }
       return false; };
     L_.forEach((t) => { t.style.visibility = ''; t.style.marginTop = '0px'; t.style.marginLeft = '0px'; t.classList.remove('dv-sm');
+      if (tipOf.has(t) && place(t, true)) return;
       if (place(t)) return;
       if (t.classList.contains('dv-rc')) { t.classList.add('dv-sm'); if (place(t)) return; t.classList.remove('dv-sm'); }  // 작게 줄여서 한 번 더
       t.style.visibility = 'hidden'; if (t.classList.contains('dv-rc')) miss.push(t.textContent); });
     // 지도에 끝내 못 넣은 도착지 라벨은 지도 아래 줄에 (지도 위에 겹치지 않게)
     let m = root.querySelector('.dv-miss'); if (!m) { m = document.createElement('p'); m.className = 'dv-miss'; const dn = root.querySelector('.dv-down'); dn ? dn.before(m) : box.after(m); }
-    m.textContent = miss.length ? '지도에 다 못 적은 도착지: ' + miss.map((x) => x.replace(/^→\s*/, '')).join(' · ') : ''; m.hidden = !miss.length; };
+    const rs = cur && map.hasLayer(gF) && REST.n ? `그 밖 ${REST.n}곳${REST.unk ? '(주소 미확인 포함)' : ''} ${krw(REST.amt)}` : '';
+    const parts = miss.map((x) => x.replace(/^→\s*/, '')); if (rs) parts.push(rs);
+    m.textContent = parts.length ? (miss.length ? '지도에 다 못 적은 도착지: ' : '') + parts.join(' · ') : ''; m.hidden = !parts.length; };
+  let REST = {n: 0, amt: 0};
   map.on('zoomend moveend', () => setTimeout(declutter, 30));
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
   // 세금 길: 도시 → 업체 소재지 선 그리기
   const drawFlows = (slug, hold) => {
-    gF.clearLayers(); FX.set([]); const c = fl.cities[slug]; if (!c || !c.flows.length) return; const arcs = [];
+    gF.clearLayers(); FX.set([]); REST = {n: 0, amt: 0}; const c = fl.cities[slug]; if (!c || !c.flows.length) return; const arcs = [];
     const a = c.p, top = c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10), mx = top[0] ? top[0].amount : 1;
+    { const sh = top.reduce((t, f) => t + f.amount, 0), tot = c.total || 0; REST = {n: c.flows.length - top.length, amt: Math.max(0, tot - sh), unk: tot - (c.known || 0) > 0}; if (REST.amt > 0 && !REST.n) REST.n = 1; if (REST.amt <= 0) REST.n = 0; }
     top.forEach((f, i) => {
       const b = f.p, dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60); // 아주 짧은 흐름도 휘어서 보이게
       const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
@@ -113,7 +129,7 @@
       A.forEach((a, i) => { const n = Math.max(1, Math.round(a.n * k)); for (let j = 0; j < n; j++) P.push({a: i, u: j / n + Math.random() * 0.1, s: 0.004 + Math.random() * 0.002}); });
       t0 = performance.now(); go(); }}; })();
   let seq = 0;
-  const fly = (slug) => { const c = fl.cities[slug]; if (!c) return; gL.remove(); const ll = toLL(c.p); const my = ++seq; gF.clearLayers(); map.stop();
+  const fly = (slug) => { const c = fl.cities[slug]; if (!c) return; gL.remove(); gLead.clearLayers(); const ll = toLL(c.p); const my = ++seq; gF.clearLayers(); map.stop();
     const pts = [ll, ...c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10).map((f) => toLL(f.p))]; let bd = L.latLngBounds(pts);
     const wide = innerWidth >= 900, sh = wide ? 0 : sheet.offsetHeight || Math.round(root.clientHeight * 0.25);
     const o = {paddingTopLeft: [24, 24], paddingBottomRight: [24, 24], maxZoom: 9.5};
@@ -173,7 +189,7 @@
   const ex = (on) => { sheet.dataset.ex = on ? '1' : '0'; if (!on) sheet.scrollTop = 0; window.__inv && __inv(); };
   root.querySelector('.dv-grab').onclick = () => ex(sheet.dataset.ex !== '1');
   let CAT = '전체'; const TOT = (slug) => { const c = BY[slug] || {}; return CAT === '전체' ? (c.total || 0) : ((c.by_cat || {})[CAT] || 0); };
-  const homeLabels = () => { gL.clearLayers(); const L_ = cities.map((c) => [c, TOT(c.slug)]).filter((x) => x[1]).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const homeLabels = () => { gL.clearLayers(); HL.clear(); const L_ = cities.map((c) => [c, TOT(c.slug)]).filter((x) => x[1]).sort((a, b) => b[1] - a[1]).slice(0, 8);
     L_.forEach(([c, v]) => homeLab(c, v)); };
   window.__dvCat = (k) => { CAT = k || '전체'; const mx = Math.max(1, ...cities.map((c) => TOT(c.slug)));
     dots.forEach((m, s) => { const v = TOT(s); m.setRadius(v ? 4 + 13 * Math.sqrt(v / mx) : 3); m.setStyle({fillOpacity: v ? 0.5 : 0.1, opacity: v ? 1 : 0.3}); });
