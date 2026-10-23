@@ -164,13 +164,20 @@
     homeLabels(); if (!cur) L0(true); setTimeout(declutter, 60); };
   if (window.__mtCat && window.__mtCat !== '전체') setTimeout(() => window.__dvCat(window.__mtCat), 0);
   // 분야 TOP 5 시 카드 (공식 데이터: by_cat·n_cat, 행사대행은 시 계약 행에서 계산)
+  // 개인 이름처럼 보이는 업체명(법인·상호 표지 없음, 흔한 성씨+1~3자)은 '개인사업자'로
+  const pName = (n) => { const t = String(n).replace(/\s*\(.*?\)\s*$/, '').trim();
+    return /^[김이박최정강조윤장임한오서신권황안송류유전홍고문양손배백허남심노하곽성차주우구민나진지엄채원천방공현함변염여추도소석선설마길연위표명기반왕금옥육인맹제모탁국어은편용][가-힣]{1,3}$/.test(t) && !/주식회사|\(주\)|㈜|기획|엔터|프로젝트|커뮤니케이션|컴퍼니|미디어|산업|건설|공사|상사|협회|재단|조합|센터|디자인|이벤트|아트|음향|무대|공방|스튜디오|그룹|코리아|플러스|테크|시스템|네트웍스|레저|문화|홀딩스|에이전시/.test(t) ? '개인사업자' : n; };
   const top5 = () => { const L_ = C.map((c) => ({c, v: TOT(c.slug), n: (c.n_cat || {})[CAT] || 0})).filter((x) => x.v).sort((a, b) => b.v - a.v).slice(0, 5);
     if (!L_.length) return ''; const fest = CAT === '축제 공연·섭외';
-    const k = CAT; setTimeout(() => fest && L_.forEach(({c}) => get('data/city/' + c.slug + '.json').then((d) => { if (CAT !== k) return;
+    const k = CAT; setTimeout(() => L_.forEach(({c}) => get('data/city/' + c.slug + '.json').then((d) => { if (CAT !== k) return;
+      const vm = {}; for (const r of d.rows) if (r.cat === k && r.vendor) { const id = r.bh || r.vendor; (vm[id] = vm[id] || {id: r.bh, n: r.vendor, a: 0}).a += r.amount; }
+      const tv = Object.values(vm).sort((a, b) => b.a - a.a)[0], ve = body.querySelector(`.t5-v[data-s="${c.slug}"]`);
+      if (tv && ve) { ve.textContent = `1위 업체: ${pName(tv.n)} ${krw(tv.a)}`; if (tv.id) { ve.dataset.v = tv.id; ve.classList.add('lnk'); ve.onclick = (e) => { e.stopPropagation(); location.href = 'vendor.html?v=' + tv.id; }; } }
+      if (!fest) return;
       const ag = d.rows.filter((r) => r.cat === k && r.ftag === '행사대행').reduce((s, r) => s + r.amount, 0), tot = d.rows.filter((r) => r.cat === k).reduce((s, r) => s + r.amount, 0);
       const e = body.querySelector(`.t5-ag[data-s="${c.slug}"]`); if (e && ag) e.textContent = `행사대행 포함 ${krw(ag)}${tot ? ' (' + Math.round(ag / tot * 100) + '%)' : ''}`; }).catch(() => {})), 0);
     return `<div class="t5"><div class="t5-h"><b>${esc(CAT)} TOP 5 시</b>${shb(CAT + ' 계약 TOP 5 시 · 우리 시 돈 추적기', './?cat=' + encodeURIComponent(CAT))}</div><ol>${L_.map(({c, v, n}, i) =>
-      `<li><button type="button" data-s="${c.slug}"><span class="t5-r">${i + 1}</span><span class="t5-m"><b>${esc(c.short || c.name)}</b><small>${n}건 · 건당 평균 ${krw(n ? v / n : v)}</small>${fest ? `<small class="t5-ag" data-s="${c.slug}"></small>` : ''}</span><em>${krw(v)}</em></button></li>`).join('')}</ol>
+      `<li><button type="button" data-s="${c.slug}"><span class="t5-r">${i + 1}</span><span class="t5-m"><b>${esc(c.short || c.name)}</b><small>${n}건 · 건당 평균 ${krw(n ? v / n : v)}</small><small class="t5-v" data-s="${c.slug}"></small>${fest ? `<small class="t5-ag" data-s="${c.slug}"></small>` : ''}</span><em>${krw(v)}</em></button></li>`).join('')}</ol>
       ${fest ? '<p class="small t5-n">공연 용역 금액에는 무대·음향·연출이 포함되며 개인 출연료가 아님 · 행사대행은 축제 전체 운영 계약</p>' : ''}<p class="dv-src">출처 조달청 나라장터</p></div>`; };
   const L0 = (keep) => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
     if (box.clientWidth && keep !== true) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});

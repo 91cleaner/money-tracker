@@ -257,3 +257,4 @@ main.wrap{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
 .t5 ol{list-style:none;margin:0;padding:0}.t5 li button{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:8px 0;background:none;border:0;border-bottom:1px solid #1c242c;color:#e6ecf1;text-align:left}
 .t5-r{width:18px;color:#6b7682;font-size:12px}.t5-m{flex:1;display:grid;gap:1px;min-width:0}.t5-m small{color:#9aa5b1;font-size:12px}.t5-m .t5-ag{color:#7cc4ff}
 .t5 em{font-style:normal;font-weight:700;color:#ffb020;white-space:nowrap}.t5-n{color:#8a95a1;margin:6px 0 0}
+.t5-m .t5-v{color:#c9d3dc}.t5-m .t5-v.lnk{text-decoration:underline;text-underline-offset:2px;cursor:pointer}
