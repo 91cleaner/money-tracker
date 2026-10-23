@@ -335,6 +335,18 @@ def merge_orders(rows):
     return out
 
 
+def set_odate(r):
+    """원계약일(odate): 0차(최초 계약) 날짜. 표준 계약정보의 cntrctCnclsDate 는 해당 차수의 체결일이라
+    변경 차수 행의 date 는 변경일이다. 0차를 수집 기간 안에서 봤으면(ord 00 또는 hist 의 00) 그 날짜, 못 봤으면
+    기간 전에 맺은 계약으로 보고 odate 없음. oy = 계약번호 앞자리로 본 등록 연도(참고)."""
+    o = r.get("ord") or "00"
+    h = {x["ord"]: x for x in r.get("hist", [])}
+    r["odate"] = r["date"] if o == "00" else (h["00"].get("date") if "00" in h else None)
+    r["chg"] = o != "00"
+    m = re.match(r"R(\d{2})", r.get("no") or "") or re.match(r"(?:20)(\d{2})", r.get("no") or "")
+    r["oy"] = 2000 + int(m.group(1)) if m else None
+
+
 def man(n):
     """금액을 '1.2억' / '9,195만' / '0원' 처럼."""
     if n >= 100_000_000:
@@ -404,7 +416,7 @@ def summarize(city, rows, vendors):
                 region_amt[vr.split()[0]] += amt
                 if city["name"] in vr or (city["metro"] and vr.startswith(key)):
                     local_amt += amt
-    dates = sorted(r["date"] for r in rows)
+    dates = sorted(r.get("odate") or r["date"] for r in rows)
     return {
         "count": len(rows), "total": total, "first": dates[0] if dates else None, "last": dates[-1] if dates else None,
         "top_inst": [{"name": k, "amount": a, "count": c} for k, (a, c) in sorted(inst.items(), key=lambda x: -x[1][0])[:10]],
@@ -469,7 +481,7 @@ def main():
             allrows = []
             for c in CITIES:
                 old = load(os.path.join(DATA, "city", c["slug"] + ".json"), {"rows": []})
-                rr = {r["id"]: r for r in old.get("rows", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
+                rr = {r["id"]: r for r in old.get("rows", []) + old.get("changes", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
                 rr.update({r["id"]: r for r in fresh.get(c["slug"], [])})
                 for r in rr.values():
                     if not r.get("ord") and re.fullmatch(r"[A-Z0-9]{13}\d{2}", r["id"]):
@@ -493,7 +505,7 @@ def main():
     for c in CITIES:
         path = os.path.join(DATA, "city", c["slug"] + ".json")
         old = load(path, {"rows": []})
-        rows = {r["id"]: r for r in old.get("rows", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
+        rows = {r["id"]: r for r in old.get("rows", []) + old.get("changes", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
         for r in fresh.get(c["slug"], []):
             rows[r["id"]] = r
         rows = merge_orders(rows)
@@ -513,11 +525,17 @@ def main():
             else:
                 r["vregion"] = legacy(r.get("vregion"))
             annotate(r, chg.get(cno(r)), vendors)
-        rows = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)
-        al = alerts_for(rows, explanations)
+            set_odate(r)
+        allr = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)
+        # 집계는 기간 안에 처음 맺은 계약만(계약번호당 1건, 금액은 최신 차수의 총계약금액).
+        # 기간 전에 맺은 계약의 변경(차수) 기록은 changes 에 따로 두고 '변경' 표시로만 보여 준다.
+        rows = [r for r in allr if r.get("odate")]
+        changes = [r for r in allr if not r.get("odate")]
+        ids_new = {r["id"] for r in rows}
+        al = [a for a in alerts_for(allr, explanations) if a["kind"] == "increase" or all(i in ids_new for i in a.get("ids", []))]
         summ = summarize(c, rows, vendors)
         save(path, {"city": {k: c[k] for k in ("slug", "name", "short", "province")}, "updated": now.isoformat(), "summary": summ,
-                    "alerts": al, "rows": rows})
+                    "alerts": al, "rows": rows, "changes": changes})
         flagged = [a for a in al if a["kind"] != "big"]
         by_cat = defaultdict(int); n_cat = defaultdict(int); cat_of = {}
         for r in rows:
@@ -531,7 +549,7 @@ def main():
         except Exception as e:  # 공유 카드가 실패해도 데이터 저장은 계속
             print(f"::warning::{c['slug']} 공유 카드 실패: {e}", flush=True)
         index.append({"slug": c["slug"], "name": c["name"], "short": c["short"], "province": c["province"], "count": summ["count"],
-                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "today": sum(1 for r in rows if r.get("date") == summ["last"]), "local_share": summ["local_share"], "by_cat": dict(by_cat), "n_cat": dict(n_cat),
+                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "today": sum(1 for r in rows if (r.get("odate") or r["date"]) == summ["last"]), "changes": len(changes), "local_share": summ["local_share"], "by_cat": dict(by_cat), "n_cat": dict(n_cat),
                       "alerts_cat": {k: sum(1 for a in flagged if k in {cat_of.get(i) for i in a.get("ids", [])}) for k in by_cat},
                       "top_alert_cat": alert_cat,
                       "top_alert": flagged[0] if flagged else None})

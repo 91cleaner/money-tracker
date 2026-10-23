@@ -18,16 +18,16 @@ def main():
     for f in sorted(glob.glob(os.path.join(ROOT, "data/city/*.json"))):
         d = json.load(open(f, encoding="utf-8"))
         c = d["city"]; cities[c["slug"]] = c
-        for r in d["rows"]:
+        for r in d["rows"] + d.get("changes", []):  # 분야별 단가 비교는 기간 전 계약의 변경분도 포함
             if r.get("method") == "수의계약":
                 k = r.get("no") or r.get("id")
                 if k not in latest or (r.get("ord") or "00") > (latest[k].get("ord") or "00"):
                     latest[k] = {**r, "slug": c["slug"], "cname": c["short"]}
-            if (r.get("ord") or "00") != "00": continue  # 변경 차수 제외, 새 계약만
+        for r in d["rows"]:  # 기간 안에 처음 맺은 계약만, 계약번호당 1건(최신 차수 금액)
             tot[(c["slug"], "all")] += amt(r); tot[(c["slug"], "n")] += 1
-            if r.get("method") == "수의계약" and (r.get("ord") or "00") == "00":  # 변경 차수는 제외(원계약 방식이 따라붙음)
+            if r.get("method") == "수의계약":
                 tot[(c["slug"], "sole")] += amt(r); tot[(c["slug"], "sn")] += 1
-                rows.append({**r, "slug": c["slug"], "cname": c["short"]})
+                rows.append({**r, "date": r.get("odate") or r["date"], "slug": c["slug"], "cname": c["short"]})
     if not rows: return
     g = collections.defaultdict(list)
     for r in rows: g[(r["inst"], r.get("bh") or r["vendor"])].append(r)
@@ -67,7 +67,7 @@ def main():
         comp.append({"kw": kw, "n": len(g2), "cities": len(byc), "med": med, "city": c, "cmed": m, "cn": n,
                      "pct": round((m / med - 1) * 100), "p25": q[0], "p75": q[2], "save": max(0, sm - med * n)})
     comp.sort(key=lambda x: -x["save"])
-    dates = [r["date"] for r in rows]
+    dates = [r.get("odate") or r["date"] for r in rows]
     out = {"updated": D.datetime.now(D.timezone(D.timedelta(hours=9))).isoformat(timespec="minutes"),
            "period": [min(dates), max(dates)], "n": len(rows), "sum": sum(amt(r) for r in rows),
            "n_all": sum(tot[(k, "n")] for k in cities), "sum_all": sum(tot[(k, "all")] for k in cities),

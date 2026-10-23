@@ -150,7 +150,7 @@ async function funHome(idx, getCat) {
   whenNear($('#receipts'), async () => {
     const all = [];
     const last = idx.updated ? new Date(idx.updated) : new Date(); const cut = new Date(last - 7 * 864e5).toISOString().slice(0, 10);
-    await Promise.all(live.map((c) => getJSON('data/city/' + c.slug + '.json').then((d) => { for (const r of d.rows) if (r.date >= cut) all.push({...r, city: c}); }).catch(() => {})));
+    await Promise.all(live.map((c) => getJSON('data/city/' + c.slug + '.json').then((d) => { for (const r of d.rows) if ((r.odate || r.date) >= cut) all.push({...r, city: c}); }).catch(() => {})));
     let key = 'amount', n = 10, lastCat = null;
     const btns = document.querySelectorAll('#rcpt th button');
     const draw = () => {
@@ -406,7 +406,8 @@ async function vendorPage() {
     $('#v-rows-n').textContent = (cat ? cat + ' · ' : '') + rows.length.toLocaleString('ko-KR') + '건' + (cat ? ' (다시 누르면 전체)' : ''); festNote($('#v-rows-n'), cat === FEST);
     for (const r of rows.slice(0, 300)) {
       const c = el('article', 'ccard');
-      const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', r.date + ' · ' + r.cat), el('b', 'cc-a', krw(r.amount)));
+      const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', (r.odate || r.date) + ' · ' + r.cat), el('b', 'cc-a', krw(r.amount)));
+      if (r.chg) { const b = el('i', 'sole-badge', '변경'); b.title = `${+r.ord}차 변경 ${r.date}${r.odate ? ' · 원계약 ' + r.odate : ' · 원계약은 수집 기간 전'} · 금액은 변경 후 총계약금액`; top.append(b); }
       if (r.cat === FEST && r.ftag) top.append(el('i', 'sole-badge ftag', r.ftag));
       if (r.cat === FEST && /수의/.test(r.method || '')) top.append(el('i', 'sole-badge', '수의계약'));
       const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
@@ -414,6 +415,17 @@ async function vendorPage() {
       c.append(...contractExtra(r));
       if (r.url) { const s2 = el('a', 'src', '출처: 조달청 나라장터 원문 ›'); s2.href = r.url; s2.target = '_blank'; s2.rel = 'noopener'; c.append(s2); }
       box.append(c);
+    }
+    const ch = (cat ? (d.changes || []).filter((r) => r.cat === cat) : (d.changes || []));
+    if (ch.length) {
+      const det = el('details', 'chg-old'); det.append(el('summary', '', `기간 전에 맺은 계약의 변경 ${ch.length.toLocaleString('ko-KR')}건 · 위 건수·합계에서 제외`));
+      for (const r of ch.slice(0, 100)) {
+        const c = el('article', 'ccard'); const top = el('div', 'cc-top');
+        top.append(el('span', 'cc-d', '변경일 ' + r.date), el('b', 'cc-a', krw(r.amount)), el('i', 'sole-badge', '변경 ' + (+r.ord) + '차'));
+        const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
+        c.append(top, t, el('span', 'cc-i', r.inst + (r.oy ? ' · 계약번호 기준 ' + r.oy + '년 등록' : '') + ' · 금액은 변경 후 총계약금액')); det.append(c);
+      }
+      box.append(det);
     }
   };
   drawCats(); drawRows();

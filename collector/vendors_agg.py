@@ -61,7 +61,7 @@ def build(now=None):
                 v["rows"].append({"id": r["id"], "date": r["date"], "title": r["title"], "amount": amt, "inst": r["inst"], "city": c["short"],
                                   "slug": c["slug"], "cat": r.get("cat") or "기타", "method": r.get("method"), "url": r.get("url"),
                                   **({"full": r["amount"], "jshare": sh} if sh is not None else {}),
-                                  **{f: r[f] for f in ("no", "ord", "this", "jv", "hist", "vers", "orig", "lt", "jvm") if r.get(f) not in (None, [])}})
+                                  **{f: r[f] for f in ("no", "ord", "odate", "chg", "oy", "this", "jv", "hist", "vers", "orig", "lt", "jvm") if r.get(f) not in (None, [])}})
             dates.append(r["date"])
         for a in d.get("alerts", []):
             for k in {k for i in a.get("ids", []) if i in byid for k in byid[i]}:
