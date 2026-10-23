@@ -15,7 +15,7 @@ import flows
 import jv
 import vendors_agg
 import corp
-import history
+import history, kw
 import backfill
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -64,7 +64,7 @@ CATS = [
 def category(title, kind):
     t = title or ""
     for name, words in CATS:
-        if any(w in t for w in words):
+        if any(kw.hit(t, w) for w in words):
             return name
     if kind and ("물품" in kind):
         return "물품"

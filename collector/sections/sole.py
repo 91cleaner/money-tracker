@@ -3,6 +3,7 @@
 건마다 2천만원 이하인데 합치면 2천만원 초과(지방계약법 시행령 1인 견적 수의계약 기준선 참고)."""
 import glob, json, os, sys, datetime as D, collections
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+import kw as KW
 try:
     from privacy import mask
 except Exception:
@@ -55,7 +56,7 @@ def main():
     import statistics as st
     comp = []
     for kw in ["건설재해예방", "긴급누수", "아스콘", "폐기물", "방역", "CCTV", "청소", "제초", "가로등", "안전점검"]:
-        g2 = [r for r in latest.values() if kw in r["title"] and amt(r) > 0]
+        g2 = [r for r in latest.values() if KW.hit(r["title"], kw) and amt(r) > 0]
         if len(g2) < 8: continue
         med = st.median(amt(r) for r in g2)
         q = st.quantiles([amt(r) for r in g2], n=4)
