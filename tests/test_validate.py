@@ -7,7 +7,7 @@ import kw, validate  # noqa: E402
 
 
 def row(no, title="도로 포장 공사", amount=1000, ord_="00", date="2026-10-20", odate="2026-10-20", cat="건설·공사", kind="공사"):
-    return {"id": no + ord_, "no": no, "ord": ord_, "title": title, "amount": amount, "date": date, "odate": odate, "cat": cat, "kind": kind, "atype": "본청"}
+    return {"id": no + ord_, "no": no, "ord": ord_, "title": title, "amount": amount, "date": date, "odate": odate, "cat": cat, "kind": kind, "atype": "본청", "ann": False}
 
 
 def ids(n, ord_="00", title="진해구 정수지 청소 용역"):
@@ -18,7 +18,7 @@ BASE = {
     "city": {"a": {"rows": [row("A1"), row("A2", "청사 청소 용역", cat="청소", kind="용역")], "changes": [row("A9", ord_="01", odate=None)]},
              "b": {"rows": [row("S0", "정수지 청소 용역", cat="청소", kind="용역"), row("S1", "정수지 청소 용역", cat="청소", kind="용역"),
                             row("S2", "정수지 청소 용역", cat="청소", kind="용역")], "changes": []}},
-    "sole": {"comp": [{"kw": "청소", "city": "b", "cn": 3, "small": False, "ids": ids(3)}]},
+    "sole": {"comp": [{"kw": "수조·관정 청소", "city": "b", "cn": 3, "small": False, "ids": ids(3)}]},
     "fest": {"rev_none": 1, "top": [{"nm": "x", "rev": None, "rr": None}, {"nm": "y", "rev": 5, "rr": 1.0}], "zero": []},
 }
 
@@ -70,6 +70,21 @@ class Gate(unittest.TestCase):
     def test_2_change_order_even_with_original_in_period(self):
         # 팩트체크: ord 01/02 517건이 원계약(00)이 기간 안에 있다는 이유로 신규 합계에 들어감
         self.assertTag(lambda s: s["city"]["a"]["rows"].append(row("M3", ord_="01", odate="2026-10-20")), "[2 변경 차수]")
+
+    def test_19_announced_contract_not_sole(self):
+        # 제보: 수원 떼까마귀 계약은 입찰공고(R26BK01756628)를 거쳤는데 '경쟁 없음' 비교에 들어감
+        def m(s):
+            s["city"]["b"]["rows"][0]["ntce"] = "R26BK01756628"; s["city"]["b"]["rows"][0]["ann"] = True
+        self.assertTag(m, "[19 공고]")
+        self.assertTag(lambda s: s["city"]["a"]["rows"][0].pop("ann"), "[19 공고]")
+
+    def test_21_mixed_sector(self):
+        self.assertTag(lambda s: s["sole"]["comp"][0]["ids"][0].update(t="떼까마귀 청소기동반 운영 용역"), "[21 분야]")
+
+    def test_20_fest_zero(self):
+        def m(s):
+            s["fest"]["top"] = [{"nm": "x", "rev": 0, "rr": 0.0, "cost": 1}]
+        self.assertTag(m, "[20 축제 수입]")
 
     def test_18_outside_agency_in_city_total(self):
         # 팩트체크: 자치구·공단·소방·교육·대학 계약이 시 합계에 섞임
@@ -142,11 +157,18 @@ class Keywords(unittest.TestCase):
     def test_sole(self):
         self.assertTrue(kw.sole_hit("○○공사 건설 재해예방 기술지도", "건설재해예방"))
         self.assertTrue(kw.sole_hit("○○공사 재해예방 기술지도 용역", "건설재해예방"))
-        self.assertFalse(kw.sole_hit("진해구청 소류지 수생식물 제거", "청소"))
+        self.assertFalse(kw.sole_hit("진해구청 소류지 수생식물 제거", "건물 청소"))
         self.assertFalse(kw.sole_hit("폐아스콘 처리 용역", "아스콘 포장"))
         self.assertTrue(kw.sole_hit("폐아스콘 처리 용역", "폐아스콘 처리"))
         self.assertFalse(kw.sole_hit("아스콘 절삭 후 덧씌우기 폐기물처리용역", "아스콘 포장"))
-        self.assertFalse(kw.sole_hit("2026년 공공청사 청소 연간 단가계약", "청소"))
+        self.assertFalse(kw.sole_hit("2026년 공공청사 청소 연간 단가계약", "건물 청소"))
+        # 제보: 수원 '청소' 비교에 조류 퇴치·청소기 구입·경로당 청소가 섞임 → 성격별로 나눔
+        self.assertEqual(kw.sole_sector("2026~2027년 떼까마귀 청소기동반 운영 용역"), "조류 퇴치")
+        self.assertIsNone(kw.sole_sector("친환경 노면 진공청소기 구입"))
+        self.assertEqual(kw.sole_sector("2026년 영통구 관내 경로당 청소 용역"), "건물 청소")
+        self.assertEqual(kw.sole_sector("공영주차장 물청소 용역"), "도로·노면 청소")
+        self.assertEqual(kw.sole_sector("제63회 수원화성문화제 청소 운영 용역"), "행사장 청소")
+        self.assertEqual(kw.sole_sector("지하수(빗물) 인공함양시설 청소 용역"), "수조·관정 청소")
 
 
 class Fields(unittest.TestCase):
@@ -230,7 +252,7 @@ class Lofin(unittest.TestCase):
         self.assertIsNone(parse_rev({"biz_ern_amt": None}))
         self.assertIsNone(parse_rev({}))
         self.assertIsNone(parse_rev({"biz_ern_amt": 0}))  # 17:17 회귀: 숫자 0 이 0원으로 들어감
-        self.assertEqual(parse_rev({"biz_ern_amt": "0"}), 0)
+        self.assertIsNone(parse_rev({"biz_ern_amt": "0"}))  # 제보: 실행마다 0/null 이 바뀜 → 형태 무관하게 null
         self.assertEqual(parse_rev({"biz_ern_amt": "1200"}), 1200)
 
 

@@ -11,6 +11,11 @@ except Exception:
 ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
 LIM = 20_000_000
 
+def is_sole(r):
+    """경쟁 없는 수의계약: 체결방법이 수의계약이고 입찰공고 번호(ntce)가 없는 것. 공고를 거친 수의계약(유찰 후·견적 공고)은 뺀다."""
+    return "수의" in (r.get("method") or "") and not r.get("ntce")
+
+
 def amt(r): return r.get("this") or r.get("amount") or 0
 
 def main():
@@ -20,13 +25,13 @@ def main():
         d = json.load(open(f, encoding="utf-8"))
         c = d["city"]; cities[c["slug"]] = c
         for r in d["rows"] + d.get("changes", []):  # 분야별 단가 비교는 기간 전 계약의 변경분도 포함
-            if r.get("method") == "수의계약":
+            if is_sole(r):
                 k = r.get("no") or r.get("id")
                 if k not in latest or (r.get("ord") or "00") > (latest[k].get("ord") or "00"):
                     latest[k] = {**r, "slug": c["slug"], "cname": c["short"]}
         for r in d["rows"]:  # 기간 안에 처음 맺은 계약만, 계약번호당 1건(최신 차수 금액)
             tot[(c["slug"], "all")] += amt(r); tot[(c["slug"], "n")] += 1
-            if r.get("method") == "수의계약":
+            if is_sole(r):
                 tot[(c["slug"], "sole")] += amt(r); tot[(c["slug"], "sn")] += 1
                 rows.append({**r, "date": r.get("odate") or r["date"], "slug": c["slug"], "cname": c["short"]})
     if not rows: return
@@ -60,7 +65,7 @@ def main():
     MIN_CITY = 3
     for kw, _, _ in KW.SOLE_SECT:
         # 기간 안에 처음 맺은 계약만(합계와 같은 기준), 기간 전 계약의 변경분 제외
-        g2 = [r for r in rows if amt(r) > 0 and (r.get("ord") or "00") == "00" and KW.sole_hit(r["title"], kw)]  # 변경 없는 원계약만(금액 비교 기준 통일)
+        g2 = [r for r in rows if amt(r) > 0 and (r.get("ord") or "00") == "00" and KW.sole_sector(r["title"]) == kw]  # 변경 없는 원계약만(금액 비교 기준 통일)
         if len(g2) < 8: continue
         med = st.median(amt(r) for r in g2)
         q = st.quantiles([amt(r) for r in g2], n=4)

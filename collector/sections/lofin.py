@@ -10,8 +10,13 @@ SRC = "행정안전부 지방재정365 OpenAPI"
 
 def parse_rev(r):
     """사업수입: 빈 값 = 기록 없음(None). 0과 구분한다."""
-    v = str(r.get("biz_ern_amt") or "").strip()  # API 는 기록이 없으면 빈 값 또는 숫자 0 을 준다 → 둘 다 '기록 없음'(원래 규칙과 같음)
-    return int(float(v)) if v != "" else None
+    v = str(r.get("biz_ern_amt") if r.get("biz_ern_amt") is not None else "").strip()
+    # API 는 기록이 없으면 빈 값, 숫자 0, 문자 "0" 을 섞어 준다 → 형태와 상관없이 0·빈 값은 모두 '기록 없음'(실행마다 같은 결과)
+    try:
+        n = int(float(v.replace(",", "")))
+    except ValueError:
+        return None
+    return n or None
 
 def call(code, **p):
     rows, page = [], 1
@@ -68,6 +73,7 @@ def fest(cities):
     if not ev: return None
     last = max(int(r["fyr"]) for r in ev)
     allrows = []
+    ev.sort(key=lambda r: (str(r.get("fyr")), str(r.get("laf_hg_nm")), str(r.get("event_fstv_nm")), str(r.get("hdmt_bgng_ymd"))))  # 쪽 순서와 상관없이 같은 결과
     for r in ev:
         c = match(cities, r.get("wa_laf_hg_nm"), r.get("laf_hg_nm"))
         cost, rev = int(r.get("tott_amt") or 0), parse_rev(r)  # 빈 값 = 기록 없음(null), 0과 구분
@@ -89,9 +95,9 @@ def fest(cities):
         r["pct"] = round((r["cost"] / med - 1) * 100)
         r["perday"] = round(r["cost"] / r["days"]) if r["days"] else None
         r["rr"] = round(r["rev"] / r["cost"] * 100, 1) if r["rev"] is not None else None
-    top = sorted(T, key=lambda r: -r["cost"])[:30]
+    top = sorted(T, key=lambda r: (-r["cost"], r["gov"] or "", r["nm"] or "", r["from"] or ""))[:30]
     zero = sorted([r for r in T if r["rev"] == 0], key=lambda r: -r["cost"])[:15]
-    pdtop = sorted([r for r in T if r["perday"]], key=lambda r: -r["perday"])[:10]
+    pdtop = sorted([r for r in T if r["perday"]], key=lambda r: (-r["perday"], r["gov"] or "", r["nm"] or ""))[:10]
     # 축제 편성 비율(YCEHF): 자치단체 예산 대비 행사·축제경비 편성
     yc = call("YCEHF")
     ratio = []
@@ -103,7 +109,7 @@ def fest(cities):
             if not c: continue
             if " " not in c["short"] and not str(r.get("laf_hg_nm", "")).endswith("본청"): continue
             ratio.append({"cname": c["short"], "gov": r["laf_hg_nm"], "y": ly, "budget": r["smy_cntt_amt"], "fest": r["smy_cntt_amt2"], "rt": r["smy_cntt_amt_rt"], "scope": "본청" if " " not in c["short"] else "시 전체"})
-        ratio.sort(key=lambda x: -x["rt"])
+        ratio.sort(key=lambda x: (-x["rt"], x["gov"]))
     # 청사 신축(GVBDAC): ㎡당 단가
     gb = []
     for y in range(yr - 6, yr):

@@ -633,6 +633,7 @@ def main():
             else:
                 r["vregion"] = sido_fix(legacy(r.get("vregion")))
             r["atype"] = agency_type(r.get("inst"), c)
+            r["ann"] = bool(r.get("ntce"))  # 공고 있음/없음: 입찰공고 번호가 있으면 공고를 거친 계약
             annotate(r, chg.get(cno(r)), vendors)
             set_odate(r)
         allr = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)

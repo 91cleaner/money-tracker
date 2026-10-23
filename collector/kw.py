@@ -33,18 +33,29 @@ SOLE_SECT = [
     ("폐기물", r"폐기물", None),
     ("방역", r"방역", None),
     ("CCTV", r"CCTV", None),
-    ("청소", r"청소(?!년)", None),
+    # 청소는 성격별로 따로 비교(제보: 수원 떼까마귀 기동반·노면 청소기 구입·경로당 청소가 한 묶음이었음)
+    ("조류 퇴치", r"까마귀|비둘기|조류\s*(퇴치|기피)|유해\s*조수", None),
+    ("행사장 청소", r"(?=.*(축제|문화제|대회|박람회|축전|페스티벌|행사))(?=.*청소(?!년))", None),
+    ("수조·관정 청소", r"(?=.*(저수조|물탱크|정수지|배수지|정수장|정수공정|착수정|관정|수조|함양\s*시설|정화조|오수))(?=.*청소(?!년))", None),
+    ("도로·노면 청소", r"(?=.*(노면|도로|가로|터널|주차장|물청소|하천|폭포))(?=.*청소(?!년))", None),
+    ("건물 청소", r"(?=.*(청사|도서관|센터|회관|화장실|유리|외벽|창호|경로당|체육관|수영장|샤워장|공연장|시설|교육장|사무실|건물))(?=.*청소(?!년))", None),
     ("제초", r"(?<!통)제초(?!소)", None),
     ("가로등", r"가로등", None),
     ("안전점검", r"안전\s*점검", None),
 ]
-SOLE_TERM = re.compile(r"단가|연간|년간|연중|1년|12개월|반기|분기")  # 1년·반기 단가계약은 단건 일과 섞지 않음
+SOLE_TERM = re.compile(r"단가|연간|년간|연중|1년|12개월|반기|분기")
+SOLE_NOT = re.compile(r"구입|구매|원가\s*계산|원가\s*산정|수수료\s*산정|차량|종량제|봉투|마대")  # 물품 구입·원가 계산 용역은 같은 일의 단가가 아님  # 1년·반기 단가계약은 단건 일과 섞지 않음
 _SOLE = {k: (re.compile(i, re.I), re.compile(x) if x else None) for k, i, x in SOLE_SECT}
 
 
 def sole_hit(title, sector):
     t = title or ""
     i, x = _SOLE[sector]
-    return bool(i.search(t)) and not (x and x.search(t)) and not SOLE_TERM.search(t)
+    return bool(i.search(t)) and not (x and x.search(t)) and not SOLE_TERM.search(t) and not SOLE_NOT.search(t)
 
 SOLE_SECT_NAMES = {k for k, _, _ in SOLE_SECT}
+
+
+def sole_sector(title):
+    """한 계약은 한 분야에만(목록 앞쪽 우선) — 같은 계약이 두 비교에 들어가지 않게."""
+    return next((k for k, _, _ in SOLE_SECT if sole_hit(title, k)), None)

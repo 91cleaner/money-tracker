@@ -151,6 +151,14 @@ def check(root, prev=None):
             E(f"[13 오늘 기준] {c['slug']} today_basis ≠ last")
 
     # sec_sole: (1)(2)(3)(4)
+    # (19) 공고 있음/없음: 모든 계약에 ann 필드, 입찰공고 번호(ntce)와 일치
+    byno, bad_ann = {}, 0
+    for slug, d in cities.items():
+        for r in d.get("rows", []) + d.get("changes", []) + d.get("ext", []):
+            byno[r.get("no") or r["id"]] = r
+            if r.get("ann") is not bool(r.get("ntce")): bad_ann += 1
+    if bad_ann: E(f"[19 공고] ann(공고 있음/없음)이 없거나 입찰공고 번호와 다른 계약 {bad_ann}건")
+    cmp_seen = {}
     sp = os.path.join(root, "sec_sole.json")
     if os.path.exists(sp):
         s = _load(sp)
@@ -166,6 +174,14 @@ def check(root, prev=None):
             for x in ids:
                 if x.get("ord") != "00":
                     E(f"[2/4 차수] sec_sole '{c['kw']}' {x.get('no')} ord={x.get('ord')}")
+                if c["kw"] in kw.SOLE_SECT_NAMES and kw.sole_sector(x.get("t")) != c["kw"]:
+                    E(f"[21 분야] sec_sole '{c['kw']}' {x.get('no')} '{x.get('t')}' 가 '{kw.sole_sector(x.get('t'))}' 분야(성격이 다른 계약끼리 비교)")
+                if x.get("no") in cmp_seen and cmp_seen[x["no"]] != c["kw"]:
+                    E(f"[21 분야] sec_sole {x['no']} 가 '{cmp_seen[x['no']]}'·'{c['kw']}' 두 비교에 들어감")
+                cmp_seen.setdefault(x.get("no"), c["kw"])
+                rr_ = byno.get(x.get("no"))
+                if rr_ is not None and rr_.get("ntce"):
+                    E(f"[19 공고] sec_sole '{c['kw']}' {x.get('no')} 는 입찰공고({rr_['ntce']})가 있는데 '경쟁 없음' 비교에 들어감")
                 if c["kw"] in kw.SOLE_SECT_NAMES and not kw.sole_hit(x.get("t"), c["kw"]):
                     E(f"[3 오탐] sec_sole '{c['kw']}' {x.get('no')} '{x.get('t')}' 가 분야 규칙에 안 맞음(낱말 경계·제외어·단가계약)")
                 t = re.sub(r"\s+", "", x.get("t") or "")
@@ -200,6 +216,22 @@ def check(root, prev=None):
                     E(f"[6 null] sec_fest.zero 에 수입 0이 아닌 행 {r.get('nm')} rev={r.get('rev')}")
                 if r.get("rev") == 0 and r.get("rr") is None:
                     E(f"[6 null] sec_fest.{k} {r.get('nm')} 수입 0인데 비율 없음(null/0 혼동)")
+
+        # (20) 축제 수입: 0 과 기록 없음이 섞이지 않게 — 0 은 '기록 없음'(null) 하나로, 실행마다 같은 결과
+        for k in ("top", "perday", "zero"):
+            for r in f.get(k) or []:
+                if isinstance(r, dict) and r.get("rev") == 0:
+                    E(f"[20 축제 수입] sec_fest.{k} {r.get('nm')} 수입 0 (0 은 기록 없음 null 로 통일해야 실행마다 같음)")
+        if prev and os.path.exists(os.path.join(prev, "sec_fest.json")):
+            pf = _load(os.path.join(prev, "sec_fest.json"))
+            if pf.get("year") == f.get("year"):
+                key = lambda r: (r.get("gov"), r.get("nm"), r.get("from"))
+                po = {key(r): r.get("rev") for r in pf.get("top") or [] if isinstance(r, dict)}
+                for r in f.get("top") or []:
+                    if isinstance(r, dict) and key(r) in po and (po[key(r)] in (None, 0)) != (r.get("rev") in (None, 0)):
+                        warn.append(f"[20 축제 수입] {r.get('nm')} 수입 {po[key(r)]} → {r.get('rev')} (같은 연도인데 값이 바뀜)")
+                if pf.get("rev_none") is not None and f.get("n") == pf.get("n") and f.get("rev_none") != pf.get("rev_none"):
+                    E(f"[20 축제 수입] 같은 연도·같은 행사 수({f.get('n')})인데 기록 없음 {pf.get('rev_none')} → {f.get('rev_none')} (실행마다 달라짐)")
 
     # rank: 업체별 건수 합이 전체 건수 이하
     rp = os.path.join(root, "rank.json")
