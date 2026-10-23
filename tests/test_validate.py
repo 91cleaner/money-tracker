@@ -30,7 +30,7 @@ def build(spec, d):
         json.dump(c, open(os.path.join(d, "city", slug + ".json"), "w"), ensure_ascii=False)
         cities.append({"slug": slug, "count": len(c["rows"]), "total": sum(r["amount"] for r in c["rows"]), "changes": len(c["changes"]), "ext": {"count": len(c.get("ext", [])), "total": sum(r["amount"] for r in c.get("ext", []))},
                        **spec.get("idx_over", {}).get(slug, {})})
-    json.dump({"updated": "2026-10-23T10:00", "days": 90, "cities": cities, **({} if spec.get("no_daily") else {"daily": "2026-10-23T10:00"})}, open(os.path.join(d, "index.json"), "w"))
+    json.dump({"updated": "2026-10-23T10:00", "days": 90, "amount_basis": "이번 차수", "cities": cities, **({} if spec.get("no_daily") else {"daily": "2026-10-23T10:00"})}, open(os.path.join(d, "index.json"), "w"))
     daily = {}
     for slug, c in spec["city"].items():
         m = daily.setdefault(slug, {})
@@ -85,6 +85,30 @@ class Gate(unittest.TestCase):
         def m(s):
             s["fest"]["top"] = [{"nm": "x", "rev": 0, "rr": 0.0, "cost": 1}]
         self.assertTag(m, "[20 축제 수입]")
+
+    def test_18_metro_county_and_fire_hq(self):
+        # 팩트체크 218c15e8b: 대구 달성군·군위군 등 광역시 자치군, 부산 소방재난본부가 본청으로 집계
+        def gun(s):
+            r = row("G1"); r["inst"] = "대구광역시 군위군"; s["city"]["a"]["city"] = {"short": "대구"}; s["city"]["a"]["rows"].append(r)
+        self.assertTag(gun, "[18 시 밖 기관]")
+        def fire(s):
+            r = row("G2"); r["inst"] = "부산광역시 소방재난본부"; s["city"]["a"]["rows"].append(r)
+        self.assertTag(fire, "[18 시 밖 기관]")
+
+    def test_22_long_term_amount_basis(self):
+        # 팩트체크: 장기계속 783건이 전체 계약금액으로 합산(이번 차수보다 약 1.2조 많음)
+        def m(s):
+            r = row("L1", amount=5000); r["this"] = 1000; r["lt"] = "신규(장기)"; r["ltc"] = True; s["city"]["a"]["rows"].append(r)
+        self.assertTag(m, "[22 금액 기준]")
+
+    def test_sectors_narrow(self):
+        self.assertIsNone(kw.sole_sector("생활폐기물 감량 연구용역"))
+        self.assertIsNone(kw.sole_sector("가로등 실시설계 용역"))
+        self.assertEqual(kw.sole_sector("가로등 LED 교체 공사"), "가로등 LED 교체")
+        self.assertEqual(kw.sole_sector("가로등 보수 공사"), "가로등 보수")
+        self.assertEqual(kw.sole_sector("CCTV 설치 공사"), "CCTV 설치")
+        self.assertEqual(kw.sole_sector("CCTV 유지보수 용역"), "CCTV 유지보수")
+        self.assertEqual(kw.sole_sector("아스콘 포트홀 보수"), "아스콘 보수")
 
     def test_18_outside_agency_in_city_total(self):
         # 팩트체크: 자치구·공단·소방·교육·대학 계약이 시 합계에 섞임

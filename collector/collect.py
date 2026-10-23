@@ -105,10 +105,10 @@ def jv_flag(v):
 
 
 _ATYPE = [("산하기관", r"시설(관리)?공단|도시(개발)?공사|관광공사|산학협력단|평생교육원|공단$|공사$|재단|진흥원|의료원|문화원|연구원"),
-          ("소방", r"소방(본부|서|학교)"), ("대학", r"대학교?$|대학교 "), ("교육", r"교육청|교육지원청|학교"), ("의회", r"의회")]
+          ("소방", r"소방"), ("대학", r"대학교?$|대학교 "), ("교육", r"교육청|교육지원청|학교"), ("의회", r"의회")]
 
 
-EXT_ATYPE = {"자치구", "산하기관", "소방", "교육", "대학"}  # 시 합계에서 빼는 기관
+EXT_ATYPE = {"자치구", "자치군", "산하기관", "소방", "교육", "대학"}  # 시 합계에서 빼는 기관
 
 
 def agency_type(inst, city):
@@ -117,6 +117,8 @@ def agency_type(inst, city):
     for k, rx in _ATYPE:
         if re.search(rx, t):
             return k
+    if city and " " not in city.get("short", " ") and re.search(r"[가-힣]+군(청)?$", t.split(" ")[-1]) and t.count(" ") >= 1:
+        return "자치군"  # 광역시 안의 군(군위·달성·기장·울주·강화·옹진): 별도 자치단체
     if re.search(r"(?<!광역)(?<!특별)[가-힣]+구(청)?$", t.split(" ")[-1]) and t.count(" ") >= 1:
         return "자치구" if city and " " not in city.get("short", " ") else "일반구"
     if re.search(r"사업소|센터|관리소|보건소|도서관|박물관|미술관|병원|청사|수도|하수|농업기술", t):
@@ -412,11 +414,23 @@ def method_label(r):
     return "유찰 후 수의계약(추정)" if "수의" in m and "유찰" not in m and r.get("ntce") and (r.get("amount") or 0) > 200_000_000 else m
 
 
+AMOUNT_BASIS = "이번 차수 금액(장기계속·계속비는 금차 계약금액, 그 밖은 계약금액). 전체 계약금액은 tot_amt"
+
+
+def set_basis(r):
+    """합계 기준 통일: 장기계속은 이번 차수 금액(this)으로 세고 전체 계약금액은 tot_amt 에 따로 둔다(sec_sole 과 같은 기준)."""
+    full = max(r.get("amount") or 0, r.get("tot_amt") or 0)
+    if r.get("ltc") and r.get("this") and 0 < r["this"] < full:
+        r["tot_amt"], r["amount"] = full, r["this"]
+    elif r.get("tot_amt") and not r.get("ltc"):
+        r.pop("tot_amt")
+
+
 def annotate(r, c, vendors):
     """계약정보서비스 결과를 행에 붙임: 차수별 금액(vers), 1차 총액(orig), 장기계속 구분(lt), 공동도급 참여 업체(jvm)."""
     for k in ("vers", "orig", "jvm"):
         r.pop(k, None)
-    r["ltc"] = bool("장기" in (r.get("lt") or "") or (r.get("this") and r.get("amount") and r["this"] < r["amount"]))  # 장기계속: 금차 < 총액
+    r["ltc"] = bool("장기" in (r.get("lt") or "") or (r.get("this") and max(r.get("amount") or 0, r.get("tot_amt") or 0) > r["this"]))  # 장기계속: 금차 < 총액
     r["jvp"] = r.get("jv") is True  # 공동도급인데 참여 업체 목록은 계약정보서비스 조회 대기(아래에서 받으면 해제)
     if not c or not c.get("v"):
         return
@@ -636,6 +650,7 @@ def main():
             r["ann"] = bool(r.get("ntce"))  # 공고 있음/없음: 입찰공고 번호가 있으면 공고를 거친 계약
             annotate(r, chg.get(cno(r)), vendors)
             set_odate(r)
+            set_basis(r)
         allr = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)
         # 집계는 기간 안에 처음 맺은 계약만(계약번호당 1건, 금액은 최신 차수의 총계약금액).
         # 기간 전에 맺은 계약의 변경(차수) 기록은 changes 에 따로 두고 '변경' 표시로만 보여 준다.
@@ -663,13 +678,15 @@ def main():
         except Exception as e:  # 공유 카드가 실패해도 데이터 저장은 계속
             print(f"::warning::{c['slug']} 공유 카드 실패: {e}", flush=True)
         index.append({"slug": c["slug"], "name": c["name"], "short": c["short"], "province": c["province"], "count": summ["count"],
-                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "today": sum(1 for r in rows if (r.get("odate") or r["date"]) == summ["last"]), "changes": len(changes), "ext": {"count": len(ext), "total": sum(r["amount"] or 0 for r in ext), "by_atype": {k: [sum(1 for r in ext if r["atype"] == k), sum(r["amount"] or 0 for r in ext if r["atype"] == k)] for k in sorted({r["atype"] for r in ext})}}, "today_basis": summ["last"],
+                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "today": sum(1 for r in rows if (r.get("odate") or r["date"]) == summ["last"]), "changes": len(changes), "tot_amt": sum(r.get("tot_amt") or r["amount"] or 0 for r in rows), "ext": {"count": len(ext), "total": sum(r["amount"] or 0 for r in ext), "by_atype": {k: [sum(1 for r in ext if r["atype"] == k), sum(r["amount"] or 0 for r in ext if r["atype"] == k)] for k in sorted({r["atype"] for r in ext})}}, "today_basis": summ["last"],
                       "by_atype": {k: sum(r["amount"] or 0 for r in rows if r.get("atype") == k) for k in sorted({r.get("atype") for r in rows if r.get("atype")})}, "local_share": summ["local_share"], "by_cat": dict(by_cat), "n_cat": dict(n_cat),
                       "alerts_cat": {k: sum(1 for a in flagged if k in {cat_of.get(i) for i in a.get("ids", [])}) for k in by_cat},
                       "top_alert_cat": alert_cat,
                       "top_alert": flagged[0] if flagged else None})
-    save(os.path.join(DATA, "daily.json"), daily_agg(now))  # 기간 슬라이더용: 시·날짜(원계약일)·분야별 건수·금액
-    save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": KEEP_DAYS, "daily": now.isoformat(), "cities": index})  # daily: 슬라이더 켜는 신호
+    dl = daily_agg(now)
+    DAYS_COVERED = (datetime.strptime(dl["last"], "%Y-%m-%d") - datetime.strptime(dl["first"], "%Y-%m-%d")).days + 1 if dl.get("first") else 0  # 실제 담긴 기간(원계약일 첫날~끝날)
+    save(os.path.join(DATA, "daily.json"), dl)  # 기간 슬라이더용: 시·날짜(원계약일)·분야별 건수·금액
+    save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": DAYS_COVERED, "amount_basis": AMOUNT_BASIS, "daily": now.isoformat(), "cities": index})  # daily: 슬라이더 켜는 신호
     if KEY:
         try:
             corp_step(now, state, biz_by_hash)

@@ -51,6 +51,14 @@ def check(root, prev=None):
                 E(f"[2 변경 차수] {slug} {r.get('no')} ord={r.get('ord')} odate={o} 가 신규 합계(rows)에 포함(changes 로 가야 함)")
             elif not o or o < start:
                 E(f"[2 기간 전] {slug} {r.get('no')} odate={o} 가 기간 시작 {start} 이전")
+            last_tok = (r.get("inst") or "").split(" ")[-1]
+            if "소방" in (r.get("inst") or "") or (" " not in d.get("city", {}).get("short", "x y") and re.search(r"군(청)?$", last_tok) and " " in (r.get("inst") or "")):
+                E(f"[18 시 밖 기관] {slug} {r.get('no')} '{r.get('inst')}'(소방·광역시 자치군)이 시 합계(rows)에 포함")
+            full = max(r.get("amount") or 0, r.get("tot_amt") or 0)
+            if r.get("this") and "장기" in (r.get("lt") or "") and r.get("amount") != r["this"] and r["this"] < full:
+                E(f"[22 금액 기준] {slug} {r.get('no')} 장기계속인데 합계 금액 {r.get('amount')} ≠ 이번 차수 {r['this']}")
+            if r.get("tot_amt") is not None and r["tot_amt"] < (r.get("amount") or 0):
+                E(f"[22 금액 기준] {slug} {r.get('no')} 전체 계약금액 tot_amt < 합계 금액")
             if r.get("atype") in EXT_ATYPE:
                 E(f"[18 시 밖 기관] {slug} {r.get('no')} {r.get('atype')} 가 시 합계(rows)에 포함(ext 로 가야 함)")
             t = r.get("title") or ""
@@ -96,6 +104,12 @@ def check(root, prev=None):
                 byday[r.get("odate") or r["date"]] = byday.get(r.get("odate") or r["date"], 0) + 1
             if any(m.get(k, [0])[0] != v for k, v in byday.items()):
                 E(f"[17 일별 집계] {slug} 날짜별 건수가 도시 파일과 다름")
+        if cities and dl.get("first") and dl.get("last"):
+            span = (D.date.fromisoformat(dl["last"]) - D.date.fromisoformat(dl["first"])).days + 1
+            if idx.get("days") != span:
+                E(f"[23 기간] index days {idx.get('days')} ≠ 실제 담긴 기간 {span}일({dl['first']}~{dl['last']})")
+        if cities and not idx.get("amount_basis"):
+            E("[22 금액 기준] index.json 에 amount_basis(합계 금액 기준) 없음")
         if "daily" not in idx:
             E("[17 일별 집계] index.json 에 daily 필드 없음(슬라이더가 꺼짐)")
         if cities and not dl.get("last"):
