@@ -19,6 +19,9 @@ def hid(s):
     return hashlib.sha1(str(s).encode()).hexdigest()[:16]  # collect.hid 와 같은 방식
 
 
+PARTNERS = {}  # 이번 실행 메모리에만: 공동도급 참여 업체 해시 → 사업자번호(소재지 조회용, 저장 안 함)
+
+
 def corps(s, mask):
     out = []
     for seg in (s or "").strip().strip("[]").split("],["):
@@ -30,6 +33,8 @@ def corps(s, mask):
             sh = float(f[6])
         except ValueError:
             sh = None
+        if b:
+            PARTNERS[hid(b)] = b
         out.append({"name": mask(f[3]), "role": f[1] or None, "joint": f[2] == "공동", "share": sh, "id": hid(b) if b else None})
     return out
 
@@ -56,7 +61,7 @@ class Quota(Exception):
     pass
 
 
-def run(data, rows, state, get_json, items_of, mask, now):
+def run(data, rows, state, get_json, items_of, mask, now, known=None):
     """rows: 모든 시의 계약 행. 돌려주는 값: chg 캐시(dict)."""
     path = os.path.join(data, "chg.json")
     try:
@@ -74,10 +79,16 @@ def run(data, rows, state, get_json, items_of, mask, now):
         c = cache.get(r["no"]) or {}
         have = {v["ord"] for v in c.get("v", [])}
         cur = int(r["ord"])
-        want = [f"{i:02d}" for i in range(1, cur + 1)] if cur > 1 else ([r["ord"]] if r["amount"] >= JV_MIN else [])
+        jvr = r.get("jv") is True  # 기본 계약 자료에 '공동계약 Y' → 금액과 상관없이 업체목록(지분)을 먼저 본다
+        want = [f"{i:02d}" for i in range(1, cur + 1)] if cur > 1 else ([r["ord"]] if (r["amount"] >= JV_MIN or jvr) else [])
         miss = [o for o in want if o not in have and o not in c.get("none", [])]
+        if jvr and not c.get("corps") and r["ord"] not in miss and r["ord"] not in c.get("none", []) and c.get("jvc") != today:
+            miss = miss + [r["ord"]]  # 업체목록을 아직 못 받은 공동계약: 최신 차수 한 번 더
+        cs = c.get("corps") or []
+        if known is not None and len(cs) > 1 and any(x.get("id") and not (known.get(x["id"]) or {}).get("region") for x in cs) and not c.get("rg") and r["ord"] not in miss:
+            miss = miss + [r["ord"]]; c["rg"] = today  # 참여 업체 소재지를 몰라 지분대로 못 나눈 계약: 사업자번호를 다시 얻으려 한 번 더
         if miss:
-            todo.append((0 if cur > 1 else 1, -r["amount"], r, miss))
+            todo.append((-1 if jvr else (0 if cur > 1 else 1), -r["amount"], r, miss))
     todo.sort(key=lambda x: x[:2])
     n = 0
     t0 = time.monotonic()
@@ -103,6 +114,8 @@ def run(data, rows, state, get_json, items_of, mask, now):
                     cs = v.pop("corps")
                     if o == max(o for o in [o] + [x["ord"] for x in c["v"]]):
                         c["corps"] = corps(cs, mask)
+                    if r.get("jv"):
+                        c["jvc"] = today
                     c["v"] = sorted([x for x in c["v"] if x["ord"] != o] + [v], key=lambda x: x["ord"])
                 c["at"] = today
                 if n % 20 == 0:

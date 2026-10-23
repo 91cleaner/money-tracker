@@ -8,10 +8,11 @@ from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
-from cities import CITIES, city_of
+from cities import CITIES, city_of, legacy
 import share
 from privacy import mask
 import flows
+import jv
 import vendors_agg
 import corp
 import history
@@ -343,7 +344,7 @@ def annotate(r, c, vendors):
     m = c.get("corps") or []
     if len(m) > 1:
         r["jv"] = True
-        r["jvm"] = [dict(x, region=(vendors.get(x["id"]) or {}).get("region") if x.get("id") else None) for x in m]
+        r["jvm"] = [dict(x, region=legacy((vendors.get(x["id"]) or {}).get("region")) if x.get("id") else None) for x in m]
     elif m:
         r["jv"] = False
 
@@ -372,15 +373,16 @@ def summarize(city, rows, vendors):
     ven = defaultdict(lambda: [0, 0, None])
     local_amt = known_amt = 0
     region_amt = defaultdict(int)
+    key = city["name"].replace("특별시", "").replace("광역시", "").replace("특별자치시", "")
     for r in rows:
         inst[r["inst"]][0] += r["amount"]; inst[r["inst"]][1] += 1
-        v = ven[(r["vendor"], r.get("bh"))]; v[0] += r["amount"]; v[1] += 1; v[2] = r.get("vregion")
-        if r.get("vregion"):
-            known_amt += r["amount"]
-            region_amt[r["vregion"].split()[0]] += r["amount"]
-            key = city["name"].replace("특별시", "").replace("광역시", "").replace("특별자치시", "")
-            if city["name"] in r["vregion"] or (city["metro"] and r["vregion"].startswith(key)):
-                local_amt += r["amount"]
+        for vr, amt, k, nm, sh in jv.alloc(r):  # 공동도급은 지분대로 나눔
+            v = ven[(nm, k)]; v[0] += amt; v[1] += 1; v[2] = vr or v[2]
+            if vr:
+                known_amt += amt
+                region_amt[vr.split()[0]] += amt
+                if city["name"] in vr or (city["metro"] and vr.startswith(key)):
+                    local_amt += amt
     dates = sorted(r["date"] for r in rows)
     return {
         "count": len(rows), "total": total, "first": dates[0] if dates else None, "last": dates[-1] if dates else None,
@@ -398,6 +400,8 @@ def main():
     now = datetime.now(KST)
     state = load(os.path.join(DATA, "state.json"), {})
     days = RECENT_DAYS if state.get("backfilled") else BACKFILL_DAYS
+    if not state.get("jngj1"):  # 전남광주통합특별시 이름으로 빠졌던 계약을 한 번 다시 받음
+        days = max(days, BACKFILL_DAYS)
     raw = []
     for i in (range(0) if rebuild else range(0, days, 7)):  # 일주일씩 나눠 요청
         s = (now - timedelta(days=min(days, i + 7))).date()
@@ -449,7 +453,12 @@ def main():
                         r["ord"] = r["id"][-2:]
                     r["no"] = cno(r)
                 allrows += merge_orders(rr).values()
-            chg = history.run(DATA, allrows, state, get_json, items_of, mask, now)
+            chg = history.run(DATA, allrows, state, get_json, items_of, mask, now, vendors)
+            pb = sorted(b for h, b in history.PARTNERS.items() if not (vendors.get(h) or {}).get("region"))
+            if pb:  # 공동도급 참여 업체 소재지 (기존 조회 한도 안에서)
+                left_p = lookup_regions(pb, vendors)
+                save(os.path.join(DATA, "vendors.json"), vendors)
+                print(f"공동도급 참여 업체 소재지 {len(pb) - left_p}/{len(pb)}곳 조회", flush=True)
         except Exception as e:
             print(f"::warning::계약 이력 단계 실패: {type(e).__name__}", flush=True)
         try:  # 과거 계약 거꾸로 채우기 (수집 기간 바로 전날부터)
@@ -472,9 +481,9 @@ def main():
             r["vendor"] = mask(r.get("vendor"))  # 사람 이름처럼 보이면 '개인사업자'
             r["cat"] = category(r.get("title"), r.get("kind"))
             if r.get("bh"):
-                r["vregion"] = (vendors.get(r["bh"]) or {}).get("region")
+                r["vregion"] = legacy((vendors.get(r["bh"]) or {}).get("region"))
             else:
-                r.setdefault("vregion", None)
+                r["vregion"] = legacy(r.get("vregion"))
             annotate(r, chg.get(cno(r)), vendors)
         rows = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)
         al = alerts_for(rows, explanations)
@@ -514,6 +523,8 @@ def main():
     if rebuild:
         print("저장된 자료로 다시 집계함"); return
     done = state.get("backfilled") or (raw and left == 0 and not FAILS)
+    if raw and not FAILS:
+        state["jngj1"] = True
     state.update({"backfilled": bool(done), "last_run": now.isoformat(), "fetched": len(raw), "lookups_left": left,
                   "failed_requests": len(FAILS)})
     save(os.path.join(DATA, "state.json"), state)

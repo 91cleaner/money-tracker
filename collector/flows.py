@@ -7,6 +7,8 @@ import json, os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import vendors_agg
+import jv
+from cities import legacy
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 
@@ -49,19 +51,15 @@ class Locator:
 
 
 def is_local(city, vregion):
+    vregion = legacy(vregion)
     key = city["name"].replace("특별시", "").replace("광역시", "").replace("특별자치시", "")
     metro = city["province"] == city["name"]
     return city["name"] in vregion or (metro and vregion.startswith(key))
 
 
 def parts(r):
-    """계약 금액을 지역별로 나눔. 공동도급 참여 업체와 지분(나라장터 계약정보서비스 업체목록)이 있고
-    모든 참여 업체 소재지를 알면 지분대로, 아니면 대표 업체 기준으로 한 곳에 전부."""
-    m = r.get("jvm") or []
-    if len(m) > 1 and all(x.get("region") and x.get("share") for x in m) and 99 <= sum(x["share"] for x in m) <= 101:
-        tot = sum(x["share"] for x in m)
-        return [(x["region"], round(r["amount"] * x["share"] / tot), x.get("id") or vendors_agg.vid(r), x["name"]) for x in m]
-    return [(r.get("vregion"), r["amount"], vendors_agg.vid(r), r["vendor"])]
+    """계약 금액을 지역별로 나눔(공동도급은 지분대로, 소재지를 모르는 업체 몫은 '확인 중')."""
+    return [(vr, amt, k, nm) for vr, amt, k, nm, _ in jv.alloc(r)]
 
 
 def build(now=None):

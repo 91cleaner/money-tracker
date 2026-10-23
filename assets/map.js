@@ -59,7 +59,7 @@ function satView(box, geo, cities, onPick) {
   const vis = (fn) => { if (box.clientWidth > 0 && box.clientHeight > 0) { fn(); } else pend = fn; };
   addEventListener('resize', () => { if (pend && box.clientWidth > 0) { map.invalidateSize(); const f = pend; pend = null; setTimeout(f, 50); } });
   const view = {
-    resize(tot) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((m, s) => { const t = tot[s] || 0; m.setRadius(t ? 4 + 13 * Math.sqrt(t / mx) : 0); }); },
+    resize(tot, all) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((m, s) => { const t = tot[s] || 0; m.setRadius(t ? 4 + 13 * Math.sqrt(t / mx) : (all ? 4 : 0)); }); },
     highlight(p) { if (hl) hl.remove(); hl = p ? L.circleMarker(toLL(p), {radius: 16, className: 'hlring', color: '#ffd60a', weight: 3, fill: false, interactive: false}).addTo(map) : null; if (p) vis(() => map.panTo(toLL(p))); },
     select(slug) { dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
@@ -125,7 +125,7 @@ function svgView(box, geo, cities, onPick) {
   });
   sizes();
   const view2 = {
-    resize(tot) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((e, s) => { const t = tot[s] || 0; e.dataset.r = t ? 2.5 + 16 * Math.sqrt(t / mx) : 0; }); sizes(); },
+    resize(tot, all) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((e, s) => { const t = tot[s] || 0; e.dataset.r = t ? 2.5 + 16 * Math.sqrt(t / mx) : (all ? 2.5 : 0); }); sizes(); },
     highlight(p) { gL.querySelectorAll('.hl').forEach((x) => x.remove()); if (p) { const c = sv('circle', {cx: p[0], cy: p[1], class: 'hl dd'}); c.dataset.r = 9; gL.prepend(c); sizes(); } },
     select(slug) { dots.forEach((e, s) => e.classList.toggle('on', s === slug)); svg.classList.toggle('picked', !!slug); },
     lines(list, maxA, labels) {
@@ -261,7 +261,7 @@ async function moneyMap(root, opts = {}) {
   }
   if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); view.fly(c.p, 10); } }
   else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); }
-  const ctl = {setCat(c) { cat = c; view.resize(Object.fromEntries(cities.map((x) => [x.slug, (dataOf(x.slug) || {}).total || 0]))); view.highlight(null); redraw(true); }};
+  const ctl = {setCat(c) { cat = c; view.resize(Object.fromEntries(cities.map((x) => [x.slug, (dataOf(x.slug) || {}).total || 0])), c === '전체'); view.highlight(null); redraw(true); }};
   root.append(el('p', 'sub small', `업체 위치: ${fl.basis}. 지도: Esri 다크 그레이 베이스(라벨 없음) + 자체 한글 표기, 경계 ${geo.source}. 갱신 ${when(fl.updated)}`));
   return ctl;
 }

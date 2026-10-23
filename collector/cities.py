@@ -56,6 +56,29 @@ def all_cities():
 
 
 CITIES = all_cities()
+
+# 2026-07-01 전남광주통합특별시 출범(광주광역시·전라남도 폐지, 시·군·구 이름은 그대로).
+# 이 사이트는 시 단위로 보므로, 새 이름을 옛 광주(5개 구)·전남(시·군) 구분으로 되돌려 묶는다.
+JNGJ = ("전남광주통합특별시", "광주특별시")
+JNGJ_GU = ("동구", "서구", "남구", "북구", "광산구")
+
+
+def legacy(name):
+    """'전남광주통합특별시 서구' → '광주광역시 서구', '전남광주통합특별시 나주시' → '전라남도 나주시'.
+    통합특별시 본청·산하기관(시·군·구가 안 붙은 것)은 광주광역시로 묶는다(광주청사 기준, 화면에 따로 안내)."""
+    if not name:
+        return name
+    n = str(name).strip()
+    for p in JNGJ:
+        if n.startswith(p):
+            rest = n[len(p):].strip()
+            t = rest.split()[0] if rest else ""
+            if t in JNGJ_GU:
+                return ("광주광역시 " + rest).strip()
+            if t[-1:] in ("시", "군") and len(t) >= 2:
+                return "전라남도 " + rest
+            return ("광주광역시 " + rest).strip()
+    return n
 EXCLUDE_WORDS = ["교육청", "교육지원청", "경찰청", "경찰서"]
 
 
@@ -63,7 +86,7 @@ def city_of(institution_name):
     """수요기관명 → 시 slug. 교육청·국가기관·공기업 등은 제외."""
     if not institution_name:
         return None
-    n = institution_name.strip()
+    n = legacy(institution_name.strip())
     if any(w in n for w in EXCLUDE_WORDS):
         return None
     best = None
@@ -77,5 +100,5 @@ def city_of(institution_name):
 if __name__ == "__main__":
     print(len(CITIES))
     for t in ["인천광역시 종합건설본부", "경기도 광주시", "광주광역시 북구", "경기도 수원시 장안구", "수원시", "경기도교육청 수원교육지원청",
-              "강원도 춘천시", "제주특별자치도 서귀포시", "서울특별시 강남구", "한국도로공사"]:
+              "강원도 춘천시", "전남광주통합특별시 북구", "전남광주통합특별시 목포시", "전남광주통합특별시", "전남광주통합특별시 무안군", "제주특별자치도 서귀포시", "서울특별시 강남구", "한국도로공사"]:
         print(t, "→", city_of(t))
