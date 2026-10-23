@@ -72,7 +72,7 @@ function alertList(box, alerts, opts = {}) {
     if (slug) top.append(shareBtn(shareURL(slug, a.key), a.title));
     it.append(top, el('span', 't', (window.plainT || String)(a.title)));
     if (a.amount != null) it.append(el('span', 'a', krw(a.amount)));
-    it.append(el('span', 'd', (window.plainT || String)(a.detail)));
+    it.append(el('span', 'd', a.detail)); if (window.plainTag && window.plainTag(a.detail)) { const tg = el('span', 'tags'); tg.innerHTML = window.plainTag(a.detail); it.append(tg); }
     if (a.explanation && a.explanation.text) {
       const x = el('div', 'x'); x.append(el('b', '', '기관·업체 해명 '), document.createTextNode(`(${a.explanation.by || ''}${a.explanation.date ? ', ' + a.explanation.date : ''}) ${a.explanation.text}`)); it.append(x);
     }

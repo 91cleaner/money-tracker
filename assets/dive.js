@@ -250,10 +250,14 @@
   const L0 = (keep) => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
     if (box.clientWidth && keep !== true) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
     const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
-    body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
-      + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc((window.plainT || String)(c.top_alert.title.replace(/^데이터상 이상 징후:\s*/, '')))}</b><span>${esc((window.plainT || String)(c.top_alert.detail) || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
+    strip(null); body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
+      + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc((window.plainT || String)(c.top_alert.title.replace(/^데이터상 이상 징후:\s*/, '')))}</b><span>${esc(c.top_alert.detail || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
     body.querySelectorAll('.t5 [data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); };
   const W = (() => { const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10); return C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk).sort((a, b) => (b.top_alert.amount || 0) - (a.top_alert.amount || 0)).slice(0, 9); })();
+  const strip = (c, tot) => { let s = root.querySelector('.dv-strip'); if (!c) { s && (s.hidden = true); return; }
+    if (!s) { s = document.createElement('button'); s.type = 'button'; s.className = 'dv-strip'; s.onclick = () => { const t = root.querySelector('.dv-sheet'); t && scrollTo({top: t.getBoundingClientRect().top + scrollY - 52, behavior: RM ? 'auto' : 'smooth'}); }; }
+    const lg = root.querySelector('.maplg'); (lg || box).after(s); s.style.order = getComputedStyle(lg || box).order;
+    s.hidden = false; s.innerHTML = `<b>${esc(c)}</b> <em>${krw(tot)}</em><span>↓ 자세히</span>`; };
   const multi = (slugs) => { setH(1); body.innerHTML = '<p class="dv-k">여러 시가 겹쳐 있어요. 하나를 고르세요</p><div class="pickrow">' + slugs.map((s) => `<button type="button" class="chip" data-s="${s}">${esc((BY[s] || {}).name || s)}</button>`).join('') + '</div>';
     body.querySelectorAll('button[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); };
   const sib = (slug, d) => { const me = BY[slug]; let g = C.filter((c) => c.province === me.province); if (g.length < 2) g = C; const i = g.findIndex((c) => c.slug === slug); return g[(i + d + g.length) % g.length].slug; };
@@ -293,7 +297,7 @@
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
     cur = slug; setH(1); dim(slug);
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
-    body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)}</p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
+    strip(c.name, c.total); body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)}</p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
       <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">다른 지역 업체 ${out}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}</span> <button type="button" class="dv-sh dv-shc" aria-label="이 지역 결과 공유">공유</button> <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
       <div class="dv-more"><div class="dv-wrap" aria-label="우리 시 한눈에 보기"></div><div class="dv-t3">${top3(f)}</div><p class="dv-k">데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
@@ -304,7 +308,7 @@
       if (window.__pdCW && window.__pdCW() && d.rows) { const f2 = reFlow(slug, d.rows); fl.cities[slug] = f2; const o2 = f2.known ? Math.round((1 - f2.local / f2.known) * 100) : null; const mt = body.querySelector('.dv-meta'); if (mt) mt.innerHTML = `${PL()} · ${c.total ? (o2 != null ? `<b class="dv-out">다른 지역 업체 ${o2}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}`; const t3 = body.querySelector('.dv-t3'); if (t3) t3.innerHTML = top3(f2); drawFlows(slug); }
       const A = (d.alerts || []).filter((a) => a.kind !== 'big' && (!gu || (a.detail || '').includes(gu)));
       body.querySelector('.dv-n').textContent = A.length; wrapFill(slug, A); A.splice(8); body.querySelector('.dv-chip').hidden = !A.length;
-      box2.innerHTML = A.length ? A.map((a, i) => `<button type="button" class="dv-card" data-i="${i}"><b>${esc((window.plainT || String)(a.title))}</b><span>${esc((window.plainT || String)((window.maskT || ((x) => x))(a.detail)))}</span><em>${krw(a.amount)} ›</em></button>`).join('') : '<p class="small">최근 눈에 띄는 패턴이 없습니다.</p>';
+      box2.innerHTML = A.length ? A.map((a, i) => `<button type="button" class="dv-card" data-i="${i}"><b>${esc((window.plainT || String)(a.title))}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}${(window.plainTag || (() => ''))(a.detail)}</span><em>${krw(a.amount)} ›</em></button>`).join('') : '<p class="small">최근 눈에 띄는 패턴이 없습니다.</p>';
       car(box2);
       box2.querySelectorAll('.dv-card').forEach((b) => (b.onclick = () => { const a = A[+b.dataset.i]; const r = d.rows.find((x) => (a.ids || []).includes(x.id)); if (r && r.bh) go({c: slug, v: r.bh, a: a.key}); else if (r) window.open(r.url, '_blank', 'noopener'); }));
     } catch (e) { box2.innerHTML = '<p class="small">불러오지 못했어요.</p>'; }
@@ -320,7 +324,7 @@
       const rows = (v.rows || []).slice(0, 8);
       body.innerHTML = `<div class="dv-vh"><button type="button" class="dv-back" aria-label="${esc(BY[slug].name)}로 돌아가기">‹</button><p class="dv-name">${esc(v.name)}</p>${shb(v.name + ' 계약', 'vendor.html?v=' + vid)}</div><p class="dv-v" style="text-align:center">${krw(v.total)}</p>
         <p class="dv-l">${esc((v.region || '소재지 확인 중').split(' ').slice(-1)[0])} · <button type="button" class="dv-chip">계약 ${v.count}건</button></p>
-        <div class="dv-more">${a ? `<div class="dv-card on"><b>${esc((window.plainT || String)(a.title))}</b><span>${esc((window.plainT || String)((window.maskT || ((x) => x))(a.detail)))}</span></div>` : ''}
+        <div class="dv-more">${a ? `<div class="dv-card on"><b>${esc((window.plainT || String)(a.title))}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}${(window.plainTag || (() => ''))(a.detail)}</span></div>` : ''}
         <div class="dv-rows">${rows.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(r.date)} · ${esc((window.maskT || ((x) => x))(r.title))}${r.jshare ? ` <i class="jvb">함께 맡음 ${r.jshare}%</i>` : ''}</span><b>${krw(r.amount)} 원문 ›</b></a>`).join('')}</div>
         <a class="gobtn" href="vendor.html?v=${vid}">업체 전체 보기</a>${src}</div>`;
       ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);

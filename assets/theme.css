@@ -329,3 +329,7 @@ html{scroll-padding-bottom:72px}
 .gm-tip{font-weight:800!important}.gm-tip0{color:#5ac8fa!important;border-color:#5ac8fa!important}.gm-tip1{color:#ffb020!important;border-color:#ffb020!important}
 .dv-shm-a{flex-wrap:wrap}.dv-shm-a .dv-shm-xp{background:#0f151b;color:#e8eef5;border-color:#33414e}
 .dv-ez{font-size:12px;font-weight:500;color:#8fa0b3;letter-spacing:0}
+.dv-strip{display:none}
+@media (max-width:899px){#dive .dv-strip:not([hidden]){display:flex;align-items:center;gap:8px;margin:4px 6px 0;height:36px;padding:0 12px;border-radius:10px;border:1px solid #2a3540;background:#11171d;color:#e8eef5;font-size:14px;text-align:left;white-space:nowrap;overflow:hidden}
+#dive .dv-strip b{overflow:hidden;text-overflow:ellipsis}#dive .dv-strip em{font-style:normal;font-weight:800;color:#ffb020}#dive .dv-strip span{margin-left:auto;color:#5ac8fa;font-size:13px}}
+.dv-tag{display:inline-block;margin-top:3px;padding:1px 6px;border:1px solid #2a3540;border-radius:6px}
