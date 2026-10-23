@@ -42,8 +42,10 @@
     dots.set(c.slug, m); const e = m.getElement(); if (e) e.setAttribute('data-s', c.slug);
   }
   const gB = L.layerGroup().addTo(map);
+  // 게임 링은 점 위 전용 레이어(점 400 < 링 560 < 이름표 650)
+  map.createPane('gmRing').style.zIndex = 560; map.getPane('gmRing').style.pointerEvents = 'none'; const gR = L.svg({pane: 'gmRing'});
   window.__dvBlink = (ss) => { gB.clearLayers(); (ss || []).forEach((s, i) => { const m = dots.get(s); if (!m) return;
-    const col = i ? '#ffb020' : '#5ac8fa'; L.circleMarker(m.getLatLng(), {radius: Math.max(18, m.getRadius() + 10), color: col, weight: 4, fill: false, interactive: false, className: 'dv-blink'}).addTo(gB);
+    const col = i ? '#ffb020' : '#7fe8ff', rr = Math.max(18, m.getRadius() + 10); L.circleMarker(m.getLatLng(), {pane: 'gmRing', renderer: gR, radius: rr, color: '#03070b', opacity: 0.95, weight: 9, fill: false, interactive: false, className: 'dv-blink-bg'}).addTo(gB); L.circleMarker(m.getLatLng(), {pane: 'gmRing', renderer: gR, radius: rr, color: col, weight: 4, fill: false, interactive: false, className: 'dv-blink'}).addTo(gB);
     const nm = (BY[s] || {}).short || (BY[s] || {}).name || ''; L.tooltip({permanent: true, direction: i ? 'right' : 'left', offset: [i ? 20 : -20, 0], className: 'klab gm-tip gm-tip' + i, interactive: false}).setLatLng(m.getLatLng()).setContent(esc(nm)).addTo(gB); });
     // 게임 이름표가 다른 이름표(금액 라벨 등)를 가리면 반대쪽으로, 그래도 겹치면 숨김
     requestAnimationFrame(() => { const ov = (a, b) => !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
