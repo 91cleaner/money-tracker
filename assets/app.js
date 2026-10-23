@@ -529,14 +529,19 @@ async function cityPage() {
     cur = rows;
     const tb = tbl.querySelector('tbody'); tb.replaceChildren();
     tbl.querySelectorAll('th').forEach((th) => th.setAttribute('aria-sort', th.querySelector('button')?.dataset.k === sortK ? (dir > 0 ? 'ascending' : 'descending') : 'none'));
-    let list = q ? rows.filter((r) => (r.title + r.vendor + r.inst + (r.vregion || '')).includes(q)) : rows;
-    $('#all-n').textContent = list.length.toLocaleString('ko-KR') + '건';
+    const hit = (r) => ((r.title || '') + (r.vendor || '') + (r.inst || '') + (r.vregion || '')).includes(q);
+    let list = q ? rows.filter(hit) : rows;
+    const pw = (window.__pdCW && window.__pdCW()) || {};
+    const ex = q ? (d.ext || []).filter((r) => (!pw.from || r.date >= pw.from) && (!pw.to || r.date <= pw.to) && hit(r)).map((r) => Object.assign({}, r, {_ext: 1})) : [];
+    $('#all-n').textContent = list.length.toLocaleString('ko-KR') + '건' + (ex.length ? ` + 시청 외 기관(구청·공단 등) ${ex.length.toLocaleString('ko-KR')}건` : '');
+    list = list.concat(ex);
     list = list.slice().sort((a, b) => ((a[sortK] ?? '') < (b[sortK] ?? '') ? -1 : (a[sortK] ?? '') > (b[sortK] ?? '') ? 1 : 0) * dir).slice(0, 1500);
     for (const r of list) {
       const tr = el('tr');
       const title = el('td', 'ttl'); if (r.url) { const a = el('a', '', r.title); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; title.append(a); } else title.textContent = r.title;
       if (r.orig && r.orig !== r.amount) { const up = r.amount - r.orig; title.append(el('small', 'cc-hist', ` 1차 ${krw(r.orig)} → ${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%`)); }
       else if (r.vers && r.vers.length > 1) title.append(el('small', 'cc-tags', ` ${r.vers.length}개 차수 확인 · 총액 변화 없음`));
+      if (r._ext) title.append(el('small', 'cc-tags', ' 시청 외 기관 계약 · 위 합계에는 안 들어감'));
       if (r.ann === true || r.ann === false) title.append(el('i', r.ann ? 'ann-y' : 'ann-n', r.ann ? '공고 있음' : '공고 없음'));
       if (r.ltc || /^장기/.test(r.lt || '')) title.append(el('small', 'cc-tags ltc', ` 여러 해 계약 · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액 ${krw(r.tot_amt || r.amount)})`));
       if (window.plainTag && /단가/.test(r.title || '')) title.insertAdjacentHTML('beforeend', window.plainTag(r.title));
