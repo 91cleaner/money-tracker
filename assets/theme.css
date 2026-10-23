@@ -274,3 +274,6 @@ main.wrap{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
 .wage small{font-size:12px}
 .ticker.tk-rot .tk-slot{white-space:nowrap;text-overflow:ellipsis;max-height:none;line-height:44px!important}
 .todayn{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box;font-size:12px}
+/* v2 탭: 불투명 배경, 넘치지 않으면 균등 */
+.stabs{background:#07090c!important}
+.stabs.fit{gap:0}.stabs.fit a{flex:1 1 auto;justify-content:center;padding:8px 4px!important}

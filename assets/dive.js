@@ -79,7 +79,7 @@
     gF.clearLayers(); FX.set([]); const c = fl.cities[slug]; if (!c || !c.flows.length) return; const arcs = [];
     const a = c.p, top = c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10), mx = top[0] ? top[0].amount : 1;
     top.forEach((f, i) => {
-      const b = f.p, dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
+      const b = f.p, dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60); // 아주 짧은 흐름도 휘어서 보이게
       const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
       for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mxp + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * myp + t * t * b[1]]));
       const w = 1.5 + 7 * Math.sqrt(f.amount / mx), col = f.local ? '#0a84ff' : '#ff9f0a';

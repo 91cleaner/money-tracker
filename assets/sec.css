@@ -38,3 +38,9 @@ main>section.sec,.case,.rcp,#cases,#comp{scroll-margin-top:120px}
 .steps{font-size:12px!important}
 .src{font-size:12px}
 .calc{font-size:12px;color:#8b97a5;margin:6px 0 0;line-height:1.5}
+/* v2: iOS 확실한 페이드(스티키 그라데이션 요소), 불투명 배경, 넘치지 않으면 균등 */
+.stabs,.stabs.end{-webkit-mask-image:none!important;mask-image:none!important;padding-right:16px;background:#07090c!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+.stabs .sfade{position:sticky;right:-16px;flex:none;width:36px;margin-left:-36px;pointer-events:none;background:linear-gradient(90deg,rgba(7,9,12,0),#07090c 75%);z-index:1;transition:opacity .2s}
+.stabs.end .sfade{opacity:0}
+.stabs.fit a{flex:1 1 auto;text-align:center;padding:7px 6px}
+.stabs.fit .sfade{display:none}
