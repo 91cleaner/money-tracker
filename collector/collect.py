@@ -494,7 +494,7 @@ def main():
         except Exception as e:  # 공유 카드가 실패해도 데이터 저장은 계속
             print(f"::warning::{c['slug']} 공유 카드 실패: {e}", flush=True)
         index.append({"slug": c["slug"], "name": c["name"], "short": c["short"], "province": c["province"], "count": summ["count"],
-                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "local_share": summ["local_share"], "by_cat": dict(by_cat), "n_cat": dict(n_cat),
+                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "today": sum(1 for r in rows if r.get("date") == summ["last"]), "local_share": summ["local_share"], "by_cat": dict(by_cat), "n_cat": dict(n_cat),
                       "alerts_cat": {k: sum(1 for a in flagged if k in {cat_of.get(i) for i in a.get("ids", [])}) for k in by_cat},
                       "top_alert_cat": alert_cat,
                       "top_alert": flagged[0] if flagged else None})

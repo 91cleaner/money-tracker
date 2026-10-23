@@ -434,6 +434,7 @@ async function cityPage() {
   if (guQ && /^[가-힣]{1,6}구$/.test(guQ)) { const g = d.rows.filter((r) => (r.inst || '').includes(guQ)); if (g.length) { const ids = new Set(g.map((r) => r.id)); d.rows = g; d.alerts = d.alerts.filter((a) => (a.ids || []).some((i) => ids.has(i))); d.city = Object.assign({}, d.city, {short: d.city.short + ' ' + guQ}); } }
   const name = d.city.short;
   window.__citySlug = slug;
+  if (window.regionBar) { document.body.classList.add('has-rbar'); regionBar(slug, (s2) => { location.href = 'city.html?c=' + s2 + location.hash; }); }
   document.querySelectorAll('.tracklinks a').forEach((a) => (a.href = a.getAttribute('href').replace('spend.html', 'spend.html?c=' + slug)));
   document.title = d.city.name + ' 돈 추적기';
   $('#title').textContent = name;
@@ -456,7 +457,7 @@ async function cityPage() {
     const mxr = rows.reduce((a, r) => (!a || r.amount > a.amount ? r : a), null);
     const big = mxr && s.total && mxr.amount / s.total > 0.3;
     let s2 = null; if (big) s2 = stats(d.city, rows.filter((r) => r !== mxr));
-    const fr = big ? mxr.amount / s.total : 0; const frac = big ? (fr >= 0.45 && fr <= 0.55 ? `절반(약 ${Math.round(fr * 100)}%)` : `약 ${Math.round(fr * 100)}%`) : '';
+    const fr = big ? mxr.amount / s.total : 0; const frac = big ? (fr >= 0.48 && fr <= 0.52 ? `절반(약 ${Math.round(fr * 100)}%)` : `약 ${Math.round(fr * 100)}%`) : '';
     $('#k-total').textContent = krw(s.total); $('#k-count').textContent = `계약 ${s.count.toLocaleString('ko-KR')}건` + (big ? ` · 이 중 1건(${krw(mxr.amount)})이 ${frac} · 최대 계약 빼면 ${krw(s2.total)}` : '');
     const bn = $('#bignote'); if (bn) { bn.hidden = !big; if (big) { bn.replaceChildren('참고: 가장 큰 계약 1건 ', mxr.url ? Object.assign(el('a', '', mxr.title.slice(0, 40)), {href: mxr.url, target: '_blank', rel: 'noopener'}) : mxr.title.slice(0, 40), ` (${krw(mxr.amount)})이 전체의 ${pct(mxr.amount / s.total)}예요. 이 1건을 빼면 ${krw(s2.total)}` + (s2.local != null && s.local != null ? `, 다른 지역 업체 비율은 ${pct(1 - s.local)} → ${pct(1 - s2.local)}` : '') + '이에요.'); } }
     $('#k-out').textContent = s.local == null ? '—' : pct(1 - s.local);

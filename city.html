@@ -8,9 +8,9 @@
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/style.css">
-<link rel="stylesheet" href="assets/sec.css">
-<link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/style.css?v=202610231107">
+<link rel="stylesheet" href="assets/sec.css?v=202610231107">
+<link rel="stylesheet" href="assets/theme.css?v=202610231107">
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body data-page="city">
@@ -51,7 +51,7 @@
 
   <section class="sec mapsec" id="map">
     <h2>돈이 어디로 갔나</h2>
-    <p class="sub">이 시가 계약으로 쓴 돈이 어느 지역(시·군·구) 업체로 갔는지 보여줍니다. 파란 선은 우리 시 업체, 주황 선은 다른 지역 업체입니다. 공동도급 계약은 대표 업체 기준입니다.</p>
+    <p class="sub">파란 선은 우리 시 업체, 주황 선은 다른 지역 업체로 간 돈입니다.</p>
     <div class="mapgrid"><div class="map" aria-live="polite"></div><div class="flowpanel"></div></div>
   </section>
 
@@ -69,13 +69,13 @@
     <h2>돈을 가장 많이 받은 업체</h2>
     <p class="sub">업체 이름 아래는 소재지(시·군·구)</p>
     <div class="bars" id="vendors"></div>
+    <details class="morebox"><summary>더 보기 · 돈을 가장 많이 쓴 기관</summary>
+      <p class="sub">시청, 구청, 사업소 등 돈을 낸 곳</p>
+      <div class="bars" id="insts"></div>
+    </details>
   </section>
 
-  <section class="sec">
-    <h2>돈을 가장 많이 쓴 기관</h2>
-    <p class="sub">시청, 구청, 사업소 등 돈을 낸 곳</p>
-    <div class="bars" id="insts"></div>
-  </section>
+
 
   <section class="sec" id="contracts">
     <h2>계약 목록</h2>
@@ -105,13 +105,14 @@
     <span>기관·업체 해명은 받는 대로 해당 항목 아래에 싣습니다. <a href="./#principles">사이트 원칙 보기</a></span>
   </footer>
 </main>
-<script src="assets/mask.js"></script>
-<script src="assets/app.js"></script>
+<script src="assets/mask.js?v=202610231107"></script>
+<script src="assets/region.js?v=202610231107"></script>
+<script src="assets/app.js?v=202610231107"></script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/map.js"></script>
-<script src="assets/bid.js" defer></script>
-<script src="assets/tabs.js"></script>
-<script src="assets/nav.js"></script>
-<script src="assets/fx.js"></script>
+<script src="assets/map.js?v=202610231107"></script>
+<script src="assets/bid.js?v=202610231107" defer></script>
+<script src="assets/tabs.js?v=202610231107"></script>
+<script src="assets/nav.js?v=202610231107"></script>
+<script src="assets/fx.js?v=202610231107"></script>
 </body>
 </html>

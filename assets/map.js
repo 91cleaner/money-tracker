@@ -12,23 +12,31 @@ function satView(box, geo, cities, onPick) {
   box.classList.add('sat');
   const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 12, zoomSnap: 0.25, tap: true,
     maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false});
-  L.control.zoom({position: 'topright'}).addTo(map);
+  if (!matchMedia('(pointer: coarse)').matches) L.control.zoom({position: 'topright'}).addTo(map);
   // 페이지 스크롤을 빼앗지 않도록: 터치 기기에서는 지도를 한 번 눌러야 움직임
   if (matchMedia('(pointer: coarse)').matches) {
-    map.dragging.disable(); map.touchZoom.disable();
-    const hint = document.createElement('div'); hint.className = 'maphint'; hint.textContent = '지도를 눌러서 움직이기';
-    box.append(hint);
-    const on = () => { map.dragging.enable(); map.touchZoom.enable(); hint.remove(); };
-    map.once('click', on); hint.addEventListener('click', on);
+    map.dragging.disable(); map.zoomControl && map.zoomControl.remove();
+    const hint = document.createElement('div'); hint.className = 'maphint'; hint.textContent = '두 손가락으로 지도 이동·확대';
+    box.append(hint); setTimeout(() => hint.remove(), 4000);
   }
-  map.attributionControl.setPrefix(false);
-  map.on('click', () => { if (view.onempty) view.onempty(); });
+  const declutter = () => { const seen = []; box.querySelectorAll('.leaflet-tooltip').forEach((t) => { t.style.visibility = ''; const r = t.getBoundingClientRect(); if (seen.some((q) => !(r.right < q.left || r.left > q.right || r.bottom < q.top || r.top > q.bottom))) t.style.visibility = 'hidden'; else seen.push(r); }); };
+  map.on('zoomend moveend', () => setTimeout(declutter, 30)); setTimeout(declutter, 600); window.__declutter = declutter;
+  map.attributionControl.setPrefix(false); window.__mtMap = map;
+  map.on('click', (e) => {
+    const pt = e.containerPoint, hits = [];
+    dots.forEach((m, s) => { const r = m.getRadius(); if (!r) return; const q = map.latLngToContainerPoint(m.getLatLng()); const d = pt.distanceTo(q); if (d <= Math.max(r, 10) + 8) hits.push([d - r, s]); });
+    hits.sort((a, b) => a[0] - b[0]);
+    if (!hits.length) { if (view.onempty) view.onempty(); return; }
+    const inside = hits.filter((h) => h[0] <= 4);
+    if (inside.length > 1 && view.onmulti) view.onmulti(inside.map((h) => h[1])); else onPick(hits[0][1]);
+  });
   const korea = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]);
   map.fitBounds(korea, {animate: false});
   let ok = false, errs = 0, failed = false;
   const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자', crossOrigin: false});
-  tiles.on('tileload', () => { ok = true; });
+  box.classList.add('loading');
+  tiles.on('tileload', () => { ok = true; box.classList.remove('loading'); });
   tiles.on('tileerror', () => { if (++errs >= 4 && !ok && !failed) { failed = true; view.onfail && view.onfail(); } });
   tiles.addTo(map);
   setTimeout(() => { if (!ok && !failed) { failed = true; view.onfail && view.onfail(); } }, 8000);
@@ -37,8 +45,8 @@ function satView(box, geo, cities, onPick) {
   const dots = new Map();
   const gC = L.layerGroup().addTo(map), gF = L.layerGroup().addTo(map);
   for (const c of cities) {
-    const m = L.circleMarker(toLL(c.p), {radius: 4 + 18 * Math.sqrt(c.total / maxT), className: 'sdot', weight: 1.5, color: '#fff', fillColor: '#0a84ff', fillOpacity: 0.55, bubblingMouseEvents: false});
-    m.on('click', (e) => { L.DomEvent.stop(e); onPick(c.slug); }); m.addTo(gC); dots.set(c.slug, m);
+    const m = L.circleMarker(toLL(c.p), {radius: c.total > 0 ? 4 + 13 * Math.sqrt(c.total / maxT) : 4, className: 'sdot', weight: 1.5, color: c.total > 0 ? '#fff' : '#8b97a5', fillColor: c.total > 0 ? '#0a84ff' : '#3a4450', fillOpacity: c.total > 0 ? 0.55 : 0.3, interactive: false});
+    m.addTo(gC); dots.set(c.slug, m); const me2 = m.getElement && m.getElement(); if (me2) me2.setAttribute('data-s', c.slug);
     if (cities.indexOf(c) < 14) L.tooltip({permanent: true, direction: 'right', className: 'klab', offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(c.name.split(' ').pop().replace(/(특별시|광역시|특별자치시)$/, '')).addTo(gC);
   }
   const bez = (a, b) => {
@@ -51,7 +59,7 @@ function satView(box, geo, cities, onPick) {
   const vis = (fn) => { if (box.clientWidth > 0 && box.clientHeight > 0) { fn(); } else pend = fn; };
   addEventListener('resize', () => { if (pend && box.clientWidth > 0) { map.invalidateSize(); const f = pend; pend = null; setTimeout(f, 50); } });
   const view = {
-    resize(tot) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((m, s) => { const t = tot[s] || 0; m.setRadius(t ? 4 + 18 * Math.sqrt(t / mx) : 0); }); },
+    resize(tot) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((m, s) => { const t = tot[s] || 0; m.setRadius(t ? 4 + 13 * Math.sqrt(t / mx) : 0); }); },
     highlight(p) { if (hl) hl.remove(); hl = p ? L.circleMarker(toLL(p), {radius: 16, className: 'hlring', color: '#ffd60a', weight: 3, fill: false, interactive: false}).addTo(map) : null; if (p) vis(() => map.panTo(toLL(p))); },
     select(slug) { dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
@@ -66,7 +74,7 @@ function satView(box, geo, cities, onPick) {
       });
       for (const [p, t, me] of labels) L.tooltip({permanent: true, direction: 'top', className: 'stip' + (me ? ' me' : ''), offset: [0, -6]}).setLatLng(toLL(p)).setContent(t).addTo(gF);
     },
-    fly(p, z) { vis(() => map.flyTo(toLL(p), Math.min(z, 9), {duration: 0.8, easeLinearity: 0.2})); },
+    fly(p, z) { vis(() => map.flyTo(toLL(p), Math.min(z, 9.5), {duration: 0.8, easeLinearity: 0.2})); },
     fit(pts) { vis(() => map.flyToBounds(L.latLngBounds(pts.map(toLL)).pad(0.25), {duration: 0.8, maxZoom: 8})); },
     home() { vis(() => map.flyToBounds(korea, {duration: 0.8})); },
     once(fn) { map.once('moveend', fn); },
@@ -141,13 +149,14 @@ function svgView(box, geo, cities, onPick) {
 async function moneyMap(root, opts = {}) {
   const [geo, fl] = await Promise.all([getJSON('assets/geo.json'), getJSON('data/flows.json')]);
   const box = $('.map', root), panel = $('.flowpanel', root);
-  const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.total > 0).sort((a, b) => b.total - a.total);
+  const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.p).sort((a, b) => b.total - a.total);
   let cur = null, mode = 'city', view, cat = '전체';
   const dataOf = (slug) => { const c = fl.cities[slug]; if (!c || cat === '전체') return c;
     const b = (c.by_cat || {})[cat] || {total: 0, known: 0, local: 0, count: 0, flows: []}; return {...c, ...b, other: null, cat}; };
-  const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {}); if (matchMedia('(max-width: 899px)').matches) setTimeout(() => panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 300); };
+  const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {fly: true, z: 9}); if (matchMedia('(max-width: 899px)').matches) setTimeout(() => panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 300); };
   const mount = (kind) => {
     view = (kind === 'svg' ? svgView : satView)(box, geo, cities, pickCity);
+    if (!opts.fixed) view.onmulti = (slugs) => { panel.replaceChildren(el('p', 'fq', '여러 시가 겹쳐 있어요. 하나를 고르세요')); const w = el('div', 'pickrow'); for (const s2 of slugs) { const b = el('button', 'chip', (window.CITY_FULL || {})[s2] || fl.cities[s2].name); b.type = 'button'; b.onclick = () => pickCity(s2); w.append(b); } panel.append(w); panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}); };
     if (!opts.fixed) view.onempty = () => { if (mode !== 'nation') { setSeg('nation'); showNation(); } };
     view.onfail = () => { view.destroy(); mount('svg'); if (cat !== '전체') ctl.setCat(cat); else redraw(false); };
   };
@@ -172,12 +181,13 @@ async function moneyMap(root, opts = {}) {
     const c = dataOf(slug); if (!c) return;
     cur = slug; mode = 'city'; view.select(slug);
     const list = c.flows.map((f) => ({...f, a: c.p}));
-    if (o.fly) { view.lines([], 1, []); view.fly(o.where || c.p, o.where ? 12 : 11); view.once(() => { if (cur === slug && mode === 'city') drawCity(c); }); }
+    if (o.fly) { view.lines([], 1, []); view.fly(o.where || c.p, o.z || (o.where ? 12 : 11)); view.once(() => { if (cur === slug && mode === 'city') drawCity(c); }); }
     else { drawCity(c); if (o.zoom !== false) view.fit([c.p, ...list.slice(0, 8).map((f) => f.p)]); }
     panel.replaceChildren();
-    const h = el('div', 'fh'); h.append(el('span', 'fh-n', c.name + (c.cat ? ' · ' + c.cat : '')), el('span', 'fh-v', krw(c.total)));
+    const h = el('div', 'fh'); h.append(el('span', 'fh-n', ((window.CITY_FULL || {})[slug] || c.name) + (c.cat ? ' · ' + c.cat : '')), el('span', 'fh-v', krw(c.total)));
     if (!opts.fixed) { const x = el('button', 'fclose', '× 닫기'); x.type = 'button'; x.setAttribute('aria-label', '닫고 전국 보기'); x.onclick = () => { setSeg('nation'); showNation(); }; h.append(x); }
     panel.append(h, el('p', 'fq', '이 돈은 어디로 갔나'));
+    if (!c.total) { panel.append(el('p', 'sub', '아직 수집된 계약이 없습니다. 공식 자료가 올라오면 자동으로 반영됩니다.')); return; }
     if (!c.known) { panel.append(el('p', 'sub', '업체 주소를 확인하는 중입니다.')); return; }
     const out = c.known - c.local;
     const sp = el('div', 'fsplit'); const bar = el('div', 'splitbar'); const i = el('i'); i.style.width = share(c.local, c.known); bar.append(i);
@@ -202,7 +212,8 @@ async function moneyMap(root, opts = {}) {
     const all = el('button', 'ghostbtn', '흐름 전체 보기'); all.type = 'button';
     all.addEventListener('click', () => { view.fit([c.p, ...list.slice(0, 8).map((f) => f.p)]); root.scrollIntoView({behavior: 'smooth'}); });
     panel.append(all);
-    if (!opts.fixed) { const g = el('a', 'gobtn', c.name + ' 자세히 보기'); g.href = 'city.html?c=' + slug; panel.append(g); }
+    if (!opts.fixed) { const g = el('a', 'gobtn', c.name + ' 자세히 보기'); g.href = 'city.html?c=' + slug; panel.append(g);
+      if (window.regionPicker) { const ob = el('button', 'ghostbtn', '다른 지역 ▾'); ob.type = 'button'; ob.onclick = () => regionPicker(slug, (s2) => pickCity(s2)); panel.append(ob); } }
   };
   const showNation = () => {
     cur = null; mode = 'nation'; view.select(null);

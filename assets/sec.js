@@ -3,7 +3,7 @@ const E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;
 const CQ=new URLSearchParams(location.search).get('c');
 const IDX=fetch('data/index.json').then(r=>r.json()).then(d=>d.cities).catch(()=>[]);
 let CN=null,CNAME='';
-const CITYP=IDX.then(cs=>{const sel=document.getElementById('cityf');if(sel){sel.innerHTML='<option value="">전국 (모든 시)</option>'+cs.map(c=>`<option value="${c.slug}">${c.short}</option>`).join('');sel.value=CQ||'';sel.onchange=()=>{const u=new URL(location.href);sel.value?u.searchParams.set('c',sel.value):u.searchParams.delete('c');location.href=u.toString();};}
+const CITYP=IDX.then(cs=>{const sel=document.getElementById('cityf');if(sel){sel.innerHTML='<option value="">전국 (모든 시)</option>'+cs.map(c=>`<option value="${c.slug}">${c.short}</option>`).join('');sel.value=CQ||'';if(window.regionPicker&&!document.getElementById('cityf-pick')){const b=document.createElement('button');b.type='button';b.id='cityf-pick';b.className='chip';b.textContent='다른 지역 ▾';b.onclick=()=>regionPicker(CQ,s2=>{const u=new URL(location.href);u.searchParams.set('c',s2);location.href=u.toString();});sel.parentElement.after(b);}sel.onchange=()=>{const u=new URL(location.href);sel.value?u.searchParams.set('c',sel.value):u.searchParams.delete('c');location.href=u.toString();};}
  const c=cs.find(x=>x.slug===CQ);if(c){CN=c.short;CNAME=c.name;const b=document.getElementById('cityf-note');if(b)b.innerHTML=`<b>${c.name}</b> 기준으로 보는 중 · 맨 위 큰 숫자는 전국 합계예요 · <a href="city.html?c=${c.slug}">${c.name} 페이지 ›</a>`;}});
 const FL=a=>!CN||!a?a:a.filter(x=>(x.cname||x.name||x.city)===CN);
 const LOAD=u=>Promise.all([fetch(u,{cache:'no-cache'}).then(r=>r.json()),CITYP]).then(([d])=>{if(CN)for(const k of ['flags','share','comp','top','perday','ratio','halls','rows','zero'])if(Array.isArray(d[k]))d[k]=FL(d[k]);return d;});
@@ -25,7 +25,7 @@ LOAD('data/sec_sole.json').then(d=>{
   $('cases').innerHTML=d.flags.map((f,i)=>`<div class="case"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 추적 파일 #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(f.cname)} · ${f.n}건 수의계약 묶음</h3>
    <div class="trail"><b>${E(f.inst)}</b><i></i><b>${E(f.vendor)}</b>${f.vregion?`<small>(${E(f.vregion.split(' ').slice(0,2).join(' '))})</small>`:''}</div>
-   <div class="amt">₩${W(f.sum)}</div><small>${f.from} ~ ${f.to} · 건마다 2천만원 이하</small>
+   <div class="amt">₩${W(f.sum)}</div><small>${f.from} ~ ${f.to} · 같은 업체 여러 건 합계 2천만원 초과</small>
    <ul>${f.items.map(x=>`<li>${x.d} ${E(x.t)} · ₩${W(x.a)} ${x.u?`<a class="orig" href="${E(x.u)}" target="_blank" rel="noopener">원문</a>`:''}</li>`).join('')}</ul>
    <p class="steps">수집 ✓ → 분석 ✓ → 기관 설명 확인 전</p><p class="src">데이터상 이상 징후 · 위법 판단 아님 · ${SRC}</p></div>`).join('')||'<p class="sub">아직 없습니다.</p>';
   // 비율

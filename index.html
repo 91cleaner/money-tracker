@@ -9,9 +9,9 @@
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/style.css">
-<link rel="stylesheet" href="assets/sec.css">
-<link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/style.css?v=202610231107">
+<link rel="stylesheet" href="assets/sec.css?v=202610231107">
+<link rel="stylesheet" href="assets/theme.css?v=202610231107">
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body data-page="home">
@@ -21,13 +21,15 @@
     <p class="eyebrow">우리 시 돈 추적기 · 개인이 만든 비공식 사이트</p>
     <h1>우리 세금,<br>어디에 쓰였을까요?</h1>
     <div class="big" id="hero-num">
-      <span class="v" id="nat-total">—</span>
+      <span class="v skel" id="nat-total">불러오는 중…</span>
       <span class="k">전국 85개 시가 최근 <span id="days">90</span>일 동안 <span id="hero-k">계약으로 쓴 돈</span></span>
       <div class="chips center" id="hero-chips"></div>
     </div>
     <p class="newbadge" id="newbadge" hidden></p>
+    <p class="todayn" id="today-n" hidden></p> <p class="todayn vis" id="visit-n" hidden></p>
+    <script>(()=>{const d=new Date(Date.now()+9*3600e3).toISOString().slice(0,10);fetch('https://moneytracker.goatcounter.com/counter/TOTAL.json?start='+d+'&end='+d).then(r=>r.ok?r.json():null).then(j=>{const n=j&&parseInt(String(j.count||'').replace(/\D/g,''),10);if(n>0){const e=document.getElementById('visit-n');e.textContent='오늘 방문 '+n.toLocaleString()+'명';e.hidden=false;}}).catch(()=>{})})()</script>
     <p class="wage" id="wage"></p>
-    <p class="meta"><span id="nat-count">—</span> · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
+    <p class="meta"><span id="nat-count">불러오는 중…</span> · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
   </header>
   <section class="addrsec">
     <form id="addr" class="searchbox addrbox" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" list="addr-dl" placeholder="우리 동네 입력 (예: 대구 수성구)" aria-label="우리 동네 주소 입력" enterkeyhint="search"></form>
@@ -38,13 +40,16 @@
 
   <section class="sec" id="find">
     <h2>우리 시 찾기</h2>
+    <button class="gobtn" type="button" id="allreg" onclick="window.regionPicker&&regionPicker(null,s=>location.href='city.html?c='+s)">전체 지역 보기 ▾</button>
+    <details class="morebox"><summary>목록으로 보기</summary>
     <label class="searchbox"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="시 이름을 입력하세요 (예: 수원)" aria-label="시 검색" autocomplete="off"></label>
     <div class="cities" id="cities"></div>
+    </details>
   </section>
 
   <section class="sec mapsec" id="map">
     <h2>돈이 어디로 가나</h2>
-    <p class="sub">원을 누르면 그 시가 계약으로 쓴 돈이 어느 지역 업체로 갔는지 선으로 보여줍니다. 선이 굵을수록 큰 돈입니다. 공동도급 계약은 대표 업체 기준(공개 자료에 참여 업체별 지분이 없음).</p>
+    <p class="sub">원을 누르면 그 시의 돈이 어느 지역 업체로 갔는지 보여줍니다.</p>
     <div class="maptools"><div class="seg" role="group" aria-label="보기 고르기"><button type="button" data-v="city">시 하나</button><button type="button" data-v="nation">전국 큰 흐름</button></div>
       <form class="placeform" role="search"><input class="placeq" type="search" list="mt-places" placeholder="우리 동네 찾기 (예: 강남구)" aria-label="지역 찾기" autocomplete="off" enterkeyhint="search"><datalist id="mt-places"></datalist></form></div>
     <div class="mapgrid"><div class="map" aria-live="polite"></div><div class="flowpanel"></div></div>
@@ -55,14 +60,12 @@
     <p class="sub">최근 7일 계약 중 금액이 큰 순서입니다. 머리글을 누르면 정렬이 바뀝니다. 모든 줄은 나라장터 원본으로 연결됩니다.</p>
     <div class="rcpt-wrap"><table class="rcpt" id="rcpt"><thead><tr><th><button type="button" data-k="date">날짜</button></th><th>내용</th><th class="num"><button type="button" data-k="amount" aria-pressed="true">금액 ↓</button></th></tr></thead><tbody></tbody></table></div>
     <button class="more" type="button" id="rcpt-more" hidden>더 보기</button>
+    <details class="morebox" id="lucky"><summary>아무 계약이나 하나 뽑아 보기</summary>
+      <div id="lucky-card"></div>
+      <button class="gobtn" type="button" id="lucky-btn">하나 뽑기</button>
+    </details>
   </section>
 
-  <section class="sec" id="lucky">
-    <h2>아무 계약이나 하나</h2>
-    <p class="sub">85개 시 계약 중 하나를 무작위로 뽑아 영수증으로 보여줍니다.</p>
-    <div id="lucky-card"></div>
-    <button class="gobtn" type="button" id="lucky-btn">하나 뽑기</button>
-  </section>
 
   <section class="sec home-alerts">
     <h2>이번 주 눈에 띄는 패턴</h2>
@@ -87,23 +90,22 @@
     <a class="gobtn" href="rank.html">100위까지 보기</a>
   </section>
 
-  <section class="sec how">
-    <h2>어떻게 만드나요?</h2>
+  <section class="sec" id="about">
+    <h2>원칙</h2>
+    <p class="sub">공개된 공식 자료만 쓰고, 모든 항목에 출처를 답니다. 단정 대신 "데이터상 이상 징후"라고만 씁니다.</p>
+    <details class="morebox"><summary>더 보기 · 어떻게 만드나요?</summary>
     <ol class="steps">
       <li><b>모으고</b><span>조달청 나라장터에 공개된 시·구청 계약을 매시간 모읍니다.</span></li>
       <li><b>살피고</b><span>쪼개진 계약, 같은 업체 반복 같은 숫자 패턴을 자동으로 찾습니다.</span></li>
       <li><b>보여줍니다</b><span>모든 항목에 출처를 달고, 해명이 오면 그대로 싣습니다.</span></li>
     </ol>
-  </section>
-
-  <section class="sec" id="principles">
-    <h2>이 사이트의 원칙</h2>
     <ul class="principles">
       <li>정부·지자체가 이미 공개한 데이터만 쓰고, 모든 항목에 출처를 답니다.</li>
       <li>"사기", "횡령" 같은 단정 대신 "데이터상 이상 징후"라고만 씁니다. 정상적인 이유가 있을 수 있습니다.</li>
       <li>개인 이름은 다루지 않습니다. 업체명과 계약 정보만 보여주고, 업체 주소는 시·군·구까지만 표시합니다.</li>
       <li>기관이나 업체가 해명을 보내면 해당 항목 바로 아래에 그대로 싣습니다.</li>
     </ul>
+    </details>
     <p class="sub">해명·정정 요청: <span id="contact">연락처 준비 중</span></p>
   </section>
 
@@ -113,14 +115,15 @@
     <span>만든 사람: @청소부</span>
   </footer>
 </main>
-<script src="assets/mask.js"></script>
-<script src="assets/app.js"></script>
+<script src="assets/mask.js?v=202610231107"></script>
+<script src="assets/region.js?v=202610231107"></script>
+<script src="assets/app.js?v=202610231107"></script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/map.js"></script>
-<script src="assets/bid.js" defer></script>
-<script src="assets/addr.js"></script>
-<script src="assets/tabs.js"></script>
-<script src="assets/nav.js"></script>
-<script src="assets/fx.js"></script>
+<script src="assets/map.js?v=202610231107"></script>
+<script src="assets/bid.js?v=202610231107" defer></script>
+<script src="assets/addr.js?v=202610231107"></script>
+<script src="assets/tabs.js?v=202610231107"></script>
+<script src="assets/nav.js?v=202610231107"></script>
+<script src="assets/fx.js?v=202610231107"></script>
 </body>
 </html>
