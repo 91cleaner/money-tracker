@@ -14,10 +14,15 @@ def amt(r): return r.get("this") or r.get("amount") or 0
 
 def main():
     rows, tot, cities = [], collections.Counter(), {}
+    latest = {}  # 분야별 비교용: 계약번호마다 최신 차수 1건(변경 계약 포함, 모든 시 동일 기준)
     for f in sorted(glob.glob(os.path.join(ROOT, "data/city/*.json"))):
         d = json.load(open(f, encoding="utf-8"))
         c = d["city"]; cities[c["slug"]] = c
         for r in d["rows"]:
+            if r.get("method") == "수의계약":
+                k = r.get("no") or r.get("id")
+                if k not in latest or (r.get("ord") or "00") > (latest[k].get("ord") or "00"):
+                    latest[k] = {**r, "slug": c["slug"], "cname": c["short"]}
             if (r.get("ord") or "00") != "00": continue  # 변경 차수 제외, 새 계약만
             tot[(c["slug"], "all")] += amt(r); tot[(c["slug"], "n")] += 1
             if r.get("method") == "수의계약" and (r.get("ord") or "00") == "00":  # 변경 차수는 제외(원계약 방식이 따라붙음)
@@ -50,7 +55,7 @@ def main():
     import statistics as st
     comp = []
     for kw in ["건설재해예방", "긴급누수", "아스콘", "폐기물", "방역", "CCTV", "청소", "제초", "가로등", "안전점검"]:
-        g2 = [r for r in rows if kw in r["title"] and amt(r) > 0]
+        g2 = [r for r in latest.values() if kw in r["title"] and amt(r) > 0]
         if len(g2) < 8: continue
         med = st.median(amt(r) for r in g2)
         q = st.quantiles([amt(r) for r in g2], n=4)

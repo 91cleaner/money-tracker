@@ -37,7 +37,7 @@ LOAD('data/sec_sole.json').then(d=>{
    <div class="l"><span>중앙값 대비 <abbr title="중앙값 = 비슷한 계약을 금액순으로 줄 세웠을 때 딱 가운데 값. +100%면 가운데 값의 2배라는 뜻이에요.">ⓘ</abbr></span><b style="color:#e11d48">+${c.pct}%</b></div>
    <div class="l"><span>만약 중앙값이었다면 절감 가능액 <span class="tag">추정</span></span><span class="save">₩${W(c.save)}</span></div>
    <details class="est"><summary>AI 추산 적정 비용 <small>(공개 통계로 계산한 참고 범위)</small> · 추정치 · 공식 금액 아님 · 산출 근거 보기</summary>
-   범위 ₩${W(c.p25)} ~ ₩${W(c.p75)} (전국 비슷한 계약의 하위 25%~상위 25%)<br>기준: 제목에 '${E(c.kw)}'가 들어간 새 수의계약 ${c.n}건의 중앙값 ₩${W(c.med)}<br>${E(c.city)} 중앙값과의 차이: ₩${W(c.cmed-c.med)} / 건<br>한계: 면적·수량·기간을 모르기 때문에 큰 일이면 당연히 비쌉니다. 위법 판단이 아닙니다.</details>
+   범위 ₩${W(c.p25)} ~ ₩${W(c.p75)} (전국 비슷한 계약의 하위 25%~상위 25%)<br>기준: 제목에 '${E(c.kw)}'가 들어간 수의계약 ${c.n}건(계약번호별 최신 차수, 변경 계약 포함·모든 시 같은 기준)의 중앙값 ₩${W(c.med)}<br>${E(c.city)} 중앙값과의 차이: ₩${W(c.cmed-c.med)} / 건<br>한계: 면적·수량·기간을 모르기 때문에 큰 일이면 당연히 비쌉니다. 위법 판단이 아닙니다.</details>
    <p class="src">${SRC}</p></div>`).join('');
   EMPTY(['cases','share','comp']);
 });
