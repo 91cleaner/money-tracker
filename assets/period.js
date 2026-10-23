@@ -4,7 +4,8 @@
 (() => {
   const Q = new URLSearchParams(location.search), STOPS = [7, 14, 30, 60, 90, 0];  // 0 = 전체
   const rf = window.fetch.bind(window);
-  const DL = rf('data/daily.json', {cache: 'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null);
+  // daily.json은 index.json에 daily 표시가 있을 때만 요청(파일이 없을 때 404·콘솔 오류 없이 슬라이더를 숨김)
+  const DL = rf('data/index.json').then(r => r.ok ? r.json() : null).then(x => x && x.daily ? rf('data/daily.json', {cache: 'no-cache'}).then(r => r.ok ? r.json() : null) : null).catch(() => null);
   const day = (s, k) => { const d = new Date(s + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + k); return d.toISOString().slice(0, 10); };
   const span = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1;
   const WIN = DL.then(dl => {
