@@ -50,7 +50,13 @@
     const inside = hits.filter((h) => h[0] <= 4);
     if (inside.length > 1) multi(inside.map((h) => h[1])); else go({c: hits[0][1]}); });
 
-  const declutter = () => { const seen = []; box.querySelectorAll('.dv-amt').forEach((t) => { t.style.visibility = ''; const r = t.getBoundingClientRect(); if (seen.some((q) => !(r.right < q.left || r.left > q.right || r.bottom < q.top || r.top > q.bottom))) t.style.visibility = 'hidden'; else seen.push(r); }); };
+  // 라벨 겹침: 발주 라벨 먼저 자리 잡고, 나머지는 위아래로 조금씩 밀어 보고 그래도 겹치면 숨김
+  const declutter = () => { const hit = (r, q) => !(r.right < q.left || r.left > q.right || r.bottom < q.top || r.top > q.bottom), seen = [];
+    const L_ = [...box.querySelectorAll('.dv-org'), ...box.querySelectorAll('.dv-amt')];
+    L_.forEach((t) => { t.style.visibility = ''; t.style.marginTop = '0px'; const r0 = t.getBoundingClientRect();
+      for (const dy of [0, 16, -16, 30, -30]) { const r = {left: r0.left, right: r0.right, top: r0.top + dy - 1, bottom: r0.bottom + dy + 1};
+        if (!seen.some((q) => hit(r, q))) { t.style.marginTop = dy + 'px'; seen.push(r); return; } }
+      t.style.visibility = 'hidden'; }); };
   map.on('zoomend moveend', () => setTimeout(declutter, 30));
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
   // 세금 길: 도시 → 업체 소재지 선 그리기
@@ -150,10 +156,16 @@
   box.addEventListener('click', (e) => { const b = e.target.closest('.dv-sh'); if (b) { e.stopPropagation(); share(b.dataset.t, b.dataset.u); } });
   const ex = (on) => { sheet.dataset.ex = on ? '1' : '0'; if (!on) sheet.scrollTop = 0; window.__inv && __inv(); };
   root.querySelector('.dv-grab').onclick = () => ex(sheet.dataset.ex !== '1');
-  const L0 = () => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
-    if (box.clientWidth) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
-    const tot = C.reduce((s, c) => s + (c.total || 0), 0);
-    body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>전국 85개 시 · 최근 계약</small></p><p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
+  let CAT = '전체'; const TOT = (slug) => { const c = BY[slug] || {}; return CAT === '전체' ? (c.total || 0) : ((c.by_cat || {})[CAT] || 0); };
+  const homeLabels = () => { gL.clearLayers(); const L_ = cities.map((c) => [c, TOT(c.slug)]).filter((x) => x[1]).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    L_.forEach(([c, v]) => L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt', offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(esc(((BY[c.slug] || {}).short || (BY[c.slug] || {}).name || '') + ' ' + krw(v))).addTo(gL)); };
+  window.__dvCat = (k) => { CAT = k || '전체'; const mx = Math.max(1, ...cities.map((c) => TOT(c.slug)));
+    dots.forEach((m, s) => { const v = TOT(s); m.setRadius(v ? 4 + 13 * Math.sqrt(v / mx) : 3); m.setStyle({fillOpacity: v ? 0.5 : 0.1, opacity: v ? 1 : 0.3}); });
+    homeLabels(); if (!cur) L0(true); setTimeout(declutter, 60); };
+  const L0 = (keep) => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
+    if (box.clientWidth && keep !== true) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
+    const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
+    body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · 최근 계약' : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p><p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
       + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 데이터상 이상 징후</p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc(c.top_alert.title.replace(/^데이터상 이상 징후:\s*/, ''))}</b><span>${esc(c.top_alert.detail || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
     const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); };
   const W = (() => { const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10); return C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk).sort((a, b) => (b.top_alert.amount || 0) - (a.top_alert.amount || 0)).slice(0, 9); })();

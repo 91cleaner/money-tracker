@@ -247,3 +247,7 @@ html,body{overflow-x:clip}#dive,.dv-car{max-width:100%}
 #dive .dv-fx{position:absolute;inset:auto;left:0;top:0}
 .dv-v0{display:flex;align-items:baseline;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 6px}.dv-v0 small{font-size:12px;color:#9aa5b1;font-weight:500}
 .skel-box{color:#6b7682;font-size:13px;display:flex;align-items:center;justify-content:center}
+
+#hero-num #nat-total{display:block!important;font-size:40px!important;font-weight:800!important;color:#fff!important;letter-spacing:-.02em;line-height:1.15}
+.hero.dark{padding-bottom:calc(72px + env(safe-area-inset-bottom))!important}
+main.wrap{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}

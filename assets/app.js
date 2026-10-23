@@ -209,6 +209,7 @@ async function homePage() {
     cities.sort((a, b) => A(b) - A(a) || T(b) - T(a));
     draw($('#q').value.trim()); alertsDraw();
     if (mapCtl) mapCtl.setCat(cat);
+    window.__dvCat && window.__dvCat(cat);
   };
   if (catList.length) chips($('#hero-chips'), ['전체', ...catList], setCat); else $('#hero-chips').remove();
 
