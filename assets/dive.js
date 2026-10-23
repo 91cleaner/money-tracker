@@ -63,7 +63,10 @@
     const t = L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-hl', offset: [6, 0], interactive: false}).setLatLng(ll).setContent(esc(nm + ' ' + krw(v))).addTo(gL);
     HL.set(t, ll); };
   cities.filter((c) => c.total).slice(0, 8).forEach((c) => homeLab(c, c.total));
-  map.on('click', (e) => { const oe = e.originalEvent; if (!oe || !oe.isTrusted || !box.contains(oe.target) || oe.target.closest('.leaflet-control')) return; { const br = box.getBoundingClientRect(); if (oe.clientY < br.top || oe.clientY > br.bottom || oe.clientX < br.left || oe.clientX > br.right) return; } const hits = [];
+  // 스크롤·관성·지도 이동이 끝나고 300ms 안의 점 클릭은 도시 이동 안 함(스크롤 직후 오클릭 방지)
+  let lastMv = 0; const mv = () => { lastMv = performance.now(); };
+  ['scroll', 'wheel', 'touchmove'].forEach((t) => addEventListener(t, mv, {capture: true, passive: true})); map.on('movestart move moveend zoomstart zoomend', mv);
+  map.on('click', (e) => { if (performance.now() - lastMv < 300) return; const oe = e.originalEvent; if (!oe || !oe.isTrusted || !box.contains(oe.target) || oe.target.closest('.leaflet-control')) return; { const br = box.getBoundingClientRect(); if (oe.clientY < br.top || oe.clientY > br.bottom || oe.clientX < br.left || oe.clientX > br.right) return; } const hits = [];
     dots.forEach((m, s) => { const d = e.containerPoint.distanceTo(map.latLngToContainerPoint(m.getLatLng())); const r = m.getRadius(); if (d <= Math.max(r + 6, 22)) hits.push([d - r, s]); });
     if (!hits.length) return; hits.sort((a, b) => a[0] - b[0]);
     const inside = hits.filter((h) => h[0] <= 4);
