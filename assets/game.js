@@ -41,12 +41,12 @@
   let moved = false; ['wheel', 'touchmove', 'keydown'].forEach((t) => addEventListener(t, () => { moved = true; upd(); }, {capture: true, passive: true, once: true}));
   const MOB = matchMedia('(max-width:899px)'), NAR = matchMedia('(max-width:699px)'); let btnOn = false;
   let seen = location.hash === '#game'; let rk = null; const ring = () => { if (!window.__dvBlink) return;
-    // PC(900px 이상): 오늘의 한 문제 카드가 보이면 그 두 도시. 두 카드가 다 보이면 화면 가운데에 더 가까운 카드 쪽
+    // PC(900px 이상): 오늘의 한 문제 카드가 보이면 그 두 도시. 두 카드가 다 보이면 화면에 보이는 비율이 더 큰 카드 쪽
     let ss = seen && pair && !done && (!NAR.matches || btnOn) ? [pair[0].slug, pair[1].slug] : [];
     const dq = !MOB.matches && moved && window.__dq && window.__dq();
     if (dq) { const inV = (el) => { const r = el.getBoundingClientRect(), h = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0); return h > Math.min(r.height, innerHeight) * 0.15; };
-      const dist = (el) => { const r = el.getBoundingClientRect(); return Math.abs((r.top + r.bottom) / 2 - innerHeight / 2); };
-      if (inV(dq.el) && (!ss.length || !inV(root) || dist(dq.el) <= dist(root))) ss = dq.ss; }
+      const vr = (el) => { const r = el.getBoundingClientRect(); return r.height ? Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0)) / r.height : 0; };
+      if (inV(dq.el) && (!ss.length || !inV(root) || vr(dq.el) > vr(root))) ss = dq.ss; }
     const k = ss.join(); if (k === rk) return; rk = k; window.__dvBlink(ss); };
   window.__gmRing = () => ring();
   addEventListener('scroll', () => { if (MOB.matches || !window.__dq) return; cancelAnimationFrame(window.__gmRaf); window.__gmRaf = requestAnimationFrame(ring); }, {passive: true});

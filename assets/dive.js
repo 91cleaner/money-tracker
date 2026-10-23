@@ -295,12 +295,12 @@
   const KN = {split: '같은 날 나눠진 계약', threshold: '한도 바로 밑 계약', increase: '계약 금액이 늘어난 경우', repeat: '같은 업체와 여러 번 계약'};
   const wrapFill = (slug, A) => { const el = body.querySelector('.dv-wrap'); if (!el) return; const k = CARD(slug); if (!k) return; const c = BY[slug], f = fl.cities[slug];
     const outEl = body.querySelector('.dv-out'), out = outEl ? outEl.textContent.replace(/[^0-9]/g, '') : '';
-    const fd = (x) => (x ? x.replace(/-/g, '.') : ''), rng = `${fd(k.fr)} ~ ${fd(k.to)}`, SR = '출처: 조달청 나라장터 공공데이터';
+    const fd = (x) => (x ? x.replace(/-/g, '.') : ''), rng = `${fd(k.fr)} ~ ${fd(k.to)}`, sd = (x) => (x ? `${+x.slice(5, 7)}.${+x.slice(8, 10)}` : ''), sr = `${sd(k.fr)}~${sd(k.to)}`, SR = '출처: 조달청 나라장터 공공데이터';
     const cats = Object.entries(c.by_cat || {}).filter((x) => x[1] > 0).sort((a, b) => b[1] - a[1]); const top = cats[0];
     const kc = {}; for (const a of A) kc[a.kind] = (kc[a.kind] || 0) + 1; const tk = Object.entries(kc).sort((a, b) => b[1] - a[1])[0];
     const card = (t, big, sub, src) => `<div class="wr-c"><p class="wr-t">${t}</p><p class="wr-b">${big}</p><p class="wr-s">${sub}</p><p class="wr-src">${src}</p></div>`;
     const cs = [
-      card(`${esc(k.name)}는 ${esc(k.when)}`, krw(k.total), `계약 금액이에요. (${rng}에 맺은 계약)`, SR),
+      card(`${esc(k.name)}는 ${esc(k.when)}`, krw(k.total), `계약을 ${krw(k.total)}어치 맺었어요. <span class="wr-nw">(${sr})</span>`, SR),
       card('전국 85개 시 중에서', `${k.rank}번째`, `${k.when} 계약 금액이 ${k.of}개 시 중 ${k.rank}번째로 많아요.`, SR),
       card('다른 지역 업체가 받은 돈', out ? out + '%' : '확인 중', out ? `업체 위치를 아는 금액 중 ${out}%가 다른 지역 업체에 갔어요.` : '업체 주소를 아직 확인하고 있어요.', SR + ' · 업체 주소 기준'),
       card('계약 금액이 가장 큰 종류', top ? esc(top[0]) : '자료 없음', top ? `${krw(top[1])}, 전체의 ${Math.round(top[1] / (k.total || 1) * 100)}%예요.` : '', SR + ' · 제목으로 나눈 종류'),
