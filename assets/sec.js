@@ -1,7 +1,6 @@
 const W=n=>{n=Math.round(n);if(n>=1e8)return (n/1e8).toFixed(n>=1e10?0:1).replace(/\.0$/,'')+'억';if(n>=1e4)return Math.round(n/1e4).toLocaleString()+'만';return n.toLocaleString()};
 const E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const SRC='출처: 조달청 나라장터 계약정보(공공데이터포털 15058815)';
-document.querySelectorAll('.stabs a').forEach(a=>a.onclick=()=>{document.querySelectorAll('.stabs a').forEach(b=>b.classList.toggle('on',b===a))});
 fetch('data/sec_sole.json',{cache:'no-cache'}).then(r=>r.json()).then(d=>{
   const $=id=>document.getElementById(id);
   $('s-upd').textContent=d.updated.slice(5,16).replace('T',' ')+' KST';
@@ -75,4 +74,3 @@ fetch('data/sec_subsidy.json',{cache:'no-cache'}).then(r=>r.json()).then(s=>{
    <p class="src">한도 밖 편성은 법령·국고보조 매칭 등 허용된 예외일 수 있습니다 · ${LSRC()} 지방보조금 · ${s.year}년 당초예산</p></div>`}).join('');
 }).catch(()=>{});
 // 탭 해시 동기화
-const syncTab=()=>{const h=location.hash||'#sole';document.querySelectorAll('.stabs a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')===h))};addEventListener('hashchange',syncTab);syncTab();

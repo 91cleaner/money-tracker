@@ -1,0 +1,28 @@
+:root,:root{--bg:#07090c;--bg2:#0f141a;--fg:#e8edf2;--muted:#8b97a5;--line:#1f2933;--accent:#ffb020;--in:#ffb020;--out:#3a4450;--warn:#ff4d4d;--warn-bg:#2a1010;color-scheme:dark}
+body{background:#07090c;color:var(--fg)}
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:
+linear-gradient(#ffffff08 1px,transparent 1px) 0 0/40px 40px,linear-gradient(90deg,#ffffff08 1px,transparent 1px) 0 0/40px 40px,
+radial-gradient(ellipse at 50% -10%,#16304a 0,#07090c 60%)}
+body::after{content:"";position:fixed;left:0;right:0;top:-20vh;height:20vh;z-index:-1;pointer-events:none;background:linear-gradient(transparent,#3dff7a0d 70%,#3dff7a22);animation:scan 9s linear infinite}
+@keyframes scan{to{transform:translateY(140vh)}}
+h1,h2,.eyebrow{letter-spacing:-.01em}h2{text-transform:uppercase;font-weight:800}
+.eyebrow{font-family:ui-monospace,Menlo,monospace;color:#3dff7a!important;font-size:12px;letter-spacing:.12em}
+.counter b,.alert .a,.case .amt,.rcp,.stats b{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-variant-numeric:tabular-nums}
+.alert,.case,.counter{border:1px solid #2a3540;background:#0c1116e6!important}
+.alert{position:relative}.alert::after{content:"데이터상 이상 징후";position:absolute;right:12px;bottom:10px;transform:rotate(-6deg);border:2px solid #ff4d4d;color:#ff4d4d;font:800 10px var(--sans);padding:1px 5px;border-radius:3px;opacity:.75;pointer-events:none}
+
+.counter span::before,.case .no::after{content:"● 추적 중";color:#ffb020;font:700 10px ui-monospace,monospace;margin-right:6px;animation:blink 1.6s steps(2) infinite}
+.case .no::after{margin-left:8px}
+@keyframes blink{50%{opacity:.3}}
+.spot{background:linear-gradient(135deg,#2a1d05,#2a0e0e)!important;color:var(--fg)!important;border:1px solid #ffb02055}.spot .eyebrow{color:#ffb020!important}
+.stickybar,header.top{background:#07090ccc!important;backdrop-filter:blur(10px)}
+.stabs{background:#07090cee!important}.stabs a{border-color:#2a3540!important}.stabs a.on{background:#ffb020!important;color:#000!important;border-color:#ffb020!important}
+.bidinfo{background:#0f141a;border-color:#2a3540}.bidinfo small{color:#8b97a5}
+.tabbar{background:rgba(7,9,12,.92)!important}.tabbar a{color:#8b97a5!important}.tabbar a.on{color:#ffb020!important}
+.ticker{position:sticky;top:0;z-index:20;overflow:hidden;white-space:nowrap;background:#0b0f13;border-bottom:1px solid #1f2933;font:12px/28px ui-monospace,Menlo,monospace;color:#3dff7a}
+.ticker div{display:inline-block;padding-left:100%;animation:tick 60s linear infinite}.ticker b{color:#ffb020;font-weight:700}.ticker i{color:#ff4d4d;font-style:normal}
+@keyframes tick{to{transform:translateX(-100%)}}
+.mburst{position:fixed;z-index:9999;pointer-events:none;font:700 14px var(--sans);color:#ffd36a;animation:mb .6s ease-out forwards}
+@keyframes mb{from{transform:translate(0,0) scale(.6);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(1.1) rotate(var(--r));opacity:0}}
+@media(prefers-reduced-motion:reduce){body::after,.ticker div,.counter span::before,.case .no::after{animation:none}.ticker div{padding-left:12px}}
+.hero,.mapsec,section.sec{background-color:transparent}
