@@ -400,3 +400,11 @@ html:has(body.has-rbar){scroll-padding-top:104px}
 body.has-rbar .sec,body.has-rbar .sec h2,body.has-rbar #contracts summary,body.has-rbar #cq{scroll-margin-top:104px}
 #contracts td,#contracts td small,#contracts td i,#contracts .cc-tags,footer,footer small,footer span,.dv-ext{font-size:13px!important}
 .ticker .tk-src[hidden]{display:none!important}
+body[data-page] .rbar{position:relative!important;top:auto!important}
+body[data-page] .stabs,body[data-page].has-rbar .stabs{top:0!important}
+html:has(body.has-rbar){scroll-padding-top:52px}
+body.has-rbar .sec,body.has-rbar .sec h2,body.has-rbar #contracts summary,body.has-rbar #cq{scroll-margin-top:52px}
+.rbar .rb-n{line-height:1.25;padding:4px 8px}.rbar .rb-n::after{margin-top:3px!important}
+.pd .pd-t{margin-top:12px!important}
+body:has(.tabbar){padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+#dive .dv-sug{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:auto!important;margin:4px 10px 6px!important;max-height:40vh}

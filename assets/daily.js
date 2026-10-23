@@ -5,7 +5,7 @@
   const box = document.createElement('section'); box.className = 'sec gm dq'; box.id = 'daily'; box.setAttribute('aria-label', '오늘의 한 문제'); game.before(box);
   const K = 'mt-daily-v1', SRC = '출처: 조달청 나라장터 공공데이터';
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
-  const krw = (n) => { const a = Math.abs(n || 0); if (a >= 1e12) return (a / 1e12).toFixed(1).replace(/\.0$/, '') + '조원'; if (a >= 1e8) return (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원'; return Math.round(a / 1e4).toLocaleString('ko-KR') + '만원'; };
+  const krw = (n) => { const a = Math.abs(n || 0); if (a >= 1e12) { const j = Math.floor(a / 1e12), e = Math.round((a % 1e12) / 1e8); return j + '조' + (e ? ' ' + e.toLocaleString('ko-KR') + '억' : '') + '원'; } if (a >= 1e8) return (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원'; return Math.round(a / 1e4).toLocaleString('ko-KR') + '만원'; };
   const kst = () => new Date(Date.now() + 9 * 36e5).toISOString().slice(0, 10);
   const add = (s, k) => { const d = new Date(s + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + k); return d.toISOString().slice(0, 10); };
   const md = (s) => `${+s.slice(5, 7)}월 ${+s.slice(8)}일`;

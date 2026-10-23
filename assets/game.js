@@ -2,7 +2,7 @@
 (() => {
   const root = document.getElementById('game'); if (!root) return;
   const K = 'mt-game-best', SRC = '출처: 조달청 나라장터 공공데이터';
-  const krw = (n) => { const a = Math.abs(n || 0); if (a >= 1e12) return (a / 1e12).toFixed(1).replace(/\.0$/, '') + '조원'; if (a >= 1e8) return (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원'; return Math.round(a / 1e4).toLocaleString('ko-KR') + '만원'; };
+  const krw = (n) => { const a = Math.abs(n || 0); if (a >= 1e12) { const j = Math.floor(a / 1e12), e = Math.round((a % 1e12) / 1e8); return j + '조' + (e ? ' ' + e.toLocaleString('ko-KR') + '억' : '') + '원'; } if (a >= 1e8) return (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원'; return Math.round(a / 1e4).toLocaleString('ko-KR') + '만원'; };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
   const label = () => (window.__pdLabel && window.__pdLabel()) || '최근 30일', when = () => (window.__pdWhen && window.__pdWhen()) || '최근 30일 동안';
   let C = [], pair = null, streak = 0, best = +(localStorage.getItem(K) || 0), done = false, last = '';

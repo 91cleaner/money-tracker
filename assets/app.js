@@ -5,7 +5,7 @@ const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls)
 const krw = (n) => {
   if (n == null || isNaN(n)) return '—';
   const a = Math.abs(n), s = n < 0 ? '-' : '';
-  if (a >= 1e12) return s + (a / 1e12).toFixed(1).replace(/\.0$/, '') + '조원';
+  if (a >= 1e12) { const j = Math.floor(a / 1e12), e = Math.round((a % 1e12) / 1e8); return s + j + '조' + (e ? ' ' + e.toLocaleString('ko-KR') + '억' : '') + '원'; }
   if (a >= 1e8) return s + (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원';
   if (a >= 1e4) return s + Math.round(a / 1e4).toLocaleString('ko-KR') + '만원';
   return s + a.toLocaleString('ko-KR') + '원';
@@ -326,7 +326,7 @@ function contractExtra(r) {
     }
     out.push(j);
   } else if (r.jv) out.push(el('span', 'cc-tags', '여러 업체가 함께 맡음 · 금액은 대표 업체 기준'));
-  if ((r.ltc || /^장기/.test(r.lt||'')) ) out.push(el('span', 'cc-tags', `장기계속계약 · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액 ${krw(r.tot_amt || r.amount)})`));
+  if ((r.ltc || /^장기/.test(r.lt||'')) ) out.push(el('span', 'cc-tags', `여러 해 계약(장기계속계약) · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액, 총액 기준 ${krw(r.tot_amt || r.amount)})`));
   if (r.vers && r.vers.length > 1) {
     if (r.orig) { const up = r.amount - r.orig; out.push(el('span', 'cc-hist', `처음 ${krw(r.orig)} → 지금 ${krw(r.amount)} (${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%)`)); }
     const ol = el('ol', 'tl');
@@ -373,7 +373,7 @@ async function pastHistory(id) {
     const c = el('div', 'cc');
     const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', `${r.date} · ${r.city || '기타 기관'} · ${r.kind}`), el('b', 'cc-a', r.tot != null ? krw(r.tot) : '—'));
     const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
-    c.append(top, t, el('span', 'cc-i', r.inst + (r.atype && r.atype !== '본청' ? ` [${r.atype}]` : '') + (r.ord ? ` · ${+r.ord}차` : '') + ((r.ltc || /^장기/.test(r.lt||'')) ? ` · 장기계속(전체 계약금액 ${krw(r.tot_amt || r.amount)})` : '')));
+    c.append(top, t, el('span', 'cc-i', r.inst + (r.atype && r.atype !== '본청' ? ` [${r.atype}]` : '') + (r.ord ? ` · ${+r.ord}차` : '') + ((r.ltc || /^장기/.test(r.lt||'')) ? ` · 여러 해 계약(장기계속) · 전체 계약금액 총액 기준 ${krw(r.tot_amt || r.amount)}` : '')));
     if (r.m && r.m.length > 1) {
       const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '함께 맡은 업체 (나눈 비율)'));
       for (const x of r.m) { const a = el(x.id && x.id !== id ? 'a' : 'span', '', `${x.name} ${x.share != null ? x.share + '%' : ''}`); if (x.id && x.id !== id) a.href = 'vendor.html?v=' + x.id; j.append(a); }
@@ -544,7 +544,7 @@ async function cityPage() {
       else if (r.vers && r.vers.length > 1) title.append(el('small', 'cc-tags', ` ${r.vers.length}개 차수 확인 · 총액 변화 없음`));
       if (r._ext) title.append(el('small', 'cc-tags', ' 시청 외 기관 계약 · 위 합계에는 안 들어감'));
       if (r.ann === true || r.ann === false) title.append(el('i', r.ann ? 'ann-y' : 'ann-n', r.ann ? '공고 있음' : '공고 없음'));
-      if (r.ltc || /^장기/.test(r.lt || '')) title.append(el('small', 'cc-tags ltc', ` 여러 해 계약 · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액 ${krw(r.tot_amt || r.amount)})`));
+      if (r.ltc || /^장기/.test(r.lt || '')) title.append(el('small', 'cc-tags ltc', ` 여러 해 계약 · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액, 총액 기준 ${krw(r.tot_amt || r.amount)})`));
       if (window.plainTag && /단가/.test(r.title || '')) title.insertAdjacentHTML('beforeend', window.plainTag(r.title));
       if (r.jvm && r.jvm.length > 1) title.append(el('small', 'cc-tags', ' 함께 맡은 업체: ' + r.jvm.map((m) => `${m.name} ${m.share != null ? m.share + '%' : ''}`).join(', ')));
       tr.append(el('td', '', r.date), el('td', 'hide-narrow', r.inst), title, el('td', '', r.vendor), el('td', 'hide-narrow', r.vregion || '—'), Object.assign(el('td', 'num', krw(r.amount)), {title: r.amount.toLocaleString('ko-KR') + '원'}));

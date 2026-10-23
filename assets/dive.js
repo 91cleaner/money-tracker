@@ -7,7 +7,7 @@
   const inKR = (ll) => ll[0] > 32.8 && ll[0] < 38.9 && ll[1] > 124.3 && ll[1] < 131.2;
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
   const krw = (n) => { if (n == null || isNaN(n)) return '—'; const a = Math.abs(n);
-    if (a >= 1e12) return (a / 1e12).toFixed(1).replace(/\.0$/, '') + '조원';
+    if (a >= 1e12) { const j = Math.floor(a / 1e12), e = Math.round((a % 1e12) / 1e8); return j + '조' + (e ? ' ' + e.toLocaleString('ko-KR') + '억' : '') + '원'; }
     if (a >= 1e8) return (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원';
     if (a >= 1e4) return Math.round(a / 1e4).toLocaleString('ko-KR') + '만원'; return a.toLocaleString('ko-KR') + '원'; };
   const J = {}; const get = (u) => (J[u] ||= fetch(u).then((r) => { if (!r.ok) throw r.status; return r.json(); }));
@@ -96,7 +96,7 @@
           return true; } }
       return false; };
     L_.forEach((t) => { t.style.visibility = ''; t.style.marginTop = '0px'; t.style.marginLeft = '0px'; t.classList.remove('dv-sm');
-      if (tipOf.has(t) && place(t, true)) return;
+      if (place(t, true)) return;
       if (place(t)) return;
       if (t.classList.contains('dv-rc')) { t.classList.add('dv-sm'); if (place(t)) return; t.classList.remove('dv-sm'); }  // 작게 줄여서 한 번 더
       t.style.visibility = 'hidden'; if (t.classList.contains('dv-rc')) miss.push(t.textContent); });
@@ -276,7 +276,7 @@
     const hd = body.querySelector('.dv-head'); if (!hd || body.querySelector('.dv-ext')) return; const t = X.reduce((a, r) => a + (r.amount || 0), 0);
     hd.insertAdjacentHTML('afterend', `<p class="dv-ext">시청 외 기관(구청·군청·공단·소방 등) ${X.length.toLocaleString('ko-KR')}건 · ${krw(t)}, 합계에서 따로 분리</p>`); }).catch(() => {});
   const multi = (slugs) => { setH(1); body.innerHTML = '<p class="dv-k">여러 시가 겹쳐 있어요. 하나를 고르세요</p><div class="pickrow">' + slugs.map((s) => `<button type="button" class="chip" data-s="${s}">${esc((BY[s] || {}).name || s)}</button>`).join('') + '</div>';
-    body.querySelectorAll('button[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); };
+    body.querySelectorAll('button[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); setTimeout(() => { const pr = body.querySelector('.pickrow'); if (pr) { const r = pr.getBoundingClientRect(); if (r.bottom > innerHeight - 70 || r.top < 0) scrollBy({top: r.bottom - innerHeight + 90, behavior: RM ? 'auto' : 'smooth'}); } }, 60); };
   const sib = (slug, d) => { const me = BY[slug]; let g = C.filter((c) => c.province === me.province); if (g.length < 2) g = C; const i = g.findIndex((c) => c.slug === slug); return g[(i + d + g.length) % g.length].slug; };
   const top3 = (f) => { if (!f) return ''; const m = {}; for (const x of f.flows || []) for (const v of x.vendors || []) { const o = m[v.id] || (m[v.id] = {id: v.id, name: v.name, amount: 0, n: 0, to: x.local ? '지역 업체' : (x.to || '')}); o.amount += v.amount; o.n += v.count || 1; }
     const t = Object.values(m).sort((a, b) => b.amount - a.amount).slice(0, 3);

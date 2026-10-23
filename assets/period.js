@@ -68,7 +68,7 @@ window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '값
   }, true);
   const sy = sessionStorage.getItem('pd-y'); if (sy) { sessionStorage.removeItem('pd-y'); addEventListener('load', () => setTimeout(() => scrollTo(0, +sy), 60)); }
   // 슬라이더 UI
-  const fmt = s => s.replace(/-/g, '.'), W = n => n >= 1e8 ? (n / 1e8).toLocaleString('ko-KR', {maximumFractionDigits: 0}) + '억' : (n / 1e4).toLocaleString('ko-KR', {maximumFractionDigits: 0}) + '만';
+  const fmt = s => s.replace(/-/g, '.'), W = n=>{n=Math.round(n||0);const a=Math.abs(n),s=n<0?'-':'';if(a>=1e12){const j=Math.floor(a/1e12),e=Math.round((a%1e12)/1e8);return s+j+'조'+(e?' '+e.toLocaleString('ko-KR')+'억':'')+'원'}if(a>=1e8)return s+(a>=1e10?Math.round(a/1e8).toLocaleString('ko-KR'):(a/1e8).toFixed(1).replace(/\.0$/,''))+'억원';if(a>=1e4)return s+Math.round(a/1e4).toLocaleString('ko-KR')+'만원';return s+a.toLocaleString('ko-KR')+'원'};
   const css = `.pd{margin:8px 6px 4px;padding:8px 12px 10px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(10,16,24,.6);font:600 12px/1.4 var(--sans,system-ui);color:#cfd8e3}
 .pd-top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.pd-top b{color:#ffb020;font-size:14px}.pd-r{color:#8fa0b3;font-weight:500}
 .pd input{width:100%;margin:8px 0 2px;accent-color:#ffb020;height:28px;touch-action:pan-y}.pd-t{display:flex;justify-content:space-between;color:#6b7785;font-size:10.5px}
@@ -95,7 +95,7 @@ window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '값
       el.querySelector('.pd-l').textContent = Q.has('from') && fr === w.from ? `${span(fr, to)}일` : (s ? `최근 ${s}일` : L0);
       el.querySelector('.pd-r').textContent = `${fmt(fr)}~${fmt(to).slice(5)} 맺은 계약${to === w.dl.last && !w.fixed ? ' (늘어날 수 있음)' : ''}`;
       let n = 0, t = 0; for (const c in w.dl.c) { const x = sumCity(w.dl.c[c], {from: fr, to}); n += x.n; t += x.t; }
-      el.querySelector('.pd-sum').textContent = `전국 85개 시 · ${n.toLocaleString()}건 · ₩${W(t)}${fr > (s ? day(to, 1 - s) : fr) ? ' · 자료가 있는 날부터' : ''}`;
+      el.querySelector('.pd-sum').textContent = `전국 85개 시 · ${n.toLocaleString()}건 · ${W(t)}${fr > (s ? day(to, 1 - s) : fr) ? ' · 자료가 있는 날부터' : ''}`;
     };
     show(i, w.from, w.to);
     let tl, busy = Promise.resolve();
