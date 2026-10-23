@@ -78,12 +78,15 @@ LOAD('data/sec_fest.json').then(f=>{
 LOAD('data/sec_subsidy.json').then(s=>{
   const $=id=>document.getElementById(id);
   $('s-sum').textContent='₩'+W(s.plan);
-  $('s-meta').textContent=`${s.year}년 당초예산 · ${s.n}곳 · 한도 적용 밖으로 편성된 금액 합계 ₩${W(s.outsum)} · ${LSRC()} 지방보조금(2021년 이후)`;
-  $('s-rows').innerHTML=s.rows.slice(0,25).map((o,i)=>{const mx=Math.max(...o.hist.map(h=>h[1]||0))||1;return `<div class="case"><span class="stamp">${o.rt>100?'한도 초과':'한도 안'}</span><div class="no">🔍 보조금 파일 #${String(i+1).padStart(3,'0')}</div>
+  $('s-meta').textContent=`올해(${s.year}년) 처음 세운 예산 · ${s.n}곳 · 한도에서 빠지는 돈 합계 ₩${W(s.outsum)}`;
+  const top=s.rows.slice(0,25),ov=s.rows.map((o,i)=>[o,i]).slice(25).filter(([o])=>o.rt>100);
+  const C=(o,i)=>{const mx=Math.max(...o.hist.map(h=>h[1]||0))||1;return `<div class="case"><span class="stamp">${o.rt>100?'한도 초과':'한도 안'}</span><div class="no">🔍 보조금 파일 #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(o.cname)} <small>(${E(o.gov)})</small></h3>
-   <div class="rcp"><div class="l"><span>총액한도</span><b>₩${W(o.limit)}</b></div><div class="l"><span>예산에 넣은 돈</span><b>₩${W(o.plan)}</b></div><div class="l"><span>한도 적용 밖 예산</span><b>₩${W(o.out||0)}</b></div><div class="l"><span>한도 대비 (한도 안 예산 ÷ 총액한도)</span><b${o.rt>100?' style="color:#e11d48"':''}>${o.rt}%${o.rt>100?' · 한도 초과':''}</b></div></div>
+   <div class="rcp"><div class="l"><span>법으로 정한 한도</span><b>₩${W(o.limit)}</b></div><div class="l"><span>예산에 넣은 돈</span><b>₩${W(o.plan)}</b></div><div class="l"><span>한도에서 빠지는 돈</span><b>₩${W(o.out||0)}</b></div><div class="l"><span>한도 중 예산에 넣은 비율</span><b${o.rt>100?' style="color:#e11d48"':''}>${o.rt}%${o.rt>100?' · 한도 초과':''}</b></div></div>
    <div class="mini">${o.hist.map(h=>`<i title="${h[0]}" style="height:${(h[1]||0)/mx*100}%"></i>`).join('')}</div><small>${o.hist.map(h=>h[0]).join(' · ')} 예산 변화</small>
-   <p class="src">한도 적용 밖 예산은 법령·국고보조 매칭 등으로 총액한도 계산에서 빠지는 예산일 수 있습니다 · ${LSRC()} 지방보조금 · ${s.year}년 당초예산</p></div>`}).join('');
+   <p class="src">한도에서 빠지는 돈은 나라 돈과 함께 쓰는 사업처럼 법이 허용한 경우일 수 있어요 · 출처: 지방재정365 지방보조금 · ${s.year}년 당초예산</p></div>`};
+  $('s-rows').innerHTML=top.map((o,i)=>C(o,i)).join('')+(ov.length?`<h3 class="h3" id="s-over">한도 중 예산에 넣은 비율이 100%를 넘는 곳 (위 목록 밖 ${ov.length}곳)</h3>`+ov.map(([o,i])=>C(o,i)).join(''):'');
+  const sp=()=>{const n=document.getElementById('stabs');if(n)document.documentElement.style.scrollPaddingTop=Math.ceil(n.offsetHeight+8+[...document.querySelectorAll('.stickybar,.rbar')].reduce((t,e)=>t+(getComputedStyle(e).display!='none'&&getComputedStyle(e).position=='sticky'?e.offsetHeight:0),0))+'px'};sp();addEventListener('resize',sp);
   EMPTY(['s-rows']);
 }).catch(()=>{});
 // 탭 해시 동기화
