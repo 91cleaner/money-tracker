@@ -125,7 +125,7 @@ def check(root, prev=None):
             if len(nos) != len(set(nos)): E(f"[1 중복] sec_sole '{c['kw']}' 근거 계약번호 중복")
             if not c.get("small") and (c["cn"] < 3 or len(ids) < 3):
                 E(f"[4 표본] sec_sole '{c['kw']}' 1위 {c['city']} {c['cn']}건 < 3 인데 표본 적음 표시 없음")
-            if ids and not c.get("small") and abs(c.get("save", 0) - max(0, sum(x.get("a") or 0 for x in ids) - c["med"] * c["cn"])) > 1:
+            if ids and not c.get("small") and abs(c.get("save", 0) - max(0, sum(x.get("a") or 0 for x in ids) - c.get("med", 0) * c["cn"])) > 1 and "med" in c:
                 E(f"[16 절감액] sec_sole '{c['kw']}' save 가 카드 공식(합계 − 전국 중앙값 × 건수)과 다름")
             if len(ids) != c["cn"]: E(f"[4 표본] sec_sole '{c['kw']}' cn {c['cn']} ≠ 근거 {len(ids)}건")
             for x in ids:
