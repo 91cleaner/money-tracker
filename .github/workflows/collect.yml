@@ -32,6 +32,7 @@ jobs:
       - name: 데이터 검증 게이트 (위반 시 커밋·배포 중단, 마지막 정상 데이터 유지)
         run: |
           mkdir -p /tmp/prev && git archive HEAD data | tar -x -C /tmp/prev
+          python collector/sections/sole.py   # 비교 섹션을 새 도시 데이터와 맞춰 다시 계산
           python -m unittest discover -s tests
           python collector/validate.py data --prev /tmp/prev/data
       - name: 바뀐 데이터 저장
