@@ -11,7 +11,7 @@
     if (a >= 1e8) return (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원';
     if (a >= 1e4) return Math.round(a / 1e4).toLocaleString('ko-KR') + '만원'; return a.toLocaleString('ko-KR') + '원'; };
   const J = {}; const get = (u) => (J[u] ||= fetch(u).then((r) => { if (!r.ok) throw r.status; return r.json(); }));
-  root.innerHTML = `<div class="dv-map map loading"></div><button type="button" class="dv-down" aria-label="아래 카드로">↓ 자세히</button><h1 class="dv-h1">우리 시는 얼마 썼을까?</h1>
+  root.innerHTML = `<div class="dv-map map loading"></div><button type="button" class="dv-down" aria-label="아래 카드로">↓ 자세히</button><h1 class="dv-h1">우리 시는 얼마나 계약했을까?</h1>
     <form class="dv-q" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" placeholder="지역·업체 검색 (예: 수성구)" aria-label="지역 검색" enterkeyhint="search"><button type="button" class="dv-all" aria-label="전체 지역 목록">목록</button></form>
     <div class="dv-sheet" role="region" aria-label="지역 정보"><div class="dv-grab" aria-hidden="true"></div><div class="dv-body"></div></div>`;
   let cur = null; // 지도 이벤트(moveend)가 초기화 중에 먼저 불릴 수 있어 맨 앞에 선언
@@ -220,13 +220,13 @@
     let sz = 132; g.font = `800 ${sz}px ${F}`; while (g.measureText(krw(k.total)).width > 1072 && sz > 80) { sz -= 4; g.font = `800 ${sz}px ${F}`; } T(krw(k.total), 64, 345, sz, '#ffb020', 800);
     const fd = (x) => x ? x.replace(/-/g, '.') : ''; T(`${fd(k.fr)} ~ ${fd(k.to)} 동안 맺은 계약 금액 합계`, 64, 400, 32, '#cfd8e3', 500);
     g.fillStyle = 'rgba(255,255,255,.12)'; g.fillRect(64, 436, 1072, 2);
-    T(`전국 ${k.of}개 시 중 ${k.rank}번째로 많이 씀`, 64, 496, 40, '#e8eef5', 700);
+    T(`계약 금액이 전국 ${k.of}개 시 중 ${k.rank}번째로 많아요`, 64, 496, 40, '#e8eef5', 700);
     T(`데이터상 이상 징후 ${k.n.toLocaleString('ko-KR')}건`, 64, 556, 40, '#ff9f0a', 700); T('(눈여겨볼 만한 점, 잘못이라는 뜻은 아니에요)', 64 + g.measureText(`데이터상 이상 징후 ${k.n.toLocaleString('ko-KR')}건`).width + 16, 556, 26, '#8fa0b3', 500);
     T('출처: 조달청 나라장터 공공데이터', 64, 624, 26, '#8fa0b3', 500); T(k.link.replace(/^https?:\/\//, '').replace(/\?.*$/, ''), 1136, 624, 26, '#8fa0b3', 600, 'right');
     return cv; };
   window.__mtCard = (slug) => { const k = CARD(slug || cur); return k ? drawCard(k).toDataURL('image/png') : null; };
   const shareCard = async (slug) => { const k = CARD(slug); if (!k) return; const cv = drawCard(k);
-    const text = `우리 시는 ${k.when} 계약에 돈을 얼마나 썼을까? ${k.name}는 ${krw(k.total)}, 전국 ${k.of}개 시 중 ${k.rank}번째로 많이 썼어요. 데이터상 이상 징후 ${k.n}건, 우리 시는 어떨까?`;
+    const text = `우리 시는 ${k.when} 얼마나 계약했을까? ${k.name}는 계약 금액 ${krw(k.total)}, 전국 ${k.of}개 시 중 ${k.rank}번째로 많아요. 데이터상 이상 징후 ${k.n}건, 우리 시는 어떨까?`;
     const blob = await new Promise((r) => cv.toBlob(r, 'image/png')); const file = blob && new File([blob], `money-tracker-${slug}.png`, {type: 'image/png'});
     if (file && navigator.canShare && navigator.canShare({files: [file]})) { try { await navigator.share({files: [file], text: text + ' ' + k.link, url: k.link}); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     const xu = 'https://x.com/intent/post?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(k.link);
@@ -300,10 +300,10 @@
     const kc = {}; for (const a of A) kc[a.kind] = (kc[a.kind] || 0) + 1; const tk = Object.entries(kc).sort((a, b) => b[1] - a[1])[0];
     const card = (t, big, sub, src) => `<div class="wr-c"><p class="wr-t">${t}</p><p class="wr-b">${big}</p><p class="wr-s">${sub}</p><p class="wr-src">${src}</p></div>`;
     const cs = [
-      card(`${esc(k.name)}는 ${esc(k.when)}`, krw(k.total), `계약으로 쓴 돈이에요. (${rng}에 맺은 계약)`, SR),
-      card('전국 85개 시 중에서', `${k.rank}번째`, `${k.when} 계약에 쓴 돈이 ${k.of}개 시 중 ${k.rank}번째로 많아요.`, SR),
+      card(`${esc(k.name)}는 ${esc(k.when)}`, krw(k.total), `계약 금액이에요. (${rng}에 맺은 계약)`, SR),
+      card('전국 85개 시 중에서', `${k.rank}번째`, `${k.when} 계약 금액이 ${k.of}개 시 중 ${k.rank}번째로 많아요.`, SR),
       card('다른 지역 업체가 받은 돈', out ? out + '%' : '확인 중', out ? `업체 위치를 아는 금액 중 ${out}%가 다른 지역 업체에 갔어요.` : '업체 주소를 아직 확인하고 있어요.', SR + ' · 업체 주소 기준'),
-      card('가장 많이 쓴 계약 종류', top ? esc(top[0]) : '자료 없음', top ? `${krw(top[1])}, 전체의 ${Math.round(top[1] / (k.total || 1) * 100)}%예요.` : '', SR + ' · 제목으로 나눈 종류'),
+      card('계약 금액이 가장 큰 종류', top ? esc(top[0]) : '자료 없음', top ? `${krw(top[1])}, 전체의 ${Math.round(top[1] / (k.total || 1) * 100)}%예요.` : '', SR + ' · 제목으로 나눈 종류'),
       card('데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small>', `${k.n.toLocaleString('ko-KR')}건`, k.n ? `가장 많은 유형: ${esc(KN[tk[0]] || tk[0])} ${tk[1]}건. 위법을 뜻하지 않고, 정상적인 이유가 있을 수 있어요.` : '이 기간에는 자동으로 찾은 패턴이 없어요.', SR + ' · 자동 패턴 검사'),
       `<div class="wr-c wr-share"><p class="wr-t">친구에게 보여 주기</p><img alt="${esc(k.name)} 공유 이미지" src="${drawCard(k).toDataURL('image/png')}"><button type="button" class="wr-btn dv-shc">이 카드 공유</button><p class="wr-src">${SR}</p></div>`];
     el.innerHTML = `<p class="dv-k">우리 시 한눈에 보기 <span class="wr-n">1 / ${cs.length}</span></p><div class="wr-row">${cs.join('')}</div>`;

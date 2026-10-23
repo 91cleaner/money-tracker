@@ -207,7 +207,7 @@ async function homePage() {
     cat = c;
     countUp($('#nat-total'), sum(T));
     const w = $('#wage'); if (w) { w.replaceChildren(); w.append(`최저임금으로 ${Math.round(sum(T) / MINWAGE / 8 / 365).toLocaleString('ko-KR')}년 일해야 버는 돈`); w.append(el('small', '', '2026년 최저임금 시간당 10,320원(고용노동부 고시), 하루 8시간·매일 일한다고 가정')); }
-    $('#hero-k').textContent = cat === '전체' ? '계약으로 쓴 돈' : cat + ' 계약에 쓴 돈';
+    $('#hero-k').textContent = cat === '전체' ? '맺은 계약 금액' : cat + ' 계약 금액';
     { const tn = $('#today-n'); if (tn) { const wh = (window.__pdWhen && window.__pdWhen()) || '최근 30일 동안'; tn.textContent = `${wh.replace(/ 동안$/, '')} 새 계약 ${(cat === '전체' ? '' : cat + ' ')}${sum(N).toLocaleString('ko-KR')}건`; tn.hidden = false; } }
     $('#nat-count').textContent = (cat === '전체' ? '' : cat + ' ') + '계약 ' + sum(N).toLocaleString('ko-KR') + '건';
     $('#nat-alerts-n').textContent = `전국 ${sum(A).toLocaleString('ko-KR')}건 중 시마다 하나씩.`;
@@ -485,10 +485,10 @@ async function cityPage() {
     const s = stats(d.city, rows);
     const alerts = cat === '전체' ? d.alerts : d.alerts.filter((a) => (a.ids || []).some((id) => (byId.get(id) || {}).cat === cat));
     const flagged = alerts.filter((a) => a.kind !== 'big').length;
-    const what = cat === '전체' ? '' : `${cat} 분야에 `; festNote($('#lede'), cat === FEST);
+    const what = cat === '전체' ? '' : `${cat} 분야 `; festNote($('#lede'), cat === FEST);
     $('#range').textContent = s.first ? `${s.first.replaceAll('-', '.')} ~ ${s.last.replaceAll('-', '.')}` : '최근 90일';
     const jo = (w) => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c <= 11171 && c % 28 ? '은' : '는'; };
-    $('#lede').replaceChildren('최근 90일, ', name + jo(name) + ' ' + what, el('b', '', krw(s.total)), '을 썼고, ',
+    $('#lede').replaceChildren('최근 90일, ', name + jo(name) + ' ' + what + '계약 금액이 ', el('b', '', krw(s.total)), '이고, ',
       s.local == null ? '업체 주소는 확인 중입니다.' : el('b', '', `${pct(1 - s.local)}는 다른 지역 업체`), s.local == null ? '' : '로 갔습니다.');
     const mxr = rows.reduce((a, r) => (!a || r.amount > a.amount ? r : a), null);
     const big = mxr && s.total && mxr.amount / s.total > 0.3;
