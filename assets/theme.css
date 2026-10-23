@@ -258,3 +258,11 @@ main.wrap{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
 .t5-r{width:18px;color:#6b7682;font-size:12px}.t5-m{flex:1;display:grid;gap:1px;min-width:0}.t5-m small{color:#9aa5b1;font-size:12px}.t5-m .t5-ag{color:#7cc4ff}
 .t5 em{font-style:normal;font-weight:700;color:#ffb020;white-space:nowrap}.t5-n{color:#8a95a1;margin:6px 0 0}
 .t5-m .t5-v{color:#c9d3dc}.t5-m .t5-v.lnk{text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+/* 상단 띠: 한 항목씩 통째로 */
+.ticker.tk-rot{display:flex;align-items:center;white-space:normal}
+.ticker.tk-rot .tk-slot{animation:none!important;padding-right:10px;display:block;width:100%;box-sizing:border-box;line-height:17px!important;font-size:12px;max-height:40px;overflow:hidden}
+.ticker.tk-rot .tk-slot a,.ticker.tk-rot .tk-slot b{display:inline!important;padding:0!important}
+/* 지도 출처: 읽히되 눈에 덜 띄게 */
+#dive .leaflet-control-attribution{font-size:11px!important;line-height:15px!important;padding:1px 5px!important;background:rgba(0,0,0,.5)!important;color:#9aa5b1!important;opacity:.85}
+#dive .leaflet-control-attribution a{color:#b8c2cc!important}
+.dv-leader{pointer-events:none}

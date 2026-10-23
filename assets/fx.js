@@ -21,3 +21,7 @@ document.body.appendChild(s);setTimeout(()=>s.remove(),650);}},{passive:true});}
 
 (()=>{const t=()=>document.querySelector('.ticker');document.addEventListener('touchstart',e=>{const k=t();if(k)k.classList.toggle('paused',k.contains(e.target));},{passive:true});
 document.addEventListener('click',e=>{const a=e.target.closest('.ticker a[data-c]');if(a&&window.__dvGo){e.preventDefault();__dvGo({c:a.dataset.c});document.getElementById('dive').scrollIntoView({block:'start'});}});})();
+// 상단 띠: 흐르는 글자 대신 한 줄씩(필요하면 두 줄) 통째로 보여 주고 5초마다 다음 항목 (잘리지 않게)
+(()=>{const rot=(t)=>{if(!t||t.dataset.rot)return;const d=t.querySelector(':scope>div');if(!d)return;const its=[...d.children].filter(e=>/^(A|B)$/.test(e.tagName));if(!its.length)return;t.dataset.rot=1;t.classList.add('tk-rot');
+let i=0;const slot=document.createElement('div');slot.className='tk-slot';d.replaceWith(slot);slot.style.paddingLeft=((t.querySelector('.tk-brand')||{}).offsetWidth||0)+10+'px';const show=()=>{slot.replaceChildren(its[i%its.length].cloneNode(true));i++;};show();setInterval(()=>{if(!document.hidden&&!t.classList.contains('paused'))show();},5000);};
+const obs=new MutationObserver(()=>{const t=document.querySelector('.ticker');const d=t&&t.querySelector(':scope>div');if(t&&d&&d.children.length&&!t.dataset.rot)setTimeout(()=>rot(t),1500);});obs.observe(document.body,{childList:true,subtree:true});})();

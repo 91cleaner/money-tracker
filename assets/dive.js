@@ -22,7 +22,7 @@
   tiles.once('tileload', () => box.classList.remove('loading'));
   const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]); const krPad = () => (innerWidth >= 900 ? {paddingTopLeft: [10, 10], paddingBottomRight: [10, 10]} : {paddingTopLeft: [10, 10], paddingBottomRight: [10, 10]}); map.fitBounds(KR, {...krPad(), animate: false});
   window.__dvMap = map;
-  map.on('moveend', () => { if (cur && map.getZoom() < 8 && !map._dvFix) { map._dvFix = 1; const c = fl && fl.cities[cur]; c && map.setView(toLL(c.p), 8, {animate: false}); map._dvFix = 0; } });
+  map.on('moveend', () => { if (cur && map.getZoom() < (map._dvFloor || 8) - 0.3 && !map._dvFix) { map._dvFix = 1; const c = fl && fl.cities[cur]; c && map.setView(toLL(c.p), map._dvFloor || 8, {animate: false}); map._dvFix = 0; } });
   // 휠은 페이지 스크롤 · Ctrl+휠 또는 지도를 클릭한 뒤에만 확대
   box.addEventListener('wheel', (e) => { if (e.ctrlKey) { e.preventDefault(); map.setZoomAround(map.mouseEventToContainerPoint(e), map.getZoom() + (e.deltaY < 0 ? 0.5 : -0.5)); } }, {passive: false});
   map.on('click', () => map.scrollWheelZoom.enable()); box.addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
@@ -43,7 +43,13 @@
   }
   // 홈: 큰 시 8곳에 '이름 금액' 라벨
   const gL = L.layerGroup();
-  cities.filter((c) => c.total).slice(0, 8).forEach((c) => L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt', offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(esc(((BY[c.slug] || {}).short || (BY[c.slug] || {}).name || '') + ' ' + krw(c.total))).addTo(gL));
+  const homeLab = (c, v) => { const nm = (BY[c.slug] || {}).short || (BY[c.slug] || {}).name || '', ll = toLL(c.p);
+    // 수도권은 점이 몰려 있어 서울 라벨을 서해 쪽으로 빼고 지시선으로 서울 점을 가리킨다
+    if (nm === '서울') { const at = [ll[0] + 0.15, ll[1] - 1.05]; L.polyline([ll, at], {color: '#ffd60a', weight: 1.5, opacity: 0.9, interactive: false, className: 'dv-leader'}).addTo(gL);
+      L.circleMarker(ll, {radius: 3, color: '#ffd60a', weight: 2, fillColor: '#ffd60a', fillOpacity: 1, interactive: false}).addTo(gL);
+      L.tooltip({permanent: true, direction: 'left', className: 'klab dv-amt dv-seoul', offset: [-2, 0], interactive: false}).setLatLng(at).setContent(esc(nm + ' ' + krw(v))).addTo(gL); return; }
+    L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt', offset: [6, 0], interactive: false}).setLatLng(ll).setContent(esc(nm + ' ' + krw(v))).addTo(gL); };
+  cities.filter((c) => c.total).slice(0, 8).forEach((c) => homeLab(c, c.total));
   map.on('click', (e) => { const hits = [];
     dots.forEach((m, s) => { const d = e.containerPoint.distanceTo(map.latLngToContainerPoint(m.getLatLng())); const r = m.getRadius(); if (d <= Math.max(r + 6, 22)) hits.push([d - r, s]); });
     if (!hits.length) return; hits.sort((a, b) => a[0] - b[0]);
@@ -52,10 +58,14 @@
 
   // 라벨 겹침: 발주 라벨 먼저 자리 잡고, 나머지는 위아래로 조금씩 밀어 보고 그래도 겹치면 숨김
   const declutter = () => { const hit = (r, q) => !(r.right < q.left || r.left > q.right || r.bottom < q.top || r.top > q.bottom), seen = [];
+    const bb = box.getBoundingClientRect(), inB = (r) => r.left >= bb.left + 2 && r.right <= bb.right - 2 && r.top >= bb.top + 2 && r.bottom <= bb.bottom - 18;
     const L_ = [...box.querySelectorAll('.dv-org'), ...box.querySelectorAll('.dv-amt')];
-    L_.forEach((t) => { t.style.visibility = ''; t.style.marginTop = '0px'; const r0 = t.getBoundingClientRect();
-      for (const dy of [0, 16, -16, 30, -30]) { const r = {left: r0.left, right: r0.right, top: r0.top + dy - 1, bottom: r0.bottom + dy + 1};
-        if (!seen.some((q) => hit(r, q))) { t.style.marginTop = dy + 'px'; seen.push(r); return; } }
+    L_.forEach((t) => { t.style.visibility = ''; t.style.marginTop = '0px'; t.style.marginLeft = '0px'; const r0 = t.getBoundingClientRect();
+      const flip = t.classList.contains('dv-org') ? 0 : -(r0.width + 16);
+      // 지도 밖으로 나가면 반대쪽(왼쪽)으로 뒤집거나 안쪽으로 밀기
+      const pull = Math.min(0, bb.right - 4 - r0.right) || Math.max(0, bb.left + 4 - r0.left);
+      for (const dx of [0, flip, pull]) for (const dy of [0, 16, -16, 30, -30]) { const r = {left: r0.left + dx, right: r0.right + dx, top: r0.top + dy - 1, bottom: r0.bottom + dy + 1};
+        if (inB(r) && !seen.some((q) => hit(r, q))) { t.style.marginTop = dy + 'px'; t.style.marginLeft = dx + 'px'; seen.push(r); return; } }
       t.style.visibility = 'hidden'; }); };
   map.on('zoomend moveend', () => setTimeout(declutter, 30));
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
@@ -102,7 +112,8 @@
     const pts = [ll, ...c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10).map((f) => toLL(f.p))]; let bd = L.latLngBounds(pts);
     const wide = innerWidth >= 900, sh = wide ? 0 : sheet.offsetHeight || Math.round(root.clientHeight * 0.25);
     const o = {paddingTopLeft: [24, 24], paddingBottomRight: [24, 24], maxZoom: 9.5};
-    if (map.getBoundsZoom(bd, false, L.point(48, 48)) < 8) bd = L.latLngBounds([[ll[0] - 0.5, ll[1] - 0.6], [ll[0] + 0.5, ll[1] + 0.6]]);
+    if (map.getBoundsZoom(bd, false, L.point(48, 48)) >= 8.5) bd = bd.extend(L.latLngBounds([[ll[0] - 0.3, ll[1] - 0.35], [ll[0] + 0.3, ll[1] + 0.35]])); // 도착지 전부 보이게(전국 범위 안)
+    map._dvFloor = Math.min(8, map.getBoundsZoom(bd, false, L.point(170, 60)) - 0.25);
     o.paddingBottomRight = [wide ? 140 : 110, 24]; o.paddingTopLeft = [wide ? 60 : 40, 30];
     map.invalidateSize({pan: false}); drawFlows(slug, true);
     if (RM || !box.clientWidth) { map.fitBounds(bd, {...o, animate: false}); FX.on(); return; }
@@ -158,7 +169,7 @@
   root.querySelector('.dv-grab').onclick = () => ex(sheet.dataset.ex !== '1');
   let CAT = '전체'; const TOT = (slug) => { const c = BY[slug] || {}; return CAT === '전체' ? (c.total || 0) : ((c.by_cat || {})[CAT] || 0); };
   const homeLabels = () => { gL.clearLayers(); const L_ = cities.map((c) => [c, TOT(c.slug)]).filter((x) => x[1]).sort((a, b) => b[1] - a[1]).slice(0, 8);
-    L_.forEach(([c, v]) => L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt', offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(esc(((BY[c.slug] || {}).short || (BY[c.slug] || {}).name || '') + ' ' + krw(v))).addTo(gL)); };
+    L_.forEach(([c, v]) => homeLab(c, v)); };
   window.__dvCat = (k) => { CAT = k || '전체'; const mx = Math.max(1, ...cities.map((c) => TOT(c.slug)));
     dots.forEach((m, s) => { const v = TOT(s); m.setRadius(v ? 4 + 13 * Math.sqrt(v / mx) : 3); m.setStyle({fillOpacity: v ? 0.5 : 0.1, opacity: v ? 1 : 0.3}); });
     homeLabels(); if (!cur) L0(true); setTimeout(declutter, 60); };
