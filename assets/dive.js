@@ -14,6 +14,7 @@
   root.innerHTML = `<div class="dv-map map loading"></div><button type="button" class="dv-down" aria-label="아래 카드로">↓ 자세히</button><h1 class="dv-h1">우리 시는 얼마 썼을까?</h1>
     <form class="dv-q" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" placeholder="지역·업체 검색 (예: 수성구)" aria-label="지역 검색" enterkeyhint="search"><button type="button" class="dv-all" aria-label="전체 지역 목록">목록</button></form>
     <div class="dv-sheet" role="region" aria-label="지역 정보"><div class="dv-grab" aria-hidden="true"></div><div class="dv-body"></div></div>`;
+  let cur = null; // 지도 이벤트(moveend)가 초기화 중에 먼저 불릴 수 있어 맨 앞에 선언
   const box = root.querySelector('.dv-map'), sheet = root.querySelector('.dv-sheet'), body = root.querySelector('.dv-body'), form = root.querySelector('.dv-q'), inp = form.querySelector('input');
   const touch = matchMedia('(pointer: coarse)').matches;
   const map = L.map(box, {zoomControl: false, attributionControl: false, dragging: true, tap: false, scrollWheelZoom: false, minZoom: 5, maxZoom: 12, zoomSnap: 0.25});
@@ -197,7 +198,6 @@
   form.querySelector('.dv-all').onclick = () => window.regionPicker && regionPicker(cur, (s) => go({c: s}));
 
   // 시트 레이어
-  let cur = null;
   const setH = (lv) => sheet.dataset.lv = lv;
   const src = '<p class="dv-src"><abbr title="데이터상 이상 징후는 위법을 뜻하지 않으며 정상적인 이유가 있을 수 있습니다. 여러 업체가 함께 맡은 계약은 나눈 비율이 확인된 것만 그 비율대로 나눠 셉니다.">ⓘ</abbr> 출처 조달청 나라장터</p>';
   const share = (title, u) => { u = new URL(u, location.href).href;
