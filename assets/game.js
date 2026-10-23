@@ -19,17 +19,20 @@
       <div class="gm-pick">${[a, b].map((c, i) => `<button type="button" class="gm-c gm-c${i}" data-i="${i}"><b>${esc(c.name)}</b><span class="gm-amt">${done ? krw(c.total) : '?'}</span></button>`).join('<span class="gm-vs">또는</span>')}</div>
       <p class="gm-res" aria-live="polite"></p>
       <div class="gm-bar"><span class="gm-st">${streak ? `연속 <b>${streak}</b>개 맞힘 · ` : ''}${best ? `최고 기록 <b>${best}</b>개` : ''}</span><span class="gm-act"></span></div>
-      <p class="src">지도에서 파란 원과 주황 원이 두 도시예요 · ${esc(label())} 맺은 계약 · ${SRC}</p>`;
+      ${done ? '' : '<p class="gm-mapp"><button type="button" class="gm-btn gm-map">지도에서 보기 ↑</button></p>'}<p class="src">지도에서 파란 원과 주황 원이 두 도시예요 · ${esc(label())} 맺은 계약 · ${SRC}</p>`;
     root.querySelectorAll('.gm-c').forEach((btn) => (btn.onclick = () => answer(+btn.dataset.i)));
+    const mb = root.querySelector('.gm-map'); if (mb) mb.onclick = () => { seen = true; ring(); const d = document.querySelector('#dive .dv-map') || document.querySelector('#dive'); if (d) d.scrollIntoView({block: 'start', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth'}); };
     ring(); };
   // 지도 링은 게임 카드가 화면에 보이거나 #game일 때만
+  // 폰: 지도와 게임 카드가 한 화면에 안 보이므로, 카드를 한 번 보면 답하거나 다른 도시를 고를 때까지 링 유지
+  const MOB = matchMedia('(max-width:899px)');
   let seen = location.hash === '#game'; const ring = () => window.__dvBlink && window.__dvBlink(seen && pair ? [pair[0].slug, pair[1].slug] : []);
-  if ('IntersectionObserver' in window) new IntersectionObserver((es) => { const v = es.some((e) => e.isIntersecting) || location.hash === '#game'; if (v !== seen) { seen = v; ring(); } }, {threshold: 0.15}).observe(root);
+  if ('IntersectionObserver' in window) new IntersectionObserver((es) => { const v = (es.some((e) => e.isIntersecting) && scrollY > 80) || location.hash === '#game'; if (MOB.matches && !v) return; if (v !== seen) { seen = v; ring(); } }, {threshold: 0.15}).observe(root);
   addEventListener('hashchange', () => { if (location.hash === '#game') { seen = true; ring(); } });
   const next = () => { done = false; pair = pick(); draw(); };
   const answer = (i) => { if (done || !pair) return; done = true; const [a, b] = pair, win = (pair[i].total >= pair[1 - i].total);
     if (win) { streak++; if (streak > best) { best = streak; try { localStorage.setItem(K, String(best)); } catch (e) {} } }
-    const lost = streak; draw();
+    const lost = streak; if (MOB.matches) seen = false; draw();
     root.querySelectorAll('.gm-c').forEach((x, k) => { x.disabled = true; x.classList.add(pair[k].total >= pair[1 - k].total ? 'gm-win' : 'gm-lose'); if (k === i) x.classList.add('gm-me'); });
     const big = a.total >= b.total ? a : b, sm = big === a ? b : a;
     root.querySelector('.gm-res').textContent = (win ? '맞았어요! ' : '아쉬워요. ') + `${big.name}가 ${krw(big.total)}으로 ${sm.name}(${krw(sm.total)})보다 많이 썼어요. 기간: ${label()}.`;
@@ -60,6 +63,9 @@
     m.innerHTML = `<div class="dv-shm-b"><img alt="게임 기록 공유 이미지" src="${src}"><div class="dv-shm-a"><a class="dv-shm-s" download="money-tracker-game.png" href="${src}">이미지 저장</a><a class="dv-shm-xp" href="${xu}" target="_blank" rel="noopener">X에 올리기</a><button type="button" class="dv-shm-x">닫기</button></div></div>`;
     m.onclick = (e) => { if (e.target === m || e.target.closest('.dv-shm-x')) m.remove(); }; document.body.append(m); };
   window.__gmPeriod = async () => { await load(); streak = 0; next(); };
-  const start = async () => { await load(); next(); if (location.hash === '#game') setTimeout(() => root.scrollIntoView({block: 'start'}), 400); };
+  const cityOn = () => new URLSearchParams(location.search).has('c');
+  addEventListener('dv:go', () => { if (seen) { seen = false; ring(); } });
+  addEventListener('popstate', () => { if (cityOn() && seen) { seen = false; ring(); } });
+  const start = async () => { await load();  next(); if (location.hash === '#game') setTimeout(() => root.scrollIntoView({block: 'start'}), 400); };
   let tries = 0; const w2 = () => (window.__dvBlink || ++tries > 30 ? start() : setTimeout(w2, 300)); w2();
 })();

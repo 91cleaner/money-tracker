@@ -342,7 +342,7 @@
   };
   const render = () => { const q = new URLSearchParams(location.search); const c = q.get('c'), v = q.get('v');
     if (c && BY[c] && v && /^[0-9a-z]+$/.test(v) && !/^\d{8,}$/.test(v)) L2(c, v, q.get('a')); else if (c && BY[c]) L1(c, q.get('gu')); else L0(); };
-  const go = (st, replace) => { const pk0 = root.querySelector('.dv-pick'); if (pk0 && !st._pick) pk0.remove(); const q = new URLSearchParams(); if (st.c) q.set('c', st.c); if (st.gu) q.set('gu', st.gu); if (st.v) q.set('v', st.v); if (st.a) q.set('a', st.a);
+  const go = (st, replace) => { if (st && st.c) dispatchEvent(new CustomEvent('dv:go', {detail: st})); const pk0 = root.querySelector('.dv-pick'); if (pk0 && !st._pick) pk0.remove(); const q = new URLSearchParams(); if (st.c) q.set('c', st.c); if (st.gu) q.set('gu', st.gu); if (st.v) q.set('v', st.v); if (st.a) q.set('a', st.a);
     { const q0 = new URLSearchParams(location.search); for (const k of ['d', 'from', 'to']) if (q0.has(k)) q.set(k, q0.get(k)); }  // 기간 유지
     const u = location.pathname + (q.toString() ? '?' + q : '') + '#map'; history[replace ? 'replaceState' : 'pushState']({dv: 1}, '', u); render();
     sheet.scrollTop = 0; body.classList.remove('dv-in'); void body.offsetWidth; body.classList.add('dv-in'); };
