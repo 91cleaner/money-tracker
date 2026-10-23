@@ -394,3 +394,9 @@ footer .unof{font-size:13px}
 #v-past .cc-jv{margin-bottom:6px;padding-bottom:4px}
 #v-past .cc+.cc{margin-top:12px;padding-top:12px;border-top:1px solid #26313b}
 html{scroll-padding-top:56px}
+.pd .pd-t{margin-top:6px!important}
+body[data-page] .rbar{top:0}body[data-page].has-rbar .stabs{top:53px}
+html:has(body.has-rbar){scroll-padding-top:104px}
+body.has-rbar .sec,body.has-rbar .sec h2,body.has-rbar #contracts summary,body.has-rbar #cq{scroll-margin-top:104px}
+#contracts td,#contracts td small,#contracts td i,#contracts .cc-tags,footer,footer small,footer span,.dv-ext{font-size:13px!important}
+.ticker .tk-src[hidden]{display:none!important}

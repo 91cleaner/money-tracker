@@ -1,5 +1,6 @@
 // 우리 시 돈 추적기 — 전국 목록(home)과 시 상세(city)
 const $ = (s, root = document) => root.querySelector(s);
+const MTH = (m) => String(m || '').replace('수의계약', '한 업체와 바로 맺은 계약(수의계약)');
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 const krw = (n) => {
   if (n == null || isNaN(n)) return '—';
@@ -117,7 +118,7 @@ function receiptCard(r, city) {
   const c = el('article', 'receipt');
   c.append(el('small', 'pill', '계약 영수증 · ' + (r.cat || '기타')), el('div', 'amt', krw(r.amount)), el('b', '', r.title));
   const dl = el('dl');
-  for (const [k, v] of [['날짜', r.date], ['일을 맡긴 기관', r.inst], ['업체', r.vendor], ['업체 소재', r.vregion || '확인 중'], ['방식', (r.method || '') + (r.ann === true ? ' · 공고 있음' : r.ann === false ? ' · 공고 없음' : '')]]) { dl.append(el('dt', '', k), el('dd', '', v || '—')); }
+  for (const [k, v] of [['날짜', r.date], ['일을 맡긴 기관', r.inst], ['업체', r.vendor], ['업체 소재', r.vregion || '확인 중'], ['방식', MTH(r.method) + (r.ann === true ? ' · 공고 있음' : r.ann === false ? ' · 공고 없음' : '')]]) { dl.append(el('dt', '', k), el('dd', '', v || '—')); }
   const acts = el('div', 'acts');
   if (r.url) { const a = el('a', '', '나라장터 원본 ↗'); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; acts.append(a); }
   acts.append(shareBtn(shareURL(city.slug), `${city.short} · ${r.title} ${krw(r.amount)}`));
@@ -428,7 +429,7 @@ async function vendorPage() {
       if (r.cat === FEST && r.ftag) top.append(el('i', 'sole-badge ftag', r.ftag));
       if (r.cat === FEST && /수의/.test(r.method || '') && !r.ann) top.append(el('i', 'sole-badge', '경쟁 없는 계약'));
       const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
-      c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : ''))); if (r.ann === true || r.ann === false) top.append(el('i', r.ann ? 'ann-y' : 'ann-n', r.ann ? '공고 있음' : '공고 없음')); if (window.plainTag && /단가/.test(r.title || '')) t.insertAdjacentHTML('afterend', window.plainTag(r.title));
+      c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + MTH(r.method) : ''))); if (r.ann === true || r.ann === false) top.append(el('i', r.ann ? 'ann-y' : 'ann-n', r.ann ? '공고 있음' : '공고 없음')); if (window.plainTag && /단가/.test(r.title || '')) t.insertAdjacentHTML('afterend', window.plainTag(r.title));
       c.append(...contractExtra(r));
       if (r.url) { const s2 = el('a', 'src', '출처: 조달청 나라장터 원문 ›'); s2.href = r.url; s2.target = '_blank'; s2.rel = 'noopener'; c.append(s2); }
       box.append(c);
@@ -546,12 +547,12 @@ async function cityPage() {
       if (r.ltc || /^장기/.test(r.lt || '')) title.append(el('small', 'cc-tags ltc', ` 여러 해 계약 · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액 ${krw(r.tot_amt || r.amount)})`));
       if (window.plainTag && /단가/.test(r.title || '')) title.insertAdjacentHTML('beforeend', window.plainTag(r.title));
       if (r.jvm && r.jvm.length > 1) title.append(el('small', 'cc-tags', ' 함께 맡은 업체: ' + r.jvm.map((m) => `${m.name} ${m.share != null ? m.share + '%' : ''}`).join(', ')));
-      tr.append(el('td', '', r.date), el('td', 'hide-narrow', r.inst), title, el('td', '', r.vendor), el('td', 'hide-narrow', r.vregion || '—'), el('td', 'num', r.amount.toLocaleString('ko-KR')));
+      tr.append(el('td', '', r.date), el('td', 'hide-narrow', r.inst), title, el('td', '', r.vendor), el('td', 'hide-narrow', r.vregion || '—'), Object.assign(el('td', 'num', krw(r.amount)), {title: r.amount.toLocaleString('ko-KR') + '원'}));
       tb.append(tr);
     }
   };
   tbl.querySelectorAll('th button').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.k; if (k === sortK) dir *= -1; else { sortK = k; dir = k === 'amount' || k === 'date' ? -1 : 1; } table(); }));
-  $('#cq').addEventListener('input', (e) => { q = e.target.value.trim(); table(); });
+  $('#cq').addEventListener('input', (e) => { q = e.target.value.trim(); table(); const sm = $('#contracts summary'), hb = Math.max(0, ...[...document.querySelectorAll('#rbar,#stabs')].map((x) => x.getBoundingClientRect().bottom)); if (sm && sm.getBoundingClientRect().top < hb + 4) scrollBy(0, sm.getBoundingClientRect().top - hb - 8); });
   if (hasCat) {
     const amt = {}; for (const r of d.rows) amt[r.cat] = (amt[r.cat] || 0) + r.amount;
     const present = ['전체', ...Object.keys(amt).filter((c) => c && amt[c] > 0).sort((x, y) => amt[y] - amt[x])];

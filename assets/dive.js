@@ -81,14 +81,14 @@
     const L_ = [...box.querySelectorAll('.dv-org'), ...box.querySelectorAll('.dv-amt')];
     gLead.clearLayers(); const tipOf = new Map(); HL.forEach((ll, tp) => { const e = tp.getElement(); if (e) tipOf.set(e, ll); });
     const DOT = []; if (map.hasLayer(gL)) dots.forEach((m) => { const p = map.latLngToContainerPoint(m.getLatLng()); DOT.push([bb.left + p.x, bb.top + p.y, m.getRadius() + 2]); });
-    const onDot = (r, own) => DOT.some(([x, y, rr]) => (!own || Math.hypot(x - own[0], y - own[1]) > 2) && Math.max(r.left - x, 0, x - r.right) ** 2 + Math.max(r.top - y, 0, y - r.bottom) ** 2 < rr * rr);
+    const onDot = (r, own, pd = 0) => DOT.some(([x, y, rr]) => (!own || Math.hypot(x - own[0], y - own[1]) > 2) && Math.max(r.left - x, 0, x - r.right) ** 2 + Math.max(r.top - y, 0, y - r.bottom) ** 2 < (rr + pd) * (rr + pd));
     const place = (t, strict) => { const r0 = t.getBoundingClientRect(), flip = t.classList.contains('dv-org') ? 0 : -(r0.width + 16), ll = tipOf.get(t);
       const pull = Math.min(0, bb.right - 4 - r0.right) || Math.max(0, bb.left + 4 - r0.left);
       let own = null; if (ll) { const p = map.latLngToContainerPoint(ll); own = [bb.left + p.x, bb.top + p.y]; }
       const C = []; if (ll) { for (const [dx, k] of [[0, 0], [flip, 0], [36, 36], [flip - 36, 36], [72, 72], [flip - 72, 72], [pull, 0]]) for (const dy of [0, 18, -18, 34, -34, 52, -52, 72, -72, 92, -92]) C.push([dx, dy, k + Math.abs(dy)]); C.sort((a, b) => a[2] - b[2]); }
       else for (const dx of [0, flip, pull]) for (const dy of [0, 18, -18, 34, -34, 50, -50]) C.push([dx, dy, 0]);
       for (const [dx, dy, k] of C) { const r = {left: r0.left + dx, right: r0.right + dx, top: r0.top + dy, bottom: r0.bottom + dy};
-        if (inB(r) && !seen.some((q) => hit(r, q)) && (!strict || !onDot(r, own))) { t.style.marginTop = dy + 'px'; t.style.marginLeft = dx + 'px'; seen.push(r);
+        if (inB(r) && !seen.some((q) => hit(r, q)) && (!strict || !onDot(r, own, 10))) { t.style.marginTop = dy + 'px'; t.style.marginLeft = dx + 'px'; seen.push(r);
           if (own && k > 0) { const left = r.left > own[0], ex = left ? r.left : r.right, ey = Math.max(r.top + 4, Math.min(r.bottom - 4, own[1]));
             const toL = (x, y) => map.containerPointToLatLng([x - bb.left, y - bb.top]);
             L.polyline([ll, toL(ex, ey)], {color: '#ffd60a', weight: 1.5, opacity: 0.85, interactive: false, className: 'dv-leader'}).addTo(gLead);
