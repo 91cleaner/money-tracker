@@ -218,7 +218,7 @@ html, body { overflow-x: hidden; }
   tbody td:nth-child(3) { grid-column: 1 / -1; font-size: 16px; font-weight: 600; min-width: 0; }
   tbody td:nth-child(4) { grid-column: 1 / -1; font-size: 14px; }
   tbody td:nth-child(2), tbody td:nth-child(5) { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
-  tbody td:nth-child(6)::after { content: "원"; font-weight: 600; }
+
 }
 .lb { fill: var(--fg); font-weight: 700; text-anchor: middle; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
 .lb.me { fill: var(--accent); }
