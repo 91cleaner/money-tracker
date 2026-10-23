@@ -234,7 +234,9 @@ async function homePage() {
     const top = cities.filter((c) => TA(c)).slice(0, 6).map((c) => ({...TA(c), slug: c.slug, city: c.short, detail: c.short + ' · ' + TA(c).detail}));
     alertList($('#nat-alerts-list'), top, {link: true});
   };
-  { const qc = new URLSearchParams(location.search).get('cat'); const ok = qc && catList.includes(qc);
+  { const q0 = (new URLSearchParams(location.search).get('cat') || '').replace(/\s+/g, ''); const AL = {'축제': '축제 공연·섭외', '공연': '축제 공연·섭외', '섭외': '축제 공연·섭외'};
+    const qc = q0 && (catList.find((k) => k.replace(/\s+/g, '') === q0) || (AL[q0] && catList.includes(AL[q0]) ? AL[q0] : null) || catList.find((k) => k.replace(/\s+/g, '').startsWith(q0)) || catList.find((k) => k.includes(q0))); const ok = !!qc;
+    if (ok) setTimeout(() => document.getElementById('dive')?.scrollIntoView({block: 'start'}), 600);
     setCat(ok ? qc : '전체'); if (ok) document.querySelectorAll('#hero-chips button').forEach((b) => { const on = b.textContent.trim() === qc; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); }
   if (window.moneyMap && $('#map')) whenNear($('#map'), () => moneyMap($('#map')).then((m) => { mapCtl = m; if (cat !== '전체') m.setCat(cat); }).catch(() => $('#map').remove()));
   funHome(idx, () => cat);
