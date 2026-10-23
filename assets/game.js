@@ -26,16 +26,18 @@
   // 지도 링은 게임 카드가 화면에 보이거나 #game일 때만
   // 폰: 지도와 게임 카드가 한 화면에 안 보이므로, 카드를 한 번 보면 답하거나 다른 도시를 고를 때까지 링 유지
   // 첫 화면에서 카드가 잠깐 보이는 순간(레이아웃 전)은 무시: 손님이 스크롤한 뒤에만
-  let moved = false; ['wheel', 'touchmove', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, () => { moved = true; upd(); }, {capture: true, passive: true, once: true}));
+  let moved = false; ['wheel', 'touchmove', 'keydown'].forEach((t) => addEventListener(t, () => { moved = true; upd(); }, {capture: true, passive: true, once: true}));
   const MOB = matchMedia('(max-width:899px)');
-  let seen = location.hash === '#game'; const ring = () => window.__dvBlink && window.__dvBlink(seen && pair ? [pair[0].slug, pair[1].slug] : []);
+  let seen = location.hash === '#game'; const ring = () => window.__dvBlink && window.__dvBlink(seen && pair && !done ? [pair[0].slug, pair[1].slug] : []);
   let vis = false; function upd() { const v = (vis && moved) || location.hash === '#game'; if (MOB.matches && !v) return; if (v !== seen) { seen = v; ring(); } }
   if ('IntersectionObserver' in window) new IntersectionObserver((es) => { vis = es[es.length - 1].isIntersecting; upd(); }, {threshold: 0.15}).observe(root);
   addEventListener('hashchange', () => { if (location.hash === '#game') { seen = true; ring(); } });
+  window.__gmPair = (x, y) => { const f = (k) => C.find((c) => c.slug === k); if (f(x) && f(y)) { done = false; pair = [f(x), f(y)]; draw(); } };
   const next = () => { done = false; pair = pick(); draw(); };
   const answer = (i) => { if (done || !pair) return; done = true; const [a, b] = pair, win = (pair[i].total >= pair[1 - i].total);
     if (win) { streak++; if (streak > best) { best = streak; try { localStorage.setItem(K, String(best)); } catch (e) {} } }
-    const lost = streak; if (MOB.matches) seen = false; draw();
+    const lost = streak; seen = false; draw();
+    { const wi = pair[0].total >= pair[1].total ? 0 : 1, sl = pair[wi].slug; if (window.__dvBlink) { window.__dvBlink(wi ? [null, sl] : [sl]); clearTimeout(window.__gmHL); window.__gmHL = setTimeout(() => { if (done) window.__dvBlink([]); }, 1500); } }
     root.querySelectorAll('.gm-c').forEach((x, k) => { x.disabled = true; x.classList.add(pair[k].total >= pair[1 - k].total ? 'gm-win' : 'gm-lose'); if (k === i) x.classList.add('gm-me'); });
     const big = a.total >= b.total ? a : b, sm = big === a ? b : a;
     root.querySelector('.gm-res').textContent = (win ? '맞았어요! ' : '아쉬워요. ') + `${big.name}가 ${krw(big.total)}으로 ${sm.name}(${krw(sm.total)})보다 많이 썼어요. 기간: ${label()}.`;
@@ -65,10 +67,10 @@
     const src = blob ? URL.createObjectURL(blob) : cv.toDataURL('image/png'); const m = document.createElement('div'); m.className = 'dv-shm'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-label', '공유 이미지');
     m.innerHTML = `<div class="dv-shm-b"><img alt="게임 기록 공유 이미지" src="${src}"><div class="dv-shm-a"><a class="dv-shm-s" download="money-tracker-game.png" href="${src}">이미지 저장</a><a class="dv-shm-xp" href="${xu}" target="_blank" rel="noopener">X에 올리기</a><button type="button" class="dv-shm-x">닫기</button></div></div>`;
     m.onclick = (e) => { if (e.target === m || e.target.closest('.dv-shm-x')) m.remove(); }; document.body.append(m); };
-  window.__gmPeriod = async () => { await load(); streak = 0; next(); };
+  let lastLb = null; window.__gmPeriod = async () => { await load(); const lb = label(); if (pair && lb === lastLb) { const f = (k) => C.find((c) => c.slug === k); const a = f(pair[0].slug), b = f(pair[1].slug); if (a && b) { pair = [a, b]; draw(); return; } } lastLb = lb; streak = 0; next(); };
   const cityOn = () => new URLSearchParams(location.search).has('c');
   addEventListener('dv:go', () => { if (seen) { seen = false; ring(); } });
   addEventListener('popstate', () => { if (cityOn() && seen) { seen = false; ring(); } });
-  const start = async () => { await load();  next(); if (location.hash === '#game') setTimeout(() => root.scrollIntoView({block: 'start'}), 400); };
-  let tries = 0; const w2 = () => (window.__dvBlink || ++tries > 30 ? start() : setTimeout(w2, 300)); w2();
+  const start = async () => { await load(); lastLb = label(); if (!pair) next(); else draw(); if (location.hash === '#game') setTimeout(() => root.scrollIntoView({block: 'start'}), 400); };
+  start(); let tries = 0; const w2 = () => (window.__dvBlink ? ring() : ++tries < 120 && setTimeout(w2, 300)); w2();
 })();

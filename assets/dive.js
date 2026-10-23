@@ -47,12 +47,15 @@
   window.__dvBlink = (ss) => { gB.clearLayers(); (ss || []).forEach((s, i) => { const m = dots.get(s); if (!m) return;
     const col = i ? '#ffb020' : '#7fe8ff', rr = Math.max(18, m.getRadius() + 10); L.circleMarker(m.getLatLng(), {pane: 'gmRing', renderer: gR, radius: rr, color: '#03070b', opacity: 0.95, weight: 9, fill: false, interactive: false, className: 'dv-blink-bg'}).addTo(gB); L.circleMarker(m.getLatLng(), {pane: 'gmRing', renderer: gR, radius: rr, color: col, weight: 4, fill: false, interactive: false, className: 'dv-blink'}).addTo(gB);
     const nm = (BY[s] || {}).short || (BY[s] || {}).name || ''; L.tooltip({permanent: true, direction: i ? 'right' : 'left', offset: [i ? 20 : -20, 0], className: 'klab gm-tip gm-tip' + i, interactive: false}).setLatLng(m.getLatLng()).setContent(esc(nm)).addTo(gB); });
-    // 게임 이름표가 다른 이름표(금액 라벨 등)를 가리면 반대쪽으로, 그래도 겹치면 숨김
-    requestAnimationFrame(() => { const ov = (a, b) => !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
-      const others = [...box.querySelectorAll('.leaflet-tooltip:not(.gm-tip)')].filter((e) => e.offsetParent).map((e) => e.getBoundingClientRect());
-      gB.eachLayer((l) => { if (!(l instanceof L.Tooltip)) return; const e = l.getElement(); if (!e) return; const hit = () => others.some((r) => ov(e.getBoundingClientRect(), r));
-        if (hit()) { const d = l.options.direction === 'left' ? 'right' : 'left'; l.options.direction = d; l.options.offset = L.point(d === 'left' ? -20 : 20, 0); l.update && l.update(); e.className = e.className.replace(/leaflet-tooltip-(left|right)/, 'leaflet-tooltip-' + d); if (hit()) e.style.display = 'none'; } }); });
-    if (ss && ss.length === 2 && !cur) { const b = L.latLngBounds(ss.map((s) => dots.get(s)).filter(Boolean).map((m) => m.getLatLng())); if (b.isValid() && !map.getBounds().pad(-0.1).contains(b)) map.fitBounds(b.pad(0.6), {maxZoom: 9, animate: !RM}); } };
+    // 링이 켜져 있으면 다른 점·선·금액 라벨을 흐리게, 게임 이름표와 겹치는 다른 이름표는 숨김(게임 이름표는 항상 표시)
+    box.classList.toggle('gm-on', !!(ss && ss.length));
+    const fixTips = () => { box.querySelectorAll('.gm-hide').forEach((e) => e.classList.remove('gm-hide')); if (!(ss && ss.length)) return;
+      const ov = (a, b) => !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+      const mine = []; gB.eachLayer((l) => { if (l instanceof L.Tooltip && l.getElement()) mine.push(l.getElement().getBoundingClientRect()); });
+      box.querySelectorAll('.leaflet-tooltip:not(.gm-tip)').forEach((e) => { const r = e.getBoundingClientRect(); if (mine.some((m) => ov(m, r))) e.classList.add('gm-hide'); }); };
+    map.__gmTips = fixTips; requestAnimationFrame(fixTips); clearTimeout(window.__gmFT); window.__gmFT = setTimeout(fixTips, 700);
+    if (!map.__gmFix) { map.__gmFix = 1; map.on('zoomend moveend', () => setTimeout(() => box.classList.contains('gm-on') && map.__gmTips && map.__gmTips(), 80)); }
+    if (ss && ss.length === 2 && !cur) { const b = L.latLngBounds(ss.map((s) => dots.get(s)).filter(Boolean).map((m) => m.getLatLng())); const pp = ss.map((s) => dots.get(s)).filter(Boolean).map((m) => map.latLngToContainerPoint(m.getLatLng())); const close = pp.length === 2 && pp[0].distanceTo(pp[1]) < 70; if (b.isValid() && (close || !map.getBounds().pad(-0.1).contains(b))) map.fitBounds(b.pad(0.6), {maxZoom: 9, animate: !RM}); } };
   // 홈: 큰 시 8곳에 '이름 금액' 라벨
   const gL = L.layerGroup();
   const HL = new Map(), gLead = L.layerGroup().addTo(map);
@@ -60,7 +63,7 @@
     const t = L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-hl', offset: [6, 0], interactive: false}).setLatLng(ll).setContent(esc(nm + ' ' + krw(v))).addTo(gL);
     HL.set(t, ll); };
   cities.filter((c) => c.total).slice(0, 8).forEach((c) => homeLab(c, c.total));
-  map.on('click', (e) => { const hits = [];
+  map.on('click', (e) => { const oe = e.originalEvent; if (!oe || !oe.isTrusted || !box.contains(oe.target) || oe.target.closest('.leaflet-control')) return; { const br = box.getBoundingClientRect(); if (oe.clientY < br.top || oe.clientY > br.bottom || oe.clientX < br.left || oe.clientX > br.right) return; } const hits = [];
     dots.forEach((m, s) => { const d = e.containerPoint.distanceTo(map.latLngToContainerPoint(m.getLatLng())); const r = m.getRadius(); if (d <= Math.max(r + 6, 22)) hits.push([d - r, s]); });
     if (!hits.length) return; hits.sort((a, b) => a[0] - b[0]);
     const inside = hits.filter((h) => h[0] <= 4);
