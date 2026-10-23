@@ -71,6 +71,7 @@ def main():
         ok = [x for x in cs if x[2] >= MIN_CITY]
         small = not ok
         c, m, n, sm, v = max(ok or cs, key=lambda x: x[1] / med)
+        if m <= med: continue  # 중앙값보다 비싼 시가 없으면 비교 카드 안 만듦
         comp.append({"kw": kw, "n": len(g2), "cities": len(byc), "med": med, "city": c, "cmed": m, "cn": n, "small": small,
                      "pct": round((m / med - 1) * 100), "p25": q[0], "p75": q[2], "save": 0 if small else max(0, sm - med * n),
                      "ids": [{"no": x.get("no"), "ord": x.get("ord"), "a": amt(x), "d": x["date"], "t": x["title"], "u": x.get("url")} for x in v]})
