@@ -10,8 +10,8 @@
     if (a >= 1e8) return (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원';
     if (a >= 1e4) return Math.round(a / 1e4).toLocaleString('ko-KR') + '만원'; return a.toLocaleString('ko-KR') + '원'; };
   const J = {}; const get = (u) => (J[u] ||= fetch(u).then((r) => { if (!r.ok) throw r.status; return r.json(); }));
-  root.innerHTML = `<div class="dv-map map loading"></div>
-    <form class="dv-q" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" placeholder="지역 검색 (예: 대구 수성구)" aria-label="지역 검색" enterkeyhint="search"><button type="button" class="dv-all" aria-label="전체 지역 목록">목록</button></form>
+  root.innerHTML = `<div class="dv-map map loading"></div><h1 class="dv-h1">우리 시는 얼마 썼을까?</h1>
+    <form class="dv-q" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" placeholder="지역·업체 검색 (예: 수성구)" aria-label="지역 검색" enterkeyhint="search"><button type="button" class="dv-all" aria-label="전체 지역 목록">목록</button></form>
     <div class="dv-sheet" role="region" aria-label="지역 정보"><div class="dv-grab" aria-hidden="true"></div><div class="dv-body"></div></div>`;
   const box = root.querySelector('.dv-map'), sheet = root.querySelector('.dv-sheet'), body = root.querySelector('.dv-body'), form = root.querySelector('.dv-q'), inp = form.querySelector('input');
   const touch = matchMedia('(pointer: coarse)').matches;
@@ -21,6 +21,11 @@
   tiles.once('tileload', () => box.classList.remove('loading'));
   const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]); const krPad = () => (innerWidth >= 900 ? {paddingTopLeft: [10, 60], paddingBottomRight: [400, 10]} : {paddingTopLeft: [10, 64], paddingBottomRight: [10, Math.round(root.clientHeight * 0.22) + 6]}); map.fitBounds(KR, {...krPad(), animate: false});
   window.__dvMap = map;
+  { // 크기가 바뀌거나 다시 보일 때 타일이 깨지지 않게
+    let t = 0; const inv = () => { clearTimeout(t); t = setTimeout(() => map.invalidateSize({pan: false}), 60); };
+    if (window.ResizeObserver) new ResizeObserver(inv).observe(box);
+    addEventListener('resize', inv); addEventListener('scroll', inv, {passive: true}); addEventListener('hashchange', inv); addEventListener('pageshow', inv);
+    document.addEventListener('visibilitychange', () => !document.hidden && inv()); window.__inv = inv; }
   let fl, idx; try { [fl, idx] = await Promise.all([get('data/flows.json'), get('data/index.json')]); } catch (e) { body.innerHTML = '<p class="sub">지도 자료를 불러오지 못했어요. 잠시 후 다시 열어 주세요.</p>'; return; }
   const C = idx.cities, BY = Object.fromEntries(C.map((c) => [c.slug, c]));
   const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.p).sort((a, b) => b.total - a.total);
@@ -69,22 +74,37 @@
       setTimeout(() => { if (my === seq && !map.getBounds().contains(bd)) map.flyToBounds(bd, {...o, duration: 1.1}); }, 1300); }); };
 
   // 검색: 시 이름·주소(시+구)
+  const GU = {seoul: '종로 중 용산 성동 광진 동대문 중랑 성북 강북 도봉 노원 은평 서대문 마포 양천 강서 구로 금천 영등포 동작 관악 서초 강남 송파 강동', busan: '중 서 동 영도 부산진 동래 남 북 해운대 사하 금정 강서 연제 수영 사상', daegu: '중 동 서 남 북 수성 달서', incheon: '중 동 미추홀 연수 남동 부평 계양 서', gwangju: '동 서 남 북 광산', daejeon: '동 중 서 유성 대덕', ulsan: '중 남 동 북',
+    suwon: '장안 권선 팔달 영통', seongnam: '수정 중원 분당', goyang: '덕양 일산동 일산서', yongin: '처인 기흥 수지', anyang: '만안 동안', ansan: '상록 단원', cheongju: '상당 서원 흥덕 청원', cheonan: '동남 서북', jeonju: '완산 덕진', pohang: '남 북', changwon: '의창 성산 마산합포 마산회원 진해'};
+  const guOf = (w) => { w = w.replace(/구$/, ''); if (w.length < 2) return null; for (const [sl, l] of Object.entries(GU)) if (BY[sl] && l.split(' ').includes(w)) return {c: sl, gu: w + '구'}; return null; };
   const norm = (s) => s.replace(/\s/g, '').replace(/(특별시|광역시|특별자치시|특별자치도)/g, '');
   const find = (q) => { const t = norm(q); if (!t) return null; const toks = q.trim().split(/\s+/);
     let best = C.find((c) => norm(c.name) === t || norm(c.short) === t) || C.find((c) => t.startsWith(norm(c.name).replace(/시$/, ''))) || C.find((c) => norm(c.short).includes(t) || norm(c.name).includes(t));
     if (!best && toks.length > 1) best = C.find((c) => norm(c.name).replace(/시$/, '') === norm(toks[0]).replace(/시$/, ''));
     return best ? {c: best.slug, gu: toks.length > 1 && /구$/.test(toks[toks.length - 1]) ? toks[toks.length - 1] : null} : null; };
-  form.addEventListener('submit', (e) => { e.preventDefault(); const r = find(inp.value); if (!r) { inp.setCustomValidity('찾는 지역이 없어요. 85개 시만 추적해요'); inp.reportValidity(); return; } inp.setCustomValidity(''); inp.blur(); go(r); });
+  form.addEventListener('submit', (e) => { e.preventDefault(); const f0 = !sug.hidden && sug.querySelector('button.on'); if (f0) { f0.click(); return; } const r = find(inp.value) || guOf(inp.value.trim().split(/\s+/).pop() || ''); if (!r) { inp.setCustomValidity('찾는 지역이 없어요. 85개 시만 추적해요'); inp.reportValidity(); return; } inp.setCustomValidity(''); inp.blur(); go(r); });
   const sug = document.createElement('div'); sug.className = 'dv-sug'; sug.hidden = true; form.after(sug);
+  let VN = null; const loadV = () => fetch('data/rank.json').then((r) => r.json()).then((d) => { VN = (d.vendors || []).map((v) => ({...v, k: norm(v.name).replace(/주식회사|\(주\)|㈜/g, '')})); inp.value && inp.dispatchEvent(new Event('input')); }).catch(() => {});
+  const pickV = (id) => { sug.hidden = true; inp.value = ''; inp.blur(); let best = null, ba = 0;
+    for (const [slug, c] of Object.entries(fl.cities || {})) for (const f of c.flows || []) for (const v of f.vendors || []) if (v.id === id && v.amount > ba) { ba = v.amount; best = slug; }
+    best ? go({c: best, v: id}) : (location.href = 'vendor.html?v=' + id); };
   const pickS = (r) => { sug.hidden = true; inp.value = ''; inp.blur(); go(r); };
   inp.addEventListener('input', () => { inp.setCustomValidity(''); const q = inp.value.trim(), t = norm(q);
     if (!t) { sug.hidden = true; return; }
     const toks = q.split(/\s+/), gu = toks.length > 1 ? toks[toks.length - 1] : '';
     let L_ = C.filter((c) => (norm(c.province) + norm(c.name) + norm(c.short)).includes(norm(toks[0]))).slice(0, 6);
     if (!L_.length) L_ = C.filter((c) => norm(c.name + c.short).includes(t)).slice(0, 6);
-    sug.innerHTML = L_.length ? L_.map((c) => `<button type="button" data-s="${c.slug}" data-g="${esc(gu)}"><b>${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</b><small>${esc(c.province)}</small></button>`).join('') : '<p class="small">찾는 시가 없어요 · 85개 시만 추적해요</p>';
-    sug.hidden = false;
-    sug.querySelectorAll('button').forEach((b) => (b.onclick = () => pickS({c: b.dataset.s, gu: /구$/.test(b.dataset.g) ? b.dataset.g : null}))); });
+    const g = !L_.length && guOf(toks[toks.length - 1]);
+    if (g) { sug.innerHTML = `<button type="button" class="on" data-s="${g.c}" data-g="${g.gu}"><b>${esc(g.gu)}는 ${esc(BY[g.c].short || BY[g.c].name)}에 포함</b><small>${esc(BY[g.c].short || BY[g.c].name)} 보기 ›</small></button>`; sug.hidden = false; sug.querySelector('button').onclick = () => pickS({c: g.c, gu: g.gu}); return; }
+    const V_ = t.length >= 2 && VN ? VN.filter((v) => v.k.includes(t)).slice(0, 5) : [];
+    sug.innerHTML = (L_.length || V_.length) ? L_.map((c) => `<button type="button" data-s="${c.slug}" data-g="${esc(gu)}"><b>${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</b><small>${esc(c.province)}</small></button>`).join('')
+      + V_.map((v) => `<button type="button" data-v="${v.id}"><b>${esc(v.name)}</b><small>업체 · ${krw(v.total)}</small></button>`).join('') : '<p class="small">찾는 지역·업체가 없어요 · 85개 시만 추적해요</p>';
+    sug.hidden = false; const f0 = sug.querySelector('button'); f0 && f0.classList.add('on');
+    sug.querySelectorAll('button').forEach((b) => (b.onclick = () => b.dataset.v ? pickV(b.dataset.v) : pickS({c: b.dataset.s, gu: /구$/.test(b.dataset.g) ? b.dataset.g : null}))); });
+  inp.addEventListener('focus', loadV, {once: true});
+  inp.addEventListener('focus', () => { if (inp.value.trim()) return; const q = C.filter((c) => c.alerts).sort((a, b) => b.alerts - a.alerts).slice(0, 5);
+    sug.innerHTML = '<p class="small">이상 징후가 많은 곳</p>' + q.map((c) => `<button type="button" data-s="${c.slug}"><b>${esc(c.name)}</b><small>이상 징후 ${c.alerts}건</small></button>`).join('');
+    sug.hidden = false; sug.querySelectorAll('button').forEach((b) => (b.onclick = () => pickS({c: b.dataset.s}))); });
   inp.addEventListener('blur', () => setTimeout(() => (sug.hidden = true), 200));
   form.querySelector('.dv-all').onclick = () => window.regionPicker && regionPicker(cur, (s) => go({c: s}));
 
@@ -92,23 +112,32 @@
   let cur = null;
   const setH = (lv) => sheet.dataset.lv = lv;
   const src = '<p class="dv-src"><abbr title="데이터상 이상 징후는 위법을 뜻하지 않으며 정상적인 이유가 있을 수 있습니다. 공동도급은 지분이 확인된 계약만 지분대로 나눕니다.">ⓘ</abbr> 출처 조달청 나라장터</p>';
-  const ex = (on) => { sheet.dataset.ex = on ? '1' : '0'; if (!on) sheet.scrollTop = 0; };
+  const share = (title, u) => { u = new URL(u, location.href).href;
+    if (navigator.share) return navigator.share({title, url: u}).catch(() => {});
+    (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast('링크를 복사했어요'), () => prompt('링크', u)); };
+  const toast = (m) => { const d = document.createElement('div'); d.className = 'dv-toast'; d.textContent = m; box.append(d); setTimeout(() => d.remove(), 1800); };
+  const shb = (t, u) => `<button type="button" class="dv-sh" data-t="${esc(t)}" data-u="${esc(u)}" aria-label="공유">공유</button>`;
+  box.addEventListener('click', (e) => { const b = e.target.closest('.dv-sh'); if (b) { e.stopPropagation(); share(b.dataset.t, b.dataset.u); } });
+  const ex = (on) => { sheet.dataset.ex = on ? '1' : '0'; if (!on) sheet.scrollTop = 0; window.__inv && __inv(); };
   root.querySelector('.dv-grab').onclick = () => ex(sheet.dataset.ex !== '1');
   const L0 = () => { cur = null; seq++; gF.clearLayers(); setH(0); dim(null);
     if (box.clientWidth) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
     const tot = C.reduce((s, c) => s + (c.total || 0), 0);
-    body.innerHTML = `<p class="dv-k">전국 85개 시 · 최근 계약으로 쓴 돈</p><p class="dv-v">${krw(tot)}</p><p class="dv-l">지역을 검색하거나 원을 누르세요</p>`; ex(false); };
+    body.innerHTML = `<p class="dv-k">전국 85개 시 · 최근 계약으로 쓴 돈</p><p class="dv-v">${krw(tot)}</p><p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`; ex(false); };
   const multi = (slugs) => { setH(1); body.innerHTML = '<p class="dv-k">여러 시가 겹쳐 있어요. 하나를 고르세요</p><div class="pickrow">' + slugs.map((s) => `<button type="button" class="chip" data-s="${s}">${esc((BY[s] || {}).name || s)}</button>`).join('') + '</div>';
     body.querySelectorAll('button[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); };
   const sib = (slug, d) => { const me = BY[slug]; let g = C.filter((c) => c.province === me.province); if (g.length < 2) g = C; const i = g.findIndex((c) => c.slug === slug); return g[(i + d + g.length) % g.length].slug; };
+  const top3 = (f) => { if (!f) return ''; const m = {}; for (const x of f.flows || []) for (const v of x.vendors || []) { const o = m[v.id] || (m[v.id] = {id: v.id, name: v.name, amount: 0}); o.amount += v.amount; }
+    const t = Object.values(m).sort((a, b) => b.amount - a.amount).slice(0, 3);
+    return t.length ? `<p class="dv-k">많이 받은 업체 3곳</p><ol class="dv-top">${t.map((v) => `<li><a href="?c=${cur}&v=${v.id}#map" data-v="${v.id}">${esc(v.name)}</a><b>${krw(v.amount)}</b></li>`).join('')}</ol>` : ''; };
   const L1 = async (slug, gu) => {
     const c = BY[slug], f = fl.cities[slug]; if (!c) return L0();
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
     cur = slug; setH(1); dim(slug);
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
     body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)}</p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
-      <p class="dv-l">${c.total ? (out != null ? `<b class="dv-out">외지 ${out}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'} <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
-      <div class="dv-more"><p class="dv-k">데이터상 이상 징후</p><div class="dv-cards"><p class="small skel">불러오는 중…</p></div>
+      <p class="dv-l">최근 ${idx.days || 90}일 · ${c.total ? (out != null ? `<b class="dv-out">외지 ${out}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'} ${shb(c.name + ' 계약 돈', 'c/' + slug + '.html')} <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
+      <div class="dv-more">${top3(f)}<p class="dv-k">데이터상 이상 징후</p><div class="dv-cards"><p class="small skel">불러오는 중…</p></div>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
     ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
     body.querySelectorAll('.dv-nav').forEach((b) => (b.onclick = () => go({c: sib(slug, +b.dataset.d)}, true)));
@@ -126,7 +155,7 @@
     try { const [v, d] = await Promise.all([get('data/vendor/' + vid + '.json'), get('data/city/' + slug + '.json')]);
       const a = (d.alerts || []).find((x) => x.key === akey);
       const rows = (v.rows || []).slice(0, 8);
-      body.innerHTML = `<div class="dv-vh"><button type="button" class="dv-back" aria-label="${esc(BY[slug].name)}로 돌아가기">‹</button><p class="dv-name">${esc(v.name)}</p><span></span></div><p class="dv-v" style="text-align:center">${krw(v.total)}</p>
+      body.innerHTML = `<div class="dv-vh"><button type="button" class="dv-back" aria-label="${esc(BY[slug].name)}로 돌아가기">‹</button><p class="dv-name">${esc(v.name)}</p>${shb(v.name + ' 계약', 'vendor.html?v=' + vid)}</div><p class="dv-v" style="text-align:center">${krw(v.total)}</p>
         <p class="dv-l">${esc((v.region || '소재지 확인 중').split(' ').slice(-1)[0])} · <button type="button" class="dv-chip">계약 ${v.count}건</button></p>
         <div class="dv-more">${a ? `<div class="dv-card on"><b>${esc(a.title)}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}</span></div>` : ''}
         <div class="dv-rows">${rows.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(r.date)} · ${esc((window.maskT || ((x) => x))(r.title))}${r.jshare ? ` <i class="jvb">공동도급 ${r.jshare}%</i>` : ''}</span><b>${krw(r.amount)} 원문 ›</b></a>`).join('')}</div>
@@ -137,10 +166,10 @@
   };
   const render = () => { const q = new URLSearchParams(location.search); const c = q.get('c'), v = q.get('v');
     if (c && BY[c] && v && /^[0-9a-z]+$/.test(v)) L2(c, v, q.get('a')); else if (c && BY[c]) L1(c, q.get('gu')); else L0(); };
-  const go = (st, replace) => { const q = new URLSearchParams(); if (st.c) q.set('c', st.c); if (st.gu) q.set('gu', st.gu); if (st.v) q.set('v', st.v); if (st.a) q.set('a', st.a);
+  const go = (st, replace) => { const pk0 = root.querySelector('.dv-pick'); if (pk0 && !st._pick) pk0.remove(); const q = new URLSearchParams(); if (st.c) q.set('c', st.c); if (st.gu) q.set('gu', st.gu); if (st.v) q.set('v', st.v); if (st.a) q.set('a', st.a);
     const u = location.pathname + (q.toString() ? '?' + q : '') + '#map'; history[replace ? 'replaceState' : 'pushState']({dv: 1}, '', u); render();
     sheet.scrollTop = 0; body.classList.remove('dv-in'); void body.offsetWidth; body.classList.add('dv-in'); };
-  addEventListener('popstate', render);
+  addEventListener('popstate', render); window.__dvGo = go;
   // 시트: 아래로 끌면 한 층 위로, 좌우로 밀면 지역 이동
   let sy = null, sx = 0;
   sheet.addEventListener('touchstart', (e) => { if (sheet.scrollTop > 0) { sy = null; return; } sy = e.touches[0].clientY; sx = e.touches[0].clientX; }, {passive: true});
@@ -156,7 +185,7 @@
     const pk = !RM && !location.search && !sessionStorage.getItem('dvPick') && C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk)
       .sort((a, b) => (RK[b.top_alert.kind] || 0) - (RK[a.top_alert.kind] || 0) || (b.top_alert.amount || 0) - (a.top_alert.amount || 0))[0];
     if (pk) { sessionStorage.setItem('dvPick', '1'); const A = pk.top_alert;
-      setTimeout(() => { go({c: pk.slug}, true);
+      setTimeout(() => { go({c: pk.slug, _pick: 1}, true);
         const d = document.createElement('div'); d.className = 'dv-pick';
         d.innerHTML = `<p class="dv-pk-h">이번 주 눈에 띄는 데이터상 이상 징후</p><p class="dv-pk-a">${krw(A.amount)} · ${esc(pk.name)}</p><p class="dv-pk-r">${esc(A.title)}</p>
           <div class="dv-pk-b"><a href="https://www.g2b.go.kr" target="_blank" rel="noopener">나라장터 원문</a><button type="button" data-sh>공유</button><button type="button" data-x>전국 보기</button></div>

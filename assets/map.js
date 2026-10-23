@@ -12,6 +12,12 @@ function satView(box, geo, cities, onPick) {
   box.classList.add('sat');
   const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 12, zoomSnap: 0.25, tap: true,
     maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false});
+  { // 크기가 바뀌거나 다시 보일 때 타일이 깨지지 않게
+    let t = 0; const inv = () => { clearTimeout(t); t = setTimeout(() => map.invalidateSize({pan: false}), 60); };
+    if (window.ResizeObserver) new ResizeObserver(inv).observe(box);
+    addEventListener('resize', inv); addEventListener('scroll', inv, {passive: true}); addEventListener('hashchange', inv); addEventListener('pageshow', inv);
+    document.addEventListener('visibilitychange', () => !document.hidden && inv()); window.__inv2 = inv; }
+
   if (!matchMedia('(pointer: coarse)').matches) L.control.zoom({position: 'topright'}).addTo(map);
   // 페이지 스크롤을 빼앗지 않도록: 터치 기기에서는 지도를 한 번 눌러야 움직임
   if (matchMedia('(pointer: coarse)').matches) {

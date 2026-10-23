@@ -8,5 +8,5 @@ const s=document.createElement('style');s.textContent=`.tabbar{position:fixed;le
 .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font:600 11px var(--sans);color:#6b7785;text-decoration:none;padding:4px 0;position:relative}
 .tabbar a.on{color:#ffb020}.tabbar a.on::before{content:"";position:absolute;top:-7px;left:30%;right:30%;height:2px;background:#ffb020;border-radius:2px}
 body.has-tabbar{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
-@media(min-width:900px){.tabbar{max-width:420px;margin:0 auto;bottom:12px;border:1px solid #1f2933;border-radius:16px;padding-bottom:6px}}`;document.head.appendChild(s);
+@media(min-width:900px){.tabbar{padding-left:calc(50% - 280px);padding-right:calc(50% - 280px)}}`;document.head.appendChild(s);
 addEventListener('hashchange',()=>n.querySelectorAll('a').forEach(a=>a.classList.toggle('on',act(a.dataset.k))));})();

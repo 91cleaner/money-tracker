@@ -9,8 +9,8 @@ document.body.classList.add('tabbed');
 const show=()=>{const h=location.hash.slice(1);let t=secs.find(s=>s.id===h);
 if(!t&&h){const el=document.getElementById(h);t=el&&secs.find(s=>s.contains(el));}
 t=t||secs[0];secs.forEach(s=>s.classList.toggle('tab-off',s!==t));
-nav.querySelectorAll('a').forEach(a=>{const on=a.getAttribute('href')==='#'+t.id;a.classList.toggle('on',on);if(on&&a.scrollIntoView)a.scrollIntoView({block:'nearest',inline:'center'});});
+nav.querySelectorAll('a').forEach(a=>{const on=a.getAttribute('href')==='#'+t.id;a.classList.toggle('on',on);if(on)nav.scrollLeft=a.offsetLeft-(nav.clientWidth-a.offsetWidth)/2;});
 setTimeout(()=>dispatchEvent(new Event('resize')),30);return t;};
-let ly=scrollY;addEventListener('scroll',()=>{const y=scrollY;if(innerWidth<1100)nav.classList.toggle('hid',y>ly+4&&y>300);if(y<ly-4||y<300)nav.classList.remove('hid');ly=y;},{passive:true});
+let ly=scrollY;addEventListener('scroll',()=>{const y=scrollY;nav.classList.toggle('hid',y>ly+4&&y>300);if(y<ly-4||y<300)nav.classList.remove('hid');ly=y;},{passive:true});
 show();if(location.hash){history.scrollRestoration='manual';const y0=()=>scrollTo(0,0);y0();addEventListener('load',y0);}addEventListener('hashchange',()=>{const t=show();const y=nav.getBoundingClientRect().top+scrollY-60;if(scrollY>y)scrollTo(0,y);});
 })();

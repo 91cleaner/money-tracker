@@ -502,7 +502,7 @@ async function cityPage() {
   } else $('#cats').remove();
   render();
   if (window.moneyMap && $('#map')) moneyMap($('#map'), {fixed: slug, rows: 5}).catch(() => $('#map').remove());
-  if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
+  if (location.hash && location.hash !== '#map') { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
