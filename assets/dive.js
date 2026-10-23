@@ -162,12 +162,22 @@
   window.__dvCat = (k) => { CAT = k || '전체'; const mx = Math.max(1, ...cities.map((c) => TOT(c.slug)));
     dots.forEach((m, s) => { const v = TOT(s); m.setRadius(v ? 4 + 13 * Math.sqrt(v / mx) : 3); m.setStyle({fillOpacity: v ? 0.5 : 0.1, opacity: v ? 1 : 0.3}); });
     homeLabels(); if (!cur) L0(true); setTimeout(declutter, 60); };
+  if (window.__mtCat && window.__mtCat !== '전체') setTimeout(() => window.__dvCat(window.__mtCat), 0);
+  // 분야 TOP 5 시 카드 (공식 데이터: by_cat·n_cat, 행사대행은 시 계약 행에서 계산)
+  const top5 = () => { const L_ = C.map((c) => ({c, v: TOT(c.slug), n: (c.n_cat || {})[CAT] || 0})).filter((x) => x.v).sort((a, b) => b.v - a.v).slice(0, 5);
+    if (!L_.length) return ''; const fest = CAT === '축제 공연·섭외';
+    const k = CAT; setTimeout(() => fest && L_.forEach(({c}) => get('data/city/' + c.slug + '.json').then((d) => { if (CAT !== k) return;
+      const ag = d.rows.filter((r) => r.cat === k && r.ftag === '행사대행').reduce((s, r) => s + r.amount, 0), tot = d.rows.filter((r) => r.cat === k).reduce((s, r) => s + r.amount, 0);
+      const e = body.querySelector(`.t5-ag[data-s="${c.slug}"]`); if (e && ag) e.textContent = `행사대행 포함 ${krw(ag)}${tot ? ' (' + Math.round(ag / tot * 100) + '%)' : ''}`; }).catch(() => {})), 0);
+    return `<div class="t5"><div class="t5-h"><b>${esc(CAT)} TOP 5 시</b>${shb(CAT + ' 계약 TOP 5 시 · 우리 시 돈 추적기', './?cat=' + encodeURIComponent(CAT))}</div><ol>${L_.map(({c, v, n}, i) =>
+      `<li><button type="button" data-s="${c.slug}"><span class="t5-r">${i + 1}</span><span class="t5-m"><b>${esc(c.short || c.name)}</b><small>${n}건 · 건당 평균 ${krw(n ? v / n : v)}</small>${fest ? `<small class="t5-ag" data-s="${c.slug}"></small>` : ''}</span><em>${krw(v)}</em></button></li>`).join('')}</ol>
+      ${fest ? '<p class="small t5-n">공연 용역 금액에는 무대·음향·연출이 포함되며 개인 출연료가 아님 · 행사대행은 축제 전체 운영 계약</p>' : ''}<p class="dv-src">출처 조달청 나라장터</p></div>`; };
   const L0 = (keep) => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
     if (box.clientWidth && keep !== true) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
     const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
-    body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · 최근 계약' : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p><p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
+    body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · 최근 계약' : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
       + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 데이터상 이상 징후</p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc(c.top_alert.title.replace(/^데이터상 이상 징후:\s*/, ''))}</b><span>${esc(c.top_alert.detail || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
-    const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); };
+    body.querySelectorAll('.t5 [data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); };
   const W = (() => { const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10); return C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk).sort((a, b) => (b.top_alert.amount || 0) - (a.top_alert.amount || 0)).slice(0, 9); })();
   const multi = (slugs) => { setH(1); body.innerHTML = '<p class="dv-k">여러 시가 겹쳐 있어요. 하나를 고르세요</p><div class="pickrow">' + slugs.map((s) => `<button type="button" class="chip" data-s="${s}">${esc((BY[s] || {}).name || s)}</button>`).join('') + '</div>';
     body.querySelectorAll('button[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); };

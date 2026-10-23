@@ -209,7 +209,7 @@ async function homePage() {
     cities.sort((a, b) => A(b) - A(a) || T(b) - T(a));
     draw($('#q').value.trim()); alertsDraw();
     if (mapCtl) mapCtl.setCat(cat);
-    window.__dvCat && window.__dvCat(cat);
+    window.__mtCat = cat; window.__dvCat && window.__dvCat(cat);
   };
   if (catList.length) chips($('#hero-chips'), ['전체', ...catList], setCat); else $('#hero-chips').remove();
 
@@ -234,7 +234,8 @@ async function homePage() {
     const top = cities.filter((c) => TA(c)).slice(0, 6).map((c) => ({...TA(c), slug: c.slug, city: c.short, detail: c.short + ' · ' + TA(c).detail}));
     alertList($('#nat-alerts-list'), top, {link: true});
   };
-  setCat('전체');
+  { const qc = new URLSearchParams(location.search).get('cat'); const ok = qc && catList.includes(qc);
+    setCat(ok ? qc : '전체'); if (ok) document.querySelectorAll('#hero-chips button').forEach((b) => { const on = b.textContent.trim() === qc; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); }
   if (window.moneyMap && $('#map')) whenNear($('#map'), () => moneyMap($('#map')).then((m) => { mapCtl = m; if (cat !== '전체') m.setCat(cat); }).catch(() => $('#map').remove()));
   funHome(idx, () => cat);
   if ($('#rank-list')) getJSON('data/rank.json').then((d) => rankList($('#rank-list'), d, {limit: 10, home: true})).catch(() => $('#ranksec').remove());
