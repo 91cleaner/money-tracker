@@ -11,5 +11,5 @@ if(!t&&h){const el=document.getElementById(h);t=el&&secs.find(s=>s.contains(el))
 t=t||secs[0];secs.forEach(s=>s.classList.toggle('tab-off',s!==t));
 nav.querySelectorAll('a').forEach(a=>{const on=a.getAttribute('href')==='#'+t.id;a.classList.toggle('on',on);if(on&&a.scrollIntoView)a.scrollIntoView({block:'nearest',inline:'center'});});
 setTimeout(()=>dispatchEvent(new Event('resize')),30);return t;};
-show();addEventListener('hashchange',()=>{const t=show();const y=nav.getBoundingClientRect().top+scrollY-60;if(scrollY>y)scrollTo(0,y);});
+show();if(location.hash){history.scrollRestoration='manual';const y0=()=>scrollTo(0,0);y0();addEventListener('load',y0);}addEventListener('hashchange',()=>{const t=show();const y=nav.getBoundingClientRect().top+scrollY-60;if(scrollY>y)scrollTo(0,y);});
 })();
