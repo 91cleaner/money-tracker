@@ -28,6 +28,12 @@
     <p class="wage" id="wage"></p>
     <p class="meta"><span id="nat-count">—</span> · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
   </header>
+  <section class="addrsec">
+    <form id="addr" class="searchbox addrbox" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" list="addr-dl" placeholder="우리 동네 주소 입력 (예: 서울 강서구 화곡동)" aria-label="우리 동네 주소 입력" enterkeyhint="search"></form>
+    <datalist id="addr-dl"></datalist>
+    <p class="small addrnote">주소는 저장되지 않아요 · 이 휴대폰 안에서만 찾고 어디에도 보내지 않아요</p>
+    <div id="addr-out"></div>
+  </section>
 
   <section class="sec" id="find">
     <h2>우리 시 찾기</h2>
@@ -110,6 +116,7 @@
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/map.js"></script>
 <script src="assets/bid.js" defer></script>
+<script src="assets/addr.js"></script>
 <script src="assets/tabs.js"></script>
 <script src="assets/nav.js"></script>
 <script src="assets/fx.js"></script>
