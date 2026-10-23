@@ -24,7 +24,7 @@ KST = timezone(timedelta(hours=9))
 KEY = os.environ.get("DATA_GO_KR_KEY", "").strip()
 BACKFILL_DAYS = int(os.environ.get("BACKFILL_DAYS", "30"))
 RECENT_DAYS = int(os.environ.get("RECENT_DAYS", "3"))
-KEEP_DAYS = 90
+KEEP_DAYS = int(os.environ.get("KEEP_DAYS", "125"))  # 2026-07-01부터 담도록(기간 슬라이더 60·90·전체)
 MAX_VENDOR_LOOKUPS = int(os.environ.get("MAX_VENDOR_LOOKUPS", "300"))
 LOOKUP_TIMEOUT = int(os.environ.get("LOOKUP_TIMEOUT", "15"))  # 업체 조회 1건당 대기 시간(초)
 LOOKUP_BUDGET = int(os.environ.get("LOOKUP_BUDGET", "1200"))  # 업체 조회 전체 시간 상한(초), 40분 제한 안에 끝내기 위함
@@ -191,6 +191,7 @@ def items_of(resp):
 
 T0 = time.monotonic()
 FETCH_BUDGET = int(os.environ.get("FETCH_BUDGET", "900"))  # 계약 목록 수집 시간 상한(초)
+PAGE_TRIES = int(os.environ.get("PAGE_TRIES", "2"))
 FAILS = []  # 건너뛴 요청의 오류 메시지
 
 
@@ -208,9 +209,9 @@ def fetch_contracts(start, end):
             print(f"::warning::{start:%Y-%m-%d}~{end:%Y-%m-%d} {page}쪽 건너뜀: {e}", flush=True)
             FAILS.append(str(e))
             fails += 1
-            if isinstance(e, ApiError) or page > 200 or fails >= 2:  # 연속 실패면 서버 문제, 이 주는 다음 실행에서
+            if isinstance(e, ApiError) or page > 200 or fails >= PAGE_TRIES:  # 같은 쪽을 여러 번 실패하면 서버 문제, 이 기간은 다음 실행에서
                 return out  # 인증 오류면 같은 요청을 반복해도 소용없음
-            page += 1
+            time.sleep(min(90, 15 * fails))  # 시간 초과는 잠시 쉬고 같은 쪽을 다시(건너뛰면 그 쪽 계약이 빠짐)
             continue
         fails = 0
         items, total = items_of(resp)
@@ -536,7 +537,8 @@ def main():
     gaps = [] if rebuild else gap_days(now)
     if os.environ.get("REFILL_FROM"):  # 수동: 이 날짜부터 오늘까지 하루씩 다시 받음(빠진 날 채우기·새 필드 채우기)
         d0 = datetime.strptime(os.environ["REFILL_FROM"], "%Y-%m-%d").date()
-        gaps = [d0 + timedelta(days=k) for k in range((now.date() - d0).days + 1)]
+        d1 = datetime.strptime(os.environ["REFILL_TO"], "%Y-%m-%d").date() if os.environ.get("REFILL_TO") else now.date()  # 나눠 받기
+        gaps = [d0 + timedelta(days=k) for k in range((d1 - d0).days + 1)]
     spans = [(g, g) for g in gaps] + [x for x in spans if not gaps or x[1] > max(gaps)]
     if gaps:
         print(f"빠진 날 다시 받기: {len(gaps)}일 ({gaps[0]}~{gaps[-1]})", flush=True)

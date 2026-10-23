@@ -9,6 +9,10 @@ on:
         description: "이 날짜(YYYY-MM-DD)부터 오늘까지 하루씩 다시 받기"
         required: false
         default: ""
+      refill_to:
+        description: "(선택) 이 날짜까지만 받기 — 오래된 기간을 나눠 채울 때"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -34,6 +38,8 @@ jobs:
         env:
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
           REFILL_FROM: ${{ github.event.inputs.refill_from }}
+          REFILL_TO: ${{ github.event.inputs.refill_to }}
+          PAGE_TRIES: ${{ github.event.inputs.refill_from && '5' || '2' }}
           FETCH_BUDGET: ${{ github.event.inputs.refill_from && '8400' || '900' }}
         run: python collector/collect.py
       - name: 지방재정365 섹션도 같은 규칙으로 다시 계산(검증이 서로 막지 않게)
