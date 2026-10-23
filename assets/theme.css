@@ -392,4 +392,4 @@ small.dv-tag,.ttl small.dv-tag{display:inline-block!important;width:auto!importa
 #title,.vname,.v-name,.cc-jv a,.cc-jv span,.dv-tn,.rank a,.rank b{overflow-wrap:anywhere;word-break:keep-all}
 footer .unof{font-size:13px}
 #v-past .cc-jv{margin-bottom:6px;padding-bottom:4px}
-#v-past .cc+.cc{margin-top:18px}
+#v-past .cc+.cc{margin-top:12px;padding-top:12px;border-top:1px solid #26313b}

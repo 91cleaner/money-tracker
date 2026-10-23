@@ -347,6 +347,13 @@ function contractExtra(r) {
   return out;
 }
 
+// 업체 이름: 한 단어가 화면보다 길면 글자를 줄여 한 단어가 한 줄에 들어가게(최소 18px, 그래도 길면 그때만 줄바꿈)
+function fitTitle(h) {
+  if (!h) return; const go = () => { h.style.fontSize = ''; h.style.overflowWrap = 'normal';
+    let fs = parseFloat(getComputedStyle(h).fontSize); while (h.scrollWidth > h.clientWidth + 1 && fs > 18) { fs -= 1; h.style.fontSize = fs + 'px'; }
+    h.style.overflowWrap = ''; };
+  go(); if (!h._fit) { h._fit = 1; addEventListener('resize', go); document.fonts && document.fonts.ready.then(go); } }
+
 async function pastHistory(id) {
   let p = null, m = null;
   try { m = await getJSON('data/past/_meta.json'); } catch (e) { return; }
@@ -385,7 +392,7 @@ async function vendorPage() {
     $('#title').textContent = '없는 업체입니다'; $('#vregion').replaceChildren('주소가 바뀌었거나 수집 기간에 계약이 없어요. ', Object.assign(el('a', '', '순위 보기 ›'), {href: 'rank.html'})); document.querySelectorAll('.sec, .stats, #stabs').forEach((x) => x.remove()); return;
   }
   document.title = d.name + ' · 우리 시 돈 추적기';
-  $('#title').textContent = d.name;
+  $('#title').textContent = d.name; fitTitle($('#title'));
   $('#vregion').textContent = (d.region || '소재지 확인 중') + (d.name === '개인사업자' ? ' · 개인 이름일 수 있어 가렸습니다' : '');
   $('#period').textContent = `수집된 기간 기준: ${d.period.first} ~ ${d.period.last}, ${d.period.cities}개 시`;
   $('#k-total').textContent = krw(d.total); $('#k-count').textContent = d.count.toLocaleString('ko-KR') + '건';
