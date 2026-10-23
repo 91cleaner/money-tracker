@@ -12,19 +12,19 @@
 .trail{display:flex;align-items:center;gap:6px;font-size:13px;margin:8px 0;flex-wrap:wrap}.trail i{flex:1;min-width:40px;height:3px;background:repeating-linear-gradient(90deg,#16a34a 0 8px,transparent 8px 14px);background-size:28px 3px;animation:flow 1s linear infinite}
 @keyframes flow{to{background-position:28px 0}}
 .spot{border-radius:16px;padding:14px;background:linear-gradient(135deg,#fff7d6,#ffe1e1);color:#111;margin:0 0 14px}.spot .eyebrow{color:#a15c00}
-.src{font-size:11px;opacity:.65;margin-top:8px;line-height:1.5}.src a{color:inherit}
+.src{font-size:12px;opacity:.65;margin-top:8px;line-height:1.5}.src a{color:inherit}
 .bar{height:8px;border-radius:4px;background:#8883;overflow:hidden;margin-top:4px}.bar b{display:block;height:100%;background:#e11d48}
 .row{padding:8px 0;border-bottom:1px solid #8882;font-size:14px}
 .rcp{border:1px dashed #8886;border-radius:12px;padding:14px;margin:10px 0;font-variant-numeric:tabular-nums}
 .rcp .l{display:flex;justify-content:space-between;font-size:14px;margin:3px 0}.rcp .save{color:#16a34a;font-weight:800;font-size:20px}
 .est{margin-top:10px;padding:10px;border-radius:10px;background:#8881;font-size:13px}.est summary{cursor:pointer;font-weight:700}
-.tag{display:inline-block;font-size:11px;padding:2px 6px;border-radius:4px;background:#f59e0b22;color:#b45309;font-weight:700}
+.tag{display:inline-block;font-size:12px;padding:2px 6px;border-radius:4px;background:#f59e0b22;color:#b45309;font-weight:700}
 .pend{border:1px dashed #8886;border-radius:12px;padding:14px;font-size:14px;line-height:1.6}
 .sec h2{font-size:20px;margin:22px 0 6px}
 .h3{font-size:16px;margin:18px 0 4px}
 .mini{display:flex;gap:3px;align-items:flex-end;height:28px;margin-top:6px}.mini i{flex:1;background:#6366f1;border-radius:2px 2px 0 0;min-height:2px}
 .bidinfo{margin-top:8px;padding:8px 10px;border:1px dashed #94a3b8;border-radius:10px;background:#f8fafc;font-size:13px;line-height:1.6;display:block}
-.bidinfo span{display:inline-block;margin-right:8px}.bidinfo a{font-weight:600;color:#4f46e5}.bidinfo small{display:block;color:#64748b;font-size:11px}
+.bidinfo span{display:inline-block;margin-right:8px}.bidinfo a{font-weight:600;color:#4f46e5}.bidinfo small{display:block;color:#64748b;font-size:12px}
 .tab-off{display:none!important}
 .stabs{margin:0 -16px;padding:8px 16px 10px;top:48px;border-bottom:1px solid #8882;-webkit-overflow-scrolling:touch}
 .stabs::-webkit-scrollbar{display:none}

@@ -335,5 +335,5 @@ table.rcpt tbody td:first-child { color: var(--muted); font-size: 13px; }
 .tl li { display: grid; gap: 1px; font-size: 13px; position: relative; }
 .tl li::before { content: ''; position: absolute; left: -19px; top: 5px; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
 .tl b { font-size: 13px; } .tl small { color: var(--muted); }
-.cc-src { font-size: 11px; color: var(--muted); }
+.cc-src { font-size: 12px; color: var(--muted); }
 .ttl small { display: block; margin-top: 2px; }
