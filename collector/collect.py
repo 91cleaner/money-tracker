@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 sys.path.insert(0, os.path.dirname(__file__))
 from cities import CITIES, city_of, legacy
 import share
-from privacy import mask, loc
+from privacy import mask, loc, kor
 import flows
 import jv
 import vendors_agg
@@ -287,7 +287,12 @@ def alerts_for(rows, explanations):
         if h and h[0]["amount"] > 0:
             o = h[0]["amount"]; up = r["amount"] - o
             if up >= 10_000_000 and up / o >= 0.1:
-                out.append({"key": "inc-" + cno(r), "kind": "increase", "title": f"데이터상 이상 징후: 계약 금액 증가 ({'1차' if r.get('orig') else '확인된 첫 ' + str(int(h[0]['ord'])) + '차'} 대비 +{up / o * 100:.0f}%)",
+                vs = [v for v in (r.get("vers") or []) if v.get("tot")]
+                last = ""
+                if len(vs) >= 2 and int(vs[-1]["ord"]) - int(vs[-2]["ord"]) == 1:
+                    dd = vs[-1]["tot"] - vs[-2]["tot"]
+                    last = f" · 직전 {int(vs[-2]['ord'])}차 대비 {'+' if dd > 0 else '−' if dd < 0 else '±'}{man(abs(dd))}"
+                out.append({"key": "inc-" + cno(r), "kind": "increase", "title": f"데이터상 이상 징후: 계약 금액 증가 ({'1차' if r.get('orig') else '확인된 첫 ' + str(int(h[0]['ord'])) + '차'} 대비 +{up / o * 100:.0f}%{last})",
                             "detail": f"{r['date']} · {r['inst']} · {r['title']} · {r['vendor']}", "amount": r["amount"], "orig": o, "ids": [r["id"]]})
     big = sorted([r for r in rows if r["amount"] >= 100_000_000], key=lambda r: -r["amount"])[:10]
     for r in big:
@@ -330,13 +335,29 @@ def merge_orders(rows):
     return out
 
 
+def man(n):
+    """금액을 '1.2억' / '9,195만' / '0원' 처럼."""
+    if n >= 100_000_000:
+        return f"{n / 1e8:.1f}억".replace(".0억", "억")
+    return f"{round(n / 10000):,}만" if n >= 10000 else f"{n:,}원"
+
+
+def method_label(r):
+    m = r.get("method") or ""
+    # 공고 번호가 붙은 수의계약이면서 소액 수의 한도(2억)를 넘으면 경쟁입찰이 유찰된 뒤 수의로 바뀐 것으로 본다
+    return "유찰 후 수의계약(추정)" if "수의" in m and "유찰" not in m and r.get("ntce") and (r.get("amount") or 0) > 200_000_000 else m
+
+
 def annotate(r, c, vendors):
     """계약정보서비스 결과를 행에 붙임: 차수별 금액(vers), 1차 총액(orig), 장기계속 구분(lt), 공동도급 참여 업체(jvm)."""
     for k in ("vers", "orig", "lt", "jvm"):
         r.pop(k, None)
     if not c or not c.get("v"):
         return
-    vs = c["v"]
+    vs = list(c["v"])
+    o = r.get("ord")
+    if o and o not in {v["ord"] for v in vs}:  # 이력 조회가 아직 못 따라온 최신 차수: 기본 계약 자료의 금액으로 채움
+        vs = sorted(vs + [{"ord": o, "date": r.get("date"), "tot": r.get("amount"), "this": r.get("this")}], key=lambda v: v["ord"])
     r["vers"] = [{k: v.get(k) for k in ("ord", "date", "tot", "this")} for v in vs]
     if vs[0]["ord"] == "01" and vs[0].get("tot"):
         r["orig"] = vs[0]["tot"]
@@ -425,9 +446,11 @@ def main():
         b = pick(it, "bizno")
         row = {"id": str(pick(it, "id") or hid(json.dumps(it, sort_keys=True, ensure_ascii=False))), "date": d, "inst": pick(it, "inst"),
                "title": loc(pick(it, "title") or ""), "kind": pick(it, "kind"), "method": pick(it, "method"), "amount": amt,
-               "vendor": pick(it, "vendor") or "", "url": pick(it, "url"), "bh": hid(str(b).replace("-", "")) if b else None,
+               "vendor": kor(pick(it, "vendor") or ""), "url": pick(it, "url"), "bh": hid(str(b).replace("-", "")) if b else None,
                "no": it.get("cntrctNo") or None, "ord": it.get("cntrctOrd") or None, "this": to_int(it.get("cntrctAmt")),
-               "jv": (it.get("cmmnCntrctYn") == "Y") if it.get("cmmnCntrctYn") in ("Y", "N") else None}
+               "jv": (it.get("cmmnCntrctYn") == "Y") if it.get("cmmnCntrctYn") in ("Y", "N") else None,
+               "ntce": next((str(it[k]) for k in ("ntceNo", "bidNtceNo", "untyNtceNo") if it.get(k)), None)}  # 입찰공고 번호(있으면 공고를 거친 계약)
+        row["method"] = method_label(row)
         if b:
             biz_by_hash[row["bh"]] = str(b).replace("-", "")
         if b:
@@ -479,7 +502,7 @@ def main():
             if not r.get("ord") and re.fullmatch(r"[A-Z0-9]{13}\d{2}", r["id"]):
                 r["ord"] = r["id"][-2:]  # 통합계약번호 끝 2자리 = 차수
             r["title"] = loc(r.get("title"))  # 지번 가리기 (예전에 저장된 행도)
-            r["vendor"] = mask(r.get("vendor"))  # 사람 이름처럼 보이면 '개인사업자'
+            r["vendor"] = kor(mask(r.get("vendor")))  # 사람 이름처럼 보이면 '개인사업자'
             r["cat"] = category(r.get("title"), r.get("kind"))
             if r.get("bh"):
                 r["vregion"] = legacy((vendors.get(r["bh"]) or {}).get("region"))

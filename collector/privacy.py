@@ -34,3 +34,18 @@ def loc(s):
     s = re.sub(r"(^|[\s(])(산\s?)?\d{1,5}-\d{1,5}(?=[\s,()·]|$)", r"\1", s)
     s = re.sub(r"\s{2,}", " ", s)
     return re.sub(r"\s+([,)\]])", r"\1", s).strip()
+
+
+try:
+    import hanja as _hj
+except ImportError:  # 라이브러리가 없으면 한자 이름을 그대로 둔다
+    _hj = None
+_CJK = re.compile(r"[\u4e00-\u9fff\uf900-\ufaff]")
+
+
+def kor(name):
+    """한자 업체명에 한글 읽기를 붙인다: '九一綜合建設' → '九一綜合建設 (구일종합건설)'. 이미 붙어 있으면 그대로."""
+    if not name or _hj is None or not _CJK.search(re.sub(r"\([^)]*\)", "", name)) or re.search(r"\([가-힣\s]+\)\s*$", name):
+        return name
+    k = _hj.translate(name, "substitution")
+    return f"{name} ({k})" if k != name else name

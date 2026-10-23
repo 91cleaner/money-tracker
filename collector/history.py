@@ -6,6 +6,7 @@
 업체목록에서 업체 이름·역할·단독/공동·지분만 쓰고, 대표자 이름과 사업자번호는 버린다(사업자번호는 해시만).
 """
 import hashlib, json, os, time
+from privacy import kor
 
 BASE = "https://apis.data.go.kr/1230000/ao/CntrctInfoService/"
 OP = {"공사": "getCntrctInfoListCnstwkPPSSrch", "용역": "getCntrctInfoListServcPPSSrch", "물품": "getCntrctInfoListThngPPSSrch"}
@@ -35,7 +36,7 @@ def corps(s, mask):
             sh = None
         if b:
             PARTNERS[hid(b)] = b
-        out.append({"name": mask(f[3]), "role": f[1] or None, "joint": f[2] == "공동", "share": sh, "id": hid(b) if b else None})
+        out.append({"name": kor(mask(f[3])), "role": f[1] or None, "joint": f[2] == "공동", "share": sh, "id": hid(b) if b else None})
     return out
 
 
@@ -81,7 +82,9 @@ def run(data, rows, state, get_json, items_of, mask, now, known=None):
         cur = int(r["ord"])
         jvr = r.get("jv") is True  # 기본 계약 자료에 '공동계약 Y' → 금액과 상관없이 업체목록(지분)을 먼저 본다
         want = [f"{i:02d}" for i in range(1, cur + 1)] if cur > 1 else ([r["ord"]] if (r["amount"] >= JV_MIN or jvr) else [])
-        miss = [o for o in want if o not in have and o not in c.get("none", [])]
+        want = sorted(want, key=lambda o: (o != r["ord"], o != "01", o))  # 최신 차수와 1차를 먼저: 예산이 끊겨도 증감이 빠지지 않게
+        # 최신 차수는 기본 계약 자료에 있으니 '없음'으로 기록됐어도(조회 지연) 하루 한 번 다시 본다
+        miss = [o for o in want if o not in have and (o not in c.get("none", []) or (o == r["ord"] and c.get("at") != today))]
         if jvr and not c.get("corps") and r["ord"] not in miss and r["ord"] not in c.get("none", []) and c.get("jvc") != today:
             miss = miss + [r["ord"]]  # 업체목록을 아직 못 받은 공동계약: 최신 차수 한 번 더
         cs = c.get("corps") or []

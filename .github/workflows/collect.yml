@@ -24,7 +24,7 @@ jobs:
       - name: 공유 카드용 한글 글꼴과 Pillow 설치
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
-          pip install -q pillow
+          pip install -q pillow hanja
       - name: 나라장터 계약 수집
         env:
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
