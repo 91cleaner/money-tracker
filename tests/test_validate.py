@@ -150,6 +150,16 @@ class Gate(unittest.TestCase):
         r = daily_q.rnd("mt-daily|2026-10-23")
         self.assertEqual([round(r(), 12) for _ in range(3)], EXPECT_RNG)
 
+    def test_27_local_council(self):
+        self.assertTag(lambda s: s["city"]["a"]["rows"].append({**row("K1", "의정활동 영상 제작"), "inst": "서울특별시 광진구 의회사무국", "atype": "의회"}), "[27 구의회]")
+        import collect
+        metro = {"slug": "seoul", "short": "서울"}
+        self.assertEqual(collect.agency_type("서울특별시 광진구 의회사무국", metro), "자치구")
+        self.assertEqual(collect.agency_type("인천광역시 강화군 의회사무과", metro), "자치군")
+        self.assertEqual(collect.agency_type("대전시 서구의회", metro), "자치구")
+        self.assertEqual(collect.agency_type("서울특별시 의회사무처", metro), "의회")
+        self.assertEqual(collect.agency_type("대구광역시 의회사무처", metro), "의회")
+
     def test_sectors_narrow(self):
         self.assertIsNone(kw.sole_sector("생활폐기물 감량 연구용역"))
         self.assertIsNone(kw.sole_sector("가로등 실시설계 용역"))

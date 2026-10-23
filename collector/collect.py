@@ -108,12 +108,16 @@ _ATYPE = [("산하기관", r"시설(관리)?공단|도시(개발)?공사|관광�
           ("소방", r"소방"), ("대학", r"대학교?$|대학교 "), ("교육", r"교육청|교육지원청|학교"), ("의회", r"의회")]
 
 
+LOCAL_COUNCIL = re.compile(r"(?:^|\s)([가-힣]+?)(구|군)\s*의회")  # '서울특별시 중구 의회사무과', '대전시 서구의회', '인천광역시 강화군 의회사무과'
 EXT_ATYPE = {"자치구", "자치군", "산하기관", "소방", "교육", "대학"}  # 시 합계에서 빼는 기관
 
 
 def agency_type(inst, city):
     """수요기관 종류: 본청 / 자치구 / 산하기관 / 소방 / 교육 / 의회 / 사업소. 광역시 계약은 본청+구청이 섞이므로 같은 범위끼리만 비교."""
     t = inst or ""
+    m = LOCAL_COUNCIL.search(t)
+    if m and city and " " not in city.get("short", " "):
+        return "자치구" if m.group(2) == "구" else "자치군"  # 광역시 안 구·군 의회(별도 자치단체 의회) → 시 합계에서 뺌
     for k, rx in _ATYPE:
         if re.search(rx, t):
             return k

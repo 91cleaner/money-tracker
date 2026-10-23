@@ -280,6 +280,12 @@ def check(root, prev=None):
         ids = [v.get("id") for v in _load(rp).get("vendors", [])]
         if len([i for i in ids if i]) != len({i for i in ids if i}): E("[1 중복] rank.json 같은 업체가 두 번")
 
+    # (27) 광역시 안 구·군 의회 계약이 시 합계(rows)에 섞이면 실패 → ext(자치구·자치군)
+    from collect import LOCAL_COUNCIL
+    for slug, d in cities.items():
+        bad = [r.get("inst") for r in d.get("rows", []) if LOCAL_COUNCIL.search(r.get("inst") or "") and r.get("atype") not in ("자치구", "자치군", "일반구")]
+        if bad: E(f"[27 구의회] {slug} 구·군 의회 계약 {len(bad)}건이 시 합계에 들어감, 예: {bad[:2]}")
+
     # (26) 오늘의 한 문제 고정: 이전에 있던 날짜는 그대로여야 함(지워지거나 숫자·도시가 바뀌면 실패)
     qp = os.path.join(root, "daily_q.json")
     if os.path.exists(qp):
