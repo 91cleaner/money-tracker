@@ -296,7 +296,7 @@ main,body.tabbed main{padding-bottom:calc(84px + env(safe-area-inset-bottom))!im
 small,.src small,.row small,.rcp small,.case small,.est small,sub,sup{font-size:max(12px,.85em)!important}
 /* PC: 지도 아래 = 범례 + 하단 탭바 + 여백, 겹침 없음 */
 @media (min-width:900px){#dive .dv-map{height:calc(100vh - 260px)!important;height:calc(100dvh - 260px)!important;min-height:420px!important}}
-@media (max-width:899px){#dive .dv-map{height:max(240px,calc(100dvh - 328px))!important}#dive{min-height:calc(100dvh - 92px);margin-bottom:24px}}
+@media (max-width:899px){#dive .dv-map{height:max(240px,calc(100dvh - 344px))!important}#dive{min-height:calc(100dvh - 92px);margin-bottom:24px}}
 .fixp{display:inline-block;margin:0 0 8px;padding:4px 10px;border:1px solid rgba(255,176,32,.55);border-radius:999px;background:rgba(255,176,32,.12);color:#ffb020;font:700 12px/1.4 var(--sans,system-ui)}
 .dv-shc{background:#f2f4f7!important;color:#0a0f14!important;border-color:#f2f4f7!important;font-weight:700;font-size:13px}
 .dv-shm{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:16px}
@@ -328,3 +328,4 @@ html{scroll-padding-bottom:72px}
 @media (max-width:899px){#dive .dv-down{display:none!important}}
 .gm-tip{font-weight:800!important}.gm-tip0{color:#5ac8fa!important;border-color:#5ac8fa!important}.gm-tip1{color:#ffb020!important;border-color:#ffb020!important}
 .dv-shm-a{flex-wrap:wrap}.dv-shm-a .dv-shm-xp{background:#0f151b;color:#e8eef5;border-color:#33414e}
+.dv-ez{font-size:12px;font-weight:500;color:#8fa0b3;letter-spacing:0}

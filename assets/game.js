@@ -15,7 +15,7 @@
     if (!pair) { root.innerHTML = '<h2>어디가 더 많게?</h2><p class="sub">문제를 만들 자료가 아직 없어요.</p>'; return; }
     const [a, b] = pair;
     root.innerHTML = `<h2>어디가 더 많게?</h2>
-      <p class="sub">${esc(when())} 계약에 돈을 더 많이 쓴 도시는 어디일까요? <span class="gm-note">(경쟁 없이 맺은 계약까지 모두 더한 돈)</span></p>
+      <p class="sub">${esc(when())} 계약에 돈을 더 많이 쓴 도시는 어디일까요? <span class="gm-note">(한 업체랑만 맺은 계약(경쟁 없이)까지 모두 더한 돈)</span></p>
       <div class="gm-pick">${[a, b].map((c, i) => `<button type="button" class="gm-c gm-c${i}" data-i="${i}"><b>${esc(c.name)}</b><span class="gm-amt">${done ? krw(c.total) : '?'}</span></button>`).join('<span class="gm-vs">또는</span>')}</div>
       <p class="gm-res" aria-live="polite"></p>
       <div class="gm-bar"><span class="gm-st">${streak ? `연속 <b>${streak}</b>개 맞힘 · ` : ''}${best ? `최고 기록 <b>${best}</b>개` : ''}</span><span class="gm-act"></span></div>

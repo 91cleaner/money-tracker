@@ -13,9 +13,9 @@
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/style.css?v=202610241300">
-<link rel="stylesheet" href="assets/sec.css?v=202610241300">
-<link rel="stylesheet" href="assets/theme.css?v=202610241300">
+<link rel="stylesheet" href="assets/style.css?v=202610241400">
+<link rel="stylesheet" href="assets/sec.css?v=202610241400">
+<link rel="stylesheet" href="assets/theme.css?v=202610241400">
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body data-page="home">
@@ -67,7 +67,7 @@
 
   <section class="sec home-alerts">
     <h2>이번 주 눈에 띄는 패턴</h2>
-    <p class="sub">숫자에서 자동으로 찾은 <b>데이터상 이상 징후</b>입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있습니다. <span id="nat-alerts-n"></span></p>
+    <p class="sub">숫자에서 자동으로 찾은 <b>데이터상 이상 징후</b>(눈여겨볼 만한 점)입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있습니다. <span id="nat-alerts-n"></span></p>
     <div class="alerts" id="nat-alerts-list"></div>
   </section>
 
@@ -80,7 +80,7 @@
       <span style="display:block;margin-top:10px;font-weight:700">추적 파일 열기 ›</span>
     </a>
     <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding:2px 0 6px"><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#sole">경쟁 없는 계약</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#cost">비용 비교</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#fest">축제·행사</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#subsidy">보조금</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#pay">공공기관 보수</a></div>
-    <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent='최근 30일 경쟁 없이 맺은 계약 ₩'+Math.round(d.sum/1e8).toLocaleString()+'억';document.getElementById('tt-line').textContent='> '+d.period[0]+'~'+d.period[1]+' · 85개 시 · '+d.n.toLocaleString()+'건 · 데이터상 이상 징후 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
+    <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent='최근 30일 한 업체랑만 맺은 계약(경쟁 없이) ₩'+Math.round(d.sum/1e8).toLocaleString()+'억';document.getElementById('tt-line').textContent='> '+d.period[0]+'~'+d.period[1]+' · 85개 시 · '+d.n.toLocaleString()+'건 · 데이터상 이상 징후 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
   </section>
   <section class="sec" id="ranksec">
     <h2>전국 업체 순위</h2>
@@ -114,17 +114,17 @@
     <span>만든 사람: @청소부</span>
   </footer>
 </main>
-<script src="assets/period.js?v=202610241300"></script>
-<script src="assets/mask.js?v=202610241300"></script>
-<script src="assets/region.js?v=202610241300"></script>
-<script src="assets/app.js?v=202610241300"></script>
+<script src="assets/period.js?v=202610241400"></script>
+<script src="assets/mask.js?v=202610241400"></script>
+<script src="assets/region.js?v=202610241400"></script>
+<script src="assets/app.js?v=202610241400"></script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/dive.js?v=202610241300"></script>
-<script src="assets/game.js?v=202610241300"></script>
-<script src="assets/bid.js?v=202610241300" defer></script>
-<script src="assets/addr.js?v=202610241300"></script>
-<script src="assets/tabs.js?v=202610241300"></script>
-<script src="assets/nav.js?v=202610241300"></script>
-<script src="assets/fx.js?v=202610241300"></script>
+<script src="assets/dive.js?v=202610241400"></script>
+<script src="assets/game.js?v=202610241400"></script>
+<script src="assets/bid.js?v=202610241400" defer></script>
+<script src="assets/addr.js?v=202610241400"></script>
+<script src="assets/tabs.js?v=202610241400"></script>
+<script src="assets/nav.js?v=202610241400"></script>
+<script src="assets/fx.js?v=202610241400"></script>
 </body>
 </html>

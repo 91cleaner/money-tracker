@@ -11,7 +11,7 @@ const krw = (n) => {
 };
 const pct = (x) => (x == null ? '—' : Math.round(x * 100) + '%');
 const when = (iso) => { if (!iso) return '—'; return new Date(iso).toLocaleString('ko-KR', {month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}); };
-const LABEL = {split: '같은 날 나눠진 계약', threshold: '기준 금액 바로 아래', increase: '계약 금액 증가', repeat: '같은 업체 반복', big: '1억 이상'};
+const LABEL = {split: '같은 날 나눠진 계약', threshold: '한도 바로 밑 계약', increase: '계약 금액 증가', repeat: '같은 업체 반복', big: '1억 이상'};
 const CATS = ['전체', '청소', '시설관리', '경비', '건설·공사', '용역·연구', '인쇄·홍보', '축제 공연·섭외', '물품', '기타'];
 const FEST = '축제 공연·섭외';
 // 축제 공연 분야를 고르면 안내 한 줄 (출연자 이름은 수집 단계에서 지움)

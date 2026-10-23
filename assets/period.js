@@ -2,8 +2,8 @@
    URL: ?d=30 (최근 30일, 매일 움직임) · ?d=30&to=2026-10-23 (고정: 공유 링크용) · ?from=2026-10-01&to=2026-10-23 (임의 기간).
    data/index.json, data/city/*.json 요청을 가로채 고른 기간만 남긴다(다른 스크립트는 그대로). */
 window.plainT = (t) => String(t == null ? '' : t)
-  .replace(/견적\s*1곳만 받아도 되는 금액선\(추정가\s*2천만원\)\s*근처/g, '2천만원 바로 아래 계약(이 금액 아래면 업체 한 곳 견적만으로 계약할 수 있어요)')
-  .replace(/금액선/g, '기준 금액').replace(/추정가격?/g, '미리 어림한 금액').replace(/수의계약/g, '경쟁 없이 맺은 계약').replace(/단가계약/g, '단가를 정해 두고 여러 번 사는 계약');
+  .replace(/견적\s*1곳만 받아도 되는 금액선\(추정가\s*2천만원\)\s*근처/g, '2천만원 한도 바로 밑 계약(이 금액 아래면 업체 한 곳 견적만으로 계약할 수 있어요)')
+  .replace(/금액선/g, '한도').replace(/추정가격?/g, '미리 어림한 금액').replace(/수의계약/g, '한 업체랑만 맺은 계약').replace(/단가계약/g, '값 정해 놓고 계속 사는 계약');
 (() => {
   const Q = new URLSearchParams(location.search), STOPS = [7, 14, 30, 60, 90, 0];  // 0 = 전체
   const rf = window.fetch.bind(window);
