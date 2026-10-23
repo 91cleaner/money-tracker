@@ -26,3 +26,10 @@ h1,h2,.eyebrow{letter-spacing:-.01em}h2{text-transform:uppercase;font-weight:800
 @keyframes mb{from{transform:translate(0,0) scale(.6);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(1.1) rotate(var(--r));opacity:0}}
 @media(prefers-reduced-motion:reduce){body::after,.ticker div,.counter span::before,.case .no::after{animation:none}.ticker div{padding-left:12px}}
 .hero,.mapsec,section.sec{background-color:transparent}
+.ticker{position:relative;top:auto;z-index:1;font-size:11px;line-height:24px}
+.stickybar{min-height:48px;white-space:nowrap}
+.stickybar .brand{white-space:nowrap;flex:none}
+@media(max-width:899px){.stickybar nav{display:none!important}.stickybar .brand{font-size:15px}.stickybar{padding-top:0;padding-bottom:0}}
+.stabs{top:48px}
+body.has-tabbar{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+.tabbar{padding-bottom:calc(6px + env(safe-area-inset-bottom))!important}
