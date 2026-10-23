@@ -106,8 +106,30 @@ def run(data, state, get_json, items_of, mask, now, start_day):
         with open(tmp, "w", encoding="utf-8") as f:
             json.dump({"id": i, "rows": out}, f, ensure_ascii=False, separators=(",", ":"))
         os.replace(tmp, p)
-    meta = {"updated": now.isoformat(), "newest": st.get("newest"), "oldest": st.get("oldest"), "days_done": st.get("days_done", 0),
+    meta = {"updated": now.isoformat(), "ids_url": "_ids.json", "newest": st.get("newest"), "oldest": st.get("oldest"), "days_done": st.get("days_done", 0),
             "source": "조달청 나라장터 계약정보서비스(공공데이터포털 15129427)"}
     with open(os.path.join(pdir, "_meta.json"), "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False)
     print(f"과거 계약 채우기: 호출 {n}건(오늘 {st['calls']}), 위치 {st['cursor']} {KINDS[st['ki']]} p{st['page']}, 업체 {len(add)}곳 갱신", flush=True)
+
+
+def write_ids(data):
+    """data/past/*.json 실제 파일 기준 업체 id 목록(_ids.json). 화면이 없는 파일을 요청해 404 나는 걸 막는다. 매 실행 갱신."""
+    pdir = os.path.join(data, "past")
+    if not os.path.isdir(pdir):
+        return 0
+    ids = sorted(f[:-5] for f in os.listdir(pdir) if f.endswith(".json") and not f.startswith("_"))
+    tmp = os.path.join(pdir, "_ids.json.tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(ids, f, separators=(",", ":"))
+    os.replace(tmp, os.path.join(pdir, "_ids.json"))
+    mp = os.path.join(pdir, "_meta.json")
+    try:
+        meta = json.load(open(mp, encoding="utf-8"))
+    except (OSError, ValueError):
+        meta = {}
+    if meta.get("ids_url") != "_ids.json":
+        meta["ids_url"] = "_ids.json"
+        with open(mp, "w", encoding="utf-8") as f:
+            json.dump(meta, f, ensure_ascii=False)
+    return len(ids)

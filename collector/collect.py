@@ -636,6 +636,7 @@ def main():
             backfill.run(DATA, state, get_json, items_of, mask, now, start)
         except Exception as e:
             print(f"::warning::과거 계약 단계 실패: {type(e).__name__}", flush=True)
+    print(f"과거 계약 파일 있는 업체 {backfill.write_ids(DATA)}곳(_ids.json)", flush=True)  # 매 실행(다시 집계 포함)
     index = []
     for c in CITIES:
         path = os.path.join(DATA, "city", c["slug"] + ".json")
