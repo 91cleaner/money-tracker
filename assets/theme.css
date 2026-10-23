@@ -379,3 +379,15 @@ small.dv-tag,.ttl small.dv-tag{display:inline-block!important;width:auto!importa
 .dq .dq-go{color:#ffb020;font-weight:700;display:block;width:max-content;padding:10px 0;min-height:44px;box-sizing:border-box}
 
 .wr-nw{white-space:nowrap}
+@media (min-width:900px){
+#dive.dv-pc{grid-template-rows:auto auto auto auto;row-gap:12px;align-items:start}
+#dive.dv-pc .dv-lc{grid-column:1;grid-row:2/5;position:sticky;top:8px;align-self:start;display:flex;flex-direction:column;gap:6px;z-index:1}
+#dive.dv-pc .dv-lc>.dv-q{position:relative!important;top:auto!important;left:auto!important;width:auto!important;order:0}
+#dive.dv-pc .dv-lc>.pd{order:1}#dive.dv-pc .dv-lc>.dv-map{order:2}#dive.dv-pc .dv-lc>.maplg{order:3;margin:0}
+#dive.dv-pc .dv-sheet{grid-column:2;grid-row:2!important}
+#dive.dv-pc>#daily{grid-column:2;grid-row:3;margin:0}
+#dive.dv-pc>#game{grid-column:2;grid-row:4;margin:0}
+#dive.dv-pc>#game .gm-pick{gap:8px}
+}
+#title,.vname,.v-name{overflow-wrap:anywhere;word-break:keep-all}
+footer .unof{font-size:13px}

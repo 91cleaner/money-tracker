@@ -280,7 +280,7 @@
   const sib = (slug, d) => { const me = BY[slug]; let g = C.filter((c) => c.province === me.province); if (g.length < 2) g = C; const i = g.findIndex((c) => c.slug === slug); return g[(i + d + g.length) % g.length].slug; };
   const top3 = (f) => { if (!f) return ''; const m = {}; for (const x of f.flows || []) for (const v of x.vendors || []) { const o = m[v.id] || (m[v.id] = {id: v.id, name: v.name, amount: 0, n: 0, to: x.local ? '지역 업체' : (x.to || '')}); o.amount += v.amount; o.n += v.count || 1; }
     const t = Object.values(m).sort((a, b) => b.amount - a.amount).slice(0, 3);
-    return t.length ? `<p class="dv-k">많이 받은 업체 3곳</p><ol class="dv-top dv-top3">${t.map((v, i) => `<li><span class="dv-no">${i + 1}</span><a href="?c=${cur}&v=${v.id}#map" data-v="${v.id}"><span class="dv-tn">${esc(v.name)}</span><b>${krw(v.amount)}</b><span class="rc-chips"><i>${esc(v.to)}</i><i>${v.n}건</i></span></a></li>`).join('')}</ol>` : ''; };
+    return t.length ? `<p class="dv-k">많이 받은 업체 3곳</p><ol class="dv-top dv-top3">${t.map((v, i) => `<li><span class="dv-no">${i + 1}</span><a href="vendor.html?v=${encodeURIComponent(v.id)}" data-v="${v.id}"><span class="dv-tn">${esc(v.name)}</span><b>${krw(v.amount)}</b><span class="rc-chips"><i>${esc(v.to)}</i><i>${v.n}건</i></span></a></li>`).join('')}</ol>` : ''; };
   const PL = () => (window.__pdLabel && window.__pdLabel()) || `최근 ${idx.days || 90}일`;
   const PV = {'경상남도': '경남', '경상북도': '경북', '전라남도': '전남', '전라북도': '전북', '전북특별자치도': '전북', '충청남도': '충남', '충청북도': '충북', '강원도': '강원', '강원특별자치도': '강원', '제주특별자치도': '제주', '경기도': '경기', '세종특별자치시': '세종'};
   const nmR = (s) => { const a = String(s || '').trim().split(/\s+/); if (!a[0]) return ''; a[0] = PV[a[0]] || a[0].replace(/(특별시|광역시)$/, ''); return a.join(' '); };
@@ -300,7 +300,7 @@
     const kc = {}; for (const a of A) kc[a.kind] = (kc[a.kind] || 0) + 1; const tk = Object.entries(kc).sort((a, b) => b[1] - a[1])[0];
     const card = (t, big, sub, src) => `<div class="wr-c"><p class="wr-t">${t}</p><p class="wr-b">${big}</p><p class="wr-s">${sub}</p><p class="wr-src">${src}</p></div>`;
     const cs = [
-      card(`${esc(k.name)}는 ${esc(k.when)}`, krw(k.total), `계약을 ${krw(k.total)}어치 맺었어요. <span class="wr-nw">(${sr})</span>`, SR),
+      card(`${esc(k.name)}는 ${esc(k.when)}`, krw(k.total), `<span class="wr-nw">${sr}</span>에 맺은 계약을 모두 더한 금액이에요.`, SR),
       card('전국 85개 시 중에서', `${k.rank}번째`, `${k.when} 계약 금액이 ${k.of}개 시 중 ${k.rank}번째로 많아요.`, SR),
       card('다른 지역 업체가 받은 돈', out ? out + '%' : '확인 중', out ? `업체 위치를 아는 금액 중 ${out}%가 다른 지역 업체에 갔어요.` : '업체 주소를 아직 확인하고 있어요.', SR + ' · 업체 주소 기준'),
       card('계약 금액이 가장 큰 종류', top ? esc(top[0]) : '자료 없음', top ? `${krw(top[1])}, 전체의 ${Math.round(top[1] / (k.total || 1) * 100)}%예요.` : '', SR + ' · 제목으로 나눈 종류'),
