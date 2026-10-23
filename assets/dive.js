@@ -164,7 +164,7 @@
     cur = slug; setH(1); dim(slug);
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
     body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)}</p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
-      <p class="dv-l">최근 ${idx.days || 90}일 · ${c.total ? (out != null ? `<b class="dv-out">외지 ${out}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'} ${shb(c.name + ' 계약 돈', 'c/' + slug + '.html')} <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
+      <p class="dv-l dv-l1"><span class="dv-meta">최근 ${idx.days || 90}일 · ${c.total ? (out != null ? `<b class="dv-out">외지 ${out}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'}</span> ${shb(c.name + ' 계약 돈', 'c/' + slug + '.html')} <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
       <div class="dv-more">${top3(f)}<p class="dv-k">데이터상 이상 징후</p><div class="dv-cards dv-car"><div class="skel-box"></div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
     ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);

@@ -49,3 +49,12 @@ def kor(name):
         return name
     k = _hj.translate(name, "substitution")
     return f"{name} ({k})" if k != name else name
+
+
+def korify(o):
+    """저장 직전: name/vendor 필드의 한자 업체명에 한글 읽기를 붙인다(요약·순위·흐름·검색 공통)."""
+    if isinstance(o, list):
+        return [korify(x) for x in o]
+    if isinstance(o, dict):
+        return {k: (kor(v) if k in ("name", "vendor") and isinstance(v, str) else korify(v)) for k, v in o.items()}
+    return o

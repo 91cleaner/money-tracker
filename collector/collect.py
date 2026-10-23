@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 sys.path.insert(0, os.path.dirname(__file__))
 from cities import CITIES, city_of, legacy
 import share
-from privacy import mask, loc, kor
+from privacy import mask, loc, kor, korify
 import flows
 import jv
 import vendors_agg
@@ -201,7 +201,7 @@ def save(path, obj):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     tmp = path + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(obj, f, ensure_ascii=False, separators=(",", ":"))
+        json.dump(korify(obj), f, ensure_ascii=False, separators=(",", ":"))
     os.replace(tmp, path)
 
 

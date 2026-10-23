@@ -219,3 +219,7 @@ html,body{overflow-x:clip}#dive,.dv-car{max-width:100%}
 .dv-top3 a{display:grid;gap:2px;white-space:normal!important;flex:1;min-width:0}.dv-top3 .dv-tn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dv-top3 b{font-size:16px}
 .dv-top3 .rc-chips{display:flex;gap:4px}.dv-top3 .rc-chips i{font-style:normal;font-size:11px;padding:2px 7px;border-radius:9px;background:#1a2028;color:#b9c3cd}
 @media (min-width:900px){#dive .dv-h1{grid-row:1}#dive .dv-map{grid-row:2}}
+
+.dv-l1{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
+.dv-l1 .dv-meta{white-space:nowrap;flex-basis:100%;text-align:center}
+.dv-chip b,.dv-chip{white-space:nowrap}

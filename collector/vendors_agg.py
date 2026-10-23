@@ -17,6 +17,11 @@ def vid(r):
 
 
 def save(path, obj):
+    try:
+        from privacy import korify
+        obj = korify(obj)
+    except Exception:
+        pass
     try:  # 내용이 같으면 다시 쓰지 않음(매시간 커밋이 커지지 않게)
         if json.load(open(path, encoding="utf-8")) == obj:
             return

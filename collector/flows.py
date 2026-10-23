@@ -135,7 +135,11 @@ def build(now=None):
     out["nation_cat"] = {ct: [{"from": s_, "to": lb, "p": pts[lb], "amount": a} for (s_, lb), a in sorted(m.items(), key=lambda x: -x[1])[:25]]
                          for ct, m in natc.items()}
     with open(os.path.join(DATA, "flows.json"), "w", encoding="utf-8") as f:
-        json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
+        try:
+            from privacy import korify
+            json.dump(korify(out), f, ensure_ascii=False, separators=(",", ":"))
+        except ImportError:
+            json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
     return out
 
 
