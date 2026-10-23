@@ -7,7 +7,7 @@ import kw, validate  # noqa: E402
 
 
 def row(no, title="도로 포장 공사", amount=1000, ord_="00", date="2026-10-20", odate="2026-10-20", cat="건설·공사", kind="공사"):
-    return {"id": no + ord_, "no": no, "ord": ord_, "title": title, "amount": amount, "date": date, "odate": odate, "cat": cat, "kind": kind, "atype": "본청", "ann": False}
+    return {"id": no + ord_, "no": no, "ord": ord_, "title": title, "amount": amount, "date": date, "odate": odate, "cat": cat, "kind": kind, "atype": "본청", "ann": False, "tot_amt": amount}
 
 
 def ids(n, ord_="00", title="진해구 정수지 청소 용역"):
@@ -100,6 +100,23 @@ class Gate(unittest.TestCase):
         def m(s):
             r = row("L1", amount=5000); r["this"] = 1000; r["lt"] = "신규(장기)"; r["ltc"] = True; s["city"]["a"]["rows"].append(r)
         self.assertTag(m, "[22 금액 기준]")
+
+    def test_22_tot_amt_every_row(self):
+        self.assertTag(lambda s: s["city"]["a"]["rows"][0].pop("tot_amt"), "[22 금액 기준]")
+
+    def test_24_address_number_masked(self):
+        # 팩트체크: 제주 '도련2동 328 외 상수도 긴급 누수복구 공사' — 번지가 화면에 그대로
+        self.assertTag(lambda s: s["city"]["a"]["rows"].append(row("J1", "도련2동 328 외 상수도 긴급 누수복구 공사")), "[24 번지]")
+        from collect import mask_addr
+        self.assertEqual(mask_addr("도련2동 328 외 상수도 긴급 누수복구 공사"), "도련2동 ○○○ 외 상수도 긴급 누수복구 공사")
+        self.assertEqual(mask_addr("봉곡로111번길 급수폐전공사"), "봉곡로111번길 급수폐전공사")
+        self.assertEqual(mask_addr("삼계본동2길 외 3개소 긴급누수복구공사"), "삼계본동2길 외 3개소 긴급누수복구공사")
+
+    def test_25_vendor_name_runaway(self):
+        self.assertTag(lambda s: s["city"]["a"]["rows"][0].update(vendor="林 (임)" * 100), "[25 업체 이름]")
+        from privacy import kor
+        a = kor("산림기술사사무소 아트(Art)林")
+        self.assertEqual(kor(kor(a)), a)
 
     def test_sectors_narrow(self):
         self.assertIsNone(kw.sole_sector("생활폐기물 감량 연구용역"))

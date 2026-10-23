@@ -28,6 +28,11 @@ def num(x):
         return None
 
 
+def _mask_addr(t):
+    from collect import mask_addr  # 화면 데이터 제목의 번지만 가림(원문은 url)
+    return mask_addr(t)
+
+
 def row_of(it, kind, mask):
     dm = (it.get("dminsttList") or "").strip("[]").split("],[")[0].split("^")
     inst = dm[2] if len(dm) > 2 else (it.get("cntrctInsttNm") or "")
@@ -36,7 +41,7 @@ def row_of(it, kind, mask):
     dno = it.get("dcsnCntrctNo") or ""
     return {"no": dno[:-2] if len(dno) > 2 else dno, "ord": dno[-2:] if len(dno) > 2 else None,
             "date": (it.get("cntrctCnclsDate") or "")[:10], "slug": slug, "city": NAMES.get(slug), "inst": inst,
-            "title": it.get(TITLE[kind]) or it.get("cntrctNm") or it.get("cnstwkNm") or "", "kind": kind,
+            "title": _mask_addr(it.get(TITLE[kind]) or it.get("cntrctNm") or it.get("cnstwkNm") or ""), "kind": kind,
             "tot": num(it.get("totCntrctAmt")), "this": num(it.get("thtmCntrctAmt")), "lt": it.get("lngtrmCtnuDivNm") or None,
             "m": [{"name": x["name"], "share": x["share"], "id": x["id"], "role": x["role"]} for x in m],
             "url": it.get("cntrctDtlInfoUrl") or None}

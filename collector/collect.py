@@ -414,16 +414,29 @@ def method_label(r):
     return "유찰 후 수의계약(추정)" if "수의" in m and "유찰" not in m and r.get("ntce") and (r.get("amount") or 0) > 200_000_000 else m
 
 
-AMOUNT_BASIS = "이번 차수 금액(장기계속·계속비는 금차 계약금액, 그 밖은 계약금액). 전체 계약금액은 tot_amt"
+AMOUNT_BASIS = "이번 차수 금액: 장기계속(lt에 '장기' 포함, 또는 lt가 계속비·빈 값이어도 이번 차수 금액<전체 계약금액인 계약)은 이번 차수 금액, 그 밖은 계약금액. 모든 행의 tot_amt = 전체 계약금액(장기계속이 아니면 amount와 같음)"
+
+
+ADDR_RX = re.compile(r"((?:[가-힣0-9]+(?:동|리|가))\s+(?:산\s?)?|(?:[가-힣0-9]+(?:로|길))\s+)(\d{1,5}(?:-\d{1,5})?)(\s*번지)?(?![\d-]|\s*(?:개소|호선|차|년|회|m|km|번길|길|호|세대|㎡|개|곳|건|공구|지구|단계|구간|kV|kv|번|종|코스|구역|가|가동|천|만|억|원|%|\.|명|일|월|시|층|미터|톤|대))")
+
+
+def mask_addr(t):
+    """화면 데이터의 계약 제목에서 번지(지번·건물번호)만 가림. 개인 집 주소일 수 있음. 길·동 이름과 '외 N개소'는 그대로.
+    원문 제목은 나라장터 링크(url)에서 그대로 볼 수 있다."""
+    return ADDR_RX.sub(lambda m: m.group(1) + re.sub(r"\d", "○", m.group(2)) + (m.group(3) or ""), t or "")
 
 
 def set_basis(r):
     """합계 기준 통일: 장기계속은 이번 차수 금액(this)으로 세고 전체 계약금액은 tot_amt 에 따로 둔다(sec_sole 과 같은 기준)."""
+    # 장기계속(ltc) 판정 규칙: lt 에 '장기'가 있으면(신규(장기)·장기·장기(계속비)) 장기계속. lt 가 '계속비'이거나 비어 있어도
+    # 이번 차수 금액(this)이 전체 계약금액보다 작으면 장기계속으로 센다(여러 해에 나눠 맺는 계약). 이런 행은 this 로 합산.
+    # this 가 없거나 전체와 같으면 전체 금액 그대로. tot_amt 는 모든 행에 채운다(장기계속이 아니면 amount 와 같음).
     full = max(r.get("amount") or 0, r.get("tot_amt") or 0)
     if r.get("ltc") and r.get("this") and 0 < r["this"] < full:
-        r["tot_amt"], r["amount"] = full, r["this"]
-    elif r.get("tot_amt") and not r.get("ltc"):
-        r.pop("tot_amt")
+        r["amount"] = r["this"]
+    elif not r.get("ltc"):
+        full = r.get("amount") or 0
+    r["tot_amt"] = full
 
 
 def annotate(r, c, vendors):
@@ -651,6 +664,7 @@ def main():
             annotate(r, chg.get(cno(r)), vendors)
             set_odate(r)
             set_basis(r)
+            r["title"] = mask_addr(r.get("title"))
         allr = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)
         # 집계는 기간 안에 처음 맺은 계약만(계약번호당 1건, 금액은 최신 차수의 총계약금액).
         # 기간 전에 맺은 계약의 변경(차수) 기록은 changes 에 따로 두고 '변경' 표시로만 보여 준다.

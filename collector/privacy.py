@@ -47,6 +47,12 @@ def kor(name):
     """한자 업체명에 한글 읽기를 붙인다: '九一綜合建設' → '九一綜合建設 (구일종합건설)'. 이미 붙어 있으면 그대로."""
     if not name or _hj is None or not _CJK.search(re.sub(r"\([^)]*\)", "", name)) or re.search(r"\([가-힣\s]+\)\s*$", name):
         return name
+    # 이미 읽기를 붙인 이름이면 원래 이름만 떼어 다시 붙인다(읽기에 영문·괄호가 섞여 위 검사를 못 넘으면 매번 덧붙어 길어지던 문제)
+    for m in re.finditer(r" \(", name):
+        p = name[:m.start()]
+        if _CJK.search(p) and name[m.start():].startswith(" (" + _hj.translate(p, "substitution") + ")"):
+            name = p
+            break
     k = _hj.translate(name, "substitution")
     return f"{name} ({k})" if k != name else name
 

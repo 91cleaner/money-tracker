@@ -57,7 +57,9 @@ def check(root, prev=None):
             full = max(r.get("amount") or 0, r.get("tot_amt") or 0)
             if r.get("this") and "장기" in (r.get("lt") or "") and r.get("amount") != r["this"] and r["this"] < full:
                 E(f"[22 금액 기준] {slug} {r.get('no')} 장기계속인데 합계 금액 {r.get('amount')} ≠ 이번 차수 {r['this']}")
-            if r.get("tot_amt") is not None and r["tot_amt"] < (r.get("amount") or 0):
+            if r.get("tot_amt") is None:
+                E(f"[22 금액 기준] {slug} {r.get('no')} tot_amt(전체 계약금액) 칸 없음")
+            elif r["tot_amt"] < (r.get("amount") or 0):
                 E(f"[22 금액 기준] {slug} {r.get('no')} 전체 계약금액 tot_amt < 합계 금액")
             if r.get("atype") in EXT_ATYPE:
                 E(f"[18 시 밖 기관] {slug} {r.get('no')} {r.get('atype')} 가 시 합계(rows)에 포함(ext 로 가야 함)")
@@ -116,6 +118,31 @@ def check(root, prev=None):
             E("[17 일별 집계] daily.json 에 last 없음")
     elif cities:
         E("[17 일별 집계] daily.json 없음")
+    # (22) changes·ext 도 tot_amt 채움
+    for slug, d in cities.items():
+        nt = sum(1 for r in d.get("changes", []) + d.get("ext", []) if r.get("tot_amt") is None)
+        if nt: E(f"[22 금액 기준] {slug} changes/ext {nt}건 tot_amt 없음")
+    # (24) 화면 데이터의 계약 제목에 번지(지번·건물번호)가 그대로 있는지
+    from collect import ADDR_RX
+    leak = []
+    def scan(o, where):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                if k in ("title", "t") and isinstance(v, str):
+                    m = ADDR_RX.search(v)
+                    if m and re.search(r"\d", m.group(2)): leak.append(f"{where}: '{v[:40]}'")
+                else: scan(v, where)
+        elif isinstance(o, list):
+            for v in o: scan(v, where)
+    for p in glob.glob(os.path.join(root, "**", "*.json"), recursive=True):
+        if os.path.basename(p).startswith("_") or os.path.basename(p) == "index.json": continue
+        try: scan(_load(p), os.path.relpath(p, root))
+        except Exception: pass
+    # (25) 업체 이름이 비정상적으로 긴 곳(한글 읽기가 실행마다 덧붙던 문제 재발 방지)
+    for slug, d in cities.items():
+        long_ = [r.get("vendor", "")[:30] for r in d.get("rows", []) + d.get("changes", []) + d.get("ext", []) if len(r.get("vendor") or "") > 200]
+        if long_: E(f"[25 업체 이름] {slug} 이름이 200자 넘는 행 {len(long_)}건, 예: {long_[:2]}")
+    if leak: E(f"[24 번지] 계약 제목에 번지가 가려지지 않은 곳 {len(leak)}건, 예: {leak[:3]}")
     # (8) 수집 공백: 기간 안 평일(공휴일 제외)마다 계약이 있고 최근 평일 평균의 20% 이상
     from collect import HOLIDAYS, SIDO
     cnt = {}
