@@ -26,7 +26,7 @@
     const f = fx && fx[D]; if (f && nm0[f.a] && nm0[f.b] && f.av > 0 && f.bv > 0 && /^\d{4}-\d\d-\d\d$/.test(f.from) && /^\d{4}-\d\d-\d\d$/.test(f.to))
       return {a: {slug: f.a, name: nm0[f.a], total: f.av}, b: {slug: f.b, name: nm0[f.b], total: f.bv}, from: f.from, to: f.to, fixed: true};
     if (!dl || !dl.c) return null;
-    let to = add(D, -1); if (to > dl.last) to = dl.last; const from = add(to, -29); if (from < (dl.cover_from || dl.first)) return null;
+    const tk = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10); let to = add(D, -1); if (to > add(tk, -1)) to = add(tk, -1); if (to > dl.last) to = dl.last; const from = add(to, -29); if (from < (dl.cover_from || dl.first)) return null;
     const nm = {}; for (const c of ix.cities || []) nm[c.slug] = c.name;
     const C = Object.keys(dl.c).filter((s) => nm[s]).sort().map((s) => { let t = 0; for (const k in dl.c[s]) if (k >= from && k <= to) t += dl.c[s][k][1]; return {slug: s, name: nm[s], total: t}; }).filter((c) => c.total >= 1e8);
     if (C.length < 2) return null; const r = rnd('mt-daily|' + D);
@@ -52,7 +52,7 @@
       ${done ? `<p class="dq-res" aria-live="polite">${me.ok ? '맞았어요!' : '아쉬워요.'} ${esc([a, b][win].name)} 새 계약 ${krw([a, b][win].total)}, ${esc([a, b][1 - win].name)} 새 계약 ${krw([a, b][1 - win].total)}이에요. ${D === today ? '내일 새 문제가 나와요.' : '<a class="dq-go" href="./#daily">오늘 문제 풀러 가기</a>'}</p>
         ${big()}
         <div class="dq-bar"><span class="dq-st">${streakText()}</span><button type="button" class="gm-btn dq-sh">결과 공유</button></div>` : `<p class="dq-st">${streakText() || '하루에 한 번만 풀 수 있어요.'}</p>`}
-      ${done ? `<p class="dq-fn">시청과 사업소가 맺은 새 계약을 공공조달 공개 자료로 더한 값이에요. 여러 해 계약은 이번 차수 금액만 넣었어요. 계약 금액은 실제로 나간 돈과 다를 수 있어요. ${md(D)} 기준.</p>` : ''}
+      ${done ? `<p class="dq-fn">시청과 사업소가 맺은 새 계약을 공공조달 공개 자료로 더한 값이에요. 여러 해 계약은 이번 차수 금액만 넣었어요. 계약 금액은 실제로 나간 돈과 다를 수 있어요. ${md(Q.to)}까지 자료.</p>` : ''}
       <p class="src">경쟁 없이 한 업체와 맺은 계약도 포함 · 날짜별로 모두 같은 문제 · ${SRC}</p>`;
     window.__gmRing && window.__gmRing();
     box.querySelectorAll('.dq-c:not([disabled])').forEach((x) => (x.onclick = () => answer(+x.dataset.i)));
