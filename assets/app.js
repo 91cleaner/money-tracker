@@ -497,9 +497,11 @@ async function cityPage() {
     const alerts = cat === '전체' ? d.alerts : d.alerts.filter((a) => (a.ids || []).some((id) => (byId.get(id) || {}).cat === cat));
     const flagged = alerts.filter((a) => a.kind !== 'big').length;
     const what = cat === '전체' ? '' : `${cat} 분야 `; festNote($('#lede'), cat === FEST);
-    $('#range').textContent = s.first ? `${s.first.replaceAll('-', '.')} ~ ${s.last.replaceAll('-', '.')}` : '최근 90일';
+    $('#range').textContent = s.first ? `${s.first.replaceAll('-', '.')} ~ ${s.last.replaceAll('-', '.')}` : (window.__pdLabel && window.__pdLabel()) || '';
     const jo = (w) => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c <= 11171 && c % 28 ? '은' : '는'; };
-    $('#lede').replaceChildren('최근 90일, ', name + jo(name) + ' ' + what + '계약 금액이 ', el('b', '', krw(s.total)), '이고, ',
+    const pl = window.__pdLabel && window.__pdLabel(), sd = (x) => `${+x.slice(5, 7)}.${+x.slice(8)}`;
+    const when = pl && /^최근/.test(pl) ? pl : s.first ? `${sd(s.first)}~${sd(s.last)}` : (pl || '고른 기간');
+    $('#lede').replaceChildren(when + ', ', name + jo(name) + ' ' + what + '계약 금액이 ', el('b', '', krw(s.total)), '이고, ',
       s.local == null ? '업체 주소는 확인 중입니다.' : el('b', '', `${pct(1 - s.local)}는 다른 지역 업체`), s.local == null ? '' : '로 갔습니다.');
     const mxr = rows.reduce((a, r) => (!a || r.amount > a.amount ? r : a), null);
     const big = mxr && s.total && mxr.amount / s.total > 0.3;
