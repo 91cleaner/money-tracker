@@ -19,6 +19,8 @@
     return {dl, lo, from, to, d, fixed: Q.has('to') || Q.has('from'), explicit: Q.has('d') || Q.has('to') || Q.has('from')};
   });
   let CW = null; WIN.then(w => { CW = w; });
+  window.__pdCW = () => CW;
+  window.__pdLabel = () => { const w = CW; if (!w || !w.from) return null; if (w.fixed && Q.has('from')) return `${span(w.from, w.to)}일 (${+w.from.slice(5, 7)}.${+w.from.slice(8)}~)`; return w.d ? `최근 ${w.d}일` : `전체 (${+w.lo.slice(5, 7)}.${+w.lo.slice(8)}~)`; };
   window.PERIOD = WIN;
   const sumCity = (m, w) => { const o = {n: 0, t: 0, cat: {}}; for (const k in m) if (k >= w.from && k <= w.to) { const v = m[k]; o.n += v[0]; o.t += v[1]; for (const c in v[2]) { const x = o.cat[c] || (o.cat[c] = [0, 0]); x[0] += v[2][c][0]; x[1] += v[2][c][1]; } } return o; };
   const fixIndex = (x, w) => { for (const c of x.cities || []) { const s = sumCity(w.dl.c[c.slug] || {}, w); c.count = s.n; c.total = s.t; c.by_cat = {}; c.n_cat = {}; for (const k in s.cat) { c.n_cat[k] = s.cat[k][0]; c.by_cat[k] = s.cat[k][1]; } } x.period = {from: w.from, to: w.to, d: w.d}; x.days = span(w.from, w.to); return x; };
@@ -73,7 +75,7 @@
     let i = stops.indexOf(w.fixed && Q.has('from') ? -1 : w.d); if (i < 0) i = stops.indexOf(30) >= 0 ? stops.indexOf(30) : stops.length - 1;
     const st = document.createElement('style'); st.textContent = css; document.head.append(st);
     const el = document.createElement('div'); el.className = 'pd';
-    el.innerHTML = `<div class="pd-top"><b class="pd-l"></b><span class="pd-r"></span></div><input type="range" min="0" max="${stops.length - 1}" step="1" value="${i}" aria-label="기간"><div class="pd-t">${stops.map(s => `<span>${s ? s + '일' : L0}</span>`).join('')}</div><div class="pd-sum"></div>`;
+    el.innerHTML = `<div class="pd-top"><b class="pd-l"></b><span class="pd-r"></span></div><input type="range" min="0" max="${stops.length - 1}" step="1" value="${i}" id="pd-range" name="period" aria-label="기간"><div class="pd-t">${stops.map(s => `<span>${s ? s + '일' : L0}</span>`).join('')}</div><div class="pd-sum"></div>`;
     const inp = el.querySelector('input');
     const show = (k, fr, to) => {
       const s = stops[k]; fr = fr || (s ? day(w.dl.last, 1 - s) : w.lo); to = to || w.dl.last; if (fr < w.lo) fr = w.lo;

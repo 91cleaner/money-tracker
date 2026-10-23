@@ -198,6 +198,9 @@ async function homePage() {
   const catTot = {};
   for (const c of cities) for (const [k, v] of Object.entries(c.by_cat || {})) catTot[k] = (catTot[k] || 0) + v;
   const catList = Object.keys(catTot).filter((k) => catTot[k] > 0).sort((a, b) => catTot[b] - catTot[a]);
+  const heroDays = () => { const l = window.__pdLabel && window.__pdLabel(); const k = $('#days') && $('#days').parentNode; if (l && k) { k.firstChild.textContent = '전국 85개 시가 '; $('#days').textContent = l; $('#days').nextSibling.textContent = ' 동안 '; } };
+  window.__mtPeriod = (i2) => { const B = {}; for (const c of i2.cities || []) B[c.slug] = c; for (const c of cities) if (B[c.slug]) Object.assign(c, B[c.slug]); idx.days = i2.days; heroDays(); setCat(cat); };
+  setTimeout(heroDays, 0); setTimeout(heroDays, 1500);
   let mapCtl = null, draw = () => {}, alertsDraw = () => {};
   const setCat = (c) => {
     cat = c;

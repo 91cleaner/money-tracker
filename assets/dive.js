@@ -198,7 +198,7 @@
   const L0 = (keep) => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
     if (box.clientWidth && keep !== true) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
     const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
-    body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · 최근 계약' : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
+    body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
       + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 데이터상 이상 징후</p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc(c.top_alert.title.replace(/^데이터상 이상 징후:\s*/, ''))}</b><span>${esc(c.top_alert.detail || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
     body.querySelectorAll('.t5 [data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); };
   const W = (() => { const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10); return C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk).sort((a, b) => (b.top_alert.amount || 0) - (a.top_alert.amount || 0)).slice(0, 9); })();
@@ -208,21 +208,33 @@
   const top3 = (f) => { if (!f) return ''; const m = {}; for (const x of f.flows || []) for (const v of x.vendors || []) { const o = m[v.id] || (m[v.id] = {id: v.id, name: v.name, amount: 0, n: 0, to: x.local ? '지역 업체' : (x.to || '')}); o.amount += v.amount; o.n += v.count || 1; }
     const t = Object.values(m).sort((a, b) => b.amount - a.amount).slice(0, 3);
     return t.length ? `<p class="dv-k">많이 받은 업체 3곳</p><ol class="dv-top dv-top3">${t.map((v, i) => `<li><span class="dv-no">${i + 1}</span><a href="?c=${cur}&v=${v.id}#map" data-v="${v.id}"><span class="dv-tn">${esc(v.name)}</span><b>${krw(v.amount)}</b><span class="rc-chips"><i>${esc(v.to)}</i><i>${v.n}건</i></span></a></li>`).join('')}</ol>` : ''; };
+  const PL = () => (window.__pdLabel && window.__pdLabel()) || `최근 ${idx.days || 90}일`;
+  const PV = {'경상남도': '경남', '경상북도': '경북', '전라남도': '전남', '전라북도': '전북', '전북특별자치도': '전북', '충청남도': '충남', '충청북도': '충북', '강원도': '강원', '강원특별자치도': '강원', '제주특별자치도': '제주', '경기도': '경기', '세종특별자치시': '세종'};
+  const nmR = (s) => { const a = String(s || '').trim().split(/\s+/); if (!a[0]) return ''; a[0] = PV[a[0]] || a[0].replace(/(특별시|광역시)$/, ''); return a.join(' '); };
+  // 기간을 고르면 시 계약 원장(data/city/*.json rows)에서 흐름·외지·업체를 다시 계산
+  const reFlow = (slug, rows) => { const c = BY[slug], o = fl.cities[slug] || {}; const P = {}; for (const k in fl.cities) for (const x of fl.cities[k].flows || []) if (x.p) P[x.to] = x.p;
+    const ct = String(c && c.name || o.name || '').trim().split(/\s+/).pop(); const m = {}; let known = 0, local = 0, total = 0, count = 0;
+    for (const r of rows || []) { const a = +r.amount || 0; total += a; count++; const to = nmR(r.vregion); if (!to) continue; known += a; const t2 = to.split(' ')[1] || ''; const lo = !!ct && (t2 === ct || t2.startsWith(ct)); if (lo) local += a;
+      const g = m[to] || (m[to] = {to, p: P[to] || P[to.split(' ').slice(0, 2).join(' ')] || null, amount: 0, count: 0, local: lo, _v: {}}); g.amount += a; g.count++;
+      const vid = r.bh || r.vendor; const v = g._v[vid] || (g._v[vid] = {id: r.bh || '', name: r.vendor || '', amount: 0, count: 0}); v.amount += a; v.count++; }
+    const flows = Object.values(m).map((g) => { g.vendors = Object.values(g._v).sort((a, b) => b.amount - a.amount); delete g._v; return g; }).sort((a, b) => b.amount - a.amount);
+    return Object.assign({}, o, {flows, known, local, total, count, by_cat: {}}); };
   const L1 = async (slug, gu) => {
     const c = BY[slug], f = fl.cities[slug]; if (!c) return L0();
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
     cur = slug; setH(1); dim(slug);
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
     body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)}</p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
-      <p class="dv-l dv-l1"><span class="dv-meta">최근 ${idx.days || 90}일 · ${c.total ? (out != null ? `<b class="dv-out">외지 ${out}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'}</span> ${shb(c.name + ' 계약 돈', 'c/' + slug + '.html')} <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
-      <div class="dv-more">${top3(f)}<p class="dv-k">데이터상 이상 징후</p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
+      <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">외지 ${out}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'}</span> ${shb(c.name + ' 계약 돈', 'c/' + slug + '.html')} <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
+      <div class="dv-more"><div class="dv-t3">${top3(f)}</div><p class="dv-k">데이터상 이상 징후</p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
     ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
     body.querySelectorAll('.dv-nav').forEach((b) => (b.onclick = () => go({c: sib(slug, +b.dataset.d)}, true)));
     const box2 = body.querySelector('.dv-cards');
     try { const d = await get('data/city/' + slug + '.json'); if (cur !== slug) return;
-      const A = (d.alerts || []).filter((a) => a.kind !== 'big' && (!gu || (a.detail || '').includes(gu))).slice(0, 8);
-      body.querySelector('.dv-n').textContent = A.length; body.querySelector('.dv-chip').hidden = !A.length;
+      if (window.__pdCW && window.__pdCW() && d.rows) { const f2 = reFlow(slug, d.rows); fl.cities[slug] = f2; const o2 = f2.known ? Math.round((1 - f2.local / f2.known) * 100) : null; const mt = body.querySelector('.dv-meta'); if (mt) mt.innerHTML = `${PL()} · ${c.total ? (o2 != null ? `<b class="dv-out">외지 ${o2}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'}`; const t3 = body.querySelector('.dv-t3'); if (t3) t3.innerHTML = top3(f2); drawFlows(slug); }
+      const A = (d.alerts || []).filter((a) => a.kind !== 'big' && (!gu || (a.detail || '').includes(gu)));
+      body.querySelector('.dv-n').textContent = A.length; A.splice(8); body.querySelector('.dv-chip').hidden = !A.length;
       box2.innerHTML = A.length ? A.map((a, i) => `<button type="button" class="dv-card" data-i="${i}"><b>${esc(a.title)}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}</span><em>${krw(a.amount)} ›</em></button>`).join('') : '<p class="small">최근 눈에 띄는 패턴이 없습니다.</p>';
       car(box2);
       box2.querySelectorAll('.dv-card').forEach((b) => (b.onclick = () => { const a = A[+b.dataset.i]; const r = d.rows.find((x) => (a.ids || []).includes(x.id)); if (r && r.bh) go({c: slug, v: r.bh, a: a.key}); else if (r) window.open(r.url, '_blank', 'noopener'); }));
@@ -260,6 +272,7 @@
     for (const c of i2.cities) if (BY[c.slug]) { const o = BY[c.slug]; for (const k of Object.keys(o)) if (!(k in c)) delete o[k]; Object.assign(o, c); }
     for (const c of cities) { const n = f2.cities[c.slug]; if (n) c.total = n.total; }
     cities.sort((a, b) => b.total - a.total);
+    window.__mtPeriod && window.__mtPeriod(i2);
     const st = sheet.scrollTop; window.__dvCat(CAT); if (cur) { render(); sheet.scrollTop = st; } };
   // 시트: 아래로 끌면 한 층 위로, 좌우로 밀면 지역 이동
   let sy = null, sx = 0;
