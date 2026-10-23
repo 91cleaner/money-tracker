@@ -4,8 +4,8 @@
 window.plainT = (t) => String(t == null ? '' : t)
   .replace(/견적\s*1곳만 받아도 되는 금액선\(추정가\s*2천만원\)\s*근처/g, '2천만원 한도 바로 밑 계약(이 금액 아래면 업체 한 곳 견적만으로 계약할 수 있어요)');
 // 공식 계약 제목은 그대로 두고, 어려운 말 풀이는 따로 작은 태그로 붙인다
-window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '값 정해 놓고 계속 사는 계약'], ['(단가)', '값 정해 놓고 계속 사는 계약(단가계약)'], ['수의계약', '기관이 업체를 골라 맺는 계약'], ['추정가', '기관이 미리 어림한 금액']].filter(([k]) => t.includes(k)).filter(([k], i, a) => !(k === '(단가)' && a.some(([x]) => x === '단가계약')));
-  return E.length ? ' ' + E.map(([k, v]) => `<small class="dv-ez dv-tag">${k} = ${v}</small>`).join(' ') : ''; };
+window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '값 정해 놓고 계속 사는 계약'], ['(단가)', '값 정해 놓고 계속 사는 계약', '단가계약'], ['수의계약', '기관이 업체를 골라 맺는 계약'], ['추정가', '기관이 미리 어림한 금액']].filter(([k]) => t.includes(k)).filter(([k], i, a) => !(k === '(단가)' && a.some(([x]) => x === '단가계약')));
+  return E.length ? ' ' + E.map(([k, v, s]) => `<small class="dv-ez dv-tag">${s || k} = ${v}</small>`).join(' ') : ''; };
 (() => {
   const Q = new URLSearchParams(location.search), STOPS = [7, 14, 30, 60, 90, 0];  // 0 = 전체
   const rf = window.fetch.bind(window);

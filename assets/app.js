@@ -160,7 +160,7 @@ async function funHome(idx, getCat) {
       tb.replaceChildren();
       for (const r of list.slice(0, n)) {
         const tr = el('tr', 'rc3'), a = el('a'); a.href = r.url || shareURL(r.city.slug); a.target = '_blank'; a.rel = 'noopener';
-        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.ftag || null, r.method && /수의/.test(r.method) && !r.ann ? '공고 없이 한 업체와 계약' : null, r.ann === true ? '공고 있음' : r.ann === false ? '공고 없음' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', x === '공고 있음' ? 'ann-y' : x === '공고 없음' ? 'ann-n' : '', x)));
+        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.ftag || null, r.method && /수의/.test(r.method) && !r.ann ? '공고 없이 한 업체와 계약' : null, r.ann === true ? '공고 있음' : r.ann === false ? '공고 없음' : null, /단가/.test(r.title || '') ? '단가계약' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', x === '공고 있음' ? 'ann-y' : x === '공고 없음' ? 'ann-n' : '', x)));
         a.append(el('small', 'rc-ag', r.inst || ''), el('b', 'rc-amt', krw(r.amount)), ch); a.title = r.title || '';
         const t2 = el('td'); t2.colSpan = 2; t2.append(a);
         tr.append(el('td', 'rc-no', String(tb.children.length + 1).padStart(2, '0')), t2); tb.append(tr);
@@ -208,7 +208,7 @@ async function homePage() {
     countUp($('#nat-total'), sum(T));
     const w = $('#wage'); if (w) { w.replaceChildren(); w.append(`최저임금으로 ${Math.round(sum(T) / MINWAGE / 8 / 365).toLocaleString('ko-KR')}년 일해야 버는 돈`); w.append(el('small', '', '2026년 최저임금 시간당 10,320원(고용노동부 고시), 하루 8시간·매일 일한다고 가정')); }
     $('#hero-k').textContent = cat === '전체' ? '계약으로 쓴 돈' : cat + ' 계약에 쓴 돈';
-    { const tn = $('#today-n'); if (tn) { const wh = (window.__pdWhen && window.__pdWhen()) || '최근 30일 동안'; tn.textContent = `${wh} 새로 포착 ${(cat === '전체' ? '' : cat + ' ')}${sum(N).toLocaleString('ko-KR')}건(맺은 날짜 기준, 늘어날 수 있음)`; tn.hidden = false; } }
+    { const tn = $('#today-n'); if (tn) { const wh = (window.__pdWhen && window.__pdWhen()) || '최근 30일 동안'; tn.textContent = `${wh.replace(/ 동안$/, '')} 새 계약 ${(cat === '전체' ? '' : cat + ' ')}${sum(N).toLocaleString('ko-KR')}건`; tn.hidden = false; } }
     $('#nat-count').textContent = (cat === '전체' ? '' : cat + ' ') + '계약 ' + sum(N).toLocaleString('ko-KR') + '건';
     $('#nat-alerts-n').textContent = `전국 ${sum(A).toLocaleString('ko-KR')}건 중 시마다 하나씩.`;
     cities.sort((a, b) => A(b) - A(a) || T(b) - T(a));
@@ -525,6 +525,7 @@ async function cityPage() {
       if (r.orig && r.orig !== r.amount) { const up = r.amount - r.orig; title.append(el('small', 'cc-hist', ` 1차 ${krw(r.orig)} → ${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%`)); }
       else if (r.vers && r.vers.length > 1) title.append(el('small', 'cc-tags', ` ${r.vers.length}개 차수 확인 · 총액 변화 없음`));
       if (r.ann === true || r.ann === false) title.append(el('i', r.ann ? 'ann-y' : 'ann-n', r.ann ? '공고 있음' : '공고 없음'));
+      if (r.ltc || /^장기/.test(r.lt || '')) title.append(el('small', 'cc-tags ltc', ` 여러 해 계약 · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액 ${krw(r.tot_amt || r.amount)})`));
       if (window.plainTag && /단가/.test(r.title || '')) title.insertAdjacentHTML('beforeend', window.plainTag(r.title));
       if (r.jvm && r.jvm.length > 1) title.append(el('small', 'cc-tags', ' 함께 맡은 업체: ' + r.jvm.map((m) => `${m.name} ${m.share != null ? m.share + '%' : ''}`).join(', ')));
       tr.append(el('td', '', r.date), el('td', 'hide-narrow', r.inst), title, el('td', '', r.vendor), el('td', 'hide-narrow', r.vregion || '—'), el('td', 'num', r.amount.toLocaleString('ko-KR')));
