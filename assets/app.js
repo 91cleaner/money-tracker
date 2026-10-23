@@ -116,7 +116,7 @@ function receiptCard(r, city) {
   const c = el('article', 'receipt');
   c.append(el('small', 'pill', '계약 영수증 · ' + (r.cat || '기타')), el('div', 'amt', krw(r.amount)), el('b', '', r.title));
   const dl = el('dl');
-  for (const [k, v] of [['날짜', r.date], ['발주', r.inst], ['업체', r.vendor], ['업체 소재', r.vregion || '확인 중'], ['방식', r.method]]) { dl.append(el('dt', '', k), el('dd', '', v || '—')); }
+  for (const [k, v] of [['날짜', r.date], ['일을 맡긴 기관', r.inst], ['업체', r.vendor], ['업체 소재', r.vregion || '확인 중'], ['방식', r.method]]) { dl.append(el('dt', '', k), el('dd', '', v || '—')); }
   const acts = el('div', 'acts');
   if (r.url) { const a = el('a', '', '나라장터 원본 ↗'); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; acts.append(a); }
   acts.append(shareBtn(shareURL(city.slug), `${city.short} · ${r.title} ${krw(r.amount)}`));
@@ -159,7 +159,7 @@ async function funHome(idx, getCat) {
       tb.replaceChildren();
       for (const r of list.slice(0, n)) {
         const tr = el('tr', 'rc3'), a = el('a'); a.href = r.url || shareURL(r.city.slug); a.target = '_blank'; a.rel = 'noopener';
-        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.ftag || null, r.method && /수의/.test(r.method) ? '수의계약' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', '', x)));
+        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.ftag || null, r.method && /수의/.test(r.method) ? '경쟁 없는 계약' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', '', x)));
         a.append(el('small', 'rc-ag', r.inst || ''), el('b', 'rc-amt', krw(r.amount)), ch); a.title = r.title || '';
         const t2 = el('td'); t2.colSpan = 2; t2.append(a);
         tr.append(el('td', 'rc-no', String(tb.children.length + 1).padStart(2, '0')), t2); tb.append(tr);
@@ -313,16 +313,16 @@ function corpInfo(c) {
 function contractExtra(r) {
   const out = [];
   const sgn = (x) => (x > 0 ? '+' : x < 0 ? '−' : '±') + krw(Math.abs(x));
-  if (r.jv && r.jvp && !(r.jvm && r.jvm.length)) out.push(el('span', 'cc-tags', '공동도급 계약 · 참여 업체 확인 중'));
+  if (r.jv && r.jvp && !(r.jvm && r.jvm.length)) out.push(el('span', 'cc-tags', '여러 업체가 함께 맡은 계약 · 참여 업체 확인 중'));
   if (r.jvm && r.jvm.length) {
-    const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '공동도급 참여 업체 (지분)'));
+    const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '함께 맡은 업체 (나눈 비율)'));
     for (const m of r.jvm) {
       const t = m.id ? el('a', '', `${m.name} ${m.share != null ? m.share + '%' : ''}`) : el('span', '', `${m.name} ${m.share != null ? m.share + '%' : ''}`);
       if (m.id) t.href = 'vendor.html?v=' + m.id;
       j.append(t);
     }
     out.push(j);
-  } else if (r.jv) out.push(el('span', 'cc-tags', '공동도급 · 금액은 대표 업체 기준'));
+  } else if (r.jv) out.push(el('span', 'cc-tags', '여러 업체가 함께 맡음 · 금액은 대표 업체 기준'));
   if ((r.ltc || /^장기/.test(r.lt||'')) && r.this && r.this !== r.amount) out.push(el('span', 'cc-tags', `장기계속계약 · 총 계약금액 ${krw(r.amount)} 기준 (이번 연차분 ${krw(r.this)})`));
   if (r.vers && r.vers.length > 1) {
     if (r.orig) { const up = r.amount - r.orig; out.push(el('span', 'cc-hist', `처음 ${krw(r.orig)} → 지금 ${krw(r.amount)} (${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%)`)); }
@@ -363,7 +363,7 @@ async function pastHistory(id) {
     const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
     c.append(top, t, el('span', 'cc-i', r.inst + (r.atype && r.atype !== '본청' ? ` [${r.atype}]` : '') + (r.ord ? ` · ${+r.ord}차` : '') + ((r.ltc || /^장기/.test(r.lt||'')) && r.this && r.this !== r.amount ? ` · 장기계속(이번 연차분 ${krw(r.this)})` : '')));
     if (r.m && r.m.length > 1) {
-      const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '공동도급 (지분)'));
+      const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '함께 맡은 업체 (나눈 비율)'));
       for (const x of r.m) { const a = el(x.id && x.id !== id ? 'a' : 'span', '', `${x.name} ${x.share != null ? x.share + '%' : ''}`); if (x.id && x.id !== id) a.href = 'vendor.html?v=' + x.id; j.append(a); }
       c.append(j);
     }
@@ -413,7 +413,7 @@ async function vendorPage() {
       const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', (r.odate || r.date) + ' · ' + r.cat), el('b', 'cc-a', krw(r.amount)));
       if (r.chg) { const b = el('i', 'sole-badge', '변경'); b.title = `${+r.ord}차 변경 ${r.date}${r.odate ? ' · 원계약 ' + r.odate : ' · 원계약은 수집 기간 전'} · 금액은 변경 후 총계약금액`; top.append(b); }
       if (r.cat === FEST && r.ftag) top.append(el('i', 'sole-badge ftag', r.ftag));
-      if (r.cat === FEST && /수의/.test(r.method || '')) top.append(el('i', 'sole-badge', '수의계약'));
+      if (r.cat === FEST && /수의/.test(r.method || '')) top.append(el('i', 'sole-badge', '경쟁 없는 계약'));
       const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
       c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : '')));
       c.append(...contractExtra(r));
@@ -522,7 +522,7 @@ async function cityPage() {
       const title = el('td', 'ttl'); if (r.url) { const a = el('a', '', r.title); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; title.append(a); } else title.textContent = r.title;
       if (r.orig && r.orig !== r.amount) { const up = r.amount - r.orig; title.append(el('small', 'cc-hist', ` 1차 ${krw(r.orig)} → ${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%`)); }
       else if (r.vers && r.vers.length > 1) title.append(el('small', 'cc-tags', ` ${r.vers.length}개 차수 확인 · 총액 변화 없음`));
-      if (r.jvm && r.jvm.length > 1) title.append(el('small', 'cc-tags', ' 공동도급: ' + r.jvm.map((m) => `${m.name} ${m.share != null ? m.share + '%' : ''}`).join(', ')));
+      if (r.jvm && r.jvm.length > 1) title.append(el('small', 'cc-tags', ' 함께 맡은 업체: ' + r.jvm.map((m) => `${m.name} ${m.share != null ? m.share + '%' : ''}`).join(', ')));
       tr.append(el('td', '', r.date), el('td', 'hide-narrow', r.inst), title, el('td', '', r.vendor), el('td', 'hide-narrow', r.vregion || '—'), el('td', 'num', r.amount.toLocaleString('ko-KR')));
       tb.append(tr);
     }

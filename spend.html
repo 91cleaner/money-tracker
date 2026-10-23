@@ -9,9 +9,9 @@
 <meta property="og:url" content="https://91cleaner.github.io/money-tracker/spend.html"><meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%92%B0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="assets/style.css?v=202610240600">
-<link rel="stylesheet" href="assets/sec.css?v=202610240600">
-<link rel="stylesheet" href="assets/theme.css?v=202610240600">
+<link rel="stylesheet" href="assets/style.css?v=202610240700">
+<link rel="stylesheet" href="assets/sec.css?v=202610240700">
+<link rel="stylesheet" href="assets/theme.css?v=202610240700">
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body data-page="spend">
@@ -19,28 +19,28 @@
 <main class="wrap">
   <header class="hero">
     <p class="eyebrow">🔍 세금 추적 파일</p>
-    <h1>입찰 없이 나간 돈,<br>어디로 갔을까요?</h1>
+    <h1>경쟁 없이 나간 돈,<br>어디로 갔을까요?</h1>
     <p class="lede">공식 공개 데이터만 씁니다. 여기 나오는 건 <b>데이터상 이상 징후</b>일 뿐, 잘못이 있다는 뜻이 아닙니다. 대부분은 정당한 사유가 있습니다.</p>
   </header>
   <nav class="stabs" id="stabs">
-    <a href="#sole" class="on">수의계약</a><a href="#cost">비용 비교</a><a href="#pay">공공기관 보수</a><a href="#fest">축제·행사</a><a href="#subsidy">보조금</a>
+    <a href="#sole" class="on">경쟁 없는 계약</a><a href="#cost">비용 비교</a><a href="#pay">공공기관 보수</a><a href="#fest">축제·행사</a><a href="#subsidy">보조금</a>
   </nav>
   <div class="cityf"><label>시 선택 <select id="cityf" aria-label="시 선택"><option value="">전국 (모든 시)</option></select></label><p class="small" id="cityf-note"></p></div>
   <section class="sec" id="sole">
     <p class="fixp">⏱ 최근 30일 기준 · 기간 슬라이더와 무관</p>
-    <div class="counter"><span>추적한 수의계약</span><b id="c-sum">—</b><small id="c-meta"></small></div>
+    <div class="counter"><span>추적한 경쟁 없는 계약(수의계약)</span><b id="c-sum">—</b><small id="c-meta"></small></div>
     <pre class="term" id="feed">TRACKING…</pre>
     <div id="spot"></div>
     <h2>추적 파일 · 같은 업체·30일 내 여러 건</h2>
-    <p class="sub small">같은 기관이 같은 업체와 30일 안에 수의계약 3건 이상, 건마다 2천만원 이하, 같은 업체 여러 건 합계가 2천만원을 넘는 경우입니다. 긴급 복구처럼 나눌 수밖에 없는 일도 많습니다.</p>
+    <p class="sub small">같은 기관이 같은 업체와 30일 안에 경쟁 없이 맺은 계약 3건 이상, 건마다 2천만원 이하, 같은 업체 여러 건 합계가 2천만원을 넘는 경우입니다. 긴급 복구처럼 나눌 수밖에 없는 일도 많습니다.</p>
     <div id="cases"></div>
-    <h2>수의계약 비율이 높은 곳</h2>
+    <h2>경쟁 없이 맺은 계약이 많은 곳</h2>
     <div id="share"></div>
   </section>
   <section class="sec" id="cost">
     <p class="fixp">⏱ 최근 30일 기준 · 기간 슬라이더와 무관</p>
     <h2>🧾 비용 비교 영수증</h2>
-    <p class="sub small">같은 종류(제목 키워드)의 수의계약을 85개 시끼리 비교했습니다. 규모·수량 차이는 반영하지 못해 <b>참고용</b>입니다. 해외 비교는 공식 단가 출처를 확보하지 못해 넣지 않았습니다.</p>
+    <p class="sub small">같은 종류(제목 키워드)의 경쟁 없이 맺은 계약을 85개 시끼리 비교했습니다. 규모·수량 차이는 반영하지 못해 <b>참고용</b>입니다. 해외 비교는 공식 단가 출처를 확보하지 못해 넣지 않았습니다.</p>
     <div id="comp"></div>
   </section>
   <section class="sec" id="pay">
@@ -50,12 +50,12 @@
     <p class="src">출처: 알리오(재정경제부 공공기관 경영정보 공개시스템) 주요통계 · 2024년 12월 말 기준 · 단위 천원 · <a href="https://www.alio.go.kr/statistics/employeeAvg.do" target="_blank">원문</a></p>
   </section>
   <section class="sec" id="fest">
-    <p class="fixp">⏱ 2024년 연간 결산 기준 · 기간 슬라이더와 무관</p>
-    <h2>🎪 축제·행사 원가 추적</h2>
+    <p class="fixp">⏱ 2024년 실제로 쓴 돈(결산) 기준 · 기간 슬라이더와 무관</p>
+    <h2>🎪 축제·행사에 든 비용 추적</h2>
     <div class="counter"><span>추적한 축제·행사 비용</span><b id="f-sum">—</b><small id="f-meta"></small></div>
     <pre class="term" id="f-feed">TRACKING…</pre>
     <div id="f-spot"></div>
-    <h3 class="h3">💸 가장 비싼 행사 (중앙값 대비)</h3><div id="f-top"></div>
+    <h3 class="h3">💸 가장 비싼 행사 (전국 중간 비용과 비교)</h3><div id="f-top"></div>
     <h3 class="h3">⏱️ 하루당 비용이 큰 행사</h3><div id="f-day"></div>
     <h3 class="h3">📊 예산 중 행사·축제경비 비율</h3><div id="f-ratio"></div>
     <h3 class="h3">🏛️ 청사 신축 ㎡당 단가 비교</h3><p class="sub small">같은 종류 청사(주민센터·본청 등)끼리 공시된 ㎡당 사업비를 비교했습니다. 증축·승강기처럼 성격이 다른 공사도 섞여 있어 참고용입니다.</p><div id="f-hall"></div>
@@ -64,22 +64,22 @@
   <section class="sec" id="subsidy">
     <p class="fixp">⏱ 2026년 당초예산 기준 · 기간 슬라이더와 무관</p>
     <h2>🤝 지방보조금 추적</h2>
-    <div class="counter"><span>올해 편성된 지방보조금 (추적 중인 시)</span><b id="s-sum">—</b><small id="s-meta"></small></div>
-    <p class="sub small">지방보조금은 법으로 '총액한도'가 정해져 있습니다. 한도 밖 편성(법령·국비 매칭 등 예외)이 큰 곳을 위로 올렸습니다. 받은 단체별 명단은 이 API에 없습니다(보탬e에서 화면 조회만 가능).</p>
+    <div class="counter"><span>올해 예산에 넣은 지방보조금(단체 지원금) (추적 중인 시)</span><b id="s-sum">—</b><small id="s-meta"></small></div>
+    <p class="sub small">지방보조금은 법으로 '총액한도'가 정해져 있습니다. 한도를 넘긴 예산(법령·국비 매칭 등 예외)이 큰 곳을 위로 올렸습니다. 받은 단체별 명단은 이 API에 없습니다(보탬e에서 화면 조회만 가능).</p>
     <div id="s-rows"></div>
   </section>
   <footer>
     <span><small class="unof">개인이 만든 비공식 사이트</small> · 정부·지자체와 관계없음</span>
-    <span>수의계약 자료: 조달청 나라장터 공공데이터개방표준 계약정보(공공데이터포털 15058815). 변경 차수는 빼고 새 계약만 셉니다. 업체 이름이 사람 이름처럼 보이면 '개인사업자'로 가립니다.</span>
+    <span>경쟁 없는 계약(수의계약) 자료: 조달청 나라장터 공공데이터개방표준 계약정보(공공데이터포털 15058815). 변경 차수는 빼고 새 계약만 셉니다. 업체 이름이 사람 이름처럼 보이면 '개인사업자'로 가립니다.</span>
   </footer>
 </main>
-<script src="assets/period.js?v=202610240600"></script>
-<script src="assets/mask.js?v=202610240600"></script>
-<script src="assets/region.js?v=202610240600"></script>
-<script src="assets/sec.js?v=202610240600"></script>
-<script src="assets/bid.js?v=202610240600" defer></script>
-<script src="assets/tabs.js?v=202610240600"></script>
-<script src="assets/nav.js?v=202610240600"></script>
-<script src="assets/fx.js?v=202610240600"></script>
+<script src="assets/period.js?v=202610240700"></script>
+<script src="assets/mask.js?v=202610240700"></script>
+<script src="assets/region.js?v=202610240700"></script>
+<script src="assets/sec.js?v=202610240700"></script>
+<script src="assets/bid.js?v=202610240700" defer></script>
+<script src="assets/tabs.js?v=202610240700"></script>
+<script src="assets/nav.js?v=202610240700"></script>
+<script src="assets/fx.js?v=202610240700"></script>
 </body>
 </html>

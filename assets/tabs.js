@@ -1,6 +1,6 @@
 (()=>{const main=document.querySelector('main');if(!main)return;
 const secs=[...main.querySelectorAll(':scope > section.sec')];if(secs.length<3)return;
-const L={trackteaser:'추적파일',sole:'수의계약',cost:'비용 비교',pay:'공공기관 보수',fest:'축제·행사',subsidy:'보조금'};
+const L={trackteaser:'추적파일',sole:'경쟁 없는 계약',cost:'비용 비교',pay:'공공기관 보수',fest:'축제·행사',subsidy:'보조금'};
 secs.forEach((s,i)=>{if(!s.id)s.id='t'+(i+1);const h=s.querySelector('h2');s.dataset.lbl=L[s.id]||(h?h.textContent.trim():'')||(s.classList.contains('home-alerts')?'눈에 띄는 패턴':'섹션 '+(i+1));});
 let nav=document.getElementById('stabs');
 if(!nav){nav=document.createElement('nav');nav.className='stabs';nav.id='stabs';secs[0].before(nav);}

@@ -107,7 +107,7 @@
       L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + ' ' + krw(f.amount))).addTo(gF);
     });
     const oc = BY[slug] || {}; L.circleMarker(toLL(a), {radius: 11, color: '#ffd60a', weight: 2.5, fill: false, interactive: false, className: 'dv-ring'}).addTo(gF);
-    L.tooltip({permanent: true, direction: 'top', className: 'klab dv-org', offset: [0, -10], interactive: false}).setLatLng(toLL(a)).setContent(esc((oc.name || '') + ' (발주)')).addTo(gF);
+    L.tooltip({permanent: true, direction: 'top', className: 'klab dv-org', offset: [0, -10], interactive: false}).setLatLng(toLL(a)).setContent(esc((oc.name || '') + ' (일을 맡긴 곳)')).addTo(gF);
     setTimeout(declutter, 50); FX.set(arcs, hold);
   };
   // 돈 흐름 입자 (canvas · 도시 화면에서만)
@@ -179,12 +179,40 @@
   // 시트 레이어
   let cur = null;
   const setH = (lv) => sheet.dataset.lv = lv;
-  const src = '<p class="dv-src"><abbr title="데이터상 이상 징후는 위법을 뜻하지 않으며 정상적인 이유가 있을 수 있습니다. 공동도급은 지분이 확인된 계약만 지분대로 나눕니다.">ⓘ</abbr> 출처 조달청 나라장터</p>';
+  const src = '<p class="dv-src"><abbr title="데이터상 이상 징후는 위법을 뜻하지 않으며 정상적인 이유가 있을 수 있습니다. 여러 업체가 함께 맡은 계약은 나눈 비율이 확인된 것만 그 비율대로 나눠 셉니다.">ⓘ</abbr> 출처 조달청 나라장터</p>';
   const share = (title, u) => { u = new URL(u, location.href).href;
     if (navigator.share) return navigator.share({title, url: u}).catch(() => {});
     window.mtCopy ? mtCopy(u) : toast('링크: ' + u); };
   const toast = (m) => { const d = document.createElement('div'); d.className = 'dv-toast'; d.textContent = m; box.append(d); setTimeout(() => d.remove(), 1800); };
   const shb = (t, u) => `<button type="button" class="dv-sh" data-t="${esc(t)}" data-u="${esc(u)}" aria-label="공유">공유</button>`;
+  const CARD = (slug) => { const c = BY[slug]; if (!c) return null; const w = (window.__pdCW && window.__pdCW()) || {}; const to = w.to || '', fr = w.from || '';
+    const arr = Object.values(BY).filter((x) => x.total != null).sort((a, b) => (b.total || 0) - (a.total || 0)); const rank = arr.findIndex((x) => x.slug === slug) + 1;
+    const nEl = body.querySelector('.dv-n'), n = nEl ? +nEl.textContent || 0 : 0; const d = w.d != null ? w.d : 30;
+    const base = location.origin + location.pathname.replace(/[^/]*$/, ''); const link = `${base}?c=${slug}&d=${d}${to ? '&to=' + to : ''}`;
+    return {name: c.name, total: c.total || 0, fr, to, label: (window.__pdLabel && window.__pdLabel()) || `최근 ${d}일`, rank, of: arr.length, n, link}; };
+  const drawCard = (k) => { const cv = document.createElement('canvas'); cv.width = 1200; cv.height = 675; const g = cv.getContext('2d'), F = '"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif';
+    const bg = g.createLinearGradient(0, 0, 1200, 675); bg.addColorStop(0, '#0b1118'); bg.addColorStop(1, '#05080c'); g.fillStyle = bg; g.fillRect(0, 0, 1200, 675);
+    g.strokeStyle = 'rgba(80,140,200,.08)'; g.lineWidth = 1; for (let x = 0; x <= 1200; x += 40) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 675); g.stroke(); } for (let y = 0; y <= 675; y += 40) { g.beginPath(); g.moveTo(0, y); g.lineTo(1200, y); g.stroke(); }
+    g.fillStyle = '#ffb020'; g.fillRect(64, 64, 8, 52); g.textBaseline = 'alphabetic';
+    const T = (t, x, y, sz, col, wt = 700, al = 'left') => { g.font = `${wt} ${sz}px ${F}`; g.fillStyle = col; g.textAlign = al; g.fillText(t, x, y); };
+    T('우리 시 돈 추적기', 92, 102, 30, '#8fa0b3', 600); T(k.label, 1136, 102, 30, '#ffb020', 700, 'right');
+    T(k.name, 64, 205, 64, '#e8eef5', 800);
+    let sz = 132; g.font = `800 ${sz}px ${F}`; while (g.measureText(krw(k.total)).width > 1072 && sz > 80) { sz -= 4; g.font = `800 ${sz}px ${F}`; } T(krw(k.total), 64, 345, sz, '#ffb020', 800);
+    const fd = (x) => x ? x.replace(/-/g, '.') : ''; T(`${fd(k.fr)} ~ ${fd(k.to)} 동안 맺은 계약 금액 합계`, 64, 400, 32, '#cfd8e3', 500);
+    g.fillStyle = 'rgba(255,255,255,.12)'; g.fillRect(64, 436, 1072, 2);
+    T(`전국 ${k.of}개 시 중 ${k.rank}번째로 많이 씀`, 64, 506, 44, '#e8eef5', 700); T(`데이터상 이상 징후 ${k.n.toLocaleString('ko-KR')}건`, 1136, 506, 44, '#ff9f0a', 700, 'right');
+    T('출처: 조달청 나라장터 공공데이터', 64, 600, 26, '#8fa0b3', 500); T(k.link.replace(/^https?:\/\//, '').replace(/\?.*$/, ''), 1136, 600, 26, '#8fa0b3', 600, 'right');
+    return cv; };
+  window.__mtCard = (slug) => { const k = CARD(slug || cur); return k ? drawCard(k).toDataURL('image/png') : null; };
+  const shareCard = async (slug) => { const k = CARD(slug); if (!k) return; const cv = drawCard(k);
+    const text = `우리 시는 ${k.label} 동안 계약에 돈을 얼마나 썼을까? ${k.name}는 ${krw(k.total)}, 전국 ${k.of}개 시 중 ${k.rank}번째로 많이 썼어요. 데이터상 이상 징후 ${k.n}건, 우리 시는 어떨까?`;
+    const blob = await new Promise((r) => cv.toBlob(r, 'image/png')); const file = blob && new File([blob], `money-tracker-${slug}.png`, {type: 'image/png'});
+    if (file && navigator.canShare && navigator.canShare({files: [file]})) { try { await navigator.share({files: [file], text: text + ' ' + k.link, url: k.link}); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+    window.open('https://x.com/intent/post?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(k.link), '_blank', 'noopener');
+    const u = blob ? URL.createObjectURL(blob) : cv.toDataURL('image/png'); const m = document.createElement('div'); m.className = 'dv-shm'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-label', '공유 이미지');
+    m.innerHTML = `<div class="dv-shm-b"><img alt="${esc(k.name)} 공유 이미지" src="${u}"><div class="dv-shm-a"><a class="dv-shm-s" download="money-tracker-${slug}.png" href="${u}">이미지 저장</a><button type="button" class="dv-shm-x">닫기</button></div></div>`;
+    m.onclick = (e) => { if (e.target === m || e.target.closest('.dv-shm-x')) m.remove(); }; document.body.append(m); };
+  body.addEventListener('click', (e) => { const b = e.target.closest('.dv-shc'); if (b && cur) { e.stopPropagation(); shareCard(cur); } });
   box.addEventListener('click', (e) => { const b = e.target.closest('.dv-sh'); if (b) { e.stopPropagation(); share(b.dataset.t, b.dataset.u); } });
   const ex = (on) => { sheet.dataset.ex = on ? '1' : '0'; if (!on) sheet.scrollTop = 0; window.__inv && __inv(); };
   root.querySelector('.dv-grab').onclick = () => ex(sheet.dataset.ex !== '1');
@@ -241,14 +269,14 @@
     cur = slug; setH(1); dim(slug);
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
     body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)}</p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
-      <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">외지 ${out}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'}</span> ${shb(c.name + ' 계약 돈', 'c/' + slug + '.html')} <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
+      <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">다른 지역 업체 ${out}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}</span> <button type="button" class="dv-sh dv-shc" aria-label="이 지역 결과 공유">공유</button> <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
       <div class="dv-more"><div class="dv-t3">${top3(f)}</div><p class="dv-k">데이터상 이상 징후</p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
     ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
     body.querySelectorAll('.dv-nav').forEach((b) => (b.onclick = () => go({c: sib(slug, +b.dataset.d)}, true)));
     const box2 = body.querySelector('.dv-cards');
     try { const d = await get('data/city/' + slug + '.json'); if (cur !== slug) return;
-      if (window.__pdCW && window.__pdCW() && d.rows) { const f2 = reFlow(slug, d.rows); fl.cities[slug] = f2; const o2 = f2.known ? Math.round((1 - f2.local / f2.known) * 100) : null; const mt = body.querySelector('.dv-meta'); if (mt) mt.innerHTML = `${PL()} · ${c.total ? (o2 != null ? `<b class="dv-out">외지 ${o2}%</b>` : '외지 비율 확인 중') : '아직 수집된 계약 없음'}`; const t3 = body.querySelector('.dv-t3'); if (t3) t3.innerHTML = top3(f2); drawFlows(slug); }
+      if (window.__pdCW && window.__pdCW() && d.rows) { const f2 = reFlow(slug, d.rows); fl.cities[slug] = f2; const o2 = f2.known ? Math.round((1 - f2.local / f2.known) * 100) : null; const mt = body.querySelector('.dv-meta'); if (mt) mt.innerHTML = `${PL()} · ${c.total ? (o2 != null ? `<b class="dv-out">다른 지역 업체 ${o2}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}`; const t3 = body.querySelector('.dv-t3'); if (t3) t3.innerHTML = top3(f2); drawFlows(slug); }
       const A = (d.alerts || []).filter((a) => a.kind !== 'big' && (!gu || (a.detail || '').includes(gu)));
       body.querySelector('.dv-n').textContent = A.length; A.splice(8); body.querySelector('.dv-chip').hidden = !A.length;
       box2.innerHTML = A.length ? A.map((a, i) => `<button type="button" class="dv-card" data-i="${i}"><b>${esc(a.title)}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}</span><em>${krw(a.amount)} ›</em></button>`).join('') : '<p class="small">최근 눈에 띄는 패턴이 없습니다.</p>';
@@ -268,7 +296,7 @@
       body.innerHTML = `<div class="dv-vh"><button type="button" class="dv-back" aria-label="${esc(BY[slug].name)}로 돌아가기">‹</button><p class="dv-name">${esc(v.name)}</p>${shb(v.name + ' 계약', 'vendor.html?v=' + vid)}</div><p class="dv-v" style="text-align:center">${krw(v.total)}</p>
         <p class="dv-l">${esc((v.region || '소재지 확인 중').split(' ').slice(-1)[0])} · <button type="button" class="dv-chip">계약 ${v.count}건</button></p>
         <div class="dv-more">${a ? `<div class="dv-card on"><b>${esc(a.title)}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}</span></div>` : ''}
-        <div class="dv-rows">${rows.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(r.date)} · ${esc((window.maskT || ((x) => x))(r.title))}${r.jshare ? ` <i class="jvb">공동도급 ${r.jshare}%</i>` : ''}</span><b>${krw(r.amount)} 원문 ›</b></a>`).join('')}</div>
+        <div class="dv-rows">${rows.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(r.date)} · ${esc((window.maskT || ((x) => x))(r.title))}${r.jshare ? ` <i class="jvb">함께 맡음 ${r.jshare}%</i>` : ''}</span><b>${krw(r.amount)} 원문 ›</b></a>`).join('')}</div>
         <a class="gobtn" href="vendor.html?v=${vid}">업체 전체 보기</a>${src}</div>`;
       ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
       body.querySelector('.dv-back').onclick = () => history.back();

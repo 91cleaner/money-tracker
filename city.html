@@ -12,9 +12,9 @@
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/style.css?v=202610240600">
-<link rel="stylesheet" href="assets/sec.css?v=202610240600">
-<link rel="stylesheet" href="assets/theme.css?v=202610240600">
+<link rel="stylesheet" href="assets/style.css?v=202610240700">
+<link rel="stylesheet" href="assets/sec.css?v=202610240700">
+<link rel="stylesheet" href="assets/theme.css?v=202610240700">
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body data-page="city">
@@ -36,7 +36,7 @@
     <div class="stat"><span class="v" id="k-alerts">—</span><span class="k">데이터상 이상 징후</span><span class="s">위법을 뜻하지 않음 · <a href="#alerts">무슨 뜻?</a></span></div>
   </section>
   <p class="bignote" id="bignote" hidden></p>
-  <p class="tracklinks">이 시의 추적파일: <a href="spend.html#sole">수의계약</a> <a href="spend.html#fest">축제·행사</a> <a href="spend.html#subsidy">보조금</a> <a href="spend.html#cost">비용 비교</a></p>
+  <p class="tracklinks">이 시의 추적파일: <a href="spend.html#sole">경쟁 없는 계약</a> <a href="spend.html#fest">축제·행사</a> <a href="spend.html#subsidy">보조금</a> <a href="spend.html#cost">비용 비교</a></p>
 
   <section class="sec" id="alerts">
     <h2>데이터상 이상 징후</h2>
@@ -45,7 +45,7 @@
       <summary>이 표시들은 무슨 뜻인가요?</summary>
       <ul>
         <li><b>같은 날 나눠진 계약</b>: 같은 업체와 같은 이름의 계약을 같은 날 여러 건으로 맺은 경우입니다. 금액이 나뉘면 경쟁 입찰 없이 계약할 수 있는 기준 아래로 내려갈 수 있어서 감사에서 자주 살펴보는 모양입니다.</li>
-        <li><b>금액선 근처</b>: 추정가격 2천만원 이하는 견적을 한 곳에서만 받아도 계약할 수 있습니다(수의계약: 경쟁 입찰 없이 기관이 업체를 골라 맺는 계약). 그 기준 바로 아래 금액입니다.</li>
+        <li><b>금액선 근처</b>: 추정가격(기관이 미리 어림한 금액) 2천만원 이하는 견적을 한 곳에서만 받아도 계약할 수 있습니다(수의계약: 경쟁 입찰 없이 기관이 업체를 골라 맺는 계약). 그 기준 바로 아래 금액입니다.</li>
         <li><b>같은 업체 반복</b>: 최근 90일 동안 같은 업체가 5번 이상 계약한 경우입니다.</li>
         <li><b>1억 이상</b>: 큰 돈이 들어간 계약입니다. 문제가 있다는 뜻이 아니라 눈여겨볼 만하다는 뜻입니다.</li>
       </ul>
@@ -66,7 +66,7 @@
       <div class="legend"><span><b class="dot in"></b>우리 시 업체 <b id="share-in-t">—</b></span><span><b class="dot out"></b>다른 지역 업체 <b id="share-out-t">—</b></span></div>
     </div>
     <div class="bars" id="regions"></div>
-    <p class="sub">업체 주소는 나라장터 업체정보에서 시·군·구까지만 가져옵니다. 주소가 확인된 계약만 셉니다. <b>우리 시 업체</b>는 같은 시(특별·광역시는 그 시 전체)에 있는 업체입니다. 공동도급은 참여 업체 지분이 확인된 계약만 지분대로 나누고, 나머지는 대표 업체 기준입니다. 2026년 7월 전남광주통합특별시 출범 뒤에도 광주 5개 구는 '광주', 전남 시·군은 '전남'으로 묶어 셉니다.</p>
+    <p class="sub">업체 주소는 나라장터 업체정보에서 시·군·구까지만 가져옵니다. 주소가 확인된 계약만 셉니다. <b>우리 시 업체</b>는 같은 시(특별·광역시는 그 시 전체)에 있는 업체입니다. 여러 업체가 함께 맡은 계약(공동도급)은 나눈 비율이 확인된 것만 그 비율대로 나누고, 나머지는 대표 업체 기준입니다. 2026년 7월 전남광주통합특별시 출범 뒤에도 광주 5개 구는 '광주', 전남 시·군은 '전남'으로 묶어 셉니다.</p>
   </section>
 
   <section class="sec">
@@ -109,15 +109,15 @@
     <span>기관·업체 해명은 받는 대로 해당 항목 아래에 싣습니다. <a href="./#principles">사이트 원칙 보기</a></span>
   </footer>
 </main>
-<script src="assets/period.js?v=202610240600"></script>
-<script src="assets/mask.js?v=202610240600"></script>
-<script src="assets/region.js?v=202610240600"></script>
-<script src="assets/app.js?v=202610240600"></script>
+<script src="assets/period.js?v=202610240700"></script>
+<script src="assets/mask.js?v=202610240700"></script>
+<script src="assets/region.js?v=202610240700"></script>
+<script src="assets/app.js?v=202610240700"></script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/map.js?v=202610240600"></script>
-<script src="assets/bid.js?v=202610240600" defer></script>
-<script src="assets/tabs.js?v=202610240600"></script>
-<script src="assets/nav.js?v=202610240600"></script>
-<script src="assets/fx.js?v=202610240600"></script>
+<script src="assets/map.js?v=202610240700"></script>
+<script src="assets/bid.js?v=202610240700" defer></script>
+<script src="assets/tabs.js?v=202610240700"></script>
+<script src="assets/nav.js?v=202610240700"></script>
+<script src="assets/fx.js?v=202610240700"></script>
 </body>
 </html>

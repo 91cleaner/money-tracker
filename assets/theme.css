@@ -298,3 +298,7 @@ small,.src small,.row small,.rcp small,.case small,.est small,sub,sup{font-size:
 @media (min-width:900px){#dive .dv-map{height:calc(100vh - 260px)!important;height:calc(100dvh - 260px)!important;min-height:420px!important}}
 @media (max-width:899px){#dive .dv-map{height:max(240px,calc(100dvh - 328px))!important}#dive{min-height:calc(100dvh - 92px);margin-bottom:24px}}
 .fixp{display:inline-block;margin:0 0 8px;padding:4px 10px;border:1px solid rgba(255,176,32,.55);border-radius:999px;background:rgba(255,176,32,.12);color:#ffb020;font:700 12px/1.4 var(--sans,system-ui)}
+.dv-shc{background:#f2f4f7!important;color:#0a0f14!important;border-color:#f2f4f7!important;font-weight:700;font-size:13px}
+.dv-shm{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:16px}
+.dv-shm-b{background:#0b1118;border:1px solid #2a3540;border-radius:18px;padding:14px;max-width:720px;width:100%}.dv-shm-b img{width:100%;border-radius:10px;display:block}
+.dv-shm-a{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}.dv-shm-a a,.dv-shm-a button{min-height:44px;padding:0 18px;border-radius:999px;font:700 14px/44px var(--sans,system-ui);border:1px solid #33414e;background:#0f151b;color:#e8eef5;text-decoration:none}.dv-shm-a a{background:#f2f4f7;color:#0a0f14;border-color:#f2f4f7}
