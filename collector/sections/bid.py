@@ -92,6 +92,10 @@ def main():
     except StopIteration:
         print("오늘 몫의 조회 한도 도달, 내일 이어서")
     print(f"조회: 계약정보 {used['c']}건, 입찰·낙찰 {used['b']}건 · 입찰정보 있는 계약 {sum(1 for v in cache.values() if v.get('n'))}건")
+    for c in cache.values():  # 낙찰률이 상식 범위(60~100.5%) 밖이면 확인할 수 없는 값으로 보고 숨김(원래 값은 rate_raw)
+        rt = c.get("rate") if c.get("rate") is not None else c.get("rate_raw")
+        if rt is not None and not (60 <= rt <= 100.5):
+            c["rate_raw"] = rt; c["rate"] = None; c["rate_note"] = "확인 불가(낙찰률이 계약금액과 맞지 않음)"
     out = {"updated": now.isoformat(timespec="seconds"), "rows": dict(sorted(cache.items())),
            "source": "조달청 나라장터 계약정보서비스·입찰공고정보서비스·낙찰정보서비스(공공데이터포털)"}
     try: old = json.load(open(OUT)); same = old.get("rows") == out["rows"]

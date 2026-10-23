@@ -125,7 +125,7 @@ def agency_type(inst, city):
         return "자치군"  # 광역시 안의 군(군위·달성·기장·울주·강화·옹진): 별도 자치단체
     if re.search(r"(?<!광역)(?<!특별)[가-힣]+구(청)?$", t.split(" ")[-1]) and t.count(" ") >= 1:
         return "자치구" if city and " " not in city.get("short", " ") else "일반구"
-    if re.search(r"사업소|센터|관리소|보건소|도서관|박물관|미술관|병원|청사|수도|하수|농업기술", t):
+    if re.search(r"사업소|본부|센터|관리소|보건소|도서관|박물관|미술관|병원|청사|수도|하수|농업기술", t):
         return "사업소"
     return "본청"
 
@@ -339,9 +339,12 @@ def alerts_for(rows, explanations):
             out.append({"key": "rep-" + hid(v if v != "개인사업자" else vk), "kind": "repeat", "title": f"같은 업체 {len(rs)}건 반복 (최근 {KEEP_DAYS}일)",
                         "detail": f"{v} · " + ", ".join(i for i, _ in insts), "amount": sum(x["amount"] for x in rs), "ids": [x["id"] for x in rs][:20]})
     for r in rows:  # 변경 계약: 1차(없으면 확인된 첫 차수) 총 계약금액보다 크게 늘어난 경우 (중립 표시)
+        if r.get("tot_missing"):
+            continue  # 총계약금액이 0으로만 온 계약: 금차 금액(this)으로 증가율을 만들지 않음
         h = r.get("hist") or []
-        if r.get("orig"):
-            h = [{"ord": "01", "amount": r["orig"]}]
+        vt = [v for v in (r.get("vers") or []) if v.get("tot")]
+        if vt:
+            h = [{"ord": vt[0]["ord"], "amount": vt[0]["tot"]}]
         if h and h[0]["amount"] > 0:
             o = h[0]["amount"]; up = r["amount"] - o
             if up >= 10_000_000 and up / o >= 0.1:
@@ -350,7 +353,7 @@ def alerts_for(rows, explanations):
                 if len(vs) >= 2 and int(vs[-1]["ord"]) - int(vs[-2]["ord"]) == 1:
                     dd = vs[-1]["tot"] - vs[-2]["tot"]
                     last = f" · 직전 {int(vs[-2]['ord'])}차 대비 {'+' if dd > 0 else '−' if dd < 0 else '±'}{man(abs(dd))}"
-                out.append({"key": "inc-" + cno(r), "kind": "increase", "title": f"데이터상 이상 징후: 계약 금액 증가 ({'1차' if r.get('orig') else '확인된 첫 ' + str(int(h[0]['ord'])) + '차'} 대비 +{up / o * 100:.0f}%{last})",
+                out.append({"key": "inc-" + cno(r), "kind": "increase", "title": f"데이터상 이상 징후: 계약 금액 증가 ({'1차' if h[0]['ord'] == '01' else '확인된 첫 ' + str(int(h[0]['ord'])) + '차'} 대비 +{up / o * 100:.0f}%{last}" + (f" · 확인된 차수 기준({r['vers_gap']}차 자료 없음)" if r.get("vers_gap") else "") + ")",
                             "detail": f"{r['date']} · {r['inst']} · {r['title']} · {r['vendor']}", "amount": r["amount"], "orig": o, "ids": [r["id"]]})
     big = sorted([r for r in rows if r["amount"] >= 100_000_000], key=lambda r: -r["amount"])[:10]
     for r in big:
@@ -412,10 +415,18 @@ def man(n):
     return f"{round(n / 10000):,}만" if n >= 10000 else f"{n:,}원"
 
 
-def method_label(r):
+FAILBID = "유찰 후 수의계약(추정)"
+
+
+def method_label(r, bid=None):
     m = r.get("method") or ""
-    # 공고 번호가 붙은 수의계약이면서 소액 수의 한도(2억)를 넘으면 경쟁입찰이 유찰된 뒤 수의로 바뀐 것으로 본다
-    return "유찰 후 수의계약(추정)" if "수의" in m and "유찰" not in m and r.get("ntce") and (r.get("amount") or 0) > 200_000_000 else m
+    if m == FAILBID:
+        m = "수의계약"  # 예전에 붙인 추정 표시는 원래 방법으로 되돌린 뒤 다시 판단
+    # 공고 번호가 붙은 수의계약이면서 소액 수의 한도(2억)를 넘으면 경쟁입찰이 유찰된 뒤 수의로 바뀐 것으로 본다.
+    # 단 입찰 정보(sec_bid)에서 공고 단계 계약방법이 이미 수의계약이면 처음부터 수의(수의계약 안내공고)라 유찰 아님.
+    if bid and "수의" in (bid.get("method") or ""):
+        return m
+    return FAILBID if "수의" in m and "유찰" not in m and r.get("ntce") and (r.get("amount") or 0) > 200_000_000 else m
 
 
 AMOUNT_BASIS = "이번 차수 금액: 장기계속(lt에 '장기' 포함, 또는 lt가 계속비·빈 값이어도 이번 차수 금액<전체 계약금액인 계약)은 이번 차수 금액, 그 밖은 계약금액. 모든 행의 tot_amt = 전체 계약금액(장기계속이 아니면 amount와 같음)"
@@ -445,7 +456,7 @@ def set_basis(r):
 
 def annotate(r, c, vendors):
     """계약정보서비스 결과를 행에 붙임: 차수별 금액(vers), 1차 총액(orig), 장기계속 구분(lt), 공동도급 참여 업체(jvm)."""
-    for k in ("vers", "orig", "jvm"):
+    for k in ("vers", "orig", "jvm", "tot_missing", "vers_gap"):
         r.pop(k, None)
     r["ltc"] = bool("장기" in (r.get("lt") or "") or (r.get("this") and max(r.get("amount") or 0, r.get("tot_amt") or 0) > r["this"]))  # 장기계속: 금차 < 총액
     r["jvp"] = r.get("jv") is True  # 공동도급인데 참여 업체 목록은 계약정보서비스 조회 대기(아래에서 받으면 해제)
@@ -456,6 +467,20 @@ def annotate(r, c, vendors):
     if o and o not in {v["ord"] for v in vs}:  # 이력 조회가 아직 못 따라온 최신 차수: 기본 계약 자료의 금액으로 채움
         vs = sorted(vs + [{"ord": o, "date": r.get("date"), "tot": r.get("amount"), "this": r.get("this")}], key=lambda v: v["ord"])
     r["vers"] = [{k: v.get(k) for k in ("ord", "date", "tot", "this")} for v in vs]
+    for v in r["vers"]:
+        if not v.get("tot"):
+            v["tot"] = None  # 총계약금액 0 = 자료 없음(금차 금액으로 대신하지 않음)
+    r["tot_missing"] = all(v["tot"] is None for v in r["vers"])
+    od = sorted(int(v["ord"]) for v in r["vers"] if str(v["ord"]).isdigit())
+    miss = [n for n in range(od[0], od[-1] + 1) if n not in set(od)] if od else []
+    if od and od[0] > 1:
+        miss = list(range(1, od[0])) + miss
+    gaps, i = [], 0
+    while i < len(miss):  # 연속 구간으로: [7..15] → '7~15'
+        j = i
+        while j + 1 < len(miss) and miss[j + 1] == miss[j] + 1: j += 1
+        gaps.append(f"{miss[i]}~{miss[j]}" if j > i else str(miss[i])); i = j + 1
+    r["vers_gap"] = "·".join(gaps) or None  # 이력에 빠진 차수(확인된 차수 기준 표시용)
     if vs[0]["ord"] == "01" and vs[0].get("tot"):
         r["orig"] = vs[0]["tot"]
     r["lt"] = vs[-1].get("lt") or r.get("lt")
@@ -615,6 +640,7 @@ def main():
 
     cutoff = (now - timedelta(days=KEEP_DAYS)).strftime("%Y-%m-%d")
     chg = load(os.path.join(DATA, "chg.json"), {})
+    bids = load(os.path.join(DATA, "sec_bid.json"), {}).get("rows", {})  # 공고 단계 계약방법(유찰 추정 판단용)
     if KEY:  # 계약정보서비스: 차수별 금액·공동도급 지분 (하루 한도 따로)
         try:
             allrows = []
@@ -665,6 +691,7 @@ def main():
             else:
                 r["vregion"] = sido_fix(legacy(r.get("vregion")))
             r["atype"] = agency_type(r.get("inst"), c)
+            r["method"] = method_label(r, bids.get(cno(r)))
             r["ann"] = bool(r.get("ntce"))  # 공고 있음/없음: 입찰공고 번호가 있으면 공고를 거친 계약
             annotate(r, chg.get(cno(r)), vendors)
             set_odate(r)
@@ -675,15 +702,19 @@ def main():
         # 기간 전에 맺은 계약의 변경(차수) 기록은 changes 에 따로 두고 '변경' 표시로만 보여 준다.
         # 변경 차수(ord 01·02…)는 원계약이 기간 안에 있어도 신규 합계에서 빼고 changes 로(최신 차수 금액이 신규로 잡히지 않게).
         # 시 밖 기관(자치구·공단·소방·교육·대학)은 시 합계에서 빼고 ext 에 따로 둔다(기관 유형 표시).
-        changes = [r for r in allr if not r.get("odate") or (r.get("ord") or "00") != "00"]
-        cids = {r["id"] for r in changes}
+        chg_all = [r for r in allr if not r.get("odate") or (r.get("ord") or "00") != "00"]
+        cids = {r["id"] for r in chg_all}
+        # 시 밖 기관(자치구 등)의 변경 계약은 시의 changes·징후에 넣지 않고 ext_chg 에 따로(합계에는 안 들어감)
+        changes = [r for r in chg_all if r.get("atype") not in EXT_ATYPE]
+        ext_chg = [r for r in chg_all if r.get("atype") in EXT_ATYPE]
         ext = [r for r in allr if r["id"] not in cids and r.get("atype") in EXT_ATYPE]
         rows = [r for r in allr if r["id"] not in cids and r.get("atype") not in EXT_ATYPE]
         ids_new = {r["id"] for r in rows}
-        al = [a for a in alerts_for(allr, explanations) if a["kind"] == "increase" or all(i in ids_new for i in a.get("ids", []))]
+        city_all = [r for r in allr if r.get("atype") not in EXT_ATYPE]
+        al = [a for a in alerts_for(city_all, explanations) if a["kind"] == "increase" or all(i in ids_new for i in a.get("ids", []))]
         summ = summarize(c, rows, vendors)
         save(path, {"city": {k: c[k] for k in ("slug", "name", "short", "province")}, "updated": now.isoformat(), "summary": summ,
-                    "alerts": al, "rows": rows, "changes": changes, "ext": ext})
+                    "alerts": al, "rows": rows, "changes": changes, "ext": ext, "ext_chg": ext_chg})
         flagged = [a for a in al if a["kind"] != "big"]
         by_cat = defaultdict(int); n_cat = defaultdict(int); cat_of = {}
         for r in rows:

@@ -182,6 +182,29 @@ class Gate(unittest.TestCase):
         self.assertEqual(collect.agency_type("서울특별시 의회사무처", metro), "의회")
         self.assertEqual(collect.agency_type("대구광역시 의회사무처", metro), "의회")
 
+    def test_28_ext_changes_and_failbid(self):
+        self.assertTag(lambda s: s["city"]["a"]["changes"].append({**row("C9", ord_="03"), "atype": "자치구", "inst": "서울특별시 송파구"}), "[28 시 밖 기관]")
+        import collect
+        self.assertEqual(collect.method_label({"method": "수의계약", "ntce": "R26BK1", "amount": 9e8}, {"method": "수의계약"}), "수의계약")
+        self.assertEqual(collect.method_label({"method": "수의계약", "ntce": "R26BK1", "amount": 9e8}, {"method": "일반경쟁"}), collect.FAILBID)
+        self.assertEqual(collect.method_label({"method": collect.FAILBID, "ntce": "R26BK1", "amount": 9e8}, {"method": "수의계약"}), "수의계약")
+        self.assertEqual(collect.agency_type("인천광역시 도시철도건설본부", {"short": "인천"}), "사업소")
+
+    def test_28_vers_gap_and_tot_missing(self):
+        import collect
+        r = {"amount": 7e9, "ord": "06"}
+        collect.annotate(r, {"v": [{"ord": f"{i:02d}", "tot": 0, "this": 6e9} for i in range(1, 7)]}, {})
+        self.assertTrue(r["tot_missing"])
+        self.assertEqual([a for a in collect.alerts_for([{**r, "id": "X06", "no": "X", "date": "2026-10-01", "inst": "i", "title": "t", "vendor": "v"}], {}) if a["kind"] == "increase"], [])
+        r = {"amount": 24685000000, "ord": "16"}
+        collect.annotate(r, {"v": [{"ord": o, "tot": t} for o, t in (("01", 4860440000), ("02", 1e10), ("03", 1e10), ("04", 1e10), ("05", 1e10), ("06", 1e10), ("16", 24685000000))]}, {})
+        self.assertEqual(r["vers_gap"], "7~15")
+        a = [a for a in collect.alerts_for([{**r, "id": "Y16", "no": "Y", "date": "2026-10-01", "inst": "i", "title": "t", "vendor": "v"}], {}) if a["kind"] == "increase"][0]
+        self.assertIn("1차 대비", a["title"]); self.assertIn("확인된 차수 기준(7~15차 자료 없음)", a["title"])
+        r = {"amount": 26524960000, "ord": "07"}
+        collect.annotate(r, {"v": [{"ord": "03", "tot": 17705195800}, {"ord": "07", "tot": 26524960000}]}, {})
+        self.assertEqual(r["vers_gap"], "1~2·4~6")
+
     def test_sectors_narrow(self):
         self.assertIsNone(kw.sole_sector("생활폐기물 감량 연구용역"))
         self.assertIsNone(kw.sole_sector("가로등 실시설계 용역"))

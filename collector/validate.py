@@ -286,6 +286,22 @@ def check(root, prev=None):
         bad = [r.get("inst") for r in d.get("rows", []) if LOCAL_COUNCIL.search(r.get("inst") or "") and r.get("atype") not in ("자치구", "자치군", "일반구")]
         if bad: E(f"[27 구의회] {slug} 구·군 의회 계약 {len(bad)}건이 시 합계에 들어감, 예: {bad[:2]}")
 
+    # (28) 시 changes·징후에 시 밖 기관(자치구 등) 계약이 섞이면 실패 / 유찰 추정 오표시 / 낙찰률 범위
+    bidp = os.path.join(root, "sec_bid.json")
+    bids = _load(bidp).get("rows", {}) if os.path.exists(bidp) else {}
+    for slug, d in cities.items():
+        bad = [r.get("inst") for r in d.get("changes", []) if r.get("atype") in EXT_ATYPE]
+        if bad: E(f"[28 시 밖 기관] {slug} changes 에 시 밖 기관 변경 계약 {len(bad)}건, 예: {bad[:2]}")
+        ext_ids = {r["id"] for r in d.get("ext", []) + d.get("ext_chg", [])}
+        ba = [a["key"] for a in d.get("alerts", []) if any(i in ext_ids for i in a.get("ids", []))]
+        if ba: E(f"[28 시 밖 기관] {slug} 징후에 시 밖 기관 계약 {len(ba)}건, 예: {ba[:2]}")
+        fb = [r.get("no") for r in d.get("rows", []) + d.get("changes", []) + d.get("ext", []) if r.get("method") == "유찰 후 수의계약(추정)" and "수의" in ((bids.get(r.get("no") or "") or {}).get("method") or "")]
+        if fb: E(f"[28 유찰 추정] {slug} 공고 단계부터 수의계약인데 '유찰 후' 표시 {len(fb)}건, 예: {fb[:3]}")
+        tm = [a["key"] for a in d.get("alerts", []) if a.get("kind") == "increase" and any(r.get("tot_missing") for r in d.get("rows", []) + d.get("changes", []) if r["id"] in a.get("ids", []))]
+        if tm: E(f"[28 증가율] {slug} 총계약금액 없는 계약으로 증가율 계산 {tm[:2]}")
+    br = [k for k, v in bids.items() if v.get("rate") is not None and not (60 <= v["rate"] <= 100.5)]
+    if br: E(f"[28 낙찰률] 상식 범위 밖 낙찰률 {len(br)}건, 예: {br[:3]}")
+
     # (26) 오늘의 한 문제 고정: 이전에 있던 날짜는 그대로여야 함(지워지거나 숫자·도시가 바뀌면 실패)
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "sections"))
     from daily_q import REVISE_ONCE
