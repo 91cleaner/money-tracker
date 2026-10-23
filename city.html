@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="assets/theme.css">
 </head>
 <body data-page="city">
-<header class="stickybar"><a class="back" href="./">‹ 전체</a><span class="upd">갱신 <span id="updated">—</span></span></header>
+<header class="stickybar"><a class="back" href="./">‹ 홈</a><span class="upd">갱신 <span id="updated">—</span></span></header>
 <main class="wrap">
 
   <header class="hero">
@@ -28,13 +28,15 @@
   <section class="stats">
     <div class="stat"><span class="v" id="k-total">—</span><span class="k">쓴 돈</span><span class="s" id="k-count">—</span></div>
     <div class="stat"><span class="v" id="k-out">—</span><span class="k">다른 지역 업체로 간 비율</span><span class="s" id="k-local-s">—</span></div>
-    <div class="stat"><span class="v" id="k-alerts">—</span><span class="k">데이터상 이상 징후</span><span class="s">위법을 뜻하지 않음</span></div>
+    <div class="stat"><span class="v" id="k-alerts">—</span><span class="k">데이터상 이상 징후</span><span class="s">위법을 뜻하지 않음 · <a href="#alerts">무슨 뜻?</a></span></div>
   </section>
+  <p class="bignote" id="bignote" hidden></p>
+  <p class="tracklinks">이 시의 추적파일: <a href="spend.html#sole">수의계약</a> <a href="spend.html#fest">축제·행사</a> <a href="spend.html#subsidy">보조금</a> <a href="spend.html#cost">비용 비교</a></p>
 
   <section class="sec" id="alerts">
     <h2>데이터상 이상 징후</h2>
     <p class="sub">공개된 숫자에서 눈에 띄는 패턴을 자동으로 모은 것입니다. 위법이나 비리를 뜻하지 않으며, 정상적인 이유가 있을 수 있습니다. 출처 원문과 기관 설명을 함께 확인하세요.</p>
-    <details class="explain">
+    <details class="explain" open>
       <summary>이 표시들은 무슨 뜻인가요?</summary>
       <ul>
         <li><b>같은 날 나눠진 계약</b>: 같은 업체와 같은 이름의 계약을 같은 날 여러 건으로 맺은 경우입니다. 금액이 나뉘면 경쟁 입찰 없이 계약할 수 있는 기준 아래로 내려갈 수 있어서 감사에서 자주 살펴보는 모양입니다.</li>
@@ -75,7 +77,8 @@
   </section>
 
   <section class="sec" id="contracts">
-    <details class="all">
+    <h2>계약 목록</h2>
+    <details class="all" open>
       <summary><span>계약 전체 보기</span><span class="sub" id="all-n"></span></summary>
       <input class="search" id="cq" type="search" placeholder="계약명·업체·기관·지역 검색" aria-label="계약 검색">
       <p class="sub">제목을 누르면 정렬, 계약명을 누르면 나라장터 원문으로 갑니다.</p>

@@ -228,9 +228,11 @@ async function homePage() {
 }
 
 // ---------- 전국 업체 순위 ----------
+const PROV_FULL={서울:'서울특별시',부산:'부산광역시',대구:'대구광역시',인천:'인천광역시',광주:'광주광역시',대전:'대전광역시',울산:'울산광역시',세종:'세종특별자치시',경기:'경기도',강원:'강원특별자치도',강원도:'강원특별자치도',충북:'충청북도',충남:'충청남도',전북:'전북특별자치도',전라북도:'전북특별자치도',전남:'전라남도',경북:'경상북도',경남:'경상남도',제주:'제주특별자치도',제주도:'제주특별자치도'};
+const normProv=(p)=>PROV_FULL[p]||PROV_FULL[(p||'').replace(/(특별자치시|특별자치도|특별시|광역시)$/,'')]||p;
 function rankList(box, d, opts = {}) {
   let sortK = 'total', prov = '';
-  const PROV = (r) => (r.region || '').split(' ')[0];
+  const PROV = (r) => normProv((r.region || '').split(' ')[0]);
   const draw = () => {
     box.replaceChildren();
     let list = d.vendors.filter((v) => !prov || PROV(v) === prov);
@@ -327,12 +329,12 @@ async function pastHistory(id) {
   let p = null, m = null;
   try { m = await getJSON('data/past/_meta.json'); } catch (e) { return; }
   try { p = await getJSON('data/past/' + id + '.json'); } catch (e) { p = null; }
-  const sec = $('#v-past-sec'); if (!sec) return; sec.hidden = false;
+  const sec = $('#v-past-sec'); if (!sec) return;
   const range = m && m.oldest ? `${m.oldest.replaceAll('-', '.')} ~ ${m.newest.replaceAll('-', '.')}` : '';
   $('#v-past-note').textContent = range ? `지금까지 ${range} (${m.days_done}일치)를 모았습니다. 매일 조금씩 더 과거로 채워집니다.` : '과거 계약을 하루씩 거슬러 올라가며 모으는 중입니다.';
   const box = $('#v-past'); box.replaceChildren();
   const rows = (p && p.rows) || [];
-  if (!rows.length) { box.append(el('p', 'note', '아직 모은 기간 안에서 찾은 계약이 없습니다.')); return; }
+  if (!rows.length) { box.append(el('p', 'note', '최근 계약은 위 \'계약 목록\'에 모두 있어요. 여기는 그보다 오래된 계약을 모으는 곳인데, 이 업체의 오래된 계약은 아직 찾지 못했어요. 매일 더 과거로 모으는 중이에요.')); return; }
   const tot = rows.reduce((a, r) => a + (r.tot || 0), 0);
   box.append(el('p', 'note', `${rows.length.toLocaleString('ko-KR')}건 · 총 계약금액 합계 ${krw(tot)}`));
   for (const r of rows.slice(0, 200)) {
@@ -378,7 +380,7 @@ async function vendorPage() {
       const l = el('span', 'cn', c.cat); l.append(el('small', '', c.count.toLocaleString('ko-KR') + '건'));
       b.append(l, el('span', 'cp', pct(c.amount / (d.total || 1))), el('span', 'ca', krw(c.amount)));
       const bar = el('i', 'cbar'); bar.style.width = Math.max(2, (c.amount / (d.total || 1)) * 100) + '%'; b.append(bar);
-      b.addEventListener('click', () => { cat = cat === c.cat ? null : c.cat; drawCats(); drawRows(); $('#v-rows-sec').scrollIntoView({behavior: 'smooth'}); });
+      b.addEventListener('click', () => { cat = cat === c.cat ? null : c.cat; drawCats(); drawRows(); location.hash = 'v-rows-sec'; });
       cb.append(b);
     }
   };
@@ -428,7 +430,11 @@ async function cityPage() {
     $('#lede').textContent = '첫 수집이 끝나면 이 시의 계약이 여기에 나타납니다. 조금만 기다려 주세요.';
     document.querySelectorAll('.stats, .sec').forEach((s) => s.remove()); return;
   }
+  const guQ = new URLSearchParams(location.search).get('gu');
+  if (guQ && /^[가-힣]{1,6}구$/.test(guQ)) { const g = d.rows.filter((r) => (r.inst || '').includes(guQ)); if (g.length) { const ids = new Set(g.map((r) => r.id)); d.rows = g; d.alerts = d.alerts.filter((a) => (a.ids || []).some((i) => ids.has(i))); d.city = Object.assign({}, d.city, {short: d.city.short + ' ' + guQ}); } }
   const name = d.city.short;
+  window.__citySlug = slug;
+  document.querySelectorAll('.tracklinks a').forEach((a) => (a.href = a.getAttribute('href').replace('spend.html', 'spend.html?c=' + slug)));
   document.title = d.city.name + ' 돈 추적기';
   $('#title').textContent = name;
   $('#updated').textContent = when(d.updated);
@@ -446,11 +452,17 @@ async function cityPage() {
     $('#range').textContent = s.first ? `${s.first.replaceAll('-', '.')} ~ ${s.last.replaceAll('-', '.')}` : '최근 90일';
     $('#lede').replaceChildren('최근 90일, ', name + '는 ' + what, el('b', '', krw(s.total)), '을 썼고, ',
       s.local == null ? '업체 주소는 확인 중입니다.' : el('b', '', `${pct(1 - s.local)}는 다른 지역 업체`), s.local == null ? '' : '로 갔습니다.');
-    $('#k-total').textContent = krw(s.total); $('#k-count').textContent = `계약 ${s.count.toLocaleString('ko-KR')}건`;
+    const mxr = rows.reduce((a, r) => (!a || r.amount > a.amount ? r : a), null);
+    const big = mxr && s.total && mxr.amount / s.total > 0.3;
+    let s2 = null; if (big) s2 = stats(d.city, rows.filter((r) => r !== mxr));
+    const frac = big ? (mxr.amount / s.total > 0.66 ? '대부분' : mxr.amount / s.total > 0.45 ? '절반' : pct(mxr.amount / s.total)) : '';
+    $('#k-total').textContent = krw(s.total); $('#k-count').textContent = `계약 ${s.count.toLocaleString('ko-KR')}건` + (big ? ` · 이 중 1건(${krw(mxr.amount)})이 ${frac} · 최대 계약 빼면 ${krw(s2.total)}` : '');
+    const bn = $('#bignote'); if (bn) { bn.hidden = !big; if (big) { bn.replaceChildren('참고: 가장 큰 계약 1건 ', mxr.url ? Object.assign(el('a', '', mxr.title.slice(0, 40)), {href: mxr.url, target: '_blank', rel: 'noopener'}) : mxr.title.slice(0, 40), ` (${krw(mxr.amount)})이 전체의 ${pct(mxr.amount / s.total)}예요. 이 1건을 빼면 ${krw(s2.total)}` + (s2.local != null && s.local != null ? `, 다른 지역 업체 비율은 ${pct(1 - s.local)} → ${pct(1 - s2.local)}` : '') + '이에요.'); } }
     $('#k-out').textContent = s.local == null ? '—' : pct(1 - s.local);
-    $('#k-local-s').textContent = s.known == null ? '주소 확인 중' : `주소가 확인된 계약 ${pct(s.known)} 기준`;
+    $('#k-local-s').textContent = (s.known == null ? '주소 확인 중' : `주소가 확인된 계약 ${pct(s.known)} 기준`) + (big && s2.local != null ? ` · 최대 계약 빼면 ${pct(1 - s2.local)}` : '');
     $('#k-alerts').textContent = flagged.toLocaleString('ko-KR') + '건';
-    alertList($('#alerts-list'), alerts, {slug, limit: 4});
+    alertList($('#alerts-list'), alerts.filter((a) => a.kind !== 'big'), {slug, limit: 4});
+    if (window.__cityTick) window.__cityTick(rows, name);
     $('#share-in').style.width = s.local == null ? '0' : Math.round(s.local * 100) + '%';
     $('#share-in-t').textContent = s.local == null ? '—' : pct(s.local);
     $('#share-out-t').textContent = s.local == null ? '—' : pct(1 - s.local);

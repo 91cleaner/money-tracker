@@ -10,7 +10,7 @@ const toLL = (p) => [38.7 - p[1] / GSX, 124.5 + p[0] / (GK * GSX)];
 function satView(box, geo, cities, onPick) {
   if (!window.L) throw new Error('no leaflet');
   box.classList.add('sat');
-  const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 17, zoomSnap: 0.25, tap: true,
+  const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 12, zoomSnap: 0.25, tap: true,
     maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false});
   L.control.zoom({position: 'topright'}).addTo(map);
   // 페이지 스크롤을 빼앗지 않도록: 터치 기기에서는 지도를 한 번 눌러야 움직임
@@ -22,6 +22,7 @@ function satView(box, geo, cities, onPick) {
     map.once('click', on); hint.addEventListener('click', on);
   }
   map.attributionControl.setPrefix(false);
+  map.on('click', () => { if (view.onempty) view.onempty(); });
   const korea = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]);
   map.fitBounds(korea, {animate: false});
   let ok = false, errs = 0, failed = false;
@@ -38,7 +39,7 @@ function satView(box, geo, cities, onPick) {
   const gC = L.layerGroup().addTo(map), gF = L.layerGroup().addTo(map);
   for (const c of cities) {
     const m = L.circleMarker(toLL(c.p), {radius: 4 + 18 * Math.sqrt(c.total / maxT), className: 'sdot', weight: 1.5, color: '#fff', fillColor: '#0a84ff', fillOpacity: 0.55, bubblingMouseEvents: false});
-    m.on('click', () => onPick(c.slug)); m.addTo(gC); dots.set(c.slug, m);
+    m.on('click', (e) => { L.DomEvent.stop(e); onPick(c.slug); }); m.addTo(gC); dots.set(c.slug, m);
   }
   const bez = (a, b) => {
     const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
@@ -46,10 +47,12 @@ function satView(box, geo, cities, onPick) {
     for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mx + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * my + t * t * b[1]]));
     return pts;
   };
-  let hl = null;
+  let hl = null, pend = null;
+  const vis = (fn) => { if (box.clientWidth > 0 && box.clientHeight > 0) { fn(); } else pend = fn; };
+  addEventListener('resize', () => { if (pend && box.clientWidth > 0) { map.invalidateSize(); const f = pend; pend = null; setTimeout(f, 50); } });
   const view = {
     resize(tot) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((m, s) => { const t = tot[s] || 0; m.setRadius(t ? 4 + 18 * Math.sqrt(t / mx) : 0); }); },
-    highlight(p) { if (hl) hl.remove(); hl = p ? L.circleMarker(toLL(p), {radius: 16, className: 'hlring', color: '#ffd60a', weight: 3, fill: false, interactive: false}).addTo(map) : null; if (p) map.panTo(toLL(p)); },
+    highlight(p) { if (hl) hl.remove(); hl = p ? L.circleMarker(toLL(p), {radius: 16, className: 'hlring', color: '#ffd60a', weight: 3, fill: false, interactive: false}).addTo(map) : null; if (p) vis(() => map.panTo(toLL(p))); },
     select(slug) { dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
       gF.clearLayers();
@@ -63,9 +66,9 @@ function satView(box, geo, cities, onPick) {
       });
       for (const [p, t, me] of labels) L.tooltip({permanent: true, direction: 'top', className: 'stip' + (me ? ' me' : ''), offset: [0, -6]}).setLatLng(toLL(p)).setContent(t).addTo(gF);
     },
-    fly(p, z) { map.flyTo(toLL(p), z, {duration: 1.6, easeLinearity: 0.2}); },
-    fit(pts) { map.flyToBounds(L.latLngBounds(pts.map(toLL)).pad(0.25), {duration: 1.2, maxZoom: 11}); },
-    home() { map.flyToBounds(korea, {duration: 1.2}); },
+    fly(p, z) { vis(() => map.flyTo(toLL(p), Math.min(z, 9), {duration: 0.8, easeLinearity: 0.2})); },
+    fit(pts) { vis(() => map.flyToBounds(L.latLngBounds(pts.map(toLL)).pad(0.25), {duration: 0.8, maxZoom: 8})); },
+    home() { vis(() => map.flyToBounds(korea, {duration: 0.8})); },
     once(fn) { map.once('moveend', fn); },
     destroy() { map.remove(); box.classList.remove('sat'); box.replaceChildren(); },
   };
@@ -110,10 +113,10 @@ function svgView(box, geo, cities, onPick) {
     const m = svg.getScreenCTM(); if (!m) return; let best = null, bd = 30;
     for (const c of cities) { const r = (+dots.get(c.slug).getAttribute('r') || 0) * m.a;
       const d = Math.hypot(ev.clientX - (c.p[0] * m.a + m.e), ev.clientY - (c.p[1] * m.d + m.f)) - r; if (d < bd) { bd = d; best = c; } }
-    if (best) onPick(best.slug);
+    if (best) onPick(best.slug); else if (view2.onempty) view2.onempty();
   });
   sizes();
-  return {
+  const view2 = {
     resize(tot) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((e, s) => { const t = tot[s] || 0; e.dataset.r = t ? 2.5 + 16 * Math.sqrt(t / mx) : 0; }); sizes(); },
     highlight(p) { gL.querySelectorAll('.hl').forEach((x) => x.remove()); if (p) { const c = sv('circle', {cx: p[0], cy: p[1], class: 'hl dd'}); c.dataset.r = 9; gL.prepend(c); sizes(); } },
     select(slug) { dots.forEach((e, s) => e.classList.toggle('on', s === slug)); svg.classList.toggle('picked', !!slug); },
@@ -125,12 +128,13 @@ function svgView(box, geo, cities, onPick) {
       for (const [p, t, me] of labels) { const e = sv('text', {x: p[0], y: p[1], class: 'lb' + (me ? ' me' : '')}); e.textContent = t; gL.append(e); }
       sizes();
     },
-    fly(p) { zoomTo(fitBox([p], 40)); },
+    fly(p) { zoomTo(fitBox([p], 160)); },
     fit(pts) { zoomTo(fitBox(pts)); },
     home() { zoomTo(full); },
     once(fn) { setTimeout(fn, 700); },
     destroy() { box.replaceChildren(); },
   };
+  return view2;
 }
 
 // ---------- 화면 ----------
@@ -141,12 +145,14 @@ async function moneyMap(root, opts = {}) {
   let cur = null, mode = 'city', view, cat = '전체';
   const dataOf = (slug) => { const c = fl.cities[slug]; if (!c || cat === '전체') return c;
     const b = (c.by_cat || {})[cat] || {total: 0, known: 0, local: 0, count: 0, flows: []}; return {...c, ...b, other: null, cat}; };
-  const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {fly: true}); };
+  const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {}); if (matchMedia('(max-width: 899px)').matches) setTimeout(() => panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 300); };
   const mount = (kind) => {
     view = (kind === 'svg' ? svgView : satView)(box, geo, cities, pickCity);
+    if (!opts.fixed) view.onempty = () => { if (mode !== 'nation') { setSeg('nation'); showNation(); } };
     view.onfail = () => { view.destroy(); mount('svg'); if (cat !== '전체') ctl.setCat(cat); else redraw(false); };
   };
   try { mount('sat'); } catch (e) { mount('svg'); }
+  if (!opts.fixed) { const rb = el('button', 'resetbtn', '전국 보기'); rb.type = 'button'; rb.addEventListener('click', (e) => { e.stopPropagation(); setSeg('nation'); showNation(); }); (box.parentElement || root).append(rb); }
 
   const share = (x, t) => (t ? Math.round((x / t) * 100) + '%' : '—');
   const row = (name, sub, amt, frac, cls) => {
@@ -170,6 +176,7 @@ async function moneyMap(root, opts = {}) {
     else { drawCity(c); if (o.zoom !== false) view.fit([c.p, ...list.slice(0, 8).map((f) => f.p)]); }
     panel.replaceChildren();
     const h = el('div', 'fh'); h.append(el('span', 'fh-n', c.name + (c.cat ? ' · ' + c.cat : '')), el('span', 'fh-v', krw(c.total)));
+    if (!opts.fixed) { const x = el('button', 'fclose', '× 닫기'); x.type = 'button'; x.setAttribute('aria-label', '닫고 전국 보기'); x.onclick = () => { setSeg('nation'); showNation(); }; h.append(x); }
     panel.append(h, el('p', 'fq', '이 돈은 어디로 갔나'));
     if (!c.known) { panel.append(el('p', 'sub', '업체 주소를 확인하는 중입니다.')); return; }
     const out = c.known - c.local;

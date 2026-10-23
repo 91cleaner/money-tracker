@@ -15,7 +15,7 @@ for(const t of tk){const b=base(t);if(b.length<2&&!/^.(시|군)$/.test(t))contin
  if(m.length){const pick=m.find(x=>!prov||x.province===prov)||m[0];
   if(b==='광주'&&prov!=='경기도'&&!/광역시/.test(t)&&t!=='광주'){}
   if(!c||(c.province!==prov&&pick.province===prov))c=(b==='광주'&&(prov==='경기도'||t==='광주시'))?C.find(x=>x.slug==='gwangju-gg')||pick:pick;}
- if(/^[가-힣]{1,5}구$/.test(t)&&t.length>=2)gu=t;
+ if(/^[가-힣]{1,5}구$/.test(t)&&t.length>=2&&!C.some(x=>base(x.name)===base(t)||base(x.name)===t.slice(0,-1)||x.name.startsWith(t)))gu=t;
  if(/^[가-힣]{2,}\d*(동|읍|면|리|가)$/.test(t)&&!STOP.test(t)||/^[가-힣]{2,}\d*(로|길)(\d+번?길)?$/.test(t)&&t.length>=3)dong.push(t.replace(/(\d+번?길)$/,''));}
 if(!c&&prov&&(prov.includes('특별시')||prov.includes('광역시')||prov.includes('특별자치시')))c=C.find(x=>x.name===prov);
 return{prov,c,gu,dong};}
@@ -30,8 +30,8 @@ const d=await city(p.c.slug);if(my!==seq)return;let rows=d.rows||[],label=p.c.na
 if(p.gu){const g=rows.filter(r=>(r.inst||'').includes(p.gu));if(g.length){rows=g;label+=' '+p.gu;}else guNote=`<p class="small">${esc(p.gu)} 단위 자료가 따로 없어서 ${esc(p.c.name)} 전체로 보여드려요.</p>`;}
 const sum=rows.reduce((a,r)=>a+r.amount,0),cats=top3(rows);
 let dh='';if(p.dong.length){const hits=(d.rows||[]).filter(r=>p.dong.some(k=>new RegExp('(^|[^가-힣])'+k+'([^가-힣]|$)').test(r.title)));const hs=hits.reduce((a,r)=>a+r.amount,0);
- dh=`<h3 class="h3">우리 동네 이름이 들어간 계약 · ${esc(p.dong.join(', '))}</h3>`+(hits.length?`<p><b>${hits.length}건 · ₩${won(hs)}</b></p>`+hits.sort((a,b)=>b.amount-a.amount).slice(0,5).map(r=>`<a class="arow" href="${esc(r.url)}" target="_blank" rel="noopener"><b>₩${won(r.amount)}</b> ${esc(r.title)}<small>${esc(r.date)} · ${esc(r.inst)}</small></a>`).join(''):'<p class="small">최근 90일 계약명에서 이 동네 이름을 찾지 못했어요.</p>')+`<p class="src">계약명에 동네 이름이 들어간 건만 모은 것이라 전부는 아닐 수 있어요. 출처: 조달청 나라장터</p>`;}
+ dh=`<h3 class="h3">우리 동네 이름이 들어간 계약 · ${esc(p.dong.join(', '))}</h3>`+(hits.length?`<p><b>${hits.length}건 · ₩${won(hs)}</b></p>`+hits.sort((a,b)=>b.amount-a.amount).slice(0,5).map(r=>`<a class="arow" href="${esc(r.url)}" target="_blank" rel="noopener"><b>₩${won(r.amount)}</b> ${esc(r.title)}<small>${esc(r.date)} · ${esc(r.inst)}</small></a>`).join(''):`<p class="small">최근 90일 계약 이름에 '${esc(p.dong.join(', '))}'이(가) 들어간 계약은 없어요. 동 이름 없이 등록된 계약이 많아서 그럴 수 있어요. 위의 ${esc(label)} 전체 금액을 참고해 주세요.</p>`)+`<p class="src">계약명에 동네 이름이 들어간 건만 모은 것이라 전부는 아닐 수 있어요. 출처: 조달청 나라장터</p>`;}
 out.innerHTML=`<div class="acard"><span class="eyebrow">● 추적 결과 · 최근 ${d.days||90}일</span><h3 style="margin:4px 0">${esc(label)}</h3>${guNote}
 <div class="abig">₩${won(sum)}</div><p class="small">계약 ${rows.length.toLocaleString()}건 · 많이 쓴 분야: ${cats.map(([k,v])=>esc(k)+' ₩'+won(v)).join(' · ')}</p>
-<a class="chip" style="display:inline-flex;align-items:center;margin-top:6px;background:#ffb020;color:#000;border-color:#ffb020" href="city.html?c=${p.c.slug}">${esc(p.c.name)} 전체 보기 ›</a>${dh}<p class="src">출처: 조달청 나라장터 계약정보. 기관 이름 기준으로 모았어요.</p></div>`;}
+<a class="chip" style="display:inline-flex;align-items:center;margin-top:6px;background:#ffb020;color:#000;border-color:#ffb020" href="city.html?c=${p.c.slug}${label!==p.c.name?'&gu='+encodeURIComponent(p.gu):''}">${esc(label)} 자세히 보기 ›</a>${label!==p.c.name?` <a class="chip" style="display:inline-flex;align-items:center;margin-top:6px" href="city.html?c=${p.c.slug}">${esc(p.c.name)} 전체 ›</a>`:''} <a class="chip" style="display:inline-flex;align-items:center;margin-top:6px" href="spend.html?c=${p.c.slug}#sole">추적파일 ›</a>${dh}<p class="src">출처: 조달청 나라장터 계약정보. 기관 이름 기준으로 모았어요.</p></div>`;}
 let t;inp.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(go,250)});box.addEventListener('submit',e=>{e.preventDefault();inp.blur();go();});})();
