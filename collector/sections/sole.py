@@ -60,7 +60,7 @@ def main():
     MIN_CITY = 3
     for kw, _, _ in KW.SOLE_SECT:
         # 기간 안에 처음 맺은 계약만(합계와 같은 기준), 기간 전 계약의 변경분 제외
-        g2 = [r for r in rows if amt(r) > 0 and KW.sole_hit(r["title"], kw)]
+        g2 = [r for r in rows if amt(r) > 0 and (r.get("ord") or "00") == "00" and KW.sole_hit(r["title"], kw)]  # 변경 없는 원계약만(금액 비교 기준 통일)
         if len(g2) < 8: continue
         med = st.median(amt(r) for r in g2)
         q = st.quantiles([amt(r) for r in g2], n=4)
