@@ -107,6 +107,7 @@ const whenNear = (node, fn) => {
 function countUp(node, to) {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches || !node.dataset.done) { /* 첫 표시만 애니메이션 */ }
   const from = Number(node.dataset.v || 0), t0 = performance.now(), D = node.dataset.done ? 450 : 1400;
+  if (node.dataset.done) { node.dataset.v = to; node.textContent = krw(to); return; } /* 기간 바꿀 때는 지역 숫자와 같은 프레임에 바로 */
   node.dataset.v = to; node.dataset.done = 1;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) { node.textContent = krw(to); return; }
   const step = (t) => { const k = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - k, 3); node.textContent = krw(from + (to - from) * e); if (k < 1) requestAnimationFrame(step); };
@@ -159,7 +160,7 @@ async function funHome(idx, getCat) {
       tb.replaceChildren();
       for (const r of list.slice(0, n)) {
         const tr = el('tr', 'rc3'), a = el('a'); a.href = r.url || shareURL(r.city.slug); a.target = '_blank'; a.rel = 'noopener';
-        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.ftag || null, r.method && /수의/.test(r.method) && !r.ann ? '공고 없이 한 업체와 계약' : null, r.ann === true ? '공고 있음' : r.ann === false ? '공고 없음' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', '', x)));
+        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.ftag || null, r.method && /수의/.test(r.method) && !r.ann ? '공고 없이 한 업체와 계약' : null, r.ann === true ? '공고 있음' : r.ann === false ? '공고 없음' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', x === '공고 있음' ? 'ann-y' : x === '공고 없음' ? 'ann-n' : '', x)));
         a.append(el('small', 'rc-ag', r.inst || ''), el('b', 'rc-amt', krw(r.amount)), ch); a.title = r.title || '';
         const t2 = el('td'); t2.colSpan = 2; t2.append(a);
         tr.append(el('td', 'rc-no', String(tb.children.length + 1).padStart(2, '0')), t2); tb.append(tr);
@@ -207,6 +208,7 @@ async function homePage() {
     countUp($('#nat-total'), sum(T));
     const w = $('#wage'); if (w) { w.replaceChildren(); w.append(`최저임금으로 ${Math.round(sum(T) / MINWAGE / 8 / 365).toLocaleString('ko-KR')}년 일해야 버는 돈`); w.append(el('small', '', '2026년 최저임금 시간당 10,320원(고용노동부 고시), 하루 8시간·매일 일한다고 가정')); }
     $('#hero-k').textContent = cat === '전체' ? '계약으로 쓴 돈' : cat + ' 계약에 쓴 돈';
+    { const tn = $('#today-n'); if (tn) { const wh = (window.__pdWhen && window.__pdWhen()) || '최근 30일 동안'; tn.textContent = `${wh} 새로 포착 ${(cat === '전체' ? '' : cat + ' ')}${sum(N).toLocaleString('ko-KR')}건(맺은 날짜 기준, 늘어날 수 있음)`; tn.hidden = false; } }
     $('#nat-count').textContent = (cat === '전체' ? '' : cat + ' ') + '계약 ' + sum(N).toLocaleString('ko-KR') + '건';
     $('#nat-alerts-n').textContent = `전국 ${sum(A).toLocaleString('ko-KR')}건 중 시마다 하나씩.`;
     cities.sort((a, b) => A(b) - A(a) || T(b) - T(a));
@@ -323,7 +325,7 @@ function contractExtra(r) {
     }
     out.push(j);
   } else if (r.jv) out.push(el('span', 'cc-tags', '여러 업체가 함께 맡음 · 금액은 대표 업체 기준'));
-  if ((r.ltc || /^장기/.test(r.lt||'')) && r.this && r.this !== r.amount) out.push(el('span', 'cc-tags', `장기계속계약 · 총 계약금액 ${krw(r.amount)} 기준 (이번 연차분 ${krw(r.this)})`));
+  if ((r.ltc || /^장기/.test(r.lt||'')) && r.tot_amt && r.tot_amt !== r.amount) out.push(el('span', 'cc-tags', `장기계속계약 · 이번 차수 금액 ${krw(r.amount)} (전체 계약금액 ${krw(r.tot_amt)})`));
   if (r.vers && r.vers.length > 1) {
     if (r.orig) { const up = r.amount - r.orig; out.push(el('span', 'cc-hist', `처음 ${krw(r.orig)} → 지금 ${krw(r.amount)} (${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%)`)); }
     const ol = el('ol', 'tl');
@@ -361,7 +363,7 @@ async function pastHistory(id) {
     const c = el('div', 'cc');
     const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', `${r.date} · ${r.city || '기타 기관'} · ${r.kind}`), el('b', 'cc-a', r.tot != null ? krw(r.tot) : '—'));
     const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
-    c.append(top, t, el('span', 'cc-i', r.inst + (r.atype && r.atype !== '본청' ? ` [${r.atype}]` : '') + (r.ord ? ` · ${+r.ord}차` : '') + ((r.ltc || /^장기/.test(r.lt||'')) && r.this && r.this !== r.amount ? ` · 장기계속(이번 연차분 ${krw(r.this)})` : '')));
+    c.append(top, t, el('span', 'cc-i', r.inst + (r.atype && r.atype !== '본청' ? ` [${r.atype}]` : '') + (r.ord ? ` · ${+r.ord}차` : '') + ((r.ltc || /^장기/.test(r.lt||'')) && r.tot_amt && r.tot_amt !== r.amount ? ` · 장기계속(전체 계약금액 ${krw(r.tot_amt)})` : '')));
     if (r.m && r.m.length > 1) {
       const j = el('div', 'cc-jv'); j.append(el('span', 'cc-tags', '함께 맡은 업체 (나눈 비율)'));
       for (const x of r.m) { const a = el(x.id && x.id !== id ? 'a' : 'span', '', `${x.name} ${x.share != null ? x.share + '%' : ''}`); if (x.id && x.id !== id) a.href = 'vendor.html?v=' + x.id; j.append(a); }
@@ -415,7 +417,7 @@ async function vendorPage() {
       if (r.cat === FEST && r.ftag) top.append(el('i', 'sole-badge ftag', r.ftag));
       if (r.cat === FEST && /수의/.test(r.method || '') && !r.ann) top.append(el('i', 'sole-badge', '경쟁 없는 계약'));
       const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
-      c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : '')));
+      c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : ''))); if (r.ann === true || r.ann === false) top.append(el('i', r.ann ? 'ann-y' : 'ann-n', r.ann ? '공고 있음' : '공고 없음')); if (window.plainTag && /단가/.test(r.title || '')) t.insertAdjacentHTML('afterend', window.plainTag(r.title));
       c.append(...contractExtra(r));
       if (r.url) { const s2 = el('a', 'src', '출처: 조달청 나라장터 원문 ›'); s2.href = r.url; s2.target = '_blank'; s2.rel = 'noopener'; c.append(s2); }
       box.append(c);
@@ -522,6 +524,8 @@ async function cityPage() {
       const title = el('td', 'ttl'); if (r.url) { const a = el('a', '', r.title); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; title.append(a); } else title.textContent = r.title;
       if (r.orig && r.orig !== r.amount) { const up = r.amount - r.orig; title.append(el('small', 'cc-hist', ` 1차 ${krw(r.orig)} → ${up >= 0 ? '+' : ''}${(up / r.orig * 100).toFixed(1)}%`)); }
       else if (r.vers && r.vers.length > 1) title.append(el('small', 'cc-tags', ` ${r.vers.length}개 차수 확인 · 총액 변화 없음`));
+      if (r.ann === true || r.ann === false) title.append(el('i', r.ann ? 'ann-y' : 'ann-n', r.ann ? '공고 있음' : '공고 없음'));
+      if (window.plainTag && /단가/.test(r.title || '')) title.insertAdjacentHTML('beforeend', window.plainTag(r.title));
       if (r.jvm && r.jvm.length > 1) title.append(el('small', 'cc-tags', ' 함께 맡은 업체: ' + r.jvm.map((m) => `${m.name} ${m.share != null ? m.share + '%' : ''}`).join(', ')));
       tr.append(el('td', '', r.date), el('td', 'hide-narrow', r.inst), title, el('td', '', r.vendor), el('td', 'hide-narrow', r.vregion || '—'), el('td', 'num', r.amount.toLocaleString('ko-KR')));
       tb.append(tr);

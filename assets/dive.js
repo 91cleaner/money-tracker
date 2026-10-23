@@ -260,8 +260,8 @@
     s.hidden = false; s.innerHTML = `<b>${esc(c)}</b> <em>${krw(tot)}</em><span>↓ 자세히</span>`; };
   const extLine = (slug) => get(`data/city/${slug}.json`).then((d) => { const w = (window.__pdCW && window.__pdCW()) || {};
     const X = (d.ext || []).filter((r) => (!w.from || r.date >= w.from) && (!w.to || r.date <= w.to)); if (!X.length || cur !== slug) return;
-    const hd = body.querySelector('.dv-head'); if (!hd || body.querySelector('.dv-ext')) return; const t = X.reduce((a, r) => a + (r.this != null ? r.this : r.amount || 0), 0);
-    hd.insertAdjacentHTML('afterend', `<p class="dv-ext">시청 외 기관(구청·공단·소방 등) ${X.length.toLocaleString('ko-KR')}건 · ${krw(t)}, 합계에서 따로 분리</p>`); }).catch(() => {});
+    const hd = body.querySelector('.dv-head'); if (!hd || body.querySelector('.dv-ext')) return; const t = X.reduce((a, r) => a + (r.amount || 0), 0);
+    hd.insertAdjacentHTML('afterend', `<p class="dv-ext">시청 외 기관(구청·군청·공단·소방 등) ${X.length.toLocaleString('ko-KR')}건 · ${krw(t)}, 합계에서 따로 분리</p>`); }).catch(() => {});
   const multi = (slugs) => { setH(1); body.innerHTML = '<p class="dv-k">여러 시가 겹쳐 있어요. 하나를 고르세요</p><div class="pickrow">' + slugs.map((s) => `<button type="button" class="chip" data-s="${s}">${esc((BY[s] || {}).name || s)}</button>`).join('') + '</div>';
     body.querySelectorAll('button[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); };
   const sib = (slug, d) => { const me = BY[slug]; let g = C.filter((c) => c.province === me.province); if (g.length < 2) g = C; const i = g.findIndex((c) => c.slug === slug); return g[(i + d + g.length) % g.length].slug; };
@@ -329,7 +329,7 @@
       body.innerHTML = `<div class="dv-vh"><button type="button" class="dv-back" aria-label="${esc(BY[slug].name)}로 돌아가기">‹</button><p class="dv-name">${esc(v.name)}</p>${shb(v.name + ' 계약', 'vendor.html?v=' + vid)}</div><p class="dv-v" style="text-align:center">${krw(v.total)}</p>
         <p class="dv-l">${esc((v.region || '소재지 확인 중').split(' ').slice(-1)[0])} · <button type="button" class="dv-chip">계약 ${v.count}건</button></p>
         <div class="dv-more">${a ? `<div class="dv-card on"><b>${esc((window.plainT || String)(a.title))}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}${(window.plainTag || (() => ''))(a.detail)}</span></div>` : ''}
-        <div class="dv-rows">${rows.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(r.date)} · ${esc((window.maskT || ((x) => x))(r.title))}${r.jshare ? ` <i class="jvb">함께 맡음 ${r.jshare}%</i>` : ''}</span><b>${krw(r.amount)} 원문 ›</b></a>`).join('')}</div>
+        <div class="dv-rows">${rows.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(r.date)} · ${esc((window.maskT || ((x) => x))(r.title))}${r.jshare ? ` <i class="jvb">함께 맡음 ${r.jshare}%</i>` : ''}${/단가/.test(r.title || '') && window.plainTag ? window.plainTag(r.title) : ''}${r.ann === true ? ' <i class="ann-y">공고 있음</i>' : r.ann === false ? ' <i class="ann-n">공고 없음</i>' : ''}</span><b>${krw(r.amount)} 원문 ›</b></a>`).join('')}</div>
         <a class="gobtn" href="vendor.html?v=${vid}">업체 전체 보기</a>${src}</div>`;
       ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
       body.querySelector('.dv-back').onclick = () => history.back();
