@@ -62,26 +62,29 @@ def korify(o):
 
 # 축제 공연·섭외 계약: 공연 용역만 (공사·보수·시설·무대장치 제작은 뺌). 출연자 이름은 절대 저장·표시하지 않는다.
 FEST_CAT = "축제 공연·섭외"
-_FEST_IN = re.compile(r"공연|출연|섭외|콘서트|축하공연|초청가수|아티스트")
-_FEST_OUT = re.compile(r"공사|보수|시설|무대장치\s*제작|무대\s*제작")
+_FEST_IN = re.compile(r"공연|축하공연|초청가수|가수|출연|섭외|아티스트|연예인|콘서트|음악회|가요제|트롯|트로트|버스킹|뮤지컬|연극|국악|페스타|FESTA|STAGE|축제", re.I)
+_FEST_OUT = re.compile(r"공사|보수|설치|조성|구입|구매|관급자재|임차|렌탈|설계|리모델링|장비|정비|감리|시설|설비|막구조물|다회용기|교통|주차|안전|경비|보안|인력|단속|청소|방역|홍보|광고|콘텐츠|영상|촬영|생중계|중계|제작|인쇄|시스템|프로세스|구축|로봇|부스|전시|플리마켓|야시장|교육|컨설팅|연구|조사|분장|음향|토크|코칭|인문학")
+_FEST_AGENCY = re.compile(r"대행")
 _FEST_CUT = re.compile(r"(초청\s*가수|가수|아티스트|출연자|출연진|출연|섭외|게스트)")
 
 
 def is_fest(title, kind):
     t = title or ""
-    if kind and ("공사" in kind or "물품" in kind):
+    if kind != "용역":
         return False
     return bool(_FEST_IN.search(t)) and not _FEST_OUT.search(t)
 
 
+def fest_tag(title):
+    """축제·페스타 행사대행은 순수 공연 계약과 구분해 '행사대행' 꼬리표."""
+    return "행사대행" if _FEST_AGENCY.search(title or "") else None
+
+
 def fest_title(title):
-    """출연자 이름이 들어갈 수 있는 부분(괄호·따옴표 안, '가수/아티스트/섭외' 뒤)을 지우고 '공연·섭외 용역'으로 끝맺는다."""
+    """출연자 이름이 들어갈 수 있는 부분('가수/아티스트/출연/섭외' 뒤)을 지운다."""
     t = title or ""
-    if t.endswith("[공연·섭외 용역]"):
-        return t
-    t = re.sub(r"[\(\[「『<〈《\"'“‘][^\)\]」』>〉》\"'”’]*[\)\]」』>〉》\"'”’]", " ", t)
     m = _FEST_CUT.search(t)
     if m:
         t = t[:m.start()]
-    t = re.sub(r"\s+", " ", t).strip(" ·-,/")
-    return (t + " " if t else "") + "[공연·섭외 용역]"
+    t = re.sub(r"\s+", " ", t).strip(" ·-,/").rstrip(" ([「『<")
+    return t or "공연 용역"

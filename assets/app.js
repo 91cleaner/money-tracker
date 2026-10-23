@@ -159,7 +159,7 @@ async function funHome(idx, getCat) {
       tb.replaceChildren();
       for (const r of list.slice(0, n)) {
         const tr = el('tr', 'rc3'), a = el('a'); a.href = r.url || shareURL(r.city.slug); a.target = '_blank'; a.rel = 'noopener';
-        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.method && /수의/.test(r.method) ? '수의계약' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', '', x)));
+        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.ftag || null, r.method && /수의/.test(r.method) ? '수의계약' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', '', x)));
         a.append(el('small', 'rc-ag', r.inst || ''), el('b', 'rc-amt', krw(r.amount)), ch); a.title = r.title || '';
         const t2 = el('td'); t2.colSpan = 2; t2.append(a);
         tr.append(el('td', 'rc-no', String(tb.children.length + 1).padStart(2, '0')), t2); tb.append(tr);
@@ -403,6 +403,7 @@ async function vendorPage() {
     for (const r of rows.slice(0, 300)) {
       const c = el('article', 'ccard');
       const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', r.date + ' · ' + r.cat), el('b', 'cc-a', krw(r.amount)));
+      if (r.cat === FEST && r.ftag) top.append(el('i', 'sole-badge ftag', r.ftag));
       if (r.cat === FEST && /수의/.test(r.method || '')) top.append(el('i', 'sole-badge', '수의계약'));
       const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
       c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : '')));

@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 sys.path.insert(0, os.path.dirname(__file__))
 from cities import CITIES, city_of, legacy
 import share
-from privacy import mask, loc, kor, korify, is_fest, fest_title, FEST_CAT
+from privacy import mask, loc, kor, korify, is_fest, fest_title, fest_tag, FEST_CAT
 import flows
 import jv
 import vendors_agg
@@ -503,7 +503,8 @@ def main():
                 r["ord"] = r["id"][-2:]  # 통합계약번호 끝 2자리 = 차수
             r["title"] = loc(r.get("title"))  # 지번 가리기 (예전에 저장된 행도)
             r["vendor"] = kor(mask(r.get("vendor")))  # 사람 이름처럼 보이면 '개인사업자'
-            if is_fest(r.get("title"), r.get("kind")) or (r.get("title") or "").endswith("[공연·섭외 용역]"):
+            if is_fest(r.get("title"), r.get("kind")) or r.get("cat") == FEST_CAT:
+                r["ftag"] = fest_tag(r.get("title"))
                 r["cat"] = FEST_CAT; r["title"] = fest_title(r.get("title"))  # 출연자 이름 제거
             else:
                 r["cat"] = category(r.get("title"), r.get("kind"))
