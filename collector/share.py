@@ -105,7 +105,7 @@ def build(root, city, summary, alerts, version):
     if top:
         ok = card(os.path.join(root, og_rel), headline(city, top), krw(top["amount"] or 0), f"{city['short']} 전체 {krw(summary['total'])} · " + sub)
     else:
-        ok = card(os.path.join(root, og_rel), f"{city['short']} · 최근 90일 쓴 돈", krw(summary["total"]), sub, caveat=False)
+        ok = card(os.path.join(root, og_rel), f"{city['short']} · 최근 90일 계약 금액", krw(summary["total"]), sub, caveat=False)
     title = f"{city['name']} 돈 추적기 · {headline(city, top)}" if top else f"{city['name']} 돈 추적기"
     desc = (f"최근 90일 {city['short']} 계약 {krw(summary['total'])}. " + (f"{CAVEAT}." if top else "") + " 공개 데이터, 출처 포함.").strip()
     img = SITE_URL + (og_rel if ok else "assets/og.png") + f"?v={version}"
