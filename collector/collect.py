@@ -105,7 +105,10 @@ def jv_flag(v):
 
 
 _ATYPE = [("산하기관", r"시설(관리)?공단|도시(개발)?공사|관광공사|산학협력단|평생교육원|공단$|공사$|재단|진흥원|의료원|문화원|연구원"),
-          ("소방", r"소방(본부|서|학교)"), ("교육", r"교육청|교육지원청|학교"), ("의회", r"의회")]
+          ("소방", r"소방(본부|서|학교)"), ("대학", r"대학교?$|대학교 "), ("교육", r"교육청|교육지원청|학교"), ("의회", r"의회")]
+
+
+EXT_ATYPE = {"자치구", "산하기관", "소방", "교육", "대학"}  # 시 합계에서 빼는 기관
 
 
 def agency_type(inst, city):
@@ -114,7 +117,7 @@ def agency_type(inst, city):
     for k, rx in _ATYPE:
         if re.search(rx, t):
             return k
-    if re.search(r"(?<!광역)(?<!특별)[가-힣]+구$", t.split(" ")[-1]) and t.count(" ") >= 1:
+    if re.search(r"(?<!광역)(?<!특별)[가-힣]+구(청)?$", t.split(" ")[-1]) and t.count(" ") >= 1:
         return "자치구" if city and " " not in city.get("short", " ") else "일반구"
     if re.search(r"사업소|센터|관리소|보건소|도서관|박물관|미술관|병원|청사|수도|하수|농업기술", t):
         return "사업소"
@@ -413,7 +416,7 @@ def annotate(r, c, vendors):
     """계약정보서비스 결과를 행에 붙임: 차수별 금액(vers), 1차 총액(orig), 장기계속 구분(lt), 공동도급 참여 업체(jvm)."""
     for k in ("vers", "orig", "jvm"):
         r.pop(k, None)
-    r["ltc"] = bool((r.get("lt") or "").startswith("장기") or (r.get("this") and r.get("amount") and r["this"] < r["amount"]))  # 장기계속: 금차 < 총액
+    r["ltc"] = bool("장기" in (r.get("lt") or "") or (r.get("this") and r.get("amount") and r["this"] < r["amount"]))  # 장기계속: 금차 < 총액
     r["jvp"] = r.get("jv") is True  # 공동도급인데 참여 업체 목록은 계약정보서비스 조회 대기(아래에서 받으면 해제)
     if not c or not c.get("v"):
         return
@@ -425,7 +428,7 @@ def annotate(r, c, vendors):
     if vs[0]["ord"] == "01" and vs[0].get("tot"):
         r["orig"] = vs[0]["tot"]
     r["lt"] = vs[-1].get("lt") or r.get("lt")
-    r["ltc"] = bool((r.get("lt") or "").startswith("장기") or r["ltc"])
+    r["ltc"] = bool("장기" in (r.get("lt") or "") or r["ltc"])
     m = c.get("corps") or []
     if len(m) > 1:
         r["jv"] = True; r["jvp"] = False
@@ -507,7 +510,7 @@ def gap_days(now, limit=int(os.environ.get("GAP_DAYS_PER_RUN", "4"))):
     cnt = Counter()
     for c in CITIES:
         d = load(os.path.join(DATA, "city", c["slug"] + ".json"), {"rows": []})
-        for r in d.get("rows", []) + d.get("changes", []):
+        for r in d.get("rows", []) + d.get("changes", []) + d.get("ext", []):
             cnt[r["date"]] += 1
     if not cnt:
         return []
@@ -586,7 +589,7 @@ def main():
             allrows = []
             for c in CITIES:
                 old = load(os.path.join(DATA, "city", c["slug"] + ".json"), {"rows": []})
-                rr = {r["id"]: r for r in old.get("rows", []) + old.get("changes", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
+                rr = {r["id"]: r for r in old.get("rows", []) + old.get("changes", []) + old.get("ext", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
                 rr.update({r["id"]: r for r in fresh.get(c["slug"], [])})
                 for r in rr.values():
                     if not r.get("ord") and re.fullmatch(r"[A-Z0-9]{13}\d{2}", r["id"]):
@@ -610,7 +613,7 @@ def main():
     for c in CITIES:
         path = os.path.join(DATA, "city", c["slug"] + ".json")
         old = load(path, {"rows": []})
-        rows = {r["id"]: r for r in old.get("rows", []) + old.get("changes", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
+        rows = {r["id"]: r for r in old.get("rows", []) + old.get("changes", []) + old.get("ext", []) if r["date"] >= cutoff and city_of(r.get("inst")) == c["slug"]}
         for r in fresh.get(c["slug"], []):
             rows[r["id"]] = r
         rows = merge_orders(rows)
@@ -635,13 +638,17 @@ def main():
         allr = sorted(rows.values(), key=lambda r: (r["date"], r["id"]), reverse=True)
         # 집계는 기간 안에 처음 맺은 계약만(계약번호당 1건, 금액은 최신 차수의 총계약금액).
         # 기간 전에 맺은 계약의 변경(차수) 기록은 changes 에 따로 두고 '변경' 표시로만 보여 준다.
-        rows = [r for r in allr if r.get("odate")]
-        changes = [r for r in allr if not r.get("odate")]
+        # 변경 차수(ord 01·02…)는 원계약이 기간 안에 있어도 신규 합계에서 빼고 changes 로(최신 차수 금액이 신규로 잡히지 않게).
+        # 시 밖 기관(자치구·공단·소방·교육·대학)은 시 합계에서 빼고 ext 에 따로 둔다(기관 유형 표시).
+        changes = [r for r in allr if not r.get("odate") or (r.get("ord") or "00") != "00"]
+        cids = {r["id"] for r in changes}
+        ext = [r for r in allr if r["id"] not in cids and r.get("atype") in EXT_ATYPE]
+        rows = [r for r in allr if r["id"] not in cids and r.get("atype") not in EXT_ATYPE]
         ids_new = {r["id"] for r in rows}
         al = [a for a in alerts_for(allr, explanations) if a["kind"] == "increase" or all(i in ids_new for i in a.get("ids", []))]
         summ = summarize(c, rows, vendors)
         save(path, {"city": {k: c[k] for k in ("slug", "name", "short", "province")}, "updated": now.isoformat(), "summary": summ,
-                    "alerts": al, "rows": rows, "changes": changes})
+                    "alerts": al, "rows": rows, "changes": changes, "ext": ext})
         flagged = [a for a in al if a["kind"] != "big"]
         by_cat = defaultdict(int); n_cat = defaultdict(int); cat_of = {}
         for r in rows:
@@ -655,7 +662,7 @@ def main():
         except Exception as e:  # 공유 카드가 실패해도 데이터 저장은 계속
             print(f"::warning::{c['slug']} 공유 카드 실패: {e}", flush=True)
         index.append({"slug": c["slug"], "name": c["name"], "short": c["short"], "province": c["province"], "count": summ["count"],
-                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "today": sum(1 for r in rows if (r.get("odate") or r["date"]) == summ["last"]), "changes": len(changes), "today_basis": summ["last"],
+                      "total": summ["total"], "alerts": len(flagged), "last": summ["last"], "today": sum(1 for r in rows if (r.get("odate") or r["date"]) == summ["last"]), "changes": len(changes), "ext": {"count": len(ext), "total": sum(r["amount"] or 0 for r in ext), "by_atype": {k: [sum(1 for r in ext if r["atype"] == k), sum(r["amount"] or 0 for r in ext if r["atype"] == k)] for k in sorted({r["atype"] for r in ext})}}, "today_basis": summ["last"],
                       "by_atype": {k: sum(r["amount"] or 0 for r in rows if r.get("atype") == k) for k in sorted({r.get("atype") for r in rows if r.get("atype")})}, "local_share": summ["local_share"], "by_cat": dict(by_cat), "n_cat": dict(n_cat),
                       "alerts_cat": {k: sum(1 for a in flagged if k in {cat_of.get(i) for i in a.get("ids", [])}) for k in by_cat},
                       "top_alert_cat": alert_cat,

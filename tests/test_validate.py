@@ -28,7 +28,7 @@ def build(spec, d):
     cities = []
     for slug, c in spec["city"].items():
         json.dump(c, open(os.path.join(d, "city", slug + ".json"), "w"), ensure_ascii=False)
-        cities.append({"slug": slug, "count": len(c["rows"]), "total": sum(r["amount"] for r in c["rows"]), "changes": len(c["changes"]),
+        cities.append({"slug": slug, "count": len(c["rows"]), "total": sum(r["amount"] for r in c["rows"]), "changes": len(c["changes"]), "ext": {"count": len(c.get("ext", [])), "total": sum(r["amount"] for r in c.get("ext", []))},
                        **spec.get("idx_over", {}).get(slug, {})})
     json.dump({"updated": "2026-10-23T10:00", "days": 90, "cities": cities, **({} if spec.get("no_daily") else {"daily": "2026-10-23T10:00"})}, open(os.path.join(d, "index.json"), "w"))
     daily = {}
@@ -64,8 +64,18 @@ class Gate(unittest.TestCase):
 
     def test_2_milyang_change_order_in_totals(self):
         # 밀양 버그: 기간 전에 맺은 계약의 변경(ord 01+)이 신규 합계에 섞임
-        self.assertTag(lambda s: s["city"]["a"]["rows"].append(row("M1", ord_="03", odate=None)), "[2 기간 전 변경분]")
-        self.assertTag(lambda s: s["city"]["a"]["rows"].append(row("M2", ord_="01", odate="2025-01-02")), "[2 기간 전 변경분]")
+        self.assertTag(lambda s: s["city"]["a"]["rows"].append(row("M1", ord_="03", odate=None)), "[2 변경 차수]")
+        self.assertTag(lambda s: s["city"]["a"]["rows"].append(row("M2", ord_="01", odate="2025-01-02")), "[2 변경 차수]")
+
+    def test_2_change_order_even_with_original_in_period(self):
+        # 팩트체크: ord 01/02 517건이 원계약(00)이 기간 안에 있다는 이유로 신규 합계에 들어감
+        self.assertTag(lambda s: s["city"]["a"]["rows"].append(row("M3", ord_="01", odate="2026-10-20")), "[2 변경 차수]")
+
+    def test_18_outside_agency_in_city_total(self):
+        # 팩트체크: 자치구·공단·소방·교육·대학 계약이 시 합계에 섞임
+        def m(s):
+            r = row("X1"); r["atype"] = "소방"; s["city"]["a"]["rows"].append(r)
+        self.assertTag(m, "[18 시 밖 기관]")
 
     def test_2_sole_from_changes(self):
         # 원주/서울/용인 1위가 changes 에서 나온 버그

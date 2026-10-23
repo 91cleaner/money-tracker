@@ -6,6 +6,7 @@ import datetime as D, glob, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import kw  # noqa: E402
+from collect import EXT_ATYPE  # noqa: E402
 
 # (오탐 단어, 들어가면 안 되는 분류) — 이 단어 때문에만 그 분류가 됐다면 위반
 FP_CAT = [("청소년", "청소"), ("보안등", "경비"), ("대행사업", "인쇄·홍보"), ("이행사업", "인쇄·홍보"),
@@ -36,18 +37,22 @@ def check(root, prev=None):
     # (1) 계약번호 중복, (2) 기간 전 계약의 변경분이 합계에 섞였는지, (3) 분류 오탐
     seen = {}
     for slug, d in cities.items():
-        rows, chg = d.get("rows", []), d.get("changes", [])
+        rows, chg, ext = d.get("rows", []), d.get("changes", []), d.get("ext", [])
         last = max([r.get("odate") or r["date"] for r in rows] + [r["date"] for r in chg] or [idx["updated"][:10]])
         start = (D.date.fromisoformat(last) - D.timedelta(days=days)).isoformat()
-        for r in rows + chg:
+        for r in rows + chg + ext:
             no = r.get("no") or r["id"]
             if no in seen:
                 E(f"[1 중복] {no} 가 {seen[no]} 와 {slug} 에 두 번 집계")
             seen[no] = slug
         for r in rows:
             o = r.get("odate")
-            if r.get("ord", "00") != "00" and (not o or o < start):
-                E(f"[2 기간 전 변경분] {slug} {r.get('no')} ord={r.get('ord')} odate={o} 가 합계(rows)에 포함")
+            if r.get("ord", "00") != "00":
+                E(f"[2 변경 차수] {slug} {r.get('no')} ord={r.get('ord')} odate={o} 가 신규 합계(rows)에 포함(changes 로 가야 함)")
+            elif not o or o < start:
+                E(f"[2 기간 전] {slug} {r.get('no')} odate={o} 가 기간 시작 {start} 이전")
+            if r.get("atype") in EXT_ATYPE:
+                E(f"[18 시 밖 기관] {slug} {r.get('no')} {r.get('atype')} 가 시 합계(rows)에 포함(ext 로 가야 함)")
             t = r.get("title") or ""
             for w, cat in FP_CAT:
                 if r.get("cat") == cat and w in t and _category(t.replace(w, " "), r.get("kind")) != cat:
@@ -62,6 +67,12 @@ def check(root, prev=None):
         rows = d.get("rows", [])
         if c["count"] != len(rows) or c["total"] != sum(r["amount"] or 0 for r in rows):
             E(f"[5 합계] {slug} index count/total {c['count']}/{c['total']} ≠ 파일 {len(rows)}/{sum(r['amount'] or 0 for r in rows)}")
+        ext = d.get("ext", [])
+        ce = c.get("ext") or {"count": 0, "total": 0}
+        if ce["count"] != len(ext) or ce["total"] != sum(r["amount"] or 0 for r in ext):
+            E(f"[18 시 밖 기관] {slug} index ext {ce['count']}/{ce['total']} ≠ 파일 {len(ext)}/{sum(r['amount'] or 0 for r in ext)}")
+        if any(r.get("atype") not in EXT_ATYPE for r in ext):
+            E(f"[18 시 밖 기관] {slug} ext 에 시 기관 계약이 섞임")
         if c.get("changes", 0) != len(d.get("changes", [])):
             E(f"[5 합계] {slug} index changes {c.get('changes')} ≠ {len(d.get('changes', []))}")
         if sum(c.get("n_cat", {}).values()) not in (0, len(rows)):
@@ -94,7 +105,7 @@ def check(root, prev=None):
     # (8) 수집 공백: 기간 안 평일(공휴일 제외)마다 계약이 있고 최근 평일 평균의 20% 이상
     from collect import HOLIDAYS, SIDO
     cnt = {}
-    allrows = [r for d in cities.values() for r in d.get("rows", []) + d.get("changes", [])]
+    allrows = [r for d in cities.values() for r in d.get("rows", []) + d.get("changes", []) + d.get("ext", [])]
     for r in allrows:
         cnt[r["date"]] = cnt.get(r["date"], 0) + 1
     newrows = [r for d in cities.values() for r in d.get("rows", [])]
