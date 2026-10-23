@@ -16,7 +16,7 @@
   const box = root.querySelector('.dv-map'), sheet = root.querySelector('.dv-sheet'), body = root.querySelector('.dv-body'), form = root.querySelector('.dv-q'), inp = form.querySelector('input');
   const touch = matchMedia('(pointer: coarse)').matches;
   const map = L.map(box, {zoomControl: false, attributionControl: false, dragging: !touch, tap: false, minZoom: 5, maxZoom: 12, zoomSnap: 0.25});
-  L.control.attribution({position: 'topright', prefix: false}).addTo(map); if (!touch) L.control.zoom({position: 'bottomleft'}).addTo(map);
+  L.control.attribution({position: 'topright', prefix: false}).addTo(map); if (!touch && innerWidth >= 900) L.control.zoom({position: 'bottomleft'}).addTo(map);
   const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자'}).addTo(map);
   tiles.once('tileload', () => box.classList.remove('loading'));
   const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]); const krPad = () => (innerWidth >= 900 ? {paddingTopLeft: [10, 60], paddingBottomRight: [400, 10]} : {paddingTopLeft: [10, 64], paddingBottomRight: [10, Math.round(root.clientHeight * 0.22) + 6]}); map.fitBounds(KR, {...krPad(), animate: false});
@@ -57,15 +57,16 @@
     });
     setTimeout(declutter, 50);
   };
-  const fly = (slug) => { const c = fl.cities[slug]; if (!c) return; const ll = toLL(c.p);
+  let seq = 0;
+  const fly = (slug) => { const c = fl.cities[slug]; if (!c) return; const ll = toLL(c.p); const my = ++seq; gF.clearLayers(); map.stop();
     const pts = [ll, ...c.flows.filter((f) => f.p).slice(0, 10).map((f) => toLL(f.p))], bd = L.latLngBounds(pts);
     const wide = innerWidth >= 900, sh = wide ? 0 : sheet.offsetHeight || Math.round(root.clientHeight * 0.25);
     const o = {paddingTopLeft: [24, 76], paddingBottomRight: [wide ? 420 : 24, sh + 16], maxZoom: 9.5};
     const near = L.latLngBounds([[ll[0] - 0.12, ll[1] - 0.12], [ll[0] + 0.12, ll[1] + 0.12]]), oz = {...o, maxZoom: 9.5};
     if (RM || !box.clientWidth) { map.fitBounds(bd, {...o, animate: false}); drawFlows(slug); return; }
     map.flyToBounds(near, {...oz, duration: 1});
-    map.once('moveend', () => { if (cur !== slug) return; drawFlows(slug);
-      setTimeout(() => { if (cur === slug && !map.getBounds().contains(bd)) map.flyToBounds(bd, {...o, duration: 1.1}); }, 1300); }); };
+    map.once('moveend', () => { if (my !== seq) return; drawFlows(slug);
+      setTimeout(() => { if (my === seq && !map.getBounds().contains(bd)) map.flyToBounds(bd, {...o, duration: 1.1}); }, 1300); }); };
 
   // 검색: 시 이름·주소(시+구)
   const norm = (s) => s.replace(/\s/g, '').replace(/(특별시|광역시|특별자치시|특별자치도)/g, '');
@@ -74,7 +75,17 @@
     if (!best && toks.length > 1) best = C.find((c) => norm(c.name).replace(/시$/, '') === norm(toks[0]).replace(/시$/, ''));
     return best ? {c: best.slug, gu: toks.length > 1 && /구$/.test(toks[toks.length - 1]) ? toks[toks.length - 1] : null} : null; };
   form.addEventListener('submit', (e) => { e.preventDefault(); const r = find(inp.value); if (!r) { inp.setCustomValidity('찾는 지역이 없어요. 85개 시만 추적해요'); inp.reportValidity(); return; } inp.setCustomValidity(''); inp.blur(); go(r); });
-  inp.addEventListener('input', () => inp.setCustomValidity(''));
+  const sug = document.createElement('div'); sug.className = 'dv-sug'; sug.hidden = true; form.after(sug);
+  const pickS = (r) => { sug.hidden = true; inp.value = ''; inp.blur(); go(r); };
+  inp.addEventListener('input', () => { inp.setCustomValidity(''); const q = inp.value.trim(), t = norm(q);
+    if (!t) { sug.hidden = true; return; }
+    const toks = q.split(/\s+/), gu = toks.length > 1 ? toks[toks.length - 1] : '';
+    let L_ = C.filter((c) => (norm(c.province) + norm(c.name) + norm(c.short)).includes(norm(toks[0]))).slice(0, 6);
+    if (!L_.length) L_ = C.filter((c) => norm(c.name + c.short).includes(t)).slice(0, 6);
+    sug.innerHTML = L_.length ? L_.map((c) => `<button type="button" data-s="${c.slug}" data-g="${esc(gu)}"><b>${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</b><small>${esc(c.province)}</small></button>`).join('') : '<p class="small">찾는 시가 없어요 · 85개 시만 추적해요</p>';
+    sug.hidden = false;
+    sug.querySelectorAll('button').forEach((b) => (b.onclick = () => pickS({c: b.dataset.s, gu: /구$/.test(b.dataset.g) ? b.dataset.g : null}))); });
+  inp.addEventListener('blur', () => setTimeout(() => (sug.hidden = true), 200));
   form.querySelector('.dv-all').onclick = () => window.regionPicker && regionPicker(cur, (s) => go({c: s}));
 
   // 시트 레이어
@@ -83,7 +94,7 @@
   const src = '<p class="dv-src"><abbr title="데이터상 이상 징후는 위법을 뜻하지 않으며 정상적인 이유가 있을 수 있습니다. 공동도급은 지분이 확인된 계약만 지분대로 나눕니다.">ⓘ</abbr> 출처 조달청 나라장터</p>';
   const ex = (on) => { sheet.dataset.ex = on ? '1' : '0'; if (!on) sheet.scrollTop = 0; };
   root.querySelector('.dv-grab').onclick = () => ex(sheet.dataset.ex !== '1');
-  const L0 = () => { cur = null; gF.clearLayers(); setH(0); dim(null);
+  const L0 = () => { cur = null; seq++; gF.clearLayers(); setH(0); dim(null);
     if (box.clientWidth) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
     const tot = C.reduce((s, c) => s + (c.total || 0), 0);
     body.innerHTML = `<p class="dv-k">전국 85개 시 · 최근 계약으로 쓴 돈</p><p class="dv-v">${krw(tot)}</p><p class="dv-l">지역을 검색하거나 원을 누르세요</p>`; ex(false); };
@@ -92,7 +103,7 @@
   const sib = (slug, d) => { const me = BY[slug]; let g = C.filter((c) => c.province === me.province); if (g.length < 2) g = C; const i = g.findIndex((c) => c.slug === slug); return g[(i + d + g.length) % g.length].slug; };
   const L1 = async (slug, gu) => {
     const c = BY[slug], f = fl.cities[slug]; if (!c) return L0();
-    if (cur !== slug) { fly(slug); window.regionRemember && regionRemember(slug); }
+    if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
     cur = slug; setH(1); dim(slug);
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
     body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)}</p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
@@ -139,4 +150,23 @@
     else if (dy > 70 && Math.abs(dy) > Math.abs(dx) && sheet.dataset.lv !== '0') history.state && history.state.dv ? history.back() : go({}, true);
     else if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 1.5 && cur && sheet.dataset.lv === '1') go({c: sib(cur, dx < 0 ? 1 : -1)}, true); }, {passive: true});
   render();
+  // 첫 방문(주소에 지역 없음): 이번 주 가장 눈에 띄는 데이터상 이상 징후 1건으로 날아간다
+  try {
+    const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10), RK = {split: 3, increase: 3, repeat: 2, big: 1, threshold: 0};
+    const pk = !RM && !location.search && !sessionStorage.getItem('dvPick') && C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk)
+      .sort((a, b) => (RK[b.top_alert.kind] || 0) - (RK[a.top_alert.kind] || 0) || (b.top_alert.amount || 0) - (a.top_alert.amount || 0))[0];
+    if (pk) { sessionStorage.setItem('dvPick', '1'); const A = pk.top_alert;
+      setTimeout(() => { go({c: pk.slug}, true);
+        const d = document.createElement('div'); d.className = 'dv-pick';
+        d.innerHTML = `<p class="dv-pk-h">이번 주 눈에 띄는 데이터상 이상 징후</p><p class="dv-pk-a">${krw(A.amount)} · ${esc(pk.name)}</p><p class="dv-pk-r">${esc(A.title)}</p>
+          <div class="dv-pk-b"><a href="https://www.g2b.go.kr" target="_blank" rel="noopener">나라장터 원문</a><button type="button" data-sh>공유</button><button type="button" data-x>전국 보기</button></div>
+          <p class="dv-pk-s">출처: 조달청 나라장터(공공데이터포털) · 위법을 뜻하지 않아요</p>`;
+        sheet.prepend(d);
+        d.querySelector('[data-x]').onclick = () => { d.remove(); go({}, true); };
+        d.querySelector('[data-sh]').onclick = () => { const u = location.href.replace(/[^/]*([?#].*)?$/, '') + 'c/' + pk.slug + '.html#' + A.key;
+          navigator.share ? navigator.share({title: '데이터상 이상 징후 · ' + pk.name, url: u}).catch(() => {}) : navigator.clipboard && navigator.clipboard.writeText(u); };
+        addEventListener('popstate', () => d.remove(), {once: true});
+        const rm = () => { if (!new URLSearchParams(location.search).get('c') || new URLSearchParams(location.search).get('c') !== pk.slug) d.remove(); };
+        addEventListener('click', () => setTimeout(rm, 50)); }, 600); }
+  } catch (e) {}
 })();

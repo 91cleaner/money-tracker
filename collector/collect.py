@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 sys.path.insert(0, os.path.dirname(__file__))
 from cities import CITIES, city_of, legacy
 import share
-from privacy import mask
+from privacy import mask, loc
 import flows
 import jv
 import vendors_agg
@@ -424,7 +424,7 @@ def main():
             continue
         b = pick(it, "bizno")
         row = {"id": str(pick(it, "id") or hid(json.dumps(it, sort_keys=True, ensure_ascii=False))), "date": d, "inst": pick(it, "inst"),
-               "title": pick(it, "title") or "", "kind": pick(it, "kind"), "method": pick(it, "method"), "amount": amt,
+               "title": loc(pick(it, "title") or ""), "kind": pick(it, "kind"), "method": pick(it, "method"), "amount": amt,
                "vendor": pick(it, "vendor") or "", "url": pick(it, "url"), "bh": hid(str(b).replace("-", "")) if b else None,
                "no": it.get("cntrctNo") or None, "ord": it.get("cntrctOrd") or None, "this": to_int(it.get("cntrctAmt")),
                "jv": (it.get("cmmnCntrctYn") == "Y") if it.get("cmmnCntrctYn") in ("Y", "N") else None}
@@ -478,6 +478,7 @@ def main():
             r.pop("_b", None)
             if not r.get("ord") and re.fullmatch(r"[A-Z0-9]{13}\d{2}", r["id"]):
                 r["ord"] = r["id"][-2:]  # 통합계약번호 끝 2자리 = 차수
+            r["title"] = loc(r.get("title"))  # 지번 가리기 (예전에 저장된 행도)
             r["vendor"] = mask(r.get("vendor"))  # 사람 이름처럼 보이면 '개인사업자'
             r["cat"] = category(r.get("title"), r.get("kind"))
             if r.get("bh"):

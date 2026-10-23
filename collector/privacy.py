@@ -16,3 +16,21 @@ def mask(name):
     if re.fullmatch(r"[가-힣]{2,3}", n) and n[0] in SURNAMES and not any(m in n for m in MARKERS):
         return MASK
     return name
+
+
+def _bunji(m):
+    t = m.group(0)
+    return " 외" if t.endswith("외") else (" 일원" if ("일원" in t or "일대" in t) else " ")
+
+
+def loc(s):
+    """계약명 속 지번·도로명 건물번호를 지운다(동·리·로 이름은 남김). assets/mask.js 와 같은 규칙."""
+    if not isinstance(s, str):
+        return s
+    s = re.sub(r"\s?(산\s?)?\d+(-\d+)?\s?번지\s?(선|일원|일대|외)?", _bunji, s)
+    s = re.sub(r"(^|[\s(가-힣])(산\s?)?\d+(-\d+)?\s?(일원|일대)", r"\1 일원", s)
+    s = re.sub(r"([가-힣](?:동|리))\s?(산\s?)?\d+(-\d+)?(?=[\s,()·\]]|외|일원|주변|$)", r"\1", s)
+    s = re.sub(r"([로길])\s?\d+(-\d+)?(?=[\s,()·]|$)", r"\1", s)
+    s = re.sub(r"(^|[\s(])(산\s?)?\d{1,5}-\d{1,5}(?=[\s,()·]|$)", r"\1", s)
+    s = re.sub(r"\s{2,}", " ", s)
+    return re.sub(r"\s+([,)\]])", r"\1", s).strip()

@@ -75,7 +75,7 @@ body.has-rbar .stabs{top:100px}
 .rs-bg{animation:fadein .2s}@keyframes fadein{from{opacity:0}}
 body.swl main{transition:transform .12s,opacity .12s;transform:translateX(-30px);opacity:.4}body.swr main{transition:transform .12s,opacity .12s;transform:translateX(30px);opacity:.4}
 .rbar .rb-n::after{content:"좌우로 밀어 이동";display:block;font:500 10px var(--sans);color:#8b97a5;margin-top:-4px}
-.ticker{font-size:13px;line-height:44px;height:44px}.ticker a,.ticker b{display:inline-block;min-height:44px;padding:0 4px}.ticker:active div,.ticker:hover div{animation-play-state:paused}
+.ticker{font-size:13px;line-height:44px;height:auto;box-sizing:content-box}.ticker a,.ticker b{display:inline-block;padding:0 4px;vertical-align:top}.ticker:active div,.ticker:hover div{animation-play-state:paused}
 .todayn{display:inline-block;margin:10px 0 0;padding:6px 12px;border:1px solid #3dff7a55;border-radius:99px;color:#3dff7a;font:700 13px ui-monospace,monospace}
 .skel{color:#8b97a5!important;font-size:.5em!important;animation:blink 1.4s infinite}
 @media(max-width:899px){.map{aspect-ratio:auto!important;height:60vh;max-height:none}}
@@ -123,3 +123,12 @@ body.swl main{transition:transform .12s,opacity .12s;transform:translateX(-30px)
 .dv-vh{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;text-align:center}.dv-vh .dv-back{font-size:26px;min-width:44px}
 .dv-sheet[data-lv="2"][data-ex="0"]{max-height:27%}
 .dv-head .dv-name,.dv-head .dv-v{text-align:center}
+.dv-sug{position:absolute;top:64px;left:12px;right:12px;z-index:700;background:rgba(10,14,18,.98);border:1px solid #2a3540;border-radius:14px;overflow:hidden;max-height:50%;overflow-y:auto}
+.dv-sug button{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:48px;padding:0 14px;background:none;border:0;border-bottom:1px solid #1f2a33;color:#fff;font-size:16px;text-align:left}
+.dv-sug small{color:#8b97a5}.dv-sug p{padding:12px 14px;margin:0}
+@media (min-width:900px){.dv-sug{right:auto;width:380px}}
+.dv-pick{margin:0 0 10px;padding:12px 14px;border-radius:14px;background:#1a2129;border:1px solid #f5a52455}
+.dv-pick p{margin:0}.dv-pk-h{font-size:12px;color:#f5a524}.dv-pk-a{font-size:20px;font-weight:700;color:#fff;margin:2px 0}.dv-pk-r{font-size:14px;color:#c9d3dd}
+.dv-pk-b{display:flex;gap:8px;margin:10px 0 6px}.dv-pk-b a,.dv-pk-b button{flex:1;min-height:40px;border-radius:10px;border:1px solid #33414e;background:#0f151b;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.dv-pk-s{font-size:11px;color:#7b8794}
+#hero-num #nat-total{display:block;font-size:clamp(44px,13vw,76px);font-weight:800;line-height:1.1;color:#fff}
