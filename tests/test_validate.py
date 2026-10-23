@@ -31,6 +31,14 @@ def build(spec, d):
         cities.append({"slug": slug, "count": len(c["rows"]), "total": sum(r["amount"] for r in c["rows"]), "changes": len(c["changes"]),
                        **spec.get("idx_over", {}).get(slug, {})})
     json.dump({"updated": "2026-10-23T10:00", "days": 90, "cities": cities}, open(os.path.join(d, "index.json"), "w"))
+    daily = {}
+    for slug, c in spec["city"].items():
+        m = daily.setdefault(slug, {})
+        for r in c["rows"]:
+            e = m.setdefault(r.get("odate") or r["date"], [0, 0, {}]); e[0] += 1; e[1] += r["amount"]
+            ce = e[2].setdefault(r["cat"], [0, 0]); ce[0] += 1; ce[1] += r["amount"]
+    if not spec.get("no_daily"):
+        json.dump({"last": "2026-10-23", "c": daily}, open(os.path.join(d, "daily.json"), "w"), ensure_ascii=False)
     json.dump(spec["sole"], open(os.path.join(d, "sec_sole.json"), "w"), ensure_ascii=False)
     json.dump(spec["fest"], open(os.path.join(d, "sec_fest.json"), "w"), ensure_ascii=False)
 
@@ -92,6 +100,9 @@ class Gate(unittest.TestCase):
     def test_5_index_mismatch(self):
         self.assertTag(lambda s: s.setdefault("idx_over", {}).update(a={"total": 1}), "[5 합계]")
         self.assertTag(lambda s: s.setdefault("idx_over", {}).update(a={"changes": 0}), "[5 합계]")
+
+    def test_17_daily_matches(self):
+        self.assertTag(lambda s: s.update(no_daily=True), "[17 일별 집계]")
 
     def test_6_rev_none_zero_regression(self):
         def m(s):

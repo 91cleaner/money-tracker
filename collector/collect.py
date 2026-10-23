@@ -484,6 +484,23 @@ HOLIDAYS = {"2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", "2026-03-02"
             "2027-10-04", "2027-10-11", "2027-12-27"}
 
 
+def daily_agg(now):
+    """시·원계약일·분야별 [건수, 금액]. 화면에서 고른 기간만큼 더해 합계를 다시 만든다(index 합계와 같은 행 기준)."""
+    out, lo, hi = {}, None, None
+    for c in CITIES:
+        d = load(os.path.join(DATA, "city", c["slug"] + ".json"), {"rows": []})
+        m = {}
+        for r in d.get("rows", []):
+            k = r.get("odate") or r["date"]
+            e = m.setdefault(k, [0, 0, {}])
+            e[0] += 1; e[1] += r["amount"] or 0
+            ce = e[2].setdefault(r.get("cat") or "기타", [0, 0]); ce[0] += 1; ce[1] += r["amount"] or 0
+            lo = k if lo is None or k < lo else lo; hi = k if hi is None or k > hi else hi
+        out[c["slug"]] = m
+    cover = min((r["date"] for c in CITIES for r in load(os.path.join(DATA, "city", c["slug"] + ".json"), {"rows": []}).get("rows", [])), default=lo)
+    return {"updated": now.isoformat(), "first": lo, "last": hi, "cover_from": cover, "c": out}
+
+
 def gap_days(now, limit=int(os.environ.get("GAP_DAYS_PER_RUN", "4"))):
     """저장된 자료에서 평일인데 계약이 거의 없는 날(최근 평일 평균의 20% 미만)을 찾아 다시 받는다(한 번에 limit일)."""
     cnt = Counter()
@@ -642,6 +659,7 @@ def main():
                       "top_alert_cat": alert_cat,
                       "top_alert": flagged[0] if flagged else None})
     save(os.path.join(DATA, "index.json"), {"updated": now.isoformat(), "days": KEEP_DAYS, "cities": index})
+    save(os.path.join(DATA, "daily.json"), daily_agg(now))  # 기간 슬라이더용: 시·날짜(원계약일)·분야별 건수·금액
     if KEY:
         try:
             corp_step(now, state, biz_by_hash)

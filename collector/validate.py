@@ -67,6 +67,28 @@ def check(root, prev=None):
         if sum(c.get("n_cat", {}).values()) not in (0, len(rows)):
             E(f"[5 합계] {slug} 분야별 건수 합 ≠ count")
 
+    # (17) 기간 슬라이더용 일별 집계 = 도시 파일의 신규 계약(건수·금액·분야) 그대로
+    dp = os.path.join(root, "daily.json")
+    if os.path.exists(dp):
+        dl = _load(dp)
+        for slug, d in cities.items():
+            m = dl.get("c", {}).get(slug, {})
+            rows = d.get("rows", [])
+            n, t = sum(v[0] for v in m.values()), sum(v[1] for v in m.values())
+            if n != len(rows) or t != sum(r["amount"] or 0 for r in rows):
+                E(f"[17 일별 집계] {slug} 일별 합 {n}건/{t} ≠ 도시 파일 {len(rows)}건/{sum(r['amount'] or 0 for r in rows)}")
+            for day, v in m.items():
+                if v[0] != sum(x[0] for x in v[2].values()) or v[1] != sum(x[1] for x in v[2].values()):
+                    E(f"[17 일별 집계] {slug} {day} 분야별 합 ≠ 그날 합"); break
+            byday = {}
+            for r in rows:
+                byday[r.get("odate") or r["date"]] = byday.get(r.get("odate") or r["date"], 0) + 1
+            if any(m.get(k, [0])[0] != v for k, v in byday.items()):
+                E(f"[17 일별 집계] {slug} 날짜별 건수가 도시 파일과 다름")
+        if cities and not dl.get("last"):
+            E("[17 일별 집계] daily.json 에 last 없음")
+    elif cities:
+        E("[17 일별 집계] daily.json 없음")
     # (8) 수집 공백: 기간 안 평일(공휴일 제외)마다 계약이 있고 최근 평일 평균의 20% 이상
     from collect import HOLIDAYS, SIDO
     cnt = {}

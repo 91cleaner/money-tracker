@@ -1,0 +1,95 @@
+/* 기간 슬라이더: 7일·14일·30일(기본)·60일·90일·전체. 일별 집계(data/daily.json)를 더해 합계를 다시 만든다.
+   URL: ?d=30 (최근 30일, 매일 움직임) · ?d=30&to=2026-10-23 (고정: 공유 링크용) · ?from=2026-10-01&to=2026-10-23 (임의 기간).
+   data/index.json, data/city/*.json 요청을 가로채 고른 기간만 남긴다(다른 스크립트는 그대로). */
+(() => {
+  const Q = new URLSearchParams(location.search), STOPS = [7, 14, 30, 60, 90, 0];  // 0 = 전체
+  const rf = window.fetch.bind(window);
+  const DL = rf('data/daily.json', {cache: 'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null);
+  const day = (s, k) => { const d = new Date(s + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + k); return d.toISOString().slice(0, 10); };
+  const span = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1;
+  const WIN = DL.then(dl => {
+    if (!dl || !dl.last) return null;
+    const lo = dl.cover_from || dl.first, to0 = /^\d{4}-\d\d-\d\d$/.test(Q.get('to') || '') ? Q.get('to') : dl.last;
+    const to = to0 > dl.last ? dl.last : to0;
+    let from, d;
+    if (/^\d{4}-\d\d-\d\d$/.test(Q.get('from') || '')) { from = Q.get('from'); d = span(from, to); }
+    else { d = Q.has('d') ? +Q.get('d') || 0 : 30; from = d ? day(to, 1 - d) : lo; }
+    if (from < lo) from = lo;
+    return {dl, lo, from, to, d, fixed: Q.has('to') || Q.has('from'), explicit: Q.has('d') || Q.has('to') || Q.has('from')};
+  });
+  window.PERIOD = WIN;
+  const sumCity = (m, w) => { const o = {n: 0, t: 0, cat: {}}; for (const k in m) if (k >= w.from && k <= w.to) { const v = m[k]; o.n += v[0]; o.t += v[1]; for (const c in v[2]) { const x = o.cat[c] || (o.cat[c] = [0, 0]); x[0] += v[2][c][0]; x[1] += v[2][c][1]; } } return o; };
+  const fixIndex = (x, w) => { for (const c of x.cities || []) { const s = sumCity(w.dl.c[c.slug] || {}, w); c.count = s.n; c.total = s.t; c.by_cat = {}; c.n_cat = {}; for (const k in s.cat) { c.n_cat[k] = s.cat[k][0]; c.by_cat[k] = s.cat[k][1]; } } x.period = {from: w.from, to: w.to, d: w.d}; return x; };
+  const fixCity = (x, w) => {
+    const inw = r => { const k = r.odate || r.date; return k >= w.from && k <= w.to; };
+    x.rows = (x.rows || []).filter(inw); x.changes = (x.changes || []).filter(r => r.date >= w.from && r.date <= w.to);
+    const ids = new Set(x.rows.map(r => r.id).concat(x.changes.map(r => r.id)));
+    x.alerts = (x.alerts || []).filter(a => (a.ids || []).every(i => ids.has(i)));
+    const s = x.summary || (x.summary = {}), inst = {}, ven = {};
+    for (const r of x.rows) {
+      (inst[r.inst] = inst[r.inst] || [0, 0]); inst[r.inst][0] += r.amount; inst[r.inst][1]++;
+      const ms = r.jvm && r.jvm.length > 1 && r.jvm.every(m => m.share != null) ? r.jvm.map(m => [m.name, m.id, r.amount * m.share / 100, m.region]) : [[r.vendor, r.bh, r.amount, r.vregion]];
+      for (const [nm, id, a, rg] of ms) { if (!nm) continue; const k = nm + '|' + id, v = ven[k] || (ven[k] = {name: nm, id, amount: 0, count: 0, region: rg}); v.amount += a; v.count++; }
+    }
+    const ds = x.rows.map(r => r.odate || r.date).sort();
+    Object.assign(s, {count: x.rows.length, total: x.rows.reduce((a, r) => a + r.amount, 0), first: ds[0] || null, last: ds[ds.length - 1] || null,
+      top_inst: Object.entries(inst).sort((a, b) => b[1][0] - a[1][0]).slice(0, 10).map(([name, [amount, count]]) => ({name, amount, count})),
+      top_vendors: Object.values(ven).sort((a, b) => b.amount - a.amount).slice(0, 10)});
+    x.period = {from: w.from, to: w.to, d: w.d}; return x;
+  };
+  window.fetch = (u, o) => {
+    const s = typeof u === 'string' ? u : (u && u.url) || '';
+    const isI = /(^|\/)data\/index\.json/.test(s), isC = /(^|\/)data\/city\/[^/]+\.json/.test(s);
+    if (!isI && !isC) return rf(u, o);
+    return Promise.all([rf(u, o), WIN]).then(([res, w]) => {
+      if (!w || !res.ok) return res;
+      return res.json().then(x => new Response(JSON.stringify(isI ? fixIndex(x, w) : fixCity(x, w)), {status: 200, headers: {'Content-Type': 'application/json'}}));
+    });
+  };
+  // 링크에 기간 유지 (주소에 기간을 직접 넣은 경우)
+  const keep = () => ['d', 'from', 'to'].filter(k => Q.has(k)).map(k => [k, Q.get(k)]);
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href]'); if (!a || !keep().length) return;
+    const h = a.getAttribute('href'); if (!h || h[0] === '#' || /^(https?:|mailto:|javascript:)/.test(h) && !h.startsWith(location.origin)) return;
+    const url = new URL(h, location.href); if (url.origin !== location.origin) return;
+    for (const [k, v] of keep()) if (!url.searchParams.has(k)) url.searchParams.set(k, v);
+    a.href = url.pathname + url.search + url.hash;
+  }, true);
+  const sy = sessionStorage.getItem('pd-y'); if (sy) { sessionStorage.removeItem('pd-y'); addEventListener('load', () => setTimeout(() => scrollTo(0, +sy), 60)); }
+  // 슬라이더 UI
+  const fmt = s => s.replace(/-/g, '.'), W = n => n >= 1e8 ? (n / 1e8).toLocaleString('ko-KR', {maximumFractionDigits: 0}) + '억' : (n / 1e4).toLocaleString('ko-KR', {maximumFractionDigits: 0}) + '만';
+  const css = `.pd{margin:8px 6px 4px;padding:8px 12px 10px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(10,16,24,.6);font:600 12px/1.4 var(--sans,system-ui);color:#cfd8e3}
+.pd-top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.pd-top b{color:#ffb020;font-size:14px}.pd-r{color:#8fa0b3;font-weight:500}
+.pd input{width:100%;margin:8px 0 2px;accent-color:#ffb020;height:28px;touch-action:pan-y}.pd-t{display:flex;justify-content:space-between;color:#6b7785;font-size:10.5px}
+.pd-sum{color:#e8eef5;font-weight:500;margin-top:2px}#dive .pd{order:3}`;
+  const mount = w => {
+    if (!w || document.querySelector('.pd')) return;
+    const cov = span(w.lo, w.dl.last), stops = STOPS.filter(s => s === 0 || s < cov);
+    let i = stops.indexOf(w.fixed && Q.has('from') ? -1 : w.d); if (i < 0) i = stops.indexOf(30) >= 0 ? stops.indexOf(30) : stops.length - 1;
+    const st = document.createElement('style'); st.textContent = css; document.head.append(st);
+    const el = document.createElement('div'); el.className = 'pd';
+    el.innerHTML = `<div class="pd-top"><b class="pd-l"></b><span class="pd-r"></span></div><input type="range" min="0" max="${stops.length - 1}" step="1" value="${i}" aria-label="기간"><div class="pd-t">${stops.map(s => `<span>${s ? s + '일' : '전체'}</span>`).join('')}</div><div class="pd-sum"></div>`;
+    const inp = el.querySelector('input');
+    const show = (k, fr, to) => {
+      const s = stops[k]; fr = fr || (s ? day(w.dl.last, 1 - s) : w.lo); to = to || w.dl.last; if (fr < w.lo) fr = w.lo;
+      el.querySelector('.pd-l').textContent = Q.has('from') && fr === w.from ? `${span(fr, to)}일` : (s ? `최근 ${s}일` : '전체');
+      el.querySelector('.pd-r').textContent = `${fmt(fr)}~${fmt(to).slice(5)} 계약일 기준${to === w.dl.last && !w.fixed ? ' (늘어날 수 있음)' : ''}`;
+      let n = 0, t = 0; for (const c in w.dl.c) { const x = sumCity(w.dl.c[c], {from: fr, to}); n += x.n; t += x.t; }
+      el.querySelector('.pd-sum').textContent = `전국 85개 시 · ${n.toLocaleString()}건 · ₩${W(t)}${fr > (s ? day(to, 1 - s) : fr) ? ' · 자료가 있는 날부터' : ''}`;
+    };
+    show(i, w.from, w.to);
+    let tl, tn;
+    inp.addEventListener('input', () => { clearTimeout(tl); tl = setTimeout(() => show(+inp.value), 60); });
+    inp.addEventListener('change', () => { clearTimeout(tn); tn = setTimeout(() => {
+      const s = stops[+inp.value], u = new URL(location.href); ['d', 'from', 'to'].forEach(k => u.searchParams.delete(k));
+      if (s !== 30) u.searchParams.set('d', String(s)); if (s !== 30 || w.explicit) u.searchParams.set('to', w.dl.last);
+      if (s === 30 && !w.explicit) u.searchParams.delete('to');
+      sessionStorage.setItem('pd-y', String(scrollY)); location.replace(u.toString());
+    }, 350); });
+    const map = document.querySelector('#dive .dv-map');
+    if (map) map.parentNode.insertBefore(el, map);
+    else { const h = document.querySelector('main h1, header + * h1, h1'); (h && h.parentNode ? h.parentNode.insertBefore(el, h.nextSibling) : document.body.prepend(el)); }
+  };
+  const go = () => (document.getElementById('dive') || /city\.html$/.test(location.pathname)) && WIN.then(mount);
+  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', () => setTimeout(go, 0)) : go();
+})();
