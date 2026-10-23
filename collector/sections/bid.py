@@ -92,6 +92,24 @@ def main():
     except StopIteration:
         print("오늘 몫의 조회 한도 도달, 내일 이어서")
     print(f"조회: 계약정보 {used['c']}건, 입찰·낙찰 {used['b']}건 · 입찰정보 있는 계약 {sum(1 for v in cache.values() if v.get('n'))}건")
+    # '유찰 후 수의계약(추정)' 표시된 계약(10억 미만 포함): 공고 번호로 공고 단계 계약방법만 확인(이미 수의면 유찰 아님)
+    try:
+        fb = {}
+        for p in glob.glob("data/city/*.json"):
+            d = json.load(open(p))
+            for r in d.get("rows", []) + d.get("changes", []) + d.get("ext", []) + d.get("ext_chg", []):
+                no = r.get("no") or r["id"][:-2]
+                if r.get("method") == "유찰 후 수의계약(추정)" and r.get("ntce") and r.get("kind") in OP and no not in rows and no not in cache:
+                    fb[no] = r
+        print(f"유찰 추정 공고 확인 대상 {len(fb)}건")
+        for no, r in sorted(fb.items(), key=lambda x: -(x[1].get("amount") or 0)):
+            bn = str(r["ntce"]).split("-")[0]
+            it = g(f"ad/BidPublicInfoService/getBidPblancListInfo{OP[r['kind']]}", "b", inqryDiv=2, bidNtceNo=bn, numOfRows=5)
+            if it is None: continue
+            cache[no] = {"done": True, "bn": bn, "src": "ntce", "method": (it[0].get("cntrctCnclsMthdNm") if it else None),
+                         "nm": (it[0].get("bidNtceNm") if it else None), "at": now.strftime("%Y-%m-%d")}
+    except StopIteration:
+        print("유찰 추정 공고 확인: 오늘 몫 한도 도달")
     for c in cache.values():  # 낙찰률이 상식 범위(60~100.5%) 밖이면 확인할 수 없는 값으로 보고 숨김(원래 값은 rate_raw)
         rt = c.get("rate") if c.get("rate") is not None else c.get("rate_raw")
         if rt is not None and not (60 <= rt <= 100.5):
