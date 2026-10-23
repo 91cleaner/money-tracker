@@ -223,3 +223,6 @@ html,body{overflow-x:clip}#dive,.dv-car{max-width:100%}
 .dv-l1{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
 .dv-l1 .dv-meta{white-space:nowrap;flex-basis:100%;text-align:center}
 .dv-chip b,.dv-chip{white-space:nowrap}
+
+.fest-note{margin:6px 0 10px;padding:8px 12px;border-radius:10px;background:#141a21;border:1px solid #26303a;color:#aab4bf;font-size:12px}
+.sole-badge{font-style:normal;font-size:11px;padding:2px 7px;border-radius:9px;background:#3a2a0a;color:#ffb020;margin-left:6px}

@@ -58,3 +58,30 @@ def korify(o):
     if isinstance(o, dict):
         return {k: (kor(v) if k in ("name", "vendor") and isinstance(v, str) else korify(v)) for k, v in o.items()}
     return o
+
+
+# 축제 공연·섭외 계약: 공연 용역만 (공사·보수·시설·무대장치 제작은 뺌). 출연자 이름은 절대 저장·표시하지 않는다.
+FEST_CAT = "축제 공연·섭외"
+_FEST_IN = re.compile(r"공연|출연|섭외|콘서트|축하공연|초청가수|아티스트")
+_FEST_OUT = re.compile(r"공사|보수|시설|무대장치\s*제작|무대\s*제작")
+_FEST_CUT = re.compile(r"(초청\s*가수|가수|아티스트|출연자|출연진|출연|섭외|게스트)")
+
+
+def is_fest(title, kind):
+    t = title or ""
+    if kind and ("공사" in kind or "물품" in kind):
+        return False
+    return bool(_FEST_IN.search(t)) and not _FEST_OUT.search(t)
+
+
+def fest_title(title):
+    """출연자 이름이 들어갈 수 있는 부분(괄호·따옴표 안, '가수/아티스트/섭외' 뒤)을 지우고 '공연·섭외 용역'으로 끝맺는다."""
+    t = title or ""
+    if t.endswith("[공연·섭외 용역]"):
+        return t
+    t = re.sub(r"[\(\[「『<〈《\"'“‘][^\)\]」』>〉》\"'”’]*[\)\]」』>〉》\"'”’]", " ", t)
+    m = _FEST_CUT.search(t)
+    if m:
+        t = t[:m.start()]
+    t = re.sub(r"\s+", " ", t).strip(" ·-,/")
+    return (t + " " if t else "") + "[공연·섭외 용역]"

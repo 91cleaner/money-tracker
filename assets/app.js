@@ -12,7 +12,12 @@ const krw = (n) => {
 const pct = (x) => (x == null ? '—' : Math.round(x * 100) + '%');
 const when = (iso) => { if (!iso) return '—'; return new Date(iso).toLocaleString('ko-KR', {month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}); };
 const LABEL = {split: '같은 날 나눠진 계약', threshold: '금액선 근처', increase: '계약 금액 증가', repeat: '같은 업체 반복', big: '1억 이상'};
-const CATS = ['전체', '청소', '시설관리', '경비', '건설·공사', '용역·연구', '인쇄·홍보', '물품', '기타'];
+const CATS = ['전체', '청소', '시설관리', '경비', '건설·공사', '용역·연구', '인쇄·홍보', '축제 공연·섭외', '물품', '기타'];
+const FEST = '축제 공연·섭외';
+// 축제 공연 분야를 고르면 안내 한 줄 (출연자 이름은 수집 단계에서 지움)
+const festNote = (anchor, on) => { if (!anchor) return; let n = anchor.parentNode.querySelector(':scope > .fest-note');
+  if (!on) { n && n.remove(); return; } if (n) return; n = document.createElement('p'); n.className = 'fest-note small';
+  n.textContent = '공연 용역 금액에는 무대·음향·연출이 포함되며 개인 출연료가 아님 · 출처 조달청 나라장터'; anchor.after(n); };
 const SOURCE = 'https://www.g2b.go.kr';
 const BASE = location.href.replace(/[^/]*([?#].*)?$/, '');
 const shareURL = (slug, key) => BASE + 'c/' + slug + '.html' + (key ? '#' + key : '');
@@ -149,7 +154,7 @@ async function funHome(idx, getCat) {
     let key = 'amount', n = 10, lastCat = null;
     const btns = document.querySelectorAll('#rcpt th button');
     const draw = () => {
-      const cat = getCat(); if (cat !== lastCat) { lastCat = cat; }
+      const cat = getCat(); if (cat !== lastCat) { lastCat = cat; } festNote($('#rcpt').closest('.rcpt-wrap') || $('#rcpt'), cat === FEST);
       const list = all.filter((r) => cat === '전체' || r.cat === cat).sort((a, b) => key === 'amount' ? b.amount - a.amount : (b.date > a.date ? 1 : b.date < a.date ? -1 : b.amount - a.amount));
       tb.replaceChildren();
       for (const r of list.slice(0, n)) {
@@ -394,10 +399,11 @@ async function vendorPage() {
   const drawRows = () => {
     const box = $('#v-rows'); box.replaceChildren();
     const rows = cat ? d.rows.filter((r) => r.cat === cat) : d.rows;
-    $('#v-rows-n').textContent = (cat ? cat + ' · ' : '') + rows.length.toLocaleString('ko-KR') + '건' + (cat ? ' (다시 누르면 전체)' : '');
+    $('#v-rows-n').textContent = (cat ? cat + ' · ' : '') + rows.length.toLocaleString('ko-KR') + '건' + (cat ? ' (다시 누르면 전체)' : ''); festNote($('#v-rows-n'), cat === FEST);
     for (const r of rows.slice(0, 300)) {
       const c = el('article', 'ccard');
       const top = el('div', 'cc-top'); top.append(el('span', 'cc-d', r.date + ' · ' + r.cat), el('b', 'cc-a', krw(r.amount)));
+      if (r.cat === FEST && /수의/.test(r.method || '')) top.append(el('i', 'sole-badge', '수의계약'));
       const t = r.url ? el('a', 'cc-t', r.title) : el('span', 'cc-t', r.title); if (r.url) { t.href = r.url; t.target = '_blank'; t.rel = 'noopener'; }
       c.append(top, t, el('span', 'cc-i', r.inst + (r.method ? ' · ' + r.method : '')));
       c.append(...contractExtra(r));
@@ -456,7 +462,7 @@ async function cityPage() {
     const s = stats(d.city, rows);
     const alerts = cat === '전체' ? d.alerts : d.alerts.filter((a) => (a.ids || []).some((id) => (byId.get(id) || {}).cat === cat));
     const flagged = alerts.filter((a) => a.kind !== 'big').length;
-    const what = cat === '전체' ? '' : `${cat} 분야에 `;
+    const what = cat === '전체' ? '' : `${cat} 분야에 `; festNote($('#lede'), cat === FEST);
     $('#range').textContent = s.first ? `${s.first.replaceAll('-', '.')} ~ ${s.last.replaceAll('-', '.')}` : '최근 90일';
     const jo = (w) => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c <= 11171 && c % 28 ? '은' : '는'; };
     $('#lede').replaceChildren('최근 90일, ', name + jo(name) + ' ' + what, el('b', '', krw(s.total)), '을 썼고, ',
