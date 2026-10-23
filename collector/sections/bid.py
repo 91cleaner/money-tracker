@@ -120,6 +120,23 @@ def main():
     except Exception: same = False
     if not same:
         json.dump(out, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
+    relabel(out["rows"])
+
+
+def relabel(bids):
+    """공고 단계부터 수의계약으로 확인된 계약의 '유찰 후 수의계약(추정)'을 '수의계약'으로 되돌린다(collect.method_label 과 같은 규칙)."""
+    n = 0
+    for p in glob.glob("data/city/*.json"):
+        d = json.load(open(p)); ch = 0
+        for k in ("rows", "changes", "ext", "ext_chg"):
+            for r in d.get(k, []):
+                b = bids.get(r.get("no") or r["id"][:-2]) or {}
+                if r.get("method") == "유찰 후 수의계약(추정)" and "수의" in (b.get("method") or ""):
+                    r["method"] = "수의계약"; ch += 1
+        if ch:
+            n += ch
+            with open(p, "w") as f: json.dump(d, f, ensure_ascii=False, separators=(",", ":"))
+    print(f"유찰 추정 표시 해제 {n}건")
 
 
 if __name__ == "__main__":
