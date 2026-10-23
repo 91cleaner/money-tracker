@@ -37,8 +37,13 @@ def add(s, k):
     return (datetime.strptime(s, "%Y-%m-%d") + timedelta(days=k)).strftime("%Y-%m-%d")
 
 
-def build(D, dl, ix):
-    to = add(D, -1)
+def kst_today():
+    return (datetime.now(timezone.utc) + timedelta(hours=9)).strftime("%Y-%m-%d")
+
+
+def build(D, dl, ix, today=None):
+    # 기간 끝 = 문제 날짜 전날. 단 아직 끝나지 않은 날(오늘 이후)은 쓰지 않는다 → 고정 시점 기준 완전히 끝난 30일.
+    to = min(add(D, -1), add(today or kst_today(), -1))
     if to > dl["last"]:
         to = dl["last"]
     frm = add(to, -29)
@@ -63,6 +68,9 @@ def build(D, dl, ix):
     return None
 
 
+REVISE_ONCE = {"2026-10-25": "2026-10-24"}  # 끝날짜가 아직 안 끝난 날(10/24)로 고정됐던 항목: 완전히 끝난 기간으로 한 번만 다시 계산(게이트도 이것만 허용)
+
+
 def main(data="data", days=None):
     dl = json.load(open(os.path.join(data, "daily.json"), encoding="utf-8"))
     ix = json.load(open(os.path.join(data, "index.json"), encoding="utf-8"))
@@ -72,9 +80,14 @@ def main(data="data", days=None):
     except (OSError, ValueError):
         q = {}
     if days is None:
-        today = (datetime.now(timezone.utc) + timedelta(hours=9)).strftime("%Y-%m-%d")
+        today = kst_today()
         days = [today, add(today, 1)]
     added = []
+    for D, bad_to in REVISE_ONCE.items():
+        if D in q and q[D]["to"] == bad_to:
+            x = build(D, dl, ix)
+            if x and x["to"] < bad_to:
+                q[D] = x; added.append(D + "(재계산)")
     for D in days:
         if D in q:
             continue  # 이미 있는 날짜는 절대 덮어쓰지 않음

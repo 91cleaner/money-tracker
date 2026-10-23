@@ -287,7 +287,13 @@ def check(root, prev=None):
         if bad: E(f"[27 구의회] {slug} 구·군 의회 계약 {len(bad)}건이 시 합계에 들어감, 예: {bad[:2]}")
 
     # (26) 오늘의 한 문제 고정: 이전에 있던 날짜는 그대로여야 함(지워지거나 숫자·도시가 바뀌면 실패)
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "sections"))
+    from daily_q import REVISE_ONCE
     qp = os.path.join(root, "daily_q.json")
+    # 끝날짜는 문제 날짜보다 앞서야 함(아직 안 끝난 날 금지는 고정 시점 규칙으로 스크립트에서 보장)
+    if os.path.exists(qp):
+        for k, v in _load(qp).items():
+            if v.get("to", "") >= k: E(f"[26 오늘의 문제] {k} 기간 끝날짜 {v.get('to')}가 문제 날짜 이후")
     if os.path.exists(qp):
         dq = _load(qp)
         for k, v in dq.items():
@@ -295,7 +301,8 @@ def check(root, prev=None):
                 E(f"[26 오늘의 문제] {k} 형식이 맞지 않음")
         if prev and os.path.exists(os.path.join(prev, "daily_q.json")):
             for k, v in _load(os.path.join(prev, "daily_q.json")).items():
-                if dq.get(k) != v:
+                fixed_once = REVISE_ONCE.get(k) == v.get("to") and (dq.get(k) or {}).get("to", "9") < v["to"]
+                if dq.get(k) != v and not fixed_once:
                     E(f"[26 오늘의 문제] {k} 고정된 문제가 바뀌거나 사라짐: {v} → {dq.get(k)}")
     elif prev and os.path.exists(os.path.join(prev, "daily_q.json")):
         E("[26 오늘의 문제] daily_q.json 이 사라짐")

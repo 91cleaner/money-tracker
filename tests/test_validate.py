@@ -144,6 +144,14 @@ class Gate(unittest.TestCase):
             q = daily_q.main(d, ["2026-10-23"])
             self.assertEqual(q["2026-10-23"]["a"], "keep")
 
+    def test_daily_q_complete_days_only(self):
+        import sys; sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "collector", "sections"))
+        import daily_q
+        dl = {"first": "2026-07-01", "last": "2026-10-24", "c": {"x": {"2026-10-01": [1, 5e8]}, "y": {"2026-10-01": [1, 2e8]}}}
+        ix = {"cities": [{"slug": "x", "name": "X"}, {"slug": "y", "name": "Y"}]}
+        self.assertEqual(daily_q.build("2026-10-25", dl, ix, today="2026-10-24")["to"], "2026-10-23")
+        self.assertEqual(daily_q.build("2026-10-24", dl, ix, today="2026-10-24")["to"], "2026-10-23")
+
     def test_daily_q_rng_matches_js(self):
         import sys; sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "collector", "sections"))
         import daily_q
