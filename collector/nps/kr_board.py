@@ -59,13 +59,16 @@ def main():
     if not res: raise RuntimeError("첨부 xlsx 못 찾음")
     u, rows = res
     LOG.append("rows[:6]=" + json.dumps([[str(c)[:15] for c in r[:8]] for r in rows[:6]], ensure_ascii=False))
-    hi = next(i for i, r in enumerate(rows) if r and any(isinstance(c, str) and "종목" in c for c in r))
+    hi = next(i for i, r in enumerate(rows) if r and any(isinstance(c, str) and "종목명" in c for c in r) and any(isinstance(c, str) and "평가액" in c for c in r))
     hdr = [str(c or "") for c in rows[hi]]
     col = lambda *ks: next(j for j, c in enumerate(hdr) if any(k in c for k in ks))
     jn, jv, jw, js = col("종목"), col("평가액"), col("비중"), col("지분율")
     asof = f"{year}-12-31" if year else None; out = []
+    num = lambda v: v if isinstance(v, (int, float)) else (float(str(v).replace(",", "")) if v and re.fullmatch(r"[\d,.]+", str(v).strip()) else None)
     for r in rows[hi + 1:]:
-        if not r or not r[jn] or not isinstance(r[jv], (int, float)): continue
+        r = list(r) + [None] * 10
+        if not r[jn] or num(r[jv]) is None: continue
+        r[jv], r[jw], r[js] = num(r[jv]), num(r[jw]), num(r[js])
         out.append({"company": str(r[jn]).strip(), "value_100m_krw": r[jv], "weight_pct": r[jw], "stake_pct": r[js], "as_of": asof, "source_url": u})
     out.sort(key=lambda x: -x["value_100m_krw"])
     for k, x in enumerate(out, 1): x["rank"] = k
