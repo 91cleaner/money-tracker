@@ -162,6 +162,15 @@
     return api;
   };
   window.mtSheet = sheet;
+  // 링크의 #칸으로 들어왔을 때: 내용이 늦게 그려져 브라우저가 못 찾은 경우 다시 그 칸으로 간다(사용자가 이미 움직였으면 안 함)
+  (() => {
+    const h = location.hash.slice(1);
+    if (!/^[\w-]+$/.test(h) || /^case-/.test(h)) return;
+    let moved = false; const stop = () => { moved = true; };
+    ['touchstart', 'wheel', 'keydown'].forEach((ev) => addEventListener(ev, stop, {once: true, passive: true}));
+    const go = () => { if (moved) return; const el = document.getElementById(h); if (el) el.scrollIntoView({block: 'start'}); };
+    [600, 1500, 3000].forEach((t) => setTimeout(go, t));
+  })();
   window.mtFX = fx;
   window.mtFxN = fxN;
   window.mtZoom = zoomLike;

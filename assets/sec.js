@@ -23,7 +23,7 @@ LOAD('data/sec_sole.json').then(d=>{
   if(d.flags.length){const f=d.flags[new Date().getDate()%Math.min(d.flags.length,7)];
     $('spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(f.inst)}</b> → <b>${E(f.vendor)}</b><br>30일 안에 ${f.n}건 · 합계 ${W(f.sum)}<p class="src">${SRC}</p></div>`}
   // 추적 파일
-  $('cases').innerHTML=d.flags.map((f,i)=>(i===8?`<details class="more-cases"><summary>묶음 ${d.flags.length-8}개 더 보기</summary>`:'')+`<div class="case"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 더 보기 목록 #${String(i+1).padStart(3,'0')}</div>
+  $('cases').innerHTML=d.flags.map((f,i)=>(i===8?`<details class="more-cases"><summary>묶음 ${d.flags.length-8}개 더 보기</summary>`:'')+`<div class="case" id="case-${i+1}"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 더 보기 목록 #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(f.cname)} · ${f.n}건, 공고 없이 바로 맺은 수의계약 묶음</h3>
    <div class="trail"><b>${E(f.inst)}</b><i></i><b>${E(f.vendor)}</b>${f.vregion?`<small>(${E(f.vregion.split(' ').slice(0,2).join(' '))})</small>`:''}</div>
    <div class="amt">${W(f.sum)}</div><small>${f.from} ~ ${f.to} · 같은 업체 여러 건 합계 2천만원 초과</small>
@@ -91,3 +91,5 @@ LOAD('data/sec_subsidy.json').then(s=>{
   EMPTY(['s-rows']);
 }).catch(()=>{});
 // 탭 해시 동기화
+// 링크로 특정 묶음(#case-N)에 들어오면 접힌 묶음을 펼치고 그 카드로 이동
+(()=>{const go=()=>{const m=location.hash.match(/^#case-(\d+)$/);if(!m)return;const el=document.getElementById('case-'+m[1]);if(!el){setTimeout(go,400);return;}const d=el.closest('details');if(d)d.open=true;setTimeout(()=>el.scrollIntoView({block:'start'}),120);};go();addEventListener('hashchange',go);})();

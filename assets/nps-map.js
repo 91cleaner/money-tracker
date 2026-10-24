@@ -261,5 +261,17 @@
     addEventListener('resize', inv);
     showPick(); paintRank(); paint();
     setTimeout(() => { map.invalidateSize(); declutter(); }, 200);
+    // 주소에 ?co=회사이름 이 있으면 그 회사 본사 지역을 바로 고른다(콘텐츠 링크용)
+    const wantCo = new URLSearchParams(location.search).get('co');
+    if (wantCo && kr) {
+      const c = (kr.companies || []).find((x) => x.company === wantCo.trim());
+      const it = c && (gu.find((g) => g.key === 'gu|' + c.sido + '|' + c.sigungu) || dom.find((d) => d.key === 'kr|' + c.sido));
+      if (it) setTimeout(() => {
+        choose(it, true);
+        const d = pickEl.querySelector('details'); if (d) d.open = true;
+        const row = [...pickEl.querySelectorAll('details .row')].find((r) => r.textContent.includes(c.company));
+        if (row) { row.style.outline = '2px solid #ffb020'; row.style.borderRadius = '6px'; }
+      }, 400);
+    }
   }
 })();
