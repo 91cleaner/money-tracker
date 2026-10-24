@@ -122,6 +122,7 @@ def _start(d):
 
 
 def party_at(name, party, date):
+    party = (party or "").split("/")[-1].strip() or None  # 역대 당적 이력 'A/B/C' → 마지막(22대)
     party = PARTY_NORM.get(party, party)
     for n, cut, before, after in PARTY_AT:
         if n == name and date:
@@ -159,7 +160,7 @@ def collect_trips(members):
             trips.append({"trip_id": i, "name": n, "member_id": ms[0]["id"] if ok else None,
                           "party": pty, "party_basis": basis, "match": how if ok or how != "현직" else "미매칭", "note": NAMESAKE_HINT.get(n) if not ok else None, "start": _start(r.get("SCH_DYS")),
                           "is_leader": n == lead, "dest": dst, "dest_inferred": inferred, "dest_raw": r.get("DSTN_NM"),
-                          "dates": r.get("SCH_DYS"), "purpose": r.get("PURP_RSON"), "funder": r.get("EXPNS_SUPPT_INST_NM"),
+                          "dates": r.get("SCH_DYS"), "purpose": r.get("PURP_RSON"), "funder": re.sub(r"\s+", " ", r.get("EXPNS_SUPPT_INST_NM") or "").strip() or None,
                           "report": r.get("REPORT_YN"), "report_label": "신고 당시 결과보고서 유/무", "src": BASE + TRIP})
     json.dump({"count_raw": len(rows), "leader_field": LEAD or "없음(PN 첫 이름을 대표로 봄)", "unmatched": dict(unmatched), "trips": trips},
               open(os.path.join(OUT, "trips_raw.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
