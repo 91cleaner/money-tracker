@@ -1,33 +1,219 @@
 {
  "_note": "공식 발표값 수동 입력(팩트체크 전). 업체·일반 개인 이름 금지. src 는 원문 URL.",
  "allowance": [
-  {"year": 2026, "item": "국회의원 수당·경비 연간 지급기준(1인)", "amount": 160925680,
-   "parts": {"일반수당": 87931200, "관리업무수당": 7913760, "정액급식비": 1920000, "정근수당": 7327600, "명절휴가비": 8793120, "입법활동비": 37632000, "특별활동비": 9408000},
-   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/OSYG8K000904Y012564", "src_note": "국회사무처 '2026년 국회의원 수당 등 지급기준'", "status": "팩트체크 전"},
-  {"year": 2025, "item": "국회의원 수당·경비 연간 지급기준(1인)", "amount": null, "parts": {"일반수당": 84958800, "관리업무수당": 7646280, "정근수당": 7079900, "명절휴가비": 8495880, "입법활동비": 37632000, "특별활동비": 9408000},
-   "src": "https://news.tf.co.kr/read/ptoday/2291395.htm", "src_note": "보도 인용(원문 지급기준표 확인 필요)", "status": "팩트체크 전"}
+  {
+   "year": 2026,
+   "item": "국회의원 수당·경비 연간 지급기준(1인)",
+   "amount": 160925680,
+   "parts": {
+    "일반수당": 87931200,
+    "관리업무수당": 7913760,
+    "정액급식비": 1920000,
+    "정근수당": 7327600,
+    "명절휴가비": 8793120,
+    "입법활동비": 37632000,
+    "특별활동비": 9408000
+   },
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/OSYG8K000904Y012564",
+   "src_note": "국회사무처 '2026년 국회의원 수당 등 지급기준'",
+   "status": "팩트체크 전"
+  },
+  {
+   "year": 2025,
+   "item": "국회의원 수당·경비 연간 지급기준(1인)",
+   "amount": null,
+   "parts": {
+    "일반수당": 84958800,
+    "관리업무수당": 7646280,
+    "정근수당": 7079900,
+    "명절휴가비": 8495880,
+    "입법활동비": 37632000,
+    "특별활동비": 9408000
+   },
+   "src": "https://news.tf.co.kr/read/ptoday/2291395.htm",
+   "src_note": "보도 인용(원문 지급기준표 확인 필요)",
+   "status": "팩트체크 전"
+  }
  ],
  "office_support": [
-  {"year": 2026, "item": "입법 및 정책개발비", "amount": 25343330, "unit": "연/의원실", "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"},
-  {"year": 2026, "item": "공무수행 출장비", "amount": 9663270, "unit": "연 평균/의원실", "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"},
-  {"year": 2026, "item": "정책자료 발송료", "amount": 7554300, "unit": "연 평균/의원실", "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"},
-  {"year": 2026, "item": "사무실 소모품", "amount": 6192000, "unit": "연/의원실", "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"},
-  {"year": 2026, "item": "업무추진비", "amount": 3483840, "unit": "연/의원실(API는 '월'로 표기 — 단위 불일치, 확인 필요)", "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"},
-  {"year": 2026, "item": "공공요금", "amount": 950000, "unit": "월/의원실", "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"},
-  {"year": 2026, "item": "비서실 운영비", "amount": 180000, "unit": "월/의원실", "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"}
+  {
+   "year": 2026,
+   "item": "입법 및 정책개발비",
+   "amount": 25343330,
+   "unit": "연/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "공무수행 출장비",
+   "amount": 9663270,
+   "unit": "연 평균/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "정책자료 발송료",
+   "amount": 7554300,
+   "unit": "연 평균/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "사무실 소모품",
+   "amount": 6192000,
+   "unit": "연/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "업무추진비",
+   "amount": 3483840,
+   "unit": "연/의원실(API는 '월'로 표기 — 단위 불일치, 확인 필요)",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "공공요금",
+   "amount": 950000,
+   "unit": "월/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "비서실 운영비",
+   "amount": 180000,
+   "unit": "월/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  }
  ],
  "party_subsidy": [
-  {"year": 2026, "kind": "경상보조금", "period": "3분기", "date": "2026-08-14", "src": "https://m.nec.go.kr/site/nec/ex/bbs/View.do?bcIdx=328653&cbIdx=1090",
+  {
+   "year": 2026,
+   "kind": "경상보조금",
+   "period": "3분기",
+   "date": "2026-08-14",
+   "src": "https://m.nec.go.kr/site/nec/ex/bbs/View.do?bcIdx=328653&cbIdx=1090",
    "total": 13405773330,
-   "by_party": {"더불어민주당": 5858551970, "국민의힘": 5461788140, "조국혁신당": 1125502570, "개혁신당": 355876200, "진보당": 317972480, "기본소득당": 277098720, "사회민주당": 8983250}},
-  {"year": 2026, "kind": "경상보조금", "period": "2분기", "src": "https://www.wbcb.co.kr/news/articleView.html?idxno=106050", "src_note": "보도 인용, 선관위 원문 확인 필요", "total": null,
-   "by_party": {"더불어민주당": 5963867240, "국민의힘": 5584735360}},
-  {"year": 2026, "kind": "지방선거 선거보조금+추천보조금", "period": "제9회 지방선거", "src": "https://www.wbcb.co.kr/news/articleView.html?idxno=106050", "src_note": "보도 인용, 선관위 원문 확인 필요",
-   "total": 57076000000, "total_note": "선거보조금 536.2억 + 여성 22.1억 + 장애인 5.7억 + 청년 6.6억(약)", "by_party": {"더불어민주당": 25884900000, "국민의힘": 23763350000}}
+   "by_party": {
+    "더불어민주당": 5858551970,
+    "국민의힘": 5461788140,
+    "조국혁신당": 1125502570,
+    "개혁신당": 355876200,
+    "진보당": 317972480,
+    "기본소득당": 277098720,
+    "사회민주당": 8983250
+   }
+  },
+  {
+   "year": 2026,
+   "kind": "경상보조금",
+   "period": "2분기",
+   "src": "https://www.wbcb.co.kr/news/articleView.html?idxno=106050",
+   "src_note": "보도 인용, 선관위 원문 확인 필요",
+   "total": null,
+   "by_party": {
+    "더불어민주당": 5963867240,
+    "국민의힘": 5584735360
+   }
+  },
+  {
+   "year": 2026,
+   "kind": "지방선거 선거보조금+추천보조금",
+   "period": "제9회 지방선거",
+   "src": "https://www.wbcb.co.kr/news/articleView.html?idxno=106050",
+   "src_note": "보도 인용, 선관위 원문 확인 필요",
+   "total": 57076000000,
+   "total_note": "선거보조금 536.2억 + 여성 22.1억 + 장애인 5.7억 + 청년 6.6억(약)",
+   "by_party": {
+    "더불어민주당": 25884900000,
+    "국민의힘": 23763350000
+   }
+  }
  ],
- "party_rules": {"text": "경상보조금 받은 정당은 30% 이상 정책연구소, 10% 이상 시·도당, 10% 이상 여성정치발전, 5% 이상 청년정치발전에 써야 함(정치자금법 제28조)", "src": "https://www.law.go.kr/법령/정치자금법"},
+ "party_rules": {
+  "text": "경상보조금 받은 정당은 30% 이상 정책연구소, 10% 이상 시·도당, 10% 이상 여성정치발전, 5% 이상 청년정치발전에 써야 함(정치자금법 제28조)",
+  "src": "https://www.law.go.kr/법령/정치자금법"
+ },
  "special_activity": [],
  "national_projects": [
-  {"id": "nk_loan", "title": "대북 차관(식량·자재 장비 등)", "status": "틀만(팩트체크 비서 확인 중)", "from": {"name": "남북협력기금(통일부)", "region": "서울"}, "via": {"name": "한국수출입은행(기금 수탁)", "region": "서울 영등포구"}, "to": {"name": "북한", "region": "북한"}, "amount": null, "repaid": null, "src": [], "fields": ["year", "kind", "amount_usd", "amount_krw", "due", "repaid", "overdue"]}
+  {
+   "id": "kedo_lwr",
+   "title": "경수로(원자력발전소) 짓기 — KEDO 무이자 대출",
+   "status": "팩트체크 완료",
+   "from": {
+    "name": "남북협력기금",
+    "region": "서울"
+   },
+   "to": {
+    "name": "한반도에너지개발기구(KEDO) · 경수로 사업",
+    "region": "해외"
+   },
+   "period": "2000~2006",
+   "kind": "무이자 대출",
+   "amount_krw": 1374400000000,
+   "amount_label": "1조 3,744억원",
+   "interest_tax": {
+    "amount_krw": 1050000000000,
+    "label": "약 1조 500억원",
+    "period": "2012~2026.9",
+    "note": "기금이 대출 재원을 마련하며 진 빚의 이자를 세금으로 냄"
+   },
+   "src": [
+    {
+     "name": "매일경제 2026.10.20",
+     "url": "https://www.mk.co.kr/news/economy/12180428"
+    },
+    {
+     "name": "아시아경제(참고)",
+     "url": "https://www.asiae.co.kr/article/2024101109335819503"
+    }
+   ]
+  },
+  {
+   "id": "nk_loan",
+   "title": "대북 차관(식량·자재·경공업 원자재)",
+   "status": "팩트체크 완료",
+   "from": {
+    "name": "남북협력기금(통일부)",
+    "region": "서울"
+   },
+   "via": {
+    "name": "한국수출입은행(기금 수탁)",
+    "region": "서울 영등포구"
+   },
+   "to": {
+    "name": "북한",
+    "region": "북한"
+   },
+   "period": "2000~2007",
+   "amount_usd": 932900000,
+   "amount_label": "9억 3,290만 달러",
+   "breakdown_usd": {
+    "식량": 720000000,
+    "자재": 132900000,
+    "경공업 원자재": 80000000
+   },
+   "repaid": {
+    "label": "아연괴 240만 달러어치",
+    "amount_usd": 2400000
+   },
+   "overdue": {
+    "amount_krw": 885300000000,
+    "label": "8,853억원",
+    "amount_usd": 620200000,
+    "as_of": "2025-08-31",
+    "basis": "연체원금+이자+지연배상금"
+   },
+   "src": [
+    {
+     "name": "조선일보 2025.10.13",
+     "url": "https://www.chosun.com/politics/assembly/2025/10/13/IMKVCK62LZFV7MFWB6U7VGJTE4/"
+    },
+    {
+     "name": "뉴스스피릿",
+     "url": "https://www.newsspirit.kr/news/articleView.html?idxno=25440"
+    }
+   ]
+  }
  ]
 }

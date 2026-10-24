@@ -13,8 +13,8 @@ SEED = os.path.join(os.path.dirname(os.path.abspath(__file__)), "seed.json")
 AK = os.environ.get("ASSEMBLY_KEY", "").strip()
 BASE = "https://open.assembly.go.kr/portal/openapi/"
 KST = timezone(timedelta(hours=9))
-NA = {"name": "국회사무처", "region": "서울 영등포구", "addr": "서울특별시 영등포구 의사당대로 1"}
-NEC = {"name": "중앙선거관리위원회(국고)", "region": "경기 과천시", "addr": "경기도 과천시 홍촌말로 44"}
+NA = {"name": "국회사무처", "region": "서울 영등포구"}
+NEC = {"name": "중앙선거관리위원회(국고)", "region": "경기 과천시"}
 SIDO = {"서울": "서울", "부산": "부산", "대구": "대구", "인천": "인천", "광주": "광주", "대전": "대전", "울산": "울산", "세종": "세종",
         "경기": "경기", "강원": "강원", "충북": "충북", "충남": "충남", "전북": "전북", "전남": "전남", "경북": "경북", "경남": "경남", "제주": "제주"}
 log = []
@@ -240,14 +240,14 @@ def main():
     for m in members:
         if y:
             flows.append({"kind": "수당·경비(지급기준)", "year": y, "amount": allow[y]["amount"], "basis": "1인 연간 지급기준(실수령액 아님)",
-                          "from": NA, "to": {"name": f"{m['name']} 의원", "party": m["party"], "region": m["region"], "addr": m["office"]},
+                          "from": NA, "to": {"name": f"{m['name']} 의원", "party": m["party"], "region": m["region"]},
                           "src": allow[y]["src"], "status": "팩트체크 전"})
     by_party = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
     for s in seed["party_subsidy"]:
         for party, amt in s["by_party"].items():
             by_party[party][s["year"]][s["kind"]] += amt
             flows.append({"kind": s["kind"], "year": s["year"], "period": s.get("period"), "amount": amt, "from": NEC,
-                          "to": {"name": f"{party} 중앙당", "party": party, "region": "서울", "addr": None},
+                          "to": {"name": f"{party} 중앙당", "party": party, "region": "서울"},
                           "src": s["src"], "status": "팩트체크 전"})
     mp = defaultdict(int)
     for m in members:
@@ -268,7 +268,7 @@ def main():
                      "note": "from/to 지역은 시·도 단위. 업체명은 공개 필드에 넣지 않음(내부 _vendor만)."})
     w("years.json", {"updated": now, "years": {k: dict(v) for k, v in sorted(years.items())}})
     w("support.json", {"updated": now, "allowance": seed["allowance"], "office_support": seed["office_support"]})
-    w("projects.json", {"updated": now, "special_activity": seed["special_activity"], "national_projects": seed["national_projects"]})
+    w("projects.json", {"updated": now, "special_activity": seed["special_activity"], "national_projects": seed["national_projects"]  # 대북 항목은 seed.json에서만 관리(수동 팩트체크값)})
     w("index.json", {"updated": now, "assembly_key": bool(AK), "seats": {"source": SEAT_SRC, "date": SEAT_DAY, "label": "현재 의석 기준 근사치"}, "log": log,
                      "files": ["trips_raw", "members", "parties", "flows", "years", "support", "projects"],
                      "missing": [
