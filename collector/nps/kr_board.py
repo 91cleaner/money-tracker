@@ -51,8 +51,8 @@ def main():
                 if files: break
             except RuntimeError: pass
     res = None
-    for fid, sn in files:
-        u = f"{BASE}/fileDown.do?atchFileId={fid}&atchFileSn={sn}"
+    for fid, fsn in files:
+        u = f"{BASE}/fileDown.do?atchFileId={fid}&atchFileSn={fsn}"
         b, hd = get(u); cd = hd.get("Content-Disposition", ""); LOG.append("file " + urllib.parse.unquote(cd)[:120])
         if b[:2] == b"PK":
             rows = parse_xlsx(b); res = (u, rows); break
