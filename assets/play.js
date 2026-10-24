@@ -8,20 +8,12 @@
     if (a >= 1e4) return s + Math.floor(a / 1e4).toLocaleString('ko-KR') + '만원'; return s + Math.round(a).toLocaleString('ko-KR') + '원'; };
   const pr = (n) => { if (n >= 1e8) return krw(n); const m = Math.floor(n / 1e4), w = Math.round(n % 1e4); return (m ? m.toLocaleString('ko-KR') + '만' + (w ? ' ' : '') : '') + (w ? w.toLocaleString('ko-KR') : '') + '원'; };
   const NOTE = '2026년에 쓰겠다고 잡아둔 돈이에요(실제로 쓴 돈 아님)', SRC = '출처 행정안전부 지방재정365 · 2026년 처음 정한 예산(실제로 쓴 돈은 아님)';
-  // ---- 모드 전환 바 ----
-  const here = (hash) => location.pathname + location.search + (hash || '');
-  const bar = document.createElement('nav'); bar.className = 'modebar'; bar.setAttribute('aria-label', '지도 · 퀴즈 · 게임');
-  bar.innerHTML = `<a href="${here('')}" data-m="map">지도 보기</a><a href="${here('#quiz')}" data-m="quiz">퀴즈 풀기</a><a href="${here('#play')}" data-m="play">게임 하기</a>`;
+  // 퀴즈·게임 코드는 주소(#quiz #play)로만 연다. 탭이나 전환 메뉴에는 넣지 않는다.
   const mode = () => (['#quiz', '#daily', '#game'].includes(location.hash) ? 'quiz' : location.hash === '#play' ? 'play' : 'map');
-  const place = () => { const lg = dive.querySelector('.maplg'); if (!lg) return false; if (bar.previousElementSibling !== lg) { lg.after(bar); bar.style.order = getComputedStyle(lg).order; } return true; };
-  const t0 = setInterval(() => { if (place()) clearInterval(t0); }, 200); setTimeout(() => clearInterval(t0), 15000);
-  new MutationObserver(() => { if (!bar.isConnected) place(); }).observe(dive, {childList: true, subtree: true});
-  bar.addEventListener('click', (e) => { const a = e.target.closest('a'); if (!a) return; e.preventDefault(); const m = a.dataset.m;
-    history.pushState(null, '', here(m === 'map' ? '' : '#' + m)); apply(true); });
-  const apply = (scroll) => { const m = mode(); document.body.dataset.mode = m; bar.querySelectorAll('a').forEach((a) => { a.classList.toggle('on', a.dataset.m === m); a.setAttribute('aria-current', a.dataset.m === m ? 'page' : 'false'); });
+  const apply = (scroll) => { const m = mode(); document.body.dataset.mode = m;
     if (m === 'play') build(); dispatchEvent(new Event('resize'));
     if (scroll) { const t = m === 'map' ? dive.querySelector('.dv-map') || dive : document.getElementById(m === 'quiz' ? 'daily' : 'fgame'); if (t) setTimeout(() => { const y = t.getBoundingClientRect().top + scrollY - 56; scrollTo({top: Math.max(0, y), behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth'}); }, 160); }
-    document.querySelectorAll('.tabbar a').forEach((a) => { const k = a.dataset.k; if (k === 'quiz' || k === 'play' || k === 'home' || k === 'map') a.classList.toggle('on', k === m || (k === 'home' && m === 'map' && location.hash !== '#map') || (k === 'map' && location.hash === '#map')); }); };
+    if (window.__tabSync) window.__tabSync(); };
   addEventListener('hashchange', () => apply(true)); addEventListener('popstate', () => apply(false));
   // ---- 게임 섹션 ----
   const fg = document.createElement('section'); fg.className = 'sec gm fg'; fg.id = 'fgame'; fg.setAttribute('aria-label', '우리 시 행사·축제 예산 써보기');
@@ -110,7 +102,8 @@
     fg.querySelector('.fg-share').onclick = () => cv.toBlob(async (b) => { const f = new File([b], 'festival-budget.png', {type: 'image/png'}), t = `${C.cname} 행사·축제 예산 ${krw(C.fest)}, 나는 이렇게 써 봤어요 · 세금추적단`, u = location.origin + location.pathname + location.search + '#play';
       try { if (navigator.canShare && navigator.canShare({files: [f]})) await navigator.share({files: [f], title: t, text: t + ' ' + u}); else if (navigator.share) await navigator.share({title: t, text: t, url: u}); else { await navigator.clipboard.writeText(t + ' ' + u); fg.querySelector('.fg-share').textContent = '링크 복사됨'; } } catch (e) {} }); };
   // 폰에서 시를 고르면 지도 아래 시 카드 머리('대구광역시 112억원')가 하단 탭바에 가리지 않게 살짝 올려 줌
-  const peek = () => { if (innerWidth >= 900 || mode() !== 'map') return; const sh = dive.querySelector('.dv-sheet'), tb = document.querySelector('.tabbar'); if (!sh || !tb || !new URLSearchParams(location.search).get('c')) return;
+  const peek = () => { if (innerWidth >= 900 || mode() !== 'map') return; const sh = dive.querySelector('.dv-sheet'), tb = document.querySelector('.tabbar-bot') || document.querySelector('.tabbar'); if (!sh || !tb || !new URLSearchParams(location.search).get('c')) return;
+    const pos = getComputedStyle(sh).position; if (pos === 'relative' || pos === 'static') return;
     const need = sh.getBoundingClientRect().top + 72 - tb.getBoundingClientRect().top; if (need > 0) scrollBy({top: Math.min(need, 260), behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth'}); };
   addEventListener('dv:go', () => setTimeout(peek, 700)); setTimeout(peek, 2500);
   apply(false); if (mode() === 'play') build();

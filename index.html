@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="assets/style.css?v=202610246200">
 <link rel="stylesheet" href="assets/sec.css?v=202610246200">
 <link rel="stylesheet" href="assets/theme.css?v=202610246200">
+<link rel="stylesheet" href="assets/refresh.css?v=202610247100">
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body data-page="home">
@@ -80,7 +81,7 @@
       <span style="display:block;margin-top:10px;font-weight:700">더 보기 목록 열기 ›</span>
     </a>
     <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding:2px 0 6px"><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#sole">경쟁 없는 계약</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#cost">비용 비교</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#fest">축제·행사</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#subsidy">보조금</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#pay">공공기관 보수</a></div>
-    <a href="national.html" style="display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#151b23;border:1px solid #2a3541;color:#fff;text-decoration:none;font-weight:700">나라 세금 · 국회의원과 정당에 가는 돈 ›</a>
+    <a href="national.html" style="display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#151b23;border:1px solid #2a3541;color:#fff;text-decoration:none;font-weight:700">정부 지출 · 국회의원과 정당에 가는 돈 ›</a>
     <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent=(d.period?`${+d.period[0].slice(5,7)}월 ${+d.period[0].slice(8)}일~${+d.period[1].slice(5,7)}월 ${+d.period[1].slice(8)}일 `:'')+'공고 없이 바로 맺은 수의계약 '+Math.round(d.sum/1e8).toLocaleString()+'억원';document.getElementById('tt-line').textContent='> '+d.period[0]+'~'+d.period[1]+' · 85개 시 · '+d.n.toLocaleString()+'건 · 데이터상 이상 징후 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
   </section>
   <section class="sec" id="ranksec">
@@ -118,7 +119,7 @@
 <script src="assets/period.js?v=202610246900"></script>
 <script src="assets/mask.js?v=202610246200"></script>
 <script src="assets/region.js?v=202610246200"></script>
-<script src="assets/app.js?v=202610246500"></script>
+<script src="assets/app.js?v=202610247100"></script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/dive.js?v=202610246900"></script>
 <script src="assets/game.js?v=202610246500"></script>
@@ -126,7 +127,8 @@
 <script src="assets/pcl.js?v=202610246200"></script>
 <script src="assets/bid.js?v=202610246200" defer></script>
 <script src="assets/addr.js?v=202610246200"></script>
-<script src="assets/play.js?v=202610246500"></script>
-<script src="assets/tabs.js?v=202610246200"></script>
-<script src="assets/nav.js?v=202610246400"></script>
+<script src="assets/play.js?v=202610247200"></script>
+<script src="assets/tabs.js?v=202610247100"></script>
+<script src="assets/fun.js?v=202610247100"></script>
+<script src="assets/nav.js?v=202610247300"></script>
 <script src="assets/fx.js?v=202610246500"></script></body></html>

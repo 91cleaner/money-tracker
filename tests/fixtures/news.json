@@ -1,0 +1,5 @@
+[
+  {"id":"fake-keep","title":"테스트 기사 서울","summary":"한 줄 요약","body":["첫째 문단","둘째 문단"],"date":"2020-01-02","city":"서울","amount":"10억원","sources":[{"label":"예시 자료","url":"https://example.com/a"}],"factchecked":true,"topic":"테스트"},
+  {"id":"fake-ko","제목":"춘천 테스트","요약":"한글 필드","본문":"첫째 줄임.\n둘째 줄임.","날짜":"2020-01-03","도시":"춘천","금액":"1조3,744억원","출처":["예시 글 https://example.com/b","주소 없는 출처"],"factchecked":true},
+  {"id":"fake-drop","title":"빼야 하는 기사","summary":"확인 전","body":["보이지 마"],"date":"2020-01-04","city":"부산","amount":"1원","sources":[],"factchecked":false}
+]
