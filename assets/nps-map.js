@@ -1,8 +1,45 @@
-/* 국민연금 국내주식 본사 지도. 시도 원 → 확대하면 시군구 원. 설명 카드는 지도 밖에만 둔다. */
+/* 국민연금 주식 본사 지도. 국내는 시도 원, 해외는 미국 주·나라 원. 설명 카드는 지도 밖에만 둔다. */
 (() => {
   const box = document.getElementById('npsMapBox');
   if (!box) return;
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const usd = (n) => {
+    n = Math.abs(Number(n) || 0);
+    const eok = n / 1e8;
+    if (eok >= 10000) {
+      const jo = Math.floor(eok / 10000);
+      const rest = Math.round((eok - jo * 10000) * 10) / 10;
+      const rs = rest.toLocaleString('ko-KR', { minimumFractionDigits: Number.isInteger(rest) ? 0 : 1, maximumFractionDigits: 1 });
+      return jo.toLocaleString('ko-KR') + '조' + (rest ? ' ' + rs + '억 달러' : ' 달러');
+    }
+    if (eok >= 1) {
+      const r = Math.round(eok * 10) / 10;
+      const rs = r.toLocaleString('ko-KR', { minimumFractionDigits: Number.isInteger(r) ? 0 : 1, maximumFractionDigits: 1 });
+      return rs + '억 달러';
+    }
+    return Math.round(n / 1e4).toLocaleString('ko-KR') + '만 달러';
+  };
+  let view = 'kr';
+  let krData = null;
+  let usData = null;
+  let live = null;
+  let ro = null;
+  let onResize = () => {};
+  let invT = 0;
+  const dropMap = () => {
+    if (ro) { ro.disconnect(); ro = null; }
+    onResize = () => {};
+    if (live) { live.remove(); live = null; }
+  };
+  const watchSize = (mapEl, fn) => {
+    onResize = fn;
+    if (ro) ro.disconnect();
+    if (window.ResizeObserver) {
+      ro = new ResizeObserver(() => { clearTimeout(invT); invT = setTimeout(fn, 80); });
+      ro.observe(mapEl);
+    }
+  };
+  addEventListener('resize', () => { clearTimeout(invT); invT = setTimeout(() => onResize(), 80); });
   const won = (eok) => {
     const neg = Number(eok) < 0;
     eok = Math.abs(Number(eok) || 0);
@@ -14,12 +51,38 @@
   };
   const radius = (v, max) => (v > 0 ? 6 + 22 * Math.sqrt(v / max) : 5);
 
-  fetch('data/nps/kr_hq_region.json')
-    .then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
-    .then((data) => draw(data))
-    .catch(() => { box.innerHTML = '<p class="sub">지역 자료를 불러오지 못했어요.</p>'; });
+  const load = (file) => fetch(file).then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json(); });
+  Promise.allSettled([load('data/nps/kr_hq_region.json'), load('data/nps/us_hq_region.json')]).then((res) => {
+    if (res[0].status === 'fulfilled') krData = res[0].value;
+    if (res[1].status === 'fulfilled') usData = res[1].value;
+    const toggle = document.getElementById('npsMapToggle');
+    if (toggle) toggle.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-view]');
+      if (!btn || btn.dataset.view === view) return;
+      view = btn.dataset.view;
+      render();
+    });
+    render();
+  });
 
-  function draw(data) {
+  function render() {
+    const title = document.getElementById('npsMapTitle');
+    if (title) title.textContent = view === 'us' ? '다른 나라 회사 주식' : '우리 지역 회사 주식';
+    document.querySelectorAll('#npsMapToggle button').forEach((b) => {
+      const on = b.dataset.view === view;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    if (view === 'us') {
+      if (!usData) { dropMap(); box.innerHTML = '<p class="sub">해외 자료를 불러오지 못했어요.</p>'; return; }
+      drawUs(usData);
+    } else {
+      if (!krData) { dropMap(); box.innerHTML = '<p class="sub">지역 자료를 불러오지 못했어요.</p>'; return; }
+      drawKr(krData);
+    }
+  }
+
+  function drawKr(data) {
+    dropMap();
     const regions = (data.regions || []).filter((r) => r.lat != null && r.lng != null);
     const rank = data.regions || [];
     const sigs = [];
@@ -51,7 +114,7 @@
 
     const mapEl = document.getElementById('npsMap');
     const coarse = matchMedia('(pointer: coarse)').matches;
-    const map = L.map(mapEl, {
+    const map = live = L.map(mapEl, {
       zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 12, zoomSnap: 0.25,
       scrollWheelZoom: false, tap: true,
       maxBounds: [[30.5, 121], [41, 134]],
@@ -223,12 +286,194 @@
       homeBtn.classList.toggle('is-home', m === 'sido' && !sel);
     });
     map.on('click', () => { /* 빈 곳. 카드는 지도 밖에 그대로 둔다. */ });
-    let t = 0;
-    const inv = () => { clearTimeout(t); t = setTimeout(() => { map.invalidateSize({ pan: false }); scheduleDeclutter(); }, 80); };
-    if (window.ResizeObserver) new ResizeObserver(inv).observe(mapEl);
-    addEventListener('resize', inv);
+    watchSize(mapEl, () => { map.invalidateSize({ pan: false }); scheduleDeclutter(); });
     showPick();
     paint('sido');
+    setTimeout(() => { map.invalidateSize(); declutter(); }, 200);
+  }
+
+  function drawUs(data) {
+    dropMap();
+    const regions = (data.regions || []).filter((r) => r.lat != null && r.lng != null && r.value_usd > 0);
+    const rank = (data.regions || []).slice().sort((a, b) => b.value_usd - a.value_usd);
+    const total = Number(data.total_value_usd) || 0;
+    const denom = '미국 주식 1,550.8억 달러($155.08B)';
+    const pctOf = (v) => (total > 0 ? (Number(v) / total * 100) : 0);
+    const pctTxt = (v, stored) => (stored != null && stored !== '' ? Number(stored).toFixed(2) : pctOf(v).toFixed(2)) + '%';
+    const asof = String(data.holdings_as_of || '').split('-');
+    const when = asof.length === 3 ? `${+asof[0]}년 ${+asof[1]}월 ${+asof[2]}일` : '';
+    const scope = data.other_overseas_files ? '' : `<p class="tm-line">${esc(data.scope_line || '미국 주식만 공개돼 있어요 (미국 13F 자료 기준)')}</p>`;
+    box.innerHTML = `<div id="npsMap" class="nps-map" role="application" aria-label="국민연금 해외 주식 본사 지도"></div>
+      <p class="maplg" aria-label="지도 범례"><i class="lg-dot"></i>클수록 돈이 많아요</p>
+      <p class="tm-line">회사 중심 사무실이 있는 곳이에요. 공장이나 일하는 사람은 다른 곳일 수 있어요.</p>
+      ${scope}
+      <div id="npsPick" class="card pick"></div>
+      <h3>지역 순위</h3>
+      <div id="npsRank"></div>
+      <p class="src" id="npsSrc"></p>`;
+    const src = (data.sources && data.sources[0]) || { url: 'https://www.sec.gov/edgar', name: 'SEC EDGAR 13F-HR' };
+    const src2 = (data.sources && data.sources[1]) || null;
+    document.getElementById('npsSrc').innerHTML = `${when ? esc(when) + ' 기준. ' : ''}출처 <a href="${esc(src.url)}" target="_blank" rel="noopener">${esc(src.name)}</a>${src2 ? ` · <a href="${esc(src2.url)}" target="_blank" rel="noopener">${esc(src2.name)}</a>` : ''}`;
+
+    const miss = {
+      name: '위치 못 찾음',
+      value_usd: data.unmatched_value_usd || 0,
+      pct: data.unmatched_pct,
+      company_count: data.unmatched_count || (data.unmatched || []).length,
+      top: (data.unmatched || []).slice(0, 5).map((c) => ({ company: c.company, value_usd: c.value_usd })),
+      unmatched: true,
+    };
+
+    let map = null;
+    if (!window.L || !regions.length) {
+      const lg = box.querySelector('.maplg');
+      if (lg) lg.remove();
+      if (!window.L) box.querySelector('.nps-map').insertAdjacentHTML('beforebegin', '<p class="sub">지도를 띄우지 못했어요. 아래 순위로 볼 수 있어요.</p>');
+      paintLists();
+      if (!window.L) return;
+    }
+
+    const mapEl = document.getElementById('npsMap');
+    const coarse = matchMedia('(pointer: coarse)').matches;
+    map = live = L.map(mapEl, {
+      zoomControl: false, attributionControl: true, minZoom: 2, maxZoom: 8, zoomSnap: 0.25,
+      scrollWheelZoom: false, tap: true,
+      maxBounds: [[-55, -175], [75, 190]],
+    });
+    map.attributionControl.setPrefix(false);
+    if (!coarse) L.control.zoom({ position: 'topleft' }).addTo(map);
+    else map.dragging.disable();
+    const homeBtn = document.createElement('button');
+    homeBtn.type = 'button';
+    homeBtn.className = 'map-home is-home';
+    homeBtn.innerHTML = '<span aria-hidden="true">⟲</span> 처음으로';
+    homeBtn.setAttribute('aria-label', '지도를 처음 본 모습으로 되돌리기');
+    const homeCtl = L.control({ position: 'topright' });
+    homeCtl.onAdd = () => {
+      const w = L.DomUtil.create('div', 'leaflet-control map-home-ctl');
+      w.append(homeBtn);
+      L.DomEvent.disableClickPropagation(w);
+      L.DomEvent.disableScrollPropagation(w);
+      return w;
+    };
+    homeCtl.addTo(map);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 8, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자',
+    }).addTo(map);
+
+    const homePts = regions.filter((r) => r.frame === 'lower48');
+    const fitPts = homePts.length ? homePts : regions;
+    const homeBounds = fitPts.length ? L.latLngBounds(fitPts.map((r) => [r.lat, r.lng])) : L.latLngBounds([[24, -125], [49, -66]]);
+    const fitHome = () => map.fitBounds(homeBounds, { animate: false, paddingTopRight: [8, 36], paddingBottomLeft: [8, 8] });
+    fitHome();
+    const layer = L.layerGroup().addTo(map);
+    let sel = null;
+
+    function scheduleDeclutter() { setTimeout(declutter, 40); }
+    function declutter() {
+      const root = map.getContainer().getBoundingClientRect();
+      const hit = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+      const seen = [];
+      map.getContainer().querySelectorAll('.leaflet-control').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.width > 4 && r.height > 4 && r.width < 280 && r.height < 160) seen.push({ left: r.left - 4, right: r.right + 4, top: r.top - 4, bottom: r.bottom + 4 });
+      });
+      const inside = (r) => r.width > 2 && r.left >= root.left + 2 && r.right <= root.right - 2 && r.top >= root.top + 2 && r.bottom <= root.bottom - 2;
+      map.getContainer().querySelectorAll('.leaflet-tooltip').forEach((t) => {
+        t.style.visibility = 'visible';
+        t.style.marginLeft = '0px';
+        t.style.marginTop = '0px';
+        let r = t.getBoundingClientRect();
+        let dx = 0, dy = 0;
+        if (r.right > root.right - 4) dx += root.right - 4 - r.right;
+        if (r.left + dx < root.left + 4) dx += root.left + 4 - (r.left + dx);
+        if (r.bottom > root.bottom - 4) dy += root.bottom - 4 - r.bottom;
+        if (r.top + dy < root.top + 4) dy += root.top + 4 - (r.top + dy);
+        if (dx || dy) {
+          t.style.marginLeft = dx + 'px';
+          t.style.marginTop = dy + 'px';
+          r = t.getBoundingClientRect();
+        }
+        if (r.width < 2) return;
+        if (!inside(r) || seen.some((s) => hit(r, s))) t.style.visibility = 'hidden';
+        else seen.push({ left: r.left - 2, right: r.right + 2, top: r.top - 2, bottom: r.bottom + 2 });
+      });
+    }
+    function paint() {
+      layer.clearLayers();
+      map.getContainer().querySelectorAll('.leaflet-tooltip').forEach((el) => el.remove());
+      const max = Math.max(1, ...regions.map((it) => it.value_usd || 0));
+      const ordered = regions.slice().sort((a, b) => (b.value_usd || 0) - (a.value_usd || 0));
+      const named = new Set(ordered.slice(0, 12).map((it) => it.kind + '|' + it.code));
+      ordered.forEach((it) => {
+        const v = it.value_usd || 0;
+        const on = sel && !sel.unmatched && sel.kind === it.kind && sel.code === it.code;
+        const m = L.circleMarker([it.lat, it.lng], {
+          radius: radius(v, max), weight: on ? 3 : 1.5, color: on ? '#ffd60a' : '#fff',
+          fillColor: '#0a84ff', fillOpacity: 0.55,
+        });
+        m.on('click', (e) => { L.DomEvent.stopPropagation(e); choose(it); });
+        if (named.has(it.kind + '|' + it.code)) {
+          m.bindTooltip(it.name, { permanent: true, direction: 'right', className: 'klab', offset: [8, 0], interactive: false });
+        }
+        m.addTo(layer);
+      });
+      scheduleDeclutter();
+    }
+    function choose(it) {
+      sel = it;
+      if (map && it.lat != null && (it.frame === 'world' || it.frame === 'ak' || it.frame === 'hi' || it.frame === 'pr')) {
+        map.setView([it.lat, it.lng], 4, { animate: false });
+      }
+      homeBtn.classList.toggle('is-home', false);
+      showPick();
+      paint();
+    }
+    function topRows(top) {
+      if (!top.length) return '<p class="sub">표시할 회사가 없어요.</p>';
+      const mx = top[0].value_usd || 1;
+      return top.map((c, i) => `<div class="row"><span>${i + 1}. ${esc(c.company)}<div class="bar" style="width:${Math.max(8, Math.sqrt((c.value_usd || 0) / mx) * 100)}%"></div></span><b>${esc(usd(c.value_usd))}</b></div>`).join('');
+    }
+    function showPick() {
+      const pick = document.getElementById('npsPick');
+      if (!sel) {
+        pick.innerHTML = '<p class="sub">주나 나라를 누르면, 그곳에 본사를 둔 회사가 나와요.</p>';
+        paintLists();
+        return;
+      }
+      const n = sel.company_count || 0;
+      pick.innerHTML = `<div class="sub">${esc(sel.name)}</div><div class="big" style="font-size:24px">${esc(usd(sel.value_usd))}</div><p class="sub">${esc(denom)} 중 ${esc(pctTxt(sel.value_usd, sel.pct))}</p><p class="sub">회사 ${Number(n).toLocaleString('ko-KR')}곳</p><h3>가장 많이 들어간 회사 5곳</h3>` + topRows(sel.top || []);
+      paintLists();
+    }
+    function paintLists() {
+      const el = document.getElementById('npsRank');
+      const max = rank.length ? rank[0].value_usd : 1;
+      const rows = rank.map((r) => {
+        const on = sel && !sel.unmatched && sel.kind === r.kind && sel.code === r.code;
+        return `<button type="button" class="row${on ? ' on' : ''}" data-k="${esc(r.kind + '|' + r.code)}"><span>${esc(r.name)} <span class="sub">회사 ${Number(r.company_count).toLocaleString('ko-KR')}곳 · ${esc(pctTxt(r.value_usd, r.pct))}</span><div class="bar" style="width:${Math.max(8, Math.sqrt((r.value_usd || 0) / max) * 100)}%"></div></span><b>${esc(usd(r.value_usd))}</b></button>`;
+      }).join('');
+      const missOn = sel && sel.unmatched;
+      const missRow = miss.company_count ? `<button type="button" class="row${missOn ? ' on' : ''}" data-k="miss"><span>위치 못 찾음 <span class="sub">회사 ${Number(miss.company_count).toLocaleString('ko-KR')}곳 · ${esc(pctTxt(miss.value_usd, miss.pct))}</span></span><b>${esc(usd(miss.value_usd))}</b></button>` : '';
+      el.innerHTML = rows + missRow;
+      el.querySelectorAll('button').forEach((btn) => btn.addEventListener('click', () => {
+        if (btn.getAttribute('data-k') === 'miss') { choose(miss); return; }
+        const r = rank.find((x) => (x.kind + '|' + x.code) === btn.getAttribute('data-k'));
+        if (r) choose(r);
+      }));
+    }
+    function goHome() {
+      sel = null;
+      fitHome();
+      homeBtn.classList.add('is-home');
+      showPick();
+      paint();
+    }
+    homeBtn.addEventListener('click', goHome);
+    map.on('zoomend moveend', () => { paint(); });
+    map.on('click', () => {});
+    watchSize(mapEl, () => { map.invalidateSize({ pan: false }); scheduleDeclutter(); });
+    showPick();
+    paint();
     setTimeout(() => { map.invalidateSize(); declutter(); }, 200);
   }
 })();
