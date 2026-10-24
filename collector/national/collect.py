@@ -3,7 +3,7 @@
 - collector/national/seed.json: 국회사무처 수당 지급기준·의원실 지원경비, 선관위 국고보조금(공식 발표값)
 - 돈 흐름(flows): 기록마다 준 쪽(from)·받은 쪽(to)과 지역. 업체명은 공개 필드에 두지 않음(_vendor 내부 필드만).
 키 값은 출력하지 않는다."""
-import json, os, re, time, urllib.request, urllib.parse
+import csv, json, os, re, time, urllib.request, urllib.parse
 from collections import defaultdict
 from datetime import datetime, timezone, timedelta
 
@@ -113,9 +113,12 @@ PARTY_NORM = {"더불어민주연합": "더불어민주당"}  # 22대 총선 비
 # 출장 시점 당적(공개 경력 기준, 팩트체크 필요): (이름, 이 날짜 전, 그 전 당적, 이후 당적)
 PARTY_AT = [("조정식", "2026-06-06", "더불어민주당", "무소속"),   # 국회의장 당선 후 무소속(국회법 20조의2), 팩트체크 확인일
             ("김상욱", "2025-05-18", "국민의힘", "더불어민주당"),  # 국민의힘 탈당·민주당 입당, 팩트체크 확인일
-            ("장경태", "2025-01-01", "더불어민주당", "무소속")]  # 2024-11 출장 당시 민주당(22대 이력 당적), 탈당일 확인 필요
-PARTY_NOTE = {"김종민": "22대 당선 당적 새로운미래 → 현재 무소속. 탈당일 미확인이라 출장 시점 당적 확인 필요",
-              "장경태": "탈당일 미확인(2024-11 출장은 민주당 시기로 봄)"}
+            ("장경태", "2026-03-20", "더불어민주당", "무소속"),
+            ("김종민", "2024-09-01", "새로운미래", "무소속")]  # 2026-08까지 무소속
+PARTY_SRC = {"조정식": None, "김상욱": None,
+             "장경태": "https://www.yna.co.kr/view/AKR20260320032200001",
+             "김종민": "https://www.yna.co.kr/view/AKR20240901018500001"}
+PARTY_NOTE = {}
 ALIAS = {"천아람": "천하람"}  # 신고서 오타(팩트체크 확인)
 FIXED = {("박지원", "2025-07-27"): "8BF5855P"}  # 1942년생(더불어민주당). 1987년생은 2026-06-03 당선이라 출장 당시 의원 아님
 NOTE_RAW = {"이준영": "이준석 오타 가능성(미확인) — 같은 신고서 PN에 이준석이 따로 적혀 있음"}
@@ -140,7 +143,14 @@ SEAT_SRC = "members.json(열린국회정보 API nwvrqwxyaytdsfvhu)"
 SEAT_DAY = datetime.now(KST).strftime("%Y-%m-%d")
 
 
+def write_party_changes():
+    with open(os.path.join(OUT, "party_changes.csv"), "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.writer(f); w.writerow(["name", "change_date", "before", "after", "source"])
+        for n, cut, b, a in PARTY_AT: w.writerow([n, cut, b, a, PARTY_SRC.get(n) or "팩트체크 확인(출처 미기재)"])
+
+
 def collect_trips(members):
+    write_party_changes()
     rows = api(TRIP, UNIT_CD="100022", pSize=1000)
     if rows:
         log.append("국외활동 필드: " + ",".join(sorted(rows[0].keys())))
@@ -172,7 +182,7 @@ def collect_trips(members):
                 unmatched[n] += 1
             pty, basis = party_at(n, ms[0]["party"], _start(r.get("SCH_DYS"))) if ok else (None, None)
             trips.append({"trip_id": i, "name": n, "member_id": ms[0]["id"] if ok else None,
-                          "party": pty, "party_basis": basis, "match": how if ok or how != "현직" else "미매칭", "name_raw": n0, "note": (NOTE_RAW.get(n) or NAMESAKE_HINT.get(n)) if not ok else PARTY_NOTE.get(n), "start": _start(r.get("SCH_DYS")),
+                          "party": pty, "party_basis": basis, "match": how if ok or how != "현직" else "미매칭", "name_raw": n0, "party_source": PARTY_SRC.get(n), "note": (NOTE_RAW.get(n) or NAMESAKE_HINT.get(n)) if not ok else PARTY_NOTE.get(n), "start": _start(r.get("SCH_DYS")),
                           "is_leader": n == lead, "dest": dst, "dest_inferred": inferred, "dest_label": "목적 문구로 추정" if inferred else None, "dest_raw": r.get("DSTN_NM"),
                           "dates": r.get("SCH_DYS"), "purpose": r.get("PURP_RSON"), "funder": re.sub(r"\s+", " ", r.get("EXPNS_SUPPT_INST_NM") or "").strip() or None,
                           "report": r.get("REPORT_YN"), "report_label": "신고 당시 결과보고서 유/무", "src": BASE + TRIP})
