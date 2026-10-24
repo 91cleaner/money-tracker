@@ -6,6 +6,25 @@ const sv = (tag, attrs = {}) => { const e = document.createElementNS(NS, tag); f
 const GK = Math.cos(36 * Math.PI / 180), GSX = 600 / (6.5 * GK);
 const toLL = (p) => [38.7 - p[1] / GSX, 124.5 + p[0] / (GK * GSX)];
 
+// 노란 고리 옆 우리 시 뱃지. 고리·처음으로·지도 가장자리와 겹치면 반대쪽으로 옮긴다.
+function seatBadge(map, mk) {
+  const el = mk && mk.getElement && mk.getElement();
+  const span = el && el.querySelector('.loc-badge');
+  if (!span || !map) return;
+  const root = map.getContainer();
+  const home = root.querySelector('.map-home');
+  const hit = (a, b) => !!(b && a.width > 2 && b.width > 2 && a.right > b.left + 1 && a.left < b.right - 1 && a.bottom > b.top + 1 && a.top < b.bottom - 1);
+  const inside = (a, box) => a.left >= box.left + 4 && a.right <= box.right - 4 && a.top >= box.top + 4 && a.bottom <= box.bottom - 4;
+  const score = (cls) => {
+    span.classList.remove('r', 'l'); span.classList.add(cls);
+    const a = span.getBoundingClientRect(), box = root.getBoundingClientRect();
+    return {off: !inside(a, box), cover: hit(a, home && home.getBoundingClientRect())};
+  };
+  const R = score('r'), Lft = score('l');
+  const pick = (!R.cover && !R.off) ? 'r' : (!Lft.cover && !Lft.off) ? 'l' : (R.cover && !Lft.cover) ? 'l' : 'r';
+  span.classList.remove('r', 'l'); span.classList.add(pick);
+}
+
 // ---------- 위성 지도 ----------
 function satView(box, geo, cities, onPick) {
   if (!window.L) throw new Error('no leaflet');
@@ -31,8 +50,6 @@ function satView(box, geo, cities, onPick) {
   const homeCtl = L.control({position: 'topright'});
   homeCtl.onAdd = () => { const w = L.DomUtil.create('div', 'leaflet-control map-home-ctl'); w.append(homeBtn); L.DomEvent.disableClickPropagation(w); L.DomEvent.disableScrollPropagation(w); return w; };
   homeCtl.addTo(map);
-  const declutter = () => { const seen = []; box.querySelectorAll('.leaflet-tooltip').forEach((t) => { t.style.visibility = ''; const r = t.getBoundingClientRect(); if (seen.some((q) => !(r.right < q.left || r.left > q.right || r.bottom < q.top || r.top > q.bottom))) t.style.visibility = 'hidden'; else seen.push(r); }); };
-  map.on('zoomend moveend', () => setTimeout(declutter, 30)); setTimeout(declutter, 600); window.__declutter = declutter;
   map.attributionControl.setPrefix(false); window.__mtMap = map;
   map.on('click', (e) => {
     const pt = e.containerPoint, hits = [];
@@ -56,11 +73,90 @@ function satView(box, geo, cities, onPick) {
   const maxT = cities[0] ? cities[0].total : 1;
   const dots = new Map();
   const gC = L.layerGroup().addTo(map), gF = L.layerGroup().addTo(map);
-  for (const c of cities) {
+  // 짧은 이름: '전남 여수시' → '여수', '충남 논산시' → '논산'. 같은 짧은 이름이 둘이면 앞 지역을 붙인다.
+  const shortNm = (name) => { const t = String(name || '').trim().split(/\s+/).pop() || ''; const base = t.replace(/(특별자치시|특별자치도|특별시|광역시)$/, ''); const m = base.match(/^(.+)(시|군|구)$/); return (m && m[1].length >= 2) ? m[1] : (base || t); };
+  const nmCount = {}; for (const c of cities) { const s = shortNm(c.name); nmCount[s] = (nmCount[s] || 0) + 1; }
+  const placeNm = (c) => { const s = shortNm(c.name); if ((nmCount[s] || 0) < 2) return s; const p = String(c.name || '').trim().split(/\s+/); return p.length > 1 ? p[0] + ' ' + s : s; };
+  const nameTips = [];
+  let destTips = [];
+  cities.forEach((c, i) => {
     const m = L.circleMarker(toLL(c.p), {radius: c.total > 0 ? 4 + 13 * Math.sqrt(c.total / maxT) : 4, className: 'sdot', weight: 1.5, color: c.total > 0 ? '#fff' : '#8b97a5', fillColor: c.total > 0 ? '#0a84ff' : '#3a4450', fillOpacity: c.total > 0 ? 0.55 : 0.3, interactive: false});
     m.addTo(gC); dots.set(c.slug, m); const me2 = m.getElement && m.getElement(); if (me2) me2.setAttribute('data-s', c.slug);
-    if (cities.indexOf(c) < 14) L.tooltip({permanent: true, direction: 'right', className: 'klab', offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(c.name.split(' ').pop().replace(/(특별시|광역시|특별자치시)$/, '')).addTo(gC);
-  }
+    const feat = i < 14;
+    const tip = L.tooltip({permanent: true, direction: 'right', className: 'klab cname' + (feat ? ' feat' : ''), offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(placeNm(c)).addTo(gC);
+    tip._feat = feat; tip._rank = i; tip._m = m; nameTips.push(tip);
+    const el = tip.getElement && tip.getElement(); if (el) { el.dataset.s = c.slug; if (!feat) el.style.visibility = 'hidden'; }
+  });
+  const hitR = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+  const zoomedIn = () => map.getZoom() >= map.getBoundsZoom(korea, false) + 0.75;
+  // 전국 배율: 금액 큰 시 14곳만. 확대하면 화면에 보이는 시·군 마커는 짧은 이름. 실제로 겹치거나 버튼 위를 가리는 것만 숨긴다.
+  const declutter = () => {
+    const zIn = zoomedIn(), b = map.getBounds(), boxR = box.getBoundingClientRect(), seen = [];
+    const narrow = box.clientWidth < 520, EIN = 10, btnPad = narrow ? 14 : 8;
+    box.querySelectorAll('.leaflet-control, .map-home').forEach((el) => { const r = el.getBoundingClientRect(); if (r.width < 4 || r.height < 4) return; const p = (el.classList.contains('map-home') || el.querySelector('.map-home')) ? btnPad : 3; seen.push({left: r.left - p, right: r.right + p, top: r.top - p, bottom: r.bottom + p, _ctl: 1}); });
+    (box.parentElement || document).querySelectorAll('.resetbtn').forEach((el) => { const r = el.getBoundingClientRect(); if (r.width > 4 && r.height > 4 && hitR(r, boxR)) seen.push({left: r.left, right: r.right, top: r.top, bottom: r.bottom, _ctl: 1}); });
+    box.querySelectorAll('.leaflet-tooltip.stip').forEach((t) => {
+      t.style.visibility = 'visible'; t.style.marginLeft = '0px'; t.style.marginTop = '0px';
+      let r = t.getBoundingClientRect(); if (r.width < 2) return;
+      let dx = 0, dy = 0;
+      if (r.right > boxR.right - EIN) dx += boxR.right - EIN - r.right;
+      if (r.left + dx < boxR.left + EIN) dx += boxR.left + EIN - (r.left + dx);
+      if (r.bottom > boxR.bottom - EIN) dy += boxR.bottom - EIN - r.bottom;
+      if (r.top + dy < boxR.top + EIN) dy += boxR.top + EIN - (r.top + dy);
+      if (dx || dy) { t.style.marginLeft = dx + 'px'; t.style.marginTop = dy + 'px'; r = t.getBoundingClientRect(); }
+      const controls = seen.filter((q) => q._ctl);
+      for (let n = 0; n < 3 && controls.some((c) => hitR(r, c)); n++) {
+        const q = controls.find((c) => hitR(r, c));
+        const opts = [[0, q.top - r.bottom - 2], [0, q.bottom - r.top + 2], [q.left - r.right - 2, 0], [q.right - r.left + 2, 0]].sort((a, b) => Math.abs(a[0]) + Math.abs(a[1]) - (Math.abs(b[0]) + Math.abs(b[1])));
+        let cleared = false;
+        for (const [sx, sy] of opts) {
+          if (Math.abs(sx) + Math.abs(sy) > 72) continue;
+          const ml = (parseFloat(t.style.marginLeft) || 0) + sx, mt = (parseFloat(t.style.marginTop) || 0) + sy;
+          t.style.marginLeft = ml + 'px'; t.style.marginTop = mt + 'px';
+          const r2 = t.getBoundingClientRect();
+          if (r2.left >= boxR.left + 4 && r2.right <= boxR.right - 4 && r2.top >= boxR.top + 4 && r2.bottom <= boxR.bottom - 4 && !controls.some((c) => hitR(r2, c))) { r = r2; cleared = true; break; }
+          t.style.marginLeft = (ml - sx) + 'px'; t.style.marginTop = (mt - sy) + 'px';
+        }
+        if (!cleared) break;
+      }
+      if (r.right > boxR.right - 4 || r.left < boxR.left + 4 || controls.some((c) => hitR(r, c)) || seen.some((q) => !q._ctl && hitR(r, q))) t.style.visibility = 'hidden';
+      else seen.push({left: r.left, right: r.right, top: r.top, bottom: r.bottom});
+    });
+    const names = nameTips.concat(destTips).filter((t) => t._feat || zIn).sort((a, c) => a._rank - c._rank);
+    const want = new Set(names);
+    for (const t of nameTips.concat(destTips)) {
+      const el = t.getElement && t.getElement(); if (!el) continue;
+      el.style.marginLeft = '0px'; el.style.marginTop = '0px';
+      const on = want.has(t) && b.contains(t.getLatLng()) && !(t._m && !t._m.getRadius());
+      if (!on) { el.style.visibility = 'hidden'; continue; }
+      el.style.visibility = 'visible';
+      let r = el.getBoundingClientRect();
+      if (r.right > boxR.right - EIN) { el.style.marginLeft = (boxR.right - EIN - r.right) + 'px'; r = el.getBoundingClientRect(); }
+      if (r.left < boxR.left + EIN) { el.style.marginLeft = ((parseFloat(el.style.marginLeft) || 0) + (boxR.left + EIN - r.left)) + 'px'; r = el.getBoundingClientRect(); }
+      if (r.bottom > boxR.bottom - EIN) { el.style.marginTop = (boxR.bottom - EIN - r.bottom) + 'px'; r = el.getBoundingClientRect(); }
+      if (r.top < boxR.top + EIN) { el.style.marginTop = ((parseFloat(el.style.marginTop) || 0) + (boxR.top + EIN - r.top)) + 'px'; r = el.getBoundingClientRect(); }
+      const controls = seen.filter((q) => q._ctl);
+      for (let n = 0; n < 3; n++) {
+        const q = controls.find((c) => hitR(r, c)); if (!q) break;
+        const opts = [[0, q.top - r.bottom - 2], [0, q.bottom - r.top + 2], [q.left - r.right - 2, 0], [q.right - r.left + 2, 0]].sort((a, b) => Math.abs(a[0]) + Math.abs(a[1]) - (Math.abs(b[0]) + Math.abs(b[1])));
+        let cleared = false;
+        for (const [dx, dy] of opts) {
+          if (Math.abs(dx) + Math.abs(dy) > 72) continue;
+          const ml = (parseFloat(el.style.marginLeft) || 0) + dx, mt = (parseFloat(el.style.marginTop) || 0) + dy;
+          el.style.marginLeft = ml + 'px'; el.style.marginTop = mt + 'px';
+          const r2 = el.getBoundingClientRect();
+          const inBox = r2.left >= boxR.left + 4 && r2.right <= boxR.right - 4 && r2.top >= boxR.top + 4 && r2.bottom <= boxR.bottom - 4;
+          if (inBox && !controls.some((c) => hitR(r2, c))) { r = r2; cleared = true; break; }
+          el.style.marginLeft = (ml - dx) + 'px'; el.style.marginTop = (mt - dy) + 'px';
+        }
+        if (!cleared) break;
+      }
+      if (r.width < 2 || r.right > boxR.right - 4 || r.left < boxR.left + 4 || r.bottom > boxR.bottom - 2 || r.top < boxR.top + 2 || seen.some((q) => hitR(r, q))) el.style.visibility = 'hidden';
+      else seen.push(r);
+    }
+  };
+  map.on('zoomend moveend resize', () => setTimeout(declutter, 40)); setTimeout(declutter, 600); window.__declutter = declutter;
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(declutter, 80));
   const bez = (a, b) => {
     const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
     const mx = (a[0] + b[0]) / 2 - (dy / d) * o, my = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
@@ -78,19 +174,45 @@ function satView(box, geo, cities, onPick) {
     sameCam(s) { if (!s || s.lat == null) return false; const c = map.getCenter(); return Math.abs(map.getZoom() - s.z) < 0.05 && Math.abs(c.lat - s.lat) < 0.02 && Math.abs(c.lng - s.lng) < 0.02; },
     previewFly(p, z) { const ll = toLL(p); return {lat: ll[0], lng: ll[1], z: Math.min(z, 9.5)}; },
     jump(p, z) { pend = null; map.stop(); map.invalidateSize(); map.setView(toLL(p), Math.min(z, 9.5), {animate: false}); },
+    fitNow(pts) { if (!pts || !pts.length) return; pend = null; map.stop(); map.invalidateSize(); map._noRelocal = (map._noRelocal || 0) + 1; map.fitBounds(L.latLngBounds(pts.map(toLL)).pad(0.22), {animate: false, maxZoom: 8, padding: [40, 40]}); setTimeout(() => { map._noRelocal = Math.max(0, (map._noRelocal || 1) - 1); }, 0); },
     onsize: null,
     select(slug) { dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
-      gF.clearLayers();
+      gF.clearLayers(); destTips = []; lineArgs = [list, maxA, labels];
+      const px = (p) => map.latLngToContainerPoint(toLL(p));
+      const buried = [];
       list.forEach((f, i) => {
         const w = 2 + 9 * Math.sqrt(f.amount / maxA), col = f.local ? '#0a84ff' : '#ff9f0a';
-        if (Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) >= 0.5) {
+        const svgD = f.a && f.p ? Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) : 99;
+        const near = !!(f.local && f.a && f.p && (svgD < 1 || (box.clientWidth > 40 && px(f.a).distanceTo(px(f.p)) < 28)));
+        if (near) { buried.push(f); return; }
+        if (svgD >= 0.5) {
           const pl = L.polyline(bez(f.a, f.p), {color: col, weight: w, opacity: 0.9, lineCap: 'round', className: 'sfl', interactive: false}).addTo(gF);
           const el2 = pl.getElement && pl.getElement(); if (el2) { el2.setAttribute('pathLength', '1'); el2.style.animationDelay = i * 60 + 'ms'; }
         }
         L.circleMarker(toLL(f.p), {radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false}).addTo(gF);
+        const dn = shortNm(f.to), ll = toLL(f.p);
+        const named = labels.some(([p]) => Math.hypot(p[0] - f.p[0], p[1] - f.p[1]) < 1.5) || nameTips.some((t) => { const a = t.getLatLng(); return Math.hypot(a.lat - ll[0], a.lng - ll[1]) < 0.03; });
+        if (dn && !named) {
+          const tip = L.tooltip({permanent: true, direction: 'left', className: 'klab cname cdest', offset: [-6, 0], interactive: false}).setLatLng(ll).setContent(dn).addTo(gF);
+          tip._feat = false; tip._rank = 1000 + i; destTips.push(tip);
+        }
       });
       for (const [p, t, me] of labels) L.tooltip({permanent: true, direction: 'top', className: 'stip' + (me ? ' me' : ''), offset: [0, -6]}).setLatLng(toLL(p)).setContent(t).addTo(gF);
+      const me = labels.find((x) => x[2]);
+      if (me) {
+        const ll = toLL(me[0]);
+        L.circleMarker(ll, {radius: 16, color: '#0b0f13', weight: 6, opacity: 0.75, fill: false, interactive: false}).addTo(gF);
+        L.circleMarker(ll, {radius: 16, color: '#ffd60a', weight: 3, fill: false, interactive: false, className: 'hlring'}).addTo(gF);
+      }
+      if (buried.length && list[0] && list[0].a) {
+        const sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
+        const money = typeof krw === 'function' ? krw(sum) : '';
+        const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>우리 시 ${money}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
+        const mk = L.marker(toLL(list[0].a), {interactive: false, keyboard: false, icon, zIndexOffset: 800}).addTo(gF);
+        const seat = () => seatBadge(map, mk); seat(); setTimeout(seat, 40);
+      }
+      setTimeout(declutter, 40);
     },
     fly(p, z) { vis(() => map.flyTo(toLL(p), Math.min(z, 9.5), {duration: 0.8, easeLinearity: 0.2})); },
     fit(pts) { vis(() => map.flyToBounds(L.latLngBounds(pts.map(toLL)).pad(0.25), {duration: 0.8, maxZoom: 8})); },
@@ -99,7 +221,9 @@ function satView(box, geo, cities, onPick) {
     destroy() { map.remove(); box.classList.remove('sat'); box.replaceChildren(); },
   };
   homeBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); view.onhome && view.onhome(); });
+  let lineArgs = null;
   map.on('zoomend moveend', () => view.oncam && view.oncam());
+  map.on('zoomend', () => { if (map._noRelocal || !lineArgs) return; const a = lineArgs; lineArgs = null; view.lines(a[0], a[1], a[2]); });
   return view;
 }
 
@@ -152,6 +276,7 @@ function svgView(box, geo, cities, onPick) {
     sameCam(s) { return !!(s && s.vb && s.vb.length === vb.length && s.vb.every((v, i) => Math.abs(v - vb[i]) < 0.6)); },
     previewFly(p) { return {vb: fitBox([p], 160).slice()}; },
     jump(p) { cancelAnimationFrame(anim); vb = fitBox([p], 160); svg.setAttribute('viewBox', vb.join(' ')); sizes(); camFn(); },
+    fitNow(pts) { if (!pts || !pts.length) return; cancelAnimationFrame(anim); vb = fitBox(pts, 36); svg.setAttribute('viewBox', vb.join(' ')); sizes(); camFn(); },
     onsize: null,
     set oncam(fn) { camFn = fn || (() => {}); },
     get oncam() { return camFn; },
@@ -159,10 +284,20 @@ function svgView(box, geo, cities, onPick) {
     select(slug) { dots.forEach((e, s) => e.classList.toggle('on', s === slug)); svg.classList.toggle('picked', !!slug); },
     lines(list, maxA, labels) {
       gF.replaceChildren(); gD.replaceChildren(); gL.replaceChildren();
+      const buried = [];
       list.forEach((f, i) => { const w = 1.5 + 9 * Math.sqrt(f.amount / maxA);
-        if (Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) >= 2) { const p = sv('path', {d: curve(f.a, f.p), class: 'fl ' + (f.local ? 'in' : 'out'), 'stroke-width': w.toFixed(1)}); p.style.animationDelay = i * 60 + 'ms'; gF.append(p); }
+        const svgD = f.a && f.p ? Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) : 99;
+        if (f.local && svgD < 18) { buried.push(f); return; }
+        if (svgD >= 2) { const p = sv('path', {d: curve(f.a, f.p), class: 'fl ' + (f.local ? 'in' : 'out'), 'stroke-width': w.toFixed(1)}); p.style.animationDelay = i * 60 + 'ms'; gF.append(p); }
         const d = sv('circle', {cx: f.p[0], cy: f.p[1], class: 'dd ' + (f.local ? 'in' : 'out')}); d.dataset.r = 2 + w / 3; gD.append(d); });
       for (const [p, t, me] of labels) { const e = sv('text', {x: p[0], y: p[1], class: 'lb' + (me ? ' me' : '')}); e.textContent = t; gL.append(e); }
+      const me = labels.find((x) => x[2]);
+      if (me) { const c = sv('circle', {cx: me[0][0], cy: me[0][1], class: 'hl dd'}); c.dataset.r = 9; c.setAttribute('stroke', '#ffd60a'); c.setAttribute('fill', 'none'); gL.prepend(c); }
+      if (buried.length && list[0] && list[0].a) {
+        const p = list[0].a, sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
+        const d = sv('circle', {cx: p[0] + 18, cy: p[1] - 14, class: 'dd in'}); d.dataset.r = 5; gD.append(d);
+        const e = sv('text', {x: p[0] + 26, y: p[1] - 10, class: 'lb'}); e.textContent = '우리 시 ' + (typeof krw === 'function' ? krw(sum) : ''); gL.append(e);
+      }
       sizes();
     },
     fly(p) { zoomTo(fitBox([p], 160)); },
@@ -192,7 +327,8 @@ async function moneyMap(root, opts = {}) {
   let homeMode = 'city', homeCur = null, homeCam = null, resetToFirst = () => {}, seated = false, nudged = false, live = false;
   const syncMapHome = () => { if (!view || !view.homeBtn || !homeCam) return; view.homeBtn.classList.toggle('is-home', mode === homeMode && cur === homeCur && !view.hlOn() && view.sameCam(homeCam)); };
   // 지도 칸이 숨겨져 있다 열리면(도시 페이지 탭) 처음 화면을 그 크기에 다시 맞춘다
-  const seatFixed = () => { const c = fl.cities[opts.fixed]; if (!c || !view) return; view._seating = 1; if (view.jump) view.jump(c.p, 10); view._seating = 0; homeCam = view.previewFly ? view.previewFly(c.p, 10) : view.readCam(); homeMode = 'city'; homeCur = opts.fixed; seated = true; nudged = false; syncMapHome(); };
+  const flowPts = (c) => [c.p, ...(c.flows || []).filter((f) => f.p).map((f) => f.p)];
+  const seatFixed = () => { const c = dataOf(opts.fixed); if (!c || !view || !c.p) return; view._seating = 1; if (view.fitNow) view.fitNow(flowPts(c)); else if (view.jump) view.jump(c.p, 8); if (cur === opts.fixed) drawCity(c); view._seating = 0; homeCam = view.readCam(); homeMode = 'city'; homeCur = opts.fixed; seated = true; nudged = false; syncMapHome(); };
   const dataOf = (slug) => { const c = fl.cities[slug]; if (!c || cat === '전체') return c;
     const b = (c.by_cat || {})[cat] || {total: 0, known: 0, local: 0, count: 0, flows: []}; return {...c, ...b, other: null, cat}; };
   const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {fly: true, z: 9}); if (matchMedia('(max-width: 899px)').matches) setTimeout(() => panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 300); };
@@ -233,7 +369,7 @@ async function moneyMap(root, opts = {}) {
     cur = slug; mode = 'city'; view.select(slug); syncMapHome();
     const list = c.flows.map((f) => ({...f, a: c.p}));
     if (o.fly) { view.lines([], 1, []); view.fly(o.where || c.p, o.z || (o.where ? 12 : 11)); view.once(() => { if (cur === slug && mode === 'city') drawCity(c); }); }
-    else { drawCity(c); if (o.zoom !== false) view.fit([c.p, ...list.slice(0, 8).map((f) => f.p)]); }
+    else { drawCity(c); if (o.zoom !== false) view.fit([c.p, ...list.map((f) => f.p)]); }
     panel.replaceChildren();
     const h = el('div', 'fh'); h.append(el('span', 'fh-n', ((window.CITY_FULL || {})[slug] || c.name) + (c.cat ? ' · ' + c.cat : '')), el('span', 'fh-v', krw(c.total)));
     if (!opts.fixed) { const x = el('button', 'fclose', '× 닫기'); x.type = 'button'; x.setAttribute('aria-label', '닫고 전국 보기'); x.onclick = () => { setSeg('nation'); showNation(); }; h.append(x); }
@@ -261,7 +397,7 @@ async function moneyMap(root, opts = {}) {
     if (restN > 0) panel.append(el('p', 'sub small', `그 밖의 ${restN}곳`));
     if (c.known < c.total) panel.append(el('p', 'sub small', `주소가 확인된 계약 ${share(c.known, c.total)} 기준`));
     const all = el('button', 'ghostbtn', '흐름 전체 보기'); all.type = 'button';
-    all.addEventListener('click', () => { view.fit([c.p, ...list.slice(0, 8).map((f) => f.p)]); root.scrollIntoView({behavior: 'smooth'}); });
+    all.addEventListener('click', () => { const pts = [c.p, ...list.map((f) => f.p)]; if (view.fitNow) view.fitNow(pts); else view.fit(pts); drawCity(c); root.scrollIntoView({behavior: 'smooth'}); });
     panel.append(all);
     if (!opts.fixed) { const g = el('a', 'gobtn', c.name + ' 자세히 보기'); g.href = 'city.html?c=' + slug; panel.append(g);
       if (window.regionPicker) { const ob = el('button', 'ghostbtn', '다른 지역 ▾'); ob.type = 'button'; ob.onclick = () => regionPicker(slug, (s2) => pickCity(s2)); panel.append(ob); } }
@@ -312,7 +448,7 @@ async function moneyMap(root, opts = {}) {
   }
   resetToFirst = () => {
     view.highlight(null);
-    if (opts.fixed) { const c = fl.cities[opts.fixed]; if (!c) return; showCity(opts.fixed, {zoom: false}); view.fly(c.p, 10); }
+    if (opts.fixed) { showCity(opts.fixed, {zoom: false}); seatFixed(); }
     else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); view.home(); }
   };
   if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); homeCam = view.previewFly ? view.previewFly(c.p, 10) : null; homeMode = 'city'; homeCur = opts.fixed; if (box.clientWidth > 40 && box.clientHeight > 40) { live = true; seatFixed(); } } }
@@ -321,3 +457,27 @@ async function moneyMap(root, opts = {}) {
   root.append(el('p', 'sub small', `업체 위치: ${fl.basis}. 지도: Esri 다크 그레이 베이스(라벨 없음) + 자체 한글 표기, 경계 ${geo.source}. 갱신 ${when(fl.updated)}`));
   return ctl;
 }
+
+// 도시 페이지 위쪽 작은 지도: 주황 흐름만 보여 주고, 누르면 본 지도로 간다.
+window.moneyPeek = (el, slug) => {
+  if (!el || !slug || typeof getJSON !== 'function') return;
+  Promise.all([getJSON('assets/geo.json'), getJSON('data/flows.json')]).then(([geo, fl]) => {
+    const c = fl.cities && fl.cities[slug]; if (!c || !c.p) return;
+    const orange = (c.flows || []).filter((f) => f.p && !f.local);
+    const local = (c.flows || []).some((f) => f.local);
+    const pts = [c.p, ...orange.map((f) => f.p)];
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const [x, y] of pts) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
+    const pad = 36; x0 -= pad; y0 -= pad; x1 += pad; y1 += pad;
+    const w = Math.max(80, x1 - x0), h = Math.max(80, y1 - y0);
+    const svg = sv('svg', {viewBox: [x0, y0, w, h].join(' '), 'aria-hidden': 'true'});
+    for (const p of geo.provinces || []) svg.append(sv('path', {d: p.d, fill: '#121a22', stroke: '#2c3a48', 'stroke-width': '1.4', 'vector-effect': 'non-scaling-stroke'}));
+    const curve = (a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60); return `M${a[0]},${a[1]} Q${(a[0] + b[0]) / 2 - (dy / d) * o},${(a[1] + b[1]) / 2 + (dx / d) * o} ${b[0]},${b[1]}`; };
+    for (const f of orange) svg.append(sv('path', {d: curve(c.p, f.p), fill: 'none', stroke: '#ff9f0a', 'stroke-width': '2.5', 'stroke-linecap': 'round', 'vector-effect': 'non-scaling-stroke'}));
+    const rr = Math.max(w, h) * 0.018;
+    svg.append(sv('circle', {cx: c.p[0], cy: c.p[1], r: rr, fill: 'none', stroke: '#ffd60a', 'stroke-width': '2.5', 'vector-effect': 'non-scaling-stroke'}));
+    if (local) svg.append(sv('circle', {cx: c.p[0] + rr * 2.4, cy: c.p[1] - rr * 1.6, r: Math.max(3, rr * 0.65), fill: '#0a84ff', stroke: '#fff', 'stroke-width': '1.5', 'vector-effect': 'non-scaling-stroke'}));
+    const cap = document.createElement('span'); cap.className = 'mappeek-cap'; cap.textContent = '돈이 어디로 갔나';
+    el.replaceChildren(svg, cap);
+  }).catch(() => {});
+};

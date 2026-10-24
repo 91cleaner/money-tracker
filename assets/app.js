@@ -472,8 +472,15 @@ function stats(city, rows) {
 
 async function cityPage() {
   const slug = new URLSearchParams(location.search).get('c');
+  const peek = $('#mappeek');
+  if (peek && slug) {
+    peek.hidden = false;
+    peek.onclick = () => { if (location.hash === '#map') dispatchEvent(new HashChangeEvent('hashchange')); else location.hash = '#map'; };
+    if (window.moneyPeek) window.moneyPeek(peek, slug);
+  }
   let d;
   try { d = await getJSON('data/city/' + slug + '.json'); } catch (e) {
+    if (peek) peek.hidden = true;
     $('#title').textContent = '없는 지역입니다';
     $('#lede').replaceChildren('주소가 바뀌었거나 아직 추적하지 않는 곳이에요. ', Object.assign(el('a', '', '홈으로 가기 ›'), {href: './'}));
     document.querySelectorAll('.stats, .sec').forEach((s) => s.remove()); return;
@@ -563,7 +570,8 @@ async function cityPage() {
   render();
   if (window.moneyMap && $('#map')) moneyMap($('#map'), {fixed: slug, rows: 5}).catch(() => $('#map').remove());
   const openAll = () => { if (location.hash === '#contracts') { const dd = document.querySelector('#contracts details.all'); if (dd) dd.open = true; } }; openAll(); addEventListener('hashchange', openAll);
-  if (location.hash && location.hash !== '#map') { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
+  if (location.hash === '#map') { const go = () => { const t = document.getElementById('map'); if (!t || t.classList.contains('tab-off')) return; const bar = document.querySelector('.stickybar'); const off = (bar ? bar.getBoundingClientRect().height : 52) + 8; scrollTo(0, Math.max(0, t.getBoundingClientRect().top + scrollY - off)); const lg = t.querySelector('.maplg'), tb = document.querySelector('.tabbar'); if (lg && tb) { const over = lg.getBoundingClientRect().bottom - tb.getBoundingClientRect().top + 8; if (over > 0) scrollBy(0, over); } }; go(); requestAnimationFrame(go); setTimeout(go, 500); setTimeout(go, 1200); }
+  else if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
