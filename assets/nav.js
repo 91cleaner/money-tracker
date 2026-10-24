@@ -1,6 +1,6 @@
-/* 위·아래 탭 5개. 순서: 지도 · 뉴스 · 나라 세금 · 국민연금 주식 · 더보기.
-   게임·퀴즈는 탭과 더보기에 넣지 않는다. ?c= 는 지도·뉴스·나라 세금·국민연금에 붙인다.
-   도시 페이지의 지도는 그 도시 지도로 남긴다. */
+/* 위·아래 탭 5개. 순서: 우리 동네 세금 · 정부 지출 · 국민연금 주식 · 뉴스 · 더보기.
+   게임·퀴즈는 메뉴에 넣지 않는다. ?c= 는 앞의 네 탭에 붙인다.
+   도시 페이지의 우리 동네 세금은 그 도시 지도로 남긴다. */
 (() => {
   const pg = document.body.dataset.page || '';
   const q = new URLSearchParams(location.search);
@@ -17,10 +17,10 @@
   };
   const fixedMap = (pg === 'city' && q.get('c')) ? ('city.html' + location.search + '#map') : addQ('./#map');
   const tabs = [
-    ['map', fixedMap, '지도'],
-    ['news', addQ('news.html'), '뉴스'],
-    ['nat', addQ('national.html'), '나라 세금'],
+    ['map', fixedMap, '우리 동네 세금'],
+    ['nat', addQ('national.html'), '정부 지출'],
     ['nps', addQ('nps.html'), '국민연금 주식'],
+    ['news', addQ('news.html'), '뉴스'],
   ];
   const act = (k) => {
     if (k === 'map') return pg === 'home' || pg === 'index' || pg === 'city';
@@ -115,21 +115,12 @@
     paintDot(!here && !!(newest && newest > seen));
   }).catch(() => {});
 
-  const fitNps = () => {
-    const labels = document.querySelectorAll('.tabbar a[data-k="nps"] .tl');
-    labels.forEach((s) => { s.textContent = '국민연금 주식'; });
-    const tight = [...document.querySelectorAll('.tabbar a[data-k="nps"]')].some((a) => {
-      const tl = a.querySelector('.tl');
-      return tl && tl.scrollWidth > a.clientWidth - 2;
-    });
-    if (tight) labels.forEach((s) => { s.textContent = '국민연금'; });
-  };
   const css = document.createElement('style');
   css.textContent = `.tabbar{position:fixed;left:0;right:0;z-index:1100;display:flex;background:#07090cf2;backdrop-filter:blur(16px);padding:4px 4px calc(4px + env(safe-area-inset-bottom));border-top:1px solid #24303a}
 .tabbar-top{top:0;bottom:auto;border-top:0;border-bottom:1px solid #24303a;padding:4px 4px}
 .tabbar-bot{bottom:0}
-.tabbar a,.tabbar button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;position:relative;min-height:44px;padding:4px 1px;border:0;background:none;color:#9aa6b2;font:700 12px/1.15 var(--sans,Pretendard,system-ui,sans-serif);text-decoration:none;white-space:nowrap;letter-spacing:-.04em;cursor:pointer;overflow:hidden}
-.tabbar .tl{min-width:0;overflow:hidden}
+.tabbar a,.tabbar button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;position:relative;min-height:44px;padding:4px 0;border:0;background:none;color:#9aa6b2;font:700 12px/1.15 var(--sans,Pretendard,system-ui,sans-serif);text-decoration:none;white-space:nowrap;letter-spacing:-.06em;cursor:pointer;overflow:hidden}
+.tabbar .tl{white-space:nowrap;overflow:hidden;text-overflow:clip}
 .tabbar a.on,.tabbar button.on{color:#ffb020}
 .tabbar-bot a.on::before,.tabbar-bot button.on::before{content:"";position:absolute;top:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
 .tabbar-top a.on::after,.tabbar-top button.on::after{content:"";position:absolute;bottom:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
@@ -147,7 +138,4 @@ body.has-tabbar{padding-top:52px;padding-bottom:calc(72px + env(safe-area-inset-
 @media(min-width:900px){.tabbar{padding-left:calc(50% - 340px);padding-right:calc(50% - 340px)}.more-box{left:50%;width:420px;transform:translateX(-50%);bottom:24px;border:1px solid #ffb020;border-radius:18px}}
 body.has-tabbar .nbar{top:52px}`;
   document.head.appendChild(css);
-  fitNps();
-  addEventListener('resize', fitNps);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNps);
 })();
