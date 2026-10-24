@@ -174,20 +174,26 @@
         radius: 4 + 16 * Math.sqrt(it.value / max),
         weight: 1.5, color: '#fff', fillColor: '#0a84ff', fillOpacity: 0.72,
       });
-      m.on('click', (e) => {
-        L.DomEvent.stopPropagation(e);
+      const tapIt = (e) => {
+        if (e) L.DomEvent.stopPropagation(e);
         markers.forEach((x) => x.setStyle({ weight: 1.5, color: '#fff' }));
         m.setStyle({ weight: 3, color: '#fff' });
         if (kind === 'tax' && it.slug) location.href = './?c=' + encodeURIComponent(it.slug) + '#map';
         else lineEl.textContent = it.name + ' · ' + won(it.value);
         // 지역을 누르면 그 페이지가 지역 목록(의원 등)을 보여 줄 수 있게 알린다
         window.dispatchEvent(new CustomEvent('tmregion', { detail: { kind, name: it.name, value: it.value } }));
-      });
+      };
+      m.on('click', tapIt);
       m.addTo(layer);
       markers.push(m);
+      // 손가락으로 누르기 쉽게 점 둘레에 보이지 않는 넓은 누름 자리를 둔다
+      L.circleMarker([it.lat, it.lng], { radius: 16, stroke: false, fillColor: '#000', fillOpacity: 0.001 }).on('click', tapIt).addTo(layer);
       if (i < 8) {
-        L.tooltip({ permanent: true, direction: 'right', className: 'klab', offset: [8, 0], interactive: false })
+        const tt = L.tooltip({ permanent: true, direction: 'right', className: 'klab', offset: [8, 0], interactive: false })
           .setLatLng([it.lat, it.lng]).setContent(esc(it.name)).addTo(layer);
+        // 지역 이름 글자를 눌러도 같은 동작
+        const te = tt.getElement && tt.getElement();
+        if (te) { te.style.pointerEvents = 'auto'; te.style.cursor = 'pointer'; L.DomEvent.on(te, 'click', (e) => { L.DomEvent.stop(e); tapIt(); }); }
       }
     });
     if (origin) {

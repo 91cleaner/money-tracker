@@ -73,12 +73,12 @@
         <button type="button" data-cam="us" aria-pressed="false">미국</button>
       </div>
       <div id="npsMap" class="nps-map" role="application" aria-label="국민연금 주식 지도. 선은 국민연금공단에서 회사 본사가 있는 곳으로 그었어요."></div>
+      <div id="npsPick" class="card pick"></div>
       <p class="tm-line">국민연금이 산 주식의 회사 본사가 있는 곳으로 선을 그었어요. 선이 굵을수록 그곳 회사 주식에 들어간 돈이 많아요. 공장이나 일하는 사람은 다른 곳일 수 있어요.</p>
       <div class="nps-tot">
         ${kr ? `<div><span class="sub">국내 주식</span><b>${esc(won(krTotal))}</b><span class="sub">${esc(ymd(kr.holdings_as_of))} 기준</span></div>` : ''}
         ${us && rate ? `<div><span class="sub">미국 주식</span><b>약 ${esc(won(usTotal))}</b><span class="sub">${esc(ymd(us.holdings_as_of))} 기준 · ${esc(usd(us.total_value_usd))}</span></div>` : ''}
       </div>
-      <div id="npsPick" class="card pick"></div>
       <h3>돈이 많이 간 곳</h3>
       <div id="npsRank"></div>
       <button type="button" class="nps-more" id="npsMore" hidden>전체 보기</button>
@@ -198,8 +198,13 @@
         ln.on('click', (e) => { L.DomEvent.stopPropagation(e); choose(it); });
         const dot = L.circleMarker([it.lat, it.lng], { radius: 3 + w / 2.5, weight: on ? 3 : 1.5, color: on ? '#ffd60a' : '#fff', fillColor: OUT, fillOpacity: dim ? 0.3 : 0.95, className: dim ? '' : 'mt-rcv' }).addTo(gDot);
         dot.on('click', (e) => { L.DomEvent.stopPropagation(e); choose(it); });
+        // 손가락으로 누르기 쉽게 점 둘레에 보이지 않는 넓은 누름 자리
+        L.circleMarker([it.lat, it.lng], { radius: Math.max(14, 3 + w / 2.5 + 8), stroke: false, fillColor: '#000', fillOpacity: 0.001 }).on('click', (e) => { L.DomEvent.stopPropagation(e); choose(it); }).addTo(gDot);
         if (named.has(it.key)) dot.bindTooltip(esc(it.name), { permanent: true, direction: 'right', className: 'klab', offset: [6, 0], interactive: false });
-        const tip = dot.getTooltip && dot.getTooltip(); if (tip && tip.getElement && tip.getElement()) tip.getElement().dataset.rank = on ? -1 : rankOf.get(it.key);
+        const tip = dot.getTooltip && dot.getTooltip(); const tEl = tip && tip.getElement && tip.getElement();
+        // 지역 이름 글자를 눌러도 그 지역이 골라진다
+        if (tEl) { tEl.style.pointerEvents = 'auto'; tEl.style.cursor = 'pointer'; L.DomEvent.on(tEl, 'click', (e) => { L.DomEvent.stop(e); choose(it); }); }
+        if (tip && tip.getElement && tip.getElement()) tip.getElement().dataset.rank = on ? -1 : rankOf.get(it.key);
       });
       L.circleMarker(o, { radius: 9, weight: 3, color: '#fff', fillColor: '#0a84ff', fillOpacity: 1, interactive: false }).addTo(gDot)
         .bindTooltip(esc(ORIGIN.name), { permanent: true, direction: 'left', className: 'klab nps-origin', offset: [-8, 0], interactive: false });
