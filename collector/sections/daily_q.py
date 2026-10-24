@@ -79,7 +79,8 @@ def main(data="data", days=None):
         q = json.load(open(p, encoding="utf-8"))
     except (OSError, ValueError):
         q = {}
-    if days is None:
+    auto = days is None  # 정기 실행(오늘·내일 자동 고정)일 때만 고정한 날을 기록한다
+    if auto:
         today = kst_today()
         days = [today, add(today, 1)]
     mp = os.path.join(data, "daily_q_meta.json")  # 항목별 고정한 날(KST)·메모. daily_q.json 형식은 그대로 두고 따로 둔다(이것도 append-only)
@@ -87,7 +88,7 @@ def main(data="data", days=None):
         meta = json.load(open(mp, encoding="utf-8"))
     except (OSError, ValueError):
         meta = {}
-    fixed_on = kst_today() if days is None else None
+    fixed_on = kst_today() if auto else None
     added = []
     for D, bad_to in REVISE_ONCE.items():
         if D in q and q[D]["to"] == bad_to:

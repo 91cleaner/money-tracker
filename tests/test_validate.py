@@ -158,6 +158,18 @@ class Gate(unittest.TestCase):
             q = daily_q.main(d, ["2026-10-23"])
             self.assertEqual(q["2026-10-23"]["a"], "keep")
 
+    def test_daily_q_auto_run_records_fixed_day(self):
+        import sys; sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "collector", "sections"))
+        import daily_q
+        from unittest import mock
+        x = {"a": "x", "b": "y", "av": 2, "bv": 1, "from": "2026-09-25", "to": "2026-10-24"}
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(daily_q, "kst_today", lambda: "2026-10-25"), \
+                mock.patch.object(daily_q, "build", lambda *a, **k: dict(x)):
+            build(BASE, d)
+            daily_q.main(d)
+            meta = json.load(open(os.path.join(d, "daily_q_meta.json"), encoding="utf-8"))
+            self.assertEqual(meta["2026-10-26"], {"fixed": "2026-10-25"})  # 정기 실행으로 더한 날은 고정한 날이 꼭 남아야 게이트를 통과
+
     def test_daily_q_complete_days_only(self):
         import sys; sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "collector", "sections"))
         import daily_q
