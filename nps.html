@@ -8,6 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%92%B0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/refresh.css?v=202610247100">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css?v=202610247400">
 <style>
 *{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#0d1117;color:#e8edf2;font-family:Pretendard,system-ui,sans-serif;font-size:15px;line-height:1.55}
 a{color:#7fe8ff;overflow-wrap:anywhere}.nbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;background:#0d1117ee;border-bottom:1px solid #222b36;font-size:13px;color:#8fa0b3}.nbar a{font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap}
@@ -26,6 +27,21 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
 .krnote{margin:0 0 8px;padding:8px 12px;border-radius:10px;background:#151b23;color:#b8c3cf;font-size:13px;line-height:1.45}
 @media(min-width:900px){.w{max-width:980px;padding-left:22px;padding-right:22px}.words{grid-template-columns:1fr 1fr}}
 @media(min-width:1280px){.w{max-width:1120px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.pair section{margin:16px 0}}
+#s5{overflow:hidden}
+#s5 .nps-map{height:300px;width:100%;max-width:100%;border-radius:12px;overflow:hidden;background:#0b0f13;position:relative;z-index:0}
+@media(min-width:800px){#s5 .nps-map{height:480px}}
+#s5 .leaflet-container{font:12px/1.35 Pretendard,system-ui,sans-serif;background:#0b0f13}
+#s5 .leaflet-control-attribution{font-size:11px!important;line-height:1.35!important;background:rgba(0,0,0,.55)!important;color:#9aa5b1!important;max-width:68%;white-space:normal}
+#s5 .leaflet-control-attribution a{color:#b8c2cc!important;font-size:11px}
+#s5 .leaflet-bar a{background:#11171de6;color:#e8eef5;border-color:#2a3540;width:44px;height:44px;line-height:44px;font-size:18px}
+#s5 .leaflet-bar a:hover{background:#1a232e}
+#s5 .map-home{display:inline-flex;align-items:center;justify-content:center;gap:4px;box-sizing:border-box;min-width:44px;min-height:44px;height:44px;margin:0;padding:0 10px;border-radius:10px;border:1px solid #2a3540;background:#11171de6;color:#e8eef5;font:700 13px/1 Pretendard,system-ui,sans-serif;white-space:nowrap;cursor:pointer}
+#s5 .map-home.is-home{opacity:.55}
+#s5 .leaflet-tooltip.klab{background:rgba(8,11,15,.88)!important;color:#f4f8fc!important;font-size:12px!important;font-weight:700!important;line-height:1.35!important;padding:1px 5px!important;border:0!important;border-radius:5px!important;box-shadow:none!important}
+#s5 .leaflet-tooltip.klab::before{display:none}
+#s5 button.row{width:100%;max-width:100%;background:none;color:inherit;font:inherit;text-align:left;border:0;border-top:1px solid #222b36;cursor:pointer;border-radius:0}
+#s5 button.row.on{background:#0f141b}
+#s5 .pick{margin-top:10px}
 </style>
 </head>
 <body data-page="nps">
@@ -55,13 +71,21 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
   </div>
   <section id="s3"><h2>많이 늘린 주식 · 많이 줄인 주식</h2><div id="chg"></div></section>
   <section id="s4"><h2>국내 주식</h2><div id="kr"></div></section>
+  <section id="s5">
+    <h2>우리 지역 회사에 국민연금 돈이 얼마나 들어갔나</h2>
+    <p class="sub">국민연금이 우리나라 회사 주식을 산 돈을, 그 회사의 중심 사무실이 있는 지역으로 모았어요.</p>
+    <p class="note">회사 본사가 있는 곳 기준이에요. 공장이나 일하는 사람은 다른 곳에 있을 수 있어요.</p>
+    <div id="npsMapBox"></div>
+  </section>
   <div id="nps-fun" class="fun-sec"></div>
   <p class="prin-link"><a href="principles.html">중립성 원칙 + 정정 요청</a></p>
   <footer>
     <span class="fun-foot"><a href="principles.html">중립성 원칙 + 정정 요청</a><button type="button" class="fun-donate" disabled>후원하기 · 준비 중</button></span>
   </footer>
 </main>
+<script src="assets/vendor/leaflet/leaflet.js?v=202610247400"></script>
 <script src="assets/nps.js?v=202610246800"></script>
+<script src="assets/nps-map.js?v=202610247400"></script>
 <script src="assets/fun.js?v=202610247100"></script>
 <script src="assets/nav.js?v=202610247300"></script>
 </body>
