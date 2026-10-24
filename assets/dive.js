@@ -124,7 +124,7 @@
       const p = ln.getElement();
       if (p && !RM) { /* 확대 후에도 끊기지 않게 길이를 1로 정규화(줌마다 d가 바뀌어도 비율 유지) */ p.setAttribute('pathLength', '1'); p.style.strokeDasharray = '1'; p.style.strokeDashoffset = '1'; p.style.transition = `stroke-dashoffset .9s ease-out ${i * 0.12}s`; p.addEventListener('transitionend', () => { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; p.style.transition = ''; }, {once: true}); requestAnimationFrame(() => requestAnimationFrame(() => (p.style.strokeDashoffset = '0'))); }
       arcs.push({pts, w, col, n: Math.max(1, Math.round(1 + 5 * Math.sqrt(f.amount / mx))), d: i * 0.12});
-      L.circleMarker(toLL(b), {radius: 3 + w / 3, color: col, weight: 1, fillOpacity: 0.9, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
+      L.circleMarker(toLL(b), {radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
       L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + ' ' + krw(f.amount))).addTo(gF);
     });
     const oc = BY[slug] || {}; L.circleMarker(toLL(a), {radius: 11, color: '#ffd60a', weight: 2.5, fill: false, interactive: false, className: 'dv-ring'}).addTo(gF);
@@ -242,7 +242,7 @@
     L_.forEach(([c, v]) => homeLab(c, v)); };
   window.__dvCat = (k) => { CAT = k || '전체'; const mx = Math.max(1, ...cities.map((c) => TOT(c.slug)));
     dots.forEach((m, s) => { const v = TOT(s); m.setRadius(v ? 4 + 13 * Math.sqrt(v / mx) : 3); m.setStyle({fillOpacity: v ? 0.5 : 0.1, opacity: v ? 1 : 0.3}); });
-    homeLabels(); if (!cur) L0(true); setTimeout(declutter, 60); };
+    homeLabels(); if (!cur) L0(true); else dim(cur); setTimeout(declutter, 60); };
   if (window.__mtCat && window.__mtCat !== '전체') setTimeout(() => window.__dvCat(window.__mtCat), 0);
   // 분야 TOP 5 시 카드 (공식 데이터: by_cat·n_cat, 행사대행은 시 계약 행에서 계산)
   // 개인 이름처럼 보이는 업체명(법인·상호 표지 없음, 흔한 성씨+1~3자)은 '개인사업자'로
@@ -285,9 +285,13 @@
   const PV = {'경상남도': '경남', '경상북도': '경북', '전라남도': '전남', '전라북도': '전북', '전북특별자치도': '전북', '충청남도': '충남', '충청북도': '충북', '강원도': '강원', '강원특별자치도': '강원', '제주특별자치도': '제주', '경기도': '경기', '세종특별자치시': '세종'};
   const nmR = (s) => { const a = String(s || '').trim().split(/\s+/); if (!a[0]) return ''; a[0] = PV[a[0]] || a[0].replace(/(특별시|광역시)$/, ''); return a.join(' '); };
   // 기간을 고르면 시 계약 원장(data/city/*.json rows)에서 흐름·외지·업체를 다시 계산
+  const LOC = {};
   const reFlow = (slug, rows) => { const c = BY[slug], o = fl.cities[slug] || {}; const P = {}; for (const k in fl.cities) for (const x of fl.cities[k].flows || []) if (x.p) P[x.to] = x.p;
-    const ct = String(c && c.name || o.name || '').trim().split(/\s+/).pop(); const m = {}; let known = 0, local = 0, total = 0, count = 0;
-    for (const r of rows || []) { const a = +r.amount || 0; total += a; count++; const to = nmR(r.vregion); if (!to) continue; known += a; const t2 = to.split(' ')[1] || ''; const lo = !!ct && (t2 === ct || t2.startsWith(ct)); if (lo) local += a;
+    const ct = String(c && c.name || o.name || '').trim().split(/\s+/).pop(); const ctb = ct.replace(/(특별시|광역시)$/, ''), MET = ctb !== ct || /^(서울|부산|대구|인천|광주|대전|울산|세종)$/.test(String(o.name || ''));
+    // 원래 흐름(flows.json)에서 '우리 시 업체'로 표시된 곳은 그대로 우리 시로 (광역시는 '부산 강서구'처럼 구 이름이 둘째라 이름 비교로는 못 맞춤)
+    const LS = LOC[slug] || (LOC[slug] = new Set([...(o.flows || []), ...Object.values(o.by_cat || {}).flatMap((b) => b.flows || [])].filter((x) => x.local).map((x) => x.to)));
+    const m = {}; let known = 0, local = 0, total = 0, count = 0;
+    for (const r of rows || []) { const a = +r.amount || 0; total += a; count++; const to = nmR(r.vregion); if (!to) continue; known += a; const t2 = to.split(' ')[1] || ''; const lo = LS.has(to) || (!!ct && (t2 === ct || t2.startsWith(ct) || (MET && to.split(' ')[0] === ctb))); if (lo) local += a;
       const g = m[to] || (m[to] = {to, p: P[to] || P[to.split(' ').slice(0, 2).join(' ')] || null, amount: 0, count: 0, local: lo, _v: {}}); g.amount += a; g.count++;
       const vid = r.bh || r.vendor; const v = g._v[vid] || (g._v[vid] = {id: r.bh || '', name: r.vendor || '', amount: 0, count: 0}); v.amount += a; v.count++; }
     const flows = Object.values(m).map((g) => { g.vendors = Object.values(g._v).sort((a, b) => b.amount - a.amount); delete g._v; return g; }).sort((a, b) => b.amount - a.amount);
