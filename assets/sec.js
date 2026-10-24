@@ -14,22 +14,23 @@ LOAD('data/sec_sole.json').then(d=>{
   $('s-upd').textContent=d.updated.slice(5,16).replace('T',' ')+' KST';
   // 카운터
   let t0=performance.now();const tick=t=>{const p=Math.min(1,(t-t0)/1200);$('c-sum').textContent=W(d.sum*p);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);
-  $('c-meta').textContent=`최근 30일(${d.period[0]}~${d.period[1]}) · 85개 시 · ${d.n.toLocaleString()}건 · 같은 기간 새 계약 ${d.n_all.toLocaleString()}건 중 ${Math.round(d.n/d.n_all*100)}% (건수 기준) · ${SRC}`;
+  const md=x=>`${+x.slice(5,7)}월 ${+x.slice(8,10)}일`,per=`${md(d.period[0])}~${md(d.period[1])}`;document.querySelectorAll('.sole-per').forEach(e=>e.textContent=`⏱ ${per} 기준 · 기간 슬라이더와 무관`);
+  $('c-meta').textContent=`${per} · 85개 시 · ${d.n.toLocaleString()}건 · 같은 기간 새 계약 ${d.n_all.toLocaleString()}건 중 ${Math.round(d.n/d.n_all*100)}% (건수 기준) · ${SRC}`;
   // 터미널 피드
-  const lines=['> 85개 시 계약 스캔 중…',`> 한 업체랑만 맺은 계약(경쟁 없이) ${d.n.toLocaleString()}건 확인`,...d.flags.slice(0,5).map((f,i)=>`> [#${String(i+1).padStart(3,'0')}] ${f.cname} · ${f.n}건 묶음 ${W(f.sum)} 발견`),`> 데이터상 이상 징후 ${d.flag_n}건 · 기관 설명 확인 전`,'> TRACKING… █'];
+  const lines=['> 85개 시 계약 스캔 중…',`> 공고 없이 바로 맺은 수의계약 ${d.n.toLocaleString()}건 확인`,...d.flags.slice(0,5).map((f,i)=>`> [#${String(i+1).padStart(3,'0')}] ${f.cname} · ${f.n}건 묶음 ${W(f.sum)} 발견`),`> 데이터상 이상 징후 ${d.flag_n}건 · 기관 설명 확인 전`,'> TRACKING… █'];
   let i=0;const feed=$('feed');feed.textContent='';const step=()=>{if(i<lines.length){feed.textContent+=lines[i++]+'\n';setTimeout(step,450)}};step();
   // 오늘의 추적 대상
   if(d.flags.length){const f=d.flags[new Date().getDate()%Math.min(d.flags.length,7)];
     $('spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(f.inst)}</b> → <b>${E(f.vendor)}</b><br>30일 안에 ${f.n}건 · 합계 ${W(f.sum)}<p class="src">${SRC}</p></div>`}
   // 추적 파일
   $('cases').innerHTML=d.flags.map((f,i)=>`<div class="case"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 추적 파일 #${String(i+1).padStart(3,'0')}</div>
-   <h3>${E(f.cname)} · ${f.n}건, 한 업체랑만 맺은 계약 묶음</h3>
+   <h3>${E(f.cname)} · ${f.n}건, 공고 없이 바로 맺은 수의계약 묶음</h3>
    <div class="trail"><b>${E(f.inst)}</b><i></i><b>${E(f.vendor)}</b>${f.vregion?`<small>(${E(f.vregion.split(' ').slice(0,2).join(' '))})</small>`:''}</div>
    <div class="amt">${W(f.sum)}</div><small>${f.from} ~ ${f.to} · 같은 업체 여러 건 합계 2천만원 초과</small>
    <ul>${f.items.map(x=>`<li>${x.d} ${E(x.t)} · ${W(x.a)} ${x.u?`<a class="orig" href="${E(x.u)}" target="_blank" rel="noopener">원문</a>`:''}</li>`).join('')}</ul>
    <p class="steps">수집 ✓ → 분석 ✓ → 기관 설명 확인 전</p><p class="src">데이터상 이상 징후 · 위법 판단 아님 · ${SRC}</p></div>`).join('')||'<p class="sub">아직 없습니다.</p>';
   // 비율
-  $('share').innerHTML=d.share.slice(0,10).map(s=>{const p=Math.round(s.sn/s.n*100);return `<div class="row"><b>${E(s.name)}</b> 새 계약 ${s.n}건 중 한 업체랑만 맺은 계약 ${s.sn}건 (${p}%)<div class="bar"><b style="width:${p}%"></b></div></div>`}).join('')+`<p class="src">나라장터 공개 계약 기준(작은 금액·급한 일은 경쟁 없이 계약해도 법에서 허용) · ${SRC}</p>`;
+  $('share').innerHTML=d.share.slice(0,10).map(s=>{const p=Math.round(s.sn/s.n*100);return `<div class="row"><b>${E(s.name)}</b> 새 계약 ${s.n}건 중 공고 없이 바로 맺은 수의계약 ${s.sn}건 (${p}%)<div class="bar"><b style="width:${p}%"></b></div></div>`}).join('')+`<p class="src">나라장터 공개 계약 기준(작은 금액·급한 일은 경쟁 없이 계약해도 법에서 허용) · ${SRC}</p>`;
   // 비용 비교 + 추정
   $('comp').innerHTML=(d.comp||[]).map((c,i)=>`<div class="rcp"><div class="no">🧾 영수증 #${String(i+1).padStart(3,'0')} · '${E(c.kw)}' 계약</div>
    <div class="l"><span>${E(c.city)} 중간 가격 (${c.cn}건)${c.small?' <span class="tag">건수가 적음</span>':''}</span><b>${W(c.cmed)}</b></div>
@@ -38,7 +39,7 @@ LOAD('data/sec_sole.json').then(d=>{
    <div class="l"><span>전국 중간 가격으로 샀다면 아낄 수 있었던 돈 <span class="tag">추정</span></span><span class="save">${W(c.save)}</span></div>
    <p class="calc">계산 방법: ${E(c.city)}의 계약 금액에서 ‘전국 중간 가격 × ${c.cn}건’을 뺐어요. 중간 가격보다 싸게 산 계약도 빼지 않고 그대로 넣었어요.</p>
    <details class="est"><summary>AI 추산 적정 비용 <small>(공개 통계로 계산한 참고 범위)</small> · 추정치 · 공식 금액 아님 · 산출 근거 보기</summary>
-   범위 ${W(c.p25)} ~ ${W(c.p75)} (전국 비슷한 계약의 하위 25%~상위 25%)<br>기준: 제목에 '${E(c.kw)}'가 들어간 한 업체랑만 맺은 계약 ${c.n}건(기간 안에 처음 맺은 계약만, 기간 전 계약을 바꾼 것과 1년·반년 동안 값 정해 놓고 계속 사는 계약은 뺌, 모든 시 같은 기준)의 중간 가격 ${W(c.med)}<br>${E(c.city)} 중간 가격과의 차이: ${W(c.cmed-c.med)} / 건<br>한계: 면적·수량·기간을 모르기 때문에 큰 일이면 당연히 비쌉니다. 위법 판단이 아닙니다.</details>
+   범위 ${W(c.p25)} ~ ${W(c.p75)} (전국 비슷한 계약의 하위 25%~상위 25%)<br>기준: 제목에 '${E(c.kw)}'가 들어간 공고 없이 바로 맺은 수의계약 ${c.n}건(기간 안에 처음 맺은 계약만, 기간 전 계약을 바꾼 것과 1년·반년 동안 값 정해 놓고 계속 사는 계약은 뺌, 모든 시 같은 기준)의 중간 가격 ${W(c.med)}<br>${E(c.city)} 중간 가격과의 차이: ${W(c.cmed-c.med)} / 건<br>한계: 면적·수량·기간을 모르기 때문에 큰 일이면 당연히 비쌉니다. 위법 판단이 아닙니다.</details>
    ${(c.ids||[]).length?`<details class="est"><summary>${E(c.city)} 계약 ${c.ids.length}건 보기 (계약번호·차수)</summary>${c.ids.map(x=>`${x.u?`<a href="${E(x.u)}" target="_blank" rel="noopener">`:''}${E(x.no||'')} · ${E(x.ord||'')}차 · ${W(x.a)}${x.u?'</a>':''}<br><small>${E(x.t)}</small>`).join('<br>')}</details>`:''}
    <p class="src">${SRC}</p></div>`).join('');
   EMPTY(['cases','share','comp']);
