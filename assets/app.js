@@ -472,8 +472,15 @@ function stats(city, rows) {
 
 async function cityPage() {
   const slug = new URLSearchParams(location.search).get('c');
+  const peek = $('#mappeek');
+  if (peek && slug) {
+    peek.hidden = false;
+    peek.onclick = () => { if (location.hash === '#map') dispatchEvent(new HashChangeEvent('hashchange')); else location.hash = '#map'; };
+    if (window.moneyPeek) window.moneyPeek(peek, slug);
+  }
   let d;
   try { d = await getJSON('data/city/' + slug + '.json'); } catch (e) {
+    if (peek) peek.hidden = true;
     $('#title').textContent = '없는 지역입니다';
     $('#lede').replaceChildren('주소가 바뀌었거나 아직 추적하지 않는 곳이에요. ', Object.assign(el('a', '', '홈으로 가기 ›'), {href: './'}));
     document.querySelectorAll('.stats, .sec').forEach((s) => s.remove()); return;

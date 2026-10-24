@@ -223,13 +223,48 @@
       else seen.push(r);
     }
   };
-  let REST = {n: 0, amt: 0};
-  map.on('zoomend moveend resize', () => setTimeout(declutter, 40));
+  let REST = {n: 0, amt: 0}, flowRefs = [], locMk = null;
+  const seatBadge = (map, mk) => {
+    const el = mk && mk.getElement && mk.getElement();
+    const span = el && el.querySelector('.loc-badge');
+    if (!span) return;
+    const root = map.getContainer();
+    const home = root.querySelector('.map-home');
+    const hit = (a, b) => !!(b && a.width > 2 && b.width > 2 && a.right > b.left + 1 && a.left < b.right - 1 && a.bottom > b.top + 1 && a.top < b.bottom - 1);
+    const inside = (a, box) => a.left >= box.left + 4 && a.right <= box.right - 4 && a.top >= box.top + 4 && a.bottom <= box.bottom - 4;
+    const score = (cls) => {
+      span.classList.remove('r', 'l'); span.classList.add(cls);
+      const a = span.getBoundingClientRect(), box = root.getBoundingClientRect();
+      return {off: !inside(a, box), cover: hit(a, home && home.getBoundingClientRect())};
+    };
+    const R = score('r'), Lft = score('l');
+    const pick = (!R.cover && !R.off) ? 'r' : (!Lft.cover && !Lft.off) ? 'l' : (R.cover && !Lft.cover) ? 'l' : 'r';
+    span.classList.remove('r', 'l'); span.classList.add(pick);
+  };
+  const sinkLocal = () => {
+    if (locMk) { locMk.remove(); locMk = null; }
+    if (!flowRefs.length) return;
+    const o = map.latLngToContainerPoint(toLL(flowRefs[0].a));
+    const buried = [];
+    for (const r of flowRefs) {
+      const hide = !!(r.f.local && o.distanceTo(map.latLngToContainerPoint(toLL(r.f.p))) < 28);
+      r.line.setStyle({opacity: hide ? 0 : 0.85});
+      r.dot.setStyle({opacity: hide ? 0 : 1, fillOpacity: hide ? 0 : 1});
+      const el = r.tip && r.tip.getElement && r.tip.getElement(); if (el) el.classList.toggle('dv-bury', hide);
+      if (hide) buried.push(r.f);
+    }
+    if (!buried.length) return;
+    const sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
+    const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>우리 시 ${krw(sum)}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
+    locMk = L.marker(toLL(flowRefs[0].a), {pane: 'markerPane', interactive: false, keyboard: false, icon, zIndexOffset: 800}).addTo(gF);
+    const seat = () => seatBadge(map, locMk); seat(); setTimeout(seat, 40);
+  };
+  map.on('zoomend moveend resize', () => { setTimeout(declutter, 40); setTimeout(sinkLocal, 70); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(declutter, 60));
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
   // 세금 길: 도시 → 업체 소재지 선 그리기
   const drawFlows = (slug, hold) => {
-    gF.clearLayers(); FX.set([]); REST = {n: 0, amt: 0}; const c = fl.cities[slug]; if (!c || !c.flows.length) return; const arcs = [];
+    gF.clearLayers(); flowRefs = []; locMk = null; FX.set([]); REST = {n: 0, amt: 0}; const c = fl.cities[slug]; if (!c || !c.flows.length) return; const arcs = [];
     const a = c.p, top = c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10), mx = top[0] ? top[0].amount : 1;
     { const inTop = new Set(top), others = c.flows.filter((f) => !inTop.has(f)), sh = top.reduce((t, f) => t + f.amount, 0), unk = Math.max(0, (c.total || 0) - (c.known || 0));
       REST = {n: others.length, amt: others.reduce((t, f) => t + f.amount, 0) + unk, unk: unk > 0}; if (REST.amt > 0 && !REST.n) REST.n = 1; if (REST.amt <= 0) REST.n = 0;
@@ -240,15 +275,16 @@
       for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mxp + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * myp + t * t * b[1]]));
       const w = 1.5 + 7 * Math.sqrt(f.amount / mx), col = f.local ? '#0a84ff' : '#ff9f0a';
       const ln = L.polyline(pts, {color: col, weight: w, opacity: 0.85, interactive: false, className: 'dv-line'}).addTo(gF);
+      const dot = L.circleMarker(toLL(b), {pane: 'dvTop', renderer: gTop, radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
+      const tip = L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + ' ' + krw(f.amount))).addTo(gF);
+      flowRefs.push({f, a, line: ln, dot, tip});
       const p = ln.getElement();
       if (p && !RM) { /* 확대 후에도 끊기지 않게 길이를 1로 정규화(줌마다 d가 바뀌어도 비율 유지) */ p.setAttribute('pathLength', '1'); p.style.strokeDasharray = '1'; p.style.strokeDashoffset = '1'; p.style.transition = `stroke-dashoffset .9s ease-out ${i * 0.12}s`; p.addEventListener('transitionend', () => { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; p.style.transition = ''; }, {once: true}); requestAnimationFrame(() => requestAnimationFrame(() => (p.style.strokeDashoffset = '0'))); }
-      arcs.push({pts, w, col, n: Math.max(1, Math.round(1 + 5 * Math.sqrt(f.amount / mx))), d: i * 0.12});
-      L.circleMarker(toLL(b), {pane: 'dvTop', renderer: gTop, radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
-      L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + ' ' + krw(f.amount))).addTo(gF);
+      if (Math.hypot(b[0] - a[0], b[1] - a[1]) >= 18) arcs.push({pts, w, col, n: Math.max(1, Math.round(1 + 5 * Math.sqrt(f.amount / mx))), d: i * 0.12});
     });
     const oc = BY[slug] || {}; L.circleMarker(toLL(a), {pane: 'dvTop', renderer: gTop, radius: 15, color: '#0b0f13', weight: 6, opacity: 0.7, fill: false, interactive: false, className: 'dv-ring-bg'}).addTo(gF); L.circleMarker(toLL(a), {pane: 'dvTop', renderer: gTop, radius: 15, color: '#ffd60a', weight: 3, fill: false, interactive: false, className: 'dv-ring'}).addTo(gF);
     L.tooltip({permanent: true, direction: 'top', className: 'klab dv-org', offset: [0, -10], interactive: false}).setLatLng(toLL(a)).setContent(esc((oc.name || '') + ' (일을 맡긴 곳)')).addTo(gF);
-    setTimeout(declutter, 50); FX.set(arcs, hold);
+    setTimeout(declutter, 50); setTimeout(sinkLocal, 80); FX.set(arcs, hold);
   };
   // 돈 흐름 입자 (canvas · 도시 화면에서만)
   const FX = (() => { const pane = map.createPane('fx'); pane.style.zIndex = 450; pane.style.pointerEvents = 'none'; const cv = document.createElement('canvas'); cv.className = 'dv-fx'; cv.setAttribute('aria-hidden', 'true'); pane.append(cv); let held = false;
