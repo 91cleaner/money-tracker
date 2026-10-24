@@ -57,19 +57,87 @@ const showC=c=>{const ids=[...(cnt[c]||[])];const box=$('cp');
  box.innerHTML=`<h3>${esc(c)} · 신고 ${ids.length}건</h3>`+(ACOST[c]||'')+ids.map(id=>{const ts=byT[id],t=ts[0];return `<div class="trip"><b>${esc(t.dates)}</b> ${t.dest_inferred?'<span class="tag y">목적 문구로 추정</span>':''}<br>
  <span class="sub">의원:</span> ${ts.map(x=>esc(x.name)+'<span class="sub">('+esc(x.party)+')</span>').join(', ')}<br>
  <span class="p">${esc(t.purpose)}</span><br>${[...new Set(ts.map(x=>x.funder||'적힌 곳 없음'))].map(f=>`<span class="tag">비용 낸 곳: ${esc(f)}</span>`).join('')}<span class="tag">신고 당시 결과보고서 ${ts.some(x=>x.report==='유')?'유':'무'}</span><br><span class="sub">신고서 첫 번째 기재 의원: ${esc((ts.find(x=>x.is_leader)||t).name)}</span> ${S(t.src,'열린국회정보')}</div>`}).join('');
- box.scrollIntoView({behavior:'smooth',block:'nearest'});};
-try{const m=L.map('tmap',{zoomControl:false,worldCopyJump:false}).setView([30,130],1);
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ requestAnimationFrame(()=>box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}));};
+try{const m=L.map('tmap',{zoomControl:false,worldCopyJump:false,zoomSnap:.25,minZoom:0,maxZoom:6});
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{attribution:'© Esri',maxZoom:6}).addTo(m);
-const se=[37.5319,126.914];const cmax=Math.max(...Object.values(cnt).map(x=>x.size));
+const se=[37.5319,126.914];const cmax=Math.max(1,...Object.values(cnt).map(x=>x.size));
 const arc=(a,b)=>{const P=[],mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=b[1]-a[1],dy=b[0]-a[0],k=.18;const c=[mx+dx*k,my-dy*k];for(let i=0;i<=24;i++){const t=i/24,u=1-t;P.push([u*u*a[0]+2*u*t*c[0]+t*t*b[0],u*u*a[1]+2*u*t*c[1]+t*t*b[1]]);}return P;};
-const pts=[se];
-for(const [c,ids] of Object.entries(cnt).sort((x,y)=>x[1].size-y[1].size)){const p=C[c];if(!p)continue;pts.push(p);const n=ids.size,w=1.5+n/cmax*7;
- L.polyline(arc(se,p),{color:'#ffb020',weight:w,opacity:.25,interactive:false}).addTo(m);
- const fl=L.polyline(arc(se,p),{color:'#ffd27a',weight:Math.max(1.5,w*.6),opacity:.95,className:'nflow'}).addTo(m);
- const mk=L.circleMarker(p,{radius:5+n/cmax*8,color:'#ffb020',weight:2,fillColor:'#ffb020',fillOpacity:.8}).addTo(m).bindTooltip(`${c} ${n}건`);
- [fl,mk].forEach(o=>o.on('click',()=>showC(c)));}
-L.circleMarker(se,{radius:7,color:'#fff',weight:2,fillColor:'#4da3ff',fillOpacity:1}).addTo(m).bindTooltip('여의도 국회',{permanent:true,direction:'bottom',className:'ntip'});
-m.fitBounds(pts,{padding:[10,10]});}catch(e){console.warn(e);$('tmap').remove();}
+const pts=[],labs=[],dots=[];
+const tag=(layer,name)=>{const el=layer.getElement&&layer.getElement();if(el)el.setAttribute('data-c',name);};
+for(const [c,ids] of Object.entries(cnt).sort((x,y)=>x[1].size-y[1].size)){const p=C[c];if(!p)continue;pts.push(p);const n=ids.size,w=2.4+n/cmax*5,line=arc(se,p);
+ L.polyline(line,{color:'#ffb020',weight:w+3,opacity:.34,interactive:false,lineCap:'round',lineJoin:'round'}).addTo(m);
+ L.polyline(line,{color:'#ffb020',weight:w,opacity:.94,interactive:false,lineCap:'round',lineJoin:'round'}).addTo(m);
+ L.polyline(line,{color:'#ffe7b8',weight:Math.max(1.8,w*.4),opacity:1,className:'nflow',interactive:false,lineCap:'round'}).addTo(m);
+ const mk=L.circleMarker(p,{radius:Math.max(7,4+n/cmax*8),color:'#1a1408',weight:1.5,fillColor:'#ffb020',fillOpacity:.96}).addTo(m);
+ const hit=L.circleMarker(p,{radius:16,color:'transparent',weight:0,fillColor:'#ffb020',fillOpacity:0}).addTo(m);
+ const go=()=>showC(c);
+ mk.on('click',go);hit.on('click',go);
+ dots.push({c,mk,hit,ll:L.latLng(p[0],p[1])});
+ const tip=L.tooltip({permanent:true,direction:'top',className:'clab',offset:[0,-4],interactive:true,opacity:1}).setLatLng(p).setContent(esc(c)).addTo(m);
+ tip._n=n;tip._c=c;labs.push(tip);}
+const seMk=L.circleMarker(se,{radius:7,color:'#fff',weight:2,fillColor:'#4da3ff',fillOpacity:1,className:'seoul-dot'}).addTo(m);
+seMk.bindTooltip('여의도 국회',{permanent:false,direction:'top',className:'ntip',opacity:1});
+seMk.on('click',()=>seMk.closeTooltip());
+if(L.Browser.mobile)seMk.on('tooltipopen',()=>seMk.closeTooltip());
+// 아메리카 경도는 태평양 쪽(+360)이라 처음 화면은 아시아·유럽이 퍼지게 그 구간을 맞춘다.
+const pad=L.point(12,24);
+const fitOpts={padding:[12,24],maxZoom:4,animate:false};
+const base=L.latLngBounds(pts.filter(p=>p[1]>-30&&p[1]<170).concat([se]));
+const fit=()=>{
+ m.invalidateSize(false);
+ if(!base.isValid())return;
+ m.fitBounds(base,fitOpts);
+ const z=m.getZoom();
+ let b=L.latLngBounds(base.getSouthWest(),base.getNorthEast());
+ for(const p of pts.filter(p=>p[1]>=170).sort((a,c)=>a[1]-c[1])){
+  const b2=L.latLngBounds(b.getSouthWest(),b.getNorthEast()).extend(p);
+  if(m.getBoundsZoom(b2,false,pad.multiplyBy(2))<z-.01)break;
+  b=b2;
+ }
+ m.fitBounds(b,fitOpts);
+};
+const arm=()=>{
+ dots.forEach(d=>{tag(d.mk,d.c);tag(d.hit,d.c);});
+ labs.forEach(t=>{
+  const el=t.getElement();if(!el||el.dataset.bound)return;
+  el.dataset.bound='1';el.dataset.c=t._c;
+  el.addEventListener('click',ev=>{ev.preventDefault();ev.stopPropagation();showC(t._c);});
+ });
+};
+fit();arm();
+const declutter=()=>{
+ const box=$('tmap');if(!box)return;
+ const bb=box.getBoundingClientRect(),inset=4;
+ const clash=(a,b)=>!(a.right+3<b.left||a.left-3>b.right||a.bottom+3<b.top||a.top-3>b.bottom);
+ const seen=[];
+ const block=el=>{if(!el)return;const r=el.getBoundingClientRect();if(r.width<2||r.height<2)return;seen.push({left:r.left-3,right:r.right+3,top:r.top-3,bottom:r.bottom+3});};
+ block(box.querySelector('.leaflet-control-attribution'));
+ block(box.querySelector('.seoul-dot'));
+ const tries=[[0,-14],[0,12],[16,-8],[-16,-8],[0,-30],[0,26],[30,0],[-30,0],[20,18],[-20,18],[0,-46],[0,40]];
+ labs.slice().sort((a,b)=>b._n-a._n).forEach(t=>{
+  const el=t.getElement();if(!el)return;
+  el.style.marginLeft='0px';el.style.marginTop='0px';el.style.visibility='hidden';
+  if(!m.getBounds().contains(t.getLatLng()))return;
+  const r0=el.getBoundingClientRect();if(r0.width<2||r0.height<2)return;
+  for(const [dx,dy] of tries){
+   const r={left:r0.left+dx,right:r0.right+dx,top:r0.top+dy,bottom:r0.bottom+dy};
+   if(r.left<bb.left+inset||r.right>bb.right-inset||r.top<bb.top+inset||r.bottom>bb.bottom-inset)continue;
+   if(seen.some(q=>clash(r,q)))continue;
+   el.style.marginLeft=dx+'px';el.style.marginTop=dy+'px';el.style.visibility='';
+   seen.push(r);return;
+  }
+ });
+};
+m.on('zoomend moveend',()=>requestAnimationFrame(()=>{declutter();arm();}));
+m.on('click',e=>{
+ let best=null,bd=22;
+ for(const d of dots){const dist=e.containerPoint.distanceTo(m.latLngToContainerPoint(d.ll));if(dist<bd){bd=dist;best=d.c;}}
+ if(best)showC(best);
+});
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{fit();arm();},120);});
+setTimeout(()=>{declutter();arm();},60);setTimeout(()=>{declutter();arm();},400);
+}catch(e){console.warn(e);$('tmap').remove();}
 
 const show=q=>{q=q.trim();if(!q){$('qr').innerHTML='';return;}
  const ts=trw.trips.filter(t=>t.name.includes(q));const s=tm.find(r=>r.name===q);
