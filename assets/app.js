@@ -99,7 +99,7 @@ function chips(box, cats, onPick) {
 }
 
 // ---------- 전국 ----------
-const MINWAGE = 10320; // 2026년 최저임금(고용노동부 고시 제2025-41호)
+const MINWAGE = 10320; // 2026년 최저임금(고용노동부 고시 제2025-47호(2025.8.5))
 const whenNear = (node, fn) => {
   if (!('IntersectionObserver' in window)) return fn();
   let done = false; const io = new IntersectionObserver((es) => { if (!done && es.some((e) => e.isIntersecting)) { done = true; io.disconnect(); fn(); } }, {rootMargin: '400px'});

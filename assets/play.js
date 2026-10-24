@@ -1,4 +1,4 @@
-// 홈 지도 바로 아래 [지도 · 퀴즈 · 게임] 전환 + 게임 1: 우리 시 축제 예산 써보기 (neal.fun/spend 패러디)
+// 홈 지도 바로 아래 [지도 · 퀴즈 · 게임] 전환 + 게임 1: 우리 시 행사·축제 예산 써보기 (neal.fun/spend 패러디)
 // 숫자는 data/sec_fest.json ratio(2026 당초예산 행사·축제 편성액)만 사용. 물건 가격은 출처 있는 것만, 없으면 '예시 가격'.
 (() => {
   const dive = document.getElementById('dive'); if (!dive) return;
@@ -23,14 +23,14 @@
     document.querySelectorAll('.tabbar a').forEach((a) => { const k = a.dataset.k; if (k === 'quiz' || k === 'play' || k === 'home' || k === 'map') a.classList.toggle('on', k === m || (k === 'home' && m === 'map' && location.hash !== '#map') || (k === 'map' && location.hash === '#map')); }); };
   addEventListener('hashchange', () => apply(true)); addEventListener('popstate', () => apply(false));
   // ---- 게임 섹션 ----
-  const fg = document.createElement('section'); fg.className = 'sec gm fg'; fg.id = 'fgame'; fg.setAttribute('aria-label', '우리 시 축제 예산 써보기');
+  const fg = document.createElement('section'); fg.className = 'sec gm fg'; fg.id = 'fgame'; fg.setAttribute('aria-label', '우리 시 행사·축제 예산 써보기');
   const g0 = document.getElementById('game'); (g0 || dive).after(fg);
   const ITEMS = [
-    {k: 'fest', n: '전국 중간 크기 축제 하나 더', p: 0, src: '2024년 행사·축제 원가 중간값 · 지방재정365'},
+    {k: 'fest', n: '전국 중간 크기 축제 하나 더', p: 0, src: '2024년 축제 원가자료 622건 중간값(지방재정365 자료로 우리 시 돈 추적기가 계산)'},
     {k: 'wage', n: '최저임금 한 달 월급', p: 2156880, src: '2026년 최저임금 월 환산액(주 40시간) · 고용노동부 고시'},
     {k: 'hour', n: '알바 1시간', p: 10320, src: '2026년 최저시급 · 고용노동부 고시'},
-    {k: 'bus', n: '시내버스 한 번', p: 1500, src: '서울 시내버스 카드 요금 · 서울시'},
-    {k: 'mail', n: '편지 한 통 보내기', p: 430, src: '보통우편 규격 · 우정사업본부'},
+    {k: 'bus', n: '시내버스 한 번', p: 1500, src: '서울 시내버스(간선·지선) 카드 요금 · 서울시'},
+    {k: 'mail', n: '편지 한 통 보내기', p: 500, src: '규격 보통우편(25g) · 우정사업본부, 2026.7.1~'},
     {k: 'ebus', n: '전기 시내버스 한 대', p: 3e8, ex: 1},
     {k: 'car', n: '경차 한 대', p: 1.5e7, ex: 1},
     {k: 'lap', n: '노트북 한 대', p: 1.5e6, ex: 1},
@@ -46,8 +46,8 @@
     const rows = (D.ratio || []).filter((r) => r.fest > 0).sort((a, b) => a.cname.localeCompare(b.cname, 'ko'));
     const q = new URLSearchParams(location.search).get('c'); const nm = (document.querySelector('.dv-org') || {}).textContent || '';
     C = rows.find((r) => q && nm && nm.startsWith(r.cname.split(' ').pop())) || rows.find((r) => r.cname === '경남 진주시') || rows[0];
-    fg.innerHTML = `<h2 class="fg-h">우리 시 축제 예산 써보기</h2>
-      <p class="fg-par">neal.fun의 'Spend Bill Gates' Money'를 따라 만든 <b>장난 게임</b>이에요. 진짜 돈을 쓰는 곳이 아니고, 축제 예산이 얼마나 큰지 감을 잡아 보는 용도예요.</p>
+    fg.innerHTML = `<h2 class="fg-h">우리 시 행사·축제 예산 써보기</h2>
+      <p class="fg-par">neal.fun의 'Spend Bill Gates' Money'를 따라 만든 <b>장난 게임</b>이에요. 진짜 돈을 쓰는 곳이 아니고, 행사·축제 예산이 얼마나 큰지 감을 잡아 보는 용도예요.</p>
       <label class="fg-sel">시 고르기 <select>${rows.map((r, i) => `<option value="${i}"${r === C ? ' selected' : ''}>${esc(r.cname)}</option>`).join('')}</select></label>
       <div class="fg-top" aria-live="polite"><p class="fg-k"></p><p class="fg-v"></p><p class="fg-bar"><i></i></p><p class="fg-note">${NOTE}</p></div>
       <ul class="fg-list">${ITEMS.map((it) => `<li data-k="${it.k}"><div class="fg-i"><b>${esc(it.n)}</b><span class="fg-p">${pr(it.p)}</span><small>${it.ex ? '예시 가격(공식 가격 아님)' : '출처: ' + esc(it.src)}</small></div>
@@ -71,19 +71,19 @@
     fg.querySelectorAll('.fg-list li').forEach((li) => { const it = ITEMS.find((x) => x.k === li.dataset.k); li.querySelector('.fg-n').textContent = (cnt[it.k] || 0).toLocaleString('ko-KR');
       li.querySelector('.fg-pl').disabled = left < it.p; li.querySelector('.fg-m').disabled = !cnt[it.k]; });
     const min = Math.min(...ITEMS.map((x) => x.p)), done = left < min;
-    fg.querySelector('.fg-res').textContent = done ? `다 썼어요! ${C.cname} 축제 예산 ${krw(C.fest)}을 남김없이 썼어요.` : s ? `지금까지 ${krw(s)} 썼어요. 아직 ${Math.floor((s / C.fest) * 1000) / 10}%예요.` : '물건 옆 + 를 눌러 써 봐요. 길게 누르면 계속 담겨요.';
+    fg.querySelector('.fg-res').textContent = done ? `다 썼어요! ${C.cname} 행사·축제 예산 ${krw(C.fest)}을 남김없이 썼어요.` : s ? `지금까지 ${krw(s)} 썼어요. 아직 ${Math.floor((s / C.fest) * 1000) / 10}%예요.` : '물건 옆 + 를 눌러 써 봐요. 길게 누르면 계속 담겨요.';
     fg.classList.toggle('done', done); fg.querySelector('.fg-cv').hidden = true; fg.querySelector('.fg-sh').hidden = true; if (done) draw(); };
   const draw = () => { const cv = fg.querySelector('.fg-cv'), g = cv.getContext('2d'), F = (w, s) => `${w} ${s}px system-ui,-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif`;
     g.fillStyle = '#0b0f13'; g.fillRect(0, 0, 1200, 630); g.fillStyle = '#ffb020'; g.fillRect(64, 64, 8, 52);
     const T = (t, x, y, s, c, w, al) => { g.font = F(w || 600, s); g.fillStyle = c; g.textAlign = al || 'left'; g.fillText(t, x, y); };
-    T('우리 시 축제 예산 써보기 · 우리 시 돈 추적기', 92, 102, 30, '#8fa0b3'); T(C.cname, 64, 190, 56, '#e6edf3', 800);
+    T('우리 시 행사·축제 예산 써보기 · 우리 시 돈 추적기', 92, 102, 30, '#8fa0b3'); T(C.cname, 64, 190, 56, '#e6edf3', 800);
     T(`2026년 행사·축제 예산 ${krw(C.fest)}`, 64, 260, 40, '#ffb020', 700);
     const L_ = ITEMS.filter((it) => cnt[it.k]).sort((a, b) => cnt[b.k] * b.p - cnt[a.k] * a.p).slice(0, 4);
     L_.forEach((it, i) => T(`${it.n} ${cnt[it.k].toLocaleString('ko-KR')}개${it.ex ? ' (예시 가격)' : ''}`, 64, 330 + i * 50, 32, '#c9d4df', 500));
     if (!L_.length) T('아직 아무것도 안 샀어요', 64, 330, 32, '#c9d4df', 500);
     T(`남은 돈 ${krw(C.fest - spent())}`, 64, 548, 30, '#e6edf3', 700); T(NOTE, 64, 590, 22, '#8fa0b3', 500); T('패러디 게임(neal.fun/spend)', 1136, 590, 22, '#8fa0b3', 500, 'right');
     cv.hidden = false; const sh = fg.querySelector('.fg-sh'); sh.hidden = false; const url = cv.toDataURL('image/png'); fg.querySelector('.fg-dl').href = url;
-    fg.querySelector('.fg-share').onclick = () => cv.toBlob(async (b) => { const f = new File([b], 'festival-budget.png', {type: 'image/png'}), t = `${C.cname} 축제 예산 ${krw(C.fest)}, 나는 이렇게 써 봤어요 · 우리 시 돈 추적기`, u = location.origin + location.pathname + '#play';
+    fg.querySelector('.fg-share').onclick = () => cv.toBlob(async (b) => { const f = new File([b], 'festival-budget.png', {type: 'image/png'}), t = `${C.cname} 행사·축제 예산 ${krw(C.fest)}, 나는 이렇게 써 봤어요 · 우리 시 돈 추적기`, u = location.origin + location.pathname + '#play';
       try { if (navigator.canShare && navigator.canShare({files: [f]})) await navigator.share({files: [f], title: t, text: t + ' ' + u}); else if (navigator.share) await navigator.share({title: t, text: t, url: u}); else { await navigator.clipboard.writeText(t + ' ' + u); fg.querySelector('.fg-share').textContent = '링크 복사됨'; } } catch (e) {} }); };
   // 폰에서 시를 고르면 지도 아래 시 카드 머리('대구광역시 112억원')가 하단 탭바에 가리지 않게 살짝 올려 줌
   const peek = () => { if (innerWidth >= 900 || mode() !== 'map') return; const sh = dive.querySelector('.dv-sheet'), tb = document.querySelector('.tabbar'); if (!sh || !tb || !new URLSearchParams(location.search).get('c')) return;
