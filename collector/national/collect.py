@@ -53,6 +53,39 @@ def sido_of(orig):
     return None
 
 
+TRIP = "nasnutdbapnfphwyr"   # O87UNV000897E818234 국회의원 직무상 국외활동 신고 내역
+def collect_trips(members):
+    rows = api(TRIP, UNIT_CD="100022", pSize=1000)          # 22대만, 1000건씩 페이지네이션(api()가 pIndex 증가)
+    name2 = defaultdict(list)
+    for m in members: name2[m["name"]].append(m)
+    trips = []
+    for i, r in enumerate(rows):
+        names = [n.strip() for n in re.split(r"[,，·、]", r.get("PN") or "") if n.strip()]
+        dst = [d.strip() for d in re.split(r"[,，·、/]", r.get("DSTN_NM") or "") if d.strip() and d.strip() != "목적지"]
+        for n in names:
+            ms = name2.get(n, [])
+            trips.append({"trip_id": i, "name": n, "member_id": ms[0]["id"] if len(ms) == 1 else None,
+                          "party": ms[0]["party"] if len(ms) == 1 else None,   # 동명이인·전직 의원은 None
+                          "dest": dst, "dest_raw": r.get("DSTN_NM"), "dates": r.get("SCH_DYS"),
+                          "purpose": r.get("PURP_RSON"), "funder": r.get("EXPNS_SUPPT_INST_NM"),
+                          "report": r.get("REPORT_YN"), "src": BASE + TRIP})
+    json.dump({"count_raw": len(rows), "trips": trips}, open(os.path.join(OUT, "trips_raw.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    by_m, by_p, by_d = defaultdict(int), defaultdict(int), defaultdict(int)
+    for t in trips:
+        by_m[(t["name"], t["party"] or "미매칭")] += 1
+        by_p[t["party"] or "미매칭"] += 1
+    for r in rows:   # 목적지는 신고 건 기준(참가 의원 수 중복 없이)
+        for d in {d.strip() for d in re.split(r"[,，·、/]", r.get("DSTN_NM") or "") if d.strip() and d.strip() != "목적지"}:
+            by_d[d] += 1
+    import csv
+    def wcsv(fn, head, items):
+        with open(os.path.join(OUT, fn), "w", encoding="utf-8-sig", newline="") as f:
+            w = csv.writer(f); w.writerow(head); w.writerows(items)
+    wcsv("trips_by_member.csv", ["name", "party", "trips"], sorted(((a, b, c) for (a, b), c in by_m.items()), key=lambda x: -x[2]))
+    wcsv("trips_by_party.csv", ["party", "member_trips"], sorted(by_p.items(), key=lambda x: -x[1]))
+    wcsv("trips_top_dest.csv", ["destination", "reports"], sorted(by_d.items(), key=lambda x: -x[1])[:10])
+    return trips
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     seed = json.load(open(SEED, encoding="utf-8"))
@@ -72,8 +105,7 @@ def main():
         log.append(f"의원 명단: 인증키 없이 {len(members)}명만 받음 → ASSEMBLY_KEY 필요(전체 {299}명 중)")
     if len(members) < len(old.get("members", [])):  # sample 키 등으로 줄어들면 이전 명단 유지
         members = old["members"]; log.append("의원 명단: 새로 받은 건이 적어 이전 명단 유지")
-    # 국외활동 신고(해외출장) — 코드가 확인되면 채움
-    trips = []
+    trips = collect_trips(members)  # 국외활동 신고(해외출장)
     allow = {a["year"]: a for a in seed["allowance"] if a.get("amount")}
     flows = []
     y = max(allow) if allow else None
@@ -110,9 +142,8 @@ def main():
     w("support.json", {"updated": now, "allowance": seed["allowance"], "office_support": seed["office_support"]})
     w("projects.json", {"updated": now, "special_activity": seed["special_activity"], "national_projects": seed["national_projects"]})
     w("index.json", {"updated": now, "assembly_key": bool(AK), "log": log,
-                     "files": ["members", "parties", "flows", "years", "support", "projects"],
+                     "files": ["trips_raw", "members", "parties", "flows", "years", "support", "projects"],
                      "missing": [
-                         "의원별 해외출장(국외활동 신고): 열린국회정보 인증키(ASSEMBLY_KEY) 필요",
                          "정당·의원 정치자금 회계보고(후원금 모금액·지출처): 선관위 정치자금 공개시스템은 Open API 없음 — 파일 내려받기/정보공개청구 필요",
                          "의원별 실제 수령액·의원실 집행액: 공개되지 않음(지급기준만 공개)",
                          "국회 특수활동비·업무추진비 집행내역: 정보공개청구 결과 필요",
