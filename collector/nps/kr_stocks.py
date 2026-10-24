@@ -23,8 +23,10 @@ def get(u, ref=None, tries=4, timeout=120):
 def via_odcloud():
     """api.odcloud.kr 자동변환 API(파일데이터 → JSON). 키는 로그에 남기지 않음."""
     doc = json.loads(get("https://infuser.odcloud.kr/oas/docs?namespace=3070507/v1"))
-    paths = sorted(doc["paths"].keys()); path = paths[-1]  # 최신 uddi
-    desc = doc["paths"][path]["get"].get("summary", "")
+    def dt(pth):  # 요약의 기준일(YYYYMMDD)로 최신 파일 고르기
+        m = re.search(r"(20\d{6})", doc["paths"][pth]["get"].get("summary", "") + doc["paths"][pth]["get"].get("description", ""))
+        return m[1] if m else ""
+    path = max(doc["paths"], key=dt); desc = dt(path)
     rows, page = [], 1
     while True:
         q = urllib.parse.urlencode({"page": page, "perPage": 1000, "serviceKey": KEY})

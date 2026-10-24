@@ -32,10 +32,16 @@ def main():
     i = h.find("국내주식 종목별 투자 현황"); seg = h[max(0, i - 1500): i + 1500] if i >= 0 else ""
     open(os.path.join(DBG, "board_seg.html"), "w").write(seg)
     title = re.search(r"국내주식 종목별 투자 현황\((\d{4})년 말\)", h); year = title[1] if title else None
-    ids = re.findall(r"(ZZ\d{18}|FL\d{8})", seg)
+    sn = re.search(r"fnc_goBbsDetail\('(\d+)'\);\">국내주식 종목별 투자 현황", h)
+    ids = []
     files = re.findall(r"atchFileId=(FL\d+)(?:&amp;|&)atchFileSn=(\d+)", seg) or re.findall(r"['\"](FL\d{8})['\"]\s*,\s*['\"]?(\d+)", seg)
-    pst = [x for x in ids if x.startswith("ZZ")]
     detail = None
+    if sn:
+        b, _ = get(BASE + "/impa/edwmpblnt/getOHEF0006M0.do", urllib.parse.urlencode({"tmpltdataSn": sn[1], "cat": "YEA"}).encode())
+        detail = b.decode("utf-8", "ignore"); open(os.path.join(DBG, "detail.html"), "w").write(detail)
+        files = re.findall(r"atchFileId=(FL\d+)(?:&amp;|&)atchFileSn=(\d+)", detail) or re.findall(r"\(\s*['\"](FL\d+)['\"]\s*,\s*['\"]?(\d+)", detail)
+        LOG.append(f"detail sn={sn[1]} files={files[:5]}")
+    pst = []
     if pst:
         for path in ("/impa/edwmpblnt/getOHEF0002M0.do", "/impa/edwmpblnt/getOHEF0001M1.do"):
             try:
@@ -63,7 +69,7 @@ def main():
     out.sort(key=lambda x: -x["value_100m_krw"])
     for k, x in enumerate(out, 1): x["rank"] = k
     d = {"updated": datetime.now(KST).strftime("%Y-%m-%d %H:%M"), "as_of": asof, "unit": "평가액 억원, 비중·지분율 %",
-         "source": f"국민연금 기금운용본부 연간공시 '국내주식 종목별 투자 현황({year}년 말)'", "board_url": BOARD, "file_url": u,
+         "source": f"국민연금 기금운용본부 연간공시 '국내주식 종목별 투자 현황({year}년 말)'", "board_url": BOARD, "detail": f"{BASE}/impa/edwmpblnt/getOHEF0006M0.do (tmpltdataSn={sn[1] if sn else ''}, POST)", "file_url": u,
          "count": len(out), "total_value_100m_krw": round(sum(x["value_100m_krw"] for x in out)),
          "top10": out[:10], "stake_5pct_plus": [x for x in out if (x["stake_pct"] or 0) >= 5], "holdings": out}
     json.dump(d, open(os.path.join(OUT, "kr_holdings.json"), "w"), ensure_ascii=False, indent=1)
