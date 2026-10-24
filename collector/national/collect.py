@@ -21,7 +21,7 @@ log = []
 
 
 def api(code, **p):
-    q = {"Type": "json", "pIndex": 1, "pSize": 1000 if AK else 5, "KEY": AK or "sample", **p}
+    q = {"Type": "json", "pIndex": 1, "pSize": 100, **({"KEY": AK} if AK else {}), **p}
     rows, total = [], None
     while True:
         url = BASE + code + "?" + urllib.parse.urlencode(q)
@@ -39,10 +39,10 @@ def api(code, **p):
         head, body = d[code][0]["head"], (d[code][1].get("row", []) if len(d[code]) > 1 else [])
         total = head[0].get("list_total_count")
         rows += body
-        if not AK or not body or len(rows) >= (total or 0):
+        if not body or len(rows) >= (total or 0) or q["pIndex"] > 50:
             break
         q["pIndex"] += 1; time.sleep(0.3)
-    log.append(f"{code}: {len(rows)}/{total}건" + ("" if AK else " (sample 키, 5건 제한)"))
+    log.append(f"{code}: {len(rows)}/{total}건" + ("" if AK else " (인증키 없이)"))
     return rows
 
 
