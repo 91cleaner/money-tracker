@@ -1,0 +1,18 @@
+*{box-sizing:border-box}body{margin:0;background:#0d1117;color:#e8edf2;font-family:Pretendard,system-ui,sans-serif;font-size:15px;line-height:1.55}
+a{color:#7fe8ff}.nbar{position:sticky;top:0;z-index:900;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#0d1117ee;border-bottom:1px solid #222b36;font-size:13px;color:#8fa0b3}.nbar a{font-weight:700;font-size:15px;text-decoration:none}
+.nw{max-width:760px;margin:0 auto;padding:16px 16px 60px}h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin:0 0 10px}h3{font-size:16px;margin:16px 0 8px}
+.lede{color:#b8c3cf}.jump{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px}.jump a{flex:none;padding:8px 12px;border:1px solid #2a3541;border-radius:999px;text-decoration:none;font-size:14px;color:#e8edf2}
+section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:16px;margin:16px 0;scroll-margin-top:56px}
+.big{font-size:32px;font-weight:800;color:#ffb020;font-variant-numeric:tabular-nums}.sub{color:#8fa0b3;font-size:13px}
+.src{font-size:12px;color:#8fa0b3}.src a{color:#8fa0b3}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid #222b36;align-items:baseline}.row b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{height:8px;border-radius:4px;background:#ffb020;margin-top:4px}.bar.b{background:#4da3ff}
+.tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid #3a4652;color:#b8c3cf;margin-right:4px;white-space:nowrap}.tag.y{border-color:#ffd60a66;color:#ffd60a}
+.note{background:#0f141b;border-radius:10px;padding:10px 12px;font-size:13px;color:#b8c3cf;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:7px 4px;border-top:1px solid #222b36;text-align:right}th:first-child,td:first-child{text-align:left}th{font-size:12px;color:#8fa0b3;font-weight:600}
+#tmap{height:240px;border-radius:12px;margin:8px 0;background:#0a0e13}
+input[type=search]{width:100%;padding:12px;border-radius:10px;border:1px solid #2a3541;background:#0f141b;color:#fff;font-size:16px}
+.trip{padding:10px 0;border-top:1px solid #222b36;font-size:14px}.trip .p{color:#b8c3cf}
+.flow{display:flex;flex-direction:column;gap:6px}.node{background:#0f141b;border:1px solid #2a3541;border-radius:12px;padding:10px 12px}.arr{text-align:center;color:#8fa0b3;font-size:13px}
+.foot{font-size:12px;color:#8fa0b3}
+@media(min-width:900px){#tmap{height:320px}}
