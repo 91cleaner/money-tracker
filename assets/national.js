@@ -190,6 +190,31 @@ function pick(p){if(window.__mpSheet)window.__mpSheet.hide();if(cur===p.key)retu
 document.querySelectorAll('.crow').forEach(e=>e.addEventListener('click',()=>showC(e.dataset.c)));
 $('q').addEventListener('input',()=>{const raw=$('q').value.trim();const q=norm(raw);if(!q){cur=null;sug([]);$('qr').innerHTML='';resetMap();return;}const d=decide(q);if(d.one){sug([]);$('qr').innerHTML='';pick(d.one);return;}sug(d.hits);if(cur){cur=null;resetMap();}$('qr').innerHTML=!d.hits.length?'<p class="mpnone">이 이름은 자료에 없어요.</p>':(d.exact.length>1?'<p class="mpnone">같은 이름이 '+d.exact.length+'명이에요. 지역구를 보고 한 명을 고르세요.</p>':'');});
 $('q').addEventListener('keydown',e=>{if(e.isComposing||e.key==='Process'||e.keyCode===229)return;if(e.key!=='Enter')return;e.preventDefault();const q=norm($('q').value);const d=decide(q);if(d.one)pick(d.one);else if(!d.hits.length)$('qr').innerHTML='<p class="mpnone">이 이름은 자료에 없어요.</p>';else if(d.exact.length>1)$('qr').innerHTML='<p class="mpnone">같은 이름이 '+d.exact.length+'명이에요. 지역구를 보고 한 명을 고르세요.</p>';else $('qr').innerHTML='<p class="mpnone">여러 명이에요. 목록에서 한 명을 고르세요.</p>';});
+// 3-2 출장 기록에서 눈여겨볼 점 (데이터상 패턴만. 잘못을 뜻하지 않음)
+{
+ const KR_PUB=/외교부|국회미래연구원|국가지식재산위원회|한국국제교류재단|국회사무처/;
+ const SELF=/자비|자부담/,PARTY=/정당|더불어민주당|국민의힘|조국혁신당|개혁신당|진보당/;
+ const FOREIGN_GOV=/정부|대사관|국무부|정보방송부|감숙성|란저우|연방|인민대외우호협회|사회과학원/;
+ // 비용 낸 곳에서 자기 돈·정부·정당을 빼고도 남는 이름이 있으면 '외부에서 낸 비용'
+ const outside=f=>{const s=String(f||'');if(!s.trim())return null;if(FOREIGN_GOV.test(s.replace(/주\)베트남대한민국대사관/,'')))return '외국 정부·기관';
+  const rest=s.replace(/\(.*?\)/g,' ').split(/[,\/·]|\s+및\s+/).map(x=>x.trim()).filter(x=>x&&!SELF.test(x)&&!KR_PUB.test(x)&&!PARTY.test(x));return rest.length?'민간 단체·기업':null;};
+ const trips=[];const seenT=new Set();
+ for(const [id,ts] of Object.entries(byT)){const t=ts[0];if(seenT.has(id))continue;seenT.add(id);trips.push({id,t,ts,who:ts.map(x=>x.name),out:[...new Set(ts.map(x=>outside(x.funder)).filter(Boolean))],noRep:!ts.some(x=>x.report==='유')});}
+ trips.sort((a,b)=>String(b.t.start||'').localeCompare(String(a.t.start||'')));
+ const gov=trips.filter(x=>x.out.includes('외국 정부·기관')),priv=trips.filter(x=>x.out.includes('민간 단체·기업')&&!x.out.includes('외국 정부·기관')),norep=trips.filter(x=>x.noRep);
+ const since=new Date(Date.now()-365*864e5).toISOString().slice(0,10);
+ const freq=people.map(p=>({p,n:uniqTrips(p).filter(t=>String(t.start||'')>=since).length})).filter(x=>x.n>=4).sort((a,b)=>b.n-a.n);
+ const row=x=>{const t=x.t,f=[...new Set(x.ts.map(y=>y.funder||'적힌 곳 없음'))].join(' / ');
+  return `<li><div><b>${esc(t.dates||t.start||'')}</b> · ${esc(destText(t))}</div><div class="sub">${x.ts.map(y=>`<button type="button" class="tfp" data-n="${esc(y.member_id||'')}">${esc(y.name)}</button><span>(${esc(y.party||'')})</span>`).join(', ')}</div><div class="sub">비용 낸 곳: ${esc(f)}${x.noRep?' · 신고 때 결과보고서 없음':''}</div>${S(t.src,'열린국회정보')}</li>`;};
+ const box=(k,title,n,desc,list,u='건')=>`<details class="tfb"><summary><span class="tfk">${esc(title)}</span><b>${n}${u}</b><span class="sub">${desc}</span></summary><ul class="tfl">${list}</ul></details>`;
+ $('trflag').innerHTML=`<p class="note">국회에 신고된 국외 출장 ${trips.length}건을 묶어 본 것이에요. <b>규정상 허용되는 경우가 많고, 잘못을 뜻하지 않아요.</b> 결과보고서는 신고한 뒤에 낼 수도 있어요. 이름을 누르면 그 의원의 출장 지도가 위에 나와요.</p>`+
+  box('gov','외국 정부·기관이 비용을 낸 출장',gov.length,'다른 나라 정부나 그 기관이 돈을 냈다고 신고',gov.map(row).join(''))+
+  box('priv','민간 단체·기업이 비용을 낸 출장',priv.length,'재단·협회·기업 등이 돈을 냈다고 신고',priv.map(row).join(''))+
+  box('norep','결과보고서 없이 신고된 출장',norep.length,`전체 ${trips.length}건 중 ${Math.round(norep.length/Math.max(1,trips.length)*100)}%`,norep.slice(0,60).map(row).join('')+(norep.length>60?`<li class="sub">최근 60건만 보여요.</li>`:''))+
+  box('freq','최근 1년 출장이 잦은 의원',freq.length,'1년 안에 4번 이상 신고한 의원',freq.map(x=>`<li><button type="button" class="tfp" data-n="${esc(x.p.key)}">${esc(x.p.name)}</button> <span class="sub">${esc(x.p.party||'')} · ${esc(x.p.district||'')}</span> <b>${x.n}번</b></li>`).join(''),'명')+
+  `<p class="src">출처 <a href="https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr" target="_blank" rel="noopener">열린국회정보 의원 국외활동</a> · 비용 낸 곳 분류는 신고서 글자를 기준으로 자동으로 나눈 것이라 틀릴 수 있어요.</p>`;
+ $('trflag').addEventListener('click',e=>{const b=e.target.closest('.tfp');if(!b)return;const p=people.find(x=>x.key===b.dataset.n)||people.find(x=>x.name===b.textContent);if(!p)return;$('q').value=p.name;pick(p);});
+}
 // 4 대북
 const MK='https://www.mk.co.kr/news/economy/12180428',AE='https://www.asiae.co.kr/article/2024101109335819503',CS='https://www.chosun.com/politics/assembly/2025/10/13/IMKVCK62LZFV7MFWB6U7VGJTE4/',NS='https://www.newsspirit.kr/news/articleView.html?idxno=25440';
 const nd=(t,s)=>`<div class="node"><b>${t}</b>${s?`<div class="sub">${s}</div>`:''}</div>`,ar=t=>`<div class="arr">↓ ${t}</div>`;
