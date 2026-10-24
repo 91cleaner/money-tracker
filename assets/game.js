@@ -72,7 +72,7 @@
     const bg = g.createLinearGradient(0, 0, 1200, 675); bg.addColorStop(0, '#0b1118'); bg.addColorStop(1, '#05080c'); g.fillStyle = bg; g.fillRect(0, 0, 1200, 675);
     g.strokeStyle = 'rgba(80,140,200,.08)'; for (let x = 0; x <= 1200; x += 40) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 675); g.stroke(); } for (let y = 0; y <= 675; y += 40) { g.beginPath(); g.moveTo(0, y); g.lineTo(1200, y); g.stroke(); }
     const T = (t, x, y, sz, col, wt = 700, al = 'left') => { g.font = `${wt} ${sz}px ${F}`; g.fillStyle = col; g.textAlign = al; g.fillText(t, x, y); };
-    g.fillStyle = '#ffb020'; g.fillRect(64, 64, 8, 52); T('우리 시 돈 추적기 · 어디가 더 많게?', 92, 102, 30, '#8fa0b3', 600); T(label(), 1136, 102, 30, '#ffb020', 700, 'right');
+    g.fillStyle = '#ffb020'; g.fillRect(64, 64, 8, 52); T('세금추적단 · 어디가 더 많게?', 92, 102, 30, '#8fa0b3', 600); T(label(), 1136, 102, 30, '#ffb020', 700, 'right');
     T('두 도시 중 새로 맺은 계약 금액이 더 많은 곳 맞히기', 64, 210, 40, '#e8eef5', 700);
     T(`연속 ${n}개 맞힘`, 64, 360, 128, '#ffb020', 800);
     T(`최고 기록 ${best}개 · 나도 해 볼까?`, 64, 440, 40, '#cfd8e3', 600);
