@@ -13,7 +13,7 @@ function satView(box, geo, cities, onPick) {
   const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 12, zoomSnap: 0.25, tap: true,
     maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false});
   { // 크기가 바뀌거나 다시 보일 때 타일이 깨지지 않게
-    let t = 0; const inv = () => { clearTimeout(t); t = setTimeout(() => map.invalidateSize({pan: false}), 60); };
+    let t = 0; const inv = () => { clearTimeout(t); t = setTimeout(() => { map.invalidateSize({pan: false}); view.onsize && view.onsize(); }, 80); };
     if (window.ResizeObserver) new ResizeObserver(inv).observe(box);
     addEventListener('resize', inv); addEventListener('scroll', inv, {passive: true}); addEventListener('hashchange', inv); addEventListener('pageshow', inv);
     document.addEventListener('visibilitychange', () => !document.hidden && inv()); window.__inv2 = inv; }
@@ -23,6 +23,14 @@ function satView(box, geo, cities, onPick) {
   if (matchMedia('(pointer: coarse)').matches) {
     map.zoomControl && map.zoomControl.remove();  // 한 손가락 이동·두 손가락 확대(기본)
   }
+  const homeBtn = document.createElement('button');
+  homeBtn.type = 'button';
+  homeBtn.className = 'map-home is-home';
+  homeBtn.innerHTML = '<span aria-hidden="true">⟲</span> 처음으로';
+  homeBtn.setAttribute('aria-label', '지도를 처음 본 모습으로 되돌리기');
+  const homeCtl = L.control({position: 'topright'});
+  homeCtl.onAdd = () => { const w = L.DomUtil.create('div', 'leaflet-control map-home-ctl'); w.append(homeBtn); L.DomEvent.disableClickPropagation(w); L.DomEvent.disableScrollPropagation(w); return w; };
+  homeCtl.addTo(map);
   const declutter = () => { const seen = []; box.querySelectorAll('.leaflet-tooltip').forEach((t) => { t.style.visibility = ''; const r = t.getBoundingClientRect(); if (seen.some((q) => !(r.right < q.left || r.left > q.right || r.bottom < q.top || r.top > q.bottom))) t.style.visibility = 'hidden'; else seen.push(r); }); };
   map.on('zoomend moveend', () => setTimeout(declutter, 30)); setTimeout(declutter, 600); window.__declutter = declutter;
   map.attributionControl.setPrefix(false); window.__mtMap = map;
@@ -64,7 +72,13 @@ function satView(box, geo, cities, onPick) {
   addEventListener('resize', () => { if (pend && box.clientWidth > 0) { map.invalidateSize(); const f = pend; pend = null; setTimeout(f, 50); } });
   const view = {
     resize(tot, all) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((m, s) => { const t = tot[s] || 0; m.setRadius(t ? 4 + 13 * Math.sqrt(t / mx) : (all ? 4 : 0)); }); },
-    highlight(p) { if (hl) hl.remove(); hl = p ? L.circleMarker(toLL(p), {radius: 16, className: 'hlring', color: '#ffd60a', weight: 3, fill: false, interactive: false}).addTo(map) : null; if (p) vis(() => map.panTo(toLL(p))); },
+    highlight(p) { if (hl) hl.remove(); hl = p ? L.circleMarker(toLL(p), {radius: 16, className: 'hlring', color: '#ffd60a', weight: 3, fill: false, interactive: false}).addTo(map) : null; if (p) vis(() => map.panTo(toLL(p))); view.oncam && view.oncam(); },
+    homeBtn, hlOn() { return !!hl; },
+    readCam() { const c = map.getCenter(); return {lat: c.lat, lng: c.lng, z: map.getZoom()}; },
+    sameCam(s) { if (!s || s.lat == null) return false; const c = map.getCenter(); return Math.abs(map.getZoom() - s.z) < 0.05 && Math.abs(c.lat - s.lat) < 0.02 && Math.abs(c.lng - s.lng) < 0.02; },
+    previewFly(p, z) { const ll = toLL(p); return {lat: ll[0], lng: ll[1], z: Math.min(z, 9.5)}; },
+    jump(p, z) { pend = null; map.stop(); map.invalidateSize(); map.setView(toLL(p), Math.min(z, 9.5), {animate: false}); },
+    onsize: null,
     select(slug) { dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
       gF.clearLayers();
@@ -84,6 +98,8 @@ function satView(box, geo, cities, onPick) {
     once(fn) { map.once('moveend', fn); },
     destroy() { map.remove(); box.classList.remove('sat'); box.replaceChildren(); },
   };
+  homeBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); view.onhome && view.onhome(); });
+  map.on('zoomend moveend', () => view.oncam && view.oncam());
   return view;
 }
 
@@ -96,7 +112,7 @@ function svgView(box, geo, cities, onPick) {
   svg.append(gP, gF, gD, gC, gL); box.replaceChildren(svg);
   const maxT = cities[0] ? cities[0].total : 1, dots = new Map();
   for (const c of cities) { const e = sv('circle', {cx: c.p[0], cy: c.p[1], class: 'cdot'}); e.dataset.r = 2.5 + 16 * Math.sqrt(c.total / maxT); gC.append(e); dots.set(c.slug, e); }
-  let vb = full.slice(), anim = 0;
+  let vb = full.slice(), anim = 0, camFn = () => {};
   const sizes = () => {
     const k = vb[2] / geo.w;
     svg.querySelectorAll('.cdot, .dd').forEach((e) => e.setAttribute('r', (+e.dataset.r) * Math.max(k, 0.35)));
@@ -106,7 +122,7 @@ function svgView(box, geo, cities, onPick) {
     cancelAnimationFrame(anim);
     const from = vb.slice(), t0 = performance.now(), dur = matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 650;
     const step = (now) => { const u = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - u, 3);
-      vb = from.map((v, i) => v + (t[i] - v) * e); svg.setAttribute('viewBox', vb.join(' ')); sizes(); if (u < 1) anim = requestAnimationFrame(step); };
+      vb = from.map((v, i) => v + (t[i] - v) * e); svg.setAttribute('viewBox', vb.join(' ')); sizes(); if (u < 1) anim = requestAnimationFrame(step); else camFn(); };
     anim = requestAnimationFrame(step);
   };
   const fitBox = (pts, minS = 90) => {
@@ -130,7 +146,16 @@ function svgView(box, geo, cities, onPick) {
   sizes();
   const view2 = {
     resize(tot, all) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((e, s) => { const t = tot[s] || 0; e.dataset.r = t ? 2.5 + 16 * Math.sqrt(t / mx) : (all ? 2.5 : 0); }); sizes(); },
-    highlight(p) { gL.querySelectorAll('.hl').forEach((x) => x.remove()); if (p) { const c = sv('circle', {cx: p[0], cy: p[1], class: 'hl dd'}); c.dataset.r = 9; gL.prepend(c); sizes(); } },
+    highlight(p) { gL.querySelectorAll('.hl').forEach((x) => x.remove()); if (p) { const c = sv('circle', {cx: p[0], cy: p[1], class: 'hl dd'}); c.dataset.r = 9; gL.prepend(c); sizes(); } camFn(); },
+    hlOn() { return !!gL.querySelector('.hl'); },
+    readCam() { return {vb: vb.slice()}; },
+    sameCam(s) { return !!(s && s.vb && s.vb.length === vb.length && s.vb.every((v, i) => Math.abs(v - vb[i]) < 0.6)); },
+    previewFly(p) { return {vb: fitBox([p], 160).slice()}; },
+    jump(p) { cancelAnimationFrame(anim); vb = fitBox([p], 160); svg.setAttribute('viewBox', vb.join(' ')); sizes(); camFn(); },
+    onsize: null,
+    set oncam(fn) { camFn = fn || (() => {}); },
+    get oncam() { return camFn; },
+    onhome: null,
     select(slug) { dots.forEach((e, s) => e.classList.toggle('on', s === slug)); svg.classList.toggle('picked', !!slug); },
     lines(list, maxA, labels) {
       gF.replaceChildren(); gD.replaceChildren(); gL.replaceChildren();
@@ -146,6 +171,15 @@ function svgView(box, geo, cities, onPick) {
     once(fn) { setTimeout(fn, 700); },
     destroy() { box.replaceChildren(); },
   };
+  const homeBtn = document.createElement('button');
+  homeBtn.type = 'button';
+  homeBtn.className = 'map-home is-home';
+  homeBtn.innerHTML = '<span aria-hidden="true">⟲</span> 처음으로';
+  homeBtn.setAttribute('aria-label', '지도를 처음 본 모습으로 되돌리기');
+  homeBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); view2.onhome && view2.onhome(); });
+  box.append(homeBtn);
+  view2.homeBtn = homeBtn;
+  if (window.ResizeObserver) { let ts = 0; new ResizeObserver(() => { clearTimeout(ts); ts = setTimeout(() => view2.onsize && view2.onsize(), 80); }).observe(box); }
   return view2;
 }
 
@@ -155,14 +189,27 @@ async function moneyMap(root, opts = {}) {
   const box = $('.map', root), panel = $('.flowpanel', root);
   const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.p).sort((a, b) => b.total - a.total);
   let cur = null, mode = 'city', view, cat = '전체';
+  let homeMode = 'city', homeCur = null, homeCam = null, resetToFirst = () => {}, seated = false, nudged = false, live = false;
+  const syncMapHome = () => { if (!view || !view.homeBtn || !homeCam) return; view.homeBtn.classList.toggle('is-home', mode === homeMode && cur === homeCur && !view.hlOn() && view.sameCam(homeCam)); };
+  // 지도 칸이 숨겨져 있다 열리면(도시 페이지 탭) 처음 화면을 그 크기에 다시 맞춘다
+  const seatFixed = () => { const c = fl.cities[opts.fixed]; if (!c || !view) return; view._seating = 1; if (view.jump) view.jump(c.p, 10); view._seating = 0; homeCam = view.previewFly ? view.previewFly(c.p, 10) : view.readCam(); homeMode = 'city'; homeCur = opts.fixed; seated = true; nudged = false; syncMapHome(); };
   const dataOf = (slug) => { const c = fl.cities[slug]; if (!c || cat === '전체') return c;
     const b = (c.by_cat || {})[cat] || {total: 0, known: 0, local: 0, count: 0, flows: []}; return {...c, ...b, other: null, cat}; };
   const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {fly: true, z: 9}); if (matchMedia('(max-width: 899px)').matches) setTimeout(() => panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 300); };
   const mount = (kind) => {
     view = (kind === 'svg' ? svgView : satView)(box, geo, cities, pickCity);
+    view.oncam = () => { if (!view._seating && homeCam && !view.sameCam(homeCam)) nudged = true; syncMapHome(); };
+    view.onhome = () => { nudged = false; resetToFirst(); };
+    view.onsize = () => {
+      const ok = box.clientWidth > 40 && box.clientHeight > 40;
+      const reveal = ok && !live; live = ok;
+      if (!ok) return;
+      if (opts.fixed && !view.hlOn() && !nudged && (reveal || !seated)) seatFixed();
+      else syncMapHome();
+    };
     if (!opts.fixed) view.onmulti = (slugs) => { panel.replaceChildren(el('p', 'fq', '여러 시가 겹쳐 있어요. 하나를 고르세요')); const w = el('div', 'pickrow'); for (const s2 of slugs) { const b = el('button', 'chip', (window.CITY_FULL || {})[s2] || fl.cities[s2].name); b.type = 'button'; b.onclick = () => pickCity(s2); w.append(b); } panel.append(w); panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}); };
     if (!opts.fixed) view.onempty = () => { if (mode !== 'nation') { setSeg('nation'); showNation(); } };
-    view.onfail = () => { view.destroy(); mount('svg'); if (cat !== '전체') ctl.setCat(cat); else redraw(false); };
+    view.onfail = () => { view.destroy(); mount('svg'); if (cat !== '전체') ctl.setCat(cat); else redraw(false); view.once(() => { homeCam = view.readCam(); homeMode = mode; homeCur = cur; syncMapHome(); }); };
   };
   try { mount('sat'); } catch (e) { mount('svg'); }
   if (!opts.fixed) { const rb = el('button', 'resetbtn', '전국 보기'); rb.type = 'button'; rb.addEventListener('click', (e) => { e.stopPropagation(); setSeg('nation'); showNation(); }); (box.parentElement || root).append(rb); }
@@ -183,7 +230,7 @@ async function moneyMap(root, opts = {}) {
   // where: 고른 시·군·구 좌표(있으면 그곳으로 날아간 뒤 흐름을 그린다)
   const showCity = (slug, o = {}) => {
     const c = dataOf(slug); if (!c) return;
-    cur = slug; mode = 'city'; view.select(slug);
+    cur = slug; mode = 'city'; view.select(slug); syncMapHome();
     const list = c.flows.map((f) => ({...f, a: c.p}));
     if (o.fly) { view.lines([], 1, []); view.fly(o.where || c.p, o.z || (o.where ? 12 : 11)); view.once(() => { if (cur === slug && mode === 'city') drawCity(c); }); }
     else { drawCity(c); if (o.zoom !== false) view.fit([c.p, ...list.slice(0, 8).map((f) => f.p)]); }
@@ -220,7 +267,7 @@ async function moneyMap(root, opts = {}) {
       if (window.regionPicker) { const ob = el('button', 'ghostbtn', '다른 지역 ▾'); ob.type = 'button'; ob.onclick = () => regionPicker(slug, (s2) => pickCity(s2)); panel.append(ob); } }
   };
   const showNation = () => {
-    cur = null; mode = 'nation'; view.select(null);
+    cur = null; mode = 'nation'; view.select(null); syncMapHome();
     const list = (cat === '전체' ? fl.nation : (fl.nation_cat || {})[cat] || []).slice(0, 25).map((f) => ({...f, a: fl.cities[f.from].p, local: false}));
     view.lines(list, Math.max(...list.map((f) => f.amount), 1), []);
     view.home();
@@ -263,8 +310,13 @@ async function moneyMap(root, opts = {}) {
     input.addEventListener('change', go);
     input.form && input.form.addEventListener('submit', (e) => { e.preventDefault(); go(); });
   }
-  if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); view.fly(c.p, 10); } }
-  else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); }
+  resetToFirst = () => {
+    view.highlight(null);
+    if (opts.fixed) { const c = fl.cities[opts.fixed]; if (!c) return; showCity(opts.fixed, {zoom: false}); view.fly(c.p, 10); }
+    else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); view.home(); }
+  };
+  if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); homeCam = view.previewFly ? view.previewFly(c.p, 10) : null; homeMode = 'city'; homeCur = opts.fixed; if (box.clientWidth > 40 && box.clientHeight > 40) { live = true; seatFixed(); } } }
+  else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); homeCam = view.readCam(); homeMode = mode; homeCur = cur; syncMapHome(); }
   const ctl = {setCat(c) { cat = c; view.resize(Object.fromEntries(cities.map((x) => [x.slug, (dataOf(x.slug) || {}).total || 0])), c === '전체'); view.highlight(null); redraw(true); }};
   root.append(el('p', 'sub small', `업체 위치: ${fl.basis}. 지도: Esri 다크 그레이 베이스(라벨 없음) + 자체 한글 표기, 경계 ${geo.source}. 갱신 ${when(fl.updated)}`));
   return ctl;

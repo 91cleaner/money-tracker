@@ -22,6 +22,47 @@
   const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자'}).addTo(map);
   tiles.once('tileload', () => box.classList.remove('loading'));
   const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]); const krPad = () => (innerWidth >= 900 ? {paddingTopLeft: [10, 10], paddingBottomRight: [10, 10]} : {paddingTopLeft: [10, 10], paddingBottomRight: [10, 10]}); map.fitBounds(KR, {...krPad(), animate: false});
+  // 확대하거나 지역을 고른 뒤, 한 번에 처음 전국 화면으로
+  const homeCtl = L.control({position: 'bottomleft'});
+  let homeEl = null;
+  homeCtl.onAdd = () => {
+    const w = L.DomUtil.create('div', 'leaflet-control map-home-ctl');
+    const b = L.DomUtil.create('button', 'map-home is-home', w);
+    b.type = 'button';
+    b.innerHTML = '<span aria-hidden="true">⟲</span> 처음으로';
+    b.setAttribute('aria-label', '지도를 처음 본 모습으로 되돌리기');
+    L.DomEvent.disableClickPropagation(w);
+    L.DomEvent.disableScrollPropagation(w);
+    L.DomEvent.on(b, 'click', L.DomEvent.stop);
+    L.DomEvent.on(b, 'click', () => resetHome());
+    homeEl = b;
+    return w;
+  };
+  homeCtl.addTo(map);
+  // 처음 전국 화면은 '그때 지도 크기'의 중심·확대. 레이아웃이 자리 잡은 뒤에도 그 화면에 맞춘다.
+  let homeSnap = null, userMoved = false, homeSz = '';
+  const grabHome = () => { const c = map.getCenter(); homeSnap = {lat: c.lat, lng: c.lng, z: map.getZoom()}; const s = map.getSize(); homeSz = s.x + 'x' + s.y; };
+  const atHomeCam = () => !!homeSnap && Math.abs(map.getZoom() - homeSnap.z) < 0.02 && map.getCenter().distanceTo(L.latLng(homeSnap.lat, homeSnap.lng)) < 400;
+  const syncHome = () => { if (homeEl) homeEl.classList.toggle('is-home', !cur && atHomeCam()); };
+  const fitHomeNow = () => { map._dvHome = 1; map.fitBounds(KR, {...krPad(), animate: false}); };
+  map.on('zoomstart', () => { if (!map._dvHome) userMoved = true; });
+  map.on('dragstart', () => { if (!map._dvHome) userMoved = true; });
+  map.on('moveend', () => {
+    if (map._dvHome) { map._dvHome = 0; userMoved = false; grabHome(); }
+    syncHome();
+  });
+  map.on('resize', () => {
+    if (userMoved || cur || map._dvHome) return;
+    const s = map.getSize(); if (!s.x || !s.y) return;
+    const key = s.x + 'x' + s.y; if (key === homeSz) return;
+    let drift = true;
+    try { const t = map._getBoundsCenterZoom(KR, krPad()); drift = Math.abs(map.getZoom() - t.zoom) >= 0.02 || map.getCenter().distanceTo(t.center) >= 400; } catch (e) {}
+    homeSz = key; if (!drift) return;
+    fitHomeNow();
+  });
+  let resetHome = () => { userMoved = false; map._dvHome = 1; map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8}); };
+  fitHomeNow();
+  syncHome();
   window.__dvMap = map;
   map.on('moveend', () => { if (cur && map.getZoom() < (map._dvFloor || 8) - 0.3 && !map._dvFix) { map._dvFix = 1; const c = fl && fl.cities[cur]; c && map.setView(toLL(c.p), map._dvFloor || 8, {animate: false}); map._dvFix = 0; } });
   // 휠은 페이지 스크롤 · Ctrl+휠 또는 지도를 클릭한 뒤에만 확대
@@ -263,11 +304,11 @@
       `<li><button type="button" data-s="${c.slug}"><span class="t5-r">${i + 1}</span><span class="t5-m"><b>${esc(c.short || c.name)}</b><small>${n}건 · 건당 평균 ${krw(n ? v / n : v)}</small><small class="t5-v" data-s="${c.slug}"></small>${fest ? `<small class="t5-ag" data-s="${c.slug}"></small>` : ''}</span><em>${krw(v)}</em></button></li>`).join('')}</ol>
       ${fest ? '<p class="small t5-n">공연 용역 금액에는 무대·음향·연출이 포함되며 개인 출연료가 아님 · 행사대행은 축제 전체 운영 계약</p>' : ''}<p class="dv-src">출처 조달청 나라장터</p></div>`; };
   const L0 = (keep) => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
-    if (box.clientWidth && keep !== true) map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8});
+    if (box.clientWidth && keep !== true) { userMoved = false; map._dvHome = 1; map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8}); }
     const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
     strip(null); body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
       + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc((window.plainT || String)(c.top_alert.title.replace(/^데이터상 이상 징후:\s*/, '')))}</b><span>${esc(c.top_alert.detail || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
-    body.querySelectorAll('.t5 [data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); };
+    body.querySelectorAll('.t5 [data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); syncHome(); };
   const W = (() => { const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10); return C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk).sort((a, b) => (b.top_alert.amount || 0) - (a.top_alert.amount || 0)).slice(0, 9); })();
   const strip = (c, tot) => { let s = root.querySelector('.dv-strip'); if (!c) { s && (s.hidden = true); return; }
     if (!s) { s = document.createElement('button'); s.type = 'button'; s.className = 'dv-strip'; s.onclick = () => { const t = root.querySelector('.dv-sheet'); t && scrollTo({top: t.getBoundingClientRect().top + scrollY - 52, behavior: RM ? 'auto' : 'smooth'}); }; }
@@ -318,7 +359,7 @@
   const L1 = async (slug, gu) => {
     const c = BY[slug], f = fl.cities[slug]; if (!c) return L0();
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
-    cur = slug; setH(1); dim(slug);
+    cur = slug; setH(1); dim(slug); syncHome();
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
     strip(c.name, c.total); extLine(slug); body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)} <small class="dv-incl">시청·사업소 포함</small></p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
       <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">다른 지역 업체 ${out}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}</span> <button type="button" class="dv-sh dv-shc" aria-label="이 지역 결과 공유">공유</button> <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
@@ -361,6 +402,7 @@
     const u = location.pathname + (q.toString() ? '?' + q : '') + '#map'; history[replace ? 'replaceState' : 'pushState']({dv: 1}, '', u); render();
     sheet.scrollTop = 0; body.classList.remove('dv-in'); void body.offsetWidth; body.classList.add('dv-in'); };
   addEventListener('popstate', render); window.__dvGo = go;
+  resetHome = () => { const q = new URLSearchParams(location.search); if (cur || q.get('c') || (sheet.dataset.lv && sheet.dataset.lv !== '0')) go({}, true); else { userMoved = false; map._dvHome = 1; map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8}); } };
   // 기간 슬라이더: 새로고침 없이 그 자리에서 숫자·원·이름표·지역 카드를 바꾼다 (period.js가 호출)
   window.__dvPeriod = async () => { for (const k in J) delete J[k];
     const [f2, i2] = await Promise.all([get('data/flows.json'), get('data/index.json')]);
