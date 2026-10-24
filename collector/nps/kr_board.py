@@ -73,7 +73,7 @@ def main():
         out.append({"company": str(r[jn]).strip(), "value_100m_krw": r[jv], "weight_pct": r[jw], "stake_pct": r[js], "as_of": asof, "source_url": u})
     out.sort(key=lambda x: -x["value_100m_krw"])
     for k, x in enumerate(out, 1): x["rank"] = k
-    d = {"updated": datetime.now(KST).strftime("%Y-%m-%d %H:%M"), "as_of": asof, "unit": "평가액 억원, 비중·지분율 %",
+    d = {"updated": datetime.now(KST).strftime("%Y-%m-%d %H:%M"), "as_of": asof, "unit": "평가액 억원, 비중·지분율 %", "weight_note": "비중은 평가액으로 계산하면 합 100%(공시 비중 칸 합은 반올림으로 99.39%)",
          "source": f"국민연금 기금운용본부 연간공시 '국내주식 종목별 투자 현황({year}년 말)'", "board_url": BOARD, "detail": f"{BASE}/impa/edwmpblnt/getOHEF0006M0.do (tmpltdataSn={sn[1] if sn else ''}, POST)", "file_url": u,
          "count": len(out), "total_value_100m_krw": round(sum(x["value_100m_krw"] for x in out)),
          "top10": out[:10], "stake_5pct_plus": [x for x in out if (x["stake_pct"] or 0) >= 5], "holdings": out}
