@@ -461,3 +461,4 @@ html{scroll-padding-bottom:calc(80px + env(safe-area-inset-bottom))}
 .fg-note{margin:0 0 12px!important;font-size:13px!important;color:#9aa6b2!important}.fg-note small{display:block;font-size:12px;color:#7d8996;margin-top:2px}
 .fg-list{padding-top:4px}.fg-list li{flex-wrap:wrap;scroll-margin-top:150px}
 .fg-more{flex-basis:100%;display:flex;gap:6px}.fg-more button{flex:1;min-height:44px;font-size:13px;font-weight:700;border-radius:10px;border:1px solid #2a3542;background:#141b24;color:#e6edf3}.fg-more button:disabled{opacity:.35}
+#dive .dv-v small.dv-incl,.dv-sheet .dv-v small.dv-incl{font-size:13px!important;font-weight:500;display:block;margin:4px 0 0;letter-spacing:0}

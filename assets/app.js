@@ -161,7 +161,7 @@ async function funHome(idx, getCat) {
       tb.replaceChildren();
       for (const r of list.slice(0, n)) {
         const tr = el('tr', 'rc3'), a = el('a'); a.href = r.url || shareURL(r.city.slug); a.target = '_blank'; a.rel = 'noopener';
-        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.ftag || null, r.method && /수의/.test(r.method) && !r.ann ? '공고 없이 한 업체와 계약' : null, r.ann === true ? '공고 있음' : r.ann === false ? '공고 없음' : null, /단가/.test(r.title || '') ? '단가계약' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', x === '공고 있음' ? 'ann-y' : x === '공고 없음' ? 'ann-n' : '', x)));
+        const ch = el('span', 'rc-chips'); [r.city.short, r.cat, r.ftag || null, r.method && /수의/.test(r.method) && !r.ann ? '공고 없이 한 업체와 계약' : null, r.ann === true ? '공고 있음' : r.ann === false ? '공고 없음' : null, /단가/.test(r.title || '') ? '필요할 때마다 사는 계약' : null, (r.date || '').slice(5).replace('-', '.')].filter(Boolean).forEach((x) => ch.append(el('i', x === '공고 있음' ? 'ann-y' : x === '공고 없음' ? 'ann-n' : '', x)));
         a.append(el('small', 'rc-ag', r.inst || ''), el('b', 'rc-amt', krw(r.amount)), ch); a.title = r.title || '';
         const t2 = el('td'); t2.colSpan = 2; t2.append(a);
         tr.append(el('td', 'rc-no', String(tb.children.length + 1).padStart(2, '0')), t2); tb.append(tr);

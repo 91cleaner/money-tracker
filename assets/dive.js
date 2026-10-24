@@ -313,7 +313,7 @@
   const strip = (c, tot) => { let s = root.querySelector('.dv-strip'); if (!c) { s && (s.hidden = true); return; }
     if (!s) { s = document.createElement('button'); s.type = 'button'; s.className = 'dv-strip'; s.onclick = () => { const t = root.querySelector('.dv-sheet'); t && scrollTo({top: t.getBoundingClientRect().top + scrollY - 52, behavior: RM ? 'auto' : 'smooth'}); }; }
     const lg = root.querySelector('.maplg'); (lg || box).after(s); s.style.order = getComputedStyle(lg || box).order;
-    s.hidden = false; s.innerHTML = `<b>${esc(c)}</b> <em>${krw(tot)}</em><small class="dv-incl">시청·사업소 포함</small><span>↓ 자세히</span>`; };
+    s.hidden = false; s.innerHTML = `<b>${esc(c)}</b> <em>${krw(tot)}</em><small class="dv-incl">시청과 산하 기관 포함</small><span>↓ 자세히</span>`; };
   const extLine = (slug) => get(`data/city/${slug}.json`).then((d) => { const w = (window.__pdCW && window.__pdCW()) || {};
     const X = (d.ext || []).filter((r) => (!w.from || r.date >= w.from) && (!w.to || r.date <= w.to)); if (!X.length || cur !== slug) return;
     const hd = body.querySelector('.dv-head'); if (!hd || body.querySelector('.dv-ext')) return; const t = X.reduce((a, r) => a + (r.amount || 0), 0);
@@ -361,7 +361,7 @@
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
     cur = slug; setH(1); dim(slug); syncHome();
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
-    strip(c.name, c.total); extLine(slug); body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)} <small class="dv-incl">시청·사업소 포함</small></p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
+    strip(c.name, c.total); extLine(slug); body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)} <small class="dv-incl">시청과 산하 기관 포함</small></p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
       <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">다른 지역 업체 ${out}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}</span> <button type="button" class="dv-sh dv-shc" aria-label="이 지역 결과 공유">공유</button> <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
       <div class="dv-more"><div class="dv-wrap" aria-label="우리 시 한눈에 보기"></div><div class="dv-t3">${top3(f)}</div><p class="dv-k">데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;

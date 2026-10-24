@@ -23,7 +23,7 @@ LOAD('data/sec_sole.json').then(d=>{
   if(d.flags.length){const f=d.flags[new Date().getDate()%Math.min(d.flags.length,7)];
     $('spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(f.inst)}</b> → <b>${E(f.vendor)}</b><br>30일 안에 ${f.n}건 · 합계 ${W(f.sum)}<p class="src">${SRC}</p></div>`}
   // 추적 파일
-  $('cases').innerHTML=d.flags.map((f,i)=>`<div class="case"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 추적 파일 #${String(i+1).padStart(3,'0')}</div>
+  $('cases').innerHTML=d.flags.map((f,i)=>`<div class="case"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 더 보기 목록 #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(f.cname)} · ${f.n}건, 공고 없이 바로 맺은 수의계약 묶음</h3>
    <div class="trail"><b>${E(f.inst)}</b><i></i><b>${E(f.vendor)}</b>${f.vregion?`<small>(${E(f.vregion.split(' ').slice(0,2).join(' '))})</small>`:''}</div>
    <div class="amt">${W(f.sum)}</div><small>${f.from} ~ ${f.to} · 같은 업체 여러 건 합계 2천만원 초과</small>
