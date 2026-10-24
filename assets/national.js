@@ -38,7 +38,7 @@ const ART='https://www.sisajournal.com/news/articleView.html?idxno=362332';const
 const reports=new Set(trw.trips.map(t=>t.trip_id)).size;
 h=`<div class="note">국회의원이 외국에 다녀왔다고 국회에 신고한 기록이에요. 돈은 <b>자비·외교부·외국 정부·재단</b> 등 다양한 곳에서 냈어요. 모두 세금으로 간 건 아니에요.</div>
 <p class="sub">신고 ${trw.count_raw||reports}건 · 의원 참가 ${trw.trips.length}번 ${S(TS,'열린국회정보 국외활동')}</p>
-<h3>여의도에서 간 나라 <span class="sub">(선 굵기 = 신고 건수)</span></h3><p class="sub">나라나 선을 누르면 그 나라에 다녀온 기록이 나와요. 국회 자료에는 비용이 없어서 선에 돈을 적지 않았어요.</p><div id="tmap"></div><div id="cp"></div>
+<h3>여의도에서 간 나라 <span class="sub">(선 굵기 = 신고 건수)</span></h3><p class="sub">나라나 선을 누르면 그 나라에 다녀온 기록이 나와요. 국회 자료에 금액이 없으면 공개 안 됨이라고 적어요.</p><div id="tmap"></div><div id="cp"></div>
 <div class="note">보도로 확인된 비용: 2025년 16개 상임위원회(분야별로 나눠 일하는 국회 모임) 해외출장 35팀, 순수 경비 <b>11억 3,800만원</b>(정보공개청구 자료). 이 지도의 신고 기록과 범위가 다를 수 있어요. ${S(ART,'시사저널 2026.2.9')}</div><h3>많이 간 나라 10곳 <span class="sub">(신고 건수 · 누르면 기록)</span></h3>`;
 const tmax=Math.max(...td.map(r=>+r.reports));
 h+=td.map((r,i)=>`<div class="row crow" data-c="${esc(r.destination)}" role="button" tabindex="0"><span>${i+1}. ${esc(r.destination)}<div class="bar" style="width:${r.reports/tmax*100}%"></div></span><b>${r.reports}건</b></div>`).join('');
@@ -47,16 +47,18 @@ h+=`<p class="src">${inf}번은 나라 칸이 비어 있어서 목적 문구로 
 const sd=tp[0]||{};
 h+=`<h3>정당별 참가 횟수</h3><table><tr><th>정당</th><th>참가 횟수(동행 포함)</th><th>현재 의석</th><th>의석당</th></tr>`+tp.filter(r=>r.party!=='미매칭').map(r=>`<tr><td>${esc(r.party)}</td><td>${r['참가 횟수(동행 포함)']}</td><td>${r['현재 의석']}</td><td>${r['의석당 참가 횟수(현재 의석 기준 근사치)']||''}</td></tr>`).join('')+`</table>
 <p class="src">의석당 = 현재 의석 기준 근사치예요. 근사치는 '대충 맞는 값'이란 뜻이에요. 다녀온 때와 지금의 의석 수가 달라서 정확한 값이 아니에요. 의석: ${S('https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu','열린국회정보 의원 명단('+String(sd['의석 기준일']||'').replace(/-/g,'.')+' 기준)')} · ${S(TS,'참가 기록')}</p>
-<h3>의원 이름으로 찾기</h3><input type="search" id="q" placeholder="예: 이재정" autocomplete="off"><div id="qr"></div>`;
+<h3>의원 이름으로 찾기</h3><p class="sub">이름 일부를 치세요. 한 명이면 위 지도로 올라가고, 여러 명이면 목록을 누르거나 엔터를 치세요.</p><div class="qwrap"><input type="search" id="q" placeholder="예: 장동혁" autocomplete="off" aria-label="의원 이름" enterkeyhint="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="qsug"><div id="qsug" class="qsug" role="listbox"></div></div><div id="qr"></div>`;
 $('tr').innerHTML=h;
 const C={일본:[35.7,139.7],중국:[39.9,116.4],미국:[38.9,282.96],영국:[51.5,-.1],독일:[52.5,13.4],베트남:[21,105.8],호주:[-35.3,149.1],인도:[28.6,77.2],싱가포르:[1.35,103.8],우즈베키스탄:[41.3,69.2],필리핀:[14.6,121],튀르키예:[39.9,32.9],체코:[50.1,14.4],인도네시아:[-6.2,106.8],말레이시아:[3.1,101.7],홍콩:[22.3,114.2],오스트리아:[48.2,16.4],오스크리아:[48.2,16.4],캄보디아:[11.6,104.9],아랍에미리트:[24.5,54.4],우간다:[0.3,32.6],브라질:[-15.8,312.1],헝가리:[47.5,19],볼리비아:[-16.5,291.9],스위스:[46.9,7.4],태국:[13.8,100.5],대만:[25,121.5],벨기에:[50.8,4.4],폴란드:[52.2,21],캐나다:[45.4,284.3],이탈리아:[41.9,12.5],덴마크:[55.7,12.6],멕시코:[19.4,260.9],이집트:[30,31.2],몽골:[47.9,106.9],칠레:[-33.4,289.4],라오스:[18,102.6],프랑스:[48.9,2.35]};
 const ACOST={프랑스:`<div class="note">보도로 확인된 비용: 예산결산특별위원회 의원 9명, 프랑스·포르투갈(2025.12~2026.1) <b>1억 7,688만원</b>. ${S(ART,'시사저널 2026.2.9')}</div>`};
 const byT={};for(const t of trw.trips)(byT[t.trip_id]=byT[t.trip_id]||[]).push(t);
 const cnt={};for(const [id,ts] of Object.entries(byT))for(const d of new Set(ts[0].dest))(cnt[d]=cnt[d]||new Set()).add(id);
+const NOAMT='공개 안 됨';
+const moneyText=t=>{const n=t&&(t.amount??t.amount_krw??t.cost);if(n==null||n===''||!Number.isFinite(Number(n)))return NOAMT;return won(Number(n))||NOAMT;};
 const showC=c=>{const ids=[...(cnt[c]||[])];const box=$('cp');
  box.innerHTML=`<h3>${esc(c)} · 신고 ${ids.length}건</h3>`+(ACOST[c]||'')+ids.map(id=>{const ts=byT[id],t=ts[0];return `<div class="trip"><b>${esc(t.dates)}</b> ${t.dest_inferred?'<span class="tag y">목적 문구로 추정</span>':''}<br>
  <span class="sub">의원:</span> ${ts.map(x=>esc(x.name)+'<span class="sub">('+esc(x.party)+')</span>').join(', ')}<br>
- <span class="p">${esc(t.purpose)}</span><br>${[...new Set(ts.map(x=>x.funder||'적힌 곳 없음'))].map(f=>`<span class="tag">비용 낸 곳: ${esc(f)}</span>`).join('')}<span class="tag">신고 당시 결과보고서 ${ts.some(x=>x.report==='유')?'유':'무'}</span><br><span class="sub">신고서 첫 번째 기재 의원: ${esc((ts.find(x=>x.is_leader)||t).name)}</span> ${S(t.src,'열린국회정보')}</div>`}).join('');
+ <span class="p">${esc(t.purpose)}</span><br><span class="k">돈</span> <b>${esc(moneyText(t))}</b><br>${[...new Set(ts.map(x=>x.funder||'적힌 곳 없음'))].map(f=>`<span class="tag">비용 낸 곳: ${esc(f)}</span>`).join('')}<span class="tag">신고 당시 결과보고서 ${ts.some(x=>x.report==='유')?'유':'무'}</span><br><span class="sub">신고서 첫 번째 기재 의원: ${esc((ts.find(x=>x.is_leader)||t).name)}</span> ${S(t.src,'열린국회정보')}</div>`}).join('');
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  requestAnimationFrame(()=>box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}));};
 try{const m=L.map('tmap',{zoomControl:false,worldCopyJump:false,zoomSnap:.25,minZoom:0,maxZoom:6});
@@ -139,18 +141,37 @@ let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{fit();
 setTimeout(()=>{declutter();arm();},60);setTimeout(()=>{declutter();arm();},400);
 }catch(e){console.warn(e);$('tmap').remove();}
 
-const tripN=new Map(),leadN=new Map();
-const bump=(map,k)=>{if(k==null||k==='')return;map.set(k,(map.get(k)||0)+1);};
-for(const t of mem.trips||[]){bump(tripN,t.member_id);bump(tripN,t.name);if(t.is_leader){bump(leadN,t.member_id);bump(leadN,t.name);}}
-const countOf=(m,map,field)=>{const n=Number(m[field]);if(Number.isFinite(n)&&m[field]!==''&&m[field]!=null&&!Array.isArray(m[field]))return n;return map.get(m.id)||map.get(m.name)||0;};
+// 출장 줄은 members.json이 아니라 trips_raw를 의원 id로 잇는다. members.trips는 횟수 숫자라 목록이 아니다.
+const byMem=new Map();
+for(const t of trw.trips){const key=t.member_id||('name:'+t.name);if(!byMem.has(key))byMem.set(key,[]);byMem.get(key).push(t);}
+const clean=s=>String(s||'').replace(/\s+/g,' ').trim();
+const people=(mem.members||[]).map(m=>({key:m.id,name:clean(m.name),party:clean(m.party),district:clean(m.district),trips:byMem.get(m.id)||[]}));
+const seenP=new Set(people.map(p=>p.key));
+for(const t of trw.trips){const key=t.member_id||('name:'+t.name);if(seenP.has(key))continue;seenP.add(key);people.push({key,name:clean(t.name),party:clean(t.party),district:'',trips:byMem.get(key)||[]});}
+const CITY={프놈펜:[11.56,104.93],뉴욕:[40.71,-74.01],제네바:[46.2,6.14],오키나와:[26.21,127.68],캔버라:[-35.28,149.13],시드니:[-33.87,151.21],란저우:[36.06,103.83],바티칸:[41.9,12.45],베를린:[52.52,13.4]};
+const worldLL=ll=>{let lng=ll[1];while(lng>180)lng-=360;while(lng<-180)lng+=360;return [ll[0],lng];};
 const norm=s=>String(s||'').replace(/\s+/g,'').toLowerCase();
-const show=q=>{q=norm(q);if(!q){$('qr').innerHTML='';return;}
- const hits=(mem.members||[]).filter(m=>norm(m.name).includes(q));
- if(!hits.length){$('qr').innerHTML='<p class="mpnone">찾는 의원이 없어요</p>';return;}
- $('qr').innerHTML=hits.map(m=>{const trips=countOf(m,tripN,'trips'),lead=countOf(m,leadN,'trips_lead');
-  return `<article class="mpcard"><b>${esc(m.name)}</b><p>정당 ${esc(m.party||'—')}</p><p>지역 ${esc(m.district||'—')}</p><p>해외출장 ${Number(trips).toLocaleString('ko-KR')}번</p>${lead?`<p>단장으로 간 횟수 ${Number(lead).toLocaleString('ko-KR')}번</p>`:''}</article>`;}).join('');};
+const uniqTrips=p=>{const seen=new Set(),out=[];for(const t of p.trips.slice().sort((a,b)=>String(a.start||'').localeCompare(String(b.start||''))||(a.trip_id||0)-(b.trip_id||0))){if(seen.has(t.trip_id))continue;seen.add(t.trip_id);out.push(t);}return out;};
+const destText=t=>{const raw=String(t.dest_raw||'').replace(/\s+/g,' ').trim();if(raw&&raw!=='목적지')return raw;return (t.dest||[]).join(', ')||'적힌 곳 없음';};
+const pointsFor=t=>{const raw=String(t.dest_raw||'');const cities=Object.keys(CITY).filter(n=>raw.includes(n)).sort((a,b)=>raw.indexOf(a)-raw.indexOf(b));if(cities.length)return cities.map(n=>({name:n,ll:CITY[n]}));const out=[],s=new Set();for(const d of t.dest||[]){if(s.has(d))continue;s.add(d);out.push({name:d,ll:C[d]?worldLL(C[d]):null});}return out;};
+const legsOf=p=>{const legs=[],seen=new Set();for(const t of uniqTrips(p))for(const pt of pointsFor(t)){if(!pt.ll||seen.has(pt.name))continue;seen.add(pt.name);legs.push({name:pt.name,lat:pt.ll[0],lng:pt.ll[1]});}return legs;};// 같은 곳에 여러 번 가도 선과 이름은 한 번만 그린다
+const findP=q=>people.filter(p=>norm(p.name).includes(q)).sort((a,b)=>a.name.localeCompare(b.name,'ko')||String(a.district).localeCompare(String(b.district),'ko'));
+// 이름 전체가 한 명에게만 맞으면 그 사람을 고른다. '김윤'은 '김윤덕'에도 들어가지만, 김윤 의원을 놓치지 않기 위해서다.
+// 같은 이름이 둘이면(박지원) 고르지 않고 지역구가 적힌 목록을 보여 준다.
+const decide=q=>{const hits=findP(q);const exact=hits.filter(p=>norm(p.name)===q);if(exact.length===1)return {one:exact[0],hits,exact};if(hits.length===1)return {one:hits[0],hits,exact};return {one:null,hits,exact};};
+let cur=null;
+const cardBox=()=>{const root=$('topmap');let box=$('mcards');if(!box){box=document.createElement('div');box.id='mcards';}if(root)root.append(box);return box;};
+const resetMap=()=>{window.__mpRouteQueue=null;if(window.__mpRoutes)window.__mpRoutes.reset();const box=$('mcards');if(box)box.innerHTML='';};
+const scrollMap=(now)=>{const el=document.querySelector('#topmap .tm-map')||$('topmap');if(!el)return;const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const pad=matchMedia('(min-width:768px)').matches?68:8;if(document.activeElement&&document.activeElement!==document.body)document.activeElement.blur();const top=el.getBoundingClientRect().top+window.scrollY-pad;window.scrollTo({top:Math.max(0,top),behavior:(now||reduce)?'auto':'smooth'});};
+const pushMap=p=>{const n=uniqTrips(p).length;const payload={title:n?p.name+' 해외출장 '+n+'건':p.name+' · 해외출장 0건',legs:legsOf(p)};if(window.__mpRoutes)window.__mpRoutes.show(payload);else window.__mpRouteQueue=payload;};
+const renderPerson=p=>{const trips=uniqTrips(p);const back='<button type="button" class="allmap" id="mapback">지역 돈 지도</button>';if(!trips.length)return `<div class="mhead">${back}</div><article class="mcard"><b>${esc(p.name)}</b><p>정당: ${esc(p.party||'자료에 없음')}</p><p>지역구: ${esc(p.district||'자료에 없음')}</p><p>해외출장 0건</p></article>`;const meta=[p.party,p.district,'해외출장 '+trips.length+'건'].filter(Boolean).map(esc).join(' · ');const head=`<div class="mhead"><b>${esc(p.name)}</b><span class="sub">${meta}</span>${back}</div>`;return head+trips.map(t=>`<article class="mcard"><div><span class="k">날짜</span> ${esc(t.dates||t.start||'')}</div><div><span class="k">간 곳</span> ${esc(destText(t))}${t.dest_inferred?' <span class="tag y">나라는 적힌 이유로 짐작했어요</span>':''}</div><div><span class="k">왜 갔는지</span> ${esc(t.purpose||'')}</div><div><span class="k">돈</span> <b>${esc(moneyText(t))}</b></div>${t.funder?`<div><span class="k">돈 낸 곳</span> ${esc(t.funder)}</div>`:''}${S(t.src,'열린국회정보')}</article>`).join('');};
+const sug=hits=>{const box=$('qsug');box.innerHTML=hits.map(p=>`<button type="button" role="option" data-k="${esc(p.key)}">${esc(p.name)} · ${esc(p.party||'정당 없음')}${p.district?' · '+esc(p.district):''}</button>`).join('');$('q').setAttribute('aria-expanded',hits.length?'true':'false');box.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{const p=people.find(x=>x.key===btn.dataset.k);if(!p)return;$('q').value=p.name;pick(p);}));};
+let scrollTok=0;
+addEventListener('mproutes',()=>{const n=scrollTok;setTimeout(()=>{if(n===scrollTok)scrollMap(true);},60);});
+function pick(p){if(cur===p.key)return;cur=p.key;sug([]);$('qr').innerHTML='';cardBox().innerHTML=renderPerson(p);const b=$('mapback');if(b)b.addEventListener('click',()=>{scrollTok++;$('q').value='';cur=null;sug([]);$('qr').innerHTML='';resetMap();});pushMap(p);scrollMap(false);}
 document.querySelectorAll('.crow').forEach(e=>e.addEventListener('click',()=>showC(e.dataset.c)));
-$('q').addEventListener('input',e=>show(e.target.value));
+$('q').addEventListener('input',()=>{const raw=$('q').value.trim();const q=norm(raw);if(!q){cur=null;sug([]);$('qr').innerHTML='';resetMap();return;}const d=decide(q);if(d.one){sug([]);$('qr').innerHTML='';pick(d.one);return;}sug(d.hits);if(cur){cur=null;resetMap();}$('qr').innerHTML=!d.hits.length?'<p class="mpnone">이 이름은 자료에 없어요.</p>':(d.exact.length>1?'<p class="mpnone">같은 이름이 '+d.exact.length+'명이에요. 지역구를 보고 한 명을 고르세요.</p>':'');});
+$('q').addEventListener('keydown',e=>{if(e.isComposing||e.key==='Process'||e.keyCode===229)return;if(e.key!=='Enter')return;e.preventDefault();const q=norm($('q').value);const d=decide(q);if(d.one)pick(d.one);else if(!d.hits.length)$('qr').innerHTML='<p class="mpnone">이 이름은 자료에 없어요.</p>';else if(d.exact.length>1)$('qr').innerHTML='<p class="mpnone">같은 이름이 '+d.exact.length+'명이에요. 지역구를 보고 한 명을 고르세요.</p>';else $('qr').innerHTML='<p class="mpnone">여러 명이에요. 목록에서 한 명을 고르세요.</p>';});
 // 4 대북
 const MK='https://www.mk.co.kr/news/economy/12180428',AE='https://www.asiae.co.kr/article/2024101109335819503',CS='https://www.chosun.com/politics/assembly/2025/10/13/IMKVCK62LZFV7MFWB6U7VGJTE4/',NS='https://www.newsspirit.kr/news/articleView.html?idxno=25440';
 const nd=(t,s)=>`<div class="node"><b>${t}</b>${s?`<div class="sub">${s}</div>`:''}</div>`,ar=t=>`<div class="arr">↓ ${t}</div>`;

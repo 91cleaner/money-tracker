@@ -194,7 +194,7 @@
     let m = root.querySelector('.dv-miss'); if (!m) { m = document.createElement('p'); m.className = 'dv-miss'; const dn = root.querySelector('.dv-down'); dn ? dn.before(m) : box.after(m); }
     const rs = cur && map.hasLayer(gF) && REST.n ? `그 밖 ${REST.n}곳${REST.unk ? '(주소 미확인 포함)' : ''}${flowAmtOn(fl.cities[cur]) ? ' ' + krw(REST.amt) : ''}` : '';
     const parts = miss.map((x) => x.replace(/^→\s*/, '')); if (rs) parts.push(rs);
-    m.textContent = [miss.length ? '이름표를 못 단 화살표: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '화살표 없는 곳: ' + rs : ''].filter(Boolean).join(' / '); m.hidden = !parts.length;
+    m.textContent = [miss.length ? '지도에 이름이 안 보이는 곳: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '지도에 선이 없는 곳: ' + rs : ''].filter(Boolean).join(' / '); m.hidden = !parts.length;
     // 확대하면 화면에 보이는 시 마커마다 짧은 이름. 금액 라벨·버튼과 실제로 겹치는 이름만 숨긴다.
     const baseZ = (homeSnap && homeSnap.z) || map.getBoundsZoom(KR, false), zIn = map.getZoom() >= baseZ + 0.75, bnds = map.getBounds(), boxR = box.getBoundingClientRect();
     const hit0 = (a, b) => !(a.right + 6 < b.left || a.left - 6 > b.right || a.bottom + 6 < b.top || a.top - 6 > b.bottom);
@@ -297,10 +297,15 @@
       REST = {n: restOut > 0 ? Math.max(1, restN) : 0, amt: restOut + unk, unk: unk > 0}; if (REST.amt <= 0) REST.n = 0;
       window.__dvLast = {slug, shown: top.reduce((t, f) => t + f.amount, 0), rest: REST.amt, tot: c.total, local: c.local, card: (BY[slug] || {}).total, re: !!c.__re, top: top.map((f) => [f.to, f.amount, f.local ? 1 : 0])}; }
     top.forEach((f, i) => {
-      const b = f.p, dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60); // 아주 짧은 흐름도 휘어서 보이게
-      const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
-      for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mxp + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * myp + t * t * b[1]]));
-      const w = 1.5 + 7 * Math.sqrt(f.amount / mx), col = f.local ? '#0a84ff' : '#ff9f0a';
+      const b = f.p;
+      let pts;
+      if (window.mtArc) pts = mtArc(a, b).map(toLL); // 시 페이지·정부 지출·국민연금 지도와 같은 곡선
+      else {
+        const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60); // 아주 짧은 흐름도 휘어서 보이게
+        const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o; pts = [];
+        for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mxp + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * myp + t * t * b[1]]));
+      }
+      const w = window.mtW ? mtW(f.amount, mx) : 1.5 + 7 * Math.sqrt(f.amount / (mx || 1)), col = f.local ? '#0a84ff' : '#ff9f0a';
       const ln = L.polyline(pts, {color: col, weight: w, opacity: 0.85, interactive: false, className: 'dv-line'}).addTo(gF);
       const dot = L.circleMarker(toLL(b), {pane: 'dvTop', renderer: gTop, radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
       const tipNm = (f.to || '').split(' ').slice(-1)[0] || '';
