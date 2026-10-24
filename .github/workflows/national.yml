@@ -1,0 +1,27 @@
+name: 나라 세금(정치인·정당) 수집
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "23 21 * * *"   # 매일 06:23 KST
+permissions:
+  contents: write
+concurrency:
+  group: national
+  cancel-in-progress: false
+jobs:
+  national:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - env: {ASSEMBLY_KEY: "${{ secrets.ASSEMBLY_KEY }}"}
+        timeout-minutes: 10
+        run: python collector/national/collect.py
+      - run: |
+          git config user.name "money-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/national
+          git diff --cached --quiet && exit 0
+          git commit -m "나라 세금 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
