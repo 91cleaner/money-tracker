@@ -135,6 +135,33 @@
     map.on('click', () => map.scrollWheelZoom.enable());
     box.addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
   };
+  // 지도 위 아래쪽 카드: 지역을 누르면 지도 위에 바로 결과가 뜬다(아래로 내려가 찾지 않아도 되게)
+  const sheet = (box) => {
+    css();
+    if (!document.getElementById('mt-sheet-css')) {
+      const st = document.createElement('style'); st.id = 'mt-sheet-css';
+      st.textContent = '.mt-sheet{position:absolute;left:8px;right:8px;bottom:8px;z-index:1000;max-height:58%;overflow:auto;-webkit-overflow-scrolling:touch;' +
+        'background:rgba(13,17,23,.96);color:#e8edf2;border:1px solid #2a3541;border-radius:14px;padding:12px 14px 10px;box-shadow:0 8px 24px rgba(0,0,0,.45);font:14px/1.45 Pretendard,system-ui,sans-serif}' +
+        '.mt-sheet[hidden]{display:none}.mt-sheet .mt-x{position:sticky;top:0;float:right;margin:-4px -6px 0 8px;min-width:40px;min-height:40px;border:0;border-radius:10px;background:#1b232d;color:#e8edf2;font:700 18px/1 system-ui;cursor:pointer}' +
+        '.mt-sheet h4{margin:0 0 2px;font-size:16px;line-height:1.3}.mt-sheet .mt-v{font-size:22px;font-weight:800;color:#ffb020;line-height:1.25}' +
+        '.mt-sheet .mt-s{color:#9aa6b2;font-size:12.5px}.mt-sheet ol{margin:8px 0 4px;padding:0;list-style:none;display:grid;gap:4px}' +
+        '.mt-sheet li{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.mt-sheet li span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
+        '.mt-sheet li b{white-space:nowrap;font-size:13px}.mt-sheet li button{all:unset;cursor:pointer;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e8edf2;text-decoration:underline;text-decoration-color:#4b5866;text-underline-offset:3px}' +
+        '.mt-sheet .mt-tk{color:#8fa0b3;font-size:12px;margin-left:4px}.mt-sheet .mt-go{display:block;width:100%;min-height:44px;margin-top:8px;border-radius:10px;border:1px solid #ffb020;background:transparent;color:#ffb020;font:700 14px Pretendard,system-ui,sans-serif;cursor:pointer}';
+      document.head.append(st);
+    }
+    const el = document.createElement('div'); el.className = 'mt-sheet'; el.hidden = true; el.setAttribute('role', 'dialog'); el.setAttribute('aria-live', 'polite');
+    box.append(el);
+    if (window.L && L.DomEvent) { L.DomEvent.disableClickPropagation(el); L.DomEvent.disableScrollPropagation(el); }
+    ['touchstart', 'touchmove', 'pointerdown', 'wheel'].forEach((ev) => el.addEventListener(ev, (e) => e.stopPropagation(), {passive: true}));
+    const api = {
+      show(html) { el.innerHTML = '<button type="button" class="mt-x" aria-label="닫기">×</button>' + html; el.hidden = false; el.scrollTop = 0; el.querySelector('.mt-x').onclick = () => { api.hide(); if (api.onclose) api.onclose(); }; return el; },
+      hide() { el.hidden = true; el.innerHTML = ''; },
+      el, onclose: null,
+    };
+    return api;
+  };
+  window.mtSheet = sheet;
   window.mtFX = fx;
   window.mtFxN = fxN;
   window.mtZoom = zoomLike;
