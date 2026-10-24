@@ -1,7 +1,9 @@
 (()=>{const I={home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',map:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',rank:'<path d="M5 20V12M12 20V5M19 20v-9"/>',quiz:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/>',play:'<rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 11v3M6.5 12.5h3M15 12h.01M17 14h.01"/>',sole:'<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>'};
 const T=[['./','홈','home'],['./#map','지도','map'],['./#quiz','퀴즈','quiz'],['./#play','게임','play'],['rank.html','순위','rank'],['spend.html','추적','sole']];
 const pg=document.body.dataset.page||'home';
-if(pg==='city'){const q=new URLSearchParams(location.search).get('c');if(q)T[1][0]='city.html?c='+encodeURIComponent(q)+'#map';}/* 도시 페이지에서 지도 탭은 그 도시가 고른 상태의 지도로 */
+const qs=location.search;
+if(pg==='home'||pg==='index'){T[1][0]='./'+qs+'#map';T[2][0]='./'+qs+'#quiz';T[3][0]='./'+qs+'#play';}/* ?c 등 쿼리를 주소에 넣어야 ./#hash가 쿼리를 지우지 않음 */
+if(pg==='city'){const q=new URLSearchParams(qs).get('c');if(q)T[1][0]='city.html'+qs+'#map';}/* 도시 페이지 지도 탭은 그 도시 지도 */
 const act=k=>pg==='spend'?k==='sole':pg==='rank'?k==='rank':pg==='city'?(k==='map'&&location.hash==='#map'):(pg==='home'||pg==='index')?(k==='map'?location.hash==='#map':k==='quiz'?['#quiz','#daily','#game'].includes(location.hash):k==='play'?location.hash==='#play':k==='home'&&!['#map','#quiz','#daily','#game','#play'].includes(location.hash)):false;
 const n=document.createElement('nav');n.className='tabbar';n.innerHTML=T.map(([u,l,k])=>`<a href="${u}" data-k="${k}" class="${act(k)?'on':''}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg>${l}</a>`).join('');
 document.body.appendChild(n);document.body.classList.add('has-tabbar');
@@ -10,5 +12,5 @@ const s=document.createElement('style');s.textContent=`.tabbar{position:fixed;le
 .tabbar a.on{color:#ffb020}.tabbar a.on::before{content:"";position:absolute;top:-7px;left:30%;right:30%;height:2px;background:#ffb020;border-radius:2px}
 body.has-tabbar{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
 @media(min-width:900px){.tabbar{padding-left:calc(50% - 280px);padding-right:calc(50% - 280px)}}`;document.head.appendChild(s);
-n.addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;const h=a.getAttribute('href');if((pg==='home'||pg==='index')&&h.startsWith('./#')){e.preventDefault();const u=location.pathname+location.search+h.slice(2);if(location.hash===h.slice(2))dispatchEvent(new HashChangeEvent('hashchange'));else location.hash=h.slice(2);}});/* 홈에서 지도·퀴즈·게임 탭은 ?c(고른 시) 유지 */
+n.addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;const h=a.getAttribute('href')||'';const hash=h.includes('#')?h.slice(h.indexOf('#')):'';if((pg==='home'||pg==='index')&&hash&&(h.startsWith('./')||h.startsWith('#'))){e.preventDefault();const u=location.pathname+location.search+hash;if(location.pathname+location.search+location.hash===u)dispatchEvent(new HashChangeEvent('hashchange'));else location.assign(u);}});/* location.hash 대입은 ?c만 있을 때 쿼리를 지움. 경로+쿼리+해시를 통째로 넣음 */
 addEventListener('hashchange',()=>n.querySelectorAll('a').forEach(a=>a.classList.toggle('on',act(a.dataset.k))));})();

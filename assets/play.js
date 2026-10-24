@@ -7,16 +7,17 @@
     if (a >= 1e8) { const e = a / 1e8; return s + (e >= 100 ? Math.round(e).toLocaleString('ko-KR') : (Math.floor(e * 10) / 10).toLocaleString('ko-KR')) + '억원'; }
     if (a >= 1e4) return s + Math.floor(a / 1e4).toLocaleString('ko-KR') + '만원'; return s + Math.round(a).toLocaleString('ko-KR') + '원'; };
   const pr = (n) => { if (n >= 1e8) return krw(n); const m = Math.floor(n / 1e4), w = Math.round(n % 1e4); return (m ? m.toLocaleString('ko-KR') + '만' + (w ? ' ' : '') : '') + (w ? w.toLocaleString('ko-KR') : '') + '원'; };
-  const NOTE = '2026년에 쓰겠다고 잡아둔 돈이에요(실제로 쓴 돈 아님)', SRC = '출처 행정안전부 지방재정365 · 정식 이름: 2026년 당초예산 편성액(실제 지출 아님)';
+  const NOTE = '2026년에 쓰겠다고 잡아둔 돈이에요(실제로 쓴 돈 아님)', SRC = '출처 행정안전부 지방재정365 · 2026년 처음 정한 예산(실제로 쓴 돈은 아님)';
   // ---- 모드 전환 바 ----
+  const here = (hash) => location.pathname + location.search + (hash || '');
   const bar = document.createElement('nav'); bar.className = 'modebar'; bar.setAttribute('aria-label', '지도 · 퀴즈 · 게임');
-  bar.innerHTML = '<a href="#" data-m="map">지도 보기</a><a href="#quiz" data-m="quiz">퀴즈 풀기</a><a href="#play" data-m="play">게임 하기</a>';
+  bar.innerHTML = `<a href="${here('')}" data-m="map">지도 보기</a><a href="${here('#quiz')}" data-m="quiz">퀴즈 풀기</a><a href="${here('#play')}" data-m="play">게임 하기</a>`;
   const mode = () => (['#quiz', '#daily', '#game'].includes(location.hash) ? 'quiz' : location.hash === '#play' ? 'play' : 'map');
   const place = () => { const lg = dive.querySelector('.maplg'); if (!lg) return false; if (bar.previousElementSibling !== lg) { lg.after(bar); bar.style.order = getComputedStyle(lg).order; } return true; };
   const t0 = setInterval(() => { if (place()) clearInterval(t0); }, 200); setTimeout(() => clearInterval(t0), 15000);
   new MutationObserver(() => { if (!bar.isConnected) place(); }).observe(dive, {childList: true, subtree: true});
   bar.addEventListener('click', (e) => { const a = e.target.closest('a'); if (!a) return; e.preventDefault(); const m = a.dataset.m;
-    history.pushState(null, '', m === 'map' ? location.pathname + location.search : '#' + m); apply(true); });
+    history.pushState(null, '', here(m === 'map' ? '' : '#' + m)); apply(true); });
   const apply = (scroll) => { const m = mode(); document.body.dataset.mode = m; bar.querySelectorAll('a').forEach((a) => { a.classList.toggle('on', a.dataset.m === m); a.setAttribute('aria-current', a.dataset.m === m ? 'page' : 'false'); });
     if (m === 'play') build(); dispatchEvent(new Event('resize'));
     if (scroll) { const t = m === 'map' ? dive.querySelector('.dv-map') || dive : document.getElementById(m === 'quiz' ? 'daily' : 'fgame'); if (t) setTimeout(() => { const y = t.getBoundingClientRect().top + scrollY - 56; scrollTo({top: Math.max(0, y), behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth'}); }, 160); }
@@ -26,8 +27,8 @@
   const fg = document.createElement('section'); fg.className = 'sec gm fg'; fg.id = 'fgame'; fg.setAttribute('aria-label', '우리 시 행사·축제 예산 써보기');
   const g0 = document.getElementById('game'); (g0 || dive).after(fg);
   const ITEMS = [
-    {k: 'fest', n: '보통 크기 축제 하나 비용', p: 0, src: '2024년 축제 원가자료 622건 중간값(지방재정365 자료로 우리 시 돈 추적기가 계산)'},
-    {k: 'wage', n: '최저시급 한 달 월급', p: 2156880, src: '2026년 최저임금, 주 40시간 일한 한 달 · 고용노동부'},
+    {k: 'fest', n: '보통 크기 축제 하나 비용', p: 0, src: '2024년 축제 622개의 보통 비용(지방재정365 자료를 우리 시 돈 추적기가 계산)'},
+    {k: 'wage', n: '최저시급 한 달 월급', p: 2156880, src: '2026년 최저시급으로 하루 8시간, 한 달 일한 돈 · 고용노동부'},
     {k: 'hour', n: '알바 1시간', p: 10320, src: '2026년 최저임금 · 고용노동부'},
     {k: 'bus', n: '시내버스 한 번', p: 1500, src: '서울 시내버스(간선·지선) 카드 요금 · 서울시'},
     {k: 'mail', n: '편지 한 통 보내기', p: 500, src: '규격 보통우편(25g) · 우정사업본부, 2026.7.1~'},
@@ -37,15 +38,30 @@
     {k: 'chk', n: '치킨 한 마리', p: 2e4, ex: 1},
     {k: 'tteok', n: '떡볶이 1인분', p: 5e3, ex: 1},
   ];
-  let D = null, built = false, C = null, cnt = {};
+  let D = null, IX = null, built = false, C = null, cnt = {};
   const spent = () => ITEMS.reduce((t, it) => t + (cnt[it.k] || 0) * it.p, 0);
+  const pickCity = (rows) => {
+    const q = new URLSearchParams(location.search).get('c');
+    const city = q && IX && (IX.cities || []).find((c) => c.slug === q);
+    if (city) {
+      const exact = rows.find((r) => r.cname === city.short || r.cname === city.name);
+      if (exact) return exact;
+      const last = String(city.short || city.name || '').split(/\s+/).pop();
+      const byLast = rows.find((r) => r.cname === last || r.cname.split(' ').pop() === last);
+      if (byLast) return byLast;
+    }
+    const nm = ((document.querySelector('.dv-name') || {}).textContent || (document.querySelector('.dv-org') || {}).textContent || '').trim();
+    return rows.find((r) => q && nm && nm.startsWith(r.cname.split(' ').pop())) || rows.find((r) => r.cname === '경남 진주시') || rows[0];
+  };
   const build = () => { if (built) return; built = true;
     fg.innerHTML = '<p class="fg-load">불러오는 중…</p>';
-    fetch('data/sec_fest.json', {cache: 'no-cache'}).then((r) => r.json()).then((d) => { D = d; ITEMS[0].p = Math.round(d.med || 0); if (!ITEMS[0].p) ITEMS.shift(); render(); }).catch(() => { fg.innerHTML = '<p class="fg-load">자료를 못 불러왔어요. 잠시 뒤 다시 해 봐요.</p>'; built = false; }); };
+    Promise.all([
+      fetch('data/sec_fest.json', {cache: 'no-cache'}).then((r) => r.json()),
+      fetch('data/index.json', {cache: 'no-cache'}).then((r) => r.json()).catch(() => null),
+    ]).then(([d, ix]) => { D = d; IX = ix; const fest = ITEMS.find((x) => x.k === 'fest'); if (fest) { fest.p = Math.round(d.med || 0); if (d.n_all) fest.src = `${d.cost_year || d.year || 2024}년 축제 ${Number(d.n_all).toLocaleString('ko-KR')}개의 보통 비용(지방재정365 자료를 우리 시 돈 추적기가 계산)`; if (!fest.p) ITEMS.shift(); } render(); }).catch(() => { fg.innerHTML = '<p class="fg-load">자료를 못 불러왔어요. 잠시 뒤 다시 해 봐요.</p>'; built = false; }); };
   const render = () => {
     const rows = (D.ratio || []).filter((r) => r.fest > 0).sort((a, b) => a.cname.localeCompare(b.cname, 'ko'));
-    const q = new URLSearchParams(location.search).get('c'); const nm = (document.querySelector('.dv-org') || {}).textContent || '';
-    C = rows.find((r) => q && nm && nm.startsWith(r.cname.split(' ').pop())) || rows.find((r) => r.cname === '경남 진주시') || rows[0];
+    C = pickCity(rows);
     fg.innerHTML = `<h2 class="fg-h">우리 시 행사·축제 예산 써보기</h2>
       <p class="fg-par">neal.fun의 'Spend Bill Gates' Money'를 따라 만든 <b>장난 게임</b>이에요. 진짜 돈을 쓰는 곳이 아니고, 행사·축제 예산이 얼마나 큰지 감을 잡아 보는 용도예요.</p>
       <label class="fg-sel">시 고르기 <select>${rows.map((r, i) => `<option value="${i}"${r === C ? ' selected' : ''}>${esc(r.cname)}</option>`).join('')}</select></label>
@@ -83,7 +99,7 @@
     if (!L_.length) T('아직 아무것도 안 샀어요', 64, 330, 32, '#c9d4df', 500);
     T(`남은 돈 ${krw(C.fest - spent())}`, 64, 548, 30, '#e6edf3', 700); T('쓰겠다고 잡아둔 돈(실제로 쓴 돈 아님) · 출처 행정안전부 지방재정365', 64, 590, 22, '#8fa0b3', 500); T('패러디 게임(neal.fun/spend)', 1136, 590, 22, '#8fa0b3', 500, 'right');
     cv.hidden = false; const sh = fg.querySelector('.fg-sh'); sh.hidden = false; const url = cv.toDataURL('image/png'); fg.querySelector('.fg-dl').href = url;
-    fg.querySelector('.fg-share').onclick = () => cv.toBlob(async (b) => { const f = new File([b], 'festival-budget.png', {type: 'image/png'}), t = `${C.cname} 행사·축제 예산 ${krw(C.fest)}, 나는 이렇게 써 봤어요 · 우리 시 돈 추적기`, u = location.origin + location.pathname + '#play';
+    fg.querySelector('.fg-share').onclick = () => cv.toBlob(async (b) => { const f = new File([b], 'festival-budget.png', {type: 'image/png'}), t = `${C.cname} 행사·축제 예산 ${krw(C.fest)}, 나는 이렇게 써 봤어요 · 우리 시 돈 추적기`, u = location.origin + location.pathname + location.search + '#play';
       try { if (navigator.canShare && navigator.canShare({files: [f]})) await navigator.share({files: [f], title: t, text: t + ' ' + u}); else if (navigator.share) await navigator.share({title: t, text: t, url: u}); else { await navigator.clipboard.writeText(t + ' ' + u); fg.querySelector('.fg-share').textContent = '링크 복사됨'; } } catch (e) {} }); };
   // 폰에서 시를 고르면 지도 아래 시 카드 머리('대구광역시 112억원')가 하단 탭바에 가리지 않게 살짝 올려 줌
   const peek = () => { if (innerWidth >= 900 || mode() !== 'map') return; const sh = dive.querySelector('.dv-sheet'), tb = document.querySelector('.tabbar'); if (!sh || !tb || !new URLSearchParams(location.search).get('c')) return;
