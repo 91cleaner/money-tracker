@@ -22,8 +22,8 @@ body { font-size: var(--t-md); }
   body[data-page="home"] #dive .dv-strip { order: 7 !important; }
   body[data-page="home"] #dive .dv-sheet { order: 8 !important; position: relative !important; top: auto !important; left: auto !important; right: auto !important; width: auto !important; max-height: none !important; }
   body[data-page="home"] #dive .dv-map {
-    height: calc(100dvh - 280px) !important;
-    min-height: 340px !important;
+    height: 50dvh !important;
+    min-height: 300px !important;
     max-height: none !important;
     border-radius: 0 !important;
     border-left: 0 !important;
@@ -53,9 +53,9 @@ body[data-page="home"] #dive .dv-h1 {
   body[data-page="home"] #dive .dv-lc > .dv-sug { order: 6 !important; position: relative !important; top: auto !important; }
   body[data-page="home"] #dive .dv-map,
   body[data-page="home"] #dive.dv-pc .dv-lc > .dv-map {
-    height: calc(100dvh - 270px) !important;
+    height: 52dvh !important;
     min-height: 420px !important;
-    max-height: none !important;
+    max-height: 560px !important;
   }
 }
 
@@ -123,3 +123,58 @@ body[data-page="national"] .nw { padding-bottom: calc(88px + env(safe-area-inset
 .nps-page .lede { font-size: 18px; color: #c5d0da; }
 #nps-root .fun-num { font-size: clamp(40px, 10vw, 68px); font-weight: 800; letter-spacing: -.04em; margin: 8px 0; }
 .maplg { position: relative; z-index: 2; }
+
+/* 탭 맨 위 지도. 390×660 첫 화면의 약 절반. 범례는 지도 아래, 글자는 12px 이상. */
+.topmap-h {
+  margin: 8px 16px 8px !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  letter-spacing: -.03em;
+  line-height: 1.15 !important;
+  color: #f4f7fb;
+}
+.tm-map {
+  height: 50dvh;
+  min-height: 300px;
+  background: #0b0f13;
+  position: relative;
+  z-index: 0;
+}
+.topmap .maplg, #s5 .maplg {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  margin: 8px 16px 0; padding: 0; background: none; border: 0;
+  color: #d5dde6; font: 700 12px/1.4 Pretendard, system-ui, sans-serif;
+  white-space: normal; position: relative; z-index: 2;
+}
+.topmap .lg-dot, #s5 .lg-dot {
+  width: 12px; height: 12px; border-radius: 50%; background: #0a84ff;
+  border: 1.5px solid #fff; box-sizing: border-box; display: inline-block; flex: none;
+}
+.tm-line { margin: 6px 16px 0; font-size: 14px; font-weight: 700; line-height: 1.45; color: #f4f7fb; }
+.tm-line a { color: #ffb020; font-weight: 800; }
+.tm-map .leaflet-container { font: 12px/1.35 Pretendard, system-ui, sans-serif; background: #0b0f13; }
+.tm-map .leaflet-tooltip.klab {
+  background: rgba(8, 11, 15, .88) !important; color: #f4f8fc !important;
+  font-size: 12px !important; font-weight: 700 !important; line-height: 1.35 !important;
+  padding: 1px 5px !important; border: 0 !important; border-radius: 5px !important; box-shadow: none !important;
+}
+.tm-map .leaflet-tooltip.klab::before { display: none; }
+.tm-map .leaflet-control-attribution, .tm-map .leaflet-control-attribution a {
+  font-size: 12px !important; line-height: 1.35 !important; background: rgba(0, 0, 0, .55) !important; color: #c5d0da !important;
+}
+.tm-map .leaflet-bar a { width: 44px; height: 44px; line-height: 44px; font-size: 18px; }
+@media (max-width: 899px) {
+  .tm-map {
+    width: 100vw; max-width: 100vw; margin-left: calc(50% - 50vw); border-radius: 0;
+  }
+}
+@media (min-width: 900px) {
+  .topmap-h { font-size: 40px !important; margin-left: 0 !important; margin-right: 0 !important; }
+  .topmap .maplg, .topmap .tm-line, #s5 .maplg, #s5 .tm-line { margin-left: 0; margin-right: 0; }
+  .tm-map { height: 52dvh; min-height: 420px; max-height: 560px; border-radius: 16px; width: 100%; margin-left: 0; }
+}
+body[data-page="home"] #dive .maplg {
+  flex-wrap: wrap !important; white-space: normal !important;
+  font-size: 12px !important; line-height: 1.35 !important;
+}
+body[data-page="home"] #dive > .ticker { order: 9 !important; position: relative !important; top: auto !important; }

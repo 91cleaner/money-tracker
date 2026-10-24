@@ -139,12 +139,16 @@ let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{fit();
 setTimeout(()=>{declutter();arm();},60);setTimeout(()=>{declutter();arm();},400);
 }catch(e){console.warn(e);$('tmap').remove();}
 
-const show=q=>{q=q.trim();if(!q){$('qr').innerHTML='';return;}
- const ts=trw.trips.filter(t=>t.name.includes(q));const s=tm.find(r=>r.name===q);
- $('qr').innerHTML=(s?`<p class="sub">${esc(s.name)} · ${esc(s.party)} · 참가 횟수(동행 포함) ${s['참가 횟수(동행 포함)']}번 · 신고서 첫 번째 기재 의원 ${s['신고서 첫 번째 기재 의원']}번</p>`:'')+
- (ts.length?ts.slice(0,40).map(t=>{const w=(byT[t.trip_id]||[]).filter(x=>x!==t).map(x=>x.name);return `<div class="trip"><b>${esc(t.name)}</b> <span class="sub">${esc(t.party)}</span> · ${esc(t.dates)}<br>
- ${t.dest.map(d=>esc(d)).join(', ')} ${t.dest_inferred?'<span class="tag y">목적 문구로 추정</span>':''}${t.is_leader?'<span class="tag">신고서 첫 번째 기재 의원</span>':''}<br>
- <span class="p">${esc(t.purpose)}</span><br><span class="tag">비용 낸 곳: ${esc(t.funder||'적힌 곳 없음')}</span><span class="tag">신고 당시 결과보고서 ${t.report==='유'?'유':'무'}</span>${w.length?`<div class="sub">같이 간 의원: ${w.map(esc).join(', ')}</div>`:''}${S(t.src,'열린국회정보')}</div>`}).join(''):'<p class="sub">찾은 기록이 없어요.</p>');};
+const tripN=new Map(),leadN=new Map();
+const bump=(map,k)=>{if(k==null||k==='')return;map.set(k,(map.get(k)||0)+1);};
+for(const t of mem.trips||[]){bump(tripN,t.member_id);bump(tripN,t.name);if(t.is_leader){bump(leadN,t.member_id);bump(leadN,t.name);}}
+const countOf=(m,map,field)=>{const n=Number(m[field]);if(Number.isFinite(n)&&m[field]!==''&&m[field]!=null&&!Array.isArray(m[field]))return n;return map.get(m.id)||map.get(m.name)||0;};
+const norm=s=>String(s||'').replace(/\s+/g,'').toLowerCase();
+const show=q=>{q=norm(q);if(!q){$('qr').innerHTML='';return;}
+ const hits=(mem.members||[]).filter(m=>norm(m.name).includes(q));
+ if(!hits.length){$('qr').innerHTML='<p class="mpnone">찾는 의원이 없어요</p>';return;}
+ $('qr').innerHTML=hits.map(m=>{const trips=countOf(m,tripN,'trips'),lead=countOf(m,leadN,'trips_lead');
+  return `<article class="mpcard"><b>${esc(m.name)}</b><p>정당 ${esc(m.party||'—')}</p><p>지역 ${esc(m.district||'—')}</p><p>해외출장 ${Number(trips).toLocaleString('ko-KR')}번</p>${lead?`<p>단장으로 간 횟수 ${Number(lead).toLocaleString('ko-KR')}번</p>`:''}</article>`;}).join('');};
 document.querySelectorAll('.crow').forEach(e=>e.addEventListener('click',()=>showC(e.dataset.c)));
 $('q').addEventListener('input',e=>show(e.target.value));
 // 4 대북

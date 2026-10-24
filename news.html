@@ -9,10 +9,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/style.css?v=202610247100">
 <link rel="stylesheet" href="assets/theme.css?v=202610247100">
-<link rel="stylesheet" href="assets/refresh.css?v=202610247100">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="assets/refresh.css?v=202610247500">
 </head>
 <body data-page="news">
 <main class="n-wrap">
+  <div class="topmap" id="topmap" data-kind="tax">
+    <h2 class="topmap-h">우리 동네 세금</h2>
+  </div>
   <p class="eyebrow">뉴스</p>
   <h1>오늘 나온 기사</h1>
   <div id="news-hero"></div>
@@ -29,9 +33,11 @@
     <span class="fun-foot"><a href="principles.html">중립성 원칙 + 정정 요청</a><button type="button" class="fun-donate" disabled>후원하기 · 준비 중</button></span>
   </footer>
 </main>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/topmap.js?v=202610247500"></script>
 <script src="assets/mask.js?v=202610247100"></script>
 <script src="assets/news.js?v=202610247100"></script>
 <script src="assets/fun.js?v=202610247100"></script>
-<script src="assets/nav.js?v=202610247400"></script>
+<script src="assets/nav.js?v=202610247600"></script>
 </body>
 </html>
