@@ -336,6 +336,12 @@ def check(root, prev=None):
     elif prev and os.path.exists(os.path.join(prev, "daily_q.json")):
         E("[26 오늘의 문제] daily_q.json 이 사라짐")
 
+    # (27) 기간 슬라이더 흐름: 전체 기간은 flows.json 과 같고, 짧은 기간은 local ≤ known ≤ total
+    if os.path.exists(os.path.join(root, "flows.json")) or os.path.exists(os.path.join(root, "flow_daily.json")):
+        import flows
+        for m in flows.period_errors(root):
+            E(m)
+
     # (7) 급변 경고
     if prev and os.path.exists(os.path.join(prev, "index.json")):
         pi = _load(os.path.join(prev, "index.json"))

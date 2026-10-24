@@ -1,5 +1,8 @@
 """돈의 흐름 집계: 시(돈을 낸 곳) → 업체 소재지(시·군·구, 사업자 등록 주소 기준). data/flows.json 을 만든다.
 
+같은 계약·원계약일 기준으로 시·날짜·소재지별 금액은 data/flow_daily.json 에 둔다.
+기간 슬라이더(assets/period.js fixFlows)가 그 파일로 local·known·flows 를 다시 더한다.
+
 collect.py 가 매시간 끝에 부른다. 혼자 돌려도 된다: python3 collector/flows.py
 사람이 아니라 업체 주소의 시·군·구까지만 다루고, 지역에 다른 꼬리표는 붙이지 않는다.
 """
@@ -140,9 +143,167 @@ def build(now=None):
             json.dump(korify(out), f, ensure_ascii=False, separators=(",", ":"))
         except ImportError:
             json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
+    write_daily(now)
     return out
 
 
+def daily_doc(now=None):
+    """시·원계약일·업체 소재지별 [금액, 건수]. flows.json 과 같은 parts·is_local·날짜(odate||date).
+
+    형식: regions·p(좌표)는 소재지 이름 사전. 시마다 L(우리 시 소재지 번호),
+    d[날짜] = [local, known, [[소재지번호, 금액, 건수], ...]].
+    좌표 없는 소재지는 빼지 않고 오류로 남긴다(known 과 흐름 합이 어긋나지 않게).
+    """
+    now = now or datetime.now(timezone(timedelta(hours=9)))
+    stamp = now if isinstance(now, str) else now.isoformat()
+    loc = Locator()
+    idx = json.load(open(os.path.join(DATA, "index.json"), encoding="utf-8"))
+    reg_pts = {}
+    raw = {}
+    for c in idx["cities"]:
+        try:
+            d = json.load(open(os.path.join(DATA, "city", c["slug"] + ".json"), encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        city = d["city"]
+        days = defaultdict(lambda: [0, 0, defaultdict(lambda: [0, 0])])
+        local_labs = set()
+        for r in d.get("rows") or []:
+            day = days[r.get("odate") or r["date"]]
+            for vr, amt, _, _ in parts(r):
+                if not vr:
+                    continue
+                lo = is_local(city, vr)
+                if lo:
+                    day[0] += amt
+                day[1] += amt
+                label, pt = loc(vr)
+                if not label or not pt:
+                    raise RuntimeError(f"{c['slug']} 소재지 좌표 없음: {vr}")
+                if label in reg_pts and reg_pts[label] != pt:
+                    raise RuntimeError(f"소재지 좌표가 둘임: {label}")
+                reg_pts[label] = pt
+                slot = day[2][label]
+                slot[0] += amt
+                slot[1] += 1
+                if lo:
+                    local_labs.add(label)
+        for dayk, (lo, kn, dest) in days.items():
+            if sum(a for a, _ in dest.values()) != kn or sum(a for lab, (a, _) in dest.items() if lab in local_labs) != lo:
+                raise RuntimeError(f"{c['slug']} {dayk} 일별 흐름 합이 local/known 과 다름")
+        raw[c["slug"]] = (days, local_labs)
+    regions = sorted(reg_pts)
+    rid = {name: i for i, name in enumerate(regions)}
+    cities = {}
+    for slug, (days, local_labs) in raw.items():
+        d_out = {}
+        for dayk in sorted(days):
+            lo, kn, dest = days[dayk]
+            if not lo and not kn and not dest:
+                continue
+            arr = [[rid[lab], amt, cnt] for lab, (amt, cnt) in sorted(dest.items(), key=lambda x: (-x[1][0], x[0])) if amt or cnt]
+            d_out[dayk] = [lo, kn, arr]
+        cities[slug] = {"L": [rid[lab] for lab in sorted(local_labs)], "d": d_out}
+    return {"updated": stamp, "basis": "odate", "regions": regions, "p": [reg_pts[n] for n in regions], "c": cities}
+
+
+def write_daily(now=None):
+    doc = daily_doc(now)
+    with open(os.path.join(DATA, "flow_daily.json"), "w", encoding="utf-8") as f:
+        json.dump(doc, f, ensure_ascii=False, separators=(",", ":"))
+    return doc
+
+
+def _shift(day, k):
+    d = datetime.strptime(day, "%Y-%m-%d") + timedelta(days=k)
+    return d.strftime("%Y-%m-%d")
+
+
+def window_of(dl, days):
+    """period.js 와 같은 최근 N일(0 이면 전체). 끝날은 daily.json last."""
+    last = dl["last"]
+    lo = dl.get("cover_from") or dl["first"]
+    if not days:
+        return lo, last
+    fr = _shift(last, 1 - days)
+    return (lo if fr < lo else fr), last
+
+
+def sum_flow_window(fd, slug, fr, to):
+    """(local, known, {소재지: [금액, 건수]}). 날짜는 양 끝 포함."""
+    city = (fd.get("c") or {}).get(slug) or {}
+    regions = fd.get("regions") or []
+    local = known = 0
+    dest = {}
+    for day, v in (city.get("d") or {}).items():
+        if day < fr or day > to:
+            continue
+        local += v[0]
+        known += v[1]
+        for ri, amt, cnt in v[2]:
+            lab = regions[ri]
+            g = dest.setdefault(lab, [0, 0])
+            g[0] += amt
+            g[1] += cnt
+    return local, known, dest
+
+
+def period_errors(root):
+    """전체 기간 흐름은 flows.json 과 같고, 어느 기간이든 local ≤ known ≤ total(daily.json)."""
+    err = []
+    E = err.append
+    fp, flp, dp = (os.path.join(root, n) for n in ("flow_daily.json", "flows.json", "daily.json"))
+    if not (os.path.exists(fp) and os.path.exists(flp) and os.path.exists(dp)):
+        E("[27 기간 흐름] flow_daily.json·flows.json·daily.json 이 함께 있어야 함")
+        return err
+    fd, fl, dl = (json.load(open(p, encoding="utf-8")) for p in (fp, flp, dp))
+    if fd.get("basis") != "odate":
+        E("[27 기간 흐름] flow_daily basis 가 odate 가 아님")
+    regions = fd.get("regions") or []
+    if len(fd.get("p") or []) != len(regions):
+        E("[27 기간 흐름] 좌표 수와 소재지 이름이 다름")
+    stops = (7, 14, 30, 60, 90, 0)
+    for slug, fc in (fl.get("cities") or {}).items():
+        src = (fd.get("c") or {}).get(slug)
+        if not src:
+            E(f"[27 기간 흐름] {slug} 일별 흐름 없음")
+            continue
+        local_labs = {regions[i] for i in src.get("L") or []}
+        fr, to = dl["first"], dl["last"]
+        lo, kn, dest = sum_flow_window(fd, slug, fr, to)
+        if lo != fc.get("local") or kn != fc.get("known"):
+            E(f"[27 기간 흐름] {slug} 전체 기간 local/known {lo}/{kn} ≠ flows.json {fc.get('local')}/{fc.get('known')}")
+        if sum(a for a, _ in dest.values()) != kn:
+            E(f"[27 기간 흐름] {slug} 전체 기간 흐름 합 ≠ known")
+        if sum(a for lab, (a, _) in dest.items() if lab in local_labs) != lo:
+            E(f"[27 기간 흐름] {slug} 전체 기간 우리 시 흐름 합 ≠ local")
+        got = {}
+        for f in fc.get("flows") or []:
+            g = got.setdefault(f["to"], [0, 0])
+            g[0] += f["amount"]
+            g[1] += f.get("count") or 0
+        for lab, (amt, cnt) in got.items():
+            if dest.get(lab, [0, 0]) != [amt, cnt]:
+                E(f"[27 기간 흐름] {slug} {lab} 전체 기간 금액/건수 {dest.get(lab)} ≠ flows.json {[amt, cnt]}")
+                break
+        daily_total = sum(v[1] for v in (dl.get("c") or {}).get(slug, {}).values())
+        if kn > daily_total or lo > kn:
+            E(f"[27 기간 흐름] {slug} 전체 기간 local {lo} known {kn} total {daily_total}")
+        for n in stops:
+            a, b = window_of(dl, n)
+            wlo, wkn, _wdest = sum_flow_window(fd, slug, a, b)
+            wt = sum(v[1] for day, v in (dl.get("c") or {}).get(slug, {}).items() if a <= day <= b)
+            if not (wlo <= wkn <= wt):
+                E(f"[27 기간 흐름] {slug} 최근 {n or '전체'}일 local {wlo} > known {wkn} > total {wt}")
+                break
+    return err
+
+
 if __name__ == "__main__":
-    o = build()
-    print(len(o["cities"]), "개 시,", len(o["nation"]), "개 큰 흐름")
+    if "--daily" in sys.argv:
+        stamp = json.load(open(os.path.join(DATA, "daily.json"), encoding="utf-8")).get("updated")
+        d = write_daily(stamp)
+        print("flow_daily", len(d["c"]), "개 시,", len(d["regions"]), "개 소재지")
+    else:
+        o = build()
+        print(len(o["cities"]), "개 시,", len(o["nation"]), "개 큰 흐름")
