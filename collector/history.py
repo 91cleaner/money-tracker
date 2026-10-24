@@ -90,8 +90,12 @@ def run(data, rows, state, get_json, items_of, mask, now, known=None):
         cs = c.get("corps") or []
         if known is not None and len(cs) > 1 and any(x.get("id") and not (known.get(x["id"]) or {}).get("region") for x in cs) and not c.get("rg") and r["ord"] not in miss:
             miss = miss + [r["ord"]]; c["rg"] = today  # 참여 업체 소재지를 몰라 지분대로 못 나눈 계약: 사업자번호를 다시 얻으려 한 번 더
-        if miss:
-            todo.append((-1 if jvr else (0 if cur > 1 else 1), -r["amount"], r, miss))
+        head = [o for o in miss if o in ("01", r["ord"])]
+        rest = [o for o in miss if o not in head]
+        if head:  # 1차·최신 차수만 있어도 증감이 나오므로 모든 계약의 이 둘을 먼저, 중간 차수는 뒤로
+            todo.append((-1 if jvr else (0 if cur > 1 else 1), -r["amount"], r, head))
+        if rest:
+            todo.append((2, -r["amount"], r, rest))
     todo.sort(key=lambda x: x[:2])
     n = 0
     t0 = time.monotonic()

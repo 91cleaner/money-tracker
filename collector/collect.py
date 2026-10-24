@@ -62,14 +62,20 @@ CATS = [
 
 
 def category(title, kind):
+    """계약 구분(물품/용역)을 먼저 따른다: 물품·용역 계약은 제목에 '공사·설치'가 있어도 건설·공사로 넣지 않음."""
     t = title or ""
+    k = kind or ""
     for name, words in CATS:
+        if name == "건설·공사" and ("물품" in k or "용역" in k):
+            continue
         if any(kw.hit(t, w) for w in words):
             return name
     if kind and ("물품" in kind):
         return "물품"
-    if kind and ("공사" in kind):
+    if "공사" in k:
         return "건설·공사"
+    if "용역" in k:
+        return "용역·연구"
     return "기타"
 
 
@@ -125,7 +131,9 @@ def agency_type(inst, city):
         return "자치군"  # 광역시 안의 군(군위·달성·기장·울주·강화·옹진): 별도 자치단체
     if re.search(r"(?<!광역)(?<!특별)[가-힣]+구(청)?$", t.split(" ")[-1]) and t.count(" ") >= 1:
         return "자치구" if city and " " not in city.get("short", " ") else "일반구"
-    if re.search(r"사업소|본부|센터|관리소|보건소|도서관|박물관|미술관|병원|청사|수도|하수|농업기술", t):
+    # 본청 부서('~국 ~과', '~과', '~팀', '~담당관')는 이름에 '하수·수도' 등이 있어도 사업소가 아님: 부서 토큰을 빼고 본다
+    core = " ".join(w for w in t.split() if not re.search(r"(?<!사업)(과|국|팀|담당관|실)$", w) or re.search(r"사업소|본부|센터|관리소|보건소", w))
+    if re.search(r"사업소|본부|센터|관리소|보건소|도서관|박물관|미술관|병원|청사|수도|하수|농업기술", core):
         return "사업소"
     return "본청"
 
