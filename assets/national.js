@@ -184,6 +184,7 @@ const regionList=(name,value)=>{const list=people.filter(p=>p.elect==='지역구
   el.querySelectorAll('li button').forEach(b=>b.addEventListener('click',()=>{const p=people.find(x=>x.key===b.dataset.k);if(p){$('q').value=p.name;pick(p);}}));
   el.querySelector('.mt-go').onclick=()=>box.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}};
 const mpSheet=()=>{if(!window.mtSheet)return null;if(!window.__mpSheet){const m=document.querySelector('#topmap .tm-map');if(m)window.__mpSheet=mtSheet(m);}return window.__mpSheet||null;};
+addEventListener('tmhome',()=>{if(window.__mpSheet)window.__mpSheet.hide();scrollTok++;cur=null;window.__mpRouteQueue=null;const q=$('q');if(q)q.value='';sug([]);$('qr').innerHTML='';const box=$('mcards');if(box)box.innerHTML='';});
 addEventListener('tmregion',e=>{const d=e.detail||{};if(d.kind==='mps')regionList(d.name,d.value);});
 function pick(p){if(window.__mpSheet)window.__mpSheet.hide();if(cur===p.key)return;cur=p.key;sug([]);$('qr').innerHTML='';cardBox().innerHTML=renderPerson(p);const b=$('mapback');if(b)b.addEventListener('click',()=>{scrollTok++;$('q').value='';cur=null;sug([]);$('qr').innerHTML='';resetMap();});pushMap(p);scrollMap(false);}
 document.querySelectorAll('.crow').forEach(e=>e.addEventListener('click',()=>showC(e.dataset.c)));
