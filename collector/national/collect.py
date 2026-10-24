@@ -61,6 +61,7 @@ def main():
     p = os.path.join(OUT, "members.json")
     if os.path.exists(p):
         old = json.load(open(p, encoding="utf-8"))
+        old["members"] = list({m["id"]: m for m in old.get("members", [])}.values())
     rows = api("nwvrqwxyaytdsfvhu")
     members = [{"id": r.get("MONA_CD"), "name": r.get("HG_NM"), "party": r.get("POLY_NM"), "district": r.get("ORIG_NM"),
                 "elect": r.get("ELECT_GBN_NM"), "reele": r.get("REELE_GBN_NM"), "cmits": r.get("CMITS"),
