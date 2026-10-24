@@ -107,6 +107,16 @@
     const t = L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-hl', offset: [6, 0], interactive: false}).setLatLng(ll).setContent(esc(nm + ' ' + krw(v))).addTo(gL);
     HL.set(t, ll); };
   cities.filter((c) => c.total).slice(0, 8).forEach((c) => homeLab(c, c.total));
+  // 짧은 이름: '전남 여수시' → '여수'. 전국 배율에서는 위의 금액 라벨만 두고, 확대하면 화면에 보이는 시에 붙인다.
+  const shortNm = (name) => { const t = String(name || '').trim().split(/\s+/).pop() || ''; const base = t.replace(/(특별자치시|특별자치도|특별시|광역시)$/, ''); const m = base.match(/^(.+)(시|군|구)$/); return (m && m[1].length >= 2) ? m[1] : (base || t); };
+  const nmCount = {}; for (const c of cities) { const s = shortNm(c.name); nmCount[s] = (nmCount[s] || 0) + 1; }
+  const placeNm = (c) => { const s = shortNm(c.name); if ((nmCount[s] || 0) < 2) return s; const p = String(c.name || '').trim().split(/\s+/); return p.length > 1 ? p[0] + ' ' + s : s; };
+  const gN = L.layerGroup().addTo(map), nameTips = [];
+  cities.forEach((c, i) => {
+    const tip = L.tooltip({permanent: true, direction: 'right', className: 'klab cname', offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(esc(placeNm(c))).addTo(gN);
+    tip._rank = i; tip._m = dots.get(c.slug); nameTips.push(tip);
+    const el = tip.getElement(); if (el) { el.dataset.s = c.slug; el.style.visibility = 'hidden'; }
+  });
   // 스크롤·관성·지도 이동이 끝나고 300ms 안의 점 클릭은 도시 이동 안 함(스크롤 직후 오클릭 방지)
   let lastMv = 0; const mv = () => { lastMv = performance.now(); };
   ['scroll', 'wheel', 'touchmove'].forEach((t) => addEventListener(t, mv, {capture: true, passive: true})); map.on('movestart move moveend zoomstart zoomend', mv);
@@ -117,16 +127,19 @@
     if (inside.length > 1) multi(inside.map((h) => h[1])); else go({c: hits[0][1]}); });
 
   // 라벨 겹침: 발주 라벨 먼저 자리 잡고, 나머지는 위아래로 조금씩 밀어 보고 그래도 겹치면 숨김
-  const declutter = () => { const G = 8, hit = (r, q) => !(r.right + G < q.left || r.left - G > q.right || r.bottom + G < q.top || r.top - G > q.bottom), seen = [], miss = [];
-    const bb = box.getBoundingClientRect(), inB = (r) => r.left >= bb.left + 2 && r.right <= bb.right - 2 && r.top >= bb.top + 2 && r.bottom <= bb.bottom - 18;
+  const declutter = () => { const narrow = box.clientWidth < 520, G = narrow ? 16 : 12, IN = 12, btnPad = narrow ? 14 : 8, hit = (r, q) => !(r.right + G < q.left || r.left - G > q.right || r.bottom + G < q.top || r.top - G > q.bottom), seen = [], miss = [];
+    box.querySelectorAll('.leaflet-control, .map-home').forEach((el) => { const r = el.getBoundingClientRect(); if (r.width < 4 || r.height < 4) return; const p = (el.classList.contains('map-home') || el.querySelector('.map-home')) ? btnPad : 3; seen.push({left: r.left - p, right: r.right + p, top: r.top - p, bottom: r.bottom + p, _ctl: 1}); });
+    const bb = box.getBoundingClientRect(), inB = (r) => r.left >= bb.left + IN && r.right <= bb.right - IN && r.top >= bb.top + IN && r.bottom <= bb.bottom - Math.max(IN, 18);
     const live = new Set(); for (const g of [gF, gL]) if (map.hasLayer(g)) g.eachLayer((l) => { const e = l.getElement && l.getElement(); if (e) live.add(e); });
     box.querySelectorAll('.dv-org, .dv-amt').forEach((e) => { if (!live.has(e)) e.remove(); });
     const L_ = [...box.querySelectorAll('.dv-org'), ...box.querySelectorAll('.dv-amt')];
     gLead.clearLayers(); const tipOf = new Map(); HL.forEach((ll, tp) => { const e = tp.getElement(); if (e) tipOf.set(e, ll); });
+    const anchorOf = new Map();
+    for (const g of [gF, gL]) if (map.hasLayer(g)) g.eachLayer((l) => { const e = l.getElement && l.getElement(); if (e && l.getLatLng) anchorOf.set(e, l.getLatLng()); });
     const DOT = []; if (map.hasLayer(gL)) dots.forEach((m) => { const p = map.latLngToContainerPoint(m.getLatLng()); DOT.push([bb.left + p.x, bb.top + p.y, m.getRadius() + 2]); });
     const onDot = (r, own, pd = 0) => DOT.some(([x, y, rr]) => (!own || Math.hypot(x - own[0], y - own[1]) > 2) && Math.max(r.left - x, 0, x - r.right) ** 2 + Math.max(r.top - y, 0, y - r.bottom) ** 2 < (rr + pd) * (rr + pd));
     const place = (t, strict) => { const r0 = t.getBoundingClientRect(), flip = t.classList.contains('dv-org') ? 0 : -(r0.width + 16), ll = tipOf.get(t);
-      const pull = Math.min(0, bb.right - 4 - r0.right) || Math.max(0, bb.left + 4 - r0.left);
+      const pull = Math.min(0, bb.right - IN - r0.right) || Math.max(0, bb.left + IN - r0.left);
       let own = null; if (ll) { const p = map.latLngToContainerPoint(ll); own = [bb.left + p.x, bb.top + p.y]; }
       const C = []; if (ll) { for (const [dx, k] of [[0, 0], [flip, 0], [36, 36], [flip - 36, 36], [72, 72], [flip - 72, 72], [pull, 0]]) for (const dy of [0, 18, -18, 34, -34, 52, -52, 72, -72, 92, -92]) C.push([dx, dy, k + Math.abs(dy)]); C.sort((a, b) => a[2] - b[2]); }
       else for (const dx of [0, flip, pull]) for (const dy of [0, 18, -18, 34, -34, 50, -50]) C.push([dx, dy, 0]);
@@ -139,17 +152,80 @@
           return true; } }
       return false; };
     L_.forEach((t) => { t.style.visibility = ''; t.style.marginTop = '0px'; t.style.marginLeft = '0px'; t.classList.remove('dv-sm');
+      const anc = anchorOf.get(t) || tipOf.get(t);
+      if (anc && !map.getBounds().contains(anc)) { t.style.visibility = 'hidden'; return; }
       if (place(t, true)) return;
       if (place(t)) return;
       if (t.classList.contains('dv-rc')) { t.classList.add('dv-sm'); if (place(t)) return; t.classList.remove('dv-sm'); }  // 작게 줄여서 한 번 더
       t.style.visibility = 'hidden'; if (t.classList.contains('dv-rc')) miss.push(t.textContent); });
+    // 실제 칸으로 다시 재고, 지도 가장자리·처음으로 버튼·서로 겹친 금액 라벨을 떨어뜨린다
+    { const controls = seen.filter((q) => q._ctl), gap = 6, boxOf = (el) => { const r = el.getBoundingClientRect(); return {left: r.left, right: r.right, top: r.top, bottom: r.bottom}; };
+      const clash = (a, b) => !(a.right + gap < b.left || a.left - gap > b.right || a.bottom + gap < b.top || a.top - gap > b.bottom);
+      const kept = [];
+      for (const t of L_) { if (t.style.visibility === 'hidden') continue;
+        let r = boxOf(t); let dx = 0, dy = 0;
+        if (r.right > bb.right - IN) dx += bb.right - IN - r.right;
+        if (r.left + dx < bb.left + IN) dx += bb.left + IN - (r.left + dx);
+        if (r.bottom > bb.bottom - IN) dy += bb.bottom - IN - r.bottom;
+        if (r.top + dy < bb.top + IN) dy += bb.top + IN - (r.top + dy);
+        if (dx || dy) { t.style.marginLeft = ((parseFloat(t.style.marginLeft) || 0) + dx) + 'px'; t.style.marginTop = ((parseFloat(t.style.marginTop) || 0) + dy) + 'px'; r = boxOf(t); }
+        const obstacles = controls.concat(kept);
+        if (obstacles.some((q) => clash(r, q)) || r.right > bb.right - 2 || r.left < bb.left + 2) {
+          const baseL = parseFloat(t.style.marginLeft) || 0, baseT = parseFloat(t.style.marginTop) || 0;
+          const tries = [[0, -32], [0, 32], [0, -56], [0, 56], [-48, 0], [48, 0], [0, 78], [0, -78], [-72, 28], [72, 28], [-72, -28], [36, 48], [-36, -48]];
+          let ok = false;
+          for (const [mx, my] of tries) { t.style.marginLeft = (baseL + mx) + 'px'; t.style.marginTop = (baseT + my) + 'px'; const r2 = boxOf(t);
+            if (r2.left >= bb.left + IN && r2.right <= bb.right - IN && r2.top >= bb.top + IN && r2.bottom <= bb.bottom - IN && !obstacles.some((q) => clash(r2, q))) { r = r2; ok = true; break; } }
+          if (!ok) { t.style.visibility = 'hidden'; t.style.marginLeft = baseL + 'px'; t.style.marginTop = baseT + 'px'; if (t.classList.contains('dv-rc') && !miss.includes(t.textContent)) miss.push(t.textContent); continue; }
+        }
+        kept.push(r);
+      }
+      seen.splice(0, seen.length, ...controls, ...kept);
+    }
     // 지도에 끝내 못 넣은 도착지 라벨은 지도 아래 줄에 (지도 위에 겹치지 않게)
     let m = root.querySelector('.dv-miss'); if (!m) { m = document.createElement('p'); m.className = 'dv-miss'; const dn = root.querySelector('.dv-down'); dn ? dn.before(m) : box.after(m); }
     const rs = cur && map.hasLayer(gF) && REST.n ? `그 밖 ${REST.n}곳${REST.unk ? '(주소 미확인 포함)' : ''} ${krw(REST.amt)}` : '';
     const parts = miss.map((x) => x.replace(/^→\s*/, '')); if (rs) parts.push(rs);
-    m.textContent = [miss.length ? '이름표를 못 단 화살표: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '화살표 없는 곳: ' + rs : ''].filter(Boolean).join(' / '); m.hidden = !parts.length; };
+    m.textContent = [miss.length ? '이름표를 못 단 화살표: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '화살표 없는 곳: ' + rs : ''].filter(Boolean).join(' / '); m.hidden = !parts.length;
+    // 확대하면 화면에 보이는 시 마커마다 짧은 이름. 금액 라벨·버튼과 실제로 겹치는 이름만 숨긴다.
+    const baseZ = (homeSnap && homeSnap.z) || map.getBoundsZoom(KR, false), zIn = map.getZoom() >= baseZ + 0.75, bnds = map.getBounds(), boxR = box.getBoundingClientRect();
+    const hit0 = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+    const ranked = nameTips.slice().sort((a, c) => a._rank - c._rank);
+    for (const t of ranked) {
+      const el = t.getElement && t.getElement(); if (!el) continue;
+      el.style.marginLeft = '0px'; el.style.marginTop = '0px';
+      const on = zIn && bnds.contains(t.getLatLng()) && !(t._m && !t._m.getRadius());
+      if (!on) { el.style.visibility = 'hidden'; continue; }
+      el.style.visibility = 'visible';
+      let r = el.getBoundingClientRect();
+      const EIN = 10;
+      if (r.right > boxR.right - EIN) { el.style.marginLeft = (boxR.right - EIN - r.right) + 'px'; r = el.getBoundingClientRect(); }
+      if (r.left < boxR.left + EIN) { el.style.marginLeft = ((parseFloat(el.style.marginLeft) || 0) + (boxR.left + EIN - r.left)) + 'px'; r = el.getBoundingClientRect(); }
+      if (r.bottom > boxR.bottom - EIN) { el.style.marginTop = (boxR.bottom - EIN - r.bottom) + 'px'; r = el.getBoundingClientRect(); }
+      if (r.top < boxR.top + EIN) { el.style.marginTop = ((parseFloat(el.style.marginTop) || 0) + (boxR.top + EIN - r.top)) + 'px'; r = el.getBoundingClientRect(); }
+      const controls = seen.filter((q) => q._ctl);
+      for (let n = 0; n < 3; n++) {
+        const q = controls.find((c) => hit0(r, c)); if (!q) break;
+        const opts = [[0, q.top - r.bottom - 2], [0, q.bottom - r.top + 2], [q.left - r.right - 2, 0], [q.right - r.left + 2, 0]].sort((a, b) => Math.abs(a[0]) + Math.abs(a[1]) - (Math.abs(b[0]) + Math.abs(b[1])));
+        let cleared = false;
+        for (const [dx, dy] of opts) {
+          if (Math.abs(dx) + Math.abs(dy) > 72) continue;
+          const ml = (parseFloat(el.style.marginLeft) || 0) + dx, mt = (parseFloat(el.style.marginTop) || 0) + dy;
+          el.style.marginLeft = ml + 'px'; el.style.marginTop = mt + 'px';
+          const r2 = el.getBoundingClientRect();
+          const inBox = r2.left >= boxR.left + 4 && r2.right <= boxR.right - 4 && r2.top >= boxR.top + 4 && r2.bottom <= boxR.bottom - 4;
+          if (inBox && !controls.some((c) => hit0(r2, c))) { r = r2; cleared = true; break; }
+          el.style.marginLeft = (ml - dx) + 'px'; el.style.marginTop = (mt - dy) + 'px';
+        }
+        if (!cleared) break;
+      }
+      if (r.width < 2 || r.right > boxR.right - 4 || r.left < boxR.left + 4 || r.bottom > boxR.bottom - 2 || r.top < boxR.top + 2 || seen.some((q) => hit0(r, q))) el.style.visibility = 'hidden';
+      else seen.push(r);
+    }
+  };
   let REST = {n: 0, amt: 0};
-  map.on('zoomend moveend', () => setTimeout(declutter, 30));
+  map.on('zoomend moveend resize', () => setTimeout(declutter, 40));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(declutter, 60));
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
   // 세금 길: 도시 → 업체 소재지 선 그리기
   const drawFlows = (slug, hold) => {

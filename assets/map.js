@@ -31,8 +31,6 @@ function satView(box, geo, cities, onPick) {
   const homeCtl = L.control({position: 'topright'});
   homeCtl.onAdd = () => { const w = L.DomUtil.create('div', 'leaflet-control map-home-ctl'); w.append(homeBtn); L.DomEvent.disableClickPropagation(w); L.DomEvent.disableScrollPropagation(w); return w; };
   homeCtl.addTo(map);
-  const declutter = () => { const seen = []; box.querySelectorAll('.leaflet-tooltip').forEach((t) => { t.style.visibility = ''; const r = t.getBoundingClientRect(); if (seen.some((q) => !(r.right < q.left || r.left > q.right || r.bottom < q.top || r.top > q.bottom))) t.style.visibility = 'hidden'; else seen.push(r); }); };
-  map.on('zoomend moveend', () => setTimeout(declutter, 30)); setTimeout(declutter, 600); window.__declutter = declutter;
   map.attributionControl.setPrefix(false); window.__mtMap = map;
   map.on('click', (e) => {
     const pt = e.containerPoint, hits = [];
@@ -56,11 +54,90 @@ function satView(box, geo, cities, onPick) {
   const maxT = cities[0] ? cities[0].total : 1;
   const dots = new Map();
   const gC = L.layerGroup().addTo(map), gF = L.layerGroup().addTo(map);
-  for (const c of cities) {
+  // 짧은 이름: '전남 여수시' → '여수', '충남 논산시' → '논산'. 같은 짧은 이름이 둘이면 앞 지역을 붙인다.
+  const shortNm = (name) => { const t = String(name || '').trim().split(/\s+/).pop() || ''; const base = t.replace(/(특별자치시|특별자치도|특별시|광역시)$/, ''); const m = base.match(/^(.+)(시|군|구)$/); return (m && m[1].length >= 2) ? m[1] : (base || t); };
+  const nmCount = {}; for (const c of cities) { const s = shortNm(c.name); nmCount[s] = (nmCount[s] || 0) + 1; }
+  const placeNm = (c) => { const s = shortNm(c.name); if ((nmCount[s] || 0) < 2) return s; const p = String(c.name || '').trim().split(/\s+/); return p.length > 1 ? p[0] + ' ' + s : s; };
+  const nameTips = [];
+  let destTips = [];
+  cities.forEach((c, i) => {
     const m = L.circleMarker(toLL(c.p), {radius: c.total > 0 ? 4 + 13 * Math.sqrt(c.total / maxT) : 4, className: 'sdot', weight: 1.5, color: c.total > 0 ? '#fff' : '#8b97a5', fillColor: c.total > 0 ? '#0a84ff' : '#3a4450', fillOpacity: c.total > 0 ? 0.55 : 0.3, interactive: false});
     m.addTo(gC); dots.set(c.slug, m); const me2 = m.getElement && m.getElement(); if (me2) me2.setAttribute('data-s', c.slug);
-    if (cities.indexOf(c) < 14) L.tooltip({permanent: true, direction: 'right', className: 'klab', offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(c.name.split(' ').pop().replace(/(특별시|광역시|특별자치시)$/, '')).addTo(gC);
-  }
+    const feat = i < 14;
+    const tip = L.tooltip({permanent: true, direction: 'right', className: 'klab cname' + (feat ? ' feat' : ''), offset: [6, 0], interactive: false}).setLatLng(toLL(c.p)).setContent(placeNm(c)).addTo(gC);
+    tip._feat = feat; tip._rank = i; tip._m = m; nameTips.push(tip);
+    const el = tip.getElement && tip.getElement(); if (el) { el.dataset.s = c.slug; if (!feat) el.style.visibility = 'hidden'; }
+  });
+  const hitR = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+  const zoomedIn = () => map.getZoom() >= map.getBoundsZoom(korea, false) + 0.75;
+  // 전국 배율: 금액 큰 시 14곳만. 확대하면 화면에 보이는 시·군 마커는 짧은 이름. 실제로 겹치거나 버튼 위를 가리는 것만 숨긴다.
+  const declutter = () => {
+    const zIn = zoomedIn(), b = map.getBounds(), boxR = box.getBoundingClientRect(), seen = [];
+    const narrow = box.clientWidth < 520, EIN = 10, btnPad = narrow ? 14 : 8;
+    box.querySelectorAll('.leaflet-control, .map-home').forEach((el) => { const r = el.getBoundingClientRect(); if (r.width < 4 || r.height < 4) return; const p = (el.classList.contains('map-home') || el.querySelector('.map-home')) ? btnPad : 3; seen.push({left: r.left - p, right: r.right + p, top: r.top - p, bottom: r.bottom + p, _ctl: 1}); });
+    (box.parentElement || document).querySelectorAll('.resetbtn').forEach((el) => { const r = el.getBoundingClientRect(); if (r.width > 4 && r.height > 4 && hitR(r, boxR)) seen.push({left: r.left, right: r.right, top: r.top, bottom: r.bottom, _ctl: 1}); });
+    box.querySelectorAll('.leaflet-tooltip.stip').forEach((t) => {
+      t.style.visibility = 'visible'; t.style.marginLeft = '0px'; t.style.marginTop = '0px';
+      let r = t.getBoundingClientRect(); if (r.width < 2) return;
+      let dx = 0, dy = 0;
+      if (r.right > boxR.right - EIN) dx += boxR.right - EIN - r.right;
+      if (r.left + dx < boxR.left + EIN) dx += boxR.left + EIN - (r.left + dx);
+      if (r.bottom > boxR.bottom - EIN) dy += boxR.bottom - EIN - r.bottom;
+      if (r.top + dy < boxR.top + EIN) dy += boxR.top + EIN - (r.top + dy);
+      if (dx || dy) { t.style.marginLeft = dx + 'px'; t.style.marginTop = dy + 'px'; r = t.getBoundingClientRect(); }
+      const controls = seen.filter((q) => q._ctl);
+      for (let n = 0; n < 3 && controls.some((c) => hitR(r, c)); n++) {
+        const q = controls.find((c) => hitR(r, c));
+        const opts = [[0, q.top - r.bottom - 2], [0, q.bottom - r.top + 2], [q.left - r.right - 2, 0], [q.right - r.left + 2, 0]].sort((a, b) => Math.abs(a[0]) + Math.abs(a[1]) - (Math.abs(b[0]) + Math.abs(b[1])));
+        let cleared = false;
+        for (const [sx, sy] of opts) {
+          if (Math.abs(sx) + Math.abs(sy) > 72) continue;
+          const ml = (parseFloat(t.style.marginLeft) || 0) + sx, mt = (parseFloat(t.style.marginTop) || 0) + sy;
+          t.style.marginLeft = ml + 'px'; t.style.marginTop = mt + 'px';
+          const r2 = t.getBoundingClientRect();
+          if (r2.left >= boxR.left + 4 && r2.right <= boxR.right - 4 && r2.top >= boxR.top + 4 && r2.bottom <= boxR.bottom - 4 && !controls.some((c) => hitR(r2, c))) { r = r2; cleared = true; break; }
+          t.style.marginLeft = (ml - sx) + 'px'; t.style.marginTop = (mt - sy) + 'px';
+        }
+        if (!cleared) break;
+      }
+      if (r.right > boxR.right - 4 || r.left < boxR.left + 4 || controls.some((c) => hitR(r, c)) || seen.some((q) => !q._ctl && hitR(r, q))) t.style.visibility = 'hidden';
+      else seen.push({left: r.left, right: r.right, top: r.top, bottom: r.bottom});
+    });
+    const names = nameTips.concat(destTips).filter((t) => t._feat || zIn).sort((a, c) => a._rank - c._rank);
+    const want = new Set(names);
+    for (const t of nameTips.concat(destTips)) {
+      const el = t.getElement && t.getElement(); if (!el) continue;
+      el.style.marginLeft = '0px'; el.style.marginTop = '0px';
+      const on = want.has(t) && b.contains(t.getLatLng()) && !(t._m && !t._m.getRadius());
+      if (!on) { el.style.visibility = 'hidden'; continue; }
+      el.style.visibility = 'visible';
+      let r = el.getBoundingClientRect();
+      if (r.right > boxR.right - EIN) { el.style.marginLeft = (boxR.right - EIN - r.right) + 'px'; r = el.getBoundingClientRect(); }
+      if (r.left < boxR.left + EIN) { el.style.marginLeft = ((parseFloat(el.style.marginLeft) || 0) + (boxR.left + EIN - r.left)) + 'px'; r = el.getBoundingClientRect(); }
+      if (r.bottom > boxR.bottom - EIN) { el.style.marginTop = (boxR.bottom - EIN - r.bottom) + 'px'; r = el.getBoundingClientRect(); }
+      if (r.top < boxR.top + EIN) { el.style.marginTop = ((parseFloat(el.style.marginTop) || 0) + (boxR.top + EIN - r.top)) + 'px'; r = el.getBoundingClientRect(); }
+      const controls = seen.filter((q) => q._ctl);
+      for (let n = 0; n < 3; n++) {
+        const q = controls.find((c) => hitR(r, c)); if (!q) break;
+        const opts = [[0, q.top - r.bottom - 2], [0, q.bottom - r.top + 2], [q.left - r.right - 2, 0], [q.right - r.left + 2, 0]].sort((a, b) => Math.abs(a[0]) + Math.abs(a[1]) - (Math.abs(b[0]) + Math.abs(b[1])));
+        let cleared = false;
+        for (const [dx, dy] of opts) {
+          if (Math.abs(dx) + Math.abs(dy) > 72) continue;
+          const ml = (parseFloat(el.style.marginLeft) || 0) + dx, mt = (parseFloat(el.style.marginTop) || 0) + dy;
+          el.style.marginLeft = ml + 'px'; el.style.marginTop = mt + 'px';
+          const r2 = el.getBoundingClientRect();
+          const inBox = r2.left >= boxR.left + 4 && r2.right <= boxR.right - 4 && r2.top >= boxR.top + 4 && r2.bottom <= boxR.bottom - 4;
+          if (inBox && !controls.some((c) => hitR(r2, c))) { r = r2; cleared = true; break; }
+          el.style.marginLeft = (ml - dx) + 'px'; el.style.marginTop = (mt - dy) + 'px';
+        }
+        if (!cleared) break;
+      }
+      if (r.width < 2 || r.right > boxR.right - 4 || r.left < boxR.left + 4 || r.bottom > boxR.bottom - 2 || r.top < boxR.top + 2 || seen.some((q) => hitR(r, q))) el.style.visibility = 'hidden';
+      else seen.push(r);
+    }
+  };
+  map.on('zoomend moveend resize', () => setTimeout(declutter, 40)); setTimeout(declutter, 600); window.__declutter = declutter;
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(declutter, 80));
   const bez = (a, b) => {
     const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
     const mx = (a[0] + b[0]) / 2 - (dy / d) * o, my = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
@@ -81,7 +158,7 @@ function satView(box, geo, cities, onPick) {
     onsize: null,
     select(slug) { dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
-      gF.clearLayers();
+      gF.clearLayers(); destTips = [];
       list.forEach((f, i) => {
         const w = 2 + 9 * Math.sqrt(f.amount / maxA), col = f.local ? '#0a84ff' : '#ff9f0a';
         if (Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) >= 0.5) {
@@ -89,8 +166,15 @@ function satView(box, geo, cities, onPick) {
           const el2 = pl.getElement && pl.getElement(); if (el2) { el2.setAttribute('pathLength', '1'); el2.style.animationDelay = i * 60 + 'ms'; }
         }
         L.circleMarker(toLL(f.p), {radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false}).addTo(gF);
+        const dn = shortNm(f.to), ll = toLL(f.p);
+        const named = labels.some(([p]) => Math.hypot(p[0] - f.p[0], p[1] - f.p[1]) < 1.5) || nameTips.some((t) => { const a = t.getLatLng(); return Math.hypot(a.lat - ll[0], a.lng - ll[1]) < 0.03; });
+        if (dn && !named) {
+          const tip = L.tooltip({permanent: true, direction: 'left', className: 'klab cname cdest', offset: [-6, 0], interactive: false}).setLatLng(ll).setContent(dn).addTo(gF);
+          tip._feat = false; tip._rank = 1000 + i; destTips.push(tip);
+        }
       });
       for (const [p, t, me] of labels) L.tooltip({permanent: true, direction: 'top', className: 'stip' + (me ? ' me' : ''), offset: [0, -6]}).setLatLng(toLL(p)).setContent(t).addTo(gF);
+      setTimeout(declutter, 40);
     },
     fly(p, z) { vis(() => map.flyTo(toLL(p), Math.min(z, 9.5), {duration: 0.8, easeLinearity: 0.2})); },
     fit(pts) { vis(() => map.flyToBounds(L.latLngBounds(pts.map(toLL)).pad(0.25), {duration: 0.8, maxZoom: 8})); },
