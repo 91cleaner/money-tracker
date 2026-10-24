@@ -68,6 +68,15 @@ if (dl.last === '2026-10-24' && myTot === 19863897747) {
   const home = (my.flows || []).find((f) => f.to === '경남 밀양시');
   if (!home || home.amount > myTot || home.amount >= fl.cities.miryang.local) err.push(`밀양 우리 시 흐름 ${home && home.amount}`);
 }
+const ys = x30.cities.yeosu;
+const ysTot = sumTotal('yeosu', w30from < lo0 ? lo0 : w30from, dl.last);
+const ysHome = (ys.flows || []).find((f) => f.to === '전남 여수시');
+if (!(ys && ys.__pf && ys.local <= ys.known && ys.known <= ys.total && ys.total === ysTot)) err.push(`여수 30일 ${ys && ys.local} ${ys && ys.known} ${ys && ys.total} daily ${ysTot}`);
+if (dl.last === '2026-10-24' && ysTot === 8259794150) {
+  if (!ysHome || ysHome.amount !== 3973063040 || ysHome.amount >= fl.cities.yeosu.local) err.push(`여수 배지 ${ysHome && ysHome.amount}`);
+  const shown = (n) => (n / 1e8 >= 100 ? String(Math.round(n / 1e8)) : (n / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원';
+  if (shown(ysTot) !== '82.6억원' || shown(ysHome.amount) !== '39.7억원') err.push(`여수 표기 ${shown(ysTot)} ${ysHome && shown(ysHome.amount)}`);
+}
 
 if (err.length) {
   console.error(err.slice(0, 30).join('\n'));

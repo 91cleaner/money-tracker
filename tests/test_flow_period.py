@@ -44,6 +44,29 @@ class FlowPeriod(unittest.TestCase):
             self.assertEqual(kn, wt)
             self.assertLess(dest["경남 밀양시"][0], whole["local"])
 
+    def test_yeosu_city_badge_uses_the_period(self):
+        """도시 페이지 '우리 시' 배지는 시 좌표에 묻힌 우리 시 흐름이다. 여수 30일은 페이지 합계 82.6억 안이고, 전체 기간 146억이 아니다."""
+        dl = json.load(open(os.path.join(DATA, "daily.json"), encoding="utf-8"))
+        fd = json.load(open(os.path.join(DATA, "flow_daily.json"), encoding="utf-8"))
+        fl = json.load(open(os.path.join(DATA, "flows.json"), encoding="utf-8"))
+        whole = fl["cities"]["yeosu"]
+        for days, total, badge in ((7, 1457935590, 1223388570), (30, 8259794150, 3973063040), (0, 33534577840, 14622015050)):
+            fr, to = flows.window_of(dl, days)
+            lo, kn, dest = flows.sum_flow_window(fd, "yeosu", fr, to)
+            wt = sum(v[1] for day, v in dl["c"]["yeosu"].items() if fr <= day <= to)
+            home = dest["전남 여수시"][0]
+            self.assertLessEqual(lo, kn)
+            self.assertLessEqual(kn, wt)
+            self.assertLessEqual(home, wt)
+            self.assertEqual(home, lo)
+            if days:
+                self.assertLess(home, whole["local"])
+            else:
+                self.assertEqual(home, whole["local"])
+            if dl.get("last") == "2026-10-24":
+                self.assertEqual(wt, total)
+                self.assertEqual(home, badge)
+
     def test_js_fixflows_same_rules(self):
         r = subprocess.run(["node", os.path.join(os.path.dirname(__file__), "check_flow_period.js")], cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout + "\n" + r.stderr)
