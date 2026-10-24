@@ -32,7 +32,8 @@
     const asof = String(data.holdings_as_of || '').split('-');
     const when = asof.length === 3 ? `${+asof[0]}년 ${+asof[1]}월 ${+asof[2]}일` : '';
     box.innerHTML = `<div id="npsMap" class="nps-map" role="application" aria-label="국민연금 국내 주식 본사 지도"></div>
-      <p class="sub">동그라미가 클수록 들어간 돈이 많아요. 지도를 키우면 시·군·구가 보여요.</p>
+      <p class="maplg" aria-label="지도 범례"><i class="lg-dot"></i>클수록 돈이 많아요</p>
+      <p class="tm-line">회사 중심 사무실이 있는 곳이에요. 공장이나 일하는 사람은 다른 곳일 수 있어요.</p>
       <div id="npsPick" class="card pick"></div>
       <h3>지역 순위</h3>
       <div id="npsRank"></div>

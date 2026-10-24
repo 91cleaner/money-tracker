@@ -7,7 +7,7 @@
 <meta property="og:title" content="국민연금은 어떤 주식을 살까? · 세금추적단"><meta property="og:description" content="국민연금이 모아 둔 돈과 미국 주식. 미국 정부에 낸 보유 주식 목록을 우리 돈으로 보여 줘요.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%92%B0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="assets/refresh.css?v=202610247100">
+<link rel="stylesheet" href="assets/refresh.css?v=202610247500">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css?v=202610247400">
 <style>
 *{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#0d1117;color:#e8edf2;font-family:Pretendard,system-ui,sans-serif;font-size:15px;line-height:1.55}
@@ -15,7 +15,25 @@ a{color:#7fe8ff;overflow-wrap:anywhere}.nbar{position:sticky;top:0;z-index:10;di
 .w{max-width:760px;margin:0 auto;padding:16px 16px 24px}h1{font-size:27px;margin:8px 0;line-height:1.3}h2{font-size:20px;margin:0 0 10px}h3{font-size:16px;margin:16px 0 8px}
 section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:16px;margin:16px 0;min-width:0}
 .big{font-size:30px;font-weight:800;color:#ffb020;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.sub{color:#8fa0b3;font-size:13px;line-height:1.5}.src{font-size:12px;color:#8fa0b3;line-height:1.45}.src a{color:#8fa0b3}
-.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid #222b36;align-items:baseline}.row>span{min-width:0;overflow-wrap:anywhere}.row b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid #222b36;align-items:baseline;flex-wrap:wrap}.row>span{min-width:0;overflow-wrap:anywhere;flex:1 1 8em}.row b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.row b.amt{display:inline-flex;align-items:baseline;gap:4px;margin-left:auto;font-size:15px;font-weight:700}
+.row b.amt .sh{font-size:22px;font-weight:800;color:#ffb020;letter-spacing:-.03em;line-height:1.05}
+.row b.amt .of{display:block;font-size:12px;font-weight:800;line-height:1.2;text-align:right;letter-spacing:0}
+.steel{margin:14px 0 4px;padding:12px 10px 10px;background:#07080a;border:1px solid #3a424a;border-radius:2px;box-shadow:inset 0 1px 0 #c5ced6,inset 0 -1px 0 #000}
+.steel-stage{perspective:720px;display:grid;place-items:center;min-height:230px}
+.steel-tilt{position:relative;width:min(100%,280px);transform:rotateX(22deg) rotateZ(-16deg);transform-style:preserve-3d;animation:steel-in 1.15s cubic-bezier(.16,.84,.24,1) both}
+.steel-tilt svg{display:block;width:100%;height:auto;overflow:visible}
+.steel-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotateZ(16deg) rotateX(-22deg);color:#f4f7fb;pointer-events:none;text-align:center}
+.steel-num b{font-family:Bahnschrift,"DIN Alternate","Arial Narrow",Pretendard,sans-serif;font-size:32px;font-weight:800;letter-spacing:-.06em;line-height:1;font-variant-numeric:tabular-nums}
+.steel-num span{margin-top:4px;font-size:12px;font-weight:800;letter-spacing:.12em;color:#d5dde6}
+.steel-lg{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px 12px}
+.steel-lg li{display:flex;align-items:baseline;gap:6px;min-width:0;font-size:12px;line-height:1.35;color:#e8eef4}
+.steel-lg i{flex:none;width:10px;height:10px;background:#c5ced6;box-shadow:inset 0 0 0 1px #f4f8fc}
+.steel-lg span{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.steel-lg b{flex:none;font-variant-numeric:tabular-nums;font-weight:800;letter-spacing:-.03em}
+@keyframes steel-in{from{transform:rotateX(22deg) rotateZ(-108deg)}to{transform:rotateX(22deg) rotateZ(-16deg)}}
+@media(prefers-reduced-motion:reduce){.steel-tilt{animation:none}}
+@media(min-width:520px){.steel-lg{grid-template-columns:1fr 1fr}}
 .bar{height:8px;border-radius:4px;background:#ffb020;margin-top:4px;max-width:100%}.bar.g{background:#3ddc84}.bar.r{background:#ff6b6b}
 .tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid #3a4652;color:#b8c3cf;margin:2px 4px 0 0;line-height:1.45}.tag.y{border-color:#ffd60a66;color:#ffd60a}
 .note{background:#0f141b;border-radius:10px;padding:10px 12px;font-size:13px;color:#b8c3cf;margin:10px 0;line-height:1.5}
@@ -27,12 +45,13 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
 .krnote{margin:0 0 8px;padding:8px 12px;border-radius:10px;background:#151b23;color:#b8c3cf;font-size:13px;line-height:1.45}
 @media(min-width:900px){.w{max-width:980px;padding-left:22px;padding-right:22px}.words{grid-template-columns:1fr 1fr}}
 @media(min-width:1280px){.w{max-width:1120px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.pair section{margin:16px 0}}
-#s5{overflow:hidden}
-#s5 .nps-map{height:300px;width:100%;max-width:100%;border-radius:12px;overflow:hidden;background:#0b0f13;position:relative;z-index:0}
-@media(min-width:800px){#s5 .nps-map{height:480px}}
+#s5.topmap{background:transparent;border:0;padding:0;margin:0 0 8px;border-radius:0;overflow:visible}
+#s5 .nps-map{height:50dvh;min-height:300px;width:100%;max-width:100%;border-radius:0;overflow:hidden;background:#0b0f13;position:relative;z-index:0}
+@media(max-width:899px){#s5 .nps-map{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw)}}
+@media(min-width:900px){#s5 .nps-map{height:52dvh;min-height:420px;max-height:560px;border-radius:16px}}
 #s5 .leaflet-container{font:12px/1.35 Pretendard,system-ui,sans-serif;background:#0b0f13}
-#s5 .leaflet-control-attribution{font-size:11px!important;line-height:1.35!important;background:rgba(0,0,0,.55)!important;color:#9aa5b1!important;max-width:68%;white-space:normal}
-#s5 .leaflet-control-attribution a{color:#b8c2cc!important;font-size:11px}
+#s5 .leaflet-control-attribution{font-size:12px!important;line-height:1.35!important;background:rgba(0,0,0,.55)!important;color:#c5d0da!important;max-width:68%;white-space:normal}
+#s5 .leaflet-control-attribution a{color:#c5d0da!important;font-size:12px!important}
 #s5 .leaflet-bar a{background:#11171de6;color:#e8eef5;border-color:#2a3540;width:44px;height:44px;line-height:44px;font-size:18px}
 #s5 .leaflet-bar a:hover{background:#1a232e}
 #s5 .map-home{display:inline-flex;align-items:center;justify-content:center;gap:4px;box-sizing:border-box;min-width:44px;min-height:44px;height:44px;margin:0;padding:0 10px;border-radius:10px;border:1px solid #2a3540;background:#11171de6;color:#e8eef5;font:700 13px/1 Pretendard,system-ui,sans-serif;white-space:nowrap;cursor:pointer}
@@ -47,6 +66,10 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
 <body data-page="nps">
 <header class="nbar"><a href="./">‹ 세금추적단</a><span>갱신 <span id="upd"></span></span></header>
 <main class="w">
+  <section id="s5" class="topmap">
+    <h2 class="topmap-h">우리 지역 회사 주식</h2>
+    <div id="npsMapBox"></div>
+  </section>
   <h1>국민연금은 어떤 주식을 살까?</h1>
   <p class="sub">국민연금은 우리가 낸 연금 보험료를 모아 불려서 나중에 연금으로 줘요. 이 돈의 일부로 주식을 사요. 여기 숫자는 사람들이 보도록 공개한 자료에 나온 값이고, 좋고 나쁨을 따지는 게 아니에요.</p>
   <ul class="words">
@@ -71,12 +94,6 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
   </div>
   <section id="s3"><h2>많이 늘린 주식 · 많이 줄인 주식</h2><div id="chg"></div></section>
   <section id="s4"><h2>국내 주식</h2><div id="kr"></div></section>
-  <section id="s5">
-    <h2>우리 지역 회사에 국민연금 돈이 얼마나 들어갔나</h2>
-    <p class="sub">국민연금이 우리나라 회사 주식을 산 돈을, 그 회사의 중심 사무실이 있는 지역으로 모았어요.</p>
-    <p class="note">회사 본사가 있는 곳 기준이에요. 공장이나 일하는 사람은 다른 곳에 있을 수 있어요.</p>
-    <div id="npsMapBox"></div>
-  </section>
   <div id="nps-fun" class="fun-sec"></div>
   <p class="prin-link"><a href="principles.html">중립성 원칙 + 정정 요청</a></p>
   <footer>
@@ -84,9 +101,9 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
   </footer>
 </main>
 <script src="assets/vendor/leaflet/leaflet.js?v=202610247400"></script>
-<script src="assets/nps.js?v=202610246800"></script>
-<script src="assets/nps-map.js?v=202610247500"></script>
+<script src="assets/nps.js?v=202610247600"></script>
+<script src="assets/nps-map.js?v=202610247600"></script>
 <script src="assets/fun.js?v=202610247100"></script>
-<script src="assets/nav.js?v=202610247300"></script>
+<script src="assets/nav.js?v=202610247600"></script>
 </body>
 </html>
