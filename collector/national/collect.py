@@ -39,7 +39,7 @@ def api(code, **p):
         head, body = d[code][0]["head"], (d[code][1].get("row", []) if len(d[code]) > 1 else [])
         total = head[0].get("list_total_count")
         rows += body
-        if not body or len(rows) >= (total or 0) or q["pIndex"] > 50:
+        if not AK or not body or len(rows) >= (total or 0) or q["pIndex"] > 50:  # 키 없으면 같은 5건만 반복됨
             break
         q["pIndex"] += 1; time.sleep(0.3)
     log.append(f"{code}: {len(rows)}/{total}건" + ("" if AK else " (인증키 없이)"))
@@ -66,7 +66,9 @@ def main():
                 "elect": r.get("ELECT_GBN_NM"), "reele": r.get("REELE_GBN_NM"), "cmits": r.get("CMITS"),
                 "office": "국회의원회관 " + (r.get("ASSEM_ADDR") or "").replace("의원회관", "").strip(),
                 "region": sido_of(r.get("ORIG_NM")) or "서울 영등포구(비례대표)",
-                "src": BASE + "nwvrqwxyaytdsfvhu"} for r in rows if r.get("HG_NM")]
+                "src": BASE + "nwvrqwxyaytdsfvhu"} for r in {x.get("MONA_CD"): x for x in rows}.values() if r.get("HG_NM")]
+    if not AK:
+        log.append(f"의원 명단: 인증키 없이 {len(members)}명만 받음 → ASSEMBLY_KEY 필요(전체 {299}명 중)")
     if len(members) < len(old.get("members", [])):  # sample 키 등으로 줄어들면 이전 명단 유지
         members = old["members"]; log.append("의원 명단: 새로 받은 건이 적어 이전 명단 유지")
     # 국외활동 신고(해외출장) — 코드가 확인되면 채움
