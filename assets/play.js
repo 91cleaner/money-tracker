@@ -60,7 +60,15 @@
       fetch('data/index.json', {cache: 'no-cache'}).then((r) => r.json()).catch(() => null),
     ]).then(([d, ix]) => { D = d; IX = ix; const fest = ITEMS.find((x) => x.k === 'fest'); if (fest) { fest.p = Math.round(d.med || 0); if (d.n_all) fest.src = `${d.cost_year || d.year || 2024}년 축제 ${Number(d.n_all).toLocaleString('ko-KR')}개의 보통 비용(지방재정365 자료를 우리 시 돈 추적기가 계산)`; if (!fest.p) ITEMS.shift(); } render(); }).catch(() => { fg.innerHTML = '<p class="fg-load">자료를 못 불러왔어요. 잠시 뒤 다시 해 봐요.</p>'; built = false; }); };
   const render = () => {
-    const rows = (D.ratio || []).filter((r) => r.fest > 0).sort((a, b) => a.cname.localeCompare(b.cname, 'ko'));
+    const seenCity = new Set();
+    const rows = (D.ratio || []).filter((r) => r.fest > 0).filter((r) => {
+      const id = r.slug || r.id || r.gov || '';
+      const name = r.cname || '';
+      if ((id && seenCity.has('id:' + id)) || (name && seenCity.has('nm:' + name))) return false;
+      if (id) seenCity.add('id:' + id);
+      if (name) seenCity.add('nm:' + name);
+      return true;
+    }).sort((a, b) => a.cname.localeCompare(b.cname, 'ko'));
     C = pickCity(rows);
     fg.innerHTML = `<h2 class="fg-h">우리 시 행사·축제 예산 써보기</h2>
       <p class="fg-par">neal.fun의 'Spend Bill Gates' Money'를 따라 만든 <b>장난 게임</b>이에요. 진짜 돈을 쓰는 곳이 아니고, 행사·축제 예산이 얼마나 큰지 감을 잡아 보는 용도예요.</p>

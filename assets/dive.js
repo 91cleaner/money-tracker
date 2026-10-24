@@ -129,6 +129,8 @@
   // 라벨 겹침: 발주 라벨 먼저 자리 잡고, 나머지는 위아래로 조금씩 밀어 보고 그래도 겹치면 숨김
   const declutter = () => { const narrow = box.clientWidth < 520, G = narrow ? 16 : 12, IN = 12, btnPad = narrow ? 14 : 8, hit = (r, q) => !(r.right + G < q.left || r.left - G > q.right || r.bottom + G < q.top || r.top - G > q.bottom), seen = [], miss = [];
     box.querySelectorAll('.leaflet-control, .map-home').forEach((el) => { const r = el.getBoundingClientRect(); if (r.width < 4 || r.height < 4) return; const p = (el.classList.contains('map-home') || el.querySelector('.map-home')) ? btnPad : 3; seen.push({left: r.left - p, right: r.right + p, top: r.top - p, bottom: r.bottom + p, _ctl: 1}); });
+    // 우리 시 뱃지는 고리 옆에 두고, 금액·고른 시 이름표가 그 칸을 피하게 한다
+    box.querySelectorAll('.loc-badge').forEach((el) => { const r = el.getBoundingClientRect(); if (r.width < 4 || r.height < 4) return; seen.push({left: r.left - 4, right: r.right + 4, top: r.top - 4, bottom: r.bottom + 4, _badge: 1}); });
     const bb = box.getBoundingClientRect(), inB = (r) => r.left >= bb.left + IN && r.right <= bb.right - IN && r.top >= bb.top + IN && r.bottom <= bb.bottom - Math.max(IN, 18);
     const live = new Set(); for (const g of [gF, gL]) if (map.hasLayer(g)) g.eachLayer((l) => { const e = l.getElement && l.getElement(); if (e) live.add(e); });
     box.querySelectorAll('.dv-org, .dv-amt').forEach((e) => { if (!live.has(e)) e.remove(); });
@@ -159,7 +161,7 @@
       if (t.classList.contains('dv-rc')) { t.classList.add('dv-sm'); if (place(t)) return; t.classList.remove('dv-sm'); }  // 작게 줄여서 한 번 더
       t.style.visibility = 'hidden'; if (t.classList.contains('dv-rc')) miss.push(t.textContent); });
     // 실제 칸으로 다시 재고, 지도 가장자리·처음으로 버튼·서로 겹친 금액 라벨을 떨어뜨린다
-    { const controls = seen.filter((q) => q._ctl), gap = 6, boxOf = (el) => { const r = el.getBoundingClientRect(); return {left: r.left, right: r.right, top: r.top, bottom: r.bottom}; };
+    { const fixed = seen.filter((q) => q._ctl || q._badge), gap = 8, boxOf = (el) => { const r = el.getBoundingClientRect(); return {left: r.left, right: r.right, top: r.top, bottom: r.bottom}; };
       const clash = (a, b) => !(a.right + gap < b.left || a.left - gap > b.right || a.bottom + gap < b.top || a.top - gap > b.bottom);
       const kept = [];
       for (const t of L_) { if (t.style.visibility === 'hidden') continue;
@@ -169,8 +171,8 @@
         if (r.bottom > bb.bottom - IN) dy += bb.bottom - IN - r.bottom;
         if (r.top + dy < bb.top + IN) dy += bb.top + IN - (r.top + dy);
         if (dx || dy) { t.style.marginLeft = ((parseFloat(t.style.marginLeft) || 0) + dx) + 'px'; t.style.marginTop = ((parseFloat(t.style.marginTop) || 0) + dy) + 'px'; r = boxOf(t); }
-        const obstacles = controls.concat(kept);
-        if (obstacles.some((q) => clash(r, q)) || r.right > bb.right - 2 || r.left < bb.left + 2) {
+        const obstacles = fixed.concat(kept);
+        if (obstacles.some((q) => clash(r, q)) || r.right > bb.right - 2 || r.left < bb.left + 2 || r.bottom > bb.bottom - 2 || r.top < bb.top + 2) {
           const baseL = parseFloat(t.style.marginLeft) || 0, baseT = parseFloat(t.style.marginTop) || 0;
           const tries = [[0, -32], [0, 32], [0, -56], [0, 56], [-48, 0], [48, 0], [0, 78], [0, -78], [-72, 28], [72, 28], [-72, -28], [36, 48], [-36, -48]];
           let ok = false;
@@ -180,7 +182,7 @@
         }
         kept.push(r);
       }
-      seen.splice(0, seen.length, ...controls, ...kept);
+      seen.splice(0, seen.length, ...fixed, ...kept);
     }
     // 지도에 끝내 못 넣은 도착지 라벨은 지도 아래 줄에 (지도 위에 겹치지 않게)
     let m = root.querySelector('.dv-miss'); if (!m) { m = document.createElement('p'); m.className = 'dv-miss'; const dn = root.querySelector('.dv-down'); dn ? dn.before(m) : box.after(m); }
@@ -189,8 +191,9 @@
     m.textContent = [miss.length ? '이름표를 못 단 화살표: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '화살표 없는 곳: ' + rs : ''].filter(Boolean).join(' / '); m.hidden = !parts.length;
     // 확대하면 화면에 보이는 시 마커마다 짧은 이름. 금액 라벨·버튼과 실제로 겹치는 이름만 숨긴다.
     const baseZ = (homeSnap && homeSnap.z) || map.getBoundsZoom(KR, false), zIn = map.getZoom() >= baseZ + 0.75, bnds = map.getBounds(), boxR = box.getBoundingClientRect();
-    const hit0 = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
-    const ranked = nameTips.slice().sort((a, c) => a._rank - c._rank);
+    const hit0 = (a, b) => !(a.right + 6 < b.left || a.left - 6 > b.right || a.bottom + 6 < b.top || a.top - 6 > b.bottom);
+    const selFirst = (t) => { const el = t.getElement && t.getElement(); return el && cur && el.dataset.s === cur ? -1 : t._rank; };
+    const ranked = nameTips.slice().sort((a, c) => selFirst(a) - selFirst(c));
     for (const t of ranked) {
       const el = t.getElement && t.getElement(); if (!el) continue;
       el.style.marginLeft = '0px'; el.style.marginTop = '0px';
@@ -203,24 +206,23 @@
       if (r.left < boxR.left + EIN) { el.style.marginLeft = ((parseFloat(el.style.marginLeft) || 0) + (boxR.left + EIN - r.left)) + 'px'; r = el.getBoundingClientRect(); }
       if (r.bottom > boxR.bottom - EIN) { el.style.marginTop = (boxR.bottom - EIN - r.bottom) + 'px'; r = el.getBoundingClientRect(); }
       if (r.top < boxR.top + EIN) { el.style.marginTop = ((parseFloat(el.style.marginTop) || 0) + (boxR.top + EIN - r.top)) + 'px'; r = el.getBoundingClientRect(); }
-      const controls = seen.filter((q) => q._ctl);
-      for (let n = 0; n < 3; n++) {
-        const q = controls.find((c) => hit0(r, c)); if (!q) break;
-        const opts = [[0, q.top - r.bottom - 2], [0, q.bottom - r.top + 2], [q.left - r.right - 2, 0], [q.right - r.left + 2, 0]].sort((a, b) => Math.abs(a[0]) + Math.abs(a[1]) - (Math.abs(b[0]) + Math.abs(b[1])));
-        let cleared = false;
-        for (const [dx, dy] of opts) {
-          if (Math.abs(dx) + Math.abs(dy) > 72) continue;
-          const ml = (parseFloat(el.style.marginLeft) || 0) + dx, mt = (parseFloat(el.style.marginTop) || 0) + dy;
-          el.style.marginLeft = ml + 'px'; el.style.marginTop = mt + 'px';
+      const blockers = seen.slice();
+      const mine = !!(cur && el.dataset.s === cur);
+      if (blockers.some((q) => hit0(r, q)) || r.right > boxR.right - 4 || r.left < boxR.left + 4 || r.bottom > boxR.bottom - 2 || r.top < boxR.top + 2) {
+        const baseL = parseFloat(el.style.marginLeft) || 0, baseT = parseFloat(el.style.marginTop) || 0;
+        const tries = [[0, -28], [0, 30], [0, -52], [0, 54], [-46, -8], [50, -8], [0, -76], [0, 78], [-80, 18], [80, 18], [-80, -24], [36, -40]];
+        if (mine) tries.push([0, -100], [0, 102], [-110, 0], [112, 0], [0, -126], [-124, 30], [124, -22], [0, 126]);
+        let moved = null;
+        for (const [dx, dy] of tries) {
+          el.style.marginLeft = (baseL + dx) + 'px'; el.style.marginTop = (baseT + dy) + 'px';
           const r2 = el.getBoundingClientRect();
-          const inBox = r2.left >= boxR.left + 4 && r2.right <= boxR.right - 4 && r2.top >= boxR.top + 4 && r2.bottom <= boxR.bottom - 4;
-          if (inBox && !controls.some((c) => hit0(r2, c))) { r = r2; cleared = true; break; }
-          el.style.marginLeft = (ml - dx) + 'px'; el.style.marginTop = (mt - dy) + 'px';
+          const inBox = r2.width > 2 && r2.left >= boxR.left + 4 && r2.right <= boxR.right - 4 && r2.top >= boxR.top + 4 && r2.bottom <= boxR.bottom - 4;
+          if (inBox && !blockers.some((q) => hit0(r2, q))) { moved = r2; break; }
         }
-        if (!cleared) break;
+        if (moved) r = moved; else { el.style.marginLeft = baseL + 'px'; el.style.marginTop = baseT + 'px'; r = el.getBoundingClientRect(); }
       }
       if (r.width < 2 || r.right > boxR.right - 4 || r.left < boxR.left + 4 || r.bottom > boxR.bottom - 2 || r.top < boxR.top + 2 || seen.some((q) => hit0(r, q))) el.style.visibility = 'hidden';
-      else seen.push(r);
+      else seen.push({left: r.left, right: r.right, top: r.top, bottom: r.bottom});
     }
   };
   let REST = {n: 0, amt: 0}, flowRefs = [], locMk = null;
@@ -257,10 +259,15 @@
     const sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
     const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>우리 시 ${krw(sum)}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
     locMk = L.marker(toLL(flowRefs[0].a), {pane: 'markerPane', interactive: false, keyboard: false, icon, zIndexOffset: 800}).addTo(gF);
-    const seat = () => seatBadge(map, locMk); seat(); setTimeout(seat, 40);
+    seatBadge(map, locMk);
   };
-  map.on('zoomend moveend resize', () => { setTimeout(declutter, 40); setTimeout(sinkLocal, 70); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(declutter, 60));
+  // 뱃지를 앉힌 뒤에 겹침을 본다. 맞춤·타일·글꼴이 끝난 뒤에도 한 번 더.
+  let relayoutT = 0, relayoutT2 = 0;
+  const relayout = () => { sinkLocal(); declutter(); };
+  const scheduleRelayout = () => { clearTimeout(relayoutT); clearTimeout(relayoutT2); relayoutT = setTimeout(relayout, 70); relayoutT2 = setTimeout(relayout, 420); };
+  map.on('zoomend moveend resize', scheduleRelayout);
+  tiles.on('load', scheduleRelayout);
+  if (document.fonts) { document.fonts.ready.then(scheduleRelayout); document.fonts.addEventListener('loadingdone', scheduleRelayout); }
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
   // 세금 길: 도시 → 업체 소재지 선 그리기
   const drawFlows = (slug, hold) => {
@@ -284,7 +291,7 @@
     });
     const oc = BY[slug] || {}; L.circleMarker(toLL(a), {pane: 'dvTop', renderer: gTop, radius: 15, color: '#0b0f13', weight: 6, opacity: 0.7, fill: false, interactive: false, className: 'dv-ring-bg'}).addTo(gF); L.circleMarker(toLL(a), {pane: 'dvTop', renderer: gTop, radius: 15, color: '#ffd60a', weight: 3, fill: false, interactive: false, className: 'dv-ring'}).addTo(gF);
     L.tooltip({permanent: true, direction: 'top', className: 'klab dv-org', offset: [0, -10], interactive: false}).setLatLng(toLL(a)).setContent(esc((oc.name || '') + ' (일을 맡긴 곳)')).addTo(gF);
-    setTimeout(declutter, 50); setTimeout(sinkLocal, 80); FX.set(arcs, hold);
+    scheduleRelayout(); FX.set(arcs, hold);
   };
   // 돈 흐름 입자 (canvas · 도시 화면에서만)
   const FX = (() => { const pane = map.createPane('fx'); pane.style.zIndex = 450; pane.style.pointerEvents = 'none'; const cv = document.createElement('canvas'); cv.className = 'dv-fx'; cv.setAttribute('aria-hidden', 'true'); pane.append(cv); let held = false;
@@ -315,7 +322,7 @@
     map.invalidateSize({pan: false}); drawFlows(slug, true);
     if (RM || !box.clientWidth) { map.fitBounds(bd, {...o, animate: false}); FX.on(); return; }
     map.flyToBounds(bd, {...o, duration: 0.7});
-    map.once('moveend', () => { if (my !== seq) return; map.invalidateSize({pan: false}); declutter(); FX.on(); }); setTimeout(() => { if (my === seq) FX.on(); }, 900); };
+    map.once('moveend', () => { if (my !== seq) return; map.invalidateSize({pan: false}); scheduleRelayout(); FX.on(); }); setTimeout(() => { if (my === seq) FX.on(); }, 900); };
 
   // 검색: 시 이름·주소(시+구)
   const GU = {seoul: '종로 중 용산 성동 광진 동대문 중랑 성북 강북 도봉 노원 은평 서대문 마포 양천 강서 구로 금천 영등포 동작 관악 서초 강남 송파 강동', busan: '중 서 동 영도 부산진 동래 남 북 해운대 사하 금정 강서 연제 수영 사상', daegu: '중 동 서 남 북 수성 달서', incheon: '중 동 미추홀 연수 남동 부평 계양 서', gwangju: '동 서 남 북 광산', daejeon: '동 중 서 유성 대덕', ulsan: '중 남 동 북',
@@ -397,7 +404,7 @@
     L_.forEach(([c, v]) => homeLab(c, v)); };
   window.__dvCat = (k) => { CAT = k || '전체'; const mx = Math.max(1, ...cities.map((c) => TOT(c.slug)));
     dots.forEach((m, s) => { const v = TOT(s); m.setRadius(v ? 4 + 13 * Math.sqrt(v / mx) : 3); m.setStyle({fillOpacity: v ? 0.5 : 0.1, opacity: v ? 1 : 0.3}); });
-    homeLabels(); if (!cur) L0(true); else dim(cur); setTimeout(declutter, 60); };
+    homeLabels(); if (!cur) L0(true); else dim(cur); scheduleRelayout(); };
   if (window.__mtCat && window.__mtCat !== '전체') setTimeout(() => window.__dvCat(window.__mtCat), 0);
   // 분야 TOP 5 시 카드 (공식 데이터: by_cat·n_cat, 행사대행은 시 계약 행에서 계산)
   // 개인 이름처럼 보이는 업체명(법인·상호 표지 없음, 흔한 성씨+1~3자)은 '개인사업자'로
@@ -415,7 +422,7 @@
     return `<div class="t5"><div class="t5-h"><b>${esc(CAT)} TOP 5 시</b>${shb(CAT + ' 계약 TOP 5 시 · 우리 시 돈 추적기', './?cat=' + encodeURIComponent(CAT))}</div><ol>${L_.map(({c, v, n}, i) =>
       `<li><button type="button" data-s="${c.slug}"><span class="t5-r">${i + 1}</span><span class="t5-m"><b>${esc(c.short || c.name)}</b><small>${n}건 · 건당 평균 ${krw(n ? v / n : v)}</small><small class="t5-v" data-s="${c.slug}"></small>${fest ? `<small class="t5-ag" data-s="${c.slug}"></small>` : ''}</span><em>${krw(v)}</em></button></li>`).join('')}</ol>
       ${fest ? '<p class="small t5-n">공연 용역 금액에는 무대·음향·연출이 포함되며 개인 출연료가 아님 · 행사대행은 축제 전체 운영 계약</p>' : ''}<p class="dv-src">출처 조달청 나라장터</p></div>`; };
-  const L0 = (keep) => { cur = null; seq++; gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(declutter, 900); setH(0); dim(null);
+  const L0 = (keep) => { cur = null; seq++; flowRefs = []; if (locMk) { locMk.remove(); locMk = null; } gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(relayout, 960); setH(0); dim(null);
     if (box.clientWidth && keep !== true) { userMoved = false; map._dvHome = 1; map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8}); }
     const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
     strip(null); body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
