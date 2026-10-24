@@ -103,12 +103,14 @@
         return { name, lat: g.lat / g.n, lng: g.lng / g.n, value: n * per };
       }).filter(Boolean);
       const people = Object.values(counts).reduce((a, n) => a + n, 0);
-      return { points, line: esc(`지역구 의원 ${people.toLocaleString('ko-KR')}명에게 1년 주도록 정한 돈을 지역별로 더했어요.`) };
+      // 정부 돈은 국회(여의도)에서 지역으로 나가는 선으로 그린다. 우리 동네 세금 지도와 같은 모양.
+      const origin = { name: '국회', lat: 37.5319, lng: 126.914, legend: '국회(여의도)', to: '지역구로 간 돈' };
+      return { points, origin, line: esc(`지역구 의원 ${people.toLocaleString('ko-KR')}명에게 1년 주도록 정한 돈을 지역별로 더했어요. 선이 굵을수록 돈이 많아요.`) };
     }
     return { points: [], line: '' };
   }
 
-  function draw(points, line) {
+  function draw(points, line, origin) {
     const note = line || '';
     const box = document.createElement('div');
     box.className = 'tm-map';
@@ -154,8 +156,19 @@
     const layer = L.layerGroup().addTo(map);
     const markers = [];
     const ordered = points.slice().sort((a, b) => b.value - a.value);
+    const OUT = window.mtOut || '#ff9f0a';
+    const bend = (a, b) => { // 위경도로 휘는 선 (가까운 곳도 휘어 보이게)
+      const dx = b[1] - a[1], dy = b[0] - a[0], d = Math.hypot(dx, dy) || 1, o = d * 0.3, pts = [];
+      const c = [(a[0] + b[0]) / 2 + (dx / d) * o, (a[1] + b[1]) / 2 - (dy / d) * o];
+      for (let t = 0; t <= 1.0001; t += 1 / 24) { const u = 1 - t; pts.push([u * u * a[0] + 2 * u * t * c[0] + t * t * b[0], u * u * a[1] + 2 * u * t * c[1] + t * t * b[1]]); }
+      return pts;
+    };
     ordered.forEach((it, i) => {
-      const m = L.circleMarker([it.lat, it.lng], {
+      const w = origin ? (window.mtW ? mtW(it.value, max) : 1.5 + 7 * Math.sqrt(it.value / max)) : 0;
+      if (origin) L.polyline(bend([origin.lat, origin.lng], [it.lat, it.lng]), { color: OUT, weight: w, opacity: 0.8, lineCap: 'round', interactive: false }).addTo(layer);
+      const m = L.circleMarker([it.lat, it.lng], origin ? {
+        radius: 3 + w / 2.5, weight: 1.5, color: '#fff', fillColor: OUT, fillOpacity: 0.95,
+      } : {
         radius: 4 + 16 * Math.sqrt(it.value / max),
         weight: 1.5, color: '#fff', fillColor: '#0a84ff', fillOpacity: 0.72,
       });
@@ -173,6 +186,17 @@
           .setLatLng([it.lat, it.lng]).setContent(esc(it.name)).addTo(layer);
       }
     });
+    if (origin) {
+      L.circleMarker([origin.lat, origin.lng], { radius: 8, weight: 3, color: '#fff', fillColor: '#0a84ff', fillOpacity: 1, interactive: false }).addTo(layer);
+      L.tooltip({ permanent: true, direction: 'left', className: 'klab', offset: [-8, 0], interactive: false })
+        .setLatLng([origin.lat, origin.lng]).setContent(esc(origin.name)).addTo(layer);
+      if (window.mtLegend) mtLegend(box, [
+        { t: 'dot', c: '#0a84ff', l: origin.legend },
+        { t: 'ln', c: OUT, l: origin.to },
+        { t: 'w', c: OUT, l: '선이 굵을수록 돈이 많아요' },
+      ]);
+      box.setAttribute('aria-label', '한국 지도. ' + origin.legend + '에서 지역으로 선을 그었어요. 굵을수록 돈이 많아요.');
+    }
     map.on('click', () => {
       markers.forEach((x) => x.setStyle({ weight: 1.5, color: '#fff' }));
       lineEl.innerHTML = note;
@@ -271,7 +295,8 @@
       routeLayer.clearLayers();
       lineEl.textContent = (pack && pack.title) || '';
       if (headEl) headEl.textContent = '해외출장 지도';
-      lg.innerHTML = '<i class="lg-ln" style="background:#ffb020"></i>선 = 한국에서 다녀온 곳';
+      if (window.mtLegend) mtLegend(box, [{ t: 'dot', c: '#4da3ff', l: '한국(여의도)' }, { t: 'ln', c: '#ffb020', l: '다녀온 곳' }]);
+      else lg.innerHTML = '<i class="lg-ln" style="background:#ffb020"></i>선 = 한국에서 다녀온 곳';
       box.setAttribute('aria-label', '세계 지도. 선은 한국에서 다녀온 곳이에요.');
       L.circleMarker(se, { radius: 7, weight: 2, color: '#fff', fillColor: '#4da3ff', fillOpacity: 1, interactive: false }).addTo(routeLayer)
         .bindTooltip('한국', { permanent: false, direction: 'top', className: 'klab', opacity: 1 });
@@ -313,6 +338,12 @@
       map.setMaxBounds([[30.5, 121], [41, 134]]);
     };
     window.__mpRoutes = { show: showRoutes, reset: resetRoutes };
+    // 처음으로: 지금 보는 지도(한국 또는 출장 세계 지도)를 처음 모습으로
+    if (window.mtHome) {
+      const hm = mtHome(map, () => { if (mode === 'world') fitRoutes(!matchMedia('(prefers-reduced-motion: reduce)').matches); else map.fitBounds(korea, { animate: !matchMedia('(prefers-reduced-motion: reduce)').matches, padding: [18, 22] }); }, 'topright');
+      map.on('movestart zoomstart', () => hm.mark(false));
+      map.on('moveend', () => setTimeout(() => { const b = mode === 'world' ? routeFit : korea; if (b) hm.mark(map.getBounds().pad(0.05).contains(b) && map.getZoom() <= map.getBoundsZoom(b) + 0.3); }, 0));
+    }
     if (window.__mpRouteQueue) { const q = window.__mpRouteQueue; window.__mpRouteQueue = null; showRoutes(q); }
 
     map.on('zoomend moveend resize', () => requestAnimationFrame(declutter));
@@ -323,5 +354,5 @@
     setTimeout(() => { map.invalidateSize(); declutter(); }, 200);
   }
 
-  load().then((pack) => draw(pack.points, pack.line)).catch(() => say('지도를 불러오지 못했어요.'));
+  load().then((pack) => draw(pack.points, pack.line, pack.origin)).catch(() => say('지도를 불러오지 못했어요.'));
 })();

@@ -67,17 +67,22 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
 #s5 button.row{width:100%;max-width:100%;background:none;color:inherit;font:inherit;text-align:left;border:0;border-top:1px solid #222b36;cursor:pointer;border-radius:0}
 #s5 button.row.on{background:#0f141b}
 #s5 .pick{margin-top:10px}
+#s5 .nps-view{display:flex;gap:8px;margin:0 0 10px}
+#s5 .nps-view button{flex:1 1 0;min-height:44px;padding:0 12px;border-radius:12px;border:1px solid #3a4652;background:#151b23;color:#f4f7fb;font:800 16px/1 Pretendard,system-ui,sans-serif;cursor:pointer}
+#s5 .nps-view button[aria-pressed="true"]{background:#ffb020;color:#14110a;border-color:#ffb020}
+#s5 .nps-tot{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0 0}
+#s5 .nps-tot>div{display:grid;gap:2px;padding:10px 12px;border:1px solid #2a3541;border-radius:12px;background:#0f141b}
+#s5 .nps-tot b{font-size:20px;line-height:1.25}
+#s5 .nps-more{width:100%;min-height:44px;margin-top:8px;border-radius:12px;border:1px solid #2a3541;background:transparent;color:#ffb020;font:700 15px Pretendard,system-ui,sans-serif;cursor:pointer}
+#s5 .leaflet-tooltip.nps-origin{background:#0a84ff!important;color:#fff!important}
+#s5 .nps-map .nps-fl{cursor:pointer}
 </style>
 </head>
 <body data-page="nps">
 <header class="nbar"><a href="./">‹ 세금추적단</a><span>갱신 <span id="upd"></span></span></header>
 <main class="w">
   <section id="s5" class="topmap">
-    <h2 id="npsMapTitle" class="topmap-h">우리 지역 회사 주식</h2>
-    <div class="map-toggle" id="npsMapToggle" role="tablist" aria-label="국내와 해외">
-      <button type="button" role="tab" data-view="kr" aria-selected="true">국내</button>
-      <button type="button" role="tab" data-view="us" aria-selected="false">해외</button>
-    </div>
+    <h2 id="npsMapTitle" class="topmap-h">국민연금 돈이 간 곳</h2>
     <div id="npsMapBox"></div>
   </section>
   <h1>국민연금은 어떤 주식을 살까?</h1>
@@ -112,7 +117,8 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
 </main>
 <script src="assets/vendor/leaflet/leaflet.js?v=202610247400"></script>
 <script src="assets/nps.js?v=202610248300"></script>
-<script src="assets/nps-map.js?v=202610248300"></script>
+<script src="assets/mapkit.js?v=202610249300"></script>
+<script src="assets/nps-map.js?v=202610249300"></script>
 <script src="assets/fun.js?v=202610247100"></script>
 <script src="assets/nav.js?v=202610247600"></script>
 </body>
