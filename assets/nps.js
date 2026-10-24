@@ -8,7 +8,9 @@ const usdKo=n=>{const [a,b]=Math.abs(n/1e8).toFixed(1).split('.');return Number(
 const ASSET={'국내주식':'우리나라 회사 주식','해외주식':'다른 나라 회사 주식','국내채권':'우리나라에서 돈을 빌려 주고 이자를 받는 투자','해외채권':'다른 나라에서 돈을 빌려 주고 이자를 받는 투자','대체투자':'건물이나 도로처럼 주식·채권이 아닌 투자','단기자금':'곧 쓸 수 있게 짧게 맡긴 돈'};
 const fundLine=(issuer,cls='')=>{const n=String(issuer||'').toUpperCase(),c=String(cls||'').toUpperCase();let s='';if(n.includes('INVESCO'))s='인베스코가 여러 주식을 묶어 파는 상품';else if(n.includes('ISHARES'))s='아이셰어즈가 여러 주식을 묶어 파는 상품';else if(/\b(ETF|TRUST|FUND)\b|EXCH TRADED|FD TR/.test(n))s='여러 주식을 묶어 파는 상품';if(/S&P/.test(c))s=s?s+' · 미국 큰 회사 500개를 따라감':'미국 큰 회사 500개를 따라가는 상품';else if(/MSCI/.test(c))s=s?s+' · 여러 나라 주식을 따라감':'여러 나라 주식을 따라가는 상품';return s;};
 const plainType=t=>String(t||'').replace(/\s*\+\s*CUSIP\s*변경/gi,'').replace(/CUSIP\s*변경/gi,'').replace(/주식분할/g,'주식 쪼개기(분할)').replace(/역분할/g,'주식 합치기(역분할)').replace(/분사/g,'회사 나누기(분사)');
-const [ft,q1,q2,ch]=await Promise.all([j('fund_totals.json'),j('holdings_us_2026Q1.json'),j('holdings_us_2026Q2.json'),j('changes_us.json')]);
+const eokWon=eok=>{const neg=eok<0;eok=Math.abs(Number(eok));const jo=Math.floor((eok+1e-9)/10000),rest=Math.round((eok-jo*10000)*10)/10;const rs=rest.toLocaleString('ko-KR',{minimumFractionDigits:Number.isInteger(rest)?0:1,maximumFractionDigits:1});const s=jo?jo.toLocaleString('ko-KR')+'조'+(rest?' '+rs+'억원':'원'):rs+'억원';return (neg?'-':'')+s;};
+const ymd=s=>{const [y,m,d]=String(s||'').split('-');return `${+y}년 ${+m}월 ${+d}일`;};
+const [ft,q1,q2,ch,kr]=await Promise.all([j('fund_totals.json'),j('holdings_us_2026Q1.json'),j('holdings_us_2026Q2.json'),j('changes_us.json'),j('kr_holdings.json')]);
 $('upd').textContent=String(ch.updated||'').slice(0,10);
 const hy=ft.half_year_release;
 let h=`<div class="big">1,865조 5,760억원</div><p class="sub">2026년 6월 말까지 쌓아 둔 돈(적립금)이에요. ${S(hy.url,'국민연금 상반기 보도자료(2026.8.28)')}</p>`;
@@ -39,4 +41,8 @@ ch.adjustments.map(a=>`<div class="row"><span>${esc(a.issuer)} · ${esc(plainTyp
 `<p class="sub">회사가 나뉘어 주식 수가 달라진 곳은 늘리거나 줄인 목록에서 뺐어요. 뺀 곳: ${skipped.map(esc).join(', ')}.</p>
 <p class="src">${S(idx(ch.sources[0]),'2026년 1분기 보유 주식 목록')} · ${S(idx(ch.sources[1]),'2026년 2분기 보유 주식 목록')}</p>`;
 $('chg').innerHTML=h;
+const top=kr.top10.slice(0,10),km=top[0].value_100m_krw;
+const krow=(x,i)=>`<div class="row"><span>${i+1}. ${esc(x.company)} <span class="sub">지분 ${esc(x.stake_pct)}%</span><div class="bar" style="width:${x.value_100m_krw/km*100}%"></div></span><b>${eokWon(x.value_100m_krw)}</b></div>`;
+const mid=Math.ceil(top.length/2);
+$('kr').innerHTML=`<div class="big">${eokWon(kr.total_value_100m_krw)}</div><p class="sub">${Number(kr.count).toLocaleString('ko-KR')}개 주식 · ${ymd(kr.as_of)} 기준</p><p class="sub">평가액은 그날 가격으로 계산한 금액이에요. 지분은 그 회사 주식 가운데 국민연금이 가진 비율이에요.</p><h3>평가액이 큰 주식 10개</h3><div class="two"><div>${top.slice(0,mid).map(krow).join('')}</div><div>${top.slice(mid).map((x,i)=>krow(x,i+mid)).join('')}</div></div><p class="src">${S(kr.board_url,'국민연금이 공개한 2025년 말 국내 주식 목록')}</p>`;
 })();
