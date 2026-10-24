@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>콘텐츠 뽑기 · 세금추적단</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+/* 청소부 전용: 오늘 데이터에서 X 글 초안과 공유 이미지를 뽑는 곳. 사이트 메뉴에는 없음. */
+:root{--bg:#0b0f13;--panel:#121820;--line:#2a3541;--ink:#e8edf2;--muted:#9aa6b2;--hot:#ffb020;--blue:#0a84ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Pretendard,system-ui,sans-serif}
+.w{max-width:760px;margin:0 auto;padding-block:20px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:14px}
+h1{margin:0;font-size:26px}
+.sub{color:var(--muted);font-size:13px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;min-width:0}
+.k{font-size:12px;color:var(--hot);font-weight:700;letter-spacing:.04em}
+.big{font-size:26px;font-weight:800;line-height:1.2}
+.draft{white-space:pre-wrap;background:#0b0f13;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;line-height:1.7;overflow-wrap:anywhere}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+button,select{font:inherit;font-weight:700;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:#1a222c;color:var(--ink);cursor:pointer}
+button.main{background:var(--hot);border-color:var(--hot);color:#14110a}
+select{font-weight:500;width:100%}
+canvas{display:none}
+.src{font-size:12px;color:var(--muted);overflow-wrap:anywhere}.src a{color:#8fb4ff}
+.note{font-size:13px;color:var(--muted);background:#121820;border:1px dashed var(--line);border-radius:10px;padding:10px}
+</style>
+</head>
+<body>
+<main class="w">
+  <div><h1>콘텐츠 뽑기</h1><p class="sub" id="upd">불러오는 중…</p></div>
+  <p class="note">오늘 데이터에서 눈에 띄는 숫자를 골라 X 글 초안과 이미지를 만들어요. 글 형식은 장면 → 숫자 반전 → 짧게, 마지막 줄 (소감)은 직접 쓰세요. 숫자는 모두 공개 자료 그대로이고, "데이터상"이라는 표현을 지켜 주세요. 이 페이지는 사이트 메뉴에 없고 검색에도 안 나와요.</p>
+  <section class="card">
+    <span class="k">우리 시 하나 골라서 뽑기</span>
+    <select id="pickCity" aria-label="시 고르기"></select>
+  </section>
+  <div id="cards"></div>
+  <canvas id="cv" width="1080" height="1350"></canvas>
+</main>
+<script src="assets/mask.js"></script>
+<script>
+(async()=>{
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mask=s=>typeof window.maskT==='function'?window.maskT(String(s||'')):String(s||'');
+const won=n=>{n=Math.round(Number(n)||0);const a=Math.abs(n);if(a>=1e12){const j=Math.floor(a/1e12),e=Math.round((a%1e12)/1e8);return j.toLocaleString('ko-KR')+'조'+(e?' '+e.toLocaleString('ko-KR')+'억':'')+'원';}
+  if(a>=1e8)return (a>=1e10?Math.round(a/1e8).toLocaleString('ko-KR'):(a/1e8).toFixed(1).replace(/\.0$/,''))+'억원';if(a>=1e4)return Math.round(a/1e4).toLocaleString('ko-KR')+'만원';return a.toLocaleString('ko-KR')+'원';};
+const jo=(w,a,b)=>{const c=String(w).trim().slice(-1).charCodeAt(0)-0xac00;return w+(c>=0&&c<=11171&&c%28?a:b);};
+const md=s=>s?`${+String(s).slice(5,7)}월 ${+String(s).slice(8,10)}일`:'';
+const get=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
+const [idx,daily,sole,chg,q2,trw]=await Promise.all([get('data/index.json'),get('data/daily.json'),get('data/sec_sole.json'),get('data/nps/changes_us.json'),get('data/nps/holdings_us_2026Q2.json'),get('data/national/trips_raw.json')]);
+$('upd').textContent='데이터 갱신 '+String((idx&&idx.updated)||'').slice(0,16).replace('T',' ');
+const SITE='https://91cleaner.github.io/money-tracker/';
+const cards=[];
+// 최근 30일 시별 합계 (daily.json)
+const last=daily&&daily.last, from30=last?new Date(new Date(last).getTime()-29*864e5).toISOString().slice(0,10):'';
+const sum30=slug=>{const m=(daily&&daily.c&&daily.c[slug])||{};let n=0,t=0;for(const d in m)if(d>=from30&&d<=last){n+=m[d][0];t+=m[d][1];}return {n,t};};
+
+// 1. 같은 업체와 금액선 바로 아래로 여러 번 (수의계약 묶음 1위)
+if(sole&&sole.flags&&sole.flags.length){const f=sole.flags[0];const avg=f.sum/f.n;
+  cards.push({k:'같은 업체 · 여러 건',title:`${f.cname} · 같은 업체 ${f.n}건`,big:won(f.sum),
+    lines:[`${md(f.from)}~${md(f.to)} 공고 없이 맺은 계약`,`건당 평균 ${won(avg)} · 합계 ${won(f.sum)}`,`견적 1곳만 받아도 되는 선(2천만원) 근처`],
+    draft:`가게에서 큰돈 쓸 땐 보통 견적 여러 군데 받음\n${jo(f.cname,'은','는')} ${md(f.from)}~${md(f.to)} 같은 업체와 ${f.n}건 계약함\n한 건 평균 ${won(avg)}, 합치면 ${won(f.sum)}\n2천만원 아래면 견적 1곳만 받아도 되는 선임\n데이터상 이상 징후일 뿐, 정상적인 이유가 있을 수 있음\n(소감)`,
+    src:(f.items[0]||{}).u||SITE+'spend.html#sole',link:SITE+'spend.html#sole'});}
+// 2. 공고 없이 맺은 계약 비율 1위 시
+if(sole&&sole.share&&sole.share.length){const s=sole.share.filter(x=>x.n>=50).sort((a,b)=>b.pct-a.pct)[0];if(s){
+  cards.push({k:'공고 없이 맺은 계약 비율',title:`${s.name} · 수의계약 비율 1위`,big:s.pct+'%',
+    lines:[`새 계약 ${s.n.toLocaleString()}건 중 ${s.sn.toLocaleString()}건`,`공고 없이 바로 맺은 계약(수의계약)`,`작은 금액·급한 일은 법에서 허용`],
+    draft:`회사에서 물건 살 때도 보통 견적은 비교함\n${jo(s.name,'은','는')} 최근 새 계약 ${s.n.toLocaleString()}건 중 ${s.sn.toLocaleString()}건을 공고 없이 바로 맺음\n비율 ${s.pct}%, 85개 시 중 가장 높음\n작은 금액이나 급한 일은 법에서 허용되는 방식이긴 함\n(소감)`,
+    src:SITE+'spend.html#sole',link:SITE+'spend.html#sole'});}}
+// 3. 가장 큰 계약
+if(sole&&sole.big&&sole.big.length){const b=sole.big.slice().sort((x,y)=>y.a-x.a)[0];
+  cards.push({k:'가장 큰 계약',title:`${b.cname} · 가장 큰 수의계약`,big:won(b.a),
+    lines:[mask(b.t).slice(0,30),`${md(b.d)} · ${mask(b.vendor)}`,'공고 없이 바로 맺은 계약'],
+    draft:`집 인테리어도 몇 천만원이면 업체 몇 곳은 알아봄\n${jo(b.cname,'이','가')} ${md(b.d)} 공고 없이 바로 맺은 계약 하나가 ${won(b.a)}임\n"${mask(b.t).slice(0,40)}"\n85개 시 수의계약 중 이번 기간 가장 큰 금액\n(소감)`,
+    src:b.u||SITE,link:SITE+'spend.html#sole'});}
+// 4. 이번 주 데이터상 이상 징후 금액 1위
+if(idx&&idx.cities){const wk=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
+  const c=idx.cities.filter(x=>x.top_alert&&(x.top_alert.detail||'').slice(0,10)>=wk).sort((a,b)=>(b.top_alert.amount||0)-(a.top_alert.amount||0))[0];
+  if(c){const A=c.top_alert;cards.push({k:'이번 주 이상 징후',title:`${c.short||c.name} · ${mask(A.title).slice(0,24)}`,big:won(A.amount),
+    lines:[mask(A.detail).slice(0,34),'데이터상 이상 징후 · 위법 판단 아님','출처 조달청 나라장터'],
+    draft:`${c.short||c.name} 계약 기록 보다가 눈에 띈 것\n${mask(A.title)}\n${mask(A.detail).slice(0,60)}\n금액 ${won(A.amount)}\n데이터상 눈여겨볼 점일 뿐, 정상적인 이유가 있을 수 있음\n(소감)`,
+    src:SITE+'?c='+c.slug+'#map',link:SITE+'?c='+c.slug+'#map'});}}
+// 5. 국민연금이 가장 많이 산 미국 주식
+if(chg&&chg.top_buys&&chg.top_buys.length&&q2&&q2.fx){const t=chg.top_buys[0],krw=(t.est_trade_usd||0)*q2.fx.usd_krw;
+  const KNOWN={'SPACE EXPLORATION TECHN CORP':'스페이스X(SpaceX)'};const nm=KNOWN[t.issuer]||String(t.issuer).replace(/\b(CORPORATION|CORP|INC|TECHN|CO)\b\.?/g,'').trim();
+  cards.push({k:'국민연금 주식',title:`국민연금이 지난 분기 가장 많이 산 미국 주식`,big:'약 '+won(krw),
+    lines:[nm,`${t.status==='신규'?'새로 산 주식':'더 산 주식'} · ${chg.from}→${chg.to}`,'미국 공개 자료(13F) · 환율 환산 어림값'],
+    draft:`내 월급에서 빠져나간 국민연금, 어디 들어가나 봤음\n지난 분기 국민연금이 가장 많이 산 미국 주식은 ${nm}\n${t.status==='신규'?'새로':'추가로'} 산 금액이 약 ${won(krw)}\n미국 정부에 낸 공개 자료 기준이고, 환율로 바꾼 어림값임\n(소감)`,
+    src:SITE+'nps.html',link:SITE+'nps.html'});}
+// 6. 외국 정부·기관이 비용을 낸 의원 출장 (이름 없이 숫자만)
+if(trw&&trw.trips){const FG=/정부|대사관|국무부|정보방송부|감숙성|란저우|연방|인민대외우호협회|사회과학원/;const ids=new Set(),all=new Set();
+  for(const t of trw.trips){all.add(t.trip_id);if(FG.test(String(t.funder||'').replace(/주\)베트남대한민국대사관/,'')))ids.add(t.trip_id);}
+  cards.push({k:'의원 출장',title:'외국 정부·기관이 비용을 낸 국회의원 출장',big:ids.size+'건',
+    lines:[`신고된 국외 출장 ${all.size}건 중`,'열린국회정보 신고 기록 그대로','규정상 허용될 수 있음'],
+    draft:`출장비 누가 내주면 보통 그 사람 눈치 좀 봄\n국회의원 국외 출장 신고 ${all.size}건 중 ${ids.size}건은 외국 정부나 그 기관이 비용을 냈다고 적혀 있음\n규정상 허용되는 경우가 많고, 잘못을 뜻하진 않음\n그래도 누가 냈는지는 알고 있을 만함\n(소감)`,
+    src:'https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr',link:SITE+'national.html#s3b'});}
+
+// 시 하나 골라서
+const cityCard=slug=>{const c=(idx.cities||[]).find(x=>x.slug===slug);if(!c)return null;const s=sum30(slug);const out=c.local_share!=null?Math.round((1-c.local_share)*100):null;
+  return {k:'우리 시',title:`${c.name} · 최근 30일`,big:won(s.t),
+    lines:[`계약 ${s.n.toLocaleString()}건`,out!=null?`다른 지역 업체로 간 돈 ${out}%`:'업체 주소 확인 중',`데이터상 이상 징후 ${c.alerts||0}건 (모은 기간 전체)`],
+    draft:`우리 동네 세금, 한 달에 얼마나 쓰나 봤음\n${jo(c.name,'은','는')} 최근 30일 계약 ${s.n.toLocaleString()}건, 합계 ${won(s.t)}\n${out!=null?`그중 ${out}%는 다른 지역 업체로 감\n`:''}계약마다 나라장터 원본 링크가 있음\n(소감)`,
+    src:SITE+'?c='+slug+'#map',link:SITE+'?c='+slug+'#map'};};
+const sel=$('pickCity');sel.innerHTML='<option value="">시를 고르세요</option>'+(idx.cities||[]).slice().sort((a,b)=>a.name.localeCompare(b.name,'ko')).map(c=>`<option value="${c.slug}">${esc(c.name)}</option>`).join('');
+
+// 카드 그리기
+const box=$('cards');
+const html=(c,i)=>`<section class="card" data-i="${i}"><span class="k">${esc(c.k)}</span><div class="big">${esc(c.big)}</div><div>${esc(c.title)}</div>
+  <div class="draft" id="d${i}">${esc(c.draft+'\n'+c.link)}</div>
+  <div class="row"><button type="button" class="main" data-copy="${i}">글 복사</button><button type="button" data-img="${i}">이미지 저장</button></div>
+  <p class="src">출처 <a href="${esc(c.src)}" target="_blank" rel="noopener">원문 보기</a></p></section>`;
+const paint=()=>{box.innerHTML=cards.map(html).join('')||'<p class="sub">오늘은 뽑을 숫자가 없어요.</p>';};
+paint();
+sel.addEventListener('change',()=>{const c=cityCard(sel.value);if(!c)return;cards.unshift(c);paint();window.scrollTo({top:0,behavior:'smooth'});});
+
+// 이미지: 1080×1350, 제목 옆에 @청소부 하나
+const cv=$('cv'),g=cv.getContext('2d');
+const wrap=(t,max,font)=>{g.font=font;const out=[];let line='';for(const ch of String(t)){const test=line+ch;if(g.measureText(test).width>max&&line){out.push(line);line=ch;}else line=test;}if(line)out.push(line);return out;};
+const draw=c=>{const W=1080,H=1350;g.fillStyle='#0b0f13';g.fillRect(0,0,W,H);
+  const grd=g.createLinearGradient(0,0,W,0);grd.addColorStop(0,'#ffb020');grd.addColorStop(1,'#ff6a00');g.fillStyle=grd;g.fillRect(0,0,W,14);
+  g.fillStyle='#ffb020';g.font='700 34px Pretendard, sans-serif';g.fillText(c.k,72,120);
+  const tl=wrap(c.title,W-144-200,'800 54px Pretendard, sans-serif');g.fillStyle='#f4f7fb';g.font='800 54px Pretendard, sans-serif';
+  tl.slice(0,3).forEach((l,i)=>g.fillText(l,72,200+i*70));
+  const lastW=g.measureText(tl.slice(0,3).slice(-1)[0]||'').width;g.font='600 30px Pretendard, sans-serif';g.fillStyle='#8fa0b3';g.fillText('@청소부',72+lastW+20,200+(Math.min(3,tl.length)-1)*70);
+  const y0=200+Math.min(3,tl.length)*70+90;g.fillStyle='#ffb020';let fs=150;g.font=`900 ${fs}px Pretendard, sans-serif`;while(g.measureText(c.big).width>W-144&&fs>60){fs-=6;g.font=`900 ${fs}px Pretendard, sans-serif`;}g.fillText(c.big,72,y0+fs*0.8);
+  let y=y0+fs+80;g.fillStyle='#d6dde4';c.lines.forEach(l=>{wrap(l,W-144,'500 42px Pretendard, sans-serif').slice(0,2).forEach(x=>{g.fillText(x,72,y);y+=60;});y+=14;});
+  g.fillStyle='#2a3541';g.fillRect(72,H-150,W-144,2);g.fillStyle='#9aa6b2';g.font='500 28px Pretendard, sans-serif';g.fillText('세금추적단 · 출처 조달청 나라장터 등 공개 자료',72,H-95);};
+box.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.copy!=null){const el=$('d'+b.dataset.copy);try{await navigator.clipboard.writeText(el.textContent);b.textContent='복사됨';}catch(err){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='선택됨 · 복사하세요';}setTimeout(()=>b.textContent='글 복사',1800);}
+  if(b.dataset.img!=null){const c=cards[+b.dataset.img];try{await document.fonts.load('800 54px Pretendard');await document.fonts.load('900 120px Pretendard');}catch(err){}
+    draw(c);cv.toBlob(bl=>{const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=`세금추적단_${c.k}_${new Date().toISOString().slice(0,10)}.png`;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},2000);},'image/png');}
+});
+})();
+</script>
+</body>
+</html>
