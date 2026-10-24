@@ -58,6 +58,7 @@ def main():
             rows = parse_xlsx(b); res = (u, rows); break
     if not res: raise RuntimeError("첨부 xlsx 못 찾음")
     u, rows = res
+    LOG.append("rows[:6]=" + json.dumps([[str(c)[:15] for c in r[:8]] for r in rows[:6]], ensure_ascii=False))
     hi = next(i for i, r in enumerate(rows) if r and any(isinstance(c, str) and "종목" in c for c in r))
     hdr = [str(c or "") for c in rows[hi]]
     col = lambda *ks: next(j for j, c in enumerate(hdr) if any(k in c for k in ks))
@@ -77,4 +78,6 @@ def main():
 
 if __name__ == "__main__":
     try: main()
+    except Exception as e:
+        LOG.append(f"FAIL {type(e).__name__}: {str(e)[:200]}"); raise
     finally: json.dump({"updated": datetime.now(KST).isoformat(), "log": LOG}, open(os.path.join(DBG, "kr_board_log.json"), "w"), ensure_ascii=False, indent=1)
