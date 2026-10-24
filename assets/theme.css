@@ -409,3 +409,4 @@ body.has-rbar .sec,body.has-rbar .sec h2,body.has-rbar #contracts summary,body.h
 body:has(.tabbar){padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 #dive .dv-sug{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:auto!important;margin:4px 10px 6px!important;max-height:40vh}
 .cc-chg{display:block;font-size:12px;color:#8b97a5;font-weight:400}
+.maplg .lg-dot{width:10px;height:10px;border-radius:50%;border:1.5px solid #fff;box-sizing:border-box}

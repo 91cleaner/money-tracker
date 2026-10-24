@@ -38,6 +38,8 @@
   const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.p).sort((a, b) => b.total - a.total);
   const maxT = cities[0].total || 1, dots = new Map();
   const gC = L.layerGroup().addTo(map), gF = L.layerGroup().addTo(map);
+  // 받은 곳 점·고른 시 링은 흐름 입자(fx 450)보다 위에 (여수처럼 우리 시 업체가 시 위치에 겹쳐도 보이게)
+  map.createPane('dvTop').style.zIndex = 470; map.getPane('dvTop').style.pointerEvents = 'none'; const gTop = L.svg({pane: 'dvTop'});
   for (const c of cities) {
     const m = L.circleMarker(toLL(c.p), {radius: c.total ? 4 + 13 * Math.sqrt(c.total / maxT) : 4, weight: 1.5, color: c.total ? '#fff' : '#8b97a5', fillColor: c.total ? '#0a84ff' : '#3a4450', fillOpacity: c.total ? 0.5 : 0.3, interactive: false}).addTo(gC);
     dots.set(c.slug, m); const e = m.getElement(); if (e) e.setAttribute('data-s', c.slug);
@@ -124,10 +126,10 @@
       const p = ln.getElement();
       if (p && !RM) { /* 확대 후에도 끊기지 않게 길이를 1로 정규화(줌마다 d가 바뀌어도 비율 유지) */ p.setAttribute('pathLength', '1'); p.style.strokeDasharray = '1'; p.style.strokeDashoffset = '1'; p.style.transition = `stroke-dashoffset .9s ease-out ${i * 0.12}s`; p.addEventListener('transitionend', () => { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; p.style.transition = ''; }, {once: true}); requestAnimationFrame(() => requestAnimationFrame(() => (p.style.strokeDashoffset = '0'))); }
       arcs.push({pts, w, col, n: Math.max(1, Math.round(1 + 5 * Math.sqrt(f.amount / mx))), d: i * 0.12});
-      L.circleMarker(toLL(b), {radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
+      L.circleMarker(toLL(b), {pane: 'dvTop', renderer: gTop, radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
       L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + ' ' + krw(f.amount))).addTo(gF);
     });
-    const oc = BY[slug] || {}; L.circleMarker(toLL(a), {radius: 11, color: '#ffd60a', weight: 2.5, fill: false, interactive: false, className: 'dv-ring'}).addTo(gF);
+    const oc = BY[slug] || {}; L.circleMarker(toLL(a), {pane: 'dvTop', renderer: gTop, radius: 15, color: '#0b0f13', weight: 6, opacity: 0.7, fill: false, interactive: false, className: 'dv-ring-bg'}).addTo(gF); L.circleMarker(toLL(a), {pane: 'dvTop', renderer: gTop, radius: 15, color: '#ffd60a', weight: 3, fill: false, interactive: false, className: 'dv-ring'}).addTo(gF);
     L.tooltip({permanent: true, direction: 'top', className: 'klab dv-org', offset: [0, -10], interactive: false}).setLatLng(toLL(a)).setContent(esc((oc.name || '') + ' (일을 맡긴 곳)')).addTo(gF);
     setTimeout(declutter, 50); FX.set(arcs, hold);
   };

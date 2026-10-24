@@ -27,6 +27,6 @@ let i=0;const slot=document.createElement('div');slot.className='tk-slot';d.hidd
 const obs=new MutationObserver(()=>{const t=document.querySelector('.ticker');const d=t&&t.querySelector(':scope>div:not(.tk-slot)');if(t&&d&&d.children.length&&!t.dataset.rot)setTimeout(()=>rot(t),1500);});obs.observe(document.body,{childList:true,subtree:true});})();
 
 // 지도 범례: 지도 바로 아래 한 줄 (지도 위에 겹치지 않게)
-(()=>{const H='<i class="lg-ln" style="background:#0a84ff"></i>우리 시 업체<i class="lg-ln" style="background:#ff9f0a"></i>다른 지역 업체<span class="lg-w"><i></i><i></i></span>굵을수록 돈이 많아요<span class="lg-s" style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap"><i class="lg-ring" style="margin-left:0"></i>지금 고른 곳</span>';
+(()=>{const H='<i class="lg-dot" style="background:#0a84ff"></i>우리 시 업체<i class="lg-ln" style="background:#ff9f0a"></i>다른 지역 업체<span class="lg-w"><i></i><i></i></span>굵을수록 돈이 많아요<span class="lg-s" style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap"><i class="lg-ring" style="margin-left:0"></i>지금 고른 곳</span>';
 const put=()=>document.querySelectorAll('.dv-map,.map').forEach(m=>{if(m.closest('.lg-skip')||!(m.classList.contains('leaflet-container')||m.querySelector('.leaflet-pane,svg')))return;const n=m.nextElementSibling;if(n&&n.classList.contains('maplg'))return;const p=document.createElement('p');p.className='maplg';p.setAttribute('aria-label','지도 범례');p.innerHTML=H;m.after(p);});
 put();new MutationObserver(put).observe(document.body,{childList:true,subtree:true});})();
