@@ -21,6 +21,8 @@ jobs:
         continue-on-error: true
         timeout-minutes: 10
         run: python collector/sections/bid.py
+      - name: 계약명 속 사람 이름 가리기(data/national 제외)
+        run: python collector/mask_names.py
       - name: 데이터 검증 게이트 (위반 시 커밋·배포 중단, 마지막 정상 데이터 유지)
         run: |
           mkdir -p /tmp/prev && git archive HEAD data | tar -x -C /tmp/prev
