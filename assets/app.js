@@ -476,7 +476,6 @@ async function cityPage() {
   if (peek && slug) {
     peek.hidden = false;
     peek.onclick = () => { if (location.hash === '#map') dispatchEvent(new HashChangeEvent('hashchange')); else location.hash = '#map'; };
-    if (window.moneyPeek) window.moneyPeek(peek, slug);
   }
   let d;
   try { d = await getJSON('data/city/' + slug + '.json'); } catch (e) {
@@ -497,18 +496,20 @@ async function cityPage() {
   const shareTop = $('#share-city'); shareTop.replaceWith(shareBtn(shareURL(slug), d.city.name + ' 돈 추적기', 'sharebtn big'));
   const byId = new Map(d.rows.map((r) => [r.id, r]));
   const hasCat = d.rows.some((r) => r.cat);
-  let q = '', cat = '전체', sortK = 'date', dir = -1;
+  let q = '', cat = '전체', sortK = 'date', dir = -1, mapCtl = null, viewRows = d.rows;
 
   const render = () => {
     const rows = cat === '전체' ? d.rows : d.rows.filter((r) => r.cat === cat);
+    viewRows = rows;
     const s = stats(d.city, rows);
     const alerts = cat === '전체' ? d.alerts : d.alerts.filter((a) => (a.ids || []).some((id) => (byId.get(id) || {}).cat === cat));
     const flagged = alerts.filter((a) => a.kind !== 'big').length;
     const what = cat === '전체' ? '' : `${cat} 분야 `; festNote($('#lede'), cat === FEST);
-    $('#range').textContent = s.first ? `${s.first.replaceAll('-', '.')} ~ ${s.last.replaceAll('-', '.')}` : (window.__pdLabel && window.__pdLabel()) || '';
+    const wdw = (window.__pdCW && window.__pdCW()) || {}, dot = (x) => String(x || '').replaceAll('-', '.');
+    $('#range').textContent = wdw.from && wdw.to ? `${dot(wdw.from)} ~ ${dot(wdw.to)}` : (s.first ? `${s.first.replaceAll('-', '.')} ~ ${s.last.replaceAll('-', '.')}` : '');
     const jo = (w) => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c <= 11171 && c % 28 ? '은' : '는'; };
     const pl = window.__pdLabel && window.__pdLabel(), sd = (x) => `${+x.slice(5, 7)}.${+x.slice(8)}`;
-    const when = pl && /^최근/.test(pl) ? pl : s.first ? `${sd(s.first)}~${sd(s.last)}` : (pl || '고른 기간');
+    const when = pl || (s.first ? `${sd(s.first)}~${sd(s.last)}` : '고른 기간');
     $('#lede').replaceChildren(when + ', ', name + jo(name) + ' ' + what + '계약 금액이 ', el('b', '', krw(s.total)), '이고, ',
       s.local == null ? '업체 주소는 확인 중입니다.' : el('b', '', `${pct(1 - s.local)}는 다른 지역 업체`), s.local == null ? '' : '로 갔습니다.');
     const mxr = rows.reduce((a, r) => (!a || r.amount > a.amount ? r : a), null);
@@ -529,6 +530,8 @@ async function cityPage() {
     bars($('#vendors'), s.ven, (r) => r.name, (r) => r.amount, (r) => (r.region || '주소 확인 중') + ` · ${r.count}건`, (r) => r.id && 'vendor.html?v=' + r.id);
     bars($('#insts'), s.inst, (r) => r.name, (r) => r.amount, (r) => r.count + '건');
     table(rows);
+    if (mapCtl) mapCtl.setContracts(rows);
+    if (peek && window.moneyPeek) window.moneyPeek(peek, slug, rows, d.city);
   };
 
   const tbl = $('#contracts table');
@@ -568,7 +571,7 @@ async function cityPage() {
     chips($('#cats'), present, (c) => { cat = c; render(); });
   } else $('#cats').remove();
   render();
-  if (window.moneyMap && $('#map')) moneyMap($('#map'), {fixed: slug, rows: 5}).catch(() => $('#map').remove());
+  if (window.moneyMap && $('#map')) moneyMap($('#map'), {fixed: slug, rows: 5, contracts: viewRows, city: d.city}).then((ctl) => { mapCtl = ctl; if (viewRows !== d.rows) ctl.setContracts(viewRows); }).catch(() => $('#map').remove());
   const openAll = () => { if (location.hash === '#contracts') { const dd = document.querySelector('#contracts details.all'); if (dd) dd.open = true; } }; openAll(); addEventListener('hashchange', openAll);
   if (location.hash === '#map') { const go = () => { const t = document.getElementById('map'); if (!t || t.classList.contains('tab-off')) return; const bar = document.querySelector('.stickybar'); const off = (bar ? bar.getBoundingClientRect().height : 52) + 8; scrollTo(0, Math.max(0, t.getBoundingClientRect().top + scrollY - off)); const lg = t.querySelector('.maplg'), tb = document.querySelector('.tabbar'); if (lg && tb) { const over = lg.getBoundingClientRect().bottom - tb.getBoundingClientRect().top + 8; if (over > 0) scrollBy(0, over); } }; go(); requestAnimationFrame(go); setTimeout(go, 500); setTimeout(go, 1200); }
   else if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }

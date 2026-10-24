@@ -188,7 +188,7 @@
     let m = root.querySelector('.dv-miss'); if (!m) { m = document.createElement('p'); m.className = 'dv-miss'; const dn = root.querySelector('.dv-down'); dn ? dn.before(m) : box.after(m); }
     const rs = cur && map.hasLayer(gF) && REST.n ? `그 밖 ${REST.n}곳${REST.unk ? '(주소 미확인 포함)' : ''} ${krw(REST.amt)}` : '';
     const parts = miss.map((x) => x.replace(/^→\s*/, '')); if (rs) parts.push(rs);
-    m.textContent = [miss.length ? '이름표를 못 단 화살표: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '화살표 없는 곳: ' + rs : ''].filter(Boolean).join(' / '); m.hidden = !parts.length;
+    m.textContent = [miss.length ? '지도에 이름이 안 보이는 곳: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '지도에 선이 없는 곳: ' + rs : ''].filter(Boolean).join(' · '); m.hidden = !parts.length;
     // 확대하면 화면에 보이는 시 마커마다 짧은 이름. 금액 라벨·버튼과 실제로 겹치는 이름만 숨긴다.
     const baseZ = (homeSnap && homeSnap.z) || map.getBoundsZoom(KR, false), zIn = map.getZoom() >= baseZ + 0.75, bnds = map.getBounds(), boxR = box.getBoundingClientRect();
     const hit0 = (a, b) => !(a.right + 6 < b.left || a.left - 6 > b.right || a.bottom + 6 < b.top || a.top - 6 > b.bottom);

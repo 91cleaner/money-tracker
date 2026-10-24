@@ -8,6 +8,7 @@ window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '필
   return E.length ? ' ' + E.map(([k, v, s]) => `<small class="dv-ez dv-tag">${s || k} = ${v}</small>`).join(' ') : ''; };
 (() => {
   const Q = new URLSearchParams(location.search), STOPS = [7, 14, 30, 60, 90, 0];  // 0 = 전체
+  const cityPg = /(^|\/)city\.html$/.test(location.pathname);
   const rf = window.fetch.bind(window);
   // daily.json은 index.json에 daily 표시가 있을 때만 요청(파일이 없을 때 404·콘솔 오류 없이 슬라이더를 숨김)
   const DL = rf('data/index.json').then(r => r.ok ? r.json() : null).then(x => x && x.daily ? rf('data/daily.json', {cache: 'no-cache'}).then(r => r.ok ? r.json() : null) : null).catch(() => null);
@@ -92,8 +93,9 @@ window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '필
     const inp = el.querySelector('input');
     const show = (k, fr, to) => { inp.style.setProperty('--p', `calc(10px + (100% - 20px) * ${stops.length > 1 ? k / (stops.length - 1) : 0})`);
       const s = stops[k]; fr = fr || (s ? day(w.dl.last, 1 - s) : w.lo); to = to || w.dl.last; if (fr < w.lo) fr = w.lo;
-      el.querySelector('.pd-l').textContent = Q.has('from') && fr === w.from ? `${span(fr, to)}일` : (s ? `최근 ${s}일` : L0);
-      el.querySelector('.pd-r').textContent = `${fmt(fr)}~${fmt(to).slice(5)} 맺은 계약${to === w.dl.last && !w.fixed ? ' (늘어날 수 있음)' : ''}`;
+      const grow = to === w.dl.last && !w.fixed;
+      el.querySelector('.pd-l').textContent = Q.has('from') && fr === w.from ? `${span(fr, to)}일` : (s ? `최근 ${s}일` : (cityPg ? '전체' : L0));
+      el.querySelector('.pd-r').textContent = cityPg ? (grow ? '늘어날 수 있음' : '이 기간에 맺은 계약') : `${fmt(fr)}~${fmt(to).slice(5)} 맺은 계약${grow ? ' (늘어날 수 있음)' : ''}`;
       let n = 0, t = 0; for (const c in w.dl.c) { const x = sumCity(w.dl.c[c], {from: fr, to}); n += x.n; t += x.t; }
       el.querySelector('.pd-sum').textContent = `전국 85개 시 · ${n.toLocaleString()}건 · ${W(t)}${fr > (s ? day(to, 1 - s) : fr) ? ' · 자료가 있는 날부터' : ''}`;
     };

@@ -191,6 +191,7 @@ function satView(box, geo, cities, onPick) {
       const px = (p) => map.latLngToContainerPoint(toLL(p));
       const buried = [];
       list.forEach((f, i) => {
+        if (!f.p) { if (f.local) buried.push(f); return; }
         const w = 2 + 9 * Math.sqrt(f.amount / maxA), col = f.local ? '#0a84ff' : '#ff9f0a';
         const svgD = f.a && f.p ? Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) : 99;
         const near = !!(f.local && f.a && f.p && (svgD < 1 || (box.clientWidth > 40 && px(f.a).distanceTo(px(f.p)) < 28)));
@@ -294,7 +295,8 @@ function svgView(box, geo, cities, onPick) {
     lines(list, maxA, labels) {
       gF.replaceChildren(); gD.replaceChildren(); gL.replaceChildren();
       const buried = [];
-      list.forEach((f, i) => { const w = 1.5 + 9 * Math.sqrt(f.amount / maxA);
+      list.forEach((f, i) => { if (!f.p) { if (f.local) buried.push(f); return; }
+        const w = 1.5 + 9 * Math.sqrt(f.amount / maxA);
         const svgD = f.a && f.p ? Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) : 99;
         if (f.local && svgD < 18) { buried.push(f); return; }
         if (svgD >= 2) { const p = sv('path', {d: curve(f.a, f.p), class: 'fl ' + (f.local ? 'in' : 'out'), 'stroke-width': w.toFixed(1)}); p.style.animationDelay = i * 60 + 'ms'; gF.append(p); }
@@ -327,9 +329,52 @@ function svgView(box, geo, cities, onPick) {
   return view2;
 }
 
+// 고른 기간의 계약(data/city rows)으로 흐름을 다시 만든다. flows.json은 모은 기간 전체라 그대로 쓰면 지도 금액이 페이지 합계보다 커진다.
+const NM_PV = {'경상남도': '경남', '경상북도': '경북', '전라남도': '전남', '전라북도': '전북', '전북특별자치도': '전북', '충청남도': '충남', '충청북도': '충북', '강원도': '강원', '강원특별자치도': '강원', '제주특별자치도': '제주', '경기도': '경기', '세종특별자치시': '세종'};
+function nmFlow(s) { const a = String(s || '').trim().split(/\s+/); if (!a[0]) return ''; a[0] = NM_PV[a[0]] || a[0].replace(/(특별시|광역시)$/, ''); return a.join(' '); }
+function flowPoint(label, PT, GP) {
+  if (!label) return null;
+  const parts = label.split(' '), ks = [label];
+  if (parts.length >= 3) { ks.push(parts[0] + ' ' + parts.slice(1).join('')); ks.push(parts.slice(0, 2).join(' ')); }
+  for (const k of ks) if (PT[k]) return PT[k];
+  for (const k of ks) if (GP[k]) return GP[k];
+  return null;
+}
+function vendorLocal(vregion, city) {
+  if (!vregion || !city || !city.name) return false;
+  const key = String(city.name).replace('특별시', '').replace('광역시', '').replace('특별자치시', '');
+  return vregion.includes(city.name) || vregion.startsWith(key);
+}
+function periodFlows(base, rows, city, PT, GP) {
+  const m = {}; let known = 0, local = 0, total = 0, count = 0;
+  for (const r of rows || []) {
+    const a = +r.amount || 0; total += a; count++;
+    const raw = r.vregion || ''; if (!raw) continue;
+    known += a; const to = nmFlow(raw); if (!to) continue;
+    const lo = vendorLocal(raw, city); if (lo) local += a;
+    const g = m[to] || (m[to] = {to, p: flowPoint(to, PT, GP), amount: 0, count: 0, local: lo, _v: {}});
+    if (lo) g.local = true; g.amount += a; g.count++;
+    const vid = r.bh || r.vendor || to, v = g._v[vid] || (g._v[vid] = {id: r.bh || '', name: r.vendor || '', amount: 0, count: 0});
+    v.amount += a; v.count++;
+  }
+  const flows = []; let otherN = 0, otherA = 0;
+  for (const g of Object.values(m)) {
+    g.vendors = Object.values(g._v).sort((a, b) => b.amount - a.amount); delete g._v;
+    if (!g.p && g.local && base.p) g.p = base.p;
+    if (!g.p) { otherN++; otherA += g.amount; continue; }
+    flows.push(g);
+  }
+  flows.sort((a, b) => b.amount - a.amount);
+  return Object.assign({}, base, {flows, known, local, total, count, other: otherN ? {n: otherN, amount: otherA} : null, by_cat: {}});
+}
+function flowIndex(fl) { const PT = {}; for (const c of Object.values(fl.cities || {})) for (const f of c.flows || []) if (f.p && f.to) PT[f.to] = f.p; return PT; }
+
 // ---------- 화면 ----------
 async function moneyMap(root, opts = {}) {
   const [geo, fl] = await Promise.all([getJSON('assets/geo.json'), getJSON('data/flows.json')]);
+  const PT = flowIndex(fl), GP = geo.points || {}, base0 = opts.fixed ? fl.cities[opts.fixed] : null;
+  const paintRows = (rows) => { if (!base0 || !opts.city || !rows) return; fl.cities[opts.fixed] = periodFlows(base0, rows, opts.city, PT, GP); };
+  if (opts.contracts) paintRows(opts.contracts);
   const box = $('.map', root), panel = $('.flowpanel', root);
   const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.p).sort((a, b) => b.total - a.total);
   let cur = null, mode = 'city', view, cat = '전체';
@@ -367,7 +412,7 @@ async function moneyMap(root, opts = {}) {
   };
   const drawCity = (c) => {
     const list = c.flows.map((f) => ({...f, a: c.p}));
-    const labels = list.filter((f) => !f.local).slice(0, 3).map((f) => [f.p, f.to.split(' ').slice(1).join(' ') || f.to]);
+    const labels = list.filter((f) => !f.local && f.p).slice(0, 3).map((f) => [f.p, f.to.split(' ').slice(1).join(' ') || f.to]);
     labels.push([c.p, c.name.split(' ').pop(), true]);
     view.lines(list, Math.max(...list.map((f) => f.amount), 1), labels);
     return list;
@@ -377,8 +422,9 @@ async function moneyMap(root, opts = {}) {
     const c = dataOf(slug); if (!c) return;
     cur = slug; mode = 'city'; view.select(slug); syncMapHome();
     const list = c.flows.map((f) => ({...f, a: c.p}));
+    const ptsOf = () => [c.p, ...list.map((f) => f.p)].filter((p) => p);
     if (o.fly) { view.lines([], 1, []); view.fly(o.where || c.p, o.z || (o.where ? 12 : 11)); view.once(() => { if (cur === slug && mode === 'city') drawCity(c); }); }
-    else { drawCity(c); if (o.zoom !== false) view.fit([c.p, ...list.map((f) => f.p)]); }
+    else { drawCity(c); if (o.zoom !== false) view.fit(ptsOf()); }
     panel.replaceChildren();
     const h = el('div', 'fh'); h.append(el('span', 'fh-n', ((window.CITY_FULL || {})[slug] || c.name) + (c.cat ? ' · ' + c.cat : '')), el('span', 'fh-v', krw(c.total)));
     if (!opts.fixed) { const x = el('button', 'fclose', '× 닫기'); x.type = 'button'; x.setAttribute('aria-label', '닫고 전국 보기'); x.onclick = () => { setSeg('nation'); showNation(); }; h.append(x); }
@@ -406,7 +452,7 @@ async function moneyMap(root, opts = {}) {
     if (restN > 0) panel.append(el('p', 'sub small', `그 밖의 ${restN}곳`));
     if (c.known < c.total) panel.append(el('p', 'sub small', `주소가 확인된 계약 ${share(c.known, c.total)} 기준`));
     const all = el('button', 'ghostbtn', '흐름 전체 보기'); all.type = 'button';
-    all.addEventListener('click', () => { const pts = [c.p, ...list.map((f) => f.p)]; if (view.fitNow) view.fitNow(pts); else view.fit(pts); drawCity(c); root.scrollIntoView({behavior: 'smooth'}); });
+    all.addEventListener('click', () => { const pts = ptsOf(); if (view.fitNow) view.fitNow(pts); else view.fit(pts); drawCity(c); root.scrollIntoView({behavior: 'smooth'}); });
     panel.append(all);
     if (!opts.fixed) { const g = el('a', 'gobtn', c.name + ' 자세히 보기'); g.href = 'city.html?c=' + slug; panel.append(g);
       if (window.regionPicker) { const ob = el('button', 'ghostbtn', '다른 지역 ▾'); ob.type = 'button'; ob.onclick = () => regionPicker(slug, (s2) => pickCity(s2)); panel.append(ob); } }
@@ -462,16 +508,20 @@ async function moneyMap(root, opts = {}) {
   };
   if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); homeCam = view.previewFly ? view.previewFly(c.p, 10) : null; homeMode = 'city'; homeCur = opts.fixed; if (box.clientWidth > 40 && box.clientHeight > 40) { live = true; seatFixed(); } } }
   else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); homeCam = view.readCam(); homeMode = mode; homeCur = cur; syncMapHome(); }
-  const ctl = {setCat(c) { cat = c; view.resize(Object.fromEntries(cities.map((x) => [x.slug, (dataOf(x.slug) || {}).total || 0])), c === '전체'); view.highlight(null); redraw(true); }};
+  const ctl = {setCat(c) { cat = c; view.resize(Object.fromEntries(cities.map((x) => [x.slug, (dataOf(x.slug) || {}).total || 0])), c === '전체'); view.highlight(null); redraw(true); },
+    setContracts(rows) { paintRows(rows || []); if (cur === opts.fixed && mode === 'city') { view.highlight(null); showCity(opts.fixed, {zoom: false}); } }};
   root.append(el('p', 'sub small', `업체 위치: ${fl.basis}. 지도: Esri 다크 그레이 베이스(라벨 없음) + 자체 한글 표기, 경계 ${geo.source}. 갱신 ${when(fl.updated)}`));
   return ctl;
 }
 
 // 도시 페이지 위쪽 작은 지도: 주황 흐름만 보여 주고, 누르면 본 지도로 간다.
-window.moneyPeek = (el, slug) => {
+window.moneyPeek = (el, slug, rows, city) => {
   if (!el || !slug || typeof getJSON !== 'function') return;
+  const seq = (el._pk = (el._pk || 0) + 1);
   Promise.all([getJSON('assets/geo.json'), getJSON('data/flows.json')]).then(([geo, fl]) => {
-    const c = fl.cities && fl.cities[slug]; if (!c || !c.p) return;
+    if (el._pk !== seq) return;
+    let c = fl.cities && fl.cities[slug]; if (!c || !c.p) return;
+    if (rows && city) c = periodFlows(c, rows, city, flowIndex(fl), geo.points || {});
     const orange = (c.flows || []).filter((f) => f.p && !f.local);
     const local = (c.flows || []).some((f) => f.local);
     const pts = [c.p, ...orange.map((f) => f.p)];
