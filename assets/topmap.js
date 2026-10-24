@@ -180,6 +180,8 @@
         m.setStyle({ weight: 3, color: '#fff' });
         if (kind === 'tax' && it.slug) location.href = './?c=' + encodeURIComponent(it.slug) + '#map';
         else lineEl.textContent = it.name + ' · ' + won(it.value);
+        // 지역을 누르면 그 페이지가 지역 목록(의원 등)을 보여 줄 수 있게 알린다
+        window.dispatchEvent(new CustomEvent('tmregion', { detail: { kind, name: it.name, value: it.value } }));
       });
       m.addTo(layer);
       markers.push(m);

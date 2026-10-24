@@ -145,7 +145,7 @@ setTimeout(()=>{declutter();arm();},60);setTimeout(()=>{declutter();arm();},400)
 const byMem=new Map();
 for(const t of trw.trips){const key=t.member_id||('name:'+t.name);if(!byMem.has(key))byMem.set(key,[]);byMem.get(key).push(t);}
 const clean=s=>String(s||'').replace(/\s+/g,' ').trim();
-const people=(mem.members||[]).map(m=>({key:m.id,name:clean(m.name),party:clean(m.party),district:clean(m.district),trips:byMem.get(m.id)||[]}));
+const people=(mem.members||[]).map(m=>({key:m.id,name:clean(m.name),party:clean(m.party),district:clean(m.district),region:clean(m.region),elect:m.elect,trips:byMem.get(m.id)||[]}));
 const seenP=new Set(people.map(p=>p.key));
 for(const t of trw.trips){const key=t.member_id||('name:'+t.name);if(seenP.has(key))continue;seenP.add(key);people.push({key,name:clean(t.name),party:clean(t.party),district:'',trips:byMem.get(key)||[]});}
 const CITY={프놈펜:[11.56,104.93],뉴욕:[40.71,-74.01],제네바:[46.2,6.14],오키나와:[26.21,127.68],캔버라:[-35.28,149.13],시드니:[-33.87,151.21],란저우:[36.06,103.83],바티칸:[41.9,12.45],베를린:[52.52,13.4]};
@@ -168,6 +168,19 @@ const renderPerson=p=>{const trips=uniqTrips(p);const back='<button type="button
 const sug=hits=>{const box=$('qsug');box.innerHTML=hits.map(p=>`<button type="button" role="option" data-k="${esc(p.key)}">${esc(p.name)} · ${esc(p.party||'정당 없음')}${p.district?' · '+esc(p.district):''}</button>`).join('');$('q').setAttribute('aria-expanded',hits.length?'true':'false');box.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{const p=people.find(x=>x.key===btn.dataset.k);if(!p)return;$('q').value=p.name;pick(p);}));};
 let scrollTok=0;
 addEventListener('mproutes',()=>{const n=scrollTok;setTimeout(()=>{if(n===scrollTok)scrollMap(true);},60);});
+// 지도에서 지역(시도)을 누르면 그 지역 지역구 의원 목록. 이름을 누르면 그 의원의 해외출장 지도로 간다.
+const regionList=(name,value)=>{const list=people.filter(p=>p.elect==='지역구'&&p.region===name).sort((x,y)=>x.district.localeCompare(y.district,'ko'));
+ if(!list.length)return;cur=null;sug([]);$('qr').innerHTML='';
+ const per=a&&a.amount?a.amount:0;
+ const box=cardBox();
+ box.innerHTML=`<div class="mhead"><b>${esc(name)} 지역구 의원 ${list.length}명</b><button type="button" class="allmap" id="rgclose">닫기</button></div>`+
+  `<p class="sub">1명에게 1년 ${esc(won(per))} × ${list.length}명 = <b>${esc(won(value||per*list.length))}</b> (지급 기준이에요. 실제로 받은 돈과 다를 수 있어요)</p>`+
+  `<div class="rglist">`+list.map(p=>{const n=uniqTrips(p).length;return `<button type="button" class="rgrow" data-k="${esc(p.key)}"><b>${esc(p.name)}</b><span class="sub">${esc(p.party||'정당 없음')} · ${esc(p.district||'')}</span><em>${n?'해외출장 '+n+'건 ›':'해외출장 0건'}</em></button>`;}).join('')+`</div>`+
+  `<p class="sub">이름을 누르면 그 의원이 다녀온 나라가 위 지도에 나와요. ${S('https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu','열린국회정보 의원 명단')}</p>`;
+ box.querySelectorAll('.rgrow').forEach(b=>b.addEventListener('click',()=>{const p=people.find(x=>x.key===b.dataset.k);if(p){$('q').value=p.name;pick(p);}}));
+ const c=$('rgclose');if(c)c.addEventListener('click',()=>{box.innerHTML='';});
+ requestAnimationFrame(()=>box.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'}));};
+addEventListener('tmregion',e=>{const d=e.detail||{};if(d.kind==='mps')regionList(d.name,d.value);});
 function pick(p){if(cur===p.key)return;cur=p.key;sug([]);$('qr').innerHTML='';cardBox().innerHTML=renderPerson(p);const b=$('mapback');if(b)b.addEventListener('click',()=>{scrollTok++;$('q').value='';cur=null;sug([]);$('qr').innerHTML='';resetMap();});pushMap(p);scrollMap(false);}
 document.querySelectorAll('.crow').forEach(e=>e.addEventListener('click',()=>showC(e.dataset.c)));
 $('q').addEventListener('input',()=>{const raw=$('q').value.trim();const q=norm(raw);if(!q){cur=null;sug([]);$('qr').innerHTML='';resetMap();return;}const d=decide(q);if(d.one){sug([]);$('qr').innerHTML='';pick(d.one);return;}sug(d.hits);if(cur){cur=null;resetMap();}$('qr').innerHTML=!d.hits.length?'<p class="mpnone">이 이름은 자료에 없어요.</p>':(d.exact.length>1?'<p class="mpnone">같은 이름이 '+d.exact.length+'명이에요. 지역구를 보고 한 명을 고르세요.</p>':'');});

@@ -53,3 +53,9 @@ html,body,.nw,#topmap,#mcards,.tm-map,.tm-line,.maplg{overflow-anchor:none}
 .tm-map path.nmove{animation:tmfly 1.05s linear infinite}
 @keyframes tmfly{to{stroke-dashoffset:-20}}
 @media(prefers-reduced-motion:reduce){.nflow,.tm-map path.nmove{animation:none}}
+
+.rglist{display:flex;flex-direction:column;gap:6px;margin:8px 0;max-height:420px;overflow:auto}
+.rgrow{display:grid;grid-template-columns:auto 1fr auto;gap:2px 10px;align-items:center;text-align:left;min-height:48px;padding:8px 12px;border-radius:10px;border:1px solid #2a3541;background:#0f141b;color:#e8edf2;font:600 15px/1.4 Pretendard,system-ui,sans-serif;cursor:pointer}
+.rgrow .sub{font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.rgrow em{font-style:normal;color:#ffb020;font-size:13px;white-space:nowrap}
+.rgrow:hover,.rgrow:focus{border-color:#ffb020}
