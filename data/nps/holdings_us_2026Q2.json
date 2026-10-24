@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24 11:38",
+ "updated": "2026-10-24 11:40",
  "filer": "National Pension Service",
  "cik": "1608046",
  "quarter": "2026Q2",
@@ -17,140 +17,160 @@
    "cusip": "67066G104",
    "class": "  COM",
    "value_usd": 10171499316,
-   "shares": 50834621
+   "shares": 50834621,
+   "value_100m_krw": 157597
   },
   {
    "issuer": "APPLE INC",
    "cusip": "037833100",
    "class": "  COM",
    "value_usd": 9120026489,
-   "shares": 31517924
+   "shares": 31517924,
+   "value_100m_krw": 141306
   },
   {
    "issuer": "MICROSOFT CORP",
    "cusip": "594918104",
    "class": "  COM",
    "value_usd": 5684729680,
-   "shares": 15239745
+   "shares": 15239745,
+   "value_100m_krw": 88079
   },
   {
    "issuer": "AMAZON COM INC",
    "cusip": "023135106",
    "class": "  COM",
    "value_usd": 4998167363,
-   "shares": 20970745
+   "shares": 20970745,
+   "value_100m_krw": 77442
   },
   {
    "issuer": "ALPHABET INC",
    "cusip": "02079K305",
    "class": "  CAP STK CL A",
    "value_usd": 4680938399,
-   "shares": 13098297
+   "shares": 13098297,
+   "value_100m_krw": 72526
   },
   {
    "issuer": "ALPHABET INC",
    "cusip": "02079K107",
    "class": "  CAP STK CL C",
    "value_usd": 3727875298,
-   "shares": 10550690
+   "shares": 10550690,
+   "value_100m_krw": 57760
   },
   {
    "issuer": "BROADCOM INC",
    "cusip": "11135F101",
    "class": "  COM",
    "value_usd": 3631259754,
-   "shares": 9612865
+   "shares": 9612865,
+   "value_100m_krw": 56263
   },
   {
    "issuer": "INVESCO EXCH TRADED FD TR II",
    "cusip": "46138E461",
    "class": "  PURBTA MSCI US",
    "value_usd": 3546096271,
-   "shares": 47382366
+   "shares": 47382366,
+   "value_100m_krw": 54943
   },
   {
    "issuer": "MICRON TECHNOLOGY INC",
    "cusip": "595112103",
    "class": "  COM",
    "value_usd": 3331465626,
-   "shares": 2886160
+   "shares": 2886160,
+   "value_100m_krw": 51618
   },
   {
    "issuer": "ISHARES TR",
    "cusip": "464287200",
    "class": "  CORE S&P500 ETF",
    "value_usd": 3084943766,
-   "shares": 4119355
+   "shares": 4119355,
+   "value_100m_krw": 47798
   },
   {
    "issuer": "META PLATFORMS INC",
    "cusip": "30303M102",
    "class": "  CL A",
    "value_usd": 2732448252,
-   "shares": 4850873
+   "shares": 4850873,
+   "value_100m_krw": 42337
   },
   {
    "issuer": "TESLA INC",
    "cusip": "88160R101",
    "class": "  COM",
    "value_usd": 2532853621,
-   "shares": 6022001
+   "shares": 6022001,
+   "value_100m_krw": 39244
   },
   {
    "issuer": "ADVANCED MICRO DEVICES INC",
    "cusip": "007903107",
    "class": "  COM",
    "value_usd": 2091720396,
-   "shares": 3600765
+   "shares": 3600765,
+   "value_100m_krw": 32409
   },
   {
    "issuer": "ELI LILLY & CO",
    "cusip": "532457108",
    "class": "  COM",
    "value_usd": 2018379214,
-   "shares": 1682782
+   "shares": 1682782,
+   "value_100m_krw": 31273
   },
   {
    "issuer": "JPMORGAN CHASE & CO",
    "cusip": "46625H100",
    "class": "  COM",
    "value_usd": 1816546640,
-   "shares": 5549588
+   "shares": 5549588,
+   "value_100m_krw": 28146
   },
   {
    "issuer": "LAM RESEARCH CORP",
    "cusip": "512807306",
    "class": "  COM NEW",
    "value_usd": 1457235924,
-   "shares": 3362878
+   "shares": 3362878,
+   "value_100m_krw": 22578
   },
   {
    "issuer": "APPLIED MATLS INC",
    "cusip": "038222105",
    "class": "  COM",
    "value_usd": 1418562873,
-   "shares": 1962051
+   "shares": 1962051,
+   "value_100m_krw": 21979
   },
   {
    "issuer": "BERKSHIRE HATHAWAY INC DEL",
    "cusip": "084670702",
    "class": "  CL B NEW",
    "value_usd": 1403556421,
-   "shares": 2804925
+   "shares": 2804925,
+   "value_100m_krw": 21747
   },
   {
    "issuer": "INTEL CORP",
    "cusip": "458140100",
    "class": "  COM",
    "value_usd": 1396229068,
-   "shares": 9999492
+   "shares": 9999492,
+   "value_100m_krw": 21633
   },
   {
    "issuer": "JOHNSON & JOHNSON",
    "cusip": "478160104",
    "class": "  COM",
    "value_usd": 1327493063,
-   "shares": 5226968
+   "shares": 5226968,
+   "value_100m_krw": 20568
   }
  ],
  "holdings": [
@@ -159,140 +179,160 @@
    "cusip": "67066G104",
    "class": "  COM",
    "value_usd": 10171499316,
-   "shares": 50834621
+   "shares": 50834621,
+   "value_100m_krw": 157597
   },
   {
    "issuer": "APPLE INC",
    "cusip": "037833100",
    "class": "  COM",
    "value_usd": 9120026489,
-   "shares": 31517924
+   "shares": 31517924,
+   "value_100m_krw": 141306
   },
   {
    "issuer": "MICROSOFT CORP",
    "cusip": "594918104",
    "class": "  COM",
    "value_usd": 5684729680,
-   "shares": 15239745
+   "shares": 15239745,
+   "value_100m_krw": 88079
   },
   {
    "issuer": "AMAZON COM INC",
    "cusip": "023135106",
    "class": "  COM",
    "value_usd": 4998167363,
-   "shares": 20970745
+   "shares": 20970745,
+   "value_100m_krw": 77442
   },
   {
    "issuer": "ALPHABET INC",
    "cusip": "02079K305",
    "class": "  CAP STK CL A",
    "value_usd": 4680938399,
-   "shares": 13098297
+   "shares": 13098297,
+   "value_100m_krw": 72526
   },
   {
    "issuer": "ALPHABET INC",
    "cusip": "02079K107",
    "class": "  CAP STK CL C",
    "value_usd": 3727875298,
-   "shares": 10550690
+   "shares": 10550690,
+   "value_100m_krw": 57760
   },
   {
    "issuer": "BROADCOM INC",
    "cusip": "11135F101",
    "class": "  COM",
    "value_usd": 3631259754,
-   "shares": 9612865
+   "shares": 9612865,
+   "value_100m_krw": 56263
   },
   {
    "issuer": "INVESCO EXCH TRADED FD TR II",
    "cusip": "46138E461",
    "class": "  PURBTA MSCI US",
    "value_usd": 3546096271,
-   "shares": 47382366
+   "shares": 47382366,
+   "value_100m_krw": 54943
   },
   {
    "issuer": "MICRON TECHNOLOGY INC",
    "cusip": "595112103",
    "class": "  COM",
    "value_usd": 3331465626,
-   "shares": 2886160
+   "shares": 2886160,
+   "value_100m_krw": 51618
   },
   {
    "issuer": "ISHARES TR",
    "cusip": "464287200",
    "class": "  CORE S&P500 ETF",
    "value_usd": 3084943766,
-   "shares": 4119355
+   "shares": 4119355,
+   "value_100m_krw": 47798
   },
   {
    "issuer": "META PLATFORMS INC",
    "cusip": "30303M102",
    "class": "  CL A",
    "value_usd": 2732448252,
-   "shares": 4850873
+   "shares": 4850873,
+   "value_100m_krw": 42337
   },
   {
    "issuer": "TESLA INC",
    "cusip": "88160R101",
    "class": "  COM",
    "value_usd": 2532853621,
-   "shares": 6022001
+   "shares": 6022001,
+   "value_100m_krw": 39244
   },
   {
    "issuer": "ADVANCED MICRO DEVICES INC",
    "cusip": "007903107",
    "class": "  COM",
    "value_usd": 2091720396,
-   "shares": 3600765
+   "shares": 3600765,
+   "value_100m_krw": 32409
   },
   {
    "issuer": "ELI LILLY & CO",
    "cusip": "532457108",
    "class": "  COM",
    "value_usd": 2018379214,
-   "shares": 1682782
+   "shares": 1682782,
+   "value_100m_krw": 31273
   },
   {
    "issuer": "JPMORGAN CHASE & CO",
    "cusip": "46625H100",
    "class": "  COM",
    "value_usd": 1816546640,
-   "shares": 5549588
+   "shares": 5549588,
+   "value_100m_krw": 28146
   },
   {
    "issuer": "LAM RESEARCH CORP",
    "cusip": "512807306",
    "class": "  COM NEW",
    "value_usd": 1457235924,
-   "shares": 3362878
+   "shares": 3362878,
+   "value_100m_krw": 22578
   },
   {
    "issuer": "APPLIED MATLS INC",
    "cusip": "038222105",
    "class": "  COM",
    "value_usd": 1418562873,
-   "shares": 1962051
+   "shares": 1962051,
+   "value_100m_krw": 21979
   },
   {
    "issuer": "BERKSHIRE HATHAWAY INC DEL",
    "cusip": "084670702",
    "class": "  CL B NEW",
    "value_usd": 1403556421,
-   "shares": 2804925
+   "shares": 2804925,
+   "value_100m_krw": 21747
   },
   {
    "issuer": "INTEL CORP",
    "cusip": "458140100",
    "class": "  COM",
    "value_usd": 1396229068,
-   "shares": 9999492
+   "shares": 9999492,
+   "value_100m_krw": 21633
   },
   {
    "issuer": "JOHNSON & JOHNSON",
    "cusip": "478160104",
    "class": "  COM",
    "value_usd": 1327493063,
-   "shares": 5226968
+   "shares": 5226968,
+   "value_100m_krw": 20568
   },
   {
    "issuer": "EXXON MOBIL CORP",
@@ -4018,5 +4058,11 @@
    "value_usd": 266828,
    "shares": 2645
   }
- ]
+ ],
+ "fx": {
+  "usd_krw": 1549.4,
+  "date": "2026-06-30",
+  "source": "https://www.yna.co.kr/view/AKR20260630138800002"
+ },
+ "total_value_100m_krw": 2402804
 }

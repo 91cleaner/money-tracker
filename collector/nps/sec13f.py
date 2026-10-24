@@ -6,6 +6,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 OUT = os.path.join(ROOT, "data", "nps"); os.makedirs(OUT, exist_ok=True)
 CIK = "1608046"
 UA = os.environ.get("SEC_UA", "MoneyTracker Research contact@91cleaner.dev")  # SEC 규칙: 이름+연락처
+FX = {"2026-06-30": (1549.4, "https://www.yna.co.kr/view/AKR20260630138800002")}  # 분기 말 서울 15:30 종가
 KST = timezone(timedelta(hours=9))
 
 def get(url):
@@ -49,6 +50,11 @@ def main():
         d = {"updated": now, "filer": name, "cik": CIK, "quarter": q, "period": f["period"], "filed": f["filed"], "form": f["form"],
              "filing_url": base, "infotable_url": xurl, "source": "SEC EDGAR 13F-HR", "count": len(h), "total_value_usd": tot,
              "top20": h[:20], "holdings": h}
+        fx = FX.get(f["period"])
+        if fx:
+            d["fx"] = {"usd_krw": fx[0], "date": f["period"], "source": fx[1]}
+            d["total_value_100m_krw"] = round(tot * fx[0] / 1e8)
+            for x in d["top20"]: x["value_100m_krw"] = round(x["value_usd"] * fx[0] / 1e8)
         json.dump(d, open(os.path.join(OUT, f"holdings_us_{q}.json"), "w"), ensure_ascii=False, indent=1); res.append(d)
     cur, prev = res[0], res[1]; pm = {x["cusip"]: x for x in prev["holdings"]}; cm = {x["cusip"]: x for x in cur["holdings"]}
     ch = []
