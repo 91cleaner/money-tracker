@@ -63,7 +63,7 @@ const jo=(w,a,b)=>{const c=String(w).trim().slice(-1).charCodeAt(0)-0xac00;retur
 const wonX=n=>{n=Math.round(Number(n)||0);const e=Math.floor(n/1e8),m=Math.round((n%1e8)/1e4);return e?e.toLocaleString('ko-KR')+'억'+(m?' '+m.toLocaleString('ko-KR')+'만':'')+'원':m.toLocaleString('ko-KR')+'만원';};
 const md=s=>s?`${+String(s).slice(5,7)}월 ${+String(s).slice(8,10)}일`:'';
 const get=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
-const [idx,daily,sole,chg,q2,trw]=await Promise.all([get('data/index.json'),get('data/daily.json'),get('data/sec_sole.json'),get('data/nps/changes_us.json'),get('data/nps/holdings_us_2026Q2.json'),get('data/national/trips_raw.json')]);
+const [idx,daily,sole,chg,q2,trw]=await Promise.all([get('data/index.json'),get('data/daily.json'),get('data/sec_sole.json'),get('data/nps/changes_us.json'),get('data/nps/changes_us.json').then(c=>get('data/nps/holdings_us_'+((c&&c.to)||'2026Q2')+'.json')),get('data/national/trips_raw.json')]);
 $('upd').textContent='데이터 갱신 '+String((idx&&idx.updated)||'').slice(0,16).replace('T',' ');
 const SITE='https://91cleaner.github.io/money-tracker/';
 const cards=[];

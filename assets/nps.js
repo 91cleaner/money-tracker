@@ -32,7 +32,9 @@ const BRAND={NVDA:['#4c7a00','#76b900','#b6f04a'],AAPL:['#3a3d40','#a2aaad','#e6
   '005380':['#001a3a','#002c5f','#4e7fbf'],'329180':['#004a8f','#0072ce','#00b4a0'],'402340':['#ea002c','#f47725','#ffb37a'],'105560':['#60584c','#ffbc00','#ffd966'],
   '012450':['#b24a00','#f37321','#ffb07a'],'034020':['#003d7a','#005eb8','#5fa8ff']};
 const brandOf=(t,i)=>{const k=String(t||'').toUpperCase();if(BRAND[k])return BRAND[k];const h=[38,195,8,145,265,25,225,48,330,170][i%10];return [`hsl(${h} 70% 32%)`,`hsl(${h} 80% 52%)`,`hsl(${h} 90% 72%)`];};
+window.npsBrandOf=(t,i)=>brandOf(t,i);
 const grad=c=>c.length>3?`linear-gradient(90deg,${c.join(',')})`:`linear-gradient(90deg,${c[0]} 0%,${c[1]} 55%,${c[2]} 100%)`;
+window.npsGrad=grad;
 const steelDonut=(rows)=>{
   const list=rows.map(r=>({name:r.name,v:Math.max(0,Number(r.pct)||0),ticker:r.ticker||'',short:r.short||'',logo:r.logo||''}));
   // 막대 길이는 상위 10개 중 가장 큰 것 기준(나머지 50%를 기준으로 하면 막대가 다 짧아져 비교가 안 된다)
@@ -48,18 +50,21 @@ const steelDonut=(rows)=>{
 const ymd=s=>{const [y,m,d]=String(s||'').split('-');return `${+y}년 ${+m}월 ${+d}일`;};
 const KR_CODE={"삼성전자":"005930","SK하이닉스":"000660","LG에너지솔루션":"373220","삼성바이오로직스":"207940","현대차":"005380","HD현대중공업":"329180","SK스퀘어":"402340","KB금융":"105560","한화에어로스페이스":"012450","두산에너빌리티":"034020"};
 const LOGO={NVDA:'NVDA.svg',AAPL:'AAPL.svg',MSFT:'MSFT.svg',AMZN:'AMZN.svg',GOOGL:'GOOGL.svg',GOOG:'GOOGL.svg',AVGO:'AVGO.svg',MU:'MU.svg',IVV:'IVV.svg',META:'META.svg','005930':'005930.svg','000660':'000660.svg','373220':'373220.svg','207940':'207940.svg','005380':'005380.svg','329180':'329180.svg','105560':'105560.svg','012450':'012450.svg'};
-const [ft,q1,q2,ch,kr,ticks]=await Promise.all([j('fund_totals.json'),j('holdings_us_2026Q1.json'),j('holdings_us_2026Q2.json'),j('changes_us.json'),j('kr_holdings.json'),j('us_tickers.json').catch(()=>({cusip:{}}))]);
+window.npsLogo=LOGO;
+const ch0=await j('changes_us.json');
+const qL=q=>{const m=String(q||'').match(/(\d{4})Q(\d)/);return m?`${m[1]}년 ${m[2]}분기`:String(q||'');},qS=q=>{const m=String(q||'').match(/Q(\d)/);return m?m[1]+'분기':'';};
+const [ft,q1,q2,ch,kr,ticks]=await Promise.all([j('fund_totals.json'),j('holdings_us_'+ch0.from+'.json'),j('holdings_us_'+ch0.to+'.json'),Promise.resolve(ch0),j('kr_holdings.json'),j('us_tickers.json').catch(()=>({cusip:{}}))]);
 $('upd').textContent=String(ch.updated||'').slice(0,10);
 const hy=ft.half_year_release;
 let h=`<div class="big">1,865조 5,760억원</div><p class="sub">2026년 6월 말까지 쌓아 둔 돈(적립금)이에요. ${S(hy.url,'국민연금 상반기 보도자료(2026.8.28)')}</p>`;
 if(hy.by_asset){const mx=Math.max(...Object.values(hy.by_asset).map(v=>v.value_billion_krw));
  h+=`<h3>어디에 나눠 두었나 (2026년 6월 말)</h3>`+Object.entries(hy.by_asset).map(([k,v])=>`<div class="row"><span>${esc(k)}${ASSET[k]?`<span class="hint">${esc(ASSET[k])}</span>`:''} <span class="sub">${v.weight_pct}%</span><div class="bar" style="width:${Math.max(2,v.value_billion_krw/mx*100)}%"></div></span><b>${krw(v.value_billion_krw*1e8)}</b></div>`).join('')+`<p class="src">같은 보도자료 기준이에요. ${S(hy.url,'국민연금')}</p>`;}
 $('fund').innerHTML=h;
-const FX={Q1:q1.fx,Q2:q2.fx};
+const FX={Q1:q1.fx||q2.fx,Q2:q2.fx||q1.fx};
 const card=(q,fx,lab)=>`<div class="card"><div class="sub">${lab} (${q.period.replace(/-/g,'.')} 기준)</div><div class="big" style="font-size:24px">약 ${krw(q.total_value_usd*fx.usd_krw)}</div><div class="sub">${q.count}개 주식(종목) · 우리 돈으로 위 금액 · 달러로는 ${usdKo(q.total_value_usd)}<br>1달러에 ${fx.usd_krw.toLocaleString()}원 (${fx.date.replace(/-/g,'.')} 환율, ${S(fx.source,'연합뉴스')})</div>${S(idx(q.filing_url),'미국 정부에 낸 보유 주식 목록')}</div>`;
 h=`<p class="sub">미국에서는 돈을 많이 굴리는 곳이 석 달에 한 번, 가진 미국 주식 목록을 미국 정부에 내요. 국민연금도 그 목록을 냈어요. 원화는 그 분기 마지막 날 환율로 바꾼 대략의 금액(어림값)이에요.</p>
-<div class="two">${card(q2,FX.Q2,'2026년 2분기')}${card(q1,FX.Q1,'2026년 1분기')}</div>
-<h3>가장 많이 가진 미국 주식 10개 (2026년 2분기)</h3><p class="sub">오른쪽 %는 미국 주식 ${usdKo(q2.total_value_usd)} 중이에요.</p>`;
+<div class="two">${card(q2,FX.Q2,qL(q2.quarter))}${card(q1,FX.Q1,qL(q1.quarter))}</div>
+<h3>가장 많이 가진 미국 주식 10개 (${qL(q2.quarter)})</h3><p class="sub">오른쪽 %는 미국 주식 ${usdKo(q2.total_value_usd)} 중이에요.</p>`;
 const t=q2.top20.slice(0,10),tm=t[0].value_usd;
 const usTick=(ticks&&ticks.cusip)||{};
 const usShares=t.map(x=>{const ticker=usTick[x.cusip]||''; return {name:x.issuer,pct:q2.total_value_usd>0?x.value_usd/q2.total_value_usd*100:0,ticker,logo:LOGO[ticker]?('assets/logos/'+LOGO[ticker]):''};});
@@ -72,14 +77,14 @@ const st=x=>x.status==='신규'?'<span class="tag">새로 산 주식</span>':x.s
 const list=(a,cls)=>{const ok=a.filter(x=>x.real!==false&&!x.suspect_note&&!BAD.test(x.issuer)).slice(0,10),m=Math.max(...ok.map(x=>Math.abs(x.est_trade_usd)));
  return ok.map((x,i)=>`<div class="row"><span>${i+1}. ${esc(x.issuer)} ${st(x)}${adj(x)}<div class="bar ${cls}" style="width:${Math.abs(x.est_trade_usd)/m*100}%"></div></span><b>${krw(Math.abs(x.est_trade_usd)*FX.Q2.usd_krw)}</b></div>`).join('');};
 const flagged=[...ch.top_buys,...ch.top_sells].filter(x=>x.suspect_note||x.real===false||BAD.test(x.issuer)).map(x=>koSkip(x.issuer));
-const skipped=[...new Set(['듀폰','페덱스 화물',...flagged])];
-h=`<p class="sub">2026년 1분기에서 2분기로 주식 수가 얼마나 변했는지 보고 계산했어요.</p>
-<div class="note">늘거나 줄어든 주식 수에 2분기 끝 가격을 곱한 대략의 금액이에요. 이 금액을 추정 거래액이라고 하고, 실제로 사고판 돈과 다를 수 있어요. 원화는 1달러에 ${FX.Q2.usd_krw.toLocaleString()}원으로 바꿨어요.</div>
+const skipped=[...new Set([...(ch.to==='2026Q2'?['듀폰','페덱스 화물']:[]),...flagged])];
+h=`<p class="sub">${qL(q1.quarter)}에서 ${qS(q2.quarter)}로 주식 수가 얼마나 변했는지 보고 계산했어요.</p>
+<div class="note">늘거나 줄어든 주식 수에 ${qS(q2.quarter)} 끝 가격을 곱한 대략의 금액이에요. 이 금액을 추정 거래액이라고 하고, 실제로 사고판 돈과 다를 수 있어요. 원화는 1달러에 ${FX.Q2.usd_krw.toLocaleString()}원으로 바꿨어요.</div>
 <div class="two"><div><h3>많이 늘린 주식 10개</h3>${list(ch.top_buys,'g')}</div><div><h3>많이 줄인 주식 10개</h3>${list(ch.top_sells,'r')}</div></div>
 <h3>주식을 쪼개거나 회사를 나눈 경우</h3><p class="sub">주식을 쪼개면(분할) 가진 수가 많아 보이고, 합치면(역분할) 적어 보여요. 회사에서 새 회사를 떼어 내기도(분사) 해요. 공개된 자료를 보고 그 변화를 반영해 주식 수를 다시 셌어요(보정).</p>`+
 ch.adjustments.map(a=>`<div class="row"><span>${esc(a.issuer)} · ${esc(plainType(a.type))} <span class="sub">${esc(a.date)}</span><br>${S(a.basis,'공개 자료')}</span></div>`).join('')+
-`<p class="sub">회사가 나뉘어 주식 수가 달라진 곳은 늘리거나 줄인 목록에서 뺐어요. 뺀 곳: ${skipped.map(esc).join(', ')}.</p>
-<p class="src">${S(idx(ch.sources[0]),'2026년 1분기 보유 주식 목록')} · ${S(idx(ch.sources[1]),'2026년 2분기 보유 주식 목록')}</p>`;
+`${skipped.length?`<p class="sub">회사가 나뉘어 주식 수가 달라진 곳은 늘리거나 줄인 목록에서 뺐어요. 뺀 곳: ${skipped.map(esc).join(', ')}.</p>`:''}
+<p class="src">${S(idx(ch.sources[0]),qL(q1.quarter)+' 보유 주식 목록')} · ${S(idx(ch.sources[1]),qL(q2.quarter)+' 보유 주식 목록')}</p>`;
 $('chg').innerHTML=h;
 const top=kr.top10.slice(0,10),km=top[0].value_100m_krw;
 const shares=top.map(x=>krShare(x,kr.total_value_100m_krw,kr.weight_note));
