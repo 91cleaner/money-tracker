@@ -1,0 +1,27 @@
+{
+ "updated": "2026-10-24",
+ "status": "공식 공시 수기 입력(팩트체크 전)",
+ "latest": {
+  "as_of": "2026-07-31",
+  "source": "국민연금기금운용본부 운용현황",
+  "url": "https://fund.nps.or.kr/oprtprcn/otln/getOHED0013M0.do?menuId=MN24000624",
+  "reserve_trillion_krw": 1684.2,
+  "total_raised_trillion_krw": 2151.0, "total_spent_trillion_krw": 466.9,
+  "mix": {"국내주식": [418.6, 24.9], "해외주식": [623.7, 37.0], "국내채권": [282.9, 16.8], "해외채권": [102.4, 6.1], "대체투자": [248.7, 14.8], "단기자금": [5.1, 0.3], "복지·기타": [1.0, 0.1]},
+  "mix_unit": "[조원, %]",
+  "return_ytd_pct": 14.84, "return_ytd_period": "2026.1~2026.7(잠정)", "return_ytd_trillion_krw": 219.1,
+  "return_3y_pct": 16.05, "return_since_1988_pct": 8.04
+ },
+ "half_year_release": {
+  "as_of": "2026-06-30", "title": "[보도자료] 국민연금 2026년 상반기 기금적립금 1,866조원", "release_date": "2026-08-28",
+  "url": "https://fund.nps.or.kr/impa/nscvrgdatadtl/getOHEF0014M0.do?hmpgBbsCd=BS20240174&pstId=ZZ202600000000000957",
+  "reserve_billion_krw": 1865576, "return_ytd_pct": 27.22,
+  "by_asset": {"국내주식": {"return_pct": 107.37, "value_billion_krw": 543204, "weight_pct": 29.1},
+               "해외주식": {"return_pct": 17.81, "value_billion_krw": 661051, "weight_pct": 35.4},
+               "국내채권": {"return_pct": -3.00, "value_billion_krw": 287816, "weight_pct": 15.4},
+               "해외채권": {"return_pct": 9.22, "value_billion_krw": 110225, "weight_pct": 5.9},
+               "대체투자": {"return_pct": 9.60, "value_billion_krw": 260861, "weight_pct": 14.0},
+               "단기자금": {"return_pct": 3.37, "value_billion_krw": 4628, "weight_pct": 0.2}}
+ },
+ "target_2026": {"url": "https://fund.nps.or.kr/oprtplcy/astaprtplcy/getOHEC0005M0.do", "국내주식": 20.8, "해외주식": 34.7, "국내채권": 23.1, "해외채권": 7.4, "대체투자": 14.0}
+}

@@ -1,0 +1,461 @@
+{
+ "updated": "2026-10-24 11:37",
+ "from": "2026Q1",
+ "to": "2026Q2",
+ "sources": [
+  "https://www.sec.gov/Archives/edgar/data/1608046/000119312526217663/",
+  "https://www.sec.gov/Archives/edgar/data/1608046/000119312526347818/"
+ ],
+ "caveat": "주식분할·CUSIP 변경(분사·합병)은 보정하지 않아 신규/전량매도로 잡힐 수 있음(팩트체크 전)",
+ "method": "주식 수 변화 × 해당 분기 말 13F 평가액 기준 주가(추정 거래액)",
+ "total_value_usd": {
+  "2026Q1": 131679039771,
+  "2026Q2": 155079663358
+ },
+ "top_buys": [
+  {
+   "issuer": "KLA CORP",
+   "cusip": "482480100",
+   "shares_prev": 363701,
+   "shares_cur": 3634859,
+   "share_change": 3271158,
+   "value_prev_usd": 535516989,
+   "value_cur_usd": 1096673309,
+   "status": "유지",
+   "est_trade_usd": 986941080
+  },
+  {
+   "issuer": "SPACE EXPLORATION TECHN CORP",
+   "cusip": "84615Q103",
+   "shares_prev": 0,
+   "shares_cur": 3500000,
+   "share_change": 3500000,
+   "value_prev_usd": 0,
+   "value_cur_usd": 598010000,
+   "status": "신규",
+   "est_trade_usd": 598010000
+  },
+  {
+   "issuer": "BOOKING HOLDINGS INC",
+   "cusip": "09857L108",
+   "shares_prev": 78294,
+   "shares_cur": 2016221,
+   "share_change": 1937927,
+   "value_prev_usd": 329642794,
+   "value_cur_usd": 359371231,
+   "status": "유지",
+   "est_trade_usd": 345416108
+  },
+  {
+   "issuer": "MARSH & MCLENNAN COS INC",
+   "cusip": "571748102",
+   "shares_prev": 0,
+   "shares_cur": 1128564,
+   "share_change": 1128564,
+   "value_prev_usd": 0,
+   "value_cur_usd": 188097762,
+   "status": "신규",
+   "est_trade_usd": 188097762
+  },
+  {
+   "issuer": "HONEYWELL INTL INC",
+   "cusip": "438516205",
+   "shares_prev": 0,
+   "shares_cur": 750586,
+   "share_change": 750586,
+   "value_prev_usd": 0,
+   "value_cur_usd": 168056205,
+   "status": "신규",
+   "est_trade_usd": 168056205
+  },
+  {
+   "issuer": "HONEYWELL AEROSPACE INC",
+   "cusip": "43849R105",
+   "shares_prev": 0,
+   "shares_cur": 750586,
+   "share_change": 750586,
+   "value_prev_usd": 0,
+   "value_cur_usd": 165939553,
+   "status": "신규",
+   "est_trade_usd": 165939553
+  },
+  {
+   "issuer": "APPLE INC",
+   "cusip": "037833100",
+   "shares_prev": 31019702,
+   "shares_cur": 31517924,
+   "share_change": 498222,
+   "value_prev_usd": 7872490171,
+   "value_cur_usd": 9120026489,
+   "status": "유지",
+   "est_trade_usd": 144165518
+  },
+  {
+   "issuer": "AMAZON COM INC",
+   "cusip": "023135106",
+   "shares_prev": 20442324,
+   "shares_cur": 20970745,
+   "share_change": 528421,
+   "value_prev_usd": 4257522819,
+   "value_cur_usd": 4998167363,
+   "status": "유지",
+   "est_trade_usd": 125943861
+  },
+  {
+   "issuer": "MICROSOFT CORP",
+   "cusip": "594918104",
+   "shares_prev": 14917409,
+   "shares_cur": 15239745,
+   "share_change": 322336,
+   "value_prev_usd": 5521977290,
+   "value_cur_usd": 5684729680,
+   "status": "유지",
+   "est_trade_usd": 120237775
+  },
+  {
+   "issuer": "ALPHABET INC",
+   "cusip": "02079K305",
+   "shares_prev": 12793377,
+   "shares_cur": 13098297,
+   "share_change": 304920,
+   "value_prev_usd": 3678863490,
+   "value_cur_usd": 4680938399,
+   "status": "유지",
+   "est_trade_usd": 108969260
+  },
+  {
+   "issuer": "COHERENT CORP",
+   "cusip": "19247G107",
+   "shares_prev": 8719,
+   "shares_cur": 262197,
+   "share_change": 253478,
+   "value_prev_usd": 2076953,
+   "value_cur_usd": 103428851,
+   "status": "유지",
+   "est_trade_usd": 99989467
+  },
+  {
+   "issuer": "CARNIVAL CORP LTD",
+   "cusip": "G2004J103",
+   "shares_prev": 0,
+   "shares_cur": 3228771,
+   "share_change": 3228771,
+   "value_prev_usd": 0,
+   "value_cur_usd": 92245987,
+   "status": "신규",
+   "est_trade_usd": 92245987
+  },
+  {
+   "issuer": "META PLATFORMS INC",
+   "cusip": "30303M102",
+   "shares_prev": 4695451,
+   "shares_cur": 4850873,
+   "share_change": 155422,
+   "value_prev_usd": 2686408381,
+   "value_cur_usd": 2732448252,
+   "status": "유지",
+   "est_trade_usd": 87547658
+  },
+  {
+   "issuer": "BROADCOM INC",
+   "cusip": "11135F101",
+   "shares_prev": 9382706,
+   "shares_cur": 9612865,
+   "share_change": 230159,
+   "value_prev_usd": 2904041334,
+   "value_cur_usd": 3631259754,
+   "status": "유지",
+   "est_trade_usd": 86942562
+  },
+  {
+   "issuer": "LUMENTUM HLDGS INC",
+   "cusip": "55024U109",
+   "shares_prev": 4000,
+   "shares_cur": 104049,
+   "share_change": 100049,
+   "value_prev_usd": 2811040,
+   "value_cur_usd": 89280285,
+   "status": "유지",
+   "est_trade_usd": 85848045
+  },
+  {
+   "issuer": "NEBIUS GROUP N.V.",
+   "cusip": "N97284108",
+   "shares_prev": 15530,
+   "shares_cur": 312303,
+   "share_change": 296773,
+   "value_prev_usd": 1611393,
+   "value_cur_usd": 86248720,
+   "status": "유지",
+   "est_trade_usd": 81959800
+  },
+  {
+   "issuer": "CARVANA CO",
+   "cusip": "146869102",
+   "shares_prev": 274819,
+   "shares_cur": 1508963,
+   "share_change": 1234144,
+   "value_prev_usd": 86397597,
+   "value_cur_usd": 99319945,
+   "status": "유지",
+   "est_trade_usd": 81231358
+  },
+  {
+   "issuer": "QNITY ELECTRONICS INC",
+   "cusip": "74743L100",
+   "shares_prev": 80116,
+   "shares_cur": 425609,
+   "share_change": 345493,
+   "value_prev_usd": 9243784,
+   "value_cur_usd": 69506206,
+   "status": "유지",
+   "est_trade_usd": 56422462
+  },
+  {
+   "issuer": "TESLA INC",
+   "cusip": "88160R101",
+   "shares_prev": 5890660,
+   "shares_cur": 6022001,
+   "share_change": 131341,
+   "value_prev_usd": 2189852855,
+   "value_cur_usd": 2532853621,
+   "status": "유지",
+   "est_trade_usd": 55242025
+  },
+  {
+   "issuer": "CASEYS GEN STORES INC",
+   "cusip": "147528103",
+   "shares_prev": 2083,
+   "shares_cur": 67466,
+   "share_change": 65383,
+   "value_prev_usd": 1516132,
+   "value_cur_usd": 53621302,
+   "status": "유지",
+   "est_trade_usd": 51965754
+  }
+ ],
+ "top_sells": [
+  {
+   "issuer": "HONEYWELL INTL INC",
+   "cusip": "438516106",
+   "shares_prev": 1459138,
+   "shares_cur": 0,
+   "share_change": -1459138,
+   "value_prev_usd": 329808962,
+   "value_cur_usd": 0,
+   "status": "전량 매도",
+   "est_trade_usd": -329808962
+  },
+  {
+   "issuer": "NVIDIA CORPORATION",
+   "cusip": "67066G104",
+   "shares_prev": 51274183,
+   "shares_cur": 50834621,
+   "share_change": -439562,
+   "value_prev_usd": 8942217515,
+   "value_cur_usd": 10171499316,
+   "status": "유지",
+   "est_trade_usd": -87951961
+  },
+  {
+   "issuer": "CARNIVAL CORP",
+   "cusip": "143658300",
+   "shares_prev": 2970311,
+   "shares_cur": 0,
+   "share_change": -2970311,
+   "value_prev_usd": 76871649,
+   "value_cur_usd": 0,
+   "status": "전량 매도",
+   "est_trade_usd": -76871649
+  },
+  {
+   "issuer": "PALO ALTO NETWORKS INC",
+   "cusip": "697435105",
+   "shares_prev": 2151333,
+   "shares_cur": 1955902,
+   "share_change": -195431,
+   "value_prev_usd": 344901707,
+   "value_cur_usd": 667001700,
+   "status": "유지",
+   "est_trade_usd": -66645880
+  },
+  {
+   "issuer": "EVERPURE INC",
+   "cusip": "74624M102",
+   "shares_prev": 609678,
+   "shares_cur": 55840,
+   "share_change": -553838,
+   "value_prev_usd": 35995389,
+   "value_cur_usd": 4399634,
+   "status": "유지",
+   "est_trade_usd": -43636900
+  },
+  {
+   "issuer": "EQUITY RESIDENTIAL",
+   "cusip": "29476L107",
+   "shares_prev": 645017,
+   "shares_cur": 38971,
+   "share_change": -606046,
+   "value_prev_usd": 38152756,
+   "value_cur_usd": 2647300,
+   "status": "유지",
+   "est_trade_usd": -41168704
+  },
+  {
+   "issuer": "LABCORP HOLDINGS INC",
+   "cusip": "504922105",
+   "shares_prev": 189636,
+   "shares_cur": 43150,
+   "share_change": -146486,
+   "value_prev_usd": 50596781,
+   "value_cur_usd": 12082000,
+   "status": "유지",
+   "est_trade_usd": -41016080
+  },
+  {
+   "issuer": "AERCAP HOLDINGS NV",
+   "cusip": "N00985106",
+   "shares_prev": 651036,
+   "shares_cur": 371176,
+   "share_change": -279860,
+   "value_prev_usd": 89309118,
+   "value_cur_usd": 54110037,
+   "status": "유지",
+   "est_trade_usd": -40797991
+  },
+  {
+   "issuer": "OMNICOM GROUP INC",
+   "cusip": "681919106",
+   "shares_prev": 960483,
+   "shares_cur": 434979,
+   "share_change": -525504,
+   "value_prev_usd": 72333975,
+   "value_cur_usd": 31679521,
+   "status": "유지",
+   "est_trade_usd": -38272457
+  },
+  {
+   "issuer": "WESTERN DIGITAL CORP",
+   "cusip": "958102105",
+   "shares_prev": 1437962,
+   "shares_cur": 1380902,
+   "share_change": -57060,
+   "value_prev_usd": 388954341,
+   "value_cur_usd": 882009725,
+   "status": "유지",
+   "est_trade_usd": -36445363
+  },
+  {
+   "issuer": "DOLLAR TREE INC",
+   "cusip": "256746108",
+   "shares_prev": 598427,
+   "shares_cur": 301995,
+   "share_change": -296432,
+   "value_prev_usd": 65533741,
+   "value_cur_usd": 36526295,
+   "status": "유지",
+   "est_trade_usd": -35853450
+  },
+  {
+   "issuer": "MARKEL GROUP INC",
+   "cusip": "570535104",
+   "shares_prev": 20627,
+   "shares_cur": 2573,
+   "share_change": -18054,
+   "value_prev_usd": 39481522,
+   "value_cur_usd": 5025095,
+   "status": "유지",
+   "est_trade_usd": -35259644
+  },
+  {
+   "issuer": "CONSTELLATION BRANDS INC",
+   "cusip": "21036P108",
+   "shares_prev": 402943,
+   "shares_cur": 152644,
+   "share_change": -250299,
+   "value_prev_usd": 60441450,
+   "value_cur_usd": 21231254,
+   "status": "유지",
+   "est_trade_usd": -34814088
+  },
+  {
+   "issuer": "HP INC",
+   "cusip": "40434L105",
+   "shares_prev": 3720120,
+   "shares_cur": 2159067,
+   "share_change": -1561053,
+   "value_prev_usd": 71463505,
+   "value_cur_usd": 47369930,
+   "status": "유지",
+   "est_trade_usd": -34249503
+  },
+  {
+   "issuer": "DELL TECHNOLOGIES INC",
+   "cusip": "24703L202",
+   "shares_prev": 732548,
+   "shares_cur": 653939,
+   "share_change": -78609,
+   "value_prev_usd": 120233103,
+   "value_cur_usd": 282148521,
+   "status": "유지",
+   "est_trade_usd": -33916639
+  },
+  {
+   "issuer": "VERALTO CORP",
+   "cusip": "92338C103",
+   "shares_prev": 450026,
+   "shares_cur": 72818,
+   "share_change": -377208,
+   "value_prev_usd": 39791299,
+   "value_cur_usd": 6457500,
+   "status": "유지",
+   "est_trade_usd": -33450804
+  },
+  {
+   "issuer": "ULTA BEAUTY INC",
+   "cusip": "90384S303",
+   "shares_prev": 107553,
+   "shares_cur": 33858,
+   "share_change": -73695,
+   "value_prev_usd": 56219029,
+   "value_cur_usd": 15269281,
+   "status": "유지",
+   "est_trade_usd": -33234971
+  },
+  {
+   "issuer": "STERIS PLC",
+   "cusip": "G8473T100",
+   "shares_prev": 186313,
+   "shares_cur": 30216,
+   "share_change": -156097,
+   "value_prev_usd": 41199394,
+   "value_cur_usd": 6362583,
+   "status": "유지",
+   "est_trade_usd": -32869345
+  },
+  {
+   "issuer": "REDDIT INC",
+   "cusip": "75734B100",
+   "shares_prev": 209031,
+   "shares_cur": 25075,
+   "share_change": -183956,
+   "value_prev_usd": 28146024,
+   "value_cur_usd": 4352519,
+   "status": "유지",
+   "est_trade_usd": -31931086
+  },
+  {
+   "issuer": "LENNAR CORP",
+   "cusip": "526057104",
+   "shares_prev": 363786,
+   "shares_cur": 15484,
+   "share_change": -348302,
+   "value_prev_usd": 31591176,
+   "value_cur_usd": 1401147,
+   "status": "유지",
+   "est_trade_usd": -31517844
+  }
+ ],
+ "new": 19,
+ "exited": 29
+}

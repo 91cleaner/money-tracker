@@ -1,0 +1,19 @@
+name: nps
+on:
+  schedule: [{cron: "41 21 * * *"}]
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python collector/nps/sec13f.py
+      - run: python collector/nps/kr_stocks.py
+        continue-on-error: true
+      - run: |
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add data/nps; git diff --cached --quiet || git commit -m "nps 데이터 갱신"
+          git pull --rebase && git push
