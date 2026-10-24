@@ -98,6 +98,9 @@ def history():
             continue
         nm = r.get("NAAS_NM") or r.get("HG_NM")
         out[nm].append({"id": r.get("NAAS_CD") or r.get("MONA_CD"), "party": r.get("PLPT_NM") or r.get("POLY_NM"), "raw": r})
+    keep = ("NAAS_CD", "NAAS_NM", "PLPT_NM", "GTELT_ERACO", "ELECD_NM", "ELECD_DIV_NM", "BIRDY_DT", "BRF_HST", "DTY_NM")
+    json.dump({n: [{k: h["raw"].get(k) for k in keep} for h in hs] for n, hs in out.items()},
+              open(os.path.join(OUT, "members_hist22.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     return out
 
 
@@ -136,7 +139,7 @@ def collect_trips(members):
                           "party": ms[0]["party"] if ok else None, "match": how if ok or how != "현직" else "미매칭",
                           "is_leader": n == lead, "dest": dst, "dest_inferred": inferred, "dest_raw": r.get("DSTN_NM"),
                           "dates": r.get("SCH_DYS"), "purpose": r.get("PURP_RSON"), "funder": r.get("EXPNS_SUPPT_INST_NM"),
-                          "report": r.get("REPORT_YN"), "src": BASE + TRIP})
+                          "report": r.get("REPORT_YN"), "report_label": "신고 당시 결과보고서 유/무", "src": BASE + TRIP})
     json.dump({"count_raw": len(rows), "leader_field": LEAD or "없음(PN 첫 이름을 대표로 봄)", "unmatched": dict(unmatched), "trips": trips},
               open(os.path.join(OUT, "trips_raw.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     by_m, by_l, by_p, by_d = defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int)
