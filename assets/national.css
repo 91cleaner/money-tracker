@@ -16,3 +16,9 @@ input[type=search]{width:100%;padding:12px;border-radius:10px;border:1px solid #
 .flow{display:flex;flex-direction:column;gap:6px}.node{background:#0f141b;border:1px solid #2a3541;border-radius:12px;padding:10px 12px}.arr{text-align:center;color:#8fa0b3;font-size:13px}
 .foot{font-size:12px;color:#8fa0b3}
 @media(min-width:900px){#tmap{height:320px}}
+.nflow{stroke-dasharray:4 14;animation:nfl 1.4s linear infinite;cursor:pointer}@keyframes nfl{to{stroke-dashoffset:-18}}
+@media (prefers-reduced-motion:reduce){.nflow{animation:none}}
+.ntip{background:#0d1117;color:#fff;border:1px solid #4da3ff;font-size:12px}
+#tmap{height:300px}@media(min-width:900px){#tmap{height:420px}}
+#cp:empty{display:none}#cp{background:#0f141b;border-radius:12px;padding:4px 12px 10px;margin:8px 0;max-height:420px;overflow:auto}
+.crow{cursor:pointer}.crow:hover{background:#1b232d}
