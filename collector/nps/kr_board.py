@@ -68,7 +68,8 @@ def main():
     for r in rows[hi + 1:]:
         r = list(r) + [None] * 10
         if not r[jn] or num(r[jv]) is None: continue
-        r[jv], r[jw], r[js] = num(r[jv]), num(r[jw]), num(r[js])
+        pct = lambda v: None if v is None else round(v * 100 if v <= 1 else v, 2)  # 엑셀은 비율(0.0776)로 저장
+        r[jv], r[jw], r[js] = round(num(r[jv]), 1), pct(num(r[jw])), pct(num(r[js]))
         out.append({"company": str(r[jn]).strip(), "value_100m_krw": r[jv], "weight_pct": r[jw], "stake_pct": r[js], "as_of": asof, "source_url": u})
     out.sort(key=lambda x: -x["value_100m_krw"])
     for k, x in enumerate(out, 1): x["rank"] = k
