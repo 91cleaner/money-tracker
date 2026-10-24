@@ -29,8 +29,8 @@ function seatBadge(map, mk) {
 function satView(box, geo, cities, onPick) {
   if (!window.L) throw new Error('no leaflet');
   box.classList.add('sat');
-  const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 12, zoomSnap: 0.25, tap: true,
-    maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false});
+  const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 5, maxZoom: 12, zoomSnap: 0.25, tap: true,
+    maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false, touchZoom: true});
   { // 크기가 바뀌거나 다시 보일 때 타일이 깨지지 않게
     let t = 0; const inv = () => { clearTimeout(t); t = setTimeout(() => { map.invalidateSize({pan: false}); view.onsize && view.onsize(); }, 80); };
     if (window.ResizeObserver) new ResizeObserver(inv).observe(box);
@@ -38,6 +38,7 @@ function satView(box, geo, cities, onPick) {
     document.addEventListener('visibilitychange', () => !document.hidden && inv()); window.__inv2 = inv; }
 
   if (!matchMedia('(pointer: coarse)').matches) L.control.zoom({position: 'topright'}).addTo(map);
+  if (window.mtWheel) mtWheel(map, box);
   // 페이지 스크롤을 빼앗지 않도록: 터치 기기에서는 지도를 한 번 눌러야 움직임
   if (matchMedia('(pointer: coarse)').matches) {
     map.zoomControl && map.zoomControl.remove();  // 한 손가락 이동·두 손가락 확대(기본)
@@ -167,17 +168,37 @@ function satView(box, geo, cities, onPick) {
   tiles.on('load', scheduleDeclutter);
   if (document.fonts) { document.fonts.ready.then(scheduleDeclutter); document.fonts.addEventListener('loadingdone', scheduleDeclutter); }
   const bez = (a, b) => {
-    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
+    if (window.mtArc) return mtArc(a, b).map(toLL);
+    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60);
     const mx = (a[0] + b[0]) / 2 - (dy / d) * o, my = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
     for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mx + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * my + t * t * b[1]]));
     return pts;
   };
   let hl = null, pend = null;
+  const lg = {out: false, inn: false, line: false, badge: false, ring: false};
+  const syncLg = () => {
+    if (!window.mtLegend) return;
+    const parts = [];
+    if (!lg.line && !lg.badge) {
+      parts.push({t: 'dot', c: '#0a84ff', l: '시가 맺은 계약'});
+      parts.push({t: 'w', c: '#0a84ff', l: '동그라미가 클수록 돈이 많아요'});
+    } else {
+      if (!lg.inn && !lg.badge && lg.out) {
+        parts.push({t: 'dot', c: '#0a84ff', l: '시가 맺은 계약'});
+        parts.push({t: 'w', c: '#0a84ff', l: '동그라미가 클수록 돈이 많아요'});
+      }
+      if (lg.inn || lg.badge) parts.push({t: 'dot', c: '#0a84ff', l: '우리 시 업체'});
+      if (lg.out) parts.push({t: 'ln', c: '#ff9f0a', l: '다른 지역으로 간 돈'});
+      if (lg.line) parts.push({t: 'w', c: lg.out ? '#ff9f0a' : '#0a84ff', l: '선이 굵을수록 돈이 많아요'});
+    }
+    if (lg.ring || hl) parts.push({t: 'ring', l: '지금 고른 곳'});
+    mtLegend(box, parts);
+  };
   const vis = (fn) => { if (box.clientWidth > 0 && box.clientHeight > 0) { fn(); } else pend = fn; };
   addEventListener('resize', () => { if (pend && box.clientWidth > 0) { map.invalidateSize(); const f = pend; pend = null; setTimeout(f, 50); } });
   const view = {
     resize(tot, all) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((m, s) => { const t = tot[s] || 0; m.setRadius(t ? 4 + 13 * Math.sqrt(t / mx) : (all ? 4 : 0)); }); },
-    highlight(p) { if (hl) hl.remove(); hl = p ? L.circleMarker(toLL(p), {radius: 16, className: 'hlring', color: '#ffd60a', weight: 3, fill: false, interactive: false}).addTo(map) : null; if (p) vis(() => map.panTo(toLL(p))); view.oncam && view.oncam(); },
+    highlight(p) { if (hl) hl.remove(); hl = p ? L.circleMarker(toLL(p), {radius: 16, className: 'hlring', color: '#ffd60a', weight: 3, fill: false, interactive: false}).addTo(map) : null; if (p) vis(() => map.panTo(toLL(p))); syncLg(); view.oncam && view.oncam(); },
     homeBtn, hlOn() { return !!hl; },
     readCam() { const c = map.getCenter(); return {lat: c.lat, lng: c.lng, z: map.getZoom()}; },
     sameCam(s) { if (!s || s.lat == null) return false; const c = map.getCenter(); return Math.abs(map.getZoom() - s.z) < 0.05 && Math.abs(c.lat - s.lat) < 0.02 && Math.abs(c.lng - s.lng) < 0.02; },
@@ -188,16 +209,18 @@ function satView(box, geo, cities, onPick) {
     select(slug) { selSlug = slug || null; dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
       gF.clearLayers(); destTips = []; lineArgs = [list, maxA, labels];
+      lg.out = lg.inn = lg.line = lg.badge = lg.ring = false;
       const px = (p) => map.latLngToContainerPoint(toLL(p));
       const buried = [];
       list.forEach((f, i) => {
-        const w = 2 + 9 * Math.sqrt(f.amount / maxA), col = f.local ? '#0a84ff' : '#ff9f0a';
+        const w = window.mtW ? mtW(f.amount, maxA) : 1.5 + 7 * Math.sqrt((f.amount || 0) / (maxA || 1)), col = f.local ? '#0a84ff' : '#ff9f0a';
         const svgD = f.a && f.p ? Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) : 99;
         const near = !!(f.local && f.a && f.p && (svgD < 1 || (box.clientWidth > 40 && px(f.a).distanceTo(px(f.p)) < 28)));
         if (near) { buried.push(f); return; }
         if (svgD >= 0.5) {
-          const pl = L.polyline(bez(f.a, f.p), {color: col, weight: w, opacity: 0.9, lineCap: 'round', className: 'sfl', interactive: false}).addTo(gF);
+          const pl = L.polyline(bez(f.a, f.p), {color: col, weight: w, opacity: 0.85, lineCap: 'round', className: 'sfl', interactive: false}).addTo(gF);
           const el2 = pl.getElement && pl.getElement(); if (el2) { el2.setAttribute('pathLength', '1'); el2.style.animationDelay = i * 60 + 'ms'; }
+          lg.line = true; if (f.local) lg.inn = true; else lg.out = true;
         }
         L.circleMarker(toLL(f.p), {radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false}).addTo(gF);
         const dn = shortNm(f.to), ll = toLL(f.p);
@@ -213,6 +236,7 @@ function satView(box, geo, cities, onPick) {
         const ll = toLL(me[0]);
         L.circleMarker(ll, {radius: 16, color: '#0b0f13', weight: 6, opacity: 0.75, fill: false, interactive: false}).addTo(gF);
         L.circleMarker(ll, {radius: 16, color: '#ffd60a', weight: 3, fill: false, interactive: false, className: 'hlring'}).addTo(gF);
+        lg.ring = true;
       }
       if (buried.length && list[0] && list[0].a) {
         const sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
@@ -220,7 +244,9 @@ function satView(box, geo, cities, onPick) {
         const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>우리 시 ${money}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
         const mk = L.marker(toLL(list[0].a), {interactive: false, keyboard: false, icon, zIndexOffset: 800}).addTo(gF);
         seatBadge(map, mk);
+        lg.badge = true;
       }
+      syncLg();
       scheduleDeclutter();
     },
     fly(p, z) { vis(() => map.flyTo(toLL(p), Math.min(z, 9.5), {duration: 0.8, easeLinearity: 0.2})); },
@@ -240,22 +266,44 @@ function satView(box, geo, cities, onPick) {
 function svgView(box, geo, cities, onPick) {
   const full = [0, 0, geo.w, geo.h];
   const svg = sv('svg', {viewBox: full.join(' '), role: 'img', 'aria-label': '대한민국 지도 위 돈의 흐름'});
-  const gP = sv('g', {class: 'provs'}), gF = sv('g', {class: 'flows'}), gD = sv('g', {class: 'dests'}), gC = sv('g', {class: 'cits'}), gL = sv('g', {class: 'labels'});
+  const gP = sv('g', {class: 'provs'}), gF = sv('g', {class: 'flows'}), gD = sv('g', {class: 'dests'}), gC = sv('g', {class: 'cits'}), gL = sv('g', {class: 'labels'}), gN = sv('g', {class: 'names'});
   for (const p of geo.provinces) gP.append(sv('path', {d: p.d}));
-  svg.append(gP, gF, gD, gC, gL); box.replaceChildren(svg);
+  svg.append(gP, gF, gD, gC, gN, gL); box.replaceChildren(svg);
+  box.style.touchAction = 'none';
   const maxT = cities[0] ? cities[0].total : 1, dots = new Map();
+  const shortNm = (name) => { const t = String(name || '').trim().split(/\s+/).pop() || ''; const base = t.replace(/(특별자치시|특별자치도|특별시|광역시)$/, ''); const m = base.match(/^(.+)(시|군|구)$/); return (m && m[1].length >= 2) ? m[1] : (base || t); };
+  const nmCount = {}; for (const c of cities) { const s = shortNm(c.name); nmCount[s] = (nmCount[s] || 0) + 1; }
+  const placeNm = (c) => { const s = shortNm(c.name); if ((nmCount[s] || 0) < 2) return s; const p = String(c.name || '').trim().split(/\s+/); return p.length > 1 ? p[0] + ' ' + s : s; };
+  const nameEls = cities.map((c, i) => { const t = sv('text', {x: c.p[0] + 6, y: c.p[1], class: 'lb nm'}); t.textContent = placeNm(c); t.style.visibility = 'hidden'; gN.append(t); return {el: t, p: c.p, rank: i}; });
   for (const c of cities) { const e = sv('circle', {cx: c.p[0], cy: c.p[1], class: 'cdot'}); e.dataset.r = 2.5 + 16 * Math.sqrt(c.total / maxT); gC.append(e); dots.set(c.slug, e); }
   let vb = full.slice(), anim = 0, camFn = () => {};
   const sizes = () => {
     const k = vb[2] / geo.w;
     svg.querySelectorAll('.cdot, .dd').forEach((e) => e.setAttribute('r', (+e.dataset.r) * Math.max(k, 0.35)));
-    gL.querySelectorAll('text').forEach((t) => { t.setAttribute('font-size', 12 * k); t.setAttribute('dy', -7 * k); });
+    svg.querySelectorAll('.labels text, .names text').forEach((t) => { t.setAttribute('font-size', 12 * k); if (t.classList.contains('nm')) t.setAttribute('dy', 4 * k); else t.setAttribute('dy', -7 * k); });
+  };
+  const labelFit = () => {
+    const m = svg.getScreenCTM(); if (!m) return;
+    const br = box.getBoundingClientRect(), zIn = vb[2] < geo.w * 0.72, seen = [];
+    const hit = (a, b) => !(a.right + 4 < b.left || a.left - 4 > b.right || a.bottom + 4 < b.top || a.top - 4 > b.bottom);
+    gL.querySelectorAll('text').forEach((t) => { const r = t.getBoundingClientRect(); if (r.width > 2 && t.style.visibility !== 'hidden') seen.push(r); });
+    const home = box.querySelector('.map-home'); if (home) { const r = home.getBoundingClientRect(); if (r.width > 2) seen.push(r); }
+    nameEls.forEach(({el, p, rank}) => {
+      el.style.visibility = 'hidden';
+      if (!zIn && rank >= 14) return;
+      const x = p[0] * m.a + m.e, y = p[1] * m.d + m.f;
+      if (x < br.left + 4 || x > br.right - 4 || y < br.top + 4 || y > br.bottom - 4) return;
+      el.style.visibility = 'visible';
+      const r = el.getBoundingClientRect();
+      if (r.width < 2 || r.left < br.left || r.right > br.right || r.top < br.top || r.bottom > br.bottom || seen.some((q) => hit(r, q))) { el.style.visibility = 'hidden'; return; }
+      seen.push(r);
+    });
   };
   const zoomTo = (t) => {
     cancelAnimationFrame(anim);
     const from = vb.slice(), t0 = performance.now(), dur = matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 650;
     const step = (now) => { const u = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - u, 3);
-      vb = from.map((v, i) => v + (t[i] - v) * e); svg.setAttribute('viewBox', vb.join(' ')); sizes(); if (u < 1) anim = requestAnimationFrame(step); else camFn(); };
+      vb = from.map((v, i) => v + (t[i] - v) * e); svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); if (u < 1) anim = requestAnimationFrame(step); else camFn(); };
     anim = requestAnimationFrame(step);
   };
   const fitBox = (pts, minS = 90) => {
@@ -268,24 +316,85 @@ function svgView(box, geo, cities, onPick) {
     const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
     return [Math.max(0, Math.min(geo.w - w, cx - w / 2)), Math.max(0, Math.min(geo.h - h, cy - h / 2)), w, h];
   };
-  const curve = (a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
-    return `M${a[0]},${a[1]} Q${(a[0] + b[0]) / 2 - (dy / d) * o},${(a[1] + b[1]) / 2 + (dx / d) * o} ${b[0]},${b[1]}`; };
+  const curve = (a, b) => {
+    const pts = window.mtArc ? mtArc(a, b) : null;
+    if (pts) return 'M' + pts.map((p) => p[0] + ',' + p[1]).join(' L');
+    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60);
+    return `M${a[0]},${a[1]} Q${(a[0] + b[0]) / 2 - (dy / d) * o},${(a[1] + b[1]) / 2 + (dx / d) * o} ${b[0]},${b[1]}`;
+  };
+  const applyZoom = (base, k, sx, sy) => {
+    let w = base[2] * k, h = base[3] * k;
+    w = Math.max(48, Math.min(geo.w, w));
+    h = w * (base[3] / base[2]);
+    if (h > geo.h) { h = geo.h; w = h * (base[2] / base[3]); }
+    const rx = (sx - base[0]) / base[2], ry = (sy - base[1]) / base[3];
+    let x = sx - rx * w, y = sy - ry * h;
+    x = Math.max(0, Math.min(geo.w - w, x));
+    y = Math.max(0, Math.min(geo.h - h, y));
+    cancelAnimationFrame(anim);
+    vb = [x, y, w, h];
+    svg.setAttribute('viewBox', vb.join(' '));
+    sizes(); labelFit(); camFn();
+  };
+  let armed = false, pinch0 = null;
+  box.addEventListener('wheel', (e) => {
+    if (!(e.ctrlKey || armed)) return;
+    e.preventDefault();
+    const m = svg.getScreenCTM(); if (!m) return;
+    applyZoom(vb, e.deltaY < 0 ? 0.8 : 1.25, (e.clientX - m.e) / m.a, (e.clientY - m.f) / m.d);
+  }, {passive: false});
+  box.addEventListener('mouseleave', () => { armed = false; });
+  box.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 2) return;
+    const [t0, t1] = e.touches;
+    pinch0 = {d: Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY) || 1, vb: vb.slice(), cx: (t0.clientX + t1.clientX) / 2, cy: (t0.clientY + t1.clientY) / 2};
+  }, {passive: true});
+  box.addEventListener('touchmove', (e) => {
+    if (e.touches.length !== 2 || !pinch0) return;
+    e.preventDefault();
+    const [t0, t1] = e.touches, d = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY) || 1, m = svg.getScreenCTM();
+    if (!m) return;
+    applyZoom(pinch0.vb, pinch0.d / d, (pinch0.cx - m.e) / m.a, (pinch0.cy - m.f) / m.d);
+  }, {passive: false});
+  box.addEventListener('touchend', () => { pinch0 = null; });
+  box.addEventListener('touchcancel', () => { pinch0 = null; });
   svg.addEventListener('click', (ev) => {
+    armed = true;
     const m = svg.getScreenCTM(); if (!m) return; let best = null, bd = 30;
     for (const c of cities) { const r = (+dots.get(c.slug).getAttribute('r') || 0) * m.a;
       const d = Math.hypot(ev.clientX - (c.p[0] * m.a + m.e), ev.clientY - (c.p[1] * m.d + m.f)) - r; if (d < bd) { bd = d; best = c; } }
     if (best) onPick(best.slug); else if (view2.onempty) view2.onempty();
   });
   sizes();
+  let svgHl = false;
+  const svgLg = {out: false, inn: false, line: false, badge: false, ring: false};
+  const syncSvg = () => {
+    if (!window.mtLegend) return;
+    const parts = [];
+    if (!svgLg.line && !svgLg.badge) {
+      parts.push({t: 'dot', c: '#0a84ff', l: '시가 맺은 계약'});
+      parts.push({t: 'w', c: '#0a84ff', l: '동그라미가 클수록 돈이 많아요'});
+    } else {
+      if (!svgLg.inn && !svgLg.badge && svgLg.out) {
+        parts.push({t: 'dot', c: '#0a84ff', l: '시가 맺은 계약'});
+        parts.push({t: 'w', c: '#0a84ff', l: '동그라미가 클수록 돈이 많아요'});
+      }
+      if (svgLg.inn || svgLg.badge) parts.push({t: 'dot', c: '#0a84ff', l: '우리 시 업체'});
+      if (svgLg.out) parts.push({t: 'ln', c: '#ff9f0a', l: '다른 지역으로 간 돈'});
+      if (svgLg.line) parts.push({t: 'w', c: svgLg.out ? '#ff9f0a' : '#0a84ff', l: '선이 굵을수록 돈이 많아요'});
+    }
+    if (svgLg.ring || svgHl) parts.push({t: 'ring', l: '지금 고른 곳'});
+    mtLegend(box, parts);
+  };
   const view2 = {
     resize(tot, all) { const mx = Math.max(1, ...Object.values(tot)); dots.forEach((e, s) => { const t = tot[s] || 0; e.dataset.r = t ? 2.5 + 16 * Math.sqrt(t / mx) : (all ? 2.5 : 0); }); sizes(); },
-    highlight(p) { gL.querySelectorAll('.hl').forEach((x) => x.remove()); if (p) { const c = sv('circle', {cx: p[0], cy: p[1], class: 'hl dd'}); c.dataset.r = 9; gL.prepend(c); sizes(); } camFn(); },
+    highlight(p) { gL.querySelectorAll('.hl').forEach((x) => x.remove()); svgHl = !!p; if (p) { const c = sv('circle', {cx: p[0], cy: p[1], class: 'hl dd'}); c.dataset.r = 9; gL.prepend(c); sizes(); } syncSvg(); camFn(); },
     hlOn() { return !!gL.querySelector('.hl'); },
     readCam() { return {vb: vb.slice()}; },
     sameCam(s) { return !!(s && s.vb && s.vb.length === vb.length && s.vb.every((v, i) => Math.abs(v - vb[i]) < 0.6)); },
     previewFly(p) { return {vb: fitBox([p], 160).slice()}; },
-    jump(p) { cancelAnimationFrame(anim); vb = fitBox([p], 160); svg.setAttribute('viewBox', vb.join(' ')); sizes(); camFn(); },
-    fitNow(pts) { if (!pts || !pts.length) return; cancelAnimationFrame(anim); vb = fitBox(pts, 36); svg.setAttribute('viewBox', vb.join(' ')); sizes(); camFn(); },
+    jump(p) { cancelAnimationFrame(anim); vb = fitBox([p], 160); svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); camFn(); },
+    fitNow(pts) { if (!pts || !pts.length) return; cancelAnimationFrame(anim); vb = fitBox(pts, 36); svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); camFn(); },
     onsize: null,
     set oncam(fn) { camFn = fn || (() => {}); },
     get oncam() { return camFn; },
@@ -293,21 +402,29 @@ function svgView(box, geo, cities, onPick) {
     select(slug) { dots.forEach((e, s) => e.classList.toggle('on', s === slug)); svg.classList.toggle('picked', !!slug); },
     lines(list, maxA, labels) {
       gF.replaceChildren(); gD.replaceChildren(); gL.replaceChildren();
+      svgLg.out = svgLg.inn = svgLg.line = svgLg.badge = svgLg.ring = false;
       const buried = [];
-      list.forEach((f, i) => { const w = 1.5 + 9 * Math.sqrt(f.amount / maxA);
+      list.forEach((f, i) => {
+        const w = window.mtW ? mtW(f.amount, maxA) : 1.5 + 7 * Math.sqrt((f.amount || 0) / (maxA || 1));
         const svgD = f.a && f.p ? Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) : 99;
         if (f.local && svgD < 18) { buried.push(f); return; }
-        if (svgD >= 2) { const p = sv('path', {d: curve(f.a, f.p), class: 'fl ' + (f.local ? 'in' : 'out'), 'stroke-width': w.toFixed(1)}); p.style.animationDelay = i * 60 + 'ms'; gF.append(p); }
-        const d = sv('circle', {cx: f.p[0], cy: f.p[1], class: 'dd ' + (f.local ? 'in' : 'out')}); d.dataset.r = 2 + w / 3; gD.append(d); });
+        if (svgD >= 2) {
+          const p = sv('path', {d: curve(f.a, f.p), class: 'fl ' + (f.local ? 'in' : 'out'), 'stroke-width': w.toFixed(1)});
+          p.style.animationDelay = i * 60 + 'ms'; gF.append(p);
+          svgLg.line = true; if (f.local) svgLg.inn = true; else svgLg.out = true;
+        }
+        const d = sv('circle', {cx: f.p[0], cy: f.p[1], class: 'dd ' + (f.local ? 'in' : 'out')}); d.dataset.r = 2 + w / 3; gD.append(d);
+      });
       for (const [p, t, me] of labels) { const e = sv('text', {x: p[0], y: p[1], class: 'lb' + (me ? ' me' : '')}); e.textContent = t; gL.append(e); }
       const me = labels.find((x) => x[2]);
-      if (me) { const c = sv('circle', {cx: me[0][0], cy: me[0][1], class: 'hl dd'}); c.dataset.r = 9; c.setAttribute('stroke', '#ffd60a'); c.setAttribute('fill', 'none'); gL.prepend(c); }
+      if (me) { const c = sv('circle', {cx: me[0][0], cy: me[0][1], class: 'hl dd'}); c.dataset.r = 9; c.setAttribute('stroke', '#ffd60a'); c.setAttribute('fill', 'none'); gL.prepend(c); svgLg.ring = true; }
       if (buried.length && list[0] && list[0].a) {
         const p = list[0].a, sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
         const d = sv('circle', {cx: p[0] + 18, cy: p[1] - 14, class: 'dd in'}); d.dataset.r = 5; gD.append(d);
         const e = sv('text', {x: p[0] + 26, y: p[1] - 10, class: 'lb'}); e.textContent = '우리 시 ' + (typeof krw === 'function' ? krw(sum) : ''); gL.append(e);
+        svgLg.badge = true;
       }
-      sizes();
+      sizes(); labelFit(); syncSvg();
     },
     fly(p) { zoomTo(fitBox([p], 160)); },
     fit(pts) { zoomTo(fitBox(pts)); },

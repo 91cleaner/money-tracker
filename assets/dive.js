@@ -270,8 +270,28 @@
     seatBadge(map, locMk);
   };
   // 뱃지를 앉힌 뒤에 겹침을 본다. 맞춤·타일·글꼴이 끝난 뒤에도 한 번 더.
+  let cityHasMoney = () => cities.some((c) => c.total);
+  const syncLegend = () => {
+    if (!window.mtLegend) return;
+    const shown = flowRefs.filter((r) => r.line && r.line.options && r.line.options.opacity > 0.05);
+    const orange = shown.some((r) => !r.f.local);
+    const blue = shown.some((r) => r.f.local);
+    const parts = [];
+    if (!shown.length && !locMk) {
+      if (cityHasMoney()) {
+        parts.push({t: 'dot', c: '#0a84ff', l: '시가 맺은 계약'});
+        parts.push({t: 'w', c: '#0a84ff', l: '동그라미가 클수록 돈이 많아요'});
+      }
+    } else {
+      if (blue || locMk) parts.push({t: 'dot', c: '#0a84ff', l: '우리 시 업체'});
+      if (orange) parts.push({t: 'ln', c: '#ff9f0a', l: '다른 지역으로 간 돈'});
+      if (shown.length) parts.push({t: 'w', c: orange ? '#ff9f0a' : '#0a84ff', l: '선이 굵을수록 돈이 많아요'});
+      parts.push({t: 'ring', l: '지금 고른 곳'});
+    }
+    mtLegend(box, parts);
+  };
   let relayoutT = 0, relayoutT2 = 0;
-  const relayout = () => { sinkLocal(); declutter(); };
+  const relayout = () => { sinkLocal(); declutter(); syncLegend(); };
   const scheduleRelayout = () => { clearTimeout(relayoutT); clearTimeout(relayoutT2); relayoutT = setTimeout(relayout, 70); relayoutT2 = setTimeout(relayout, 420); };
   map.on('zoomend moveend resize', scheduleRelayout);
   tiles.on('load', scheduleRelayout);
@@ -279,16 +299,23 @@
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
   // 세금 길: 도시 → 업체 소재지 선 그리기
   const drawFlows = (slug, hold) => {
-    gF.clearLayers(); flowRefs = []; locMk = null; FX.set([]); REST = {n: 0, amt: 0}; const c = fl.cities[slug]; flowCity = c || null; if (!c || !c.flows.length) return; const arcs = [];
+    gF.clearLayers(); flowRefs = []; locMk = null; FX.set([]); REST = {n: 0, amt: 0}; const c = fl.cities[slug]; flowCity = c || null; if (!c || !c.flows.length) { scheduleRelayout(); return; } const arcs = [];
     const a = c.p, top = c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10), mx = top[0] ? top[0].amount : 1;
     { const inTop = new Set(top), others = c.flows.filter((f) => !inTop.has(f)), sh = top.reduce((t, f) => t + f.amount, 0), unk = Math.max(0, (c.total || 0) - (c.known || 0));
       REST = {n: others.length, amt: others.reduce((t, f) => t + f.amount, 0) + unk, unk: unk > 0}; if (REST.amt > 0 && !REST.n) REST.n = 1; if (REST.amt <= 0) REST.n = 0;
       window.__dvLast = {slug, shown: sh, rest: REST.amt, tot: c.total, card: (BY[slug] || {}).total, re: !!c.__re, top: top.map((f) => [f.to, f.amount])}; }
     top.forEach((f, i) => {
-      const b = f.p, dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60); // 아주 짧은 흐름도 휘어서 보이게
-      const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
-      for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mxp + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * myp + t * t * b[1]]));
-      const w = 1.5 + 7 * Math.sqrt(f.amount / mx), col = f.local ? '#0a84ff' : '#ff9f0a';
+      const b = f.p;
+      const raw = window.mtArc ? mtArc(a, b) : null;
+      let pts;
+      if (raw) pts = raw.map(toLL);
+      else {
+        const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60);
+        const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o;
+        pts = [];
+        for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mxp + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * myp + t * t * b[1]]));
+      }
+      const w = window.mtW ? mtW(f.amount, mx) : 1.5 + 7 * Math.sqrt(f.amount / (mx || 1)), col = f.local ? '#0a84ff' : '#ff9f0a';
       const ln = L.polyline(pts, {color: col, weight: w, opacity: 0.85, interactive: false, className: 'dv-line'}).addTo(gF);
       const dot = L.circleMarker(toLL(b), {pane: 'dvTop', renderer: gTop, radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
       const tipNm = (f.to || '').split(' ').slice(-1)[0] || '';
@@ -409,6 +436,7 @@
   const ex = (on) => { sheet.dataset.ex = on ? '1' : '0'; if (!on) sheet.scrollTop = 0; window.__inv && __inv(); };
   root.querySelector('.dv-grab').onclick = () => ex(sheet.dataset.ex !== '1');
   let CAT = '전체'; const TOT = (slug) => { const c = BY[slug] || {}; return CAT === '전체' ? (c.total || 0) : ((c.by_cat || {})[CAT] || 0); };
+  cityHasMoney = () => cities.some((c) => TOT(c.slug));
   const homeLabels = () => { gL.clearLayers(); HL.clear(); const L_ = cities.map((c) => [c, TOT(c.slug)]).filter((x) => x[1]).sort((a, b) => b[1] - a[1]).slice(0, 8);
     L_.forEach(([c, v]) => homeLab(c, v)); };
   window.__dvCat = (k) => { CAT = k || '전체'; const mx = Math.max(1, ...cities.map((c) => TOT(c.slug)));
@@ -431,7 +459,7 @@
     return `<div class="t5"><div class="t5-h"><b>${esc(CAT)} TOP 5 시</b>${shb(CAT + ' 계약 TOP 5 시 · 세금추적단', './?cat=' + encodeURIComponent(CAT))}</div><ol>${L_.map(({c, v, n}, i) =>
       `<li><button type="button" data-s="${c.slug}"><span class="t5-r">${i + 1}</span><span class="t5-m"><b>${esc(c.short || c.name)}</b><small>${n}건 · 건당 평균 ${krw(n ? v / n : v)}</small><small class="t5-v" data-s="${c.slug}"></small>${fest ? `<small class="t5-ag" data-s="${c.slug}"></small>` : ''}</span><em>${krw(v)}</em></button></li>`).join('')}</ol>
       ${fest ? '<p class="small t5-n">공연 용역 금액에는 무대·음향·연출이 포함되며 개인 출연료가 아님 · 행사대행은 축제 전체 운영 계약</p>' : ''}<p class="dv-src">출처 조달청 나라장터</p></div>`; };
-  const L0 = (keep) => { cur = null; seq++; flowRefs = []; if (locMk) { locMk.remove(); locMk = null; } gF.clearLayers(); FX.set([]); sheet.classList.remove('has-flow-note'); gL.addTo(map); setTimeout(relayout, 960); setH(0); dim(null);
+  const L0 = (keep) => { cur = null; seq++; flowRefs = []; if (locMk) { locMk.remove(); locMk = null; } gF.clearLayers(); FX.set([]); sheet.classList.remove('has-flow-note'); gL.addTo(map); syncLegend(); setTimeout(relayout, 960); setH(0); dim(null);
     if (box.clientWidth && keep !== true) { userMoved = false; map._dvHome = 1; map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8}); }
     const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
     strip(null); body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('세금추적단', './')}</p>`
