@@ -16,6 +16,9 @@ def is_sole(r):
     return "수의" in (r.get("method") or "") and not r.get("ntce")
 
 
+TODAY = D.datetime.now(D.timezone(D.timedelta(hours=9))).strftime("%Y-%m-%d")
+
+
 def amt(r): return r.get("this") or r.get("amount") or 0
 
 def main():
@@ -29,7 +32,11 @@ def main():
                 k = r.get("no") or r.get("id")
                 if k not in latest or (r.get("ord") or "00") > (latest[k].get("ord") or "00"):
                     latest[k] = {**r, "slug": c["slug"], "cname": c["short"]}
-        for r in d["rows"]:  # 기간 안에 처음 맺은 계약만, 계약번호당 1건(최신 차수 금액)
+        for r in d["rows"]:
+            if (r.get("odate") or r["date"]) >= TODAY: continue  # 진행 중인 오늘은 빼고 다 끝난 날까지만
+            if "수의" in (r.get("method") or ""):  # 공고 거친 수의계약까지 포함한 비율(참고용)
+                tot[(c["slug"], "sole_all")] += amt(r); tot[(c["slug"], "sn_all")] += 1
+            # 기간 안에 처음 맺은 계약만, 계약번호당 1건(최신 차수 금액)
             tot[(c["slug"], "all")] += amt(r); tot[(c["slug"], "n")] += 1
             if is_sole(r):
                 tot[(c["slug"], "sole")] += amt(r); tot[(c["slug"], "sn")] += 1
@@ -55,7 +62,11 @@ def main():
                           "items": [{"t": x["title"], "a": amt(x), "d": x["date"], "u": x.get("url")} for x in w]})
     flags.sort(key=lambda x: -x["sum"])
     share = [{"slug": k, "name": cities[k]["short"], "sole": tot[(k, "sole")], "all": tot[(k, "all")],
-              "sn": tot[(k, "sn")], "n": tot[(k, "n")]} for k in cities if tot[(k, "n")] >= 20]
+              "sn": tot[(k, "sn")], "n": tot[(k, "n")],
+              "sole_all": tot[(k, "sole_all")], "sn_all": tot[(k, "sn_all")],
+              "pct": round(tot[(k, "sn")] / tot[(k, "n")] * 100, 1), "pct_all": round(tot[(k, "sn_all")] / tot[(k, "n")] * 100, 1),
+              "pct_amt": round(tot[(k, "sole")] / tot[(k, "all")] * 100, 1) if tot[(k, "all")] else None,
+              "pct_amt_all": round(tot[(k, "sole_all")] / tot[(k, "all")] * 100, 1) if tot[(k, "all")] else None} for k in cities if tot[(k, "n")] >= 20]
     share.sort(key=lambda x: -(x["sn"] / x["n"]))
     big = sorted(rows, key=lambda r: -amt(r))[:15]
     import statistics as st
@@ -85,7 +96,7 @@ def main():
     out = {"updated": D.datetime.now(D.timezone(D.timedelta(hours=9))).isoformat(timespec="minutes"),
            "period": [min(dates), max(dates)], "n": len(rows), "sum": sum(amt(r) for r in rows),
            "n_all": sum(tot[(k, "n")] for k in cities), "sum_all": sum(tot[(k, "all")] for k in cities),
-           "flags": flags[:40], "comp": comp, "flag_n": len(flags), "share": share,
+           "share_note": "pct: 공고 없는 수의계약 건수 비율 · pct_all: 공고 거친 수의계약(유찰 후·견적 공고) 포함 건수 비율 · pct_amt/pct_amt_all: 같은 기준의 금액 비율", "flags": flags[:40], "comp": comp, "flag_n": len(flags), "share": share,
            "big": [{"t": r["title"], "a": amt(r), "d": r["date"], "inst": r["inst"], "vendor": mask(r["vendor"]),
                     "u": r.get("url"), "cname": r["cname"]} for r in big],
            "source": "조달청 나라장터 공공데이터개방표준 계약정보(공공데이터포털 15058815)"}

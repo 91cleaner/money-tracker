@@ -132,7 +132,7 @@ def fest(cities):
         halls.sort(key=lambda h: -h["pct"])
     return {"updated": now(), "year": last, "cost_year": last, "ratio_year": (ratio[0]["y"] if ratio else None), "n_all": len(L), "n": len(T), "sum": sum(r["cost"] for r in T), "rev": sum(r["rev"] or 0 for r in T), "rev_none": sum(1 for r in T if r["rev"] is None),
             "med": med, "p25": q[0], "p75": q[2], "med_perday": mpd, "med_rr": round(mrr * 100, 1),
-            "top": top, "zero": zero, "perday": pdtop, "ratio": ratio[:20], "halls": halls[:20],
+            "top": top, "zero": zero, "perday": pdtop, "ratio": ratio, "halls": halls[:20],
             "visitors": False,
             "source": SRC + " · 행사축제원가회계정보(EVFTCT)·행사축제경비편성내역(YCEHF)·청사신축원가회계정보(GVBDAC)"}
 

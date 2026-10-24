@@ -102,7 +102,8 @@ def main():
                 if r.get("method") == "유찰 후 수의계약(추정)" and r.get("ntce") and r.get("kind") in OP and no not in rows and no not in cache:
                     fb[no] = r
         print(f"유찰 추정 공고 확인 대상 {len(fb)}건")
-        for no, r in sorted(fb.items(), key=lambda x: -(x[1].get("amount") or 0)):
+        PRIORITY = {"R26TA02242241"}  # 팩트체크 우선 확인: 제주 외도수영장 개보수 공사
+        for no, r in sorted(fb.items(), key=lambda x: (x[0] not in PRIORITY, -(x[1].get("amount") or 0))):
             bn = str(r["ntce"]).split("-")[0]
             it = g(f"ad/BidPublicInfoService/getBidPblancListInfo{OP[r['kind']]}", "b", inqryDiv=2, bidNtceNo=bn, numOfRows=5)
             if it is None: continue
