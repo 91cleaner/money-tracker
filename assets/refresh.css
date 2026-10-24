@@ -178,3 +178,8 @@ body[data-page="home"] #dive .maplg {
   font-size: 12px !important; line-height: 1.35 !important;
 }
 body[data-page="home"] #dive > .ticker { order: 9 !important; position: relative !important; top: auto !important; }
+
+/* 2026-10-24: 홈 총액이 지도 카드와 이 칸에 두 번 나와 번잡했다. 지도 카드의 총액만 남기고 이 칸은 분야 고르기만 둔다. */
+body[data-page="home"] #hero-num > .v, body[data-page="home"] #hero-num > .k { display: none !important; }
+.hero-pick { margin: 0 0 6px; font-size: 13px; color: #9aa6b2; text-align: center; }
+body:not([data-page="home"]) .hero-pick { display: none; }

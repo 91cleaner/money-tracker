@@ -161,7 +161,7 @@ function bootFun() {
     if (foot.querySelector('.fun-foot')) return;
     const box = document.createElement('span');
     box.className = 'fun-foot';
-    box.innerHTML = '<a href="principles.html">중립성 원칙 + 정정 요청</a><button type="button" class="fun-donate" disabled>후원하기 · 준비 중</button>';
+    box.innerHTML = '<a href="principles.html">중립성 원칙 + 정정 요청</a>'; // 후원 버튼은 결제 수단이 생기면 다시 넣는다
     foot.append(box);
   };
   ensureFoot();
@@ -343,7 +343,8 @@ function bootFun() {
       }
     } catch (e) {}
   };
-  if (pg === 'home' || pg === 'index' || pg === 'city' || pg === 'national') run();
+  // 비교·계산 상자는 홈에만 둔다(여러 페이지에 같은 상자가 반복돼 번잡했다)
+  if (pg === 'home' || pg === 'index') run();
 
   document.addEventListener('news:ready', (e) => {
     const host = document.getElementById('fun-slot');
@@ -396,10 +397,6 @@ function bootFun() {
       };
       range.addEventListener('input', draw);
       draw();
-      const extra = nps.querySelector('#nps-extra');
-      const rows = (model.items || []).filter((it) => it && typeof it.amount === 'number').map((it, i) => ({ id: String(i), label: String(it.name || it.label || '항목'), won: it.amount, group: '종목' }));
-      mountCompare(extra, rows, '두 종류 비교');
-      mountCalc(extra, [{ id: 'fund', label: '기금 전체', won: model.total, group: '기금' }].concat(rows));
     };
     fetch('data/nps.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).then((data) => {
       if (npsModel(data)) { paint(data); return null; }

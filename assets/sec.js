@@ -23,12 +23,12 @@ LOAD('data/sec_sole.json').then(d=>{
   if(d.flags.length){const f=d.flags[new Date().getDate()%Math.min(d.flags.length,7)];
     $('spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(f.inst)}</b> → <b>${E(f.vendor)}</b><br>30일 안에 ${f.n}건 · 합계 ${W(f.sum)}<p class="src">${SRC}</p></div>`}
   // 추적 파일
-  $('cases').innerHTML=d.flags.map((f,i)=>`<div class="case"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 더 보기 목록 #${String(i+1).padStart(3,'0')}</div>
+  $('cases').innerHTML=d.flags.map((f,i)=>(i===8?`<details class="more-cases"><summary>묶음 ${d.flags.length-8}개 더 보기</summary>`:'')+`<div class="case"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 더 보기 목록 #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(f.cname)} · ${f.n}건, 공고 없이 바로 맺은 수의계약 묶음</h3>
    <div class="trail"><b>${E(f.inst)}</b><i></i><b>${E(f.vendor)}</b>${f.vregion?`<small>(${E(f.vregion.split(' ').slice(0,2).join(' '))})</small>`:''}</div>
    <div class="amt">${W(f.sum)}</div><small>${f.from} ~ ${f.to} · 같은 업체 여러 건 합계 2천만원 초과</small>
-   <ul>${f.items.map(x=>`<li>${x.d} ${E(x.t)} · ${W(x.a)} ${x.u?`<a class="orig" href="${E(x.u)}" target="_blank" rel="noopener">원문</a>`:''}</li>`).join('')}</ul>
-   <p class="steps">수집 ✓ → 분석 ✓ → 기관 설명 확인 전</p><p class="src">데이터상 이상 징후 · 위법 판단 아님 · ${SRC}</p></div>`).join('')||'<p class="sub">아직 없습니다.</p>';
+   ${(()=>{const li=x=>`<li>${x.d} ${E(x.t)} · ${W(x.a)} ${x.u?`<a class="orig" href="${E(x.u)}" target="_blank" rel="noopener">원문</a>`:''}</li>`;const a=f.items.slice(0,3),b=f.items.slice(3);/* 묶음마다 3건만 보이고 나머지는 접어 둔다(페이지가 너무 길었다) */return `<ul>${a.map(li).join('')}</ul>`+(b.length?`<details class="more-items"><summary>나머지 ${b.length}건 보기</summary><ul>${b.map(li).join('')}</ul></details>`:'')})()}
+   <p class="steps">수집 ✓ → 분석 ✓ → 기관 설명 확인 전</p><p class="src">데이터상 이상 징후 · 위법 판단 아님 · ${SRC}</p></div>`).join('')+(d.flags.length>8?'</details>':'')||'<p class="sub">아직 없습니다.</p>';
   // 비율
   $('share').innerHTML=d.share.slice(0,10).map(s=>{const p=Math.round(s.sn/s.n*100);return `<div class="row"><b>${E(s.name)}</b> 새 계약 ${s.n}건 중 공고 없이 바로 맺은 수의계약 ${s.sn}건 (${p}%)<div class="bar"><b style="width:${p}%"></b></div></div>`}).join('')+`<p class="src">나라장터 공개 계약 기준(작은 금액·급한 일은 경쟁 없이 계약해도 법에서 허용) · ${SRC}</p>`;
   // 비용 비교 + 추정
