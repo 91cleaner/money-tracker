@@ -118,6 +118,7 @@ def _ok(w):
 
 _PAREN = re.compile(r"\(([가-힣]{3})\)")
 _LAND = re.compile(r"지장물|철거|보상|토지|매입|분묘|이장|감정평가|\(\d+차\)$")
+_TR2F = re.compile(r"^\s?([가-힣]{1,3})?(꿈나무|선수|장학)")  # 이름 바로 뒤 '종목+꿈나무/선수/장학'일 때만: '최경주 골프꿈나무'
 _CORP = re.compile(r"(\(주\)|㈜|주식회사|\(유\)|유한회사)\s?$")
 _TR2 = re.compile(r"꿈나무|선수|장학|골프 ?아카데미|프로와|감독과")
 
@@ -141,7 +142,7 @@ def names(s):
         pre, post = s[max(0, a - 10):a], s[a + len(ww):a + len(ww) + 10]
         if _PARK.search(post) or _CORP.search(pre) or re.match(r"^\s?(작가)?\s?기념", post):
             continue  # 장소(공원·파크골프장), 회사 이름, 기념시설(역사 인물)
-        if _TR.search(pre) or _TR.search(post) or _SEP.search(pre[-2:]) or _SEP.search(post[:2]) or _TR2.search(post[:8]):
+        if _TR.search(pre) or _TR.search(post) or _SEP.search(pre[-2:]) or _SEP.search(post[:2]) or _TR2F.match(post):
             out.append(s[last:a]); out.append("○○○"); last = a + len(ww)
     if not out:
         return s
