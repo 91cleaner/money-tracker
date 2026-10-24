@@ -767,6 +767,11 @@ def main():
     save(os.path.join(DATA, "state.json"), state)
     print(f"계약 {len(raw)}건 읽음, 시 단위 {sum(len(v) for v in fresh.values())}건 반영, 건너뛴 요청 {len(FAILS)}건")
     if FAILS and not raw:
+        # 나라장터 서버가 잠깐 응답하지 않은 것(시간 초과)이면 이번 회차만 쉬고 다음 실행에서 이어 받는다.
+        # 인증키 오류 같은 다른 실패는 그대로 실패로 알린다.
+        if all(("timed out" in f or "시간 초과" in f or f == "budget") for f in FAILS):
+            print("::warning::나라장터 서버가 응답하지 않아 이번 회차는 건너뜀(기존 자료 유지, 다음 실행에서 이어서)", flush=True)
+            return
         sys.exit("모든 요청이 실패했습니다. 첫 오류: " + FAILS[0])
 
 
