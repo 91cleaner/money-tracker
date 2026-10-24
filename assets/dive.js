@@ -6,11 +6,14 @@
   const toLL = (p) => [38.7 - p[1] / GSX, 124.5 + p[0] / (GK * GSX)];
   const inKR = (ll) => ll[0] > 32.8 && ll[0] < 38.9 && ll[1] > 124.3 && ll[1] < 131.2;
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+  const flowFull = () => { const w = window.__pdCW && window.__pdCW(); if (!w || !w.from || !w.dl || !w.dl.last) return true; return w.from <= w.lo && w.to >= w.dl.last; };
+  const FLOW_NOTE = '업체 지역별 금액은 7월 1일부터 전체 기준만 있어요';
   const krw = (n) => { if (n == null || isNaN(n)) return '—'; const a = Math.abs(n);
     if (a >= 1e12) { const j = Math.floor(a / 1e12), e = Math.round((a % 1e12) / 1e8); return j + '조' + (e ? ' ' + e.toLocaleString('ko-KR') + '억' : '') + '원'; }
     if (a >= 1e8) return (a / 1e8 >= 100 ? Math.round(a / 1e8).toLocaleString('ko-KR') : (a / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원';
     if (a >= 1e4) return Math.round(a / 1e4).toLocaleString('ko-KR') + '만원'; return a.toLocaleString('ko-KR') + '원'; };
   const J = {}; const get = (u) => (J[u] ||= fetch(u).then((r) => { if (!r.ok) throw r.status; return r.json(); }));
+  { const st = document.createElement('style'); st.textContent = '#dive .dv-flow-note{margin:6px 0 0;color:#8fa0b3;font-size:12px;line-height:1.45;font-weight:500;text-align:center;overflow-wrap:anywhere}#dive .dv-sheet.has-flow-note{max-height:38%}'; document.head.appendChild(st); }
   root.innerHTML = `<div class="dv-map map loading"></div><button type="button" class="dv-down" aria-label="아래 카드로">↓ 자세히</button><h1 class="dv-h1">우리 시는 얼마나 계약했을까?</h1>
     <form class="dv-q" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" placeholder="지역·업체 검색 (예: 수성구)" aria-label="지역 검색" enterkeyhint="search"><button type="button" class="dv-all" aria-label="전체 지역 목록">목록</button></form>
     <div class="dv-sheet" role="region" aria-label="지역 정보"><div class="dv-grab" aria-hidden="true"></div><div class="dv-body"></div></div>`;
@@ -186,7 +189,7 @@
     }
     // 지도에 끝내 못 넣은 도착지 라벨은 지도 아래 줄에 (지도 위에 겹치지 않게)
     let m = root.querySelector('.dv-miss'); if (!m) { m = document.createElement('p'); m.className = 'dv-miss'; const dn = root.querySelector('.dv-down'); dn ? dn.before(m) : box.after(m); }
-    const rs = cur && map.hasLayer(gF) && REST.n ? `그 밖 ${REST.n}곳${REST.unk ? '(주소 미확인 포함)' : ''} ${krw(REST.amt)}` : '';
+    const rs = cur && map.hasLayer(gF) && REST.n ? `그 밖 ${REST.n}곳${REST.unk ? '(주소 미확인 포함)' : ''}${flowFull() ? ' ' + krw(REST.amt) : ''}` : '';
     const parts = miss.map((x) => x.replace(/^→\s*/, '')); if (rs) parts.push(rs);
     m.textContent = [miss.length ? '이름표를 못 단 화살표: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '화살표 없는 곳: ' + rs : ''].filter(Boolean).join(' / '); m.hidden = !parts.length;
     // 확대하면 화면에 보이는 시 마커마다 짧은 이름. 금액 라벨·버튼과 실제로 겹치는 이름만 숨긴다.
@@ -257,7 +260,7 @@
     }
     if (!buried.length) return;
     const sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
-    const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>우리 시 ${krw(sum)}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
+    const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>우리 시${flowFull() ? ' ' + krw(sum) : ''}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
     locMk = L.marker(toLL(flowRefs[0].a), {pane: 'markerPane', interactive: false, keyboard: false, icon, zIndexOffset: 800}).addTo(gF);
     seatBadge(map, locMk);
   };
@@ -283,7 +286,7 @@
       const w = 1.5 + 7 * Math.sqrt(f.amount / mx), col = f.local ? '#0a84ff' : '#ff9f0a';
       const ln = L.polyline(pts, {color: col, weight: w, opacity: 0.85, interactive: false, className: 'dv-line'}).addTo(gF);
       const dot = L.circleMarker(toLL(b), {pane: 'dvTop', renderer: gTop, radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
-      const tip = L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + ' ' + krw(f.amount))).addTo(gF);
+      const tip = L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + (flowFull() ? ' ' + krw(f.amount) : ''))).addTo(gF);
       flowRefs.push({f, a, line: ln, dot, tip});
       const p = ln.getElement();
       if (p && !RM) { /* 확대 후에도 끊기지 않게 길이를 1로 정규화(줌마다 d가 바뀌어도 비율 유지) */ p.setAttribute('pathLength', '1'); p.style.strokeDasharray = '1'; p.style.strokeDashoffset = '1'; p.style.transition = `stroke-dashoffset .9s ease-out ${i * 0.12}s`; p.addEventListener('transitionend', () => { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; p.style.transition = ''; }, {once: true}); requestAnimationFrame(() => requestAnimationFrame(() => (p.style.strokeDashoffset = '0'))); }
@@ -422,7 +425,7 @@
     return `<div class="t5"><div class="t5-h"><b>${esc(CAT)} TOP 5 시</b>${shb(CAT + ' 계약 TOP 5 시 · 세금추적단', './?cat=' + encodeURIComponent(CAT))}</div><ol>${L_.map(({c, v, n}, i) =>
       `<li><button type="button" data-s="${c.slug}"><span class="t5-r">${i + 1}</span><span class="t5-m"><b>${esc(c.short || c.name)}</b><small>${n}건 · 건당 평균 ${krw(n ? v / n : v)}</small><small class="t5-v" data-s="${c.slug}"></small>${fest ? `<small class="t5-ag" data-s="${c.slug}"></small>` : ''}</span><em>${krw(v)}</em></button></li>`).join('')}</ol>
       ${fest ? '<p class="small t5-n">공연 용역 금액에는 무대·음향·연출이 포함되며 개인 출연료가 아님 · 행사대행은 축제 전체 운영 계약</p>' : ''}<p class="dv-src">출처 조달청 나라장터</p></div>`; };
-  const L0 = (keep) => { cur = null; seq++; flowRefs = []; if (locMk) { locMk.remove(); locMk = null; } gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(relayout, 960); setH(0); dim(null);
+  const L0 = (keep) => { cur = null; seq++; flowRefs = []; if (locMk) { locMk.remove(); locMk = null; } gF.clearLayers(); FX.set([]); sheet.classList.remove('has-flow-note'); gL.addTo(map); setTimeout(relayout, 960); setH(0); dim(null);
     if (box.clientWidth && keep !== true) { userMoved = false; map._dvHome = 1; map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8}); }
     const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
     strip(null); body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('세금추적단', './')}</p>`
@@ -480,8 +483,9 @@
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
     cur = slug; setH(1); dim(slug); syncHome();
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
-    strip(c.name, c.total); extLine(slug); body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)} <small class="dv-incl">시청과 산하 기관 포함</small></p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
+    strip(c.name, c.total); extLine(slug); sheet.classList.toggle('has-flow-note', !flowFull()); body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)} <small class="dv-incl">시청과 산하 기관 포함</small></p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
       <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">다른 지역 업체 ${out}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}</span> <button type="button" class="dv-sh dv-shc" aria-label="이 지역 결과 공유">공유</button> <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
+      ${flowFull() ? '' : `<p class="dv-flow-note">${FLOW_NOTE}</p>`}
       <div class="dv-more"><div class="dv-wrap" aria-label="우리 시 한눈에 보기"></div><div class="dv-t3">${top3(f)}</div><p class="dv-k">데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
     ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
