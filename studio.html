@@ -22,6 +22,7 @@ h1{margin:0;font-size:26px}
 button,select{font:inherit;font-weight:700;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:#1a222c;color:var(--ink);cursor:pointer}
 button.main{background:var(--hot);border-color:var(--hot);color:#14110a}
 select{font-weight:500;width:100%}
+input{font:inherit;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:#0b0f13;color:var(--ink);flex:1 1 180px;min-width:0}
 canvas{display:none}
 .src{font-size:12px;color:var(--muted);overflow-wrap:anywhere}.src a{color:#8fb4ff}
 .note{font-size:13px;color:var(--muted);background:#121820;border:1px dashed var(--line);border-radius:10px;padding:10px}
@@ -35,6 +36,17 @@ canvas{display:none}
     <span class="k">우리 시 하나 골라서 뽑기</span>
     <select id="pickCity" aria-label="시 고르기"></select>
   </section>
+  <section class="card">
+    <span class="k">이름으로 찾아서 뽑기</span>
+    <label class="sub" for="qMp">국회의원</label>
+    <div class="row"><input id="qMp" list="dlMp" placeholder="예: 이재정" autocomplete="off"><button type="button" data-make="mp">만들기</button></div>
+    <label class="sub" for="qVen">계약 받은 업체</label>
+    <div class="row"><input id="qVen" list="dlVen" placeholder="예: 도화엔지니어링" autocomplete="off"><button type="button" data-make="ven">만들기</button></div>
+    <label class="sub" for="qNps">국민연금이 투자한 회사</label>
+    <div class="row"><input id="qNps" list="dlNps" placeholder="예: 삼성전자" autocomplete="off"><button type="button" data-make="nps">만들기</button></div>
+    <datalist id="dlMp"></datalist><datalist id="dlVen"></datalist><datalist id="dlNps"></datalist>
+    <p class="sub" id="qNote"></p>
+  </section>
   <div id="cards"></div>
   <canvas id="cv" width="1080" height="1350"></canvas>
 </main>
@@ -47,6 +59,7 @@ const mask=s=>typeof window.maskT==='function'?window.maskT(String(s||'')):Strin
 const won=n=>{n=Math.round(Number(n)||0);const a=Math.abs(n);if(a>=1e12){const j=Math.floor(a/1e12),e=Math.round((a%1e12)/1e8);return j.toLocaleString('ko-KR')+'조'+(e?' '+e.toLocaleString('ko-KR')+'억':'')+'원';}
   if(a>=1e8)return (a>=1e10?Math.round(a/1e8).toLocaleString('ko-KR'):(a/1e8).toFixed(1).replace(/\.0$/,''))+'억원';if(a>=1e4)return Math.round(a/1e4).toLocaleString('ko-KR')+'만원';return a.toLocaleString('ko-KR')+'원';};
 const jo=(w,a,b)=>{const c=String(w).trim().slice(-1).charCodeAt(0)-0xac00;return w+(c>=0&&c<=11171&&c%28?a:b);};
+const wonX=n=>{n=Math.round(Number(n)||0);const e=Math.floor(n/1e8),m=Math.round((n%1e8)/1e4);return e?e.toLocaleString('ko-KR')+'억'+(m?' '+m.toLocaleString('ko-KR')+'만':'')+'원':m.toLocaleString('ko-KR')+'만원';};
 const md=s=>s?`${+String(s).slice(5,7)}월 ${+String(s).slice(8,10)}일`:'';
 const get=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
 const [idx,daily,sole,chg,q2,trw]=await Promise.all([get('data/index.json'),get('data/daily.json'),get('data/sec_sole.json'),get('data/nps/changes_us.json'),get('data/nps/holdings_us_2026Q2.json'),get('data/national/trips_raw.json')]);
@@ -113,6 +126,38 @@ const html=(c,i)=>`<section class="card" data-i="${i}"><span class="k">${esc(c.k
   <p class="src">출처 <a href="${esc(c.src)}" target="_blank" rel="noopener">원문 보기</a></p></section>`;
 const paint=()=>{box.innerHTML=cards.map(html).join('')||'<p class="sub">오늘은 뽑을 숫자가 없어요.</p>';};
 paint();
+// 이름으로 찾기: 의원·계약 업체·국민연금 투자 회사
+const [mem,sup,rank,krh]=await Promise.all([get('data/national/members.json'),get('data/national/support.json'),get('data/rank.json'),get('data/nps/kr_hq_region.json')]);
+const per=((sup&&sup.allowance)||[]).find(x=>x&&x.amount);
+const people=(mem&&mem.members)||[];
+$('dlMp').innerHTML=people.map(m=>`<option value="${esc(m.name)}">${esc(m.party)} · ${esc(m.district)}</option>`).join('');
+const vens=((rank&&rank.vendors)||[]).map(v=>({...v,name:mask(v.name)})).filter(v=>v.name&&v.name!=='개인사업자');
+$('dlVen').innerHTML=vens.slice(0,2000).map(v=>`<option value="${esc(v.name)}">${esc(v.region||'')}</option>`).join('');
+const comps=(krh&&krh.companies)||[];
+$('dlNps').innerHTML=comps.map(c=>`<option value="${esc(c.company)}">${esc(c.sido)} ${esc(c.sigungu||'')}</option>`).join('');
+const norm=x=>String(x||'').replace(/\s+/g,'').replace(/^(주식회사|\(주\)|㈜)/,'').replace(/(주식회사|\(주\)|㈜)$/,'').toLowerCase();
+const findBy=(list,key,q)=>{const n=norm(q);if(!n)return null;return list.find(x=>norm(x[key])===n)||list.find(x=>norm(x[key]).includes(n))||null;};
+const FG=/정부|대사관|국무부|정보방송부|감숙성|란저우|연방|인민대외우호협회|사회과학원/,SELFR=/자비|자부담/,PUB=/외교부|국회미래연구원|국가지식재산위원회|한국국제교류재단|국회사무처/,PTY=/정당|더불어민주당|국민의힘/;
+const mpCard=q=>{const m=findBy(people,'name',q);if(!m)return null;const ts=((trw&&trw.trips)||[]).filter(t=>t.member_id===m.id);const uniq=[...new Map(ts.map(t=>[t.trip_id,t])).values()];
+  const dest=[...new Set(uniq.flatMap(t=>t.dest||[]))];const ext=uniq.filter(t=>{const f=String(t.funder||'');return FG.test(f)||f.split(/[,\/·]/).some(x=>x.trim()&&!SELFR.test(x)&&!PUB.test(x)&&!PTY.test(x));}).length;
+  const self=uniq.filter(t=>SELFR.test(t.funder||'')).length,norep=uniq.filter(t=>t.report!=='유').length;
+  return {k:'국회의원',title:`${m.name} · ${m.party} · ${m.district}`,big:uniq.length?`출장 ${uniq.length}건`:'출장 0건',
+    lines:[dest.length?`간 나라: ${dest.slice(0,6).join(', ')}${dest.length>6?' 외':''}`:'신고된 국외 출장 없음',uniq.length?`자기 돈 ${self}건 · 외부에서 낸 비용 ${ext}건`:'',per?`의원 1명 1년 지급 기준 ${wonX(per.amount)}`:''].filter(Boolean),
+    draft:`국회의원 한 명한테 1년에 들어가는 돈${per?' '+wonX(per.amount):''}(지급 기준)\n${m.name} 의원(${m.party}, ${m.district})의 국외 출장 신고는 ${uniq.length}건${dest.length?'\n간 나라: '+dest.slice(0,5).join(', ')+(dest.length>5?' 외':''):''}${uniq.length?`\n비용은 자기 돈 ${self}건, 외부에서 낸 비용 ${ext}건으로 신고됨`:''}${uniq.length&&norep?`\n신고 때 결과보고서가 없던 출장 ${norep}건 (나중에 낼 수 있음)`:''}\n(소감)`,
+    src:'https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr',link:SITE+'national.html'};};
+const venCard=q=>{const v=findBy(vens,'name',q);if(!v)return null;const p=rank&&rank.period||{};
+  return {k:'계약 받은 업체',title:`${v.name} · ${v.region||''}`,big:won(v.total),
+    lines:[`${md(p.first)}~${md(p.last)} 85개 시 계약 ${v.count}건`,`계약한 시 ${v.nc}곳 · 기관 ${v.ni}곳`,'출처 조달청 나라장터'],
+    draft:`동네 시청이 일 맡기는 회사는 어디일까 봤음\n${v.name}(${v.region||'소재지 확인 중'})은 ${md(p.first)}부터 85개 시에서 계약 ${v.count}건을 받음\n합계 ${won(v.total)}, 계약한 시만 ${v.nc}곳\n많이 받았다고 문제가 있다는 뜻은 아님\n(소감)`,
+    src:SITE+'vendor.html?v='+v.id,link:SITE+'vendor.html?v='+v.id};};
+const npsCard=q=>{const c=findBy(comps,'company',q);if(!c)return null;const tot=(krh.total_value_100m_krw||0)*1e8,v=(c.value_100m_krw||0)*1e8;const pct=tot?v/tot*100:0;
+  return {k:'국민연금 투자 회사',title:`${c.company}${c.code?' ('+c.code+')':''}`,big:won(v),
+    lines:[`국민연금 국내 주식의 ${pct<0.1?'0.1% 미만':pct.toFixed(1)+'%'}`,`본사 ${c.sido} ${c.sigungu||''}`,`${String(krh.holdings_as_of||'').replace(/-/g,'.')} 기준 · 공개 자료`],
+    draft:`내 월급에서 나가는 국민연금, 어느 회사에 들어가나 봤음\n국민연금이 ${c.company} 주식에 넣은 돈은 ${won(v)}\n국내 주식 전체의 ${pct<0.1?'0.1% 미만':pct.toFixed(1)+'%'}\n${String(krh.holdings_as_of||'').slice(0,4)}년 ${+String(krh.holdings_as_of||'').slice(5,7)}월 말 공개 자료 기준임\n(소감)`,
+    src:SITE+'nps.html',link:SITE+'nps.html'};};
+document.querySelector('[data-make]').closest('.card').addEventListener('click',e=>{const b=e.target.closest('[data-make]');if(!b)return;
+  const kind=b.dataset.make,q=$(kind==='mp'?'qMp':kind==='ven'?'qVen':'qNps').value;const c=kind==='mp'?mpCard(q):kind==='ven'?venCard(q):npsCard(q);
+  if(!c){$('qNote').textContent='그 이름을 자료에서 못 찾았어요. 목록에서 골라 보세요.';return;}$('qNote').textContent='';cards.unshift(c);paint();box.scrollIntoView({behavior:'smooth',block:'start'});});
 sel.addEventListener('change',()=>{const c=cityCard(sel.value);if(!c)return;cards.unshift(c);paint();window.scrollTo({top:0,behavior:'smooth'});});
 
 // 이미지: 1080×1350, 제목 옆에 @청소부 하나
