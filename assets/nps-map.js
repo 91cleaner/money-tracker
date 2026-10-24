@@ -41,12 +41,20 @@
     const rate = fx && Number(fx.usd_krw) > 0 ? Number(fx.usd_krw) : null;
     // 목적지: 국내 시도·시군구, 해외 주·나라. 금액은 원.
     const dom = [], gu = [], abroad = [];
+    // 지역을 누르면 그곳에 본사를 둔 회사 전체 목록을 보여 주려고 회사를 지역별로 묶어 둔다
+    const bySido = new Map(), byGu = new Map();
+    if (kr) for (const c of kr.companies || []) {
+      const row = { name: c.company, krw: (c.value_100m_krw || 0) * 1e8, gu: c.sigungu || '' };
+      if (!bySido.has(c.sido)) bySido.set(c.sido, []); bySido.get(c.sido).push(row);
+      const k = c.sido + '|' + (c.sigungu || ''); if (!byGu.has(k)) byGu.set(k, []); byGu.get(k).push(row);
+    }
+    for (const m of [bySido, byGu]) for (const v of m.values()) v.sort((a, b) => b.krw - a.krw);
     if (kr) for (const r of kr.regions || []) {
       if (r.lat == null || r.lng == null) continue;
-      dom.push({ key: 'kr|' + r.sido, where: 'kr', name: r.sido, full: r.sido, lat: r.lat, lng: r.lng, krw: (r.value_100m_krw || 0) * 1e8, n: r.company_count, top: (r.top || []).map((c) => ({ name: c.company, krw: (c.value_100m_krw || 0) * 1e8 })), parent: r });
+      dom.push({ key: 'kr|' + r.sido, where: 'kr', name: r.sido, full: r.sido, lat: r.lat, lng: r.lng, krw: (r.value_100m_krw || 0) * 1e8, n: r.company_count, top: (r.top || []).map((c) => ({ name: c.company, krw: (c.value_100m_krw || 0) * 1e8 })), all: bySido.get(r.sido) || [], parent: r });
       for (const g of r.sigungu || []) {
         if (g.lat == null || g.lng == null) continue;
-        gu.push({ key: 'gu|' + r.sido + '|' + g.name, where: 'kr', name: String(g.name).split(' ').pop(), full: r.sido + ' ' + g.name, lat: g.lat, lng: g.lng, krw: (g.value_100m_krw || 0) * 1e8, n: g.company_count, top: (g.top || []).map((c) => ({ name: c.company, krw: (c.value_100m_krw || 0) * 1e8 })), parent: r });
+        gu.push({ key: 'gu|' + r.sido + '|' + g.name, where: 'kr', name: String(g.name).split(' ').pop(), full: r.sido + ' ' + g.name, lat: g.lat, lng: g.lng, krw: (g.value_100m_krw || 0) * 1e8, n: g.company_count, top: (g.top || []).map((c) => ({ name: c.company, krw: (c.value_100m_krw || 0) * 1e8 })), all: byGu.get(r.sido + '|' + g.name) || [], parent: r });
       }
     }
     if (us && rate) for (const r of us.regions || []) {
@@ -99,7 +107,10 @@
       const share = tot > 0 ? ` · ${it.where === 'kr' ? '국내' : '미국'} 주식의 ${(it.krw / tot * 100).toFixed(1)}%` : '';
       pickEl.innerHTML = `<div class="sub">${esc(ORIGIN.name)} → ${esc(it.full)}</div><div class="big" style="font-size:24px">${it.usd ? '약 ' : ''}${esc(won(it.krw))}</div>` +
         `<p class="sub">회사 ${Number(it.n || 0).toLocaleString('ko-KR')}곳${esc(share)}${it.usd ? ' · ' + esc(usd(it.usd)) : ''}</p><h3>가장 많이 들어간 회사 5곳</h3>` +
-        (it.top.length ? it.top.slice(0, 5).map((c, i) => `<div class="row"><span>${i + 1}. ${esc(c.name)}<div class="bar" style="width:${Math.max(8, Math.sqrt((c.krw || 0) / mx) * 100)}%"></div></span><b>${c.usd ? '약 ' : ''}${esc(won(c.krw))}</b></div>`).join('') : '<p class="sub">표시할 회사가 없어요.</p>');
+        (it.top.length ? it.top.slice(0, 5).map((c, i) => `<div class="row"><span>${i + 1}. ${esc(c.name)}<div class="bar" style="width:${Math.max(8, Math.sqrt((c.krw || 0) / mx) * 100)}%"></div></span><b>${c.usd ? '약 ' : ''}${esc(won(c.krw))}</b></div>`).join('') : '<p class="sub">표시할 회사가 없어요.</p>') +
+        (it.all && it.all.length > 5 ? `<details class="nps-all"><summary>${esc(it.full)} 주식 ${it.all.length}종목 전부 보기</summary><p class="sub">회사 수와 다를 수 있어요. 우선주(예: 삼성전자우)는 따로 한 종목으로 셉니다.</p>` +
+          it.all.map((c, i) => `<div class="row"><span>${i + 1}. ${esc(c.name)}${it.key.startsWith('kr|') && c.gu ? ` <span class="sub">${esc(c.gu)}</span>` : ''}</span><b>${esc(won(c.krw))}</b></div>`).join('') + '</details>' : '') +
+        (it.where !== 'kr' ? '<p class="sub">해외는 공개 자료에 정리된 상위 5곳만 보여 줘요.</p>' : '');
     }
     function paintRank() {
       const list = all.slice().sort((a, b) => b.krw - a.krw);
