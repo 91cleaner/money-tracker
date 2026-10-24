@@ -7,7 +7,8 @@ OUT = os.path.join(ROOT, "data", "nps"); os.makedirs(OUT, exist_ok=True)
 CIK = "1608046"
 UA = os.environ.get("SEC_UA", "MoneyTracker Research contact@91cleaner.dev")  # SEC 규칙: 이름+연락처
 FX = {"2026-03-31": (1530.1, "https://www.yna.co.kr/view/AKR20260331148100002"),
-      "2026-06-30": (1549.4, "https://www.yna.co.kr/view/AKR20260630138800002")}  # 분기 말 서울 15:30 종가
+      "2026-06-30": (1549.4, "https://www.yna.co.kr/view/AKR20260630138800002"),
+      "2026-09-30": (1352.8, "https://www.mt.co.kr/economy/2026/09/30/2026093015352291632")}  # 분기 말 서울 15:30 종가
 # 분기 사이 기업행위: 직전 분기 주식 수를 현재 기준으로 환산(공식 공시 근거)
 ACTIONS = [
  {"cusip": "482480100", "issuer": "KLA", "type": "주식분할 10:1", "ratio": 10, "date": "2026-06-11",
@@ -77,7 +78,8 @@ def main():
         json.dump(d, open(os.path.join(OUT, f"holdings_us_{q}.json"), "w"), ensure_ascii=False, indent=1); res.append(d)
     cur, prev = res[0], res[1]; cm = {x["cusip"]: x for x in cur["holdings"]}
     raw = {x["cusip"]: x for x in prev["holdings"]}; pm = {k: dict(v, adj_note=None) for k, v in raw.items()}
-    for act in ACTIONS:  # 직전 분기 주식 수를 현재 CUSIP·주식 수 기준으로 환산
+    acts = [a for a in ACTIONS if prev["period"] < a.get("date", "") <= cur["period"]]  # 두 분기 사이에 일어난 것만
+    for act in acts:  # 직전 분기 주식 수를 현재 CUSIP·주식 수 기준으로 환산
         p = raw.get(act["cusip"])
         if not p: continue
         tgt = act.get("new_cusip", act["cusip"])
@@ -97,7 +99,7 @@ def main():
                    "real": "확인 필요" if k in SUSPECT else True, "suspect_note": SUSPECT.get(k)})
     ch.sort(key=lambda x: x["est_trade_usd"])
     out = {"updated": now, "from": prev["quarter"], "to": cur["quarter"], "sources": [prev["filing_url"], cur["filing_url"]],
-           "adjustments": ACTIONS, "caveat": "ACTIONS 표의 분할·CUSIP 변경·분사는 공식 공시로 보정. 그 밖의 기업행위는 미보정일 수 있음(팩트체크 전)", "method": "주식 수 변화 × 해당 분기 말 13F 평가액 기준 주가(추정 거래액)",
+           "adjustments": acts, "caveat": "ACTIONS 표의 분할·CUSIP 변경·분사는 공식 공시로 보정. 그 밖의 기업행위는 미보정일 수 있음(팩트체크 전)", "method": "주식 수 변화 × 해당 분기 말 13F 평가액 기준 주가(추정 거래액)",
            "total_value_usd": {prev["quarter"]: prev["total_value_usd"], cur["quarter"]: cur["total_value_usd"]},
            "adjusted": [x for x in ch if x["adjustment"]],
            "top_buys": [x for x in reversed(ch) if x["est_trade_usd"] > 0][:20], "top_sells": [x for x in ch if x["est_trade_usd"] < 0][:20],
