@@ -1,3 +1,4 @@
+from collections import Counter
 """나라 세금(정치인·정당) 섹션 수집: data/national/*.json
 - 열린국회정보 API(ASSEMBLY_KEY, 없으면 sample 키=5건 제한)로 국회의원 명단·정당·지역구
 - collector/national/seed.json: 국회사무처 수당 지급기준·의원실 지원경비, 선관위 국고보조금(공식 발표값)
@@ -262,6 +263,11 @@ def main():
     for f in flows:
         years[f["year"]][f["kind"]] += f["amount"] or 0
     w = lambda n, o: json.dump(o, open(os.path.join(OUT, n), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    tc = Counter(t.get("member_id") for t in trips if t.get("member_id"))
+    tl = Counter(t.get("member_id") for t in trips if t.get("member_id") and t.get("is_leader"))
+    for m in members:
+        m["profile"] = BASE + "nwvrqwxyaytdsfvhu?Type=json&MONA_CD=" + (m.get("id") or "")
+        m["trips"] = tc.get(m.get("id"), 0); m["trips_lead"] = tl.get(m.get("id"), 0)
     w("members.json", {"updated": now, "count": len(members), "members": members, "trips": trips})
     w("parties.json", {"updated": now, "parties": parties, "rules": seed["party_rules"]})
     w("flows.json", {"updated": now, "count": len(flows), "flows": flows,
