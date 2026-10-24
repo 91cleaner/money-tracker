@@ -61,7 +61,7 @@
     if (D === today) { if (ok) { st.streak = st.lastWin === add(D, -1) ? (st.streak || 0) + 1 : 1; st.lastWin = D; st.best = Math.max(st.best || 0, st.streak); } else st.streak = 0; }
     const ks = Object.keys(st.days).sort(); while (ks.length > 60) delete st.days[ks.shift()];
     save(); draw(); loadBig().then(draw); };
-  const share = async () => { const me = st.days[D]; const t = `우리 시 돈 추적기 오늘의 한 문제(${md(D)}): ${Q.a.name}와 ${Q.b.name} 중 새로 맺은 계약 금액이 더 많은 곳은? 나는 ${me.ok ? '맞혔어요' : '틀렸어요'}${st.streak && me.ok ? `, 연속 ${st.streak}일째` : ''}. 너도 풀어 볼래?`, u = link();
+  const share = async () => { const me = st.days[D]; const t = `세금추적단 오늘의 한 문제(${md(D)}): ${Q.a.name}와 ${Q.b.name} 중 새로 맺은 계약 금액이 더 많은 곳은? 나는 ${me.ok ? '맞혔어요' : '틀렸어요'}${st.streak && me.ok ? `, 연속 ${st.streak}일째` : ''}. 너도 풀어 볼래?`, u = link();
     if (navigator.share) { try { await navigator.share({text: t, url: u}); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     try { await navigator.clipboard.writeText(t + ' ' + u); } catch (e) {}
     const res = box.querySelector('.dq-bar'); if (res && !box.querySelector('.dq-x')) res.insertAdjacentHTML('afterend', `<p class="dq-x">공유 문구를 복사했어요. <a href="https://x.com/intent/post?text=${encodeURIComponent(t)}&url=${encodeURIComponent(u)}" target="_blank" rel="noopener">X에 올리기</a></p>`); };

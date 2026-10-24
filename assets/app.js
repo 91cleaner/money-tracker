@@ -1,4 +1,4 @@
-// 우리 시 돈 추적기 — 전국 목록(home)과 시 상세(city)
+// 세금추적단 — 전국 목록(home)과 시 상세(city)
 const $ = (s, root = document) => root.querySelector(s);
 const MTH = (m) => String(m || '').replace('수의계약', '한 업체와 바로 맺은 계약(수의계약)');
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
@@ -392,7 +392,7 @@ async function vendorPage() {
   try { if (!/^[0-9a-zn]+$/.test(id || '')) throw 0; d = await getJSON('data/vendor/' + id + '.json'); } catch (e) {
     $('#title').textContent = '없는 업체입니다'; $('#vregion').replaceChildren('주소가 바뀌었거나 수집 기간에 계약이 없어요. ', Object.assign(el('a', '', '순위 보기 ›'), {href: 'rank.html'})); document.querySelectorAll('.sec, .stats, #stabs').forEach((x) => x.remove()); return;
   }
-  document.title = d.name + ' · 우리 시 돈 추적기';
+  document.title = d.name + ' · 세금추적단';
   $('#title').textContent = d.name; fitTitle($('#title'));
   $('#vregion').textContent = (d.region || '소재지 확인 중') + (d.name === '개인사업자' ? ' · 개인 이름일 수 있어 가렸습니다' : '');
   $('#period').textContent = `수집된 기간 기준: ${d.period.first} ~ ${d.period.last}, ${d.period.cities}개 시`;
@@ -448,7 +448,7 @@ async function vendorPage() {
   };
   drawCats(); drawRows();
   alertList($('#v-alerts'), d.alerts.filter((a) => a.kind !== 'big'), {link: true, limit: 4, empty: emptyBox('데이터상 이상 징후 없음', '이 업체가 들어간 자동 패턴이 없습니다.')});
-  $('#share-v').replaceWith(shareBtn(location.href, d.name + ' · 우리 시 돈 추적기', 'sharebtn big'));
+  $('#share-v').replaceWith(shareBtn(location.href, d.name + ' · 세금추적단', 'sharebtn big'));
 }
 
 // ---------- 시 상세 ----------

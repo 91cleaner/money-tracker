@@ -3,7 +3,7 @@ X·카카오톡 같은 곳은 자바스크립트를 실행하지 않으므로, �
 import html, os
 
 SITE_URL = os.environ.get("SITE_URL", "https://91cleaner.github.io/money-tracker/").rstrip("/") + "/"
-SITE_NAME = "우리 시 돈 추적기"
+SITE_NAME = "세금추적단"
 CAVEAT = "데이터상 이상 징후, 위법 아님"
 FONT_BOLD = ["/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc", "/usr/share/fonts/noto-cjk/NotoSansCJK-Bold.ttc"]
 FONT_REG = ["/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc"]

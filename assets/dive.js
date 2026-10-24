@@ -377,7 +377,7 @@
     g.strokeStyle = 'rgba(80,140,200,.08)'; g.lineWidth = 1; for (let x = 0; x <= 1200; x += 40) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 675); g.stroke(); } for (let y = 0; y <= 675; y += 40) { g.beginPath(); g.moveTo(0, y); g.lineTo(1200, y); g.stroke(); }
     g.fillStyle = '#ffb020'; g.fillRect(64, 64, 8, 52); g.textBaseline = 'alphabetic';
     const T = (t, x, y, sz, col, wt = 700, al = 'left') => { g.font = `${wt} ${sz}px ${F}`; g.fillStyle = col; g.textAlign = al; g.fillText(t, x, y); };
-    T('우리 시 돈 추적기', 92, 102, 30, '#8fa0b3', 600); T(k.label, 1136, 102, 30, '#ffb020', 700, 'right');
+    T('세금추적단', 92, 102, 30, '#8fa0b3', 600); T(k.label, 1136, 102, 30, '#ffb020', 700, 'right');
     T(k.name, 64, 205, 64, '#e8eef5', 800);
     let sz = 132; g.font = `800 ${sz}px ${F}`; while (g.measureText(krw(k.total)).width > 1072 && sz > 80) { sz -= 4; g.font = `800 ${sz}px ${F}`; } T(krw(k.total), 64, 345, sz, '#ffb020', 800);
     const fd = (x) => x ? x.replace(/-/g, '.') : ''; T(`${fd(k.fr)} ~ ${fd(k.to)} 동안 맺은 계약 금액 합계`, 64, 400, 32, '#cfd8e3', 500);
@@ -419,13 +419,13 @@
       if (!fest) return;
       const ag = d.rows.filter((r) => r.cat === k && r.ftag === '행사대행').reduce((s, r) => s + r.amount, 0), tot = d.rows.filter((r) => r.cat === k).reduce((s, r) => s + r.amount, 0);
       const e = body.querySelector(`.t5-ag[data-s="${c.slug}"]`); if (e && ag) e.textContent = `행사대행 포함 ${krw(ag)}${tot ? ' (' + Math.round(ag / tot * 100) + '%)' : ''}`; }).catch(() => {})), 0);
-    return `<div class="t5"><div class="t5-h"><b>${esc(CAT)} TOP 5 시</b>${shb(CAT + ' 계약 TOP 5 시 · 우리 시 돈 추적기', './?cat=' + encodeURIComponent(CAT))}</div><ol>${L_.map(({c, v, n}, i) =>
+    return `<div class="t5"><div class="t5-h"><b>${esc(CAT)} TOP 5 시</b>${shb(CAT + ' 계약 TOP 5 시 · 세금추적단', './?cat=' + encodeURIComponent(CAT))}</div><ol>${L_.map(({c, v, n}, i) =>
       `<li><button type="button" data-s="${c.slug}"><span class="t5-r">${i + 1}</span><span class="t5-m"><b>${esc(c.short || c.name)}</b><small>${n}건 · 건당 평균 ${krw(n ? v / n : v)}</small><small class="t5-v" data-s="${c.slug}"></small>${fest ? `<small class="t5-ag" data-s="${c.slug}"></small>` : ''}</span><em>${krw(v)}</em></button></li>`).join('')}</ol>
       ${fest ? '<p class="small t5-n">공연 용역 금액에는 무대·음향·연출이 포함되며 개인 출연료가 아님 · 행사대행은 축제 전체 운영 계약</p>' : ''}<p class="dv-src">출처 조달청 나라장터</p></div>`; };
   const L0 = (keep) => { cur = null; seq++; flowRefs = []; if (locMk) { locMk.remove(); locMk = null; } gF.clearLayers(); FX.set([]); gL.addTo(map); setTimeout(relayout, 960); setH(0); dim(null);
     if (box.clientWidth && keep !== true) { userMoved = false; map._dvHome = 1; map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8}); }
     const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
-    strip(null); body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('우리 시 돈 추적기', './')}</p>`
+    strip(null); body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('세금추적단', './')}</p>`
       + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc((window.plainT || String)(c.top_alert.title.replace(/^데이터상 이상 징후:\s*/, '')))}</b><span>${esc(c.top_alert.detail || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
     body.querySelectorAll('.t5 [data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); syncHome(); };
   const W = (() => { const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10); return C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk).sort((a, b) => (b.top_alert.amount || 0) - (a.top_alert.amount || 0)).slice(0, 9); })();
