@@ -30,7 +30,45 @@ window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '필
   window.PERIOD = WIN;
   const sumCity = (m, w) => { const o = {n: 0, t: 0, cat: {}}; for (const k in m) if (k >= w.from && k <= w.to) { const v = m[k]; o.n += v[0]; o.t += v[1]; for (const c in v[2]) { const x = o.cat[c] || (o.cat[c] = [0, 0]); x[0] += v[2][c][0]; x[1] += v[2][c][1]; } } return o; };
   const fixIndex = (x, w) => { for (const c of x.cities || []) { const s = sumCity(w.dl.c[c.slug] || {}, w); c.count = s.n; c.total = s.t; c.by_cat = {}; c.n_cat = {}; for (const k in s.cat) { c.n_cat[k] = s.cat[k][0]; c.by_cat[k] = s.cat[k][1]; } } x.period = {from: w.from, to: w.to, d: w.d}; x.days = span(w.from, w.to); return x; };
-  const fixFlows = (x, w) => { for (const k in x.cities || {}) x.cities[k].total = sumCity(w.dl.c[k] || {}, w).t; return x; };  // 지도 원 크기·이름표: 고른 기간 합계
+  const TOPF = 12; // collector/flows.py TOP_CITY
+  const coversAll = (w) => !!(w && w.dl && w.from <= (w.dl.first || w.from) && w.to >= (w.dl.last || w.to));
+  // flow_daily.json 으로 고른 기간의 local·known·도착지 금액을 다시 더한다. 전체 기간이면 flows.json 을 그대로 둔다.
+  const fixFlows = (x, w, fd) => {
+    const regions = (fd && fd.regions) || [], pts = (fd && fd.p) || [];
+    for (const k in x.cities || {}) {
+      const c = x.cities[k];
+      c.total = sumCity((w.dl.c || {})[k] || {}, w).t;
+      const src = fd && fd.c && fd.c[k];
+      if (!src || !src.d || coversAll(w)) continue;
+      const localIx = new Set(src.L || []);
+      let local = 0, known = 0;
+      const agg = new Map();
+      for (const day in src.d) {
+        if (day < w.from || day > w.to) continue;
+        const v = src.d[day];
+        local += v[0] || 0; known += v[1] || 0;
+        for (const row of v[2] || []) {
+          const g = agg.get(row[0]) || {amount: 0, count: 0};
+          g.amount += row[1] || 0; g.count += row[2] || 0;
+          agg.set(row[0], g);
+        }
+      }
+      const flows = [];
+      for (const [ri, g] of agg) {
+        if (!g.amount) continue;
+        const to = regions[ri], p = pts[ri] || null;
+        if (!to || !p) continue;
+        flows.push({to, p, amount: g.amount, count: g.count, local: localIx.has(ri), vendors: []});
+      }
+      flows.sort((a, b) => b.amount - a.amount || (a.to < b.to ? -1 : a.to > b.to ? 1 : 0));
+      const top = flows.slice(0, TOPF), rest = flows.slice(TOPF);
+      c.local = local; c.known = known; c.flows = top;
+      c.other = {n: rest.length, amount: rest.reduce((s, f) => s + f.amount, 0)};
+      c.__pf = 1;
+    }
+    return x;
+  };
+  window.__fixFlows = fixFlows;
   const fixCity = (x, w) => {
     const inw = r => { const k = r.odate || r.date; return k >= w.from && k <= w.to; };
     x.rows = (x.rows || []).filter(inw); x.changes = (x.changes || []).filter(r => r.date >= w.from && r.date <= w.to);
@@ -48,13 +86,15 @@ window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '필
       top_vendors: Object.values(ven).sort((a, b) => b.amount - a.amount).slice(0, 10)});
     x.period = {from: w.from, to: w.to, d: w.d}; return x;
   };
+  let FDL = null;
+  const flowDaily = () => FDL || (FDL = rf('data/flow_daily.json', {cache: 'no-cache'}).then((r) => r.ok ? r.json() : null).catch(() => null));
   window.fetch = (u, o) => {
     const s = typeof u === 'string' ? u : (u && u.url) || '';
     const isI = /(^|\/)data\/index\.json/.test(s), isC = /(^|\/)data\/city\/[^/]+\.json/.test(s), isF = /(^|\/)data\/flows\.json/.test(s);
     if (!isI && !isC && !isF) return rf(u, o);
-    return Promise.all([rf(u, o), WIN]).then(([res, w]) => {
+    return Promise.all([rf(u, o), WIN, isF ? flowDaily() : null]).then(([res, w, fd]) => {
       w = CW || w; if (!w || !res.ok) return res;
-      return res.json().then(x => new Response(JSON.stringify(isF ? fixFlows(x, w) : isI ? fixIndex(x, w) : fixCity(x, w)), {status: 200, headers: {'Content-Type': 'application/json'}}));
+      return res.json().then(x => new Response(JSON.stringify(isF ? fixFlows(x, w, fd) : isI ? fixIndex(x, w) : fixCity(x, w)), {status: 200, headers: {'Content-Type': 'application/json'}}));
     });
   };
   // 링크에 기간 유지 (주소에 기간을 직접 넣은 경우)

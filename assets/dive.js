@@ -7,6 +7,9 @@
   const inKR = (ll) => ll[0] > 32.8 && ll[0] < 38.9 && ll[1] > 124.3 && ll[1] < 131.2;
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
   const flowFull = () => { const w = window.__pdCW && window.__pdCW(); if (!w || !w.from || !w.dl || !w.dl.last) return true; return w.from <= w.lo && w.to >= w.dl.last; };
+  // 일별 흐름(__pf)이 있으면 그 기간 금액을 보여 준다. 없으면 flowFull()에 맡긴다.
+  // flowFull은 짧은 기간의 배지·화살표 금액을 숨기는 쪽이라, 그 코드가 있든 없든 같다.
+  const flowAmtOn = (c) => !!(c && c.__pf) || flowFull();
   const FLOW_NOTE = '업체 지역별 금액은 7월 1일부터 전체 기준만 있어요';
   const krw = (n) => { if (n == null || isNaN(n)) return '—'; const a = Math.abs(n);
     if (a >= 1e12) { const j = Math.floor(a / 1e12), e = Math.round((a % 1e12) / 1e8); return j + '조' + (e ? ' ' + e.toLocaleString('ko-KR') + '억' : '') + '원'; }
@@ -189,7 +192,7 @@
     }
     // 지도에 끝내 못 넣은 도착지 라벨은 지도 아래 줄에 (지도 위에 겹치지 않게)
     let m = root.querySelector('.dv-miss'); if (!m) { m = document.createElement('p'); m.className = 'dv-miss'; const dn = root.querySelector('.dv-down'); dn ? dn.before(m) : box.after(m); }
-    const rs = cur && map.hasLayer(gF) && REST.n ? `그 밖 ${REST.n}곳${REST.unk ? '(주소 미확인 포함)' : ''}${flowFull() ? ' ' + krw(REST.amt) : ''}` : '';
+    const rs = cur && map.hasLayer(gF) && REST.n ? `그 밖 ${REST.n}곳${REST.unk ? '(주소 미확인 포함)' : ''}${flowAmtOn(fl.cities[cur]) ? ' ' + krw(REST.amt) : ''}` : '';
     const parts = miss.map((x) => x.replace(/^→\s*/, '')); if (rs) parts.push(rs);
     m.textContent = [miss.length ? '이름표를 못 단 화살표: ' + parts.slice(0, miss.length).join(' · ') : '', rs ? '화살표 없는 곳: ' + rs : ''].filter(Boolean).join(' / '); m.hidden = !parts.length;
     // 확대하면 화면에 보이는 시 마커마다 짧은 이름. 금액 라벨·버튼과 실제로 겹치는 이름만 숨긴다.
@@ -246,6 +249,7 @@
     const pick = (!R.cover && !R.off) ? 'r' : (!Lft.cover && !Lft.off) ? 'l' : (R.cover && !Lft.cover) ? 'l' : 'r';
     span.classList.remove('r', 'l'); span.classList.add(pick);
   };
+  let flowCity = null;
   const sinkLocal = () => {
     if (locMk) { locMk.remove(); locMk = null; }
     if (!flowRefs.length) return;
@@ -260,7 +264,8 @@
     }
     if (!buried.length) return;
     const sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
-    const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>우리 시${flowFull() ? ' ' + krw(sum) : ''}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
+    const badge = flowAmtOn(flowCity) ? `우리 시 ${krw(sum)}` : '우리 시';
+    const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>${badge}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
     locMk = L.marker(toLL(flowRefs[0].a), {pane: 'markerPane', interactive: false, keyboard: false, icon, zIndexOffset: 800}).addTo(gF);
     seatBadge(map, locMk);
   };
@@ -274,7 +279,7 @@
   const dim = (slug) => dots.forEach((m, s) => m.setStyle({opacity: !slug || s === slug ? 1 : 0.3, fillOpacity: !slug || s === slug ? 0.5 : 0.12}));
   // 세금 길: 도시 → 업체 소재지 선 그리기
   const drawFlows = (slug, hold) => {
-    gF.clearLayers(); flowRefs = []; locMk = null; FX.set([]); REST = {n: 0, amt: 0}; const c = fl.cities[slug]; if (!c || !c.flows.length) return; const arcs = [];
+    gF.clearLayers(); flowRefs = []; locMk = null; FX.set([]); REST = {n: 0, amt: 0}; const c = fl.cities[slug]; flowCity = c || null; if (!c || !c.flows.length) return; const arcs = [];
     const a = c.p, top = c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10), mx = top[0] ? top[0].amount : 1;
     { const inTop = new Set(top), others = c.flows.filter((f) => !inTop.has(f)), sh = top.reduce((t, f) => t + f.amount, 0), unk = Math.max(0, (c.total || 0) - (c.known || 0));
       REST = {n: others.length, amt: others.reduce((t, f) => t + f.amount, 0) + unk, unk: unk > 0}; if (REST.amt > 0 && !REST.n) REST.n = 1; if (REST.amt <= 0) REST.n = 0;
@@ -286,7 +291,8 @@
       const w = 1.5 + 7 * Math.sqrt(f.amount / mx), col = f.local ? '#0a84ff' : '#ff9f0a';
       const ln = L.polyline(pts, {color: col, weight: w, opacity: 0.85, interactive: false, className: 'dv-line'}).addTo(gF);
       const dot = L.circleMarker(toLL(b), {pane: 'dvTop', renderer: gTop, radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
-      const tip = L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(((f.to || '').split(' ').slice(-1)[0] || '') + (flowFull() ? ' ' + krw(f.amount) : ''))).addTo(gF);
+      const tipNm = (f.to || '').split(' ').slice(-1)[0] || '';
+      const tip = L.tooltip({permanent: true, direction: 'right', className: 'klab dv-amt dv-rc', offset: [4, 0], interactive: false}).setLatLng(toLL(b)).setContent('→ ' + esc(flowAmtOn(c) ? tipNm + ' ' + krw(f.amount) : tipNm)).addTo(gF);
       flowRefs.push({f, a, line: ln, dot, tip});
       const p = ln.getElement();
       if (p && !RM) { /* 확대 후에도 끊기지 않게 길이를 1로 정규화(줌마다 d가 바뀌어도 비율 유지) */ p.setAttribute('pathLength', '1'); p.style.strokeDasharray = '1'; p.style.strokeDashoffset = '1'; p.style.transition = `stroke-dashoffset .9s ease-out ${i * 0.12}s`; p.addEventListener('transitionend', () => { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; p.style.transition = ''; }, {once: true}); requestAnimationFrame(() => requestAnimationFrame(() => (p.style.strokeDashoffset = '0'))); }
@@ -449,9 +455,23 @@
   const PL = () => (window.__pdLabel && window.__pdLabel()) || `최근 ${idx.days || 90}일`;
   const PV = {'경상남도': '경남', '경상북도': '경북', '전라남도': '전남', '전라북도': '전북', '전북특별자치도': '전북', '충청남도': '충남', '충청북도': '충북', '강원도': '강원', '강원특별자치도': '강원', '제주특별자치도': '제주', '경기도': '경기', '세종특별자치시': '세종'};
   const nmR = (s) => { const a = String(s || '').trim().split(/\s+/); if (!a[0]) return ''; a[0] = PV[a[0]] || a[0].replace(/(특별시|광역시)$/, ''); return a.join(' '); };
-  // 기간을 고르면 시 계약 원장(data/city/*.json rows)에서 흐름·외지·업체를 다시 계산
+  // 기간을 고르면 시 계약 원장(data/city/*.json rows)에서 흐름·외지·업체를 다시 계산.
+  // __pf(일별 흐름으로 이미 나눈 기간)이면 금액은 유지하고, 이 기간 업체만 붙인다.
   const LOC = {};
-  const reFlow = (slug, rows) => { const c = BY[slug], o = fl.cities[slug] || {}; const P = {}; for (const k in fl.cities) for (const x of fl.cities[k].flows || []) if (x.p) P[x.to] = x.p;
+  const reFlow = (slug, rows) => { const c = BY[slug], o = fl.cities[slug] || {};
+    if (o.__pf) {
+      const byTo = {};
+      for (const r of rows || []) {
+        const to = nmR(r.vregion); if (!to) continue;
+        const vid = r.bh || r.vendor || ''; if (!vid) continue;
+        const g = byTo[to] || (byTo[to] = {});
+        const v = g[vid] || (g[vid] = {id: r.bh || '', name: r.vendor || '', amount: 0, count: 0});
+        v.amount += +r.amount || 0; v.count++;
+      }
+      const flows = (o.flows || []).map((f) => { const vs = byTo[f.to]; return vs ? Object.assign({}, f, {vendors: Object.values(vs).sort((a, b) => b.amount - a.amount).slice(0, 20)}) : f; });
+      return Object.assign({}, o, {flows, __pf: 1, __re: 1});
+    }
+    const P = {}; for (const k in fl.cities) for (const x of fl.cities[k].flows || []) if (x.p) P[x.to] = x.p;
     const ct = String(c && c.name || o.name || '').trim().split(/\s+/).pop(); const ctb = ct.replace(/(특별시|광역시)$/, ''), MET = ctb !== ct || /^(서울|부산|대구|인천|광주|대전|울산|세종)$/.test(String(o.name || ''));
     // 원래 흐름(flows.json)에서 '우리 시 업체'로 표시된 곳은 그대로 우리 시로 (광역시는 '부산 강서구'처럼 구 이름이 둘째라 이름 비교로는 못 맞춤)
     const LS = LOC[slug] || (LOC[slug] = new Set([...(o.flows || []), ...Object.values(o.by_cat || {}).flatMap((b) => b.flows || [])].filter((x) => x.local).map((x) => x.to)));
@@ -483,9 +503,10 @@
     if (cur !== slug) { cur = slug; fly(slug); window.regionRemember && regionRemember(slug); }
     cur = slug; setH(1); dim(slug); syncHome();
     const out = f && f.known ? Math.round((1 - f.local / f.known) * 100) : null;
-    strip(c.name, c.total); extLine(slug); sheet.classList.toggle('has-flow-note', !flowFull()); body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)} <small class="dv-incl">시청과 산하 기관 포함</small></p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
+    const flowNote = !flowAmtOn(f);
+    strip(c.name, c.total); extLine(slug); sheet.classList.toggle('has-flow-note', flowNote); body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)} <small class="dv-incl">시청과 산하 기관 포함</small></p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
       <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">다른 지역 업체 ${out}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}</span> <button type="button" class="dv-sh dv-shc" aria-label="이 지역 결과 공유">공유</button> <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
-      ${flowFull() ? '' : `<p class="dv-flow-note">${FLOW_NOTE}</p>`}
+      ${flowNote ? `<p class="dv-flow-note">${FLOW_NOTE}</p>` : ''}
       <div class="dv-more"><div class="dv-wrap" aria-label="우리 시 한눈에 보기"></div><div class="dv-t3">${top3(f)}</div><p class="dv-k">데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
     ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
