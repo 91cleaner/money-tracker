@@ -54,7 +54,11 @@
 
   const ch = await j('changes_us.json');
   if (!ch) return;
-  const [ft, qa, qb, kr, hq, tk] = await Promise.all([j('fund_totals.json'), j('holdings_us_' + ch.from + '.json'), j('holdings_us_' + ch.to + '.json'), j('kr_holdings.json'), j('kr_hq_region.json'), j('us_tickers.json')]);
+  const [ft, qa, qb, kr, hq, tk, d5] = await Promise.all([j('fund_totals.json'), j('holdings_us_' + ch.from + '.json'), j('holdings_us_' + ch.to + '.json'), j('kr_holdings.json'), j('kr_hq_region.json'), j('us_tickers.json'), j('dart5.json')]);
+  const d5items = ((d5 && d5.items) || []).filter((x) => x.corp && x.stake != null);
+  const pp = (n) => (Math.round(Number(n) * 100) / 100).toFixed(2);
+  const mdS = (s) => (s ? `${+s.slice(5, 7)}월 ${+s.slice(8, 10)}일` : '');
+  const d5line = (x) => (x.prev != null ? `${pp(x.prev)}% → ${pp(x.stake)}%` : `${pp(x.stake)}%`) + (x.delta ? ` (${x.delta > 0 ? '+' : ''}${pp(x.delta)}%p)` : '');
   if (!qb || !kr) return;
   const fx = (qb.fx || (qa && qa.fx) || {}).usd_krw || 0;
   const tick = (tk && tk.cusip) || {};
@@ -111,7 +115,12 @@
 .f-card{margin-top:10px;padding:14px;border-radius:14px;background:#0f141b;border:1px solid #2a3541;display:grid;gap:6px}
 .f-card .hd{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:800;min-width:0}.f-card .hd span{min-width:0;overflow-wrap:anywhere}
 .f-card .v{font-size:26px;font-weight:800;color:#ffb020;line-height:1.2}.f-card .l{font-size:14px;color:#d6dde4}.f-card .up{color:#3ddc84;font-weight:800}.f-card .dn{color:#ff6b6b;font-weight:800}
-.f-card .s{font-size:12.5px;color:#8fa0b3}`;
+.f-card .s{font-size:12.5px;color:#8fa0b3}
+.d5{display:grid}.d5r{display:flex;align-items:center;gap:8px;padding:9px 0;border-top:1px solid #222b36;font-size:14px;min-width:0}
+.d5d{color:#8fa0b3;font-size:12.5px;white-space:nowrap;min-width:4.6em}.d5n{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e8edf2;font-weight:700;text-decoration:none}
+.d5v{white-space:nowrap;font-variant-numeric:tabular-nums;color:#b8c3cf}.d5v b{color:#fff}.d5r .up,.d5r .dn,.d5z{white-space:nowrap;font-weight:800;font-size:13px;min-width:4.4em;text-align:right}
+.d5r .up{color:#3ddc84}.d5r .dn{color:#ff6b6b}.d5z{color:#8fa0b3}.d5o{font-size:12px;color:#8fa0b3;white-space:nowrap}
+@media(max-width:420px){.d5p{display:none}.d5d{min-width:0;flex:none}}`;
   document.head.append(css);
 
   // ── ① 카운트다운 ──
@@ -142,6 +151,23 @@
     const leadTxt = lead.length ? `지난 ${lead.length === 2 ? '두' : '한'} 번은 마감 ${Math.min(...lead)}${lead.length === 2 && Math.min(...lead) !== Math.max(...lead) ? '~' + Math.max(...lead) : ''}일 전에 냈어요. ` : '';
     box.href = '#s3';
     box.innerHTML = `<span class="dd">${left > 0 ? 'D-' + left : left === 0 ? 'D-DAY' : '곧'}</span><span><b>${esc(qL(nq))} 국민연금 미국 주식 목록 공개</b> · 늦어도 ${esc(fmt(due))}${tbn ? `<span class="s">지난 분기엔 ${esc(tbn)}${josa(tbn, '을', '를')} 가장 많이 늘렸어요. 이번엔 뭘 샀을까요?</span>` : ''}<span class="s">${leadTxt}나오면 이 페이지가 하루 안에 저절로 바뀌어요.</span></span>`;
+  })();
+
+  // ── ④ 국민연금 지분 변동(대량보유 보고) ──
+  (() => {
+    const box = $('dart5'); if (!box || !d5items.length) return;
+    box.hidden = false;
+    const row = (x) => `<div class="d5r"><span class="d5d">${esc(mdS(x.date))}</span><a class="d5n" href="nps.html?q=${encodeURIComponent(x.corp)}#find">${esc(x.corp)}</a><span class="d5v">${x.prev != null ? `<span class="d5p">${esc(pp(x.prev))}% → </span>` : ''}<b>${esc(pp(x.stake))}%</b></span>${x.delta ? `<span class="${x.delta > 0 ? 'up' : 'dn'}">${x.delta > 0 ? '▲' : '▼'}${esc(pp(Math.abs(x.delta)))}%p</span>` : '<span class="d5z">유지</span>'}<a class="d5o" href="${esc(x.url)}" target="_blank" rel="noopener" aria-label="${esc(x.corp)} 공시 원문">원문↗</a></div>`;
+    const head = d5items.slice(0, 8), more = d5items.slice(8, 60);
+    const lastDay = d5items[0].date, sameDay = d5items.filter((x) => x.date === lastDay);
+    const up = sameDay.filter((x) => x.delta > 0).length, dn = sameDay.filter((x) => x.delta < 0).length;
+    box.innerHTML = `<h2>📣 국민연금 지분 변동</h2>
+      <p class="sub">${esc(mdS(lastDay))} 공시 ${sameDay.length}건${up || dn ? ` · 늘림 ${up} · 줄임 ${dn}` : ''}. 국민연금이 5% 넘게 가진 회사의 지분이 바뀌면 금융감독원에 보고해요.</p>
+      <div class="d5">${head.map(row).join('')}</div>
+      ${more.length ? `<details class="nps-all"><summary>지난 보고 ${more.length}건 더 보기</summary><div class="d5">${more.map(row).join('')}</div></details>` : ''}
+      <div class="me-act"><button type="button" class="p" data-a="t">최근 변동 글 복사</button></div>
+      <p class="src">출처 <a href="https://dart.fss.or.kr" target="_blank" rel="noopener">금융감독원 전자공시</a> 주식등의 대량보유상황보고서(제출인 국민연금공단). 국민연금은 보통 변동이 있던 달(또는 분기)의 다음 달 10일 무렵에 몰아서 보고해서, 실제 사고판 날과 공시 날이 달라요. 투자 권유가 아니에요.</p>`;
+    box.querySelector('[data-a="t"]').onclick = (e) => copy(`국민연금 지분 변동 (${mdS(lastDay)} 공시)\n` + sameDay.slice(0, 5).map((x) => `${x.corp} ${d5line(x)}`).join('\n'), e.target);
   })();
 
   // ── ② 내 연금 계산기 ──
@@ -215,6 +241,11 @@
           ${where ? `<div class="s">본사 ${esc(where)} · <a href="nps.html?co=${encodeURIComponent(r.name)}#s5">지도에서 보기</a></div>` : ''}
           <div class="s">${esc(kr.as_of.slice(0, 4))}년 ${+kr.as_of.slice(5, 7)}월 말 평가액 · 국민연금은 국내 주식 전체 목록을 1년에 한 번 공개해요.</div>`;
         text = `국민연금은 ${r.name} 주식을 ${won(r.value)}어치 갖고 있어요. 국내 주식 중 ${r.rank}위${r.stake ? `, 지분 ${r.stake}%` : ''}.`;
+        const dx = d5items.find((x) => (r.code && x.code === r.code) || x.corp === r.name);
+        if (dx) {
+          body += `<div class="l">📣 최근 공시(${esc(mdS(dx.date))}): 지분 ${dx.prev != null ? esc(pp(dx.prev)) + '% → ' : ''}<b>${esc(pp(dx.stake))}%</b>${dx.delta ? ` <span class="${dx.delta > 0 ? 'up' : 'dn'}">${dx.delta > 0 ? '▲' : '▼'}${esc(pp(Math.abs(dx.delta)))}%p</span>` : ''} · <a href="${esc(dx.url)}" target="_blank" rel="noopener">원문</a></div>`;
+          text += `\n최근 공시(${mdS(dx.date)}): 지분 ${d5line(dx)}`;
+        }
       } else if (r.kind === 'us') {
         let chg = '', chgT = '';
         if (!r.prev) { chg = `<span class="up">${esc(qS(qb.quarter))}에 새로 샀어요</span>`; chgT = `${qS(qb.quarter)}에 새로 샀어요.`; }

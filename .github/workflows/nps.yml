@@ -1,6 +1,6 @@
 name: nps
 on:
-  schedule: [{cron: "41 21 * * *"}]
+  schedule: [{cron: "41 21 * * *"}, {cron: "41 9 * * 1-5"}]
   workflow_dispatch:
 permissions: {contents: write}
 jobs:
@@ -11,6 +11,10 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install openpyxl
+      - run: python collector/nps/dart5.py
+        continue-on-error: true
+        timeout-minutes: 10
+        env: {DART_API_KEY: "${{ secrets.DART_API_KEY }}"}
       - run: python collector/nps/kr_board.py
         continue-on-error: true
         timeout-minutes: 15
