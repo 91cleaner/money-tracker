@@ -126,7 +126,17 @@
 .tabbar-top a.on::after,.tabbar-top button.on::after{content:"";position:absolute;bottom:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
 .ndot{display:none;width:8px;height:8px;border-radius:50%;background:#ff3b30;position:absolute;top:8px;right:10%}
 .has-new .ndot{display:block}
-body.has-tabbar{padding-top:52px;padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+body.has-tabbar{padding-top:56px;padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+@media (max-width:767px){
+  .tabbar-top{display:none !important}
+  body.has-tabbar{padding-top:0 !important}
+}
+@media (min-width:768px){
+  .tabbar-bot{display:none !important}
+  body.has-tabbar{padding-bottom:28px !important}
+}
+.nbar,.stickybar{position:relative !important;top:auto !important;margin:0 !important;z-index:20;background:#0d1117}
+.nbar a,.stickybar .brand,.stickybar .back{flex:0 0 auto;white-space:nowrap}
 .more-sheet{position:fixed;inset:0;z-index:1200}
 .more-bg{position:absolute;inset:0;border:0;background:#000a}
 .more-box{position:absolute;left:0;right:0;bottom:0;background:#10161c;border-top:1px solid #ffb020;border-radius:18px 18px 0 0;padding:12px 14px calc(16px + env(safe-area-inset-bottom))}
@@ -136,6 +146,6 @@ body.has-tabbar{padding-top:52px;padding-bottom:calc(72px + env(safe-area-inset-
 .more-links{display:grid;gap:8px;margin-top:8px}
 .more-links a{display:flex;align-items:center;min-height:48px;padding:0 12px;border-radius:12px;border:1px solid #2a3544;background:#0c1218;color:#e8eef5;text-decoration:none;font-weight:700;font-size:16px}
 @media(min-width:900px){.tabbar{padding-left:calc(50% - 340px);padding-right:calc(50% - 340px)}.more-box{left:50%;width:420px;transform:translateX(-50%);bottom:24px;border:1px solid #ffb020;border-radius:18px}}
-body.has-tabbar .nbar{top:52px}`;
+.nbar,.stickybar{top:auto !important}`;
   document.head.appendChild(css);
 })();
