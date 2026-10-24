@@ -44,3 +44,7 @@ main>section.sec,.case,.rcp,#cases,#comp{scroll-margin-top:120px}
 .stabs.end .sfade{opacity:0}
 .stabs.fit a{flex:1 1 auto;text-align:center;padding:7px 6px}
 .stabs.fit .sfade{display:none}
+
+/* 2026-10-24: 묶음 접기 */
+.more-items summary,.more-cases>summary{cursor:pointer;color:#ffb020;font-weight:700;min-height:44px;display:flex;align-items:center}
+.more-cases>summary{justify-content:center;border:1px solid #2a3541;border-radius:12px;margin:8px 0}

@@ -14,9 +14,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="assets/style.css?v=202610249300">
-<link rel="stylesheet" href="assets/sec.css?v=202610246200">
+<link rel="stylesheet" href="assets/sec.css?v=202610249700">
 <link rel="stylesheet" href="assets/theme.css?v=202610249300">
-<link rel="stylesheet" href="assets/refresh.css?v=202610247500">
+<link rel="stylesheet" href="assets/refresh.css?v=202610249700">
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body data-page="home">
@@ -28,6 +28,7 @@
     <div class="big" id="hero-num">
       <span class="v skel" id="nat-total">불러오는 중…</span>
       <span class="k">전국 85개 시가 최근 <span id="days">90</span>일 동안 <span id="hero-k">맺은 계약 금액</span></span>
+      <p class="hero-pick">분야별로 보기 (위 지도와 숫자가 함께 바뀌어요)</p>
       <div class="chips center" id="hero-chips"></div>
     </div>
     <p class="newbadge" id="newbadge" hidden></p>
@@ -77,12 +78,12 @@
     <a href="spend.html#sole" style="display:block;text-decoration:none;color:#fff;background:#0b0b0b;border-radius:16px;padding:16px">
       <span style="font-size:13px;opacity:.7">🔍 세금 더 보기 목록</span><br>
       <b style="font-size:28px" id="tt-sum">경쟁 없이 나간 돈</b><br>
-      <code style="color:#3dff7a;font-size:12px" id="tt-line">&gt; TRACKING… 경쟁 없는 계약 · 비용 비교 · 축제 · 보조금</code>
+      <span style="display:block;color:#9aa6b2;font-size:13px;margin-top:4px" id="tt-line">경쟁 없는 계약 · 비용 비교 · 축제 · 보조금</span>
       <span style="display:block;margin-top:10px;font-weight:700">더 보기 목록 열기 ›</span>
     </a>
     <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding:2px 0 6px"><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#sole">경쟁 없는 계약</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#cost">비용 비교</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#fest">축제·행사</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#subsidy">보조금</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#pay">공공기관 보수</a></div>
     <a href="national.html" style="display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#151b23;border:1px solid #2a3541;color:#fff;text-decoration:none;font-weight:700">정부 지출 · 국회의원과 정당에 가는 돈 ›</a>
-    <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent=(d.period?`${+d.period[0].slice(5,7)}월 ${+d.period[0].slice(8)}일~${+d.period[1].slice(5,7)}월 ${+d.period[1].slice(8)}일 `:'')+'공고 없이 바로 맺은 수의계약 '+Math.round(d.sum/1e8).toLocaleString()+'억원';document.getElementById('tt-line').textContent='> '+d.period[0]+'~'+d.period[1]+' · 85개 시 · '+d.n.toLocaleString()+'건 · 데이터상 이상 징후 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
+    <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent=(d.period?`${+d.period[0].slice(5,7)}월 ${+d.period[0].slice(8)}일~${+d.period[1].slice(5,7)}월 ${+d.period[1].slice(8)}일 `:'')+'공고 없이 바로 맺은 수의계약 '+Math.round(d.sum/1e8).toLocaleString()+'억원';document.getElementById('tt-line').textContent='85개 시 · '+d.n.toLocaleString()+'건 · 데이터상 이상 징후 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
   </section>
   <section class="sec" id="ranksec">
     <h2>전국 업체 순위</h2>
@@ -107,7 +108,7 @@
       <li>기관이나 업체가 해명을 보내면 해당 항목 바로 아래에 그대로 싣습니다.</li>
     </ul>
     </details>
-    <p class="sub">해명·정정 요청: <span id="contact">연락처 준비 중</span></p>
+    <p class="sub">해명·정정 요청: <a id="contact" href="https://github.com/91cleaner/money-tracker/issues/new" target="_blank" rel="noopener">GitHub에 남기기 ↗</a> · <a href="principles.html">원칙 보기</a></p>
   </section>
 
   <footer>
@@ -126,10 +127,10 @@
 <script src="assets/game.js?v=202610246500"></script>
 <script src="assets/daily.js?v=202610246500"></script>
 <script src="assets/pcl.js?v=202610246200"></script>
-<script src="assets/bid.js?v=202610246200" defer></script>
+<script src="assets/bid.js?v=202610249700" defer></script>
 <script src="assets/addr.js?v=202610246200"></script>
 <script src="assets/play.js?v=202610247200"></script>
 <script src="assets/tabs.js?v=202610247100"></script>
-<script src="assets/fun.js?v=202610247100"></script>
+<script src="assets/fun.js?v=202610249700"></script>
 <script src="assets/nav.js?v=202610247600"></script>
 <script src="assets/fx.js?v=202610247700"></script></body></html>

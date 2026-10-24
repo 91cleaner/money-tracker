@@ -7,7 +7,7 @@
 <meta property="og:title" content="국민연금은 어떤 주식을 살까? · 세금추적단"><meta property="og:description" content="국민연금이 모아 둔 돈과 미국 주식. 미국 정부에 낸 보유 주식 목록을 우리 돈으로 보여 줘요.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%92%B0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="assets/refresh.css?v=202610247500">
+<link rel="stylesheet" href="assets/refresh.css?v=202610249700">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css?v=202610247400">
 <style>
 *{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#0d1117;color:#e8edf2;font-family:Pretendard,system-ui,sans-serif;font-size:15px;line-height:1.55}
@@ -67,6 +67,7 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
 #s5 button.row{width:100%;max-width:100%;background:none;color:inherit;font:inherit;text-align:left;border:0;border-top:1px solid #222b36;cursor:pointer;border-radius:0}
 #s5 button.row.on{background:#0f141b}
 #s5 .pick{margin-top:10px}
+.words-box{margin:8px 0 14px}.words-box summary{cursor:pointer;color:#ffb020;font-weight:700;min-height:44px;display:flex;align-items:center}
 #s5 .nps-view{display:flex;gap:8px;margin:0 0 10px}
 #s5 .nps-view button{flex:1 1 0;min-height:44px;padding:0 12px;border-radius:12px;border:1px solid #3a4652;background:#151b23;color:#f4f7fb;font:800 16px/1 Pretendard,system-ui,sans-serif;cursor:pointer}
 #s5 .nps-view button[aria-pressed="true"]{background:#ffb020;color:#14110a;border-color:#ffb020}
@@ -87,6 +88,7 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
   </section>
   <h1>국민연금은 어떤 주식을 살까?</h1>
   <p class="sub">국민연금은 우리가 낸 연금 보험료를 모아 불려서 나중에 연금으로 줘요. 이 돈의 일부로 주식을 사요. 여기 숫자는 사람들이 보도록 공개한 자료에 나온 값이고, 좋고 나쁨을 따지는 게 아니에요.</p>
+  <details class="words-box"><summary>어려운 말 풀이 14개 보기</summary>
   <ul class="words">
     <li><b>기금</b> 국민연금이 모아 둔 돈</li>
     <li><b>적립금</b> 그때까지 쌓아 둔 돈</li>
@@ -103,6 +105,7 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
     <li><b>분사</b> 회사에서 새 회사를 떼어 내는 일</li>
     <li><b>보정</b> 그런 변화를 반영해 주식 수를 다시 센 것</li>
   </ul>
+  </details>
   <div class="pair">
     <section id="s1"><h2>모아 둔 연금 돈은 얼마?</h2><div id="fund"></div></section>
     <section id="s2"><h2>미국 주식</h2><div id="us"></div></section>
@@ -110,16 +113,15 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
   <section id="s3"><h2>많이 늘린 주식 · 많이 줄인 주식</h2><div id="chg"></div></section>
   <section id="s4"><h2>국내 주식</h2><div id="kr"></div></section>
   <div id="nps-fun" class="fun-sec"></div>
-  <p class="prin-link"><a href="principles.html">중립성 원칙 + 정정 요청</a></p>
   <footer>
-    <span class="fun-foot"><a href="principles.html">중립성 원칙 + 정정 요청</a><button type="button" class="fun-donate" disabled>후원하기 · 준비 중</button></span>
+    <span class="fun-foot"><a href="principles.html">중립성 원칙 + 정정 요청</a></span>
   </footer>
 </main>
 <script src="assets/vendor/leaflet/leaflet.js?v=202610247400"></script>
 <script src="assets/nps.js?v=202610248300"></script>
 <script src="assets/mapkit.js?v=202610249500"></script>
 <script src="assets/nps-map.js?v=202610249500"></script>
-<script src="assets/fun.js?v=202610247100"></script>
+<script src="assets/fun.js?v=202610249700"></script>
 <script src="assets/nav.js?v=202610247600"></script>
 </body>
 </html>
