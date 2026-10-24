@@ -268,7 +268,7 @@ def main():
                      "note": "from/to 지역은 시·도 단위. 업체명은 공개 필드에 넣지 않음(내부 _vendor만)."})
     w("years.json", {"updated": now, "years": {k: dict(v) for k, v in sorted(years.items())}})
     w("support.json", {"updated": now, "allowance": seed["allowance"], "office_support": seed["office_support"]})
-    w("projects.json", {"updated": now, "special_activity": seed["special_activity"], "national_projects": seed["national_projects"]  # 대북 항목은 seed.json에서만 관리(수동 팩트체크값)})
+    w("projects.json", {"updated": now, "special_activity": seed["special_activity"], "national_projects": seed["national_projects"]})  # 대북 항목은 seed.json에서만 관리(수동 팩트체크값)
     w("index.json", {"updated": now, "assembly_key": bool(AK), "seats": {"source": SEAT_SRC, "date": SEAT_DAY, "label": "현재 의석 기준 근사치"}, "log": log,
                      "files": ["trips_raw", "members", "parties", "flows", "years", "support", "projects"],
                      "missing": [
