@@ -1,5 +1,6 @@
-/* 위·아래 탭 5개. 순서: 지도 · 게임/퀴즈 · 뉴스 · 나라 세금 · 더보기.
-   ?c= 는 지도·게임/퀴즈·뉴스·나라 세금에 붙인다. 도시 페이지의 지도는 그 도시 지도로 남긴다. */
+/* 위·아래 탭 5개. 순서: 지도 · 뉴스 · 나라 세금 · 국민연금 주식 · 더보기.
+   게임·퀴즈는 탭과 더보기에 넣지 않는다. ?c= 는 지도·뉴스·나라 세금·국민연금에 붙인다.
+   도시 페이지의 지도는 그 도시 지도로 남긴다. */
 (() => {
   const pg = document.body.dataset.page || '';
   const q = new URLSearchParams(location.search);
@@ -17,27 +18,24 @@
   const fixedMap = (pg === 'city' && q.get('c')) ? ('city.html' + location.search + '#map') : addQ('./#map');
   const tabs = [
     ['map', fixedMap, '지도'],
-    ['play', addQ('./#quiz'), '게임/퀴즈'],
     ['news', addQ('news.html'), '뉴스'],
     ['nat', addQ('national.html'), '나라 세금'],
+    ['nps', addQ('nps.html'), '국민연금 주식'],
   ];
-  const quizHash = ['#quiz', '#daily', '#game', '#play'];
   const act = (k) => {
-    const h = location.hash;
-    if (k === 'map') return (pg === 'home' || pg === 'index' || pg === 'city') && !quizHash.includes(h);
-    if (k === 'play') return (pg === 'home' || pg === 'index') && quizHash.includes(h);
+    if (k === 'map') return pg === 'home' || pg === 'index' || pg === 'city';
     if (k === 'news') return pg === 'news' || pg === 'article';
     if (k === 'nat') return pg === 'national';
-    if (k === 'more') return ['nps', 'rank', 'spend', 'vendor', 'principles'].includes(pg);
+    if (k === 'nps') return pg === 'nps';
+    if (k === 'more') return ['rank', 'spend', 'vendor', 'principles'].includes(pg);
     return false;
   };
   const moreLinks = [
-    ['nps.html', '국민연금 주식'],
-    ['rank.html', '업체 순위'],
-    ['spend.html', '세금 더 보기'],
-    ['principles.html', '중립성 원칙 + 정정 요청'],
+    ['rank.html', '순위'],
+    ['spend.html', '추적'],
+    ['principles.html', '중립성 원칙'],
   ];
-  const barHtml = () => tabs.map(([k, href, label]) => `<a href="${href}" data-k="${k}" class="${act(k) ? 'on' : ''}"${act(k) ? ' aria-current="page"' : ''}>${label}<span class="ndot" hidden></span></a>`).join('')
+  const barHtml = () => tabs.map(([k, href, label]) => `<a href="${href}" data-k="${k}" class="${act(k) ? 'on' : ''}"${act(k) ? ' aria-current="page"' : ''}><span class="tl">${label}</span><span class="ndot" hidden></span></a>`).join('')
     + `<button type="button" data-k="more" class="${act('more') ? 'on' : ''}" aria-expanded="false" aria-controls="more-sheet">더보기</button>`;
   const top = document.createElement('nav');
   top.className = 'tabbar tabbar-top';
@@ -55,11 +53,10 @@
   sheet.className = 'more-sheet';
   sheet.id = 'more-sheet';
   sheet.hidden = true;
-  const withC = (href) => (href === 'nps.html' ? addQ(href) : href);
   sheet.innerHTML = `<button type="button" class="more-bg" aria-label="닫기"></button>
     <div class="more-box" role="dialog" aria-label="더보기">
       <div class="more-top"><b>더보기</b><button type="button" class="more-x">닫기</button></div>
-      <div class="more-links">${moreLinks.map(([href, label]) => `<a href="${withC(href)}">${label}</a>`).join('')}</div>
+      <div class="more-links">${moreLinks.map(([href, label]) => `<a href="${href}">${label}</a>`).join('')}</div>
     </div>`;
   document.body.append(sheet);
   const setOpen = (on) => {
@@ -91,7 +88,7 @@
     const a = e.target.closest('.tabbar a');
     if (!a) return;
     const hash = (a.getAttribute('href') || '').includes('#') ? a.getAttribute('href').slice(a.getAttribute('href').indexOf('#')) : '';
-    if ((pg === 'home' || pg === 'index') && hash && (a.dataset.k === 'map' || a.dataset.k === 'play')) {
+    if ((pg === 'home' || pg === 'index') && hash && a.dataset.k === 'map') {
       e.preventDefault();
       const u = location.pathname + location.search + hash;
       if (location.pathname + location.search + location.hash !== u) location.assign(u);
@@ -118,11 +115,21 @@
     paintDot(!here && !!(newest && newest > seen));
   }).catch(() => {});
 
+  const fitNps = () => {
+    const labels = document.querySelectorAll('.tabbar a[data-k="nps"] .tl');
+    labels.forEach((s) => { s.textContent = '국민연금 주식'; });
+    const tight = [...document.querySelectorAll('.tabbar a[data-k="nps"]')].some((a) => {
+      const tl = a.querySelector('.tl');
+      return tl && tl.scrollWidth > a.clientWidth - 2;
+    });
+    if (tight) labels.forEach((s) => { s.textContent = '국민연금'; });
+  };
   const css = document.createElement('style');
   css.textContent = `.tabbar{position:fixed;left:0;right:0;z-index:1100;display:flex;background:#07090cf2;backdrop-filter:blur(16px);padding:4px 4px calc(4px + env(safe-area-inset-bottom));border-top:1px solid #24303a}
 .tabbar-top{top:0;bottom:auto;border-top:0;border-bottom:1px solid #24303a;padding:4px 4px}
 .tabbar-bot{bottom:0}
-.tabbar a,.tabbar button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;position:relative;min-height:44px;padding:4px 2px;border:0;background:none;color:#9aa6b2;font:700 12px/1.2 var(--sans,Pretendard,system-ui,sans-serif);text-decoration:none;white-space:nowrap;letter-spacing:-.03em;cursor:pointer}
+.tabbar a,.tabbar button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;position:relative;min-height:44px;padding:4px 1px;border:0;background:none;color:#9aa6b2;font:700 12px/1.15 var(--sans,Pretendard,system-ui,sans-serif);text-decoration:none;white-space:nowrap;letter-spacing:-.04em;cursor:pointer;overflow:hidden}
+.tabbar .tl{min-width:0;overflow:hidden}
 .tabbar a.on,.tabbar button.on{color:#ffb020}
 .tabbar-bot a.on::before,.tabbar-bot button.on::before{content:"";position:absolute;top:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
 .tabbar-top a.on::after,.tabbar-top button.on::after{content:"";position:absolute;bottom:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
@@ -140,4 +147,7 @@ body.has-tabbar{padding-top:52px;padding-bottom:calc(72px + env(safe-area-inset-
 @media(min-width:900px){.tabbar{padding-left:calc(50% - 340px);padding-right:calc(50% - 340px)}.more-box{left:50%;width:420px;transform:translateX(-50%);bottom:24px;border:1px solid #ffb020;border-radius:18px}}
 body.has-tabbar .nbar{top:52px}`;
   document.head.appendChild(css);
+  fitNps();
+  addEventListener('resize', fitNps);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNps);
 })();
