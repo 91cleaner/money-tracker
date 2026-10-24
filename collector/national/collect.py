@@ -109,6 +109,26 @@ def _party_at(hist_party, date):
     return hist_party
 
 
+PARTY_NORM = {"더불어민주연합": "더불어민주당"}  # 22대 총선 비례 위성정당 → 2024.5 합당
+# 출장 시점 당적(공개 경력 기준, 팩트체크 필요): (이름, 이 날짜 전, 그 전 당적, 이후 당적)
+PARTY_AT = [("조정식", "2026-06-01", "더불어민주당", "무소속"),   # 국회의장 당선 후 무소속(국회법 20조의2)
+            ("김상욱", "2025-05-08", "국민의힘", "더불어민주당")]  # 2025년 5월 국민의힘 탈당·민주당 입당
+NAMESAKE_HINT = {"박지원": "22대 동명이인 2명(1942년생 전남 해남·완도·진도 / 1987년생 전북 군산·김제·부안을)"}
+
+
+def _start(d):
+    m = re.search(r"(20\d\d)\s*\.\s*(\d{1,2})\s*\.\s*(\d{1,2})", d or "")
+    return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}" if m else None
+
+
+def party_at(name, party, date):
+    party = PARTY_NORM.get(party, party)
+    for n, cut, before, after in PARTY_AT:
+        if n == name and date:
+            return (before if date < cut else after), "출장 시점 당적"
+    return party, "현재 당적"
+
+
 def collect_trips(members):
     rows = api(TRIP, UNIT_CD="100022", pSize=1000)
     if rows:
@@ -135,8 +155,9 @@ def collect_trips(members):
             ok = len(ms) == 1
             if not ok:
                 unmatched[n] += 1
+            pty, basis = party_at(n, ms[0]["party"], _start(r.get("SCH_DYS"))) if ok else (None, None)
             trips.append({"trip_id": i, "name": n, "member_id": ms[0]["id"] if ok else None,
-                          "party": ms[0]["party"] if ok else None, "match": how if ok or how != "현직" else "미매칭",
+                          "party": pty, "party_basis": basis, "match": how if ok or how != "현직" else "미매칭", "note": NAMESAKE_HINT.get(n) if not ok else None, "start": _start(r.get("SCH_DYS")),
                           "is_leader": n == lead, "dest": dst, "dest_inferred": inferred, "dest_raw": r.get("DSTN_NM"),
                           "dates": r.get("SCH_DYS"), "purpose": r.get("PURP_RSON"), "funder": r.get("EXPNS_SUPPT_INST_NM"),
                           "report": r.get("REPORT_YN"), "report_label": "신고 당시 결과보고서 유/무", "src": BASE + TRIP})
