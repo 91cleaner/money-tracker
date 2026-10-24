@@ -21,62 +21,29 @@ const krShare=(row,total,note)=>{
   return {pct:from,computed:true};
 };
 const shHtml=(pct,computed)=>computed?`<span class="sh"><span class="of">국내주식 중</span>${pct2(pct)}</span>`:`<span class="sh">${pct2(pct)}</span>`;
-/* 각진 스테인리스 도넛. 32개 평면 + 나머지 조각이 100%. */
+/* 상위 10개 막대 그래프. 막대 색은 그 회사(티커)의 대표 색으로 그라데이션. 나머지는 회색 한 줄. */
+const BRAND={NVDA:['#4c7a00','#76b900','#b6f04a'],AAPL:['#3a3d40','#a2aaad','#e6e8ea'],MSFT:['#f25022','#7fba00','#00a4ef','#ffb900'],AMZN:['#c46f00','#ff9900','#ffc46b'],
+  GOOGL:['#4285f4','#ea4335','#fbbc05','#34a853'],GOOG:['#4285f4','#ea4335','#fbbc05','#34a853'],AVGO:['#8a0620','#cc092f','#ff4d6d'],MU:['#003b73','#0071c5','#5ab4ff'],
+  IVV:['#111111','#555b61','#a7b0b8'],META:['#0050c8','#0081fb','#5fc4ff'],TSLA:['#a1121f','#e31937','#ff6b7a'],AMD:['#a3141b','#ed1c24','#ff7076'],NFLX:['#8c0610','#e50914','#ff5a63'],
+  ORCL:['#a10000','#f80000','#ff6b6b'],JPM:['#4a3418','#7a5a2b','#c8a46a'],V:['#10144a','#1a1f71','#f7b600'],MA:['#eb001b','#ff5f00','#f79e1b'],LLY:['#9c1f16','#d52b1e','#ff7a6e'],
+  BRK:['#2e1a52','#4b2a82','#9a7fd1'],'BRK.B':['#2e1a52','#4b2a82','#9a7fd1'],WMT:['#004c99','#0071ce','#ffc220'],COST:['#a5122a','#e31837','#005daa'],UNH:['#001a4d','#002677','#5f8bd9'],
+  XOM:['#a3121f','#ed1b2d','#ff7380'],PLTR:['#101113','#4a4f55','#c4c9ce'],
+  '005930':['#0d1b6e','#1428a0','#4f6bff'],'000660':['#ea002c','#f47725','#ffb37a'],'373220':['#6e0023','#a50034','#e0507d'],'207940':['#1428a0','#0077c8','#00b3e3'],
+  '005380':['#001a3a','#002c5f','#4e7fbf'],'329180':['#004a8f','#0072ce','#00b4a0'],'402340':['#ea002c','#f47725','#ffb37a'],'105560':['#60584c','#ffbc00','#ffd966'],
+  '012450':['#b24a00','#f37321','#ffb07a'],'034020':['#003d7a','#005eb8','#5fa8ff']};
+const brandOf=(t,i)=>{const k=String(t||'').toUpperCase();if(BRAND[k])return BRAND[k];const h=[38,195,8,145,265,25,225,48,330,170][i%10];return [`hsl(${h} 70% 32%)`,`hsl(${h} 80% 52%)`,`hsl(${h} 90% 72%)`];};
+const grad=c=>c.length>3?`linear-gradient(90deg,${c.join(',')})`:`linear-gradient(90deg,${c[0]} 0%,${c[1]} 55%,${c[2]} 100%)`;
 const steelDonut=(rows)=>{
-  const N=32,cx=160,cy=160,Ro=112,Ri=70,step=Math.PI*2/N,t0=-Math.PI/2;
-  const hex=c=>'#'+c.map(n=>Math.max(0,Math.min(255,Math.round(n))).toString(16).padStart(2,'0')).join('');
-  const hit=(R,th)=>{
-    let u=((th-t0)/step)%N; if(u<0)u+=N; const i=Math.min(N-1,Math.floor(u+1e-9));
-    const a0=t0+i*step,a1=a0+step,p0=[Math.cos(a0)*R,Math.sin(a0)*R],p1=[Math.cos(a1)*R,Math.sin(a1)*R];
-    const dx=Math.cos(th),dy=Math.sin(th),ex=p1[0]-p0[0],ey=p1[1]-p0[1],den=dx*ey-dy*ex;
-    const t=Math.abs(den)<1e-9?R:(p0[0]*ey-p0[1]*ex)/den;
-    return [cx+dx*t,cy+dy*t];
-  };
-  const exact=rows.map(r=>({name:r.name,v:Math.max(0,Number(r.pct)||0),ticker:r.ticker||'',short:r.short||'',logo:r.logo||''}));
-  const used=exact.reduce((s,r)=>s+r.v,0);
-  const rest=Math.max(0,100-used);
-  const parts=exact.concat([{name:'나머지',v:rest,rest:1}]).filter(p=>p.v>0.0001);
-  const sum=parts.reduce((s,p)=>s+p.v,0)||1;
-  const shown=parts.map(p=>Math.round(p.v*100)/100);
-  const drift=Math.round((100-shown.reduce((s,n)=>s+n,0))*100)/100;
-  shown[shown.length-1]=Math.round((shown[shown.length-1]+drift)*100)/100;
-  const hues=[[255,176,32],[64,196,232],[255,92,64],[80,220,140],[176,132,255],[255,138,48],[110,150,255],[240,208,96],[255,96,168],[48,214,196]];
-  const restRgb=[148,156,164];
-  let acc=0; const ranges=parts.map((p,i)=>{const a0=t0+(acc/sum)*Math.PI*2; acc+=p.v; return {p,i,a0,a1:t0+(acc/sum)*Math.PI*2,rgb:p.rest?restRgb:hues[i%hues.length]};});
-  const defs=[],faces=[];
-  const gid=(i,k)=>'st'+i+'f'+k;
-  ranges.forEach(sl=>{
-    for(let f=0;f<N;f++){
-      const f0=t0+f*step,f1=f0+step,b0=Math.max(f0,sl.a0),b1=Math.min(f1,sl.a1);
-      if(b1-b0<0.0008)continue;
-      const amid=(f0+f1)/2, shine=Math.max(0,Math.cos(amid-(-Math.PI*0.72)));
-      const tone=(c,k,add)=>Math.max(0,Math.min(255,c*k+add));
-      const base=sl.rgb.map(c=>tone(c,0.62+shine*0.34,0)), hi=sl.rgb.map(c=>tone(c,0.8+shine*0.2,shine*16)), lo=sl.rgb.map(c=>tone(c,0.4,0));
-      const tx=Math.cos(amid+Math.PI/2), ty=Math.sin(amid+Math.PI/2);
-      const id=gid(sl.i,f);
-      defs.push(`<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${(cx-tx*70).toFixed(1)}" y1="${(cy-ty*70).toFixed(1)}" x2="${(cx+tx*70).toFixed(1)}" y2="${(cy+ty*70).toFixed(1)}"><stop offset="0" stop-color="${hex(lo)}"/><stop offset="0.16" stop-color="${hex(hi)}"/><stop offset="0.42" stop-color="${hex(base)}"/><stop offset="0.58" stop-color="${hex(lo)}"/><stop offset="0.8" stop-color="${hex(hi)}"/><stop offset="1" stop-color="${hex(base)}"/></linearGradient>`);
-      const q=[hit(Ro,b0),hit(Ro,b1),hit(Ri,b1),hit(Ri,b0)].map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ');
-      const edge=shine>0.55?'#f4f8fc':'#9aa6b2';
-      faces.push(`<polygon points="${q}" fill="url(#${id})" stroke="#0a0c0e" stroke-width="0.8" stroke-linejoin="miter"/>`);
-      faces.push(`<line x1="${hit(Ro,b0)[0].toFixed(1)}" y1="${hit(Ro,b0)[1].toFixed(1)}" x2="${hit(Ro,b1)[0].toFixed(1)}" y2="${hit(Ro,b1)[1].toFixed(1)}" stroke="${edge}" stroke-width="1.15" stroke-linecap="butt"/>`);
-    }
-    const cut=hit(Ro,sl.a0), cuti=hit(Ri,sl.a0);
-    faces.push(`<line x1="${cuti[0].toFixed(1)}" y1="${cuti[1].toFixed(1)}" x2="${cut[0].toFixed(1)}" y2="${cut[1].toFixed(1)}" stroke="#e7f2ff" stroke-width="1.25"/>`);
-  });
-  const ngon=R=>Array.from({length:N},(_,i)=>{const a=t0+i*step;return (cx+Math.cos(a)*R).toFixed(1)+','+(cy+Math.sin(a)*R).toFixed(1);}).join(' ');
-  const ring=R=>{const pts=ngon(R).split(' ');return 'M'+pts[0]+pts.slice(1).map(p=>'L'+p).join('')+'Z';};
-  const back=`<path transform="translate(5,16)" fill="#14181c" fill-rule="evenodd" d="${ring(Ro)}${ring(Ri)}"/>`;
-  const topPct=pct2(used);
-  const letters=t=>{const s=String(t||'').toUpperCase().replace(/[^A-Z0-9]/g,''); if(!s)return '?'; return /^[0-9]+$/.test(s)?s.slice(0,3):s.slice(0,2);};
-  const ink=rgb=>((rgb[0]*299+rgb[1]*587+rgb[2]*114)/1000>160)?'#14110a':'#f4f7fb';
-  const lab=p=>p.rest?'나머지':(p.short?`${p.ticker} ${p.short}`.trim():(p.ticker||p.name));
-  const label=ranges.map(sl=>`${lab(sl.p)} ${shown[sl.i].toFixed(2)}%`).join(', ');
-  const lg=ranges.map((sl,i)=>{
-    const p=sl.p, col=hex(sl.rgb);
-    const mark=p.rest?'':(p.logo?`<img class="logo" alt="" width="36" height="22" src="${esc(p.logo)}">`:`<span class="mark" style="background:${col};color:${ink(sl.rgb)}">${esc(letters(p.ticker||p.short||p.name))}</span>`);
-    return `<li><i style="background:${col}"></i>${mark}<span>${esc(lab(p))}</span><b>${shown[i].toFixed(2)}%</b></li>`;
-  }).join('');
-  return `<figure class="steel"><div class="steel-fit"><div class="steel-stage"><div class="steel-tilt"><svg viewBox="0 0 320 320" role="img" aria-label="상위 10개 ${topPct}. ${esc(label)}"><defs>${defs.join('')}</defs>${back}${faces.join('')}<polygon points="${ngon(Ri)}" fill="#07080a"/><polygon points="${ngon(Ro)}" fill="none" stroke="#f7fbff" stroke-width="1.2" stroke-linejoin="miter"/></svg><div class="steel-num"><b>${topPct}</b><span>상위 10개</span></div></div></div><ul class="steel-lg">${lg}</ul></div></figure>`;
+  const list=rows.map(r=>({name:r.name,v:Math.max(0,Number(r.pct)||0),ticker:r.ticker||'',short:r.short||'',logo:r.logo||''}));
+  // 막대 길이는 상위 10개 중 가장 큰 것 기준(나머지 50%를 기준으로 하면 막대가 다 짧아져 비교가 안 된다)
+  const used=list.reduce((s,r)=>s+r.v,0),rest=Math.max(0,100-used),max=Math.max(...list.map(r=>r.v),0.0001);
+  const tidy=n=>String(n||'').replace(/\b(CORPORATION|CORP|INCORPORATED|INC|CO|COM|LTD|PLC|HLDGS?|HOLDINGS?|GROUP|TR|FD|NEW|CL [A-Z]|DEL)\b\.?/gi,'').replace(/\s{2,}/g,' ').trim().toLowerCase().replace(/(^|\s)\S/g,c=>c.toUpperCase());
+  const FIX={Nvidia:'NVIDIA',Ishares:'iShares',Amd:'AMD',Jpmorgan:'JPMorgan'};const nm=p=>p.short||(/[가-힣]/.test(p.name)?p.name:(t=>t.replace(/^\S+/,w=>FIX[w]||w))(tidy(p.name))||p.name);
+  const li=list.map((p,i)=>{const c=brandOf(p.ticker,i);
+    const mark=p.logo?`<img class="bb-logo" alt="" width="28" height="18" src="${esc(p.logo)}">`:`<span class="bb-mark" style="background:${grad(c)}">${esc(/^[0-9]+$/.test(p.ticker)?nm(p).replace(/[^A-Za-z가-힣]/g,'').slice(0,2):String(p.ticker||nm(p)).replace(/[^A-Za-z0-9가-힣]/g,'').slice(0,4))}</span>`;
+    return `<li><div class="bb-h">${mark}<span class="bb-n">${esc(nm(p))}</span>${p.ticker?`<span class="bb-t">${esc(p.ticker)}</span>`:''}<b>${pct2(p.v)}</b></div><div class="bb-track"><i style="width:${Math.max(1.5,p.v/max*100).toFixed(2)}%;background:${grad(c)}"></i></div></li>`;}).join('');
+  const restLi=rest>0.0001?`<li class="bb-rest"><div class="bb-h"><span class="bb-n">나머지 종목 전부</span><b>${pct2(rest)}</b></div></li>`:'';
+  return `<figure class="bbars" role="img" aria-label="상위 10개가 ${pct2(used)}. ${esc(list.map(p=>(p.ticker||nm(p))+' '+pct2(p.v)).join(', '))}"><figcaption><b>${pct2(used)}</b> 상위 10개 합계</figcaption><ol>${li}${restLi}</ol></figure>`;
 };
 const ymd=s=>{const [y,m,d]=String(s||'').split('-');return `${+y}년 ${+m}월 ${+d}일`;};
 const KR_CODE={"삼성전자":"005930","SK하이닉스":"000660","LG에너지솔루션":"373220","삼성바이오로직스":"207940","현대차":"005380","HD현대중공업":"329180","SK스퀘어":"402340","KB금융":"105560","한화에어로스페이스":"012450","두산에너빌리티":"034020"};
