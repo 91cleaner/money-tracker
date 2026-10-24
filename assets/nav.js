@@ -10,4 +10,5 @@ const s=document.createElement('style');s.textContent=`.tabbar{position:fixed;le
 .tabbar a.on{color:#ffb020}.tabbar a.on::before{content:"";position:absolute;top:-7px;left:30%;right:30%;height:2px;background:#ffb020;border-radius:2px}
 body.has-tabbar{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
 @media(min-width:900px){.tabbar{padding-left:calc(50% - 280px);padding-right:calc(50% - 280px)}}`;document.head.appendChild(s);
+n.addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;const h=a.getAttribute('href');if((pg==='home'||pg==='index')&&h.startsWith('./#')){e.preventDefault();const u=location.pathname+location.search+h.slice(2);if(location.hash===h.slice(2))dispatchEvent(new HashChangeEvent('hashchange'));else location.hash=h.slice(2);}});/* 홈에서 지도·퀴즈·게임 탭은 ?c(고른 시) 유지 */
 addEventListener('hashchange',()=>n.querySelectorAll('a').forEach(a=>a.classList.toggle('on',act(a.dataset.k))));})();
