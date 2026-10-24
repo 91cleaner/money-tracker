@@ -6,7 +6,26 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 OUT = os.path.join(ROOT, "data", "nps"); os.makedirs(OUT, exist_ok=True)
 CIK = "1608046"
 UA = os.environ.get("SEC_UA", "MoneyTracker Research contact@91cleaner.dev")  # SEC 규칙: 이름+연락처
-FX = {"2026-06-30": (1549.4, "https://www.yna.co.kr/view/AKR20260630138800002")}  # 분기 말 서울 15:30 종가
+FX = {"2026-03-31": (1530.1, "https://www.yna.co.kr/view/AKR20260331148100002"),
+      "2026-06-30": (1549.4, "https://www.yna.co.kr/view/AKR20260630138800002")}  # 분기 말 서울 15:30 종가
+# 분기 사이 기업행위: 직전 분기 주식 수를 현재 기준으로 환산(공식 공시 근거)
+ACTIONS = [
+ {"cusip": "482480100", "issuer": "KLA", "type": "주식분할 10:1", "ratio": 10, "date": "2026-06-11",
+  "basis": "https://www.sec.gov/Archives/edgar/data/319201/000119312526269375/d144278d8k.htm"},
+ {"cusip": "09857L108", "issuer": "Booking Holdings", "type": "주식분할 25:1", "ratio": 25, "date": "2026-04-02",
+  "basis": "https://www.sec.gov/Archives/edgar/data/1075531/000107553126000008/bkng-20260218.htm"},
+ {"cusip": "146869102", "issuer": "Carvana", "type": "주식분할 5:1", "ratio": 5, "date": "2026-05-07",
+  "basis": "https://www.sec.gov/Archives/edgar/data/1690820/000169082026000039/cvna-20260505.htm"},
+ {"cusip": "143658300", "new_cusip": "G2004J103", "issuer": "Carnival", "type": "통합(Carnival Corp → Carnival Corp Ltd) 1:1 + CUSIP 변경", "ratio": 1, "date": "2026-05-07",
+  "basis": "https://www.sec.gov/Archives/edgar/data/815097/000110465926057200/tm2613680d1_8k.htm"},
+ {"cusip": "438516106", "new_cusip": "438516205", "issuer": "Honeywell", "type": "역분할 1:2 + CUSIP 변경", "ratio": 0.5, "date": "2026-06-29",
+  "basis": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000084/exhibit991-pressrelease629.htm"},
+ {"cusip": "438516106", "new_cusip": "43849R105", "issuer": "Honeywell Aerospace", "type": "분사(HON 2주당 HONA 1주)", "ratio": 0.5, "date": "2026-06-29", "spinoff": True,
+  "basis": "https://www.nasdaqtrader.com/TraderNews.aspx?id=ECA2026-399"},
+]
+SUSPECT = {"26614N201": "DuPont CUSIP 변경(26614N102→26614N201) 추정, 비율 미확인 — 실제 매매 아닐 수 있음",
+           "26614N102": "DuPont CUSIP 변경 추정, 비율 미확인 — 실제 매도 아닐 수 있음",
+           "314352105": "FedEx Freight 분사로 받은 주식일 가능성(미확인) — 실제 매수 아닐 수 있음"}
 KST = timezone(timedelta(hours=9))
 
 def get(url):
@@ -54,24 +73,33 @@ def main():
         if fx:
             d["fx"] = {"usd_krw": fx[0], "date": f["period"], "source": fx[1]}
             d["total_value_100m_krw"] = round(tot * fx[0] / 1e8)
-            for x in d["top20"]: x["value_100m_krw"] = round(x["value_usd"] * fx[0] / 1e8)
+            for x in d["holdings"]: x["value_100m_krw"] = round(x["value_usd"] * fx[0] / 1e8)
         json.dump(d, open(os.path.join(OUT, f"holdings_us_{q}.json"), "w"), ensure_ascii=False, indent=1); res.append(d)
-    cur, prev = res[0], res[1]; pm = {x["cusip"]: x for x in prev["holdings"]}; cm = {x["cusip"]: x for x in cur["holdings"]}
+    cur, prev = res[0], res[1]; cm = {x["cusip"]: x for x in cur["holdings"]}
+    raw = {x["cusip"]: x for x in prev["holdings"]}; pm = {k: dict(v, adj_note=None) for k, v in raw.items()}
+    for act in ACTIONS:  # 직전 분기 주식 수를 현재 CUSIP·주식 수 기준으로 환산
+        p = raw.get(act["cusip"])
+        if not p: continue
+        tgt = act.get("new_cusip", act["cusip"])
+        pm[tgt] = {"issuer": p["issuer"], "cusip": tgt, "shares": round(p["shares"] * act["ratio"]),
+                   "value_usd": 0 if act.get("spinoff") else p["value_usd"], "adj_note": {k: act[k] for k in ("type", "date", "basis")}}
+        if tgt != act["cusip"]: pm[act["cusip"]]["moved"] = True
     ch = []
     for k in set(pm) | set(cm):
-        c, p = cm.get(k), pm.get(k); b = c or p
-        ch.append({"issuer": b["issuer"], "cusip": k, "shares_prev": p["shares"] if p else 0, "shares_cur": c["shares"] if c else 0,
-                   "share_change": (c["shares"] if c else 0) - (p["shares"] if p else 0),
+        c, p = cm.get(k), pm.get(k)
+        if p and p.get("moved") and not c: continue  # CUSIP 이동분은 새 CUSIP에서 비교
+        b = c or p; ps = p["shares"] if p else 0; cs = c["shares"] if c else 0
+        px = c["value_usd"] / cs if cs else (p["value_usd"] / ps if ps else 0)
+        ch.append({"issuer": b["issuer"], "cusip": k, "shares_prev_adj": ps, "shares_cur": cs, "share_change": cs - ps,
                    "value_prev_usd": p["value_usd"] if p else 0, "value_cur_usd": c["value_usd"] if c else 0,
-                   "status": "신규" if not p else "전량 매도" if not c else "유지"})
-    # 매수/매도 크기: 주식 수 변화 × 현재(또는 직전) 주가 추정
-    for x in ch:
-        px = x["value_cur_usd"] / x["shares_cur"] if x["shares_cur"] else (x["value_prev_usd"] / x["shares_prev"] if x["shares_prev"] else 0)
-        x["est_trade_usd"] = round(x["share_change"] * px)
+                   "status": "신규" if not p else "전량 매도" if not c else "유지",
+                   "adjustment": p.get("adj_note") if p else None, "est_trade_usd": round((cs - ps) * px),
+                   "real": "확인 필요" if k in SUSPECT else True, "suspect_note": SUSPECT.get(k)})
     ch.sort(key=lambda x: x["est_trade_usd"])
     out = {"updated": now, "from": prev["quarter"], "to": cur["quarter"], "sources": [prev["filing_url"], cur["filing_url"]],
-           "caveat": "주식분할·CUSIP 변경(분사·합병)은 보정하지 않아 신규/전량매도로 잡힐 수 있음(팩트체크 전)", "method": "주식 수 변화 × 해당 분기 말 13F 평가액 기준 주가(추정 거래액)",
+           "adjustments": ACTIONS, "caveat": "ACTIONS 표의 분할·CUSIP 변경·분사는 공식 공시로 보정. 그 밖의 기업행위는 미보정일 수 있음(팩트체크 전)", "method": "주식 수 변화 × 해당 분기 말 13F 평가액 기준 주가(추정 거래액)",
            "total_value_usd": {prev["quarter"]: prev["total_value_usd"], cur["quarter"]: cur["total_value_usd"]},
+           "adjusted": [x for x in ch if x["adjustment"]],
            "top_buys": [x for x in reversed(ch) if x["est_trade_usd"] > 0][:20], "top_sells": [x for x in ch if x["est_trade_usd"] < 0][:20],
            "new": sum(x["status"] == "신규" for x in ch), "exited": sum(x["status"] == "전량 매도" for x in ch)}
     json.dump(out, open(os.path.join(OUT, "changes_us.json"), "w"), ensure_ascii=False, indent=1)

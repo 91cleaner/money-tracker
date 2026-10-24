@@ -13,6 +13,8 @@ jobs:
       - run: python collector/nps/sec13f.py
       - run: python collector/nps/kr_stocks.py
         continue-on-error: true
+        timeout-minutes: 20
+        env: {DATA_GO_KR_KEY: "${{ secrets.DATA_GO_KR_KEY }}"}
       - run: |
           git config user.name "github-actions"; git config user.email "actions@github.com"
           git add data/nps; git diff --cached --quiet || git commit -m "nps 데이터 갱신"
