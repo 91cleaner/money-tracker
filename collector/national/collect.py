@@ -1,9 +1,9 @@
-from collections import Counter
 """나라 세금(정치인·정당) 섹션 수집: data/national/*.json
 - 열린국회정보 API(ASSEMBLY_KEY, 없으면 sample 키=5건 제한)로 국회의원 명단·정당·지역구
 - collector/national/seed.json: 국회사무처 수당 지급기준·의원실 지원경비, 선관위 국고보조금(공식 발표값)
 - 돈 흐름(flows): 기록마다 준 쪽(from)·받은 쪽(to)과 지역. 업체명은 공개 필드에 두지 않음(_vendor 내부 필드만).
 키 값은 출력하지 않는다."""
+from collections import Counter
 import csv, json, os, re, time, urllib.request, urllib.parse
 from collections import defaultdict
 from datetime import datetime, timezone, timedelta
