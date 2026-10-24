@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>국민연금 주식 · 세금추적단</title>
+<meta property="og:title" content="국민연금은 어떤 주식을 살까? · 세금추적단"><meta property="og:description" content="국민연금 기금 규모와 미국 주식 보유·매매(SEC 13F 공시). 공식 자료만.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%92%B0%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#0d1117;color:#e8edf2;font-family:Pretendard,system-ui,sans-serif;font-size:15px;line-height:1.55}
+a{color:#7fe8ff;word-break:break-all}.nbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#0d1117ee;border-bottom:1px solid #222b36;font-size:13px;color:#8fa0b3}.nbar a{font-weight:700;font-size:15px;text-decoration:none}
+.w{max-width:760px;margin:0 auto;padding:16px 16px 60px}h1{font-size:27px;margin:8px 0}h2{font-size:20px;margin:0 0 10px}h3{font-size:16px;margin:16px 0 8px}
+section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:16px;margin:16px 0}
+.big{font-size:30px;font-weight:800;color:#ffb020;font-variant-numeric:tabular-nums}.sub{color:#8fa0b3;font-size:13px}.src{font-size:12px;color:#8fa0b3}.src a{color:#8fa0b3}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid #222b36;align-items:baseline}.row>span{min-width:0;overflow-wrap:anywhere}.row b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:4px;background:#ffb020;margin-top:4px}.bar.g{background:#3ddc84}.bar.r{background:#ff6b6b}
+.tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid #3a4652;color:#b8c3cf;margin:2px 4px 0 0}.tag.y{border-color:#ffd60a66;color:#ffd60a}
+.note{background:#0f141b;border-radius:10px;padding:10px 12px;font-size:13px;color:#b8c3cf;margin:10px 0}
+.two{display:grid;grid-template-columns:1fr;gap:10px}@media(min-width:700px){.two{grid-template-columns:1fr 1fr}}
+.card{background:#0f141b;border-radius:12px;padding:12px}
+</style>
+</head>
+<body>
+<header class="nbar"><a href="./">‹ 세금추적단</a><span>갱신 <span id="upd"></span></span></header>
+<main class="w">
+  <h1>국민연금은 어떤 주식을 살까?</h1>
+  <p class="sub">국민연금은 우리가 낸 연금 보험료를 모아 불려서 나중에 연금으로 줘요. 이 돈의 일부로 주식을 사요. 여기 숫자는 공식 공시에 나온 <b>데이터상</b> 값이고, 좋고 나쁨을 따지는 게 아니에요.</p>
+  <section id="s1"><h2>국민연금 기금은 얼마?</h2><div id="fund"></div></section>
+  <section id="s2"><h2>미국 주식</h2><div id="us"></div></section>
+  <section id="s3"><h2>많이 늘린 주식 · 많이 줄인 주식</h2><div id="chg"></div></section>
+  <section id="s4"><h2>국내 주식</h2><div class="note">국내주식 자료 준비 중이에요. 공공데이터포털 자료를 받는 대로 올릴게요.</div></section>
+</main>
+<script src="assets/nps.js?v=202610246100"></script>
+</body>
+</html>
