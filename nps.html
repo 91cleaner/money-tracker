@@ -4,33 +4,58 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>국민연금 주식 · 세금추적단</title>
-<meta property="og:title" content="국민연금은 어떤 주식을 살까? · 세금추적단"><meta property="og:description" content="국민연금 기금 규모와 미국 주식 보유·매매(SEC 13F 공시). 공식 자료만.">
+<meta property="og:title" content="국민연금은 어떤 주식을 살까? · 세금추적단"><meta property="og:description" content="국민연금이 모아 둔 돈과 미국 주식. 미국 정부에 낸 보유 주식 목록을 우리 돈으로 보여 줘요.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%92%B0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
 *{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#0d1117;color:#e8edf2;font-family:Pretendard,system-ui,sans-serif;font-size:15px;line-height:1.55}
-a{color:#7fe8ff;word-break:break-all}.nbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#0d1117ee;border-bottom:1px solid #222b36;font-size:13px;color:#8fa0b3}.nbar a{font-weight:700;font-size:15px;text-decoration:none}
-.w{max-width:760px;margin:0 auto;padding:16px 16px 60px}h1{font-size:27px;margin:8px 0}h2{font-size:20px;margin:0 0 10px}h3{font-size:16px;margin:16px 0 8px}
-section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:16px;margin:16px 0}
-.big{font-size:30px;font-weight:800;color:#ffb020;font-variant-numeric:tabular-nums}.sub{color:#8fa0b3;font-size:13px}.src{font-size:12px;color:#8fa0b3}.src a{color:#8fa0b3}
+a{color:#7fe8ff;overflow-wrap:anywhere}.nbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;background:#0d1117ee;border-bottom:1px solid #222b36;font-size:13px;color:#8fa0b3}.nbar a{font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap}
+.w{max-width:760px;margin:0 auto;padding:16px 16px 24px}h1{font-size:27px;margin:8px 0;line-height:1.3}h2{font-size:20px;margin:0 0 10px}h3{font-size:16px;margin:16px 0 8px}
+section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:16px;margin:16px 0;min-width:0}
+.big{font-size:30px;font-weight:800;color:#ffb020;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.sub{color:#8fa0b3;font-size:13px;line-height:1.5}.src{font-size:12px;color:#8fa0b3;line-height:1.45}.src a{color:#8fa0b3}
 .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid #222b36;align-items:baseline}.row>span{min-width:0;overflow-wrap:anywhere}.row b{white-space:nowrap;font-variant-numeric:tabular-nums}
-.bar{height:8px;border-radius:4px;background:#ffb020;margin-top:4px}.bar.g{background:#3ddc84}.bar.r{background:#ff6b6b}
-.tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid #3a4652;color:#b8c3cf;margin:2px 4px 0 0}.tag.y{border-color:#ffd60a66;color:#ffd60a}
-.note{background:#0f141b;border-radius:10px;padding:10px 12px;font-size:13px;color:#b8c3cf;margin:10px 0}
+.bar{height:8px;border-radius:4px;background:#ffb020;margin-top:4px;max-width:100%}.bar.g{background:#3ddc84}.bar.r{background:#ff6b6b}
+.tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid #3a4652;color:#b8c3cf;margin:2px 4px 0 0;line-height:1.45}.tag.y{border-color:#ffd60a66;color:#ffd60a}
+.note{background:#0f141b;border-radius:10px;padding:10px 12px;font-size:13px;color:#b8c3cf;margin:10px 0;line-height:1.5}
+.hint{display:block;margin-top:2px;color:#8fa0b3;font-size:12px;font-weight:500;line-height:1.4}
 .two{display:grid;grid-template-columns:1fr;gap:10px}@media(min-width:700px){.two{grid-template-columns:1fr 1fr}}
-.card{background:#0f141b;border-radius:12px;padding:12px}
+.card{background:#0f141b;border-radius:12px;padding:12px;min-width:0}
+.words{display:grid;grid-template-columns:1fr;gap:4px 16px;margin:12px 0 0;padding:12px;list-style:none;background:#151b23;border:1px solid #222b36;border-radius:16px}
+.words li{font-size:13px;line-height:1.45;color:#b8c3cf}.words b{color:#e8edf2;font-weight:700}
+.krnote{margin:0 0 8px;padding:8px 12px;border-radius:10px;background:#151b23;color:#b8c3cf;font-size:13px;line-height:1.45}
+@media(min-width:900px){.w{max-width:980px;padding-left:22px;padding-right:22px}.words{grid-template-columns:1fr 1fr}}
+@media(min-width:1280px){.w{max-width:1120px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.pair section{margin:16px 0}}
 </style>
 </head>
-<body>
+<body data-page="nps">
 <header class="nbar"><a href="./">‹ 세금추적단</a><span>갱신 <span id="upd"></span></span></header>
 <main class="w">
   <h1>국민연금은 어떤 주식을 살까?</h1>
-  <p class="sub">국민연금은 우리가 낸 연금 보험료를 모아 불려서 나중에 연금으로 줘요. 이 돈의 일부로 주식을 사요. 여기 숫자는 공식 공시에 나온 <b>데이터상</b> 값이고, 좋고 나쁨을 따지는 게 아니에요.</p>
-  <section id="s1"><h2>국민연금 기금은 얼마?</h2><div id="fund"></div></section>
-  <section id="s2"><h2>미국 주식</h2><div id="us"></div></section>
+  <p class="sub">국민연금은 우리가 낸 연금 보험료를 모아 불려서 나중에 연금으로 줘요. 이 돈의 일부로 주식을 사요. 여기 숫자는 사람들이 보도록 공개한 자료에 나온 값이고, 좋고 나쁨을 따지는 게 아니에요.</p>
+  <ul class="words">
+    <li><b>기금</b> 국민연금이 모아 둔 돈</li>
+    <li><b>적립금</b> 그때까지 쌓아 둔 돈</li>
+    <li><b>공시</b> 사람들이 보도록 공개한 자료</li>
+    <li><b>종목</b> 주식 하나의 이름</li>
+    <li><b>채권</b> 돈을 빌려 주고 이자를 받는 투자</li>
+    <li><b>대체투자</b> 건물이나 도로처럼 주식·채권이 아닌 투자</li>
+    <li><b>단기자금</b> 곧 쓸 수 있게 짧게 맡긴 돈</li>
+    <li><b>환율</b> 1달러를 우리 돈으로 바꾼 값</li>
+    <li><b>어림값</b> 대략 계산한 값</li>
+    <li><b>추정 거래액</b> 늘거나 줄어든 주식 수에 그때 가격을 곱한 대략의 금액</li>
+    <li><b>분할</b> 주식 1주를 여러 주로 쪼개는 일</li>
+    <li><b>역분할</b> 여러 주를 모아 1주로 합치는 일</li>
+    <li><b>분사</b> 회사에서 새 회사를 떼어 내는 일</li>
+    <li><b>보정</b> 그런 변화를 반영해 주식 수를 다시 센 것</li>
+  </ul>
+  <div class="pair">
+    <section id="s1"><h2>모아 둔 연금 돈은 얼마?</h2><div id="fund"></div></section>
+    <section id="s2"><h2>미국 주식</h2><div id="us"></div></section>
+  </div>
   <section id="s3"><h2>많이 늘린 주식 · 많이 줄인 주식</h2><div id="chg"></div></section>
-  <section id="s4"><h2>국내 주식</h2><div class="note">국내주식 자료 준비 중이에요. 공공데이터포털 자료를 받는 대로 올릴게요.</div></section>
+  <p class="krnote">국내 주식 목록은 아직 이 화면에 없어요.</p>
 </main>
-<script src="assets/nps.js?v=202610246100"></script>
+<script src="assets/nps.js?v=202610246700"></script>
+<script src="assets/nav.js?v=202610246400"></script>
 </body>
 </html>
