@@ -353,7 +353,14 @@
     window.__mpRoutes = { show: showRoutes, reset: resetRoutes };
     // 처음으로: 지금 보는 지도(한국 또는 출장 세계 지도)를 처음 모습으로
     if (window.mtHome) {
-      const hm = mtHome(map, () => { if (mode === 'world') fitRoutes(!matchMedia('(prefers-reduced-motion: reduce)').matches); else map.fitBounds(korea, { animate: !matchMedia('(prefers-reduced-motion: reduce)').matches, padding: [18, 22] }); }, 'topright');
+      // 처음으로 = 처음 들어왔을 때 모습. 의원 출장 지도였으면 한국 지도로 돌아가고, 고른 지역·의원 카드도 닫는다.
+      const hm = mtHome(map, () => {
+        window.dispatchEvent(new CustomEvent('tmhome'));
+        if (mode === 'world') resetRoutes();
+        else map.fitBounds(korea, { animate: !matchMedia('(prefers-reduced-motion: reduce)').matches, padding: [18, 22] });
+        markers.forEach((x) => x.setStyle({ weight: 1.5, color: '#fff' }));
+        lineEl.innerHTML = baseHTML;
+      }, 'topright');
       map.on('movestart zoomstart', () => hm.mark(false));
       map.on('moveend', () => setTimeout(() => { const b = mode === 'world' ? routeFit : korea; if (b) hm.mark(map.getBounds().pad(0.05).contains(b) && map.getZoom() <= map.getBoundsZoom(b) + 0.3); }, 0));
     }
