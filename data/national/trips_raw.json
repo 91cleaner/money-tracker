@@ -1,0 +1,3732 @@
+{
+ "count_raw": 121,
+ "trips": [
+  {
+   "trip_id": 0,
+   "name": "김준형",
+   "member_id": "8A05621B",
+   "party": "조국혁신당",
+   "dest": [],
+   "dest_raw": "목적지",
+   "dates": "2024.8.15.~8.17.",
+   "purpose": "일본 사도광산 유네스코 세계문화유산 등재 관련 현지 조사 및 방문",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 0,
+   "name": "이해민",
+   "member_id": null,
+   "party": null,
+   "dest": [],
+   "dest_raw": "목적지",
+   "dates": "2024.8.15.~8.17.",
+   "purpose": "일본 사도광산 유네스코 세계문화유산 등재 관련 현지 조사 및 방문",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 0,
+   "name": "정혜경",
+   "member_id": "BNV6535N",
+   "party": "진보당",
+   "dest": [],
+   "dest_raw": "목적지",
+   "dates": "2024.8.15.~8.17.",
+   "purpose": "일본 사도광산 유네스코 세계문화유산 등재 관련 현지 조사 및 방문",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 0,
+   "name": "임미애",
+   "member_id": "X639721U",
+   "party": "더불어민주당",
+   "dest": [],
+   "dest_raw": "목적지",
+   "dates": "2024.8.15.~8.17.",
+   "purpose": "일본 사도광산 유네스코 세계문화유산 등재 관련 현지 조사 및 방문",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 0,
+   "name": "이재강",
+   "member_id": "3LP22204",
+   "party": "더불어민주당",
+   "dest": [],
+   "dest_raw": "목적지",
+   "dates": "2024.8.15.~8.17.",
+   "purpose": "일본 사도광산 유네스코 세계문화유산 등재 관련 현지 조사 및 방문",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 1,
+   "name": "강승규",
+   "member_id": "42K7317Y",
+   "party": "국민의힘",
+   "dest": [
+    "라오스"
+   ],
+   "dest_raw": "라오스",
+   "dates": "2024.8.15.~8.17.",
+   "purpose": "제28회 세계한국어웅변대회 명예대회장 직 수행",
+   "funder": "(사)한국스피치웅변협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 2,
+   "name": "강민국",
+   "member_id": "GX22581L",
+   "party": "국민의힘",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.1.16.~1.23.",
+   "purpose": "미합중국 도널드 트럼프 대통령 취임식 참석 등",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 3,
+   "name": "이철규",
+   "member_id": "TZP9391O",
+   "party": "국민의힘",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025.6.29.~7.2.(의원별 상이)",
+   "purpose": "평화 오디세이 2025 참석을 위한 중국 방문",
+   "funder": "한반도평화만들기",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 3,
+   "name": "정동영",
+   "member_id": "ARP89147",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025.6.29.~7.2.(의원별 상이)",
+   "purpose": "평화 오디세이 2025 참석을 위한 중국 방문",
+   "funder": "한반도평화만들기",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 4,
+   "name": "손명수",
+   "member_id": "JSA8739I",
+   "party": "더불어민주당",
+   "dest": [
+    "벨기에"
+   ],
+   "dest_raw": "벨기에",
+   "dates": "2025. 7.14~ 7.17",
+   "purpose": "이재명 대통령 EU 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 4,
+   "name": "전현희",
+   "member_id": "25G2571T",
+   "party": "더불어민주당",
+   "dest": [
+    "벨기에"
+   ],
+   "dest_raw": "벨기에",
+   "dates": "2025. 7.14~ 7.17",
+   "purpose": "이재명 대통령 EU 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 5,
+   "name": "김병주",
+   "member_id": "GF286398",
+   "party": "더불어민주당",
+   "dest": [
+    "캐나다"
+   ],
+   "dest_raw": "캐나다",
+   "dates": "2025. 7.22. ~ 7.25.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 5,
+   "name": "맹성규",
+   "member_id": "FJK3396E",
+   "party": "더불어민주당",
+   "dest": [
+    "캐나다"
+   ],
+   "dest_raw": "캐나다",
+   "dates": "2025. 7.22. ~ 7.25.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 5,
+   "name": "김주영",
+   "member_id": "D6U6678O",
+   "party": "더불어민주당",
+   "dest": [
+    "캐나다"
+   ],
+   "dest_raw": "캐나다",
+   "dates": "2025. 7.22. ~ 7.25.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 6,
+   "name": "남인순",
+   "member_id": "04T3751T",
+   "party": "더불어민주당",
+   "dest": [
+    "말레이시아"
+   ],
+   "dest_raw": "말레이시아",
+   "dates": "2025. 7.22. ~ 7.25.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 6,
+   "name": "윤건영",
+   "member_id": "GP07421U",
+   "party": "더불어민주당",
+   "dest": [
+    "말레이시아"
+   ],
+   "dest_raw": "말레이시아",
+   "dates": "2025. 7.22. ~ 7.25.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 7,
+   "name": "박지원",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "폴란드"
+   ],
+   "dest_raw": "폴란드",
+   "dates": "2025. 7.27.~ 7.31.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 7,
+   "name": "어기구",
+   "member_id": "8FB1535Y",
+   "party": "더불어민주당",
+   "dest": [
+    "폴란드"
+   ],
+   "dest_raw": "폴란드",
+   "dates": "2025. 7.27.~ 7.31.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 7,
+   "name": "진선미",
+   "member_id": "68P7228G",
+   "party": "더불어민주당",
+   "dest": [
+    "폴란드"
+   ],
+   "dest_raw": "폴란드",
+   "dates": "2025. 7.27.~ 7.31.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 8,
+   "name": "김영호",
+   "member_id": "7BM2933Y",
+   "party": "더불어민주당",
+   "dest": [
+    "호주"
+   ],
+   "dest_raw": "호주",
+   "dates": "2025. 7.28.~ 7.31.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 9,
+   "name": "김윤",
+   "member_id": "5N65159P",
+   "party": "더불어민주당",
+   "dest": [
+    "우즈베키스탄"
+   ],
+   "dest_raw": "우즈베키스탄",
+   "dates": "2025. 8. 6.~ 8. 9.",
+   "purpose": "한국-우즈베키스탄 보건의료 협력 강화",
+   "funder": "(사)국회국제보건의료포럼",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 9,
+   "name": "이수진",
+   "member_id": "0R68099X",
+   "party": "더불어민주당",
+   "dest": [
+    "우즈베키스탄"
+   ],
+   "dest_raw": "우즈베키스탄",
+   "dates": "2025. 8. 6.~ 8. 9.",
+   "purpose": "한국-우즈베키스탄 보건의료 협력 강화",
+   "funder": "(사)국회국제보건의료포럼",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 10,
+   "name": "김원이",
+   "member_id": "4L695580",
+   "party": "더불어민주당",
+   "dest": [
+    "영국",
+    "덴마크"
+   ],
+   "dest_raw": "영국, 덴마크",
+   "dates": "2025. 8. 6.~ 8.13.",
+   "purpose": "덴마크·영국 해상풍력 관련 고위급 관계자 면담 및 산업 인프라 시찰",
+   "funder": "주한덴마크대사관, 오션에너지패스웨이",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 10,
+   "name": "김정호",
+   "member_id": "9LD2641Q",
+   "party": "더불어민주당",
+   "dest": [
+    "영국",
+    "덴마크"
+   ],
+   "dest_raw": "영국, 덴마크",
+   "dates": "2025. 8. 6.~ 8.13.",
+   "purpose": "덴마크·영국 해상풍력 관련 고위급 관계자 면담 및 산업 인프라 시찰",
+   "funder": "주한덴마크대사관, 오션에너지패스웨이",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 10,
+   "name": "박지혜",
+   "member_id": "EMH4976E",
+   "party": "더불어민주당",
+   "dest": [
+    "영국",
+    "덴마크"
+   ],
+   "dest_raw": "영국, 덴마크",
+   "dates": "2025. 8. 6.~ 8.13.",
+   "purpose": "덴마크·영국 해상풍력 관련 고위급 관계자 면담 및 산업 인프라 시찰",
+   "funder": "주한덴마크대사관, 오션에너지패스웨이",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 10,
+   "name": "박상웅",
+   "member_id": "VA04150X",
+   "party": "국민의힘",
+   "dest": [
+    "영국",
+    "덴마크"
+   ],
+   "dest_raw": "영국, 덴마크",
+   "dates": "2025. 8. 6.~ 8.13.",
+   "purpose": "덴마크·영국 해상풍력 관련 고위급 관계자 면담 및 산업 인프라 시찰",
+   "funder": "주한덴마크대사관, 오션에너지패스웨이",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 10,
+   "name": "서일준",
+   "member_id": "MR210505",
+   "party": "국민의힘",
+   "dest": [
+    "영국",
+    "덴마크"
+   ],
+   "dest_raw": "영국, 덴마크",
+   "dates": "2025. 8. 6.~ 8.13.",
+   "purpose": "덴마크·영국 해상풍력 관련 고위급 관계자 면담 및 산업 인프라 시찰",
+   "funder": "주한덴마크대사관, 오션에너지패스웨이",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 11,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본\r\n",
+   "dates": "2025.2.7.~2.9.",
+   "purpose": "피폭 80주년 기념 핵무기 철폐를 위한 국제 시민 사회 포럼\r\n",
+   "funder": "Japan Campain to Aboilsh Nclear Weapons",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 12,
+   "name": "김건",
+   "member_id": "TQP7167T",
+   "party": "국민의힘",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.2.19.~2.26.(의원별 입출국일 상이)",
+   "purpose": "Trans-Pacific Dialouge 2025 초청",
+   "funder": "(재) 최종현학술원",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 12,
+   "name": "최형두",
+   "member_id": "A0P4646G",
+   "party": "국민의힘",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.2.19.~2.26.(의원별 입출국일 상이)",
+   "purpose": "Trans-Pacific Dialouge 2025 초청",
+   "funder": "(재) 최종현학술원",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 12,
+   "name": "위성락",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.2.19.~2.26.(의원별 입출국일 상이)",
+   "purpose": "Trans-Pacific Dialouge 2025 초청",
+   "funder": "(재) 최종현학술원",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 12,
+   "name": "이언주",
+   "member_id": "JG77046J",
+   "party": "더불어민주당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.2.19.~2.26.(의원별 입출국일 상이)",
+   "purpose": "Trans-Pacific Dialouge 2025 초청",
+   "funder": "(재) 최종현학술원",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 13,
+   "name": "김소희",
+   "member_id": "1SR94244",
+   "party": "국민의힘",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본\r\n",
+   "dates": "2025.2.24.~2.26.",
+   "purpose": "기후환경 개선을 통한 해외 지역혁신 우수사례 현장 방문\r\n",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 14,
+   "name": "이준석",
+   "member_id": "QWL7778X",
+   "party": "개혁신당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025.2.26.~2.27.",
+   "purpose": "상해 임시정부 청사와 매헌 윤봉길 의사 기념관을 찾아 그분들의 넋을 기리고 의미있는 메시지를 전달하고자 함.",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 15,
+   "name": "백혜련",
+   "member_id": "HSS7466Y",
+   "party": "더불어민주당",
+   "dest": [
+    "베트남"
+   ],
+   "dest_raw": "베트남",
+   "dates": "2025. 7.28.~ 7.30.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 15,
+   "name": "윤후덕",
+   "member_id": "O7R5461J",
+   "party": "더불어민주당",
+   "dest": [
+    "베트남"
+   ],
+   "dest_raw": "베트남",
+   "dates": "2025. 7.28.~ 7.30.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 16,
+   "name": "박선원",
+   "member_id": "VZA76236",
+   "party": "더불어민주당",
+   "dest": [
+    "영국"
+   ],
+   "dest_raw": "영국",
+   "dates": "2025. 7.16.~ 7.19.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 16,
+   "name": "최민희",
+   "member_id": "YS38221N",
+   "party": "더불어민주당",
+   "dest": [
+    "영국"
+   ],
+   "dest_raw": "영국",
+   "dates": "2025. 7.16.~ 7.19.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 16,
+   "name": "추미애",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "영국"
+   ],
+   "dest_raw": "영국",
+   "dates": "2025. 7.16.~ 7.19.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 17,
+   "name": "김건",
+   "member_id": "TQP7167T",
+   "party": "국민의힘",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025. 7.28.~ 7.30.",
+   "purpose": "제25차 한중고위지도자포럼 참석을 위한 중국 방문",
+   "funder": "(사)21세기한중교류협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 17,
+   "name": "홍기원",
+   "member_id": "5MD4184K",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025. 7.28.~ 7.30.",
+   "purpose": "제25차 한중고위지도자포럼 참석을 위한 중국 방문",
+   "funder": "(사)21세기한중교류협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 18,
+   "name": "김준형",
+   "member_id": "8A05621B",
+   "party": "조국혁신당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025. 8. 7.~ 8.10.",
+   "purpose": "원폭 80주기 계기 나가사키 추념식 참석 및 일본 의원 면담",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 19,
+   "name": "김용태",
+   "member_id": "EPI69383",
+   "party": "국민의힘",
+   "dest": [
+    "인도"
+   ],
+   "dest_raw": "인도",
+   "dates": "2025. 8.17.~ 8.20.",
+   "purpose": "인도의 재생에너지 사례 현장 시찰 등을 통한 정책협력 방안 모색",
+   "funder": "(사)기후솔루션",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 19,
+   "name": "모경종",
+   "member_id": "J1G57517",
+   "party": "더불어민주당",
+   "dest": [
+    "인도"
+   ],
+   "dest_raw": "인도",
+   "dates": "2025. 8.17.~ 8.20.",
+   "purpose": "인도의 재생에너지 사례 현장 시찰 등을 통한 정책협력 방안 모색",
+   "funder": "(사)기후솔루션",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 20,
+   "name": "조은희",
+   "member_id": "MQU41854",
+   "party": "국민의힘",
+   "dest": [
+    "몽골"
+   ],
+   "dest_raw": "몽골",
+   "dates": "2025. 8.19.~ 8.21.",
+   "purpose": "한국과 몽골 양국의 경제 발전 및 민간차원의 국제교류 플랫폼 구축을 위한  ‘제4차 한-몽골 미래전략 포럼’ 참석",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 21,
+   "name": "김용태",
+   "member_id": "EPI69383",
+   "party": "국민의힘",
+   "dest": [
+    "호주"
+   ],
+   "dest_raw": "호주",
+   "dates": "2025. 8.30~ 9. 6.(의원별 상이)",
+   "purpose": "2025 한-호 정치차세대 지도자 교류",
+   "funder": "호주정치교류위원회,\r\n한국국제교류재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 21,
+   "name": "박지혜",
+   "member_id": "EMH4976E",
+   "party": "더불어민주당",
+   "dest": [
+    "호주"
+   ],
+   "dest_raw": "호주",
+   "dates": "2025. 8.30~ 9. 6.(의원별 상이)",
+   "purpose": "2025 한-호 정치차세대 지도자 교류",
+   "funder": "호주정치교류위원회,\r\n한국국제교류재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 21,
+   "name": "차지호",
+   "member_id": "RC885085",
+   "party": "더불어민주당",
+   "dest": [
+    "호주"
+   ],
+   "dest_raw": "호주",
+   "dates": "2025. 8.30~ 9. 6.(의원별 상이)",
+   "purpose": "2025 한-호 정치차세대 지도자 교류",
+   "funder": "호주정치교류위원회,\r\n한국국제교류재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 22,
+   "name": "박범계",
+   "member_id": "7R156073",
+   "party": "더불어민주당",
+   "dest": [
+    "이집트"
+   ],
+   "dest_raw": "이집트",
+   "dates": "2025. 9.28.~10. 3.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 23,
+   "name": "한준호",
+   "member_id": "BCQ55105",
+   "party": "더불어민주당",
+   "dest": [
+    "볼리비아"
+   ],
+   "dest_raw": "볼리비아",
+   "dates": "2025.11.6.~11.14.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 24,
+   "name": "이재강",
+   "member_id": "3LP22204",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025.11.11.~11.14.(의원별 상이)",
+   "purpose": "「동아시아 4자 포럼」참석",
+   "funder": "Union of Concerned Scientists",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 24,
+   "name": "이해민",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025.11.11.~11.14.(의원별 상이)",
+   "purpose": "「동아시아 4자 포럼」참석",
+   "funder": "Union of Concerned Scientists",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 25,
+   "name": "김준형",
+   "member_id": "8A05621B",
+   "party": "조국혁신당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025.11.11.~11.14.",
+   "purpose": "「동아시아 4자 포럼」 참석",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 26,
+   "name": "차지호",
+   "member_id": "RC885085",
+   "party": "더불어민주당",
+   "dest": [
+    "스위스",
+    "브라질",
+    "독일"
+   ],
+   "dest_raw": "스위스, 브라질, 독일",
+   "dates": "2025.11.13.~11.23.",
+   "purpose": "제30차 유엔기후변화 당사국 총회 참석 및 베를린자유대 포럼 참석",
+   "funder": "자비(스위스, 브라질), 베를린자유대 한국학연구소(독일)",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 27,
+   "name": "맹성규",
+   "member_id": "FJK3396E",
+   "party": "더불어민주당",
+   "dest": [
+    "태국"
+   ],
+   "dest_raw": "태국",
+   "dates": "2025.11.16.~11.19.(의원별 상이)",
+   "purpose": "한-태 경제협력포럼(2025) 참석",
+   "funder": "헤럴드미디어그룹",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 27,
+   "name": "이학영",
+   "member_id": "K5F2023J",
+   "party": "더불어민주당",
+   "dest": [
+    "태국"
+   ],
+   "dest_raw": "태국",
+   "dates": "2025.11.16.~11.19.(의원별 상이)",
+   "purpose": "한-태 경제협력포럼(2025) 참석",
+   "funder": "헤럴드미디어그룹",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 28,
+   "name": "김재원",
+   "member_id": "DMP1439I",
+   "party": "조국혁신당",
+   "dest": [
+    "인도"
+   ],
+   "dest_raw": "인도",
+   "dates": "2025.11.18.~11.27.",
+   "purpose": "인도 정보방송부 주요인사 면담 및 제56회 인도국제영화제 참석",
+   "funder": "인도 정보방송부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 29,
+   "name": "김남희",
+   "member_id": "NXB3178C",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.1.14.~1.16.(의원별 상이)",
+   "purpose": "해상풍력 산업의 친환경산업단지 시찰",
+   "funder": "기후위기탈탄소경제포럼, 자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 29,
+   "name": "김정호",
+   "member_id": "9LD2641Q",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.1.14.~1.16.(의원별 상이)",
+   "purpose": "해상풍력 산업의 친환경산업단지 시찰",
+   "funder": "기후위기탈탄소경제포럼, 자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 29,
+   "name": "박지혜",
+   "member_id": "EMH4976E",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.1.14.~1.16.(의원별 상이)",
+   "purpose": "해상풍력 산업의 친환경산업단지 시찰",
+   "funder": "기후위기탈탄소경제포럼, 자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 29,
+   "name": "이용선",
+   "member_id": "9JF4562W",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.1.14.~1.16.(의원별 상이)",
+   "purpose": "해상풍력 산업의 친환경산업단지 시찰",
+   "funder": "기후위기탈탄소경제포럼, 자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 29,
+   "name": "임미애",
+   "member_id": "X639721U",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.1.14.~1.16.(의원별 상이)",
+   "purpose": "해상풍력 산업의 친환경산업단지 시찰",
+   "funder": "기후위기탈탄소경제포럼, 자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 29,
+   "name": "서왕진",
+   "member_id": "80C5885Z",
+   "party": "조국혁신당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.1.14.~1.16.(의원별 상이)",
+   "purpose": "해상풍력 산업의 친환경산업단지 시찰",
+   "funder": "기후위기탈탄소경제포럼, 자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 30,
+   "name": "김준형",
+   "member_id": "8A05621B",
+   "party": "조국혁신당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.2.5.~2.8.",
+   "purpose": "한-중 협력방안 모색",
+   "funder": "사단법인 외교광장",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 30,
+   "name": "이해민",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.2.5.~2.8.",
+   "purpose": "한-중 협력방안 모색",
+   "funder": "사단법인 외교광장",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 31,
+   "name": "김건",
+   "member_id": "TQP7167T",
+   "party": "국민의힘",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2026.2.15.~2.24.(의원별 상이)",
+   "purpose": "최종현학술원 주관 컨퍼런스 참석",
+   "funder": "재단법인 최종현학술원(민간 비영리단체)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 31,
+   "name": "박지혜",
+   "member_id": "EMH4976E",
+   "party": "더불어민주당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2026.2.15.~2.24.(의원별 상이)",
+   "purpose": "최종현학술원 주관 컨퍼런스 참석",
+   "funder": "재단법인 최종현학술원(민간 비영리단체)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 31,
+   "name": "차지호",
+   "member_id": "RC885085",
+   "party": "더불어민주당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2026.2.15.~2.24.(의원별 상이)",
+   "purpose": "최종현학술원 주관 컨퍼런스 참석",
+   "funder": "재단법인 최종현학술원(민간 비영리단체)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 31,
+   "name": "최형두",
+   "member_id": "A0P4646G",
+   "party": "국민의힘",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2026.2.15.~2.24.(의원별 상이)",
+   "purpose": "최종현학술원 주관 컨퍼런스 참석",
+   "funder": "재단법인 최종현학술원(민간 비영리단체)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 32,
+   "name": "이용선",
+   "member_id": "9JF4562W",
+   "party": "더불어민주당",
+   "dest": [
+    "캄보디아(프놈펜)"
+   ],
+   "dest_raw": "캄보디아(프놈펜)",
+   "dates": "2026.3.18.~3.20.",
+   "purpose": "왕립프놈펜대학교 한국어 교원양성과정 수료식 참석",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 33,
+   "name": "복기왕",
+   "member_id": "GJ56729D",
+   "party": "더불어민주당",
+   "dest": [
+    "칠레"
+   ],
+   "dest_raw": "칠레",
+   "dates": "2026.3.4.~3.12.",
+   "purpose": "신재생 에너지 발전 사업현황 조사를 위한 방문",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 34,
+   "name": "차지호",
+   "member_id": "RC885085",
+   "party": "더불어민주당",
+   "dest": [
+    "미국(뉴욕)",
+    "스위스(제네바)"
+   ],
+   "dest_raw": "미국(뉴욕), 스위스(제네바)",
+   "dates": "2026.3.15.~3.19.",
+   "purpose": "국무총리 순방 동행(국제기구 방문)",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 35,
+   "name": "김정재",
+   "member_id": "E1J8836Y",
+   "party": "국민의힘",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2026. 6. 10.  ~ 6. 14.(의원별 상이)",
+   "purpose": "미국 내 주요IP 허브 방문",
+   "funder": "국가지식재산위원회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 35,
+   "name": "박범계",
+   "member_id": "7R156073",
+   "party": "더불어민주당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2026. 6. 10.  ~ 6. 14.(의원별 상이)",
+   "purpose": "미국 내 주요IP 허브 방문",
+   "funder": "국가지식재산위원회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 36,
+   "name": "천하람",
+   "member_id": "YGB8604T",
+   "party": "개혁신당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2024.7.20.~8.11.",
+   "purpose": "미 국무부 국제방문자리더십프로그램(IVLP) 참석",
+   "funder": "미국무부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 37,
+   "name": "김준형",
+   "member_id": "8A05621B",
+   "party": "조국혁신당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2024.7.28.~7.31.",
+   "purpose": "국제회의 PRESERVING THE LONG EAST ASIN PEACE 참석",
+   "funder": "토다연구소, 중국사회과학원",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 38,
+   "name": "김대식",
+   "member_id": "ANS8383S",
+   "party": "국민의힘",
+   "dest": [
+    "몽골"
+   ],
+   "dest_raw": "몽골\r\n",
+   "dates": "2024.8.26.~8.29.",
+   "purpose": "2024 한-몽 미래전략포럼 참석\r\n",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 39,
+   "name": "김준형",
+   "member_id": "8A05621B",
+   "party": "조국혁신당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2024.8.26.~8.28.",
+   "purpose": "국제회의 China and the Asia-Pacific Region in a Transitioning International Order 참석",
+   "funder": "프리드리히에버트재단",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 40,
+   "name": "김교흥",
+   "member_id": "X1K3667J",
+   "party": "더불어민주당",
+   "dest": [
+    "헝가리",
+    "오스크리아"
+   ],
+   "dest_raw": "헝가리, 오스크리아",
+   "dates": "2024.10.26.~11.2.",
+   "purpose": "제28차 세계한인경제인대회 참석/\r\n헝가리 한인 경제인 간담회 및 시찰",
+   "funder": "세계한인무역협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 40,
+   "name": "나경원",
+   "member_id": "SLW27496",
+   "party": "국민의힘",
+   "dest": [
+    "헝가리",
+    "오스크리아"
+   ],
+   "dest_raw": "헝가리, 오스크리아",
+   "dates": "2024.10.26.~11.2.",
+   "purpose": "제28차 세계한인경제인대회 참석/\r\n헝가리 한인 경제인 간담회 및 시찰",
+   "funder": "세계한인무역협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 40,
+   "name": "어기구",
+   "member_id": "8FB1535Y",
+   "party": "더불어민주당",
+   "dest": [
+    "헝가리",
+    "오스크리아"
+   ],
+   "dest_raw": "헝가리, 오스크리아",
+   "dates": "2024.10.26.~11.2.",
+   "purpose": "제28차 세계한인경제인대회 참석/\r\n헝가리 한인 경제인 간담회 및 시찰",
+   "funder": "세계한인무역협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 41,
+   "name": "김용태",
+   "member_id": "EPI69383",
+   "party": "국민의힘",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본\r\n",
+   "dates": "2025.2.14.~2.16.",
+   "purpose": "일본 도지샤대학교 윤동주선생 명예박사 학위 수여식 참석 등\r\n",
+   "funder": "자비\r\n",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 42,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "영국",
+    "스위스"
+   ],
+   "dest_raw": "영국, 스위스",
+   "dates": "2025.2.23~3.1.",
+   "purpose": "국제보건에서 한국의 리더십 확대를 위한 영국과 제네바 국제보건 기구 방문\r\n",
+   "funder": "Open Philanthropy",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 42,
+   "name": "조정식",
+   "member_id": "IN328264",
+   "party": "무소속",
+   "dest": [
+    "영국",
+    "스위스"
+   ],
+   "dest_raw": "영국, 스위스",
+   "dates": "2025.2.23~3.1.",
+   "purpose": "국제보건에서 한국의 리더십 확대를 위한 영국과 제네바 국제보건 기구 방문\r\n",
+   "funder": "Open Philanthropy",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 42,
+   "name": "김태호",
+   "member_id": "P0F1530P",
+   "party": "국민의힘",
+   "dest": [
+    "영국",
+    "스위스"
+   ],
+   "dest_raw": "영국, 스위스",
+   "dates": "2025.2.23~3.1.",
+   "purpose": "국제보건에서 한국의 리더십 확대를 위한 영국과 제네바 국제보건 기구 방문\r\n",
+   "funder": "Open Philanthropy",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 42,
+   "name": "안철수",
+   "member_id": "YOG1280B",
+   "party": "국민의힘",
+   "dest": [
+    "영국",
+    "스위스"
+   ],
+   "dest_raw": "영국, 스위스",
+   "dates": "2025.2.23~3.1.",
+   "purpose": "국제보건에서 한국의 리더십 확대를 위한 영국과 제네바 국제보건 기구 방문\r\n",
+   "funder": "Open Philanthropy",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 43,
+   "name": "진종오",
+   "member_id": "QDU1100U",
+   "party": "국민의힘",
+   "dest": [
+    "베트남"
+   ],
+   "dest_raw": "베트남\r\n",
+   "dates": "2025.2.23.~2.26.",
+   "purpose": "베트남 문화체육관광부장관 면담 및 현지조사",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 44,
+   "name": "전종덕",
+   "member_id": "P8A4624C",
+   "party": "진보당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025. 5.27.~ 5.28.",
+   "purpose": "양곡정책 방향과 TRQ쌀 문제 해결방안 모색",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 45,
+   "name": "천준호",
+   "member_id": "A494529E",
+   "party": "더불어민주당",
+   "dest": [
+    "프랑스"
+   ],
+   "dest_raw": "프랑스",
+   "dates": "2025. 7.15.~ 7.18.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 45,
+   "name": "한병도",
+   "member_id": "H5476989",
+   "party": "더불어민주당",
+   "dest": [
+    "프랑스"
+   ],
+   "dest_raw": "프랑스",
+   "dates": "2025. 7.15.~ 7.18.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 46,
+   "name": "박홍배",
+   "member_id": "ZW43496R",
+   "party": "더불어민주당",
+   "dest": [
+    "홍콩"
+   ],
+   "dest_raw": "홍콩",
+   "dates": "2025. 9. 8.~ 9.10.",
+   "purpose": "CLSA 세계 투자자 포럼 참석",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 47,
+   "name": "이강일",
+   "member_id": "AEO5706C",
+   "party": "더불어민주당",
+   "dest": [
+    "홍콩"
+   ],
+   "dest_raw": "홍콩",
+   "dates": "2025. 9. 8.~ 9.11.",
+   "purpose": "CLSA 세계 투자자 포럼 참석",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 48,
+   "name": "이재강",
+   "member_id": "3LP22204",
+   "party": "더불어민주당",
+   "dest": [
+    "필리핀"
+   ],
+   "dest_raw": "필리핀",
+   "dates": "2025.11.19.~11.22.",
+   "purpose": "민주평통자문회의 동남아 북부협의회 참석",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 49,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025.11.20.~11.22.",
+   "purpose": "한일 관계 개선을 위한 공공외교 강화 및 협력방안 모색",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 50,
+   "name": "천하람",
+   "member_id": "YGB8604T",
+   "party": "개혁신당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.12.6.~12.15.",
+   "purpose": "안미생·안원생 지사 등 독립유공자 국내 봉환 추진을 위한 방문",
+   "funder": "새크라멘토한인회",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 51,
+   "name": "김용태",
+   "member_id": "EPI69383",
+   "party": "국민의힘",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2026.1.10.~1.15.",
+   "purpose": "독일 재단(콘라드 아데나워) 주최 포럼 참석",
+   "funder": "콘라드 아데나워",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 52,
+   "name": "이재강",
+   "member_id": "3LP22204",
+   "party": "더불어민주당",
+   "dest": [
+    "베트남"
+   ],
+   "dest_raw": "베트남",
+   "dates": "2026.1.14.~1.16",
+   "purpose": "아시아태평양 민주평화포럼 참석",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 53,
+   "name": "권향엽",
+   "member_id": "EFU76868",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026.1.24.~1.26.",
+   "purpose": "성평등민주주의 진전을 위한 강연 및 한일 여성의원 교류",
+   "funder": "더불어민주당 전국여성위원회, Academy for gender parity",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 53,
+   "name": "이수진",
+   "member_id": "0R68099X",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026.1.24.~1.26.",
+   "purpose": "성평등민주주의 진전을 위한 강연 및 한일 여성의원 교류",
+   "funder": "더불어민주당 전국여성위원회, Academy for gender parity",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 54,
+   "name": "이준영",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "대만"
+   ],
+   "dest_raw": "대만",
+   "dates": "2026.3.15.~3.18.",
+   "purpose": "대만 YUSHAN FORUM 참석",
+   "funder": "대만정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 54,
+   "name": "이준석",
+   "member_id": "QWL7778X",
+   "party": "개혁신당",
+   "dest": [
+    "대만"
+   ],
+   "dest_raw": "대만",
+   "dates": "2026.3.15.~3.18.",
+   "purpose": "대만 YUSHAN FORUM 참석",
+   "funder": "대만정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 54,
+   "name": "천아람",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "대만"
+   ],
+   "dest_raw": "대만",
+   "dates": "2026.3.15.~3.18.",
+   "purpose": "대만 YUSHAN FORUM 참석",
+   "funder": "대만정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 55,
+   "name": "모경종",
+   "member_id": "J1G57517",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.4.1.~4.3.",
+   "purpose": "한·중 청년단체 및 청년경제 분야 교류",
+   "funder": "중국정부·자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 56,
+   "name": "김준형",
+   "member_id": "8A05621B",
+   "party": "조국혁신당",
+   "dest": [
+    "일본(오키나와)"
+   ],
+   "dest_raw": "일본(오키나와)",
+   "dates": "2026. 4. 23. ~ 4. 26.",
+   "purpose": "국제 심포지움 참석",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 57,
+   "name": "김재원",
+   "member_id": "DMP1439I",
+   "party": "조국혁신당",
+   "dest": [
+    "대만"
+   ],
+   "dest_raw": "대만",
+   "dates": "2026. 6. 7. ~ 6. 10.",
+   "purpose": "해외공무출장",
+   "funder": "대만 정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 57,
+   "name": "곽상언",
+   "member_id": "FIE6569O",
+   "party": "더불어민주당",
+   "dest": [
+    "대만"
+   ],
+   "dest_raw": "대만",
+   "dates": "2026. 6. 7. ~ 6. 10.",
+   "purpose": "해외공무출장",
+   "funder": "대만 정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 57,
+   "name": "박수영",
+   "member_id": "FU87526G",
+   "party": "국민의힘",
+   "dest": [
+    "대만"
+   ],
+   "dest_raw": "대만",
+   "dates": "2026. 6. 7. ~ 6. 10.",
+   "purpose": "해외공무출장",
+   "funder": "대만 정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 58,
+   "name": "김용민",
+   "member_id": "OFE45081",
+   "party": "더불어민주당",
+   "dest": [],
+   "dest_raw": null,
+   "dates": "2026. 6. 6. ~ 6. 12.",
+   "purpose": "- 독일 검찰청 및 경찰청을 방문하여 형사사법제도 운영 현황과 수사절차를 조사하고, 양국의 제도 운영 경험을 비교·검토\r\n- 독일 연방의회의 입법 및 의정 활동 운영 현황을 파악하고, 의회 제도와 주요 정책 현안에 대한 의견을 교환",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 58,
+   "name": "박성준",
+   "member_id": "IL74008M",
+   "party": "더불어민주당",
+   "dest": [],
+   "dest_raw": null,
+   "dates": "2026. 6. 6. ~ 6. 12.",
+   "purpose": "- 독일 검찰청 및 경찰청을 방문하여 형사사법제도 운영 현황과 수사절차를 조사하고, 양국의 제도 운영 경험을 비교·검토\r\n- 독일 연방의회의 입법 및 의정 활동 운영 현황을 파악하고, 의회 제도와 주요 정책 현안에 대한 의견을 교환",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 58,
+   "name": "박은정",
+   "member_id": "1A82234K",
+   "party": "조국혁신당",
+   "dest": [],
+   "dest_raw": null,
+   "dates": "2026. 6. 6. ~ 6. 12.",
+   "purpose": "- 독일 검찰청 및 경찰청을 방문하여 형사사법제도 운영 현황과 수사절차를 조사하고, 양국의 제도 운영 경험을 비교·검토\r\n- 독일 연방의회의 입법 및 의정 활동 운영 현황을 파악하고, 의회 제도와 주요 정책 현안에 대한 의견을 교환",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 59,
+   "name": "김영배",
+   "member_id": "B7D7534L",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 29.~ 7. 31.(의원별 상이)",
+   "purpose": "제34차 한일포럼 참석",
+   "funder": "한국국제교류재단, 일본국제교류센터",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 59,
+   "name": "강경숙",
+   "member_id": "T2T8225E",
+   "party": "조국혁신당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 29.~ 7. 31.(의원별 상이)",
+   "purpose": "제34차 한일포럼 참석",
+   "funder": "한국국제교류재단, 일본국제교류센터",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 59,
+   "name": "주호영",
+   "member_id": "8SV6917G",
+   "party": "국민의힘",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 29.~ 7. 31.(의원별 상이)",
+   "purpose": "제34차 한일포럼 참석",
+   "funder": "한국국제교류재단, 일본국제교류센터",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 60,
+   "name": "문진석",
+   "member_id": "4U29186R",
+   "party": "더불어민주당",
+   "dest": [
+    "베트남"
+   ],
+   "dest_raw": "베트남",
+   "dates": "2026. 6. 29.~ 7. 2.",
+   "purpose": "제7차 한베미래포럼 참석",
+   "funder": "한국국제교류재단(외교부 산하 공공기관), VASS(베트남사회과학원), 주)베트남대한민국대사관 ",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 61,
+   "name": "김주영",
+   "member_id": "D6U6678O",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 8. 31. ~ 9. 1.",
+   "purpose": "관동대지진 조선인·중국인 학살 100주년 희생자 추모대회 참석",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 61,
+   "name": "윤건영",
+   "member_id": "GP07421U",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 8. 31. ~ 9. 1.",
+   "purpose": "관동대지진 조선인·중국인 학살 100주년 희생자 추모대회 참석",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 61,
+   "name": "윤후덕",
+   "member_id": "O7R5461J",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 8. 31. ~ 9. 1.",
+   "purpose": "관동대지진 조선인·중국인 학살 100주년 희생자 추모대회 참석",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 61,
+   "name": "이용선",
+   "member_id": "9JF4562W",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 8. 31. ~ 9. 1.",
+   "purpose": "관동대지진 조선인·중국인 학살 100주년 희생자 추모대회 참석",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 61,
+   "name": "이학영",
+   "member_id": "K5F2023J",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 8. 31. ~ 9. 1.",
+   "purpose": "관동대지진 조선인·중국인 학살 100주년 희생자 추모대회 참석",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 61,
+   "name": "정혜경",
+   "member_id": "BNV6535N",
+   "party": "진보당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 8. 31. ~ 9. 1.",
+   "purpose": "관동대지진 조선인·중국인 학살 100주년 희생자 추모대회 참석",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 62,
+   "name": "김영배",
+   "member_id": "B7D7534L",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026.9.7.~9.9.(의원별 상이)",
+   "purpose": "동북아 정세 변화에 대한 한일 간 의견 교환 및 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 62,
+   "name": "부승찬",
+   "member_id": "6I88973D",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026.9.7.~9.9.(의원별 상이)",
+   "purpose": "동북아 정세 변화에 대한 한일 간 의견 교환 및 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 62,
+   "name": "배현진",
+   "member_id": "4X525582",
+   "party": "국민의힘",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026.9.7.~9.9.(의원별 상이)",
+   "purpose": "동북아 정세 변화에 대한 한일 간 의견 교환 및 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 63,
+   "name": "김남희",
+   "member_id": "NXB3178C",
+   "party": "더불어민주당",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르",
+   "dates": "2026. 9. 11.~ 9. 15.(의원별 상이)",
+   "purpose": "싱가포르 여성 발전 국가전략 및 여성 가족정책 추진체계 연구",
+   "funder": "정당(더불어민주당), 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 63,
+   "name": "백승아",
+   "member_id": "MDC3257K",
+   "party": "더불어민주당",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르",
+   "dates": "2026. 9. 11.~ 9. 15.(의원별 상이)",
+   "purpose": "싱가포르 여성 발전 국가전략 및 여성 가족정책 추진체계 연구",
+   "funder": "정당(더불어민주당), 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 63,
+   "name": "백혜련",
+   "member_id": "HSS7466Y",
+   "party": "더불어민주당",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르",
+   "dates": "2026. 9. 11.~ 9. 15.(의원별 상이)",
+   "purpose": "싱가포르 여성 발전 국가전략 및 여성 가족정책 추진체계 연구",
+   "funder": "정당(더불어민주당), 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 63,
+   "name": "이수진",
+   "member_id": "0R68099X",
+   "party": "더불어민주당",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르",
+   "dates": "2026. 9. 11.~ 9. 15.(의원별 상이)",
+   "purpose": "싱가포르 여성 발전 국가전략 및 여성 가족정책 추진체계 연구",
+   "funder": "정당(더불어민주당), 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 63,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르",
+   "dates": "2026. 9. 11.~ 9. 15.(의원별 상이)",
+   "purpose": "싱가포르 여성 발전 국가전략 및 여성 가족정책 추진체계 연구",
+   "funder": "정당(더불어민주당), 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 63,
+   "name": "이주희",
+   "member_id": "RBM5454A",
+   "party": "더불어민주당",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르",
+   "dates": "2026. 9. 11.~ 9. 15.(의원별 상이)",
+   "purpose": "싱가포르 여성 발전 국가전략 및 여성 가족정책 추진체계 연구",
+   "funder": "정당(더불어민주당), 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 63,
+   "name": "임오경",
+   "member_id": "4T026790",
+   "party": "더불어민주당",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르",
+   "dates": "2026. 9. 11.~ 9. 15.(의원별 상이)",
+   "purpose": "싱가포르 여성 발전 국가전략 및 여성 가족정책 추진체계 연구",
+   "funder": "정당(더불어민주당), 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 64,
+   "name": "이재강",
+   "member_id": "3LP22204",
+   "party": "더불어민주당",
+   "dest": [
+    "영국"
+   ],
+   "dest_raw": "영국",
+   "dates": "2026. 9. 29.~ 10. 4.",
+   "purpose": "한영고위급포럼 참석",
+   "funder": "한국국제교류재단, Wilton Park",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 65,
+   "name": "강승규",
+   "member_id": "42K7317Y",
+   "party": "국민의힘",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 10. 8.~ 10. 10.",
+   "purpose": "제30차 월드옥타 세계한인경제인 참석",
+   "funder": "세계한인무역협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 66,
+   "name": "이학영",
+   "member_id": "K5F2023J",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 10. 10.~ 10. 15.",
+   "purpose": "2026 우호교류를 위한 의원 포럼 참석",
+   "funder": "중국인민대외우호협회(CPAFFC)",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 67,
+   "name": "김용태",
+   "member_id": "EPI69383",
+   "party": "국민의힘",
+   "dest": [
+    "영국"
+   ],
+   "dest_raw": "영국",
+   "dates": "2024.8.19.~8.23.",
+   "purpose": "영국 CEN 및 기후변화위원회(CCC) 등 방문 및 협력관계 모색",
+   "funder": "(사)우리들의 미래",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 68,
+   "name": "안철수",
+   "member_id": "YOG1280B",
+   "party": "국민의힘",
+   "dest": [
+    "캐나다"
+   ],
+   "dest_raw": "캐나다\r\n",
+   "dates": "2024.9.13.~9.18.",
+   "purpose": "고도제한완화 관련 국제민간항공기구(IACO) 방문\r\n",
+   "funder": "자비\r\n",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 69,
+   "name": "위성락",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2024.11.4.~11.6.",
+   "purpose": "Grandview Institution 전문가 간담회 참석으로 미중관계 한중관계 등 국제정세, \r\n외교안보 등 다양한 분야의 전문가 네크워크 구축과 관련 정책 논의",
+   "funder": "Grandview Institution",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 70,
+   "name": "강승규",
+   "member_id": "42K7317Y",
+   "party": "국민의힘",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025.7.6.~7.12.(의원별 상이)",
+   "purpose": "에너지 전환에 관한 독일연방정부 고위급 교류 프로그램 참석",
+   "funder": "독일연방정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 70,
+   "name": "김소희",
+   "member_id": "1SR94244",
+   "party": "국민의힘",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025.7.6.~7.12.(의원별 상이)",
+   "purpose": "에너지 전환에 관한 독일연방정부 고위급 교류 프로그램 참석",
+   "funder": "독일연방정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 70,
+   "name": "김원이",
+   "member_id": "4L695580",
+   "party": "더불어민주당",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025.7.6.~7.12.(의원별 상이)",
+   "purpose": "에너지 전환에 관한 독일연방정부 고위급 교류 프로그램 참석",
+   "funder": "독일연방정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 70,
+   "name": "김태선",
+   "member_id": "6WK3815W",
+   "party": "더불어민주당",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025.7.6.~7.12.(의원별 상이)",
+   "purpose": "에너지 전환에 관한 독일연방정부 고위급 교류 프로그램 참석",
+   "funder": "독일연방정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 70,
+   "name": "박지혜",
+   "member_id": "EMH4976E",
+   "party": "더불어민주당",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025.7.6.~7.12.(의원별 상이)",
+   "purpose": "에너지 전환에 관한 독일연방정부 고위급 교류 프로그램 참석",
+   "funder": "독일연방정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 70,
+   "name": "서왕진",
+   "member_id": "80C5885Z",
+   "party": "조국혁신당",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025.7.6.~7.12.(의원별 상이)",
+   "purpose": "에너지 전환에 관한 독일연방정부 고위급 교류 프로그램 참석",
+   "funder": "독일연방정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 70,
+   "name": "안호영",
+   "member_id": "XEF29171",
+   "party": "더불어민주당",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025.7.6.~7.12.(의원별 상이)",
+   "purpose": "에너지 전환에 관한 독일연방정부 고위급 교류 프로그램 참석",
+   "funder": "독일연방정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 70,
+   "name": "이철규",
+   "member_id": "TZP9391O",
+   "party": "국민의힘",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025.7.6.~7.12.(의원별 상이)",
+   "purpose": "에너지 전환에 관한 독일연방정부 고위급 교류 프로그램 참석",
+   "funder": "독일연방정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 71,
+   "name": "강승규",
+   "member_id": "42K7317Y",
+   "party": "국민의힘",
+   "dest": [
+    "헝가리",
+    "튀르키예(의원별 상이)"
+   ],
+   "dest_raw": "헝가리, 튀르키예(의원별 상이)",
+   "dates": "2025. 6.17.~ 6.24.(의원별 상이)",
+   "purpose": "2025 유럽·유라시아 지역 한인경제인대회 참석",
+   "funder": "(사) 세계한인무역협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 71,
+   "name": "김원이",
+   "member_id": "4L695580",
+   "party": "더불어민주당",
+   "dest": [
+    "헝가리",
+    "튀르키예(의원별 상이)"
+   ],
+   "dest_raw": "헝가리, 튀르키예(의원별 상이)",
+   "dates": "2025. 6.17.~ 6.24.(의원별 상이)",
+   "purpose": "2025 유럽·유라시아 지역 한인경제인대회 참석",
+   "funder": "(사) 세계한인무역협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 71,
+   "name": "박성민",
+   "member_id": "X3170462",
+   "party": "국민의힘",
+   "dest": [
+    "헝가리",
+    "튀르키예(의원별 상이)"
+   ],
+   "dest_raw": "헝가리, 튀르키예(의원별 상이)",
+   "dates": "2025. 6.17.~ 6.24.(의원별 상이)",
+   "purpose": "2025 유럽·유라시아 지역 한인경제인대회 참석",
+   "funder": "(사) 세계한인무역협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 71,
+   "name": "정동만",
+   "member_id": "DAY6557K",
+   "party": "국민의힘",
+   "dest": [
+    "헝가리",
+    "튀르키예(의원별 상이)"
+   ],
+   "dest_raw": "헝가리, 튀르키예(의원별 상이)",
+   "dates": "2025. 6.17.~ 6.24.(의원별 상이)",
+   "purpose": "2025 유럽·유라시아 지역 한인경제인대회 참석",
+   "funder": "(사) 세계한인무역협회",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 72,
+   "name": "권칠승",
+   "member_id": "C7E79345",
+   "party": "더불어민주당",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025. 7.30.~ 8. 2.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 72,
+   "name": "김영배",
+   "member_id": "B7D7534L",
+   "party": "더불어민주당",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2025. 7.30.~ 8. 2.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 73,
+   "name": "서영교",
+   "member_id": "TKJ4800F",
+   "party": "더불어민주당",
+   "dest": [
+    "인도네시아"
+   ],
+   "dest_raw": "인도네시아",
+   "dates": "2025. 8.11.~ 8.14.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 73,
+   "name": "이재강",
+   "member_id": "3LP22204",
+   "party": "더불어민주당",
+   "dest": [
+    "인도네시아"
+   ],
+   "dest_raw": "인도네시아",
+   "dates": "2025. 8.11.~ 8.14.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 73,
+   "name": "조정식",
+   "member_id": "IN328264",
+   "party": "무소속",
+   "dest": [
+    "인도네시아"
+   ],
+   "dest_raw": "인도네시아",
+   "dates": "2025. 8.11.~ 8.14.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 74,
+   "name": "김태년",
+   "member_id": "1WE5693J",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025. 8.24~ 8.27.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 74,
+   "name": "박정",
+   "member_id": "4019850M",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025. 8.24~ 8.27.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 75,
+   "name": "유용원",
+   "member_id": "KBK8836C",
+   "party": "국민의힘",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025. 8.31.~ 9. 6.",
+   "purpose": "의원 외교 활동",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 76,
+   "name": "조정식",
+   "member_id": "IN328264",
+   "party": "무소속",
+   "dest": [
+    "몽골"
+   ],
+   "dest_raw": "몽골",
+   "dates": "2025. 9. 3.~ 9. 6.",
+   "purpose": "대암 이태준 선생의 독립정신과 인도주의적 업적을 기리고 한-몽 양국 간의 우호 증진",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 77,
+   "name": "차지호",
+   "member_id": "RC885085",
+   "party": "더불어민주당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025. 9.19.~ 9.25.",
+   "purpose": "대통령 해외순방 수행",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 78,
+   "name": "박지혜",
+   "member_id": "EMH4976E",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026.1.18.~1.21.",
+   "purpose": "중국의 에너지 기술 및 산업동향 파악",
+   "funder": "국회미래연구원",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 79,
+   "name": "김재원",
+   "member_id": "DMP1439I",
+   "party": "조국혁신당",
+   "dest": [
+    "인도"
+   ],
+   "dest_raw": "인도",
+   "dates": "2026.3.5.~3.12.",
+   "purpose": "한-인도 협력사업 후속 협의 및 문화외교 강화를 위한 인도 방문",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 80,
+   "name": "박선원",
+   "member_id": "VZA76236",
+   "party": "더불어민주당",
+   "dest": [
+    "호주(캔버라",
+    "시드니)"
+   ],
+   "dest_raw": "호주(캔버라, 시드니)",
+   "dates": "2026.3.7.~3.12.",
+   "purpose": "캔버라 펠로우십 프로그램(Canberra Fellowships Program) 참석",
+   "funder": "호주정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 80,
+   "name": "부승찬",
+   "member_id": "6I88973D",
+   "party": "더불어민주당",
+   "dest": [
+    "호주(캔버라",
+    "시드니)"
+   ],
+   "dest_raw": "호주(캔버라, 시드니)",
+   "dates": "2026.3.7.~3.12.",
+   "purpose": "캔버라 펠로우십 프로그램(Canberra Fellowships Program) 참석",
+   "funder": "호주정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 80,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "호주(캔버라",
+    "시드니)"
+   ],
+   "dest_raw": "호주(캔버라, 시드니)",
+   "dates": "2026.3.7.~3.12.",
+   "purpose": "캔버라 펠로우십 프로그램(Canberra Fellowships Program) 참석",
+   "funder": "호주정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 80,
+   "name": "홍기원",
+   "member_id": "5MD4184K",
+   "party": "더불어민주당",
+   "dest": [
+    "호주(캔버라",
+    "시드니)"
+   ],
+   "dest_raw": "호주(캔버라, 시드니)",
+   "dates": "2026.3.7.~3.12.",
+   "purpose": "캔버라 펠로우십 프로그램(Canberra Fellowships Program) 참석",
+   "funder": "호주정부",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 81,
+   "name": "김윤",
+   "member_id": "5N65159P",
+   "party": "더불어민주당",
+   "dest": [
+    "중국 감숙성 란저우시"
+   ],
+   "dest_raw": "중국 감숙성 란저우시",
+   "dates": "2026. 4. 20. ~ 4. 22.",
+   "purpose": "감숙성 란저우시 인민정부 한·중 교류 증진",
+   "funder": "중국 감숙성 란저우시",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 81,
+   "name": "박정",
+   "member_id": "4019850M",
+   "party": "더불어민주당",
+   "dest": [
+    "중국 감숙성 란저우시"
+   ],
+   "dest_raw": "중국 감숙성 란저우시",
+   "dates": "2026. 4. 20. ~ 4. 22.",
+   "purpose": "감숙성 란저우시 인민정부 한·중 교류 증진",
+   "funder": "중국 감숙성 란저우시",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 81,
+   "name": "소병훈",
+   "member_id": "ZDR63255",
+   "party": "더불어민주당",
+   "dest": [
+    "중국 감숙성 란저우시"
+   ],
+   "dest_raw": "중국 감숙성 란저우시",
+   "dates": "2026. 4. 20. ~ 4. 22.",
+   "purpose": "감숙성 란저우시 인민정부 한·중 교류 증진",
+   "funder": "중국 감숙성 란저우시",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 82,
+   "name": "백선희",
+   "member_id": "YN160848",
+   "party": "조국혁신당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 6. 11.  ~ 6. 13.",
+   "purpose": "NKNGO 포럼 기조발제 및 와세다대학교 특별강연",
+   "funder": "NKNGO Forum(민간법인단체)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 83,
+   "name": "김종민",
+   "member_id": "M2Q9024I",
+   "party": "무소속",
+   "dest": [
+    "아랍에미리트"
+   ],
+   "dest_raw": "아랍에미리트",
+   "dates": "2026. 6. 14. ~ 6. 18.",
+   "purpose": "한국-UAE 산업협력, 아부다비 산업단지 방문, 한국기업 진출정책 협의 등",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 84,
+   "name": "김윤",
+   "member_id": "5N65159P",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 6. 16. ~ 6. 19.",
+   "purpose": "AI시대에 맞춰 로봇, 자율주행 사업 등 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 84,
+   "name": "박민규",
+   "member_id": "M4O5221T",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 6. 16. ~ 6. 19.",
+   "purpose": "AI시대에 맞춰 로봇, 자율주행 사업 등 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 84,
+   "name": "안태준",
+   "member_id": "W8L9421K",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 6. 16. ~ 6. 19.",
+   "purpose": "AI시대에 맞춰 로봇, 자율주행 사업 등 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 84,
+   "name": "이연희",
+   "member_id": "EBH1101V",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 6. 16. ~ 6. 19.",
+   "purpose": "AI시대에 맞춰 로봇, 자율주행 사업 등 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 84,
+   "name": "전진숙",
+   "member_id": "QUR40502",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 6. 16. ~ 6. 19.",
+   "purpose": "AI시대에 맞춰 로봇, 자율주행 사업 등 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 85,
+   "name": "염태영",
+   "member_id": "URX8075K",
+   "party": "더불어민주당",
+   "dest": [
+    "영국"
+   ],
+   "dest_raw": "영국",
+   "dates": "2026. 6. 21. ~ 6. 25.",
+   "purpose": "국내 탈석탄을 위한 해외 선진사례(영국) 현장 시찰",
+   "funder": "기후변화포럼(민간 비영리법인)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 85,
+   "name": "한정애",
+   "member_id": "XPP2564T",
+   "party": "더불어민주당",
+   "dest": [
+    "영국"
+   ],
+   "dest_raw": "영국",
+   "dates": "2026. 6. 21. ~ 6. 25.",
+   "purpose": "국내 탈석탄을 위한 해외 선진사례(영국) 현장 시찰",
+   "funder": "기후변화포럼(민간 비영리법인)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 86,
+   "name": "문진석",
+   "member_id": "4U29186R",
+   "party": "더불어민주당",
+   "dest": [
+    "베트남"
+   ],
+   "dest_raw": "베트남",
+   "dates": "2026. 6. 25. ~ 6. 29.",
+   "purpose": "K-TREND VINA EXPO 2026 산업박람회 행사 참석",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 87,
+   "name": "이준석",
+   "member_id": "QWL7778X",
+   "party": "개혁신당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2026. 6. 24. ~ 6. 28.",
+   "purpose": "미 하원의원, 주미대사 등 미국 주요 인사 면담",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 88,
+   "name": "김소희",
+   "member_id": "1SR94244",
+   "party": "국민의힘",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 7. 5. ~ 7. 8.",
+   "purpose": "동북아 정세 변화에 대한 한중 간 의견 교환 및 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 88,
+   "name": "김태호",
+   "member_id": "P0F1530P",
+   "party": "국민의힘",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 7. 5. ~ 7. 8.",
+   "purpose": "동북아 정세 변화에 대한 한중 간 의견 교환 및 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 88,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 7. 5. ~ 7. 8.",
+   "purpose": "동북아 정세 변화에 대한 한중 간 의견 교환 및 양국 관계 발전을 위한 공공외교 활동",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 89,
+   "name": "김영배",
+   "member_id": "B7D7534L",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 5. ~ 7. 7.",
+   "purpose": "지역의사 근무병원 시찰과 일본 의회 면담",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 89,
+   "name": "남인순",
+   "member_id": "04T3751T",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 5. ~ 7. 7.",
+   "purpose": "지역의사 근무병원 시찰과 일본 의회 면담",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 89,
+   "name": "서미화",
+   "member_id": "51A45980",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 5. ~ 7. 7.",
+   "purpose": "지역의사 근무병원 시찰과 일본 의회 면담",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 89,
+   "name": "이수진",
+   "member_id": "0R68099X",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 5. ~ 7. 7.",
+   "purpose": "지역의사 근무병원 시찰과 일본 의회 면담",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 89,
+   "name": "임미애",
+   "member_id": "X639721U",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 5. ~ 7. 7.",
+   "purpose": "지역의사 근무병원 시찰과 일본 의회 면담",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 89,
+   "name": "백선희",
+   "member_id": "YN160848",
+   "party": "조국혁신당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 5. ~ 7. 7.",
+   "purpose": "지역의사 근무병원 시찰과 일본 의회 면담",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 89,
+   "name": "전종덕",
+   "member_id": "P8A4624C",
+   "party": "진보당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 5. ~ 7. 7.",
+   "purpose": "지역의사 근무병원 시찰과 일본 의회 면담",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 90,
+   "name": "김대식",
+   "member_id": "ANS8383S",
+   "party": "국민의힘",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2024.9.12.~9.13.",
+   "purpose": "일본 리츠메이칸아시아 태평양대학교 APU 방문",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 91,
+   "name": "권영진",
+   "member_id": "LYY5513O",
+   "party": "국민의힘",
+   "dest": [
+    "우즈베키스탄"
+   ],
+   "dest_raw": "우즈베키스탄\r\n",
+   "dates": "2024.9.18.~9.22.",
+   "purpose": "AKITA-한국IT연합대학교 개교 기념식 참석\r\n",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 92,
+   "name": "정점식",
+   "member_id": "LJK4960Z",
+   "party": "국민의힘",
+   "dest": [
+    "체코"
+   ],
+   "dest_raw": "체코",
+   "dates": "2024.9.19.~9.22.",
+   "purpose": "대통령 해외순방 수행",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 92,
+   "name": "서일준",
+   "member_id": "MR210505",
+   "party": "국민의힘",
+   "dest": [
+    "체코"
+   ],
+   "dest_raw": "체코",
+   "dates": "2024.9.19.~9.22.",
+   "purpose": "대통령 해외순방 수행",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 93,
+   "name": "김용태",
+   "member_id": "EPI69383",
+   "party": "국민의힘",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르\r\n",
+   "dates": "2024.10.22.~10.24.",
+   "purpose": "PPCA Regional Dialogue 참석",
+   "funder": "탈석탄연맹",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 94,
+   "name": "이준석",
+   "member_id": "QWL7778X",
+   "party": "개혁신당",
+   "dest": [
+    "베트남"
+   ],
+   "dest_raw": "베트남\r\n",
+   "dates": "2024.11.3~11.4/6.",
+   "purpose": "한국청년의정 의원(국회 및 지방의회)대표단과 베트남 청년의원 간의 친선교류를 통한 한-베 의회외교 우호관계 증진을 도모\r\n",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 94,
+   "name": "장경태",
+   "member_id": "RPN2293B",
+   "party": "무소속",
+   "dest": [
+    "베트남"
+   ],
+   "dest_raw": "베트남\r\n",
+   "dates": "2024.11.3~11.4/6.",
+   "purpose": "한국청년의정 의원(국회 및 지방의회)대표단과 베트남 청년의원 간의 친선교류를 통한 한-베 의회외교 우호관계 증진을 도모\r\n",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 95,
+   "name": "김건",
+   "member_id": "TQP7167T",
+   "party": "국민의힘",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025.6.30.~7.3.(의원별 상이)",
+   "purpose": "2025 EAF 한중고위급협력대화 참석을 위한 중국 방문",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 95,
+   "name": "김태호",
+   "member_id": "P0F1530P",
+   "party": "국민의힘",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025.6.30.~7.3.(의원별 상이)",
+   "purpose": "2025 EAF 한중고위급협력대화 참석을 위한 중국 방문",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 95,
+   "name": "부승찬",
+   "member_id": "6I88973D",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025.6.30.~7.3.(의원별 상이)",
+   "purpose": "2025 EAF 한중고위급협력대화 참석을 위한 중국 방문",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 95,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025.6.30.~7.3.(의원별 상이)",
+   "purpose": "2025 EAF 한중고위급협력대화 참석을 위한 중국 방문",
+   "funder": "동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 96,
+   "name": "최기상",
+   "member_id": "I5I2468R",
+   "party": "더불어민주당",
+   "dest": [
+    "오스트리아"
+   ],
+   "dest_raw": "오스트리아",
+   "dates": "2025.7.7.~7.9.",
+   "purpose": "대법원장·헌법재판소장 등 헌법기관장 및 대법관·헌법재판관 임명절차 개선을 위한 해외 제도 연구",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 97,
+   "name": "이개호",
+   "member_id": "I7R13867",
+   "party": "더불어민주당",
+   "dest": [
+    "인도"
+   ],
+   "dest_raw": "인도",
+   "dates": "2025. 7.16.~ 7.19.",
+   "purpose": "대통령 특사 파견",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 98,
+   "name": "김건",
+   "member_id": "TQP7167T",
+   "party": "국민의힘",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025. 9. 5.~ 9. 7.",
+   "purpose": "북경대학교 토론회 참석",
+   "funder": "북경대학교 한반도연구센터",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 99,
+   "name": "이병진",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025. 8.14.~ 8.17.",
+   "purpose": "한·중 상호 협력강화 및 우호적 관계발전을 위한 주요 의제교환 등",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 99,
+   "name": "이재강",
+   "member_id": "3LP22204",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025. 8.14.~ 8.17.",
+   "purpose": "한·중 상호 협력강화 및 우호적 관계발전을 위한 주요 의제교환 등",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 99,
+   "name": "추미애",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2025. 8.14.~ 8.17.",
+   "purpose": "한·중 상호 협력강화 및 우호적 관계발전을 위한 주요 의제교환 등",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 100,
+   "name": "김상욱",
+   "member_id": null,
+   "party": null,
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025. 8.24.~ 8.26.(의원별 상이)",
+   "purpose": "2025 EAF(East Asia Foundation) 한일고위급전략대화 참석",
+   "funder": "(재)동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 100,
+   "name": "김영배",
+   "member_id": "B7D7534L",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025. 8.24.~ 8.26.(의원별 상이)",
+   "purpose": "2025 EAF(East Asia Foundation) 한일고위급전략대화 참석",
+   "funder": "(재)동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 100,
+   "name": "이성권",
+   "member_id": "WXJ8352N",
+   "party": "국민의힘",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025. 8.24.~ 8.26.(의원별 상이)",
+   "purpose": "2025 EAF(East Asia Foundation) 한일고위급전략대화 참석",
+   "funder": "(재)동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 100,
+   "name": "최형두",
+   "member_id": "A0P4646G",
+   "party": "국민의힘",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2025. 8.24.~ 8.26.(의원별 상이)",
+   "purpose": "2025 EAF(East Asia Foundation) 한일고위급전략대화 참석",
+   "funder": "(재)동아시아재단",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 101,
+   "name": "김태호",
+   "member_id": "P0F1530P",
+   "party": "국민의힘",
+   "dest": [
+    "우간다"
+   ],
+   "dest_raw": "우간다",
+   "dates": "2025. 9.18.~ 9.24.",
+   "purpose": "한국 글로벌보건 리더십 확대를 위한 아프리카 방문",
+   "funder": "Malaria No More",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 101,
+   "name": "박홍배",
+   "member_id": "ZW43496R",
+   "party": "더불어민주당",
+   "dest": [
+    "우간다"
+   ],
+   "dest_raw": "우간다",
+   "dates": "2025. 9.18.~ 9.24.",
+   "purpose": "한국 글로벌보건 리더십 확대를 위한 아프리카 방문",
+   "funder": "Malaria No More",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 101,
+   "name": "백혜련",
+   "member_id": "HSS7466Y",
+   "party": "더불어민주당",
+   "dest": [
+    "우간다"
+   ],
+   "dest_raw": "우간다",
+   "dates": "2025. 9.18.~ 9.24.",
+   "purpose": "한국 글로벌보건 리더십 확대를 위한 아프리카 방문",
+   "funder": "Malaria No More",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 101,
+   "name": "이강일",
+   "member_id": "AEO5706C",
+   "party": "더불어민주당",
+   "dest": [
+    "우간다"
+   ],
+   "dest_raw": "우간다",
+   "dates": "2025. 9.18.~ 9.24.",
+   "purpose": "한국 글로벌보건 리더십 확대를 위한 아프리카 방문",
+   "funder": "Malaria No More",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 101,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "우간다"
+   ],
+   "dest_raw": "우간다",
+   "dates": "2025. 9.18.~ 9.24.",
+   "purpose": "한국 글로벌보건 리더십 확대를 위한 아프리카 방문",
+   "funder": "Malaria No More",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 101,
+   "name": "조정식",
+   "member_id": "IN328264",
+   "party": "무소속",
+   "dest": [
+    "우간다"
+   ],
+   "dest_raw": "우간다",
+   "dates": "2025. 9.18.~ 9.24.",
+   "purpose": "한국 글로벌보건 리더십 확대를 위한 아프리카 방문",
+   "funder": "Malaria No More",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 102,
+   "name": "김용민",
+   "member_id": "OFE45081",
+   "party": "더불어민주당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.10.7.~10.12.",
+   "purpose": "스탠퍼드대 방문 및 주요 학계·산업계 인사 면담을 위한 미국 방문",
+   "funder": "Hillwood, SFR(Stock Farm Road)",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 102,
+   "name": "김준혁",
+   "member_id": "YM42715P",
+   "party": "더불어민주당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.10.7.~10.12.",
+   "purpose": "스탠퍼드대 방문 및 주요 학계·산업계 인사 면담을 위한 미국 방문",
+   "funder": "Hillwood, SFR(Stock Farm Road)",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 102,
+   "name": "이언주",
+   "member_id": "JG77046J",
+   "party": "더불어민주당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.10.7.~10.12.",
+   "purpose": "스탠퍼드대 방문 및 주요 학계·산업계 인사 면담을 위한 미국 방문",
+   "funder": "Hillwood, SFR(Stock Farm Road)",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 102,
+   "name": "전용기",
+   "member_id": "TJW93720",
+   "party": "더불어민주당",
+   "dest": [
+    "미국"
+   ],
+   "dest_raw": "미국",
+   "dates": "2025.10.7.~10.12.",
+   "purpose": "스탠퍼드대 방문 및 주요 학계·산업계 인사 면담을 위한 미국 방문",
+   "funder": "Hillwood, SFR(Stock Farm Road)",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 103,
+   "name": "모경종",
+   "member_id": "J1G57517",
+   "party": "더불어민주당",
+   "dest": [
+    "영국"
+   ],
+   "dest_raw": "영국",
+   "dates": "2025.11.18.~11.26.",
+   "purpose": "전국청년위원회 해외 정당교류",
+   "funder": "더불어민주당",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 104,
+   "name": "김종민",
+   "member_id": "M2Q9024I",
+   "party": "무소속",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르",
+   "dates": "2025.11.26.~11.28.",
+   "purpose": "벤처투자정책 협의 등을 위한 방문",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 105,
+   "name": "이수진",
+   "member_id": "0R68099X",
+   "party": "더불어민주당",
+   "dest": [
+    "호주"
+   ],
+   "dest_raw": "호주",
+   "dates": "2025.12.15.~12.20.",
+   "purpose": "아시아-태평양 지역 보건안보 협력 강화",
+   "funder": "국회국제보건의료포럼",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 105,
+   "name": "김미애",
+   "member_id": "3BC6890E",
+   "party": "국민의힘",
+   "dest": [
+    "호주"
+   ],
+   "dest_raw": "호주",
+   "dates": "2025.12.15.~12.20.",
+   "purpose": "아시아-태평양 지역 보건안보 협력 강화",
+   "funder": "국회국제보건의료포럼",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 106,
+   "name": "모경종",
+   "member_id": "J1G57517",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026.2.1.~2.3.",
+   "purpose": "아시아-태평양 청년 리더십 프로그램 참가 및 청년리더 간 정책 논의",
+   "funder": "일본국제교류센터",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 107,
+   "name": "박상혁",
+   "member_id": "HXT76735",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026.4.3.~4.4.",
+   "purpose": "일본 의원 및 주요 단체와의 교류",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 107,
+   "name": "백혜련",
+   "member_id": "HSS7466Y",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026.4.3.~4.4.",
+   "purpose": "일본 의원 및 주요 단체와의 교류",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 107,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026.4.3.~4.4.",
+   "purpose": "일본 의원 및 주요 단체와의 교류",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 108,
+   "name": "안도걸",
+   "member_id": "EB16073M",
+   "party": "더불어민주당",
+   "dest": [
+    "우즈베키스탄"
+   ],
+   "dest_raw": "우즈베키스탄",
+   "dates": "2026. 4. 22. ~ 4. 25.",
+   "purpose": "한-중앙아시아 정상회담 문화행사 협의 및 국제교류 협력강화 중동전쟁 관련 산업핵심 물자(암모니아, 요소 등) 확보 방안 협의 등",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 109,
+   "name": "김윤",
+   "member_id": "5N65159P",
+   "party": "더불어민주당",
+   "dest": [
+    "일본 도쿄"
+   ],
+   "dest_raw": "일본 도쿄",
+   "dates": "2026. 5. 21. ~ 5. 22.",
+   "purpose": "일본 도쿄 지역의료 헤외시찰",
+   "funder": "자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 110,
+   "name": "모경종",
+   "member_id": "J1G57517",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 6. 14.  ~ 6. 17.",
+   "purpose": "한·중 청년단체 및 청년경제 분야 교류",
+   "funder": "중국 정부 / 자비",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 111,
+   "name": "김남희",
+   "member_id": "NXB3178C",
+   "party": "더불어민주당",
+   "dest": [
+    "멕시코"
+   ],
+   "dest_raw": "멕시코",
+   "dates": "2026. 6. 16. ~ 6. 21.",
+   "purpose": "북중미 월드컵 계기 대통령 특사 활동",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 111,
+   "name": "이재정",
+   "member_id": "UQ282145",
+   "party": "더불어민주당",
+   "dest": [
+    "멕시코"
+   ],
+   "dest_raw": "멕시코",
+   "dates": "2026. 6. 16. ~ 6. 21.",
+   "purpose": "북중미 월드컵 계기 대통령 특사 활동",
+   "funder": "외교부",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 112,
+   "name": "이학영",
+   "member_id": "K5F2023J",
+   "party": "더불어민주당",
+   "dest": [
+    "벨기에"
+   ],
+   "dest_raw": "벨기에",
+   "dates": "2026. 6. 28. ~ 7. 4.",
+   "purpose": "프리드리히 에버트재단 초청 ？EU South Korea Policy Dialogue 2026？ 참석",
+   "funder": "프리드리히 에버트재단(FES) (해외비영리단체)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 112,
+   "name": "정태호",
+   "member_id": "UHB5553T",
+   "party": "더불어민주당",
+   "dest": [
+    "벨기에"
+   ],
+   "dest_raw": "벨기에",
+   "dates": "2026. 6. 28. ~ 7. 4.",
+   "purpose": "프리드리히 에버트재단 초청 ？EU South Korea Policy Dialogue 2026？ 참석",
+   "funder": "프리드리히 에버트재단(FES) (해외비영리단체)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 112,
+   "name": "서왕진",
+   "member_id": "80C5885Z",
+   "party": "조국혁신당",
+   "dest": [
+    "벨기에"
+   ],
+   "dest_raw": "벨기에",
+   "dates": "2026. 6. 28. ~ 7. 4.",
+   "purpose": "프리드리히 에버트재단 초청 ？EU South Korea Policy Dialogue 2026？ 참석",
+   "funder": "프리드리히 에버트재단(FES) (해외비영리단체)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 113,
+   "name": "김재원",
+   "member_id": "DMP1439I",
+   "party": "조국혁신당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 5. ~ 7. 7.",
+   "purpose": "한·일 양국 간 만화·웹툰 산업 교류",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 113,
+   "name": "서영석",
+   "member_id": "XR24352K",
+   "party": "더불어민주당",
+   "dest": [
+    "일본"
+   ],
+   "dest_raw": "일본",
+   "dates": "2026. 7. 5. ~ 7. 7.",
+   "purpose": "한·일 양국 간 만화·웹툰 산업 교류",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 114,
+   "name": "송재봉",
+   "member_id": "RG972910",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 7. 17.~ 7. 20.",
+   "purpose": "AI 산업의 글로벌 동향과 해당 분야 선도 대학 및 기업들의 인재 양성과 사업 추진 방향 모색",
+   "funder": "국회미래연구원, 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 114,
+   "name": "오기형",
+   "member_id": "OIA3741M",
+   "party": "더불어민주당",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 7. 17.~ 7. 20.",
+   "purpose": "AI 산업의 글로벌 동향과 해당 분야 선도 대학 및 기업들의 인재 양성과 사업 추진 방향 모색",
+   "funder": "국회미래연구원, 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 114,
+   "name": "박수민",
+   "member_id": "Y0X4618N",
+   "party": "국민의힘",
+   "dest": [
+    "중국"
+   ],
+   "dest_raw": "중국",
+   "dates": "2026. 7. 17.~ 7. 20.",
+   "purpose": "AI 산업의 글로벌 동향과 해당 분야 선도 대학 및 기업들의 인재 양성과 사업 추진 방향 모색",
+   "funder": "국회미래연구원, 자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 115,
+   "name": "강준현",
+   "member_id": "5KV96424",
+   "party": "더불어민주당",
+   "dest": [
+    "캄보디아"
+   ],
+   "dest_raw": "캄보디아",
+   "dates": "2026. 7. 18.~ 7. 22.",
+   "purpose": "캄코시티 현안해결을 위한 (캄)국토부 장관 등 고위급 업무협의",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 115,
+   "name": "복기왕",
+   "member_id": "GJ56729D",
+   "party": "더불어민주당",
+   "dest": [
+    "캄보디아"
+   ],
+   "dest_raw": "캄보디아",
+   "dates": "2026. 7. 18.~ 7. 22.",
+   "purpose": "캄코시티 현안해결을 위한 (캄)국토부 장관 등 고위급 업무협의",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 116,
+   "name": "강승규",
+   "member_id": "42K7317Y",
+   "party": "국민의힘",
+   "dest": [
+    "싱가포르"
+   ],
+   "dest_raw": "싱가포르",
+   "dates": "2026. 8. 12. ~ 8. 16.",
+   "purpose": "동서남아 지역경제인대회 in 싱가포르 대회 참석",
+   "funder": "세계한인경제무역협회(World-OKTA)",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 117,
+   "name": "홍기원",
+   "member_id": "5MD4184K",
+   "party": "더불어민주당",
+   "dest": [
+    "캄보디아"
+   ],
+   "dest_raw": "캄보디아",
+   "dates": "2026. 8. 27. ~ 8. 30.",
+   "purpose": "재캄보디아한인회 창립 30주년 기념행사 참석",
+   "funder": "캄보디아한인회, 자부담",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 118,
+   "name": "김용민",
+   "member_id": "OFE45081",
+   "party": "더불어민주당",
+   "dest": [
+    "이탈리아(바티칸)"
+   ],
+   "dest_raw": "이탈리아(바티칸)",
+   "dates": "2026. 8. 22. ~ 8. 27.",
+   "purpose": "교황청 성직자부 장관인 유흥식 추기경 예방",
+   "funder": "자부담",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 119,
+   "name": "김영배",
+   "member_id": "B7D7534L",
+   "party": "더불어민주당",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2026.9.2.~9.6.(의원별 상이)",
+   "purpose": "제24차 한독포럼 참석",
+   "funder": "한국국제교류재단(KF), 독일 한독포럼",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 119,
+   "name": "김희정",
+   "member_id": "HRG9655C",
+   "party": "국민의힘",
+   "dest": [
+    "독일"
+   ],
+   "dest_raw": "독일",
+   "dates": "2026.9.2.~9.6.(의원별 상이)",
+   "purpose": "제24차 한독포럼 참석",
+   "funder": "한국국제교류재단(KF), 독일 한독포럼",
+   "report": "유",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  },
+  {
+   "trip_id": 120,
+   "name": "모경종",
+   "member_id": "J1G57517",
+   "party": "더불어민주당",
+   "dest": [
+    "독일(베를린)"
+   ],
+   "dest_raw": "독일(베를린)",
+   "dates": "2026. 9. 15.~ 9. 23.",
+   "purpose": "전국청년위원회 해외 정당교류",
+   "funder": "정당(더불어민주당)",
+   "report": "무",
+   "src": "https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr"
+  }
+ ]
+}

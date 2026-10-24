@@ -1,10 +1,12 @@
 {
- "updated": "2026-10-24 10:40",
+ "updated": "2026-10-24 10:43",
  "assembly_key": true,
  "log": [
-  "nwvrqwxyaytdsfvhu: 299/299건"
+  "nwvrqwxyaytdsfvhu: 299/299건",
+  "nasnutdbapnfphwyr: 121/121건"
  ],
  "files": [
+  "trips_raw",
   "members",
   "parties",
   "flows",
@@ -13,7 +15,6 @@
   "projects"
  ],
  "missing": [
-  "의원별 해외출장(국외활동 신고): 열린국회정보 인증키(ASSEMBLY_KEY) 필요",
   "정당·의원 정치자금 회계보고(후원금 모금액·지출처): 선관위 정치자금 공개시스템은 Open API 없음 — 파일 내려받기/정보공개청구 필요",
   "의원별 실제 수령액·의원실 집행액: 공개되지 않음(지급기준만 공개)",
   "국회 특수활동비·업무추진비 집행내역: 정보공개청구 결과 필요",
