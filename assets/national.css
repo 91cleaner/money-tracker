@@ -46,7 +46,7 @@ html,body,.nw,#topmap,#mcards,.tm-map,.tm-line,.maplg{overflow-anchor:none}
 .mcard b{display:block;font-size:18px;line-height:1.3}
 .mcard p{margin:4px 0 0;font-size:15px;line-height:1.45}
 .allmap{min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #ffb020;background:transparent;color:#ffb020;font:700 14px Pretendard,system-ui,sans-serif;cursor:pointer}
-.qsug{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.qsug{display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:320px;overflow:auto}
 .qsug:empty{display:none}
 .qsug button{text-align:left;min-height:44px;padding:8px 12px;border-radius:10px;border:1px solid #2a3541;background:#0f141b;color:#e8edf2;font:600 15px/1.4 Pretendard,system-ui,sans-serif;cursor:pointer}
 .qsug button:hover,.qsug button:focus{border-color:#ffb020}
