@@ -131,16 +131,12 @@
     const coarse = matchMedia('(pointer: coarse)').matches;
     const map = L.map(box, {
       zoomControl: false, attributionControl: true, minZoom: 5, maxZoom: 12, zoomSnap: 0.25,
-      scrollWheelZoom: false, dragging: !coarse, tap: true,
+      scrollWheelZoom: false, dragging: true, tap: false,
       maxBounds: [[30.5, 121], [41, 134]],
     });
     map.attributionControl.setPrefix(false);
-    if (!coarse) L.control.zoom({ position: 'topleft' }).addTo(map);
-    else {
-      map.touchZoom.disable();
-      map.doubleClickZoom.disable();
-      box.style.touchAction = 'pan-y';
-    }
+    if (window.mtZoom) mtZoom(map, box); // 확대·축소는 우리 동네 세금 지도와 똑같이
+    else if (!coarse) L.control.zoom({ position: 'bottomleft' }).addTo(map);
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, © OpenStreetMap 기여자',
     }).addTo(map);
@@ -163,11 +159,17 @@
       for (let t = 0; t <= 1.0001; t += 1 / 24) { const u = 1 - t; pts.push([u * u * a[0] + 2 * u * t * c[0] + t * t * b[0], u * u * a[1] + 2 * u * t * c[1] + t * t * b[1]]); }
       return pts;
     };
+    const FX = origin && window.mtFX ? mtFX(map, box) : null; // 돈이 흐르는 방향으로 움직이는 빛
+    const glow = [];
     ordered.forEach((it, i) => {
       const w = origin ? (window.mtW ? mtW(it.value, max) : 1.5 + 7 * Math.sqrt(it.value / max)) : 0;
-      if (origin) L.polyline(bend([origin.lat, origin.lng], [it.lat, it.lng]), { color: OUT, weight: w, opacity: 0.8, lineCap: 'round', interactive: false }).addTo(layer);
+      if (origin) {
+        const pts = bend([origin.lat, origin.lng], [it.lat, it.lng]);
+        L.polyline(pts, { color: OUT, weight: w, opacity: 0.8, lineCap: 'round', interactive: false }).addTo(layer);
+        glow.push({ pts, w, col: OUT, n: window.mtFxN ? mtFxN(it.value, max) : 2, d: i * 0.08 });
+      }
       const m = L.circleMarker([it.lat, it.lng], origin ? {
-        radius: 3 + w / 2.5, weight: 1.5, color: '#fff', fillColor: OUT, fillOpacity: 0.95,
+        radius: 3 + w / 2.5, weight: 1.5, color: '#fff', fillColor: OUT, fillOpacity: 0.95, className: 'mt-rcv',
       } : {
         radius: 4 + 16 * Math.sqrt(it.value / max),
         weight: 1.5, color: '#fff', fillColor: '#0a84ff', fillOpacity: 0.72,
@@ -196,6 +198,7 @@
         { t: 'w', c: OUT, l: '선이 굵을수록 돈이 많아요' },
       ]);
       box.setAttribute('aria-label', '한국 지도. ' + origin.legend + '에서 지역으로 선을 그었어요. 굵을수록 돈이 많아요.');
+      if (FX) FX.set(glow);
     }
     map.on('click', () => {
       markers.forEach((x) => x.setStyle({ weight: 1.5, color: '#fff' }));
@@ -315,6 +318,7 @@
       routeFit = paths.length ? L.latLngBounds([se, ...legs.map((g) => [g.lat, g.lng])]) : L.latLngBounds([[-55, -170], [72, 180]]);
       fitRoutes(!matchMedia('(prefers-reduced-motion: reduce)').matches);
       fly(paths);
+      if (FX) FX.set(paths.map((pts, i) => ({ pts, w: 4, col: '#ffb020', n: 3, d: i * 0.1 })));
       requestAnimationFrame(() => window.dispatchEvent(new Event('mproutes')));
     };
     const resetRoutes = () => {
@@ -325,6 +329,7 @@
       routeLayer.clearLayers();
       if (!map.hasLayer(layer)) layer.addTo(map);
       lineEl.innerHTML = baseHTML;
+      if (FX) FX.set(glow);
       if (headEl) headEl.textContent = baseHead;
       lg.innerHTML = baseLegend;
       box.setAttribute('aria-label', baseLabel);

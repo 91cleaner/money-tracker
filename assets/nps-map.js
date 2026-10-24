@@ -120,8 +120,9 @@
     const coarse = matchMedia('(pointer: coarse)').matches;
     const map = L.map(mapEl, { zoomControl: false, attributionControl: true, minZoom: 0, maxZoom: 11, zoomSnap: 0.25, scrollWheelZoom: false, tap: true, worldCopyJump: false });
     map.attributionControl.setPrefix(false);
-    if (!coarse) L.control.zoom({ position: 'topleft' }).addTo(map);
-    if (window.mtWheel) mtWheel(map, mapEl);
+    if (window.mtZoom) mtZoom(map, mapEl); // 확대·축소는 우리 동네 세금 지도와 똑같이
+    else if (!coarse) L.control.zoom({ position: 'bottomleft' }).addTo(map);
+    const FX = window.mtFX ? mtFX(map, mapEl) : null; // 돈이 흐르는 방향으로 움직이는 빛
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 11, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자',
     }).addTo(map);
@@ -165,12 +166,14 @@
       if (sel) named.add(sel.key);
       const rankOf = new Map(ordered.map((x, i) => [x.key, i]));
       // 굵은 선을 먼저 그려 가는 선이 위에 보이게 한다. 이름표 순서는 따로 금액 순으로 정한다.
-      ordered.forEach((it) => {
+      const glow = [];
+      ordered.forEach((it, i) => {
         const on = sel && sel.key === it.key, dim = sel && !on;
-        const w = weight(it.krw, mx);
-        const ln = L.polyline(arc(o, [it.lat, it.lng]), { color: OUT, weight: w, opacity: dim ? 0.18 : 0.8, lineCap: 'round', interactive: true, className: 'nps-fl' }).addTo(gLine);
+        const w = weight(it.krw, mx), pts = arc(o, [it.lat, it.lng]);
+        const ln = L.polyline(pts, { color: OUT, weight: w, opacity: dim ? 0.18 : 0.8, lineCap: 'round', interactive: true, className: 'nps-fl' }).addTo(gLine);
+        if (!dim) glow.push({ pts, w, col: OUT, n: (window.mtFxN ? mtFxN(it.krw, mx) : 2) + (on ? 4 : 0), d: i * 0.06 });
         ln.on('click', (e) => { L.DomEvent.stopPropagation(e); choose(it); });
-        const dot = L.circleMarker([it.lat, it.lng], { radius: 3 + w / 2.5, weight: on ? 3 : 1.5, color: on ? '#ffd60a' : '#fff', fillColor: OUT, fillOpacity: dim ? 0.3 : 0.95 }).addTo(gDot);
+        const dot = L.circleMarker([it.lat, it.lng], { radius: 3 + w / 2.5, weight: on ? 3 : 1.5, color: on ? '#ffd60a' : '#fff', fillColor: OUT, fillOpacity: dim ? 0.3 : 0.95, className: dim ? '' : 'mt-rcv' }).addTo(gDot);
         dot.on('click', (e) => { L.DomEvent.stopPropagation(e); choose(it); });
         if (named.has(it.key)) dot.bindTooltip(esc(it.name), { permanent: true, direction: 'right', className: 'klab', offset: [6, 0], interactive: false });
         const tip = dot.getTooltip && dot.getTooltip(); if (tip && tip.getElement && tip.getElement()) tip.getElement().dataset.rank = on ? -1 : rankOf.get(it.key);
@@ -182,6 +185,7 @@
         { t: 'ln', c: OUT, l: '회사 본사가 있는 곳' },
         { t: 'w', c: OUT, l: '선이 굵을수록 돈이 많아요' },
       ].concat(sel ? [{ t: 'ring', l: '지금 고른 곳' }] : []));
+      if (FX) FX.set(glow);
       setTimeout(declutter, 40);
     }
     function declutter() {
