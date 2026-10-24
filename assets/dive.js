@@ -262,12 +262,17 @@
       const el = r.tip && r.tip.getElement && r.tip.getElement(); if (el) el.classList.toggle('dv-bury', hide);
       if (hide) buried.push(r.f);
     }
-    if (!buried.length) return;
-    const sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
-    const badge = flowAmtOn(flowCity) ? `우리 시 ${krw(sum)}` : '우리 시';
+    // 배지는 그 기간의 우리 시 전체. 구로 가는 파란 화살표는 그 안의 일부라 배지를 넘지 않는다.
+    const showAmt = flowAmtOn(flowCity) && flowCity && flowCity.local != null;
+    const sum = showAmt ? flowCity.local : buried.reduce((s, f) => s + (f.amount || 0), 0);
+    if ((!showAmt && !buried.length) || !(sum > 0)) { if (window.__syncMapLg) window.__syncMapLg(); return; }
+    const anchor = (flowRefs[0] && flowRefs[0].a) || flowCity.p;
+    if (!anchor) return;
+    const badge = showAmt ? `우리 시 ${krw(sum)}` : '우리 시';
     const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>${badge}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
-    locMk = L.marker(toLL(flowRefs[0].a), {pane: 'markerPane', interactive: false, keyboard: false, icon, zIndexOffset: 800}).addTo(gF);
+    locMk = L.marker(toLL(anchor), {pane: 'markerPane', interactive: false, keyboard: false, icon, zIndexOffset: 800}).addTo(gF);
     seatBadge(map, locMk);
+    if (window.__syncMapLg) window.__syncMapLg();
   };
   // 뱃지를 앉힌 뒤에 겹침을 본다. 맞춤·타일·글꼴이 끝난 뒤에도 한 번 더.
   let relayoutT = 0, relayoutT2 = 0;
@@ -280,10 +285,17 @@
   // 세금 길: 도시 → 업체 소재지 선 그리기
   const drawFlows = (slug, hold) => {
     gF.clearLayers(); flowRefs = []; locMk = null; FX.set([]); REST = {n: 0, amt: 0}; const c = fl.cities[slug]; flowCity = c || null; if (!c || !c.flows.length) return; const arcs = [];
-    const a = c.p, top = c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10), mx = top[0] ? top[0].amount : 1;
-    { const inTop = new Set(top), others = c.flows.filter((f) => !inTop.has(f)), sh = top.reduce((t, f) => t + f.amount, 0), unk = Math.max(0, (c.total || 0) - (c.known || 0));
-      REST = {n: others.length, amt: others.reduce((t, f) => t + f.amount, 0) + unk, unk: unk > 0}; if (REST.amt > 0 && !REST.n) REST.n = 1; if (REST.amt <= 0) REST.n = 0;
-      window.__dvLast = {slug, shown: sh, rest: REST.amt, tot: c.total, card: (BY[slug] || {}).total, re: !!c.__re, top: top.map((f) => [f.to, f.amount])}; }
+    const a = c.p, pool = c.flows.filter((f) => f.p && inKR(toLL(f.p)));
+    const locals = pool.filter((f) => f.local), outs = pool.filter((f) => !f.local);
+    const top = locals.slice(0, 7).concat(outs.slice(0, 4));
+    const mx = top.length ? Math.max(...top.map((f) => f.amount)) : 1;
+    { const drawnOut = outs.slice(0, 4).reduce((t, f) => t + f.amount, 0);
+      const otherAll = Math.max(0, (c.known || 0) - (c.local || 0));
+      const restOut = Math.max(0, otherAll - drawnOut);
+      const unk = Math.max(0, (c.total || 0) - (c.known || 0));
+      const restN = Math.max(0, outs.length - Math.min(outs.length, 4)) + ((c.other && c.other.outN) || 0);
+      REST = {n: restOut > 0 ? Math.max(1, restN) : 0, amt: restOut + unk, unk: unk > 0}; if (REST.amt <= 0) REST.n = 0;
+      window.__dvLast = {slug, shown: top.reduce((t, f) => t + f.amount, 0), rest: REST.amt, tot: c.total, local: c.local, card: (BY[slug] || {}).total, re: !!c.__re, top: top.map((f) => [f.to, f.amount, f.local ? 1 : 0])}; }
     top.forEach((f, i) => {
       const b = f.p, dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60); // 아주 짧은 흐름도 휘어서 보이게
       const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
@@ -322,7 +334,11 @@
       t0 = performance.now(); go(); }}; })();
   let seq = 0;
   const fly = (slug) => { const c = fl.cities[slug]; if (!c) return; gL.remove(); gLead.clearLayers(); const ll = toLL(c.p); const my = ++seq; gF.clearLayers(); map.stop();
-    const pts = [ll, ...c.flows.filter((f) => f.p && inKR(toLL(f.p))).slice(0, 10).map((f) => toLL(f.p))]; let bd = L.latLngBounds(pts);
+    const pool = (c.flows || []).filter((f) => f.p && inKR(toLL(f.p)));
+    const locals = pool.filter((f) => f.local).slice(0, 7), outs = pool.filter((f) => !f.local);
+    const spread = locals.reduce((m, f) => Math.max(m, Math.hypot(f.p[0] - c.p[0], f.p[1] - c.p[1])), 0);
+    const fitF = locals.concat(spread < 8 ? outs.slice(0, 6) : outs.filter((f) => Math.hypot(f.p[0] - c.p[0], f.p[1] - c.p[1]) < 40).slice(0, 2));
+    const pts = [ll, ...fitF.map((f) => toLL(f.p))]; let bd = L.latLngBounds(pts);
     const wide = innerWidth >= 900, sh = wide ? 0 : sheet.offsetHeight || Math.round(root.clientHeight * 0.25);
     const o = {paddingTopLeft: [24, 24], paddingBottomRight: [24, 24], maxZoom: 9.5};
     if (map.getBoundsZoom(bd, false, L.point(48, 48)) >= 8.5) bd = bd.extend(L.latLngBounds([[ll[0] - 0.3, ll[1] - 0.35], [ll[0] + 0.3, ll[1] + 0.35]])); // 도착지 전부 보이게(전국 범위 안)

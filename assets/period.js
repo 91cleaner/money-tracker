@@ -30,7 +30,6 @@ window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '필
   window.PERIOD = WIN;
   const sumCity = (m, w) => { const o = {n: 0, t: 0, cat: {}}; for (const k in m) if (k >= w.from && k <= w.to) { const v = m[k]; o.n += v[0]; o.t += v[1]; for (const c in v[2]) { const x = o.cat[c] || (o.cat[c] = [0, 0]); x[0] += v[2][c][0]; x[1] += v[2][c][1]; } } return o; };
   const fixIndex = (x, w) => { for (const c of x.cities || []) { const s = sumCity(w.dl.c[c.slug] || {}, w); c.count = s.n; c.total = s.t; c.by_cat = {}; c.n_cat = {}; for (const k in s.cat) { c.n_cat[k] = s.cat[k][0]; c.by_cat[k] = s.cat[k][1]; } } x.period = {from: w.from, to: w.to, d: w.d}; x.days = span(w.from, w.to); return x; };
-  const TOPF = 12; // collector/flows.py TOP_CITY
   const coversAll = (w) => !!(w && w.dl && w.from <= (w.dl.first || w.from) && w.to >= (w.dl.last || w.to));
   // flow_daily.json 으로 고른 기간의 local·known·도착지 금액을 다시 더한다. 전체 기간이면 flows.json 을 그대로 둔다.
   const fixFlows = (x, w, fd) => {
@@ -61,9 +60,14 @@ window.plainTag = (t) => { t = String(t || ''); const E = [['단가계약', '필
         flows.push({to, p, amount: g.amount, count: g.count, local: localIx.has(ri), vendors: []});
       }
       flows.sort((a, b) => b.amount - a.amount || (a.to < b.to ? -1 : a.to > b.to ? 1 : 0));
-      const top = flows.slice(0, TOPF), rest = flows.slice(TOPF);
-      c.local = local; c.known = known; c.flows = top;
-      c.other = {n: rest.length, amount: rest.reduce((s, f) => s + f.amount, 0)};
+      // 금액 상위만 남기면 광역시는 구 흐름이 상위라 다른 지역 선이 전부 잘린다. 우리 시·다른 지역을 따로 남긴다.
+      const byAmt = (a, b) => b.amount - a.amount || (a.to < b.to ? -1 : a.to > b.to ? 1 : 0);
+      const locals = flows.filter((f) => f.local), outs = flows.filter((f) => !f.local);
+      const kept = locals.slice(0, 8).concat(outs.slice(0, 6));
+      const keep = new Set(kept), rest = flows.filter((f) => !keep.has(f));
+      const restOut = rest.filter((f) => !f.local);
+      c.local = local; c.known = known; c.flows = kept.sort(byAmt);
+      c.other = {n: rest.length, amount: rest.reduce((s, f) => s + f.amount, 0), outN: restOut.length, outAmt: restOut.reduce((s, f) => s + f.amount, 0)};
       c.__pf = 1;
     }
     return x;

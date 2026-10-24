@@ -26,7 +26,15 @@ document.addEventListener('click',e=>{const a=e.target.closest('.ticker a[data-c
 let i=0;const slot=document.createElement('div');slot.className='tk-slot';d.hidden=true;d.classList.add('tk-src');d.after(slot);slot.style.paddingLeft=((t.querySelector('.tk-brand')||{}).offsetWidth||0)+10+'px';const show=()=>{const its=IT();slot.replaceChildren(its[i%its.length].cloneNode(true));i++;};show();setInterval(()=>{if(!document.hidden&&!t.classList.contains('paused'))show();},5000);};
 const obs=new MutationObserver(()=>{const t=document.querySelector('.ticker');const d=t&&t.querySelector(':scope>div:not(.tk-slot)');if(t&&d&&d.children.length&&!t.dataset.rot)setTimeout(()=>rot(t),1500);});obs.observe(document.body,{childList:true,subtree:true});})();
 
-// 지도 범례: 지도 바로 아래 한 줄 (지도 위에 겹치지 않게)
-(()=>{const H='<i class="lg-dot" style="background:#0a84ff"></i>우리 시 업체<i class="lg-ln" style="background:#ff9f0a"></i>다른 지역 업체<span class="lg-w"><i style="background:#ff9f0a"></i><i style="background:#ff9f0a"></i></span>선이 굵을수록 돈이 많아요<span class="lg-s" style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap"><i class="lg-ring" style="margin-left:0"></i>지금 고른 곳</span>';
-const put=()=>document.querySelectorAll('.dv-map,.map').forEach(m=>{if(m.closest('.lg-skip')||!(m.classList.contains('leaflet-container')||m.querySelector('.leaflet-pane,svg')))return;const n=m.nextElementSibling;if(n&&n.classList.contains('maplg'))return;const p=document.createElement('p');p.className='maplg';p.setAttribute('aria-label','지도 범례');p.innerHTML=H;m.after(p);});
-put();new MutationObserver(put).observe(document.body,{childList:true,subtree:true});})();
+// 지도 범례: 지금 지도에 있는 것만. 없는 색·고리·굵기 설명은 빼 지도 위에 겹치지 않게 둔다.
+(()=>{
+const DOT='<i class="lg-dot" style="background:#0a84ff"></i>우리 시 업체', LN='<i class="lg-ln" style="background:#ff9f0a"></i>다른 지역 업체', WID='<span class="lg-w"><i style="background:#ff9f0a"></i><i style="background:#ff9f0a"></i></span>선이 굵을수록 돈이 많아요', RNG='<span class="lg-s" style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap"><i class="lg-ring" style="margin-left:0"></i>지금 고른 곳</span>';
+const vis=el=>{const o=el.getAttribute('stroke-opacity');if(o!=null&&Number(o)===0)return false;if(el.style&&(el.style.opacity==='0'||el.style.strokeOpacity==='0'))return false;return true;};
+const html=m=>{const paths=[...m.querySelectorAll('path,polyline')];
+const orange=paths.some(p=>vis(p)&&((p.getAttribute('stroke')||'').toLowerCase()==='#ff9f0a'||(p.classList.contains('fl')&&p.classList.contains('out'))));
+const blueLine=paths.some(p=>vis(p)&&((p.getAttribute('stroke')||'').toLowerCase()==='#0a84ff'||(p.classList.contains('fl')&&p.classList.contains('in'))));
+const blueDot=!!m.querySelector('.loc-badge, path.dd.in');
+const ring=!!m.querySelector('path.dv-ring, path.hlring, circle.hl');
+const parts=[];if(blueDot||blueLine)parts.push(DOT);if(orange)parts.push(LN);if(orange||blueLine)parts.push(WID);if(ring)parts.push(RNG);return parts.join('');};
+const put=()=>document.querySelectorAll('.dv-map,.map').forEach(m=>{if(m.closest('.lg-skip')||!(m.classList.contains('leaflet-container')||m.querySelector('.leaflet-pane,svg')))return;let p=m.nextElementSibling;if(!p||!p.classList.contains('maplg')){p=document.createElement('p');p.className='maplg';p.setAttribute('aria-label','지도 범례');m.after(p);}const h=html(m);if(p.dataset.sig!==h){p.dataset.sig=h;p.innerHTML=h;}p.style.display=h?'':'none';});
+window.__syncMapLg=put;put();new MutationObserver(put).observe(document.body,{childList:true,subtree:true});})();
