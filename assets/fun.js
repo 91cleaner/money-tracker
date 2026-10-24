@@ -12,7 +12,7 @@ function npsModel(data) {
     const total = latest.reserve_trillion_krw * 1e12;
     if (!(total > 0) || !(pct >= 0 && pct <= 100)) return null;
     const items = Object.entries(latest.mix).filter(([, v]) => Array.isArray(v) && typeof v[0] === 'number' && v[0] > 0).map(([name, v]) => ({ name, amount: v[0] * 1e12 }));
-    return { total, pct, items, kind: 'fund' };
+    return { total, pct, items, kind: 'fund', asOf: latest.as_of || '' };
   }
   const total = data.total != null ? data.total : data.fund_total;
   const share = data.stock_share != null ? data.stock_share : data.share;
@@ -372,8 +372,9 @@ function bootFun() {
         return;
       }
       const real = Math.round(model.pct * 10) / 10;
+      const when = model.asOf ? String(model.asOf).replace(/-/g, '.') + ' 기준, ' : '';
       const src = model.kind === 'fund'
-        ? `자료 비율 ${real}%는 국내주식과 해외주식 비율을 더한 값이에요.`
+        ? `${when}자료 비율 ${real}%는 국내주식과 해외주식 비율을 더한 값이에요.`
         : `자료에 적힌 비율은 ${real}%예요.`;
       nps.innerHTML = `<h2>주식 비율 움직여 보기</h2><p class="fun-num" data-tip="자료에 적힌 기금 전체 금액이에요.">${esc(wonText(model.total))}</p>
         <p class="fun-note">기금 전체</p>
