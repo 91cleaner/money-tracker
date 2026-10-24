@@ -1,0 +1,1797 @@
+{
+ "fetched": "2026-10-24",
+ "holdings_as_of": "2026-06-30",
+ "holdings_file": "data/nps/holdings_us_2026Q2.json",
+ "quarter": "2026Q2",
+ "total_value_usd": 155079663358,
+ "total_label_usd": "$155.08B",
+ "scope_line": "미국 주식만 공개돼 있어요 (미국 13F 자료 기준)",
+ "other_overseas_files": false,
+ "source": "SEC EDGAR 13F-HR 보유 금액과, 각 회사 제출 서류의 사업장 주소",
+ "sources": [
+  {
+   "role": "보유 금액",
+   "name": "SEC EDGAR 13F-HR",
+   "url": "https://www.sec.gov/Archives/edgar/data/1608046/000119312526347818/"
+  },
+  {
+   "role": "본사 주소",
+   "name": "SEC EDGAR 회사 사업장 주소",
+   "url": "https://data.sec.gov/submissions/"
+  },
+  {
+   "role": "티커",
+   "name": "OpenFIGI CUSIP·CINS",
+   "url": "https://www.openfigi.com/"
+  },
+  {
+   "role": "미국 주 위치",
+   "name": "미국 주 경계의 중심",
+   "url": "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json"
+  },
+  {
+   "role": "나라 위치",
+   "name": "나라 중심 좌표",
+   "url": "https://raw.githubusercontent.com/google/dspl/master/samples/google/canonical/countries.csv"
+  }
+ ],
+ "regions": [
+  {
+   "kind": "state",
+   "code": "CA",
+   "name": "캘리포니아",
+   "name_en": "California",
+   "lat": 37.2539,
+   "lng": -119.6144,
+   "frame": "lower48",
+   "value_usd": 59801495693,
+   "company_count": 90,
+   "top": [
+    {
+     "company": "NVIDIA CORPORATION",
+     "ticker": "NVDA",
+     "value_usd": 10171499316
+    },
+    {
+     "company": "APPLE INC",
+     "ticker": "AAPL",
+     "value_usd": 9120026489
+    },
+    {
+     "company": "ALPHABET INC",
+     "ticker": "GOOGL",
+     "value_usd": 8408813697
+    },
+    {
+     "company": "BROADCOM INC",
+     "ticker": "AVGO",
+     "value_usd": 3631259754
+    },
+    {
+     "company": "ISHARES TR",
+     "ticker": "IVV",
+     "value_usd": 3084943766
+    }
+   ],
+   "pct": 38.56
+  },
+  {
+   "kind": "state",
+   "code": "WA",
+   "name": "워싱턴",
+   "name_en": "Washington",
+   "lat": 47.3716,
+   "lng": -120.4407,
+   "frame": "lower48",
+   "value_usd": 12376326121,
+   "company_count": 11,
+   "top": [
+    {
+     "company": "MICROSOFT CORP",
+     "ticker": "MSFT",
+     "value_usd": 5684729680
+    },
+    {
+     "company": "AMAZON COM INC",
+     "ticker": "AMZN",
+     "value_usd": 4998167363
+    },
+    {
+     "company": "COSTCO WHOLESALE CORPORATION",
+     "ticker": "COST",
+     "value_usd": 904344107
+    },
+    {
+     "company": "STARBUCKS CORP",
+     "ticker": "SBUX",
+     "value_usd": 285711590
+    },
+    {
+     "company": "T-MOBILE US INC",
+     "ticker": "TMUS",
+     "value_usd": 213470306
+    }
+   ],
+   "pct": 7.98
+  },
+  {
+   "kind": "state",
+   "code": "TX",
+   "name": "텍사스",
+   "name_en": "Texas",
+   "lat": 31.4952,
+   "lng": -99.3579,
+   "frame": "lower48",
+   "value_usd": 11506171409,
+   "company_count": 54,
+   "top": [
+    {
+     "company": "TESLA INC",
+     "ticker": "TSLA",
+     "value_usd": 2532853621
+    },
+    {
+     "company": "CATERPILLAR INC",
+     "ticker": "CAT",
+     "value_usd": 1075678918
+    },
+    {
+     "company": "CHEVRON CORPORATION",
+     "ticker": "CVX",
+     "value_usd": 750205228
+    },
+    {
+     "company": "TEXAS INSTRS INC",
+     "ticker": "TXN",
+     "value_usd": 632111088
+    },
+    {
+     "company": "SPACE EXPLORATION TECHN CORP",
+     "ticker": "SPCX",
+     "value_usd": 598010000
+    }
+   ],
+   "pct": 7.42
+  },
+  {
+   "kind": "state",
+   "code": "NY",
+   "name": "뉴욕",
+   "name_en": "New York",
+   "lat": 42.9434,
+   "lng": -75.5011,
+   "frame": "lower48",
+   "value_usd": 10810758851,
+   "company_count": 49,
+   "top": [
+    {
+     "company": "JPMORGAN CHASE & CO",
+     "ticker": "JPM",
+     "value_usd": 1816546640
+    },
+    {
+     "company": "MASTERCARD INCORPORATED",
+     "ticker": "MA",
+     "value_usd": 886994390
+    },
+    {
+     "company": "GOLDMAN SACHS GROUP INC",
+     "ticker": "GS",
+     "value_usd": 678086164
+    },
+    {
+     "company": "INTERNATIONAL BUSINESS MACHS",
+     "ticker": "IBM",
+     "value_usd": 660836470
+    },
+    {
+     "company": "MORGAN STANLEY",
+     "ticker": "MS",
+     "value_usd": 618889886
+    }
+   ],
+   "pct": 6.97
+  },
+  {
+   "kind": "state",
+   "code": "IL",
+   "name": "일리노이",
+   "name_en": "Illinois",
+   "lat": 40.0627,
+   "lng": -89.1957,
+   "frame": "lower48",
+   "value_usd": 8088488934,
+   "company_count": 29,
+   "top": [
+    {
+     "company": "INVESCO EXCH TRADED FD TR II",
+     "ticker": "PBUS",
+     "value_usd": 3546096271
+    },
+    {
+     "company": "ABBVIE INC",
+     "ticker": "ABBV",
+     "value_usd": 1008968950
+    },
+    {
+     "company": "HARBOR ETF TRUST",
+     "ticker": "INFO",
+     "value_usd": 668030237
+    },
+    {
+     "company": "MCDONALDS CORP",
+     "ticker": "MCD",
+     "value_usd": 448276427
+    },
+    {
+     "company": "DEERE & CO",
+     "ticker": "DE",
+     "value_usd": 402322534
+    }
+   ],
+   "pct": 5.22
+  },
+  {
+   "kind": "state",
+   "code": "OH",
+   "name": "오하이오",
+   "name_en": "Ohio",
+   "lat": 40.2961,
+   "lng": -82.7882,
+   "frame": "lower48",
+   "value_usd": 4631390853,
+   "company_count": 22,
+   "top": [
+    {
+     "company": "GE AEROSPACE",
+     "ticker": "GE",
+     "value_usd": 910452623
+    },
+    {
+     "company": "PROCTER & GAMBLE CO",
+     "ticker": "PG",
+     "value_usd": 826948565
+    },
+    {
+     "company": "WELLTOWER INC",
+     "ticker": "WELL",
+     "value_usd": 457359757
+    },
+    {
+     "company": "PARKER-HANNIFIN CORP",
+     "ticker": "PH",
+     "value_usd": 359105021
+    },
+    {
+     "company": "PROGRESSIVE CORP",
+     "ticker": "PGR",
+     "value_usd": 292009761
+    }
+   ],
+   "pct": 2.99
+  },
+  {
+   "kind": "state",
+   "code": "ID",
+   "name": "아이다호",
+   "name_en": "Idaho",
+   "lat": 44.3883,
+   "lng": -114.6598,
+   "frame": "lower48",
+   "value_usd": 3331465626,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "MICRON TECHNOLOGY INC",
+     "ticker": "MU",
+     "value_usd": 3331465626
+    }
+   ],
+   "pct": 2.15
+  },
+  {
+   "kind": "state",
+   "code": "MA",
+   "name": "매사추세츠",
+   "name_en": "Massachusetts",
+   "lat": 42.267,
+   "lng": -71.8434,
+   "frame": "lower48",
+   "value_usd": 3246197658,
+   "company_count": 18,
+   "top": [
+    {
+     "company": "GE VERNOVA INC",
+     "ticker": "GEV",
+     "value_usd": 663308333
+    },
+    {
+     "company": "ANALOG DEVICES INC",
+     "ticker": "ADI",
+     "value_usd": 556955066
+    },
+    {
+     "company": "THERMO FISHER SCIENTIFIC INC",
+     "ticker": "TMO",
+     "value_usd": 422118548
+    },
+    {
+     "company": "TJX COS INC NEW",
+     "ticker": "TJX",
+     "value_usd": 406939757
+    },
+    {
+     "company": "VERTEX PHARMACEUTICALS INC",
+     "ticker": "VRTX",
+     "value_usd": 268000737
+    }
+   ],
+   "pct": 2.09
+  },
+  {
+   "kind": "state",
+   "code": "NJ",
+   "name": "뉴저지",
+   "name_en": "New Jersey",
+   "lat": 40.1928,
+   "lng": -74.6619,
+   "frame": "lower48",
+   "value_usd": 3192881258,
+   "company_count": 17,
+   "top": [
+    {
+     "company": "JOHNSON & JOHNSON",
+     "ticker": "JNJ",
+     "value_usd": 1327493063
+    },
+    {
+     "company": "MERCK & CO INC",
+     "ticker": "MRK",
+     "value_usd": 744243987
+    },
+    {
+     "company": "BRISTOL-MYERS SQUIBB CO",
+     "ticker": "BMY",
+     "value_usd": 321412139
+    },
+    {
+     "company": "AUTOMATIC DATA PROCESSING IN",
+     "ticker": "ADP",
+     "value_usd": 230956948
+    },
+    {
+     "company": "PRUDENTIAL FINL INC",
+     "ticker": "PRU",
+     "value_usd": 90674799
+    }
+   ],
+   "pct": 2.06
+  },
+  {
+   "kind": "state",
+   "code": "IN",
+   "name": "인디애나",
+   "name_en": "Indiana",
+   "lat": 39.9121,
+   "lng": -86.2707,
+   "frame": "lower48",
+   "value_usd": 2993167265,
+   "company_count": 8,
+   "top": [
+    {
+     "company": "ELI LILLY & CO",
+     "ticker": "LLY",
+     "value_usd": 2018379214
+    },
+    {
+     "company": "CUMMINS INC",
+     "ticker": "CMI",
+     "value_usd": 296823025
+    },
+    {
+     "company": "SIMON PPTY GROUP INC NEW",
+     "ticker": "SPG",
+     "value_usd": 273527305
+    },
+    {
+     "company": "ELEVANCE HEALTH INC FORMERLY",
+     "ticker": "ELV",
+     "value_usd": 228059708
+    },
+    {
+     "company": "CORTEVA INC",
+     "ticker": "CTVA",
+     "value_usd": 91515252
+    }
+   ],
+   "pct": 1.93
+  },
+  {
+   "kind": "state",
+   "code": "GA",
+   "name": "조지아",
+   "name_en": "Georgia",
+   "lat": 32.648,
+   "lng": -83.4465,
+   "frame": "lower48",
+   "value_usd": 2611431420,
+   "company_count": 15,
+   "top": [
+    {
+     "company": "HOME DEPOT INC",
+     "ticker": "HD",
+     "value_usd": 791159990
+    },
+    {
+     "company": "COCA COLA CO",
+     "ticker": "KO",
+     "value_usd": 759894655
+    },
+    {
+     "company": "SOUTHERN CO",
+     "ticker": "SO",
+     "value_usd": 280715324
+    },
+    {
+     "company": "UNITED PARCEL SVCS INC",
+     "ticker": "UPS",
+     "value_usd": 255762818
+    },
+    {
+     "company": "NORFOLK SOUTHN CORP",
+     "ticker": "NSC",
+     "value_usd": 172412308
+    }
+   ],
+   "pct": 1.68
+  },
+  {
+   "kind": "state",
+   "code": "VA",
+   "name": "버지니아",
+   "name_en": "Virginia",
+   "lat": 37.5129,
+   "lng": -78.8637,
+   "frame": "lower48",
+   "value_usd": 2606280454,
+   "company_count": 16,
+   "top": [
+    {
+     "company": "RTX CORPORATION",
+     "ticker": "RTX",
+     "value_usd": 555811189
+    },
+    {
+     "company": "BOEING CO",
+     "ticker": "BA",
+     "value_usd": 360648761
+    },
+    {
+     "company": "ALTRIA GROUP INC",
+     "ticker": "MO",
+     "value_usd": 359663660
+    },
+    {
+     "company": "CAPITAL ONE FINL CORP",
+     "ticker": "COF",
+     "value_usd": 295407533
+    },
+    {
+     "company": "GENERAL DYNAMICS CORP",
+     "ticker": "GD",
+     "value_usd": 267848657
+    }
+   ],
+   "pct": 1.68
+  },
+  {
+   "kind": "state",
+   "code": "CT",
+   "name": "코네티컷",
+   "name_en": "Connecticut",
+   "lat": 41.6209,
+   "lng": -72.7279,
+   "frame": "lower48",
+   "value_usd": 2446976856,
+   "company_count": 15,
+   "top": [
+    {
+     "company": "PHILIP MORRIS INTL INC",
+     "ticker": "PM",
+     "value_usd": 675325633
+    },
+    {
+     "company": "AMPHENOL CORP",
+     "ticker": "APH",
+     "value_usd": 595623066
+    },
+    {
+     "company": "BOOKING HOLDINGS INC",
+     "ticker": "BKNG",
+     "value_usd": 359371231
+    },
+    {
+     "company": "THE CIGNA GROUP",
+     "ticker": "CI",
+     "value_usd": 218948088
+    },
+    {
+     "company": "UNITED RENTALS INC",
+     "ticker": "URI",
+     "value_usd": 123549585
+    }
+   ],
+   "pct": 1.58
+  },
+  {
+   "kind": "state",
+   "code": "MD",
+   "name": "메릴랜드",
+   "name_en": "Maryland",
+   "lat": 39.037,
+   "lng": -76.7706,
+   "frame": "lower48",
+   "value_usd": 2330373032,
+   "company_count": 9,
+   "top": [
+    {
+     "company": "T ROWE PRICE EXCHANGE-TRADED",
+     "ticker": "TGRW",
+     "value_usd": 1342288668
+    },
+    {
+     "company": "LOCKHEED MARTIN CORP",
+     "ticker": "LMT",
+     "value_usd": 331322216
+    },
+    {
+     "company": "MARRIOTT INTL INC NEW",
+     "ticker": "MAR",
+     "value_usd": 224414480
+    },
+    {
+     "company": "CONSTELLATION ENERGY CORP",
+     "ticker": "CEG",
+     "value_usd": 205990130
+    },
+    {
+     "company": "CIENA CORP",
+     "ticker": "CIEN",
+     "value_usd": 133555451
+    }
+   ],
+   "pct": 1.5
+  },
+  {
+   "kind": "state",
+   "code": "FL",
+   "name": "플로리다",
+   "name_en": "Florida",
+   "lat": 28.6589,
+   "lng": -82.504,
+   "frame": "lower48",
+   "value_usd": 2300536504,
+   "company_count": 20,
+   "top": [
+    {
+     "company": "PALANTIR TECHNOLOGIES INC",
+     "ticker": "PLTR",
+     "value_usd": 610642496
+    },
+    {
+     "company": "NEXTERA ENERGY INC",
+     "ticker": "NEE",
+     "value_usd": 455247806
+    },
+    {
+     "company": "ROYAL CARIBBEAN GROUP",
+     "ticker": "RCL",
+     "value_usd": 322090683
+    },
+    {
+     "company": "CSX CORP",
+     "ticker": "CSX",
+     "value_usd": 264618189
+    },
+    {
+     "company": "CARNIVAL CORP LTD",
+     "ticker": "CCL",
+     "value_usd": 92245987
+    }
+   ],
+   "pct": 1.48
+  },
+  {
+   "kind": "state",
+   "code": "PA",
+   "name": "펜실베이니아",
+   "name_en": "Pennsylvania",
+   "lat": 40.8741,
+   "lng": -77.8,
+   "frame": "lower48",
+   "value_usd": 2292314324,
+   "company_count": 17,
+   "top": [
+    {
+     "company": "ADVISORS INNER CIRCLE FD",
+     "ticker": "LSVD",
+     "value_usd": 627384496
+    },
+    {
+     "company": "HOWMET AEROSPACE INC",
+     "ticker": "HWM",
+     "value_usd": 298724700
+    },
+    {
+     "company": "COMCAST CORP NEW",
+     "ticker": "CMCSA",
+     "value_usd": 259876873
+    },
+    {
+     "company": "PNC FINL SVCS GROUP INC",
+     "ticker": "PNC",
+     "value_usd": 246645714
+    },
+    {
+     "company": "CENCORA INC",
+     "ticker": "COR",
+     "value_usd": 208758025
+    }
+   ],
+   "pct": 1.48
+  },
+  {
+   "kind": "state",
+   "code": "NC",
+   "name": "노스캐롤라이나",
+   "name_en": "North Carolina",
+   "lat": 35.5377,
+   "lng": -79.339,
+   "frame": "lower48",
+   "value_usd": 2179688197,
+   "company_count": 13,
+   "top": [
+    {
+     "company": "BANK OF AMER CORP",
+     "ticker": "BAC",
+     "value_usd": 885265895
+    },
+    {
+     "company": "LOWES COS INC",
+     "ticker": "LOW",
+     "value_usd": 306022040
+    },
+    {
+     "company": "DUKE ENERGY CORP NEW",
+     "ticker": "DUK",
+     "value_usd": 268856426
+    },
+    {
+     "company": "TRUIST FINL CORP",
+     "ticker": "TFC",
+     "value_usd": 170691192
+    },
+    {
+     "company": "HONEYWELL INTL INC",
+     "ticker": "HON",
+     "value_usd": 168056205
+    }
+   ],
+   "pct": 1.41
+  },
+  {
+   "kind": "state",
+   "code": "MN",
+   "name": "미네소타",
+   "name_en": "Minnesota",
+   "lat": 46.317,
+   "lng": -94.3112,
+   "frame": "lower48",
+   "value_usd": 2155728488,
+   "company_count": 13,
+   "top": [
+    {
+     "company": "UNITEDHEALTH GROUP INC",
+     "ticker": "UNH",
+     "value_usd": 818929089
+    },
+    {
+     "company": "TRAVELERS COMPANIES INC",
+     "ticker": "TRV",
+     "value_usd": 263061734
+    },
+    {
+     "company": "US BANCORP",
+     "ticker": "USB",
+     "value_usd": 246051178
+    },
+    {
+     "company": "3M CO",
+     "ticker": "MMM",
+     "value_usd": 226923827
+    },
+    {
+     "company": "ECOLAB INC",
+     "ticker": "ECL",
+     "value_usd": 214046312
+    }
+   ],
+   "pct": 1.39
+  },
+  {
+   "kind": "country",
+   "code": "L2",
+   "name": "아일랜드",
+   "name_en": "Ireland",
+   "lat": 53.4129,
+   "lng": -8.2439,
+   "frame": "world",
+   "value_usd": 2058387647,
+   "company_count": 13,
+   "top": [
+    {
+     "company": "EATON CORP PLC",
+     "ticker": "ETN",
+     "value_usd": 368479174
+    },
+    {
+     "company": "JOHNSON CONTROLS INTERNATION",
+     "ticker": "JCI",
+     "value_usd": 305040714
+    },
+    {
+     "company": "TRANE TECHNOLOGIES PLC",
+     "ticker": "TT",
+     "value_usd": 261717553
+    },
+    {
+     "company": "MEDTRONIC PLC",
+     "ticker": "MDT",
+     "value_usd": 247426235
+    },
+    {
+     "company": "TE CONNECTIVITY PLC",
+     "ticker": "TEL",
+     "value_usd": 222233695
+    }
+   ],
+   "pct": 1.33
+  },
+  {
+   "kind": "state",
+   "code": "NE",
+   "name": "네브래스카",
+   "name_en": "Nebraska",
+   "lat": 41.5278,
+   "lng": -99.8105,
+   "frame": "lower48",
+   "value_usd": 1780590853,
+   "company_count": 2,
+   "top": [
+    {
+     "company": "BERKSHIRE HATHAWAY INC DEL",
+     "ticker": "BRK/B",
+     "value_usd": 1403556421
+    },
+    {
+     "company": "UNION PAC CORP",
+     "ticker": "UNP",
+     "value_usd": 377034432
+    }
+   ],
+   "pct": 1.15
+  },
+  {
+   "kind": "state",
+   "code": "AR",
+   "name": "아칸소",
+   "name_en": "Arkansas",
+   "lat": 34.8982,
+   "lng": -92.4409,
+   "frame": "lower48",
+   "value_usd": 1198876944,
+   "company_count": 3,
+   "top": [
+    {
+     "company": "WALMART INC",
+     "ticker": "WMT",
+     "value_usd": 1168182441
+    },
+    {
+     "company": "TYSON FOODS INC",
+     "ticker": "TSN",
+     "value_usd": 15997826
+    },
+    {
+     "company": "HUNT J B TRANS SVCS INC",
+     "ticker": "JBHT",
+     "value_usd": 14696677
+    }
+   ],
+   "pct": 0.77
+  },
+  {
+   "kind": "state",
+   "code": "DE",
+   "name": "델라웨어",
+   "name_en": "Delaware",
+   "lat": 38.9827,
+   "lng": -75.4976,
+   "frame": "lower48",
+   "value_usd": 911358326,
+   "company_count": 4,
+   "top": [
+    {
+     "company": "MARVELL TECHNOLOGY INC",
+     "ticker": "MRVL",
+     "value_usd": 833056534
+    },
+    {
+     "company": "QNITY ELECTRONICS INC",
+     "ticker": "Q",
+     "value_usd": 69506206
+    },
+    {
+     "company": "INCYTE CORP",
+     "ticker": "INCY",
+     "value_usd": 4843986
+    },
+    {
+     "company": "DUPONT DE NEMOURS INC",
+     "ticker": "DD",
+     "value_usd": 3951600
+    }
+   ],
+   "pct": 0.59
+  },
+  {
+   "kind": "state",
+   "code": "AZ",
+   "name": "애리조나",
+   "name_en": "Arizona",
+   "lat": 34.2934,
+   "lng": -111.6633,
+   "frame": "lower48",
+   "value_usd": 869579719,
+   "company_count": 12,
+   "top": [
+    {
+     "company": "FREEPORT MCMORAN INC",
+     "ticker": "FCX",
+     "value_usd": 240845242
+    },
+    {
+     "company": "HONEYWELL AEROSPACE INC",
+     "ticker": "HONA",
+     "value_usd": 165939553
+    },
+    {
+     "company": "CARVANA CO",
+     "ticker": "CVNA",
+     "value_usd": 99319945
+    },
+    {
+     "company": "MICROCHIP TECHNOLOGY INC.",
+     "ticker": "MCHP",
+     "value_usd": 81335534
+    },
+    {
+     "company": "ON SEMICONDUCTOR CORP",
+     "ticker": "ON",
+     "value_usd": 70759219
+    }
+   ],
+   "pct": 0.56
+  },
+  {
+   "kind": "country",
+   "code": "U0",
+   "name": "싱가포르",
+   "name_en": "Singapore",
+   "lat": 1.3521,
+   "lng": 103.8198,
+   "frame": "world",
+   "value_usd": 864328031,
+   "company_count": 3,
+   "top": [
+    {
+     "company": "SEAGATE TECHNOLOGY HLDNGS PL",
+     "ticker": "STX",
+     "value_usd": 805490325
+    },
+    {
+     "company": "SEA LTD",
+     "ticker": "SE",
+     "value_usd": 58019028
+    },
+    {
+     "company": "GRAB HOLDINGS LIMITED",
+     "ticker": "GRAB",
+     "value_usd": 818678
+    }
+   ],
+   "pct": 0.56
+  },
+  {
+   "kind": "state",
+   "code": "MI",
+   "name": "미시간",
+   "name_en": "Michigan",
+   "lat": 43.4805,
+   "lng": -84.6194,
+   "frame": "lower48",
+   "value_usd": 770064616,
+   "company_count": 10,
+   "top": [
+    {
+     "company": "GENERAL MTRS CO",
+     "ticker": "GM",
+     "value_usd": 307160563
+    },
+    {
+     "company": "STRYKER CORPORATION",
+     "ticker": "SYK",
+     "value_usd": 227058200
+    },
+    {
+     "company": "FORD MTR CO",
+     "ticker": "F",
+     "value_usd": 138298411
+    },
+    {
+     "company": "DTE ENERGY CO",
+     "ticker": "DTE",
+     "value_usd": 45084302
+    },
+    {
+     "company": "DOW HLDGS INC",
+     "ticker": "DOW",
+     "value_usd": 36578159
+    }
+   ],
+   "pct": 0.5
+  },
+  {
+   "kind": "country",
+   "code": "X0",
+   "name": "영국",
+   "name_en": "United Kingdom",
+   "lat": 55.3781,
+   "lng": -3.436,
+   "frame": "world",
+   "value_usd": 741350837,
+   "company_count": 7,
+   "top": [
+    {
+     "company": "LINDE PLC",
+     "ticker": "LIN",
+     "value_usd": 623718138
+    },
+    {
+     "company": "WILLIS TOWERS WATSON PLC LTD",
+     "ticker": "WTW",
+     "value_usd": 44663167
+    },
+    {
+     "company": "TECHNIPFMC PLC",
+     "ticker": "FTI",
+     "value_usd": 40511024
+    },
+    {
+     "company": "AMCOR PLC",
+     "ticker": "AMCR",
+     "value_usd": 21914465
+    },
+    {
+     "company": "COCA-COLA EUROPACIFIC PARTNE",
+     "ticker": "CCEP",
+     "value_usd": 6534771
+    }
+   ],
+   "pct": 0.48
+  },
+  {
+   "kind": "state",
+   "code": "TN",
+   "name": "테네시",
+   "name_en": "Tennessee",
+   "lat": 35.8425,
+   "lng": -86.348,
+   "frame": "lower48",
+   "value_usd": 687481756,
+   "company_count": 8,
+   "top": [
+    {
+     "company": "HCA HEALTHCARE INC",
+     "ticker": "HCA",
+     "value_usd": 230650346
+    },
+    {
+     "company": "FEDEX CORP",
+     "ticker": "FDX",
+     "value_usd": 202121031
+    },
+    {
+     "company": "AUTOZONE INC",
+     "ticker": "AZO",
+     "value_usd": 145891465
+    },
+    {
+     "company": "DOLLAR GEN CORP",
+     "ticker": "DG",
+     "value_usd": 76733707
+    },
+    {
+     "company": "FEDEX FGHT HLDG CO INC",
+     "ticker": "FDXF",
+     "value_usd": 26648178
+    }
+   ],
+   "pct": 0.44
+  },
+  {
+   "kind": "country",
+   "code": "V8",
+   "name": "스위스",
+   "name_en": "Switzerland",
+   "lat": 46.8182,
+   "lng": 8.2275,
+   "frame": "world",
+   "value_usd": 543703810,
+   "company_count": 5,
+   "top": [
+    {
+     "company": "CHUBB LIMITED",
+     "ticker": "CB",
+     "value_usd": 391173268
+    },
+    {
+     "company": "AMRIZE LTD",
+     "ticker": "AMRZ",
+     "value_usd": 79578073
+    },
+    {
+     "company": "GARMIN LTD",
+     "ticker": "GRMN",
+     "value_usd": 65695963
+    },
+    {
+     "company": "APTIV PLC",
+     "ticker": "APTV",
+     "value_usd": 3898673
+    },
+    {
+     "company": "BUNGE GLOBAL SA",
+     "ticker": "BG",
+     "value_usd": 3357833
+    }
+   ],
+   "pct": 0.35
+  },
+  {
+   "kind": "state",
+   "code": "MO",
+   "name": "미주리",
+   "name_en": "Missouri",
+   "lat": 38.3681,
+   "lng": -92.4774,
+   "frame": "lower48",
+   "value_usd": 521674879,
+   "company_count": 5,
+   "top": [
+    {
+     "company": "OREILLY AUTOMOTIVE INC",
+     "ticker": "ORLY",
+     "value_usd": 209890055
+    },
+    {
+     "company": "EMERSON ELEC CO",
+     "ticker": "EMR",
+     "value_usd": 205424258
+    },
+    {
+     "company": "CENTENE CORP DEL",
+     "ticker": "CNC",
+     "value_usd": 60317674
+    },
+    {
+     "company": "AMEREN CORP",
+     "ticker": "AEE",
+     "value_usd": 44537195
+    },
+    {
+     "company": "EVERGY INC",
+     "ticker": "EVRG",
+     "value_usd": 1505697
+    }
+   ],
+   "pct": 0.34
+  },
+  {
+   "kind": "state",
+   "code": "RI",
+   "name": "로드아일랜드",
+   "name_en": "Rhode Island",
+   "lat": 41.7013,
+   "lng": -71.5957,
+   "frame": "lower48",
+   "value_usd": 430104046,
+   "company_count": 3,
+   "top": [
+    {
+     "company": "CVS HEALTH CORP",
+     "ticker": "CVS",
+     "value_usd": 352166145
+    },
+    {
+     "company": "CITIZENS FINL GROUP INC",
+     "ticker": "CFG",
+     "value_usd": 63595182
+    },
+    {
+     "company": "TEXTRON INC",
+     "ticker": "TXT",
+     "value_usd": 14342719
+    }
+   ],
+   "pct": 0.28
+  },
+  {
+   "kind": "state",
+   "code": "CO",
+   "name": "콜로라도",
+   "name_en": "Colorado",
+   "lat": 38.9993,
+   "lng": -105.5488,
+   "frame": "lower48",
+   "value_usd": 341604021,
+   "company_count": 5,
+   "top": [
+    {
+     "company": "NEWMONT CORP",
+     "ticker": "NEM",
+     "value_usd": 328598105
+    },
+    {
+     "company": "BALL CORP",
+     "ticker": "BALL",
+     "value_usd": 9517560
+    },
+    {
+     "company": "LIBERTY MEDIA CORP DEL",
+     "ticker": "FWONK",
+     "value_usd": 1549926
+    },
+    {
+     "company": "ECHOSTAR CORP",
+     "ticker": "ECHO",
+     "value_usd": 1245811
+    },
+    {
+     "company": "TRIMBLE INC",
+     "ticker": "TRMB",
+     "value_usd": 692619
+    }
+   ],
+   "pct": 0.22
+  },
+  {
+   "kind": "state",
+   "code": "DC",
+   "name": "워싱턴 D.C.",
+   "name_en": "District of Columbia",
+   "lat": 38.8984,
+   "lng": -77.0218,
+   "frame": "lower48",
+   "value_usd": 334961244,
+   "company_count": 3,
+   "top": [
+    {
+     "company": "DANAHER CORP DEL",
+     "ticker": "DHR",
+     "value_usd": 285900766
+    },
+    {
+     "company": "XYLEM INC",
+     "ticker": "XYL",
+     "value_usd": 48391982
+    },
+    {
+     "company": "CARLYLE GROUP INC",
+     "ticker": "CG",
+     "value_usd": 668496
+    }
+   ],
+   "pct": 0.22
+  },
+  {
+   "kind": "country",
+   "code": "N4",
+   "name": "룩셈부르크",
+   "name_en": "Luxembourg",
+   "lat": 49.8153,
+   "lng": 6.1296,
+   "frame": "world",
+   "value_usd": 277865017,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "SPOTIFY TECHNOLOGY S A",
+     "ticker": "SPOT",
+     "value_usd": 277865017
+    }
+   ],
+   "pct": 0.18
+  },
+  {
+   "kind": "state",
+   "code": "OK",
+   "name": "오클라호마",
+   "name_en": "Oklahoma",
+   "lat": 35.5849,
+   "lng": -97.5058,
+   "frame": "lower48",
+   "value_usd": 245769452,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "WILLIAMS COS INC",
+     "ticker": "WMB",
+     "value_usd": 245769452
+    }
+   ],
+   "pct": 0.16
+  },
+  {
+   "kind": "state",
+   "code": "WI",
+   "name": "위스콘신",
+   "name_en": "Wisconsin",
+   "lat": 44.635,
+   "lng": -90.0142,
+   "frame": "lower48",
+   "value_usd": 207050238,
+   "company_count": 5,
+   "top": [
+    {
+     "company": "ROCKWELL AUTOMATION INC",
+     "ticker": "ROK",
+     "value_usd": 86052330
+    },
+    {
+     "company": "FISERV INC",
+     "ticker": "FISV",
+     "value_usd": 54359515
+    },
+    {
+     "company": "WEC ENERGY GROUP INC",
+     "ticker": "WEC",
+     "value_usd": 49953856
+    },
+    {
+     "company": "SNAP ON INC",
+     "ticker": "SNA",
+     "value_usd": 13826866
+    },
+    {
+     "company": "ALLIANT ENERGY CORP",
+     "ticker": "LNT",
+     "value_usd": 2857671
+    }
+   ],
+   "pct": 0.13
+  },
+  {
+   "kind": "country",
+   "code": "X3",
+   "name": "우루과이",
+   "name_en": "Uruguay",
+   "lat": -32.5228,
+   "lng": -55.7658,
+   "frame": "world",
+   "value_usd": 197109414,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "MERCADOLIBRE",
+     "ticker": "MELI",
+     "value_usd": 197109414
+    }
+   ],
+   "pct": 0.13
+  },
+  {
+   "kind": "state",
+   "code": "KY",
+   "name": "켄터키",
+   "name_en": "Kentucky",
+   "lat": 37.5269,
+   "lng": -85.2921,
+   "frame": "lower48",
+   "value_usd": 146027604,
+   "company_count": 2,
+   "top": [
+    {
+     "company": "YUM BRANDS INC",
+     "ticker": "YUM",
+     "value_usd": 75167131
+    },
+    {
+     "company": "HUMANA INC",
+     "ticker": "HUM",
+     "value_usd": 70860473
+    }
+   ],
+   "pct": 0.09
+  },
+  {
+   "kind": "state",
+   "code": "OR",
+   "name": "오리건",
+   "name_en": "Oregon",
+   "lat": 43.9373,
+   "lng": -120.5553,
+   "frame": "lower48",
+   "value_usd": 126788672,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "NIKE INC",
+     "ticker": "NKE",
+     "value_usd": 126788672
+    }
+   ],
+   "pct": 0.08
+  },
+  {
+   "kind": "country",
+   "code": "E9",
+   "name": "케이맨 제도",
+   "name_en": "Cayman Islands",
+   "lat": 19.5135,
+   "lng": -80.567,
+   "frame": "world",
+   "value_usd": 119627924,
+   "company_count": 2,
+   "top": [
+    {
+     "company": "CREDO TECHNOLOGY GROUP HOLDI",
+     "ticker": "CRDO",
+     "value_usd": 116250738
+    },
+    {
+     "company": "XP INC",
+     "ticker": "XP",
+     "value_usd": 3377186
+    }
+   ],
+   "pct": 0.08
+  },
+  {
+   "kind": "state",
+   "code": "AL",
+   "name": "앨라배마",
+   "name_en": "Alabama",
+   "lat": 32.7899,
+   "lng": -86.8278,
+   "frame": "lower48",
+   "value_usd": 118954087,
+   "company_count": 2,
+   "top": [
+    {
+     "company": "VULCAN MATLS CO",
+     "ticker": "VMC",
+     "value_usd": 60548737
+    },
+    {
+     "company": "REGIONS FINANCIAL CORP NEW",
+     "ticker": "RF",
+     "value_usd": 58405350
+    }
+   ],
+   "pct": 0.08
+  },
+  {
+   "kind": "state",
+   "code": "IA",
+   "name": "아이오와",
+   "name_en": "Iowa",
+   "lat": 42.0755,
+   "lng": -93.5004,
+   "frame": "lower48",
+   "value_usd": 111595733,
+   "company_count": 2,
+   "top": [
+    {
+     "company": "PRINCIPAL FINANCIAL GROUP IN",
+     "ticker": "PFG",
+     "value_usd": 57974431
+    },
+    {
+     "company": "CASEYS GEN STORES INC",
+     "ticker": "CASY",
+     "value_usd": 53621302
+    }
+   ],
+   "pct": 0.07
+  },
+  {
+   "kind": "country",
+   "code": "P7",
+   "name": "네덜란드",
+   "name_en": "Netherlands",
+   "lat": 52.1326,
+   "lng": 5.2913,
+   "frame": "world",
+   "value_usd": 87398063,
+   "company_count": 2,
+   "top": [
+    {
+     "company": "NEBIUS GROUP N.V.",
+     "ticker": "NBIS",
+     "value_usd": 86248720
+    },
+    {
+     "company": "JBS N.V.",
+     "ticker": "JBS",
+     "value_usd": 1149343
+    }
+   ],
+   "pct": 0.06
+  },
+  {
+   "kind": "country",
+   "code": "D0",
+   "name": "버뮤다",
+   "name_en": "Bermuda",
+   "lat": 32.3214,
+   "lng": -64.7574,
+   "frame": "world",
+   "value_usd": 79794048,
+   "company_count": 3,
+   "top": [
+    {
+     "company": "ARCH CAP GROUP LTD",
+     "ticker": "ACGL",
+     "value_usd": 69798564
+    },
+    {
+     "company": "CREDICORP LTD",
+     "ticker": "BAP",
+     "value_usd": 6777913
+    },
+    {
+     "company": "EVEREST GROUP LTD",
+     "ticker": "EG",
+     "value_usd": 3217571
+    }
+   ],
+   "pct": 0.05
+  },
+  {
+   "kind": "state",
+   "code": "ME",
+   "name": "메인",
+   "name_en": "Maine",
+   "lat": 45.3786,
+   "lng": -69.2324,
+   "frame": "lower48",
+   "value_usd": 68071324,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "IDEXX LABS INC",
+     "ticker": "IDXX",
+     "value_usd": 68071324
+    }
+   ],
+   "pct": 0.04
+  },
+  {
+   "kind": "state",
+   "code": "LA",
+   "name": "루이지애나",
+   "name_en": "Louisiana",
+   "lat": 31.0612,
+   "lng": -91.9886,
+   "frame": "lower48",
+   "value_usd": 62803840,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "ENTERGY CORP NEW",
+     "ticker": "ETR",
+     "value_usd": 62803840
+    }
+   ],
+   "pct": 0.04
+  },
+  {
+   "kind": "state",
+   "code": "NH",
+   "name": "뉴햄프셔",
+   "name_en": "New Hampshire",
+   "lat": 43.6818,
+   "lng": -71.5791,
+   "frame": "lower48",
+   "value_usd": 57447683,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "IRON MTN INC DEL",
+     "ticker": "IRM",
+     "value_usd": 57447683
+    }
+   ],
+   "pct": 0.04
+  },
+  {
+   "kind": "state",
+   "code": "UT",
+   "name": "유타",
+   "name_en": "Utah",
+   "lat": 39.3252,
+   "lng": -111.6778,
+   "frame": "lower48",
+   "value_usd": 52430343,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "EXTRA SPACE STORAGE INC",
+     "ticker": "EXR",
+     "value_usd": 52430343
+    }
+   ],
+   "pct": 0.03
+  },
+  {
+   "kind": "state",
+   "code": "MT",
+   "name": "몬태나",
+   "name_en": "Montana",
+   "lat": 47.0334,
+   "lng": -109.6469,
+   "frame": "lower48",
+   "value_usd": 50207045,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "FAIR ISAAC CORP",
+     "ticker": "FICO",
+     "value_usd": 50207045
+    }
+   ],
+   "pct": 0.03
+  },
+  {
+   "kind": "state",
+   "code": "NV",
+   "name": "네바다",
+   "name_en": "Nevada",
+   "lat": 39.3548,
+   "lng": -116.6544,
+   "frame": "lower48",
+   "value_usd": 17478527,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "LAS VEGAS SANDS CORP",
+     "ticker": "LVS",
+     "value_usd": 17478527
+    }
+   ],
+   "pct": 0.01
+  },
+  {
+   "kind": "country",
+   "code": "D5",
+   "name": "브라질",
+   "name_en": "Brazil",
+   "lat": -14.235,
+   "lng": -51.9253,
+   "frame": "world",
+   "value_usd": 16375045,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "NU HLDGS LTD",
+     "ticker": "NU",
+     "value_usd": 16375045
+    }
+   ],
+   "pct": 0.01
+  },
+  {
+   "kind": "country",
+   "code": "F4",
+   "name": "중국",
+   "name_en": "China",
+   "lat": 35.8617,
+   "lng": 104.1954,
+   "frame": "world",
+   "value_usd": 11095641,
+   "company_count": 6,
+   "top": [
+    {
+     "company": "H WORLD GROUP LTD",
+     "ticker": "HTHT",
+     "value_usd": 4287731
+    },
+    {
+     "company": "FULL TRUCK ALLIANCE CO LTD",
+     "ticker": "YMM",
+     "value_usd": 1709008
+    },
+    {
+     "company": "KANZHUN LIMITED",
+     "ticker": "BZ",
+     "value_usd": 1429715
+    },
+    {
+     "company": "TENCENT MUSIC ENTMT GROUP",
+     "ticker": "TME",
+     "value_usd": 1397506
+    },
+    {
+     "company": "FUTU HLDGS LTD",
+     "ticker": "FUTU",
+     "value_usd": 1139410
+    }
+   ],
+   "pct": 0.01
+  },
+  {
+   "kind": "country",
+   "code": "L3",
+   "name": "이스라엘",
+   "name_en": "Israel",
+   "lat": 31.0461,
+   "lng": 34.8516,
+   "frame": "world",
+   "value_usd": 2032959,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "CHECK POINT SOFTWARE TECH LT",
+     "ticker": "CHKP",
+     "value_usd": 2032959
+    }
+   ],
+   "pct": 0.0
+  },
+  {
+   "kind": "country",
+   "code": "A1",
+   "name": "캐나다",
+   "name_en": "Canada",
+   "lat": 56.1304,
+   "lng": -106.3468,
+   "frame": "world",
+   "value_usd": 1581621,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "LULULEMON ATHLETICA INC",
+     "ticker": "LULU",
+     "value_usd": 1581621
+    }
+   ],
+   "pct": 0.0
+  },
+  {
+   "kind": "country",
+   "code": "R5",
+   "name": "페루",
+   "name_en": "Peru",
+   "lat": -9.19,
+   "lng": -75.0152,
+   "frame": "world",
+   "value_usd": 1336093,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "COMPANIA DE MINAS BUENAVENTU",
+     "ticker": "BVN",
+     "value_usd": 1336093
+    }
+   ],
+   "pct": 0.0
+  },
+  {
+   "kind": "country",
+   "code": "C3",
+   "name": "호주",
+   "name_en": "Australia",
+   "lat": -25.2744,
+   "lng": 133.7751,
+   "frame": "world",
+   "value_usd": 1213263,
+   "company_count": 1,
+   "top": [
+    {
+     "company": "IREN LIMITED",
+     "ticker": "IREN",
+     "value_usd": 1213263
+    }
+   ],
+   "pct": 0.0
+  }
+ ],
+ "unmatched_count": 7,
+ "unmatched_value_usd": 2063870050,
+ "unmatched_pct": 1.33,
+ "unmatched": [
+  {
+   "company": "EXXON MOBIL CORP",
+   "value_usd": 1321264951,
+   "cusips": [
+    "30231G102"
+   ],
+   "ticker": null,
+   "cik": null,
+   "reason": "SEC 회사 번호를 못 찾았어요"
+  },
+  {
+   "company": "NXP SEMICONDUCTORS N V",
+   "value_usd": 244051792,
+   "cusips": [
+    "N6596X109"
+   ],
+   "ticker": "NXPI",
+   "cik": "1413447",
+   "reason": "EDGAR 사업장 주소에 주나 나라가 없어요"
+  },
+  {
+   "company": "WARNER BROS DISCOVERY INC",
+   "value_usd": 181076453,
+   "cusips": [
+    "934423104"
+   ],
+   "ticker": null,
+   "cik": null,
+   "reason": "SEC 회사 번호를 못 찾았어요"
+  },
+  {
+   "company": "ELECTRONIC ARTS INC",
+   "value_usd": 99731661,
+   "cusips": [
+    "285512109"
+   ],
+   "ticker": null,
+   "cik": null,
+   "reason": "SEC 회사 번호를 못 찾았어요"
+  },
+  {
+   "company": "ONEOK INC NEW",
+   "value_usd": 90100617,
+   "cusips": [
+    "682680103"
+   ],
+   "ticker": null,
+   "cik": null,
+   "reason": "SEC 회사 번호를 못 찾았어요"
+  },
+  {
+   "company": "TEVA PHARMACEUTICAL INDS LTD",
+   "value_usd": 81515720,
+   "cusips": [
+    "881624209"
+   ],
+   "ticker": null,
+   "cik": null,
+   "reason": "SEC 회사 번호를 못 찾았어요"
+  },
+  {
+   "company": "AVALONBAY CMNTYS INC",
+   "value_usd": 46128856,
+   "cusips": [
+    "053484101"
+   ],
+   "ticker": null,
+   "cik": null,
+   "reason": "SEC 회사 번호를 못 찾았어요"
+  }
+ ],
+ "company_count": 546,
+ "matched_company_count": 539
+}

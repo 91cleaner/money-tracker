@@ -32,7 +32,7 @@ const steelDonut=(rows)=>{
     const t=Math.abs(den)<1e-9?R:(p0[0]*ey-p0[1]*ex)/den;
     return [cx+dx*t,cy+dy*t];
   };
-  const exact=rows.map(r=>({name:r.name,v:Math.max(0,Number(r.pct)||0)}));
+  const exact=rows.map(r=>({name:r.name,v:Math.max(0,Number(r.pct)||0),ticker:r.ticker||'',short:r.short||'',logo:r.logo||''}));
   const used=exact.reduce((s,r)=>s+r.v,0);
   const rest=Math.max(0,100-used);
   const parts=exact.concat([{name:'나머지',v:rest,rest:1}]).filter(p=>p.v>0.0001);
@@ -40,8 +40,9 @@ const steelDonut=(rows)=>{
   const shown=parts.map(p=>Math.round(p.v*100)/100);
   const drift=Math.round((100-shown.reduce((s,n)=>s+n,0))*100)/100;
   shown[shown.length-1]=Math.round((shown[shown.length-1]+drift)*100)/100;
-  const steels=[[226,232,238],[168,178,190],[196,206,214],[124,136,148],[210,216,222],[146,158,170],[184,192,202],[108,118,130],[200,208,216],[132,144,156],[78,86,96]];
-  let acc=0; const ranges=parts.map((p,i)=>{const a0=t0+(acc/sum)*Math.PI*2; acc+=p.v; return {p,i,a0,a1:t0+(acc/sum)*Math.PI*2,rgb:steels[Math.min(i,steels.length-1)]};});
+  const hues=[[255,176,32],[64,196,232],[255,92,64],[80,220,140],[176,132,255],[255,138,48],[110,150,255],[240,208,96],[255,96,168],[48,214,196]];
+  const restRgb=[148,156,164];
+  let acc=0; const ranges=parts.map((p,i)=>{const a0=t0+(acc/sum)*Math.PI*2; acc+=p.v; return {p,i,a0,a1:t0+(acc/sum)*Math.PI*2,rgb:p.rest?restRgb:hues[i%hues.length]};});
   const defs=[],faces=[];
   const gid=(i,k)=>'st'+i+'f'+k;
   ranges.forEach(sl=>{
@@ -49,8 +50,8 @@ const steelDonut=(rows)=>{
       const f0=t0+f*step,f1=f0+step,b0=Math.max(f0,sl.a0),b1=Math.min(f1,sl.a1);
       if(b1-b0<0.0008)continue;
       const amid=(f0+f1)/2, shine=Math.max(0,Math.cos(amid-(-Math.PI*0.72)));
-      const tone=c=>c*(0.32+shine*0.82)+(shine>0.78?(shine-0.78)*220:0);
-      const base=sl.rgb.map(tone), hi=sl.rgb.map(c=>tone(c)+28+shine*24), lo=sl.rgb.map(c=>tone(c)-36);
+      const tone=(c,k,add)=>Math.max(0,Math.min(255,c*k+add));
+      const base=sl.rgb.map(c=>tone(c,0.62+shine*0.34,0)), hi=sl.rgb.map(c=>tone(c,0.8+shine*0.2,shine*16)), lo=sl.rgb.map(c=>tone(c,0.4,0));
       const tx=Math.cos(amid+Math.PI/2), ty=Math.sin(amid+Math.PI/2);
       const id=gid(sl.i,f);
       defs.push(`<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${(cx-tx*70).toFixed(1)}" y1="${(cy-ty*70).toFixed(1)}" x2="${(cx+tx*70).toFixed(1)}" y2="${(cy+ty*70).toFixed(1)}"><stop offset="0" stop-color="${hex(lo)}"/><stop offset="0.16" stop-color="${hex(hi)}"/><stop offset="0.42" stop-color="${hex(base)}"/><stop offset="0.58" stop-color="${hex(lo)}"/><stop offset="0.8" stop-color="${hex(hi)}"/><stop offset="1" stop-color="${hex(base)}"/></linearGradient>`);
@@ -66,13 +67,21 @@ const steelDonut=(rows)=>{
   const ring=R=>{const pts=ngon(R).split(' ');return 'M'+pts[0]+pts.slice(1).map(p=>'L'+p).join('')+'Z';};
   const back=`<path transform="translate(5,16)" fill="#14181c" fill-rule="evenodd" d="${ring(Ro)}${ring(Ri)}"/>`;
   const topPct=pct2(used);
-  const label=ranges.map(sl=>`${sl.p.name} ${shown[sl.i].toFixed(2)}%`).join(', ');
-  const swatch=sl=>hex(sl.rgb.map(c=>c*0.72+40));
-  const lg=ranges.map((sl,i)=>`<li><i style="background:${swatch(sl)}"></i><span>${esc(sl.p.name)}</span><b>${shown[i].toFixed(2)}%</b></li>`).join('');
-  return `<figure class="steel"><div class="steel-stage"><div class="steel-tilt"><svg viewBox="0 0 320 320" role="img" aria-label="상위 10개 ${topPct}. ${esc(label)}"><defs>${defs.join('')}</defs>${back}${faces.join('')}<polygon points="${ngon(Ri)}" fill="#07080a"/><polygon points="${ngon(Ro)}" fill="none" stroke="#f7fbff" stroke-width="1.2" stroke-linejoin="miter"/></svg><div class="steel-num"><b>${topPct}</b><span>상위 10개</span></div></div></div><ul class="steel-lg">${lg}</ul></figure>`;
+  const letters=t=>{const s=String(t||'').toUpperCase().replace(/[^A-Z0-9]/g,''); if(!s)return '?'; return /^[0-9]+$/.test(s)?s.slice(0,3):s.slice(0,2);};
+  const ink=rgb=>((rgb[0]*299+rgb[1]*587+rgb[2]*114)/1000>160)?'#14110a':'#f4f7fb';
+  const lab=p=>p.rest?'나머지':(p.short?`${p.ticker} ${p.short}`.trim():(p.ticker||p.name));
+  const label=ranges.map(sl=>`${lab(sl.p)} ${shown[sl.i].toFixed(2)}%`).join(', ');
+  const lg=ranges.map((sl,i)=>{
+    const p=sl.p, col=hex(sl.rgb);
+    const mark=p.rest?'':(p.logo?`<img class="logo" alt="" width="36" height="22" src="${esc(p.logo)}">`:`<span class="mark" style="background:${col};color:${ink(sl.rgb)}">${esc(letters(p.ticker||p.short||p.name))}</span>`);
+    return `<li><i style="background:${col}"></i>${mark}<span>${esc(lab(p))}</span><b>${shown[i].toFixed(2)}%</b></li>`;
+  }).join('');
+  return `<figure class="steel"><div class="steel-fit"><div class="steel-stage"><div class="steel-tilt"><svg viewBox="0 0 320 320" role="img" aria-label="상위 10개 ${topPct}. ${esc(label)}"><defs>${defs.join('')}</defs>${back}${faces.join('')}<polygon points="${ngon(Ri)}" fill="#07080a"/><polygon points="${ngon(Ro)}" fill="none" stroke="#f7fbff" stroke-width="1.2" stroke-linejoin="miter"/></svg><div class="steel-num"><b>${topPct}</b><span>상위 10개</span></div></div></div><ul class="steel-lg">${lg}</ul></div></figure>`;
 };
 const ymd=s=>{const [y,m,d]=String(s||'').split('-');return `${+y}년 ${+m}월 ${+d}일`;};
-const [ft,q1,q2,ch,kr]=await Promise.all([j('fund_totals.json'),j('holdings_us_2026Q1.json'),j('holdings_us_2026Q2.json'),j('changes_us.json'),j('kr_holdings.json')]);
+const KR_CODE={"삼성전자":"005930","SK하이닉스":"000660","LG에너지솔루션":"373220","삼성바이오로직스":"207940","현대차":"005380","HD현대중공업":"329180","SK스퀘어":"402340","KB금융":"105560","한화에어로스페이스":"012450","두산에너빌리티":"034020"};
+const LOGO={NVDA:'NVDA.svg',AAPL:'AAPL.svg',MSFT:'MSFT.svg',AMZN:'AMZN.svg',GOOGL:'GOOGL.svg',GOOG:'GOOGL.svg',AVGO:'AVGO.svg',MU:'MU.svg',IVV:'IVV.svg',META:'META.svg','005930':'005930.svg','000660':'000660.svg','373220':'373220.svg','207940':'207940.svg','005380':'005380.svg','329180':'329180.svg','105560':'105560.svg','012450':'012450.svg'};
+const [ft,q1,q2,ch,kr,ticks]=await Promise.all([j('fund_totals.json'),j('holdings_us_2026Q1.json'),j('holdings_us_2026Q2.json'),j('changes_us.json'),j('kr_holdings.json'),j('us_tickers.json').catch(()=>({cusip:{}}))]);
 $('upd').textContent=String(ch.updated||'').slice(0,10);
 const hy=ft.half_year_release;
 let h=`<div class="big">1,865조 5,760억원</div><p class="sub">2026년 6월 말까지 쌓아 둔 돈(적립금)이에요. ${S(hy.url,'국민연금 상반기 보도자료(2026.8.28)')}</p>`;
@@ -85,7 +94,8 @@ h=`<p class="sub">미국에서는 돈을 많이 굴리는 곳이 석 달에 한 
 <div class="two">${card(q2,FX.Q2,'2026년 2분기')}${card(q1,FX.Q1,'2026년 1분기')}</div>
 <h3>가장 많이 가진 미국 주식 10개 (2026년 2분기)</h3><p class="sub">오른쪽 %는 미국 주식 ${usdKo(q2.total_value_usd)} 중이에요.</p>`;
 const t=q2.top20.slice(0,10),tm=t[0].value_usd;
-const usShares=t.map(x=>({name:x.issuer,pct:q2.total_value_usd>0?x.value_usd/q2.total_value_usd*100:0}));
+const usTick=(ticks&&ticks.cusip)||{};
+const usShares=t.map(x=>{const ticker=usTick[x.cusip]||''; return {name:x.issuer,pct:q2.total_value_usd>0?x.value_usd/q2.total_value_usd*100:0,ticker,logo:LOGO[ticker]?('assets/logos/'+LOGO[ticker]):''};});
 h+=t.map((x,i)=>{const g=fundLine(x.issuer,x.class);return `<div class="row"><span>${i+1}. ${esc(x.issuer)}${g?`<span class="hint">${esc(g)}</span>`:''}<div class="bar" style="width:${x.value_usd/tm*100}%"></div></span><b class="amt">${krw(x.value_usd*FX.Q2.usd_krw)} · ${shHtml(usShares[i].pct,false)}</b></div>`;}).join('')+steelDonut(usShares)+`<p class="src">회사 이름은 공개 자료의 영어 그대로예요. ${S(idx(q2.infotable_url),'미국 정부에 낸 보유 주식 목록')}</p>`;
 $('us').innerHTML=h;
 const BAD=/DUPONT|FEDEX|QNITY/i;
@@ -111,5 +121,5 @@ const mid=Math.ceil(top.length/2);
 const krLine=shares.some(s=>s.computed)
   ?`오른쪽 %는 가진 금액을 국내 주식 ${eokWon(kr.total_value_100m_krw)}으로 나눈 값이에요.`
   :`오른쪽 %는 국내 주식 ${eokWon(kr.total_value_100m_krw)} 중이에요.`;
-$('kr').innerHTML=`<div class="big">${eokWon(kr.total_value_100m_krw)}</div><p class="sub">${Number(kr.count).toLocaleString('ko-KR')}개 주식 · ${ymd(kr.as_of)} 기준</p><p class="sub">평가액은 그날 가격으로 계산한 금액이에요. 지분은 그 회사 주식 가운데 국민연금이 가진 비율이에요.</p><h3>평가액이 큰 주식 10개</h3><p class="sub">${krLine}</p><div class="two"><div>${top.slice(0,mid).map(krow).join('')}</div><div>${top.slice(mid).map((x,i)=>krow(x,i+mid)).join('')}</div></div>${steelDonut(top.map((x,i)=>({name:x.company,pct:shares[i].pct})))}<p class="src">${S(kr.board_url,'국민연금이 공개한 2025년 말 국내 주식 목록')}</p>`;
+$('kr').innerHTML=`<div class="big">${eokWon(kr.total_value_100m_krw)}</div><p class="sub">${Number(kr.count).toLocaleString('ko-KR')}개 주식 · ${ymd(kr.as_of)} 기준</p><p class="sub">평가액은 그날 가격으로 계산한 금액이에요. 지분은 그 회사 주식 가운데 국민연금이 가진 비율이에요.</p><h3>평가액이 큰 주식 10개</h3><p class="sub">${krLine}</p><div class="two"><div>${top.slice(0,mid).map(krow).join('')}</div><div>${top.slice(mid).map((x,i)=>krow(x,i+mid)).join('')}</div></div>${steelDonut(top.map((x,i)=>{const code=KR_CODE[x.company]||''; return {name:x.company,pct:shares[i].pct,ticker:code,short:x.company,logo:LOGO[code]?('assets/logos/'+LOGO[code]):''};}))}<p class="src">${S(kr.board_url,'국민연금이 공개한 2025년 말 국내 주식 목록')}</p>`;
 })();

@@ -27,13 +27,19 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
 .steel-num b{font-family:Bahnschrift,"DIN Alternate","Arial Narrow",Pretendard,sans-serif;font-size:32px;font-weight:800;letter-spacing:-.06em;line-height:1;font-variant-numeric:tabular-nums}
 .steel-num span{margin-top:4px;font-size:12px;font-weight:800;letter-spacing:.12em;color:#d5dde6}
 .steel-lg{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px 12px}
-.steel-lg li{display:flex;align-items:baseline;gap:6px;min-width:0;font-size:12px;line-height:1.35;color:#e8eef4}
-.steel-lg i{flex:none;width:10px;height:10px;background:#c5ced6;box-shadow:inset 0 0 0 1px #f4f8fc}
+.steel-lg li{display:flex;align-items:center;gap:8px;min-width:0;min-height:28px;font-size:13px;line-height:1.35;color:#e8eef4}
+.steel-lg i{flex:none;width:12px;height:12px;background:#c5ced6;box-shadow:inset 0 0 0 1px #f4f8fc}
 .steel-lg span{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
 .steel-lg b{flex:none;font-variant-numeric:tabular-nums;font-weight:800;letter-spacing:-.03em}
 @keyframes steel-in{from{transform:rotateX(22deg) rotateZ(-108deg)}to{transform:rotateX(22deg) rotateZ(-16deg)}}
 @media(prefers-reduced-motion:reduce){.steel-tilt{animation:none}}
-@media(min-width:520px){.steel-lg{grid-template-columns:1fr 1fr}}
+.steel-fit{display:grid;gap:8px;align-items:center}
+@media(min-width:1100px){.steel-fit{grid-template-columns:minmax(200px,240px) minmax(0,1fr)}}
+.steel-lg .logo{flex:none;width:36px;height:22px;object-fit:contain;background:#f4f7fb;border-radius:4px;padding:1px}
+.steel-lg .mark{flex:none;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.map-toggle{display:flex;gap:8px;margin:0 0 10px}
+.map-toggle button{flex:1 1 0;min-height:48px;padding:0 12px;border-radius:12px;border:1px solid #3a4652;background:#151b23;color:#f4f7fb;font:800 18px/1 Pretendard,system-ui,sans-serif;cursor:pointer}
+.map-toggle button[aria-selected="true"]{background:#ffb020;color:#14110a;border-color:#ffb020}
 .bar{height:8px;border-radius:4px;background:#ffb020;margin-top:4px;max-width:100%}.bar.g{background:#3ddc84}.bar.r{background:#ff6b6b}
 .tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;border:1px solid #3a4652;color:#b8c3cf;margin:2px 4px 0 0;line-height:1.45}.tag.y{border-color:#ffd60a66;color:#ffd60a}
 .note{background:#0f141b;border-radius:10px;padding:10px 12px;font-size:13px;color:#b8c3cf;margin:10px 0;line-height:1.5}
@@ -67,7 +73,11 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
 <header class="nbar"><a href="./">‹ 세금추적단</a><span>갱신 <span id="upd"></span></span></header>
 <main class="w">
   <section id="s5" class="topmap">
-    <h2 class="topmap-h">우리 지역 회사 주식</h2>
+    <h2 id="npsMapTitle" class="topmap-h">우리 지역 회사 주식</h2>
+    <div class="map-toggle" id="npsMapToggle" role="tablist" aria-label="국내와 해외">
+      <button type="button" role="tab" data-view="kr" aria-selected="true">국내</button>
+      <button type="button" role="tab" data-view="us" aria-selected="false">해외</button>
+    </div>
     <div id="npsMapBox"></div>
   </section>
   <h1>국민연금은 어떤 주식을 살까?</h1>
@@ -101,8 +111,8 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
   </footer>
 </main>
 <script src="assets/vendor/leaflet/leaflet.js?v=202610247400"></script>
-<script src="assets/nps.js?v=202610247600"></script>
-<script src="assets/nps-map.js?v=202610247600"></script>
+<script src="assets/nps.js?v=202610248300"></script>
+<script src="assets/nps-map.js?v=202610248300"></script>
 <script src="assets/fun.js?v=202610247100"></script>
 <script src="assets/nav.js?v=202610247600"></script>
 </body>
