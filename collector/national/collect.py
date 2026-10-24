@@ -111,8 +111,14 @@ def _party_at(hist_party, date):
 
 PARTY_NORM = {"더불어민주연합": "더불어민주당"}  # 22대 총선 비례 위성정당 → 2024.5 합당
 # 출장 시점 당적(공개 경력 기준, 팩트체크 필요): (이름, 이 날짜 전, 그 전 당적, 이후 당적)
-PARTY_AT = [("조정식", "2026-06-01", "더불어민주당", "무소속"),   # 국회의장 당선 후 무소속(국회법 20조의2)
-            ("김상욱", "2025-05-08", "국민의힘", "더불어민주당")]  # 2025년 5월 국민의힘 탈당·민주당 입당
+PARTY_AT = [("조정식", "2026-06-06", "더불어민주당", "무소속"),   # 국회의장 당선 후 무소속(국회법 20조의2), 팩트체크 확인일
+            ("김상욱", "2025-05-18", "국민의힘", "더불어민주당"),  # 국민의힘 탈당·민주당 입당, 팩트체크 확인일
+            ("장경태", "2025-01-01", "더불어민주당", "무소속")]  # 2024-11 출장 당시 민주당(22대 이력 당적), 탈당일 확인 필요
+PARTY_NOTE = {"김종민": "22대 당선 당적 새로운미래 → 현재 무소속. 탈당일 미확인이라 출장 시점 당적 확인 필요",
+              "장경태": "탈당일 미확인(2024-11 출장은 민주당 시기로 봄)"}
+ALIAS = {"천아람": "천하람"}  # 신고서 오타(팩트체크 확인)
+FIXED = {("박지원", "2025-07-27"): "8BF5855P"}  # 1942년생(더불어민주당). 1987년생은 2026-06-03 당선이라 출장 당시 의원 아님
+NOTE_RAW = {"이준영": "이준석 오타 가능성(미확인) — 같은 신고서 PN에 이준석이 따로 적혀 있음"}
 NAMESAKE_HINT = {"박지원": "22대 동명이인 2명(1942년생 전남 해남·완도·진도 / 1987년생 전북 군산·김제·부안을)"}
 
 
@@ -127,7 +133,11 @@ def party_at(name, party, date):
     for n, cut, before, after in PARTY_AT:
         if n == name and date:
             return (before if date < cut else after), "출장 시점 당적"
-    return party, "현재 당적"
+    return party, "출장 시점 당적(당적 변경 기록 없음)" if name not in PARTY_NOTE else "현재 당적(출장 시점 확인 필요)"
+
+
+SEAT_SRC = "members.json(열린국회정보 API nwvrqwxyaytdsfvhu)"
+SEAT_DAY = datetime.now(KST).strftime("%Y-%m-%d")
 
 
 def collect_trips(members):
@@ -147,9 +157,13 @@ def collect_trips(members):
         names = [n.strip() for n in _split_top(r.get("PN") or "")]
         dst, inferred = dests(r.get("DSTN_NM"), r.get("PURP_RSON"), known)
         lead = (r.get(LEAD) or "").strip() if LEAD else (names[0] if names else None)
-        for n in names:
-            ms, how = cur.get(n, []), "현직"
-            if len(ms) != 1:
+        for n0 in names:
+            n = ALIAS.get(n0, n0)
+            ms, how = cur.get(n, []), ("현직" if n == n0 else "오타 보정")
+            fx = FIXED.get((n, _start(r.get("SCH_DYS"))))
+            if fx:
+                ms = [{"id": h["id"], "party": h["party"], "name": n} for h in hist.get(n, []) if h["id"] == fx]; how = "동명이인 판별"
+            if len(ms) != 1 and not fx:
                 hs = hist.get(n, [])
                 ms = [{"id": h["id"], "party": h["party"], "name": n} for h in hs] if len(hs) == 1 else ms
                 how = "22대 이력" if len(hs) == 1 else ("동명이인" if len(ms) > 1 or len(hs) > 1 else "미매칭")
@@ -158,8 +172,8 @@ def collect_trips(members):
                 unmatched[n] += 1
             pty, basis = party_at(n, ms[0]["party"], _start(r.get("SCH_DYS"))) if ok else (None, None)
             trips.append({"trip_id": i, "name": n, "member_id": ms[0]["id"] if ok else None,
-                          "party": pty, "party_basis": basis, "match": how if ok or how != "현직" else "미매칭", "note": NAMESAKE_HINT.get(n) if not ok else None, "start": _start(r.get("SCH_DYS")),
-                          "is_leader": n == lead, "dest": dst, "dest_inferred": inferred, "dest_raw": r.get("DSTN_NM"),
+                          "party": pty, "party_basis": basis, "match": how if ok or how != "현직" else "미매칭", "name_raw": n0, "note": (NOTE_RAW.get(n) or NAMESAKE_HINT.get(n)) if not ok else PARTY_NOTE.get(n), "start": _start(r.get("SCH_DYS")),
+                          "is_leader": n == lead, "dest": dst, "dest_inferred": inferred, "dest_label": "목적 문구로 추정" if inferred else None, "dest_raw": r.get("DSTN_NM"),
                           "dates": r.get("SCH_DYS"), "purpose": r.get("PURP_RSON"), "funder": re.sub(r"\s+", " ", r.get("EXPNS_SUPPT_INST_NM") or "").strip() or None,
                           "report": r.get("REPORT_YN"), "report_label": "신고 당시 결과보고서 유/무", "src": BASE + TRIP})
     json.dump({"count_raw": len(rows), "leader_field": LEAD or "없음(PN 첫 이름을 대표로 봄)", "unmatched": dict(unmatched), "trips": trips},
@@ -181,10 +195,10 @@ def collect_trips(members):
     def wcsv(fn, head, items):
         with open(os.path.join(OUT, fn), "w", encoding="utf-8-sig", newline="") as f:
             w = csv.writer(f); w.writerow(head); w.writerows(items)
-    wcsv("trips_by_member.csv", ["name", "party", "참가 횟수(동행 포함)", "대표 횟수", "funders"],
+    wcsv("trips_by_member.csv", ["name", "party", "참가 횟수(동행 포함)", "신고서 첫 번째 기재 의원", "funders"],
          sorted(((a, b, c, by_l.get((a, b), 0), " / ".join(sorted(x for x in fund[(a, b)] if x))) for (a, b), c in by_m.items()), key=lambda x: (-x[2], x[0])))
-    wcsv("trips_by_party.csv", ["party", "참가 횟수(동행 포함)", "현재 의석", "의석당 참가 횟수"],
-         sorted(((p, c, seats.get(p, 0), round(c / seats[p], 2) if seats.get(p) else None) for p, c in by_p.items()), key=lambda x: -x[1]))
+    wcsv("trips_by_party.csv", ["party", "참가 횟수(동행 포함)", "현재 의석", "의석당 참가 횟수(현재 의석 기준 근사치)", "의석 출처", "의석 기준일"],
+         sorted(((p, c, seats.get(p, 0), round(c / seats[p], 2) if seats.get(p) else None, SEAT_SRC, SEAT_DAY) for p, c in by_p.items()), key=lambda x: -x[1]))
     wcsv("trips_top_dest.csv", ["destination", "reports"], sorted(by_d.items(), key=lambda x: -x[1])[:10])
     log.append(f"국외활동: 신고 {len(rows)}건, 참가 {len(trips)}건, 미매칭 {sum(unmatched.values())}건")
     return trips
@@ -245,7 +259,7 @@ def main():
     w("years.json", {"updated": now, "years": {k: dict(v) for k, v in sorted(years.items())}})
     w("support.json", {"updated": now, "allowance": seed["allowance"], "office_support": seed["office_support"]})
     w("projects.json", {"updated": now, "special_activity": seed["special_activity"], "national_projects": seed["national_projects"]})
-    w("index.json", {"updated": now, "assembly_key": bool(AK), "log": log,
+    w("index.json", {"updated": now, "assembly_key": bool(AK), "seats": {"source": SEAT_SRC, "date": SEAT_DAY, "label": "현재 의석 기준 근사치"}, "log": log,
                      "files": ["trips_raw", "members", "parties", "flows", "years", "support", "projects"],
                      "missing": [
                          "정당·의원 정치자금 회계보고(후원금 모금액·지출처): 선관위 정치자금 공개시스템은 Open API 없음 — 파일 내려받기/정보공개청구 필요",
