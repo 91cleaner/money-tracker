@@ -281,6 +281,8 @@ main.wrap{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
 .maplg i{display:inline-block;flex:none}.maplg .lg-ln{width:16px;height:3px;border-radius:2px;margin-left:4px}.maplg .lg-ln:first-child{margin-left:0}
 .maplg .lg-w{display:inline-flex;align-items:center;gap:2px;margin-left:4px}.maplg .lg-w i{width:12px;background:#9aa6b2;border-radius:2px}.maplg .lg-w i:first-child{height:2px}.maplg .lg-w i:last-child{height:6px}
 .maplg .lg-ring{width:10px;height:10px;border:2px solid #ffd60a;border-radius:50%;margin-left:4px}
+.maplg .lg-s{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.maplg .lg-s .lg-ring{margin-left:0}
 #dive .maplg{order:3;margin:6px 6px 0}
 /* 최소 12px(남은 10px 정리) + 하단 탭바 여백 */
 .leaflet-control-attribution,#dive .leaflet-control-attribution{font-size:12px!important}

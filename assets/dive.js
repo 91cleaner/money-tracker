@@ -297,10 +297,15 @@
       REST = {n: restOut > 0 ? Math.max(1, restN) : 0, amt: restOut + unk, unk: unk > 0}; if (REST.amt <= 0) REST.n = 0;
       window.__dvLast = {slug, shown: top.reduce((t, f) => t + f.amount, 0), rest: REST.amt, tot: c.total, local: c.local, card: (BY[slug] || {}).total, re: !!c.__re, top: top.map((f) => [f.to, f.amount, f.local ? 1 : 0])}; }
     top.forEach((f, i) => {
-      const b = f.p, dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60); // 아주 짧은 흐름도 휘어서 보이게
-      const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
-      for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mxp + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * myp + t * t * b[1]]));
-      const w = 1.5 + 7 * Math.sqrt(f.amount / mx), col = f.local ? '#0a84ff' : '#ff9f0a';
+      const b = f.p;
+      let pts;
+      if (window.mtArc) pts = mtArc(a, b).map(toLL); // 시 페이지·정부 지출·국민연금 지도와 같은 곡선
+      else {
+        const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60); // 아주 짧은 흐름도 휘어서 보이게
+        const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o; pts = [];
+        for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mxp + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * myp + t * t * b[1]]));
+      }
+      const w = window.mtW ? mtW(f.amount, mx) : 1.5 + 7 * Math.sqrt(f.amount / (mx || 1)), col = f.local ? '#0a84ff' : '#ff9f0a';
       const ln = L.polyline(pts, {color: col, weight: w, opacity: 0.85, interactive: false, className: 'dv-line'}).addTo(gF);
       const dot = L.circleMarker(toLL(b), {pane: 'dvTop', renderer: gTop, radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false, className: RM ? '' : 'dv-rcv'}).addTo(gF);
       const tipNm = (f.to || '').split(' ').slice(-1)[0] || '';

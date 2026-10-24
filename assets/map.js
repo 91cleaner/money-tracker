@@ -29,7 +29,7 @@ function seatBadge(map, mk) {
 function satView(box, geo, cities, onPick) {
   if (!window.L) throw new Error('no leaflet');
   box.classList.add('sat');
-  const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 12, zoomSnap: 0.25, tap: true,
+  const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 5, maxZoom: 12, zoomSnap: 0.25, tap: true, touchZoom: true,
     maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false});
   { // 크기가 바뀌거나 다시 보일 때 타일이 깨지지 않게
     let t = 0; const inv = () => { clearTimeout(t); t = setTimeout(() => { map.invalidateSize({pan: false}); view.onsize && view.onsize(); }, 80); };
@@ -38,6 +38,7 @@ function satView(box, geo, cities, onPick) {
     document.addEventListener('visibilitychange', () => !document.hidden && inv()); window.__inv2 = inv; }
 
   if (!matchMedia('(pointer: coarse)').matches) L.control.zoom({position: 'topright'}).addTo(map);
+  if (window.mtWheel) mtWheel(map, box);
   // 페이지 스크롤을 빼앗지 않도록: 터치 기기에서는 지도를 한 번 눌러야 움직임
   if (matchMedia('(pointer: coarse)').matches) {
     map.zoomControl && map.zoomControl.remove();  // 한 손가락 이동·두 손가락 확대(기본)
@@ -91,6 +92,7 @@ function satView(box, geo, cities, onPick) {
   const zoomedIn = () => map.getZoom() >= map.getBoundsZoom(korea, false) + 0.75;
   // 전국 배율: 금액 큰 시 14곳만. 확대하면 화면에 보이는 시·군 마커는 짧은 이름. 실제로 겹치거나 버튼 위를 가리는 것만 숨긴다.
   const declutter = () => {
+    if (!map._mapPane || !map._loaded) return; // 지도를 지운 뒤 남은 타이머가 부르면 아무것도 하지 않는다
     const zIn = zoomedIn(), b = map.getBounds(), boxR = box.getBoundingClientRect(), seen = [];
     const narrow = box.clientWidth < 520, EIN = 10, btnPad = narrow ? 14 : 8;
     box.querySelectorAll('.leaflet-control, .map-home').forEach((el) => { const r = el.getBoundingClientRect(); if (r.width < 4 || r.height < 4) return; const p = (el.classList.contains('map-home') || el.querySelector('.map-home')) ? btnPad : 3; seen.push({left: r.left - p, right: r.right + p, top: r.top - p, bottom: r.bottom + p, _ctl: 1}); });
@@ -167,7 +169,8 @@ function satView(box, geo, cities, onPick) {
   tiles.on('load', scheduleDeclutter);
   if (document.fonts) { document.fonts.ready.then(scheduleDeclutter); document.fonts.addEventListener('loadingdone', scheduleDeclutter); }
   const bez = (a, b) => {
-    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
+    if (window.mtArc) return mtArc(a, b).map(toLL);
+    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60);
     const mx = (a[0] + b[0]) / 2 - (dy / d) * o, my = (a[1] + b[1]) / 2 + (dx / d) * o, pts = [];
     for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mx + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * my + t * t * b[1]]));
     return pts;
@@ -191,12 +194,12 @@ function satView(box, geo, cities, onPick) {
       const px = (p) => map.latLngToContainerPoint(toLL(p));
       const buried = [];
       list.forEach((f, i) => {
-        const w = 2 + 9 * Math.sqrt(f.amount / maxA), col = f.local ? '#0a84ff' : '#ff9f0a';
+        const w = window.mtW ? mtW(f.amount, maxA) : 1.5 + 7 * Math.sqrt((f.amount || 0) / (maxA || 1)), col = f.local ? '#0a84ff' : '#ff9f0a';
         const svgD = f.a && f.p ? Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) : 99;
         const near = !!(f.local && f.a && f.p && (svgD < 1 || (box.clientWidth > 40 && px(f.a).distanceTo(px(f.p)) < 28)));
         if (near) { buried.push(f); return; }
         if (svgD >= 0.5) {
-          const pl = L.polyline(bez(f.a, f.p), {color: col, weight: w, opacity: 0.9, lineCap: 'round', className: 'sfl', interactive: false}).addTo(gF);
+          const pl = L.polyline(bez(f.a, f.p), {color: col, weight: w, opacity: 0.85, lineCap: 'round', className: 'sfl', interactive: false}).addTo(gF);
           const el2 = pl.getElement && pl.getElement(); if (el2) { el2.setAttribute('pathLength', '1'); el2.style.animationDelay = i * 60 + 'ms'; }
         }
         L.circleMarker(toLL(f.p), {radius: 3 + w / 3, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false}).addTo(gF);
@@ -242,22 +245,45 @@ function satView(box, geo, cities, onPick) {
 function svgView(box, geo, cities, onPick) {
   const full = [0, 0, geo.w, geo.h];
   const svg = sv('svg', {viewBox: full.join(' '), role: 'img', 'aria-label': '대한민국 지도 위 돈의 흐름'});
-  const gP = sv('g', {class: 'provs'}), gF = sv('g', {class: 'flows'}), gD = sv('g', {class: 'dests'}), gC = sv('g', {class: 'cits'}), gL = sv('g', {class: 'labels'});
+  const gP = sv('g', {class: 'provs'}), gF = sv('g', {class: 'flows'}), gD = sv('g', {class: 'dests'}), gC = sv('g', {class: 'cits'}), gL = sv('g', {class: 'labels'}), gN = sv('g', {class: 'names'});
   for (const p of geo.provinces) gP.append(sv('path', {d: p.d}));
-  svg.append(gP, gF, gD, gC, gL); box.replaceChildren(svg);
+  svg.append(gP, gF, gD, gC, gN, gL); box.replaceChildren(svg);
+  box.style.touchAction = 'none';
   const maxT = cities[0] ? cities[0].total : 1, dots = new Map();
+  const shortNm = (name) => { const t = String(name || '').trim().split(/\s+/).pop() || ''; const base = t.replace(/(특별자치시|특별자치도|특별시|광역시)$/, ''); const m = base.match(/^(.+)(시|군|구)$/); return (m && m[1].length >= 2) ? m[1] : (base || t); };
+  const nmCount = {}; for (const c of cities) { const s = shortNm(c.name); nmCount[s] = (nmCount[s] || 0) + 1; }
+  const placeNm = (c) => { const s = shortNm(c.name); if ((nmCount[s] || 0) < 2) return s; const p = String(c.name || '').trim().split(/\s+/); return p.length > 1 ? p[0] + ' ' + s : s; };
+  const nameEls = cities.map((c, i) => { const t = sv('text', {x: c.p[0] + 6, y: c.p[1], class: 'lb nm'}); t.textContent = placeNm(c); t.style.visibility = 'hidden'; gN.append(t); return {el: t, p: c.p, rank: i}; });
   for (const c of cities) { const e = sv('circle', {cx: c.p[0], cy: c.p[1], class: 'cdot'}); e.dataset.r = 2.5 + 16 * Math.sqrt(c.total / maxT); gC.append(e); dots.set(c.slug, e); }
   let vb = full.slice(), anim = 0, camFn = () => {};
   const sizes = () => {
     const k = vb[2] / geo.w;
     svg.querySelectorAll('.cdot, .dd').forEach((e) => e.setAttribute('r', (+e.dataset.r) * Math.max(k, 0.35)));
-    gL.querySelectorAll('text').forEach((t) => { t.setAttribute('font-size', 12 * k); t.setAttribute('dy', -7 * k); });
+    svg.querySelectorAll('.labels text, .names text').forEach((t) => { t.setAttribute('font-size', 12 * k); t.setAttribute('dy', (t.classList.contains('nm') ? 4 : -7) * k); });
+  };
+  // 확대하면 보이는 지역 이름을 보여 주고, 겹치는 이름만 숨긴다.
+  const labelFit = () => {
+    const m = svg.getScreenCTM(); if (!m) return;
+    const br = box.getBoundingClientRect(), zIn = vb[2] < geo.w * 0.72, seen = [];
+    const hit = (a, b) => !(a.right + 4 < b.left || a.left - 4 > b.right || a.bottom + 4 < b.top || a.top - 4 > b.bottom);
+    gL.querySelectorAll('text').forEach((t) => { const r = t.getBoundingClientRect(); if (r.width > 2 && t.style.visibility !== 'hidden') seen.push(r); });
+    const home = box.querySelector('.map-home'); if (home) { const r = home.getBoundingClientRect(); if (r.width > 2) seen.push(r); }
+    nameEls.forEach(({el, p, rank}) => {
+      el.style.visibility = 'hidden';
+      if (!zIn && rank >= 14) return;
+      const x = p[0] * m.a + m.e, y = p[1] * m.d + m.f;
+      if (x < br.left + 4 || x > br.right - 4 || y < br.top + 4 || y > br.bottom - 4) return;
+      el.style.visibility = 'visible';
+      const r = el.getBoundingClientRect();
+      if (r.width < 2 || r.left < br.left || r.right > br.right || r.top < br.top || r.bottom > br.bottom || seen.some((q) => hit(r, q))) { el.style.visibility = 'hidden'; return; }
+      seen.push(r);
+    });
   };
   const zoomTo = (t) => {
     cancelAnimationFrame(anim);
     const from = vb.slice(), t0 = performance.now(), dur = matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 650;
     const step = (now) => { const u = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - u, 3);
-      vb = from.map((v, i) => v + (t[i] - v) * e); svg.setAttribute('viewBox', vb.join(' ')); sizes(); if (u < 1) anim = requestAnimationFrame(step); else camFn(); };
+      vb = from.map((v, i) => v + (t[i] - v) * e); svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); if (u < 1) anim = requestAnimationFrame(step); else camFn(); };
     anim = requestAnimationFrame(step);
   };
   const fitBox = (pts, minS = 90) => {
@@ -270,9 +296,44 @@ function svgView(box, geo, cities, onPick) {
     const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
     return [Math.max(0, Math.min(geo.w - w, cx - w / 2)), Math.max(0, Math.min(geo.h - h, cy - h / 2)), w, h];
   };
-  const curve = (a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
-    return `M${a[0]},${a[1]} Q${(a[0] + b[0]) / 2 - (dy / d) * o},${(a[1] + b[1]) / 2 + (dx / d) * o} ${b[0]},${b[1]}`; };
+  const curve = (a, b) => {
+    const pts = window.mtArc ? mtArc(a, b) : null;
+    if (pts) return 'M' + pts.map((p) => p[0] + ',' + p[1]).join(' L');
+    const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = d < 12 ? Math.max(d * 0.6, 2.5) : Math.min(d * 0.28, 60);
+    return `M${a[0]},${a[1]} Q${(a[0] + b[0]) / 2 - (dy / d) * o},${(a[1] + b[1]) / 2 + (dx / d) * o} ${b[0]},${b[1]}`;
+  };
+  // 휠(지도를 한 번 누른 뒤 또는 Ctrl)과 두 손가락으로 확대·축소
+  const applyZoom = (base, k, sx, sy) => {
+    let w = Math.max(48, Math.min(geo.w, base[2] * k)), h = w * (base[3] / base[2]);
+    if (h > geo.h) { h = geo.h; w = h * (base[2] / base[3]); }
+    const rx = (sx - base[0]) / base[2], ry = (sy - base[1]) / base[3];
+    const x = Math.max(0, Math.min(geo.w - w, sx - rx * w)), y = Math.max(0, Math.min(geo.h - h, sy - ry * h));
+    cancelAnimationFrame(anim); vb = [x, y, w, h]; svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); camFn();
+  };
+  let armed = false, pinch0 = null;
+  box.addEventListener('wheel', (e) => {
+    if (!(e.ctrlKey || armed)) return;
+    e.preventDefault();
+    const m = svg.getScreenCTM(); if (!m) return;
+    applyZoom(vb, e.deltaY < 0 ? 0.8 : 1.25, (e.clientX - m.e) / m.a, (e.clientY - m.f) / m.d);
+  }, {passive: false});
+  box.addEventListener('mouseleave', () => { armed = false; });
+  box.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 2) return;
+    const [t0, t1] = e.touches;
+    pinch0 = {d: Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY) || 1, vb: vb.slice(), cx: (t0.clientX + t1.clientX) / 2, cy: (t0.clientY + t1.clientY) / 2};
+  }, {passive: true});
+  box.addEventListener('touchmove', (e) => {
+    if (e.touches.length !== 2 || !pinch0) return;
+    e.preventDefault();
+    const [t0, t1] = e.touches, d = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY) || 1, m = svg.getScreenCTM();
+    if (!m) return;
+    applyZoom(pinch0.vb, pinch0.d / d, (pinch0.cx - m.e) / m.a, (pinch0.cy - m.f) / m.d);
+  }, {passive: false});
+  box.addEventListener('touchend', () => { pinch0 = null; });
+  box.addEventListener('touchcancel', () => { pinch0 = null; });
   svg.addEventListener('click', (ev) => {
+    armed = true;
     const m = svg.getScreenCTM(); if (!m) return; let best = null, bd = 30;
     for (const c of cities) { const r = (+dots.get(c.slug).getAttribute('r') || 0) * m.a;
       const d = Math.hypot(ev.clientX - (c.p[0] * m.a + m.e), ev.clientY - (c.p[1] * m.d + m.f)) - r; if (d < bd) { bd = d; best = c; } }
@@ -286,8 +347,8 @@ function svgView(box, geo, cities, onPick) {
     readCam() { return {vb: vb.slice()}; },
     sameCam(s) { return !!(s && s.vb && s.vb.length === vb.length && s.vb.every((v, i) => Math.abs(v - vb[i]) < 0.6)); },
     previewFly(p) { return {vb: fitBox([p], 160).slice()}; },
-    jump(p) { cancelAnimationFrame(anim); vb = fitBox([p], 160); svg.setAttribute('viewBox', vb.join(' ')); sizes(); camFn(); },
-    fitNow(pts) { if (!pts || !pts.length) return; cancelAnimationFrame(anim); vb = fitBox(pts, 36); svg.setAttribute('viewBox', vb.join(' ')); sizes(); camFn(); },
+    jump(p) { cancelAnimationFrame(anim); vb = fitBox([p], 160); svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); camFn(); },
+    fitNow(pts) { if (!pts || !pts.length) return; cancelAnimationFrame(anim); vb = fitBox(pts, 36); svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); camFn(); },
     onsize: null,
     set oncam(fn) { camFn = fn || (() => {}); },
     get oncam() { return camFn; },
@@ -296,7 +357,7 @@ function svgView(box, geo, cities, onPick) {
     lines(list, maxA, labels) {
       gF.replaceChildren(); gD.replaceChildren(); gL.replaceChildren();
       const buried = [];
-      list.forEach((f, i) => { const w = 1.5 + 9 * Math.sqrt(f.amount / maxA);
+      list.forEach((f, i) => { const w = window.mtW ? mtW(f.amount, maxA) : 1.5 + 7 * Math.sqrt((f.amount || 0) / (maxA || 1));
         const svgD = f.a && f.p ? Math.hypot(f.a[0] - f.p[0], f.a[1] - f.p[1]) : 99;
         if (f.local && svgD < 18) { buried.push(f); return; }
         if (svgD >= 2) { const p = sv('path', {d: curve(f.a, f.p), class: 'fl ' + (f.local ? 'in' : 'out'), 'stroke-width': w.toFixed(1)}); p.style.animationDelay = i * 60 + 'ms'; gF.append(p); }
@@ -310,7 +371,7 @@ function svgView(box, geo, cities, onPick) {
         const d = sv('circle', {cx: p[0] + 18, cy: p[1] - 14, class: 'dd in'}); d.dataset.r = 5; gD.append(d);
         const e = sv('text', {x: p[0] + 26, y: p[1] - 10, class: 'lb'}); e.textContent = '우리 시 ' + (typeof krw === 'function' ? krw(fullLocal) : ''); gL.append(e);
       }
-      sizes();
+      sizes(); labelFit();
       if (box._syncCap) box._syncCap();
       if (window.__syncMapLg) window.__syncMapLg();
     },

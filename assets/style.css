@@ -180,6 +180,9 @@ footer { border-top: 1px solid var(--line); padding-top: 26px; display: grid; ga
 .gobtn { display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 14px; background: var(--accent); color: #fff; font-weight: 700; font-size: 17px; }
 @media (min-width: 900px) {
   .mapgrid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 32px; align-items: start; }
+  .mapgrid > .map { grid-column: 1; grid-row: 1; }
+  .mapgrid > .maplg { grid-column: 1; grid-row: 2; }
+  .mapgrid > .flowpanel { grid-column: 2; grid-row: 1 / span 2; }
   .flowpanel { padding-top: 0; }
   .map { max-height: 680px; }
 }
