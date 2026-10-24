@@ -84,12 +84,23 @@
     let sel = null;
 
     function keyOf(it, mode) { return mode === 'gu' ? it.sido + '|' + it.name : it.sido; }
+    function shortGu(name) {
+      const parts = String(name || '').split(' ');
+      return parts[parts.length - 1] || name;
+    }
     function paint(mode) {
       layer.clearLayers();
+      map.getContainer().querySelectorAll('.leaflet-tooltip').forEach((el) => el.remove());
       const items = mode === 'gu' ? sigs : regions;
       const max = Math.max(1, ...items.map((it) => it.value_100m_krw || it.value || 0));
       const ordered = items.slice().sort((a, b) => (b.value_100m_krw || b.value || 0) - (a.value_100m_krw || a.value || 0));
-      ordered.forEach((it, i) => {
+      const view = map.getBounds();
+      const focus = mode === 'gu' && sel ? sel.it.sido : null;
+      const inside = ordered.filter((it) => view.contains([it.lat, it.lng]));
+      const focused = focus ? inside.filter((it) => it.sido === focus) : inside;
+      const pool = mode === 'sido' ? ordered : (focused.length ? focused : inside);
+      const named = new Set((mode === 'sido' ? pool.slice(0, 17) : pool.slice(0, 12)).map((it) => keyOf(it, mode)));
+      ordered.forEach((it) => {
         const v = it.value_100m_krw || it.value || 0;
         const lat = it.lat, lng = it.lng;
         const on = sel && sel.k === keyOf(it, mode);
@@ -98,31 +109,45 @@
           fillColor: '#0a84ff', fillOpacity: v > 0 ? 0.55 : 0.3,
         });
         m.on('click', (e) => { L.DomEvent.stopPropagation(e); choose(it, mode); });
-        m.addTo(layer);
-        const showName = mode === 'sido' ? i < 17 : i < 18;
-        if (showName) {
-          const tip = L.tooltip({ permanent: true, direction: 'right', className: 'klab', offset: [8, 0], interactive: false })
-            .setLatLng([lat, lng]).setContent(mode === 'gu' ? it.name : it.sido);
-          tip.addTo(layer);
+        if (named.has(keyOf(it, mode))) {
+          m.bindTooltip(mode === 'gu' ? shortGu(it.name) : it.sido, {
+            permanent: true, direction: 'right', className: 'klab', offset: [8, 0], interactive: false,
+          });
         }
+        m.addTo(layer);
       });
-      requestAnimationFrame(declutter);
+      scheduleDeclutter();
+    }
+    function scheduleDeclutter() {
+      setTimeout(declutter, 40);
     }
     function declutter() {
       const root = map.getContainer().getBoundingClientRect();
+      const hit = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
       const seen = [];
       map.getContainer().querySelectorAll('.leaflet-control').forEach((el) => {
         const r = el.getBoundingClientRect();
-        if (r.width > 4) seen.push(r);
+        if (r.width > 4 && r.height > 4 && r.width < 280 && r.height < 160) seen.push({ left: r.left - 4, right: r.right + 4, top: r.top - 4, bottom: r.bottom + 4 });
       });
-      const tips = [...map.getContainer().querySelectorAll('.leaflet-tooltip')];
-      tips.forEach((t) => { t.style.visibility = 'visible'; });
-      tips.forEach((t) => {
-        const r = t.getBoundingClientRect();
-        const hit = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
-        const outside = r.left < root.left + 2 || r.right > root.right - 2 || r.top < root.top + 2 || r.bottom > root.bottom - 2;
-        if (outside || r.width < 2 || seen.some((s) => hit(r, s))) t.style.visibility = 'hidden';
-        else seen.push(r);
+      const inside = (r) => r.width > 2 && r.left >= root.left + 2 && r.right <= root.right - 2 && r.top >= root.top + 2 && r.bottom <= root.bottom - 2;
+      map.getContainer().querySelectorAll('.leaflet-tooltip').forEach((t) => {
+        t.style.visibility = 'visible';
+        t.style.marginLeft = '0px';
+        t.style.marginTop = '0px';
+        let r = t.getBoundingClientRect();
+        let dx = 0, dy = 0;
+        if (r.right > root.right - 4) dx += root.right - 4 - r.right;
+        if (r.left + dx < root.left + 4) dx += root.left + 4 - (r.left + dx);
+        if (r.bottom > root.bottom - 4) dy += root.bottom - 4 - r.bottom;
+        if (r.top + dy < root.top + 4) dy += root.top + 4 - (r.top + dy);
+        if (dx || dy) {
+          t.style.marginLeft = dx + 'px';
+          t.style.marginTop = dy + 'px';
+          r = t.getBoundingClientRect();
+        }
+        if (r.width < 2) return;
+        if (!inside(r) || seen.some((s) => hit(r, s))) t.style.visibility = 'hidden';
+        else seen.push({ left: r.left - 2, right: r.right + 2, top: r.top - 2, bottom: r.bottom + 2 });
       });
     }
     function modeNow() { return map.getZoom() >= cut ? 'gu' : 'sido'; }
@@ -132,8 +157,9 @@
         const pts = sigs.filter((g) => g.sido === it.sido);
         if (pts.length) {
           const b = L.latLngBounds(pts.map((p) => [p.lat, p.lng]));
-          map.fitBounds(b.pad(0.35), { maxZoom: 11, paddingTopRight: [8, 36] });
-        } else map.setView([it.lat, it.lng], Math.max(map.getZoom(), cut));
+          map.fitBounds(b.pad(0.35), { animate: false, maxZoom: 11, paddingTopRight: [8, 36] });
+          if (map.getZoom() < cut) map.setView(b.getCenter(), cut, { animate: false });
+        } else map.setView([it.lat, it.lng], Math.max(cut, map.getZoom()), { animate: false });
       }
       homeBtn.classList.toggle('is-home', false);
       showPick();
@@ -198,7 +224,7 @@
     });
     map.on('click', () => { /* 빈 곳. 카드는 지도 밖에 그대로 둔다. */ });
     let t = 0;
-    const inv = () => { clearTimeout(t); t = setTimeout(() => { map.invalidateSize({ pan: false }); declutter(); }, 80); };
+    const inv = () => { clearTimeout(t); t = setTimeout(() => { map.invalidateSize({ pan: false }); scheduleDeclutter(); }, 80); };
     if (window.ResizeObserver) new ResizeObserver(inv).observe(mapEl);
     addEventListener('resize', inv);
     showPick();

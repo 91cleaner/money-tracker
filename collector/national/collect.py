@@ -3,6 +3,7 @@
 - collector/national/seed.json: 국회사무처 수당 지급기준·의원실 지원경비, 선관위 국고보조금(공식 발표값)
 - 돈 흐름(flows): 기록마다 준 쪽(from)·받은 쪽(to)과 지역. 업체명은 공개 필드에 두지 않음(_vendor 내부 필드만).
 키 값은 출력하지 않는다."""
+from collections import Counter
 import csv, json, os, re, time, urllib.request, urllib.parse
 from collections import defaultdict
 from datetime import datetime, timezone, timedelta
@@ -262,6 +263,11 @@ def main():
     for f in flows:
         years[f["year"]][f["kind"]] += f["amount"] or 0
     w = lambda n, o: json.dump(o, open(os.path.join(OUT, n), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    tc = Counter(t.get("member_id") for t in trips if t.get("member_id"))
+    tl = Counter(t.get("member_id") for t in trips if t.get("member_id") and t.get("is_leader"))
+    for m in members:
+        m["profile"] = BASE + "nwvrqwxyaytdsfvhu?Type=json&MONA_CD=" + (m.get("id") or "")
+        m["trips"] = tc.get(m.get("id"), 0); m["trips_lead"] = tl.get(m.get("id"), 0)
     w("members.json", {"updated": now, "count": len(members), "members": members, "trips": trips})
     w("parties.json", {"updated": now, "parties": parties, "rules": seed["party_rules"]})
     w("flows.json", {"updated": now, "count": len(flows), "flows": flows,
