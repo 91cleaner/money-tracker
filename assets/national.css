@@ -15,7 +15,7 @@ input[type=search]{width:100%;box-sizing:border-box;min-height:44px;padding:12px
 .mpcard{margin-top:8px;padding:12px;border:1px solid #2a3541;border-radius:12px;background:#0f141b}
 .mpcard b{display:block;font-size:18px;line-height:1.3}
 .mpcard p{margin:4px 0 0;font-size:14px;line-height:1.4}
-.mpnone{margin:8px 0 0;font-size:14px;font-weight:700;color:#e8edf2}
+.mpnone{margin:8px 0 0;font-size:16px;font-weight:800;color:#ffb020}
 .trip{padding:10px 0;border-top:1px solid #222b36;font-size:14px}.trip .p{color:#b8c3cf}
 .flow{display:flex;flex-direction:column;gap:6px}.node{background:#0f141b;border:1px solid #2a3541;border-radius:12px;padding:10px 12px}.arr{text-align:center;color:#8fa0b3;font-size:13px}
 .foot{font-size:12px;color:#8fa0b3}
@@ -26,7 +26,7 @@ input[type=search]{width:100%;box-sizing:border-box;min-height:44px;padding:12px
 #tmap .leaflet-tooltip.ntip{border-color:#4da3ff}
 #tmap .leaflet-tooltip.clab::before,#tmap .leaflet-tooltip.ntip::before{display:none}
 #tmap .leaflet-popup-content-wrapper,#tmap .leaflet-popup-tip{background:#151b23;color:#e8edf2;box-shadow:none}
-#tmap .leaflet-control-attribution{background:rgba(13,17,23,.82);color:#8fa0b3;font-size:9px;line-height:1.2;white-space:nowrap;max-width:none}
+#tmap .leaflet-control-attribution{background:rgba(13,17,23,.82);color:#8fa0b3;font-size:12px;line-height:1.3;white-space:nowrap;max-width:none}
 #tmap .leaflet-control-attribution a{color:#8fa0b3}
 #cp:empty{display:none}
 #cp{background:#151b23;color:#e8edf2;border:1px solid #222b36;border-radius:12px;padding:4px 12px 12px;margin:8px 0 0;max-height:420px;overflow-x:hidden;overflow-y:auto;overflow-wrap:anywhere;word-break:break-word;scroll-margin-top:64px;scrollbar-color:#3a4652 #151b23}
@@ -34,3 +34,22 @@ input[type=search]{width:100%;box-sizing:border-box;min-height:44px;padding:12px
 #cp .tag{font-size:12px;white-space:normal;max-width:100%;overflow-wrap:anywhere}
 #cp .note{background:#0f141b}
 .crow{cursor:pointer}.crow:hover{background:#1b232d}
+.k{display:inline-block;min-width:5.6em;color:#8fa0b3;font-size:13px;font-weight:700}
+@media(max-width:767px){.tm-map.tm-person{height:calc(100dvh - 390px);min-height:200px;max-height:280px}}
+#topmap .tm-map{scroll-margin-top:8px}
+@media(min-width:768px){#topmap .tm-map{scroll-margin-top:68px}}
+html,body,.nw,#topmap,#mcards,.tm-map,.tm-line,.maplg{overflow-anchor:none}
+#mcards{position:relative;z-index:1;clear:both;margin:12px 0 0}
+#mcards:empty{display:none}
+.mhead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 4px}
+.mcard{margin-top:8px;padding:12px;border:1px solid #2a3541;border-radius:12px;background:#0f141b;font-size:15px;line-height:1.5}
+.mcard b{display:block;font-size:18px;line-height:1.3}
+.mcard p{margin:4px 0 0;font-size:15px;line-height:1.45}
+.allmap{min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #ffb020;background:transparent;color:#ffb020;font:700 14px Pretendard,system-ui,sans-serif;cursor:pointer}
+.qsug{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.qsug:empty{display:none}
+.qsug button{text-align:left;min-height:44px;padding:8px 12px;border-radius:10px;border:1px solid #2a3541;background:#0f141b;color:#e8edf2;font:600 15px/1.4 Pretendard,system-ui,sans-serif;cursor:pointer}
+.qsug button:hover,.qsug button:focus{border-color:#ffb020}
+.tm-map path.nmove{animation:tmfly 1.05s linear infinite}
+@keyframes tmfly{to{stroke-dashoffset:-20}}
+@media(prefers-reduced-motion:reduce){.nflow,.tm-map path.nmove{animation:none}}
