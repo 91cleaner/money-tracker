@@ -1,19 +1,143 @@
-(()=>{const I={home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',map:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',rank:'<path d="M5 20V12M12 20V5M19 20v-9"/>',quiz:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/>',play:'<rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 11v3M6.5 12.5h3M15 12h.01M17 14h.01"/>',sole:'<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>',nat:'<path d="M4 20h16M6 20V10M10 20V10M14 20V10M18 20V10M3 10h18L12 3z"/>',nps:'<path d="M4 19V5M4 19h16"/><path d="M7 15l4-4 3 2 6-6"/><path d="M16 6h4v4"/>'};
-const T=[['./','홈','home'],['./#map','지도','map'],['./#quiz','퀴즈','quiz'],['./#play','게임','play'],['rank.html','순위','rank'],['spend.html','추적','sole'],['national.html','나라 세금','nat'],['nps.html','국민연금 주식','nps']];
-const file=(location.pathname.split('/').pop()||'');
-let pg=document.body.dataset.page||'home';
-if(file==='nps.html'||pg==='nps')pg='nps';/* 페이지 파일이 없어도 주소가 nps.html이면 이 탭이 켜짐 */
-const qs=location.search;
-if(pg==='home'||pg==='index'||pg==='national'||pg==='nps'){T[1][0]='./'+qs+'#map';T[2][0]='./'+qs+'#quiz';T[3][0]='./'+qs+'#play';T[6][0]='national.html'+qs;T[7][0]='nps.html'+qs;}/* ?c 등 쿼리를 주소에 넣어야 ./#hash가 쿼리를 지우지 않음 */
-if(pg==='city'){const q=new URLSearchParams(qs).get('c');if(q){T[1][0]='city.html'+qs+'#map';T[6][0]='national.html'+qs;T[7][0]='nps.html'+qs;}}/* 도시 페이지 지도 탭은 그 도시 지도. 나라 세금·국민연금도 같은 ?c= */
-const act=k=>pg==='nps'?k==='nps':pg==='national'?k==='nat':pg==='spend'?k==='sole':pg==='rank'?k==='rank':pg==='city'?(k==='map'&&location.hash==='#map'):(pg==='home'||pg==='index')?(k==='map'?location.hash==='#map':k==='quiz'?['#quiz','#daily','#game'].includes(location.hash):k==='play'?location.hash==='#play':k==='home'&&!['#map','#quiz','#daily','#game','#play'].includes(location.hash)):false;
-const n=document.createElement('nav');n.className='tabbar';n.innerHTML=T.map(([u,l,k])=>`<a href="${u}" data-k="${k}" class="${act(k)?'on':''}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg><span>${l}</span></a>`).join('');
-document.body.appendChild(n);document.body.classList.add('has-tabbar');
-const s=document.createElement('style');s.textContent=`.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:1000;display:flex;background:rgba(7,9,12,.94);backdrop-filter:blur(12px);border-top:1px solid #1f2933;padding:6px 2px calc(6px + env(safe-area-inset-bottom))}
-.tabbar a{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;font:600 12px/1.15 var(--sans,Pretendard,system-ui,sans-serif);color:#6b7785;text-decoration:none;padding:4px 0;position:relative;text-align:center}
-.tabbar a span{display:block;min-width:0;max-width:100%;white-space:normal;word-break:keep-all;overflow-wrap:normal;line-height:1.15}
-.tabbar a.on{color:#ffb020}.tabbar a.on::before{content:"";position:absolute;top:-7px;left:30%;right:30%;height:2px;background:#ffb020;border-radius:2px}
-body.has-tabbar{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
-@media(min-width:900px){.tabbar{padding-left:calc(50% - 280px);padding-right:calc(50% - 280px)}}`;document.head.appendChild(s);
-n.addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;const h=a.getAttribute('href')||'';const hash=h.includes('#')?h.slice(h.indexOf('#')):'';if((pg==='home'||pg==='index')&&hash&&(h.startsWith('./')||h.startsWith('#'))){e.preventDefault();const u=location.pathname+location.search+hash;if(location.pathname+location.search+location.hash===u)dispatchEvent(new HashChangeEvent('hashchange'));else location.assign(u);}});/* location.hash 대입은 ?c만 있을 때 쿼리를 지움. 경로+쿼리+해시를 통째로 넣음 */
-addEventListener('hashchange',()=>n.querySelectorAll('a').forEach(a=>a.classList.toggle('on',act(a.dataset.k))));})();
+/* 위·아래 탭 5개. 순서: 지도 · 게임/퀴즈 · 뉴스 · 나라 세금 · 더보기.
+   ?c= 는 지도·게임/퀴즈·뉴스·나라 세금에 붙인다. 도시 페이지의 지도는 그 도시 지도로 남긴다. */
+(() => {
+  const pg = document.body.dataset.page || '';
+  const q = new URLSearchParams(location.search);
+  const addQ = (href) => {
+    const keep = ['c', 'd', 'from', 'to', 'gu'].filter((k) => q.has(k));
+    if (!keep.length) return href;
+    const i = href.indexOf('#');
+    const hash = i >= 0 ? href.slice(i) : '';
+    const base = i >= 0 ? href.slice(0, i) : href;
+    if (base.includes('?')) return href;
+    const sp = new URLSearchParams();
+    for (const k of keep) sp.set(k, q.get(k));
+    return base + '?' + sp.toString() + hash;
+  };
+  const fixedMap = (pg === 'city' && q.get('c')) ? ('city.html' + location.search + '#map') : addQ('./#map');
+  const tabs = [
+    ['map', fixedMap, '지도'],
+    ['play', addQ('./#quiz'), '게임/퀴즈'],
+    ['news', addQ('news.html'), '뉴스'],
+    ['nat', addQ('national.html'), '나라 세금'],
+  ];
+  const quizHash = ['#quiz', '#daily', '#game', '#play'];
+  const act = (k) => {
+    const h = location.hash;
+    if (k === 'map') return (pg === 'home' || pg === 'index' || pg === 'city') && !quizHash.includes(h);
+    if (k === 'play') return (pg === 'home' || pg === 'index') && quizHash.includes(h);
+    if (k === 'news') return pg === 'news' || pg === 'article';
+    if (k === 'nat') return pg === 'national';
+    if (k === 'more') return ['nps', 'rank', 'spend', 'vendor', 'principles'].includes(pg);
+    return false;
+  };
+  const moreLinks = [
+    ['nps.html', '국민연금 주식'],
+    ['rank.html', '업체 순위'],
+    ['spend.html', '세금 더 보기'],
+    ['principles.html', '중립성 원칙 + 정정 요청'],
+  ];
+  const barHtml = () => tabs.map(([k, href, label]) => `<a href="${href}" data-k="${k}" class="${act(k) ? 'on' : ''}"${act(k) ? ' aria-current="page"' : ''}>${label}<span class="ndot" hidden></span></a>`).join('')
+    + `<button type="button" data-k="more" class="${act('more') ? 'on' : ''}" aria-expanded="false" aria-controls="more-sheet">더보기</button>`;
+  const top = document.createElement('nav');
+  top.className = 'tabbar tabbar-top';
+  top.setAttribute('aria-label', '위 메뉴');
+  top.innerHTML = barHtml();
+  const bot = document.createElement('nav');
+  bot.className = 'tabbar tabbar-bot';
+  bot.setAttribute('aria-label', '아래 메뉴');
+  bot.innerHTML = barHtml();
+  document.body.prepend(top);
+  document.body.append(bot);
+  document.body.classList.add('has-tabbar');
+
+  const sheet = document.createElement('div');
+  sheet.className = 'more-sheet';
+  sheet.id = 'more-sheet';
+  sheet.hidden = true;
+  const withC = (href) => (href === 'nps.html' ? addQ(href) : href);
+  sheet.innerHTML = `<button type="button" class="more-bg" aria-label="닫기"></button>
+    <div class="more-box" role="dialog" aria-label="더보기">
+      <div class="more-top"><b>더보기</b><button type="button" class="more-x">닫기</button></div>
+      <div class="more-links">${moreLinks.map(([href, label]) => `<a href="${withC(href)}">${label}</a>`).join('')}</div>
+    </div>`;
+  document.body.append(sheet);
+  const setOpen = (on) => {
+    sheet.hidden = !on;
+    document.querySelectorAll('[data-k="more"]').forEach((b) => b.setAttribute('aria-expanded', on ? 'true' : 'false'));
+    if (on) { const x = sheet.querySelector('.more-x'); if (x) x.focus(); }
+  };
+  sheet.querySelector('.more-bg').addEventListener('click', () => setOpen(false));
+  sheet.querySelector('.more-x').addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+
+  const sync = () => {
+    document.querySelectorAll('.tabbar a, .tabbar button').forEach((el) => {
+      const on = act(el.dataset.k);
+      el.classList.toggle('on', on);
+      if (el.tagName === 'A') {
+        if (on) el.setAttribute('aria-current', 'page');
+        else el.removeAttribute('aria-current');
+      }
+    });
+  };
+  window.__tabSync = sync;
+  addEventListener('hashchange', sync);
+  addEventListener('popstate', sync);
+
+  document.addEventListener('click', (e) => {
+    const more = e.target.closest('[data-k="more"]');
+    if (more) { e.preventDefault(); setOpen(sheet.hidden); return; }
+    const a = e.target.closest('.tabbar a');
+    if (!a) return;
+    const hash = (a.getAttribute('href') || '').includes('#') ? a.getAttribute('href').slice(a.getAttribute('href').indexOf('#')) : '';
+    if ((pg === 'home' || pg === 'index') && hash && (a.dataset.k === 'map' || a.dataset.k === 'play')) {
+      e.preventDefault();
+      const u = location.pathname + location.search + hash;
+      if (location.pathname + location.search + location.hash !== u) location.assign(u);
+      else sync();
+    }
+  });
+
+  const paintDot = (on) => {
+    document.querySelectorAll('.tabbar a[data-k="news"] .ndot').forEach((d) => { d.hidden = !on; });
+    document.querySelectorAll('.tabbar a[data-k="news"]').forEach((a) => a.classList.toggle('has-new', on));
+  };
+  fetch('data/news.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : [])).then((data) => {
+    const list = Array.isArray(data) ? data : [];
+    let newest = '';
+    for (const a of list) {
+      if (!a || a.factchecked !== true) continue;
+      const d = String(a.date || a['날짜'] || '');
+      if (d > newest) newest = d;
+    }
+    let seen = '';
+    try { seen = localStorage.getItem('mt-news-seen') || ''; } catch (e) {}
+    const here = pg === 'news' || pg === 'article';
+    if (here && newest) { try { localStorage.setItem('mt-news-seen', newest); } catch (e) {} }
+    paintDot(!here && !!(newest && newest > seen));
+  }).catch(() => {});
+
+  const css = document.createElement('style');
+  css.textContent = `.tabbar{position:fixed;left:0;right:0;z-index:1100;display:flex;background:#07090cf2;backdrop-filter:blur(16px);padding:4px 4px calc(4px + env(safe-area-inset-bottom));border-top:1px solid #24303a}
+.tabbar-top{top:0;bottom:auto;border-top:0;border-bottom:1px solid #24303a;padding:4px 4px}
+.tabbar-bot{bottom:0}
+.tabbar a,.tabbar button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;position:relative;min-height:44px;padding:4px 2px;border:0;background:none;color:#9aa6b2;font:700 12px/1.2 var(--sans,Pretendard,system-ui,sans-serif);text-decoration:none;white-space:nowrap;letter-spacing:-.03em;cursor:pointer}
+.tabbar a.on,.tabbar button.on{color:#ffb020}
+.tabbar-bot a.on::before,.tabbar-bot button.on::before{content:"";position:absolute;top:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
+.tabbar-top a.on::after,.tabbar-top button.on::after{content:"";position:absolute;bottom:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
+.ndot{display:none;width:8px;height:8px;border-radius:50%;background:#ff3b30;position:absolute;top:8px;right:10%}
+.has-new .ndot{display:block}
+body.has-tabbar{padding-top:52px;padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+.more-sheet{position:fixed;inset:0;z-index:1200}
+.more-bg{position:absolute;inset:0;border:0;background:#000a}
+.more-box{position:absolute;left:0;right:0;bottom:0;background:#10161c;border-top:1px solid #ffb020;border-radius:18px 18px 0 0;padding:12px 14px calc(16px + env(safe-area-inset-bottom))}
+.more-top{display:flex;justify-content:space-between;align-items:center}
+.more-top b{font-size:18px}
+.more-x{min-height:44px;min-width:44px;border:0;background:none;color:#ffb020;font:700 15px var(--sans,system-ui)}
+.more-links{display:grid;gap:8px;margin-top:8px}
+.more-links a{display:flex;align-items:center;min-height:48px;padding:0 12px;border-radius:12px;border:1px solid #2a3544;background:#0c1218;color:#e8eef5;text-decoration:none;font-weight:700;font-size:16px}
+@media(min-width:900px){.tabbar{padding-left:calc(50% - 340px);padding-right:calc(50% - 340px)}.more-box{left:50%;width:420px;transform:translateX(-50%);bottom:24px;border:1px solid #ffb020;border-radius:18px}}
+body.has-tabbar .nbar{top:52px}`;
+  document.head.appendChild(css);
+})();
