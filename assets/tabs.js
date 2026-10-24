@@ -1,4 +1,5 @@
 (()=>{const main=document.querySelector('main');if(!main)return;
+/* 홈은 탭을 쓰지 않는다(지도 아래 탭 줄이 하나 더 있어 번잡했다). 홈 아래쪽은 '더 보기' 링크로 대신한다. */if(document.body.dataset.page==='home')return;
 const secs=[...main.querySelectorAll(':scope > section.sec:not(.gm):not(.fun-sec)')];const G={find:['receipts']};/* 홈 첫 탭은 주소 찾기+이번 주 영수증을 함께 */if(secs.length<3)return;
 const L={trackteaser:'더 보기 목록',sole:'경쟁 없는 계약',cost:'비용 비교',pay:'공공기관 보수',fest:'축제·행사',subsidy:'보조금'};
 secs.forEach((s,i)=>{if(!s.id)s.id='t'+(i+1);const h=s.querySelector('h2');s.dataset.lbl=L[s.id]||(h?h.textContent.trim():'')||(s.classList.contains('home-alerts')?'눈에 띄는 패턴':'섹션 '+(i+1));});

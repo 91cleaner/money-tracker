@@ -153,7 +153,7 @@ async function funHome(idx, getCat) {
     const all = [];
     const last = idx.updated ? new Date(idx.updated) : new Date(); const cut = new Date(last - 7 * 864e5).toISOString().slice(0, 10);
     await Promise.all(live.map((c) => getJSON('data/city/' + c.slug + '.json').then((d) => { for (const r of d.rows) if ((r.odate || r.date) >= cut) all.push({...r, city: c}); }).catch(() => {})));
-    let key = 'amount', n = 10, lastCat = null;
+    let key = 'amount', n = 5, lastCat = null; // 처음엔 5줄만(더 보기로 늘림)
     const btns = document.querySelectorAll('#rcpt th button');
     const draw = () => {
       const cat = getCat(); if (cat !== lastCat) { lastCat = cat; } festNote($('#rcpt').closest('.rcpt-wrap') || $('#rcpt'), cat === FEST);

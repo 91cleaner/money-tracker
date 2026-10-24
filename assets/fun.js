@@ -326,8 +326,12 @@ function bootFun() {
         const dive = document.getElementById('dive');
         if (dive && !document.getElementById('fun-slot')) dive.after(slot);
         const items = await homeItems();
-        mountCompare(slot, items, '두 시 비교');
-        mountCalc(slot, items);
+        // 처음에는 접어 두고, 궁금한 사람만 펼친다
+        const fold = document.createElement('details'); fold.className = 'fun-fold';
+        fold.innerHTML = '<summary>재미로 비교해 보기 · 두 시 비교, 내 세금으로 치면</summary>';
+        slot.append(fold);
+        mountCompare(fold, items, '두 시 비교');
+        mountCalc(fold, items);
       } else if (pg === 'city') {
         const stats = document.querySelector('.stats');
         if (stats && !document.getElementById('fun-slot')) stats.after(slot);
