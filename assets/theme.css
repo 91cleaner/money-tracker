@@ -456,3 +456,4 @@ body[data-mode=quiz] #dive.dv-pc>#daily{grid-row:2}body[data-mode=quiz] #dive.dv
 .fg-cv{width:100%;height:auto;border-radius:10px;margin:8px 0;border:1px solid #1f2933}
 .fg-load{font-size:14px;color:#9aa6b2}
 #dive.dv-pc #fgame .fg-list{grid-template-columns:1fr}
+html{scroll-padding-bottom:calc(80px + env(safe-area-inset-bottom))}

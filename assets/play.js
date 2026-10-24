@@ -85,5 +85,9 @@
     cv.hidden = false; const sh = fg.querySelector('.fg-sh'); sh.hidden = false; const url = cv.toDataURL('image/png'); fg.querySelector('.fg-dl').href = url;
     fg.querySelector('.fg-share').onclick = () => cv.toBlob(async (b) => { const f = new File([b], 'festival-budget.png', {type: 'image/png'}), t = `${C.cname} 축제 예산 ${krw(C.fest)}, 나는 이렇게 써 봤어요 · 우리 시 돈 추적기`, u = location.origin + location.pathname + '#play';
       try { if (navigator.canShare && navigator.canShare({files: [f]})) await navigator.share({files: [f], title: t, text: t + ' ' + u}); else if (navigator.share) await navigator.share({title: t, text: t, url: u}); else { await navigator.clipboard.writeText(t + ' ' + u); fg.querySelector('.fg-share').textContent = '링크 복사됨'; } } catch (e) {} }); };
+  // 폰에서 시를 고르면 지도 아래 시 카드 머리('대구광역시 112억원')가 하단 탭바에 가리지 않게 살짝 올려 줌
+  const peek = () => { if (innerWidth >= 900 || mode() !== 'map') return; const sh = dive.querySelector('.dv-sheet'), tb = document.querySelector('.tabbar'); if (!sh || !tb || !new URLSearchParams(location.search).get('c')) return;
+    const need = sh.getBoundingClientRect().top + 72 - tb.getBoundingClientRect().top; if (need > 0) scrollBy({top: Math.min(need, 260), behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth'}); };
+  addEventListener('dv:go', () => setTimeout(peek, 700)); setTimeout(peek, 2500);
   apply(false); if (mode() === 'play') build();
 })();
