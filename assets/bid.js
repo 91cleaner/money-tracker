@@ -12,16 +12,16 @@
       const rg = x.duty ? `지역 업체 참여 의무 · ${esc(x.duty)} 업체 ${x.duty_rt ?? '?'}% 이상` : x.rgnlmt ? `지역제한 · ${esc(x.rgnlmt)}` : '지역 조건 없음';
       const d = document.createElement(card.tagName === 'TR' ? 'td' : 'div'); d.className = 'bidinfo';
       if (card.tagName === 'TR') d.colSpan = 9;
-      d.innerHTML = `<b>🧾 입찰 정보</b> <span>참가 ${x.n ? x.n.toLocaleString('ko-KR') + '곳' : '—'}</span> <span>예상 가격 대비 계약 금액 ${x.rate != null ? x.rate + '%' : '—'}</span> <span>${rg}</span>
-        ${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">공고 ${esc(x.bn)} ↗</a>` : ''}
-        ${x.opened ? `<small>개찰 ${esc(x.opened)}</small>` : ''}`;
+      // 한 줄로 짧게: 참가 업체 수 · 낙찰률 · 공고 원문
+      d.classList.add('bid-1');
+      d.innerHTML = `🧾 입찰 ${x.n ? x.n.toLocaleString('ko-KR') + '곳 참가' : '참가 수 없음'}${x.rate != null ? ' · 낙찰률 ' + (Math.round(x.rate * 10) / 10) + '%' : ''}${x.duty || x.rgnlmt ? ' · 지역 업체 조건' : ''}${x.url ? ` · <a href="${esc(x.url)}" target="_blank" rel="noopener">공고 ↗</a>` : ''}`;
       if (card.tagName === 'TR') { const tr = document.createElement('tr'); tr.append(d); card.after(tr); } else card.append(d);
       // 같은 설명을 카드마다 붙이지 않고, 목록 위에 한 번만 둔다
       const list = card.tagName === 'TR' ? card.closest('table') : card.parentElement;
       if (list && !list.dataset.bidnote) {
         list.dataset.bidnote = '1';
         const n = document.createElement('p'); n.className = 'bid-explain';
-        n.textContent = '🧾 입찰 정보의 "예상 가격 대비 계약 금액(낙찰률)"은 기관이 미리 정한 가격(예정가격)에 견줘 실제로 계약한 금액의 비율이에요. 출처: 조달청 나라장터 입찰공고·낙찰정보서비스';
+        n.textContent = '🧾 낙찰률 = 기관이 미리 정한 가격(예정가격)에 견줘 실제로 계약한 금액의 비율 · 출처: 조달청 나라장터';
         n.style.cssText = 'margin:6px 0 10px;font-size:12px;line-height:1.5;color:#9aa6b2';
         list.before(n);
       }

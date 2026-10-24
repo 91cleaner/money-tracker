@@ -591,7 +591,7 @@
     const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10), RK = {split: 3, increase: 3, repeat: 2, big: 1, threshold: 0};
     const pk = !RM && !location.search && !sessionStorage.getItem('dvPick') && C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk)
       .sort((a, b) => (RK[b.top_alert.kind] || 0) - (RK[a.top_alert.kind] || 0) || (b.top_alert.amount || 0) - (a.top_alert.amount || 0))[0];
-    if (pk) { sessionStorage.setItem('dvPick', '1'); const A = pk.top_alert;
+    if (pk && !root.querySelector('.dv-car')) { sessionStorage.setItem('dvPick', '1'); const A = pk.top_alert; // 지도 카드에 이상 징후 목록이 이미 있으면 겹치므로 생략
       setTimeout(() => {
         const d = document.createElement('div'); d.className = 'dv-pick';
         d.innerHTML = `<button type="button" class="dv-pk-line"><span>이번 주 데이터상 이상 징후(눈여겨볼 만한 점)</span> <b>${esc(pk.short || pk.name)} ${krw(A.amount)}</b> ›</button>
