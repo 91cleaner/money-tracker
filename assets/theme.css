@@ -406,7 +406,7 @@ html:has(body.has-rbar){scroll-padding-top:52px}
 body.has-rbar .sec,body.has-rbar .sec h2,body.has-rbar #contracts summary,body.has-rbar #cq{scroll-margin-top:52px}
 /* 지도 처음으로: 확대 버튼 옆, 작은 어두운 칸 */
 .leaflet-bottom.leaflet-left,.leaflet-top.leaflet-right{display:flex;align-items:center;gap:6px}
-.leaflet-bottom.leaflet-left{flex-direction:row;padding:0 0 10px 10px}
+.leaflet-bottom.leaflet-left{flex-direction:row-reverse;padding:0 0 10px 10px}
 .leaflet-top.leaflet-right{flex-direction:row-reverse;padding:10px 10px 0 0}
 .leaflet-bottom.leaflet-left .leaflet-control,.leaflet-top.leaflet-right .leaflet-control{margin:0!important;float:none;clear:none}
 .map-home{display:inline-flex;align-items:center;justify-content:center;gap:4px;box-sizing:border-box;min-width:44px;min-height:44px;height:44px;margin:0;padding:0 10px;border-radius:10px;border:1px solid #2a3540;background:#11171de6;color:#e8eef5;font:700 13px/1 var(--sans,system-ui);white-space:nowrap;cursor:pointer;flex:none;box-shadow:0 1px 4px #0008}

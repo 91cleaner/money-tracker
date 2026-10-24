@@ -13,7 +13,7 @@ function satView(box, geo, cities, onPick) {
   const map = L.map(box, {zoomControl: false, attributionControl: true, minZoom: 6, maxZoom: 12, zoomSnap: 0.25, tap: true,
     maxBounds: [[30.5, 121], [41, 134]], preferCanvas: false, scrollWheelZoom: false});
   { // 크기가 바뀌거나 다시 보일 때 타일이 깨지지 않게
-    let t = 0; const inv = () => { clearTimeout(t); t = setTimeout(() => map.invalidateSize({pan: false}), 60); };
+    let t = 0; const inv = () => { clearTimeout(t); t = setTimeout(() => { map.invalidateSize({pan: false}); view.onsize && view.onsize(); }, 80); };
     if (window.ResizeObserver) new ResizeObserver(inv).observe(box);
     addEventListener('resize', inv); addEventListener('scroll', inv, {passive: true}); addEventListener('hashchange', inv); addEventListener('pageshow', inv);
     document.addEventListener('visibilitychange', () => !document.hidden && inv()); window.__inv2 = inv; }
@@ -77,6 +77,8 @@ function satView(box, geo, cities, onPick) {
     readCam() { const c = map.getCenter(); return {lat: c.lat, lng: c.lng, z: map.getZoom()}; },
     sameCam(s) { if (!s || s.lat == null) return false; const c = map.getCenter(); return Math.abs(map.getZoom() - s.z) < 0.05 && Math.abs(c.lat - s.lat) < 0.02 && Math.abs(c.lng - s.lng) < 0.02; },
     previewFly(p, z) { const ll = toLL(p); return {lat: ll[0], lng: ll[1], z: Math.min(z, 9.5)}; },
+    jump(p, z) { pend = null; map.stop(); map.invalidateSize(); map.setView(toLL(p), Math.min(z, 9.5), {animate: false}); },
+    onsize: null,
     select(slug) { dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
       gF.clearLayers();
@@ -149,6 +151,8 @@ function svgView(box, geo, cities, onPick) {
     readCam() { return {vb: vb.slice()}; },
     sameCam(s) { return !!(s && s.vb && s.vb.length === vb.length && s.vb.every((v, i) => Math.abs(v - vb[i]) < 0.6)); },
     previewFly(p) { return {vb: fitBox([p], 160).slice()}; },
+    jump(p) { cancelAnimationFrame(anim); vb = fitBox([p], 160); svg.setAttribute('viewBox', vb.join(' ')); sizes(); camFn(); },
+    onsize: null,
     set oncam(fn) { camFn = fn || (() => {}); },
     get oncam() { return camFn; },
     onhome: null,
@@ -175,6 +179,7 @@ function svgView(box, geo, cities, onPick) {
   homeBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); view2.onhome && view2.onhome(); });
   box.append(homeBtn);
   view2.homeBtn = homeBtn;
+  if (window.ResizeObserver) { let ts = 0; new ResizeObserver(() => { clearTimeout(ts); ts = setTimeout(() => view2.onsize && view2.onsize(), 80); }).observe(box); }
   return view2;
 }
 
@@ -184,15 +189,24 @@ async function moneyMap(root, opts = {}) {
   const box = $('.map', root), panel = $('.flowpanel', root);
   const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.p).sort((a, b) => b.total - a.total);
   let cur = null, mode = 'city', view, cat = '전체';
-  let homeMode = 'city', homeCur = null, homeCam = null, resetToFirst = () => {};
+  let homeMode = 'city', homeCur = null, homeCam = null, resetToFirst = () => {}, seated = false, nudged = false, live = false;
   const syncMapHome = () => { if (!view || !view.homeBtn || !homeCam) return; view.homeBtn.classList.toggle('is-home', mode === homeMode && cur === homeCur && !view.hlOn() && view.sameCam(homeCam)); };
+  // 지도 칸이 숨겨져 있다 열리면(도시 페이지 탭) 처음 화면을 그 크기에 다시 맞춘다
+  const seatFixed = () => { const c = fl.cities[opts.fixed]; if (!c || !view) return; view._seating = 1; if (view.jump) view.jump(c.p, 10); view._seating = 0; homeCam = view.previewFly ? view.previewFly(c.p, 10) : view.readCam(); homeMode = 'city'; homeCur = opts.fixed; seated = true; nudged = false; syncMapHome(); };
   const dataOf = (slug) => { const c = fl.cities[slug]; if (!c || cat === '전체') return c;
     const b = (c.by_cat || {})[cat] || {total: 0, known: 0, local: 0, count: 0, flows: []}; return {...c, ...b, other: null, cat}; };
   const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {fly: true, z: 9}); if (matchMedia('(max-width: 899px)').matches) setTimeout(() => panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 300); };
   const mount = (kind) => {
     view = (kind === 'svg' ? svgView : satView)(box, geo, cities, pickCity);
-    view.oncam = syncMapHome;
-    view.onhome = () => resetToFirst();
+    view.oncam = () => { if (!view._seating && homeCam && !view.sameCam(homeCam)) nudged = true; syncMapHome(); };
+    view.onhome = () => { nudged = false; resetToFirst(); };
+    view.onsize = () => {
+      const ok = box.clientWidth > 40 && box.clientHeight > 40;
+      const reveal = ok && !live; live = ok;
+      if (!ok) return;
+      if (opts.fixed && !view.hlOn() && !nudged && (reveal || !seated)) seatFixed();
+      else syncMapHome();
+    };
     if (!opts.fixed) view.onmulti = (slugs) => { panel.replaceChildren(el('p', 'fq', '여러 시가 겹쳐 있어요. 하나를 고르세요')); const w = el('div', 'pickrow'); for (const s2 of slugs) { const b = el('button', 'chip', (window.CITY_FULL || {})[s2] || fl.cities[s2].name); b.type = 'button'; b.onclick = () => pickCity(s2); w.append(b); } panel.append(w); panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}); };
     if (!opts.fixed) view.onempty = () => { if (mode !== 'nation') { setSeg('nation'); showNation(); } };
     view.onfail = () => { view.destroy(); mount('svg'); if (cat !== '전체') ctl.setCat(cat); else redraw(false); view.once(() => { homeCam = view.readCam(); homeMode = mode; homeCur = cur; syncMapHome(); }); };
@@ -301,7 +315,7 @@ async function moneyMap(root, opts = {}) {
     if (opts.fixed) { const c = fl.cities[opts.fixed]; if (!c) return; showCity(opts.fixed, {zoom: false}); view.fly(c.p, 10); }
     else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); view.home(); }
   };
-  if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); view.fly(c.p, 10); homeCam = view.previewFly ? view.previewFly(c.p, 10) : view.readCam(); homeMode = 'city'; homeCur = opts.fixed; } }
+  if (opts.fixed) { const c = fl.cities[opts.fixed]; if (c) { showCity(opts.fixed, {zoom: false}); homeCam = view.previewFly ? view.previewFly(c.p, 10) : null; homeMode = 'city'; homeCur = opts.fixed; if (box.clientWidth > 40 && box.clientHeight > 40) { live = true; seatFixed(); } } }
   else { setSeg('city'); showCity(cities[0].slug, {zoom: false}); homeCam = view.readCam(); homeMode = mode; homeCur = cur; syncMapHome(); }
   const ctl = {setCat(c) { cat = c; view.resize(Object.fromEntries(cities.map((x) => [x.slug, (dataOf(x.slug) || {}).total || 0])), c === '전체'); view.highlight(null); redraw(true); }};
   root.append(el('p', 'sub small', `업체 위치: ${fl.basis}. 지도: Esri 다크 그레이 베이스(라벨 없음) + 자체 한글 표기, 경계 ${geo.source}. 갱신 ${when(fl.updated)}`));
