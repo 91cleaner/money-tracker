@@ -1,0 +1,15 @@
+{
+ "updated": "2026-10-24 11:52",
+ "log": [
+  "https://api.odcloud.kr/api/3070507/v1/uddi:ff42d7e9-283d-4247-9f7f-ccc607743dee 시도1: HTTPError HTTP Error 401: Unauthorized",
+  "https://api.odcloud.kr/api/3070507/v1/uddi:ff42d7e9-283d-4247-9f7f-ccc607743dee 시도2: HTTPError HTTP Error 401: Unauthorized",
+  "https://api.odcloud.kr/api/3070507/v1/uddi:ff42d7e9-283d-4247-9f7f-ccc607743dee 시도3: HTTPError HTTP Error 401: Unauthorized",
+  "https://api.odcloud.kr/api/3070507/v1/uddi:ff42d7e9-283d-4247-9f7f-ccc607743dee 시도4: HTTPError HTTP Error 401: Unauthorized",
+  "odcloud 실패: RuntimeError",
+  "https://www.data.go.kr/data/3070507/fileData.do 시도1: URLError <urlopen error timed out>",
+  "https://www.data.go.kr/data/3070507/fileData.do 시도2: URLError <urlopen error timed out>",
+  "https://www.data.go.kr/data/3070507/fileData.do 시도3: URLError <urlopen error timed out>",
+  "https://www.data.go.kr/data/3070507/fileData.do 시도4: URLError <urlopen error timed out>"
+ ],
+ "manual_download": "https://www.data.go.kr/data/3070507/fileData.do"
+}
