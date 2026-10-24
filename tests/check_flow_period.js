@@ -52,6 +52,9 @@ for (const s of stops) {
     if (!(c.local <= c.known && c.known <= c.total)) err.push(`${slug} ${s} local ${c.local} known ${c.known} total ${c.total}`);
     const sumF = (c.flows || []).reduce((a, f) => a + f.amount, 0) + ((c.other && c.other.amount) || 0);
     if (sumF !== c.known) err.push(`${slug} ${s} 흐름 합 ${sumF} ≠ known ${c.known}`);
+    const locShown = (c.flows || []).filter((f) => f.local).reduce((a, f) => a + f.amount, 0);
+    if (locShown > c.local) err.push(`${slug} ${s} 우리 시 화살표 ${locShown} > local ${c.local}`);
+    if (c.known > c.local && !(c.flows || []).some((f) => !f.local && f.p)) err.push(`${slug} ${s} 다른 지역 화살표 없음`);
   }
 }
 

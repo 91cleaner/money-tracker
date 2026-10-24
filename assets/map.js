@@ -214,14 +214,16 @@ function satView(box, geo, cities, onPick) {
         L.circleMarker(ll, {radius: 16, color: '#0b0f13', weight: 6, opacity: 0.75, fill: false, interactive: false}).addTo(gF);
         L.circleMarker(ll, {radius: 16, color: '#ffd60a', weight: 3, fill: false, interactive: false, className: 'hlring'}).addTo(gF);
       }
-      if (buried.length && list[0] && list[0].a) {
-        const sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
-        const money = typeof krw === 'function' ? krw(sum) : '';
+      const fullLocal = list.localSum != null ? list.localSum : (buried.length ? buried.reduce((s, f) => s + (f.amount || 0), 0) : 0);
+      if (fullLocal > 0 && list[0] && list[0].a) {
+        const money = typeof krw === 'function' ? krw(fullLocal) : '';
         const icon = L.divIcon({className: 'loc-badge-wrap', html: `<span class="loc-badge r"><i></i><b>우리 시 ${money}</b></span>`, iconSize: [1, 1], iconAnchor: [0, 0]});
         const mk = L.marker(toLL(list[0].a), {interactive: false, keyboard: false, icon, zIndexOffset: 800}).addTo(gF);
         seatBadge(map, mk);
       }
       scheduleDeclutter();
+      if (box._syncCap) box._syncCap();
+      if (window.__syncMapLg) window.__syncMapLg();
     },
     fly(p, z) { vis(() => map.flyTo(toLL(p), Math.min(z, 9.5), {duration: 0.8, easeLinearity: 0.2})); },
     fit(pts) { vis(() => map.flyToBounds(L.latLngBounds(pts.map(toLL)).pad(0.25), {duration: 0.8, maxZoom: 8})); },
@@ -302,12 +304,15 @@ function svgView(box, geo, cities, onPick) {
       for (const [p, t, me] of labels) { const e = sv('text', {x: p[0], y: p[1], class: 'lb' + (me ? ' me' : '')}); e.textContent = t; gL.append(e); }
       const me = labels.find((x) => x[2]);
       if (me) { const c = sv('circle', {cx: me[0][0], cy: me[0][1], class: 'hl dd'}); c.dataset.r = 9; c.setAttribute('stroke', '#ffd60a'); c.setAttribute('fill', 'none'); gL.prepend(c); }
-      if (buried.length && list[0] && list[0].a) {
-        const p = list[0].a, sum = buried.reduce((s, f) => s + (f.amount || 0), 0);
+      const fullLocal = list.localSum != null ? list.localSum : (buried.length ? buried.reduce((s, f) => s + (f.amount || 0), 0) : 0);
+      if (fullLocal > 0 && list[0] && list[0].a) {
+        const p = list[0].a;
         const d = sv('circle', {cx: p[0] + 18, cy: p[1] - 14, class: 'dd in'}); d.dataset.r = 5; gD.append(d);
-        const e = sv('text', {x: p[0] + 26, y: p[1] - 10, class: 'lb'}); e.textContent = '우리 시 ' + (typeof krw === 'function' ? krw(sum) : ''); gL.append(e);
+        const e = sv('text', {x: p[0] + 26, y: p[1] - 10, class: 'lb'}); e.textContent = '우리 시 ' + (typeof krw === 'function' ? krw(fullLocal) : ''); gL.append(e);
       }
       sizes();
+      if (box._syncCap) box._syncCap();
+      if (window.__syncMapLg) window.__syncMapLg();
     },
     fly(p) { zoomTo(fitBox([p], 160)); },
     fit(pts) { zoomTo(fitBox(pts)); },
@@ -331,6 +336,19 @@ function svgView(box, geo, cities, onPick) {
 async function moneyMap(root, opts = {}) {
   const [geo, fl] = await Promise.all([getJSON('assets/geo.json'), getJSON('data/flows.json')]);
   const box = $('.map', root), panel = $('.flowpanel', root);
+  const capEl = root.querySelector(':scope > p.sub');
+  box._syncCap = () => {
+    if (!capEl || !opts.fixed) return;
+    const orange = !!box.querySelector('path[stroke="#ff9f0a"], path.fl.out');
+    const blueLine = !!box.querySelector('path[stroke="#0a84ff"], path.fl.in');
+    const blueDot = !!box.querySelector('.loc-badge, path.dd.in');
+    const bits = [];
+    if (blueLine && blueDot) bits.push('파란 점과 파란 선은 우리 시 업체가 받은 돈이에요.');
+    else if (blueLine) bits.push('파란 선은 우리 시 업체가 받은 돈이에요.');
+    else if (blueDot) bits.push('파란 점은 우리 시 업체가 받은 돈이에요.');
+    if (orange) bits.push('주황 선은 다른 지역 업체로 간 돈이에요.');
+    if (bits.length) capEl.textContent = bits.join(' ');
+  };
   const cities = Object.entries(fl.cities).map(([slug, c]) => ({slug, ...c})).filter((c) => c.p).sort((a, b) => b.total - a.total);
   let cur = null, mode = 'city', view, cat = '전체';
   let homeMode = 'city', homeCur = null, homeCam = null, resetToFirst = () => {}, seated = false, nudged = false, live = false;
@@ -367,6 +385,7 @@ async function moneyMap(root, opts = {}) {
   };
   const drawCity = (c) => {
     const list = c.flows.map((f) => ({...f, a: c.p}));
+    if (c.local != null) list.localSum = c.local;
     const labels = list.filter((f) => !f.local).slice(0, 3).map((f) => [f.p, f.to.split(' ').slice(1).join(' ') || f.to]);
     labels.push([c.p, c.name.split(' ').pop(), true]);
     view.lines(list, Math.max(...list.map((f) => f.amount), 1), labels);

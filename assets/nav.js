@@ -1,4 +1,5 @@
-/* 위·아래 탭 5개. 순서: 우리 동네 세금 · 정부 지출 · 국민연금 주식 · 뉴스 · 더보기.
+/* 아래 탭 5개. 순서: 우리 동네 세금 · 정부 지출 · 국민연금 주식 · 뉴스 · 더보기.
+   폰과 넓은 화면 모두 아래 막대만 둔다. 위 막대는 만들지 않는다.
    게임·퀴즈는 메뉴에 넣지 않는다. ?c= 는 앞의 네 탭에 붙인다.
    도시 페이지의 우리 동네 세금은 그 도시 지도로 남긴다. */
 (() => {
@@ -37,15 +38,10 @@
   ];
   const barHtml = () => tabs.map(([k, href, label]) => `<a href="${href}" data-k="${k}" class="${act(k) ? 'on' : ''}"${act(k) ? ' aria-current="page"' : ''}><span class="tl">${label}</span><span class="ndot" hidden></span></a>`).join('')
     + `<button type="button" data-k="more" class="${act('more') ? 'on' : ''}" aria-expanded="false" aria-controls="more-sheet">더보기</button>`;
-  const top = document.createElement('nav');
-  top.className = 'tabbar tabbar-top';
-  top.setAttribute('aria-label', '위 메뉴');
-  top.innerHTML = barHtml();
   const bot = document.createElement('nav');
   bot.className = 'tabbar tabbar-bot';
   bot.setAttribute('aria-label', '아래 메뉴');
   bot.innerHTML = barHtml();
-  document.body.prepend(top);
   document.body.append(bot);
   document.body.classList.add('has-tabbar');
 
@@ -117,16 +113,15 @@
 
   const css = document.createElement('style');
   css.textContent = `.tabbar{position:fixed;left:0;right:0;z-index:1100;display:flex;background:#07090cf2;backdrop-filter:blur(16px);padding:4px 4px calc(4px + env(safe-area-inset-bottom));border-top:1px solid #24303a}
-.tabbar-top{top:0;bottom:auto;border-top:0;border-bottom:1px solid #24303a;padding:4px 4px}
+.tabbar-top{display:none!important}
 .tabbar-bot{bottom:0}
 .tabbar a,.tabbar button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;position:relative;min-height:44px;padding:4px 0;border:0;background:none;color:#9aa6b2;font:700 12px/1.15 var(--sans,Pretendard,system-ui,sans-serif);text-decoration:none;white-space:nowrap;letter-spacing:-.06em;cursor:pointer;overflow:hidden}
 .tabbar .tl{white-space:nowrap;overflow:hidden;text-overflow:clip}
 .tabbar a.on,.tabbar button.on{color:#ffb020}
 .tabbar-bot a.on::before,.tabbar-bot button.on::before{content:"";position:absolute;top:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
-.tabbar-top a.on::after,.tabbar-top button.on::after{content:"";position:absolute;bottom:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
 .ndot{display:none;width:8px;height:8px;border-radius:50%;background:#ff3b30;position:absolute;top:8px;right:10%}
 .has-new .ndot{display:block}
-body.has-tabbar{padding-top:52px;padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+body.has-tabbar{padding-top:0;padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 .more-sheet{position:fixed;inset:0;z-index:1200}
 .more-bg{position:absolute;inset:0;border:0;background:#000a}
 .more-box{position:absolute;left:0;right:0;bottom:0;background:#10161c;border-top:1px solid #ffb020;border-radius:18px 18px 0 0;padding:12px 14px calc(16px + env(safe-area-inset-bottom))}
@@ -136,6 +131,6 @@ body.has-tabbar{padding-top:52px;padding-bottom:calc(72px + env(safe-area-inset-
 .more-links{display:grid;gap:8px;margin-top:8px}
 .more-links a{display:flex;align-items:center;min-height:48px;padding:0 12px;border-radius:12px;border:1px solid #2a3544;background:#0c1218;color:#e8eef5;text-decoration:none;font-weight:700;font-size:16px}
 @media(min-width:900px){.tabbar{padding-left:calc(50% - 340px);padding-right:calc(50% - 340px)}.more-box{left:50%;width:420px;transform:translateX(-50%);bottom:24px;border:1px solid #ffb020;border-radius:18px}}
-body.has-tabbar .nbar{top:52px}`;
+body.has-tabbar .nbar{top:0}`;
   document.head.appendChild(css);
 })();
