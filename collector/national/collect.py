@@ -54,37 +54,116 @@ def sido_of(orig):
 
 
 TRIP = "nasnutdbapnfphwyr"   # O87UNV000897E818234 국회의원 직무상 국외활동 신고 내역
+ALLM = "ALLNAMEMBER"          # 국회의원 정보 통합(역대·사직 포함)
+_SPLIT = re.compile(r"[,，·、/]")
+
+
+def _split_top(s):
+    """괄호 밖 구분자로만 나눔: '호주(캔버라,시드니), 일본' → ['호주(캔버라,시드니)', '일본']"""
+    out, buf, depth = [], "", 0
+    for ch in s or "":
+        if ch in "(（[": depth += 1
+        elif ch in ")）]": depth = max(0, depth - 1)
+        if depth == 0 and _SPLIT.match(ch):
+            out.append(buf); buf = ""
+        else:
+            buf += ch
+    out.append(buf)
+    return [x.strip() for x in out if x.strip()]
+
+
+def _country(d):
+    d = re.sub(r"[(（].*?[)）]", "", d).strip()
+    return d.split()[0] if d else None
+
+
+def dests(raw, purpose, known):
+    """목적지(나라만). 목적지 칸이 비었거나 머리글('목적지')이면 목적 글에서 나라 이름을 찾음(inferred)."""
+    r = (raw or "").strip()
+    if r and r != "목적지":
+        return sorted({c for c in (_country(x) for x in _split_top(r)) if c}), False
+    hit = [k for k in known if k in (purpose or "")]
+    return sorted(set(hit)), bool(hit)
+
+
+def history():
+    """22대 의원 전체(사직·당적 변경 포함): ALLNAMEMBER 에서 22대 경력 있는 사람."""
+    rows = api(ALLM, pSize=1000)
+    if rows:
+        log.append("ALLNAMEMBER 필드: " + ",".join(sorted(rows[0].keys())))
+    out = defaultdict(list)
+    for r in rows:
+        units = " ".join(str(r.get(k) or "") for k in ("GTELT_ERACO", "ERACO", "UNITS", "UNIT_NM"))
+        if "22" not in units:
+            continue
+        nm = r.get("NAAS_NM") or r.get("HG_NM")
+        out[nm].append({"id": r.get("NAAS_CD") or r.get("MONA_CD"), "party": r.get("PLPT_NM") or r.get("POLY_NM"), "raw": r})
+    return out
+
+
+def _party_at(hist_party, date):
+    """'A/B/C' 처럼 당적 이력이 있으면 마지막(현재) — 시점별 날짜가 없으면 그대로 표시"""
+    return hist_party
+
+
 def collect_trips(members):
-    rows = api(TRIP, UNIT_CD="100022", pSize=1000)          # 22대만, 1000건씩 페이지네이션(api()가 pIndex 증가)
-    name2 = defaultdict(list)
-    for m in members: name2[m["name"]].append(m)
-    trips = []
+    rows = api(TRIP, UNIT_CD="100022", pSize=1000)
+    if rows:
+        log.append("국외활동 필드: " + ",".join(sorted(rows[0].keys())))
+    cur = defaultdict(list)
+    for m in members: cur[m["name"]].append(m)
+    hist = history()
+    known = set()
+    for r in rows:
+        if (r.get("DSTN_NM") or "").strip() not in ("", "목적지"):
+            known |= {c for c in (_country(x) for x in _split_top(r["DSTN_NM"])) if c}
+    LEAD = next((k for k in ("LEADER", "CHIEF_NM", "LDR_NM", "HEAD_NM", "RPRS_NM") if rows and k in rows[0]), None)
+    trips, unmatched = [], defaultdict(int)
     for i, r in enumerate(rows):
-        names = [n.strip() for n in re.split(r"[,，·、]", r.get("PN") or "") if n.strip()]
-        dst = [d.strip() for d in re.split(r"[,，·、/]", r.get("DSTN_NM") or "") if d.strip() and d.strip() != "목적지"]
+        names = [n.strip() for n in _split_top(r.get("PN") or "")]
+        dst, inferred = dests(r.get("DSTN_NM"), r.get("PURP_RSON"), known)
+        lead = (r.get(LEAD) or "").strip() if LEAD else (names[0] if names else None)
         for n in names:
-            ms = name2.get(n, [])
-            trips.append({"trip_id": i, "name": n, "member_id": ms[0]["id"] if len(ms) == 1 else None,
-                          "party": ms[0]["party"] if len(ms) == 1 else None,   # 동명이인·전직 의원은 None
-                          "dest": dst, "dest_raw": r.get("DSTN_NM"), "dates": r.get("SCH_DYS"),
-                          "purpose": r.get("PURP_RSON"), "funder": r.get("EXPNS_SUPPT_INST_NM"),
+            ms, how = cur.get(n, []), "현직"
+            if len(ms) != 1:
+                hs = hist.get(n, [])
+                ms = [{"id": h["id"], "party": h["party"], "name": n} for h in hs] if len(hs) == 1 else ms
+                how = "22대 이력" if len(hs) == 1 else ("동명이인" if len(ms) > 1 or len(hs) > 1 else "미매칭")
+            ok = len(ms) == 1
+            if not ok:
+                unmatched[n] += 1
+            trips.append({"trip_id": i, "name": n, "member_id": ms[0]["id"] if ok else None,
+                          "party": ms[0]["party"] if ok else None, "match": how if ok or how != "현직" else "미매칭",
+                          "is_leader": n == lead, "dest": dst, "dest_inferred": inferred, "dest_raw": r.get("DSTN_NM"),
+                          "dates": r.get("SCH_DYS"), "purpose": r.get("PURP_RSON"), "funder": r.get("EXPNS_SUPPT_INST_NM"),
                           "report": r.get("REPORT_YN"), "src": BASE + TRIP})
-    json.dump({"count_raw": len(rows), "trips": trips}, open(os.path.join(OUT, "trips_raw.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    by_m, by_p, by_d = defaultdict(int), defaultdict(int), defaultdict(int)
+    json.dump({"count_raw": len(rows), "leader_field": LEAD or "없음(PN 첫 이름을 대표로 봄)", "unmatched": dict(unmatched), "trips": trips},
+              open(os.path.join(OUT, "trips_raw.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    by_m, by_l, by_p, by_d = defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int)
+    fund = defaultdict(set)
     for t in trips:
-        by_m[(t["name"], t["party"] or "미매칭")] += 1
-        by_p[t["party"] or "미매칭"] += 1
-    for r in rows:   # 목적지는 신고 건 기준(참가 의원 수 중복 없이)
-        for d in {d.strip() for d in re.split(r"[,，·、/]", r.get("DSTN_NM") or "") if d.strip() and d.strip() != "목적지"}:
-            by_d[d] += 1
+        k = (t["name"], t["party"] or "미매칭")
+        by_m[k] += 1; by_p[t["party"] or "미매칭"] += 1; fund[k].add(t["funder"] or "")
+        if t["is_leader"]: by_l[k] += 1
+    seen = set()
+    for t in trips:
+        if t["trip_id"] in seen: continue
+        seen.add(t["trip_id"])
+        for d in t["dest"]: by_d[d] += 1
+    seats = defaultdict(int)
+    for m in members: seats[m["party"]] += 1
     import csv
     def wcsv(fn, head, items):
         with open(os.path.join(OUT, fn), "w", encoding="utf-8-sig", newline="") as f:
             w = csv.writer(f); w.writerow(head); w.writerows(items)
-    wcsv("trips_by_member.csv", ["name", "party", "trips"], sorted(((a, b, c) for (a, b), c in by_m.items()), key=lambda x: -x[2]))
-    wcsv("trips_by_party.csv", ["party", "member_trips"], sorted(by_p.items(), key=lambda x: -x[1]))
+    wcsv("trips_by_member.csv", ["name", "party", "참가 횟수(동행 포함)", "대표 횟수", "funders"],
+         sorted(((a, b, c, by_l.get((a, b), 0), " / ".join(sorted(x for x in fund[(a, b)] if x))) for (a, b), c in by_m.items()), key=lambda x: (-x[2], x[0])))
+    wcsv("trips_by_party.csv", ["party", "참가 횟수(동행 포함)", "현재 의석", "의석당 참가 횟수"],
+         sorted(((p, c, seats.get(p, 0), round(c / seats[p], 2) if seats.get(p) else None) for p, c in by_p.items()), key=lambda x: -x[1]))
     wcsv("trips_top_dest.csv", ["destination", "reports"], sorted(by_d.items(), key=lambda x: -x[1])[:10])
+    log.append(f"국외활동: 신고 {len(rows)}건, 참가 {len(trips)}건, 미매칭 {sum(unmatched.values())}건")
     return trips
+
 
 def main():
     os.makedirs(OUT, exist_ok=True)
