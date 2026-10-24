@@ -1,0 +1,35 @@
+{
+ "updated": "2026-10-24 10:24",
+ "special_activity": [],
+ "national_projects": [
+  {
+   "id": "nk_loan",
+   "title": "대북 차관(식량·자재 장비 등)",
+   "status": "틀만(팩트체크 비서 확인 중)",
+   "from": {
+    "name": "남북협력기금(통일부)",
+    "region": "서울"
+   },
+   "via": {
+    "name": "한국수출입은행(기금 수탁)",
+    "region": "서울 영등포구"
+   },
+   "to": {
+    "name": "북한",
+    "region": "북한"
+   },
+   "amount": null,
+   "repaid": null,
+   "src": [],
+   "fields": [
+    "year",
+    "kind",
+    "amount_usd",
+    "amount_krw",
+    "due",
+    "repaid",
+    "overdue"
+   ]
+  }
+ ]
+}
