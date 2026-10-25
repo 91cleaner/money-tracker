@@ -27,12 +27,13 @@
     if (k === 'news') return pg === 'news' || pg === 'article';
     if (k === 'nat') return pg === 'national';
     if (k === 'nps') return pg === 'nps';
-    if (k === 'more') return ['rank', 'spend', 'vendor', 'principles'].includes(pg);
+    if (k === 'more') return ['rank', 'spend', 'vendor', 'principles', 'bid'].includes(pg);
     return false;
   };
   const moreLinks = [
     ['rank.html', '순위'],
     ['spend.html', '추적'],
+    ['bid.html', '입찰 정보'],
     ['principles.html', '중립성 원칙'],
   ];
   const barHtml = () => tabs.map(([k, href, label]) => `<a href="${href}" data-k="${k}" class="${act(k) ? 'on' : ''}"${act(k) ? ' aria-current="page"' : ''}><span class="tl">${label}</span><span class="ndot" hidden></span></a>`).join('')
