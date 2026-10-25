@@ -75,7 +75,7 @@
 #pg .tabs button.on{background:rgba(93,255,158,.16);color:#eafff2;box-shadow:inset 0 0 0 1px rgba(93,255,158,.4)}#pg .tabs button i{font-style:normal;opacity:.7;margin-left:3px;font-weight:600}
 #pg .vt{display:inline-block;min-width:38px;text-align:center;font:800 11.5px Pretendard,system-ui,sans-serif;padding:1px 6px;border-radius:6px;margin-right:6px}#pg .vt.Y{background:#0f3b23;color:#7dffb0}#pg .vt.N{background:#3b1414;color:#ff9b9b}#pg .vt.A{background:#3a2c0b;color:#ffd27a}#pg .vt.X{background:#1b2420;color:#8fa79a}
 #pg .vsum{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:8px 0}#pg .vsum div{background:#04140b;border:1px solid #1f4a30;border-radius:8px;padding:6px;text-align:center;font-size:11px;color:#8fc9a5}#pg .vsum b{display:block;font-size:17px;color:#e8fff1}
-#pg .tr a{color:#7fe8ff}#pg .lk{display:grid;gap:6px;margin-top:8px}#pg .lk a{display:flex;gap:8px;align-items:center;min-height:42px;padding:0 12px;border-radius:8px;border:1px solid #1f4a30;color:#cfe9d8;text-decoration:none;font-size:13px}
+#pg .allb{width:100%;min-height:42px;margin-top:10px;border-radius:10px;border:1px solid rgba(93,255,158,.3);background:rgba(93,255,158,.08);color:#eafff2;font:700 13px Pretendard,system-ui,sans-serif;cursor:pointer}#pg .fl{display:flex;gap:4px;margin:0 0 6px}#pg .fl button{min-height:32px;padding:0 11px;border-radius:999px;border:1px solid #1f4a30;background:transparent;color:#86b89a;font:700 12px Pretendard,system-ui,sans-serif;cursor:pointer}#pg .fl button.on{background:rgba(93,255,158,.16);color:#eafff2;border-color:rgba(93,255,158,.4)}#pg .tr a{color:#7fe8ff}#pg .lk{display:grid;gap:6px;margin-top:8px}#pg .lk a{display:flex;gap:8px;align-items:center;min-height:42px;padding:0 12px;border-radius:8px;border:1px solid #1f4a30;color:#cfe9d8;text-decoration:none;font-size:13px}
 #pg .act{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}#pg .act a,#pg .act button{font:700 12.5px Pretendard;min-height:34px;padding:0 10px;border-radius:8px;border:1px solid #2a7a4a;background:#06150c;color:#cfe9d8;text-decoration:none;display:inline-flex;align-items:center;cursor:pointer}
 #pg .act .p{background:#5dff9e;color:#02110a;border-color:#5dff9e}
 #pg .fine{font-size:11px;color:#6fae88;margin-top:8px;line-height:1.45}#pg .fine a{color:#8fc9a5}
@@ -300,7 +300,7 @@
       const st = (SEC.lead_stat || {})[m.id], L1 = (SEC.lead || {})[m.id] || [];
       file.querySelector('.c-bill').textContent = st ? st[0] : 0;
       tb('bill').innerHTML = st ? `<div class="vsum" style="grid-template-columns:repeat(3,1fr)"><div><b>${st[0]}</b>대표 발의</div><div><b>${st[1]}</b>통과·반영</div><div><b>${st[2]}</b>외교·안보 위원회</div></div>
-        <div class="ds">22대 국회에서 이 의원이 대표로 낸 법안이에요. 최근 ${L1.length}건:</div>` + L1.map((b) => `<div class="tr"><div class="d">${esc(b.d)}</div><div class="p">${billA(b.id, b.n)}</div><div><span class="tg ${b.r && b.r !== '철회' ? 'y' : ''}">${esc(RES(b.r))}</span>${b.s ? '<span class="tg">외교·안보 위원회 소관</span>' : ''}</div></div>`).join('') + `<div class="ds" style="margin-top:6px">전체 목록은 '원문 링크' 탭의 의안정보시스템에서 볼 수 있어요.</div>` + SRC
+        <div class="ds">22대 국회에서 이 의원이 대표로 낸 법안이에요. 최근 ${L1.length}건:</div>` + L1.map((b) => `<div class="tr"><div class="d">${esc(b.d)}</div><div class="p">${billA(b.id, b.n)}</div><div><span class="tg ${b.r && b.r !== '철회' ? 'y' : ''}">${esc(RES(b.r))}</span>${b.s ? '<span class="tg">외교·안보 위원회 소관</span>' : ''}</div></div>`).join('') + `${st[0] > L1.length ? `<button type="button" class="allb">전체 ${st[0]}건 보기</button>` : ''}` + SRC
         : '<div class="ds" style="margin-top:8px">22대 국회에서 대표로 낸 법안 기록이 없어요.</div>' + SRC;
       // 외교·안보 표결
       const vs = (SEC.votes || {})[m.id] || '', B = SEC.bills || [];
@@ -314,6 +314,27 @@
       file.querySelector('.c-disc').textContent = D2.length;
       tb('disc').innerHTML = (D2.length ? `<div class="ds" style="margin-top:8px">국회에 제출된, 이 의원 이름이 제목에 있는 징계안이에요. <b>징계안은 제출된 안건일 뿐, 징계가 정해졌다는 뜻이 아니에요.</b></div>` + D2.map((x) => `<div class="tr"><div class="d">${esc(x.date)} 제출</div><div class="p">${billA(x.id, x.name)}</div><div><span class="tg">${esc(x.result || '처리 전(윤리특별위원회 심사)')}</span></div></div>`).join('')
         : '<div class="ds" style="margin-top:8px">22대 국회에서 이 의원 이름으로 제출된 징계안이 없어요.</div>') + '<div class="fine">출처 열린국회정보 의안 접수목록 · 같은 이름의 다른 사람일 수 있으니 원문을 확인하세요.</div>';
+      const ab = tb('bill').querySelector('.allb');
+      if (ab) ab.onclick = async () => {
+        SFX.click(); ab.textContent = '불러오는 중…'; ab.disabled = true;
+        const all = await j('bills/' + m.id + '.json');
+        if (!all || file.dataset.mid !== m.id) { ab.textContent = '불러오지 못했어요'; return; }
+        const box = document.createElement('div');
+        box.innerHTML = `<input class="q" type="search" placeholder="법안 이름으로 찾기 (예: 주택)" aria-label="법안 찾기" style="margin-top:10px"><div class="fl"><button type="button" data-f="" class="on">전체</button><button type="button" data-f="ok">통과·반영</button><button type="button" data-f="wait">심사 중</button></div><div class="ds cnt"></div><div class="ls"></div>`;
+        ab.replaceWith(box);
+        const q = box.querySelector('.q'), ls = box.querySelector('.ls'), cnt = box.querySelector('.cnt'); let f = '', lim = 40;
+        const ok = (b) => /가결|대안반영|수정/.test(b.r || '');
+        const paint = () => {
+          const nrm = (t) => String(t || '').replace(/\s+/g, '');
+          const n = nrm(q.value);
+          const L2 = all.filter((b) => (!n || nrm(b.n).includes(n)) && (!f || (f === 'ok' ? ok(b) : !b.r)));
+          cnt.textContent = `${L2.length}건`;
+          ls.innerHTML = L2.slice(0, lim).map((b) => `<div class="tr"><div class="d">${esc(b.d)}${b.c ? ' · ' + esc(b.c) : ''}</div><div class="p">${billA(b.id, b.n)}</div><div><span class="tg ${ok(b) ? 'y' : ''}">${esc(RES(b.r))}</span></div></div>`).join('') + (L2.length > lim ? '<button type="button" class="allb more">더 보기</button>' : '');
+          const mb = ls.querySelector('.more'); if (mb) mb.onclick = () => { lim += 60; paint(); };
+        };
+        box.querySelectorAll('.fl button').forEach((x) => (x.onclick = () => { f = x.dataset.f; lim = 40; box.querySelectorAll('.fl button').forEach((y) => y.classList.toggle('on', y === x)); paint(); }));
+        q.oninput = () => { lim = 40; paint(); }; paint();
+      };
     };
     file.dataset.mid = m.id;
     if (SEC) fill(); else secP.then(() => { if (file.dataset.mid === m.id && file.querySelector('.tabs')) fill(); });

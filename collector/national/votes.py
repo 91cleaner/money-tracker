@@ -3,7 +3,7 @@
 모두 열린국회정보 공식 기록 그대로이고, 사이트가 성향을 판단하거나 딱지를 붙이지 않는다.
   1) 본회의 표결: 외교·안보 관련 안건(국방·외교통일·정보위원회 소관이거나, 제목에 외교·안보 낱말이 있는 결의안 등) 중
      찬성 말고 반대·기권이 있었던 것만 골라(만장일치는 비교할 게 없어서), 의원마다 찬성·반대·기권을 남긴다.
-  2) 대표 발의: 같은 세 위원회 소관 법안 중 그 의원이 대표로 낸 것.
+  2) 대표 발의: 그 의원이 대표로 낸 모든 법안(총·통과·최근 8건, 전체 목록은 data/national/bills/<의원코드>.json).
   3) 징계안: 국회에 제출된 의원 징계안(제목·제출일·처리 결과·원문 링크).
 API가 응답하지 않으면 이전 파일을 그대로 둔다.
 """
@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import collect as C  # noqa: E402  같은 api() 사용(키·재시도·기록)
 
 OUT = os.path.join(C.OUT, "security.json")
+BILLS = os.path.join(C.OUT, "bills")
 SEC_CMT = ("국방위원회", "외교통일위원회", "정보위원회")
 KW = re.compile(r"외교|안보|국방|군사|방위|북한|대북|남북|통일|한미|한일|한중|미국|일본|중국|러시아|동맹|독도|위안부|강제동원|후쿠시마|오염수|간첩|병역|전쟁|핵|미사일|NATO|나토|우크라이나|이스라엘|대만")
 VOTE = {"찬성": "Y", "반대": "N", "기권": "A", "불참": "X"}
@@ -82,9 +83,19 @@ def main():
         if (r.get("COMMITTEE") or "") in SEC_CMT:
             st[2] += 1
         lead.setdefault(mid, []).append({"n": r.get("BILL_NAME"), "d": (r.get("PROPOSE_DT") or "")[:10], "r": res or None,
-                                         "id": r.get("BILL_ID"), "s": 1 if (r.get("COMMITTEE") or "") in SEC_CMT else 0})
+                                         "id": r.get("BILL_ID"), "c": (r.get("COMMITTEE") or "").replace("위원회", "위") or None,
+                                         "s": 1 if (r.get("COMMITTEE") or "") in SEC_CMT else 0})
+    # 의원마다 전체 목록은 따로 작은 파일로(화면에서 '전체 보기'를 누를 때만 받는다)
+    if lead:
+        os.makedirs(BILLS, exist_ok=True)
+        for f in os.listdir(BILLS):
+            if f.endswith(".json") and f[:-5] not in lead:
+                os.remove(os.path.join(BILLS, f))
     for mid in lead:
-        lead[mid] = sorted(lead[mid], key=lambda x: x["d"], reverse=True)[:8]
+        full = sorted(lead[mid], key=lambda x: x["d"], reverse=True)
+        with open(os.path.join(BILLS, mid + ".json"), "w", encoding="utf-8") as f:
+            json.dump([{k: v for k, v in x.items() if v not in (None, 0, "")} for x in full], f, ensure_ascii=False, separators=(",", ":"))
+        lead[mid] = [{k: v for k, v in x.items() if k != "c"} for x in full[:8]]
     # 징계안
     disc = []
     for r in C.api("BILLRCP", ERACO="제22대", BILL_KIND="징계안", pSize=1000):
