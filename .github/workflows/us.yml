@@ -19,6 +19,9 @@ jobs:
         continue-on-error: true
         timeout-minutes: 25
         env: {TRADES_BUDGET_MIN: "20"}
+      - run: python collector/us/prices.py
+        continue-on-error: true
+        timeout-minutes: 15
       - run: python collector/us/bills.py
         continue-on-error: true
         timeout-minutes: 20
