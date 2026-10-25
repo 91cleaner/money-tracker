@@ -16,7 +16,7 @@
   const box = document.createElement('div'); box.className = 'pwa'; box.setAttribute('role', 'note');
   const close = () => { box.remove(); try { localStorage.setItem('mt.pwa.off', '1'); } catch (e) { /* 무시 */ } };
   const show = (html, btn) => {
-    box.innerHTML = `<img src="assets/icons/icon-192.png" alt=""><span class="t">${html}</span>${btn ? '<button type="button" class="go">설치</button>' : ''}<button type="button" class="x" aria-label="닫기">×</button>`;
+    box.innerHTML = `<img src="assets/icons/radar-192.png" alt=""><span class="t">${html}</span>${btn ? '<button type="button" class="go">설치</button>' : ''}<button type="button" class="x" aria-label="닫기">×</button>`;
     box.querySelector('.x').onclick = close;
     const go = box.querySelector('.go'); if (go) go.onclick = async () => { if (!deferred) return; deferred.prompt(); try { await deferred.userChoice; } catch (e) { /* 무시 */ } deferred = null; box.remove(); };
     const at = document.querySelector('.visits') || document.getElementById('mytop');

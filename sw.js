@@ -1,6 +1,6 @@
 /* 홈 화면 앱용 서비스 워커. 늘 인터넷에서 새로 받고(network-first), 끊겼을 때만 마지막으로 받은 것을 보여 준다.
    자료가 매시간 바뀌는 사이트라 캐시를 먼저 쓰지 않는다. */
-const C = 'mt-v1';
+const C = 'mt-v2';
 self.addEventListener('install', (e) => { self.skipWaiting(); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== C).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', (e) => {
