@@ -19,7 +19,7 @@
   <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl us">U.S. CONGRESS <button type="button" class="snd" aria-label="Sound on/off"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="m" d="m16 9.5 5 5m0-5-5 5" style="display:none"/></svg></button></div></div>
   <div class="pg-box ctr"><div class="n mono">$0</div><div class="l">Congress pay accrued today · <span class="nmem">535</span> members</div></div></div>
   <div class="pg-say mono"></div>
-  <div class="pg-file" role="dialog" aria-label="Record file"></div>
+  <div class="pg-file" role="dialog" aria-label="Record file"></div>\n  <button type="button" class="pg-reset" aria-label="Reset map to United States" title="Reset map">⌖ <span>Reset map</span></button>
   <nav class="pg-bar" aria-label="Tools">
     <button type="button" data-w="mp"><span class="k">1</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21v-7h14v7M4 14h16M8 14v7M12 14v7M16 14v7"/><path d="M7 14a5 5 0 0 1 10 0"/><path d="M12 9V4.5M10.5 4.5h3"/></svg></span>Members</button>
     <button type="button" data-w="trades"><span class="k">2</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/><path d="M3 21h18" opacity=".5"/></svg></span>Trades</button>
@@ -113,7 +113,7 @@
   { const sb = document.createElement('div'); sb.className = 'satb'; sb.innerHTML = '<i></i>SAT · SATELLITE'; root.append(sb); }
   const US = L.latLngBounds([[24.5, -125], [49.5, -66.5]]);
   const fitUS = (anim) => map.fitBounds(US, { padding: [60, 16], paddingBottomRight: [16, 90], animate: !!anim && !RM });
-  fitUS(false);
+  fitUS(false);\n  root.querySelector(".pg-reset").addEventListener("click", () => { closeFile(); fitUS(true); });
   const gDots = L.layerGroup().addTo(map), gFx = L.layerGroup().addTo(map), gTop = L.layerGroup().addTo(map);
   // spread members that share an office location
   const LL = {}, slot = {};
