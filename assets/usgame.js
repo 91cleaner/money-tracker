@@ -101,7 +101,7 @@
   tick(); setInterval(tick, RM ? 1000 : 100);
 
   // map
-  const map = L.map($('.pg-map'), { zoomControl: false, scrollWheelZoom: false, attributionControl: true, zoomSnap: 0.25, minZoom: 2, maxZoom: 12, tap: false });
+  const map = L.map($('.pg-map'), { zoomControl: false, scrollWheelZoom: true, attributionControl: true, zoomSnap: 0.25, minZoom: 2, maxZoom: 12, tap: false });
   map.attributionControl.setPrefix(false);
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 12, attribution: 'Esri · Maxar · @unitedstates · House Clerk · Senate eFD · Congress.gov' }).addTo(map);
   map.createPane('sat'); map.getPane('sat').style.zIndex = 250; map.getPane('sat').style.filter = 'brightness(.72) contrast(1.12) saturate(.75)';
@@ -404,6 +404,8 @@
 
   const snd = root.querySelector('.snd'); const paintSnd = () => snd.classList.toggle('off', SFX.muted); paintSnd(); snd.onclick = () => { SFX.toggle(); paintSnd(); if (!SFX.muted) SFX.click(); };
   new MutationObserver(() => { const on = file.classList.contains('on'); if (root.classList.contains('fileon') !== on) { root.classList.toggle('fileon', on); setTimeout(() => map.invalidateSize({ pan: false }), 30); } }).observe(file, { attributes: true, attributeFilter: ['class'] });
+  // Mouse wheel zooms the map only over its surface; panels keep their own scrolling.
+  file.addEventListener('wheel', (e) => { e.stopPropagation(); }, { passive: true });
   const mapEl = root.querySelector('.pg-map');
   ['touchstart', 'wheel'].forEach((ev) => mapEl.addEventListener(ev, () => { if (innerWidth < 900 && file.classList.contains('on')) file.classList.add('min'); }, { passive: true }));
   file.addEventListener('click', (e) => { if (file.classList.contains('min') && !e.target.closest('.x')) file.classList.remove('min'); });
