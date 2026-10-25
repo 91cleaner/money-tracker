@@ -304,6 +304,7 @@
       // Price movement is NOT realized member profit; filings do not provide exact execution prices.
       let radarMode = 'recent';
       let hot = [];
+      const seen = new Set();
       const score = (m) => {
         const priced = (byM[m.id] || []).filter(t => t.ty === 'P' && Number.isFinite(Number(t.r)) && t.r != null);
         if (!priced.length) return null;
@@ -320,7 +321,7 @@
         const ids=new Set(hot.map(m=>m.id));
         drawDots(m=>false,()=>true);
         // Targets are revealed as the sweep reaches each map marker.
-        if (typeof seen !== 'undefined') seen.clear();
+        seen.clear();
         const choices=[['recent','최근 30일 거래'],['up','매수 후 상승'],['down','매수 후 하락']];
         file.innerHTML=fileHead('Radar · stock activity')+
           '<div class="seg" role="group" aria-label="Radar filters">'+choices.map(([k,l])=>'<button type="button" data-radar="'+k+'" class="'+(radarMode===k?'on':'')+'">'+l+'</button>').join('')+'</div>'+
@@ -343,7 +344,7 @@
       stopRadar(); if (RM) return;
       const cv = document.createElement('canvas'); cv.className = 'pg-radar'; cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:600;pointer-events:none'; root.querySelector('.pg-map').after(cv);
       const g = cv.getContext('2d'); const r0 = devicePixelRatio || 1; cv.width = root.clientWidth * r0; cv.height = root.clientHeight * r0; g.setTransform(r0, 0, 0, r0, 0, 0);
-      const t0 = performance.now(); let rev = -1, lastBlip = 0; const seen = new Set();
+      const t0 = performance.now(); let rev = -1, lastBlip = 0;
       const loop = (now) => {
         const rv = Math.floor((now - t0) / 2600); if (rv !== rev) { rev = rv; seen.clear(); SFX.ping(); }
         const c = map.latLngToContainerPoint([38.5, -96]), R = Math.max(root.clientWidth, root.clientHeight) * 0.7, a = ((now - t0) / 2600) * Math.PI * 2;
