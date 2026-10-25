@@ -135,7 +135,7 @@
   const closeFile = () => file.classList.remove('on');
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]);
   const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="mn" aria-label="Collapse">▾</button><button type="button" class="x" aria-label="Close">×</button></span></div>`;
-  const bindX = () => { file.classList.remove('min'); const x = file.querySelector('.x'); if (x) x.onclick = () => { VSA = null; closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) mn.onclick = (e) => { e.stopPropagation(); file.classList.toggle('min'); }; };
+  const bindX = () => { file.classList.remove('min'); const x = file.querySelector('.x'); if (x) x.onclick = () => { VSA = null; closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) { mn.setAttribute('aria-expanded', String(!file.classList.contains('min'))); mn.title='접기 / 펼치기'; mn.onclick = (e) => { e.stopPropagation(); const collapsed=file.classList.toggle('min'); mn.setAttribute('aria-expanded', String(!collapsed)); }; } };
   const row = (m, right) => `<div class="li" data-id="${esc(m.id)}"><img src="${esc(m.pic)}" alt="" loading="lazy" referrerpolicy="no-referrer"><div class="t"><b>${esc(m.name)}</b> <span style="color:${pc(m.party)};font-size:11px;font-weight:800">${m.party}-${esc(m.state)}</span><div>${esc(title(m))}</div></div>${right ? `<span class="r">${right}</span>` : ''}</div>`;
   const byId = Object.fromEntries(people.map((m) => [m.id, m]));
   const bindRows = () => file.querySelectorAll('.li[data-id]').forEach((el) => (el.onclick = () => { const m = byId[el.dataset.id]; if (m) open(m); }));
@@ -157,6 +157,15 @@
     return '<section style="padding:12px 0"><div class="ph2">Stock trade timeline · '+esc(start)+' – '+esc(end)+'</div><div class="ds">Green: buy · Red: sell · Top 5 tickers. Reported trade dates, not stock prices.</div><svg role="img" aria-label="Stock trade timeline by ticker" viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">'+grid+marks+'<text x="'+left+'" y="'+(H-7)+'" fill="#9fd3b4" font-size="12">'+esc(start)+'</text><text x="'+(W-right)+'" y="'+(H-7)+'" text-anchor="end" fill="#9fd3b4" font-size="12">'+esc(end)+'</text></svg></section>';
   };
 
+  const tradeTable = (ts) => {
+    if (!ts.length) return '';
+    const cells = ts.slice(0, 80).map(t => {
+      const move = t.r == null ? '<span style="color:#91a99a">자료 없음</span>' : '<b style="color:'+(Number(t.r)>=0?'#7dffb0':'#ff9b9b')+'">'+(Number(t.r)>0?'+':'')+esc(t.r)+'%</b>';
+      return '<tr><td>'+esc(t.d || '—')+'</td><td><b>'+esc(t.tk || '—')+'</b></td><td style="color:'+(t.ty==='P'?'#7dffb0':'#ff9b9b')+'">'+(t.ty==='P'?'매수':t.ty==='S'?'매도':'교환')+'</td><td>'+esc(amtShort(t.amt || '—'))+'</td><td>'+move+'</td></tr>';
+    }).join('');
+    return '<div class="member-trade-table"><div class="ph2">거래 내역표</div><div class="ds">신고 금액은 범위이며, 주가 변동은 실제 의원 수익이 아닙니다.</div><div class="member-table-scroll"><table><thead><tr><th>거래일</th><th>종목</th><th>구분</th><th>신고 금액</th><th>이후 주가</th></tr></thead><tbody>'+cells+'</tbody></table></div></div>';
+  };
+
   let VSA = null;
   function open(m) {
     if (VSA) { const a = VSA; VSA = null; if (a.id !== m.id) return vs(a, m); }
@@ -173,7 +182,7 @@
       <div class="ds">${esc(title(m))} · in Congress since ${esc(m.since)}${age ? `<br>Age ${age}` : ''}</div></div></div>
       <div class="st st4"><div><b>${n.trades}</b><span>stock trades</span></div><div><b>${n.buys}</b><span>buys</span></div><div><b>${n.sells}</b><span>sells</span></div>${n.edge != null ? `<div><b style="color:${n.edge >= 0 ? '#7dffb0' : '#ff9b9b'}">${n.edge > 0 ? '+' : ''}${n.edge.toFixed(1)}%</b><span>vs S&amp;P 500</span></div>` : `<div><b>${bl ? n.bills : '—'}</b><span>bills sponsored</span></div>`}</div>
       <div class="tabs" role="tablist"><button type="button" class="on" data-t="trd">Trades<i>${n.trades}</i></button><button type="button" data-t="bill">Bills<i>${bl ? n.bills : ''}</i></button><button type="button" data-t="prof">Profile</button></div>
-      <div class="tb" data-t="trd">${tradeTimeline(ts)}${ts.length ? (top.length ? `<div class="fl2">${top.map(([k, c]) => `<span class="tk">${esc(k)} <small>×${c}</small></span>`).join('')}</div>` : '') + ts.slice(0, 40).map((t) => tline(t)).join('') + (ts.length > 40 ? `<div class="ds">+${ts.length - 40} more in the filings.</div>` : '') : '<div class="ds" style="margin-top:8px">No stock trade disclosures (PTRs) parsed for the last 12 months.</div>'}${SRC}</div>
+      <div class="tb" data-t="trd">${tradeTimeline(ts)}${tradeTable(ts)}${ts.length ? (top.length ? `<div class="fl2">${top.map(([k, c]) => `<span class="tk">${esc(k)} <small>×${c}</small></span>`).join('')}</div>` : '') + ts.slice(0, 40).map((t) => tline(t)).join('') + (ts.length > 40 ? `<div class="ds">+${ts.length - 40} more in the filings.</div>` : '') : '<div class="ds" style="margin-top:8px">No stock trade disclosures (PTRs) parsed for the last 12 months.</div>'}${SRC}</div>
       <div class="tb" data-t="bill" hidden>${bl ? `<div class="vsum" style="grid-template-columns:repeat(3,1fr)"><div><b>${n.bills}</b>sponsored</div><div><b>${n.passed}</b>passed a chamber</div><div><b>${n.laws}</b>became law</div></div>` + (BR[m.id] || []).map((b) => `<div class="tr"><div class="d">${esc(b.d || '')} · ${esc(b.no)}</div><div class="p"><a href="${esc(b.u)}" target="_blank" rel="noopener">${esc(b.n)}</a></div><div><span class="tg ${b.law ? 'y' : ''}">${esc(b.law ? 'Became law' : (b.a || 'Introduced').slice(0, 70))}</span></div></div>`).join('') + `<div class="fine">${esc(bl.congress)}th Congress · Source: Congress.gov</div>` : '<div class="ds" style="margin-top:8px">Bill data is loading in the next update.</div>'}</div>
       <div class="tb" data-t="prof" hidden>${m.cmits && m.cmits.length ? `<div class="ph2">Committees</div>` + m.cmits.map((c) => `<div class="pl">${esc(c)}</div>`).join('') : ''}
         <div class="ph2">Check the source</div><div class="lk">
