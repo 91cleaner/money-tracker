@@ -33,7 +33,7 @@
   const moreLinks = [
     ['rank.html', '순위'],
     ['spend.html', '추적'],
-    ['bid.html', '입찰 정보'],
+    ['bid.html', '우리 동네 입찰'],
     ['principles.html', '중립성 원칙'],
   ];
   const barHtml = () => tabs.map(([k, href, label]) => `<a href="${href}" data-k="${k}" class="${act(k) ? 'on' : ''}"${act(k) ? ' aria-current="page"' : ''}><span class="tl">${label}</span><span class="ndot" hidden></span></a>`).join('')
