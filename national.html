@@ -23,6 +23,65 @@
  body[data-page="national"] #pg .pg-dice{bottom:calc(85px + env(safe-area-inset-bottom,0px))!important}
  body[data-page="national"] #pg.fileon .pg-dice{opacity:0!important;pointer-events:none!important}
 }
+
+/* Mobile national tracker: one document flow, three non-overlapping map zones. */
+@media(max-width:600px){
+ html,body{overflow-x:hidden!important}
+ body[data-page="national"] .nbar{
+  position:relative!important;top:auto!important;z-index:910!important;
+  box-sizing:border-box!important;width:100%!important;
+  padding:calc(10px + env(safe-area-inset-top,0px)) 12px 12px!important;
+  background:#0b1113!important;border-bottom:1px solid #28523a!important;
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;gap:10px 8px!important;
+ }
+ body[data-page="national"] .nbar .mt-brand{grid-column:1!important;min-width:0!important}
+ body[data-page="national"] .nbar .mt-exit{grid-column:2!important;justify-self:end!important}
+ body[data-page="national"] .nbar .country-switch{
+  grid-column:1/-1!important;width:100%!important;display:grid!important;
+  grid-template-columns:1fr 1fr!important;gap:8px!important;
+ }
+ body[data-page="national"] .nbar .country-switch a{
+  max-width:none!important;width:100%!important;min-height:45px!important;
+  padding:8px!important;text-align:center!important;
+ }
+ body[data-page="national"] .nw{padding-top:0!important}
+ body[data-page="national"] #pg{
+  position:relative!important;margin:0 calc(50% - 50vw)!important;
+  width:100vw!important;height:calc(100svh - 132px)!important;
+  min-height:420px!important;overflow:hidden!important;
+ }
+ body[data-page="national"] #pg .pg-top{top:10px!important;left:10px!important;right:10px!important}
+ body[data-page="national"] #pg .pg-say{top:86px!important}
+ body[data-page="national"] #pg .pg-bar{
+  display:flex!important;position:absolute!important;top:auto!important;
+  bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;
+  left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  z-index:850!important;width:calc(100% - 24px)!important;
+  max-width:430px!important;justify-content:space-between!important;
+ }
+ body[data-page="national"] #pg .pg-bar button{
+  flex:1 1 0!important;min-width:0!important;width:auto!important;
+  height:56px!important;
+ }
+ body[data-page="national"] #pg .pg-dice{
+  top:auto!important;right:12px!important;
+  bottom:calc(90px + env(safe-area-inset-bottom,0px))!important;z-index:760!important;
+ }
+ body[data-page="national"] #pg.fileon .pg-dice{opacity:0!important;pointer-events:none!important}
+ body[data-page="national"] #pg .pg-file.on{
+  position:absolute!important;top:auto!important;left:10px!important;right:10px!important;
+  bottom:calc(91px + env(safe-area-inset-bottom,0px))!important;
+  max-height:min(45%,350px)!important;overflow-y:auto!important;
+  z-index:790!important;
+ }
+ body[data-page="national"] #pg .pg-file.on.min{
+  max-height:52px!important;overflow:hidden!important;
+ }
+ body[data-page="national"] #pg .pg-file:not(.on){pointer-events:none!important}
+ body[data-page="national"] #pg .pg-hint{bottom:165px!important}
+ body[data-page="national"] .tabbar,.tabbar-bot,.tabbar-top{display:none!important}
+}
 </style></head>
 <body data-page="national">
 <header class="nbar"><a class="mt-brand" href="./" aria-label="MONEY TRACKER 홈"><span class="mt-mark">MT</span><span class="mt-brand-name">MONEY TRACKER</span></a><a class="mt-exit" href="./">✕ 나가기</a><nav class="country-switch"><a href="national.html" aria-current="page">🇰🇷 한국</a><a href="us.html?lang=ko">🇺🇸 미국</a></nav><span>갱신 <span id="upd">—</span></span></header>
