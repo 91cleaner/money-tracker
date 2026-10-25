@@ -330,6 +330,7 @@
         drawDots(m=>false,()=>false);
         // Targets are revealed as the sweep reaches each map marker.
         seen.clear();
+        if(RM)for(const m of hot){const marker=dotOf[m.id];if(marker)marker.setStyle({radius:8,weight:2.5,color:'#ffc94a',fillOpacity:1,opacity:1});}
         const choices=[['recent','Trades in last 30 days'],['up','Stocks rose after buying'],['down','Stocks fell after buying']];
         file.innerHTML=fileHead('Radar · stock activity')+
           '<div class="seg" role="group" aria-label="Radar filters">'+choices.map(([k,l])=>'<button type="button" data-radar="'+k+'" class="'+(radarMode===k?'on':'')+'">'+l+'</button>').join('')+'</div>'+
@@ -350,7 +351,7 @@
       quick.style.cssText='position:absolute;z-index:1200;top:72px;left:50%;transform:translateX(-50%);display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:8px;background:#061a12ee;border:1px solid #357b54;border-radius:12px;max-width:calc(100% - 20px);box-shadow:0 5px 22px #0009';
       [['recent','Recent trades'],['up','Stocks rose after buying'],['down','Stocks fell after buying']].forEach(([key,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.mode=key;b.style.cssText='border:1px solid #417b57;border-radius:7px;padding:7px 9px;background:#143422;color:#eafff2;font-size:12px;cursor:pointer';b.onclick=()=>{radarMode=key;paintRadar();syncQuick();};quick.appendChild(b);});
       root.appendChild(quick);syncQuick();
-      cancelAnimationFrame(radarRaf); const prior=root.querySelector('.pg-radar'); if(prior)prior.remove(); if (RM) return;
+      cancelAnimationFrame(radarRaf); const prior=root.querySelector('.pg-radar'); if(prior)prior.remove(); if (RM) { for(const m of hot){const marker=dotOf[m.id];if(marker)marker.setStyle({radius:8,weight:2.5,color:'#ffc94a',fillOpacity:1,opacity:1});} return; }
       const cv = document.createElement('canvas'); cv.className = 'pg-radar'; cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:600;pointer-events:none'; root.querySelector('.pg-map').after(cv);
       const g = cv.getContext('2d'); const r0 = devicePixelRatio || 1; cv.width = root.clientWidth * r0; cv.height = root.clientHeight * r0; g.setTransform(r0, 0, 0, r0, 0, 0);
       const t0 = performance.now(); let rev = -1, lastBlip = 0;
