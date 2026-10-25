@@ -167,3 +167,13 @@
  #pg .pg-more-menu button:active{background:#205c38}
  #pg .pg-dice{right:8px;bottom:calc(92px + env(safe-area-inset-bottom,0px))}
 }
+
+/* Map remains visible when selecting tools: compact initial drawer, expand on demand. */
+@media(max-width:600px){
+ #pg .pg-file.on:not(.expanded):not(.min){top:auto!important;bottom:calc(82px + env(safe-area-inset-bottom,0px));height:min(34dvh,310px)!important;max-height:min(34dvh,310px)!important;overflow:auto}
+ #pg .pg-file.on.expanded{top:calc(46px + env(safe-area-inset-top,0px))!important;bottom:calc(82px + env(safe-area-inset-bottom,0px));height:auto!important;max-height:none!important}
+ #pg .pg-file.on.min{bottom:calc(82px + env(safe-area-inset-bottom,0px))!important}
+ #pg .pg-file .fh{cursor:ns-resize}
+ #pg .pg-top{pointer-events:none}
+ #pg .pg-top button,#pg .pg-top a{pointer-events:auto}
+}
