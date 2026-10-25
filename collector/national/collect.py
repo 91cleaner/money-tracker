@@ -99,7 +99,7 @@ def history():
             continue
         nm = r.get("NAAS_NM") or r.get("HG_NM")
         out[nm].append({"id": r.get("NAAS_CD") or r.get("MONA_CD"), "party": r.get("PLPT_NM") or r.get("POLY_NM"), "raw": r})
-    keep = ("NAAS_CD", "NAAS_NM", "PLPT_NM", "GTELT_ERACO", "ELECD_NM", "ELECD_DIV_NM", "BIRDY_DT", "BRF_HST", "DTY_NM")
+    keep = ("NAAS_CD", "NAAS_NM", "PLPT_NM", "GTELT_ERACO", "ELECD_NM", "ELECD_DIV_NM", "BIRDY_DT", "BRF_HST", "DTY_NM", "NAAS_PIC")
     json.dump({n: [{k: h["raw"].get(k) for k in keep} for h in hs] for n, hs in out.items()},
               open(os.path.join(OUT, "members_hist22.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     return out
@@ -265,7 +265,17 @@ def main():
     w = lambda n, o: json.dump(o, open(os.path.join(OUT, n), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     tc = Counter(t.get("member_id") for t in trips if t.get("member_id"))
     tl = Counter(t.get("member_id") for t in trips if t.get("member_id") and t.get("is_leader"))
+    pics = {}  # 국회 공식 사진(ALLNAMEMBER NAAS_PIC). 못 받으면 이전 값 유지
+    try:
+        for hs in json.load(open(os.path.join(OUT, "members_hist22.json"), encoding="utf-8")).values():
+            for h in hs:
+                if h.get("NAAS_CD") and h.get("NAAS_PIC"):
+                    pics[h["NAAS_CD"]] = h["NAAS_PIC"]
+    except (OSError, ValueError):
+        pass
+    oldpic = {m.get("id"): m.get("pic") for m in old.get("members", []) if m.get("pic")}
     for m in members:
+        m["pic"] = pics.get(m.get("id")) or oldpic.get(m.get("id"))
         m["profile"] = BASE + "nwvrqwxyaytdsfvhu?Type=json&MONA_CD=" + (m.get("id") or "")
         m["trips"] = tc.get(m.get("id"), 0); m["trips_lead"] = tl.get(m.get("id"), 0)
     w("members.json", {"updated": now, "count": len(members), "members": members, "trips": trips})
