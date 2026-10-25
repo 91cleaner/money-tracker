@@ -92,7 +92,8 @@
   const BS = (bl && bl.stat) || {}, BR = (bl && bl.recent) || {};
   const now = Date.now(), day = 864e5;
   const recent = (t, n) => now - Date.parse(t.d) <= n * day;
-  const numOf = (m) => { const ts = byM[m.id] || []; const b = BS[m.id] || [0, 0, 0]; return { trades: ts.length, buys: ts.filter((t) => t.ty === 'P').length, sells: ts.filter((t) => t.ty === 'S').length, vol: ts.reduce((a, t) => a + amtMid(t.amt), 0), bills: b[0], passed: b[1], laws: b[2] }; };
+  const edgeOf = (ts) => { const e = ts.filter((t) => t.ty === 'P' && t.r != null && t.rspy != null); return e.length >= 5 ? e.reduce((a, t) => a + t.r - t.rspy, 0) / e.length : null; };
+  const numOf = (m) => { const ts = byM[m.id] || []; const b = BS[m.id] || [0, 0, 0]; return { trades: ts.length, buys: ts.filter((t) => t.ty === 'P').length, sells: ts.filter((t) => t.ty === 'S').length, vol: ts.reduce((a, t) => a + amtMid(t.amt), 0), edge: edgeOf(ts), bills: b[0], passed: b[1], laws: b[2] }; };
   root.querySelector('.nmem').textContent = people.length;
 
   const clk = $('.clk'), ctr = $('.ctr .n');
@@ -138,7 +139,7 @@
   const row = (m, right) => `<div class="li" data-id="${esc(m.id)}"><img src="${esc(m.pic)}" alt="" loading="lazy" referrerpolicy="no-referrer"><div class="t"><b>${esc(m.name)}</b> <span style="color:${pc(m.party)};font-size:11px;font-weight:800">${m.party}-${esc(m.state)}</span><div>${esc(title(m))}</div></div>${right ? `<span class="r">${right}</span>` : ''}</div>`;
   const byId = Object.fromEntries(people.map((m) => [m.id, m]));
   const bindRows = () => file.querySelectorAll('.li[data-id]').forEach((el) => (el.onclick = () => { const m = byId[el.dataset.id]; if (m) open(m); }));
-  const tline = (t, showWho) => { const m = t.id && byId[t.id]; return `<div class="trd"${m ? ` data-id="${esc(m.id)}"` : ''}><span class="sym"><span class="bs ${t.ty}">${t.ty === 'P' ? 'BUY' : t.ty === 'S' ? 'SELL' : 'EXCH'}</span>${esc(t.tk || '—')}</span><span class="as">${esc(t.asset || '')}</span><span class="am">${esc(amtShort(t.amt))}</span><span class="wh">${esc(t.d)} traded · ${esc(t.fd || '')} filed${showWho ? ` · <b style="color:#fff">${esc(m ? m.name : t.who)}</b>${m ? ` <span style="color:${pc(m.party)}">${m.party}-${esc(m.state)}</span>` : ''}` : ''} · <a href="${esc(t.doc)}" target="_blank" rel="noopener">filing ↗</a></span></div>`; };
+  const tline = (t, showWho) => { const m = t.id && byId[t.id]; return `<div class="trd"${m ? ` data-id="${esc(m.id)}"` : ''}><span class="sym"><span class="bs ${t.ty}">${t.ty === 'P' ? 'BUY' : t.ty === 'S' ? 'SELL' : 'EXCH'}</span>${esc(t.tk || '—')}</span><span class="as">${esc(t.asset || '')}</span><span class="am">${esc(amtShort(t.amt))}</span><span class="wh">${esc(t.d)} ${t.ty === 'S' ? 'sold' : 'traded'}${t.r != null ? ` · <b style="color:${t.r >= 0 ? '#7dffb0' : '#ff9b9b'}">${t.r > 0 ? '+' : ''}${t.r}%</b> ${t.ty === 'S' ? 'after' : 'since'} <span style="opacity:.75">(S&amp;P ${t.rspy > 0 ? '+' : ''}${t.rspy}%)</span>` : ''} · ${esc(t.filed || t.fd || '')} filed${showWho ? ` · <b style="color:#fff">${esc(m ? m.name : t.who)}</b>${m ? ` <span style="color:${pc(m.party)}">${m.party}-${esc(m.state)}</span>` : ''}` : ''} · <a href="${esc(t.doc)}" target="_blank" rel="noopener">filing ↗</a></span></div>`; };
   const bindTrd = () => file.querySelectorAll('.trd[data-id]').forEach((el) => (el.onclick = (e) => { if (e.target.closest('a')) return; const m = byId[el.dataset.id]; if (m) open(m); }));
   const SRC = '<div class="fine">Public records as filed. A trade disclosure is not an accusation of wrongdoing. Amounts are the reported ranges.<br>Built by one person. If this is useful, <a href="https://x.com/KORROOFTOPARODY/creator-subscriptions/subscribe" target="_blank" rel="noopener" style="color:#ffd27a">support it for $1/month on X ›</a></div>';
 
@@ -156,7 +157,7 @@
       <div class="who"><div class="ph"><span class="scanl"></span>${pic(m)}</div>
       <div><div class="nm">${esc(m.name)}</div><span class="pt" style="background:${pc(m.party)}">${PN[m.party]}</span>
       <div class="ds">${esc(title(m))} · in Congress since ${esc(m.since)}${age ? `<br>Age ${age}` : ''}</div></div></div>
-      <div class="st st4"><div><b>${n.trades}</b><span>stock trades</span></div><div><b>${n.buys}</b><span>buys</span></div><div><b>${n.sells}</b><span>sells</span></div><div><b>${bl ? n.bills : '—'}</b><span>bills sponsored</span></div></div>
+      <div class="st st4"><div><b>${n.trades}</b><span>stock trades</span></div><div><b>${n.buys}</b><span>buys</span></div><div><b>${n.sells}</b><span>sells</span></div>${n.edge != null ? `<div><b style="color:${n.edge >= 0 ? '#7dffb0' : '#ff9b9b'}">${n.edge > 0 ? '+' : ''}${n.edge.toFixed(1)}%</b><span>vs S&amp;P 500</span></div>` : `<div><b>${bl ? n.bills : '—'}</b><span>bills sponsored</span></div>`}</div>
       <div class="tabs" role="tablist"><button type="button" class="on" data-t="trd">Trades<i>${n.trades}</i></button><button type="button" data-t="bill">Bills<i>${bl ? n.bills : ''}</i></button><button type="button" data-t="prof">Profile</button></div>
       <div class="tb" data-t="trd">${ts.length ? (top.length ? `<div class="fl2">${top.map(([k, c]) => `<span class="tk">${esc(k)} <small>×${c}</small></span>`).join('')}</div>` : '') + ts.slice(0, 40).map((t) => tline(t)).join('') + (ts.length > 40 ? `<div class="ds">+${ts.length - 40} more in the filings.</div>` : '') : '<div class="ds" style="margin-top:8px">No stock trade disclosures (PTRs) parsed for the last 12 months.</div>'}${SRC}</div>
       <div class="tb" data-t="bill" hidden>${bl ? `<div class="vsum" style="grid-template-columns:repeat(3,1fr)"><div><b>${n.bills}</b>sponsored</div><div><b>${n.passed}</b>passed a chamber</div><div><b>${n.laws}</b>became law</div></div>` + (BR[m.id] || []).map((b) => `<div class="tr"><div class="d">${esc(b.d || '')} · ${esc(b.no)}</div><div class="p"><a href="${esc(b.u)}" target="_blank" rel="noopener">${esc(b.n)}</a></div><div><span class="tg ${b.law ? 'y' : ''}">${esc(b.law ? 'Became law' : (b.a || 'Introduced').slice(0, 70))}</span></div></div>`).join('') + `<div class="fine">${esc(bl.congress)}th Congress · Source: Congress.gov</div>` : '<div class="ds" style="margin-top:8px">Bill data is loading in the next update.</div>'}</div>
@@ -188,10 +189,10 @@
     SFX.lock(); drawDots((m) => m.id === a.id || m.id === b.id); reticle(LL[a.id]); reticle(LL[b.id], true);
     map.flyToBounds(L.latLngBounds([LL[a.id], LL[b.id]]), { paddingTopLeft: [40, 120], paddingBottomRight: padBR(), duration: RM ? 0 : 1, maxZoom: 8 });
     const A = numOf(a), B = numOf(b);
-    const rows = [['Stock trades', 'trades', (v) => v], ['Buys', 'buys', (v) => v], ['Sells', 'sells', (v) => v], ['Est. volume', 'vol', (v) => (v ? '$' + (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : Math.round(v / 1e3) + 'K') : '$0')], ['Bills', 'bills', (v) => v], ['Became law', 'laws', (v) => v]];
+    const rows = [['Stock trades', 'trades', (v) => v], ['Buys', 'buys', (v) => v], ['Sells', 'sells', (v) => v], ['vs S&P 500', 'edge', (v) => (v == null ? '—' : (v > 0 ? '+' : '') + v.toFixed(1) + '%')], ['Est. volume', 'vol', (v) => (v ? '$' + (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : Math.round(v / 1e3) + 'K') : '$0')], ['Bills', 'bills', (v) => v], ['Became law', 'laws', (v) => v]];
     const side = (m) => `<div class="vp">${pic(m)}<b>${esc(m.name)}</b><span style="color:${pc(m.party)}">${PN[m.party]}</span><small>${esc(title(m))}</small></div>`;
     file.innerHTML = fileHead('Head to head') + `<div class="vs">${side(a)}<div class="vx">VS</div>${side(b)}</div>` +
-      rows.map(([lab, k, f]) => { const x = A[k] || 0, y = B[k] || 0, mx = Math.max(x, y) || 1; return `<div class="vr"><div class="l"><b>${f(x)}</b><i style="width:${(x / mx) * 100}%"></i></div><span>${lab}</span><div class="r"><i style="width:${(y / mx) * 100}%"></i><b>${f(y)}</b></div></div>`; }).join('') +
+      rows.map(([lab, k, f]) => { const x = A[k] ?? null, y = B[k] ?? null, mx = Math.max(Math.abs(x), Math.abs(y)) || 1; return `<div class="vr"><div class="l"><b>${f(x)}</b><i style="width:${(Math.abs(x) / mx) * 100}%"></i></div><span>${lab}</span><div class="r"><i style="width:${(Math.abs(y) / mx) * 100}%"></i><b>${f(y)}</b></div></div>`; }).join('') +
       `<div class="act"><button type="button" class="p" data-a="again">New rival</button><button type="button" data-a="share">Copy link</button><button type="button" data-a="oa">${esc(a.name.split(' ').pop())}</button><button type="button" data-a="ob">${esc(b.name.split(' ').pop())}</button></div>
       <div class="fine">Side-by-side public records, not a scorecard. Est. volume = sum of the midpoints of reported ranges (12 months).</div>`;
     file.classList.add('on'); bindX();
@@ -210,6 +211,7 @@
   const RANKS = [
     { k: 'trades', label: 'Most trades', f: (v) => v, note: 'Stock trades disclosed in the last 12 months (parsed electronic filings).' },
     { k: 'vol', label: 'Est. volume', f: (v) => (v >= 1e6 ? '$' + (v / 1e6).toFixed(1) + 'M' : '$' + Math.round(v / 1e3) + 'K'), note: 'Sum of the midpoints of reported amount ranges. A rough estimate.' },
+    { k: 'edge', label: 'Beat the market', f: (v) => (v > 0 ? '+' : '') + v.toFixed(1) + '%', note: 'Average move of the stocks they bought since each trade date, minus the S&P 500 over the same days (members with 5+ priced buys). Price moves, not actual profits.' },
     { k: 'buys', label: 'Buys', f: (v) => v, note: 'Purchases disclosed in the last 12 months.' },
     { k: 'sells', label: 'Sells', f: (v) => v, note: 'Sales disclosed in the last 12 months.' },
     ...(bl ? [{ k: 'bills', label: 'Bills', f: (v) => v, note: 'Bills and resolutions sponsored in the current Congress.' }, { k: 'laws', label: 'Became law', f: (v) => v, note: 'Sponsored bills that became law in the current Congress.' }] : []),
@@ -310,7 +312,7 @@
     rank() {
       stopRadar(); gFx.clearLayers(); gTop.clearLayers();
       const K = RANKS.find((x) => x.k === RSEG) || RANKS[0];
-      const L0 = people.map((m) => [m, numOf(m)[K.k]]).sort((a, b) => (RDESC ? b[1] - a[1] : a[1] - b[1]) || a[0].name.localeCompare(b[0].name));
+      const L0 = people.map((m) => [m, numOf(m)[K.k]]).filter(([, v]) => v != null).sort((a, b) => (RDESC ? b[1] - a[1] : a[1] - b[1]) || a[0].name.localeCompare(b[0].name));
       const top = L0.slice(0, 20), ids = new Set(top.map(([m]) => m.id));
       drawDots((m) => ids.has(m.id)); fitUS(true);
       file.innerHTML = fileHead('Rank') + `<div class="seg">${RANKS.map((x) => `<button type="button" data-s="${x.k}" class="${RSEG === x.k ? 'on' : ''}">${x.label}</button>`).join('')}</div><div class="ord"><button type="button" data-o="1" class="${RDESC ? 'on' : ''}">Most</button><button type="button" data-o="0" class="${RDESC ? '' : 'on'}">Fewest</button></div>` +

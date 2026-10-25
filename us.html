@@ -13,12 +13,12 @@
 <link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="theme-color" content="#020805">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/usgame.css?v=202610251510">
+<link rel="stylesheet" href="assets/usgame.css?v=202610251545">
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#020805;color:#e8fff1;font-family:Pretendard,system-ui,sans-serif;overflow-x:hidden}html{scroll-behavior:smooth}
 .ubar{height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;background:#020805;border-bottom:1px solid #12301f;font-size:13px}
 .ubar b{font:800 14px Pretendard,system-ui;letter-spacing:.06em;color:#eafff2}.ubar b i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#5dff9e;margin-right:8px;box-shadow:0 0 8px #5dff9e;vertical-align:1px}
-.ubar nav{display:flex;gap:6px}.ubar a{color:#9fd3b4;text-decoration:none;padding:6px 10px;border-radius:999px;border:1px solid #1f4a30;white-space:nowrap}.ubar a:hover{color:#fff;border-color:#5dff9e}.ubar .sup{color:#ffd27a;border-color:rgba(255,176,32,.45)}@media(max-width:420px){.ubar b{font-size:12px}.ubar a{padding:6px 8px;font-size:12px}.ubar .lg{display:none}}.ubar b{white-space:nowrap}
+.ubar nav{display:flex;gap:6px}.ubar a{color:#9fd3b4;text-decoration:none;padding:6px 10px;border-radius:999px;border:1px solid #1f4a30;white-space:nowrap}.ubar a:hover{color:#fff;border-color:#5dff9e}.ubar .sup{color:#ffd27a;border-color:rgba(255,176,32,.45)}.ubar .lang{color:#02110a;background:#5dff9e;border-color:#5dff9e;font-weight:800}@media(max-width:420px){.ubar b{font-size:12px}.ubar a{padding:6px 8px;font-size:12px}.ubar .lg{display:none}}.ubar b{white-space:nowrap}
 @media(max-width:420px){.ubar .x1{display:none}}
 
 #usdash{max-width:1100px;margin:0 auto;padding:28px 16px 60px;color:#cfe9d8}
@@ -33,7 +33,12 @@
 #usdash .lg{display:flex;gap:14px;font-size:12.5px;color:#cfe9d8;margin-top:6px}#usdash .lg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
 #usdash .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}#usdash table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}#usdash th,#usdash td{padding:8px 6px;border-top:1px solid #12301f;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}#usdash th:first-child,#usdash td:first-child{text-align:left}#usdash th{font-size:12px;color:#8fc9a5;border-top:0}#usdash td a{color:#eafff2;text-decoration:none;font-weight:700}#usdash td a:hover{text-decoration:underline}#usdash td.hot{color:#ffd27a;font-weight:800}
 #usdash th button{font:700 12px Pretendard,system-ui,sans-serif;color:#8fc9a5;background:none;border:0;cursor:pointer;padding:4px 0}#usdash th button.on{color:#5dff9e}
-#usdash .src{margin-top:20px}
+#usdash .src{margin-top:20px}#usdash .big{display:grid;gap:4px;margin:16px 0 4px;font:600 clamp(18px,3.2vw,26px)/1.35 Pretendard,system-ui,sans-serif;color:#cfe9d8}#usdash .big b{color:#fff;font-weight:800}#usdash .big a{color:#fff;font-weight:800}#usdash .big .up{color:#7dffb0}#usdash details.more>summary{min-height:48px;justify-content:center;border:1px solid #1f4a30;border-radius:14px;margin-top:14px;font-weight:700;color:#9fd3b4}
+#usdash .db{display:grid;gap:4px}#usdash .dr{display:grid;grid-template-columns:minmax(0,1.3fr) 1fr 64px;align-items:center;gap:10px;min-height:30px;border-top:1px solid #0e2a19;padding:3px 0}#usdash .dnm{color:#eafff2;text-decoration:none;font-weight:700;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#usdash .dnm span{font-size:11.5px;font-weight:800}
+#usdash .dz{position:relative;height:12px;background:linear-gradient(90deg,transparent calc(50% - .5px),#2a5a40 calc(50% - .5px),#2a5a40 calc(50% + .5px),transparent calc(50% + .5px))}#usdash .dz i{position:absolute;top:0;height:100%;min-width:2px}#usdash .dz i.p{left:50%;background:#5dff9e;border-radius:0 4px 4px 0}#usdash .dz i.n{right:50%;background:#ff8a8a;border-radius:4px 0 0 4px}
+#usdash .dv{text-align:right;font:800 14px Pretendard,system-ui,sans-serif;color:#eafff2;font-variant-numeric:tabular-nums}
+#usdash .hero{border-color:#2a7a4a;background:linear-gradient(180deg,#07200f,#05130b)}#usdash .hero h3{font-size:18px}
+#usdash details summary{cursor:pointer;color:#9fd3b4;font-size:13px;margin-top:10px;min-height:32px;display:flex;align-items:center}
 .dtip{position:fixed;z-index:9999;display:none;pointer-events:none;background:#04110a;border:1px solid #2a7a4a;border-radius:10px;padding:8px 10px;font:13px/1.45 Pretendard,system-ui,sans-serif;color:#eafff2;box-shadow:0 8px 24px rgba(0,0,0,.5);max-width:280px}
 </style>
 </head>
@@ -42,8 +47,9 @@
 <div id="pg"></div>
 <section id="usdash" aria-label="Congress trading dashboard"></section>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/usdash.js?v=202610251510" defer></script>
-<script src="assets/usgame.js?v=202610251510"></script>
+<script src="assets/usko.js?v=202610251545" defer></script>
+<script src="assets/usdash.js?v=202610251545" defer></script>
+<script src="assets/usgame.js?v=202610251545"></script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
