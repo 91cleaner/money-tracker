@@ -91,7 +91,7 @@
       <span style="display:block;margin-top:10px;font-weight:700">더 보기 목록 열기 ›</span>
     </a>
     <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding:2px 0 6px"><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#sole">경쟁 없는 계약</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#cost">비용 비교</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#fest">축제·행사</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#subsidy">보조금</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#pay">공공기관 보수</a></div>
-    <a href="national.html" style="display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#151b23;border:1px solid #2a3541;color:#fff;text-decoration:none;font-weight:700">정부 지출 · 국회의원과 정당에 가는 돈 ›</a>
+    <a href="national.html" style="display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#151b23;border:1px solid #2a3541;color:#fff;text-decoration:none;font-weight:700">국회 추적 · 의원 299명 출장·발의·표결 기록 ›</a>
     <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent=(d.period?`${+d.period[0].slice(5,7)}월 ${+d.period[0].slice(8)}일~${+d.period[1].slice(5,7)}월 ${+d.period[1].slice(8)}일 `:'')+'공고 없이 바로 맺은 수의계약 '+Math.round(d.sum/1e8).toLocaleString()+'억원';document.getElementById('tt-line').textContent='85개 시 · '+d.n.toLocaleString()+'건 · 데이터상 이상 징후 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
   </section>
   <section class="sec" id="ranksec" hidden>
@@ -126,7 +126,7 @@
       <a href="spend.html#sole"><b>공고 없이 맺은 계약</b><span>경쟁 없이 바로 맺은 계약 묶음</span></a>
       <a href="rank.html"><b>전국 업체 순위</b><span>계약을 가장 많이 받은 업체</span></a>
       <a href="bid.html"><b>우리 동네 입찰</b><span>지금 열린 입찰공고, 마감 임박 순 · 낙찰률</span></a>
-      <a href="national.html"><b>정부 지출</b><span>국회의원·정당에 가는 돈</span></a>
+      <a href="national.html"><b>국회 추적</b><span>의원 출장·발의·표결 기록을 지도에서</span></a>
       <a href="principles.html"><b>원칙·정정 요청</b><span>어떻게 만들고, 틀리면 어디로</span></a>
     </div>
   </section>
@@ -145,7 +145,7 @@
 <script src="assets/mapkit.js?v=202610251700"></script>
 <script src="assets/dive.js?v=202610251100"></script>
 <script src="assets/replay.js?v=202610251010" defer></script>
-<script src="assets/today.js?v=202610251000"></script>
+<script src="assets/today.js?v=202610251000"></script><script src="assets/hometrack.js?v=202610251335" defer></script>
 <script src="assets/game.js?v=202610246500"></script>
 <script src="assets/daily.js?v=202610246500"></script>
 <script src="assets/pcl.js?v=202610246200"></script>
@@ -154,7 +154,7 @@
 <script src="assets/play.js?v=202610247200"></script>
 <script src="assets/tabs.js?v=202610251100"></script>
 <script src="assets/fun.js?v=202610251100"></script>
-<script src="assets/nav.js?v=202610251115"></script>
+<script src="assets/nav.js?v=202610251330"></script>
 <script src="assets/fx.js?v=202610251100"></script><script src="assets/visits.js?v=202610251055" defer></script>
-<script src="assets/pwa.js?v=202610251210" defer></script>
+<script src="assets/pwa.js?v=202610251330" defer></script>
 </body></html>

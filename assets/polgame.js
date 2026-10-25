@@ -92,7 +92,11 @@
 #pg .mtag{background:rgba(3,14,8,.9)!important;border:1px solid #5dff9e!important;color:#e8fff1!important;font:800 12px Pretendard!important;padding:2px 7px!important;border-radius:6px!important;box-shadow:0 0 12px rgba(93,255,158,.3)!important}
 #pg .mtag::before{display:none}
 #pg .leaflet-control-attribution{background:transparent!important;color:#4f6f5d!important;font-size:9px!important;text-shadow:0 0 3px #000}#pg .leaflet-control-attribution a{color:#4f6f5d!important}
-#pg .pg-hint{position:absolute;z-index:700;left:50%;transform:translateX(-50%);bottom:80px;font:700 12px Pretendard;color:#02110a;background:#5dff9e;border-radius:999px;padding:4px 12px;white-space:nowrap;animation:pgBlink 1.4s ease-in-out 4}
+#pg .pg-dice{position:absolute;z-index:715;right:12px;bottom:84px;display:flex;align-items:center;gap:7px;height:40px;padding:0 15px 0 12px;border-radius:999px;border:1px solid rgba(93,255,158,.3);background:rgba(4,18,10,.82);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#eafff2;font:700 13px Pretendard,system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.45),0 0 0 0 rgba(93,255,158,.5);animation:pgPulse 2.4s ease-out 3;transition:transform .12s,opacity .2s}
+#pg .pg-dice:active{transform:scale(.94)}#pg .pg-dice svg{width:18px;height:18px;fill:none;stroke:#5dff9e;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}#pg .pg-dice.spin svg{animation:pgSpin .5s linear infinite}
+@keyframes pgPulse{0%{box-shadow:0 6px 24px rgba(0,0,0,.45),0 0 0 0 rgba(93,255,158,.45)}70%,100%{box-shadow:0 6px 24px rgba(0,0,0,.45),0 0 0 14px rgba(93,255,158,0)}}
+@media(max-width:899px){#pg.fileon .pg-dice{opacity:0;pointer-events:none}}@media(min-width:900px){#pg.fileon .pg-dice{right:416px}}
+#pg .pg-hint{position:absolute;z-index:700;left:50%;transform:translateX(-50%);bottom:134px;font:700 12px Pretendard;color:#02110a;background:#5dff9e;border-radius:999px;padding:4px 12px;white-space:nowrap;animation:pgBlink 1.4s ease-in-out 4}
 `;
   document.head.append(css);
   root.innerHTML = `<div class="pg-map" aria-label="국회의원 지도"></div><div class="pg-scan"></div>
@@ -107,7 +111,8 @@
     <button type="button" data-w="party"><span class="k">4</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 21V3.5"/><path d="M5 4.5c3-1.6 5.5 1.6 8.5 0s4.5-.6 5.5 0v8.5c-1-.6-2.5-1.6-5.5 0s-5.5-1.6-8.5 0" stroke-linejoin="round"/></svg></span>정당</button>
     <button type="button" data-w="pres"><span class="k">5</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2.8 19.5 6v5.5c0 4.6-3.2 8-7.5 9.7-4.3-1.7-7.5-5.1-7.5-9.7V6z" stroke-linejoin="round"/><path d="m12 7.6 1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" stroke-linejoin="round" stroke-width="1.3"/></svg></span>대통령</button>
     <button type="button" data-w="find"><span class="k">6</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.4 15.4 5.6 5.6"/><path d="M7.5 10.5a3 3 0 0 1 3-3" opacity=".6"/></svg></span>찾기</button>
-  </nav>`;
+  </nav>
+  <button type="button" class="pg-dice" aria-label="아무 의원이나 골라 추적"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/></svg>아무나 추적</button>`;
   const $ = (s) => root.querySelector(s);
   const file = $('.pg-file'), say = $('.pg-say');
   let typer = 0;
@@ -233,6 +238,7 @@
   };
 
   // ── 기록 파일 ──
+  const cm = (t) => String(t || '').split(/\s*,\s*/).filter(Boolean).map((x) => (x.length > 14 ? x.slice(0, 13) + '…' : x)).join(' · '); // 긴 특위 이름은 줄여서
   const pic = (m, cls) => (m.pic ? `<img class="${cls || ''}" src="${esc(m.pic)}" alt="${esc(m.name)} 의원 공식 사진" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ini',textContent:'${esc(m.name.slice(0, 1))}'}))">` : `<span class="ini">${esc(m.name.slice(0, 1))}</span>`);
   const closeFile = () => { file.classList.remove('on'); };
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]); // 파일 창에 가리지 않게
@@ -251,7 +257,7 @@
     file.innerHTML = fileHead(`FILE · 22대 국회의원 · ${m.id || ''}`) + `
       <div class="who"><div class="ph"><span class="scanl"></span>${pic(m)}</div>
       <div><div class="nm">${esc(m.name)}</div><span class="pt" style="background:${pc(m.party)}">${esc(m.party)}</span>
-      <div class="ds">${esc(m.district)} · ${esc(m.reele || '')}<br>${esc(m.cmits || '')}</div></div></div>
+      <div class="ds">${esc(m.district)} · ${esc(m.reele || '')}<br>${esc(cm(m.cmits))}</div></div></div>
       <div class="st"><div><b>${s.n}</b><span>국외 출장 신고</span></div><div class="${s.ext ? '' : 'z'}"><b>${s.ext}</b><span>외부에서 비용 낸 출장</span></div><div class="${s.norep ? '' : 'z'}"><b>${s.norep}</b><span>결과보고서 없이 신고</span></div></div>
       <div class="ds">1년 지급 기준 <b style="color:#ffb020">${won(per)}</b> (의원 1명, 실수령액 아님)</div>
       <div class="tabs" role="tablist"><button type="button" class="on" data-t="trip">출장<i>${s.n}</i></button><button type="button" data-t="bill">발의<i class="c-bill"></i></button><button type="button" data-t="vote">안보 표결</button><button type="button" data-t="disc">징계안<i class="c-disc"></i></button><button type="button" data-t="more">원문 링크</button></div>
@@ -447,8 +453,25 @@
   setTimeout(() => map.invalidateSize(), 300);
   addEventListener('resize', () => { map.invalidateSize(); setMin(); });
 
+  // 아무나 추적: 지도 위 점들을 빠르게 훑다가(띡띡띡) 한 명에 조준
+  const dice = root.querySelector('.pg-dice'); let rolling = false;
+  dice.onclick = () => {
+    if (rolling) return; rolling = true; dice.classList.add('spin'); dice.style.animation = 'none';
+    closeFile(); gFx.clearLayers(); pick('mp', true);
+    const pool = people.filter((m) => LL[m.id]);
+    const flown = pool.filter((m) => statOf(m).n), rnd = (L) => L[Math.floor(Math.random() * L.length)];
+    const target = flown.length && Math.random() < 0.8 ? rnd(flown) : rnd(pool); // 대개는 출장 기록이 있는 의원(보는 맛이 있게)
+    if (!RM) map.flyTo(KR.getCenter(), Math.min(map.getZoom(), 7), { duration: 0.5 });
+    const steps = RM ? 0 : 14; let k = 0;
+    const hop = () => {
+      if (k >= steps) { rolling = false; dice.classList.remove('spin'); open(target); return; }
+      const m = pool[Math.floor(Math.random() * pool.length)]; reticle(LL[m.id]); SFX.blip(); type(`스캔 중… ${m.name}`);
+      k++; setTimeout(hop, 60 + k * k * 2.2);
+    };
+    setTimeout(hop, RM ? 0 : 450);
+  };
   pick('mp', true);
   const want = new URLSearchParams(location.search).get('mp');
   if (want) { const m = people.find((x) => x.name === want.trim()); if (m) setTimeout(() => open(m), 600); }
-  else { const h = document.createElement('div'); h.className = 'pg-hint'; h.textContent = '점을 눌러 의원 기록을 열어 보세요'; root.append(h); setTimeout(() => h.remove(), 6000); }
+
 })();
