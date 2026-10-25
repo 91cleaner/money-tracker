@@ -279,6 +279,48 @@
  body[data-page="us"] #pg .pg-say{max-width:calc(100% - 24px)!important;overflow:hidden!important;text-overflow:ellipsis!important}
  body[data-page="us"] .mt-mobile-tabs{display:none!important}
 }
+
+/* Mobile detail-sheet containment: prevent filters, charts and toolbar overlap. */
+@media(max-width:600px){
+ body[data-page="us"] #pg .pg-file.on,
+ body[data-page="us"] #pg.member-selected .pg-file.on,
+ body[data-page="us"] #pg.member-selected .pg-file.on.min,
+ body[data-page="us"] #pg.member-selected .pg-file.on.expanded,
+ body[data-page="us"] #pg.member-selected.member-full .pg-file.on{
+  position:absolute!important;display:block!important;
+  box-sizing:border-box!important;top:auto!important;
+  left:10px!important;right:10px!important;
+  bottom:calc(91px + env(safe-area-inset-bottom,0px))!important;
+  width:calc(100% - 20px)!important;height:auto!important;
+  min-height:0!important;max-height:min(42svh,355px)!important;
+  overflow-x:hidden!important;overflow-y:auto!important;
+  overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch;
+  transform:none!important;z-index:830!important;
+  border-radius:16px!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-file.on.min,
+ body[data-page="us"] #pg .pg-file.on.min{
+  height:54px!important;max-height:54px!important;overflow:hidden!important;
+ }
+ body[data-page="us"] #pg .pg-file.on .fh{
+  position:sticky!important;top:0!important;z-index:10!important;
+  background:#071b10!important;
+ }
+ body[data-page="us"] #pg .pg-file.on .fh .tools{flex-shrink:0!important}
+ body[data-page="us"] #pg .pg-file.on button{max-width:100%}
+ body[data-page="us"] #pg .pg-bar{z-index:1000!important}
+ body[data-page="us"] #pg.member-selected .pg-dice,
+ body[data-page="us"] #pg.fileon .pg-dice{
+  display:none!important;opacity:0!important;visibility:hidden!important;
+  pointer-events:none!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-top{display:none!important}
+ body[data-page="us"] #pg.member-selected .pg-say{display:none!important}
+ body[data-page="us"] #pg .pg-file.on .pg-filter,
+ body[data-page="us"] #pg .pg-file.on .pg-filters{
+  max-width:100%!important;overflow-x:auto!important;
+ }
+}
 </style>
 </head>
 <body data-page="us">
