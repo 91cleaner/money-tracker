@@ -123,7 +123,9 @@ def house(year, done, mem, out):
 
 
 def senate(done, mem, out, since):
-    s = requests.Session(); s.headers.update(UA)
+    s = requests.Session()
+    s.headers.update({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36",
+                      "Accept-Language": "en-US,en;q=0.9", "Accept": "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8"})
     base = "https://efdsearch.senate.gov"
     h = s.get(base + "/search/home/", timeout=40)
     tok = re.search(r'name="csrfmiddlewaretoken" value="([^"]+)"', h.text)
@@ -140,11 +142,13 @@ def senate(done, mem, out, since):
     rows = []
     while True:
         r = s.post(base + "/search/report/data/", data={"start": start, "length": 100, "report_types": "[11]", "filer_types": "[]", "submitted_start_date": since.strftime("%m/%d/%Y 00:00:00"), "submitted_end_date": "", "candidate_state": "", "senator_state": "", "office_id": "", "first_name": "", "last_name": "", "csrfmiddlewaretoken": csrf},
-                   headers={"Referer": base + "/search/", "X-CSRFToken": csrf or ""}, timeout=40)
+                   headers={"Referer": base + "/search/", "Origin": base, "X-CSRFToken": csrf or "", "X-Requested-With": "XMLHttpRequest"}, timeout=40)
         try:
             d = r.json()
         except ValueError:
-            LOG.append(f"senate: 목록 {r.status_code}")
+            snip = " ".join(r.text[:200].split())
+            LOG.append(f"senate: 목록 {r.status_code} {snip}")
+            print(f"::warning::senate eFD 목록 {r.status_code}: {snip}")
             return
         total = d.get("recordsTotal")
         rows += d.get("data") or []
