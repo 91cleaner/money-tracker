@@ -138,10 +138,10 @@
 
   // record file
   const pic = (m) => `<img src="${esc(m.pic)}" alt="Official photo of ${esc(m.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ini',textContent:'${esc(m.name.slice(0, 1))}'}))">`;
-  const closeFile = () => { file.classList.remove('on','expanded'); file.setAttribute('aria-hidden','true'); };
+  const closeFile = () => { file.classList.remove('on','expanded','peek','min'); file.setAttribute('aria-hidden','true'); };
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]);
   const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="ex" aria-label="Expand panel" title="Expand panel">⤢</button><button type="button" class="mn" aria-label="Collapse">▾</button><button type="button" class="x" aria-label="Close">×</button></span></div>`;
-  const bindX = () => { file.classList.remove('min','expanded'); file.setAttribute('aria-hidden','false'); const ex=file.querySelector('.ex'); if(ex)ex.onclick=()=>{ const expanded=file.classList.toggle('expanded');ex.setAttribute('aria-label',expanded?'Restore panel':'Expand panel');ex.textContent=expanded?'⤡':'⤢'; }; const x = file.querySelector('.x'); if (x) x.onclick = () => { VSA = null; closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) { mn.setAttribute('aria-expanded', String(!file.classList.contains('min'))); mn.title='접기 / 펼치기'; mn.onclick = (e) => { e.stopPropagation(); const collapsed=file.classList.toggle('min'); file.classList.remove('expanded'); mn.setAttribute('aria-expanded', String(!collapsed)); }; } };
+  const bindX = () => { file.classList.remove('min','expanded'); file.classList.add('peek'); file.setAttribute('aria-hidden','false'); const ex=file.querySelector('.ex'); if(ex)ex.onclick=()=>{ file.classList.remove('peek','min'); const expanded=file.classList.toggle('expanded');ex.setAttribute('aria-label',expanded?'Restore panel':'Expand panel');ex.textContent=expanded?'⤡':'⤢'; }; const x = file.querySelector('.x'); if (x) x.onclick = () => { VSA = null; closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) { mn.setAttribute('aria-expanded', String(!file.classList.contains('min'))); mn.title='접기 / 펼치기'; mn.onclick = (e) => { e.stopPropagation(); const collapsed=file.classList.toggle('min'); file.classList.remove('expanded','peek'); mn.setAttribute('aria-expanded', String(!collapsed)); }; } };
   // Swipe on the panel header to collapse, restore or expand on touchscreens.
   let sheetStart = null;
   file.addEventListener('touchstart', e => {
@@ -153,8 +153,8 @@
     const dy=e.changedTouches[0].clientY-sheetStart.y, dx=e.changedTouches[0].clientX-sheetStart.x;
     sheetStart=null;
     if (Math.abs(dy)<55 || Math.abs(dy)<Math.abs(dx)*1.5) return;
-    if(dy>0){if(file.classList.contains('expanded'))file.classList.remove('expanded');else file.classList.add('min');}
-    else {if(file.classList.contains('min'))file.classList.remove('min');else file.classList.add('expanded');}
+    if(dy>0){if(file.classList.contains('expanded')){file.classList.remove('expanded');file.classList.add('peek');}else if(file.classList.contains('peek')){file.classList.remove('peek');file.classList.add('min');}else file.classList.add('min');}
+    else {if(file.classList.contains('min')){file.classList.remove('min');file.classList.add('peek');}else {file.classList.remove('peek');file.classList.add('expanded');}}
     const mn=file.querySelector('.mn');if(mn)mn.setAttribute('aria-expanded',String(!file.classList.contains('min')));
     const ex=file.querySelector('.ex');if(ex){ex.textContent=file.classList.contains('expanded')?'⤡':'⤢';ex.setAttribute('aria-label',file.classList.contains('expanded')?'Restore panel':'Expand panel');}
   }, {passive:true});
