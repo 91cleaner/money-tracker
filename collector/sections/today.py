@@ -10,6 +10,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 
 KEEP = 14
+MIN_N = 20
 
 
 def kst_today():
@@ -68,7 +69,7 @@ def main(data="data", today=None):
         if day in have:
             continue
         cand, n, total = pick_for(day, rows)
-        if not cand:
+        if not cand or n < MIN_N:  # 주말·공휴일처럼 계약이 몇 건 없는 날은 영수증을 만들지 않는다
             continue
         cur["items"].append({
             "date": day, "n": n, "sum": total,
