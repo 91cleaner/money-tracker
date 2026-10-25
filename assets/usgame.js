@@ -229,7 +229,7 @@
 
   // tools
   let radarRaf = 0;
-  const stopRadar = () => { cancelAnimationFrame(radarRaf); radarRaf = 0; const c = root.querySelector('.pg-radar'); if (c) c.remove(); };
+  const stopRadar = () => { cancelAnimationFrame(radarRaf); radarRaf = 0; const c = root.querySelector('.pg-radar'); if (c) c.remove(); const q=root.querySelector('.radar-quick'); if(q)q.remove(); };
   let PSEL = null, TK = null, TV = 'latest', TP = null, RSEG = 'trades', RDESC = true;
   const RANKS = [
     { k: 'trades', label: 'Most trades', f: (v) => v, note: 'Stock trades disclosed in the last 12 months (parsed electronic filings).' },
@@ -327,8 +327,7 @@
       });
       const paintRadar = () => {
         hot=radarList();
-        const ids=new Set(hot.map(m=>m.id));
-        drawDots(m=>false,()=>true);
+        drawDots(m=>false,()=>false);
         // Targets are revealed as the sweep reaches each map marker.
         seen.clear();
         const choices=[['recent','Trades in last 30 days'],['up','Stocks rose after buying'],['down','Stocks fell after buying']];
@@ -340,17 +339,18 @@
             return row(m,radarMode==='recent'?(byM[m.id]||[]).filter(t=>recent(t,30)).length+' trades':(v.avg>0?'+':'')+v.avg.toFixed(1)+'% · '+v.n+' buys');
           }).join('')+(hot.length?'':'<div class="ds">No matching records with priced purchases.</div>')+SRC;
         file.classList.add('on');file.classList.remove('min');bindX();bindRows();
-        file.querySelectorAll('[data-radar]').forEach(b=>b.onclick=()=>{radarMode=b.dataset.radar;SFX.click();paintRadar();});
+        file.querySelectorAll('[data-radar]').forEach(b=>b.onclick=()=>{radarMode=b.dataset.radar;SFX.click();paintRadar();syncQuick();});
         type('Radar · '+hot.length+' members · '+(radarMode==='recent'?'recent trades':radarMode==='up'?'stocks rose after purchase':'stocks fell after purchase'));
       };
+      const syncQuick=()=>{const q=root.querySelector('.radar-quick');if(q)q.querySelectorAll('button').forEach(b=>{const active=b.dataset.mode===radarMode;b.style.background=active?'#247748':'#143422';b.setAttribute('aria-pressed',String(active));});};
       paintRadar();fitUS(true);
       // Keep filter controls visible independently of the collapsible record drawer.
       const oldBar=root.querySelector('.radar-quick');if(oldBar)oldBar.remove();
       const quick=document.createElement('div');quick.className='radar-quick';
       quick.style.cssText='position:absolute;z-index:1200;top:72px;left:50%;transform:translateX(-50%);display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:8px;background:#061a12ee;border:1px solid #357b54;border-radius:12px;max-width:calc(100% - 20px);box-shadow:0 5px 22px #0009';
-      [['recent','Recent trades'],['up','Stocks rose after buying'],['down','Stocks fell after buying']].forEach(([key,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.mode=key;b.style.cssText='border:1px solid #417b57;border-radius:7px;padding:7px 9px;background:#143422;color:#eafff2;font-size:12px;cursor:pointer';b.onclick=()=>{radarMode=key;paintRadar();quick.querySelectorAll('button').forEach(x=>{x.style.background=x.dataset.mode===key?'#247748':'#143422';});};quick.appendChild(b);});
-      root.appendChild(quick);quick.firstChild.style.background='#247748';
-      stopRadar(); if (RM) return;
+      [['recent','Recent trades'],['up','Stocks rose after buying'],['down','Stocks fell after buying']].forEach(([key,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.mode=key;b.style.cssText='border:1px solid #417b57;border-radius:7px;padding:7px 9px;background:#143422;color:#eafff2;font-size:12px;cursor:pointer';b.onclick=()=>{radarMode=key;paintRadar();syncQuick();};quick.appendChild(b);});
+      root.appendChild(quick);syncQuick();
+      cancelAnimationFrame(radarRaf); const prior=root.querySelector('.pg-radar'); if(prior)prior.remove(); if (RM) return;
       const cv = document.createElement('canvas'); cv.className = 'pg-radar'; cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:600;pointer-events:none'; root.querySelector('.pg-map').after(cv);
       const g = cv.getContext('2d'); const r0 = devicePixelRatio || 1; cv.width = root.clientWidth * r0; cv.height = root.clientHeight * r0; g.setTransform(r0, 0, 0, r0, 0, 0);
       const t0 = performance.now(); let rev = -1, lastBlip = 0;
@@ -362,7 +362,7 @@
         if (gr) { gr.addColorStop(0, 'rgba(93,255,158,0)'); gr.addColorStop(0.14, 'rgba(93,255,158,.28)'); gr.addColorStop(0.145, 'rgba(93,255,158,0)'); g.fillStyle = gr; g.beginPath(); g.arc(c.x, c.y, R, 0, 6.283); g.fill(); }
         g.strokeStyle = 'rgba(93,255,158,.18)'; for (const r of [R * 0.25, R * 0.5, R * 0.75]) { g.beginPath(); g.arc(c.x, c.y, r, 0, 6.283); g.stroke(); }
         g.strokeStyle = 'rgba(160,255,200,.8)'; g.lineWidth = 2; g.beginPath(); g.moveTo(c.x, c.y); g.lineTo(c.x + R * Math.cos(a), c.y + R * Math.sin(a)); g.stroke(); g.lineWidth = 1;
-        for (const m of hot) { const p = map.latLngToContainerPoint(LL[m.id]); let d = Math.atan2(p.y - c.y, p.x - c.x) - a; d = ((d % 6.283) + 6.283) % 6.283; const glow = Math.max(0, 1 - (6.283 - d) / 1.2); if (glow > 0) { g.fillStyle = `rgba(255,176,32,${0.9 * glow})`; g.beginPath(); g.arc(p.x, p.y, 7 + 10 * glow, 0, 6.283); g.fill(); if (glow > 0.9 && !seen.has(m.id) && now - lastBlip > 140) { seen.add(m.id); lastBlip = now; const marker=dotOf[m.id]; if(marker)marker.setStyle({radius:8,weight:2.5,color:'#ffc94a',fillOpacity:1,opacity:1}); SFX.blip(); } } }
+        for (const m of hot) { const p = map.latLngToContainerPoint(LL[m.id]); let d = Math.atan2(p.y - c.y, p.x - c.x) - a; d = ((d % 6.283) + 6.283) % 6.283; const glow = Math.max(0, 1 - (6.283 - d) / 1.2); if (glow > 0) { g.fillStyle = `rgba(255,176,32,${0.9 * glow})`; g.beginPath(); g.arc(p.x, p.y, 7 + 10 * glow, 0, 6.283); g.fill(); if (glow > 0.9 && !seen.has(m.id)) { seen.add(m.id); const marker=dotOf[m.id]; if(marker)marker.setStyle({radius:8,weight:2.5,color:'#ffc94a',fillOpacity:1,opacity:1}); if(now-lastBlip>140){SFX.blip();lastBlip=now;} } } }
         radarRaf = requestAnimationFrame(loop);
       };
       radarRaf = requestAnimationFrame(loop);
