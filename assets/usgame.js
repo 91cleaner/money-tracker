@@ -224,7 +224,7 @@
         const L2 = (TK ? trades.filter((t) => t.tk === TK) : trades).slice().sort((a, b) => (b.fd || '').localeCompare(a.fd || '') || (b.d || '').localeCompare(a.d || ''));
         const ids = new Set(L2.slice(0, 200).map((t) => t.id).filter(Boolean));
         drawDots((m) => ids.has(m.id), (m) => ids.has(m.id) && (byM[m.id] || []).some((t) => recent(t, 30)));
-        file.innerHTML = fileHead(TK ? `Trades · ${TK}` : 'Latest trades') + `<div class="ds">Most traded tickers · last 90 days</div><div class="fl2">${tops.map(([k, c]) => `<button type="button" class="tk${TK === k ? ' on' : ''}" data-k="${esc(k)}">${esc(k)} <small>×${c}</small></button>`).join('')}</div>` +
+        file.innerHTML = fileHead(TK ? `Trades · ${TK}` : 'Latest trades') + `<div class="ds">House members' disclosed trades · Senate filings coming soon<br>Most traded tickers · last 90 days</div><div class="fl2">${tops.map(([k, c]) => `<button type="button" class="tk${TK === k ? ' on' : ''}" data-k="${esc(k)}">${esc(k)} <small>×${c}</small></button>`).join('')}</div>` +
           L2.slice(0, 50).map((t) => tline(t, true)).join('') + (L2.length ? '' : '<div class="ds">No trades yet — data is still loading.</div>') + SRC;
         file.classList.add('on'); bindX(); bindTrd(); if (innerWidth < 900 && !TK) file.classList.add('min');
         file.querySelectorAll('[data-k]').forEach((b) => (b.onclick = () => { TK = TK === b.dataset.k ? null : b.dataset.k; SFX.click(); paint(); type(TK ? `${TK}: ${trades.filter((t) => t.tk === TK).length} disclosed trades` : 'All trades'); }));
