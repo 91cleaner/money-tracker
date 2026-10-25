@@ -56,6 +56,13 @@
     [/^Rep\. · /, '하원의원 · '], [/^Age (\d+)/, '나이 $1'], [/They bought about/, '산 금액은 약'], [/members traded stocks/, '명의 의원이 주식을'], [/times\./, '번 거래했어요.'], [/Favorite:/, '가장 많이 산 종목:'], [/Best stock picker:/, '종목 고르기 1위:'],
   ];
   const orig = new WeakMap();
+  // Explicitly re-translate sections rebuilt with innerHTML (dashboard filters, sorting).
+  window.addEventListener('mt:us-content-updated', (e) => {
+    if (!ko) return;
+    busy = true;
+    walk(e.detail && e.detail.root ? e.detail.root : document.body);
+    busy = false;
+  });
     const rx = (re) => new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g');
   const tr = (t) => { let s = t; if (!s.trim()) return t; S.forEach(([re, h]) => (s = s.replace(rx(re), h))); for (const [e, h] of P) if (s.includes(e)) s = s.split(e).join(h); R.forEach(([re, h]) => (s = s.replace(rx(re), h))); return s; };
   const walk = (root) => {
