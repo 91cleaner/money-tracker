@@ -41,10 +41,11 @@
 #usdash details summary{cursor:pointer;color:#9fd3b4;font-size:13px;margin-top:10px;min-height:32px;display:flex;align-items:center}
 .dtip{position:fixed;z-index:9999;display:none;pointer-events:none;background:#04110a;border:1px solid #2a7a4a;border-radius:10px;padding:8px 10px;font:13px/1.45 Pretendard,system-ui,sans-serif;color:#eafff2;box-shadow:0 8px 24px rgba(0,0,0,.5);max-width:280px}
 .us-visit{max-width:1100px;margin:0 auto 30px;padding:12px 16px;border-top:1px solid #1b4930;color:#9fd3b4;font-size:13px}.us-visit strong{color:#eafff2;margin:0 5px}.us-visit small{color:#79a78b}
+.ubar .us-exit{color:#d4eee0;text-decoration:none;display:inline-flex;align-items:center;gap:5px;min-height:40px;padding:5px 8px;border-radius:9px;border:1px solid #24543b;font-size:13px;font-weight:700}.ubar .country-switch{display:flex;gap:5px;align-items:center}.ubar .country-switch a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:6px 9px;border-radius:10px;border:1px solid #235139;color:#d7f9e2;text-decoration:none;font-size:13px;font-weight:700}.ubar .country-switch a[aria-current="page"]{background:#164b2d;border-color:#5dff9e}@media(max-width:600px){.ubar{padding:0 7px;gap:4px}.ubar b{font-size:12px;letter-spacing:0}.ubar .us-exit{font-size:12px;padding:5px 7px}.ubar .country-switch{gap:3px}.ubar .country-switch a{font-size:12px;padding:5px 7px}}
 </style>
 </head>
 <body data-page="us">
-<header class="ubar" id="top"><b><i></i>🇺🇸 CONGRESS TRACKER</b><nav><a href="#usdash">📊 <span class="lg">Charts</span></a><a class="sup" href="https://x.com/KORROOFTOPARODY/creator-subscriptions/subscribe" target="_blank" rel="noopener">♥ <span class="lg">Support · </span>$1/mo<span class="lg"> on X</span></a><a href="national.html" lang="ko">🇰🇷 Korea</a></nav></header>
+<header class="ubar" id="top"><a class="us-exit" href="./" aria-label="Exit to MONEY TRACKER">✕ <span>Exit</span></a><b><i></i>MONEY TRACKER</b><nav class="country-switch" aria-label="Choose country"><a href="national.html">🇰🇷 Korea</a><a href="us.html?lang=ko" aria-current="page">🇺🇸 USA</a></nav></header>
 <div id="pg"></div>
 <section id="usdash" aria-label="Congress trading dashboard"></section><aside class="us-visit" aria-live="polite">🇺🇸 오늘 방문 <strong id="us-visitor-count">집계 확인 중…</strong> <small>한국시간 · 통계 반영 지연 가능</small></aside>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
