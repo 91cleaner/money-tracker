@@ -53,10 +53,20 @@
  #pg .pg-bar,#pg .pg-more-toggle,#pg .pg-more-menu{display:none!important}
  body[data-mt-mobile-tab="map"] #pg{height:calc(100dvh - 150px);min-height:300px}
 }
+
+/* Shared Korea/USA MONEY TRACKER identity; radar and map remain unchanged. */
+.mt-shared-head{height:auto;min-height:56px;position:relative;z-index:1000;background:#0d1117;border-bottom:1px solid #27323e;padding:9px 14px;gap:10px}
+.mt-shared-head .mt-brand{display:inline-flex;align-items:center;gap:8px;border:0;padding:0;color:#f1f6fa;text-decoration:none;white-space:nowrap}
+.mt-shared-head .mt-mark{width:32px;height:32px;border:1px solid #4aaf77;border-radius:9px;background:#183c2b;display:inline-flex;align-items:center;justify-content:center;color:#8ff7b5;font:900 11px system-ui}
+.mt-shared-head .mt-brand-name{font:900 13px Pretendard,system-ui;letter-spacing:.04em}
+.mt-shared-head .country-switch a{border:1px solid #4a586b;border-radius:10px;min-height:40px;display:inline-flex;align-items:center;justify-content:center;color:#dce8e0;font-weight:700}
+.mt-shared-head .country-switch a[aria-current=page]{background:#22472d;border-color:#499b66;color:#f3fff7}
+.mt-shared-head .us-exit{order:3;color:#b6c4cb;font-size:12px}
+@media(max-width:600px){.mt-shared-head{display:grid;grid-template-columns:1fr auto;gap:7px;padding:8px}.mt-shared-head .mt-brand{grid-column:1;grid-row:1}.mt-shared-head .us-exit{grid-column:2;grid-row:1;justify-self:end}.mt-shared-head .country-switch{grid-column:1 / -1;grid-row:2;display:flex;justify-content:center;width:100%}.mt-shared-head .country-switch a{flex:1;max-width:170px}}
 </style>
 </head>
 <body data-page="us">
-<header class="ubar" id="top"><a class="us-exit" href="./" aria-label="Exit to MONEY TRACKER">✕ <span>Exit</span></a><b><i></i>MONEY TRACKER</b><nav class="country-switch" aria-label="Choose country"><a href="national.html">🇰🇷 Korea</a><a href="us.html?lang=ko" aria-current="page">🇺🇸 USA</a></nav></header>
+<header class="ubar mt-shared-head" id="top"><a class="mt-brand" href="./" aria-label="MONEY TRACKER home"><span class="mt-mark">MT</span><span class="mt-brand-name">MONEY TRACKER</span></a><a class="us-exit" href="./" aria-label="Exit to MONEY TRACKER">✕ <span>나가기</span></a><nav class="country-switch" aria-label="Choose country"><a href="national.html">🇰🇷 한국</a><a href="us.html?lang=ko" aria-current="page">🇺🇸 미국</a></nav></header>
 <div id="pg"></div>
 <nav class="mt-mobile-tabs" aria-label="모바일 화면 선택">
  <button type="button" data-mtab="map" aria-pressed="true">🗺️ <span>지도</span></button>
