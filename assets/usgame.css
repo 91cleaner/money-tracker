@@ -110,3 +110,34 @@
 #pg .pg-file.min{height:52px!important;min-height:0!important;max-height:52px!important;overflow:hidden!important}
 #pg .pg-file.min .fh{margin-bottom:0}
 #pg .pg-file.min .fh~*{display:none!important}
+
+/* Mobile readability: full-width drawer, comfortable type and touch targets. */
+@media(max-width:600px){
+  #pg{height:calc(100dvh - 86px);min-height:560px}
+  #pg .pg-file{left:6px;right:6px;bottom:78px;top:104px;max-height:none;height:auto;padding:14px;overscroll-behavior:contain;font-size:15px;line-height:1.55}
+  #pg .pg-file.min{top:auto!important;bottom:78px!important;height:56px!important;max-height:56px!important}
+  #pg .pg-file .fh{font-size:13px;gap:8px}
+  #pg .pg-file .fh button{min-width:42px;min-height:42px;font-size:20px}
+  #pg .who{grid-template-columns:76px 1fr;gap:12px}
+  #pg .ph{width:76px;height:96px}
+  #pg .nm{font-size:22px;line-height:1.25}
+  #pg .ds,#pg .fine,#pg .pl{font-size:13px;line-height:1.5}
+  #pg .st span{font-size:12px}
+  #pg .st b{font-size:19px}
+  #pg .tabs button,#pg .seg button{min-height:44px;font-size:14px}
+  #pg .li{padding:11px 2px;gap:10px;min-height:60px}
+  #pg .li img,#pg .li .av{width:40px;height:50px}
+  #pg .li .t b{font-size:15px}
+  #pg .li .t div{font-size:13px}
+  #pg .li .r{font-size:14px}
+  #pg .trd{padding:12px 0}
+  #pg .trd .sym{font-size:15px}
+  #pg .trd .as,#pg .trd .am,#pg .trd .wh{font-size:13px}
+  #pg .member-table-scroll table{font-size:13px}
+  #pg .member-table-scroll th,#pg .member-table-scroll td{padding:11px 9px}
+  #pg .pg-bar{width:calc(100% - 12px);justify-content:space-around;gap:0;bottom:calc(6px + env(safe-area-inset-bottom,0px))}
+  #pg .pg-bar button{flex:1;min-width:0;width:auto;height:60px;font-size:12px}
+  #pg .pg-bar .ic{width:25px;height:25px}
+  #pg .radar-quick{top:65px!important;padding:5px!important;gap:4px!important;width:calc(100% - 12px);max-width:none!important}
+  #pg .radar-quick button{font-size:12px!important;line-height:1.25;min-height:44px;flex:1 1 30%;padding:6px 4px!important}
+}
