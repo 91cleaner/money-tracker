@@ -240,13 +240,28 @@
   };
 
   let VSA = null;
+  let mobileTrackingTimer=null;
+  let mobileTrackingRun=0;
   function open(m) {
+    const run=++mobileTrackingRun;
+    if(mobileTrackingTimer){clearTimeout(mobileTrackingTimer);mobileTrackingTimer=null;}
+    map.stop();
     trackedMember=m;
     trackingBadge.hidden=true;
-    if(innerWidth<=600){showMobileTab('map');root.classList.add('member-selected');requestAnimationFrame(()=>{map.invalidateSize();map.panTo(LL[m.id],{animate:false});});}
+    if(innerWidth<=600){
+      showMobileTab('map');
+      root.classList.remove('member-selected','member-full');
+      file.classList.remove('on','expanded','peek','min');
+      map.invalidateSize();
+    }
     if (VSA) { const a = VSA; VSA = null; if (a.id !== m.id) return vs(a, m); }
     SFX.lock(); reticle(LL[m.id]);
-    if (innerWidth<=600) map.setView(LL[m.id], Math.max(map.getZoom(),8), {animate:false}); else if (!RM) map.flyTo(LL[m.id], Math.max(map.getZoom(), 7.5), { duration: 0.9 }); else map.setView(LL[m.id], 7.5);
+    if(innerWidth<=600){
+      // Keep the full map visible while Leaflet flies from the current overview
+      // into the selected member's location; reveal the record afterwards.
+      map.flyTo(LL[m.id],Math.max(map.getZoom(),9),{animate:true,duration:1.8,easeLinearity:0.22});
+    }else if(!RM) map.flyTo(LL[m.id],Math.max(map.getZoom(),7.5),{duration:0.9});
+    else map.setView(LL[m.id],7.5);
     type(`File opened: ${m.name} · ${PN[m.party]} · ${title(m)}`);
     const n = numOf(m), ts = (byM[m.id] || []).slice().sort((a, b) => (b.d || '').localeCompare(a.d || ''));
     const tk = {}; for (const t of ts) if (t.tk) tk[t.tk] = (tk[t.tk] || 0) + 1;
@@ -267,7 +282,20 @@
         <a href="${m.chamber === 'sen' ? 'https://efdsearch.senate.gov/search/' : 'https://disclosures-clerk.house.gov/FinancialDisclosure'}" target="_blank" rel="noopener">Financial disclosures (net worth, trades) ↗<span>${m.chamber === 'sen' ? 'Senate eFD' : 'House Clerk'}</span></a>
         <a href="https://www.fec.gov/data/search/?search=${encodeURIComponent(m.name)}" target="_blank" rel="noopener">Campaign money ↗<span>FEC</span></a></div></div>
       <div class="act"><button type="button" class="p" data-a="vs">⇄ Compare</button><button type="button" data-a="share">Copy link</button></div>`;
-    file.classList.add('on'); bindX(); bindTrd(); if(innerWidth<=600){file.classList.remove('peek','expanded','min');file.scrollTop=0;requestAnimationFrame(()=>map.invalidateSize());}
+    if(innerWidth<=600){
+      file.classList.remove('peek','expanded','min');
+      file.scrollTop=0;
+      mobileTrackingTimer=setTimeout(()=>{
+        if(run!==mobileTrackingRun)return;
+        root.classList.add('member-selected');
+        file.classList.add('on');
+        bindX();
+        bindTrd();
+        mobileTrackingTimer=null;
+      },1950);
+    }else{
+      file.classList.add('on');bindX();bindTrd();
+    }
     const tabs = file.querySelectorAll('.tabs button');
     tabs.forEach((bt) => (bt.onclick = () => { SFX.click(); tabs.forEach((x) => x.classList.toggle('on', x === bt)); file.querySelectorAll('.tb').forEach((x) => (x.hidden = x.dataset.t !== bt.dataset.t)); }));
     file.querySelector('[data-a="vs"]').onclick = () => vsPick(m);
