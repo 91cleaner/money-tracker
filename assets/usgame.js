@@ -132,10 +132,26 @@
 
   // record file
   const pic = (m) => `<img src="${esc(m.pic)}" alt="Official photo of ${esc(m.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ini',textContent:'${esc(m.name.slice(0, 1))}'}))">`;
-  const closeFile = () => file.classList.remove('on');
+  const closeFile = () => { file.classList.remove('on','expanded'); file.setAttribute('aria-hidden','true'); };
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]);
-  const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="mn" aria-label="Collapse">▾</button><button type="button" class="x" aria-label="Close">×</button></span></div>`;
-  const bindX = () => { file.classList.remove('min'); const x = file.querySelector('.x'); if (x) x.onclick = () => { VSA = null; closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) { mn.setAttribute('aria-expanded', String(!file.classList.contains('min'))); mn.title='접기 / 펼치기'; mn.onclick = (e) => { e.stopPropagation(); const collapsed=file.classList.toggle('min'); mn.setAttribute('aria-expanded', String(!collapsed)); }; } };
+  const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="ex" aria-label="Expand panel" title="Expand panel">⤢</button><button type="button" class="mn" aria-label="Collapse">▾</button><button type="button" class="x" aria-label="Close">×</button></span></div>`;
+  const bindX = () => { file.classList.remove('min','expanded'); file.setAttribute('aria-hidden','false'); const ex=file.querySelector('.ex'); if(ex)ex.onclick=()=>{ const expanded=file.classList.toggle('expanded');ex.setAttribute('aria-label',expanded?'Restore panel':'Expand panel');ex.textContent=expanded?'⤡':'⤢'; }; const x = file.querySelector('.x'); if (x) x.onclick = () => { VSA = null; closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) { mn.setAttribute('aria-expanded', String(!file.classList.contains('min'))); mn.title='접기 / 펼치기'; mn.onclick = (e) => { e.stopPropagation(); const collapsed=file.classList.toggle('min'); file.classList.remove('expanded'); mn.setAttribute('aria-expanded', String(!collapsed)); }; } };
+  // Swipe on the panel header to collapse, restore or expand on touchscreens.
+  let sheetStart = null;
+  file.addEventListener('touchstart', e => {
+    if (innerWidth > 600 || !e.target.closest('.fh') || e.target.closest('button') || e.touches.length !== 1) return;
+    sheetStart = { y:e.touches[0].clientY, x:e.touches[0].clientX };
+  }, {passive:true});
+  file.addEventListener('touchend', e => {
+    if (!sheetStart || !e.changedTouches.length) return;
+    const dy=e.changedTouches[0].clientY-sheetStart.y, dx=e.changedTouches[0].clientX-sheetStart.x;
+    sheetStart=null;
+    if (Math.abs(dy)<55 || Math.abs(dy)<Math.abs(dx)*1.5) return;
+    if(dy>0){if(file.classList.contains('expanded'))file.classList.remove('expanded');else file.classList.add('min');}
+    else {if(file.classList.contains('min'))file.classList.remove('min');else file.classList.add('expanded');}
+    const mn=file.querySelector('.mn');if(mn)mn.setAttribute('aria-expanded',String(!file.classList.contains('min')));
+    const ex=file.querySelector('.ex');if(ex){ex.textContent=file.classList.contains('expanded')?'⤡':'⤢';ex.setAttribute('aria-label',file.classList.contains('expanded')?'Restore panel':'Expand panel');}
+  }, {passive:true});
   const row = (m, right) => `<div class="li" data-id="${esc(m.id)}"><img src="${esc(m.pic)}" alt="" loading="lazy" referrerpolicy="no-referrer"><div class="t"><b>${esc(m.name)}</b> <span style="color:${pc(m.party)};font-size:11px;font-weight:800">${m.party}-${esc(m.state)}</span><div>${esc(title(m))}</div></div>${right ? `<span class="r">${right}</span>` : ''}</div>`;
   const byId = Object.fromEntries(people.map((m) => [m.id, m]));
   const bindRows = () => file.querySelectorAll('.li[data-id]').forEach((el) => (el.onclick = () => { const m = byId[el.dataset.id]; if (m) open(m); }));
@@ -430,7 +446,7 @@
     const rect = mapEl.getBoundingClientRect();
     const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
     const y = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
-    map.setZoomAround([x,y], Math.max(map.getMinZoom(), Math.min(map.getMaxZoom(), map.getZoom() + delta)), {animate:false});
+    map.setZoomAround(L.point(x,y), Math.max(map.getMinZoom(), Math.min(map.getMaxZoom(), map.getZoom() + delta)), {animate:false});
   }, { passive:false });
   ['touchstart', 'wheel'].forEach((ev) => mapEl.addEventListener(ev, () => { if (innerWidth < 900 && file.classList.contains('on')) file.classList.add('min'); }, { passive: true }));
   file.addEventListener('click', (e) => { if (file.classList.contains('min') && !e.target.closest('.x')) file.classList.remove('min'); });
