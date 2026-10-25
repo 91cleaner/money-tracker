@@ -326,11 +326,17 @@
             const v=score(m);
             return row(m,radarMode==='recent'?(byM[m.id]||[]).filter(t=>recent(t,30)).length+' trades':(v.avg>0?'+':'')+v.avg.toFixed(1)+'% · '+v.n+' buys');
           }).join('')+(hot.length?'':'<div class="ds">No matching records with priced purchases.</div>')+SRC;
-        file.classList.add('on');bindX();bindRows();
+        file.classList.add('on');file.classList.remove('min');bindX();bindRows();
         file.querySelectorAll('[data-radar]').forEach(b=>b.onclick=()=>{radarMode=b.dataset.radar;SFX.click();paintRadar();});
         type('Radar · '+hot.length+' members · '+(radarMode==='recent'?'recent trades':radarMode==='up'?'stocks rose after purchase':'stocks fell after purchase'));
       };
       paintRadar();fitUS(true);
+      // Keep filter controls visible independently of the collapsible record drawer.
+      const oldBar=root.querySelector('.radar-quick');if(oldBar)oldBar.remove();
+      const quick=document.createElement('div');quick.className='radar-quick';
+      quick.style.cssText='position:absolute;z-index:1200;top:72px;left:50%;transform:translateX(-50%);display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:8px;background:#061a12ee;border:1px solid #357b54;border-radius:12px;max-width:calc(100% - 20px);box-shadow:0 5px 22px #0009';
+      [['recent','최근 거래'],['up','매수 후 상승'],['down','매수 후 하락']].forEach(([key,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.mode=key;b.style.cssText='border:1px solid #417b57;border-radius:7px;padding:7px 9px;background:#143422;color:#eafff2;font-size:12px;cursor:pointer';b.onclick=()=>{radarMode=key;paintRadar();quick.querySelectorAll('button').forEach(x=>{x.style.background=x.dataset.mode===key?'#247748':'#143422';});};quick.appendChild(b);});
+      root.appendChild(quick);quick.firstChild.style.background='#247748';
       stopRadar(); if (RM) return;
       const cv = document.createElement('canvas'); cv.className = 'pg-radar'; cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:600;pointer-events:none'; root.querySelector('.pg-map').after(cv);
       const g = cv.getContext('2d'); const r0 = devicePixelRatio || 1; cv.width = root.clientWidth * r0; cv.height = root.clientHeight * r0; g.setTransform(r0, 0, 0, r0, 0, 0);
@@ -398,7 +404,7 @@
   ['touchstart', 'wheel'].forEach((ev) => mapEl.addEventListener(ev, () => { if (innerWidth < 900 && file.classList.contains('on')) file.classList.add('min'); }, { passive: true }));
   file.addEventListener('click', (e) => { if (file.classList.contains('min') && !e.target.closest('.x')) file.classList.remove('min'); });
   const btns = [...root.querySelectorAll('.pg-bar button')];
-  const pick = (w, quiet) => { if (!quiet) SFX.click(); btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === w))); W[w](); };
+  const pick = (w, quiet) => { if(w!=='radar'){const bar=root.querySelector('.radar-quick');if(bar)bar.remove();} if (!quiet) SFX.click(); btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === w))); W[w](); };
   btns.forEach((b) => (b.onclick = () => pick(b.dataset.w)));
   addEventListener('keydown', (e) => { if (/input|textarea/i.test((e.target && e.target.tagName) || '')) return; const i = Number(e.key) - 1; if (i >= 0 && i < btns.length) pick(btns[i].dataset.w); if (e.key === 'Escape') { VSA = null; closeFile(); } });
   setTimeout(() => map.invalidateSize(), 300); addEventListener('resize', () => map.invalidateSize());
