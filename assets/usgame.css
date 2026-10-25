@@ -232,3 +232,17 @@
  #pg .pg-dice{bottom:15px}
 }
 @media(min-width:601px){.mt-mobile-tabs,#mt-mobile-trades{display:none!important}}
+
+/* Keep random-member dice discoverable on mobile, including an open member sheet. */
+@media(max-width:600px){
+ body[data-mt-mobile-tab="map"] #pg .pg-dice,
+ body[data-mt-mobile-tab="map"] #pg.fileon .pg-dice{
+  display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
+  position:absolute!important;z-index:900!important;right:12px!important;
+  bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;
+  min-height:46px!important;padding:0 15px!important;border:1px solid #56e89a!important;
+  background:#092b1a!important;color:#e7fff0!important;box-shadow:0 2px 12px #0009!important;
+ }
+ #pg.member-selected .pg-dice{top:calc(55% - 59px)!important;bottom:auto!important}
+ #pg.member-selected.member-full .pg-dice{top:calc(18% - 59px)!important}
+}
