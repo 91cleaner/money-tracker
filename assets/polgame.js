@@ -122,33 +122,50 @@
   const SFX = (() => {
     let ac = null, muted = false;
     try { muted = localStorage.getItem('mt.pg.mute') === '1'; } catch (e) { /* 무시 */ }
-    const ctx = () => { if (muted) return null; if (!ac) { const A = window.AudioContext || window.webkitAudioContext; if (!A) return null; ac = new A(); } if (ac.state === 'suspended') ac.resume(); return ac; };
-    // 아이폰: 무음 스위치가 켜져 있으면 웹 소리가 막힌다. iOS 17+는 audioSession 을 'playback'으로, 그 전 버전은 무음 오디오를 한 번 틀어 풀어 준다.
+    // 소리는 모두 master(음량 줄이기 + 고음 깎기 + 압축기)를 거쳐 나간다: 여러 소리가 겹쳐도 찢어지지 않게.
+    let master = null;
+    const ctx = () => {
+      if (muted) return null;
+      if (!ac) {
+        const A = window.AudioContext || window.webkitAudioContext; if (!A) return null;
+        // 아이폰: 컨텍스트를 만들기 전에 audioSession 을 정해야 중간에 장치 샘플레이트가 바뀌며 지직거리지 않는다(iOS 17+).
+        try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* 무시 */ }
+        ac = new A();
+        const comp = ac.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 6;
+        const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200; // 폰 스피커에서 날카로운 고음 깎기
+        master = ac.createGain(); master.gain.value = 0.7; master.connect(lp); lp.connect(comp); comp.connect(ac.destination);
+      }
+      if (ac.state === 'suspended' || ac.state === 'interrupted') ac.resume();
+      return ac;
+    };
+    // 첫 터치 때 빈 소리를 한 번 틀어 Web Audio 를 깨운다(<audio> 무음 파일은 아이폰에서 샘플레이트를 바꿔 지직거려서 뺐다).
     let unlocked = false;
     const unlock = () => {
       if (unlocked || muted) return; unlocked = true;
-      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* 무시 */ }
-      try { const el = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA='); el.setAttribute('playsinline', ''); el.volume = 0.01; el.play().catch(() => {}); } catch (e) { /* 무시 */ }
       const a = ctx(); if (!a) return;
-      try { const b = a.createBuffer(1, 1, 22050), src = a.createBufferSource(); src.buffer = b; src.connect(a.destination); src.start(0); } catch (e) { /* 무시 */ }
+      try { const b = a.createBuffer(1, 1, a.sampleRate), src = a.createBufferSource(); src.buffer = b; src.connect(a.destination); src.start(0); } catch (e) { /* 무시 */ }
     };
     ['pointerdown', 'touchend', 'click'].forEach((ev) => document.addEventListener(ev, unlock, { capture: true, passive: true }));
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && ac && !muted) ac.resume(); });
+    let live = 0;
     const tone = (f, dur, { type = 'sine', vol = 0.18, at = 0, f2 = null, echo = false } = {}) => {
-      const a = ctx(); if (!a) return; const t = a.currentTime + at;
+      const a = ctx(); if (!a || live > 8) return; const t = a.currentTime + at; live++;
       const o = a.createOscillator(), g = a.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      o.connect(g); let out = g;
-      if (echo) { const d = a.createDelay(); d.delayTime.value = 0.18; const fb = a.createGain(); fb.gain.value = 0.35; g.connect(d); d.connect(fb); fb.connect(d); d.connect(a.destination); }
-      out.connect(a.destination); o.start(t); o.stop(t + dur + 0.05);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(master);
+      let d = null, fb = null;
+      if (echo) { d = a.createDelay(); d.delayTime.value = 0.18; fb = a.createGain(); fb.gain.value = 0.3; g.connect(d); d.connect(fb); fb.connect(d); d.connect(master); }
+      o.start(t); o.stop(t + dur + 0.05);
+      o.onended = () => { live--; try { o.disconnect(); g.disconnect(); } catch (e) { /* 무시 */ } if (d) setTimeout(() => { try { d.disconnect(); fb.disconnect(); } catch (e) { /* 무시 */ } }, 1500); };
     };
     return {
       get muted() { return muted; },
       toggle() { muted = !muted; if (!muted) { unlocked = false; unlock(); } try { localStorage.setItem('mt.pg.mute', muted ? '1' : '0'); } catch (e) { /* 무시 */ } if (muted && ac) ac.suspend(); return muted; },
-      ping() { tone(1250, 1.1, { vol: 0.16, echo: true }); },                       // 소나 '띵'
+      ping() { tone(1100, 1.0, { vol: 0.14, echo: true }); },                       // 소나 '띵'
       blip() { tone(880, 0.09, { type: 'triangle', vol: 0.07 }); },                  // 레이더에 잡힌 점
-      lock() { tone(660, 0.07, { type: 'square', vol: 0.05 }); tone(990, 0.09, { type: 'square', vol: 0.05, at: 0.09 }); tone(1320, 0.16, { type: 'square', vol: 0.05, at: 0.2 }); }, // 조준 완료 '삑삑삑'
-      click() { tone(420, 0.05, { type: 'square', vol: 0.05 }); tone(840, 0.04, { type: 'square', vol: 0.03, at: 0.04 }); }, // 무기 바꾸기 '철컥'
-      whoosh() { tone(300, 0.9, { type: 'sawtooth', vol: 0.025, f2: 1200 }); },     // 비행기 출발
+      lock() { tone(660, 0.07, { type: 'triangle', vol: 0.09 }); tone(990, 0.09, { type: 'triangle', vol: 0.09, at: 0.09 }); tone(1320, 0.16, { type: 'triangle', vol: 0.08, at: 0.2 }); }, // 조준 완료 '삑삑삑'
+      click() { tone(420, 0.05, { type: 'triangle', vol: 0.08 }); tone(840, 0.04, { type: 'triangle', vol: 0.05, at: 0.04 }); }, // 무기 바꾸기 '철컥'
+      whoosh() { tone(260, 0.9, { type: 'sine', vol: 0.06, f2: 900 }); },     // 비행기 출발
     };
   })();
 
