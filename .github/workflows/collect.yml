@@ -54,6 +54,7 @@ jobs:
           mkdir -p /tmp/prev && git archive HEAD data | tar -x -C /tmp/prev
           python collector/sections/sole.py   # 비교 섹션을 새 도시 데이터와 맞춰 다시 계산
           python collector/sections/today.py   # 오늘의 영수증: 끝난 날 가장 큰 계약 한 건(최근 14일 보관)
+          python collector/sections/bidpage.py   # 입찰 정보 페이지: 분야별 경쟁·낙찰률, 큰 계약 낙찰 결과, 최근 경쟁입찰
           python collector/sections/daily_q.py   # 오늘의 한 문제: 오늘·내일 날짜를 없을 때만 고정(기존 날짜는 안 바꿈)
           python -m unittest discover -s tests
           python collector/validate.py data --prev /tmp/prev/data

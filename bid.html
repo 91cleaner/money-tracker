@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>나라장터 입찰·낙찰률 한눈에 · 분야별 경쟁 · 85개 시 · 세금추적단</title>
+<meta name="description" content="85개 시가 나라장터에서 맺은 계약으로 본 분야별 경쟁입찰 비율, 큰 계약의 참가 업체 수와 낙찰률, 최근 30일 경쟁입찰을 누가 땄는지. 청소·시설관리·건설·용역·물품.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="나라장터 입찰·낙찰률 한눈에 · 세금추적단"><meta property="og:description" content="분야별 경쟁입찰 비율, 참가 업체 수, 낙찰률, 최근 경쟁입찰 낙찰 업체. 85개 시 공개 계약 자료.">
+<meta property="og:url" content="https://91cleaner.github.io/money-tracker/bid.html"><meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%A7%BE%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/refresh.css?v=202610249700">
+<style>
+*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#0d1117;color:#e8edf2;font-family:Pretendard,system-ui,sans-serif;font-size:15px;line-height:1.55}
+a{color:#7fe8ff;overflow-wrap:anywhere}.nbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;background:#0d1117ee;border-bottom:1px solid #222b36;font-size:13px;color:#8fa0b3}.nbar a{font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap}
+.w{max-width:860px;margin:0 auto;padding:16px 16px 24px}h1{font-size:26px;margin:8px 0;line-height:1.3}h2{font-size:19px;margin:0 0 6px}
+section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:16px;margin:16px 0;min-width:0}
+.sub{color:#8fa0b3;font-size:13px;line-height:1.5}.src{font-size:12px;color:#8fa0b3;line-height:1.45}.src a{color:#8fa0b3}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}.tbl th,.tbl td{padding:8px 6px;border-top:1px solid #222b36;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl th{font-size:12px;color:#8fa0b3;font-weight:600;border-top:0;white-space:normal;vertical-align:bottom}.tbl td b{color:#ffb020}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}@media(max-width:480px){.tbl{font-size:13px}.tbl th,.tbl td{padding:8px 3px}}
+.flt{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.flt select,.flt input{font:600 14px Pretendard,system-ui,sans-serif;color:#e8edf2;background:#0b0f13;border:1px solid #3a4652;border-radius:10px;padding:8px 10px;min-height:40px}.flt input{flex:1 1 12em;min-width:0}
+.it{padding:12px 0;border-top:1px solid #222b36;display:grid;gap:3px;min-width:0}.it .t{font-weight:700;overflow-wrap:anywhere}.it .m{font-size:13px;color:#9aa6b2}
+.it .a{font-weight:800;color:#ffb020;font-variant-numeric:tabular-nums}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.chip{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #3a4652;color:#c9d3dd}.chip.y{border-color:#ffb02088;color:#ffd27a}.chip.r{border-color:#ff6b6b88;color:#ff9b9b}
+.it .ln{font-size:12.5px}.it .ln a{margin-right:10px}
+.more{width:100%;min-height:44px;margin-top:8px;border-radius:12px;border:1px solid #2a3541;background:transparent;color:#ffb020;font:700 15px Pretendard,system-ui,sans-serif;cursor:pointer}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}.kpi div{background:#0f141b;border:1px solid #2a3541;border-radius:12px;padding:10px 12px}.kpi b{display:block;font-size:20px;color:#fff}.kpi span{font-size:12.5px;color:#9aa6b2}
+.note{background:#0f141b;border-radius:10px;padding:10px 12px;font-size:13px;color:#b8c3cf;margin:10px 0;line-height:1.5}
+</style>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0d1117"><link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="세금추적단"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body data-page="bid">
+<header class="nbar"><a href="./">‹ 세금추적단</a><span>갱신 <span id="upd"></span></span></header>
+<main class="w">
+  <h1>입찰·낙찰 한눈에</h1>
+  <p class="sub" id="lead">나라장터에서 85개 시가 맺은 계약으로 정리했어요. 입찰 준비하시는 분들이 보기 쉽게, 분야별로 얼마나 공개 경쟁으로 나오는지, 큰 계약은 몇 곳이 들어와 몇 %에 낙찰됐는지, 최근 경쟁입찰은 어디서 누가 땄는지 모았어요.</p>
+  <div class="kpi" id="kpi"></div>
+
+  <section id="cat"><h2>분야별로 보면</h2>
+    <p class="sub">공고를 거친 계약 = 경쟁입찰 + 공고를 내고 견적을 받은 수의계약. 참가 업체·낙찰률은 10억원 이상 계약 중 확인된 것의 가운데 값(중앙값)이에요.</p>
+    <div class="tbl-wrap"><table class="tbl" id="catT"></table></div>
+  </section>
+
+  <section id="big"><h2>큰 계약(10억원 이상) 낙찰 결과</h2>
+    <p class="sub">몇 곳이 입찰에 들어왔고, 미리 정한 가격(예정가격)의 몇 %에 낙찰됐는지예요.</p>
+    <div class="flt"><select id="bCat" aria-label="분야"></select><select id="bSido" aria-label="지역"></select><select id="bSort" aria-label="정렬"><option value="d">최신순</option><option value="rh">낙찰률 높은 순</option><option value="rl">낙찰률 낮은 순</option><option value="n">참가 적은 순</option><option value="a">금액 큰 순</option></select></div>
+    <div id="bigL"></div><button type="button" class="more" id="bigM" hidden>더 보기</button>
+  </section>
+
+  <section id="recent"><h2>최근 30일 경쟁입찰, 누가 땄나</h2>
+    <p class="sub">제한·일반·지명 경쟁으로 맺은 계약이에요. 기관, 업체, 공고명으로 찾아보세요.</p>
+    <div class="flt"><input id="rQ" type="search" placeholder="예: 청소, 상주시, OO건설" aria-label="검색"><select id="rCat" aria-label="분야"></select><select id="rSido" aria-label="지역"></select></div>
+    <div id="recL"></div><button type="button" class="more" id="recM" hidden>더 보기</button>
+  </section>
+
+  <p class="note">공개 자료를 정리한 것이에요. 참가 업체 수와 낙찰률은 나라장터 낙찰정보 그대로이고, 개인사업자 이름은 가렸어요. 틀린 곳은 <a href="principles.html">정정 요청</a>으로 알려 주세요.</p>
+  <p class="src" id="src"></p>
+  <footer><span class="fun-foot"><a href="principles.html">중립성 원칙 + 정정 요청</a></span></footer>
+</main>
+<script src="assets/bidpage.js?v=202610251030"></script>
+<script src="assets/nav.js?v=202610251030"></script>
+<script src="assets/visits.js?v=202610250930" defer></script>
+<script src="assets/pwa.js?v=202610251000" defer></script>
+</body>
+</html>
