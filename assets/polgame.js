@@ -42,6 +42,10 @@
 #pg .pg-file.on{opacity:1;transform:none;pointer-events:auto}
 @media(min-width:900px){#pg .pg-file{left:auto;right:12px;top:110px;bottom:84px;width:380px;max-height:none}}
 @media(max-width:899px){#pg .pg-file{max-height:44%;padding:10px}#pg .who{grid-template-columns:64px 1fr;gap:10px}#pg .ph{width:64px;height:80px}#pg .nm{font-size:19px}#pg .st{margin:8px 0}#pg .st b{font-size:16px}#pg .st span{font-size:10.5px}#pg .ttl{font-size:13px}#pg .ctr .n{font-size:15px}#pg .live{font-size:10px}}
+@media(min-width:900px){#pg.fileon .pg-map{right:404px}#pg.fileon .pg-bar{left:calc((100% - 404px)/2)}}
+#pg .pg-file.min{max-height:52px!important;overflow:hidden;bottom:84px;top:auto!important}
+#pg .pg-file.min .fh .mn{transform:rotate(180deg)}
+#pg .fh .tools{display:flex;gap:6px}
 #pg .fh{display:flex;justify-content:space-between;align-items:center;font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e;margin-bottom:8px}
 #pg .fh button{min-width:36px;min-height:36px;border-radius:8px;border:1px solid #1f4a30;background:#06150c;color:#cfe9d8;font-size:16px;cursor:pointer}
 #pg .who{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:center}
@@ -152,7 +156,7 @@
   // 크게 줌아웃해도 대륙이 옆으로 되풀이되지 않게: 지구 한 바퀴(유럽 서쪽 ~ 아메리카 동쪽)만 보이게 묶고, 그 폭이 화면을 꽉 채우는 데까지만 줌아웃
   const WORLD = L.latLngBounds([[-60, -25], [78, 335]]);
   map.setMaxBounds(WORLD); map.options.maxBoundsViscosity = 1;
-  const setMin = () => { const w = root.clientWidth || 360; map.setMinZoom(Math.ceil(Math.log2(w / 256) * 4) / 4); };
+  const setMin = () => { const w = (root.querySelector('.pg-map') || root).clientWidth || 360; map.setMinZoom(Math.ceil(Math.log2(w / 256) * 4) / 4); };
   setMin();
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 11, attribution: '지도: Esri · 자료: 열린국회정보' }).addTo(map);
   const KR = L.latLngBounds([[33.0, 125.3], [38.7, 129.7]]);
@@ -216,8 +220,8 @@
   const pic = (m, cls) => (m.pic ? `<img class="${cls || ''}" src="${esc(m.pic)}" alt="${esc(m.name)} 의원 공식 사진" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ini',textContent:'${esc(m.name.slice(0, 1))}'}))">` : `<span class="ini">${esc(m.name.slice(0, 1))}</span>`);
   const closeFile = () => { file.classList.remove('on'); };
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]); // 파일 창에 가리지 않게
-  const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><button type="button" class="x" aria-label="닫기">×</button></div>`;
-  const bindX = () => { const x = file.querySelector('.x'); if (x) x.onclick = () => { closeFile(); gTop.clearLayers(); }; };
+  const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="mn" aria-label="접기·펴기">▾</button><button type="button" class="x" aria-label="닫기">×</button></span></div>`;
+  const bindX = () => { file.classList.remove('min'); const x = file.querySelector('.x'); if (x) x.onclick = () => { closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) mn.onclick = (e) => { e.stopPropagation(); file.classList.toggle('min'); }; };
   const SHARE = (m) => { try { const ix = window.__shIdx; if (ix && ix.mp && ix.mp[m.name]) return location.origin + location.pathname.replace(/[^/]*$/, '') + 's/m/' + ix.mp[m.name] + '.html'; } catch (e) { /* 무시 */ } return location.origin + location.pathname + '?mp=' + encodeURIComponent(m.name); };
   fetch('data/og/s/index.json').then((r) => (r.ok ? r.json() : null)).then((x) => { window.__shIdx = x; }).catch(() => {});
   function open(m) {
@@ -341,6 +345,11 @@
     file.classList.add('on'); bindX(); bindRows();
   }
   const snd = root.querySelector('.snd'); const paintSnd = () => { snd.textContent = SFX.muted ? '🔇' : '🔊'; }; paintSnd(); snd.onclick = () => { SFX.toggle(); paintSnd(); if (!SFX.muted) SFX.click(); };
+  // 파일 창이 열리면 컴퓨터에서는 지도를 창 왼쪽으로 줄여 가리지 않게, 휴대폰에서는 지도를 만지면 창을 접는다
+  new MutationObserver(() => { const on = file.classList.contains('on'); if (root.classList.contains('fileon') !== on) { root.classList.toggle('fileon', on); setTimeout(() => { map.invalidateSize({ pan: false }); setMin(); }, 30); } }).observe(file, { attributes: true, attributeFilter: ['class'] });
+  const mapEl = root.querySelector('.pg-map');
+  ['touchstart', 'wheel'].forEach((ev) => mapEl.addEventListener(ev, () => { if (innerWidth < 900 && file.classList.contains('on')) file.classList.add('min'); }, { passive: true }));
+  file.addEventListener('click', (e) => { if (file.classList.contains('min') && !e.target.closest('.x')) file.classList.remove('min'); });
   const btns = [...root.querySelectorAll('.pg-bar button')];
   const pick = (w, quiet) => { if (!quiet) SFX.click(); btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === w))); W[w](); };
   btns.forEach((b) => (b.onclick = () => pick(b.dataset.w)));
