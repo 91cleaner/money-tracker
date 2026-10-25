@@ -12,11 +12,13 @@
   const css = document.createElement('style');
   css.textContent = `.visits{display:grid;gap:2px;margin:0 0 12px;padding:10px 14px;border-radius:14px;background:#14161f;border:1px solid #2a3040;font-size:13.5px;line-height:1.5;color:#c9d3dd}
 .visits .vn{display:block;font-weight:800;color:#fff}.visits .vn[hidden]{display:none}.visits .vn b{display:inline!important;color:#ffb020;font-size:16px;margin:0 1px}.visits .vt{display:block;min-width:0}
+.visits .vx{display:block;margin-top:6px;padding-top:6px;border-top:1px solid #2a3040;color:#ffd27a;text-decoration:none;font-size:13px}.visits .vx b{color:#ffb020}.visits .vx:hover{text-decoration:underline}
 footer .visits{margin:8px 0 0;background:transparent;border:0;padding:0;font-size:12.5px;color:#9aa6b2}footer .visits .vn b{font-size:13px}`;
   document.head.append(css);
   const THANKS = '여러분의 관심으로 세금이 절약될 수 있습니다. 감사합니다 🙏';
   const box = document.createElement('div'); box.className = 'visits';
-  box.innerHTML = `<span class="vn" hidden></span><span class="vt">${THANKS}</span>`;
+  const X = 'https://x.com/KORROOFTOPARODY';
+  box.innerHTML = `<span class="vn" hidden></span><span class="vt">${THANKS}</span><a class="vx" href="${X}" target="_blank" rel="noopener">☕ 이 사이트는 <b>@청소부</b> 혼자 만들어요 · <b>월 1달러 X 구독</b>으로 응원하기 ›</a>`;
   const place = () => {
     if (page === 'home') {
       const top = document.getElementById('mytop'), main = document.querySelector('main');
