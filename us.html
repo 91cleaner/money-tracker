@@ -128,15 +128,48 @@
  .mt-shared-head .country-switch{grid-column:1/-1!important}
 }
 @media(min-width:601px){.mt-shared-head .mt-language-switch{order:2;font-size:12px;background:#183c2b;color:#a8f4c7}}
+
+/* Two-tier tool layout: Korean Assembly style for both tool and section docks. */
+@media(max-width:600px){
+ body[data-page="us"] .mt-mobile-tabs{
+  position:fixed!important;top:auto!important;bottom:calc(4px + env(safe-area-inset-bottom,0px))!important;
+  left:12px!important;right:12px!important;width:calc(100% - 24px)!important;
+  height:70px!important;min-height:70px!important;z-index:1050!important;
+  padding:5px!important;gap:3px!important;display:flex!important;
+  border:1px solid #285d3f!important;border-radius:20px!important;
+  background:linear-gradient(180deg,rgba(13,38,24,.97),rgba(4,18,10,.98))!important;
+  box-shadow:0 10px 26px #000b!important;backdrop-filter:blur(14px)!important;
+ }
+ body[data-page="us"] .mt-mobile-tabs button{
+  flex:1 1 0!important;display:flex!important;flex-direction:column!important;
+  justify-content:center!important;align-items:center!important;gap:3px!important;
+  min-width:0!important;height:58px!important;border-radius:15px!important;
+  font:700 12px Pretendard,system-ui,sans-serif!important;color:#9bc7aa!important;
+ }
+ body[data-page="us"] .mt-mobile-tabs .mt-tab-icon{font-size:24px!important;line-height:1.1!important;color:inherit}
+ body[data-page="us"] .mt-mobile-tabs button[aria-pressed="true"]{
+  background:linear-gradient(180deg,#1a5131,#0b2819)!important;
+  border:1px solid #388c59!important;color:#85ffb2!important;
+  box-shadow:inset 0 0 12px #2b925633!important;
+ }
+ body[data-page="us"] #pg{height:calc(100dvh - 216px)!important}
+ body[data-page="us"] #pg.member-selected{height:calc(100dvh - 216px)!important}
+ body[data-page="us"] #pg .pg-bar{bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
+ body[data-page="us"] #pg .pg-dice{bottom:calc(160px + env(safe-area-inset-bottom,0px))!important}
+ body[data-page="us"] #pg.member-selected .pg-bar{bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
+ body[data-page="us"] #pg.member-selected .pg-dice{top:calc(55% - 65px)!important;bottom:auto!important}
+ body[data-page="us"] #pg.member-selected.member-full .pg-dice{top:calc(18% - 65px)!important}
+ body[data-page="us"].has-tabbar{padding-bottom:calc(82px + env(safe-area-inset-bottom,0px))!important}
+}
 </style>
 </head>
 <body data-page="us" data-page="us">
 <header class="ubar mt-shared-head" id="top"><a class="mt-brand" href="./" aria-label="MONEY TRACKER home"><span class="mt-mark">MT</span><span class="mt-brand-name">MONEY TRACKER</span></a><a class="us-exit" href="./" aria-label="Exit to MONEY TRACKER">✕ <span>나가기</span></a><nav class="country-switch" aria-label="Choose country"><a href="national.html">🇰🇷 한국</a><a href="us.html?lang=ko" aria-current="page">🇺🇸 미국</a></nav></header>
 <div id="pg"></div>
 <nav class="mt-mobile-tabs" aria-label="미국 의회 화면 선택">
- <button type="button" data-mtab="map" aria-pressed="true">🗺️ <span>지도</span></button>
- <button type="button" data-mtab="trades" aria-pressed="false">📋 <span>거래</span></button>
- <button type="button" data-mtab="dashboard" aria-pressed="false">📊 <span>대시보드</span></button>
+ <button type="button" data-mtab="map" aria-pressed="true"><span class="mt-tab-icon" aria-hidden="true">◈</span><span>지도</span></button>
+ <button type="button" data-mtab="trades" aria-pressed="false"><span class="mt-tab-icon" aria-hidden="true">↗</span><span>거래</span></button>
+ <button type="button" data-mtab="dashboard" aria-pressed="false"><span class="mt-tab-icon" aria-hidden="true">▥</span><span>대시보드</span></button>
 </nav>
 <section id="usdash" aria-label="Congress trading dashboard"></section><aside class="us-visit" aria-live="polite">🇺🇸 오늘 방문 <strong id="us-visitor-count">집계 확인 중…</strong> <small>한국시간 · 통계 반영 지연 가능</small></aside>
 <script>
@@ -154,7 +187,7 @@ if(matchMedia('(max-width:600px)').matches){
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/usko.js?v=20261025mobile21" defer></script>
 <script src="assets/usdash.js?v=20261025ko2" defer></script>
-<script src="assets/usgame.js?v=20261025verify19"></script>
+<script src="assets/usgame.js?v=20261025ko22"></script>
 <script src="assets/usvisitors.js?v=20261025a" defer></script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script src="assets/nav.js?v=20261025usshared18" defer></script>
