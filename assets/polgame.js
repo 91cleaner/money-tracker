@@ -99,6 +99,16 @@
     let ac = null, muted = false;
     try { muted = localStorage.getItem('mt.pg.mute') === '1'; } catch (e) { /* 무시 */ }
     const ctx = () => { if (muted) return null; if (!ac) { const A = window.AudioContext || window.webkitAudioContext; if (!A) return null; ac = new A(); } if (ac.state === 'suspended') ac.resume(); return ac; };
+    // 아이폰: 무음 스위치가 켜져 있으면 웹 소리가 막힌다. iOS 17+는 audioSession 을 'playback'으로, 그 전 버전은 무음 오디오를 한 번 틀어 풀어 준다.
+    let unlocked = false;
+    const unlock = () => {
+      if (unlocked || muted) return; unlocked = true;
+      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* 무시 */ }
+      try { const el = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA='); el.setAttribute('playsinline', ''); el.volume = 0.01; el.play().catch(() => {}); } catch (e) { /* 무시 */ }
+      const a = ctx(); if (!a) return;
+      try { const b = a.createBuffer(1, 1, 22050), src = a.createBufferSource(); src.buffer = b; src.connect(a.destination); src.start(0); } catch (e) { /* 무시 */ }
+    };
+    ['pointerdown', 'touchend', 'click'].forEach((ev) => document.addEventListener(ev, unlock, { capture: true, passive: true }));
     const tone = (f, dur, { type = 'sine', vol = 0.18, at = 0, f2 = null, echo = false } = {}) => {
       const a = ctx(); if (!a) return; const t = a.currentTime + at;
       const o = a.createOscillator(), g = a.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
@@ -109,7 +119,7 @@
     };
     return {
       get muted() { return muted; },
-      toggle() { muted = !muted; try { localStorage.setItem('mt.pg.mute', muted ? '1' : '0'); } catch (e) { /* 무시 */ } if (muted && ac) ac.suspend(); return muted; },
+      toggle() { muted = !muted; if (!muted) { unlocked = false; unlock(); } try { localStorage.setItem('mt.pg.mute', muted ? '1' : '0'); } catch (e) { /* 무시 */ } if (muted && ac) ac.suspend(); return muted; },
       ping() { tone(1250, 1.1, { vol: 0.16, echo: true }); },                       // 소나 '띵'
       blip() { tone(880, 0.09, { type: 'triangle', vol: 0.07 }); },                  // 레이더에 잡힌 점
       lock() { tone(660, 0.07, { type: 'square', vol: 0.05 }); tone(990, 0.09, { type: 'square', vol: 0.05, at: 0.09 }); tone(1320, 0.16, { type: 'square', vol: 0.05, at: 0.2 }); }, // 조준 완료 '삑삑삑'
