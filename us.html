@@ -321,6 +321,66 @@
   max-width:100%!important;overflow-x:auto!important;
  }
 }
+
+/* Mobile v34: two exclusive modes — interactive map OR full record screen. */
+@media(max-width:600px){
+ body[data-page="us"] #pg .mt-return-map{display:none!important}
+ body[data-page="us"] #pg .leaflet-control-zoom{
+  display:block!important;margin:12px 12px 0 0!important;
+  border:1px solid #39734e!important;border-radius:13px!important;
+  overflow:hidden!important;box-shadow:0 4px 14px #000b!important;
+ }
+ body[data-page="us"] #pg .leaflet-control-zoom a{
+  display:grid!important;place-items:center!important;
+  width:44px!important;height:44px!important;line-height:44px!important;
+  background:#0b2919!important;color:#c4ffda!important;
+  border-bottom:1px solid #346349!important;font-size:25px!important;
+ }
+ body[data-page="us"] #pg .leaflet-top.leaflet-right{
+  top:128px!important;right:0!important;z-index:725!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-file.on,
+ body[data-page="us"] #pg.member-selected.member-full .pg-file.on,
+ body[data-page="us"] #pg.member-selected .pg-file.on.min,
+ body[data-page="us"] #pg.member-selected .pg-file.on.expanded,
+ body[data-page="us"] #pg.fileon .pg-file.on{
+  display:block!important;position:absolute!important;
+  top:0!important;left:0!important;right:0!important;bottom:0!important;
+  width:100%!important;height:100%!important;max-height:none!important;
+  min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;
+  border-radius:0!important;transform:none!important;
+  padding:76px 14px calc(26px + env(safe-area-inset-bottom,0px))!important;
+  background:#06150d!important;z-index:1800!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-file.on.min{
+  height:100%!important;max-height:none!important;overflow-y:auto!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-file.on .fh{
+  position:relative!important;top:auto!important;background:transparent!important;
+ }
+ body[data-page="us"] #pg.member-selected .mt-return-map{
+  display:flex!important;position:absolute!important;top:12px!important;left:12px!important;
+  right:auto!important;bottom:auto!important;z-index:1950!important;
+  align-items:center!important;justify-content:center!important;
+  height:48px!important;padding:0 17px!important;
+  background:#19452d!important;color:#d4ffe1!important;
+  border:1px solid #55ae77!important;border-radius:12px!important;
+  box-shadow:0 4px 14px #0009!important;font:800 14px Pretendard,system-ui!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-bar,
+ body[data-page="us"] #pg.member-selected .pg-dice,
+ body[data-page="us"] #pg.member-selected .leaflet-control-zoom,
+ body[data-page="us"] #pg.member-selected .pg-top,
+ body[data-page="us"] #pg.member-selected .pg-say{display:none!important}
+ body[data-page="us"] #pg:not(.member-selected) .pg-file:not(.on){display:none!important}
+ body[data-page="us"] #pg:not(.member-selected) .pg-bar{z-index:1000!important}
+ body[data-page="us"] #pg:not(.member-selected) .pg-dice{
+  display:flex!important;top:auto!important;right:12px!important;
+  bottom:calc(84px + env(safe-area-inset-bottom,0px))!important;
+  z-index:850!important;
+ }
+}
+@media(min-width:601px){#pg .mt-return-map{display:none!important}}
 </style>
 </head>
 <body data-page="us">
@@ -347,7 +407,7 @@ if(matchMedia('(max-width:600px)').matches){
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/usko.js?v=20261025mobile21" defer></script>
 <script src="assets/usdash.js?v=20261025ko2" defer></script>
-<script src="assets/usgame.js?v=20261025mobile27"></script>
+<script src="assets/usgame.js?v=20261025v34"></script>
 <script src="assets/usvisitors.js?v=20261025a" defer></script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
