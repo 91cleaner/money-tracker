@@ -35,7 +35,7 @@ def get(path, **q):
 
 def main():
     if not K:
-        print("us bills: CONGRESS_API_KEY 없음, 건너뜀")
+        print("::warning::us bills: CONGRESS_API_KEY 가 비어 있어 법안은 건너뜀(Secrets 이름 확인)")
         return
     mem = json.load(open(os.path.join(D, "members.json"), encoding="utf-8"))["members"]
     os.makedirs(os.path.join(D, "bills"), exist_ok=True)
