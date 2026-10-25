@@ -303,6 +303,7 @@
       gFx.clearLayers(); gTop.clearLayers(); closeFile();
       // Price movement is NOT realized member profit; filings do not provide exact execution prices.
       let radarMode = 'recent';
+      let hot = [];
       const score = (m) => {
         const priced = (byM[m.id] || []).filter(t => t.ty === 'P' && Number.isFinite(Number(t.r)) && t.r != null);
         if (!priced.length) return null;
@@ -315,9 +316,11 @@
         return v && (radarMode==='up' ? v.avg>0 : v.avg<0);
       });
       const paintRadar = () => {
-        const hot=radarList();
+        hot=radarList();
         const ids=new Set(hot.map(m=>m.id));
-        drawDots(m=>ids.has(m.id),()=>true);
+        drawDots(m=>false,()=>true);
+        // Targets are revealed as the sweep reaches each map marker.
+        if (typeof seen !== 'undefined') seen.clear();
         const choices=[['recent','최근 30일 거래'],['up','매수 후 상승'],['down','매수 후 하락']];
         file.innerHTML=fileHead('Radar · stock activity')+
           '<div class="seg" role="group" aria-label="Radar filters">'+choices.map(([k,l])=>'<button type="button" data-radar="'+k+'" class="'+(radarMode===k?'on':'')+'">'+l+'</button>').join('')+'</div>'+
@@ -349,7 +352,7 @@
         if (gr) { gr.addColorStop(0, 'rgba(93,255,158,0)'); gr.addColorStop(0.14, 'rgba(93,255,158,.28)'); gr.addColorStop(0.145, 'rgba(93,255,158,0)'); g.fillStyle = gr; g.beginPath(); g.arc(c.x, c.y, R, 0, 6.283); g.fill(); }
         g.strokeStyle = 'rgba(93,255,158,.18)'; for (const r of [R * 0.25, R * 0.5, R * 0.75]) { g.beginPath(); g.arc(c.x, c.y, r, 0, 6.283); g.stroke(); }
         g.strokeStyle = 'rgba(160,255,200,.8)'; g.lineWidth = 2; g.beginPath(); g.moveTo(c.x, c.y); g.lineTo(c.x + R * Math.cos(a), c.y + R * Math.sin(a)); g.stroke(); g.lineWidth = 1;
-        for (const m of hot) { const p = map.latLngToContainerPoint(LL[m.id]); let d = Math.atan2(p.y - c.y, p.x - c.x) - a; d = ((d % 6.283) + 6.283) % 6.283; const glow = Math.max(0, 1 - (6.283 - d) / 1.2); if (glow > 0) { g.fillStyle = `rgba(255,176,32,${0.9 * glow})`; g.beginPath(); g.arc(p.x, p.y, 7 + 10 * glow, 0, 6.283); g.fill(); if (glow > 0.9 && !seen.has(m.id) && now - lastBlip > 140) { seen.add(m.id); lastBlip = now; SFX.blip(); } } }
+        for (const m of hot) { const p = map.latLngToContainerPoint(LL[m.id]); let d = Math.atan2(p.y - c.y, p.x - c.x) - a; d = ((d % 6.283) + 6.283) % 6.283; const glow = Math.max(0, 1 - (6.283 - d) / 1.2); if (glow > 0) { g.fillStyle = `rgba(255,176,32,${0.9 * glow})`; g.beginPath(); g.arc(p.x, p.y, 7 + 10 * glow, 0, 6.283); g.fill(); if (glow > 0.9 && !seen.has(m.id) && now - lastBlip > 140) { seen.add(m.id); lastBlip = now; const marker=dotOf[m.id]; if(marker)marker.setStyle({radius:8,weight:2.5,color:'#ffc94a',fillOpacity:1,opacity:1}); SFX.blip(); } } }
         radarRaf = requestAnimationFrame(loop);
       };
       radarRaf = requestAnimationFrame(loop);
