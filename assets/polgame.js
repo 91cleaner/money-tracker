@@ -75,7 +75,20 @@
 #pg .tabs button.on{background:rgba(93,255,158,.16);color:#eafff2;box-shadow:inset 0 0 0 1px rgba(93,255,158,.4)}#pg .tabs button i{font-style:normal;opacity:.7;margin-left:3px;font-weight:600}
 #pg .vt{display:inline-block;min-width:38px;text-align:center;font:800 11.5px Pretendard,system-ui,sans-serif;padding:1px 6px;border-radius:6px;margin-right:6px}#pg .vt.Y{background:#0f3b23;color:#7dffb0}#pg .vt.N{background:#3b1414;color:#ff9b9b}#pg .vt.A{background:#3a2c0b;color:#ffd27a}#pg .vt.X{background:#1b2420;color:#8fa79a}
 #pg .vsum{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:8px 0}#pg .vsum div{background:#04140b;border:1px solid #1f4a30;border-radius:8px;padding:6px;text-align:center;font-size:11px;color:#8fc9a5}#pg .vsum b{display:block;font-size:17px;color:#e8fff1}
-#pg .allb{width:100%;min-height:42px;margin-top:10px;border-radius:10px;border:1px solid rgba(93,255,158,.3);background:rgba(93,255,158,.08);color:#eafff2;font:700 13px Pretendard,system-ui,sans-serif;cursor:pointer}#pg .fl{display:flex;gap:4px;margin:0 0 6px}#pg .fl button{min-height:32px;padding:0 11px;border-radius:999px;border:1px solid #1f4a30;background:transparent;color:#86b89a;font:700 12px Pretendard,system-ui,sans-serif;cursor:pointer}#pg .fl button.on{background:rgba(93,255,158,.16);color:#eafff2;border-color:rgba(93,255,158,.4)}#pg .tr a{color:#7fe8ff}#pg .lk{display:grid;gap:6px;margin-top:8px}#pg .lk a{display:flex;gap:8px;align-items:center;min-height:42px;padding:0 12px;border-radius:8px;border:1px solid #1f4a30;color:#cfe9d8;text-decoration:none;font-size:13px}
+#pg .allb{width:100%;min-height:42px;margin-top:10px;border-radius:10px;border:1px solid rgba(93,255,158,.3);background:rgba(93,255,158,.08);color:#eafff2;font:700 13px Pretendard,system-ui,sans-serif;cursor:pointer}#pg .fl{display:flex;gap:4px;margin:0 0 6px}#pg .fl button{min-height:32px;padding:0 11px;border-radius:999px;border:1px solid #1f4a30;background:transparent;color:#86b89a;font:700 12px Pretendard,system-ui,sans-serif;cursor:pointer}#pg .fl button.on{background:rgba(93,255,158,.16);color:#eafff2;border-color:rgba(93,255,158,.4)}#pg .st4{grid-template-columns:repeat(4,1fr)}#pg .st4 b{color:#eafff2}#pg .st4 span{font-size:10.5px}
+#pg .ph2{font:800 11.5px Pretendard,system-ui,sans-serif;color:#5dff9e;letter-spacing:.04em;margin:12px 0 4px}#pg .pl{font-size:13px;color:#cfe9d8;line-height:1.5;padding:2px 0}
+#pg .lk a span{margin-left:auto;font-size:11px;color:#8fc9a5;text-align:right}
+#pg .fh .fol{font-size:18px;color:#ffc94a}#pg .fh .fol.on{background:rgba(255,201,74,.14);border-color:rgba(255,201,74,.5)}
+#pg .rate{display:flex;align-items:center;gap:10px}#pg .rate b{font:800 22px Pretendard,system-ui,sans-serif;color:#eafff2;font-variant-numeric:tabular-nums}#pg .rate .bar{flex:1;height:8px;border-radius:4px;background:#0b2416;overflow:hidden}#pg .rate .bar i{display:block;height:100%;background:linear-gradient(90deg,#2a9f5f,#5dff9e)}
+#pg .seg{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:0 0 8px}#pg .seg::-webkit-scrollbar{display:none}#pg .seg button{flex:none;min-height:34px;padding:0 12px;border-radius:999px;border:1px solid #1f4a30;background:transparent;color:#86b89a;font:700 12.5px Pretendard,system-ui,sans-serif;cursor:pointer}#pg .seg button.on{background:#5dff9e;color:#02110a;border-color:#5dff9e}
+#pg .ord{display:flex;gap:4px;margin:0 0 4px;justify-content:flex-end}#pg .ord button{min-height:28px;padding:0 10px;border-radius:8px;border:0;background:transparent;color:#6fae88;font:700 11.5px Pretendard,system-ui,sans-serif;cursor:pointer}#pg .ord button.on{color:#eafff2;background:rgba(93,255,158,.12)}
+#pg .rk{display:inline-block;min-width:20px;margin-right:6px;color:#5dff9e;font-size:11px}
+#pg .vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;margin:4px 0 10px}#pg .vp{display:grid;justify-items:center;text-align:center;gap:2px;min-width:0}#pg .vp img,#pg .vp .ini{width:64px;height:80px;border-radius:8px;object-fit:cover;border:1px solid #2a7a4a;filter:grayscale(.6) sepia(.25) hue-rotate(70deg);display:grid;place-items:center;font:800 24px Pretendard;color:#5dff9e;background:#06150c}
+#pg .vp b{font-size:16px;color:#fff}#pg .vp span{font-size:11.5px;font-weight:800}#pg .vp small{font-size:11px;color:#8fc9a5;overflow-wrap:anywhere}#pg .vx{font:900 20px ui-monospace,Menlo,monospace;color:#ffb020;text-shadow:0 0 12px rgba(255,176,32,.6)}
+#pg .vr{display:grid;grid-template-columns:1fr 64px 1fr;align-items:center;gap:6px;padding:7px 0;border-top:1px solid #12301f}#pg .vr>span{text-align:center;font-size:11.5px;color:#8fc9a5}#pg .vr .l,#pg .vr .r{display:flex;align-items:center;gap:6px}#pg .vr .l{justify-content:flex-end}#pg .vr i{display:block;height:6px;border-radius:3px;background:#5dff9e;min-width:2px;max-width:60%}#pg .vr .r i{background:#ffb020}#pg .vr b{font:800 14px Pretendard,system-ui,sans-serif;color:#eafff2;font-variant-numeric:tabular-nums;white-space:nowrap}
+#pg .pg-news{position:absolute;z-index:716;left:50%;transform:translateX(-50%);top:100px;max-width:calc(100% - 24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:36px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,201,74,.5);background:rgba(30,22,4,.85);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#ffe7a8;font:700 13px Pretendard,system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.4)}#pg .pg-news b{color:#ffc94a}#pg .pg-news span{opacity:.7}
+#pg .satb{position:absolute;z-index:705;left:12px;top:104px;font:700 10.5px ui-monospace,Menlo,monospace;color:#5dff9e;letter-spacing:.08em;padding:3px 8px;border-radius:6px;background:rgba(2,12,6,.7);border:1px solid rgba(93,255,158,.3);opacity:0;transition:opacity .4s;pointer-events:none}#pg .satb i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#5dff9e;margin-right:6px;box-shadow:0 0 6px #5dff9e}#pg.sat .satb{opacity:1}
+#pg .tr a{color:#7fe8ff}#pg .lk{display:grid;gap:6px;margin-top:8px}#pg .lk a{display:flex;gap:8px;align-items:center;min-height:42px;padding:0 12px;border-radius:8px;border:1px solid #1f4a30;color:#cfe9d8;text-decoration:none;font-size:13px}
 #pg .act{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}#pg .act a,#pg .act button{font:700 12.5px Pretendard;min-height:34px;padding:0 10px;border-radius:8px;border:1px solid #2a7a4a;background:#06150c;color:#cfe9d8;text-decoration:none;display:inline-flex;align-items:center;cursor:pointer}
 #pg .act .p{background:#5dff9e;color:#02110a;border-color:#5dff9e}
 #pg .fine{font-size:11px;color:#6fae88;margin-top:8px;line-height:1.45}#pg .fine a{color:#8fc9a5}
@@ -108,7 +121,7 @@
     <button type="button" data-w="mp"><span class="k">1</span><span class="ic"><svg viewBox="0 0 24 24" class="badge"><circle cx="12" cy="12" r="10.2" fill="none" stroke-width="1.4"/><g class="pet"><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(0 12 12)"/><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(72 12 12)"/><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(144 12 12)"/><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(216 12 12)"/><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(288 12 12)"/></g><circle cx="12" cy="12" r="2.1" class="core"/></svg></span>의원</button>
     <button type="button" data-w="trip"><span class="k">2</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15.5v-1.8l-7.8-4.9V4.2a1.6 1.6 0 0 0-3.2 0v4.6L2.2 13.7v1.8l7.8-2.4v4.6l-2.2 1.6V21l3.8-1.1 3.8 1.1v-1.7l-2.2-1.6v-4.6z" stroke-linejoin="round"/></svg></span>출장</button>
     <button type="button" data-w="radar"><span class="k">3</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.5" opacity=".6"/><path d="M12 12 18.7 5.3"/><path d="M12 2.5A9.5 9.5 0 0 1 18.7 5.3L12 12z" class="fillp" stroke="none"/><circle cx="16" cy="14.5" r="1.1" class="dot" stroke="none"/></svg></span>레이더</button>
-    <button type="button" data-w="party"><span class="k">4</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 21V3.5"/><path d="M5 4.5c3-1.6 5.5 1.6 8.5 0s4.5-.6 5.5 0v8.5c-1-.6-2.5-1.6-5.5 0s-5.5-1.6-8.5 0" stroke-linejoin="round"/></svg></span>정당</button>
+    <button type="button" data-w="rank"><span class="k">4</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M8.5 21v-8h7v8"/><path d="M3 21v-5h5.5M15.5 21v-11H21v11"/><path d="M2 21h20"/><path d="m12 3.2.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.3z" stroke-width="1.3" stroke-linejoin="round"/></svg></span>순위</button>
     <button type="button" data-w="pres"><span class="k">5</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2.8 19.5 6v5.5c0 4.6-3.2 8-7.5 9.7-4.3-1.7-7.5-5.1-7.5-9.7V6z" stroke-linejoin="round"/><path d="m12 7.6 1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" stroke-linejoin="round" stroke-width="1.3"/></svg></span>대통령</button>
     <button type="button" data-w="find"><span class="k">6</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.4 15.4 5.6 5.6"/><path d="M7.5 10.5a3 3 0 0 1 3-3" opacity=".6"/></svg></span>찾기</button>
   </nav>
@@ -173,12 +186,18 @@
   const [mem, sup, flw, par, geo, prez] = await Promise.all([j('members.json'), j('support.json'), j('flows.json'), j('parties.json'), j('geo.json'), j('president.json')]);
   if (!mem) { type('자료를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.'); return; }
   let SEC = null; const secP = j('security.json').then((x) => (SEC = x));
+  let BIO = null, VR = null; const bioP = j('bio.json').then((x) => (BIO = (x && x.members) || {})); const vrP = j('vote_rate.json').then((x) => (VR = x || false));
+  // 팔로우(이 폰에만 저장): { 의원코드: [그때 발의 수, 그때 출장 수] }
+  const FK = 'mt.pg.fol'; let FOL = {}; try { FOL = JSON.parse(localStorage.getItem(FK) || '{}') || {}; } catch (e) { FOL = {}; }
+  const saveFol = () => { try { localStorage.setItem(FK, JSON.stringify(FOL)); } catch (e) { /* 무시 */ } };
   const people = mem.members || [], trips = mem.trips || [];
   const pos = (geo && geo.pos) || {};
   const per = Number(((sup && sup.allowance) || []).find((a) => a.amount)?.amount) || 0;
   const byM = {}; for (const t of trips) { if (!t.member_id) continue; (byM[t.member_id] = byM[t.member_id] || []).push(t); }
   const tripsOf = (m) => { const u = new Map(); for (const t of byM[m.id] || []) u.set(t.trip_id, t); return [...u.values()].sort((a, b) => String(b.start || '').localeCompare(String(a.start || ''))); };
   const statOf = (m) => { const ts = tripsOf(m); return { ts, n: ts.length, ext: ts.filter((t) => extF(t.funder)).length, norep: ts.filter((t) => t.report !== '유').length }; };
+  const rateOf = (m) => { const v = VR && VR.m && VR.m[m.id]; if (!v) return null; const all = v[0] + v[1] + v[2] + v[3]; return all ? { p: Math.round(((v[0] + v[1] + v[2]) / all) * 1000) / 10, v, all } : null; };
+  const numOf = (m) => { const ls = SEC && SEC.lead_stat && SEC.lead_stat[m.id]; const r = rateOf(m); return { bill: ls ? ls[0] : 0, pass: ls ? ls[1] : 0, trip: statOf(m).n, vote: r ? r.p : null, disc: SEC ? (SEC.discipline || []).filter((x) => (x.who || []).includes(m.name)).length : 0 }; };
   const byT = {}; for (const t of trips) (byT[t.trip_id] = byT[t.trip_id] || []).push(t);
   const ctry = {}; for (const [id, ts] of Object.entries(byT)) for (const d of new Set((ts[0].dest || []).map(cname))) (ctry[d] = ctry[d] || new Set()).add(id);
   root.querySelector('.nmem').textContent = people.length;
@@ -196,7 +215,20 @@
   map.setMaxBounds(WORLD); map.options.maxBoundsViscosity = 1;
   const setMin = () => { const w = (root.querySelector('.pg-map') || root).clientWidth || 360; map.setMinZoom(Math.ceil(Math.log2(w / 256) * 4) / 4); };
   setMin();
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 11, attribution: '지도: Esri · 자료: 열린국회정보' }).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 11, attribution: '지도: Esri · 위성: Esri, Maxar, Earthstar Geographics · 자료: 열린국회정보' }).addTo(map);
+  // 확대할수록 진짜 위성 사진으로: 줌 6.5부터 서서히 겹쳐 8에서 완전히(어둡게 눌러 추적실 느낌 유지), 지명은 위에 얹는다
+  map.createPane('sat'); map.getPane('sat').style.zIndex = 250; map.getPane('sat').style.filter = 'brightness(.72) contrast(1.12) saturate(.75)';
+  map.createPane('satlab'); map.getPane('satlab').style.zIndex = 260; map.getPane('satlab').style.pointerEvents = 'none';
+  const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { pane: 'sat', maxZoom: 11, minZoom: 6, opacity: 0 }).addTo(map);
+  const satLab = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', { pane: 'satlab', maxZoom: 11, minZoom: 7, opacity: 0 }).addTo(map);
+  let satOn = false;
+  const satFade = () => {
+    const z = map.getZoom(), o = Math.max(0, Math.min(1, (z - 6.5) / 1.5));
+    sat.setOpacity(o); satLab.setOpacity(o * 0.85);
+    const on = o > 0.6; if (on !== satOn) { satOn = on; root.classList.toggle('sat', on); }
+  };
+  map.on('zoom zoomend', satFade);
+  { const sb = document.createElement('div'); sb.className = 'satb'; sb.innerHTML = '<i></i>SAT · 위성 영상'; root.append(sb); }
   const KR = L.latLngBounds([[33.0, 125.3], [38.7, 129.7]]);
   const fitKR = (anim) => map.fitBounds(KR, { padding: [70, 20], paddingBottomRight: [20, 90], animate: !!anim && !RM });
   fitKR(false);
@@ -216,7 +248,8 @@
     gDots.clearLayers();
     for (const m of people) {
       const on = !filter || filter(m);
-      const mk = L.circleMarker(LL[m.id], { radius: on ? 5.5 : 3, weight: on ? 1.5 : 0.5, color: on ? '#e8fff1' : '#2a4a38', fillColor: pc(m.party), fillOpacity: on ? 0.95 : 0.25, opacity: on ? 0.9 : 0.4 }).addTo(gDots);
+      const fo = !!FOL[m.id];
+      const mk = L.circleMarker(LL[m.id], { radius: on ? (fo ? 7 : 5.5) : 3, weight: on ? (fo ? 2.5 : 1.5) : 0.5, color: on ? (fo ? '#ffc94a' : '#e8fff1') : '#2a4a38', fillColor: pc(m.party), fillOpacity: on ? 0.95 : 0.25, opacity: on ? 0.9 : 0.4 }).addTo(gDots);
       mk.on('click', () => open(m));
       mk.bindTooltip(`${esc(m.name)} · ${esc(m.party)}`, { direction: 'top', className: 'clab', offset: [0, -4] });
       dotOf[m.id] = mk;
@@ -249,8 +282,8 @@
     };
     planeRaf = requestAnimationFrame(step);
   };
-  const reticle = (ll) => {
-    gTop.clearLayers();
+  const reticle = (ll, keep) => {
+    if (!keep) gTop.clearLayers();
     L.marker(ll, { interactive: false, icon: L.divIcon({ className: 'reticle', iconSize: [70, 70], iconAnchor: [35, 35], html: '<svg width="70" height="70" viewBox="0 0 70 70"><circle cx="35" cy="35" r="22" fill="none" stroke="#5dff9e" stroke-width="2"/><circle cx="35" cy="35" r="30" fill="none" stroke="#5dff9e" stroke-opacity=".35" stroke-width="1" stroke-dasharray="3 5"/><g stroke="#5dff9e" stroke-width="2"><line x1="35" y1="2" x2="35" y2="14"/><line x1="35" y1="56" x2="35" y2="68"/><line x1="2" y1="35" x2="14" y2="35"/><line x1="56" y1="35" x2="68" y2="35"/></g></svg>' }) }).addTo(gTop);
   };
 
@@ -259,11 +292,13 @@
   const pic = (m, cls) => (m.pic ? `<img class="${cls || ''}" src="${esc(m.pic)}" alt="${esc(m.name)} 의원 공식 사진" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ini',textContent:'${esc(m.name.slice(0, 1))}'}))">` : `<span class="ini">${esc(m.name.slice(0, 1))}</span>`);
   const closeFile = () => { file.classList.remove('on'); };
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]); // 파일 창에 가리지 않게
-  const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="mn" aria-label="접기·펴기">▾</button><button type="button" class="x" aria-label="닫기">×</button></span></div>`;
+  const fileHead = (t, extra) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools">${extra || ''}<button type="button" class="mn" aria-label="접기·펴기">▾</button><button type="button" class="x" aria-label="닫기">×</button></span></div>`;
   const bindX = () => { file.classList.remove('min'); const x = file.querySelector('.x'); if (x) x.onclick = () => { closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) mn.onclick = (e) => { e.stopPropagation(); file.classList.toggle('min'); }; };
   const SHARE = (m) => { try { const ix = window.__shIdx; if (ix && ix.mp && ix.mp[m.name]) return location.origin + location.pathname.replace(/[^/]*$/, '') + 's/m/' + ix.mp[m.name] + '.html'; } catch (e) { /* 무시 */ } return location.origin + location.pathname + '?mp=' + encodeURIComponent(m.name); };
   fetch('data/og/s/index.json').then((r) => (r.ok ? r.json() : null)).then((x) => { window.__shIdx = x; }).catch(() => {});
+  let VSA = null; // 비교 상대를 고르는 중이면 첫 의원
   function open(m) {
+    if (VSA) { const a = VSA; VSA = null; if (a.id !== m.id) return vs(a, m); }
     SFX.lock();
     const s = statOf(m);
     const ll = LL[m.id];
@@ -271,17 +306,17 @@
     if (!RM) map.flyTo(ll, Math.max(map.getZoom(), 8.5), { duration: 0.9 }); else map.setView(ll, 8.5);
     type(`기록 열람: ${m.name} · ${m.party} · ${m.district}`);
     const dests = [...new Set(s.ts.flatMap((t) => (t.dest || []).map(cname)))];
-    file.innerHTML = fileHead(`FILE · 22대 국회의원 · ${m.id || ''}`) + `
+    const fo = !!FOL[m.id];
+    file.innerHTML = fileHead(`FILE · 22대 국회의원 · ${m.id || ''}`, `<button type="button" class="fol${fo ? ' on' : ''}" aria-pressed="${fo}" aria-label="팔로우">${fo ? '★' : '☆'}</button>`) + `
       <div class="who"><div class="ph"><span class="scanl"></span>${pic(m)}</div>
       <div><div class="nm">${esc(m.name)}</div><span class="pt" style="background:${pc(m.party)}">${esc(m.party)}</span>
-      <div class="ds">${esc(m.district)} · ${esc(m.reele || '')}<br>${esc(cm(m.cmits))}</div></div></div>
-      <div class="st"><div><b>${s.n}</b><span>국외 출장 신고</span></div><div class="${s.ext ? '' : 'z'}"><b>${s.ext}</b><span>외부에서 비용 낸 출장</span></div><div class="${s.norep ? '' : 'z'}"><b>${s.norep}</b><span>결과보고서 없이 신고</span></div></div>
-      <div class="ds">1년 지급 기준 <b style="color:#ffb020">${won(per)}</b> (의원 1명, 실수령액 아님)</div>
-      <div class="tabs" role="tablist"><button type="button" class="on" data-t="trip">출장<i>${s.n}</i></button><button type="button" data-t="bill">발의<i class="c-bill"></i></button><button type="button" data-t="vote">안보 표결</button><button type="button" data-t="disc">징계안<i class="c-disc"></i></button><button type="button" data-t="more">원문 링크</button></div>
-      <div class="tb" data-t="trip">${s.ts.length ? `<div style="margin-top:8px">` + s.ts.map((t) => `<div class="tr"><div class="d">${esc(t.dates || t.start || '')} · ${esc((t.dest || []).map(cname).join(', '))}</div><div class="p">${esc(String(t.purpose || '').slice(0, 90))}</div><div><span class="tg y">비용 낸 곳: ${esc(t.funder || '적힌 곳 없음')}</span><span class="tg">결과보고서 ${t.report === '유' ? '있음' : '신고 때 없음'}</span>${t.dest_inferred ? '<span class="tg">나라는 목적 문구로 추정</span>' : ''}</div></div>`).join('') + '</div>' : '<div class="ds" style="margin-top:8px">신고된 국외 출장이 없어요.</div>'}</div>
-      <div class="tb" data-t="bill" hidden></div><div class="tb" data-t="vote" hidden></div><div class="tb" data-t="disc" hidden></div><div class="tb" data-t="more" hidden></div>
-      <div class="act">${dests.length ? '<button type="button" class="p" data-a="fly">✈️ 출장 경로 보기</button>' : ''}<button type="button" data-a="share">링크 복사</button><a href="${esc(m.profile || m.src || 'https://open.assembly.go.kr')}" target="_blank" rel="noopener">원문 ↗</a></div>
-      <div class="fine">공개된 기록을 모은 것일 뿐, 잘잘못을 뜻하지 않아요. 결과보고서는 나중에 낼 수 있어요. 출처 <a href="https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr" target="_blank" rel="noopener">열린국회정보</a> · 사진 국회</div>`;
+      <div class="ds">${esc(m.district)} · ${esc(m.reele || '')}<br><span class="bio1"></span></div></div></div>
+      <div class="st st4"><div><b class="s-bill">·</b><span>대표 발의</span></div><div><b class="s-pass">·</b><span>통과·반영</span></div><div><b>${s.n}</b><span>국외 출장</span></div><div><b class="s-vote">·</b><span>표결 참여</span></div></div>
+      <div class="tabs" role="tablist"><button type="button" class="on" data-t="prof">프로필</button><button type="button" data-t="trip">출장<i>${s.n}</i></button><button type="button" data-t="bill">발의<i class="c-bill"></i></button><button type="button" data-t="vote">표결</button><button type="button" data-t="disc">징계안<i class="c-disc"></i></button></div>
+      <div class="tb" data-t="prof"></div>
+      <div class="tb" data-t="trip" hidden>${s.ts.length ? `<div class="ds" style="margin-top:8px">외부에서 비용 낸 출장 <b style="color:#ffd27a">${s.ext}</b> · 결과보고서 없이 신고 <b style="color:#ffd27a">${s.norep}</b></div>` + s.ts.map((t) => `<div class="tr"><div class="d">${esc(t.dates || t.start || '')} · ${esc((t.dest || []).map(cname).join(', '))}</div><div class="p">${esc(String(t.purpose || '').slice(0, 90))}</div><div><span class="tg y">비용 낸 곳: ${esc(t.funder || '적힌 곳 없음')}</span><span class="tg">결과보고서 ${t.report === '유' ? '있음' : '신고 때 없음'}</span>${t.dest_inferred ? '<span class="tg">나라는 목적 문구로 추정</span>' : ''}</div></div>`).join('') + '<div class="fine">공개된 기록일 뿐 잘잘못을 뜻하지 않아요. 결과보고서는 나중에 낼 수 있어요. 출처 열린국회정보</div>' : '<div class="ds" style="margin-top:8px">신고된 국외 출장이 없어요.</div>'}</div>
+      <div class="tb" data-t="bill" hidden></div><div class="tb" data-t="vote" hidden></div><div class="tb" data-t="disc" hidden></div>
+      <div class="act">${dests.length ? '<button type="button" class="p" data-a="fly">✈ 출장 경로</button>' : ''}<button type="button" data-a="vs">⇄ 다른 의원과 비교</button><button type="button" data-a="share">링크 복사</button></div>`;
     file.classList.add('on'); bindX();
     recs(m);
     const showFly = () => {
@@ -294,6 +329,10 @@
     };
     const fb = file.querySelector('[data-a="fly"]'); if (fb) fb.onclick = showFly;
     file.querySelector('[data-a="share"]').onclick = async (e) => { const u = SHARE(m); try { await navigator.clipboard.writeText(u); e.target.textContent = '복사했어요'; } catch (_) { prompt('링크', u); } };
+    const fb2 = file.querySelector('.fol');
+    fb2.onclick = (e) => { e.stopPropagation(); const n = numOf(m); if (FOL[m.id]) delete FOL[m.id]; else FOL[m.id] = [n.bill, n.trip]; saveFol(); const on = !!FOL[m.id]; fb2.classList.toggle('on', on); fb2.textContent = on ? '★' : '☆'; fb2.setAttribute('aria-pressed', String(on)); SFX.click(); type(on ? `${m.name} 팔로우 · 새 법안·출장이 생기면 다음에 알려 드려요(이 폰에만 저장)` : `${m.name} 팔로우 해제`); if (dotOf[m.id]) drawDots(); };
+    file.querySelector('[data-a="vs"]').onclick = () => vsPick(m);
+    if (FOL[m.id] && SEC) { const n = numOf(m); FOL[m.id] = [n.bill, n.trip]; saveFol(); } // 봤으니 '새 소식' 기준을 지금으로
     if (dests.length) setTimeout(showFly, RM ? 0 : 1300); else gFx.clearLayers();
     try { history.replaceState(null, '', '?mp=' + encodeURIComponent(m.name)); } catch (e) { /* 무시 */ }
   }
@@ -301,16 +340,43 @@
   const VN = { Y: '찬성', N: '반대', A: '기권', X: '불참', '-': '기록 없음' };
   const RES = (r) => (!r ? '심사 중' : r === '대안반영폐기' ? '다른 법안에 내용 반영' : r);
   const billA = (id, t) => (id && SEC && SEC.bill_url ? `<a href="${esc(SEC.bill_url + id)}" target="_blank" rel="noopener">${esc(t)}</a>` : esc(t));
+  const rateBox = (m) => {
+    const r = rateOf(m);
+    if (!r) return VR ? '<div class="ds" style="margin-top:8px">본회의 표결 참여 기록을 모으는 중이에요.</div>' : '';
+    const [y, n, a, x] = r.v;
+    return `<div class="ph2">본회의 표결 참여</div><div class="rate"><b>${r.p}%</b><div class="bar"><i style="width:${r.p}%"></i></div></div>
+      <div class="vsum"><div><b>${y}</b>찬성</div><div><b>${n}</b>반대</div><div><b>${a}</b>기권</div><div><b>${x}</b>불참</div></div>
+      <div class="fine" style="margin-top:2px">22대 본회의 전자 표결 ${VR.bills_done.toLocaleString('ko-KR')}건 기준${VR.bills_done < VR.bills_total ? `(전체 ${VR.bills_total.toLocaleString('ko-KR')}건 중 모으는 중)` : ''} · 불참에는 공무·병가 등 사정이 있을 수 있어요.</div>`;
+  };
   function recs(m) {
+    file.dataset.mid = m.id;
     const tabs = file.querySelectorAll('.tabs button'), tb = (t) => file.querySelector(`.tb[data-t="${t}"]`);
     tabs.forEach((bt) => (bt.onclick = () => { SFX.click(); tabs.forEach((x) => x.classList.toggle('on', x === bt)); file.querySelectorAll('.tb').forEach((x) => (x.hidden = x.dataset.t !== bt.dataset.t)); }));
     const SRC = '<div class="fine">국회 공식 기록 그대로예요. 사이트가 성향을 판단하거나 좋고 나쁨을 매기지 않아요. 출처 <a href="https://open.assembly.go.kr" target="_blank" rel="noopener">열린국회정보</a></div>';
-    tb('more').innerHTML = `<div class="ds" style="margin-top:8px">아래는 공식 사이트로 바로 가는 길이에요. 원문을 직접 확인하세요.</div><div class="lk">
-      <a href="https://record.assembly.go.kr/" target="_blank" rel="noopener">국회 회의록에서 발언 찾기 ↗<span style="margin-left:auto;font-size:11px;color:#8fc9a5">검색창에 "${esc(m.name)}"</span></a>
-      <a href="https://likms.assembly.go.kr/bill/main.do" target="_blank" rel="noopener">의안정보시스템에서 모든 발의 법안 ↗<span style="margin-left:auto;font-size:11px;color:#8fc9a5">제안자 "${esc(m.name)}"</span></a>
-      <a href="${esc(m.profile || 'https://www.assembly.go.kr')}" target="_blank" rel="noopener">국회 의원 소개 원문 ↗</a>
-      <a href="http://info.nec.go.kr" target="_blank" rel="noopener">선관위 선거통계시스템(후보자 공개 원문) ↗<span style="margin-left:auto;font-size:11px;color:#8fc9a5">제22대 국회의원선거</span></a></div>
-      <div class="fine">선관위에는 후보 등록 때 낸 재산·병역·납세·전과 등 공개 서류 원문이 있어요. 이 사이트는 그 내용을 옮겨 적지 않고 원문 링크만 둬요.</div>`;
+    // 프로필: 국회 공개 약력 그대로 + 재산·선관위·회의록 원문 링크
+    const prof = () => {
+      if (file.dataset.mid !== m.id) return;
+      const b = (BIO || {})[m.id] || {};
+      const age = b.y ? `${b.y}년생` : '';
+      // 한 줄 요약용 학교: 대학원 말고 학부(학사·졸업·학과) 줄을 먼저, 'OO대학교' → 'OO대'
+      const E = (b.edu || []).filter((x) => /대학|대\b|대 /.test(x) && !/대학원/.test(x));
+      const e1 = E.find((x) => /학사|졸업|학과|학부/.test(x)) || E[0] || '';
+      const sch = ((e1.match(/([가-힣A-Za-z]+?)(대학교|대학|대)(?![가-힣])/) || [])[1] || '');
+      const b1 = file.querySelector('.bio1'); if (b1) b1.textContent = [age, sch ? sch + '대' : ''].filter(Boolean).join(' · ');
+      const H = b.hist || [], more = H.length > 6;
+      tb('prof').innerHTML = `
+        ${b.edu && b.edu.length ? `<div class="ph2">학력</div>` + b.edu.map((x) => `<div class="pl">${esc(x)}</div>`).join('') : ''}
+        ${H.length ? `<div class="ph2">경력</div>` + H.map((x, i) => `<div class="pl${i >= 6 ? ' hx' : ''}"${i >= 6 ? ' hidden' : ''}>${esc(x)}</div>`).join('') + (more ? '<button type="button" class="allb hm">경력 더 보기</button>' : '') : '<div class="ds" style="margin-top:8px">공개된 약력이 없어요.</div>'}
+        ${m.cmits ? `<div class="ph2">소속 위원회</div><div class="pl">${esc(cm(m.cmits))}</div>` : ''}
+        <div class="ph2">원문으로 확인</div><div class="lk">
+          <a href="https://www.peti.go.kr" target="_blank" rel="noopener">재산 공개 원문 ↗<span>공직윤리시스템 · "${esc(m.name)}" 검색</span></a>
+          <a href="http://info.nec.go.kr" target="_blank" rel="noopener">선관위 후보자 공개 서류 ↗<span>재산·병역·납세·전과</span></a>
+          <a href="https://record.assembly.go.kr/" target="_blank" rel="noopener">국회 회의록 발언 ↗<span>"${esc(m.name)}" 검색</span></a>
+          <a href="${esc(m.profile || 'https://www.assembly.go.kr')}" target="_blank" rel="noopener">국회 의원 소개 ↗</a></div>
+        <div class="fine">약력은 국회가 공개한 글 그대로예요(열린국회정보). 재산은 매년 3월 정기 공개되고, 숫자를 옮겨 적다 틀리지 않게 원문 링크만 둬요.</div>`;
+      const hm = tb('prof').querySelector('.hm'); if (hm) hm.onclick = () => { tb('prof').querySelectorAll('.hx').forEach((x) => (x.hidden = false)); hm.remove(); };
+    };
+    if (BIO) prof(); else bioP.then(prof);
     const fill = () => {
       if (!SEC) { ['bill', 'vote', 'disc'].forEach((t) => (tb(t).innerHTML = '<div class="ds" style="margin-top:8px">공식 기록을 불러오지 못했어요.</div>')); return; }
       // 대표 발의
@@ -319,13 +385,15 @@
       tb('bill').innerHTML = st ? `<div class="vsum" style="grid-template-columns:repeat(3,1fr)"><div><b>${st[0]}</b>대표 발의</div><div><b>${st[1]}</b>통과·반영</div><div><b>${st[2]}</b>외교·안보 위원회</div></div>
         <div class="ds rc">22대 국회에서 이 의원이 대표로 낸 법안이에요. 최근 ${L1.length}건:</div>` + L1.map((b) => `<div class="tr"><div class="d">${esc(b.d)}</div><div class="p">${billA(b.id, b.n)}</div><div><span class="tg ${b.r && b.r !== '철회' ? 'y' : ''}">${esc(RES(b.r))}</span>${b.s ? '<span class="tg">외교·안보 위원회 소관</span>' : ''}</div></div>`).join('') + `${st[0] > L1.length ? `<button type="button" class="allb">전체 ${st[0]}건 보기</button>` : ''}` + SRC
         : '<div class="ds" style="margin-top:8px">22대 국회에서 대표로 낸 법안 기록이 없어요.</div>' + SRC;
-      // 외교·안보 표결
+      const nn = numOf(m);
+      const sb = file.querySelector('.s-bill'); if (sb) { sb.textContent = nn.bill; file.querySelector('.s-pass').textContent = nn.pass; }
+      // 표결: 본회의 전체 참여율 + 외교·안보 표결
       const vs = (SEC.votes || {})[m.id] || '', B = SEC.bills || [];
       const cnt = { Y: 0, N: 0, A: 0, X: 0 }; for (const c of vs) if (cnt[c] != null) cnt[c]++;
       const rows = B.map((b, i) => [b, vs[i] || '-']).filter(([, v]) => v !== '-');
-      tb('vote').innerHTML = rows.length ? `<div class="ds" style="margin-top:8px">국방·외교통일·정보위원회 소관이거나 외교·안보 안건 중, 본회의에서 반대·기권이 3표 이상 나온 ${B.length}건이에요(만장일치는 뺐어요).</div>
+      tb('vote').innerHTML = rateBox(m) + (rows.length ? `<div class="ph2">외교·안보 표결</div><div class="ds">국방·외교통일·정보위원회 소관이거나 외교·안보 안건 중, 본회의에서 반대·기권이 3표 이상 나온 ${B.length}건이에요(만장일치는 뺐어요).</div>
         <div class="vsum"><div><b>${cnt.Y}</b>찬성</div><div><b>${cnt.N}</b>반대</div><div><b>${cnt.A}</b>기권</div><div><b>${cnt.X}</b>불참</div></div>` + rows.map(([b, v]) => `<div class="tr"><div class="d">${esc(b.date)}</div><div class="p"><span class="vt ${v}">${VN[v]}</span>${billA(b.id, b.name)}</div><div><span class="tg">본회의 ${esc(b.result || '')} · 찬성 ${b.yes} · 반대 ${b.nay} · 기권 ${b.blank}</span></div></div>`).join('') + SRC
-        : '<div class="ds" style="margin-top:8px">이 의원의 해당 표결 기록이 없어요.</div>' + SRC;
+        : '<div class="ds" style="margin-top:8px">이 의원의 외교·안보 표결 기록이 없어요.</div>' + SRC);
       // 징계안
       const D2 = (SEC.discipline || []).filter((x) => (x.who || []).includes(m.name));
       file.querySelector('.c-disc').textContent = D2.length;
@@ -354,7 +422,40 @@
       };
     };
     file.dataset.mid = m.id;
-    if (SEC) fill(); else secP.then(() => { if (file.dataset.mid === m.id && file.querySelector('.tabs')) fill(); });
+    vrP.then(() => { if (file.dataset.mid !== m.id) return; const r = rateOf(m), sv = file.querySelector('.s-vote'); if (sv) sv.textContent = r ? Math.round(r.p) + '%' : '—'; });
+    if (SEC && VR !== null) fill(); else Promise.all([secP, vrP]).then(() => { if (file.dataset.mid === m.id && file.querySelector('.tabs')) fill(); });
+  }
+  // ── 1:1 비교 ──
+  function vsPick(a) {
+    VSA = a; SFX.click();
+    type(`${a.name} 와(과) 비교할 의원을 지도에서 누르거나 찾아 주세요`);
+    file.innerHTML = fileHead('비교 · 상대 고르기') + `<input class="q" type="search" placeholder="이름·동네·정당" aria-label="비교할 의원 찾기" autocomplete="off"><div class="res"></div><div class="ds">지도에서 점을 눌러도 돼요.</div>`;
+    file.classList.add('on'); bindX();
+    const q = file.querySelector('.q'), res = file.querySelector('.res'), nrm = (t) => String(t || '').replace(/\s+/g, '');
+    const same = people.filter((m) => m.id !== a.id && m.district.split(' ')[0] === a.district.split(' ')[0] && m.elect === '지역구').slice(0, 5);
+    const paint = () => { const n = nrm(q.value); const L2 = n ? people.filter((m) => m.id !== a.id && nrm(m.name + m.district + m.party).includes(n)).slice(0, 20) : same; res.innerHTML = (n ? '' : same.length ? '<div class="ph2">같은 지역 의원</div>' : '') + L2.map((m) => row(m)).join(''); bindRows(); };
+    q.oninput = paint; paint(); if (innerWidth >= 900) setTimeout(() => q.focus(), 50);
+    const x = file.querySelector('.x'); if (x) x.addEventListener('click', () => (VSA = null));
+  }
+  async function vs(a, b) {
+    await Promise.all([secP, vrP, bioP]);
+    SFX.lock(); gFx.clearLayers(); stopRadar(); drawDots((m) => m.id === a.id || m.id === b.id);
+    reticle(LL[a.id]); reticle(LL[b.id], true);
+    map.flyToBounds(L.latLngBounds([LL[a.id], LL[b.id]]), { paddingTopLeft: [40, 120], paddingBottomRight: padBR(), duration: RM ? 0 : 1, maxZoom: 9 });
+    const A = numOf(a), B = numOf(b), ba = (BIO || {})[a.id] || {}, bb = (BIO || {})[b.id] || {};
+    const rows = [['대표 발의', 'bill', (v) => v + '건'], ['통과·반영', 'pass', (v) => v + '건'], ['국외 출장', 'trip', (v) => v + '건'], ['표결 참여', 'vote', (v) => (v == null ? '—' : v + '%')], ['징계안', 'disc', (v) => v + '건']];
+    const side = (m, bi) => `<div class="vp">${pic(m)}<b>${esc(m.name)}</b><span style="color:${pc(m.party)}">${esc(m.party)}</span><small>${esc(m.district)}${bi.y ? ' · ' + bi.y + '년생' : ''}</small></div>`;
+    file.innerHTML = fileHead('1:1 비교') + `<div class="vs">${side(a, ba)}<div class="vx">VS</div>${side(b, bb)}</div>` +
+      rows.map(([lab, k, f]) => { const x = A[k], y = B[k], mx = Math.max(x || 0, y || 0) || 1; return `<div class="vr"><div class="l"><b>${f(x)}</b><i style="width:${((x || 0) / mx) * 100}%"></i></div><span>${lab}</span><div class="r"><i style="width:${((y || 0) / mx) * 100}%"></i><b>${f(y)}</b></div></div>`; }).join('') +
+      `<div class="act"><button type="button" class="p" data-a="again">다른 상대</button><button type="button" data-a="share">링크 복사</button><button type="button" data-a="oa">${esc(a.name)} 파일</button><button type="button" data-a="ob">${esc(b.name)} 파일</button></div>
+      <div class="fine">국회 공식 기록의 숫자를 나란히 놓은 것일 뿐, 누가 더 잘한다는 뜻이 아니에요. 출처 열린국회정보</div>`;
+    file.classList.add('on'); bindX();
+    file.querySelector('[data-a="again"]').onclick = () => vsPick(a);
+    file.querySelector('[data-a="oa"]').onclick = () => open(a);
+    file.querySelector('[data-a="ob"]').onclick = () => open(b);
+    file.querySelector('[data-a="share"]').onclick = async (e) => { const u = location.origin + location.pathname + '?vs=' + encodeURIComponent(a.name + ',' + b.name); try { await navigator.clipboard.writeText(u); e.target.textContent = '복사했어요'; } catch (_) { prompt('링크', u); } };
+    type(`${a.name} vs ${b.name} · 공식 기록 비교`);
+    try { history.replaceState(null, '', '?vs=' + encodeURIComponent(a.name + ',' + b.name)); } catch (e) { /* 무시 */ }
   }
   const row = (m, right) => `<div class="li" data-id="${esc(m.id)}">${m.pic ? `<img src="${esc(m.pic)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="av">${esc(m.name.slice(0, 1))}</span>`}<div class="t"><b>${esc(m.name)}</b> <span style="color:${pc(m.party)};font-size:11px;font-weight:800">${esc(m.party)}</span><div>${esc(m.district)}</div></div>${right ? `<span class="r">${right}</span>` : ''}</div>`;
   const bindRows = () => file.querySelectorAll('.li[data-id]').forEach((el) => (el.onclick = () => { const m = people.find((x) => x.id === el.dataset.id); if (m) open(m); }));
@@ -362,6 +463,15 @@
   // ── 도구(무기) ──
   let radarRaf = 0;
   const stopRadar = () => { cancelAnimationFrame(radarRaf); radarRaf = 0; const c = root.querySelector('.pg-radar'); if (c) c.remove(); };
+  const RANKS = [
+    { k: 'bill', label: '대표 발의', f: (v) => v + '건', note: '22대 국회에서 대표로 낸 법안 수.' },
+    { k: 'pass', label: '통과·반영', f: (v) => v + '건', note: '대표로 낸 법안 중 가결되었거나 다른 법안에 내용이 반영된 수.' },
+    { k: 'trip', label: '국외 출장', f: (v) => v + '건', note: '국외 출장 신고 수.' },
+    { k: 'vote', label: '표결 참여', f: (v) => v + '%', note: '본회의 전자 표결 참여율. 불참에는 공무·병가 등 사정이 있을 수 있어요.' },
+  ];
+  let RSEG = 'bill', RDESC = true;
+  const segBar = () => `<div class="seg">${RANKS.filter((x) => x.k !== 'vote' || (VR && VR.m)).map((x) => `<button type="button" data-s="${x.k}" class="${RSEG === x.k ? 'on' : ''}">${x.label}</button>`).join('')}<button type="button" data-s="party" class="${RSEG === 'party' ? 'on' : ''}">정당 돈</button></div>`;
+  const bindSeg = () => file.querySelectorAll('.seg [data-s]').forEach((b) => (b.onclick = () => { RSEG = b.dataset.s; SFX.click(); W.rank(); }));
   const W = {
     mp() {
       stopRadar(); gFx.clearLayers(); gTop.clearLayers(); drawDots(); fitKR(true); closeFile();
@@ -412,7 +522,7 @@
       radarRaf = requestAnimationFrame(loop);
     },
     party() {
-      stopRadar(); gFx.clearLayers(); gTop.clearLayers(); fitKR(true);
+      stopRadar(); gFx.clearLayers(); gTop.clearLayers(); fitKR(true); RSEG = 'party';
       const pf = ((flw && flw.flows) || []).filter((f) => f.kind === '경상보조금' && f.period === '3분기');
       const amt = Object.fromEntries(pf.map((f) => [f.to.party, f.amount]));
       const seats = {}; for (const m of people) seats[m.party] = (seats[m.party] || 0) + 1;
@@ -421,8 +531,8 @@
       let sel = null;
       const paint = () => {
         drawDots(sel ? (m) => m.party === sel : null);
-        file.innerHTML = fileHead('정당 · 2026년 3분기 경상보조금') + `<div class="ds">정당이 3달마다 나라에서 받는 살림 돈이에요. 정당을 누르면 그 정당 의원만 지도에 남아요.</div>` + parties.map((p) => `<div class="pb li" data-p="${esc(p)}" style="display:block${sel && sel !== p ? ';opacity:.45' : ''}"><div class="h"><span><span style="color:${pc(p)}">●</span> ${esc(p)} <span style="color:#8fc9a5;font-size:11.5px">의석 ${seats[p]}</span></span><b>${amt[p] ? won(amt[p]) : '—'}</b></div><div class="tk"><i style="width:${amt[p] ? Math.max(2, amt[p] / mx * 100) : 0}%;background:${pc(p)}"></i></div></div>`).join('') + `<div class="fine">출처 중앙선거관리위원회 · 의석은 현재 기준</div>`;
-        file.classList.add('on'); bindX();
+        file.innerHTML = fileHead('순위') + segBar() + `<div class="ds">2026년 3분기 경상보조금: 정당이 3달마다 나라에서 받는 살림 돈이에요. 정당을 누르면 그 정당 의원만 지도에 남아요.</div>` + parties.map((p) => `<div class="pb li" data-p="${esc(p)}" style="display:block${sel && sel !== p ? ';opacity:.45' : ''}"><div class="h"><span><span style="color:${pc(p)}">●</span> ${esc(p)} <span style="color:#8fc9a5;font-size:11.5px">의석 ${seats[p]}</span></span><b>${amt[p] ? won(amt[p]) : '—'}</b></div><div class="tk"><i style="width:${amt[p] ? Math.max(2, amt[p] / mx * 100) : 0}%;background:${pc(p)}"></i></div></div>`).join('') + `<div class="fine">출처 중앙선거관리위원회 · 의석은 현재 기준</div>`;
+        file.classList.add('on'); bindX(); bindSeg();
         file.querySelectorAll('[data-p]').forEach((el) => (el.onclick = () => { sel = sel === el.dataset.p ? null : el.dataset.p; paint(); type(sel ? `${sel} 의원 ${seats[sel]}명 표시` : '모든 정당 표시'); }));
       };
       paint(); type(`정당 ${parties.length}곳 · 3분기 경상보조금 합계 ${won(Object.values(amt).reduce((a, b) => a + b, 0))}`);
@@ -460,14 +570,48 @@
       };
       paint();
     },
+    async rank() {
+      stopRadar(); gFx.clearLayers(); gTop.clearLayers();
+      if (RSEG === 'party') return W.party();
+      await Promise.all([secP, vrP]);
+      const K = RANKS.find((x) => x.k === RSEG) || RANKS[0];
+      const L0 = people.map((m) => [m, numOf(m)[K.k]]).filter(([, v]) => v != null);
+      L0.sort((a, b) => (RDESC ? b[1] - a[1] : a[1] - b[1]) || a[0].name.localeCompare(b[0].name, 'ko'));
+      const top = L0.slice(0, 20), ids = new Set(top.map(([m]) => m.id));
+      drawDots((m) => ids.has(m.id)); fitKR(true);
+      file.innerHTML = fileHead('순위') + segBar() + `<div class="ord"><button type="button" data-o="1" class="${RDESC ? 'on' : ''}">많은 순</button><button type="button" data-o="0" class="${RDESC ? '' : 'on'}">적은 순</button></div>` +
+        top.map(([m, v], i) => row(m, `<span class="rk">${i + 1}</span>${K.f(v)}`)).join('') + `<div class="fine">${K.note} 공식 기록의 횟수일 뿐, 많고 적음이 잘하고 못함을 뜻하지 않아요.</div>`;
+      file.classList.add('on'); bindX(); bindRows(); bindSeg();
+      file.querySelectorAll('[data-o]').forEach((b) => (b.onclick = () => { RDESC = b.dataset.o === '1'; SFX.click(); W.rank(); }));
+      type(`${K.label} ${RDESC ? '많은' : '적은'} 순 20명 · 지도에 표시`);
+    },
     find() {
       stopRadar(); gFx.clearLayers();
-      file.innerHTML = fileHead('찾기') + `<input class="q" type="search" placeholder="이름·지역구·정당 (예: 동작구)" aria-label="의원 찾기" autocomplete="off"><div class="res"></div>`;
+      const fl = people.filter((m) => FOL[m.id]);
+      file.innerHTML = fileHead('찾기') + `<input class="q" type="search" placeholder="이름·동네·정당 (예: 분당, 동작구)" aria-label="의원 찾기" autocomplete="off">
+        <button type="button" class="allb gps" style="margin:0 0 6px">📍 내 위치로 우리 동네 의원 찾기</button><div class="res"></div>
+        ${fl.length ? `<div class="ph2">★ 팔로우</div>` + fl.map((m) => row(m)).join('') : ''}`;
       file.classList.add('on'); bindX();
       const q = file.querySelector('.q'), res = file.querySelector('.res');
+      file.querySelector('.gps').onclick = (e) => {
+        const bt = e.currentTarget; if (!navigator.geolocation) { bt.textContent = '이 기기에선 위치를 쓸 수 없어요'; return; }
+        bt.textContent = '위치 확인 중…';
+        navigator.geolocation.getCurrentPosition((p) => {
+          const me = [p.coords.latitude, p.coords.longitude];
+          const d2 = (a) => (a[0] - me[0]) ** 2 + ((a[1] - me[1]) * 0.8) ** 2;
+          const loc = people.filter((m) => m.elect === '지역구' && pos[m.id]);
+          if (!loc.length) { bt.textContent = '위치 자료가 없어요'; return; }
+          const best = Math.min(...loc.map((m) => d2(pos[m.id])));
+          const near = loc.filter((m) => d2(pos[m.id]) <= best + 0.0004).slice(0, 8);
+          bt.textContent = '📍 내 근처 지역구 의원 (대략)';
+          res.innerHTML = near.map((m) => row(m, statOf(m).n ? '✈ ' + statOf(m).n : '')).join('') + '<div class="fine">위치는 이 기기 안에서만 쓰고 저장하지 않아요. 지역구 중심과의 거리로 고른 대략값이라, 갑·을이 나뉜 곳은 여러 명이 나와요.</div>';
+          bindRows(); if (near.length === 1) open(near[0]); else { reticle(LL[near[0].id]); map.flyTo(LL[near[0].id], 9, { duration: RM ? 0 : 0.9 }); }
+          SFX.lock(); type(`우리 동네 의원 ${near.length}명 포착`);
+        }, () => { bt.textContent = '위치 권한이 없어요 · 동네 이름으로 찾아보세요'; }, { enableHighAccuracy: false, timeout: 9000, maximumAge: 600000 });
+      };
       const norm = (s) => String(s || '').replace(/\s+/g, '').toLowerCase();
-      const paint = () => { const n = norm(q.value); const L2 = n ? people.filter((m) => norm(m.name + m.district + m.party + (m.cmits || '')).includes(n)).slice(0, 30) : []; res.innerHTML = L2.map((m) => row(m, statOf(m).n ? '✈ ' + statOf(m).n : '')).join('') || (n ? '<div class="ds">못 찾았어요.</div>' : '<div class="ds">이름 한 글자만 쳐도 돼요.</div>'); bindRows(); };
-      q.addEventListener('input', paint); setTimeout(() => q.focus(), 50); paint();
+      const paint = () => { const n = norm(q.value); const L2 = n ? people.filter((m) => norm(m.name + m.district + m.party + (m.cmits || '')).includes(n)).slice(0, 30) : []; res.innerHTML = L2.map((m) => row(m, statOf(m).n ? '✈ ' + statOf(m).n : '')).join('') || (n ? '<div class="ds">못 찾았어요.</div>' : ''); bindRows(); };
+      q.addEventListener('input', paint); if (innerWidth >= 900) setTimeout(() => q.focus(), 50); paint(); bindRows();
       type('검색 대기 중…');
     },
   };
@@ -487,7 +631,7 @@
   const btns = [...root.querySelectorAll('.pg-bar button')];
   const pick = (w, quiet) => { if (!quiet) SFX.click(); btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === w))); W[w](); };
   btns.forEach((b) => (b.onclick = () => pick(b.dataset.w)));
-  addEventListener('keydown', (e) => { if (/input|textarea/i.test((e.target && e.target.tagName) || '')) return; const i = Number(e.key) - 1; if (i >= 0 && i < btns.length) pick(btns[i].dataset.w); if (e.key === 'Escape') closeFile(); });
+  addEventListener('keydown', (e) => { if (/input|textarea/i.test((e.target && e.target.tagName) || '')) return; const i = Number(e.key) - 1; if (i >= 0 && i < btns.length) pick(btns[i].dataset.w); if (e.key === 'Escape') { VSA = null; closeFile(); } });
   setTimeout(() => map.invalidateSize(), 300);
   addEventListener('resize', () => { map.invalidateSize(); setMin(); });
 
@@ -511,5 +655,16 @@
   pick('mp', true);
   const want = new URLSearchParams(location.search).get('mp');
   if (want) { const m = people.find((x) => x.name === want.trim()); if (m) setTimeout(() => open(m), 600); }
+  const vq = (new URLSearchParams(location.search).get('vs') || '').split(',').map((x) => people.find((p) => p.name === x.trim()));
+  if (!want && vq.length === 2 && vq[0] && vq[1]) setTimeout(() => vs(vq[0], vq[1]), 600);
+  // 팔로우한 의원에게 새 소식(새 법안·새 출장)이 있으면 위에 한 줄로
+  secP.then(() => {
+    const news = people.filter((m) => FOL[m.id]).map((m) => { const n = numOf(m), o = FOL[m.id]; const nb = n.bill - o[0], nt = n.trip - o[1]; return nb > 0 || nt > 0 ? [m, [nb > 0 ? `새 법안 ${nb}건` : '', nt > 0 ? `새 출장 ${nt}건` : ''].filter(Boolean).join(' · ')] : null; }).filter(Boolean);
+    if (!news.length) return;
+    const el = document.createElement('button'); el.type = 'button'; el.className = 'pg-news';
+    el.innerHTML = `<b>★</b> ${esc(news[0][0].name)} ${esc(news[0][1])}${news.length > 1 ? ` <span>외 ${news.length - 1}명</span>` : ''}`;
+    el.onclick = () => { el.remove(); if (news.length > 1) pick('find'); else open(news[0][0]); };
+    root.append(el); setTimeout(() => SFX.ping(), 400);
+  });
 
 })();
