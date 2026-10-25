@@ -1,0 +1,25 @@
+name: 미국 의회 수집
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "41 12 * * *"   # 매일 21:41 KST (미국 아침)
+permissions: {contents: write}
+concurrency: {group: us, cancel-in-progress: false}
+jobs:
+  us:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install pyyaml requests pdfplumber
+      - run: python collector/us/members.py
+        timeout-minutes: 5
+      - run: python collector/us/trades.py
+        continue-on-error: true
+        timeout-minutes: 25
+        env: {TRADES_BUDGET_MIN: "20"}
+      - run: |
+          git config user.name "money-tracker-bot"; git config user.email "actions@users.noreply.github.com"
+          git add data/us; git diff --cached --quiet && exit 0
+          git commit -m "미국 의회 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"; for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
