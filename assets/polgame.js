@@ -37,7 +37,7 @@
 #pg .pg-bar button{position:relative;width:62px;height:58px;border-radius:10px;border:1px solid #1f4a30;background:#06150c;color:#bfe8cf;cursor:pointer;display:grid;place-items:center;gap:0;padding:4px 2px;font:700 10.5px Pretendard,system-ui}
 #pg .pg-bar button .ic{font-size:21px;line-height:1}#pg .pg-bar button .k{position:absolute;left:4px;top:2px;font:700 9px ui-monospace,Menlo,monospace;color:#4f8f68}
 #pg .pg-bar button[aria-pressed="true"]{border-color:#5dff9e;background:#0b2a17;color:#fff;box-shadow:0 0 0 1px #5dff9e,0 0 16px rgba(93,255,158,.35)}
-@media(max-width:380px){#pg .pg-bar button{width:56px}}
+@media(max-width:600px){#pg .pg-bar{gap:4px;padding:5px}#pg .pg-bar button{width:54px;height:54px;font-size:10px}#pg .pg-bar button .ic{font-size:19px}}@media(max-width:360px){#pg .pg-bar button{width:48px}}
 #pg .pg-file{position:absolute;z-index:740;left:8px;right:8px;bottom:84px;max-height:58%;overflow:auto;background:rgba(2,10,6,.95);border:1px solid #2a7a4a;border-radius:12px;padding:12px 12px 10px;box-shadow:0 0 0 1px rgba(93,255,158,.08),0 10px 40px rgba(0,0,0,.6);transform:translateY(10px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
 #pg .pg-file.on{opacity:1;transform:none;pointer-events:auto}
 @media(min-width:900px){#pg .pg-file{left:auto;right:12px;top:110px;bottom:84px;width:380px;max-height:none}}
@@ -91,7 +91,8 @@
     <button type="button" data-w="trip"><span class="k">2</span><span class="ic">✈️</span>출장</button>
     <button type="button" data-w="radar"><span class="k">3</span><span class="ic">📡</span>레이더</button>
     <button type="button" data-w="party"><span class="k">4</span><span class="ic">🏛</span>정당</button>
-    <button type="button" data-w="find"><span class="k">5</span><span class="ic">🔍</span>찾기</button>
+    <button type="button" data-w="pres"><span class="k">5</span><span class="ic">🇰🇷</span>대통령</button>
+    <button type="button" data-w="find"><span class="k">6</span><span class="ic">🔍</span>찾기</button>
   </nav>`;
   const $ = (s) => root.querySelector(s);
   const file = $('.pg-file'), say = $('.pg-say');
@@ -133,7 +134,7 @@
   })();
 
   // ── 자료 ──
-  const [mem, sup, flw, par, geo] = await Promise.all([j('members.json'), j('support.json'), j('flows.json'), j('parties.json'), j('geo.json')]);
+  const [mem, sup, flw, par, geo, prez] = await Promise.all([j('members.json'), j('support.json'), j('flows.json'), j('parties.json'), j('geo.json'), j('president.json')]);
   if (!mem) { type('자료를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.'); return; }
   const people = mem.members || [], trips = mem.trips || [];
   const pos = (geo && geo.pos) || {};
@@ -279,7 +280,7 @@
       const n = new Set(trips.map((t) => t.trip_id)).size;
       type(`국외 출장 신고 ${n}건 · ${list.length}개 나라 · 나라를 누르면 누가 갔는지 나와요`);
       file.innerHTML = fileHead('출장 추적') + `<div class="ds">국회에서 출발한 선이 굵을수록 신고가 많아요. 비용은 자비·외교부·외국 정부 등 여러 곳에서 냈어요(모두 세금은 아님).</div>` + list.slice(0, 15).map(([c, s]) => `<div class="li" data-c="${esc(c)}"><span class="av">✈</span><div class="t"><b>${esc(c)}</b><div>신고 ${s.size}건</div></div><span class="r">${s.size}</span></div>`).join('');
-      file.classList.add('on'); bindX(); file.querySelectorAll('.li[data-c]').forEach((el) => (el.onclick = () => country(el.dataset.c)));
+      file.classList.add('on'); bindX(); if (innerWidth < 900) file.classList.add('min'); file.querySelectorAll('.li[data-c]').forEach((el) => (el.onclick = () => country(el.dataset.c)));
       map.flyToBounds(L.latLngBounds([SE, ...list.map(([c]) => C[c]).filter((p) => p[1] < 200)]), { paddingTopLeft: [30, 100], paddingBottomRight: padBR(), duration: RM ? 0 : 1.2, maxZoom: 4 });
     },
     radar() {
@@ -325,6 +326,39 @@
         file.querySelectorAll('[data-p]').forEach((el) => (el.onclick = () => { sel = sel === el.dataset.p ? null : el.dataset.p; paint(); type(sel ? `${sel} 의원 ${seats[sel]}명 표시` : '모든 정당 표시'); }));
       };
       paint(); type(`정당 ${parties.length}곳 · 3분기 경상보조금 합계 ${won(Object.values(amt).reduce((a, b) => a + b, 0))}`);
+    },
+    pres() {
+      stopRadar(); gTop.clearLayers(); drawDots(() => false);
+      const P = (prez && prez.presidents) || [];
+      if (!P.length) { type('대통령 순방 자료를 불러오지 못했어요'); return; }
+      const HOME = [37.44, 127.11]; // 서울공항(성남)
+      const wrap = (ll) => [ll[0], ll[1] < -30 ? ll[1] + 360 : ll[1]]; // 아메리카는 태평양 쪽으로
+      const tot = (p) => p.trips.reduce((a, t) => a + t.km, 0);
+      const show = (p, only) => {
+        const trips = only != null ? [p.trips[only]] : p.trips;
+        const routes = [];
+        for (const t of trips) { let prev = HOME; for (const st of t.stops) { const ll = wrap(st.ll); routes.push({ path: arc(prev, ll), w: 2, col: p.id === 'lee' ? '#5dff9e' : '#ffb020' }); prev = ll; } routes.push({ path: arc(prev, HOME), w: 1.2, col: p.id === 'lee' ? '#5dff9e' : '#ffb020' }); }
+        SFX.whoosh(); fly(routes);
+        const pts = [HOME, ...trips.flatMap((t) => t.stops.map((x) => wrap(x.ll)))];
+        for (const t of trips) for (const st of t.stops) L.circleMarker(wrap(st.ll), { radius: 5, color: '#02110a', weight: 1, fillColor: p.id === 'lee' ? '#5dff9e' : '#ffb020', fillOpacity: 0.95 }).addTo(gTop).bindTooltip(esc(st.city), { direction: 'top', className: 'clab', offset: [0, -5], permanent: only != null });
+        map.flyToBounds(L.latLngBounds(pts), { paddingTopLeft: [30, 100], paddingBottomRight: padBR(), duration: RM ? 0 : 1.1, maxZoom: only != null ? 4 : 3 });
+        const k = tot(p);
+        type(only != null ? `${p.name} ${p.trips[only].when} · ${p.trips[only].label} · ${p.trips[only].km.toLocaleString('ko-KR')}km` : `${p.name} 해외 순방 ${p.trips.length}번 · 약 ${Math.round(k / 10000).toLocaleString("ko-KR")}만 km · 지구 ${(k / 40075).toFixed(1)}바퀴`);
+        return k;
+      };
+      let cur = 0;
+      const paint = () => {
+        const p = P[cur], k = tot(p);
+        file.innerHTML = fileHead('대통령 해외 순방') + `<div class="act" style="margin:0 0 8px">${P.map((x, i) => `<button type="button" data-pi="${i}" class="${i === cur ? 'p' : ''}">${esc(x.name)} <span style="opacity:.75;font-weight:500;margin-left:4px">${esc(x.title)}</span></button>`).join('')}</div>
+          <div class="st"><div><b>${p.trips.length}</b><span>해외 순방</span></div><div><b>${Math.round(k / 10000).toLocaleString('ko-KR')}만</b><span>날아간 거리(km, 어림)</span></div><div><b>${(k / 40075).toFixed(1)}</b><span>지구 몇 바퀴</span></div></div>
+          <div class="ds">${esc(p.since)}${p.until ? ' ~ ' + esc(p.until) : ' ~ 지금'} · 서울공항에서 들른 도시를 차례로 이은 직선 거리예요.</div>` +
+          p.trips.slice().reverse().map((t, ri) => { const i = p.trips.length - 1 - ri; return `<div class="li" data-ti="${i}"><span class="av">✈</span><div class="t"><b>${esc(t.when)}</b> <span style="font-size:12px;color:#cfe9d8">${esc(t.label)}</span><div>${esc(t.stops.map((x) => x.city).join(' → '))}</div></div><span class="r">${t.km.toLocaleString('ko-KR')}km</span></div>`; }).join('') +
+          `<div class="fine">${esc((prez && prez.note) || '')} 출처: 대통령실 발표·언론 보도(${esc((prez && prez.updated) || '')}). 정상외교는 나라 일이고, 거리는 비교를 위한 어림값일 뿐 잘잘못을 뜻하지 않아요.</div>`;
+        file.classList.add('on'); bindX(); if (innerWidth < 900) file.classList.add('min'); setTimeout(() => show(p), 60);
+        file.querySelectorAll('[data-pi]').forEach((b) => (b.onclick = () => { cur = +b.dataset.pi; SFX.click(); gTop.clearLayers(); paint(); }));
+        file.querySelectorAll('[data-ti]').forEach((el) => (el.onclick = () => { gTop.clearLayers(); show(P[cur], +el.dataset.ti); }));
+      };
+      paint();
     },
     find() {
       stopRadar(); gFx.clearLayers();
