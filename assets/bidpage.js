@@ -88,10 +88,11 @@
   if (qs.get('cat') && cats.includes(qs.get('cat'))) $('oCat').value = qs.get('cat');
   let show = 20;
   const item = (x) => { const [t, cls] = left(x.close); const ref = x.ref ? `참고 낙찰률 ${x.ref.rate}% (${x.ref.scope === 'city' ? '이 시' : '전국 85개 시'} ${esc(x.cat)} 큰 계약 ${x.ref.n}건 가운데 값)` : '';
-    return `<div class="it"><div class="t">${esc(x.title)}</div><div class="m">${esc(x.cname)} · ${esc(x.dem && x.dem !== x.inst ? x.dem : x.inst)} · ${esc(x.cat)}</div>
+    const isNew = x.posted && (Date.now() - new Date(x.posted.replace(' ', 'T') + ':00+09:00')) < 36e5 * 24;
+    return `<div class="it"><div class="t">${isNew ? '<span class="chip y" style="margin-right:6px">NEW</span>' : ''}${esc(x.title)}</div><div class="m">${esc(x.cname)} · ${esc(x.dem || x.inst)} · ${esc(x.cat)}</div>
     <div><span class="a">${esc(won(x.price))}</span> <span class="dd ${cls}">${t}</span> <span class="m">마감 ${esc(md(x.close))}</span></div>
-    <div class="chips">${x.method ? `<span class="chip">${esc(x.method)}</span>` : ''}${x.award ? `<span class="chip">${esc(x.award)}</span>` : ''}${x.rgn ? '<span class="chip y">지역 제한</span>' : ''}${x.low ? `<span class="chip">낙찰 하한율 ${esc(x.low)}%</span>` : ''}</div>
-    ${ref ? `<div class="m">${ref}</div>` : ''}${x.url ? `<div class="ln"><a href="${esc(x.url)}" target="_blank" rel="noopener">나라장터 공고 원문 ↗</a></div>` : ''}</div>`; };
+    <div class="chips">${x.method ? `<span class="chip">${esc(x.method)}</span>` : ''}${x.award ? `<span class="chip">${esc(/2인 이상/.test(x.award) ? '소액 견적(2인 이상)' : x.award.split('-')[0])}</span>` : ''}${x.rgn ? '<span class="chip y">지역 제한</span>' : ''}${x.low ? `<span class="chip">낙찰 하한율 ${esc(x.low)}%</span>` : ''}</div>
+    ${ref ? `<div class="m">${ref}</div>` : ''}<div class="ln"><a href="${esc(x.url || `https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo=${encodeURIComponent(x.no)}&bidPbancOrd=${encodeURIComponent(x.ord || '000')}`)}" target="_blank" rel="noopener">나라장터 공고 원문 ↗</a></div></div>`; };
   const norm = (t) => String(t || '').replace(/\s+/g, '').toLowerCase();
   const paint = () => { const c = $('oCity').value, k = $('oCat').value, q = norm($('oQ').value);
     const L = items.filter((x) => (!c || x.slug === c) && (!k || x.cat === k) && (!q || norm(x.title + x.inst + x.dem).includes(q)));

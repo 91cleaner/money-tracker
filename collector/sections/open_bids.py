@@ -131,6 +131,20 @@ def rates(ix):
     return ({k: (med(v), len(v)) for k, v in by_c.items() if len(v) >= 3}, {k: (med(v), len(v)) for k, v in by_k.items() if len(v) >= 3})
 
 
+STD = "https://www.g2b.go.kr/link/PNPE027_01/single/?bidPbancNo={no}&bidPbancOrd={ord}"
+
+
+def slim(it):
+    """파일을 작게: 빈 값·기본 주소·같은 기관 이름은 뺀다(화면에서 다시 만든다)."""
+    it = dict(it)
+    if it.get("url") == STD.format(no=it["no"], ord=it.get("ord", "000")):
+        it.pop("url")
+    if it.get("dem") == it.get("inst"):
+        it.pop("dem")
+    it.pop("open", None)
+    return {k: v for k, v in it.items() if v not in (None, "", 0)}
+
+
 def main():
     if not K:
         print("open_bids: DATA_GO_KR_KEY 없음, 건너뜀")
@@ -190,7 +204,7 @@ def main():
             continue
         r = rc.get((it["slug"], it["cat"])) or rk.get(it["cat"])
         it["ref"] = {"rate": r[0], "n": r[1], "scope": "city" if (it["slug"], it["cat"]) in rc else "all"} if r else None
-        items.append(it)
+        items.append(slim(it))
     items.sort(key=lambda x: (x["close"], x["no"]))
     out = {"updated": now.isoformat(timespec="seconds"), "source": "조달청 나라장터 입찰공고정보서비스(공공데이터포털)",
            "note": "85개 시 기관(공고기관·수요기관)이 낸 공고 중 아직 마감 안 된 것. 참고 낙찰률은 10억원 이상 계약에서 확인된 값의 가운데 값.",

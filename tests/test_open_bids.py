@@ -50,7 +50,7 @@ class OpenBids(unittest.TestCase):
         got = {x["no"]: x["slug"] for x in out["items"]}
         self.assertEqual(got, {"R26BK1": "sangju", "R26BK4": "sangju", "R26BK5": "seoul"})
         one = next(x for x in out["items"] if x["no"] == "R26BK1")
-        self.assertEqual((one["cat"], one["price"], one["kind"]), ("청소", 50000000, "용역"))
+        self.assertEqual((one["cat"], one["price"], one["kind"], one["url"]), ("청소", 50000000, "용역", "u1"))
         self.assertEqual([x["no"] for x in out["items"]][0], "R26BK4")  # 마감 임박 순
 
     def test_cancel_notice_removes(self):
