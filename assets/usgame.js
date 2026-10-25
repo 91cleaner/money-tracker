@@ -28,6 +28,12 @@
     <button type="button" data-w="rank"><span class="k">5</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M8.5 21v-8h7v8"/><path d="M3 21v-5h5.5M15.5 21v-11H21v11"/><path d="M2 21h20"/><path d="m12 3.2.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.3z" stroke-width="1.3" stroke-linejoin="round"/></svg></span>Rank</button>
     <button type="button" data-w="find"><span class="k">6</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.4 15.4 5.6 5.6"/></svg></span>Find</button>
   </nav>
+  <button type="button" class="pg-more-toggle" aria-expanded="false" aria-controls="pg-more-menu">More</button>
+  <div class="pg-more-menu" id="pg-more-menu" hidden role="group" aria-label="More tools">
+    <button type="button" data-more="mp">Members</button>
+    <button type="button" data-more="trades">Trades</button>
+    <button type="button" data-more="party">Party</button>
+  </div>
   <button type="button" class="pg-dice" aria-label="Track a random member"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/></svg>Track anyone</button>`;
   const $ = (s) => root.querySelector(s);
   const say = $('.pg-say'), file = $('.pg-file');
@@ -450,10 +456,15 @@
   }, { passive:false });
   ['touchstart', 'wheel'].forEach((ev) => mapEl.addEventListener(ev, () => { if (innerWidth < 900 && file.classList.contains('on')) file.classList.add('min'); }, { passive: true }));
   file.addEventListener('click', (e) => { if (file.classList.contains('min') && !e.target.closest('.x')) file.classList.remove('min'); });
+  const moreToggle=root.querySelector('.pg-more-toggle'),moreMenu=root.querySelector('.pg-more-menu');
+  const closeMore=()=>{moreMenu.hidden=true;moreToggle.setAttribute('aria-expanded','false');};
+  moreToggle.onclick=()=>{const next=moreMenu.hidden;moreMenu.hidden=!next;moreToggle.setAttribute('aria-expanded',String(next));};
+  moreMenu.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{closeMore();pick(b.dataset.more);});
+  document.addEventListener('pointerdown',e=>{if(!moreMenu.contains(e.target)&&e.target!==moreToggle)closeMore();});
   const btns = [...root.querySelectorAll('.pg-bar button')];
-  const pick = (w, quiet) => { if(w!=='radar'){const bar=root.querySelector('.radar-quick');if(bar)bar.remove();} if (!quiet) SFX.click(); btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === w))); W[w](); };
+  const pick = (w, quiet) => { closeMore(); if(w!=='radar'){const bar=root.querySelector('.radar-quick');if(bar)bar.remove();} if (!quiet) SFX.click(); btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === w))); W[w](); };
   btns.forEach((b) => (b.onclick = () => pick(b.dataset.w)));
-  addEventListener('keydown', (e) => { if (/input|textarea/i.test((e.target && e.target.tagName) || '')) return; const i = Number(e.key) - 1; if (i >= 0 && i < btns.length) pick(btns[i].dataset.w); if (e.key === 'Escape') { VSA = null; closeFile(); } });
+  addEventListener('keydown', (e) => { if (/input|textarea/i.test((e.target && e.target.tagName) || '')) return; const i = Number(e.key) - 1; if (i >= 0 && i < btns.length) pick(btns[i].dataset.w); if (e.key === 'Escape') { closeMore(); VSA = null; closeFile(); } });
   setTimeout(() => map.invalidateSize(), 300); addEventListener('resize', () => map.invalidateSize());
 
   const dice = root.querySelector('.pg-dice'); let rolling = false;
