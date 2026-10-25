@@ -30,7 +30,7 @@
 #pg .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
 #pg .live{font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e}#pg .live i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff3b47;margin-right:5px;animation:pgBlink 1s steps(2) infinite;vertical-align:0}
 @keyframes pgBlink{50%{opacity:.15}}
-#pg .ttl{font:800 14px Pretendard,system-ui;color:#e8fff1;letter-spacing:.04em}
+#pg .ttl{font:800 14px Pretendard,system-ui;color:#e8fff1;letter-spacing:.04em;display:flex;align-items:center;gap:6px}#pg .snd{min-width:30px;min-height:28px;border-radius:6px;border:1px solid #1f4a30;background:#06150c;color:#cfe9d8;font-size:14px;cursor:pointer;padding:0 4px}
 #pg .ctr{text-align:right}#pg .ctr .n{font:800 17px ui-monospace,Menlo,monospace;color:#ffb020;font-variant-numeric:tabular-nums}#pg .ctr .l{font-size:10.5px;color:#8fc9a5}
 #pg .pg-say{position:absolute;z-index:700;left:10px;right:10px;top:74px;font:600 12px ui-monospace,Menlo,monospace;color:#7dffb0;text-shadow:0 0 6px rgba(80,255,160,.5);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #pg .pg-bar{position:absolute;z-index:720;left:50%;transform:translateX(-50%);bottom:10px;display:flex;gap:6px;padding:6px;background:rgba(3,14,8,.88);border:1px solid #1d5a35;border-radius:14px;max-width:calc(100% - 16px)}
@@ -78,7 +78,7 @@
 `;
   document.head.append(css);
   root.innerHTML = `<div class="pg-map" aria-label="국회의원 지도"></div><div class="pg-scan"></div>
-  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl">국회 돈 추적실</div></div>
+  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl">국회 돈 추적실 <button type="button" class="snd" aria-label="소리 켜기·끄기">🔊</button></div></div>
   <div class="pg-box ctr"><div class="n mono">0원</div><div class="l">오늘 의원 <span class="nmem">300</span>명 세비 누적(지급 기준)</div></div></div>
   <div class="pg-say mono"></div>
   <div class="pg-file" role="dialog" aria-label="기록 파일"></div>
@@ -93,6 +93,30 @@
   const file = $('.pg-file'), say = $('.pg-say');
   let typer = 0;
   const type = (t) => { clearInterval(typer); if (RM) { say.textContent = '> ' + t; return; } let i = 0; say.textContent = '> '; typer = setInterval(() => { say.textContent = '> ' + t.slice(0, ++i) + (i < t.length ? '▌' : ''); if (i >= t.length) clearInterval(typer); }, 22); };
+
+  // ── 소리(Web Audio로 직접 만든 효과음, 파일 없음). 처음 누를 때부터 켜지고, 🔊 버튼으로 끌 수 있다 ──
+  const SFX = (() => {
+    let ac = null, muted = false;
+    try { muted = localStorage.getItem('mt.pg.mute') === '1'; } catch (e) { /* 무시 */ }
+    const ctx = () => { if (muted) return null; if (!ac) { const A = window.AudioContext || window.webkitAudioContext; if (!A) return null; ac = new A(); } if (ac.state === 'suspended') ac.resume(); return ac; };
+    const tone = (f, dur, { type = 'sine', vol = 0.18, at = 0, f2 = null, echo = false } = {}) => {
+      const a = ctx(); if (!a) return; const t = a.currentTime + at;
+      const o = a.createOscillator(), g = a.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); let out = g;
+      if (echo) { const d = a.createDelay(); d.delayTime.value = 0.18; const fb = a.createGain(); fb.gain.value = 0.35; g.connect(d); d.connect(fb); fb.connect(d); d.connect(a.destination); }
+      out.connect(a.destination); o.start(t); o.stop(t + dur + 0.05);
+    };
+    return {
+      get muted() { return muted; },
+      toggle() { muted = !muted; try { localStorage.setItem('mt.pg.mute', muted ? '1' : '0'); } catch (e) { /* 무시 */ } if (muted && ac) ac.suspend(); return muted; },
+      ping() { tone(1250, 1.1, { vol: 0.16, echo: true }); },                       // 소나 '띵'
+      blip() { tone(880, 0.09, { type: 'triangle', vol: 0.07 }); },                  // 레이더에 잡힌 점
+      lock() { tone(660, 0.07, { type: 'square', vol: 0.05 }); tone(990, 0.09, { type: 'square', vol: 0.05, at: 0.09 }); tone(1320, 0.16, { type: 'square', vol: 0.05, at: 0.2 }); }, // 조준 완료 '삑삑삑'
+      click() { tone(420, 0.05, { type: 'square', vol: 0.05 }); tone(840, 0.04, { type: 'square', vol: 0.03, at: 0.04 }); }, // 무기 바꾸기 '철컥'
+      whoosh() { tone(300, 0.9, { type: 'sawtooth', vol: 0.025, f2: 1200 }); },     // 비행기 출발
+    };
+  })();
 
   // ── 자료 ──
   const [mem, sup, flw, par, geo] = await Promise.all([j('members.json'), j('support.json'), j('flows.json'), j('parties.json'), j('geo.json')]);
@@ -182,6 +206,7 @@
   const SHARE = (m) => { try { const ix = window.__shIdx; if (ix && ix.mp && ix.mp[m.name]) return location.origin + location.pathname.replace(/[^/]*$/, '') + 's/m/' + ix.mp[m.name] + '.html'; } catch (e) { /* 무시 */ } return location.origin + location.pathname + '?mp=' + encodeURIComponent(m.name); };
   fetch('data/og/s/index.json').then((r) => (r.ok ? r.json() : null)).then((x) => { window.__shIdx = x; }).catch(() => {});
   function open(m) {
+    SFX.lock();
     const s = statOf(m);
     const ll = LL[m.id];
     reticle(ll);
@@ -203,7 +228,7 @@
       if (!rs.length) return;
       const b = L.latLngBounds([SE, ...dests.filter((d) => C[d]).map((d) => C[d])]);
       map.flyToBounds(b, { paddingTopLeft: [30, 100], paddingBottomRight: padBR(), duration: RM ? 0 : 1.1, maxZoom: 5 });
-      setTimeout(() => { fly(rs); for (const d of dests.filter((x) => C[x])) { const n = s.ts.filter((t) => (t.dest || []).map(cname).includes(d)).length; L.circleMarker(C[d], { radius: 6, color: '#02110a', weight: 1, fillColor: '#ffb020', fillOpacity: 0.95, interactive: false }).addTo(gFx).bindTooltip(`${esc(d)}${n > 1 ? ' ×' + n : ''}`, { permanent: true, direction: 'top', className: 'mtag', offset: [0, -6] }); } }, RM ? 0 : 900);
+      setTimeout(() => { SFX.whoosh(); fly(rs); for (const d of dests.filter((x) => C[x])) { const n = s.ts.filter((t) => (t.dest || []).map(cname).includes(d)).length; L.circleMarker(C[d], { radius: 6, color: '#02110a', weight: 1, fillColor: '#ffb020', fillOpacity: 0.95, interactive: false }).addTo(gFx).bindTooltip(`${esc(d)}${n > 1 ? ' ×' + n : ''}`, { permanent: true, direction: 'top', className: 'mtag', offset: [0, -6] }); } }, RM ? 0 : 900);
       type(`${m.name} 출장 경로 ${rs.length}곳 · 국회(여의도) 출발`);
     };
     const fb = file.querySelector('[data-a="fly"]'); if (fb) fb.onclick = showFly;
@@ -252,15 +277,16 @@
       stopRadar(); if (RM) return;
       const cv = document.createElement('canvas'); cv.className = 'pg-radar'; cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:600;pointer-events:none'; root.querySelector('.pg-map').after(cv);
       const g = cv.getContext('2d'); const size = () => { const r = devicePixelRatio || 1; cv.width = root.clientWidth * r; cv.height = root.clientHeight * r; g.setTransform(r, 0, 0, r, 0, 0); }; size();
-      const t0 = performance.now();
+      const t0 = performance.now(); let rev = -1, lastBlip = 0; const seen = new Set();
       const loop = (now) => {
+        const r0 = Math.floor((now - t0) / 2600); if (r0 !== rev) { rev = r0; seen.clear(); SFX.ping(); }
         const c = map.latLngToContainerPoint([36.4, 127.8]), R = Math.max(root.clientWidth, root.clientHeight) * 0.6, a = ((now - t0) / 2600) * Math.PI * 2;
         g.clearRect(0, 0, cv.width, cv.height);
         const gr = g.createConicGradient ? g.createConicGradient(a - 0.9, c.x, c.y) : null;
         if (gr) { gr.addColorStop(0, 'rgba(93,255,158,0)'); gr.addColorStop(0.14, 'rgba(93,255,158,.28)'); gr.addColorStop(0.145, 'rgba(93,255,158,0)'); g.fillStyle = gr; g.beginPath(); g.arc(c.x, c.y, R, 0, 6.283); g.fill(); }
         g.strokeStyle = 'rgba(93,255,158,.18)'; for (const r of [R * 0.25, R * 0.5, R * 0.75]) { g.beginPath(); g.arc(c.x, c.y, r, 0, 6.283); g.stroke(); }
         g.strokeStyle = 'rgba(160,255,200,.8)'; g.lineWidth = 2; g.beginPath(); g.moveTo(c.x, c.y); g.lineTo(c.x + R * Math.cos(a), c.y + R * Math.sin(a)); g.stroke(); g.lineWidth = 1;
-        for (const m of L2) { const p = map.latLngToContainerPoint(LL[m.id]); let d = Math.atan2(p.y - c.y, p.x - c.x) - a; d = ((d % 6.283) + 6.283) % 6.283; const glow = Math.max(0, 1 - (6.283 - d) / 1.2); if (glow > 0) { g.fillStyle = `rgba(255,176,32,${0.9 * glow})`; g.beginPath(); g.arc(p.x, p.y, 7 + 10 * glow, 0, 6.283); g.fill(); } }
+        for (const m of L2) { const p = map.latLngToContainerPoint(LL[m.id]); let d = Math.atan2(p.y - c.y, p.x - c.x) - a; d = ((d % 6.283) + 6.283) % 6.283; const glow = Math.max(0, 1 - (6.283 - d) / 1.2); if (glow > 0) { g.fillStyle = `rgba(255,176,32,${0.9 * glow})`; g.beginPath(); g.arc(p.x, p.y, 7 + 10 * glow, 0, 6.283); g.fill(); if (glow > 0.9 && !seen.has(m.id) && now - lastBlip > 140) { seen.add(m.id); lastBlip = now; SFX.blip(); } } }
         radarRaf = requestAnimationFrame(loop);
       };
       radarRaf = requestAnimationFrame(loop);
@@ -299,14 +325,15 @@
     file.innerHTML = fileHead(`국가 파일 · ${c}`) + ids.map((id) => { const ts = byT[id], t = ts[0]; return `<div class="tr"><div class="d">${esc(t.dates || '')}</div><div class="p">${esc(String(t.purpose || '').slice(0, 80))}</div><div><span class="tg y">비용 낸 곳: ${esc(t.funder || '적힌 곳 없음')}</span></div>${ts.map((x) => { const m = people.find((p) => p.id === x.member_id); return m ? row(m) : `<div class="ds">${esc(x.name)} (${esc(x.party || '')})</div>`; }).join('')}</div>`; }).join('') + '<div class="fine">출처 열린국회정보 · 공개 기록일 뿐 잘잘못을 뜻하지 않아요</div>';
     file.classList.add('on'); bindX(); bindRows();
   }
+  const snd = root.querySelector('.snd'); const paintSnd = () => { snd.textContent = SFX.muted ? '🔇' : '🔊'; }; paintSnd(); snd.onclick = () => { SFX.toggle(); paintSnd(); if (!SFX.muted) SFX.click(); };
   const btns = [...root.querySelectorAll('.pg-bar button')];
-  const pick = (w) => { btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === w))); W[w](); };
+  const pick = (w, quiet) => { if (!quiet) SFX.click(); btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === w))); W[w](); };
   btns.forEach((b) => (b.onclick = () => pick(b.dataset.w)));
   addEventListener('keydown', (e) => { if (/input|textarea/i.test((e.target && e.target.tagName) || '')) return; const i = Number(e.key) - 1; if (i >= 0 && i < btns.length) pick(btns[i].dataset.w); if (e.key === 'Escape') closeFile(); });
   setTimeout(() => map.invalidateSize(), 300);
   addEventListener('resize', () => map.invalidateSize());
 
-  pick('mp');
+  pick('mp', true);
   const want = new URLSearchParams(location.search).get('mp');
   if (want) { const m = people.find((x) => x.name === want.trim()); if (m) setTimeout(() => open(m), 600); }
   else { const h = document.createElement('div'); h.className = 'pg-hint'; h.textContent = '점을 눌러 의원 기록을 열어 보세요'; root.append(h); setTimeout(() => h.remove(), 6000); }
