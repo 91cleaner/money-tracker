@@ -154,3 +154,16 @@
  #pg .pg-file .fh .ex{display:inline-flex;align-items:center;justify-content:center}
 }
 @media(min-width:601px){#pg .pg-file .fh .ex{display:none}}
+
+/* Compact mobile navigation: radar, search, rankings + secondary menu. */
+#pg .pg-more-toggle,#pg .pg-more-menu{display:none}
+@media(max-width:600px){
+ #pg .pg-bar{width:calc(100% - 102px);left:6px;transform:none;right:auto;max-width:none;justify-content:space-around}
+ #pg .pg-bar button[data-w="mp"],#pg .pg-bar button[data-w="trades"],#pg .pg-bar button[data-w="party"]{display:none}
+ #pg .pg-bar button[data-w="radar"],#pg .pg-bar button[data-w="find"],#pg .pg-bar button[data-w="rank"]{display:flex;flex:1 1 33.33%;font-size:12px}
+ #pg .pg-more-toggle{display:block;position:absolute;z-index:760;right:6px;bottom:calc(6px + env(safe-area-inset-bottom,0px));height:70px;width:86px;background:#0a2617;color:#eafff2;border:1px solid #357b54;border-radius:17px;font:700 14px Pretendard,system-ui,sans-serif;cursor:pointer}
+ #pg .pg-more-menu:not([hidden]){display:flex;flex-direction:column;position:absolute;z-index:800;right:6px;bottom:calc(83px + env(safe-area-inset-bottom,0px));min-width:170px;padding:8px;gap:4px;background:#092016;border:1px solid #357b54;border-radius:14px;box-shadow:0 12px 30px #000a}
+ #pg .pg-more-menu button{background:transparent;color:#eafff2;text-align:left;padding:13px 16px;border:0;border-radius:8px;font:700 15px Pretendard,system-ui,sans-serif}
+ #pg .pg-more-menu button:active{background:#205c38}
+ #pg .pg-dice{right:8px;bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+}
