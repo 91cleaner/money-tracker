@@ -189,3 +189,16 @@
  #pg .pg-file.on:not(.expanded):not(.min){bottom:calc(87px + env(safe-area-inset-bottom,0px))}
  #pg .pg-file.on.expanded,#pg .pg-file.on.min{bottom:calc(87px + env(safe-area-inset-bottom,0px))!important}
 }
+
+/* Selected member layout: real split view, not an overlay. */
+@media(max-width:600px){
+ #pg.member-selected{display:grid;grid-template-rows:minmax(190px,42%) minmax(0,1fr);height:calc(100dvh - 94px);min-height:480px;overflow:hidden}
+ #pg.member-selected .pg-map{position:relative;grid-row:1;grid-column:1;inset:auto;width:100%;height:100%;min-height:0}
+ #pg.member-selected .pg-file.on{position:relative!important;grid-row:2;grid-column:1;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:100%;height:100%!important;max-height:none!important;min-height:0;border-radius:16px 16px 0 0;box-shadow:0 -4px 22px #0009;overflow-y:auto;padding:12px 14px calc(80px + env(safe-area-inset-bottom,0px));z-index:740;transform:none}
+ #pg.member-selected .pg-file.on.expanded,#pg.member-selected .pg-file.on.min,#pg.member-selected .pg-file.on:not(.expanded):not(.min){position:relative!important;top:auto!important;bottom:auto!important;height:100%!important;max-height:none!important}
+ #pg.member-selected .pg-file.on .fh{position:sticky;top:-12px;background:#06190f;z-index:3}
+ #pg.member-selected .pg-top{top:3px}
+ #pg.member-selected .pg-say{display:none}
+ #pg.member-selected .pg-bar,#pg.member-selected .pg-more-toggle{z-index:780}
+ #pg.member-selected .pg-file.on.min .fh~*{display:block!important}
+}
