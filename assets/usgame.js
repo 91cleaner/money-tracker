@@ -331,10 +331,10 @@
         drawDots(m=>false,()=>true);
         // Targets are revealed as the sweep reaches each map marker.
         seen.clear();
-        const choices=[['recent','최근 30일 거래'],['up','매수 후 상승'],['down','매수 후 하락']];
+        const choices=[['recent','Trades in last 30 days'],['up','Stocks rose after buying'],['down','Stocks fell after buying']];
         file.innerHTML=fileHead('Radar · stock activity')+
           '<div class="seg" role="group" aria-label="Radar filters">'+choices.map(([k,l])=>'<button type="button" data-radar="'+k+'" class="'+(radarMode===k?'on':'')+'">'+l+'</button>').join('')+'</div>'+
-          '<div class="ds">'+(radarMode==='recent'?'최근 30일 신고 거래 기준':'기록된 매수 종목의 거래일 이후 주가 변동 평균 기준 · 실제 의원 손익 아님')+' · '+hot.length+' members</div>'+
+          '<div class="ds">'+(radarMode==='recent'?'Reported trades in the last 30 days':'Average stock price movement since disclosed buys · not actual member profit')+' · '+hot.length+' members</div>'+
           hot.sort((a,b)=>radarMode==='recent'?(byM[b.id]||[]).length-(byM[a.id]||[]).length:radarMode==='up'?score(b).avg-score(a).avg:score(a).avg-score(b).avg).slice(0,40).map(m=>{
             const v=score(m);
             return row(m,radarMode==='recent'?(byM[m.id]||[]).filter(t=>recent(t,30)).length+' trades':(v.avg>0?'+':'')+v.avg.toFixed(1)+'% · '+v.n+' buys');
@@ -348,7 +348,7 @@
       const oldBar=root.querySelector('.radar-quick');if(oldBar)oldBar.remove();
       const quick=document.createElement('div');quick.className='radar-quick';
       quick.style.cssText='position:absolute;z-index:1200;top:72px;left:50%;transform:translateX(-50%);display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:8px;background:#061a12ee;border:1px solid #357b54;border-radius:12px;max-width:calc(100% - 20px);box-shadow:0 5px 22px #0009';
-      [['recent','최근 거래'],['up','매수 후 상승'],['down','매수 후 하락']].forEach(([key,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.mode=key;b.style.cssText='border:1px solid #417b57;border-radius:7px;padding:7px 9px;background:#143422;color:#eafff2;font-size:12px;cursor:pointer';b.onclick=()=>{radarMode=key;paintRadar();quick.querySelectorAll('button').forEach(x=>{x.style.background=x.dataset.mode===key?'#247748':'#143422';});};quick.appendChild(b);});
+      [['recent','Recent trades'],['up','Stocks rose after buying'],['down','Stocks fell after buying']].forEach(([key,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.mode=key;b.style.cssText='border:1px solid #417b57;border-radius:7px;padding:7px 9px;background:#143422;color:#eafff2;font-size:12px;cursor:pointer';b.onclick=()=>{radarMode=key;paintRadar();quick.querySelectorAll('button').forEach(x=>{x.style.background=x.dataset.mode===key?'#247748':'#143422';});};quick.appendChild(b);});
       root.appendChild(quick);quick.firstChild.style.background='#247748';
       stopRadar(); if (RM) return;
       const cv = document.createElement('canvas'); cv.className = 'pg-radar'; cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:600;pointer-events:none'; root.querySelector('.pg-map').after(cv);
