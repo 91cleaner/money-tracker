@@ -198,9 +198,48 @@
  body[data-page="us"] #pg.member-selected{height:calc(100dvh - 190px)!important}
 }
 @media(min-width:601px){#pg .mt-map-tools-toggle{display:none!important}}
+
+/* 2026-10-25 stable mobile layout: ONE six-tool dock, Radar always visible.
+   Dashboard is a separate small action, not a second bottom toolbar. */
+@media(max-width:600px){
+ body[data-page="us"] .mt-mobile-tabs{display:none!important}
+ body[data-page="us"] .mt-map-tools-toggle{display:none!important}
+ body[data-page="us"] .tabbar-bot{display:none!important}
+ body[data-page="us"] #pg .pg-bar,
+ body[data-page="us"] #pg.mt-tools-open .pg-bar{
+  display:flex!important;position:absolute!important;left:50%!important;right:auto!important;
+  bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;
+  width:calc(100% - 20px)!important;max-width:560px!important;
+  transform:translateX(-50%)!important;z-index:850!important;
+  gap:2px!important;padding:5px!important;border-radius:20px!important;
+ }
+ body[data-page="us"] #pg .pg-bar button{display:flex!important;flex:1 1 0!important;min-width:0!important}
+ body[data-page="us"] #pg .pg-bar [data-w="radar"]{display:flex!important;visibility:visible!important}
+ body[data-page="us"] #pg .pg-dice,
+ body[data-page="us"] #pg.mt-tools-open .pg-dice,
+ body[data-page="us"] #pg.member-selected .pg-dice{
+  display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
+  position:absolute!important;right:12px!important;top:auto!important;
+  bottom:calc(84px + env(safe-area-inset-bottom,0px))!important;z-index:880!important;
+ }
+ body[data-page="us"] #pg{height:calc(100dvh - 130px)!important;min-height:350px!important}
+ body[data-page="us"] #pg.member-selected{height:calc(100dvh - 130px)!important}
+ body[data-page="us"] .mt-dashboard-link{
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  grid-column:1/-1;min-height:36px;margin:0 0 2px;
+  border:1px solid #35694b;border-radius:10px;background:#102a1c;
+  color:#a9f3c5;font:700 13px Pretendard,system-ui;
+ }
+ body[data-page="us"][data-mt-mobile-tab="dashboard"] #usdash{display:block!important}
+ body[data-page="us"][data-mt-mobile-tab="dashboard"] #pg{display:none!important}
+ body[data-page="us"][data-mt-mobile-tab="map"] #pg{display:block!important}
+ body[data-page="us"][data-mt-mobile-tab="map"] #usdash{display:none!important}
+ body[data-page="us"] .us-visit{padding-bottom:100px}
+}
+@media(min-width:601px){.mt-dashboard-link{display:none!important}}
 </style>
 </head>
-<body data-page="us" data-page="us">
+<body data-page="us">
 <header class="ubar mt-shared-head" id="top"><a class="mt-brand" href="./" aria-label="MONEY TRACKER home"><span class="mt-mark">MT</span><span class="mt-brand-name">MONEY TRACKER</span></a><a class="us-exit" href="./" aria-label="Exit to MONEY TRACKER">✕ <span>나가기</span></a><nav class="country-switch" aria-label="Choose country"><a href="national.html">🇰🇷 한국</a><a href="us.html?lang=ko" aria-current="page">🇺🇸 미국</a></nav></header>
 <div id="pg"></div>
 <nav class="mt-mobile-tabs" aria-label="미국 의회 화면 선택">
@@ -252,6 +291,28 @@ if(matchMedia('(max-width:600px)').matches){
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initTools);
  else initTools();
+})();
+</script>
+
+<script>
+(function(){
+ const root=document.getElementById('pg');
+ const header=document.querySelector('.mt-shared-head');
+ if(!root||!header)return;
+ const btn=document.createElement('button');
+ btn.type='button';btn.className='mt-dashboard-link';
+ btn.textContent='▥ 거래 대시보드 보기';
+ header.append(btn);
+ const setView=(view)=>{
+  document.body.dataset.mtMobileTab=view;
+  btn.textContent=view==='dashboard'?'← 의원 지도 돌아가기':'▥ 거래 대시보드 보기';
+  document.querySelectorAll('.mt-mobile-tabs [data-mtab]').forEach(b=>
+   b.setAttribute('aria-pressed',String(b.dataset.mtab===view)));
+  if(view==='map')requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));
+  window.scrollTo({top:0,behavior:'instant'});
+ };
+ btn.addEventListener('click',()=>setView(document.body.dataset.mtMobileTab==='dashboard'?'map':'dashboard'));
+ root.addEventListener('click',e=>{if(e.target.closest('.pg-bar [data-w]'))setView('map')});
 })();
 </script>
 </body>
