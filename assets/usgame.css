@@ -100,3 +100,13 @@
 #pg .ttl.us{font-size:12px;letter-spacing:.08em;color:#8fc9a5;white-space:nowrap}@media(max-width:420px){#pg .ttl.us{font-size:11px}}
 #pg .pbar{display:inline-block;width:70px;height:5px;border-radius:3px;background:#0b2416;margin-right:8px;vertical-align:middle;overflow:hidden}#pg .pbar i{display:block;height:100%}
 #pg .tkb{height:8px;border-radius:4px;background:#06150c;overflow:hidden;margin-top:3px}#pg .tkb i{display:block;height:100%}
+
+/* Member disclosure table and collapsible floating file panel */
+#pg .member-trade-table{margin:12px 0 16px}
+#pg .member-table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior:contain;border:1px solid #235238;border-radius:9px}
+#pg .member-table-scroll table{width:100%;min-width:440px;border-collapse:collapse;font-size:11px}
+#pg .member-table-scroll th,#pg .member-table-scroll td{padding:8px 6px;text-align:left;border-bottom:1px solid #183c29;white-space:nowrap}
+#pg .member-table-scroll th{position:sticky;top:0;background:#0b2617;color:#b7e5c8}
+#pg .pg-file.min{height:52px!important;min-height:0!important;max-height:52px!important;overflow:hidden!important}
+#pg .pg-file.min .fh{margin-bottom:0}
+#pg .pg-file.min .fh~*{display:none!important}
