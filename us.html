@@ -174,6 +174,48 @@
  body[data-page="us"] .us-visit{padding-bottom:25px}
 }
 @media(min-width:601px){.mt-dashboard-link{display:none!important}}
+
+/* iPhone overlap fix: member details and controls occupy separate zones. */
+@media(max-width:600px){
+ body[data-page="us"] #pg.member-selected{
+  display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:minmax(160px,42%) minmax(0,58%)!important;
+  overflow:hidden!important;
+ }
+ body[data-page="us"] #pg.member-selected.member-full{
+  grid-template-rows:minmax(70px,18%) minmax(0,82%)!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-map{
+  grid-column:1!important;grid-row:1!important;
+  position:relative!important;inset:auto!important;width:100%!important;height:100%!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-file.on,
+ body[data-page="us"] #pg.member-selected .pg-file.on.min,
+ body[data-page="us"] #pg.member-selected .pg-file.on.expanded{
+  grid-column:1!important;grid-row:2!important;
+  position:relative!important;left:auto!important;right:auto!important;
+  top:auto!important;bottom:auto!important;
+  width:100%!important;height:100%!important;max-height:none!important;
+  min-height:0!important;overflow-y:auto!important;
+  padding:12px 14px calc(92px + env(safe-area-inset-bottom,0px))!important;
+  border-radius:17px 17px 0 0!important;z-index:740!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-bar{
+  position:absolute!important;left:50%!important;right:auto!important;
+  bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;
+  z-index:950!important;
+ }
+ body[data-page="us"] #pg.member-selected .pg-dice,
+ body[data-page="us"] #pg.member-selected.member-full .pg-dice{
+  position:absolute!important;top:calc(42% - 58px)!important;
+  bottom:auto!important;right:12px!important;z-index:850!important;
+ }
+ body[data-page="us"] #pg.member-selected.member-full .pg-dice{top:calc(18% - 58px)!important}
+ body[data-page="us"] #pg .pg-file:not(.on){pointer-events:none!important}
+ body[data-page="us"] #pg .pg-file.on .fh{position:sticky!important;top:-12px!important;z-index:4!important}
+ body[data-page="us"] #pg .pg-bar button{height:58px!important}
+ body[data-page="us"] .mt-dashboard-link{margin-top:2px!important}
+}
 </style>
 </head>
 <body data-page="us">
