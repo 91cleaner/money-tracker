@@ -38,7 +38,7 @@
   const $ = (s) => root.querySelector(s);
   const say = $('.pg-say'), file = $('.pg-file');
   let typer = 0;
-  const type = (t) => { clearInterval(typer); if (RM) { say.textContent = '> ' + t; return; } let i = 0; say.textContent = '> '; typer = setInterval(() => { say.textContent = '> ' + t.slice(0, ++i) + (i < t.length ? '▌' : ''); if (i >= t.length) clearInterval(typer); }, 18); };
+  const type = (t) => { clearInterval(typer); say.textContent = '> ' + t; };
 
   const SFX = (() => {
     let ac = null, muted = false;
@@ -104,7 +104,7 @@
 
   const clk = $('.clk'), ctr = $('.ctr .n');
   const tick = () => { const n = new Date(); const et = new Date(n.toLocaleString('en-US', { timeZone: 'America/New_York' })); clk.textContent = et.toTimeString().slice(0, 8) + ' ET'; const sec = et.getHours() * 3600 + et.getMinutes() * 60 + et.getSeconds() + n.getMilliseconds() / 1000; ctr.textContent = usd(PAY * people.length / (365 * 86400) * sec); };
-  tick(); setInterval(tick, RM ? 1000 : 100);
+  tick(); setInterval(tick, 1000);
 
   // map
   const map = L.map($('.pg-map'), { zoomControl: false, scrollWheelZoom: false, attributionControl: true, zoomSnap: 0.25, minZoom: 2, maxZoom: 12, tap: false });
@@ -377,7 +377,11 @@
       const cv = document.createElement('canvas'); cv.className = 'pg-radar'; cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:600;pointer-events:none'; root.querySelector('.pg-map').after(cv);
       const g = cv.getContext('2d'); const r0 = devicePixelRatio || 1; cv.width = root.clientWidth * r0; cv.height = root.clientHeight * r0; g.setTransform(r0, 0, 0, r0, 0, 0);
       const t0 = performance.now(); let rev = -1, lastBlip = 0;
+      let lastFrame=0;
       const loop = (now) => {
+        radarRaf=requestAnimationFrame(loop);
+        if(now-lastFrame<48)return;
+        lastFrame=now;
         const rv = Math.floor((now - t0) / 2600); if (rv !== rev) { rev = rv; seen.clear(); SFX.ping(); }
         const c = map.latLngToContainerPoint([38.5, -96]), R = Math.max(root.clientWidth, root.clientHeight) * 0.7, a = ((now - t0) / 2600) * Math.PI * 2;
         g.clearRect(0, 0, cv.width, cv.height);
@@ -386,7 +390,6 @@
         g.strokeStyle = 'rgba(93,255,158,.18)'; for (const r of [R * 0.25, R * 0.5, R * 0.75]) { g.beginPath(); g.arc(c.x, c.y, r, 0, 6.283); g.stroke(); }
         g.strokeStyle = 'rgba(160,255,200,.8)'; g.lineWidth = 2; g.beginPath(); g.moveTo(c.x, c.y); g.lineTo(c.x + R * Math.cos(a), c.y + R * Math.sin(a)); g.stroke(); g.lineWidth = 1;
         for (const m of hot) { const p = map.latLngToContainerPoint(LL[m.id]); let d = Math.atan2(p.y - c.y, p.x - c.x) - a; d = ((d % 6.283) + 6.283) % 6.283; const glow = Math.max(0, 1 - (6.283 - d) / 1.2); if (glow > 0) { g.fillStyle = `rgba(255,176,32,${0.9 * glow})`; g.beginPath(); g.arc(p.x, p.y, 7 + 10 * glow, 0, 6.283); g.fill(); if (glow > 0.9 && !seen.has(m.id)) { seen.add(m.id); const marker=dotOf[m.id]; if(marker)marker.setStyle({radius:8,weight:2.5,color:'#ffc94a',fillOpacity:1,opacity:1}); if(now-lastBlip>140){SFX.blip();lastBlip=now;} } } }
-        radarRaf = requestAnimationFrame(loop);
       };
       radarRaf = requestAnimationFrame(loop);
     },
