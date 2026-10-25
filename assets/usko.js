@@ -79,6 +79,6 @@
   const btn = document.createElement('a'); btn.href = '#'; btn.className = 'lang'; btn.setAttribute('role', 'button');
   const paint = () => { btn.textContent = ko ? 'English' : '한국어'; btn.setAttribute('lang', ko ? 'en' : 'ko'); document.documentElement.lang = ko ? 'ko' : 'en'; };
   btn.onclick = (e) => { e.preventDefault(); const next = ko ? 'en' : 'ko'; try { localStorage.setItem(K, next); } catch (x) { /* 무시 */ } const url = new URL(location.href); url.searchParams.set('lang', next); location.assign(url.toString()); };
-  const nav = document.querySelector('.ubar nav'); if (nav) nav.prepend(btn);
+  const header = document.querySelector('.ubar'); if (header) { btn.classList.add('mt-language-switch'); header.append(btn); }
   paint(); if (ko) { busy = true; walk(document.body); busy = false; }
 })();
