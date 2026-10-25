@@ -139,7 +139,7 @@
   const bindRows = () => file.querySelectorAll('.li[data-id]').forEach((el) => (el.onclick = () => { const m = byId[el.dataset.id]; if (m) open(m); }));
   const tline = (t, showWho) => { const m = t.id && byId[t.id]; return `<div class="trd"${m ? ` data-id="${esc(m.id)}"` : ''}><span class="sym"><span class="bs ${t.ty}">${t.ty === 'P' ? 'BUY' : t.ty === 'S' ? 'SELL' : 'EXCH'}</span>${esc(t.tk || '—')}</span><span class="as">${esc(t.asset || '')}</span><span class="am">${esc(amtShort(t.amt))}</span><span class="wh">${esc(t.d)} traded · ${esc(t.fd || '')} filed${showWho ? ` · <b style="color:#fff">${esc(m ? m.name : t.who)}</b>${m ? ` <span style="color:${pc(m.party)}">${m.party}-${esc(m.state)}</span>` : ''}` : ''} · <a href="${esc(t.doc)}" target="_blank" rel="noopener">filing ↗</a></span></div>`; };
   const bindTrd = () => file.querySelectorAll('.trd[data-id]').forEach((el) => (el.onclick = (e) => { if (e.target.closest('a')) return; const m = byId[el.dataset.id]; if (m) open(m); }));
-  const SRC = '<div class="fine">Public records as filed. A trade disclosure is not an accusation of wrongdoing. Amounts are the reported ranges.</div>';
+  const SRC = '<div class="fine">Public records as filed. A trade disclosure is not an accusation of wrongdoing. Amounts are the reported ranges.<br>Built by one person. If this is useful, <a href="https://x.com/KORROOFTOPARODY/creator-subscriptions/subscribe" target="_blank" rel="noopener" style="color:#ffd27a">support it for $1/month on X ›</a></div>';
 
   let VSA = null;
   function open(m) {

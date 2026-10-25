@@ -37,6 +37,44 @@ def iso(d):
         return None
 
 
+HEAD = re.compile(r"^(?:(?:SP|JT|DC)\s+)?(?P<a>.*?)\s*(?P<ty>P|S \(partial\)|S|E)\s+(?P<d>\d{2}/\d{2}/\d{4})\s+(?P<n>\d{2}/\d{2}/\d{4})\s+(?P<amt>\$[\d,]+(?:\s*-\s*(?:\$[\d,]+)?)?|Over \$[\d,]+|Spouse/DC Over \$[\d,]+)\s*$")
+STOP = re.compile(r"^(F\s+S\s*:|S\s+O\s*:|D\s*:|C\s*:|\* For the complete|I\s+V\s+D|Filing ID|ID Owner)")
+
+
+def parse_ptr(text):
+    """하원 전자 PTR 글자에서 거래 줄을 뽑는다. 자산 이름·(종목)·[종류]·금액 뒷부분이 다음 줄로 넘어가는 경우를 붙인다."""
+    lines = [x.strip() for x in text.split("\n")]
+    out, cur, cont = [], None, []
+
+    def flush():
+        if not cur:
+            return
+        rest = " ".join(cont)
+        whole = (cur.group("a") + " " + rest).strip()
+        tk = re.search(r"\(([A-Z][A-Z0-9.\-]{0,6})\)", whole)
+        at = re.search(r"\[([A-Z]{2})\]", whole)
+        amt = cur.group("amt").strip()
+        if amt.endswith("-"):
+            m2 = re.search(r"\$[\d,]+", rest)
+            amt = amt + " " + (m2.group(0) if m2 else "")
+        asset = re.sub(r"\s*\[[A-Z]{2}\]", "", whole)
+        asset = re.sub(r"\s*\$[\d,]+\s*$", "", asset).strip()
+        out.append({"tk": tk.group(1) if tk else None, "asset": asset[:80], "at": at.group(1) if at else None,
+                    "ty": cur.group("ty")[0], "d": iso(cur.group("d")), "fd": iso(cur.group("n")), "amt": re.sub(r"\s+", " ", amt).strip()})
+
+    for ln in lines:
+        m = HEAD.match(ln)
+        if m:
+            flush(); cur, cont = m, []
+        elif cur is not None:
+            if STOP.match(ln) or not ln:
+                flush(); cur, cont = None, []
+            else:
+                cont.append(ln)
+    flush()
+    return out
+
+
 def house(year, done, mem, out):
     r = requests.get(f"https://disclosures-clerk.house.gov/public_disc/financial-pdfs/{year}FD.zip", headers=UA, timeout=60)
     if r.status_code != 200:
@@ -75,13 +113,9 @@ def house(year, done, mem, out):
             done.add("h" + doc)
             continue
         text = re.sub(r"[\x00\u0000]", "", text)
-        got = 0
-        for mm in ROW.finditer(text):
-            asset = re.sub(r"\s+", " ", mm.group("asset")).strip()
-            asset = re.sub(r"^(SP|JT|DC)\s+", "", asset)
-            out.append({"c": "h", "id": who["id"] if who else None, "who": f"{first} {last}".strip(), "tk": mm.group("tk"), "asset": asset[:80],
-                        "at": mm.group("at"), "ty": mm.group("ty")[0], "d": iso(mm.group("d")), "fd": iso(mm.group("n")), "amt": re.sub(r"\s+", " ", mm.group("amt")), "doc": url})
-            got += 1
+        for t in parse_ptr(text):
+            t.update({"c": "h", "id": who["id"] if who else None, "who": f"{first} {last}".strip(), "doc": url})
+            out.append(t)
         done.add("h" + doc)
         n += 1
         time.sleep(0.3)
@@ -156,6 +190,9 @@ def main():
     except (OSError, ValueError):
         cur = {"done": [], "trades": []}
     done, out = set(cur.get("done", [])), cur.get("trades", [])
+    if cur.get("parser") != 2:  # 읽는 방식이 바뀌었으니 하원 보고서는 처음부터 다시
+        done = {d for d in done if not d.startswith("h")}
+        out = [t for t in out if t.get("c") != "h"]
     now = datetime.utcnow()
     for y in sorted({now.year - 1, now.year}):
         try:
@@ -175,7 +212,7 @@ def main():
         seen.add(k); keep.append(t)
     json.dump({"updated": now.strftime("%Y-%m-%d %H:%M UTC"), "source": "U.S. House Clerk financial disclosures · U.S. Senate eFD (STOCK Act periodic transaction reports)",
                "note": "Amounts are reported ranges. P=purchase, S=sale, E=exchange. Filings can be up to 45 days after the trade.",
-               "log": LOG, "done": sorted(done), "trades": keep}, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+               "parser": 2, "log": LOG, "done": sorted(done), "trades": keep}, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     print("trades:", len(keep), LOG)
 
 

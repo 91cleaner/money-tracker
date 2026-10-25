@@ -126,7 +126,6 @@
     <button type="button" data-w="pres"><span class="k">5</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2.8 19.5 6v5.5c0 4.6-3.2 8-7.5 9.7-4.3-1.7-7.5-5.1-7.5-9.7V6z" stroke-linejoin="round"/><path d="m12 7.6 1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" stroke-linejoin="round" stroke-width="1.3"/></svg></span>대통령</button>
     <button type="button" data-w="find"><span class="k">6</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.4 15.4 5.6 5.6"/><path d="M7.5 10.5a3 3 0 0 1 3-3" opacity=".6"/></svg></span>찾기</button>
   </nav>
-  <a class="usflag" href="us.html" >🇺🇸 미국 의회</a>
   <button type="button" class="pg-dice" aria-label="아무 의원이나 골라 추적"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/></svg>아무나 추적</button>`;
   const $ = (s) => root.querySelector(s);
   const file = $('.pg-file'), say = $('.pg-say');
