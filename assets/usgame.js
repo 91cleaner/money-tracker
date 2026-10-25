@@ -301,11 +301,36 @@
     },
     radar() {
       gFx.clearLayers(); gTop.clearLayers(); closeFile();
-      const hot = people.filter((m) => (byM[m.id] || []).some((t) => recent(t, 30)));
-      drawDots((m) => hot.includes(m), () => true); fitUS(true);
-      type(`Radar on · ${hot.length} members disclosed trades in the last 30 days`);
-      file.innerHTML = fileHead('Radar · traded in the last 30 days') + hot.sort((a, b) => (byM[b.id] || []).length - (byM[a.id] || []).length).slice(0, 40).map((m) => row(m, (byM[m.id] || []).filter((t) => recent(t, 30)).length + ' trades')).join('') + SRC;
-      file.classList.add('on'); bindX(); bindRows();
+      // Price movement is NOT realized member profit; filings do not provide exact execution prices.
+      let radarMode = 'recent';
+      const score = (m) => {
+        const priced = (byM[m.id] || []).filter(t => t.ty === 'P' && Number.isFinite(Number(t.r)) && t.r != null);
+        if (!priced.length) return null;
+        return { n: priced.length, avg: priced.reduce((a,t)=>a+Number(t.r),0)/priced.length };
+      };
+      const radarList = () => people.filter(m => {
+        const ts = byM[m.id] || [];
+        if (radarMode === 'recent') return ts.some(t=>recent(t,30));
+        const v=score(m);
+        return v && (radarMode==='up' ? v.avg>0 : v.avg<0);
+      });
+      const paintRadar = () => {
+        const hot=radarList();
+        const ids=new Set(hot.map(m=>m.id));
+        drawDots(m=>ids.has(m.id),()=>true);
+        const choices=[['recent','최근 30일 거래'],['up','매수 후 상승'],['down','매수 후 하락']];
+        file.innerHTML=fileHead('Radar · stock activity')+
+          '<div class="seg" role="group" aria-label="Radar filters">'+choices.map(([k,l])=>'<button type="button" data-radar="'+k+'" class="'+(radarMode===k?'on':'')+'">'+l+'</button>').join('')+'</div>'+
+          '<div class="ds">'+(radarMode==='recent'?'최근 30일 신고 거래 기준':'기록된 매수 종목의 거래일 이후 주가 변동 평균 기준 · 실제 의원 손익 아님')+' · '+hot.length+' members</div>'+
+          hot.sort((a,b)=>radarMode==='recent'?(byM[b.id]||[]).length-(byM[a.id]||[]).length:radarMode==='up'?score(b).avg-score(a).avg:score(a).avg-score(b).avg).slice(0,40).map(m=>{
+            const v=score(m);
+            return row(m,radarMode==='recent'?(byM[m.id]||[]).filter(t=>recent(t,30)).length+' trades':(v.avg>0?'+':'')+v.avg.toFixed(1)+'% · '+v.n+' buys');
+          }).join('')+(hot.length?'':'<div class="ds">No matching records with priced purchases.</div>')+SRC;
+        file.classList.add('on');bindX();bindRows();
+        file.querySelectorAll('[data-radar]').forEach(b=>b.onclick=()=>{radarMode=b.dataset.radar;SFX.click();paintRadar();});
+        type('Radar · '+hot.length+' members · '+(radarMode==='recent'?'recent trades':radarMode==='up'?'stocks rose after purchase':'stocks fell after purchase'));
+      };
+      paintRadar();fitUS(true);
       stopRadar(); if (RM) return;
       const cv = document.createElement('canvas'); cv.className = 'pg-radar'; cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:600;pointer-events:none'; root.querySelector('.pg-map').after(cv);
       const g = cv.getContext('2d'); const r0 = devicePixelRatio || 1; cv.width = root.clientWidth * r0; cv.height = root.clientHeight * r0; g.setTransform(r0, 0, 0, r0, 0, 0);
