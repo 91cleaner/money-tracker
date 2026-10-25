@@ -13,20 +13,37 @@
 <link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="theme-color" content="#020805">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/usgame.css?v=202610251455">
+<link rel="stylesheet" href="assets/usgame.css?v=202610251510">
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:#020805;color:#e8fff1;font-family:Pretendard,system-ui,sans-serif;overflow:hidden}
+*{box-sizing:border-box}html,body{margin:0;background:#020805;color:#e8fff1;font-family:Pretendard,system-ui,sans-serif;overflow-x:hidden}html{scroll-behavior:smooth}
 .ubar{height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;background:#020805;border-bottom:1px solid #12301f;font-size:13px}
 .ubar b{font:800 14px Pretendard,system-ui;letter-spacing:.06em;color:#eafff2}.ubar b i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#5dff9e;margin-right:8px;box-shadow:0 0 8px #5dff9e;vertical-align:1px}
 .ubar nav{display:flex;gap:6px}.ubar a{color:#9fd3b4;text-decoration:none;padding:6px 10px;border-radius:999px;border:1px solid #1f4a30;white-space:nowrap}.ubar a:hover{color:#fff;border-color:#5dff9e}.ubar .sup{color:#ffd27a;border-color:rgba(255,176,32,.45)}@media(max-width:420px){.ubar b{font-size:12px}.ubar a{padding:6px 8px;font-size:12px}.ubar .lg{display:none}}.ubar b{white-space:nowrap}
 @media(max-width:420px){.ubar .x1{display:none}}
+
+#usdash{max-width:1100px;margin:0 auto;padding:28px 16px 60px;color:#cfe9d8}
+#usdash h2{font:800 26px Pretendard,system-ui,sans-serif;color:#fff;margin:0 0 4px}#usdash h3{font:800 15px Pretendard,system-ui,sans-serif;color:#eafff2;margin:0 0 10px}
+#usdash .dn{font-size:13px;color:#8fc9a5;margin:4px 0 10px;line-height:1.5}#usdash .dn a{color:#ffd27a}
+#usdash .seg2{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px}#usdash .seg2 button{min-height:38px;padding:0 16px;border-radius:999px;border:1px solid #1f4a30;background:transparent;color:#9fd3b4;font:700 14px Pretendard,system-ui,sans-serif;cursor:pointer}#usdash .seg2 button.on{background:#5dff9e;border-color:#5dff9e;color:#02110a}
+#usdash .card{background:#05130b;border:1px solid #143a24;border-radius:16px;padding:16px;margin:12px 0;min-width:0}
+#usdash .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}#usdash .cols .card{margin:0}@media(max-width:760px){#usdash .cols{grid-template-columns:1fr}}#usdash .cols+.cols,#usdash .cols+.card,#usdash .card+.cols{margin-top:12px}
+#usdash .kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}#usdash .kp div{background:#020b06;border:1px solid #12301f;border-radius:12px;padding:10px 12px;font-size:12px;color:#8fc9a5}#usdash .kp b{display:block;font:800 22px Pretendard,system-ui,sans-serif;color:#fff;font-variant-numeric:tabular-nums}#usdash .kp small{font-size:12px;color:#6fae88;font-weight:600}
+#usdash .hb{display:grid;gap:6px}#usdash .hr{display:grid;grid-template-columns:62px 1fr 30px;align-items:center;gap:8px;min-height:24px;cursor:default}#usdash .hk{font:800 13px ui-monospace,Menlo,monospace;color:#fff}#usdash .ht{height:14px;border-radius:0 4px 4px 0;background:transparent}#usdash .ht i{display:block;height:100%;border-radius:0 4px 4px 0;min-width:3px}#usdash .hv{font:700 13px Pretendard,system-ui,sans-serif;color:#cfe9d8;text-align:right;font-variant-numeric:tabular-nums}
+#usdash .ln{width:100%;height:auto;display:block}#usdash .ln .gl{stroke:#12301f;stroke-width:1}#usdash .ln .ax{fill:#6fae88;font:11px Pretendard,system-ui,sans-serif}#usdash .ln .lb{fill:#cfe9d8;font:700 12px Pretendard,system-ui,sans-serif}
+#usdash .lg{display:flex;gap:14px;font-size:12.5px;color:#cfe9d8;margin-top:6px}#usdash .lg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+#usdash .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}#usdash table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}#usdash th,#usdash td{padding:8px 6px;border-top:1px solid #12301f;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}#usdash th:first-child,#usdash td:first-child{text-align:left}#usdash th{font-size:12px;color:#8fc9a5;border-top:0}#usdash td a{color:#eafff2;text-decoration:none;font-weight:700}#usdash td a:hover{text-decoration:underline}#usdash td.hot{color:#ffd27a;font-weight:800}
+#usdash th button{font:700 12px Pretendard,system-ui,sans-serif;color:#8fc9a5;background:none;border:0;cursor:pointer;padding:4px 0}#usdash th button.on{color:#5dff9e}
+#usdash .src{margin-top:20px}
+.dtip{position:fixed;z-index:9999;display:none;pointer-events:none;background:#04110a;border:1px solid #2a7a4a;border-radius:10px;padding:8px 10px;font:13px/1.45 Pretendard,system-ui,sans-serif;color:#eafff2;box-shadow:0 8px 24px rgba(0,0,0,.5);max-width:280px}
 </style>
 </head>
 <body data-page="us">
-<header class="ubar"><b><i></i>🇺🇸 CONGRESS TRACKER</b><nav><a class="sup" href="https://x.com/KORROOFTOPARODY/creator-subscriptions/subscribe" target="_blank" rel="noopener">♥ <span class="lg">Support · </span>$1/mo<span class="lg"> on X</span></a><a href="national.html" lang="ko">🇰🇷 Korea</a></nav></header>
+<header class="ubar" id="top"><b><i></i>🇺🇸 CONGRESS TRACKER</b><nav><a href="#usdash">📊 <span class="lg">Charts</span></a><a class="sup" href="https://x.com/KORROOFTOPARODY/creator-subscriptions/subscribe" target="_blank" rel="noopener">♥ <span class="lg">Support · </span>$1/mo<span class="lg"> on X</span></a><a href="national.html" lang="ko">🇰🇷 Korea</a></nav></header>
 <div id="pg"></div>
+<section id="usdash" aria-label="Congress trading dashboard"></section>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/usgame.js?v=202610251455"></script>
+<script src="assets/usdash.js?v=202610251510" defer></script>
+<script src="assets/usgame.js?v=202610251510"></script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
