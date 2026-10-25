@@ -106,5 +106,30 @@
 
 <script src="assets/visits.js?v=202610251055" defer></script>
 <script src="assets/pwa.js?v=202610251330" defer></script>
+
+<script>
+/* Measure the real two-row mobile header instead of guessing its height. */
+(function(){
+ const h=document.querySelector('.nbar');
+ if(!h)return;
+ const measure=()=>{
+  const px=Math.ceil(h.getBoundingClientRect().height);
+  if(px>0)document.documentElement.style.setProperty('--mt-room-header',px+'px');
+ };
+ measure();
+ if(window.ResizeObserver)new ResizeObserver(measure).observe(h);
+ window.addEventListener('resize',measure,{passive:true});
+})();
+</script>
+<style>
+@media(max-width:600px){
+ body[data-page="national"] #pg,
+ body[data-page="national"] #pg.member-selected,
+ body[data-page="national"] #pg.member-selected.member-full{
+ height:calc(100svh - var(--mt-room-header, 145px))!important;
+ min-height:360px!important;
+ }
+}
+</style>
 </body>
 </html>
