@@ -121,6 +121,9 @@
   // map
   const map = L.map($('.pg-map'), { zoomControl: false, scrollWheelZoom: false, attributionControl: true, zoomSnap: 0.25, minZoom: 2, maxZoom: 12, tap: false });
   map.attributionControl.setPrefix(false);
+  // Visible mobile zoom buttons: pinch-to-zoom remains available on the map.
+  L.control.zoom({position:'topright'}).addTo(map);
+
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 12, attribution: 'Esri · Maxar · @unitedstates · House Clerk · Senate eFD · Congress.gov' }).addTo(map);
   map.createPane('sat'); map.getPane('sat').style.zIndex = 250; map.getPane('sat').style.filter = 'brightness(.72) contrast(1.12) saturate(.75)';
   map.createPane('satlab'); map.getPane('satlab').style.zIndex = 260; map.getPane('satlab').style.pointerEvents = 'none';
@@ -151,6 +154,14 @@
   // record file
   const pic = (m) => `<img src="${esc(m.pic)}" alt="Official photo of ${esc(m.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ini',textContent:'${esc(m.name.slice(0, 1))}'}))">`;
   const closeFile = () => { root.classList.remove('member-selected','member-full'); file.classList.remove('on','expanded','peek','min'); if(innerWidth<=600)requestAnimationFrame(()=>map.invalidateSize()); file.setAttribute('aria-hidden','true'); };
+  // Dedicated back-to-map action, visible at the top of the mobile record screen.
+  const mapBack=document.createElement('button');
+  mapBack.type='button';mapBack.className='mt-return-map';
+  mapBack.textContent='← 지도로 돌아가기';
+  mapBack.setAttribute('aria-label','의원 상세정보 닫고 지도 돌아가기');
+  root.append(mapBack);
+  mapBack.addEventListener('click',()=>{VSA=null;closeFile();gTop.clearLayers();});
+
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]);
   const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="ex" aria-label="Expand panel" title="Expand panel">⤢</button><button type="button" class="mn" aria-label="Collapse">▾</button><button type="button" class="x" aria-label="Close">×</button></span></div>`;
   const bindX = () => { file.classList.remove('min','expanded'); file.classList.add('peek'); file.setAttribute('aria-hidden','false'); const ex=file.querySelector('.ex'); if(ex)ex.onclick=()=>{ file.classList.remove('peek','min'); const expanded=file.classList.toggle('expanded');ex.setAttribute('aria-label',expanded?'Restore panel':'Expand panel');ex.textContent=expanded?'⤡':'⤢'; }; const x = file.querySelector('.x'); if (x) x.onclick = () => { VSA = null; closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) { mn.setAttribute('aria-expanded', String(!file.classList.contains('min'))); mn.title='접기 / 펼치기'; mn.onclick = (e) => { e.stopPropagation(); const collapsed=file.classList.toggle('min'); file.classList.remove('expanded','peek'); mn.setAttribute('aria-expanded', String(!collapsed)); }; } };
