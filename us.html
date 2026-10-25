@@ -122,6 +122,12 @@
  body[data-page="us"] #pg.member-selected.member-full .pg-dice{top:calc(18% - 65px)!important}
  body[data-page="us"] #pg .pg-more-toggle,body[data-page="us"] #pg .pg-more-menu{display:none!important}
 }
+
+@media(max-width:600px){
+ .mt-shared-head .mt-language-switch{grid-column:2;grid-row:1;justify-self:end;margin-right:80px;min-height:32px!important;padding:4px 8px!important;border-radius:8px!important;background:#193b2a!important;color:#a8f4c7!important;font-size:11px!important;border:1px solid #35734e!important}
+ .mt-shared-head .country-switch{grid-column:1/-1!important}
+}
+@media(min-width:601px){.mt-shared-head .mt-language-switch{order:2;font-size:12px;background:#183c2b;color:#a8f4c7}}
 </style>
 </head>
 <body data-page="us" data-page="us">
@@ -146,7 +152,7 @@ if(matchMedia('(max-width:600px)').matches){
 }
 </script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/usko.js?v=20261025simplenav9" defer></script>
+<script src="assets/usko.js?v=20261025mobile21" defer></script>
 <script src="assets/usdash.js?v=20261025ko2" defer></script>
 <script src="assets/usgame.js?v=20261025verify19"></script>
 <script src="assets/usvisitors.js?v=20261025a" defer></script>
