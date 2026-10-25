@@ -138,7 +138,7 @@
 
   // record file
   const pic = (m) => `<img src="${esc(m.pic)}" alt="Official photo of ${esc(m.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ini',textContent:'${esc(m.name.slice(0, 1))}'}))">`;
-  const closeFile = () => { file.classList.remove('on','expanded','peek','min'); file.setAttribute('aria-hidden','true'); };
+  const closeFile = () => { root.classList.remove('member-selected'); file.classList.remove('on','expanded','peek','min'); if(innerWidth<=600)requestAnimationFrame(()=>map.invalidateSize()); file.setAttribute('aria-hidden','true'); };
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]);
   const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="ex" aria-label="Expand panel" title="Expand panel">⤢</button><button type="button" class="mn" aria-label="Collapse">▾</button><button type="button" class="x" aria-label="Close">×</button></span></div>`;
   const bindX = () => { file.classList.remove('min','expanded'); file.classList.add('peek'); file.setAttribute('aria-hidden','false'); const ex=file.querySelector('.ex'); if(ex)ex.onclick=()=>{ file.classList.remove('peek','min'); const expanded=file.classList.toggle('expanded');ex.setAttribute('aria-label',expanded?'Restore panel':'Expand panel');ex.textContent=expanded?'⤡':'⤢'; }; const x = file.querySelector('.x'); if (x) x.onclick = () => { VSA = null; closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) { mn.setAttribute('aria-expanded', String(!file.classList.contains('min'))); mn.title='접기 / 펼치기'; mn.onclick = (e) => { e.stopPropagation(); const collapsed=file.classList.toggle('min'); file.classList.remove('expanded','peek'); mn.setAttribute('aria-expanded', String(!collapsed)); }; } };
@@ -190,6 +190,7 @@
 
   let VSA = null;
   function open(m) {
+    if(innerWidth<=600){root.classList.add('member-selected');requestAnimationFrame(()=>{map.invalidateSize();map.panTo(LL[m.id],{animate:false});});}
     if (VSA) { const a = VSA; VSA = null; if (a.id !== m.id) return vs(a, m); }
     SFX.lock(); reticle(LL[m.id]);
     if (!RM) map.flyTo(LL[m.id], Math.max(map.getZoom(), 7.5), { duration: 0.9 }); else map.setView(LL[m.id], 7.5);
@@ -213,7 +214,7 @@
         <a href="${m.chamber === 'sen' ? 'https://efdsearch.senate.gov/search/' : 'https://disclosures-clerk.house.gov/FinancialDisclosure'}" target="_blank" rel="noopener">Financial disclosures (net worth, trades) ↗<span>${m.chamber === 'sen' ? 'Senate eFD' : 'House Clerk'}</span></a>
         <a href="https://www.fec.gov/data/search/?search=${encodeURIComponent(m.name)}" target="_blank" rel="noopener">Campaign money ↗<span>FEC</span></a></div></div>
       <div class="act"><button type="button" class="p" data-a="vs">⇄ Compare</button><button type="button" data-a="share">Copy link</button></div>`;
-    file.classList.add('on'); bindX(); bindTrd();
+    file.classList.add('on'); bindX(); bindTrd(); if(innerWidth<=600){file.classList.remove('peek','expanded','min');file.scrollTop=0;requestAnimationFrame(()=>map.invalidateSize());}
     const tabs = file.querySelectorAll('.tabs button');
     tabs.forEach((bt) => (bt.onclick = () => { SFX.click(); tabs.forEach((x) => x.classList.toggle('on', x === bt)); file.querySelectorAll('.tb').forEach((x) => (x.hidden = x.dataset.t !== bt.dataset.t)); }));
     file.querySelector('[data-a="vs"]').onclick = () => vsPick(m);
