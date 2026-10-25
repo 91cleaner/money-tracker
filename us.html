@@ -381,6 +381,34 @@
  }
 }
 @media(min-width:601px){#pg .mt-return-map{display:none!important}}
+
+/* v38: mobile tracking status stays visible after returning to the map. */
+body[data-page="us"] #pg .mt-tracking-badge[hidden]{display:none!important}
+@media(max-width:600px){
+ body[data-page="us"] #pg .mt-tracking-badge{
+  position:absolute!important;left:10px!important;right:10px!important;
+  top:10px!important;z-index:1150!important;
+  display:flex!important;align-items:center!important;gap:8px!important;
+  min-height:49px!important;padding:7px 9px!important;
+  border:1px solid #64c88a!important;border-radius:12px!important;
+  background:#082317f2!important;color:#e4ffed!important;
+  box-shadow:0 5px 20px #000a!important;font:700 12px system-ui!important;
+ }
+ body[data-page="us"] #pg .mt-tracking-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ body[data-page="us"] #pg .mt-tracking-badge button{
+  flex-shrink:0!important;min-height:35px!important;border-radius:8px!important;
+  border:1px solid #4a9e67!important;background:#17452a!important;
+  color:#d7ffe2!important;padding:0 9px!important;font:800 12px system-ui!important;
+ }
+ body[data-page="us"] #pg .mt-tracking-badge .mt-tracking-clear{font-size:21px!important;min-width:35px!important;padding:0!important}
+ body[data-page="us"] #pg.member-selected .mt-tracking-badge{display:none!important}
+ body[data-page="us"] #pg .leaflet-top.leaflet-right{top:142px!important}
+ body[data-page="us"] .mt-train-launch{
+  top:auto!important;right:12px!important;
+  bottom:calc(153px + env(safe-area-inset-bottom,0px))!important;
+ }
+ body[data-page="us"] #pg.member-selected~.mt-train-launch{display:none!important}
+}
 </style>
 </head>
 <body data-page="us">
@@ -407,7 +435,7 @@ if(matchMedia('(max-width:600px)').matches){
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/usko.js?v=20261025mobile21" defer></script>
 <script src="assets/usdash.js?v=20261025ko2" defer></script>
-<script src="assets/usgame.js?v=20261025v37"></script>
+<script src="assets/usgame.js?v=20261025v38"></script>
 <script src="assets/usvisitors.js?v=20261025a" defer></script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
