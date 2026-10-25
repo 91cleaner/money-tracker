@@ -138,7 +138,7 @@
 
   // record file
   const pic = (m) => `<img src="${esc(m.pic)}" alt="Official photo of ${esc(m.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ini',textContent:'${esc(m.name.slice(0, 1))}'}))">`;
-  const closeFile = () => { root.classList.remove('member-selected'); file.classList.remove('on','expanded','peek','min'); if(innerWidth<=600)requestAnimationFrame(()=>map.invalidateSize()); file.setAttribute('aria-hidden','true'); };
+  const closeFile = () => { root.classList.remove('member-selected','member-full'); file.classList.remove('on','expanded','peek','min'); if(innerWidth<=600)requestAnimationFrame(()=>map.invalidateSize()); file.setAttribute('aria-hidden','true'); };
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]);
   const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="ex" aria-label="Expand panel" title="Expand panel">⤢</button><button type="button" class="mn" aria-label="Collapse">▾</button><button type="button" class="x" aria-label="Close">×</button></span></div>`;
   const bindX = () => { file.classList.remove('min','expanded'); file.classList.add('peek'); file.setAttribute('aria-hidden','false'); const ex=file.querySelector('.ex'); if(ex)ex.onclick=()=>{ file.classList.remove('peek','min'); const expanded=file.classList.toggle('expanded');ex.setAttribute('aria-label',expanded?'Restore panel':'Expand panel');ex.textContent=expanded?'⤡':'⤢'; }; const x = file.querySelector('.x'); if (x) x.onclick = () => { VSA = null; closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) { mn.setAttribute('aria-expanded', String(!file.classList.contains('min'))); mn.title='접기 / 펼치기'; mn.onclick = (e) => { e.stopPropagation(); const collapsed=file.classList.toggle('min'); file.classList.remove('expanded','peek'); mn.setAttribute('aria-expanded', String(!collapsed)); }; } };
@@ -149,6 +149,7 @@
     sheetStart = { y:e.touches[0].clientY, x:e.touches[0].clientX };
   }, {passive:true});
   file.addEventListener('touchend', e => {
+    if(root.classList.contains('member-selected')){if(sheetStart && e.changedTouches.length){const dy=e.changedTouches[0].clientY-sheetStart.y;if(Math.abs(dy)>55){root.classList.toggle('member-full',dy<0);requestAnimationFrame(()=>map.invalidateSize());}}sheetStart=null;return;}
     if (!sheetStart || !e.changedTouches.length) return;
     const dy=e.changedTouches[0].clientY-sheetStart.y, dx=e.changedTouches[0].clientX-sheetStart.x;
     sheetStart=null;
@@ -190,7 +191,7 @@
 
   let VSA = null;
   function open(m) {
-    if(innerWidth<=600){root.classList.add('member-selected');requestAnimationFrame(()=>{map.invalidateSize();map.panTo(LL[m.id],{animate:false});});}
+    if(innerWidth<=600){showMobileTab('map');root.classList.add('member-selected');requestAnimationFrame(()=>{map.invalidateSize();map.panTo(LL[m.id],{animate:false});});}
     if (VSA) { const a = VSA; VSA = null; if (a.id !== m.id) return vs(a, m); }
     SFX.lock(); reticle(LL[m.id]);
     if (!RM) map.flyTo(LL[m.id], Math.max(map.getZoom(), 7.5), { duration: 0.9 }); else map.setView(LL[m.id], 7.5);
@@ -480,6 +481,41 @@
     const hop = () => { if (k >= steps) { rolling = false; dice.classList.remove('spin'); open(target); return; } const m = rnd(people); reticle(LL[m.id]); SFX.blip(); type(`Scanning… ${m.name}`); k++; setTimeout(hop, 60 + k * k * 2.2); };
     setTimeout(hop, RM ? 0 : 300);
   };
+
+  // Mobile: three clear views, with the map kept independent of long reports.
+  const mobileTabs=document.createElement('nav');
+  mobileTabs.className='mt-mobile-tabs';
+  mobileTabs.setAttribute('aria-label','Mobile sections');
+  mobileTabs.innerHTML='<button type="button" data-mtab="map" aria-pressed="true">🗺️ <span>지도</span></button><button type="button" data-mtab="trades" aria-pressed="false">📋 <span>거래</span></button><button type="button" data-mtab="dashboard" aria-pressed="false">📊 <span>대시보드</span></button>';
+  root.after(mobileTabs);
+  const mobileTrades=document.createElement('section');mobileTrades.id='mt-mobile-trades';mobileTrades.setAttribute('aria-label','Congress member transactions');mobileTabs.after(mobileTrades);
+  let mobileTradeReady=false;
+  const sortedTrades=trades.filter(t=>t.id&&byId[t.id]).sort((a,b)=>(b.d||'').localeCompare(a.d||''));
+  function renderMobileTrades(){
+    if(!mobileTradeReady){
+      mobileTrades.innerHTML='<div class="mt-trade-controls"><h2>의원 주식 거래</h2><input type="search" aria-label="Search members or stocks" placeholder="의원 이름 또는 종목 검색"><select aria-label="Transaction type"><option value="">전체 거래</option><option value="P">매수</option><option value="S">매도</option></select></div><div class="mt-trade-results"></div>';
+      mobileTrades.querySelector('input').addEventListener('input',updateMobileTrades);
+      mobileTrades.querySelector('select').addEventListener('change',updateMobileTrades);
+      mobileTrades.addEventListener('click',e=>{const row=e.target.closest('[data-member]');if(row&&byId[row.dataset.member])open(byId[row.dataset.member]);});
+      mobileTradeReady=true;
+    }
+    updateMobileTrades();
+  }
+  function updateMobileTrades(){
+    const q=mobileTrades.querySelector('input').value.trim().toLowerCase(),ty=mobileTrades.querySelector('select').value;
+    const rows=sortedTrades.filter(t=>(!ty||t.ty===ty)&&(!q||(byId[t.id].name+' '+(t.tk||'')+' '+(t.asset||'')).toLowerCase().includes(q))).slice(0,120);
+    mobileTrades.querySelector('.mt-trade-results').innerHTML=rows.length?rows.map(t=>'<button type="button" class="mt-trade-row" data-member="'+esc(t.id)+'"><span><strong>'+esc(byId[t.id].name)+'</strong><small>'+esc(t.d)+' · '+esc(byId[t.id].state)+'</small></span><span><b>'+esc(t.tk||t.asset||'—')+'</b><small>'+(t.ty==='P'?'매수':t.ty==='S'?'매도':'교환')+' · '+esc(t.amt||'금액 미공개')+'</small></span></button>').join(''):'<p class="mt-no-results">해당 거래 내역이 없습니다.</p>';
+  }
+  function showMobileTab(tab){
+    if(innerWidth>600)return;
+    document.body.dataset.mtMobileTab=tab;
+    mobileTabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mtab===tab)));
+    if(tab==='trades')renderMobileTrades();
+    if(tab==='map')requestAnimationFrame(()=>{map.invalidateSize();});
+    if(tab==='dashboard')document.getElementById('usdash')?.scrollTo(0,0);
+  }
+  mobileTabs.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>showMobileTab(b.dataset.mtab)));
+  showMobileTab('map');
 
   pick('mp', true);
   const qs = new URLSearchParams(location.search);
