@@ -1,0 +1,313 @@
+/* 정부 지출 '국회 돈 추적실': 화면 전체가 지도인 게임 화면.
+   아래 도구 칸(1~5)을 바꿔 끼우면 지도가 바뀐다. 의원을 누르면 공식 사진이 들어간 '기록 파일'이 열리고, 다녀온 나라로 비행 경로가 그려진다.
+   공개 기록을 보기 쉽게 모은 것일 뿐, 잘잘못을 따지지 않는다(문구도 그렇게 쓴다). */
+(async () => {
+  const root = document.getElementById('pg'); if (!root || !window.L) return;
+  const D = 'data/national/';
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const j = (f) => fetch(D + f, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const won = (n) => { n = Math.round(Number(n) || 0); const jo = Math.floor(n / 1e12), e = Math.floor((n % 1e12) / 1e8), m = Math.floor((n % 1e8) / 1e4); if (jo) return jo.toLocaleString('ko-KR') + '조 ' + e.toLocaleString('ko-KR') + '억원'; if (e) return e.toLocaleString('ko-KR') + '억' + (m ? ' ' + m.toLocaleString('ko-KR') + '만' : '') + '원'; return m.toLocaleString('ko-KR') + '만원'; };
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SE = [37.5319, 126.914]; // 국회
+  const PC = { 더불어민주당: '#2f7bff', 국민의힘: '#ff3b47', 조국혁신당: '#1a5fd0', 개혁신당: '#ff8a1f', 진보당: '#e0284f', 기본소득당: '#00c2b0', 사회민주당: '#ffa31a', 무소속: '#9aa6b2' };
+  const pc = (p) => PC[p] || '#b9c4cf';
+  const C = { 일본: [35.7, 139.7], 중국: [39.9, 116.4], 미국: [38.9, 282.96], 영국: [51.5, -0.1], 독일: [52.5, 13.4], 베트남: [21, 105.8], 호주: [-35.3, 149.1], 인도: [28.6, 77.2], 싱가포르: [1.35, 103.8], 우즈베키스탄: [41.3, 69.2], 필리핀: [14.6, 121], 튀르키예: [39.9, 32.9], 체코: [50.1, 14.4], 인도네시아: [-6.2, 106.8], 말레이시아: [3.1, 101.7], 홍콩: [22.3, 114.2], 오스트리아: [48.2, 16.4], 캄보디아: [11.6, 104.9], 아랍에미리트: [24.5, 54.4], 우간다: [0.3, 32.6], 브라질: [-15.8, 312.1], 헝가리: [47.5, 19], 볼리비아: [-16.5, 291.9], 스위스: [46.9, 7.4], 태국: [13.8, 100.5], 대만: [25, 121.5], 벨기에: [50.8, 4.4], 폴란드: [52.2, 21], 캐나다: [45.4, 284.3], 이탈리아: [41.9, 12.5], 덴마크: [55.7, 12.6], 멕시코: [19.4, 260.9], 이집트: [30, 31.2], 몽골: [47.9, 106.9], 칠레: [-33.4, 289.4], 라오스: [18, 102.6], 프랑스: [48.9, 2.35] };
+  const cname = (d) => (d === '오스크리아' ? '오스트리아' : d);
+  const FG = /정부|대사관|국무부|정보방송부|감숙성|란저우|연방|인민대외우호협회|사회과학원/, SELF = /자비|자부담/, PUB = /외교부|국회미래연구원|국가지식재산위원회|한국국제교류재단|국회사무처/, PTY = /정당|더불어민주당|국민의힘/;
+  const extF = (f) => { f = String(f || ''); return FG.test(f) || f.split(/[,/·]/).some((x) => x.trim() && !SELF.test(x) && !PUB.test(x) && !PTY.test(x)); };
+
+  // ── 화면 뼈대 ──
+  const css = document.createElement('style');
+  css.textContent = `
+#pg{position:relative;height:calc(100dvh - 112px);min-height:460px;margin:0 calc(50% - 50vw);width:100vw;background:#020805;overflow:hidden;font-family:Pretendard,system-ui,sans-serif;color:#cfe9d8}
+@media(min-width:900px){#pg{height:calc(100dvh - 120px)}}
+#pg .pg-map{position:absolute;inset:0;background:#020805}
+#pg .leaflet-container{background:#020805;font-family:inherit}
+#pg .leaflet-tile-pane{filter:sepia(1) hue-rotate(80deg) saturate(.9) brightness(.55) contrast(1.15)}
+#pg .pg-scan{position:absolute;inset:0;pointer-events:none;z-index:500;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.18) 2px 3px),radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(0,0,0,.65) 100%)}
+#pg .pg-top{position:absolute;z-index:700;left:8px;right:8px;top:8px;display:flex;justify-content:space-between;gap:8px;align-items:flex-start;pointer-events:none}
+#pg .pg-box{pointer-events:auto;background:rgba(3,14,8,.82);border:1px solid #1d5a35;border-radius:10px;padding:6px 10px;box-shadow:0 0 18px rgba(40,255,140,.08) inset;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+#pg .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
+#pg .live{font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e}#pg .live i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff3b47;margin-right:5px;animation:pgBlink 1s steps(2) infinite;vertical-align:0}
+@keyframes pgBlink{50%{opacity:.15}}
+#pg .ttl{font:800 14px Pretendard,system-ui;color:#e8fff1;letter-spacing:.04em}
+#pg .ctr{text-align:right}#pg .ctr .n{font:800 17px ui-monospace,Menlo,monospace;color:#ffb020;font-variant-numeric:tabular-nums}#pg .ctr .l{font-size:10.5px;color:#8fc9a5}
+#pg .pg-say{position:absolute;z-index:700;left:10px;right:10px;top:74px;font:600 12px ui-monospace,Menlo,monospace;color:#7dffb0;text-shadow:0 0 6px rgba(80,255,160,.5);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pg .pg-bar{position:absolute;z-index:720;left:50%;transform:translateX(-50%);bottom:10px;display:flex;gap:6px;padding:6px;background:rgba(3,14,8,.88);border:1px solid #1d5a35;border-radius:14px;max-width:calc(100% - 16px)}
+#pg .pg-bar button{position:relative;width:62px;height:58px;border-radius:10px;border:1px solid #1f4a30;background:#06150c;color:#bfe8cf;cursor:pointer;display:grid;place-items:center;gap:0;padding:4px 2px;font:700 10.5px Pretendard,system-ui}
+#pg .pg-bar button .ic{font-size:21px;line-height:1}#pg .pg-bar button .k{position:absolute;left:4px;top:2px;font:700 9px ui-monospace,Menlo,monospace;color:#4f8f68}
+#pg .pg-bar button[aria-pressed="true"]{border-color:#5dff9e;background:#0b2a17;color:#fff;box-shadow:0 0 0 1px #5dff9e,0 0 16px rgba(93,255,158,.35)}
+@media(max-width:380px){#pg .pg-bar button{width:56px}}
+#pg .pg-file{position:absolute;z-index:740;left:8px;right:8px;bottom:84px;max-height:58%;overflow:auto;background:rgba(2,10,6,.95);border:1px solid #2a7a4a;border-radius:12px;padding:12px 12px 10px;box-shadow:0 0 0 1px rgba(93,255,158,.08),0 10px 40px rgba(0,0,0,.6);transform:translateY(10px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+#pg .pg-file.on{opacity:1;transform:none;pointer-events:auto}
+@media(min-width:900px){#pg .pg-file{left:auto;right:12px;top:110px;bottom:84px;width:380px;max-height:none}}
+@media(max-width:899px){#pg .pg-file{max-height:44%;padding:10px}#pg .who{grid-template-columns:64px 1fr;gap:10px}#pg .ph{width:64px;height:80px}#pg .nm{font-size:19px}#pg .st{margin:8px 0}#pg .st b{font-size:16px}#pg .st span{font-size:10.5px}#pg .ttl{font-size:13px}#pg .ctr .n{font-size:15px}#pg .live{font-size:10px}}
+#pg .fh{display:flex;justify-content:space-between;align-items:center;font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e;margin-bottom:8px}
+#pg .fh button{min-width:36px;min-height:36px;border-radius:8px;border:1px solid #1f4a30;background:#06150c;color:#cfe9d8;font-size:16px;cursor:pointer}
+#pg .who{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:center}
+#pg .ph{position:relative;width:86px;height:108px;border-radius:6px;overflow:hidden;border:1px solid #2a7a4a;background:#06150c}
+#pg .ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(.85) sepia(.35) hue-rotate(70deg) contrast(1.1) brightness(.95)}
+#pg .ph::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.22) 2px 3px)}
+#pg .ph .ini{position:absolute;inset:0;display:grid;place-items:center;font:800 30px Pretendard;color:#5dff9e}
+#pg .ph .scanl{position:absolute;left:0;right:0;height:18px;background:linear-gradient(180deg,rgba(93,255,158,0),rgba(93,255,158,.45),rgba(93,255,158,0));animation:pgScan 1.6s linear 2;z-index:1}
+@keyframes pgScan{from{top:-18px}to{top:108px}}
+#pg .nm{font:800 22px Pretendard;color:#fff;line-height:1.2}#pg .pt{display:inline-block;margin:4px 0;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:800;color:#fff}
+#pg .ds{font-size:12.5px;color:#9fd3b4;line-height:1.45}
+#pg .st{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}
+#pg .st div{background:#06150c;border:1px solid #1f4a30;border-radius:8px;padding:6px 8px}#pg .st b{display:block;font:800 18px ui-monospace,Menlo,monospace;color:#ffb020}#pg .st span{font-size:11px;color:#8fc9a5}
+#pg .st .z b{color:#5dff9e}
+#pg .tr{padding:8px 0;border-top:1px dashed #1f4a30;font-size:13px;line-height:1.45}#pg .tr .d{font:700 12px ui-monospace,Menlo,monospace;color:#7dffb0}#pg .tr .f{font-size:12px;color:#ffd27a}
+#pg .tr .p{color:#cfe9d8}#pg .tg{display:inline-block;font-size:11px;padding:0 6px;border-radius:999px;border:1px solid #2a7a4a;color:#9fd3b4;margin:2px 4px 0 0}
+#pg .tg.y{border-color:#ffb02088;color:#ffd27a}
+#pg .act{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}#pg .act a,#pg .act button{font:700 12.5px Pretendard;min-height:34px;padding:0 10px;border-radius:8px;border:1px solid #2a7a4a;background:#06150c;color:#cfe9d8;text-decoration:none;display:inline-flex;align-items:center;cursor:pointer}
+#pg .act .p{background:#5dff9e;color:#02110a;border-color:#5dff9e}
+#pg .fine{font-size:11px;color:#6fae88;margin-top:8px;line-height:1.45}#pg .fine a{color:#8fc9a5}
+#pg .li{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid #12301f;cursor:pointer}#pg .li:hover{background:#071a0f}
+#pg .li img,#pg .li .av{width:30px;height:38px;border-radius:4px;object-fit:cover;filter:grayscale(.8) sepia(.3) hue-rotate(70deg);flex:none;background:#06150c;border:1px solid #1f4a30;display:grid;place-items:center;font:800 13px Pretendard;color:#5dff9e}
+#pg .li .t{flex:1;min-width:0}#pg .li .t b{color:#fff}#pg .li .t div{font-size:11.5px;color:#8fc9a5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#pg .li .r{font:800 13px ui-monospace,Menlo,monospace;color:#ffb020;white-space:nowrap}
+#pg .q{width:100%;font:700 16px Pretendard;color:#e8fff1;background:#06150c;border:1px solid #2a7a4a;border-radius:8px;padding:10px 12px;margin:2px 0 6px}
+#pg .pb{margin:6px 0}#pg .pb .h{display:flex;justify-content:space-between;font-size:13px}#pg .pb .h b{font-family:ui-monospace,Menlo,monospace;color:#ffb020}#pg .pb .tk{height:8px;border-radius:4px;background:#06150c;overflow:hidden;margin-top:3px}#pg .pb .tk i{display:block;height:100%}
+#pg .reticle{pointer-events:none}#pg .reticle svg{animation:pgLock .9s ease-out both}
+@keyframes pgLock{from{transform:scale(2.6) rotate(45deg);opacity:0}to{transform:none;opacity:1}}
+#pg .plane{font-size:18px;filter:drop-shadow(0 0 4px #ffb020);pointer-events:none}
+#pg .clab{background:rgba(3,14,8,.85)!important;border:1px solid #1d5a35!important;color:#cfe9d8!important;font:700 11px Pretendard!important;padding:1px 6px!important;border-radius:6px!important;box-shadow:none!important}
+#pg .clab::before{display:none}
+#pg .mtag{background:rgba(3,14,8,.9)!important;border:1px solid #5dff9e!important;color:#e8fff1!important;font:800 12px Pretendard!important;padding:2px 7px!important;border-radius:6px!important;box-shadow:0 0 12px rgba(93,255,158,.3)!important}
+#pg .mtag::before{display:none}
+#pg .pg-hint{position:absolute;z-index:700;left:50%;transform:translateX(-50%);bottom:80px;font:700 12px Pretendard;color:#02110a;background:#5dff9e;border-radius:999px;padding:4px 12px;white-space:nowrap;animation:pgBlink 1.4s ease-in-out 4}
+`;
+  document.head.append(css);
+  root.innerHTML = `<div class="pg-map" aria-label="국회의원 지도"></div><div class="pg-scan"></div>
+  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl">국회 돈 추적실</div></div>
+  <div class="pg-box ctr"><div class="n mono">0원</div><div class="l">오늘 의원 <span class="nmem">300</span>명 세비 누적(지급 기준)</div></div></div>
+  <div class="pg-say mono"></div>
+  <div class="pg-file" role="dialog" aria-label="기록 파일"></div>
+  <nav class="pg-bar" aria-label="도구">
+    <button type="button" data-w="mp"><span class="k">1</span><span class="ic">🎯</span>의원</button>
+    <button type="button" data-w="trip"><span class="k">2</span><span class="ic">✈️</span>출장</button>
+    <button type="button" data-w="radar"><span class="k">3</span><span class="ic">📡</span>레이더</button>
+    <button type="button" data-w="party"><span class="k">4</span><span class="ic">🏛</span>정당</button>
+    <button type="button" data-w="find"><span class="k">5</span><span class="ic">🔍</span>찾기</button>
+  </nav>`;
+  const $ = (s) => root.querySelector(s);
+  const file = $('.pg-file'), say = $('.pg-say');
+  let typer = 0;
+  const type = (t) => { clearInterval(typer); if (RM) { say.textContent = '> ' + t; return; } let i = 0; say.textContent = '> '; typer = setInterval(() => { say.textContent = '> ' + t.slice(0, ++i) + (i < t.length ? '▌' : ''); if (i >= t.length) clearInterval(typer); }, 22); };
+
+  // ── 자료 ──
+  const [mem, sup, flw, par, geo] = await Promise.all([j('members.json'), j('support.json'), j('flows.json'), j('parties.json'), j('geo.json')]);
+  if (!mem) { type('자료를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.'); return; }
+  const people = mem.members || [], trips = mem.trips || [];
+  const pos = (geo && geo.pos) || {};
+  const per = Number(((sup && sup.allowance) || []).find((a) => a.amount)?.amount) || 0;
+  const byM = {}; for (const t of trips) { if (!t.member_id) continue; (byM[t.member_id] = byM[t.member_id] || []).push(t); }
+  const tripsOf = (m) => { const u = new Map(); for (const t of byM[m.id] || []) u.set(t.trip_id, t); return [...u.values()].sort((a, b) => String(b.start || '').localeCompare(String(a.start || ''))); };
+  const statOf = (m) => { const ts = tripsOf(m); return { ts, n: ts.length, ext: ts.filter((t) => extF(t.funder)).length, norep: ts.filter((t) => t.report !== '유').length }; };
+  const byT = {}; for (const t of trips) (byT[t.trip_id] = byT[t.trip_id] || []).push(t);
+  const ctry = {}; for (const [id, ts] of Object.entries(byT)) for (const d of new Set((ts[0].dest || []).map(cname))) (ctry[d] = ctry[d] || new Set()).add(id);
+  root.querySelector('.nmem').textContent = people.length;
+
+  // ── 시계·카운터 ──
+  const clk = $('.clk'), ctr = $('.ctr .n');
+  const tick = () => { const k = new Date(Date.now() + 9 * 3600e3); clk.textContent = k.toISOString().slice(11, 19) + ' KST'; const sec = k.getUTCHours() * 3600 + k.getUTCMinutes() * 60 + k.getUTCSeconds() + k.getUTCMilliseconds() / 1000; ctr.textContent = won(per * people.length / (365 * 86400) * sec); };
+  tick(); setInterval(tick, RM ? 1000 : 100);
+
+  // ── 지도 ──
+  const map = L.map($('.pg-map'), { zoomControl: false, attributionControl: true, zoomSnap: 0.25, minZoom: 1, maxZoom: 11, worldCopyJump: false, tap: false });
+  map.attributionControl.setPrefix(false);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 11, attribution: '지도: Esri · 자료: 열린국회정보' }).addTo(map);
+  const KR = L.latLngBounds([[33.0, 125.3], [38.7, 129.7]]);
+  const fitKR = (anim) => map.fitBounds(KR, { padding: [70, 20], paddingBottomRight: [20, 90], animate: !!anim && !RM });
+  fitKR(false);
+  const gDots = L.layerGroup().addTo(map), gFx = L.layerGroup().addTo(map), gTop = L.layerGroup().addTo(map);
+
+  // 의원 위치: 지역구는 지역 좌표(같은 곳이 여럿이면 둘레로 살짝), 비례대표는 국회 둘레 고리
+  const slot = {}, LL = {};
+  const prop = people.filter((m) => m.elect !== '지역구');
+  for (const m of people) {
+    let p = pos[m.id];
+    if (m.elect !== '지역구' || !p) { const i = prop.indexOf(m), n = Math.max(1, prop.length), a = (i / n) * Math.PI * 2; p = [SE[0] + 0.16 * Math.sin(a), SE[1] + 0.2 * Math.cos(a)]; }
+    else { const k = p.join(','), i = (slot[k] = (slot[k] || 0) + 1) - 1; if (i) { const a = i * 2.4, r = 0.035 * Math.sqrt(i); p = [p[0] + r * Math.sin(a), p[1] + r * 1.25 * Math.cos(a)]; } }
+    LL[m.id] = p;
+  }
+  const dotOf = {};
+  const drawDots = (filter) => {
+    gDots.clearLayers();
+    for (const m of people) {
+      const on = !filter || filter(m);
+      const mk = L.circleMarker(LL[m.id], { radius: on ? 5.5 : 3, weight: on ? 1.5 : 0.5, color: on ? '#e8fff1' : '#2a4a38', fillColor: pc(m.party), fillOpacity: on ? 0.95 : 0.25, opacity: on ? 0.9 : 0.4 }).addTo(gDots);
+      mk.on('click', () => open(m));
+      mk.bindTooltip(`${esc(m.name)} · ${esc(m.party)}`, { direction: 'top', className: 'clab', offset: [0, -4] });
+      dotOf[m.id] = mk;
+    }
+  };
+
+  // 비행 경로(국회 → 나라): 휘는 선 + 움직이는 ✈
+  const arc = (a, b) => { const P = [], mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, dx = b[1] - a[1], dy = b[0] - a[0], k = 0.18, c = [mx + dx * k, my - dy * k]; for (let i = 0; i <= 40; i++) { const t = i / 40, u = 1 - t; P.push([u * u * a[0] + 2 * u * t * c[0] + t * t * b[0], u * u * a[1] + 2 * u * t * c[1] + t * t * b[1]]); } return P; };
+  let planeRaf = 0;
+  const fly = (routes) => {
+    cancelAnimationFrame(planeRaf); gFx.clearLayers();
+    const planes = routes.map((r, i) => {
+      L.polyline(r.path, { color: r.col || '#ffb020', weight: r.w || 2.5, opacity: 0.35, dashArray: '2 8', interactive: false }).addTo(gFx);
+      const line = L.polyline([r.path[0]], { color: r.col || '#ffb020', weight: r.w || 2.5, opacity: 0.95, interactive: false }).addTo(gFx);
+      const pl = L.marker(r.path[0], { icon: L.divIcon({ className: 'plane', html: '✈', iconSize: [18, 18], iconAnchor: [9, 9] }), interactive: false }).addTo(gFx);
+      return { r, line, pl, off: i * 260 };
+    });
+    if (RM) { planes.forEach((p) => { p.line.setLatLngs(p.r.path); p.pl.setLatLng(p.r.path[p.r.path.length - 1]); }); return; }
+    const t0 = performance.now(), DUR = 1800;
+    const step = (now) => {
+      let busy = false;
+      for (const p of planes) {
+        const u = Math.min(1, Math.max(0, (now - t0 - p.off) / DUR)); if (u < 1) busy = true;
+        const k = Math.max(1, Math.round(u * (p.r.path.length - 1)));
+        p.line.setLatLngs(p.r.path.slice(0, k + 1)); p.pl.setLatLng(p.r.path[k]);
+        const a = p.r.path[Math.max(0, k - 1)], b = p.r.path[k];
+        const el = p.pl.getElement(); if (el) { const ang = Math.atan2(-(b[0] - a[0]), b[1] - a[1]) * 180 / Math.PI; el.style.transform = el.style.transform.replace(/ rotate\([^)]*\)/, '') + ` rotate(${ang}deg)`; }
+      }
+      if (busy) planeRaf = requestAnimationFrame(step);
+    };
+    planeRaf = requestAnimationFrame(step);
+  };
+  const reticle = (ll) => {
+    gTop.clearLayers();
+    L.marker(ll, { interactive: false, icon: L.divIcon({ className: 'reticle', iconSize: [70, 70], iconAnchor: [35, 35], html: '<svg width="70" height="70" viewBox="0 0 70 70"><circle cx="35" cy="35" r="22" fill="none" stroke="#5dff9e" stroke-width="2"/><circle cx="35" cy="35" r="30" fill="none" stroke="#5dff9e" stroke-opacity=".35" stroke-width="1" stroke-dasharray="3 5"/><g stroke="#5dff9e" stroke-width="2"><line x1="35" y1="2" x2="35" y2="14"/><line x1="35" y1="56" x2="35" y2="68"/><line x1="2" y1="35" x2="14" y2="35"/><line x1="56" y1="35" x2="68" y2="35"/></g></svg>' }) }).addTo(gTop);
+  };
+
+  // ── 기록 파일 ──
+  const pic = (m, cls) => (m.pic ? `<img class="${cls || ''}" src="${esc(m.pic)}" alt="${esc(m.name)} 의원 공식 사진" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ini',textContent:'${esc(m.name.slice(0, 1))}'}))">` : `<span class="ini">${esc(m.name.slice(0, 1))}</span>`);
+  const closeFile = () => { file.classList.remove('on'); };
+  const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]); // 파일 창에 가리지 않게
+  const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><button type="button" class="x" aria-label="닫기">×</button></div>`;
+  const bindX = () => { const x = file.querySelector('.x'); if (x) x.onclick = () => { closeFile(); gTop.clearLayers(); }; };
+  const SHARE = (m) => { try { const ix = window.__shIdx; if (ix && ix.mp && ix.mp[m.name]) return location.origin + location.pathname.replace(/[^/]*$/, '') + 's/m/' + ix.mp[m.name] + '.html'; } catch (e) { /* 무시 */ } return location.origin + location.pathname + '?mp=' + encodeURIComponent(m.name); };
+  fetch('data/og/s/index.json').then((r) => (r.ok ? r.json() : null)).then((x) => { window.__shIdx = x; }).catch(() => {});
+  function open(m) {
+    const s = statOf(m);
+    const ll = LL[m.id];
+    reticle(ll);
+    if (!RM) map.flyTo(ll, Math.max(map.getZoom(), 8.5), { duration: 0.9 }); else map.setView(ll, 8.5);
+    type(`기록 열람: ${m.name} · ${m.party} · ${m.district}`);
+    const dests = [...new Set(s.ts.flatMap((t) => (t.dest || []).map(cname)))];
+    file.innerHTML = fileHead(`FILE · 22대 국회의원 · ${m.id || ''}`) + `
+      <div class="who"><div class="ph"><span class="scanl"></span>${pic(m)}</div>
+      <div><div class="nm">${esc(m.name)}</div><span class="pt" style="background:${pc(m.party)}">${esc(m.party)}</span>
+      <div class="ds">${esc(m.district)} · ${esc(m.reele || '')}<br>${esc(m.cmits || '')}</div></div></div>
+      <div class="st"><div><b>${s.n}</b><span>국외 출장 신고</span></div><div class="${s.ext ? '' : 'z'}"><b>${s.ext}</b><span>외부에서 비용 낸 출장</span></div><div class="${s.norep ? '' : 'z'}"><b>${s.norep}</b><span>결과보고서 없이 신고</span></div></div>
+      <div class="ds">1년 지급 기준 <b style="color:#ffb020">${won(per)}</b> (의원 1명, 실수령액 아님)</div>
+      ${s.ts.length ? `<div style="margin-top:8px">` + s.ts.map((t) => `<div class="tr"><div class="d">${esc(t.dates || t.start || '')} · ${esc((t.dest || []).map(cname).join(', '))}</div><div class="p">${esc(String(t.purpose || '').slice(0, 90))}</div><div><span class="tg y">비용 낸 곳: ${esc(t.funder || '적힌 곳 없음')}</span><span class="tg">결과보고서 ${t.report === '유' ? '있음' : '신고 때 없음'}</span>${t.dest_inferred ? '<span class="tg">나라는 목적 문구로 추정</span>' : ''}</div></div>`).join('') + '</div>' : '<div class="ds" style="margin-top:8px">신고된 국외 출장이 없어요.</div>'}
+      <div class="act">${dests.length ? '<button type="button" class="p" data-a="fly">✈️ 출장 경로 보기</button>' : ''}<button type="button" data-a="share">링크 복사</button><a href="${esc(m.profile || m.src || 'https://open.assembly.go.kr')}" target="_blank" rel="noopener">원문 ↗</a></div>
+      <div class="fine">공개된 기록을 모은 것일 뿐, 잘잘못을 뜻하지 않아요. 결과보고서는 나중에 낼 수 있어요. 출처 <a href="https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr" target="_blank" rel="noopener">열린국회정보</a> · 사진 국회</div>`;
+    file.classList.add('on'); bindX();
+    const showFly = () => {
+      const rs = dests.filter((d) => C[d]).map((d) => ({ path: arc(SE, C[d]), col: '#ffb020', w: 2.5 }));
+      if (!rs.length) return;
+      const b = L.latLngBounds([SE, ...dests.filter((d) => C[d]).map((d) => C[d])]);
+      map.flyToBounds(b, { paddingTopLeft: [30, 100], paddingBottomRight: padBR(), duration: RM ? 0 : 1.1, maxZoom: 5 });
+      setTimeout(() => { fly(rs); for (const d of dests.filter((x) => C[x])) { const n = s.ts.filter((t) => (t.dest || []).map(cname).includes(d)).length; L.circleMarker(C[d], { radius: 6, color: '#02110a', weight: 1, fillColor: '#ffb020', fillOpacity: 0.95, interactive: false }).addTo(gFx).bindTooltip(`${esc(d)}${n > 1 ? ' ×' + n : ''}`, { permanent: true, direction: 'top', className: 'mtag', offset: [0, -6] }); } }, RM ? 0 : 900);
+      type(`${m.name} 출장 경로 ${rs.length}곳 · 국회(여의도) 출발`);
+    };
+    const fb = file.querySelector('[data-a="fly"]'); if (fb) fb.onclick = showFly;
+    file.querySelector('[data-a="share"]').onclick = async (e) => { const u = SHARE(m); try { await navigator.clipboard.writeText(u); e.target.textContent = '복사했어요'; } catch (_) { prompt('링크', u); } };
+    if (dests.length) setTimeout(showFly, RM ? 0 : 1300); else gFx.clearLayers();
+    try { history.replaceState(null, '', '?mp=' + encodeURIComponent(m.name)); } catch (e) { /* 무시 */ }
+  }
+  const row = (m, right) => `<div class="li" data-id="${esc(m.id)}">${m.pic ? `<img src="${esc(m.pic)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="av">${esc(m.name.slice(0, 1))}</span>`}<div class="t"><b>${esc(m.name)}</b> <span style="color:${pc(m.party)};font-size:11px;font-weight:800">${esc(m.party)}</span><div>${esc(m.district)}</div></div>${right ? `<span class="r">${right}</span>` : ''}</div>`;
+  const bindRows = () => file.querySelectorAll('.li[data-id]').forEach((el) => (el.onclick = () => { const m = people.find((x) => x.id === el.dataset.id); if (m) open(m); }));
+
+  // ── 도구(무기) ──
+  let radarRaf = 0;
+  const stopRadar = () => { cancelAnimationFrame(radarRaf); radarRaf = 0; const c = root.querySelector('.pg-radar'); if (c) c.remove(); };
+  const W = {
+    mp() {
+      stopRadar(); gFx.clearLayers(); gTop.clearLayers(); drawDots(); fitKR(true); closeFile();
+      type(`의원 ${people.length}명 위치 표시 · 점을 누르면 기록 파일이 열려요 (비례대표는 국회 둘레)`);
+    },
+    trip() {
+      stopRadar(); gTop.clearLayers(); drawDots(() => false);
+      const list = Object.entries(ctry).filter(([c]) => C[c]).sort((a, b) => b[1].size - a[1].size);
+      const mx = Math.max(1, ...list.map(([, s]) => s.size));
+      fly(list.map(([c, s]) => ({ path: arc(SE, C[c]), w: 1.5 + (s.size / mx) * 5 })));
+      for (const [c, s] of list) {
+        const mk = L.circleMarker(C[c], { radius: 5 + (s.size / mx) * 7, color: '#02110a', weight: 1, fillColor: '#ffb020', fillOpacity: 0.95 }).addTo(gTop);
+        mk.bindTooltip(`${esc(c)} ${s.size}`, { permanent: s.size >= mx * 0.25, direction: 'top', className: 'clab', offset: [0, -6] });
+        mk.on('click', () => country(c));
+      }
+      const n = new Set(trips.map((t) => t.trip_id)).size;
+      type(`국외 출장 신고 ${n}건 · ${list.length}개 나라 · 나라를 누르면 누가 갔는지 나와요`);
+      file.innerHTML = fileHead('출장 추적') + `<div class="ds">국회에서 출발한 선이 굵을수록 신고가 많아요. 비용은 자비·외교부·외국 정부 등 여러 곳에서 냈어요(모두 세금은 아님).</div>` + list.slice(0, 15).map(([c, s]) => `<div class="li" data-c="${esc(c)}"><span class="av">✈</span><div class="t"><b>${esc(c)}</b><div>신고 ${s.size}건</div></div><span class="r">${s.size}</span></div>`).join('');
+      file.classList.add('on'); bindX(); file.querySelectorAll('.li[data-c]').forEach((el) => (el.onclick = () => country(el.dataset.c)));
+      map.flyToBounds(L.latLngBounds([SE, ...list.map(([c]) => C[c]).filter((p) => p[1] < 200)]), { paddingTopLeft: [30, 100], paddingBottomRight: padBR(), duration: RM ? 0 : 1.2, maxZoom: 4 });
+    },
+    radar() {
+      gFx.clearLayers(); gTop.clearLayers();
+      const st = Object.fromEntries(people.map((m) => [m.id, statOf(m)]));
+      const hit = (m) => st[m.id].ext > 0 || st[m.id].norep > 0;
+      drawDots((m) => hit(m)); fitKR(true);
+      const L2 = people.filter(hit).sort((a, b) => (st[b.id].ext * 2 + st[b.id].norep) - (st[a.id].ext * 2 + st[a.id].norep));
+      const ne = people.filter((m) => st[m.id].ext).length, nn = people.filter((m) => st[m.id].norep).length;
+      type(`레이더 가동 · 외부 비용 출장 ${ne}명 · 결과보고서 없이 신고 ${nn}명 감지`);
+      file.innerHTML = fileHead('레이더 · 눈여겨볼 기록') + `<div class="ds">출장 비용을 외부(외국 정부·단체·기업 등)에서 냈거나, 신고할 때 결과보고서가 없던 기록이 있는 의원이에요. 규정상 허용될 수 있고 잘못을 뜻하지 않아요.</div>` + L2.slice(0, 40).map((m) => row(m, `${st[m.id].ext ? '외부 ' + st[m.id].ext : ''}${st[m.id].ext && st[m.id].norep ? ' · ' : ''}${st[m.id].norep ? '보고서 ' + st[m.id].norep : ''}`)).join('');
+      file.classList.add('on'); bindX(); bindRows();
+      // 훑는 레이더(캔버스)
+      stopRadar(); if (RM) return;
+      const cv = document.createElement('canvas'); cv.className = 'pg-radar'; cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:600;pointer-events:none'; root.querySelector('.pg-map').after(cv);
+      const g = cv.getContext('2d'); const size = () => { const r = devicePixelRatio || 1; cv.width = root.clientWidth * r; cv.height = root.clientHeight * r; g.setTransform(r, 0, 0, r, 0, 0); }; size();
+      const t0 = performance.now();
+      const loop = (now) => {
+        const c = map.latLngToContainerPoint([36.4, 127.8]), R = Math.max(root.clientWidth, root.clientHeight) * 0.6, a = ((now - t0) / 2600) * Math.PI * 2;
+        g.clearRect(0, 0, cv.width, cv.height);
+        const gr = g.createConicGradient ? g.createConicGradient(a - 0.9, c.x, c.y) : null;
+        if (gr) { gr.addColorStop(0, 'rgba(93,255,158,0)'); gr.addColorStop(0.14, 'rgba(93,255,158,.28)'); gr.addColorStop(0.145, 'rgba(93,255,158,0)'); g.fillStyle = gr; g.beginPath(); g.arc(c.x, c.y, R, 0, 6.283); g.fill(); }
+        g.strokeStyle = 'rgba(93,255,158,.18)'; for (const r of [R * 0.25, R * 0.5, R * 0.75]) { g.beginPath(); g.arc(c.x, c.y, r, 0, 6.283); g.stroke(); }
+        g.strokeStyle = 'rgba(160,255,200,.8)'; g.lineWidth = 2; g.beginPath(); g.moveTo(c.x, c.y); g.lineTo(c.x + R * Math.cos(a), c.y + R * Math.sin(a)); g.stroke(); g.lineWidth = 1;
+        for (const m of L2) { const p = map.latLngToContainerPoint(LL[m.id]); let d = Math.atan2(p.y - c.y, p.x - c.x) - a; d = ((d % 6.283) + 6.283) % 6.283; const glow = Math.max(0, 1 - (6.283 - d) / 1.2); if (glow > 0) { g.fillStyle = `rgba(255,176,32,${0.9 * glow})`; g.beginPath(); g.arc(p.x, p.y, 7 + 10 * glow, 0, 6.283); g.fill(); } }
+        radarRaf = requestAnimationFrame(loop);
+      };
+      radarRaf = requestAnimationFrame(loop);
+    },
+    party() {
+      stopRadar(); gFx.clearLayers(); gTop.clearLayers(); fitKR(true);
+      const pf = ((flw && flw.flows) || []).filter((f) => f.kind === '경상보조금' && f.period === '3분기');
+      const amt = Object.fromEntries(pf.map((f) => [f.to.party, f.amount]));
+      const seats = {}; for (const m of people) seats[m.party] = (seats[m.party] || 0) + 1;
+      const parties = Object.keys(seats).sort((a, b) => seats[b] - seats[a]);
+      const mx = Math.max(1, ...Object.values(amt));
+      let sel = null;
+      const paint = () => {
+        drawDots(sel ? (m) => m.party === sel : null);
+        file.innerHTML = fileHead('정당 · 2026년 3분기 경상보조금') + `<div class="ds">정당이 3달마다 나라에서 받는 살림 돈이에요. 정당을 누르면 그 정당 의원만 지도에 남아요.</div>` + parties.map((p) => `<div class="pb li" data-p="${esc(p)}" style="display:block${sel && sel !== p ? ';opacity:.45' : ''}"><div class="h"><span><span style="color:${pc(p)}">●</span> ${esc(p)} <span style="color:#8fc9a5;font-size:11.5px">의석 ${seats[p]}</span></span><b>${amt[p] ? won(amt[p]) : '—'}</b></div><div class="tk"><i style="width:${amt[p] ? Math.max(2, amt[p] / mx * 100) : 0}%;background:${pc(p)}"></i></div></div>`).join('') + `<div class="fine">출처 중앙선거관리위원회 · 의석은 현재 기준</div>`;
+        file.classList.add('on'); bindX();
+        file.querySelectorAll('[data-p]').forEach((el) => (el.onclick = () => { sel = sel === el.dataset.p ? null : el.dataset.p; paint(); type(sel ? `${sel} 의원 ${seats[sel]}명 표시` : '모든 정당 표시'); }));
+      };
+      paint(); type(`정당 ${parties.length}곳 · 3분기 경상보조금 합계 ${won(Object.values(amt).reduce((a, b) => a + b, 0))}`);
+    },
+    find() {
+      stopRadar(); gFx.clearLayers();
+      file.innerHTML = fileHead('찾기') + `<input class="q" type="search" placeholder="이름·지역구·정당 (예: 동작구)" aria-label="의원 찾기" autocomplete="off"><div class="res"></div>`;
+      file.classList.add('on'); bindX();
+      const q = file.querySelector('.q'), res = file.querySelector('.res');
+      const norm = (s) => String(s || '').replace(/\s+/g, '').toLowerCase();
+      const paint = () => { const n = norm(q.value); const L2 = n ? people.filter((m) => norm(m.name + m.district + m.party + (m.cmits || '')).includes(n)).slice(0, 30) : []; res.innerHTML = L2.map((m) => row(m, statOf(m).n ? '✈ ' + statOf(m).n : '')).join('') || (n ? '<div class="ds">못 찾았어요.</div>' : '<div class="ds">이름 한 글자만 쳐도 돼요.</div>'); bindRows(); };
+      q.addEventListener('input', paint); setTimeout(() => q.focus(), 50); paint();
+      type('검색 대기 중…');
+    },
+  };
+  function country(c) {
+    const ids = [...(ctry[c] || [])];
+    if (C[c]) map.flyTo(C[c], 4, { duration: RM ? 0 : 0.9 });
+    type(`${c} · 출장 신고 ${ids.length}건`);
+    file.innerHTML = fileHead(`국가 파일 · ${c}`) + ids.map((id) => { const ts = byT[id], t = ts[0]; return `<div class="tr"><div class="d">${esc(t.dates || '')}</div><div class="p">${esc(String(t.purpose || '').slice(0, 80))}</div><div><span class="tg y">비용 낸 곳: ${esc(t.funder || '적힌 곳 없음')}</span></div>${ts.map((x) => { const m = people.find((p) => p.id === x.member_id); return m ? row(m) : `<div class="ds">${esc(x.name)} (${esc(x.party || '')})</div>`; }).join('')}</div>`; }).join('') + '<div class="fine">출처 열린국회정보 · 공개 기록일 뿐 잘잘못을 뜻하지 않아요</div>';
+    file.classList.add('on'); bindX(); bindRows();
+  }
+  const btns = [...root.querySelectorAll('.pg-bar button')];
+  const pick = (w) => { btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === w))); W[w](); };
+  btns.forEach((b) => (b.onclick = () => pick(b.dataset.w)));
+  addEventListener('keydown', (e) => { if (/input|textarea/i.test((e.target && e.target.tagName) || '')) return; const i = Number(e.key) - 1; if (i >= 0 && i < btns.length) pick(btns[i].dataset.w); if (e.key === 'Escape') closeFile(); });
+  setTimeout(() => map.invalidateSize(), 300);
+  addEventListener('resize', () => map.invalidateSize());
+
+  pick('mp');
+  const want = new URLSearchParams(location.search).get('mp');
+  if (want) { const m = people.find((x) => x.name === want.trim()); if (m) setTimeout(() => open(m), 600); }
+  else { const h = document.createElement('div'); h.className = 'pg-hint'; h.textContent = '점을 눌러 의원 기록을 열어 보세요'; root.append(h); setTimeout(() => h.remove(), 6000); }
+})();

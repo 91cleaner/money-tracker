@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-25 11:24",
+ "updated": "2026-10-25 06:47",
  "assembly_key": true,
  "seats": {
   "source": "members.json(열린국회정보 API nwvrqwxyaytdsfvhu)",
@@ -7,14 +7,12 @@
   "label": "현재 의석 기준 근사치"
  },
  "log": [
-  "nwvrqwxyaytdsfvhu: URLError <urlopen error timed out>",
-  "nwvrqwxyaytdsfvhu: 0/None건",
-  "의원 명단: 새로 받은 건이 적어 이전 명단 유지",
-  "nasnutdbapnfphwyr: URLError <urlopen error timed out>",
-  "nasnutdbapnfphwyr: 0/None건",
-  "ALLNAMEMBER: URLError <urlopen error timed out>",
-  "ALLNAMEMBER: 0/None건",
-  "국외활동: 신고 0건, 참가 0건, 미매칭 0건"
+  "nwvrqwxyaytdsfvhu: 299/299건",
+  "nasnutdbapnfphwyr: 121/121건",
+  "국외활동 필드: DSTN_NM,EXPNS_SUPPT_INST_NM,PN,PURP_RSON,REPORT_YN,SCH_DYS,UNIT_CD,UNIT_NM",
+  "ALLNAMEMBER: 3296/3296건",
+  "ALLNAMEMBER 필드: AIDE_NM,BIRDY_DIV_CD,BIRDY_DT,BLNG_CMIT_NM,BRF_HST,CHF_SCRT_NM,CMIT_NM,DTY_NM,ELECD_DIV_NM,ELECD_NM,GTELT_ERACO,NAAS_CD,NAAS_CH_NM,NAAS_EMAIL_ADDR,NAAS_EN_NM,NAAS_HP_URL,NAAS_NM,NAAS_PIC,NAAS_TEL_NO,NTR_DIV,OFFM_RNUM_NO,PLPT_NM,RLCT_DIV_NM,SCRT_NM",
+  "국외활동: 신고 121건, 참가 248건, 미매칭 1건"
  ],
  "files": [
   "trips_raw",
