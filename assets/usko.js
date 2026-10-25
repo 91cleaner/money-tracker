@@ -29,7 +29,7 @@
     ['Find my representatives (near me)', '내 근처 의원 찾기'], ['Name, state, or ticker (e.g. Pelosi, TX, NVDA)', '이름·주·종목 (예: Pelosi, TX, NVDA)'], ['Name or state (e.g. TX)', '이름 또는 주 (예: TX)'],
     ['No stock trade disclosures (PTRs) parsed for the last 12 months.', '최근 12개월 신고된 주식 거래가 없어요.'], ['Bill data is loading in the next update.', '법안 자료는 다음 업데이트에 들어와요.'],
     ['Official biography', '공식 약력'], ['Official website', '공식 홈페이지'], ['Financial disclosures (net worth, trades)', '재산 공개(재산·거래)'], ['Campaign money', '선거 자금'], ['Check the source', '원문으로 확인'], ['Committees', '소속 위원회'],
-    ['Radar · traded in the last 30 days', '레이더 · 최근 30일 거래'], ['Beat the market', '시장 대비'], ['Est. volume', '추정 거래액'], ['Most trades', '거래 많은 순'], ['Became law', '법이 됨'],
+    ['Radar · stock activity', '레이더 · 주식 거래 탐지'], ['Green: buy', '초록: 매수'], ['Red: sell', '빨강: 매도'], ['Stock trade timeline', '주식 거래 시점 차트'], ['Recent trades', '최근 거래'], ['No matching records with priced purchases.', '주가 변동 기록이 있는 매수 내역이 없어요.'], ['Radar · traded in the last 30 days', '레이더 · 최근 30일 거래'], ['Beat the market', '시장 대비'], ['Est. volume', '추정 거래액'], ['Most trades', '거래 많은 순'], ['Became law', '법이 됨'],
     ['members traded', '명 거래'], ['members trading', '거래한 의원'], ['trades each (avg)', '1인 평균 거래'], ['filed after 45 days', '45일 넘겨 신고'], ['passed a chamber', '한 원 통과'],
     ['stock trades', '주식 거래'], ['bills sponsored', '발의 법안'], ['vs S&P 500', 'S&P 500 대비'], ['vs the market', '시장 대비'], ['in Congress since', '의회 입성'],
     ['Track anyone', '아무나 추적'], ['Copy link', '링크 복사'], ['Copied', '복사됨'], ['Compare', '비교'], ['Profile', '프로필'], ['Members', '의원'], ['Trades', '거래'], ['Party', '정당'], ['Radar', '레이더'], ['Rank', '순위'], ['Find', '찾기'], ['Bills', '법안'],
@@ -77,7 +77,7 @@
   // 버튼
   const btn = document.createElement('a'); btn.href = '#'; btn.className = 'lang'; btn.setAttribute('role', 'button');
   const paint = () => { btn.textContent = ko ? 'English' : '한국어'; btn.setAttribute('lang', ko ? 'en' : 'ko'); document.documentElement.lang = ko ? 'ko' : 'en'; };
-  btn.onclick = (e) => { e.preventDefault(); ko = !ko; try { localStorage.setItem(K, ko ? 'ko' : 'en'); } catch (x) { /* 무시 */ } paint(); busy = true; walk(document.body); busy = false; };
+  btn.onclick = (e) => { e.preventDefault(); const next = ko ? 'en' : 'ko'; try { localStorage.setItem(K, next); } catch (x) { /* 무시 */ } const url = new URL(location.href); url.searchParams.set('lang', next); location.assign(url.toString()); };
   const nav = document.querySelector('.ubar nav'); if (nav) nav.prepend(btn);
   paint(); if (ko) { busy = true; walk(document.body); busy = false; }
 })();
