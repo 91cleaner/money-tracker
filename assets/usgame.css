@@ -177,3 +177,15 @@
  #pg .pg-top{pointer-events:none}
  #pg .pg-top button,#pg .pg-top a{pointer-events:auto}
 }
+
+/* Mobile bottom navigation: no clipped labels or safe-area overlap. */
+@media(max-width:600px){
+ #pg .pg-bar{box-sizing:border-box;bottom:calc(9px + env(safe-area-inset-bottom,0px));height:66px;min-height:66px;padding:3px 4px;width:calc(100% - 100px);overflow:visible}
+ #pg .pg-bar button{box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:58px;height:58px;padding:4px 1px!important;line-height:1.2;white-space:normal;overflow:visible;font-size:12px!important}
+ #pg .pg-bar button .k{display:none}
+ #pg .pg-bar button .ic{width:23px;height:23px;flex-shrink:0}
+ #pg .pg-more-toggle{box-sizing:border-box;bottom:calc(9px + env(safe-area-inset-bottom,0px));height:66px;width:84px;min-height:66px;font-size:13px}
+ #pg .pg-more-menu:not([hidden]){bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+ #pg .pg-file.on:not(.expanded):not(.min){bottom:calc(87px + env(safe-area-inset-bottom,0px))}
+ #pg .pg-file.on.expanded,#pg .pg-file.on.min{bottom:calc(87px + env(safe-area-inset-bottom,0px))!important}
+}
