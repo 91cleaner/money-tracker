@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>미국 의원 주식 거래 기록 | Congress Tracker</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#020805;color:#eafff2;font:15px/1.6 system-ui,-apple-system,"Malgun Gothic",sans-serif}main{max-width:1120px;margin:auto;padding:26px 16px 70px}a{color:#76f9a8}header{display:flex;justify-content:space-between;gap:12px;align-items:center}h1{font-size:clamp(24px,4vw,36px);margin:24px 0 8px}h2{font-size:18px;margin:0 0 12px}.muted{color:#9abda6}.panel{background:#07170d;border:1px solid #1b4930;border-radius:16px;padding:18px;margin:16px 0}.controls{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px}label{display:grid;gap:5px;color:#9abda6;font-size:13px}input,select{width:100%;min-width:0;padding:12px;background:#020805;color:#fff;border:1px solid #356147;border-radius:8px;font:inherit}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stats b{font-size:25px;display:block;color:#76f9a8}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;min-width:790px;text-align:left}th,td{padding:10px 9px;border-bottom:1px solid #1b4930}th{color:#9abda6;font-size:13px}td{font-variant-numeric:tabular-nums}.buy{color:#76f9a8}.sell{color:#ff9b9b}.note{font-size:13px;color:#9abda6}.empty{padding:30px;text-align:center;color:#9abda6}@media(max-width:720px){.controls{grid-template-columns:1fr 1fr}.controls label:first-child{grid-column:1/-1}.stats{grid-template-columns:1fr 1fr}} 
+</style></head><body><main><header><strong>🇺🇸 CONGRESS TRACKER</strong><a href="us.html">← 기존 미국 의회 대시보드</a></header>
+<h1>미국 의원 주식거래 기록</h1><p class="muted">공개 신고 자료 기반 · 의원·종목·연도별 검색 · 실제 거래일과 신고일 구분</p>
+<section class="panel controls" aria-label="거래 검색"><label>의원 또는 종목 검색<input id="q" placeholder="예: Pelosi, NVDA, TSLA" autocomplete="off"></label><label>거래 연도<select id="year"><option value="">전체 연도</option></select></label><label>거래 유형<select id="type"><option value="">매수 + 매도</option><option value="P">매수</option><option value="S">매도</option></select></label><label>정렬<select id="sort"><option value="recent">최근 거래일</option><option value="filed">최근 신고일</option><option value="old">오래된 거래일</option></select></label></section>
+<section class="stats" aria-label="검색 결과 통계"><div class="panel"><span class="muted">검색된 거래</span><b id="count">—</b></div><div class="panel"><span class="muted">거래 의원</span><b id="members">—</b></div><div class="panel"><span class="muted">거래 종목</span><b id="tickers">—</b></div></section>
+<section class="panel"><h2>거래 내역 <small class="muted" id="shown"></small></h2><div class="scroll"><table><thead><tr><th>거래일</th><th>신고일</th><th>의원</th><th>종목</th><th>구분</th><th>신고 금액 구간</th><th>거래 후 주가 변화*</th></tr></thead><tbody id="rows"><tr><td colspan="7" class="empty">데이터를 불러오는 중…</td></tr></tbody></table></div><p class="note">* 기존 데이터에 주가 변화 값이 있는 경우에만 표시합니다. 해당 값은 의원의 실제 투자 수익률이 아닙니다. 신고 금액은 정확한 체결 금액이 아닌 구간일 수 있습니다. 자료에 없는 과거 거래는 표시하지 않습니다.</p></section>
+<p class="note" id="coverage">데이터 범위 확인 중…</p><p class="note">공개 신고는 실제 거래보다 늦게 제출·공개될 수 있습니다. 신고 사실만으로 위법행위를 의미하지 않습니다. 투자 권유가 아닙니다.</p></main>
+<script>
+(async()=>{
+const $=id=>document.getElementById(id);
+const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const get=async file=>{const r=await fetch('data/us/'+file,{cache:'no-cache'});if(!r.ok)throw Error(file+' HTTP '+r.status);return r.json()};
+try{
+const [t,m]=await Promise.all([get('trades.json'),get('members.json')]);
+const trades=Array.isArray(t.trades)?t.trades:[],members=Array.isArray(m.members)?m.members:[],byId=Object.fromEntries(members.map(x=>[String(x.id),x]));
+const years=[...new Set(trades.map(x=>String(x.d||'').slice(0,4)).filter(x=>/^\d{4}$/.test(x)))].sort().reverse();
+$('year').insertAdjacentHTML('beforeend',years.map(y=>'<option>'+y+'</option>').join(''));
+$('coverage').textContent=years.length?'현재 제공된 거래 자료의 거래일 범위: '+years.at(-1)+'–'+years[0]+'. 더 오래된 신고 기록은 수집·검증 후 추가됩니다.':'거래일이 확인된 자료가 없습니다.';
+const name=x=>byId[String(x.id)]?.name||x.who||'미확인',fmt=x=>x==null||!Number.isFinite(Number(x))?'—':(Number(x)>0?'+':'')+Number(x).toFixed(1)+'%';
+function render(){
+const q=$('q').value.trim().toLowerCase(),year=$('year').value,ty=$('type').value;
+let list=trades.filter(x=>x.d&&(!year||String(x.d).startsWith(year))&&(!ty||x.ty===ty)&&(!q||[name(x),x.tk,x.asset,x.who].some(v=>String(v||'').toLowerCase().includes(q))));
+list.sort((a,b)=>$('sort').value==='old'?String(a.d).localeCompare(String(b.d)):$('sort').value==='filed'?String(b.filed||'').localeCompare(String(a.filed||'')):String(b.d).localeCompare(String(a.d)));
+$('count').textContent=list.length.toLocaleString('ko-KR');$('members').textContent=new Set(list.map(x=>x.id||x.who).filter(Boolean)).size.toLocaleString('ko-KR');$('tickers').textContent=new Set(list.map(x=>x.tk).filter(Boolean)).size.toLocaleString('ko-KR');
+const shown=list.slice(0,500);$('shown').textContent=list.length>500?'(최신 정렬 기준 500건 표시)':'';
+$('rows').innerHTML=shown.length?shown.map(x=>'<tr><td>'+escape(x.d)+'</td><td>'+escape(x.filed||'—')+'</td><td>'+escape(name(x))+'</td><td><strong>'+escape(x.tk||'—')+'</strong></td><td class="'+(x.ty==='P'?'buy':'sell')+'">'+(x.ty==='P'?'매수':x.ty==='S'?'매도':escape(x.ty||'기타'))+'</td><td>'+escape(x.amt||'—')+'</td><td>'+fmt(x.r)+'</td></tr>').join(''):'<tr><td colspan="7" class="empty">조건에 맞는 거래가 없습니다.</td></tr>';
+}
+['q','year','type','sort'].forEach(id=>$(id).addEventListener(id==='q'?'input':'change',render));render();
+}catch(err){$('rows').innerHTML='<tr><td colspan="7" class="empty">거래 자료를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</td></tr>';$('coverage').textContent='데이터 로드 실패: '+err.message}
+})();
+</script></body></html>
