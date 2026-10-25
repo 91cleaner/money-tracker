@@ -61,7 +61,7 @@ const showC=c=>{const ids=[...(cnt[c]||[])];const box=$('cp');
  <span class="p">${esc(t.purpose)}</span><br><span class="k">돈</span> <b>${esc(moneyText(t))}</b><br>${[...new Set(ts.map(x=>x.funder||'적힌 곳 없음'))].map(f=>`<span class="tag">비용 낸 곳: ${esc(f)}</span>`).join('')}<span class="tag">신고 당시 결과보고서 ${ts.some(x=>x.report==='유')?'유':'무'}</span><br><span class="sub">신고서 첫 번째 기재 의원: ${esc((ts.find(x=>x.is_leader)||t).name)}</span> ${S(t.src,'열린국회정보')}</div>`}).join('');
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  requestAnimationFrame(()=>box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}));};
-try{const m=L.map('tmap',{zoomControl:false,worldCopyJump:false,zoomSnap:.25,minZoom:0,maxZoom:6});
+try{const m=L.map('tmap',{zoomControl:false,worldCopyJump:false,zoomSnap:.25,minZoom:0,maxZoom:6});m.setMaxBounds(L.latLngBounds([[-60,-25],[78,335]]));m.options.maxBoundsViscosity=1;{const tb=document.getElementById('tmap');const sm=()=>m.setMinZoom(Math.ceil(Math.log2(((tb&&tb.clientWidth)||360)/256)*4)/4);sm();addEventListener('resize',sm);}
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{attribution:'© Esri',maxZoom:6}).addTo(m);
 const se=[37.5319,126.914];const cmax=Math.max(1,...Object.values(cnt).map(x=>x.size));
 const arc=(a,b)=>{const P=[],mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=b[1]-a[1],dy=b[0]-a[0],k=.18;const c=[mx+dx*k,my-dy*k];for(let i=0;i<=24;i++){const t=i/24,u=1-t;P.push([u*u*a[0]+2*u*t*c[0]+t*t*b[0],u*u*a[1]+2*u*t*c[1]+t*t*b[1]]);}return P;};

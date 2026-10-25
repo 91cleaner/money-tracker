@@ -147,8 +147,13 @@
   tick(); setInterval(tick, RM ? 1000 : 100);
 
   // ── 지도 ──
-  const map = L.map($('.pg-map'), { zoomControl: false, attributionControl: true, zoomSnap: 0.25, minZoom: 1, maxZoom: 11, worldCopyJump: false, tap: false });
+  const map = L.map($('.pg-map'), { zoomControl: false, attributionControl: true, zoomSnap: 0.25, minZoom: 0, maxZoom: 11, worldCopyJump: false, tap: false });
   map.attributionControl.setPrefix(false);
+  // 크게 줌아웃해도 대륙이 옆으로 되풀이되지 않게: 지구 한 바퀴(유럽 서쪽 ~ 아메리카 동쪽)만 보이게 묶고, 그 폭이 화면을 꽉 채우는 데까지만 줌아웃
+  const WORLD = L.latLngBounds([[-60, -25], [78, 335]]);
+  map.setMaxBounds(WORLD); map.options.maxBoundsViscosity = 1;
+  const setMin = () => { const w = root.clientWidth || 360; map.setMinZoom(Math.ceil(Math.log2(w / 256) * 4) / 4); };
+  setMin();
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 11, attribution: '지도: Esri · 자료: 열린국회정보' }).addTo(map);
   const KR = L.latLngBounds([[33.0, 125.3], [38.7, 129.7]]);
   const fitKR = (anim) => map.fitBounds(KR, { padding: [70, 20], paddingBottomRight: [20, 90], animate: !!anim && !RM });
@@ -341,7 +346,7 @@
   btns.forEach((b) => (b.onclick = () => pick(b.dataset.w)));
   addEventListener('keydown', (e) => { if (/input|textarea/i.test((e.target && e.target.tagName) || '')) return; const i = Number(e.key) - 1; if (i >= 0 && i < btns.length) pick(btns[i].dataset.w); if (e.key === 'Escape') closeFile(); });
   setTimeout(() => map.invalidateSize(), 300);
-  addEventListener('resize', () => map.invalidateSize());
+  addEventListener('resize', () => { map.invalidateSize(); setMin(); });
 
   pick('mp', true);
   const want = new URLSearchParams(location.search).get('mp');
