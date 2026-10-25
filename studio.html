@@ -66,6 +66,7 @@ const get=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>n
 const [idx,daily,sole,chg,q2,trw]=await Promise.all([get('data/index.json'),get('data/daily.json'),get('data/sec_sole.json'),get('data/nps/changes_us.json'),get('data/nps/changes_us.json').then(c=>get('data/nps/holdings_us_'+((c&&c.to)||'2026Q2')+'.json')),get('data/national/trips_raw.json')]);
 $('upd').textContent='데이터 갱신 '+String((idx&&idx.updated)||'').slice(0,16).replace('T',' ');
 const SITE='https://91cleaner.github.io/money-tracker/';
+const SH=(await get('data/og/s/index.json'))||{};
 const cards=[];
 // 최근 30일 시별 합계 (daily.json)
 const last=daily&&daily.last, from30=last?new Date(new Date(last).getTime()-29*864e5).toISOString().slice(0,10):'';
@@ -82,7 +83,7 @@ if(sole&&sole.share&&sole.share.length){const s=sole.share.filter(x=>x.n>=50).so
   cards.push({k:'공고 없이 맺은 계약 비율',title:`${s.name} · 수의계약 비율 1위`,big:s.pct+'%',
     lines:[`새 계약 ${s.n.toLocaleString()}건 중 ${s.sn.toLocaleString()}건`,`공고 없이 바로 맺은 계약(수의계약)`,`작은 금액·급한 일은 법에서 허용`],
     draft:`회사에서 물건 살 때도 보통 견적은 비교함\n${jo(s.name,'은','는')} 최근 새 계약 ${s.n.toLocaleString()}건 중 ${s.sn.toLocaleString()}건을 공고 없이 바로 맺음\n비율 ${s.pct}%, 85개 시 중 가장 높음\n작은 금액이나 급한 일은 법에서 허용되는 방식이긴 함\n(소감)`,
-    src:SITE+'spend.html#sole',link:SITE+'city.html?c='+s.slug});}}
+    src:SITE+'spend.html#sole',link:SITE+'c/'+s.slug+'.html'});}}
 // 3. 가장 큰 계약
 if(sole&&sole.big&&sole.big.length){const b=sole.big.slice().sort((x,y)=>y.a-x.a)[0];
   cards.push({k:'가장 큰 계약',title:`${b.cname} · 가장 큰 수의계약`,big:won(b.a),
@@ -95,7 +96,7 @@ if(idx&&idx.cities){const wk=new Date(Date.now()-7*864e5).toISOString().slice(0,
   if(c){const A=c.top_alert;cards.push({k:'이번 주 이상 징후',title:`${c.short||c.name} · ${mask(A.title).slice(0,24)}`,big:won(A.amount),
     lines:[mask(A.detail).slice(0,34),'데이터상 이상 징후 · 위법 판단 아님','출처 조달청 나라장터'],
     draft:`${c.short||c.name} 계약 기록 보다가 눈에 띈 것\n${mask(A.title)}\n${mask(A.detail).slice(0,60)}\n금액 ${won(A.amount)}\n데이터상 눈여겨볼 점일 뿐, 정상적인 이유가 있을 수 있음\n(소감)`,
-    src:SITE+'?c='+c.slug+'#map',link:SITE+'city.html?c='+c.slug+'#alerts'});}}
+    src:SITE+'?c='+c.slug+'#map',link:SITE+'c/'+c.slug+'.html#alerts'});}}
 // 5. 국민연금이 가장 많이 산 미국 주식
 if(chg&&chg.top_buys&&chg.top_buys.length&&q2&&q2.fx){const t=chg.top_buys[0],krw=(t.est_trade_usd||0)*q2.fx.usd_krw;
   const KNOWN={'SPACE EXPLORATION TECHN CORP':'스페이스X(SpaceX)'};const nm=KNOWN[t.issuer]||String(t.issuer).replace(/\b(CORPORATION|CORP|INC|TECHN|CO)\b\.?/g,'').trim();
@@ -116,7 +117,7 @@ const cityCard=slug=>{const c=(idx.cities||[]).find(x=>x.slug===slug);if(!c)retu
   return {k:'우리 시',title:`${c.name} · 최근 30일`,big:won(s.t),
     lines:[`계약 ${s.n.toLocaleString()}건`,out!=null?`다른 지역 업체로 간 돈 ${out}%`:'업체 주소 확인 중',`데이터상 이상 징후 ${c.alerts||0}건 (모은 기간 전체)`],
     draft:`우리 동네 세금, 한 달에 얼마나 쓰나 봤음\n${jo(c.name,'은','는')} 최근 30일 계약 ${s.n.toLocaleString()}건, 합계 ${won(s.t)}\n${out!=null?`그중 ${out}%는 다른 지역 업체로 감\n`:''}계약마다 나라장터 원본 링크가 있음\n(소감)`,
-    src:SITE+'?c='+slug+'#map',link:SITE+'city.html?c='+slug};};
+    src:SITE+'?c='+slug+'#map',link:SITE+'c/'+slug+'.html'};};
 const sel=$('pickCity');sel.innerHTML='<option value="">시를 고르세요</option>'+(idx.cities||[]).slice().sort((a,b)=>a.name.localeCompare(b.name,'ko')).map(c=>`<option value="${c.slug}">${esc(c.name)}</option>`).join('');
 
 // 카드 그리기
@@ -146,7 +147,7 @@ const mpCard=q=>{const m=findBy(people,'name',q);if(!m)return null;const ts=((tr
   return {k:'국회의원',title:`${m.name} · ${m.party} · ${m.district}`,big:uniq.length?`출장 ${uniq.length}건`:'출장 0건',
     lines:[dest.length?`간 나라: ${dest.slice(0,6).join(', ')}${dest.length>6?' 외':''}`:'신고된 국외 출장 없음',uniq.length?`자기 돈 ${self}건 · 외부에서 낸 비용 ${ext}건`:'',per?`의원 1명 1년 지급 기준 ${wonX(per.amount)}`:''].filter(Boolean),
     draft:`국회의원 한 명한테 1년에 들어가는 돈${per?' '+wonX(per.amount):''}(지급 기준)\n${m.name} 의원(${m.party}, ${m.district})의 국외 출장 신고는 ${uniq.length}건${dest.length?'\n간 나라: '+dest.slice(0,5).join(', ')+(dest.length>5?' 외':''):''}${uniq.length?`\n비용은 자기 돈 ${self}건, 외부에서 낸 비용 ${ext}건으로 신고됨`:''}${uniq.length&&norep?`\n신고 때 결과보고서가 없던 출장 ${norep}건 (나중에 낼 수 있음)`:''}\n(소감)`,
-    src:'https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr',link:SITE+'national.html?mp='+encodeURIComponent(m.name)};};
+    src:'https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr',link:(SH.mp&&SH.mp[m.name])?SITE+'s/m/'+SH.mp[m.name]+'.html':SITE+'national.html?mp='+encodeURIComponent(m.name)};};
 const venCard=q=>{const v=findBy(vens,'name',q);if(!v)return null;const p=rank&&rank.period||{};
   return {k:'계약 받은 업체',title:`${v.name} · ${v.region||''}`,big:won(v.total),
     lines:[`${md(p.first)}~${md(p.last)} 85개 시 계약 ${v.count}건`,`계약한 시 ${v.nc}곳 · 기관 ${v.ni}곳`,'출처 조달청 나라장터'],
@@ -156,7 +157,7 @@ const npsCard=q=>{const c=findBy(comps,'company',q);if(!c)return null;const tot=
   return {k:'국민연금 투자 회사',title:`${c.company}${c.code?' ('+c.code+')':''}`,big:won(v),
     lines:[`국민연금 국내 주식의 ${pct<0.1?'0.1% 미만':pct.toFixed(1)+'%'}`,`본사 ${c.sido} ${c.sigungu||''}`,`${String(krh.holdings_as_of||'').replace(/-/g,'.')} 기준 · 공개 자료`],
     draft:`내 월급에서 나가는 국민연금, 어느 회사에 들어가나 봤음\n국민연금이 ${c.company} 주식에 넣은 돈은 ${won(v)}\n국내 주식 전체의 ${pct<0.1?'0.1% 미만':pct.toFixed(1)+'%'}\n${String(krh.holdings_as_of||'').slice(0,4)}년 ${+String(krh.holdings_as_of||'').slice(5,7)}월 말 공개 자료 기준임\n(소감)`,
-    src:SITE+'nps.html',link:SITE+'nps.html?co='+encodeURIComponent(c.company)};};
+    src:SITE+'nps.html',link:(SH.nps&&SH.nps[c.company])?SITE+'s/n/'+SH.nps[c.company]+'.html':SITE+'nps.html?co='+encodeURIComponent(c.company)};};
 // ── 오늘의 글감: 날마다 바뀌는 것만 골라 맨 위에(아침에 열면 그날 것) ──
 {
 const kst=new Date(Date.now()+9*3600e3).toISOString().slice(0,10);
@@ -169,7 +170,7 @@ if(it&&it.pick){const p=it.pick;
   fresh.push({k:'오늘 · 영수증',title:`${p.cname} · ${md(it.date)} 가장 큰 계약`,big:won(p.amount),
     lines:[mask(p.title).slice(0,32),mask(p.vendor||''),`그날 85개 시 계약 ${Number(it.n).toLocaleString()}건 중 1위`],
     draft:`영수증 받으면 제일 큰 금액부터 보게 됨\n${md(it.date)} 85개 시가 맺은 계약 ${Number(it.n).toLocaleString()}건 중 가장 큰 건 ${p.cname}\n"${mask(p.title).slice(0,40)}" ${won(p.amount)}\n${p.ann===false?'공고 없이 바로 맺은 계약임\n':''}(소감)`,
-    src:p.url||SITE,link:SITE+'city.html?c='+p.slug});}
+    src:p.url||SITE,link:SITE+'c/'+p.slug+'.html'});}
 // B. 오늘의 문제 → X 투표
 const q=dq&&dq[kst];
 if(q){const A=cn(q.a),B=cn(q.b),win=q.av>q.bv?A:B;

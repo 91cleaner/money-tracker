@@ -61,6 +61,7 @@
   const d5line = (x) => (x.prev != null ? `${pp(x.prev)}% → ${pp(x.stake)}%` : `${pp(x.stake)}%`) + (x.delta ? ` (${x.delta > 0 ? '+' : ''}${pp(x.delta)}%p)` : '');
   if (!qb || !kr) return;
   const fx = (qb.fx || (qa && qa.fx) || {}).usd_krw || 0;
+  const SH = (((await fetch('data/og/s/index.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null)) || {}).nps) || {}; // 미리보기 카드가 있는 회사
   const tick = (tk && tk.cusip) || {};
   const brand = (t, i) => (window.npsBrandOf ? window.npsBrandOf(t, i) : ['#7a5a00', '#ffb020', '#ffd27a']);
   const grad = (c) => (window.npsGrad ? window.npsGrad(c) : `linear-gradient(90deg,${c.join(',')})`);
@@ -265,7 +266,7 @@
       res.innerHTML = `<div class="f-card"><div class="hd">${mark(r.code, label, 0)}<span>${esc(r.name)}</span>${r.code ? `<span class="bb-t" style="color:#8fa0b3;font:12px ui-monospace,Menlo,monospace">${esc(r.code)}</span>` : ''}</div>${body}
         <div class="me-act"><button type="button" class="p" data-a="t">글 복사</button><button type="button" data-a="l">링크 복사</button></div></div>`;
       res.querySelector('[data-a="t"]').onclick = (e) => copy(text, e.target);
-      res.querySelector('[data-a="l"]').onclick = (e) => copy(pageUrl('q=' + encodeURIComponent(r.name), '#find'), e.target);
+      res.querySelector('[data-a="l"]').onclick = (e) => copy(SH[r.name] ? location.origin + location.pathname.replace(/[^/]*$/, '') + 's/n/' + SH[r.name] + '.html' : pageUrl('q=' + encodeURIComponent(r.name), '#find'), e.target);
     };
     const notFound = (q) => { res.innerHTML = `<div class="f-card"><div class="l">‘${esc(q)}’${josa(q, '은', '는')} 국민연금 공개 목록에서 못 찾았어요.</div><div class="s">미국은 ${esc(qL(qb.quarter))} 미국 주식 목록, 국내는 ${esc(kr.as_of.slice(0, 4))}년 말 국내 주식 목록 기준이에요. 이름을 조금 다르게(영어·티커) 넣어 보세요.</div></div>`; };
     const run = (q, pickFirst) => {
