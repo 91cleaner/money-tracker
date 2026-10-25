@@ -101,7 +101,7 @@
   tick(); setInterval(tick, RM ? 1000 : 100);
 
   // map
-  const map = L.map($('.pg-map'), { zoomControl: false, attributionControl: true, zoomSnap: 0.25, minZoom: 2, maxZoom: 12, tap: false });
+  const map = L.map($('.pg-map'), { zoomControl: false, scrollWheelZoom: false, attributionControl: true, zoomSnap: 0.25, minZoom: 2, maxZoom: 12, tap: false });
   map.attributionControl.setPrefix(false);
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 12, attribution: 'Esri · Maxar · @unitedstates · House Clerk · Senate eFD · Congress.gov' }).addTo(map);
   map.createPane('sat'); map.getPane('sat').style.zIndex = 250; map.getPane('sat').style.filter = 'brightness(.72) contrast(1.12) saturate(.75)';
