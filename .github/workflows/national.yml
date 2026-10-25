@@ -21,6 +21,10 @@ jobs:
       - name: 빈 응답이면 이번 회차 자료 버리기(이전 자료 유지)
         run: python collector/national/check.py || git checkout -- data/national
       - run: python collector/national/geo.py   # 의원 지역구 → 지도 위치
+      - run: python collector/national/votes.py   # 외교·안보 표결·대표발의·징계안(공식 기록)
+        continue-on-error: true
+        timeout-minutes: 15
+        env: {ASSEMBLY_KEY: "${{ secrets.ASSEMBLY_KEY }}"}
       - run: |
           git config user.name "money-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
