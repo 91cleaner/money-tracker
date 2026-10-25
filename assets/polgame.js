@@ -30,14 +30,22 @@
 #pg .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
 #pg .live{font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e}#pg .live i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff3b47;margin-right:5px;animation:pgBlink 1s steps(2) infinite;vertical-align:0}
 @keyframes pgBlink{50%{opacity:.15}}
-#pg .ttl{font:800 14px Pretendard,system-ui;color:#e8fff1;letter-spacing:.04em;display:flex;align-items:center;gap:6px}#pg .snd{min-width:30px;min-height:28px;border-radius:6px;border:1px solid #1f4a30;background:#06150c;color:#cfe9d8;font-size:14px;cursor:pointer;padding:0 4px}
+#pg .ttl{font:800 14px Pretendard,system-ui;color:#e8fff1;letter-spacing:.04em;display:flex;align-items:center;gap:6px}#pg .snd{width:30px;height:30px;border-radius:50%;border:0;background:rgba(93,255,158,.08);color:#cfe9d8;cursor:pointer;padding:0;display:grid;place-items:center;transition:background .15s}#pg .snd:hover{background:rgba(93,255,158,.16)}#pg .snd.off{color:#5f7d6c}#pg .snd.off .w{display:none}#pg .snd.off .m{display:inline!important}
 #pg .ctr{text-align:right}#pg .ctr .n{font:800 17px ui-monospace,Menlo,monospace;color:#ffb020;font-variant-numeric:tabular-nums}#pg .ctr .l{font-size:10.5px;color:#8fc9a5}
 #pg .pg-say{position:absolute;z-index:700;left:10px;right:10px;top:74px;font:600 12px ui-monospace,Menlo,monospace;color:#7dffb0;text-shadow:0 0 6px rgba(80,255,160,.5);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#pg .pg-bar{position:absolute;z-index:720;left:50%;transform:translateX(-50%);bottom:10px;display:flex;gap:6px;padding:6px;background:rgba(3,14,8,.88);border:1px solid #1d5a35;border-radius:14px;max-width:calc(100% - 16px)}
-#pg .pg-bar button{position:relative;width:62px;height:58px;border-radius:10px;border:1px solid #1f4a30;background:#06150c;color:#bfe8cf;cursor:pointer;display:grid;place-items:center;gap:0;padding:4px 2px;font:700 10.5px Pretendard,system-ui}
-#pg .pg-bar button .ic{font-size:21px;line-height:1}#pg .pg-bar button .k{position:absolute;left:4px;top:2px;font:700 9px ui-monospace,Menlo,monospace;color:#4f8f68}
-#pg .pg-bar button[aria-pressed="true"]{border-color:#5dff9e;background:#0b2a17;color:#fff;box-shadow:0 0 0 1px #5dff9e,0 0 16px rgba(93,255,158,.35)}
-@media(max-width:600px){#pg .pg-bar{gap:4px;padding:5px}#pg .pg-bar button{width:54px;height:54px;font-size:10px}#pg .pg-bar button .ic{font-size:19px}}@media(max-width:360px){#pg .pg-bar button{width:48px}}
+#pg .pg-bar{position:absolute;z-index:720;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:2px;padding:5px;background:linear-gradient(180deg,rgba(14,32,22,.72),rgba(4,14,9,.86));-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(93,255,158,.18);border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);max-width:calc(100% - 16px)}
+#pg .pg-bar button{position:relative;width:64px;height:56px;border-radius:15px;border:0;background:transparent;color:#86b89a;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0;font:600 10.5px Pretendard,system-ui;letter-spacing:-.01em;transition:color .18s,background .18s,transform .12s;-webkit-tap-highlight-color:transparent}
+#pg .pg-bar button:hover{color:#d9f7e5;background:rgba(93,255,158,.06)}#pg .pg-bar button:active{transform:scale(.93)}
+#pg .pg-bar .ic{width:24px;height:24px;display:block}#pg .pg-bar .ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;overflow:visible;transition:filter .18s}
+#pg .pg-bar .ic .fillp{fill:currentColor;opacity:.22}#pg .pg-bar .ic .dot{fill:currentColor}
+#pg .pg-bar .badge .pet ellipse{fill:rgba(255,200,90,.14);stroke:#e7b85a;stroke-width:1.1}#pg .pg-bar .badge circle{stroke:#e7b85a}#pg .pg-bar .badge .core{fill:#e7b85a;stroke:none}
+#pg .pg-bar button .k{position:absolute;right:7px;top:5px;font:600 8.5px ui-monospace,Menlo,monospace;color:#3f6b52;opacity:.0;transition:opacity .2s}@media(hover:hover){#pg .pg-bar:hover button .k{opacity:1}}
+#pg .pg-bar button[aria-pressed="true"]{color:#eafff2;background:linear-gradient(180deg,rgba(93,255,158,.16),rgba(93,255,158,.05));box-shadow:inset 0 0 0 1px rgba(93,255,158,.35)}
+#pg .pg-bar button[aria-pressed="true"] .ic svg{filter:drop-shadow(0 0 5px rgba(93,255,158,.75))}#pg .pg-bar button[aria-pressed="true"] .badge{filter:drop-shadow(0 0 6px rgba(255,200,90,.8))!important}
+#pg .pg-bar button[aria-pressed="true"]::after{content:"";position:absolute;bottom:3px;left:50%;width:16px;height:3px;margin-left:-8px;border-radius:2px;background:#5dff9e;box-shadow:0 0 8px #5dff9e}
+#pg .pg-bar button[data-w="radar"][aria-pressed="true"] .ic svg{animation:pgSpin 3s linear infinite}@keyframes pgSpin{to{transform:rotate(360deg)}}
+@media(max-width:600px){#pg .pg-bar{gap:0;padding:4px;bottom:calc(10px + env(safe-area-inset-bottom,0px))}#pg .pg-bar button{width:54px;height:54px;font-size:10px}#pg .pg-bar .ic{width:22px;height:22px}}@media(max-width:360px){#pg .pg-bar button{width:48px}}
+@media(prefers-reduced-motion:reduce){#pg .pg-bar button[data-w="radar"] .ic svg{animation:none!important}}
 #pg .pg-file{position:absolute;z-index:740;left:8px;right:8px;bottom:84px;max-height:58%;overflow:auto;background:rgba(2,10,6,.95);border:1px solid #2a7a4a;border-radius:12px;padding:12px 12px 10px;box-shadow:0 0 0 1px rgba(93,255,158,.08),0 10px 40px rgba(0,0,0,.6);transform:translateY(10px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
 #pg .pg-file.on{opacity:1;transform:none;pointer-events:auto}
 @media(min-width:900px){#pg .pg-file{left:auto;right:12px;top:110px;bottom:84px;width:380px;max-height:none}}
@@ -63,6 +71,11 @@
 #pg .tr{padding:8px 0;border-top:1px dashed #1f4a30;font-size:13px;line-height:1.45}#pg .tr .d{font:700 12px ui-monospace,Menlo,monospace;color:#7dffb0}#pg .tr .f{font-size:12px;color:#ffd27a}
 #pg .tr .p{color:#cfe9d8}#pg .tg{display:inline-block;font-size:11px;padding:0 6px;border-radius:999px;border:1px solid #2a7a4a;color:#9fd3b4;margin:2px 4px 0 0}
 #pg .tg.y{border-color:#ffb02088;color:#ffd27a}
+#pg .tabs{display:flex;gap:2px;margin:10px 0 2px;padding:3px;border-radius:11px;background:rgba(93,255,158,.05);border:1px solid rgba(93,255,158,.12);overflow-x:auto;scrollbar-width:none}#pg .tabs::-webkit-scrollbar{display:none}#pg .tabs button{flex:1 0 auto;min-height:36px;padding:0 10px;border-radius:8px;border:0;background:transparent;color:#86b89a;font:700 12.5px Pretendard,system-ui,sans-serif;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+#pg .tabs button.on{background:rgba(93,255,158,.16);color:#eafff2;box-shadow:inset 0 0 0 1px rgba(93,255,158,.4)}#pg .tabs button i{font-style:normal;opacity:.7;margin-left:3px;font-weight:600}
+#pg .vt{display:inline-block;min-width:38px;text-align:center;font:800 11.5px Pretendard,system-ui,sans-serif;padding:1px 6px;border-radius:6px;margin-right:6px}#pg .vt.Y{background:#0f3b23;color:#7dffb0}#pg .vt.N{background:#3b1414;color:#ff9b9b}#pg .vt.A{background:#3a2c0b;color:#ffd27a}#pg .vt.X{background:#1b2420;color:#8fa79a}
+#pg .vsum{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:8px 0}#pg .vsum div{background:#04140b;border:1px solid #1f4a30;border-radius:8px;padding:6px;text-align:center;font-size:11px;color:#8fc9a5}#pg .vsum b{display:block;font-size:17px;color:#e8fff1}
+#pg .tr a{color:#7fe8ff}#pg .lk{display:grid;gap:6px;margin-top:8px}#pg .lk a{display:flex;gap:8px;align-items:center;min-height:42px;padding:0 12px;border-radius:8px;border:1px solid #1f4a30;color:#cfe9d8;text-decoration:none;font-size:13px}
 #pg .act{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}#pg .act a,#pg .act button{font:700 12.5px Pretendard;min-height:34px;padding:0 10px;border-radius:8px;border:1px solid #2a7a4a;background:#06150c;color:#cfe9d8;text-decoration:none;display:inline-flex;align-items:center;cursor:pointer}
 #pg .act .p{background:#5dff9e;color:#02110a;border-color:#5dff9e}
 #pg .fine{font-size:11px;color:#6fae88;margin-top:8px;line-height:1.45}#pg .fine a{color:#8fc9a5}
@@ -78,21 +91,22 @@
 #pg .clab::before{display:none}
 #pg .mtag{background:rgba(3,14,8,.9)!important;border:1px solid #5dff9e!important;color:#e8fff1!important;font:800 12px Pretendard!important;padding:2px 7px!important;border-radius:6px!important;box-shadow:0 0 12px rgba(93,255,158,.3)!important}
 #pg .mtag::before{display:none}
+#pg .leaflet-control-attribution{background:transparent!important;color:#4f6f5d!important;font-size:9px!important;text-shadow:0 0 3px #000}#pg .leaflet-control-attribution a{color:#4f6f5d!important}
 #pg .pg-hint{position:absolute;z-index:700;left:50%;transform:translateX(-50%);bottom:80px;font:700 12px Pretendard;color:#02110a;background:#5dff9e;border-radius:999px;padding:4px 12px;white-space:nowrap;animation:pgBlink 1.4s ease-in-out 4}
 `;
   document.head.append(css);
   root.innerHTML = `<div class="pg-map" aria-label="국회의원 지도"></div><div class="pg-scan"></div>
-  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl">국회 돈 추적실 <button type="button" class="snd" aria-label="소리 켜기·끄기">🔊</button></div></div>
+  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl">국회 돈 추적실 <button type="button" class="snd" aria-label="소리 켜기·끄기"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="m" d="m16 9.5 5 5m0-5-5 5" style="display:none"/></svg></button></div></div>
   <div class="pg-box ctr"><div class="n mono">0원</div><div class="l">오늘 의원 <span class="nmem">300</span>명 세비 누적(지급 기준)</div></div></div>
   <div class="pg-say mono"></div>
   <div class="pg-file" role="dialog" aria-label="기록 파일"></div>
   <nav class="pg-bar" aria-label="도구">
-    <button type="button" data-w="mp"><span class="k">1</span><span class="ic">🎯</span>의원</button>
-    <button type="button" data-w="trip"><span class="k">2</span><span class="ic">✈️</span>출장</button>
-    <button type="button" data-w="radar"><span class="k">3</span><span class="ic">📡</span>레이더</button>
-    <button type="button" data-w="party"><span class="k">4</span><span class="ic">🏛</span>정당</button>
-    <button type="button" data-w="pres"><span class="k">5</span><span class="ic">🇰🇷</span>대통령</button>
-    <button type="button" data-w="find"><span class="k">6</span><span class="ic">🔍</span>찾기</button>
+    <button type="button" data-w="mp"><span class="k">1</span><span class="ic"><svg viewBox="0 0 24 24" class="badge"><circle cx="12" cy="12" r="10.2" fill="none" stroke-width="1.4"/><g class="pet"><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(0 12 12)"/><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(72 12 12)"/><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(144 12 12)"/><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(216 12 12)"/><ellipse cx="12" cy="7.1" rx="2.7" ry="3.9" transform="rotate(288 12 12)"/></g><circle cx="12" cy="12" r="2.1" class="core"/></svg></span>의원</button>
+    <button type="button" data-w="trip"><span class="k">2</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15.5v-1.8l-7.8-4.9V4.2a1.6 1.6 0 0 0-3.2 0v4.6L2.2 13.7v1.8l7.8-2.4v4.6l-2.2 1.6V21l3.8-1.1 3.8 1.1v-1.7l-2.2-1.6v-4.6z" stroke-linejoin="round"/></svg></span>출장</button>
+    <button type="button" data-w="radar"><span class="k">3</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.5" opacity=".6"/><path d="M12 12 18.7 5.3"/><path d="M12 2.5A9.5 9.5 0 0 1 18.7 5.3L12 12z" class="fillp" stroke="none"/><circle cx="16" cy="14.5" r="1.1" class="dot" stroke="none"/></svg></span>레이더</button>
+    <button type="button" data-w="party"><span class="k">4</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 21V3.5"/><path d="M5 4.5c3-1.6 5.5 1.6 8.5 0s4.5-.6 5.5 0v8.5c-1-.6-2.5-1.6-5.5 0s-5.5-1.6-8.5 0" stroke-linejoin="round"/></svg></span>정당</button>
+    <button type="button" data-w="pres"><span class="k">5</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2.8 19.5 6v5.5c0 4.6-3.2 8-7.5 9.7-4.3-1.7-7.5-5.1-7.5-9.7V6z" stroke-linejoin="round"/><path d="m12 7.6 1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" stroke-linejoin="round" stroke-width="1.3"/></svg></span>대통령</button>
+    <button type="button" data-w="find"><span class="k">6</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.4 15.4 5.6 5.6"/><path d="M7.5 10.5a3 3 0 0 1 3-3" opacity=".6"/></svg></span>찾기</button>
   </nav>`;
   const $ = (s) => root.querySelector(s);
   const file = $('.pg-file'), say = $('.pg-say');
@@ -136,6 +150,7 @@
   // ── 자료 ──
   const [mem, sup, flw, par, geo, prez] = await Promise.all([j('members.json'), j('support.json'), j('flows.json'), j('parties.json'), j('geo.json'), j('president.json')]);
   if (!mem) { type('자료를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.'); return; }
+  let SEC = null; const secP = j('security.json').then((x) => (SEC = x));
   const people = mem.members || [], trips = mem.trips || [];
   const pos = (geo && geo.pos) || {};
   const per = Number(((sup && sup.allowance) || []).find((a) => a.amount)?.amount) || 0;
@@ -239,10 +254,13 @@
       <div class="ds">${esc(m.district)} · ${esc(m.reele || '')}<br>${esc(m.cmits || '')}</div></div></div>
       <div class="st"><div><b>${s.n}</b><span>국외 출장 신고</span></div><div class="${s.ext ? '' : 'z'}"><b>${s.ext}</b><span>외부에서 비용 낸 출장</span></div><div class="${s.norep ? '' : 'z'}"><b>${s.norep}</b><span>결과보고서 없이 신고</span></div></div>
       <div class="ds">1년 지급 기준 <b style="color:#ffb020">${won(per)}</b> (의원 1명, 실수령액 아님)</div>
-      ${s.ts.length ? `<div style="margin-top:8px">` + s.ts.map((t) => `<div class="tr"><div class="d">${esc(t.dates || t.start || '')} · ${esc((t.dest || []).map(cname).join(', '))}</div><div class="p">${esc(String(t.purpose || '').slice(0, 90))}</div><div><span class="tg y">비용 낸 곳: ${esc(t.funder || '적힌 곳 없음')}</span><span class="tg">결과보고서 ${t.report === '유' ? '있음' : '신고 때 없음'}</span>${t.dest_inferred ? '<span class="tg">나라는 목적 문구로 추정</span>' : ''}</div></div>`).join('') + '</div>' : '<div class="ds" style="margin-top:8px">신고된 국외 출장이 없어요.</div>'}
+      <div class="tabs" role="tablist"><button type="button" class="on" data-t="trip">출장<i>${s.n}</i></button><button type="button" data-t="bill">발의<i class="c-bill"></i></button><button type="button" data-t="vote">안보 표결</button><button type="button" data-t="disc">징계안<i class="c-disc"></i></button><button type="button" data-t="more">원문 링크</button></div>
+      <div class="tb" data-t="trip">${s.ts.length ? `<div style="margin-top:8px">` + s.ts.map((t) => `<div class="tr"><div class="d">${esc(t.dates || t.start || '')} · ${esc((t.dest || []).map(cname).join(', '))}</div><div class="p">${esc(String(t.purpose || '').slice(0, 90))}</div><div><span class="tg y">비용 낸 곳: ${esc(t.funder || '적힌 곳 없음')}</span><span class="tg">결과보고서 ${t.report === '유' ? '있음' : '신고 때 없음'}</span>${t.dest_inferred ? '<span class="tg">나라는 목적 문구로 추정</span>' : ''}</div></div>`).join('') + '</div>' : '<div class="ds" style="margin-top:8px">신고된 국외 출장이 없어요.</div>'}</div>
+      <div class="tb" data-t="bill" hidden></div><div class="tb" data-t="vote" hidden></div><div class="tb" data-t="disc" hidden></div><div class="tb" data-t="more" hidden></div>
       <div class="act">${dests.length ? '<button type="button" class="p" data-a="fly">✈️ 출장 경로 보기</button>' : ''}<button type="button" data-a="share">링크 복사</button><a href="${esc(m.profile || m.src || 'https://open.assembly.go.kr')}" target="_blank" rel="noopener">원문 ↗</a></div>
       <div class="fine">공개된 기록을 모은 것일 뿐, 잘잘못을 뜻하지 않아요. 결과보고서는 나중에 낼 수 있어요. 출처 <a href="https://open.assembly.go.kr/portal/openapi/nasnutdbapnfphwyr" target="_blank" rel="noopener">열린국회정보</a> · 사진 국회</div>`;
     file.classList.add('on'); bindX();
+    recs(m);
     const showFly = () => {
       const rs = dests.filter((d) => C[d]).map((d) => ({ path: arc(SE, C[d]), col: '#ffb020', w: 2.5 }));
       if (!rs.length) return;
@@ -255,6 +273,44 @@
     file.querySelector('[data-a="share"]').onclick = async (e) => { const u = SHARE(m); try { await navigator.clipboard.writeText(u); e.target.textContent = '복사했어요'; } catch (_) { prompt('링크', u); } };
     if (dests.length) setTimeout(showFly, RM ? 0 : 1300); else gFx.clearLayers();
     try { history.replaceState(null, '', '?mp=' + encodeURIComponent(m.name)); } catch (e) { /* 무시 */ }
+  }
+  // ── 공식 기록 탭: 대표 발의 · 외교·안보 표결 · 징계안 · 더 찾기. 모두 국회 공식 기록 그대로, 판단 없음 ──
+  const VN = { Y: '찬성', N: '반대', A: '기권', X: '불참', '-': '기록 없음' };
+  const RES = (r) => (!r ? '심사 중' : r === '대안반영폐기' ? '다른 법안에 내용 반영' : r);
+  const billA = (id, t) => (id && SEC && SEC.bill_url ? `<a href="${esc(SEC.bill_url + id)}" target="_blank" rel="noopener">${esc(t)}</a>` : esc(t));
+  function recs(m) {
+    const tabs = file.querySelectorAll('.tabs button'), tb = (t) => file.querySelector(`.tb[data-t="${t}"]`);
+    tabs.forEach((bt) => (bt.onclick = () => { SFX.click(); tabs.forEach((x) => x.classList.toggle('on', x === bt)); file.querySelectorAll('.tb').forEach((x) => (x.hidden = x.dataset.t !== bt.dataset.t)); }));
+    const SRC = '<div class="fine">국회 공식 기록 그대로예요. 사이트가 성향을 판단하거나 좋고 나쁨을 매기지 않아요. 출처 <a href="https://open.assembly.go.kr" target="_blank" rel="noopener">열린국회정보</a></div>';
+    tb('more').innerHTML = `<div class="ds" style="margin-top:8px">아래는 공식 사이트로 바로 가는 길이에요. 원문을 직접 확인하세요.</div><div class="lk">
+      <a href="https://record.assembly.go.kr/" target="_blank" rel="noopener">국회 회의록에서 발언 찾기 ↗<span style="margin-left:auto;font-size:11px;color:#8fc9a5">검색창에 "${esc(m.name)}"</span></a>
+      <a href="https://likms.assembly.go.kr/bill/main.do" target="_blank" rel="noopener">의안정보시스템에서 모든 발의 법안 ↗<span style="margin-left:auto;font-size:11px;color:#8fc9a5">제안자 "${esc(m.name)}"</span></a>
+      <a href="${esc(m.profile || 'https://www.assembly.go.kr')}" target="_blank" rel="noopener">국회 의원 소개 원문 ↗</a>
+      <a href="http://info.nec.go.kr" target="_blank" rel="noopener">선관위 선거통계시스템(후보자 공개 원문) ↗<span style="margin-left:auto;font-size:11px;color:#8fc9a5">제22대 국회의원선거</span></a></div>
+      <div class="fine">선관위에는 후보 등록 때 낸 재산·병역·납세·전과 등 공개 서류 원문이 있어요. 이 사이트는 그 내용을 옮겨 적지 않고 원문 링크만 둬요.</div>`;
+    const fill = () => {
+      if (!SEC) { ['bill', 'vote', 'disc'].forEach((t) => (tb(t).innerHTML = '<div class="ds" style="margin-top:8px">공식 기록을 불러오지 못했어요.</div>')); return; }
+      // 대표 발의
+      const st = (SEC.lead_stat || {})[m.id], L1 = (SEC.lead || {})[m.id] || [];
+      file.querySelector('.c-bill').textContent = st ? st[0] : 0;
+      tb('bill').innerHTML = st ? `<div class="vsum" style="grid-template-columns:repeat(3,1fr)"><div><b>${st[0]}</b>대표 발의</div><div><b>${st[1]}</b>통과·반영</div><div><b>${st[2]}</b>외교·안보 위원회</div></div>
+        <div class="ds">22대 국회에서 이 의원이 대표로 낸 법안이에요. 최근 ${L1.length}건:</div>` + L1.map((b) => `<div class="tr"><div class="d">${esc(b.d)}</div><div class="p">${billA(b.id, b.n)}</div><div><span class="tg ${b.r && b.r !== '철회' ? 'y' : ''}">${esc(RES(b.r))}</span>${b.s ? '<span class="tg">외교·안보 위원회 소관</span>' : ''}</div></div>`).join('') + `<div class="ds" style="margin-top:6px">전체 목록은 '원문 링크' 탭의 의안정보시스템에서 볼 수 있어요.</div>` + SRC
+        : '<div class="ds" style="margin-top:8px">22대 국회에서 대표로 낸 법안 기록이 없어요.</div>' + SRC;
+      // 외교·안보 표결
+      const vs = (SEC.votes || {})[m.id] || '', B = SEC.bills || [];
+      const cnt = { Y: 0, N: 0, A: 0, X: 0 }; for (const c of vs) if (cnt[c] != null) cnt[c]++;
+      const rows = B.map((b, i) => [b, vs[i] || '-']).filter(([, v]) => v !== '-');
+      tb('vote').innerHTML = rows.length ? `<div class="ds" style="margin-top:8px">국방·외교통일·정보위원회 소관이거나 외교·안보 안건 중, 본회의에서 반대·기권이 3표 이상 나온 ${B.length}건이에요(만장일치는 뺐어요).</div>
+        <div class="vsum"><div><b>${cnt.Y}</b>찬성</div><div><b>${cnt.N}</b>반대</div><div><b>${cnt.A}</b>기권</div><div><b>${cnt.X}</b>불참</div></div>` + rows.map(([b, v]) => `<div class="tr"><div class="d">${esc(b.date)}</div><div class="p"><span class="vt ${v}">${VN[v]}</span>${billA(b.id, b.name)}</div><div><span class="tg">본회의 ${esc(b.result || '')} · 찬성 ${b.yes} · 반대 ${b.nay} · 기권 ${b.blank}</span></div></div>`).join('') + SRC
+        : '<div class="ds" style="margin-top:8px">이 의원의 해당 표결 기록이 없어요.</div>' + SRC;
+      // 징계안
+      const D2 = (SEC.discipline || []).filter((x) => (x.who || []).includes(m.name));
+      file.querySelector('.c-disc').textContent = D2.length;
+      tb('disc').innerHTML = (D2.length ? `<div class="ds" style="margin-top:8px">국회에 제출된, 이 의원 이름이 제목에 있는 징계안이에요. <b>징계안은 제출된 안건일 뿐, 징계가 정해졌다는 뜻이 아니에요.</b></div>` + D2.map((x) => `<div class="tr"><div class="d">${esc(x.date)} 제출</div><div class="p">${billA(x.id, x.name)}</div><div><span class="tg">${esc(x.result || '처리 전(윤리특별위원회 심사)')}</span></div></div>`).join('')
+        : '<div class="ds" style="margin-top:8px">22대 국회에서 이 의원 이름으로 제출된 징계안이 없어요.</div>') + '<div class="fine">출처 열린국회정보 의안 접수목록 · 같은 이름의 다른 사람일 수 있으니 원문을 확인하세요.</div>';
+    };
+    file.dataset.mid = m.id;
+    if (SEC) fill(); else secP.then(() => { if (file.dataset.mid === m.id && file.querySelector('.tabs')) fill(); });
   }
   const row = (m, right) => `<div class="li" data-id="${esc(m.id)}">${m.pic ? `<img src="${esc(m.pic)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="av">${esc(m.name.slice(0, 1))}</span>`}<div class="t"><b>${esc(m.name)}</b> <span style="color:${pc(m.party)};font-size:11px;font-weight:800">${esc(m.party)}</span><div>${esc(m.district)}</div></div>${right ? `<span class="r">${right}</span>` : ''}</div>`;
   const bindRows = () => file.querySelectorAll('.li[data-id]').forEach((el) => (el.onclick = () => { const m = people.find((x) => x.id === el.dataset.id); if (m) open(m); }));
@@ -378,7 +434,7 @@
     file.innerHTML = fileHead(`국가 파일 · ${c}`) + ids.map((id) => { const ts = byT[id], t = ts[0]; return `<div class="tr"><div class="d">${esc(t.dates || '')}</div><div class="p">${esc(String(t.purpose || '').slice(0, 80))}</div><div><span class="tg y">비용 낸 곳: ${esc(t.funder || '적힌 곳 없음')}</span></div>${ts.map((x) => { const m = people.find((p) => p.id === x.member_id); return m ? row(m) : `<div class="ds">${esc(x.name)} (${esc(x.party || '')})</div>`; }).join('')}</div>`; }).join('') + '<div class="fine">출처 열린국회정보 · 공개 기록일 뿐 잘잘못을 뜻하지 않아요</div>';
     file.classList.add('on'); bindX(); bindRows();
   }
-  const snd = root.querySelector('.snd'); const paintSnd = () => { snd.textContent = SFX.muted ? '🔇' : '🔊'; }; paintSnd(); snd.onclick = () => { SFX.toggle(); paintSnd(); if (!SFX.muted) SFX.click(); };
+  const snd = root.querySelector('.snd'); const paintSnd = () => { snd.classList.toggle('off', SFX.muted); snd.setAttribute('aria-pressed', String(!SFX.muted)); }; paintSnd(); snd.onclick = () => { SFX.toggle(); paintSnd(); if (!SFX.muted) SFX.click(); };
   // 파일 창이 열리면 컴퓨터에서는 지도를 창 왼쪽으로 줄여 가리지 않게, 휴대폰에서는 지도를 만지면 창을 접는다
   new MutationObserver(() => { const on = file.classList.contains('on'); if (root.classList.contains('fileon') !== on) { root.classList.toggle('fileon', on); setTimeout(() => { map.invalidateSize({ pan: false }); setMin(); }, 30); } }).observe(file, { attributes: true, attributeFilter: ['class'] });
   const mapEl = root.querySelector('.pg-map');
