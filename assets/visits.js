@@ -17,7 +17,7 @@ footer .visits{margin:8px 0 0;background:transparent;border:0;padding:0;font-siz
   document.head.append(css);
   const THANKS = '여러분의 관심으로 세금이 절약될 수 있습니다. 감사합니다 🙏';
   const box = document.createElement('div'); box.className = 'visits';
-  const X = 'https://x.com/KORROOFTOPARODY';
+  const X = 'https://x.com/KORROOFTOPARODY/creator-subscriptions/subscribe';
   box.innerHTML = `<span class="vn" hidden></span><span class="vt">${THANKS}</span><a class="vx" href="${X}" target="_blank" rel="noopener">☕ 이 사이트는 <b>@청소부</b> 혼자 만들어요 · <b>월 1달러 X 구독</b>으로 응원하기 ›</a>`;
   const place = () => {
     if (page === 'home') {
