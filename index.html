@@ -28,6 +28,10 @@ h1{font-size:clamp(28px,7vw,38px);letter-spacing:-.055em;margin:15px 0 10px;line
 .country{display:grid;grid-template-columns:66px 1fr 26px;align-items:center;gap:12px;min-height:124px;padding:18px;border-radius:20px;border:1px solid #28523a;text-decoration:none;color:#f0fff4;background:linear-gradient(115deg,#123721,#0a1b12);box-shadow:0 12px 32px #0007;transition:transform .15s,border-color .15s,background .15s}
 .country:active{transform:scale(.985)}
 .country:focus-visible,.country:hover{outline:2px solid #7af4a2;outline-offset:2px;border-color:#79efaa}
+.country.local{background:linear-gradient(115deg,#302515,#171b12);border-color:#65522e}
+.country.local small{color:#d6c9ac}
+.country.local .arrow{color:#f2d38c}
+.country.local .flag{font-size:31px}
 .country.us{background:linear-gradient(115deg,#122b3d,#091c21);border-color:#315369}
 .flag{width:60px;height:60px;display:grid;place-items:center;border-radius:16px;background:#ffffff12;font-size:36px}
 .country strong{display:block;font-size:23px;letter-spacing:-.04em;margin-bottom:5px}
@@ -42,12 +46,12 @@ footer{text-align:center;color:#668675;font-size:11px;line-height:1.8}
 </style></head><body>
 <main>
  <div class="brand"><span class="logo">MT</span><span>MONEY TRACKER</span></div>
- <div class="intro"><div class="eyebrow">SELECT YOUR REGION</div><h1>어느 나라를<br>추적하시겠습니까?</h1><p>국가를 선택하고 공개 기록 추적을 시작하세요.</p></div>
- <nav class="choices" aria-label="추적할 국가 선택">
+ <div class="intro"><div class="eyebrow">SELECT YOUR REGION</div><h1>어느 곳을<br>추적하시겠습니까?</h1><p>국가를 선택하고 공개 기록 추적을 시작하세요.</p></div>
+ <nav class="choices" aria-label="추적실 선택">
   <a class="country kr" href="national.html"><span class="flag" aria-hidden="true">🇰🇷</span><span><strong>대한민국</strong><small>국회의원 · 정당 · 국외활동<br>한국 국회 추적실 입장</small></span><span class="arrow" aria-hidden="true">›</span></a>
   <a class="country us" href="us.html?lang=ko"><span class="flag" aria-hidden="true">🇺🇸</span><span><strong>미국</strong><small>Congress · 주식 거래 · 레이더<br>미국 의회 추적실 입장</small></span><span class="arrow" aria-hidden="true">›</span></a>
  </nav>
- <a class="secondary" href="contracts.html">⌗ 지역 계약·예산 데이터 둘러보기 <span aria-hidden="true">↗</span></a>
+ <a class="country local" href="contracts.html"><span class="flag" aria-hidden="true">🏙️</span><span><strong>지역 계약·예산</strong><small>전국 지자체 계약 · 예산 · 입찰<br>우리 동네 예산 추적실 입장</small></span><span class="arrow" aria-hidden="true">›</span></a>
  <footer>공개 자료 기반 · 기록은 잘못의 증거가 아닙니다.<br>© MONEY TRACKER</footer>
 </main>
 </body></html>
