@@ -13,7 +13,7 @@
 <link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><meta name="apple-mobile-web-app-title" content="MONEY TRACKER"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="theme-color" content="#020805">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/usgame.css?v=20261025dock20">
+<link rel="stylesheet" href="assets/usgame.css?v=20261025clean25">
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#020805;color:#e8fff1;font-family:Pretendard,system-ui,sans-serif;overflow-x:hidden}html{scroll-behavior:smooth}
 .ubar{height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;background:#020805;border-bottom:1px solid #12301f;font-size:13px}
@@ -129,112 +129,49 @@
 }
 @media(min-width:601px){.mt-shared-head .mt-language-switch{order:2;font-size:12px;background:#183c2b;color:#a8f4c7}}
 
-/* Two-tier tool layout: Korean Assembly style for both tool and section docks. */
-@media(max-width:600px){
- body[data-page="us"] .mt-mobile-tabs{
-  position:fixed!important;top:auto!important;bottom:calc(4px + env(safe-area-inset-bottom,0px))!important;
-  left:12px!important;right:12px!important;width:calc(100% - 24px)!important;
-  height:70px!important;min-height:70px!important;z-index:1050!important;
-  padding:5px!important;gap:3px!important;display:flex!important;
-  border:1px solid #285d3f!important;border-radius:20px!important;
-  background:linear-gradient(180deg,rgba(13,38,24,.97),rgba(4,18,10,.98))!important;
-  box-shadow:0 10px 26px #000b!important;backdrop-filter:blur(14px)!important;
- }
- body[data-page="us"] .mt-mobile-tabs button{
-  flex:1 1 0!important;display:flex!important;flex-direction:column!important;
-  justify-content:center!important;align-items:center!important;gap:3px!important;
-  min-width:0!important;height:58px!important;border-radius:15px!important;
-  font:700 12px Pretendard,system-ui,sans-serif!important;color:#9bc7aa!important;
- }
- body[data-page="us"] .mt-mobile-tabs .mt-tab-icon{font-size:24px!important;line-height:1.1!important;color:inherit}
- body[data-page="us"] .mt-mobile-tabs button[aria-pressed="true"]{
-  background:linear-gradient(180deg,#1a5131,#0b2819)!important;
-  border:1px solid #388c59!important;color:#85ffb2!important;
-  box-shadow:inset 0 0 12px #2b925633!important;
- }
- body[data-page="us"] #pg{height:calc(100dvh - 216px)!important}
- body[data-page="us"] #pg.member-selected{height:calc(100dvh - 216px)!important}
- body[data-page="us"] #pg .pg-bar{bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
- body[data-page="us"] #pg .pg-dice{bottom:calc(160px + env(safe-area-inset-bottom,0px))!important}
- body[data-page="us"] #pg.member-selected .pg-bar{bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
- body[data-page="us"] #pg.member-selected .pg-dice{top:calc(55% - 65px)!important;bottom:auto!important}
- body[data-page="us"] #pg.member-selected.member-full .pg-dice{top:calc(18% - 65px)!important}
- body[data-page="us"].has-tabbar{padding-bottom:calc(82px + env(safe-area-inset-bottom,0px))!important}
-}
 
-/* Mobile UX cleanup: one persistent three-item dock; six map tools on demand. */
+/* US mobile: one dock only. No floating secondary menus. */
 @media(max-width:600px){
- body[data-page="us"] .mt-mobile-tabs{
-  position:fixed!important;top:auto!important;bottom:calc(5px + env(safe-area-inset-bottom,0px))!important;
-  left:12px!important;right:12px!important;width:calc(100% - 24px)!important;
-  height:65px!important;min-height:65px!important;z-index:1100!important;
- }
- body[data-page="us"] #pg .pg-bar{display:none!important}
- body[data-page="us"] #pg.mt-tools-open .pg-bar{
-  display:flex!important;position:absolute!important;
-  bottom:calc(85px + env(safe-area-inset-bottom,0px))!important;
-  left:50%!important;right:auto!important;transform:translateX(-50%)!important;
-  z-index:900!important;width:calc(100% - 20px)!important;
- }
- body[data-page="us"] #pg .mt-map-tools-toggle{
-  display:flex!important;align-items:center;justify-content:center;gap:6px;
-  position:absolute;left:12px;bottom:calc(88px + env(safe-area-inset-bottom,0px));
-  z-index:920;min-height:43px;padding:0 14px;border:1px solid #367b51;
-  border-radius:999px;background:#082719;color:#b7f9ce;
-  font:700 13px Pretendard,system-ui;box-shadow:0 3px 14px #0009;
- }
- body[data-page="us"] #pg.mt-tools-open .mt-map-tools-toggle{background:#21583a;color:#fff}
- body[data-page="us"] #pg .pg-dice{
-  right:12px!important;top:auto!important;
-  bottom:calc(88px + env(safe-area-inset-bottom,0px))!important;
-  min-height:43px!important;padding:0 12px!important;
-  font-size:12px!important;z-index:920!important;
- }
- body[data-page="us"] #pg.mt-tools-open .pg-dice{bottom:calc(162px + env(safe-area-inset-bottom,0px))!important}
- body[data-page="us"] #pg.member-selected .mt-map-tools-toggle{bottom:calc(88px + env(safe-area-inset-bottom,0px))!important}
- body[data-page="us"] #pg.member-selected .pg-dice{top:auto!important;bottom:calc(88px + env(safe-area-inset-bottom,0px))!important}
- body[data-page="us"] #pg.member-selected.mt-tools-open .pg-dice{bottom:calc(162px + env(safe-area-inset-bottom,0px))!important}
- body[data-page="us"] #pg{height:calc(100dvh - 190px)!important}
- body[data-page="us"] #pg.member-selected{height:calc(100dvh - 190px)!important}
-}
-@media(min-width:601px){#pg .mt-map-tools-toggle{display:none!important}}
-
-/* 2026-10-25 stable mobile layout: ONE six-tool dock, Radar always visible.
-   Dashboard is a separate small action, not a second bottom toolbar. */
-@media(max-width:600px){
- body[data-page="us"] .mt-mobile-tabs{display:none!important}
- body[data-page="us"] .mt-map-tools-toggle{display:none!important}
- body[data-page="us"] .tabbar-bot{display:none!important}
+ body[data-page="us"] .mt-mobile-tabs,
+ body[data-page="us"] .tabbar,
+ body[data-page="us"] #pg .mt-map-tools-toggle,
+ body[data-page="us"] #pg.mt-tools-open .mt-map-tools-toggle{display:none!important;visibility:hidden!important}
+ body[data-page="us"]{padding-bottom:0!important}
+ body[data-page="us"] #pg{height:calc(100dvh - 138px)!important;min-height:340px!important}
+ body[data-page="us"] #pg.member-selected{height:calc(100dvh - 138px)!important}
  body[data-page="us"] #pg .pg-bar,
  body[data-page="us"] #pg.mt-tools-open .pg-bar{
-  display:flex!important;position:absolute!important;left:50%!important;right:auto!important;
-  bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;
-  width:calc(100% - 20px)!important;max-width:560px!important;
+  display:flex!important;visibility:visible!important;position:absolute!important;
+  left:50%!important;right:auto!important;top:auto!important;
+  bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;
+  width:calc(100% - 24px)!important;max-width:560px!important;
   transform:translateX(-50%)!important;z-index:850!important;
   gap:2px!important;padding:5px!important;border-radius:20px!important;
+  background:linear-gradient(180deg,rgba(14,42,25,.96),rgba(4,18,10,.97))!important;
+  border:1px solid #2d6746!important;box-shadow:0 10px 25px #0009!important;
  }
- body[data-page="us"] #pg .pg-bar button{display:flex!important;flex:1 1 0!important;min-width:0!important}
- body[data-page="us"] #pg .pg-bar [data-w="radar"]{display:flex!important;visibility:visible!important}
+ body[data-page="us"] #pg .pg-bar button{display:flex!important;flex:1 1 0!important;min-width:0!important;width:auto!important;height:57px!important;font-size:11px!important}
+ body[data-page="us"] #pg .pg-bar button .k{display:none!important}
+ body[data-page="us"] #pg .pg-bar button .ic{display:flex!important}
+ body[data-page="us"] #pg .pg-bar button[aria-pressed="true"]{color:#8fffb8!important;background:#16462b!important;border-radius:14px!important}
  body[data-page="us"] #pg .pg-dice,
- body[data-page="us"] #pg.mt-tools-open .pg-dice,
- body[data-page="us"] #pg.member-selected .pg-dice{
+ body[data-page="us"] #pg.member-selected .pg-dice,
+ body[data-page="us"] #pg.member-selected.member-full .pg-dice{
   display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
   position:absolute!important;right:12px!important;top:auto!important;
-  bottom:calc(84px + env(safe-area-inset-bottom,0px))!important;z-index:880!important;
+  bottom:calc(85px + env(safe-area-inset-bottom,0px))!important;z-index:870!important;
  }
- body[data-page="us"] #pg{height:calc(100dvh - 130px)!important;min-height:350px!important}
- body[data-page="us"] #pg.member-selected{height:calc(100dvh - 130px)!important}
  body[data-page="us"] .mt-dashboard-link{
-  display:inline-flex;align-items:center;justify-content:center;gap:5px;
-  grid-column:1/-1;min-height:36px;margin:0 0 2px;
-  border:1px solid #35694b;border-radius:10px;background:#102a1c;
-  color:#a9f3c5;font:700 13px Pretendard,system-ui;
+  display:inline-flex!important;grid-column:1/-1;align-items:center;justify-content:center;
+  min-height:37px;padding:5px 12px;margin:0 0 3px;
+  background:#10291b;border:1px solid #316c49;border-radius:10px;
+  color:#b8f5cd;font:700 13px Pretendard,system-ui;
  }
- body[data-page="us"][data-mt-mobile-tab="dashboard"] #usdash{display:block!important}
  body[data-page="us"][data-mt-mobile-tab="dashboard"] #pg{display:none!important}
+ body[data-page="us"][data-mt-mobile-tab="dashboard"] #usdash{display:block!important}
  body[data-page="us"][data-mt-mobile-tab="map"] #pg{display:block!important}
  body[data-page="us"][data-mt-mobile-tab="map"] #usdash{display:none!important}
- body[data-page="us"] .us-visit{padding-bottom:100px}
+ body[data-page="us"] .us-visit{padding-bottom:25px}
 }
 @media(min-width:601px){.mt-dashboard-link{display:none!important}}
 </style>
@@ -263,36 +200,12 @@ if(matchMedia('(max-width:600px)').matches){
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/usko.js?v=20261025mobile21" defer></script>
 <script src="assets/usdash.js?v=20261025ko2" defer></script>
-<script src="assets/usgame.js?v=20261025ko22"></script>
+<script src="assets/usgame.js?v=20261025clean25"></script>
 <script src="assets/usvisitors.js?v=20261025a" defer></script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="assets/nav.js?v=20261025usshared18" defer></script>
 
-<script>
-(function(){
- function initTools(){
-  const root=document.getElementById('pg');
-  if(!root)return;
-  const toggle=document.createElement('button');
-  toggle.type='button';toggle.className='mt-map-tools-toggle';
-  toggle.setAttribute('aria-expanded','false');toggle.textContent='☷ 지도 도구';
-  root.append(toggle);
-  const setOpen=(open)=>{
-   root.classList.toggle('mt-tools-open',open);
-   toggle.setAttribute('aria-expanded',String(open));
-   toggle.textContent=open?'✕ 도구 닫기':'☷ 지도 도구';
-  };
-  toggle.addEventListener('click',()=>setOpen(!root.classList.contains('mt-tools-open')));
-  root.addEventListener('click',e=>{
-   if(e.target.closest('.pg-bar [data-w]'))setOpen(false);
-  });
-  document.querySelectorAll('.mt-mobile-tabs [data-mtab]').forEach(b=>
-   b.addEventListener('click',()=>setOpen(false)));
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initTools);
- else initTools();
-})();
-</script>
+
+
 
 <script>
 (function(){
