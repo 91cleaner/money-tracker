@@ -100,3 +100,15 @@
 #pg .ttl.us{font-size:12px;letter-spacing:.08em;color:#8fc9a5;white-space:nowrap}@media(max-width:420px){#pg .ttl.us{font-size:11px}}
 #pg .pbar{display:inline-block;width:70px;height:5px;border-radius:3px;background:#0b2416;margin-right:8px;vertical-align:middle;overflow:hidden}#pg .pbar i{display:block;height:100%}
 #pg .tkb{height:8px;border-radius:4px;background:#06150c;overflow:hidden;margin-top:3px}#pg .tkb i{display:block;height:100%}
+
+
+/* iPhone: keep controls clear of the bottom toolbar and safe area. */
+#pg .pg-reset{position:absolute;z-index:725;left:12px;bottom:84px;min-height:42px;padding:0 14px;border-radius:999px;border:1px solid #397c52;background:rgba(3,18,9,.94);color:#eafff2;font:700 13px Pretendard,system-ui,sans-serif;cursor:pointer;box-shadow:0 5px 20px #0009}
+#pg .pg-reset:focus-visible{outline:3px solid #5dff9e;outline-offset:2px}
+@media(max-width:899px){
+  #pg .pg-file{bottom:calc(88px + env(safe-area-inset-bottom,0px));max-height:min(48%,420px);left:10px;right:10px;overscroll-behavior:contain}
+  #pg .pg-file.min{bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+  #pg .pg-reset{bottom:calc(88px + env(safe-area-inset-bottom,0px));left:10px}
+  #pg.fileon .pg-reset{opacity:0;pointer-events:none}
+  #pg .pg-bar{z-index:760}
+}
