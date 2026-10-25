@@ -23,9 +23,10 @@
   <nav class="pg-bar" aria-label="Tools">
     <button type="button" data-w="mp"><span class="k">1</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21v-7h14v7M4 14h16M8 14v7M12 14v7M16 14v7"/><path d="M7 14a5 5 0 0 1 10 0"/><path d="M12 9V4.5M10.5 4.5h3"/></svg></span>Members</button>
     <button type="button" data-w="trades"><span class="k">2</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/><path d="M3 21h18" opacity=".5"/></svg></span>Trades</button>
-    <button type="button" data-w="radar"><span class="k">3</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.5" opacity=".6"/><path d="M12 12 18.7 5.3"/><path d="M12 2.5A9.5 9.5 0 0 1 18.7 5.3L12 12z" class="fillp" stroke="none"/><circle cx="16" cy="14.5" r="1.1" class="dot" stroke="none"/></svg></span>Radar</button>
-    <button type="button" data-w="rank"><span class="k">4</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M8.5 21v-8h7v8"/><path d="M3 21v-5h5.5M15.5 21v-11H21v11"/><path d="M2 21h20"/><path d="m12 3.2.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.3z" stroke-width="1.3" stroke-linejoin="round"/></svg></span>Rank</button>
-    <button type="button" data-w="find"><span class="k">5</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.4 15.4 5.6 5.6"/></svg></span>Find</button>
+    <button type="button" data-w="party"><span class="k">3</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 21V3.5"/><path d="M5 4.5c3-1.6 5.5 1.6 8.5 0s4.5-.6 5.5 0v8.5c-1-.6-2.5-1.6-5.5 0s-5.5-1.6-8.5 0" stroke-linejoin="round"/></svg></span>Party</button>
+    <button type="button" data-w="radar"><span class="k">4</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.5" opacity=".6"/><path d="M12 12 18.7 5.3"/><path d="M12 2.5A9.5 9.5 0 0 1 18.7 5.3L12 12z" class="fillp" stroke="none"/><circle cx="16" cy="14.5" r="1.1" class="dot" stroke="none"/></svg></span>Radar</button>
+    <button type="button" data-w="rank"><span class="k">5</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M8.5 21v-8h7v8"/><path d="M3 21v-5h5.5M15.5 21v-11H21v11"/><path d="M2 21h20"/><path d="m12 3.2.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.3z" stroke-width="1.3" stroke-linejoin="round"/></svg></span>Rank</button>
+    <button type="button" data-w="find"><span class="k">6</span><span class="ic"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.4 15.4 5.6 5.6"/></svg></span>Find</button>
   </nav>
   <button type="button" class="pg-dice" aria-label="Track a random member"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/></svg>Track anyone</button>`;
   const $ = (s) => root.querySelector(s);
@@ -205,7 +206,7 @@
   // tools
   let radarRaf = 0;
   const stopRadar = () => { cancelAnimationFrame(radarRaf); radarRaf = 0; const c = root.querySelector('.pg-radar'); if (c) c.remove(); };
-  let TK = null, TV = 'latest', TP = null, RSEG = 'trades', RDESC = true;
+  let PSEL = null, TK = null, TV = 'latest', TP = null, RSEG = 'trades', RDESC = true;
   const RANKS = [
     { k: 'trades', label: 'Most trades', f: (v) => v, note: 'Stock trades disclosed in the last 12 months (parsed electronic filings).' },
     { k: 'vol', label: 'Est. volume', f: (v) => (v >= 1e6 ? '$' + (v / 1e6).toFixed(1) + 'M' : '$' + Math.round(v / 1e3) + 'K'), note: 'Sum of the midpoints of reported amount ranges. A rough estimate.' },
@@ -266,6 +267,21 @@
       };
       paint(); fitUS(true);
       type(`${trades.length.toLocaleString('en-US')} disclosed trades · ${win.length} in the last 90 days`);
+    },
+    party() {
+      stopRadar(); gFx.clearLayers(); gTop.clearLayers(); fitUS(true);
+      const P = ['D', 'R', 'I'];
+      const st = Object.fromEntries(P.map((p) => { const ms = people.filter((m) => m.party === p); const ts = trades.filter((t) => t.id && byId[t.id] && byId[t.id].party === p); return [p, { seats: ms.length, sen: ms.filter((m) => m.chamber === 'sen').length, who: new Set(ts.map((t) => t.id)).size, n: ts.length, b: ts.filter((t) => t.ty === 'P').length, s: ts.filter((t) => t.ty === 'S').length, v: ts.reduce((a, t) => a + amtMid(t.amt), 0), top: Object.entries(ts.filter((t) => t.ty === 'P' && t.tk).reduce((a, t) => ((a[t.tk] = (a[t.tk] || 0) + 1), a), {})).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k]) => k) }]; }));
+      const fmt = (v) => (v >= 1e6 ? '$' + (v / 1e6).toFixed(1) + 'M' : '$' + Math.round(v / 1e3) + 'K');
+      const mx = Math.max(1, ...P.map((p) => st[p].n));
+      const paint = () => {
+        drawDots(PSEL ? (m) => m.party === PSEL : null);
+        file.innerHTML = fileHead('Party') + `<div class="ds">Tap a party to show only its members on the map.</div>` + P.filter((p) => st[p].seats).map((p) => `<div class="pb li" data-p="${p}" style="display:block${PSEL && PSEL !== p ? ';opacity:.45' : ''}"><div class="h"><span><span style="color:${pc(p)}">●</span> ${PN[p]}s <span style="color:#8fc9a5;font-size:11.5px">${st[p].seats} seats · ${st[p].sen} senators</span></span><b>${st[p].n} trades</b></div><div class="tkb"><i style="width:${(st[p].n / mx) * 100}%;background:${pc(p)}"></i></div><div class="ds" style="margin-top:3px">${st[p].who} members traded · ${st[p].b} buys · ${st[p].s} sells · est. ${fmt(st[p].v)}${st[p].top.length ? ' · top buys ' + st[p].top.join(', ') : ''}</div></div>`).join('') +
+          `<div class="act"><a href="#usdash" class="p" style="text-decoration:none">📊 Compare D vs R charts</a></div>` + SRC;
+        file.classList.add('on'); bindX();
+        file.querySelectorAll('[data-p]').forEach((el) => (el.onclick = () => { PSEL = PSEL === el.dataset.p ? null : el.dataset.p; SFX.click(); paint(); type(PSEL ? `${PN[PSEL]}s: ${st[PSEL].seats} members on the map` : 'All parties'); }));
+      };
+      paint(); type(`Democrats ${st.D.seats} · Republicans ${st.R.seats} · Independents ${st.I.seats}`);
     },
     radar() {
       gFx.clearLayers(); gTop.clearLayers(); closeFile();

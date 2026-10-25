@@ -85,6 +85,13 @@ def house(year, done, mem, out):
     root = ET.fromstring(z.read(xmlname))
     import pdfplumber  # noqa: E402
     rows = [m for m in root.iter("Member") if (m.findtext("FilingType") or "") == "P"]
+    # 신고(접수)일: 거래일과 비교해 45일 기한을 넘겼는지 보려고 모든 거래에 붙인다
+    fdate = {f"/{year}/{m.findtext('DocID')}.pdf": iso(m.findtext("FilingDate") or "") for m in rows if m.findtext("DocID")}
+    for t in out:
+        if t.get("c") == "h" and not t.get("filed"):
+            k = t.get("doc", "")[t.get("doc", "").find(f"/{year}/"):]
+            if k in fdate and fdate[k]:
+                t["filed"] = fdate[k]
     LOG.append(f"house {year}: PTR {len(rows)}")
     by_sd = {}
     for m in mem:
@@ -119,6 +126,11 @@ def house(year, done, mem, out):
         done.add("h" + doc)
         n += 1
         time.sleep(0.3)
+    for t in out:
+        if t.get("c") == "h" and not t.get("filed"):
+            k = t.get("doc", "")[t.get("doc", "").find(f"/{year}/"):]
+            if k in fdate and fdate[k]:
+                t["filed"] = fdate[k]
     LOG.append(f"house {year}: 새 보고서 {n}")
 
 
@@ -215,7 +227,7 @@ def main():
             continue
         seen.add(k); keep.append(t)
     json.dump({"updated": now.strftime("%Y-%m-%d %H:%M UTC"), "source": "U.S. House Clerk financial disclosures · U.S. Senate eFD (STOCK Act periodic transaction reports)",
-               "note": "Amounts are reported ranges. P=purchase, S=sale, E=exchange. Filings can be up to 45 days after the trade.",
+               "note": "Amounts are reported ranges. P=purchase, S=sale, E=exchange. d=transaction date, filed=date the report was filed. The STOCK Act deadline is 45 days after the transaction.",
                "parser": 2, "log": LOG, "done": sorted(done), "trades": keep}, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     print("trades:", len(keep), LOG)
 
