@@ -13,7 +13,7 @@
 <link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><meta name="apple-mobile-web-app-title" content="MONEY TRACKER"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="theme-color" content="#020805">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/usgame.css?v=20261025mobile14">
+<link rel="stylesheet" href="assets/usgame.css?v=20261025nav15">
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#020805;color:#e8fff1;font-family:Pretendard,system-ui,sans-serif;overflow-x:hidden}html{scroll-behavior:smooth}
 .ubar{height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;background:#020805;border-bottom:1px solid #12301f;font-size:13px}
@@ -42,16 +42,44 @@
 .dtip{position:fixed;z-index:9999;display:none;pointer-events:none;background:#04110a;border:1px solid #2a7a4a;border-radius:10px;padding:8px 10px;font:13px/1.45 Pretendard,system-ui,sans-serif;color:#eafff2;box-shadow:0 8px 24px rgba(0,0,0,.5);max-width:280px}
 .us-visit{max-width:1100px;margin:0 auto 30px;padding:12px 16px;border-top:1px solid #1b4930;color:#9fd3b4;font-size:13px}.us-visit strong{color:#eafff2;margin:0 5px}.us-visit small{color:#79a78b}
 .ubar .us-exit{color:#d4eee0;text-decoration:none;display:inline-flex;align-items:center;gap:5px;min-height:40px;padding:5px 8px;border-radius:9px;border:1px solid #24543b;font-size:13px;font-weight:700}.ubar .country-switch{display:flex;gap:5px;align-items:center}.ubar .country-switch a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:6px 9px;border-radius:10px;border:1px solid #235139;color:#d7f9e2;text-decoration:none;font-size:13px;font-weight:700}.ubar .country-switch a[aria-current="page"]{background:#164b2d;border-color:#5dff9e}@media(max-width:600px){.ubar{padding:0 7px;gap:4px}.ubar b{font-size:12px;letter-spacing:0}.ubar .us-exit{font-size:12px;padding:5px 7px}.ubar .country-switch{gap:3px}.ubar .country-switch a{font-size:12px;padding:5px 7px}}
+
+@media(max-width:600px){
+ .mt-mobile-tabs{display:flex!important;position:fixed;bottom:0;left:0;right:0;z-index:99999;height:calc(64px + env(safe-area-inset-bottom,0px));background:#06150f;border-top:1px solid #357a50;padding:4px 6px calc(4px + env(safe-area-inset-bottom,0px));box-sizing:border-box}
+ .mt-mobile-tabs button{flex:1;border:0;background:transparent;color:#a2b6a8;font:700 13px system-ui;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px}
+ .mt-mobile-tabs button[aria-pressed=true]{background:#123b26;color:#70ffab;border-radius:9px}
+ body[data-mt-mobile-tab="map"] #usdash,body[data-mt-mobile-tab="map"] #mt-mobile-trades{display:none!important}
+ body[data-mt-mobile-tab="dashboard"] #pg,body[data-mt-mobile-tab="dashboard"] #mt-mobile-trades{display:none!important}
+ body[data-mt-mobile-tab="trades"] #pg,body[data-mt-mobile-tab="trades"] #usdash{display:none!important}
+ #pg .pg-bar,#pg .pg-more-toggle,#pg .pg-more-menu{display:none!important}
+ body[data-mt-mobile-tab="map"] #pg{height:calc(100dvh - 150px);min-height:300px}
+}
 </style>
 </head>
 <body data-page="us">
 <header class="ubar" id="top"><a class="us-exit" href="./" aria-label="Exit to MONEY TRACKER">✕ <span>Exit</span></a><b><i></i>MONEY TRACKER</b><nav class="country-switch" aria-label="Choose country"><a href="national.html">🇰🇷 Korea</a><a href="us.html?lang=ko" aria-current="page">🇺🇸 USA</a></nav></header>
 <div id="pg"></div>
+<nav class="mt-mobile-tabs" aria-label="모바일 화면 선택">
+ <button type="button" data-mtab="map" aria-pressed="true">🗺️ <span>지도</span></button>
+ <button type="button" data-mtab="trades" aria-pressed="false">📋 <span>거래</span></button>
+ <button type="button" data-mtab="dashboard" aria-pressed="false">📊 <span>대시보드</span></button>
+</nav>
 <section id="usdash" aria-label="Congress trading dashboard"></section><aside class="us-visit" aria-live="polite">🇺🇸 오늘 방문 <strong id="us-visitor-count">집계 확인 중…</strong> <small>한국시간 · 통계 반영 지연 가능</small></aside>
+<script>
+if(matchMedia('(max-width:600px)').matches){
+ document.body.dataset.mtMobileTab='map';
+ document.querySelectorAll('.mt-mobile-tabs button').forEach(b=>b.addEventListener('click',()=>{
+  document.body.dataset.mtMobileTab=b.dataset.mtab;
+  document.querySelectorAll('.mt-mobile-tabs button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  if(b.dataset.mtab==='trades'&&!document.getElementById('mt-mobile-trades')){const n=document.createElement('section');n.id='mt-mobile-trades';n.textContent='거래 내역을 불러오는 중…';document.querySelector('.mt-mobile-tabs').after(n);}
+  if(b.dataset.mtab==='map')setTimeout(()=>window.dispatchEvent(new Event('resize')),60);
+  window.scrollTo(0,0);
+ }));
+}
+</script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/usko.js?v=20261025simplenav9" defer></script>
 <script src="assets/usdash.js?v=20261025ko2" defer></script>
-<script src="assets/usgame.js?v=20261025mobile14"></script>
+<script src="assets/usgame.js?v=20261025nav15"></script>
 <script src="assets/usvisitors.js?v=20261025a" defer></script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
