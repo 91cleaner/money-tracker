@@ -205,7 +205,7 @@
   // tools
   let radarRaf = 0;
   const stopRadar = () => { cancelAnimationFrame(radarRaf); radarRaf = 0; const c = root.querySelector('.pg-radar'); if (c) c.remove(); };
-  let TK = null, RSEG = 'trades', RDESC = true;
+  let TK = null, TV = 'latest', TP = null, RSEG = 'trades', RDESC = true;
   const RANKS = [
     { k: 'trades', label: 'Most trades', f: (v) => v, note: 'Stock trades disclosed in the last 12 months (parsed electronic filings).' },
     { k: 'vol', label: 'Est. volume', f: (v) => (v >= 1e6 ? '$' + (v / 1e6).toFixed(1) + 'M' : '$' + Math.round(v / 1e3) + 'K'), note: 'Sum of the midpoints of reported amount ranges. A rough estimate.' },
@@ -220,13 +220,48 @@
       const win = trades.filter((t) => recent(t, 90));
       const cnt = {}; for (const t of win) if (t.tk) cnt[t.tk] = (cnt[t.tk] || 0) + 1;
       const tops = Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      const fmt$ = (v) => (v >= 1e6 ? '$' + (v / 1e6).toFixed(1) + 'M' : '$' + Math.round(v / 1e3) + 'K');
+      // Congress portfolio: what members bought / sold most (12 months), optionally by party
+      const board = (ty) => {
+        const g = {};
+        for (const t of trades) {
+          if (!t.tk || t.ty !== ty) continue;
+          const m = t.id && byId[t.id]; if (TP && (!m || m.party !== TP)) continue;
+          const x = (g[t.tk] = g[t.tk] || { n: 0, v: 0, who: new Set(), name: t.asset });
+          x.n++; x.v += amtMid(t.amt); if (t.id) x.who.add(t.id);
+        }
+        return Object.entries(g).sort((a, b) => b[1].who.size - a[1].who.size || b[1].n - a[1].n).slice(0, 15);
+      };
+      const nameOf = (a) => String(a || '').replace(/\s*\([^)]*\)\s*$/, '').replace(/\s*-?\s*Common Stock.*$/i, '').slice(0, 34);
+      const avgLine = () => {
+        const sel = trades.filter((t) => { const m = t.id && byId[t.id]; return !TP || (m && m.party === TP); });
+        const who = new Set(sel.map((t) => t.id).filter(Boolean));
+        const b = sel.filter((t) => t.ty === 'P').length, sl = sel.filter((t) => t.ty === 'S').length;
+        const per = who.size ? (sel.length / who.size).toFixed(1) : 0;
+        return `<div class="vsum" style="grid-template-columns:repeat(4,1fr)"><div><b>${who.size}</b>members trading</div><div><b>${per}</b>trades each (avg)</div><div><b>${b.toLocaleString('en-US')}</b>buys</div><div><b>${sl.toLocaleString('en-US')}</b>sells</div></div>`;
+      };
       const paint = () => {
-        const L2 = (TK ? trades.filter((t) => t.tk === TK) : trades).slice().sort((a, b) => (b.fd || '').localeCompare(a.fd || '') || (b.d || '').localeCompare(a.d || ''));
-        const ids = new Set(L2.slice(0, 200).map((t) => t.id).filter(Boolean));
-        drawDots((m) => ids.has(m.id), (m) => ids.has(m.id) && (byM[m.id] || []).some((t) => recent(t, 30)));
-        file.innerHTML = fileHead(TK ? `Trades · ${TK}` : 'Latest trades') + `<div class="ds">House members' disclosed trades · Senate filings coming soon<br>Most traded tickers · last 90 days</div><div class="fl2">${tops.map(([k, c]) => `<button type="button" class="tk${TK === k ? ' on' : ''}" data-k="${esc(k)}">${esc(k)} <small>×${c}</small></button>`).join('')}</div>` +
-          L2.slice(0, 50).map((t) => tline(t, true)).join('') + (L2.length ? '' : '<div class="ds">No trades yet — data is still loading.</div>') + SRC;
-        file.classList.add('on'); bindX(); bindTrd(); if (innerWidth < 900 && !TK) file.classList.add('min');
+        const head = `<div class="seg"><button type="button" data-v="latest" class="${TV === 'latest' ? 'on' : ''}">Latest</button><button type="button" data-v="P" class="${TV === 'P' ? 'on' : ''}">Most bought</button><button type="button" data-v="S" class="${TV === 'S' ? 'on' : ''}">Most sold</button></div>`;
+        if (TV === 'latest') {
+          const L2 = (TK ? trades.filter((t) => t.tk === TK) : trades).slice().sort((a, b) => (b.fd || '').localeCompare(a.fd || '') || (b.d || '').localeCompare(a.d || ''));
+          const ids = new Set(L2.slice(0, 200).map((t) => t.id).filter(Boolean));
+          drawDots((m) => ids.has(m.id), (m) => ids.has(m.id) && (byM[m.id] || []).some((t) => recent(t, 30)));
+          file.innerHTML = fileHead(TK ? `Trades · ${TK}` : 'Congress trades') + head + `<div class="ds">Most traded tickers · last 90 days</div><div class="fl2">${tops.map(([k, c]) => `<button type="button" class="tk${TK === k ? ' on' : ''}" data-k="${esc(k)}">${esc(k)} <small>×${c}</small></button>`).join('')}</div>` +
+            L2.slice(0, 50).map((t) => tline(t, true)).join('') + (L2.length ? '' : '<div class="ds">No trades yet — data is still loading.</div>') + SRC;
+        } else {
+          const B = board(TV), mx = Math.max(1, ...B.map(([, x]) => x.who.size));
+          const ids = new Set(B.flatMap(([, x]) => [...x.who]));
+          drawDots((m) => ids.has(m.id) && (!TP || m.party === TP));
+          file.innerHTML = fileHead(TV === 'P' ? 'What Congress is buying' : 'What Congress is selling') + head +
+            `<div class="fl2"><button type="button" class="tk${!TP ? ' on' : ''}" data-p="">All</button><button type="button" class="tk${TP === 'D' ? ' on' : ''}" data-p="D" style="${TP === 'D' ? '' : 'color:#8fb4ff'}">Democrats</button><button type="button" class="tk${TP === 'R' ? ' on' : ''}" data-p="R" style="${TP === 'R' ? '' : 'color:#ff9b9b'}">Republicans</button></div>` + avgLine() +
+            `<div class="ds">Ranked by how many members ${TV === 'P' ? 'bought' : 'sold'} it (last 12 months)</div>` +
+            B.map(([k, x], i) => `<div class="trd" data-k2="${esc(k)}"><span class="sym"><span class="rk">${i + 1}</span>${esc(k)}</span><span class="as">${esc(nameOf(x.name))}</span><span class="am">${x.who.size} members</span><span class="wh"><span class="pbar"><i style="width:${(x.who.size / mx) * 100}%;background:${TV === 'P' ? '#5dff9e' : '#ff6b6b'}"></i></span>${x.n} ${TV === 'P' ? 'buys' : 'sells'} · est. ${fmt$(x.v)}</span></div>`).join('') +
+            '<div class="fine">Est. = sum of the midpoints of reported amount ranges, a rough guide. Tap a ticker to see every trade.</div>' + SRC;
+        }
+        file.classList.add('on'); bindX(); bindTrd(); if (innerWidth < 900 && !TK && TV === 'latest') file.classList.add('min');
+        file.querySelectorAll('[data-v]').forEach((b) => (b.onclick = () => { TV = b.dataset.v; TK = null; SFX.click(); paint(); type(TV === 'P' ? 'What Congress is buying' : TV === 'S' ? 'What Congress is selling' : 'Latest disclosed trades'); }));
+        file.querySelectorAll('[data-p]').forEach((b) => (b.onclick = () => { TP = b.dataset.p || null; SFX.click(); paint(); }));
+        file.querySelectorAll('[data-k2]').forEach((el) => (el.onclick = () => { TV = 'latest'; TK = el.dataset.k2; SFX.click(); paint(); type(`${TK}: ${trades.filter((t) => t.tk === TK).length} disclosed trades`); }));
         file.querySelectorAll('[data-k]').forEach((b) => (b.onclick = () => { TK = TK === b.dataset.k ? null : b.dataset.k; SFX.click(); paint(); type(TK ? `${TK}: ${trades.filter((t) => t.tk === TK).length} disclosed trades` : 'All trades'); }));
       };
       paint(); fitUS(true);

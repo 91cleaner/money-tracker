@@ -98,3 +98,4 @@
 #pg .usflag{pointer-events:auto;display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:700 11.5px Pretendard,system-ui;color:#cfe9d8;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid rgba(93,255,158,.25);background:rgba(3,14,8,.7)}
 
 #pg .ttl.us{font-size:12px;letter-spacing:.08em;color:#8fc9a5;white-space:nowrap}@media(max-width:420px){#pg .ttl.us{font-size:11px}}
+#pg .pbar{display:inline-block;width:70px;height:5px;border-radius:3px;background:#0b2416;margin-right:8px;vertical-align:middle;overflow:hidden}#pg .pbar i{display:block;height:100%}
