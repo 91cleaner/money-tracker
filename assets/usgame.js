@@ -160,10 +160,10 @@
   const tradeTable = (ts) => {
     if (!ts.length) return '';
     const cells = ts.slice(0, 80).map(t => {
-      const move = t.r == null ? '<span style="color:#91a99a">자료 없음</span>' : '<b style="color:'+(Number(t.r)>=0?'#7dffb0':'#ff9b9b')+'">'+(Number(t.r)>0?'+':'')+esc(t.r)+'%</b>';
-      return '<tr><td>'+esc(t.d || '—')+'</td><td><b>'+esc(t.tk || '—')+'</b></td><td style="color:'+(t.ty==='P'?'#7dffb0':'#ff9b9b')+'">'+(t.ty==='P'?'매수':t.ty==='S'?'매도':'교환')+'</td><td>'+esc(amtShort(t.amt || '—'))+'</td><td>'+move+'</td></tr>';
+      const move = t.r == null ? '<span style="color:#91a99a">N/A</span>' : '<b style="color:'+(Number(t.r)>=0?'#7dffb0':'#ff9b9b')+'">'+(Number(t.r)>0?'+':'')+esc(t.r)+'%</b>';
+      return '<tr><td>'+esc(t.d || '—')+'</td><td><b>'+esc(t.tk || '—')+'</b></td><td style="color:'+(t.ty==='P'?'#7dffb0':'#ff9b9b')+'">'+(t.ty==='P'?'BUY':t.ty==='S'?'SELL':'EXCH')+'</td><td>'+esc(amtShort(t.amt || '—'))+'</td><td>'+move+'</td></tr>';
     }).join('');
-    return '<div class="member-trade-table"><div class="ph2">거래 내역표</div><div class="ds">신고 금액은 범위이며, 주가 변동은 실제 의원 수익이 아닙니다.</div><div class="member-table-scroll"><table><thead><tr><th>거래일</th><th>종목</th><th>구분</th><th>신고 금액</th><th>이후 주가</th></tr></thead><tbody>'+cells+'</tbody></table></div></div>';
+    return '<div class="member-trade-table"><div class="ph2">Trade disclosures</div><div class="ds">Reported amounts are ranges; price moves are not actual member profits.</div><div class="member-table-scroll"><table><thead><tr><th>Trade date</th><th>Ticker</th><th>Action</th><th>Reported amount</th><th>Price move since trade</th></tr></thead><tbody>'+cells+'</tbody></table></div></div>';
   };
 
   let VSA = null;
@@ -196,7 +196,7 @@
     tabs.forEach((bt) => (bt.onclick = () => { SFX.click(); tabs.forEach((x) => x.classList.toggle('on', x === bt)); file.querySelectorAll('.tb').forEach((x) => (x.hidden = x.dataset.t !== bt.dataset.t)); }));
     file.querySelector('[data-a="vs"]').onclick = () => vsPick(m);
     file.querySelector('[data-a="share"]').onclick = async (e) => { const u = location.origin + location.pathname + '?m=' + m.id; try { await navigator.clipboard.writeText(u); e.target.textContent = 'Copied'; } catch (_) { prompt('Link', u); } };
-    try { history.replaceState(null, '', '?m=' + m.id); } catch (e) { /* ignore */ }
+    try { const next = new URL(location.href); next.searchParams.set('m', m.id); history.replaceState(null, '', next.pathname + next.search + next.hash); } catch (e) { /* ignore */ }
   }
 
   function vsPick(a) {
