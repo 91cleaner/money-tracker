@@ -1,28 +1,32 @@
 (()=>{'use strict';
-const country=document.body.dataset.page==='us'?'us':'national';
-const isUS=country==='us';
+const us=document.body.dataset.page==='us';
 const steps=[
-{selector:'#pg .pg-map',title:'01 · 지도 움직이기',desc:'지도를 손가락으로 밀어 보세요. 두 손가락으로 확대·축소할 수 있어요.'},
-{selector:'#pg .pg-bar [data-w="mp"]',title:'02 · 의원 살펴보기',desc:'의원 버튼을 눌러 공개 기록을 찾아보세요.'},
-{selector:'#pg .pg-bar [data-w="radar"]',title:'03 · 레이더',desc:'레이더 버튼을 눌러 활동을 탐색해 보세요.'},
-{selector:'#pg .pg-bar [data-w="rank"]',title:'04 · 순위',desc:'순위 버튼에서 공개 지표를 확인해 보세요.'},
-{selector:'#pg .pg-bar [data-w="'+(isUS?'trades':'trip')+'"]',title:isUS?'05 · 주식 거래':'05 · 국외활동',desc:isUS?'의원들의 신고된 주식 거래를 확인할 수 있어요. 모바일에서는 전체 메뉴를 이용하세요.':'국회의원의 국외활동 관련 공개 자료를 찾아보세요.'},
-{selector:'#pg .pg-file',title:'06 · 의원 기록',desc:'지도에서 의원을 선택하면 상세 기록을 볼 수 있어요. 닫기 또는 지도로 돌아가기로 복귀하세요.'}
+ {key:'map',title:'지도 이동',desc:'지도 빈 곳을 손가락으로 밀거나 확대·축소해 보세요.',selector:'#pg .pg-map',event:'pointerup'},
+ {key:'mp',title:'의원 찾기',desc:'아래 「의원」 버튼을 직접 눌러 보세요.',selector:'#pg .pg-bar [data-w="mp"]',event:'click'},
+ {key:'radar',title:'레이더 사용',desc:'「레이더」 버튼을 직접 눌러 보세요.',selector:'#pg .pg-bar [data-w="radar"]',event:'click'},
+ {key:'rank',title:'순위 보기',desc:'「순위」 버튼을 직접 눌러 보세요.',selector:'#pg .pg-bar [data-w="rank"]',event:'click'},
+ {key:'random',title:'의원 추적',desc:'주사위 버튼을 눌러 임의의 의원을 선택해 보세요. 상세정보가 열리면 지도로 돌아갈 수 있어요.',selector:'#pg .pg-dice',event:'click'}
 ];
-const style=document.createElement('style');style.textContent=`
-.mt-train-launch{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:94px;z-index:2500;min-height:40px;padding:0 13px;border-radius:11px;border:1px solid #69cc89;background:#123b25;color:#d5ffe1;font:800 13px system-ui;cursor:pointer}
-.mt-train-card{position:fixed;z-index:3100;left:50%;top:44%;transform:translate(-50%,-50%);width:min(calc(100vw - 30px),360px);background:#091d12;border:1px solid #7ee9a2;border-radius:18px;padding:20px;color:#effff3;box-shadow:0 12px 50px #000d;font-family:system-ui}
-.mt-train-card[hidden]{display:none!important}.mt-train-card h2{font-size:18px;margin:10px 0}.mt-train-card p{font-size:14px;line-height:1.65;color:#c0ddca}.mt-train-card .progress{font-size:12px;color:#87e9a7}.mt-train-actions{display:flex;gap:8px;margin-top:17px}.mt-train-actions button{flex:1;min-height:44px;border-radius:10px;border:1px solid #397c52;background:#183a26;color:#edfff1;font-weight:800}.mt-train-actions button.primary{background:#7bed9f;color:#06200f}.mt-train-target{outline:3px solid #87ffa9!important;outline-offset:3px!important;box-shadow:0 0 0 7px #6aff9738!important}
-@media(max-width:600px){.mt-train-launch{position:fixed;top:auto;bottom:calc(151px + env(safe-area-inset-bottom,0px));right:12px;z-index:1200;padding:0 12px;min-height:43px}.mt-train-card{top:auto;bottom:calc(155px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:14px 16px}.mt-train-card h2{font-size:16px;margin:6px 0}.mt-train-card p{font-size:13px;margin:6px 0}.mt-train-actions{margin-top:10px}body.mt-training .mt-train-launch{display:none!important}}
-`;document.head.append(style);
-const launch=document.createElement('button');launch.className='mt-train-launch';launch.type='button';launch.textContent='? 훈련';launch.setAttribute('aria-label','조작 훈련 시작');document.body.append(launch);
-const card=document.createElement('section');card.className='mt-train-card';card.hidden=true;card.setAttribute('role','dialog');card.setAttribute('aria-modal','false');card.setAttribute('aria-label','조작 훈련');
-card.innerHTML='<div class="progress"></div><h2></h2><p></p><div class="mt-train-actions"><button type="button" data-act="exit">종료</button><button type="button" data-act="prev">이전</button><button type="button" class="primary" data-act="next">다음 →</button></div>';document.body.append(card);
-let index=0,highlight=null;
-function clear(){if(highlight)highlight.classList.remove('mt-train-target');highlight=null}
-function stop(){clear();card.hidden=true;document.body.classList.remove('mt-training');launch.focus()}
-function render(){clear();const s=steps[index];card.querySelector('.progress').textContent='TRAINING MODE · '+(index+1)+' / '+steps.length;card.querySelector('h2').textContent=s.title;card.querySelector('p').textContent=s.desc;card.querySelector('[data-act="prev"]').disabled=index===0;card.querySelector('[data-act="next"]').textContent=index===steps.length-1?'훈련 완료 ✓':'다음 →';const t=document.querySelector(s.selector);if(t&&t.getBoundingClientRect().width>0){highlight=t;t.classList.add('mt-train-target')} }
-launch.addEventListener('click',()=>{index=0;card.hidden=false;document.body.classList.add('mt-training');render()});
-card.addEventListener('click',e=>{const a=e.target.closest('[data-act]')?.dataset.act;if(a==='exit')stop();if(a==='prev'&&index>0){index--;render()}if(a==='next'){if(index===steps.length-1)stop();else{index++;render()}}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!card.hidden)stop()});
+const css=document.createElement('style');css.textContent=`
+.mt-train-launch{position:fixed;right:12px;bottom:calc(154px + env(safe-area-inset-bottom,0px));z-index:1200;min-width:68px;min-height:43px;padding:0 12px;border:1px solid #66ca86;border-radius:11px;background:#123a23;color:#e2ffec;font:800 13px system-ui;cursor:pointer}
+.mt-train-card{position:fixed;z-index:3100;left:50%;top:50%;transform:translate(-50%,-50%);width:min(360px,calc(100vw - 24px));border:1px solid #76e79b;border-radius:16px;background:#071d11;color:#eaffef;padding:18px;box-shadow:0 12px 40px #000d;font-family:system-ui}
+.mt-train-card[hidden],.mt-train-launch[hidden]{display:none!important}
+.mt-train-card h2{font-size:18px;margin:8px 0}.mt-train-card p{font-size:14px;line-height:1.55;margin:8px 0;color:#c5e2ce}
+.mt-train-card .progress,.mt-train-card .status{color:#89eeb0;font-size:12px}
+.mt-train-actions{display:flex;gap:8px;margin-top:12px}.mt-train-actions button{flex:1;min-height:44px;border:1px solid #39784f;border-radius:10px;background:#163924;color:#effff3;font-weight:800}.mt-train-actions .primary{background:#78eb9f;color:#07200f}
+.mt-train-target{outline:3px solid #a0ffc0!important;outline-offset:3px!important;box-shadow:0 0 0 6px #67fa9c3c!important}
+@media(max-width:600px){.mt-train-card{top:calc(var(--mt-room-header,145px) + 12px);bottom:auto;transform:translateX(-50%);padding:13px 15px}.mt-train-card h2{font-size:16px;margin:5px 0}.mt-train-card p{font-size:13px;margin:5px 0}.mt-train-actions{margin-top:8px}.mt-train-launch{bottom:calc(150px + env(safe-area-inset-bottom,0px))}body.mt-training .mt-train-launch{display:none!important}}
+`;document.head.append(css);
+const launch=document.createElement('button');launch.className='mt-train-launch';launch.type='button';launch.textContent='? 훈련';document.body.append(launch);
+const card=document.createElement('section');card.className='mt-train-card';card.hidden=true;card.setAttribute('role','dialog');card.setAttribute('aria-label','조작 훈련');
+card.innerHTML='<div class="progress"></div><h2></h2><p></p><div class="status" aria-live="polite"></div><div class="mt-train-actions"><button data-act="exit">종료</button><button data-act="skip">건너뛰기</button><button class="primary" data-act="next" disabled>직접 조작해 주세요</button></div>';document.body.append(card);
+let index=0,done=false,highlight=null,off=null,started=null;
+const getTarget=()=>document.querySelector(steps[index].selector);
+function clear(){if(off){off();off=null}if(highlight){highlight.classList.remove('mt-train-target');highlight=null}}
+function finish(){clear();card.hidden=true;document.body.classList.remove('mt-training');launch.hidden=false}
+function complete(){if(done)return;done=true;card.querySelector('.status').textContent='✓ 조작 성공! 다음 단계로 진행하세요.';const next=card.querySelector('[data-act="next"]');next.disabled=false;next.textContent=index===steps.length-1?'훈련 완료 ✓':'다음 단계 →'}
+function render(){clear();done=false;const step=steps[index];card.querySelector('.progress').textContent='TRAINING · '+(index+1)+' / '+steps.length;card.querySelector('h2').textContent=step.title;card.querySelector('p').textContent=step.desc;card.querySelector('.status').textContent='초록색으로 표시된 곳을 직접 조작하세요.';const next=card.querySelector('[data-act="next"]');next.disabled=true;next.textContent='직접 조작해 주세요';const target=getTarget();if(!target||target.getBoundingClientRect().width===0){card.querySelector('.status').textContent='현재 화면에서 버튼을 찾을 수 없어요. 건너뛰기를 누르세요.';return}highlight=target;target.classList.add('mt-train-target');const handler=e=>{if(step.key==='map'&&e.target.closest('button,a,.leaflet-control'))return;complete()};target.addEventListener(step.event,handler,true);off=()=>target.removeEventListener(step.event,handler,true)}
+launch.addEventListener('click',()=>{index=0;launch.hidden=true;card.hidden=false;document.body.classList.add('mt-training');render()});
+card.addEventListener('click',e=>{const act=e.target.closest('[data-act]')?.dataset.act;if(!act)return;if(act==='exit'){finish();return}if(act==='skip'||act==='next'&&done){if(index===steps.length-1){finish();return}index++;render()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!card.hidden)finish()});
 })();
