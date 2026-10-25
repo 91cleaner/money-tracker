@@ -67,32 +67,42 @@ def main():
     if sel and not votes:
         print("::warning::votes: 표결 결과를 하나도 못 받아 이전 자료 유지", fields)
         return
-    # 대표 발의(세 위원회 소관)
-    lead = {}
+    vstr = {m: "".join(v.get(b["id"], "-") for b in sel) for m, v in votes.items()}
+    # 대표 발의(모든 법안): 의원마다 총 건수·통과 건수·최근 8건(외교·안보 위원회 소관은 표시)
+    lead, stat = {}, {}
     for r in C.api("nzmimeepazxkubdpn", AGE="22", pSize=1000):
-        if (r.get("COMMITTEE") or "") not in SEC_CMT:
-            continue
         mid = r.get("RST_MONA_CD")
         if not mid:
             continue
-        lead.setdefault(mid, []).append({"name": r.get("BILL_NAME"), "date": (r.get("PROPOSE_DT") or "")[:10], "cmt": r.get("COMMITTEE"),
-                                         "result": r.get("PROC_RESULT"), "link": r.get("DETAIL_LINK")})
+        res = r.get("PROC_RESULT") or ""
+        st = stat.setdefault(mid, [0, 0, 0])
+        st[0] += 1
+        if re.search(r"가결|대안반영|수정", res):
+            st[1] += 1
+        if (r.get("COMMITTEE") or "") in SEC_CMT:
+            st[2] += 1
+        lead.setdefault(mid, []).append({"n": r.get("BILL_NAME"), "d": (r.get("PROPOSE_DT") or "")[:10], "r": res or None,
+                                         "id": r.get("BILL_ID"), "s": 1 if (r.get("COMMITTEE") or "") in SEC_CMT else 0})
     for mid in lead:
-        lead[mid] = sorted(lead[mid], key=lambda x: x["date"], reverse=True)[:12]
+        lead[mid] = sorted(lead[mid], key=lambda x: x["d"], reverse=True)[:8]
     # 징계안
     disc = []
     for r in C.api("BILLRCP", ERACO="제22대", BILL_KIND="징계안", pSize=1000):
-        if "징계" not in (r.get("BILL_KIND") or "") + (r.get("BILL_NM") or ""):
+        nm = r.get("BILL_NM") or ""
+        m = re.match(r"국회의원\s*\(([^)]+)\)\s*징계안", nm)
+        if not m:
             continue
-        disc.append({"name": r.get("BILL_NM"), "date": (r.get("PPSL_DT") or "")[:10], "by": r.get("PPSR_KIND"), "result": r.get("PROC_RSLT"), "link": r.get("LINK_URL")})
+        who = [w.strip() for w in re.split(r"[·,ㆍ\s]+", m.group(1)) if w.strip()]
+        disc.append({"name": nm, "who": who, "date": (r.get("PPSL_DT") or "")[:10], "result": r.get("PROC_RSLT"), "id": r.get("BILL_ID")})
     disc.sort(key=lambda x: x["date"], reverse=True)
     out = {"updated": time.strftime("%Y-%m-%d %H:%M"), "source": "열린국회정보(본회의 처리안건·의원 표결·발의법률안·의안 접수목록)",
            "rule": "국방·외교통일·정보위원회 소관이거나 제목에 외교·안보 낱말이 있는 본회의 안건 중 반대·기권이 3표 이상 있었던 것(최근 120건). 판단 없이 공식 표결 그대로.",
-           "vote_fields": fields, "bills": sel, "votes": votes, "lead": lead, "discipline": disc}
+           "bill_url": "https://likms.assembly.go.kr/bill/billDetail.do?billId=", "vote_fields": fields,
+           "bills": [{k: v for k, v in b.items() if k != "link"} for b in sel], "votes": vstr, "lead": lead, "lead_stat": stat, "discipline": disc}
     if old and not disc and old.get("discipline"):
         out["discipline"] = old["discipline"]
     json.dump(out, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
-    print(f"votes: 안건 {len(sel)}, 표결 의원 {len(votes)}, 대표발의 의원 {len(lead)}, 징계안 {len(disc)}", C.log[-6:])
+    print(f"votes: 안건 {len(sel)}, 표결 의원 {len(votes)}, 대표발의 의원 {len(lead)}, 징계안 {len(disc)}")
 
 
 if __name__ == "__main__":
