@@ -161,6 +161,18 @@
   mapBack.setAttribute('aria-label','의원 상세정보 닫고 지도 돌아가기');
   root.append(mapBack);
   let trackedMember=null;
+  const trackingBadge=document.createElement('div');
+  trackingBadge.className='mt-tracking-badge';
+  trackingBadge.hidden=true;
+  trackingBadge.innerHTML='<span class="mt-tracking-label"></span><button type="button" class="mt-tracking-open">기록 보기</button><button type="button" class="mt-tracking-clear" aria-label="추적 해제">×</button>';
+  root.append(trackingBadge);
+  const showTrackingBadge=()=>{
+    if(!trackedMember){trackingBadge.hidden=true;return}
+    trackingBadge.querySelector('.mt-tracking-label').textContent='◎ 추적 중 · '+trackedMember.name+' · '+trackedMember.state;
+    trackingBadge.hidden=root.classList.contains('member-selected');
+  };
+  trackingBadge.querySelector('.mt-tracking-open').addEventListener('click',()=>{if(trackedMember)open(trackedMember)});
+  trackingBadge.querySelector('.mt-tracking-clear').addEventListener('click',()=>{trackedMember=null;trackingBadge.hidden=true;gTop.clearLayers()});
   const focusTrackedMember=()=>{
     if(!trackedMember||!LL[trackedMember.id])return;
     const ll=LL[trackedMember.id];
@@ -170,6 +182,7 @@
     map.setView(ll,Math.max(map.getZoom(),8),{animate:false});
     if(dotOf[trackedMember.id])dotOf[trackedMember.id].bringToFront();
     mapBack.textContent='← 지도로 돌아가기';
+    showTrackingBadge();
   };
   mapBack.addEventListener('click',()=>{
     VSA=null;closeFile();
@@ -229,6 +242,7 @@
   let VSA = null;
   function open(m) {
     trackedMember=m;
+    trackingBadge.hidden=true;
     if(innerWidth<=600){showMobileTab('map');root.classList.add('member-selected');requestAnimationFrame(()=>{map.invalidateSize();map.panTo(LL[m.id],{animate:false});});}
     if (VSA) { const a = VSA; VSA = null; if (a.id !== m.id) return vs(a, m); }
     SFX.lock(); reticle(LL[m.id]);
