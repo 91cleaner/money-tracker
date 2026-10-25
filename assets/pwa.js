@@ -5,7 +5,12 @@
   if (standalone || (document.body.dataset.page || '') !== 'home') return;
   let off = false; try { off = localStorage.getItem('mt.pwa.off') === '1'; } catch (e) { /* 저장 막힘 */ }
   if (off) return;
-  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !/crios|fxios/i.test(navigator.userAgent);
+  const ua = navigator.userAgent;
+  const ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+  const inApp = /KAKAOTALK|Instagram|FBAN|FBAV|Line\/|NAVER|Twitter|TwitterAndroid|DaumApps|everytimeApp/i.test(ua); // 앱 안 브라우저(여기선 홈 화면 추가가 없음)
+  const iosHow = inApp ? '<b>지금은 앱 안 화면</b>이라 홈 화면 추가가 안 돼요 · 오른쪽 아래 <b>…</b> 또는 나침반 아이콘 → <b>Safari로 열기</b> 뒤 공유 버튼 → 홈 화면에 추가'
+    : /crios/i.test(ua) ? '<b>홈 화면에 추가</b>하면 앱처럼 열려요 · 주소창 오른쪽 <b>공유 버튼</b> → 목록을 내려 <b>홈 화면에 추가</b> (이 안내는 눌러도 설치되지 않아요)'
+    : '<b>홈 화면에 추가</b>하면 앱처럼 열려요 · 화면 맨 아래 가운데 <b>공유 버튼</b>(네모에 위 화살표) → 목록을 내려 <b>홈 화면에 추가</b> (이 안내는 눌러도 설치되지 않아요)';
   let deferred = null;
   const css = document.createElement('style');
   css.textContent = `.pwa{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:10px 12px;border-radius:14px;background:#101a14;border:1px solid #24432f;font-size:13.5px;line-height:1.45;color:#cfe9d8}
@@ -23,6 +28,6 @@
     if (at) at.after(box); else { const m = document.querySelector('main'); if (m) m.prepend(box); }
   };
   addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferred = e; setTimeout(() => show('<b>앱으로 설치</b>하면 홈 화면에서 바로 열려요', true), 1500); });
-  if (ios) setTimeout(() => show('<b>홈 화면에 추가</b>하면 앱처럼 바로 열려요 · Safari 아래 공유 버튼(네모에 위 화살표) → <b>홈 화면에 추가</b>', false), 2500);
+  if (ios) setTimeout(() => show(iosHow, false), 2500);
   addEventListener('appinstalled', () => { box.remove(); close(); });
 })();
