@@ -25,6 +25,12 @@ jobs:
         continue-on-error: true
         timeout-minutes: 15
         env: {ASSEMBLY_KEY: "${{ secrets.ASSEMBLY_KEY }}"}
+      - run: python collector/national/votes_all.py   # 본회의 표결 참여(새 안건만 이어서)
+        continue-on-error: true
+        timeout-minutes: 25
+        env: {ASSEMBLY_KEY: "${{ secrets.ASSEMBLY_KEY }}"}
+      - run: python collector/national/bio.py   # 의원 프로필(공개 약력)
+        continue-on-error: true
       - run: |
           git config user.name "money-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
