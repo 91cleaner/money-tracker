@@ -35,6 +35,18 @@
     <button type="button" data-more="party">Party</button>
   </div>
   <button type="button" class="pg-dice" aria-label="Track a random member"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/></svg>Track anyone</button>`;
+  // Match the Korean Assembly map dock language without altering tool IDs.
+  const dockKo = (()=>{try{return (new URLSearchParams(location.search).get('lang')||localStorage.getItem('mt.us.lang'))==='ko';}catch(e){return false;}})();
+  if(dockKo){
+    const names={mp:'의원',trades:'거래',party:'정당',radar:'레이더',rank:'순위',find:'찾기'};
+    root.querySelectorAll('.pg-bar [data-w]').forEach(b=>{
+      const label=names[b.dataset.w];if(!label)return;
+      for(const n of [...b.childNodes])if(n.nodeType===3&&n.textContent.trim())n.textContent=label;
+      b.setAttribute('aria-label',label);
+    });
+    const dice=root.querySelector('.pg-dice');
+    if(dice){for(const n of [...dice.childNodes])if(n.nodeType===3&&n.textContent.trim())n.textContent='아무나 추적';dice.setAttribute('aria-label','무작위 미국 의원 추적');}
+  }
   const $ = (s) => root.querySelector(s);
   const say = $('.pg-say'), file = $('.pg-file');
   let typer = 0;
