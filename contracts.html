@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MONEY TRACKER</title>
+<meta property="og:type" content="website"><meta property="og:site_name" content="MONEY TRACKER">
+<meta property="og:title" content="우리 시는 얼마나 계약했을까? · MONEY TRACKER"><meta property="og:description" content="전국 85개 시의 공개 계약을 지도로. 어디에 얼마를, 어느 업체에. 출처 나라장터.">
+<meta property="og:url" content="https://91cleaner.github.io/money-tracker/"><meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<meta name="description" content="전국 85개 시의 공개 계약을 모아 어디와 얼마나 계약했는지, 데이터상 이상 징후는 없는지 쉽게 보여줍니다.">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="assets/style.css?v=202610249300">
+<link rel="stylesheet" href="assets/sec.css?v=202610249700">
+<link rel="stylesheet" href="assets/theme.css?v=202610249300">
+<link rel="stylesheet" href="assets/refresh.css?v=202610249700">
+<script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+#more-links .more-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+#more-links .more-grid a{display:grid;gap:2px;padding:14px;border-radius:14px;background:#151b23;border:1px solid #2a3541;color:#e8edf2;text-decoration:none;min-height:44px}
+#more-links .more-grid a b{font-size:16px}#more-links .more-grid a span{font-size:13px;color:#9aa6b2}
+#more-links .more-grid a:hover,#more-links .more-grid a:focus-visible{border-color:#ffb020}
+.fun-fold{margin:16px 0}.fun-fold>summary{cursor:pointer;min-height:48px;display:flex;align-items:center;justify-content:center;border:1px solid #2a3541;border-radius:14px;color:#ffb020;font-weight:700}
+.bidinfo.bid-1{border:0!important;background:transparent!important;padding:2px 0 0!important;margin:4px 0 0!important;font-size:12.5px!important;color:#9aa6b2!important}
+.bidinfo.bid-1 a{color:#8fb4ff}
+.country-switch{display:flex;gap:6px;align-items:center}.country-switch a,.country-entry a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:8px 12px;border-radius:10px;border:1px solid #536174;color:inherit;text-decoration:none;font-size:13px;font-weight:700}.country-entry{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1100px;margin:10px auto;padding:12px 16px;border:1px solid #354455;border-radius:14px;background:#111b26;color:#fff}.country-entry>div{display:flex;gap:8px;flex-wrap:wrap}.country-entry a{background:#203245;color:#fff}@media(max-width:600px){.stickybar{display:flex;justify-content:space-between;gap:8px}.stickybar .brand{font-size:14px}.country-switch a{font-size:12px;padding:6px 8px}.country-entry{margin:8px 10px}.country-entry>div{width:100%}.country-entry a{flex:1;padding:12px 6px;font-size:13px}}
+</style>
+<link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MONEY TRACKER"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body data-page="home">
+<header class="stickybar"><a class="brand" href="./">MONEY TRACKER</a><nav class="country-switch" aria-label="국가 선택"><a href="national.html">🇰🇷 한국</a><a href="us.html?lang=ko">🇺🇸 미국</a></nav></header>
+<section class="country-entry" aria-label="국가별 추적 선택"><strong>어느 나라를 추적할까요?</strong><div><a href="national.html">🇰🇷 한국 국회 추적</a><a href="us.html?lang=ko">🇺🇸 미국 의회 추적</a></div></section>
+<main class="wrap">
+  <div id="dive"></div>
+  <section class="sec gm" id="game" aria-label="어디가 더 많게? 게임"></section>
+  <header class="hero dark">
+    <div class="big" id="hero-num">
+      <span class="v skel" id="nat-total" style="display:none!important">불러오는 중…</span>
+      <span class="k" style="display:none!important">전국 85개 시가 최근 <span id="days">90</span>일 동안 <span id="hero-k">맺은 계약 금액</span></span>
+      <p class="hero-pick">분야별로 보기 (위 지도와 숫자가 함께 바뀌어요)</p>
+      <div class="chips center" id="hero-chips"></div>
+    </div>
+    <p class="newbadge" id="newbadge" hidden></p>
+    <p class="todayn" id="today-n" hidden></p>
+    <p class="wage" id="wage"></p>
+    <p class="meta"><span id="nat-count">불러오는 중…</span> · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
+  </header>
+  <section class="addrsec" hidden>
+    <form id="addr" class="searchbox addrbox" role="search" autocomplete="off"><span aria-hidden="true">⌕</span><input type="search" list="addr-dl" placeholder="우리 동네 입력 (예: 대구 수성구)" aria-label="우리 동네 주소 입력" enterkeyhint="search"></form>
+    <datalist id="addr-dl"></datalist>
+    <p class="small addrnote">주소는 저장되지 않아요 · 이 휴대폰 안에서만 찾고 어디에도 보내지 않아요</p>
+    <div id="addr-out"></div>
+  </section>
+
+  <section class="sec" id="find">
+    <h2>우리 시 찾기</h2>
+    <button class="gobtn" type="button" id="allreg" onclick="window.regionPicker&&regionPicker(null,s=>location.href='city.html?c='+s)">전체 지역 보기 ▾</button>
+    <details class="morebox"><summary>목록으로 보기</summary>
+    <label class="searchbox"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="시 이름을 입력하세요 (예: 수원)" aria-label="시 검색" autocomplete="off"></label>
+    <div class="cities" id="cities"></div>
+    </details>
+  </section>
+
+
+  <section class="sec" id="receipts">
+    <p class="fixp">⏱ 최근 7일 고정 · 기간 슬라이더와 무관</p>
+    <h2>이번 주 영수증</h2>
+    <p class="sub">최근 7일 계약 중 금액이 큰 순서입니다. 머리글을 누르면 정렬이 바뀝니다. 모든 줄은 나라장터 원본으로 연결됩니다.</p>
+    <div class="rcpt-wrap"><table class="rcpt" id="rcpt"><thead><tr><th class="rc-no">#</th><th>정렬 <button type="button" data-k="amount" aria-pressed="true">금액 ↓</button> <button type="button" data-k="date">날짜</button></th></tr></thead><tbody></tbody></table></div>
+    <button class="more" type="button" id="rcpt-more" hidden>더 보기</button>
+    <details class="morebox" id="lucky"><summary>아무 계약이나 하나 뽑아 보기</summary>
+      <div id="lucky-card"></div>
+      <button class="gobtn" type="button" id="lucky-btn">하나 뽑기</button>
+    </details>
+  </section>
+
+
+  <section class="sec home-alerts" hidden>
+    <h2>이번 주 눈에 띄는 패턴</h2>
+    <p class="sub">자동으로 찾은 <b>데이터상 이상 징후</b>(눈여겨볼 만한 점)입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있습니다. <span id="nat-alerts-n"></span></p>
+    <div class="alerts" id="nat-alerts-list"></div>
+  </section>
+
+  <section class="sec" id="trackteaser" hidden>
+    <p class="fixp">⏱ 최근 30일 기준 · 기간 슬라이더와 무관</p>
+    <a href="spend.html#sole" style="display:block;text-decoration:none;color:#fff;background:#0b0b0b;border-radius:16px;padding:16px">
+      <span style="font-size:13px;opacity:.7">🔍 세금 더 보기 목록</span><br>
+      <b style="font-size:28px" id="tt-sum">경쟁 없이 나간 돈</b><br>
+      <span style="display:block;color:#9aa6b2;font-size:13px;margin-top:4px" id="tt-line">경쟁 없는 계약 · 비용 비교 · 축제 · 보조금</span>
+      <span style="display:block;margin-top:10px;font-weight:700">더 보기 목록 열기 ›</span>
+    </a>
+    <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding:2px 0 6px"><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#sole">경쟁 없는 계약</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#cost">비용 비교</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#fest">축제·행사</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#subsidy">보조금</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#pay">공공기관 보수</a></div>
+    <a href="national.html" style="display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#151b23;border:1px solid #2a3541;color:#fff;text-decoration:none;font-weight:700">국회 추적 · 의원 299명 출장·발의·표결 기록 ›</a>
+    <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent=(d.period?`${+d.period[0].slice(5,7)}월 ${+d.period[0].slice(8)}일~${+d.period[1].slice(5,7)}월 ${+d.period[1].slice(8)}일 `:'')+'공고 없이 바로 맺은 수의계약 '+Math.round(d.sum/1e8).toLocaleString()+'억원';document.getElementById('tt-line').textContent='85개 시 · '+d.n.toLocaleString()+'건 · 데이터상 이상 징후 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
+  </section>
+  <section class="sec" id="ranksec" hidden>
+    <h2>전국 업체 순위</h2>
+    <p class="sub">85개 시의 계약을 가장 많이 받은 업체입니다. 많이 받았다고 문제가 있다는 뜻은 아닙니다. <span class="rank-period"></span></p>
+    <div class="rank" id="rank-list"></div>
+    <a class="gobtn" href="rank.html">100위까지 보기</a>
+  </section>
+
+  <section class="sec" id="about" hidden>
+    <h2>원칙</h2>
+    <p class="sub">공개된 공식 자료만 쓰고, 모든 항목에 출처를 답니다. 단정 대신 "데이터상 이상 징후"라고만 씁니다.</p>
+    <details class="morebox"><summary>더 보기 · 어떻게 만드나요?</summary>
+    <ol class="steps">
+      <li><b>모으고</b><span>조달청 나라장터에 공개된 시·구청 계약을 매시간 모읍니다.</span></li>
+      <li><b>살피고</b><span>쪼개진 계약, 같은 업체 반복 같은 숫자 패턴을 자동으로 찾습니다.</span></li>
+      <li><b>보여줍니다</b><span>모든 항목에 출처를 달고, 해명이 오면 그대로 싣습니다.</span></li>
+    </ol>
+    <ul class="principles">
+      <li>정부·지자체가 이미 공개한 데이터만 쓰고, 모든 항목에 출처를 답니다.</li>
+      <li>"사기", "횡령" 같은 단정 대신 "데이터상 이상 징후"라고만 씁니다. 정상적인 이유가 있을 수 있습니다.</li>
+      <li>개인 이름은 다루지 않습니다. 업체명과 계약 정보만 보여주고, 업체 주소는 시·군·구까지만 표시합니다.</li>
+      <li>기관이나 업체가 해명을 보내면 해당 항목 바로 아래에 그대로 싣습니다.</li>
+    </ul>
+    </details>
+    <p class="sub">해명·정정 요청: <a id="contact" href="https://github.com/91cleaner/money-tracker/issues/new" target="_blank" rel="noopener">GitHub에 남기기 ↗</a> · <a href="principles.html">원칙 보기</a></p>
+  </section>
+
+  <section class="sec" id="more-links">
+    <h2>더 보기</h2>
+    <div class="more-grid">
+      <a href="spend.html#sole"><b>공고 없이 맺은 계약</b><span>경쟁 없이 바로 맺은 계약 묶음</span></a>
+      <a href="rank.html"><b>전국 업체 순위</b><span>계약을 가장 많이 받은 업체</span></a>
+      <a href="bid.html"><b>우리 동네 입찰</b><span>지금 열린 입찰공고, 마감 임박 순 · 낙찰률</span></a>
+      <a href="national.html"><b>국회 추적</b><span>의원 출장·발의·표결 기록을 지도에서</span></a>
+      <a href="principles.html"><b>원칙·정정 요청</b><span>어떻게 만들고, 틀리면 어디로</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있습니다.</span>
+    <span><small class="unof">개인이 만든 비공식 사이트</small>입니다. 정부·지자체와 관계없습니다 · 출처 나라장터</span>
+    <span>만든 사람: @청소부</span>
+  </footer>
+</main>
+<script src="assets/period.js?v=202610247400"></script>
+<script src="assets/mask.js?v=202610246200"></script>
+<script src="assets/region.js?v=202610246200"></script>
+<script src="assets/app.js?v=202610251100"></script>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/mapkit.js?v=202610251700"></script>
+<script src="assets/dive.js?v=202610251100"></script>
+<script src="assets/replay.js?v=202610251010" defer></script>
+<script src="assets/today.js?v=202610251000"></script><script src="assets/hometrack.js?v=202610251430" defer></script>
+<script src="assets/game.js?v=202610246500"></script>
+<script src="assets/daily.js?v=202610246500"></script>
+<script src="assets/pcl.js?v=202610246200"></script>
+<script src="assets/bid.js?v=202610252300" defer></script>
+<script src="assets/addr.js?v=202610246200"></script>
+<script src="assets/play.js?v=202610247200"></script>
+<script src="assets/tabs.js?v=202610251100"></script>
+<script src="assets/fun.js?v=202610251100"></script>
+<script src="assets/nav.js?v=202610251445"></script>
+<script src="assets/fx.js?v=202610251100"></script><script src="assets/visits.js?v=202610251055" defer></script>
+<script src="assets/pwa.js?v=202610251330" defer></script>
+</body></html>
