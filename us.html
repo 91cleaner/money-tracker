@@ -13,7 +13,7 @@
 <link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><meta name="apple-mobile-web-app-title" content="MONEY TRACKER"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="theme-color" content="#020805">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/usgame.css?v=20261025clean25">
+<link rel="stylesheet" href="assets/usgame.css?v=20261025mobile27">
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#020805;color:#e8fff1;font-family:Pretendard,system-ui,sans-serif;overflow-x:hidden}html{scroll-behavior:smooth}
 .ubar{height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;background:#020805;border-bottom:1px solid #12301f;font-size:13px}
@@ -130,92 +130,98 @@
 @media(min-width:601px){.mt-shared-head .mt-language-switch{order:2;font-size:12px;background:#183c2b;color:#a8f4c7}}
 
 
-/* US mobile: one dock only. No floating secondary menus. */
-@media(max-width:600px){
- body[data-page="us"] .mt-mobile-tabs,
- body[data-page="us"] .tabbar,
- body[data-page="us"] #pg .mt-map-tools-toggle,
- body[data-page="us"] #pg.mt-tools-open .mt-map-tools-toggle{display:none!important;visibility:hidden!important}
- body[data-page="us"]{padding-bottom:0!important}
- body[data-page="us"] #pg{height:calc(100dvh - 138px)!important;min-height:340px!important}
- body[data-page="us"] #pg.member-selected{height:calc(100dvh - 138px)!important}
- body[data-page="us"] #pg .pg-bar,
- body[data-page="us"] #pg.mt-tools-open .pg-bar{
-  display:flex!important;visibility:visible!important;position:absolute!important;
-  left:50%!important;right:auto!important;top:auto!important;
-  bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;
-  width:calc(100% - 24px)!important;max-width:560px!important;
-  transform:translateX(-50%)!important;z-index:850!important;
-  gap:2px!important;padding:5px!important;border-radius:20px!important;
-  background:linear-gradient(180deg,rgba(14,42,25,.96),rgba(4,18,10,.97))!important;
-  border:1px solid #2d6746!important;box-shadow:0 10px 25px #0009!important;
- }
- body[data-page="us"] #pg .pg-bar button{display:flex!important;flex:1 1 0!important;min-width:0!important;width:auto!important;height:57px!important;font-size:11px!important}
- body[data-page="us"] #pg .pg-bar button .k{display:none!important}
- body[data-page="us"] #pg .pg-bar button .ic{display:flex!important}
- body[data-page="us"] #pg .pg-bar button[aria-pressed="true"]{color:#8fffb8!important;background:#16462b!important;border-radius:14px!important}
- body[data-page="us"] #pg .pg-dice,
- body[data-page="us"] #pg.member-selected .pg-dice,
- body[data-page="us"] #pg.member-selected.member-full .pg-dice{
-  display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
-  position:absolute!important;right:12px!important;top:auto!important;
-  bottom:calc(85px + env(safe-area-inset-bottom,0px))!important;z-index:870!important;
- }
- body[data-page="us"] .mt-dashboard-link{
-  display:inline-flex!important;grid-column:1/-1;align-items:center;justify-content:center;
-  min-height:37px;padding:5px 12px;margin:0 0 3px;
-  background:#10291b;border:1px solid #316c49;border-radius:10px;
-  color:#b8f5cd;font:700 13px Pretendard,system-ui;
- }
- body[data-page="us"][data-mt-mobile-tab="dashboard"] #pg{display:none!important}
- body[data-page="us"][data-mt-mobile-tab="dashboard"] #usdash{display:block!important}
- body[data-page="us"][data-mt-mobile-tab="map"] #pg{display:block!important}
- body[data-page="us"][data-mt-mobile-tab="map"] #usdash{display:none!important}
- body[data-page="us"] .us-visit{padding-bottom:25px}
-}
-@media(min-width:601px){.mt-dashboard-link{display:none!important}}
 
-/* iPhone overlap fix: member details and controls occupy separate zones. */
+/* Unified 2026 mobile layout: four-item dock, non-overlapping detail, accessible overflow. */
 @media(max-width:600px){
+ body[data-page="us"]{padding-bottom:0!important}
+ body[data-page="us"] .mt-mobile-tabs,
+ body[data-page="us"] .tabbar-bot,
+ body[data-page="us"] .mt-dashboard-link,
+ body[data-page="us"] #pg .pg-more-toggle,
+ body[data-page="us"] #pg .pg-more-menu{display:none!important}
+ body[data-page="us"] .ubar{min-height:46px;height:auto}
+ body[data-page="us"] #pg{height:calc(100dvh - 137px)!important;min-height:350px!important;overflow:hidden!important}
  body[data-page="us"] #pg.member-selected{
   display:grid!important;grid-template-columns:minmax(0,1fr)!important;
-  grid-template-rows:minmax(160px,42%) minmax(0,58%)!important;
-  overflow:hidden!important;
+  grid-template-rows:minmax(135px,39%) minmax(0,61%)!important;
+  height:calc(100dvh - 137px)!important;min-height:350px!important;overflow:hidden!important;
  }
- body[data-page="us"] #pg.member-selected.member-full{
-  grid-template-rows:minmax(70px,18%) minmax(0,82%)!important;
- }
+ body[data-page="us"] #pg.member-selected.member-full{grid-template-rows:minmax(70px,20%) minmax(0,80%)!important}
  body[data-page="us"] #pg.member-selected .pg-map{
-  grid-column:1!important;grid-row:1!important;
-  position:relative!important;inset:auto!important;width:100%!important;height:100%!important;
+  position:relative!important;inset:auto!important;grid-column:1!important;grid-row:1!important;
+  width:100%!important;height:100%!important;min-height:0!important;
  }
  body[data-page="us"] #pg.member-selected .pg-file.on,
  body[data-page="us"] #pg.member-selected .pg-file.on.min,
  body[data-page="us"] #pg.member-selected .pg-file.on.expanded{
-  grid-column:1!important;grid-row:2!important;
-  position:relative!important;left:auto!important;right:auto!important;
-  top:auto!important;bottom:auto!important;
-  width:100%!important;height:100%!important;max-height:none!important;
-  min-height:0!important;overflow-y:auto!important;
-  padding:12px 14px calc(92px + env(safe-area-inset-bottom,0px))!important;
-  border-radius:17px 17px 0 0!important;z-index:740!important;
+  position:relative!important;grid-column:1!important;grid-row:2!important;
+  top:auto!important;bottom:auto!important;left:auto!important;right:auto!important;
+  width:100%!important;height:100%!important;max-height:none!important;min-height:0!important;
+  border-radius:16px 16px 0 0!important;overflow-x:hidden!important;overflow-y:auto!important;
+  padding:12px 14px calc(94px + env(safe-area-inset-bottom,0px))!important;z-index:740!important;
  }
- body[data-page="us"] #pg.member-selected .pg-bar{
-  position:absolute!important;left:50%!important;right:auto!important;
-  bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;
-  z-index:950!important;
+ body[data-page="us"] #pg .pg-file:not(.on){pointer-events:none!important}
+ body[data-page="us"] #pg .pg-file.on .fh{position:sticky!important;top:-12px!important;z-index:5!important;background:#06190f!important}
+ body[data-page="us"] #pg .pg-bar{
+  position:absolute!important;display:flex!important;visibility:visible!important;
+  left:50%!important;right:auto!important;top:auto!important;
+  bottom:calc(9px + env(safe-area-inset-bottom,0px))!important;
+  transform:translateX(-50%)!important;width:calc(100% - 24px)!important;
+  max-width:560px!important;z-index:990!important;gap:2px!important;
+  padding:5px!important;border-radius:20px!important;
+  background:rgba(6,25,15,.97)!important;border:1px solid #387552!important;
+  box-shadow:0 5px 18px #000b!important;
  }
+ body[data-page="us"] #pg .pg-bar button{
+  flex:1 1 0!important;min-width:0!important;width:auto!important;
+  height:55px!important;font-size:12px!important;display:flex!important;
+ }
+ body[data-page="us"] #pg .pg-bar button .k{display:none!important}
+ body[data-page="us"] #pg .pg-bar button[data-w="trades"],
+ body[data-page="us"] #pg .pg-bar button[data-w="party"],
+ body[data-page="us"] #pg .pg-bar button[data-w="find"]{display:none!important}
+ body[data-page="us"] #pg .pg-bar button.mt-overflow-trigger{display:flex!important}
+ body[data-page="us"] #pg .pg-dice,
  body[data-page="us"] #pg.member-selected .pg-dice,
  body[data-page="us"] #pg.member-selected.member-full .pg-dice{
-  position:absolute!important;top:calc(42% - 58px)!important;
-  bottom:auto!important;right:12px!important;z-index:850!important;
+  position:absolute!important;display:flex!important;visibility:visible!important;
+  right:12px!important;top:auto!important;
+  bottom:calc(82px + env(safe-area-inset-bottom,0px))!important;
+  z-index:850!important;max-width:148px!important;min-height:42px!important;
  }
- body[data-page="us"] #pg.member-selected.member-full .pg-dice{top:calc(18% - 58px)!important}
- body[data-page="us"] #pg .pg-file:not(.on){pointer-events:none!important}
- body[data-page="us"] #pg .pg-file.on .fh{position:sticky!important;top:-12px!important;z-index:4!important}
- body[data-page="us"] #pg .pg-bar button{height:58px!important}
- body[data-page="us"] .mt-dashboard-link{margin-top:2px!important}
+ body[data-page="us"] #pg.member-selected .pg-dice{display:none!important}
+ body[data-page="us"] #pg.member-selected .pg-top{pointer-events:none!important}
+ body[data-page="us"] #pg.member-selected .pg-say{display:none!important}
+ body[data-page="us"] #pg.member-selected .pg-file .fh{touch-action:pan-y!important}
+ body[data-page="us"] #pg .pg-map{bottom:0!important}
+ body[data-page="us"] .us-visit{padding:10px 14px 24px!important}
+ body[data-page="us"][data-mt-mobile-tab="dashboard"] #pg{display:none!important}
+ body[data-page="us"][data-mt-mobile-tab="dashboard"] #usdash{display:block!important}
+ body[data-page="us"][data-mt-mobile-tab="map"] #pg{display:block!important}
+ body[data-page="us"][data-mt-mobile-tab="map"] #usdash{display:none!important}
+ body[data-page="us"] .mt-mobile-menu{
+  position:fixed;inset:0;z-index:50000;background:#0009;
+  display:flex;align-items:flex-end;justify-content:center;padding:12px 12px calc(16px + env(safe-area-inset-bottom,0px));
+ }
+ body[data-page="us"] .mt-mobile-menu[hidden]{display:none!important}
+ body[data-page="us"] .mt-mobile-menu-panel{
+  width:100%;max-width:560px;background:#071c10;border:1px solid #39744e;
+  border-radius:20px;padding:14px;display:grid;gap:9px;box-shadow:0 10px 45px #000d;
+ }
+ body[data-page="us"] .mt-mobile-menu-panel button{
+  min-height:47px;text-align:left;padding:9px 14px;background:#112c1d;
+  border:1px solid #2c6042;border-radius:12px;color:#d4f7df;
+  font:700 15px Pretendard,system-ui;
+ }
+ body[data-page="us"] .mt-mobile-menu-panel .mt-menu-close{background:transparent;text-align:center}
+ body[data-page="us"] .mt-dashboard-back{
+  display:none;position:sticky;top:0;z-index:1000;width:100%;
+  padding:12px;background:#103821;color:#d5ffe2;border:1px solid #3c7751;
+  font:700 14px Pretendard,system-ui;
+ }
+ body[data-page="us"][data-mt-mobile-tab="dashboard"] .mt-dashboard-back{display:block}
 }
+@media(min-width:601px){.mt-mobile-menu,.mt-dashboard-back{display:none!important}}
 </style>
 </head>
 <body data-page="us">
@@ -242,9 +248,11 @@ if(matchMedia('(max-width:600px)').matches){
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/usko.js?v=20261025mobile21" defer></script>
 <script src="assets/usdash.js?v=20261025ko2" defer></script>
-<script src="assets/usgame.js?v=20261025clean25"></script>
+<script src="assets/usgame.js?v=20261025mobile27"></script>
 <script src="assets/usvisitors.js?v=20261025a" defer></script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+
 
 
 
@@ -252,22 +260,38 @@ if(matchMedia('(max-width:600px)').matches){
 <script>
 (function(){
  const root=document.getElementById('pg');
- const header=document.querySelector('.mt-shared-head');
- if(!root||!header)return;
- const btn=document.createElement('button');
- btn.type='button';btn.className='mt-dashboard-link';
- btn.textContent='▥ 거래 대시보드 보기';
- header.append(btn);
- const setView=(view)=>{
-  document.body.dataset.mtMobileTab=view;
-  btn.textContent=view==='dashboard'?'← 의원 지도 돌아가기':'▥ 거래 대시보드 보기';
-  document.querySelectorAll('.mt-mobile-tabs [data-mtab]').forEach(b=>
-   b.setAttribute('aria-pressed',String(b.dataset.mtab===view)));
-  if(view==='map')requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));
-  window.scrollTo({top:0,behavior:'instant'});
- };
- btn.addEventListener('click',()=>setView(document.body.dataset.mtMobileTab==='dashboard'?'map':'dashboard'));
- root.addEventListener('click',e=>{if(e.target.closest('.pg-bar [data-w]'))setView('map')});
+ if(!root)return;
+ const bar=root.querySelector('.pg-bar');
+ if(!bar)return;
+ const trigger=document.createElement('button');
+ trigger.type='button';trigger.className='mt-overflow-trigger';
+ trigger.innerHTML='<span class="ic" aria-hidden="true">☰</span>전체 메뉴';
+ trigger.setAttribute('aria-label','전체 메뉴 열기');
+ bar.append(trigger);
+ const sheet=document.createElement('div');
+ sheet.className='mt-mobile-menu';sheet.hidden=true;
+ sheet.innerHTML='<div class="mt-mobile-menu-panel" role="dialog" aria-modal="true" aria-label="전체 메뉴">'+
+ '<button type="button" data-tool="trades">↗ 거래 내역</button>'+
+ '<button type="button" data-tool="party">⚑ 정당 비교</button>'+
+ '<button type="button" data-tool="find">⌕ 의원 검색</button>'+
+ '<button type="button" data-view="dashboard">▥ 거래 대시보드</button>'+
+ '<button type="button" class="mt-menu-close">✕ 닫기</button></div>';
+ document.body.append(sheet);
+ const back=document.createElement('button');back.type='button';
+ back.className='mt-dashboard-back';back.textContent='← 미국 의원 지도 돌아가기';
+ document.getElementById('usdash')?.before(back);
+ const close=()=>{sheet.hidden=true;trigger.setAttribute('aria-expanded','false')};
+ trigger.setAttribute('aria-expanded','false');
+ trigger.addEventListener('click',()=>{sheet.hidden=false;trigger.setAttribute('aria-expanded','true')});
+ sheet.addEventListener('click',e=>{
+  if(e.target===sheet||e.target.closest('.mt-menu-close')){close();return}
+  const b=e.target.closest('button');if(!b)return;
+  close();
+  if(b.dataset.tool){document.body.dataset.mtMobileTab='map';bar.querySelector('[data-w="'+b.dataset.tool+'"]')?.click()}
+  if(b.dataset.view==='dashboard'){document.body.dataset.mtMobileTab='dashboard';window.scrollTo(0,0)}
+ });
+ back.addEventListener('click',()=>{document.body.dataset.mtMobileTab='map';window.scrollTo(0,0);requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')))});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 })();
 </script>
 </body>
