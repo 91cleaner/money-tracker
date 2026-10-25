@@ -19,6 +19,10 @@ jobs:
         continue-on-error: true
         timeout-minutes: 25
         env: {TRADES_BUDGET_MIN: "20"}
+      - run: python collector/us/bills.py
+        continue-on-error: true
+        timeout-minutes: 20
+        env: {CONGRESS_API_KEY: "${{ secrets.CONGRESS_API_KEY }}"}
       - run: |
           git config user.name "money-tracker-bot"; git config user.email "actions@users.noreply.github.com"
           git add data/us; git diff --cached --quiet && exit 0
