@@ -160,7 +160,21 @@
   mapBack.textContent='← 지도로 돌아가기';
   mapBack.setAttribute('aria-label','의원 상세정보 닫고 지도 돌아가기');
   root.append(mapBack);
-  mapBack.addEventListener('click',()=>{VSA=null;closeFile();gTop.clearLayers();});
+  let trackedMember=null;
+  const focusTrackedMember=()=>{
+    if(!trackedMember||!LL[trackedMember.id])return;
+    const ll=LL[trackedMember.id];
+    map.stop();
+    map.invalidateSize();
+    reticle(ll);
+    map.setView(ll,Math.max(map.getZoom(),8),{animate:false});
+    if(dotOf[trackedMember.id])dotOf[trackedMember.id].bringToFront();
+    mapBack.textContent='← 지도로 돌아가기';
+  };
+  mapBack.addEventListener('click',()=>{
+    VSA=null;closeFile();
+    requestAnimationFrame(()=>requestAnimationFrame(focusTrackedMember));
+  });
 
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]);
   const fileHead = (t) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools"><button type="button" class="ex" aria-label="Expand panel" title="Expand panel">⤢</button><button type="button" class="mn" aria-label="Collapse">▾</button><button type="button" class="x" aria-label="Close">×</button></span></div>`;
@@ -214,10 +228,11 @@
 
   let VSA = null;
   function open(m) {
+    trackedMember=m;
     if(innerWidth<=600){showMobileTab('map');root.classList.add('member-selected');requestAnimationFrame(()=>{map.invalidateSize();map.panTo(LL[m.id],{animate:false});});}
     if (VSA) { const a = VSA; VSA = null; if (a.id !== m.id) return vs(a, m); }
     SFX.lock(); reticle(LL[m.id]);
-    if (!RM) map.flyTo(LL[m.id], Math.max(map.getZoom(), 7.5), { duration: 0.9 }); else map.setView(LL[m.id], 7.5);
+    if (innerWidth<=600) map.setView(LL[m.id], Math.max(map.getZoom(),8), {animate:false}); else if (!RM) map.flyTo(LL[m.id], Math.max(map.getZoom(), 7.5), { duration: 0.9 }); else map.setView(LL[m.id], 7.5);
     type(`File opened: ${m.name} · ${PN[m.party]} · ${title(m)}`);
     const n = numOf(m), ts = (byM[m.id] || []).slice().sort((a, b) => (b.d || '').localeCompare(a.d || ''));
     const tk = {}; for (const t of ts) if (t.tk) tk[t.tk] = (tk[t.tk] || 0) + 1;
