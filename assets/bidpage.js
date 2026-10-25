@@ -66,3 +66,39 @@
   paintB(); paintR();
   $('src').innerHTML = `출처 ${esc(d.source)} · ${esc(d.note)}`;
 })();
+
+/* 지금 열린 입찰: data/open_bids.json. 우리 시(홈에서 정해 둔 것)가 있으면 그 시부터. */
+(async () => {
+  const $ = (id) => document.getElementById(id); if (!$('openL')) return;
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const won = (n) => { n = Math.round(Number(n) || 0); if (!n) return '금액 공고문 확인'; if (n >= 1e8) return (n >= 1e10 ? Math.round(n / 1e8).toLocaleString('ko-KR') : (n / 1e8).toFixed(1).replace(/\.0$/, '')) + '억원'; return Math.round(n / 1e4).toLocaleString('ko-KR') + '만원'; };
+  const d = await fetch('data/open_bids.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  if (!d || !(d.items || []).length) { $('openL').innerHTML = '<p class="sub">아직 모은 공고가 없어요. 아침·저녁에 새로 받아요.</p>'; return; }
+  const kst = () => new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 16).replace('T', ' ');
+  const left = (c) => { const ms = new Date(c.replace(' ', 'T') + ':00+09:00') - Date.now(); if (ms <= 0) return ['마감', 'hot']; const h = ms / 36e5; if (h < 24) return [`${Math.max(1, Math.floor(h))}시간 남음`, 'hot']; const dd = Math.ceil(h / 24); return [`D-${dd}`, dd <= 3 ? 'soon' : '']; };
+  const md = (c) => `${+c.slice(5, 7)}월 ${+c.slice(8, 10)}일 ${c.slice(11, 16)}`;
+  const items = d.items.filter((x) => (x.close || '') > kst());
+  const cities = [...new Map(items.map((x) => [x.slug, x.cname])).entries()].sort((a, b) => a[1].localeCompare(b[1], 'ko'));
+  const cats = [...new Set(items.map((x) => x.cat))].sort((a, b) => a.localeCompare(b, 'ko'));
+  $('oCity').innerHTML = '<option value="">85개 시 전체</option>' + cities.map(([s, n]) => `<option value="${esc(s)}">${esc(n)} (${items.filter((x) => x.slug === s).length})</option>`).join('');
+  $('oCat').innerHTML = '<option value="">모든 분야</option>' + cats.map((c) => `<option>${esc(c)}</option>`).join('');
+  let my = null; try { my = (JSON.parse(localStorage.getItem('mt.my') || 'null') || {}).slug; } catch (e) { my = null; }
+  const qs = new URLSearchParams(location.search);
+  if (qs.get('c') && cities.some(([s]) => s === qs.get('c'))) $('oCity').value = qs.get('c'); else if (my && cities.some(([s]) => s === my)) $('oCity').value = my;
+  if (qs.get('cat') && cats.includes(qs.get('cat'))) $('oCat').value = qs.get('cat');
+  let show = 20;
+  const item = (x) => { const [t, cls] = left(x.close); const ref = x.ref ? `참고 낙찰률 ${x.ref.rate}% (${x.ref.scope === 'city' ? '이 시' : '전국 85개 시'} ${esc(x.cat)} 큰 계약 ${x.ref.n}건 가운데 값)` : '';
+    return `<div class="it"><div class="t">${esc(x.title)}</div><div class="m">${esc(x.cname)} · ${esc(x.dem && x.dem !== x.inst ? x.dem : x.inst)} · ${esc(x.cat)}</div>
+    <div><span class="a">${esc(won(x.price))}</span> <span class="dd ${cls}">${t}</span> <span class="m">마감 ${esc(md(x.close))}</span></div>
+    <div class="chips">${x.method ? `<span class="chip">${esc(x.method)}</span>` : ''}${x.award ? `<span class="chip">${esc(x.award)}</span>` : ''}${x.rgn ? '<span class="chip y">지역 제한</span>' : ''}${x.low ? `<span class="chip">낙찰 하한율 ${esc(x.low)}%</span>` : ''}</div>
+    ${ref ? `<div class="m">${ref}</div>` : ''}${x.url ? `<div class="ln"><a href="${esc(x.url)}" target="_blank" rel="noopener">나라장터 공고 원문 ↗</a></div>` : ''}</div>`; };
+  const norm = (t) => String(t || '').replace(/\s+/g, '').toLowerCase();
+  const paint = () => { const c = $('oCity').value, k = $('oCat').value, q = norm($('oQ').value);
+    const L = items.filter((x) => (!c || x.slug === c) && (!k || x.cat === k) && (!q || norm(x.title + x.inst + x.dem).includes(q)));
+    $('openL').innerHTML = L.slice(0, show).map(item).join('') || '<p class="sub">조건에 맞는 열린 공고가 없어요. 다른 시나 분야를 골라 보세요.</p>';
+    $('openM').hidden = L.length <= show; $('openM').textContent = `더 보기 (${(L.length - show).toLocaleString('ko-KR')}건 더)`; };
+  ['oCity', 'oCat'].forEach((id) => $(id).addEventListener('change', () => { show = 20; paint(); }));
+  let tm = 0; $('oQ').addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(() => { show = 20; paint(); }, 150); });
+  $('openM').onclick = () => { show += 30; paint(); };
+  paint();
+})();
