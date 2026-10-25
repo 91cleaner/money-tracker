@@ -246,3 +246,10 @@
  #pg.member-selected .pg-dice{top:calc(55% - 59px)!important;bottom:auto!important}
  #pg.member-selected.member-full .pg-dice{top:calc(18% - 59px)!important}
 }
+
+@media(max-width:600px){
+ body:has(.tabbar-bot) .mt-mobile-tabs{position:sticky!important;top:0!important;bottom:auto!important;left:auto!important;right:auto!important;height:56px!important;z-index:980!important;box-shadow:none!important;border-bottom:1px solid #2a3541!important}
+ body:has(.tabbar-bot) .mt-mobile-tabs button{flex-direction:row!important;gap:5px!important}
+ body:has(.tabbar-bot) #pg{height:calc(100dvh - 216px)!important}
+ body:has(.tabbar-bot) #pg.member-selected{height:calc(100dvh - 216px)!important}
+}
