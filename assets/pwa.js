@@ -5,6 +5,8 @@
   if (standalone || (document.body.dataset.page || '') !== 'home') return;
   let off = false; try { off = localStorage.getItem('mt.pwa.off') === '1'; } catch (e) { /* 저장 막힘 */ }
   if (off) return;
+  let seen = 0; try { seen = Number(localStorage.getItem('mt.pwa.n') || 0) + 1; localStorage.setItem('mt.pwa.n', String(seen)); } catch (e) { /* 무시 */ }
+  if (seen < 2) return; // 처음 온 사람에겐 설치부터 권하지 않는다
   const ua = navigator.userAgent;
   const ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
   const inApp = /KAKAOTALK|Instagram|FBAN|FBAV|Line\/|NAVER|Twitter|TwitterAndroid|DaumApps|everytimeApp/i.test(ua); // 앱 안 브라우저(여기선 홈 화면 추가가 없음)

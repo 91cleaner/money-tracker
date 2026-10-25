@@ -1,4 +1,4 @@
-/* 위·아래 탭 5개. 순서: 우리 동네 세금 · 정부 지출 · 국민연금 주식 · 뉴스 · 더보기.
+/* 위·아래 탭 5개. 순서: 우리 동네 세금 · 국회 추적 · 국민연금 주식 · 뉴스 · 더보기.
    게임·퀴즈는 메뉴에 넣지 않는다. ?c= 는 앞의 네 탭에 붙인다.
    도시 페이지의 우리 동네 세금은 그 도시 지도로 남긴다. */
 (() => {
@@ -18,7 +18,7 @@
   const fixedMap = (pg === 'city' && q.get('c')) ? ('city.html' + location.search + '#map') : addQ('./#map');
   const tabs = [
     ['map', fixedMap, '우리 동네 세금'],
-    ['nat', addQ('national.html'), '정부 지출'],
+    ['nat', addQ('national.html'), '국회 추적'],
     ['nps', addQ('nps.html'), '국민연금 주식'],
     ['news', addQ('news.html'), '뉴스'],
   ];
