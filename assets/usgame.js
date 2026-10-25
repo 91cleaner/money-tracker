@@ -143,6 +143,20 @@
   const bindTrd = () => file.querySelectorAll('.trd[data-id]').forEach((el) => (el.onclick = (e) => { if (e.target.closest('a')) return; const m = byId[el.dataset.id]; if (m) open(m); }));
   const SRC = '<div class="fine">Public records as filed. A trade disclosure is not an accusation of wrongdoing. Amounts are the reported ranges.<br>Built by one person. If this is useful, <a href="https://x.com/KORROOFTOPARODY/creator-subscriptions/subscribe" target="_blank" rel="noopener" style="color:#ffd27a">support it for $1/month on X ›</a></div>';
 
+  const tradeTimeline = (ts) => {
+    const valid = ts.filter(t => t.tk && /^\d{4}-\d{2}-\d{2}$/.test(t.d) && (t.ty === 'P' || t.ty === 'S'));
+    if (!valid.length) return '';
+    const tickers = Object.entries(valid.reduce((a,t)=>((a[t.tk]=(a[t.tk]||0)+1),a),{})).sort((a,b)=>b[1]-a[1]).slice(0,5).map(x=>x[0]);
+    const selected=valid.filter(t=>tickers.includes(t.tk)).sort((a,b)=>a.d.localeCompare(b.d));
+    const dates=selected.map(t=>Date.parse(t.d)),lo=Math.min(...dates),hi=Math.max(...dates),span=Math.max(86400000,hi-lo);
+    const W=640,left=82,right=20,top=28,row=34,H=top+tickers.length*row+35;
+    const X=d=>left+(Date.parse(d)-lo)/span*(W-left-right);
+    const grid=tickers.map((tk,i)=>{const y=top+i*row+12;return '<text x="4" y="'+(y+4)+'" fill="#cfe9d8" font-size="13">'+esc(tk)+'</text><line x1="'+left+'" y1="'+y+'" x2="'+(W-right)+'" y2="'+y+'" stroke="#20402c"/>';}).join('');
+    const marks=selected.map(t=>{const y=top+tickers.indexOf(t.tk)*row+12;return '<circle cx="'+X(t.d).toFixed(1)+'" cy="'+y+'" r="5" fill="'+(t.ty==='P'?'#5dff9e':'#ff8a8a')+'"><title>'+esc(t.tk+' · '+(t.ty==='P'?'BUY':'SELL')+' · '+t.d+' · '+(t.amt||''))+'</title></circle>';}).join('');
+    const start=selected[0].d,end=selected[selected.length-1].d;
+    return '<section style="padding:12px 0"><div class="ph2">Stock trade timeline · '+esc(start)+' – '+esc(end)+'</div><div class="ds">Green: buy · Red: sell · Top 5 tickers. Reported trade dates, not stock prices.</div><svg role="img" aria-label="Stock trade timeline by ticker" viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">'+grid+marks+'<text x="'+left+'" y="'+(H-7)+'" fill="#9fd3b4" font-size="12">'+esc(start)+'</text><text x="'+(W-right)+'" y="'+(H-7)+'" text-anchor="end" fill="#9fd3b4" font-size="12">'+esc(end)+'</text></svg></section>';
+  };
+
   let VSA = null;
   function open(m) {
     if (VSA) { const a = VSA; VSA = null; if (a.id !== m.id) return vs(a, m); }
@@ -159,7 +173,7 @@
       <div class="ds">${esc(title(m))} · in Congress since ${esc(m.since)}${age ? `<br>Age ${age}` : ''}</div></div></div>
       <div class="st st4"><div><b>${n.trades}</b><span>stock trades</span></div><div><b>${n.buys}</b><span>buys</span></div><div><b>${n.sells}</b><span>sells</span></div>${n.edge != null ? `<div><b style="color:${n.edge >= 0 ? '#7dffb0' : '#ff9b9b'}">${n.edge > 0 ? '+' : ''}${n.edge.toFixed(1)}%</b><span>vs S&amp;P 500</span></div>` : `<div><b>${bl ? n.bills : '—'}</b><span>bills sponsored</span></div>`}</div>
       <div class="tabs" role="tablist"><button type="button" class="on" data-t="trd">Trades<i>${n.trades}</i></button><button type="button" data-t="bill">Bills<i>${bl ? n.bills : ''}</i></button><button type="button" data-t="prof">Profile</button></div>
-      <div class="tb" data-t="trd">${ts.length ? (top.length ? `<div class="fl2">${top.map(([k, c]) => `<span class="tk">${esc(k)} <small>×${c}</small></span>`).join('')}</div>` : '') + ts.slice(0, 40).map((t) => tline(t)).join('') + (ts.length > 40 ? `<div class="ds">+${ts.length - 40} more in the filings.</div>` : '') : '<div class="ds" style="margin-top:8px">No stock trade disclosures (PTRs) parsed for the last 12 months.</div>'}${SRC}</div>
+      <div class="tb" data-t="trd">${tradeTimeline(ts)}${ts.length ? (top.length ? `<div class="fl2">${top.map(([k, c]) => `<span class="tk">${esc(k)} <small>×${c}</small></span>`).join('')}</div>` : '') + ts.slice(0, 40).map((t) => tline(t)).join('') + (ts.length > 40 ? `<div class="ds">+${ts.length - 40} more in the filings.</div>` : '') : '<div class="ds" style="margin-top:8px">No stock trade disclosures (PTRs) parsed for the last 12 months.</div>'}${SRC}</div>
       <div class="tb" data-t="bill" hidden>${bl ? `<div class="vsum" style="grid-template-columns:repeat(3,1fr)"><div><b>${n.bills}</b>sponsored</div><div><b>${n.passed}</b>passed a chamber</div><div><b>${n.laws}</b>became law</div></div>` + (BR[m.id] || []).map((b) => `<div class="tr"><div class="d">${esc(b.d || '')} · ${esc(b.no)}</div><div class="p"><a href="${esc(b.u)}" target="_blank" rel="noopener">${esc(b.n)}</a></div><div><span class="tg ${b.law ? 'y' : ''}">${esc(b.law ? 'Became law' : (b.a || 'Introduced').slice(0, 70))}</span></div></div>`).join('') + `<div class="fine">${esc(bl.congress)}th Congress · Source: Congress.gov</div>` : '<div class="ds" style="margin-top:8px">Bill data is loading in the next update.</div>'}</div>
       <div class="tb" data-t="prof" hidden>${m.cmits && m.cmits.length ? `<div class="ph2">Committees</div>` + m.cmits.map((c) => `<div class="pl">${esc(c)}</div>`).join('') : ''}
         <div class="ph2">Check the source</div><div class="lk">
