@@ -41,8 +41,7 @@
       <div class="chips center" id="hero-chips"></div>
     </div>
     <p class="newbadge" id="newbadge" hidden></p>
-    <p class="todayn" id="today-n" hidden></p> <p class="todayn vis" id="visit-n" hidden></p>
-    <script>(()=>{const d=new Date(Date.now()+9*3600e3).toISOString().slice(0,10);fetch('https://moneytracker.goatcounter.com/counter/TOTAL.json?start='+d+'&end='+d).then(r=>r.ok?r.json():null).then(j=>{const n=j&&parseInt(String(j.count||'').replace(/\D/g,''),10);if(n>0){const e=document.getElementById('visit-n');e.textContent='오늘 방문 '+n.toLocaleString()+'명';e.hidden=false;}}).catch(()=>{})})()</script>
+    <p class="todayn" id="today-n" hidden></p>
     <p class="wage" id="wage"></p>
     <p class="meta"><span id="nat-count">불러오는 중…</span> · 마지막 갱신 <span id="updated">—</span> · 1시간마다 자동 갱신</p>
   </header>
@@ -153,4 +152,5 @@
 <script src="assets/tabs.js?v=202610251100"></script>
 <script src="assets/fun.js?v=202610251100"></script>
 <script src="assets/nav.js?v=202610247600"></script>
-<script src="assets/fx.js?v=202610251100"></script></body></html>
+<script src="assets/fx.js?v=202610251100"></script><script src="assets/visits.js?v=202610250930" defer></script>
+</body></html>
