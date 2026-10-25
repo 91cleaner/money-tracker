@@ -485,7 +485,7 @@
   // Mobile: three clear views, with the map kept independent of long reports.
   const mobileTabs=document.querySelector('.mt-mobile-tabs')||document.createElement('nav');
   if(!mobileTabs.isConnected){mobileTabs.className='mt-mobile-tabs';mobileTabs.setAttribute('aria-label','Mobile sections');mobileTabs.innerHTML='<button type="button" data-mtab="map" aria-pressed="true">🗺️ <span>지도</span></button><button type="button" data-mtab="trades" aria-pressed="false">📋 <span>거래</span></button><button type="button" data-mtab="dashboard" aria-pressed="false">📊 <span>대시보드</span></button>';root.after(mobileTabs);}
-  const mobileTrades=document.createElement('section');mobileTrades.id='mt-mobile-trades';mobileTrades.setAttribute('aria-label','Congress member transactions');mobileTabs.after(mobileTrades);
+  const mobileTrades=document.getElementById('mt-mobile-trades')||document.createElement('section');mobileTrades.id='mt-mobile-trades';mobileTrades.setAttribute('aria-label','Congress member transactions');if(!mobileTrades.isConnected)mobileTabs.after(mobileTrades);
   let mobileTradeReady=false;
   const sortedTrades=trades.filter(t=>t.id&&byId[t.id]).sort((a,b)=>(b.d||'').localeCompare(a.d||''));
   function renderMobileTrades(){
