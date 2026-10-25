@@ -35,7 +35,7 @@
   const get = (u) => fetch(u, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 
   Promise.all([get('data/today.json'), get('data/index.json'), get('data/daily.json')]).then(([td, idx, daily]) => {
-    const items = (td && td.items) || [];
+    const items = ((td && td.items) || []).filter((it) => it.n >= 20); // 주말·공휴일처럼 계약이 몇 건 없는 날은 건너뜀
     let k = 0;
     const rcpt = document.createElement('div'); rcpt.className = 'tr';
     const myRow = document.createElement('div'); myRow.className = 'my';
