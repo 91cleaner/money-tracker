@@ -300,7 +300,7 @@
       const st = (SEC.lead_stat || {})[m.id], L1 = (SEC.lead || {})[m.id] || [];
       file.querySelector('.c-bill').textContent = st ? st[0] : 0;
       tb('bill').innerHTML = st ? `<div class="vsum" style="grid-template-columns:repeat(3,1fr)"><div><b>${st[0]}</b>대표 발의</div><div><b>${st[1]}</b>통과·반영</div><div><b>${st[2]}</b>외교·안보 위원회</div></div>
-        <div class="ds">22대 국회에서 이 의원이 대표로 낸 법안이에요. 최근 ${L1.length}건:</div>` + L1.map((b) => `<div class="tr"><div class="d">${esc(b.d)}</div><div class="p">${billA(b.id, b.n)}</div><div><span class="tg ${b.r && b.r !== '철회' ? 'y' : ''}">${esc(RES(b.r))}</span>${b.s ? '<span class="tg">외교·안보 위원회 소관</span>' : ''}</div></div>`).join('') + `${st[0] > L1.length ? `<button type="button" class="allb">전체 ${st[0]}건 보기</button>` : ''}` + SRC
+        <div class="ds rc">22대 국회에서 이 의원이 대표로 낸 법안이에요. 최근 ${L1.length}건:</div>` + L1.map((b) => `<div class="tr"><div class="d">${esc(b.d)}</div><div class="p">${billA(b.id, b.n)}</div><div><span class="tg ${b.r && b.r !== '철회' ? 'y' : ''}">${esc(RES(b.r))}</span>${b.s ? '<span class="tg">외교·안보 위원회 소관</span>' : ''}</div></div>`).join('') + `${st[0] > L1.length ? `<button type="button" class="allb">전체 ${st[0]}건 보기</button>` : ''}` + SRC
         : '<div class="ds" style="margin-top:8px">22대 국회에서 대표로 낸 법안 기록이 없어요.</div>' + SRC;
       // 외교·안보 표결
       const vs = (SEC.votes || {})[m.id] || '', B = SEC.bills || [];
@@ -321,7 +321,7 @@
         if (!all || file.dataset.mid !== m.id) { ab.textContent = '불러오지 못했어요'; return; }
         const box = document.createElement('div');
         box.innerHTML = `<input class="q" type="search" placeholder="법안 이름으로 찾기 (예: 주택)" aria-label="법안 찾기" style="margin-top:10px"><div class="fl"><button type="button" data-f="" class="on">전체</button><button type="button" data-f="ok">통과·반영</button><button type="button" data-f="wait">심사 중</button></div><div class="ds cnt"></div><div class="ls"></div>`;
-        ab.replaceWith(box);
+        ab.replaceWith(box); tb('bill').querySelectorAll(':scope > .tr, :scope > .rc').forEach((x) => x.remove()); // 최근 목록 대신 전체 목록
         const q = box.querySelector('.q'), ls = box.querySelector('.ls'), cnt = box.querySelector('.cnt'); let f = '', lim = 40;
         const ok = (b) => /가결|대안반영|수정/.test(b.r || '');
         const paint = () => {
