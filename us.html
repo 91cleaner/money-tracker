@@ -13,7 +13,7 @@
 <link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><meta name="apple-mobile-web-app-title" content="MONEY TRACKER"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="theme-color" content="#020805">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/usgame.css?v=20261025dice16">
+<link rel="stylesheet" href="assets/usgame.css?v=20261025nav18">
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#020805;color:#e8fff1;font-family:Pretendard,system-ui,sans-serif;overflow-x:hidden}html{scroll-behavior:smooth}
 .ubar{height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;background:#020805;border-bottom:1px solid #12301f;font-size:13px}
@@ -63,12 +63,23 @@
 .mt-shared-head .country-switch a[aria-current=page]{background:#22472d;border-color:#499b66;color:#f3fff7}
 .mt-shared-head .us-exit{order:3;color:#b6c4cb;font-size:12px}
 @media(max-width:600px){.mt-shared-head{display:grid;grid-template-columns:1fr auto;gap:7px;padding:8px}.mt-shared-head .mt-brand{grid-column:1;grid-row:1}.mt-shared-head .us-exit{grid-column:2;grid-row:1;justify-self:end}.mt-shared-head .country-switch{grid-column:1 / -1;grid-row:2;display:flex;justify-content:center;width:100%}.mt-shared-head .country-switch a{flex:1;max-width:170px}}
+
+/* Match Korean National Assembly bottom site navigation.
+   Keep US-specific map/trades/dashboard switches visible directly above the content. */
+@media(max-width:600px){
+ .mt-mobile-tabs{position:sticky!important;top:0!important;bottom:auto!important;left:auto!important;right:auto!important;z-index:980!important;height:56px!important;padding:5px 8px!important;background:#0d1117!important;border-top:0!important;border-bottom:1px solid #2a3541!important;box-shadow:none!important}
+ .mt-mobile-tabs button{flex-direction:row!important;gap:5px!important;font-size:13px!important}
+ .mt-mobile-tabs button[aria-pressed=true]{background:#22472d!important;color:#a5f4c5!important}
+ body:has(.tabbar-bot) .mt-mobile-tabs{bottom:auto!important}
+ body:has(.tabbar-bot) #pg{height:calc(100dvh - 216px)!important}
+ body:has(.tabbar-bot) #pg.member-selected{height:calc(100dvh - 216px)!important}
+}
 </style>
 </head>
 <body data-page="us">
 <header class="ubar mt-shared-head" id="top"><a class="mt-brand" href="./" aria-label="MONEY TRACKER home"><span class="mt-mark">MT</span><span class="mt-brand-name">MONEY TRACKER</span></a><a class="us-exit" href="./" aria-label="Exit to MONEY TRACKER">✕ <span>나가기</span></a><nav class="country-switch" aria-label="Choose country"><a href="national.html">🇰🇷 한국</a><a href="us.html?lang=ko" aria-current="page">🇺🇸 미국</a></nav></header>
 <div id="pg"></div>
-<nav class="mt-mobile-tabs" aria-label="모바일 화면 선택">
+<nav class="mt-mobile-tabs" aria-label="미국 의회 화면 선택">
  <button type="button" data-mtab="map" aria-pressed="true">🗺️ <span>지도</span></button>
  <button type="button" data-mtab="trades" aria-pressed="false">📋 <span>거래</span></button>
  <button type="button" data-mtab="dashboard" aria-pressed="false">📊 <span>대시보드</span></button>
@@ -92,5 +103,6 @@ if(matchMedia('(max-width:600px)').matches){
 <script src="assets/usgame.js?v=20261025nav15"></script>
 <script src="assets/usvisitors.js?v=20261025a" defer></script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script src="assets/nav.js?v=20261025usshared18" defer></script>
 </body>
 </html>
