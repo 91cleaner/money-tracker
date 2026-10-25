@@ -1,4 +1,4 @@
-/* 위·아래 탭 5개. 순서: 우리 동네 세금 · 국회 추적 · 국민연금 주식 · 뉴스 · 더보기.
+/* 위·아래 탭 6개. 순서: 🇰🇷 국회 · 🇺🇸 미국 · 우리 동네 · 국민연금 · 뉴스 · 더보기(의원 추적이 먼저).
    게임·퀴즈는 메뉴에 넣지 않는다. ?c= 는 앞의 네 탭에 붙인다.
    도시 페이지의 우리 동네 세금은 그 도시 지도로 남긴다. */
 (() => {
@@ -17,15 +17,17 @@
   };
   const fixedMap = (pg === 'city' && q.get('c')) ? ('city.html' + location.search + '#map') : addQ('./#map');
   const tabs = [
-    ['map', fixedMap, '우리 동네 세금'],
-    ['nat', addQ('national.html'), '국회 추적'],
-    ['nps', addQ('nps.html'), '국민연금 주식'],
+    ['nat', addQ('national.html'), '🇰🇷 국회'],
+    ['us', 'us.html', '🇺🇸 미국'],
+    ['map', fixedMap, '우리 동네'],
+    ['nps', addQ('nps.html'), '국민연금'],
     ['news', addQ('news.html'), '뉴스'],
   ];
   const act = (k) => {
     if (k === 'map') return pg === 'home' || pg === 'index' || pg === 'city';
     if (k === 'news') return pg === 'news' || pg === 'article';
     if (k === 'nat') return pg === 'national';
+    if (k === 'us') return pg === 'us';
     if (k === 'nps') return pg === 'nps';
     if (k === 'more') return ['rank', 'spend', 'vendor', 'principles', 'bid'].includes(pg);
     return false;

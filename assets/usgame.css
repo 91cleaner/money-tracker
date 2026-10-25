@@ -97,4 +97,4 @@
 #pg .trd .wh{grid-column:1/-1;font-size:11.5px;color:#8fc9a5}#pg .bs{display:inline-block;font:900 10.5px ui-monospace,Menlo,monospace;padding:1px 6px;border-radius:5px;margin-right:6px}#pg .bs.P{background:#0f3b23;color:#7dffb0}#pg .bs.S{background:#3b1414;color:#ff9b9b}#pg .bs.E{background:#1b2420;color:#cfe9d8}
 #pg .usflag{pointer-events:auto;display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:700 11.5px Pretendard,system-ui;color:#cfe9d8;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid rgba(93,255,158,.25);background:rgba(3,14,8,.7)}
 
-#pg .ttl.us{font-size:12px;letter-spacing:.08em;color:#8fc9a5}
+#pg .ttl.us{font-size:12px;letter-spacing:.08em;color:#8fc9a5;white-space:nowrap}@media(max-width:420px){#pg .ttl.us{font-size:11px}}
