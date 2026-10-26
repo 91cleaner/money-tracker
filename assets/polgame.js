@@ -557,17 +557,44 @@
         type(only != null ? `${p.name} ${p.trips[only].when} · ${p.trips[only].label} · ${p.trips[only].km.toLocaleString('ko-KR')}km` : `${p.name} 해외 순방 ${p.trips.length}번 · 약 ${Math.round(k / 10000).toLocaleString("ko-KR")}만 km · 지구 ${(k / 40075).toFixed(1)}바퀴`);
         return k;
       };
-      let cur = 0;
+      let cur = 0, playTimer = null, playIndex = 0, isPlaying = false;
+      const stopChronicle = () => { if (playTimer) clearTimeout(playTimer); playTimer = null; isPlaying = false; const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='▶ 연대기 재생'; };
+      const visitDetail = (p, ti, si) => {
+        const t=p.trips[ti]; if(!t)return;
+        const stops=t.stops||[]; const st=stops[si]||stops[0]; if(!st)return;
+        gTop.clearLayers();
+        const ll=wrap(st.ll), col=p.id==='lee'?'#5dff9e':'#ffc247';
+        // 목적지를 밝은 후광으로 강조하고, 카메라가 해당 도시로 천천히 줌인한다.
+        L.circleMarker(ll,{radius:24,color:col,weight:2,opacity:.95,fillColor:col,fillOpacity:.16}).addTo(gTop);
+        L.circleMarker(ll,{radius:9,color:'#ffffff',weight:2,opacity:1,fillColor:col,fillOpacity:1}).addTo(gTop).bindTooltip(esc(st.city),{permanent:true,direction:'top',className:'clab'});
+        map.flyTo(ll, Math.max(map.getZoom(),4.5), {duration:RM?0:1.25,easeLinearity:.22});
+        type(`${p.name} · ${t.when} · ${st.city} · ${t.label}`);
+        const controls=file.querySelector('[data-chronicle-status]');
+        if(controls)controls.textContent=`${t.when} · ${st.city} · ${si+1}/${stops.length}개 방문지`;
+      };
+      const runChronicle = () => {
+        stopChronicle(); const p=P[cur]; const seq=[];
+        p.trips.forEach((t,ti)=>(t.stops||[]).forEach((st,si)=>seq.push({ti,si})));
+        if(!seq.length){type('재생할 방문 기록이 없어요.');return;}
+        isPlaying=true; const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='Ⅱ 일시정지';
+        playIndex=0;
+        const step=()=>{if(!isPlaying)return;if(playIndex>=seq.length){stopChronicle();type(`${p.name} 순방 연대기 재생 완료 · ${seq.length}개 방문 지점`);return;}
+          const q=seq[playIndex++];visitDetail(p,q.ti,q.si);
+          playTimer=setTimeout(step,3200);
+        };step();
+      };
       const paint = () => {
-        const p = P[cur], k = tot(p);
+        stopChronicle(); const p = P[cur], k = tot(p);
         file.innerHTML = fileHead('대통령 해외 순방') + `<div class="act" style="margin:0 0 8px">${P.map((x, i) => `<button type="button" data-pi="${i}" class="${i === cur ? 'p' : ''}">${esc(x.name)} <span style="opacity:.75;font-weight:500;margin-left:4px">${esc(x.title)}</span></button>`).join('')}</div>
-          <div class="st"><div><b>${p.trips.length}</b><span>해외 순방</span></div><div><b>${Math.round(k / 10000).toLocaleString('ko-KR')}만</b><span>날아간 거리(km, 어림)</span></div><div><b>${(k / 40075).toFixed(1)}</b><span>지구 몇 바퀴</span></div></div>
-          <div class="ds">${esc(p.since)}${p.until ? ' ~ ' + esc(p.until) : ' ~ 지금'} · 서울공항에서 들른 도시를 차례로 이은 직선 거리예요.</div>` +
+          <div class="st"><div><b>${p.trips.length}</b><span>수록 순방</span></div><div><b>${Math.round(k / 10000).toLocaleString('ko-KR')}만</b><span>지도 거리 합계(어림)</span></div><div><b>${(k / 40075).toFixed(1)}</b><span>지구 둘레 환산</span></div></div>
+          <div class="ds">${esc(p.since)}${p.until ? ' ~ ' + esc(p.until) : ' ~ 지금'} · 기록을 선택하면 경로를 보고, 연대기 재생으로 방문지를 시간순으로 탐험할 수 있어요.</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0"><button type="button" data-chronicle style="border:1px solid #4baf78;background:#143b28;color:#eafff1;border-radius:10px;padding:10px 14px;font-weight:800">▶ 연대기 재생</button><span data-chronicle-status class="ds" style="margin:0">방문국이 빛나고 지도가 줌인됩니다</span></div>` +
           p.trips.slice().reverse().map((t, ri) => { const i = p.trips.length - 1 - ri; return `<div class="li" data-ti="${i}"><span class="av">✈</span><div class="t"><b>${esc(t.when)}</b> <span style="font-size:12px;color:#cfe9d8">${esc(t.label)}</span><div>${esc(t.stops.map((x) => x.city).join(' → '))}</div></div><span class="r">${t.km.toLocaleString('ko-KR')}km</span></div>`; }).join('') +
-          `<div class="fine">${esc((prez && prez.note) || '')} 출처: 대통령실 발표·언론 보도(${esc((prez && prez.updated) || '')}). 정상외교는 나라 일이고, 거리는 비교를 위한 어림값일 뿐 잘잘못을 뜻하지 않아요.</div>`;
+          `<div class="fine">${esc((prez && prez.note) || '')} · 일부 기록은 추가 확인이 필요해요. 지도 거리와 방문 도시 좌표는 추정치일 수 있습니다.</div>`;
         file.classList.add('on'); bindX(); if (innerWidth < 900) file.classList.add('min'); setTimeout(() => show(p), 60);
         file.querySelectorAll('[data-pi]').forEach((b) => (b.onclick = () => { cur = +b.dataset.pi; SFX.click(); gTop.clearLayers(); paint(); }));
-        file.querySelectorAll('[data-ti]').forEach((el) => (el.onclick = () => { gTop.clearLayers(); show(P[cur], +el.dataset.ti); }));
+        file.querySelector('[data-chronicle]').onclick=()=>{if(isPlaying){stopChronicle();type('연대기 일시정지');}else runChronicle();};
+        file.querySelectorAll('[data-ti]').forEach((el) => (el.onclick = () => { stopChronicle(); const ti=+el.dataset.ti; show(P[cur],ti); visitDetail(P[cur],ti,0); }));
       };
       paint();
     },
