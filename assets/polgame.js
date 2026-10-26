@@ -179,7 +179,8 @@
       blip() { tone(880, 0.09, { type: 'triangle', vol: 0.07 }); },                  // 레이더에 잡힌 점
       lock() { tone(660, 0.07, { type: 'triangle', vol: 0.09 }); tone(990, 0.09, { type: 'triangle', vol: 0.09, at: 0.09 }); tone(1320, 0.16, { type: 'triangle', vol: 0.08, at: 0.2 }); }, // 조준 완료 '삑삑삑'
       click() { tone(420, 0.05, { type: 'triangle', vol: 0.08 }); tone(840, 0.04, { type: 'triangle', vol: 0.05, at: 0.04 }); }, // 무기 바꾸기 '철컥'
-      whoosh() { tone(260, 0.9, { type: 'sine', vol: 0.06, f2: 900 }); },     // 비행기 출발
+      whoosh() { tone(95, 1.2, { type: 'sawtooth', vol: 0.035, f2: 420 }); tone(260, 0.9, { type: 'sine', vol: 0.06, f2: 900, at: 0.05 }); }, // 미래형 추진음
+      arrival() { tone(520, 0.12, { type: 'triangle', vol: 0.07 }); tone(880, 0.5, { type: 'sine', vol: 0.11, at: 0.12, f2: 1320, echo: true }); },
     };
   })();
 
@@ -569,11 +570,17 @@
         gTop.clearLayers();
         const ll=wrap(st.ll), col=p.id==='lee'?'#5dff9e':'#ffc247';
         // 목적지는 강한 펄스 후광과 고정 라벨로 표시한다.
-        L.circleMarker(ll,{radius:30,color:col,weight:3,opacity:1,fillColor:col,fillOpacity:.22}).addTo(gTop);
-        L.circleMarker(ll,{radius:17,color:col,weight:2,opacity:1,fillColor:col,fillOpacity:.42}).addTo(gTop);
-        L.circleMarker(ll,{radius:8,color:'#ffffff',weight:2,opacity:1,fillColor:col,fillOpacity:1}).addTo(gTop)
+        // 도착 시 레이더 스캔: 여러 겹의 파동이 바깥으로 퍼지며 도착 지점을 강조한다.
+        const core=L.circleMarker(ll,{radius:8,color:'#ffffff',weight:2,opacity:1,fillColor:col,fillOpacity:1}).addTo(gTop)
           .bindTooltip(esc(st.city),{permanent:true,direction:'top',className:'clab'});
-        type(`${p.name} · ${t.when} · ${st.city} · ${t.label}`);
+        const rings=[0,1,2].map((i)=>L.circleMarker(ll,{radius:12+i*10,color:col,weight:2,opacity:.9,fillColor:col,fillOpacity:.05,interactive:false}).addTo(gTop));
+        const started=performance.now();
+        const pulse=(now)=>{if(!isPlaying)return;const u=(now-started)/1500;if(u>=1){rings.forEach((r)=>gTop.removeLayer(r));return;}
+          rings.forEach((r,i)=>{const phase=(u+i/3)%1;r.setStyle({opacity:1-phase,weight:2,fillOpacity:.04*(1-phase)});r.setRadius(10+phase*72);});
+          planeFrame=requestAnimationFrame(pulse);};
+        if(isPlaying)planeFrame=requestAnimationFrame(pulse);
+        SFX.arrival();
+        type(`${p.name} · ${t.when} · ${st.city} 도착 · ${t.label}`);
         const controls=file.querySelector('[data-chronicle-status]');
         if(controls)controls.textContent=`${t.when} · ${st.city} · ${si+1}/${stops.length}개 방문지`;
       };
@@ -584,13 +591,17 @@
         gFx.clearLayers();
         L.polyline(path,{color:col,weight:2.5,opacity:.35,dashArray:'4 7',interactive:false}).addTo(gFx);
         const trail=L.polyline([path[0]],{color:col,weight:3,opacity:.95,interactive:false}).addTo(gFx);
-        planeMarker=L.marker(path[0],{interactive:false,icon:L.divIcon({className:'plane',html:'✈',iconSize:[24,24],iconAnchor:[12,12]})}).addTo(gFx);
+        planeMarker=L.marker(path[0],{interactive:false,icon:L.divIcon({className:'plane',html:'<span class="plane-glyph" style="display:block;transform:rotate(0deg);transform-origin:50% 50%;filter:drop-shadow(0 0 5px #70eaff) drop-shadow(0 0 12px #168bff)">✈</span>',iconSize:[28,28],iconAnchor:[14,14]})}).addTo(gFx);
         const duration=RM?20:2400, began=performance.now(); let lastPan=0;
         const frame=(now)=>{
           if(!isPlaying)return;
           const t=Math.min(1,(now-began)/duration), eased=t*t*(3-2*t);
           const idx=Math.min(path.length-1,Math.floor(eased*(path.length-1))), pos=path[idx];
           planeMarker.setLatLng(pos); trail.setLatLngs(path.slice(0,idx+1));
+          // 비행 경로의 다음 점을 화면 좌표로 바꿔 기체 아이콘을 진행 방향으로 회전한다.
+          const next=path[Math.min(path.length-1,idx+1)], a=map.latLngToContainerPoint(pos), b=map.latLngToContainerPoint(next);
+          const glyph=planeMarker.getElement()?.querySelector('.plane-glyph');
+          if(glyph){const deg=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI+90;glyph.style.transform=`rotate(${deg}deg)`;}
           if(now-lastPan>100){map.panTo(pos,{animate:!RM,duration:.12});lastPan=now;}
           if(t<1)planeFrame=requestAnimationFrame(frame);
           else {planeFrame=0;map.flyTo(to,Math.max(4.5,Math.min(5.5,map.getZoom())),{duration:RM?0:.7});visitDetail(p,activeTi,activeSi);playTimer=setTimeout(done,1700);}
