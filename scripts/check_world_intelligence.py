@@ -54,6 +54,14 @@ else:
     else:
         warnings.append("Node.js not installed; JavaScript syntax check skipped")
 
+signals_page = ROOT / "world-intelligence/us-signals.html"
+if signals_page.exists():
+    signals_html = signals_page.read_text(encoding="utf-8")
+    check("../../data/" not in signals_html,
+          "US Signal Lab has broken two-level data URLs on GitHub Pages")
+else:
+    errors.append("US Signal Lab HTML missing")
+
 bills = read_json("data/us/bills.json")
 trades = read_json("data/us/trades.json")
 index = read_json("data/index.json")
