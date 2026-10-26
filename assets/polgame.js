@@ -234,7 +234,29 @@
   const KR = L.latLngBounds([[33.0, 125.3], [38.7, 129.7]]);
   const fitKR = (anim) => map.fitBounds(KR, { padding: [70, 20], paddingBottomRight: [20, 90], animate: !!anim && !RM });
   fitKR(false);
-  const gDots = L.layerGroup().addTo(map), gFx = L.layerGroup().addTo(map), gTop = L.layerGroup().addTo(map);
+  // 국가 경계 데이터(Natural Earth 1:110m)를 별도 pane에 표시한다.
+  map.createPane('countryBorders'); map.getPane('countryBorders').style.zIndex = 390; map.getPane('countryBorders').style.pointerEvents = 'none';
+  map.createPane('countryGlow'); map.getPane('countryGlow').style.zIndex = 405; map.getPane('countryGlow').style.pointerEvents = 'none';
+  const countryBoundaries = L.geoJSON(null, { pane: 'countryBorders', interactive: false, style: () => ({ color: '#5b91b8', weight: 0.65, opacity: 0.48, fillColor: '#12304a', fillOpacity: 0.035 }) }).addTo(map);
+  let countryGeo = null, countryPulseRaf = 0;
+  fetch(D + 'countries-110m.geojson', { cache: 'force-cache' }).then(r => r.ok ? r.json() : null).then(g => {
+    if (!g || !Array.isArray(g.features)) return;
+    countryGeo = g; countryBoundaries.addData(g);
+  }).catch(() => {});
+  const pointInRing = (x, y, ring) => {
+    let inside = false;
+    for (let i=0, j=ring.length-1; i<ring.length; j=i++) {
+      const xi=ring[i][0], yi=ring[i][1], xj=ring[j][0], yj=ring[j][1];
+      if (((yi>y)!==(yj>y)) && x < (xj-xi)*(y-yi)/((yj-yi)||1e-12)+xi) inside=!inside;
+    }
+    return inside;
+  };
+  const featureContains = (feature, ll) => {
+    const x=ll[1], y=ll[0], g=feature.geometry; if(!g)return false;
+    const polygons=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];
+    return polygons.some(poly=>poly.length && pointInRing(x,y,poly[0]) && !poly.slice(1).some(hole=>pointInRing(x,y,hole)));
+  };
+  const gDots = L.layerGroup().addTo(map), gFx = L.layerGroup().addTo(map), gTop = L.layerGroup().addTo(map), gCountryFx = L.layerGroup().addTo(map);
 
   // 의원 위치: 지역구는 지역 좌표(같은 곳이 여럿이면 둘레로 살짝), 비례대표는 국회 둘레 고리
   const slot = {}, LL = {};
@@ -568,7 +590,24 @@
         const t=p.trips[ti]; if(!t)return;
         const stops=t.stops||[]; const st=stops[si]||stops[0]; if(!st)return;
         gTop.clearLayers();
+        if(countryPulseRaf) cancelAnimationFrame(countryPulseRaf); countryPulseRaf=0; gCountryFx.clearLayers();
         const ll=wrap(st.ll), col=p.id==='lee'?'#5dff9e':'#ffc247';
+        // 도시 점만이 아니라 실제 국가 경계 전체를 관제실 타깃으로 점등한다.
+        if(countryGeo){
+          const feature=countryGeo.features.find(f=>featureContains(f,ll));
+          if(feature){
+            const glow=L.geoJSON(feature,{pane:'countryGlow',interactive:false,style:{color:col,weight:11,opacity:.2,fillColor:col,fillOpacity:.13}}).addTo(gCountryFx);
+            const edge=L.geoJSON(feature,{pane:'countryGlow',interactive:false,style:{color:'#eafaff',weight:2.2,opacity:.95,fillColor:col,fillOpacity:.19}}).addTo(gCountryFx);
+            const started=performance.now();
+            const scan=(now)=>{if(!isPlaying){countryPulseRaf=0;return;}const u=(now-started)/2600;if(u>=1){glow.setStyle({opacity:.13,fillOpacity:.055});edge.setStyle({opacity:.78,fillOpacity:.09});countryPulseRaf=0;return;}
+              const wave=(1+Math.sin(u*Math.PI*4-Math.PI/2))/2;
+              glow.setStyle({opacity:.12+wave*.32,weight:8+wave*8,fillOpacity:.055+wave*.12});
+              edge.setStyle({opacity:.62+wave*.38,weight:1.7+wave*1.2,fillOpacity:.07+wave*.2});
+              countryPulseRaf=requestAnimationFrame(scan);
+            };
+            if(isPlaying)countryPulseRaf=requestAnimationFrame(scan);
+          }
+        }
         // 목적지는 강한 펄스 후광과 고정 라벨로 표시한다.
         // 도착 시 레이더 스캔: 여러 겹의 파동이 바깥으로 퍼지며 도착 지점을 강조한다.
         const core=L.circleMarker(ll,{radius:8,color:'#ffffff',weight:2,opacity:1,fillColor:col,fillOpacity:1}).addTo(gTop)
