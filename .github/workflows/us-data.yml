@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/collect_us_macro.py'
+      - 'scripts/collect_house_filings.py'
       - '.github/workflows/us-data.yml'
   schedule:
     - cron: '17 5 * * *'
@@ -23,11 +24,14 @@ jobs:
           python-version: '3.12'
       - name: Fetch official macro series
         run: python scripts/collect_us_macro.py
+      - name: Archive official House filing index
+        run: python scripts/collect_house_filings.py
+        continue-on-error: true
       - name: Commit changed data
         run: |
           git config user.name "money-tracker-data-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/us-macro.json
+          git add data/us-macro.json data/us-house-filings.json || true
           if ! git diff --cached --quiet; then
             git commit -m "data: refresh US macro observations"
             git push
