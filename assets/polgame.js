@@ -134,7 +134,12 @@
   const file = $('.pg-file'), say = $('.pg-say');
   // 대통령 연대기 패널 접기/펴기는 패널 바깥의 고정 버튼으로 제어한다.
   const panelControls = document.createElement('div'); panelControls.className='pg-mobile-panel-controls'; panelControls.innerHTML='<button type="button" data-panel-collapse>▾ 접기</button><button type="button" data-panel-close>× 닫기</button>'; document.body.appendChild(panelControls);
-  const showMobilePanelControls = (show) => { const visible = show && window.innerWidth < 900; panelControls.style.display = visible ? 'flex' : 'none'; if (visible) { const r = file.getBoundingClientRect(); panelControls.style.top = Math.max(8, r.top - 52) + 'px'; } };
+  const positionMobilePanelControls = () => { if (panelControls.style.display === 'none' || window.innerWidth >= 900) return; const r = file.getBoundingClientRect(); panelControls.style.top = Math.max(8, r.top - panelControls.offsetHeight - 8) + 'px'; };
+  const showMobilePanelControls = (show) => { const visible = show && window.innerWidth < 900; panelControls.style.display = visible ? 'flex' : 'none'; if (visible) requestAnimationFrame(positionMobilePanelControls); };
+  window.addEventListener('resize', positionMobilePanelControls);
+  file.addEventListener('transitionend', positionMobilePanelControls);
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(positionMobilePanelControls).observe(file);
+  new MutationObserver(() => requestAnimationFrame(positionMobilePanelControls)).observe(file, {subtree:true, childList:true, attributes:true, attributeFilter:['class','style']});
   panelControls.querySelector('[data-panel-collapse]').addEventListener('click',()=>{ if(file.classList.contains('min')) { file.classList.remove('min'); file.style.removeProperty('max-height'); file.style.removeProperty('height'); file.style.removeProperty('overflow'); file.style.removeProperty('top'); file.style.removeProperty('bottom'); panelControls.querySelector('[data-panel-collapse]').textContent='▾ 접기'; } else { file.classList.add('min'); file.style.setProperty('max-height','52px','important'); file.style.setProperty('height','52px','important'); file.style.setProperty('overflow','hidden','important'); file.style.setProperty('top','auto','important'); file.style.setProperty('bottom','calc(88px + env(safe-area-inset-bottom,0px))','important'); panelControls.querySelector('[data-panel-collapse]').textContent='▴ 펼치기'; } });
   panelControls.querySelector('[data-panel-close]').addEventListener('click',()=>{ closeFile(); showMobilePanelControls(false); });
   let typer = 0;
