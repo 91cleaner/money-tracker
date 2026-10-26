@@ -74,3 +74,8 @@ html,body,.nw,#topmap,#mcards,.tm-map,.tm-line,.maplg{overflow-anchor:none}
 #pg .leaflet-tooltip.tripclab{white-space:normal!important;min-width:155px;max-width:230px;padding:7px 9px!important;background:rgba(5,15,25,.96)!important;border:1px solid #5dff9e!important;border-radius:8px!important;box-shadow:0 0 16px #36a9ff44!important;text-align:left!important;line-height:1.35!important}
 #pg .tripclab-title{font-size:11px;font-weight:800;color:#8be8ff;margin-bottom:3px}
 #pg .tripclab-reason{font-size:12px;font-weight:700;color:#fff;white-space:normal;overflow-wrap:anywhere}
+
+/* Mobile: make the panel expand/collapse control obvious and easy to tap. */
+#pg .pg-file .fh .mn{min-width:42px;min-height:38px;padding:0 12px;border:1px solid #5dff9e;border-radius:9px;background:#145c35;color:#fff;font-size:22px;font-weight:900;line-height:1;box-shadow:0 0 0 2px rgba(0,0,0,.55),0 2px 12px rgba(0,0,0,.55);}
+#pg .pg-file .fh .mn:active{background:#1e8149;transform:scale(.96)}
+@media(max-width:899px){#pg .pg-file.min{bottom:calc(88px + env(safe-area-inset-bottom,0px));}#pg .pg-file.min .fh{min-height:40px}#pg .pg-file.min .fh .mn{background:#168044;border-color:#8dffb9;box-shadow:0 0 0 2px #06150c,0 0 14px rgba(93,255,158,.28)}}
