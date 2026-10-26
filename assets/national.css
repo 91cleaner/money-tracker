@@ -69,3 +69,8 @@ html,body,.nw,#topmap,#mcards,.tm-map,.tm-line,.maplg{overflow-anchor:none}
 #trflag .tfl{list-style:none;margin:0;padding:0 12px 12px;display:grid;gap:10px;max-height:480px;overflow:auto}
 #trflag .tfl li{border-top:1px solid #222b36;padding-top:8px;font-size:14px;overflow-wrap:anywhere}
 #trflag .tfp{all:unset;cursor:pointer;color:#e8edf2;font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#4b5866}
+
+/* 해외순방 지도 목적지 라벨: 날짜·도시·방문 목적을 한눈에 표시 */
+#pg .leaflet-tooltip.tripclab{white-space:normal!important;min-width:155px;max-width:230px;padding:7px 9px!important;background:rgba(5,15,25,.96)!important;border:1px solid #5dff9e!important;border-radius:8px!important;box-shadow:0 0 16px #36a9ff44!important;text-align:left!important;line-height:1.35!important}
+#pg .tripclab-title{font-size:11px;font-weight:800;color:#8be8ff;margin-bottom:3px}
+#pg .tripclab-reason{font-size:12px;font-weight:700;color:#fff;white-space:normal;overflow-wrap:anywhere}
