@@ -591,7 +591,7 @@
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0"><button type="button" data-chronicle style="border:1px solid #4baf78;background:#143b28;color:#eafff1;border-radius:10px;padding:10px 14px;font-weight:800">▶ 연대기 재생</button><span data-chronicle-status class="ds" style="margin:0">방문국이 빛나고 지도가 줌인됩니다</span></div>` +
           p.trips.slice().reverse().map((t, ri) => { const i = p.trips.length - 1 - ri; return `<div class="li" data-ti="${i}"><span class="av">✈</span><div class="t"><b>${esc(t.when)}</b> <span style="font-size:12px;color:#cfe9d8">${esc(t.label)}</span><div>${esc(t.stops.map((x) => x.city).join(' → '))}</div></div><span class="r">${t.km.toLocaleString('ko-KR')}km</span></div>`; }).join('') +
           `<div class="fine">${esc((prez && prez.note) || '')} · 일부 기록은 추가 확인이 필요해요. 지도 거리와 방문 도시 좌표는 추정치일 수 있습니다.</div>`;
-        file.classList.add('on'); bindX(); if (innerWidth < 900) file.classList.add('min'); setTimeout(() => show(p), 60);
+        file.classList.add('on'); file.classList.remove('min'); bindX(); setTimeout(() => show(p), 60);
         file.querySelectorAll('[data-pi]').forEach((b) => (b.onclick = () => { cur = +b.dataset.pi; SFX.click(); gTop.clearLayers(); paint(); }));
         file.querySelector('[data-chronicle]').onclick=()=>{if(isPlaying){stopChronicle();type('연대기 일시정지');}else runChronicle();};
         file.querySelectorAll('[data-ti]').forEach((el) => (el.onclick = () => { stopChronicle(); const ti=+el.dataset.ti; show(P[cur],ti); visitDetail(P[cur],ti,0); }));
