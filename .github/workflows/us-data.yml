@@ -28,12 +28,14 @@ jobs:
         run: python scripts/collect_us_macro.py
         continue-on-error: true
       - name: Archive official House filing index
+        id: house
         run: python scripts/collect_house_filings.py
         continue-on-error: true
       - name: Record collector run status
         if: always()
         env:
           MACRO_OUTCOME: ${{ steps.macro.outcome }}
+          HOUSE_OUTCOME: ${{ steps.house.outcome }}
         run: |
           python - <<'PY'
           import json,os,datetime,pathlib
@@ -43,8 +45,8 @@ jobs:
               try: previous=json.loads(p.read_text())
               except (ValueError,OSError): pass
           datasets={name:pathlib.Path('data/'+name).exists() for name in ['us-macro.json','us-house-filings.json','us-events.json']}
-          payload={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'macro_run':os.environ.get('MACRO_OUTCOME'),'files_present':datasets,'warning':'File existence is not equivalent to complete or fresh data.'}
-          p.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\\n')
+          payload={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'macro_run':os.environ.get('MACRO_OUTCOME'),'house_run':os.environ.get('HOUSE_OUTCOME'),'files_present':datasets,'warning':'File existence is not equivalent to complete or fresh data.'}
+          p.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n')
           PY
       - name: Commit changed data
         run: |
