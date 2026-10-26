@@ -42,7 +42,7 @@ else:
                    "cdn.jsdelivr.net/npm/leaflet", "id=\"journey\"",
                    "id=\"intelFeed\"", "id=\"intelBrief\"", "#rotate{display:none!important}"):
         check(needle in html, f"Map page missing expected feature: {needle}")
-    scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, flags=re.I | re.S)
+    scripts = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", html, flags=re.I | re.S)
     if shutil.which("node"):
         with tempfile.TemporaryDirectory() as directory:
             for i, script in enumerate(scripts, 1):
