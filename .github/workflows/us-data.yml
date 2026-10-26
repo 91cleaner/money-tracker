@@ -1,0 +1,29 @@
+name: Collect US macro data
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: us-data
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch official macro series
+        run: python scripts/collect_us_macro.py
+      - name: Commit changed data
+        run: |
+          git config user.name "money-tracker-data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/us-macro.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: refresh US macro observations"
+            git push
+          fi
