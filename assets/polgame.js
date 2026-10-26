@@ -51,7 +51,7 @@
 @media(min-width:900px){#pg .pg-file{left:auto;right:12px;top:110px;bottom:84px;width:380px;max-height:none}}
 @media(max-width:899px){#pg .pg-file{max-height:44%;padding:10px}#pg .who{grid-template-columns:64px 1fr;gap:10px}#pg .ph{width:64px;height:80px}#pg .nm{font-size:19px}#pg .st{margin:8px 0}#pg .st b{font-size:16px}#pg .st span{font-size:10.5px}#pg .ttl{font-size:13px}#pg .ctr .n{font-size:15px}#pg .live{font-size:10px}}
 @media(min-width:900px){#pg.fileon .pg-map{right:404px}#pg.fileon .pg-bar{left:calc((100% - 404px)/2)}}
-#pg .pg-file.min{max-height:52px!important;overflow:hidden;bottom:84px;top:auto!important}
+#pg .pg-file.min{height:52px!important;max-height:52px!important;overflow:hidden!important;bottom:calc(88px + env(safe-area-inset-bottom,0px))!important;top:auto!important}
 #pg .pg-file.min .fh .mn{transform:rotate(180deg)}
 #pg .fh .tools{display:flex;gap:6px}
 #pg .fh{display:flex;justify-content:space-between;align-items:center;font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e;margin-bottom:8px}
@@ -655,7 +655,7 @@
         if(!seq.length){type('재생할 방문 기록이 없어요.');return;}
         isPlaying=true; const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='Ⅱ 일시정지';
         // 모바일에서는 재생 시작과 동시에 대통령 목록 패널을 접어 지도를 우선 보여준다.
-        if (matchMedia('(max-width: 899px)').matches) file.classList.add('min');
+        if (window.innerWidth < 900) { file.classList.add('min'); file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.bottom = 'calc(88px + env(safe-area-inset-bottom, 0px))'; }
         playIndex=0;
         const step=()=>{
           if(!isPlaying)return;
