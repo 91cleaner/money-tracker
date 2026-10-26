@@ -53,6 +53,8 @@
 @media(min-width:900px){#pg.fileon .pg-map{right:404px}#pg.fileon .pg-bar{left:calc((100% - 404px)/2)}}
 #pg .pg-file.min{height:52px!important;max-height:52px!important;overflow:hidden!important;bottom:calc(88px + env(safe-area-inset-bottom,0px))!important;top:auto!important}
 #pg .pg-file.min .fh .mn{transform:rotate(180deg)}
+ #pg .pg-panel-toggle{display:none;position:absolute;z-index:980;top:8px;right:12px;min-height:42px;padding:0 14px;border:1px solid #5dff9e;border-radius:10px;background:rgba(2,18,9,.96);color:#eafff2;font:800 13px Pretendard,system-ui;box-shadow:0 4px 18px rgba(0,0,0,.55);cursor:pointer;pointer-events:auto}
+ @media(max-width:899px){#pg .pg-panel-toggle{display:block}#pg .pg-file.min .fh .mn{display:none}}
  #pg .pg-file.min > :not(.fh){display:none!important}
 #pg .fh .tools{display:flex;gap:6px}
 #pg .fh{display:flex;justify-content:space-between;align-items:center;font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e;margin-bottom:8px}
@@ -130,6 +132,9 @@
   <button type="button" class="pg-dice" aria-label="아무 의원이나 골라 추적"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="#5dff9e" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="#5dff9e" stroke="none"/></svg>아무나 추적</button>`;
   const $ = (s) => root.querySelector(s);
   const file = $('.pg-file'), say = $('.pg-say');
+  // 대통령 연대기 패널 접기/펴기는 패널 바깥의 고정 버튼으로 제어한다.
+  const panelToggle = document.createElement('button'); panelToggle.type = 'button'; panelToggle.className = 'pg-panel-toggle'; panelToggle.textContent = '▴ 순방 기록 펼치기'; panelToggle.setAttribute('aria-expanded','false'); root.appendChild(panelToggle);
+  panelToggle.addEventListener('click', () => { const expanded = panelToggle.getAttribute('aria-expanded') !== 'true'; panelToggle.setAttribute('aria-expanded', String(expanded)); if (expanded) { file.classList.remove('min'); file.style.removeProperty('max-height'); file.style.removeProperty('height'); file.style.removeProperty('overflow'); file.style.removeProperty('top'); file.style.removeProperty('bottom'); file.style.removeProperty('z-index'); panelToggle.textContent = '▾ 순방 기록 접기'; } else { file.classList.add('min'); file.style.maxHeight='52px'; file.style.height='52px'; file.style.overflow='hidden'; file.style.top='8px'; file.style.bottom='auto'; file.style.zIndex='950'; panelToggle.textContent = '▴ 순방 기록 펼치기'; } });
   let typer = 0;
   const type = (t) => { clearInterval(typer); if (RM) { say.textContent = '> ' + t; return; } let i = 0; say.textContent = '> '; typer = setInterval(() => { say.textContent = '> ' + t.slice(0, ++i) + (i < t.length ? '▌' : ''); if (i >= t.length) clearInterval(typer); }, 22); };
 
@@ -656,7 +661,7 @@
         if(!seq.length){type('재생할 방문 기록이 없어요.');return;}
         isPlaying=true; const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='Ⅱ 일시정지';
         // 모바일에서는 재생 시작과 동시에 대통령 목록 패널을 접어 지도를 우선 보여준다.
-        if (window.innerWidth < 900) { file.classList.add('min'); file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.top = '8px'; file.style.bottom = 'auto'; file.style.zIndex = '950'; }
+        if (window.innerWidth < 900) { file.classList.add('min'); file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.top = '8px'; file.style.bottom = 'auto'; file.style.zIndex = '950'; panelToggle.style.display='block'; panelToggle.setAttribute('aria-expanded','false'); panelToggle.textContent='▴ 순방 기록 펼치기'; }
         playIndex=0;
         const step=()=>{
           if(!isPlaying)return;
