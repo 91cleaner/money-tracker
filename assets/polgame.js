@@ -590,6 +590,11 @@
       const stopChronicle = () => {
         if (playTimer) clearTimeout(playTimer); playTimer = null; isPlaying = false;
         if (planeFrame) cancelAnimationFrame(planeFrame); planeFrame = 0;
+        // 이전 대통령의 비행기·경로·국가 강조 효과를 즉시 제거해 새 재생과 겹치지 않게 한다.
+        if (typeof gFx !== 'undefined' && gFx) gFx.clearLayers();
+        if (typeof gTop !== 'undefined' && gTop) gTop.clearLayers();
+        if (typeof gCountryFx !== 'undefined' && gCountryFx) gCountryFx.clearLayers();
+        if (countryPulseRaf) cancelAnimationFrame(countryPulseRaf); countryPulseRaf = 0;
         const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='▶ 연대기 재생';
       };
       const visitDetail = (p, ti, si) => {
@@ -684,7 +689,7 @@
           p.trips.slice().reverse().map((t, ri) => { const i = p.trips.length - 1 - ri; return `<div class="li" data-ti="${i}"><span class="av">✈</span><div class="t"><b>${esc(t.when)}</b> <span style="font-size:12px;color:#cfe9d8">${esc(t.label)}</span><div>${esc(t.stops.map((x) => x.city).join(' → '))}</div></div><span class="r">${t.km.toLocaleString('ko-KR')}km</span></div>`; }).join('') +
           `<div class="fine">${esc((prez && prez.note) || '')} · 일부 기록은 추가 확인이 필요해요. 지도 거리와 방문 도시 좌표는 추정치일 수 있습니다.</div>`;
         file.classList.add('on'); file.classList.remove('min'); bindX(); setTimeout(() => show(p), 60);
-        file.querySelectorAll('[data-pi]').forEach((b) => (b.onclick = () => { cur = +b.dataset.pi; SFX.click(); gTop.clearLayers(); paint(); }));
+        file.querySelectorAll('[data-pi]').forEach((b) => (b.onclick = () => { stopChronicle(); cur = +b.dataset.pi; SFX.click(); gFx.clearLayers(); gTop.clearLayers(); gCountryFx.clearLayers(); if(countryPulseRaf) cancelAnimationFrame(countryPulseRaf); countryPulseRaf=0; paint(); }));
         file.querySelector('[data-chronicle]').onclick=()=>{if(isPlaying){stopChronicle();type('연대기 일시정지');}else runChronicle();};
         file.querySelectorAll('[data-ti]').forEach((el) => (el.onclick = () => { stopChronicle(); const ti=+el.dataset.ti; show(P[cur],ti); visitDetail(P[cur],ti,0); }));
       };
