@@ -57,7 +57,10 @@ errors = []
 for year in [YEAR - 1, YEAR]:
     url = "https://disclosures-clerk.house.gov/public_disc/financial-pdfs/" + str(year) + "FD.xml"
     try:
-        raw = download(url)
+        try:
+            raw = download(url)
+        except Exception:
+            raw = download(url.replace("FD.xml", "FD.zip"))
         if raw[:2] == b"PK":
             with zipfile.ZipFile(io.BytesIO(raw)) as z:
                 name = next(n for n in z.namelist() if n.lower().endswith(".xml"))
