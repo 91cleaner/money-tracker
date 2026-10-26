@@ -586,8 +586,10 @@
         type(only != null ? `${p.name} ${p.trips[only].when} · ${p.trips[only].label} · ${p.trips[only].km.toLocaleString('ko-KR')}km` : `${p.name} 해외 순방 ${p.trips.length}번 · 약 ${Math.round(k / 10000).toLocaleString("ko-KR")}만 km · 지구 ${(k / 40075).toFixed(1)}바퀴`);
         return k;
       };
-      let cur = 0, playTimer = null, playIndex = 0, isPlaying = false, planeFrame = 0, planeMarker = null;
+      let cur = 0, playTimer = null, playIndex = 0, isPlaying = false, planeFrame = 0, planeMarker = null, chronicleRunId = 0;
       const stopChronicle = () => {
+        // 토큰을 갱신해 이미 예약된 이전 RAF/타이머 콜백도 무효화한다.
+        chronicleRunId++;
         if (playTimer) clearTimeout(playTimer); playTimer = null; isPlaying = false;
         if (planeFrame) cancelAnimationFrame(planeFrame); planeFrame = 0;
         // 이전 대통령의 비행기·경로·국가 강조 효과를 즉시 제거해 새 재생과 겹치지 않게 한다.
@@ -635,7 +637,7 @@
         const controls=file.querySelector('[data-chronicle-status]');
         if(controls)controls.textContent=`${t.when} · ${st.city} · ${si+1}/${stops.length}개 방문지`;
       };
-      const flyPlaneTo = (from, to, p, done) => {
+      const flyPlaneTo = (from, to, p, done, runId) => {
         const col=p.id==='lee'?'#5dff9e':'#ffc247';
         const path=arc(from,to);
         if(planeFrame)cancelAnimationFrame(planeFrame);
@@ -645,7 +647,7 @@
         planeMarker=L.marker(path[0],{interactive:false,icon:L.divIcon({className:'plane',html:'<span class="plane-glyph" style="display:block;transform:rotate(0deg);transform-origin:50% 50%;filter:drop-shadow(0 0 5px #70eaff) drop-shadow(0 0 12px #168bff)">✈</span>',iconSize:[28,28],iconAnchor:[14,14]})}).addTo(gFx);
         const duration=RM?20:2400, began=performance.now(); let lastPan=0;
         const frame=(now)=>{
-          if(!isPlaying)return;
+          if(!isPlaying || runId !== chronicleRunId)return;
           const t=Math.min(1,(now-began)/duration), eased=t*t*(3-2*t);
           const idx=Math.min(path.length-1,Math.floor(eased*(path.length-1))), pos=path[idx];
           planeMarker.setLatLng(pos); trail.setLatLngs(path.slice(0,idx+1));
@@ -655,13 +657,13 @@
           if(glyph){const deg=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI+90;glyph.style.transform=`rotate(${deg}deg)`;}
           if(now-lastPan>100){map.panTo(pos,{animate:!RM,duration:.12});lastPan=now;}
           if(t<1)planeFrame=requestAnimationFrame(frame);
-          else {planeFrame=0;map.flyTo(to,Math.max(4.5,Math.min(5.5,map.getZoom())),{duration:RM?0:.7});visitDetail(p,activeTi,activeSi);playTimer=setTimeout(done,1700);}
+          else {planeFrame=0;map.flyTo(to,Math.max(4.5,Math.min(5.5,map.getZoom())),{duration:RM?0:.7});visitDetail(p,activeTi,activeSi);playTimer=setTimeout(()=>{if(isPlaying && runId===chronicleRunId)done();},1700);}
         };
         planeFrame=requestAnimationFrame(frame);
       };
       let activeTi=0, activeSi=0;
       const runChronicle = () => {
-        stopChronicle(); const p=P[cur]; const seq=[];
+        stopChronicle(); const runId=chronicleRunId; const p=P[cur]; const seq=[];
         p.trips.forEach((t,ti)=>(t.stops||[]).forEach((st,si)=>seq.push({ti,si,st})));
         if(!seq.length){type('재생할 방문 기록이 없어요.');return;}
         isPlaying=true; const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='Ⅱ 일시정지';
@@ -669,14 +671,14 @@
         if (window.innerWidth < 900) { file.classList.add('min'); file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.top = '8px'; file.style.bottom = 'auto'; file.style.zIndex = '950'; panelToggle.style.display='block'; panelToggle.setAttribute('aria-expanded','false'); panelToggle.textContent='▴ 순방 기록 펼치기'; }
         playIndex=0;
         const step=()=>{
-          if(!isPlaying)return;
+          if(!isPlaying || runId !== chronicleRunId)return;
           if(playIndex>=seq.length){stopChronicle();type(`${p.name} 순방 연대기 재생 완료 · ${seq.length}개 방문 지점`);return;}
           const q=seq[playIndex++]; activeTi=q.ti; activeSi=q.si;
           const to=wrap(q.st.ll), from=playIndex===1?HOME:wrap(seq[playIndex-2].st.ll);
           type(`✈ ${p.name} · ${p.trips[q.ti].when} · ${playIndex===1?'서울공항 출발':'다음 방문지 이동'} → ${q.st.city}`);
           const controls=file.querySelector('[data-chronicle-status]');
           if(controls)controls.textContent=`✈ 비행 중 · ${p.trips[q.ti].when} · ${q.st.city} · ${playIndex}/${seq.length}`;
-          flyPlaneTo(from,to,p,step);
+          flyPlaneTo(from,to,p,step,runId);
         };
         step();
       };
