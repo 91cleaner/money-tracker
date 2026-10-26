@@ -1,0 +1,29 @@
+name: World Intelligence health check
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'world-intelligence/**'
+      - 'scripts/check_world_intelligence.py'
+      - 'data/us/bills.json'
+      - 'data/us/trades.json'
+      - '.github/workflows/world-intelligence-health.yml'
+  schedule:
+    - cron: '13 2 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check flat map, JavaScript, and public-data integrity
+        run: python scripts/check_world_intelligence.py
