@@ -53,8 +53,8 @@
 @media(min-width:900px){#pg.fileon .pg-map{right:404px}#pg.fileon .pg-bar{left:calc((100% - 404px)/2)}}
 #pg .pg-file.min{height:52px!important;max-height:52px!important;overflow:hidden!important;bottom:calc(88px + env(safe-area-inset-bottom,0px))!important;top:auto!important}
 #pg .pg-file.min .fh .mn{transform:rotate(180deg)}
- #pg .pg-panel-toggle{display:none;position:absolute;z-index:980;top:8px;right:12px;min-height:42px;padding:0 14px;border:1px solid #5dff9e;border-radius:10px;background:rgba(2,18,9,.96);color:#eafff2;font:800 13px Pretendard,system-ui;box-shadow:0 4px 18px rgba(0,0,0,.55);cursor:pointer;pointer-events:auto}
- @media(max-width:899px){#pg .pg-panel-toggle{display:block}#pg .pg-file.min .fh .mn{display:none}}
+ #pg .pg-panel-toggle{display:none;position:fixed;z-index:99999;top:72px;right:12px;min-height:42px;padding:0 14px;border:1px solid #5dff9e;border-radius:10px;background:rgba(2,18,9,.96);color:#eafff2;font:800 13px Pretendard,system-ui;box-shadow:0 4px 18px rgba(0,0,0,.55);cursor:pointer;pointer-events:auto}
+ @media(max-width:899px){#pg .pg-file.min .fh .mn{display:none}}
  #pg .pg-file.min > :not(.fh){display:none!important}
 #pg .fh .tools{display:flex;gap:6px}
 #pg .fh{display:flex;justify-content:space-between;align-items:center;font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e;margin-bottom:8px}
@@ -133,7 +133,7 @@
   const $ = (s) => root.querySelector(s);
   const file = $('.pg-file'), say = $('.pg-say');
   // 대통령 연대기 패널 접기/펴기는 패널 바깥의 고정 버튼으로 제어한다.
-  const panelToggle = document.createElement('button'); panelToggle.type = 'button'; panelToggle.className = 'pg-panel-toggle'; panelToggle.textContent = '▴ 순방 기록 펼치기'; panelToggle.setAttribute('aria-expanded','false'); root.appendChild(panelToggle);
+  const panelToggle = document.createElement('button'); panelToggle.type = 'button'; panelToggle.className = 'pg-panel-toggle'; panelToggle.textContent = '▴ 순방 기록 펼치기'; panelToggle.setAttribute('aria-expanded','false'); document.body.appendChild(panelToggle);
   panelToggle.addEventListener('click', () => { const expanded = panelToggle.getAttribute('aria-expanded') !== 'true'; panelToggle.setAttribute('aria-expanded', String(expanded)); if (expanded) { file.classList.remove('min'); file.style.removeProperty('max-height'); file.style.removeProperty('height'); file.style.removeProperty('overflow'); file.style.removeProperty('top'); file.style.removeProperty('bottom'); file.style.removeProperty('z-index'); panelToggle.textContent = '▾ 순방 기록 접기'; } else { file.classList.add('min'); file.style.maxHeight='52px'; file.style.height='52px'; file.style.overflow='hidden'; file.style.top='8px'; file.style.bottom='auto'; file.style.zIndex='950'; panelToggle.textContent = '▴ 순방 기록 펼치기'; } });
   let typer = 0;
   const type = (t) => { clearInterval(typer); if (RM) { say.textContent = '> ' + t; return; } let i = 0; say.textContent = '> '; typer = setInterval(() => { say.textContent = '> ' + t.slice(0, ++i) + (i < t.length ? '▌' : ''); if (i >= t.length) clearInterval(typer); }, 22); };
@@ -668,6 +668,7 @@
         if(!seq.length){type('재생할 방문 기록이 없어요.');return;}
         isPlaying=true; const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='Ⅱ 일시정지';
         // 모바일에서는 재생 시작과 동시에 대통령 목록 패널을 접어 지도를 우선 보여준다.
+        panelToggle.style.display='block'; panelToggle.setAttribute('aria-expanded','false'); panelToggle.textContent='▴ 순방 기록 펼치기';
         if (window.innerWidth < 900) { file.classList.add('min'); file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.top = '8px'; file.style.bottom = 'auto'; file.style.zIndex = '950'; panelToggle.style.display='block'; panelToggle.setAttribute('aria-expanded','false'); panelToggle.textContent='▴ 순방 기록 펼치기'; }
         playIndex=0;
         const step=()=>{
@@ -690,8 +691,8 @@
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0"><button type="button" data-chronicle style="border:1px solid #4baf78;background:#143b28;color:#eafff1;border-radius:10px;padding:10px 14px;font-weight:800">▶ 연대기 재생</button><span data-chronicle-status class="ds" style="margin:0">방문국이 빛나고 지도가 줌인됩니다</span></div>` +
           p.trips.slice().reverse().map((t, ri) => { const i = p.trips.length - 1 - ri; return `<div class="li" data-ti="${i}"><span class="av">✈</span><div class="t"><b>${esc(t.when)}</b> <span style="font-size:12px;color:#cfe9d8">${esc(t.label)}</span><div>${esc(t.stops.map((x) => x.city).join(' → '))}</div></div><span class="r">${t.km.toLocaleString('ko-KR')}km</span></div>`; }).join('') +
           `<div class="fine">${esc((prez && prez.note) || '')} · 일부 기록은 추가 확인이 필요해요. 지도 거리와 방문 도시 좌표는 추정치일 수 있습니다.</div>`;
-        file.classList.add('on'); file.classList.remove('min'); bindX(); setTimeout(() => show(p), 60);
-        file.querySelectorAll('[data-pi]').forEach((b) => (b.onclick = () => { stopChronicle(); cur = +b.dataset.pi; SFX.click(); gFx.clearLayers(); gTop.clearLayers(); gCountryFx.clearLayers(); if(countryPulseRaf) cancelAnimationFrame(countryPulseRaf); countryPulseRaf=0; paint(); }));
+        file.classList.add('on'); file.classList.remove('min'); panelToggle.style.display='block'; bindX(); setTimeout(() => show(p), 60);
+        file.querySelectorAll('[data-pi]').forEach((b) => (b.onclick = () => { stopChronicle(); panelToggle.style.display='block'; panelToggle.setAttribute('aria-expanded','true'); panelToggle.textContent='▾ 순방 기록 접기'; file.classList.remove('min'); file.style.removeProperty('max-height'); file.style.removeProperty('height'); file.style.removeProperty('overflow'); file.style.removeProperty('top'); file.style.removeProperty('bottom'); file.style.removeProperty('z-index'); cur = +b.dataset.pi; SFX.click(); gFx.clearLayers(); gTop.clearLayers(); gCountryFx.clearLayers(); if(countryPulseRaf) cancelAnimationFrame(countryPulseRaf); countryPulseRaf=0; paint(); }));
         file.querySelector('[data-chronicle]').onclick=()=>{if(isPlaying){stopChronicle();type('연대기 일시정지');}else runChronicle();};
         file.querySelectorAll('[data-ti]').forEach((el) => (el.onclick = () => { stopChronicle(); const ti=+el.dataset.ti; show(P[cur],ti); visitDetail(P[cur],ti,0); }));
       };
