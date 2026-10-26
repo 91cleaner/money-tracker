@@ -53,7 +53,7 @@
 @media(min-width:900px){#pg.fileon .pg-map{right:404px}#pg.fileon .pg-bar{left:calc((100% - 404px)/2)}}
 #pg .pg-file.min{height:52px!important;max-height:52px!important;overflow:hidden!important;bottom:calc(88px + env(safe-area-inset-bottom,0px))!important;top:auto!important}
 #pg .pg-file.min .fh .mn{transform:rotate(180deg)}
- #pg .pg-mobile-panel-controls{display:none;position:fixed!important;z-index:2147483647!important;right:10px!important;bottom:calc(96px + env(safe-area-inset-bottom,0px))!important;gap:8px!important;align-items:center!important;pointer-events:auto!important}#pg .pg-mobile-panel-controls button{min-height:44px!important;padding:0 14px!important;border:1px solid #5dff9e!important;border-radius:10px!important;background:rgba(2,18,9,.97)!important;color:#eafff2!important;font:800 14px Pretendard,system-ui!important;box-shadow:0 4px 18px rgba(0,0,0,.55)!important;cursor:pointer!important}
+ .pg-mobile-panel-controls{display:none;position:fixed!important;z-index:2147483647!important;right:10px!important;bottom:calc(96px + env(safe-area-inset-bottom,0px))!important;gap:8px!important;align-items:center!important;pointer-events:auto!important}.pg-mobile-panel-controls button{min-height:44px!important;padding:0 14px!important;border:1px solid #5dff9e!important;border-radius:10px!important;background:rgba(2,18,9,.97)!important;color:#eafff2!important;font:800 14px Pretendard,system-ui!important;box-shadow:0 4px 18px rgba(0,0,0,.55)!important;cursor:pointer!important}
  @media(max-width:899px){#pg .pg-file.min .fh .mn{display:none}}
  #pg .pg-file.min > :not(.fh){display:none!important}
 #pg .fh .tools{display:flex;gap:6px}
