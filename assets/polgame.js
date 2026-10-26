@@ -53,6 +53,7 @@
 @media(min-width:900px){#pg.fileon .pg-map{right:404px}#pg.fileon .pg-bar{left:calc((100% - 404px)/2)}}
 #pg .pg-file.min{height:52px!important;max-height:52px!important;overflow:hidden!important;bottom:calc(88px + env(safe-area-inset-bottom,0px))!important;top:auto!important}
 #pg .pg-file.min .fh .mn{transform:rotate(180deg)}
+ #pg .pg-file.min > :not(.fh){display:none!important}
 #pg .fh .tools{display:flex;gap:6px}
 #pg .fh{display:flex;justify-content:space-between;align-items:center;font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e;margin-bottom:8px}
 #pg .fh button{min-width:36px;min-height:36px;border-radius:8px;border:1px solid #1f4a30;background:#06150c;color:#cfe9d8;font-size:16px;cursor:pointer}
