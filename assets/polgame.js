@@ -654,6 +654,8 @@
         p.trips.forEach((t,ti)=>(t.stops||[]).forEach((st,si)=>seq.push({ti,si,st})));
         if(!seq.length){type('재생할 방문 기록이 없어요.');return;}
         isPlaying=true; const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='Ⅱ 일시정지';
+        // 모바일에서는 재생 시작과 동시에 대통령 목록 패널을 접어 지도를 우선 보여준다.
+        if (matchMedia('(max-width: 899px)').matches) file.classList.add('min');
         playIndex=0;
         const step=()=>{
           if(!isPlaying)return;
