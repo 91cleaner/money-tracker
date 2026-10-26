@@ -53,8 +53,8 @@
 @media(min-width:900px){#pg.fileon .pg-map{right:404px}#pg.fileon .pg-bar{left:calc((100% - 404px)/2)}}
 #pg .pg-file.min{height:52px!important;max-height:52px!important;overflow:hidden!important;bottom:calc(88px + env(safe-area-inset-bottom,0px))!important;top:auto!important}
 #pg .pg-file.min .fh .mn{transform:rotate(180deg)}
- .pg-mobile-panel-controls{display:none;position:fixed!important;z-index:2147483647!important;right:10px!important;bottom:calc(96px + env(safe-area-inset-bottom,0px))!important;gap:8px!important;align-items:center!important;pointer-events:auto!important}.pg-mobile-panel-controls button{min-height:44px!important;padding:0 14px!important;border:1px solid #5dff9e!important;border-radius:10px!important;background:rgba(2,18,9,.97)!important;color:#eafff2!important;font:800 14px Pretendard,system-ui!important;box-shadow:0 4px 18px rgba(0,0,0,.55)!important;cursor:pointer!important}
- @media(max-width:899px){#pg .pg-file.min .fh .mn{display:none}}
+ .pg-mobile-panel-controls{display:none;position:fixed!important;z-index:2147483647!important;top:0;right:10px!important;bottom:auto!important;gap:8px!important;align-items:center!important;pointer-events:auto!important}.pg-mobile-panel-controls button{min-height:44px!important;padding:0 14px!important;border:1px solid #5dff9e!important;border-radius:10px!important;background:rgba(2,18,9,.97)!important;color:#eafff2!important;font:800 14px Pretendard,system-ui!important;box-shadow:0 4px 18px rgba(0,0,0,.55)!important;cursor:pointer!important}
+ @media(max-width:899px){#pg .pg-file.pres-panel .fh .tools{display:none!important}#pg .pg-file.min .fh .mn{display:none}}
  #pg .pg-file.min > :not(.fh){display:none!important}
 #pg .fh .tools{display:flex;gap:6px}
 #pg .fh{display:flex;justify-content:space-between;align-items:center;font:700 11px ui-monospace,Menlo,monospace;color:#5dff9e;margin-bottom:8px}
@@ -134,7 +134,7 @@
   const file = $('.pg-file'), say = $('.pg-say');
   // 대통령 연대기 패널 접기/펴기는 패널 바깥의 고정 버튼으로 제어한다.
   const panelControls = document.createElement('div'); panelControls.className='pg-mobile-panel-controls'; panelControls.innerHTML='<button type="button" data-panel-collapse>▾ 접기</button><button type="button" data-panel-close>× 닫기</button>'; document.body.appendChild(panelControls);
-  const showMobilePanelControls = (show) => { panelControls.style.display = (show && window.innerWidth < 900) ? 'flex' : 'none'; };
+  const showMobilePanelControls = (show) => { const visible = show && window.innerWidth < 900; panelControls.style.display = visible ? 'flex' : 'none'; if (visible) { const r = file.getBoundingClientRect(); panelControls.style.top = Math.max(8, r.top - 52) + 'px'; } };
   panelControls.querySelector('[data-panel-collapse]').addEventListener('click',()=>{ if(file.classList.contains('min')) { file.classList.remove('min'); file.style.removeProperty('max-height'); file.style.removeProperty('height'); file.style.removeProperty('overflow'); file.style.removeProperty('top'); file.style.removeProperty('bottom'); panelControls.querySelector('[data-panel-collapse]').textContent='▾ 접기'; } else { file.classList.add('min'); file.style.setProperty('max-height','52px','important'); file.style.setProperty('height','52px','important'); file.style.setProperty('overflow','hidden','important'); file.style.setProperty('top','auto','important'); file.style.setProperty('bottom','calc(88px + env(safe-area-inset-bottom,0px))','important'); panelControls.querySelector('[data-panel-collapse]').textContent='▴ 펼치기'; } });
   panelControls.querySelector('[data-panel-close]').addEventListener('click',()=>{ closeFile(); showMobilePanelControls(false); });
   let typer = 0;
@@ -687,6 +687,7 @@
       };
       const paint = () => {
         stopChronicle(); const p = P[cur], k = tot(p);
+        file.classList.add('pres-panel');
         file.innerHTML = fileHead('대통령 해외 순방') + `<div class="act" style="margin:0 0 8px">${P.map((x, i) => `<button type="button" data-pi="${i}" class="${i === cur ? 'p' : ''}">${esc(x.name)} <span style="opacity:.75;font-weight:500;margin-left:4px">${esc(x.title)}</span></button>`).join('')}</div>
           <div class="st"><div><b>${p.trips.length}</b><span>수록 순방</span></div><div><b>${Math.round(k / 10000).toLocaleString('ko-KR')}만</b><span>지도 거리 합계(어림)</span></div><div><b>${(k / 40075).toFixed(1)}</b><span>지구 둘레 환산</span></div></div>
           <div class="ds">${esc(p.since)}${p.until ? ' ~ ' + esc(p.until) : ' ~ 지금'} · 기록을 선택하면 경로를 보고, 연대기 재생으로 방문지를 시간순으로 탐험할 수 있어요.</div>
