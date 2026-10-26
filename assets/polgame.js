@@ -610,8 +610,9 @@
         }
         // 목적지는 강한 펄스 후광과 고정 라벨로 표시한다.
         // 도착 시 레이더 스캔: 여러 겹의 파동이 바깥으로 퍼지며 도착 지점을 강조한다.
+        const mapLabel = `<div class="tripclab-title">${esc(t.when)} · ${esc(st.city)}</div><div class="tripclab-reason">${esc(t.label || '방문 일정')}</div>`;
         const core=L.circleMarker(ll,{radius:8,color:'#ffffff',weight:2,opacity:1,fillColor:col,fillOpacity:1}).addTo(gTop)
-          .bindTooltip(esc(st.city),{permanent:true,direction:'top',className:'clab'});
+          .bindTooltip(mapLabel,{permanent:true,direction:'top',className:'clab tripclab',sticky:false,opacity:1});
         const rings=[0,1,2].map((i)=>L.circleMarker(ll,{radius:12+i*10,color:col,weight:2,opacity:.9,fillColor:col,fillOpacity:.05,interactive:false}).addTo(gTop));
         const started=performance.now();
         const pulse=(now)=>{if(!isPlaying)return;const u=(now-started)/1500;if(u>=1){rings.forEach((r)=>gTop.removeLayer(r));return;}
