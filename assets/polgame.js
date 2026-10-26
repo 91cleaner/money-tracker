@@ -53,7 +53,7 @@
 @media(min-width:900px){#pg.fileon .pg-map{right:404px}#pg.fileon .pg-bar{left:calc((100% - 404px)/2)}}
 #pg .pg-file.min{height:52px!important;max-height:52px!important;overflow:hidden!important;bottom:calc(88px + env(safe-area-inset-bottom,0px))!important;top:auto!important}
 #pg .pg-file.min .fh .mn{transform:rotate(180deg)}
- #pg .pg-panel-toggle{display:none;position:fixed;z-index:99999;top:72px;right:12px;min-height:42px;padding:0 14px;border:1px solid #5dff9e;border-radius:10px;background:rgba(2,18,9,.96);color:#eafff2;font:800 13px Pretendard,system-ui;box-shadow:0 4px 18px rgba(0,0,0,.55);cursor:pointer;pointer-events:auto}
+ #pg .pg-panel-toggle{display:none;position:fixed!important;z-index:2147483647!important;top:auto!important;bottom:calc(100px + env(safe-area-inset-bottom,0px))!important;right:12px!important;min-height:42px;padding:0 14px;border:1px solid #5dff9e;border-radius:10px;background:rgba(2,18,9,.96);color:#eafff2;font:800 13px Pretendard,system-ui;box-shadow:0 4px 18px rgba(0,0,0,.55);cursor:pointer;pointer-events:auto}
  @media(max-width:899px){#pg .pg-file.min .fh .mn{display:none}}
  #pg .pg-file.min > :not(.fh){display:none!important}
 #pg .fh .tools{display:flex;gap:6px}
@@ -668,8 +668,8 @@
         if(!seq.length){type('재생할 방문 기록이 없어요.');return;}
         isPlaying=true; const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='Ⅱ 일시정지';
         // 모바일에서는 재생 시작과 동시에 대통령 목록 패널을 접어 지도를 우선 보여준다.
-        panelToggle.style.display='block'; panelToggle.setAttribute('aria-expanded','false'); panelToggle.textContent='▴ 순방 기록 펼치기';
-        if (window.innerWidth < 900) { file.classList.add('min'); file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.top = '8px'; file.style.bottom = 'auto'; file.style.zIndex = '950'; panelToggle.style.display='block'; panelToggle.setAttribute('aria-expanded','false'); panelToggle.textContent='▴ 순방 기록 펼치기'; }
+        panelToggle.style.setProperty('display','block','important'); panelToggle.setAttribute('aria-expanded','false'); panelToggle.textContent='▴ 순방 기록 펼치기';
+        if (window.innerWidth < 900) { panelToggle.style.setProperty('display','block','important'); file.classList.add('min'); file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.top = '8px'; file.style.bottom = 'auto'; file.style.zIndex = '950'; panelToggle.style.display='block'; panelToggle.setAttribute('aria-expanded','false'); panelToggle.textContent='▴ 순방 기록 펼치기'; }
         playIndex=0;
         const step=()=>{
           if(!isPlaying || runId !== chronicleRunId)return;
