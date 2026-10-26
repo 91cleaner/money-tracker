@@ -609,7 +609,7 @@
           if(playIndex>=seq.length){stopChronicle();type(`${p.name} 순방 연대기 재생 완료 · ${seq.length}개 방문 지점`);return;}
           const q=seq[playIndex++]; activeTi=q.ti; activeSi=q.si;
           const to=wrap(q.st.ll), from=playIndex===1?HOME:wrap(seq[playIndex-2].st.ll);
-          type(`✈ ${p.name} · ${p.trips[q.ti].when} · ${from===HOME?'서울공항 출발':'다음 방문지 이동 중'} → ${q.st.city}`);
+          type(`✈ ${p.name} · ${p.trips[q.ti].when} · ${playIndex===1?'서울공항 출발':'다음 방문지 이동'} → ${q.st.city}`);
           const controls=file.querySelector('[data-chronicle-status]');
           if(controls)controls.textContent=`✈ 비행 중 · ${p.trips[q.ti].when} · ${q.st.city} · ${playIndex}/${seq.length}`;
           flyPlaneTo(from,to,p,step);
