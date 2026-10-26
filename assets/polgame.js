@@ -318,7 +318,7 @@
   const closeFile = () => { file.classList.remove('on'); };
   const padBR = () => (innerWidth >= 900 ? [40, 400] : [30, (file.classList.contains('on') ? file.offsetHeight : 0) + 100]); // 파일 창에 가리지 않게
   const fileHead = (t, extra) => `<div class="fh"><span>▣ ${esc(t)}</span><span class="tools">${extra || ''}<button type="button" class="mn" aria-label="접기·펴기">▾</button><button type="button" class="x" aria-label="닫기">×</button></span></div>`;
-  const bindX = () => { file.classList.remove('min'); const x = file.querySelector('.x'); if (x) x.onclick = () => { closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) mn.onclick = (e) => { e.stopPropagation(); const collapsed = file.classList.toggle('min'); if (collapsed) { file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.bottom = 'calc(88px + env(safe-area-inset-bottom, 0px))'; } else { file.style.removeProperty('max-height'); file.style.removeProperty('height'); file.style.removeProperty('overflow'); file.style.removeProperty('bottom'); } }; };
+  const bindX = () => { file.classList.remove('min'); const x = file.querySelector('.x'); if (x) x.onclick = () => { closeFile(); gTop.clearLayers(); }; const mn = file.querySelector('.mn'); if (mn) mn.onclick = (e) => { e.stopPropagation(); const collapsed = file.classList.toggle('min'); if (collapsed) { file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.top = '8px'; file.style.bottom = 'auto'; file.style.zIndex = '950'; } else { file.style.removeProperty('max-height'); file.style.removeProperty('height'); file.style.removeProperty('overflow'); file.style.removeProperty('top'); file.style.removeProperty('bottom'); file.style.removeProperty('z-index'); } }; };
   const SHARE = (m) => { try { const ix = window.__shIdx; if (ix && ix.mp && ix.mp[m.name]) return location.origin + location.pathname.replace(/[^/]*$/, '') + 's/m/' + ix.mp[m.name] + '.html'; } catch (e) { /* 무시 */ } return location.origin + location.pathname + '?mp=' + encodeURIComponent(m.name); };
   fetch('data/og/s/index.json').then((r) => (r.ok ? r.json() : null)).then((x) => { window.__shIdx = x; }).catch(() => {});
   let VSA = null; // 비교 상대를 고르는 중이면 첫 의원
@@ -656,7 +656,7 @@
         if(!seq.length){type('재생할 방문 기록이 없어요.');return;}
         isPlaying=true; const b=file.querySelector('[data-chronicle]'); if(b)b.textContent='Ⅱ 일시정지';
         // 모바일에서는 재생 시작과 동시에 대통령 목록 패널을 접어 지도를 우선 보여준다.
-        if (window.innerWidth < 900) { file.classList.add('min'); file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.bottom = 'calc(88px + env(safe-area-inset-bottom, 0px))'; }
+        if (window.innerWidth < 900) { file.classList.add('min'); file.style.maxHeight = '52px'; file.style.height = '52px'; file.style.overflow = 'hidden'; file.style.top = '8px'; file.style.bottom = 'auto'; file.style.zIndex = '950'; }
         playIndex=0;
         const step=()=>{
           if(!isPlaying)return;
