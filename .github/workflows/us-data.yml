@@ -1,5 +1,10 @@
 name: Collect US macro data
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/collect_us_macro.py'
+      - '.github/workflows/us-data.yml'
   schedule:
     - cron: '17 5 * * *'
   workflow_dispatch:
