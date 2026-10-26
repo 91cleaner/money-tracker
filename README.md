@@ -1,14 +1,34 @@
-# 세금추적단
+# MONEY TRACKER
 
-전국 85개 시의 공개 계약을 조달청 나라장터 공개 데이터(공공데이터포털)로 모아, 어디에 얼마를 썼는지와 데이터상 이상 징후를 보여주는 사이트입니다.
+A public-source intelligence prototype connecting world history, legislation, macroeconomic data, and U.S. congressional financial disclosures on a **flat world map**.
 
-## 원칙
-- 정부·지자체가 공개한 데이터만 쓰고, 모든 항목에 출처를 답니다.
-- "사기", "횡령" 같은 단정 대신 "데이터상 이상 징후"라고만 씁니다.
-- 개인 이름은 다루지 않습니다. 업체 주소는 시·군·구까지만 표시합니다.
-- 기관·업체 해명은 data/explanations.json 에 넣으면 해당 항목 아래에 그대로 실립니다.
+## Entry points
+- `index.html` — country selection
+- `world-intelligence/index.html` — flat world-map command center and guided country exploration
+- `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research
+- `us.html` — U.S. command entry
 
-## 구조
-- collector/collect.py: 매시간 GitHub Actions에서 실행, data/ 에 시별 JSON 저장
-- index.html, city.html, assets/: 정적 사이트 (GitHub Pages)
-- 저장소 Secrets에 DATA_GO_KR_KEY(공공데이터포털 인증키) 필요
+## Verified data and caveats
+- `data/us/bills.json` — U.S. congressional legislation summary from Congress.gov. The **Congress.gov API requires a key** for its collection workflow; this is separate from the map.
+- `data/us/trades.json` — parsed public U.S. House PTR transactions, linked to House Clerk source PDFs. Transaction amounts are ranges; records are not investment advice or evidence of misconduct. The Senate index has reported HTTP 403 errors; do not imply complete Senate coverage.
+- `data/us-events.json` — curated historical milestones with source URLs, not causal investment signals.
+- `data/us-macro.json` — generated only after a successful FRED data collection run; it may be absent.
+- `data/us-house-filings.json` — generated only after successful House Clerk index collection; it may be absent.
+- `data/index.json`, `data/city/` — legacy Korean municipal contract data.
+
+## Map
+The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional Esri satellite imagery. **No map API key is required.** It depends on external tile/CDN availability; a simplified offline schematic is shown when providers cannot be reached. The satellite imagery is not a live satellite feed. The country-to-country lines show exploration paths, not proof of causation.
+
+## Collection and validation
+- `.github/workflows/us-data.yml` — scheduled FRED macro and House filing index collection.
+- `.github/workflows/collect.yml` — legacy Korean municipal contract collection (requires `DATA_GO_KR_KEY` repository secret).
+- `.github/workflows/world-intelligence-health.yml` — static map and data integrity checks.
+- `python scripts/check_world_intelligence.py` — local read-only health check. With Node.js installed, also checks inline JavaScript syntax.
+
+**Important:** GitHub Pages is public. `noindex`, hidden links, or client-side controls are not authentication and do not restrict access to specific devices. Proper device-only access requires an authenticated gateway or private hosting.
+
+## Principles
+1. Cite original official public sources and distinguish source dates, event dates, transaction dates, and ingestion times.
+2. Mark incomplete, inaccessible, stale, and unverified data explicitly.
+3. Do not infer stock returns, insider misconduct, or causal links from temporal proximity.
+4. Treat the intelligence-terminal visuals as a simulation, never as classified or live intelligence.
