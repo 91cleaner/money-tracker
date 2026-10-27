@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 QUEUE=ROOT/"data/us-ptr-research-queue.json"
-OUT=ROOT/"data/us/trades.json"
+OUT=ROOT/"data/us/house-ptr-candidates.json"  # Review-only; never overwrite legacy disclosure trades.json
 STATUS=ROOT/"data/us-ptr-extraction-status.json"
 MAX_DOCS=max(1,min(int(os.getenv("PTR_MAX_DOCS","8")),25))
 DATE=re.compile(r"^\d{1,2}/\d{1,2}/\d{4}$")
@@ -48,14 +48,16 @@ def extract(raw,record):
     import pdfplumber
     output=[]
     with pdfplumber.open(io.BytesIO(raw)) as pdf:
-        for page in pdf.pages[:12]:
-            for table in page.extract_tables() or []:
+        for page_number, page in enumerate(pdf.pages[:12], start=1):
+            for table_number, table in enumerate(page.extract_tables() or [], start=1):
                 if not table:continue
                 header=" ".join(clean(x).lower() for x in table[0])
                 if "asset" not in header or "amount" not in header or "transaction" not in header:continue
-                for cells in table[1:]:
+                for row_number, cells in enumerate(table[1:], start=1):
                     item=parse_row(cells,record)
-                    if item:output.append(item)
+                    if item:
+                        item.update(source_page=page_number, source_table=table_number, source_row=row_number)
+                        output.append(item)
     return output
 def main():
     if not QUEUE.exists() or QUEUE.stat().st_size==0:
@@ -88,7 +90,7 @@ def main():
             except (ValueError,TypeError):pass
         combined={}
         for row in previous+trades:
-            key=(row.get("filing_id"),row.get("transaction_date"),row.get("asset"),row.get("type"),row.get("amount_min_usd"),row.get("amount_max_usd"),row.get("notification_date"))
+            key=(row.get("filing_id"),row.get("source_page"),row.get("source_table"),row.get("source_row"),row.get("owner"),row.get("transaction_date"),row.get("asset"),row.get("type"),row.get("amount_min_usd"),row.get("amount_max_usd"),row.get("notification_date"))
             combined[key]=row
         OUT.parent.mkdir(parents=True,exist_ok=True)
         OUT.write_text(json.dumps({"schema_version":1,"collected_at":status["checked_at"],"source":"Official US House PTR PDF","records":list(combined.values()),"caveat":"Machine-parsed, not independently verified; amount bands are not exact transaction values."},ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
