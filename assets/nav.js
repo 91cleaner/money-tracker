@@ -29,10 +29,11 @@
     if (k === 'nat') return pg === 'national';
     if (k === 'us') return pg === 'us';
     if (k === 'nps') return pg === 'nps';
-    if (k === 'more') return ['rank', 'spend', 'vendor', 'principles', 'bid'].includes(pg);
+    if (k === 'more') return ['rank', 'spend', 'vendor', 'principles', 'bid', 'search'].includes(pg);
     return false;
   };
   const moreLinks = [
+    ['search.html', '🔍 통합 검색 (업체·계약·의원·법안·종목)'],
     ['rank.html', '순위'],
     ['spend.html', '추적'],
     ['bid.html', '우리 동네 입찰'],

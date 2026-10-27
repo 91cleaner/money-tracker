@@ -1,0 +1,53 @@
+name: 통합 검색 색인 갱신
+# 수집된 공개 기록(data/city, data/national, data/nps, data/news.json)으로 search.html 의 검색 색인(data/search/se)을 다시 만든다.
+# 계약 수집(collect.yml, 매시 17분) 뒤인 매시 37분. 같은 concurrency 그룹이라 다른 수집 커밋과 겹치지 않는다.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'collector/search/build_se.py'
+      - 'assets/se-core.js'
+      - 'tests/test_search_engine.js'
+      - '.github/workflows/search-index.yml'
+  schedule:
+    - cron: "37 * * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: collect
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - uses: actions/setup-node@v4
+        with: {node-version: "20"}
+      - name: 검색 색인 만들기
+        run: python collector/search/build_se.py
+      - name: 색인 검사 (실패하면 커밋하지 않고 이전 색인 유지)
+        run: node tests/test_search_engine.js
+      - name: 커밋
+        run: |
+          git config user.name "money-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A data/search/se
+          git diff --cached --quiet && { echo "색인 변화 없음"; exit 0; }
+          git commit -m "검색 색인 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do
+            if git pull --rebase && git push; then exit 0; fi
+            # 다른 커밋과 색인 파일이 겹치면 최신 데이터로 다시 만든다
+            git rebase --abort 2>/dev/null || true
+            git reset --hard origin/main
+            python collector/search/build_se.py && node tests/test_search_engine.js || exit 1
+            git add -A data/search/se
+            git diff --cached --quiet && exit 0
+            git commit -m "검색 색인 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+            sleep 5
+          done
+          echo "::warning::검색 색인 커밋을 4번 시도했지만 올리지 못했습니다(다음 정시에 다시 시도)."
