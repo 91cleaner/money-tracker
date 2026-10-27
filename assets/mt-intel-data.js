@@ -17,13 +17,22 @@ var SOURCES={
   fed:{title:"연방준비제도 · 통화정책",url:"https://www.federalreserve.gov/monetarypolicy.htm"},
   nyfed:{title:"뉴욕 연준 · 공식 사이트",url:"https://www.newyorkfed.org/"},
   history:{title:"미 국무부 역사실 · 역사 자료",url:"https://history.state.gov/"},
-  congress:{title:"Congress.gov · 법안 검색",url:"https://www.congress.gov/"}
+  congress:{title:"Congress.gov · 법안 검색",url:"https://www.congress.gov/"},
+  nvidiaIR:{title:"NVIDIA 공식 실적 발표 · FY2027 Q2 (2026-08-26)",url:"https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027/"},
+  nvidiaHQ:{title:"NVIDIA 공식 본사 주소 · Santa Clara",url:"https://www.nvidia.com/en-us/contact/"},
+  tsmcHQ:{title:"TSMC 공식 본사 · Hsinchu Science Park",url:"https://www.tsmc.com/english/aboutTSMC/business_contacts"}
 };
 function node(id,place,lat,lng,zoom,title,text,connection,source,kind){
  return {id:id,place:place,lat:lat,lng:lng,zoom:zoom,title:title,text:text,connection:connection,source:SOURCES[source],kind:kind||"document"};
 }
 var MISSIONS=[
- {id:"chips",title:"CHIPS법 → 발의 의원 → 기업",short:"반도체 공급망",keywords:["반도체","칩스","chips","h.r.4346","hr4346","4346","tsmc","인텔","intel","대만","타이완","엔비디아","nvidia","nvda","법안","의원 기업","공급망"],summary:"공식 입법 기록과 기업 지원 기록을 따라가는 검증된 역사적 관계 경로",symbols:"INTC · TSM · SOXX (시세 미연결)",steps:[
+ {id:"nvda",title:"NVIDIA → 대만 공급망 → 미국 법안",short:"엔비디아 · 주가 요인",keywords:["젠슨황","젠슨 황","gpu","blackwell","rubin","왜떨어져","왜 하락","엔비디아 주가"],summary:"2026년 8월 NVIDIA 공식 실적 → 대만 반도체 공급망 → 미국 의회·연준을 따라가는 조사 경로",symbols:"NVDA · TSM · SOXX (실시간 시세 미연결)",steps:[
+ node("nvda-santa","미국 · 산타클라라 (본사 소재지)",37.3727,-121.9694,12,"NVIDIA 본사 · 실적에서 출발","NVIDIA는 캘리포니아 산타클라라에 본사를 둡니다. 2026년 8월 발표된 FY2027 2분기 매출은 962억 달러입니다. 지도 지점은 본사 소재 지역을 가리키며 실시간 주가 정보가 아닙니다.","실적 발표 → 주가 기대와 비교","nvidiaIR"),
+ node("nvda-tsmc","대만 · 신주 과학단지 (본사 소재 지역)",24.785,121.008,11,"TSMC · 생산 공급망 추적","TSMC 본사는 대만 신주 과학단지에 있습니다. NVIDIA의 반도체 생산 및 공급망 노출을 분석할 때 관련 생산업체의 공식 자료와 기업 공시를 함께 조사해야 합니다.","AI칩 설계 → 위탁생산 공급망 (개별 계약 검증 필요)","tsmcHQ","context"),
+ node("nvda-capitol","미국 · 워싱턴 D.C. 의회",38.8899,-77.0091,13,"미국 의회 · 반도체 산업정책","CHIPS and Science Act는 2022년 제정된 산업정책의 역사적 사실입니다. 이 법률만으로 특정 날짜의 NVIDIA 주가 하락 원인이 확인되지는 않습니다.","공급망 → 산업정책·법안","chipsLaw"),
+ node("nvda-fed","미국 · 워싱턴 D.C. 연준",38.8929,-77.0457,13,"연준 · 성장주 밸류에이션 조건","미국 금리와 성장주 가치평가의 관계를 검토하는 출처입니다. 당일 금리·주가 데이터 피드가 없어 실제 가격 영향은 미확인입니다.","금리 기대 → 성장주 가격","fed","context")
+ ]},
+ {id:"chips",title:"CHIPS법 → 발의 의원 → 기업",short:"반도체 공급망",keywords:["반도체","칩스","chips","h.r.4346","hr4346","4346","tsmc","인텔","intel","대만","타이완","법안","의원 기업","공급망"],summary:"공식 입법 기록과 기업 지원 기록을 따라가는 검증된 역사적 관계 경로",symbols:"INTC · TSM · SOXX (시세 미연결)",steps:[
  node("chips-bill","워싱턴 D.C. · 의회",38.8899,-77.0091,13,"H.R.4346 / CHIPS and Science Act","2022년 8월 9일 Public Law 117-167로 제정된 미국 반도체·과학 관련 법률입니다.","법안 원문 · 법률 제정","chipsLaw"),
  node("chips-sponsor","워싱턴 D.C. · 하원",38.8899,-77.0091,14,"팀 라이언 · 당시 하원의원","Congress.gov에 기재된 H.R.4346 원 발의자: Tim Ryan (D-OH-13). 당시의 발의 기록이며 현재 재직을 의미하지 않습니다.","법안 → 원 발의 의원","chipsLaw"),
  node("chips-intel","오하이오 · 뉴올버니",40.0806,-82.8088,12,"Intel · 미국 반도체 투자","NIST의 CHIPS 지원 사업 기록에 Intel의 오하이오 뉴올버니 프로젝트가 기재돼 있습니다. 법안과 정책상 연결이며 의원 개인거래의 증거는 아닙니다.","법률 → 공식 지원 사업 → 기업","intel"),
