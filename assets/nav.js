@@ -1,4 +1,4 @@
-/* 위·아래 탭 6개. 순서: 🇰🇷 국회 · 🇺🇸 Congress · 우리 동네 · 국민연금 · 뉴스 · 더보기(의원 추적이 먼저).
+/* 위·아래 탭 6개. 순서: 🇰🇷 국회 · 🇺🇸 USA · 우리 동네 · 국민연금 · 뉴스 · 더보기(의원 추적이 먼저).
    게임·퀴즈는 메뉴에 넣지 않는다. ?c= 는 앞의 네 탭에 붙인다.
    도시 페이지의 우리 동네 세금은 그 도시 지도로 남긴다. */
 (() => {
@@ -18,7 +18,7 @@
   const fixedMap = (pg === 'city' && q.get('c')) ? ('city.html' + location.search + '#map') : addQ('./#map');
   const tabs = [
     ['nat', addQ('national.html'), '🇰🇷 국회'],
-    ['us', 'us.html', '🇺🇸 Congress'],
+    ['us', 'us.html', '🇺🇸 USA'],
     ['map', fixedMap, '우리 동네'],
     ['nps', addQ('nps.html'), '국민연금'],
     ['news', addQ('news.html'), '뉴스'],
@@ -123,7 +123,7 @@
 .tabbar-top{top:0;bottom:auto;border-top:0;border-bottom:1px solid #24303a;padding:4px 4px}
 .tabbar-bot{bottom:0}
 .tabbar a,.tabbar button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;position:relative;min-height:44px;padding:4px 0;border:0;background:none;color:#9aa6b2;font:700 12px/1.15 var(--sans,Pretendard,system-ui,sans-serif);text-decoration:none;white-space:nowrap;letter-spacing:-.06em;cursor:pointer;overflow:hidden}
-.tabbar .tl{white-space:nowrap;overflow:hidden;text-overflow:clip}
+.tabbar .tl{display:block;max-width:100%;margin:0;padding:0;border:0;list-style:none;white-space:nowrap;overflow:hidden;text-overflow:clip}
 .tabbar a.on,.tabbar button.on{color:#ffb020}
 .tabbar-bot a.on::before,.tabbar-bot button.on::before{content:"";position:absolute;top:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
 .tabbar-top a.on::after,.tabbar-top button.on::after{content:"";position:absolute;bottom:0;left:18%;right:18%;height:2px;background:#ffb020;border-radius:2px}
