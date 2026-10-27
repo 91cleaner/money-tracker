@@ -278,4 +278,48 @@ html{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
   });
  });
 })();
+</script><style id="mt-keyboard-viewport-fix">
+/* Keep map and search inside the visible iOS keyboard viewport. */
+html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+#pg{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important}
+#usCmd{box-sizing:border-box!important;max-width:calc(100% - 16px)!important}
+#usCmd input{font-size:18px!important;min-width:0!important}
+#pg .pg-file:not(.on){display:none!important}
+@media(max-width:700px){
+ #pg .pg-file.on{max-height:25dvh!important}
+}
+body.mt-keyboard-open #pg .pg-file{display:none!important}
+body.mt-keyboard-open #pg .pg-top,body.mt-keyboard-open #pg .pg-say{display:none!important}
+body.mt-keyboard-open #usCmd{bottom:6px!important}
+</style>
+<script id="mt-keyboard-controller">
+(function(){
+ function init(){
+  var form=document.getElementById('usCmd'),input=document.getElementById('usQuery'),pg=document.getElementById('pg');
+  if(!form||!input||!pg)return;
+  var vv=window.visualViewport;
+  function sync(){
+   var height=vv?vv.height:window.innerHeight;
+   var top=vv?vv.offsetTop:0;
+   var keyboard= document.activeElement===input && height < window.innerHeight*0.82;
+   document.body.classList.toggle('mt-keyboard-open',keyboard);
+   if(keyboard){
+    form.style.setProperty('position','fixed','important');
+    form.style.setProperty('bottom','auto','important');
+    form.style.setProperty('top',Math.max(0,top+height-form.offsetHeight-8)+'px','important');
+    form.style.setProperty('left','8px','important');
+    form.style.setProperty('right','8px','important');
+    form.style.setProperty('width','auto','important');
+   }else{
+    form.style.removeProperty('position');form.style.removeProperty('top');form.style.removeProperty('bottom');
+    form.style.removeProperty('left');form.style.removeProperty('right');form.style.removeProperty('width');
+   }
+  }
+  input.addEventListener('focus',function(){requestAnimationFrame(sync)});
+  input.addEventListener('blur',function(){document.body.classList.remove('mt-keyboard-open');setTimeout(sync,100)});
+  if(vv){vv.addEventListener('resize',sync);vv.addEventListener('scroll',sync)}
+  window.addEventListener('resize',sync);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
 </script></head><body><header class="nbar"><a class="mt-home" href="./" aria-label="입장 화면으로 돌아가기">🟢 MONEY TRACKER / 미국 관제실</a><small>USA · GLOBAL INTELLIGENCE · 공개 자료</small></header><div id="pg"><div class="pg-map"></div><div class="pg-scan"></div><div class="pg-top"><div class="pg-box"><div class="live"><i></i>PREVIEW · PUBLIC SOURCES</div><div class="ttl">미국 · 세계 추적실</div></div><div class="pg-box mono">◉ US / GLOBAL OPERATIONS<br>공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결</div></div><div class="pg-say">무엇이든 물어보세요 · 사실과 추론을 구분하며 지도에서 추적합니다</div><div class="pg-file" id="usFile" hidden></div><form id="usCmd"><input id="usQuery" placeholder="무엇이든 질문하세요 · 기업 · 주가 · 법안 · 세계 사건" aria-label="작전 명령" required><button>추적 ↵</button></form><div class="pg-bar" role="toolbar" aria-label="지도 작전"><button data-w="chips">◈<span>반도체</span></button><button data-w="trade">▤<span>관세</span></button><button data-w="rates">⌁<span>금리</span></button></div></div><script src="assets/vendor/leaflet/leaflet.js"></script><script src="assets/mt-intel-data.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-photo.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-command-ui.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-query-engine.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-open-research.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-news-discovery.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-backend.js?v=server-bridge-20261027"></script><script src="assets/mt-research-ui.js?v=server-bridge-20261027"></script></body></html>
