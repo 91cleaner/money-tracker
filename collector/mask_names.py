@@ -2,6 +2,7 @@
 import glob, json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from privacy import names
+from collect import mask_addr
 ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 K = {"title", "t", "detail"}
 
@@ -12,7 +13,7 @@ def walk(o, hits):
     elif isinstance(o, dict):
         for k, v in o.items():
             if k in K and isinstance(v, str):
-                n = names(v)
+                n = mask_addr(names(v))
                 if n != v:
                     o[k] = n; hits.append((v, n))
             elif isinstance(v, (list, dict)):
@@ -35,7 +36,7 @@ def main():
             with open(p, "w", encoding="utf-8") as f:
                 json.dump(d, f, ensure_ascii=False, **({"separators": (",", ":")} if compact else {"indent": 1}))
             changed += 1; allhits += hits
-    print(f"이름 가리기: 파일 {files}개 중 {changed}개 변경, {len(allhits)}곳 (서로 다른 제목 {len({h[0] for h in allhits})}건)")
+    print(f"이름·번지 가리기: 파일 {files}개 중 {changed}개 변경, {len(allhits)}곳 (서로 다른 제목 {len({h[0] for h in allhits})}건)")
     return allhits
 
 

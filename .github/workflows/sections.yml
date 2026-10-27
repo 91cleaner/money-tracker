@@ -26,7 +26,8 @@ jobs:
       - run: |
           git config user.name "money-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/sec_*.json
+          # 개인정보 가리기가 기존 공고에도 적용되면 함께 저장해야 다음 실행에서 재발하지 않는다.
+          git add data/sec_*.json data/open_bids.json
           git diff --cached --quiet && exit 0
           git commit -m "추적 파일 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
           git pull --rebase && git push
