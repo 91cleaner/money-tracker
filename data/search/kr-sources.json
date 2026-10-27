@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "country": "kr",
+  "updated": "2026-10-27",
+  "description": "Public official source directory. Do not interpret source links as verified current facts.",
+  "items": [
+    {
+      "id": "kr-na-bills",
+      "type": "dataset",
+      "title": "대한민국 국회 의안정보 통합 API",
+      "aliases": [
+        "한국 국회",
+        "법안",
+        "의안",
+        "법률 발의",
+        "국회의원 법안"
+      ],
+      "summary": "한국 국회사무처의 의안정보 통합 API. 무료이지만 공공데이터포털 활용신청·승인 및 호출 제한이 있을 수 있음.",
+      "source": "국회사무처 / 공공데이터포털",
+      "url": "https://www.data.go.kr/data/15126134/openapi.do",
+      "source_date": null,
+      "country": "kr",
+      "location": {
+        "lat": 37.531,
+        "lng": 126.914,
+        "label": "KR 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "kr-na-members",
+      "type": "dataset",
+      "title": "대한민국 국회의원 정보 통합 API",
+      "aliases": [
+        "한국 국회의원",
+        "국회 소속",
+        "위원회",
+        "국회의원 지역구"
+      ],
+      "summary": "의원 재직기간과 상임위원회 변화를 데이터 기준일별로 확인하는 공식 공공데이터 출처.",
+      "source": "국회사무처 / 공공데이터포털",
+      "url": "https://www.data.go.kr/data/15126133/openapi.do",
+      "source_date": null,
+      "country": "kr",
+      "location": {
+        "lat": 37.531,
+        "lng": 126.914,
+        "label": "KR 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "kr-na-records",
+      "type": "dataset",
+      "title": "대한민국 국회 발간물·회의록 API",
+      "aliases": [
+        "한국 국회 회의록",
+        "발언",
+        "국회 발간물"
+      ],
+      "summary": "입법 심의 기록과 법안 의결·통과 여부를 구분해 검색해야 하는 자료 출처.",
+      "source": "국회사무처 / 공공데이터포털",
+      "url": "https://www.data.go.kr/data/15126135/openapi.do",
+      "source_date": null,
+      "country": "kr",
+      "location": {
+        "lat": 37.531,
+        "lng": 126.914,
+        "label": "KR 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "kr-trilateral-2023",
+      "type": "agreement",
+      "title": "2023 한미일 캠프데이비드 공동성명",
+      "aliases": [
+        "한국 미국 일본",
+        "한미일 동맹",
+        "캠프데이비드",
+        "수출통제"
+      ],
+      "summary": "공식 공동성명에 안보·기술보호·수출통제 협력 등이 명시됨. 협력 선언과 세부 정책 집행은 구분할 것.",
+      "source": "대한민국 외교부",
+      "url": "https://www.mofa.go.kr/www/brd/m_3973/view.do?page=1&seq=367956",
+      "source_date": "2023-08-18",
+      "country": "kr",
+      "location": {
+        "lat": 37.568,
+        "lng": 126.977,
+        "label": "KR 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "kr-trilateral-2024",
+      "type": "agreement",
+      "title": "2024 한미일 정상회의 공동성명",
+      "aliases": [
+        "2024 한미일",
+        "APEC",
+        "한미일 공동성명",
+        "기술 협력"
+      ],
+      "summary": "2024년 11월 한미일 정상회의 공동성명 공식 자료. 정책의 현재 효력·추진 현황은 추가 확인해야 함.",
+      "source": "대한민국 외교부",
+      "url": "https://www.mofa.go.kr/www/brd/m_27865/view.do?itm_seq_1=0&itm_seq_2=0&multi_itm_seq=0&seq=5",
+      "source_date": "2024-11-16",
+      "country": "kr",
+      "location": {
+        "lat": 37.568,
+        "lng": 126.977,
+        "label": "KR 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "kr-presidential-travel",
+      "type": "dataset",
+      "title": "대한민국 대통령 해외 순방 · 외교부 공식 기록",
+      "aliases": [
+        "대통령 순방",
+        "해외 방문",
+        "한미 정상회담",
+        "노무현",
+        "김대중",
+        "문재인",
+        "전두환",
+        "박근혜"
+      ],
+      "summary": "대통령별 공식 순방 장소·날짜·목적은 개별 외교부 원문에서 검증해야 한다. 미확인 방문 횟수·이동거리를 생성하지 않는다.",
+      "source": "대한민국 외교부",
+      "url": "https://www.mofa.go.kr/www/index.do",
+      "source_date": null,
+      "country": "kr",
+      "location": {
+        "lat": 37.568,
+        "lng": 126.977,
+        "label": "KR 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "kr-bok",
+      "type": "dataset",
+      "title": "한국은행 · 경제통계·금융시장",
+      "aliases": [
+        "한국은행",
+        "금리",
+        "환율",
+        "물가",
+        "경제통계"
+      ],
+      "summary": "한국은행 경제통계의 발표일·관측기간·수정 여부와 기업·정책 이벤트를 분리해 조사.",
+      "source": "Bank of Korea",
+      "url": "https://www.bok.or.kr/eng/main/main.do",
+      "source_date": null,
+      "country": "kr",
+      "location": {
+        "lat": 37.563,
+        "lng": 126.982,
+        "label": "KR 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    }
+  ]
+}
