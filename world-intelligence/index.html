@@ -90,8 +90,25 @@ header strong{color:#d6eff4!important;font-family:ui-monospace,Consolas,monospac
 #mtTargetBanner{top:110px!important;left:10px!important}
 #status{top:102px!important;left:10px!important;background:#061724dc!important;color:#c0e7ec!important}
 @media(max-width:650px){#opsHud{top:52px!important;right:6px!important}#mtOpsBar{top:52px!important;left:6px!important}#brief{top:98px!important;right:7px!important;left:7px!important;max-height:37dvh!important}#status{top:98px!important;left:7px!important;max-width:48vw!important}}
+</style><style id="mt-one-room">
+/* Original green-on-black tactical map identity; one map, one control surface */
+:root{--a:#82edab!important}body{background:#030a08!important;color:#c8ffe1!important}
+header{background:#090f12!important;border-bottom:1px solid #1d4435!important}header strong{color:#e3fff1!important;font-weight:900!important}
+#mapFrame{background:#020a08!important}#map{background:#020a08!important}
+#map .leaflet-tile{filter:invert(1) hue-rotate(175deg) brightness(.66) saturate(.85) contrast(1.15)!important}
+#mapFrame:after{background:linear-gradient(90deg,#00130c4d,transparent 23%,transparent 80%,#00130c44)!important}
+#brief,#menu,#opsHud,#opsSteps,#controls button,#mtOpsBar,#mtTargetBanner{background:#06130ff2!important;border-color:#235e44!important;color:#c6f7d7!important}
+#brief{border-left:3px solid #5bda91!important}#brief h2,#menu h3{color:#8af7af!important}
+#ask{background:#050e0afa!important;border-top:1px solid #285b3f!important}#ask input{background:#0a1c14!important;border:1px solid #3a8056!important;color:#e5fff0!important}#ask button{background:#17492d!important;border-color:#5da87d!important}
+#status{background:#06160df0!important;color:#a1f4ba!important;border-color:#24563d!important}
+#mtRadar:before{opacity:.08!important}#mtRadar:after{opacity:.08!important}
+#mtOneDock{position:fixed;left:50%;transform:translateX(-50%);bottom:83px;z-index:1550;display:flex;gap:5px;background:#06150ff0;border:1px solid #2d6e4b;border-radius:15px;padding:5px;box-shadow:0 7px 25px #0009}
+#mtOneDock button{border:0;background:transparent;color:#b4e7c6;padding:9px 12px;border-radius:10px;white-space:nowrap;font-size:12px}
+#mtOneDock button:hover,#mtOneDock button:focus-visible{background:#1b4e31;color:#fff}
+#controls{bottom:140px!important}
+@media(max-width:650px){#mtOneDock{bottom:78px;width:calc(100% - 12px);justify-content:space-around}#mtOneDock button{padding:8px 5px;font-size:11px}#controls{bottom:137px!important}#opsHud{display:none!important}}
 </style></head><body>
-<header><strong>◉ MONEY TRACKER / GLOBAL COMMAND</strong><span>PUBLIC SOURCE INTELLIGENCE · MAP FIRST</span><button id="fullscreen" aria-label="전체화면">⛶</button></header>
+<header><strong>◉ MONEY TRACKER</strong><span>GLOBAL INTELLIGENCE / OPERATIONS</span><button id="fullscreen" aria-label="전체화면">⛶</button></header>
 <div id="mapFrame">
 <svg id="fallback" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" aria-label="오프라인 개략 세계지도"><path d="M70 80 190 40 295 92 270 155 225 185 180 250 145 195 80 175Z M205 260 295 250 325 315 290 410 245 465 210 360Z M420 95 525 72 565 110 590 170 555 225 520 200 480 260 445 215Z M505 240 585 235 625 320 600 425 545 465 500 380Z M585 75 810 55 930 125 890 220 790 260 720 215 665 260 590 185Z M810 335 910 325 955 385 925 450 835 440Z"/></svg>
 <div id="map" aria-label="실제 좌표 기반 세계지도"></div></div>
@@ -117,7 +134,7 @@ let map=null,mission=null,step=0,route=null,marker=null,loaded=0;
 const fallback=$('fallback'),status=$('status');
 if(window.L){try{
  map=L.map('map',{zoomControl:false,worldCopyJump:false,minZoom:2,maxZoom:15,maxBounds:[[-85,-180],[85,180]],maxBoundsViscosity:1}).setView([20,0],2);window.moneyTrackerMap=map;
- const tile=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,noWrap:true,attribution:'Tiles &copy; Esri, Maxar, Earthstar Geographics and the GIS User Community'});
+ const tile=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,noWrap:true,attribution:'&copy; OpenStreetMap contributors'});
  tile.on('tileload',()=>{loaded++;$('map').style.display='block';fallback.style.display='none';$('map').style.opacity='1';if(loaded===1)map.invalidateSize();status.textContent='실제 지리 기반 세계지도 · 자유 탐색'});
  tile.on('tileerror',()=>{if(!loaded)status.textContent='지도 서버 연결 확인 중 · 대체 지도 표시'});
  tile.addTo(map);$('map').style.opacity='0';
@@ -196,4 +213,18 @@ const obs=new MutationObserver(()=>setTimeout(acquire,40));const title=document.
 document.getElementById('world')?.addEventListener('click',()=>{banner.classList.remove('on');last=null});
 document.getElementById('closeBrief')?.addEventListener('click',()=>banner.classList.remove('on'));
 }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
-</script><script src="./evidence.js" defer></script></body></html>
+</script><script src="./evidence.js" defer></script><script id="mt-one-room-controller">
+(function(){function init(){
+const dock=document.createElement('nav');dock.id='mtOneDock';dock.setAttribute('aria-label','통합 관제실 도구');
+const actions=[['◎ 전체','world'],['◉ 미국','us'],['◉ 한국','kr'],['⌁ 세계사','history'],['▤ 법안','law'],['⌕ 추적','track']];
+actions.forEach(([name,key])=>{const b=document.createElement('button');b.type='button';b.textContent=name;b.onclick=()=>{
+const map=window.moneyTrackerMap;
+if(key==='world'){document.getElementById('world')?.click();return}
+if(key==='us'||key==='kr'){if(map){map.invalidateSize();map.flyTo(key==='us'?[39,-98]:[36.4,127.8],5,{duration:1.4})}return}
+if(key==='track'){document.getElementById('question')?.focus();return}
+const input=document.getElementById('question');if(input){input.value=key==='history'?'세계사와 미국 시장의 관계':'미국 법안이 주식시장에 미치는 영향';input.focus()}
+};dock.append(b)});
+document.body.append(dock);
+const status=document.getElementById('status');if(status)status.textContent='◉ GLOBAL COMMAND · 미국 / 한국 / 세계 / 법안 · 하나의 지도';
+}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
+</script></body></html>
