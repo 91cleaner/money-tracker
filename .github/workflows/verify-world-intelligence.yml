@@ -1,0 +1,38 @@
+name: Verify world intelligence
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'world-intelligence/**'
+      - 'data/us/bills.json'
+      - 'data/us/trades.json'
+      - 'scripts/test_world_intelligence.mjs'
+      - 'scripts/audit_data_coverage.py'
+      - '.github/workflows/verify-world-intelligence.yml'
+  pull_request:
+    paths:
+      - 'world-intelligence/**'
+      - 'data/us/bills.json'
+      - 'data/us/trades.json'
+      - 'scripts/test_world_intelligence.mjs'
+      - 'scripts/audit_data_coverage.py'
+      - '.github/workflows/verify-world-intelligence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check Python audit syntax
+        run: python -m py_compile scripts/audit_data_coverage.py
+      - name: Validate map JavaScript, legislation and public disclosure provenance
+        run: node --test scripts/test_world_intelligence.mjs
