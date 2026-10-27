@@ -292,4 +292,26 @@ document.getElementById('mtTradeOpen')?.addEventListener('click',showTradeMissio
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
 })();
+</script><style id="mt-bottom-question-layout">
+#mtAssistant{bottom:env(safe-area-inset-bottom,0px)!important;left:0!important;transform:none!important;width:100%!important;max-width:none!important;border-radius:12px 12px 0 0!important;padding:10px max(12px,calc((100vw - 900px)/2))!important;z-index:3100!important}
+#mtAskForm{display:flex!important;align-items:center!important}
+#mtAskInput{font-size:16px!important;min-height:44px!important}
+#mtModes{display:none!important}
+#mtAssistant.mt-modes-open #mtModes{display:flex!important}
+#mtDock{bottom:calc(78px + env(safe-area-inset-bottom,0px))!important;z-index:3050!important}
+#mtNarrator{bottom:calc(132px + env(safe-area-inset-bottom,0px))!important;max-width:min(430px,calc(100vw - 24px));z-index:2500!important}
+#mtAnalysis{bottom:calc(100% + 8px)!important;max-height:28dvh!important;pointer-events:auto!important}
+#mtAssistant:not(.mt-asked) #mtAnalysis{display:none!important}
+#operatorPanel.mt-open,#historyMission.mt-open,#intelFeed.mt-open,#intelBrief.mt-open,.panel.mt-open{bottom:calc(192px + env(safe-area-inset-bottom,0px))!important}
+@media(max-width:700px){#mtAssistant{padding:7px 8px!important}#mtDock{bottom:calc(70px + env(safe-area-inset-bottom,0px))!important}#mtNarrator{bottom:calc(116px + env(safe-area-inset-bottom,0px))!important}#mtAssistant #mtAskForm button{padding:10px 9px!important;font-size:12px!important}#operatorPanel.mt-open,#historyMission.mt-open,#intelFeed.mt-open,#intelBrief.mt-open,.panel.mt-open{bottom:calc(172px + env(safe-area-inset-bottom,0px))!important}}
+</style><script id="mt-bottom-question-controller">
+(function(){function ready(){
+ const a=document.getElementById('mtAssistant'),f=document.getElementById('mtAskForm'),input=document.getElementById('mtAskInput'),dock=document.getElementById('mtDock');
+ if(!a||!f||!input)return;
+ input.placeholder='무엇을 추적할까요? 예: 대만 반도체가 미국 증시에 미치는 영향';
+ const mode=document.createElement('button');mode.type='button';mode.textContent='⚙';mode.title='분석 방식 선택';mode.setAttribute('aria-label','분석 옵션 열기');
+ mode.onclick=()=>a.classList.toggle('mt-modes-open');f.insertBefore(mode,input);
+ f.addEventListener('submit',()=>{if(input.value.trim())a.classList.add('mt-asked')});
+ if(dock)dock.setAttribute('aria-label','지도 분석 메뉴');
+}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready()})();
 </script></body></html>
