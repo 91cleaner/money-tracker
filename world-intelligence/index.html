@@ -175,6 +175,59 @@ async function showTradeMission(){
    line('LIMIT / 현재는 규칙 기반 탐색이며 AI 실시간 분석이나 투자 추천이 아닙니다.',true);
   },400+names.length*800);
  }
- form.addEventListener('submit',e=>{e.preventDefault();const q=input.value.trim();if(q)run(q)});
+
+ // Source-grounded law and trade research: only show actual verified records.
+ const intel=document.createElement('section');intel.id='mtEvidence';intel.setAttribute('aria-live','polite');
+ intel.style.cssText='position:absolute;right:12px;top:72px;width:min(345px,calc(100vw - 24px));max-height:43vh;overflow:auto;background:#061624ef;border:1px solid #366577;border-radius:12px;padding:12px;color:#d9f4ff;font:12px/1.55 system-ui;z-index:999;display:none;box-shadow:0 8px 35px #0009';
+ document.body.append(intel);
+ const evidenceCss=document.createElement('style');evidenceCss.textContent='#mtEvidence button{background:#102d40;border:1px solid #32617b;border-radius:6px;color:#b9f8e6;padding:5px 8px;margin:3px;cursor:pointer}#mtEvidence a{color:#91dfff}#mtEvidence .muted{color:#a1b4c3}';document.head.append(evidenceCss);
+ let billsCache=null,loading=null;
+ function el(tag,txt,parent){const n=document.createElement(tag);if(txt!==undefined)n.textContent=txt;(parent||intel).append(n);return n}
+ function clearEvidence(title){intel.replaceChildren();intel.style.display='block';el('strong',title);const close=el('button','닫기');close.addEventListener('click',()=>intel.style.display='none');el('hr','')}
+ function sourceLink(label,url,parent){if(!/^https:\/\/www\.congress\.gov\/bill\//.test(url||''))return;const a=el('a',label,parent);a.href=url;a.target='_blank';a.rel='noopener noreferrer'}
+ function loadBills(){
+  if(billsCache)return Promise.resolve(billsCache);
+  if(!loading)loading=fetch('../data/us/bills.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(data=>{billsCache=data;return data}).catch(e=>{loading=null;throw e});
+  return loading;
+ }
+ function searchBills(q){
+  const words=(q.toLowerCase().match(/[a-z]{3,}|[가-힣]{2,}/g)||[]).filter(w=>!['미국','관련','법안','추적','알려줘','의원','주식','거래','분석','반도체'].includes(w));
+  const seeds=/반도체|칩|nvidia|엔비디아|삼성|tsmc/i.test(q)?['semiconductor','chips','artificial intelligence','export control']:words;
+  return loadBills().then(data=>{
+   const matches=[];for(const [member,items] of Object.entries(data.recent||{})){
+    if(!Array.isArray(items))continue;
+    for(const b of items){const name=(b.n||'').toLowerCase();if(seeds.some(w=>name.includes(w.toLowerCase())))matches.push({...b,member})}
+   }
+   matches.sort((a,b)=>String(b.d||'').localeCompare(String(a.d||'')));
+   return {matches:matches.slice(0,8),updated:data.updated};
+  });
+ }
+ async function investigate(q){
+  const id=++sequence;mission=[];cursor=-1;box.replaceChildren();next.replaceChildren();
+  line('INTELLIGENCE REQUEST / '+q);line('TARGET / 미국 의회 · 워싱턴 D.C.');
+  focus('미국');clearEvidence('◉ SOURCE INTELLIGENCE / 공식 법안');
+  el('p','Congress.gov 법안 데이터 검색 중…');
+  try{
+   const result=await searchBills(q);if(id!==sequence)return;
+   clearEvidence('◉ VERIFIED LEGISLATION');
+   el('div','데이터 갱신: '+(result.updated||'확인 불가'),'').className='muted';
+   if(!result.matches.length){el('p','현재 수집된 법안에서 검색어와 일치하는 결과가 없습니다. 관련 법안이 없다는 뜻은 아닙니다.')}
+   for(const b of result.matches){
+    const item=el('div');item.style.cssText='padding:9px 0;border-bottom:1px solid #244052';
+    el('strong',(b.no||'법안')+' · '+(b.n||'제목 미확인'),item);
+    el('div','발의일 '+(b.d||'미확인')+' · 후원 의원 ID '+b.member,item).className='muted';
+    el('div','최근 진행: '+(b.a||'미확인'),item);
+    sourceLink('Congress.gov 원문 ↗',b.u,item);
+    const btn=el('button','이 법안 추적',item);
+    btn.addEventListener('click',()=>{sequence++;box.replaceChildren();line('LAW TARGET / '+(b.no||'')+' '+(b.n||''));line('SPONSOR ID / '+b.member);line('LAST ACTION / '+(b.a||'미확인'));focus('미국');showNext('미국')});
+   }
+   line('SOURCE / '+result.matches.length+'건의 법안 기록 표시 · 의원 거래 공시와는 별개입니다.');
+   line('TRADES / 실거래 데이터 연결 전이므로 의원 매수·매도·보유 여부를 표시하지 않습니다.',true);
+  }catch(e){if(id!==sequence)return;clearEvidence('◉ DATA UNAVAILABLE');el('p','법안 자료를 불러오지 못했습니다. 네트워크 또는 파일 배포 상태를 확인하세요.');line('ERROR / 검증 가능한 법안 데이터를 불러오지 못했습니다.',true)}
+ }
+ const originalRun=run;
+ function dispatch(q){if(/의원|법안|국회|의회|반도체|엔비디아|nvidia|삼성|tsmc|정책/i.test(q))investigate(q);else{intel.style.display='none';originalRun(q)}}
+ const lawSuggest=document.createElement('button');lawSuggest.type='button';lawSuggest.textContent='◉ 반도체 관련 법안 추적';lawSuggest.style.cssText='margin:4px 0;padding:6px 9px;font-size:11px';lawSuggest.addEventListener('click',()=>{input.value='반도체 관련 미국 의회 법안';dispatch(input.value)});form.before(lawSuggest);
+ form.addEventListener('submit',e=>{e.preventDefault();const q=input.value.trim();if(q)dispatch(q)});
 })();
 </script></body></html>
