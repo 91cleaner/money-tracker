@@ -10,6 +10,7 @@ on:
       - 'scripts/build_ptr_research_queue.py'
       - 'scripts/extract_house_ptr.py'
       - 'tests/test_house_ptr_extraction.py'
+      - 'tests/test_ptr_research_queue.py'
       - 'scripts/sync_command_worker.py'
   schedule:
     - cron: '17 5 * * *'
@@ -28,8 +29,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Test PTR candidate isolation and provenance
-        run: python -m unittest discover -s tests -p 'test_house_ptr_extraction.py'
+      - name: Test House PTR queue calendar order and candidate provenance
+        run: |
+          python -m unittest discover -s tests -p 'test_ptr_research_queue.py'
+          python -m unittest discover -s tests -p 'test_house_ptr_extraction.py'
       - name: Fetch official macro series
         id: macro
         run: python scripts/collect_us_macro.py
@@ -93,5 +96,21 @@ jobs:
           git add -A data/ cloudflare/admin-worker.js
           if ! git diff --cached --quiet; then
             git commit -m "data: refresh US macro observations"
-            git push
+            # Other collectors may update main while this job is running.
+            # Never force-push a stale snapshot over newer records.
+            for attempt in 1 2 3; do
+              git fetch origin main
+              if ! git rebase origin/main; then
+                git rebase --abort || true
+                echo '::error::Upstream data conflict; refusing to overwrite newer records.'
+                exit 1
+              fi
+              if git push origin HEAD:main; then
+                echo "Published US data (attempt $attempt)."
+                exit 0
+              fi
+              sleep $((attempt * 5))
+            done
+            echo '::error::Upstream moved repeatedly; data left unpushed for review.'
+            exit 1
           fi
