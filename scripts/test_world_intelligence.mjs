@@ -6,8 +6,15 @@ import { Script } from 'node:vm';
 const root = new URL('../', import.meta.url);
 const read = path => readFileSync(new URL(path, root), 'utf8');
 const html = read('world-intelligence/index.html');
+// 7b8cbca (10/27) retired the separate world map into a redirect to usa-command.html (checked by command-check.yml).
+const retired = /http-equiv="refresh"/.test(html) && html.includes('usa-command.html');
 
-test('every inline world-map script compiles', () => {
+test('retired world map redirects to an existing US command map', { skip: !retired }, () => {
+  assert.ok(existsSync(new URL('usa-command.html', root)), 'redirect target missing');
+  assert.match(html, /location\.replace\("\.\.\/usa-command\.html"/);
+});
+
+test('every inline world-map script compiles', { skip: retired }, () => {
   const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
     .map(match => match[1]).filter(script => script.trim());
   assert.ok(scripts.length >= 5, 'expected multiple world-map controllers');
@@ -16,7 +23,7 @@ test('every inline world-map script compiles', () => {
   ));
 });
 
-test('one map container and source-backed law-to-sponsor path exist', () => {
+test('one map container and source-backed law-to-sponsor path exist', { skip: retired }, () => {
   assert.equal((html.match(/id="realEarth"/g) || []).length, 1);
   assert.match(html, /function showSponsor\(b\)/);
   assert.match(html, /billsCache\?\.recent\?\.\[b\.member\]/);
@@ -37,10 +44,11 @@ test('Congress.gov legislation archive has source-backed records', () => {
 });
 
 test('House trade archive is not silently accepted without official PDF evidence', () => {
-  const path = new URL('data/us/trades.json', root);
+  // Machine-parsed candidates moved to their own file in 657a1192a; data/us/trades.json is the disclosure archive.
+  const path = new URL('data/us/house-ptr-candidates.json', root);
   if (!existsSync(path) || !readFileSync(path).length) return;
   const data = JSON.parse(readFileSync(path, 'utf8'));
-  assert.ok(Array.isArray(data.records), 'trade archive requires records array');
+  assert.ok(Array.isArray(data.records), 'candidate archive requires records array');
   for (const row of data.records) {
     assert.match(row.source_pdf || '', /^https:\/\/disclosures-clerk\.house\.gov\/public_disc\/ptr-pdfs\//);
     assert.ok(row.transaction_date && row.filing_id);

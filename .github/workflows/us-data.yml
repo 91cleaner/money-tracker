@@ -37,6 +37,8 @@ jobs:
         id: macro
         run: python scripts/collect_us_macro.py
         continue-on-error: true
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
       - name: Archive official House filing index
         id: house
         run: python scripts/collect_house_filings.py

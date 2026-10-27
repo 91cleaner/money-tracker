@@ -37,10 +37,16 @@ def load(relative, required=True):
 
 
 page = ROOT / "world-intelligence/index.html"
+html = page.read_text(encoding="utf-8") if page.exists() else ""
+# 7b8cbca (10/27) retired the separate world map into a redirect to the single US command map.
+# The live map is checked by command-check.yml / usa-map-smoke.yml; here we only confirm the redirect.
+RETIRED = 'http-equiv="refresh"' in html and "usa-command.html" in html
+if RETIRED:
+    check((ROOT / "usa-command.html").is_file(), "Retired world map redirects to missing usa-command.html")
+    warnings.append("world-intelligence/index.html retired -> usa-command.html; old map checks skipped")
 if not page.exists():
     errors.append("Satellite map HTML missing")
-else:
-    html = page.read_text(encoding="utf-8")
+elif not RETIRED:
     for marker in ('id="mapFrame"', 'id="map"', 'id="ask"',
                    'id="candidatePanel"', 'id="brief"', 'id="question"',
                    'server.arcgisonline.com', 'window.moneyTrackerMap',
@@ -132,9 +138,14 @@ if isinstance(recent, dict):
                 errors.append("Congress bill missing official source URL")
                 break
 
-trades = load("data/us/trades.json")
-records = trades.get("records")
-check(isinstance(records, list), "House PTR schema must use records array")
+# Machine-parsed House PTR candidates live in their own file since 657a1192a (they no longer overwrite
+# the disclosure archive data/us/trades.json, which uses a "trades" array written by collector/us/trades.py).
+candidates = load("data/us/house-ptr-candidates.json", required=False)
+records = candidates.get("records") if candidates else None
+if candidates:
+    check(isinstance(records, list), "House PTR candidate schema must use records array")
+else:
+    warnings.append("House PTR candidates not published yet: candidate and crosscheck matching skipped")
 today = dt.datetime.now(dt.timezone.utc).date()
 valid_candidates = 0
 if isinstance(records, list):
