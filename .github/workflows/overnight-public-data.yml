@@ -1,0 +1,78 @@
+name: MONEY TRACKER public-data overnight ingest (NO AI)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/build-local-index.mjs'
+      - 'scripts/collect-public-records.mjs'
+      - 'data/search/seed-docs.json'
+      - 'data/search/*-sources.json'
+      - 'data/search/relations.json'
+      - '.github/workflows/overnight-public-data.yml'
+  schedule:
+    # KST = UTC +09:00: 00:30 and 03:30 each morning.
+    # GitHub schedule timing is best-effort and may be delayed.
+    - cron: '30 15,18 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: money-tracker-public-data
+  cancel-in-progress: false
+jobs:
+  collect:
+    name: Official records + deterministic free search index
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax checks
+        run: |
+          node --check scripts/collect-public-records.mjs
+          node --check scripts/build-local-index.mjs
+          node --check assets/mt-local-search.js
+      - name: Collect official US/Japan records and optional SEC
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: node scripts/collect-public-records.mjs
+      - name: Rebuild published search index
+        run: node scripts/build-local-index.mjs
+      - name: Check search index provenance
+        run: node --test tests/mt-local-index.test.cjs
+      - name: Archive public datasets as workflow artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: money-tracker-public-data-${{ github.run_number }}
+          path: |
+            data/search/index.json
+            data/search/collection-status.json
+            data/search/us-federal-register.json
+            data/search/japan-diet.json
+            data/search/sec-filings.json
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Commit only changed data (if branch permissions allow)
+        shell: bash
+        run: |
+          git config user.name 'money-tracker-data-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/search/index.json data/search/collection-status.json
+          for file in data/search/us-federal-register.json data/search/japan-diet.json data/search/sec-filings.json; do
+            if [ -f "$file" ]; then git add "$file"; fi
+          done
+          if git diff --staged --quiet; then
+            echo 'No changes.'
+            exit 0
+          fi
+          git commit -m 'data: refresh official evidence and searchable index [skip ci]'
+          git push
+      - name: Summary
+        if: always()
+        run: |
+          echo 'AI tokens used: 0. Commercial market-data calls: 0.'
+          echo 'If publishing fails, inspect the archived data artifact.'
