@@ -42,6 +42,9 @@ css.textContent=[
 "#mtResearch .mt-spacex-fastbrief{border:1px solid #559665;border-radius:9px;background:rgba(24,59,35,.75);padding:9px 11px;margin:10px 0}",
 "#mtResearch .mt-spacex-fastbrief h3{margin:0 0 6px;color:#c7ffe2}",
 "#mtResearch .mt-spacex-fastbrief p{font-size:12px;line-height:1.65}",
+"#mtResearch .mt-secure-ai{border:1px solid #47785a;border-radius:9px;padding:9px;margin-top:11px;background:#081a15}",
+"#mtResearch .mt-secure-ai h4{font-size:12px;color:#b7ffd1;margin:10px 0 3px}",
+"#mtResearch .mt-secure-ai p{font-size:12px}",
 "#mtResearch .mt-case-file{border:1px solid #377555;border-radius:8px;padding:9px;margin-top:10px}",
 "#mtResearch .mt-case-file summary{cursor:pointer;color:#bdffc9;font-weight:800;line-height:1.6}",
 "#mtResearch .mt-case-item{border-top:1px solid #284d37;padding:9px 0}",
@@ -201,6 +204,43 @@ function renderCaseEvidence(topic){
   inner.replaceChildren();add(inner,"p","mt-r-muted","보관된 증거 파일을 불러오지 못했습니다. 공식 원문 링크는 위 실적·정책 항목에서 확인할 수 있습니다.");
  });
 }
+function renderLiveBackend(question){
+ var box=add(panel,"section","mt-secure-ai");
+ add(box,"h3","","보호된 AI 조사 서버 · 연결 상태");
+ var status=add(box,"p","mt-r-muted","서버 연결 상태 확인 중…");
+ var results=add(box,"div","mt-secure-answer");
+ var ticket=researchSerial;
+ if(!window.MTBackend){status.textContent="AI 서버 연결 모듈 없음";return;}
+ window.MTBackend.analyze(question).then(function(resp){
+  if(ticket!==researchSerial||!box.isConnected)return;
+  if(resp.status!=="ok"){
+   status.textContent=resp.message||"보호된 AI 검색 서버 미연결 · 아래 공개 뉴스/원문 검색만 사용 가능";
+   return;
+  }
+  var data=resp.result||{},brief=data.ai&&data.ai.brief;
+  var isReady=data.ai&&data.ai.status==="ok"&&brief;
+  status.textContent="서버 응답 "+(data.generatedAt||"기준시각 미확인")+" · 생성형 분석 "+(isReady?"연결":"미연결");
+  if(data.market){
+   var m=data.market;
+   if(m.status==="provider-data"){
+    add(results,"p","mt-r-muted",m.symbol+" · "+m.provider+" 제공: "+m.price+" USD · 기준 "+m.providerTime+" · 실제 실시간 여부/라이선스 별도 확인");
+   }else add(results,"p","mt-r-muted","시세: "+(m.status==="not-configured"?"API 미설정":m.status));
+  }
+  if(!isReady){add(results,"p","mt-r-muted","AI가 실행되지 않았습니다. 확인된 공개 자료만 보세요.");return;}
+  add(results,"h3","",brief.title);
+  add(results,"p","",brief.summary);
+  [["검증 가능한 사실",brief.confirmed],["가능한 해석",brief.hypotheses],["반대 증거·한계",brief.counterEvidence],["다음 확인 사항",brief.watchNext],["지휘관에게 제안하는 다음 질문",brief.questions]].forEach(function(group){
+   add(results,"h4","",group[0]);group[1].forEach(function(t){add(results,"p","mt-r-muted","· "+t);});
+  });
+  add(results,"p","mt-r-warning",brief.warning);
+  if(data.news&&Array.isArray(data.news.items)){
+   var ev=add(results,"div","mt-auto-group");add(ev,"h4","","참조한 기사 제목 · 본문 사실 검증 필요");
+   data.news.items.slice(0,6).forEach(function(item){
+    var a=add(ev,"a","mt-auto-link",item.title+" ↗");a.href=item.url;a.rel="noopener noreferrer";a.target="_blank";ev.append(document.createElement("br"));
+   });
+  }
+ }).catch(function(){if(ticket===researchSerial&&box.isConnected)status.textContent="AI 검색 서버 응답 오류";});
+}
 function render(query){
  if(typeof api.beginQuestion==="function")api.beginQuestion();
  var result=engine.analyze(query);panel.hidden=false;while(panel.firstChild)panel.removeChild(panel.firstChild);
@@ -211,6 +251,7 @@ function render(query){
  add(panel,"p","mt-r-lead",result.opening);
  renderSpaceXBrief(result);
  runPublicResearch(query,result);
+ renderLiveBackend(query);
  if(!result.photo&&result.location&&window.MTPhoto){var photoSlot=add(panel,"div","mt-r-livephoto");window.MTPhoto.render(photoSlot,result.id,result.location.name);}
  if(result.photo&&/^https:\/\/thumb\.wikimedia\.org\//.test(result.photo.url)){
   var photo=add(panel,"figure","mt-r-photo");
