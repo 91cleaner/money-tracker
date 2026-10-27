@@ -44,6 +44,7 @@ jobs:
           node --check tests/mt-admin-ai.test.cjs
           node --check tests/mt-grok.test.cjs
           node --check tests/mt-browser-smoke.cjs
+          node --check tests/mt-zoom-browser.cjs
       - name: Unit tests
         run: node --test tests/mt-command.test.cjs tests/mt-research.test.cjs tests/mt-open-research.test.cjs tests/mt-spacex-research.test.cjs tests/mt-backend.test.cjs tests/mt-admin-ai.test.cjs tests/mt-grok.test.cjs
   browser:
@@ -61,6 +62,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Click through the control room
         run: node tests/mt-browser-smoke.cjs
+      - name: Zoom and satellite switching
+        run: node tests/mt-zoom-browser.cjs
       - name: Save desktop and mobile screenshots
         if: always()
         uses: actions/upload-artifact@v4

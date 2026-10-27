@@ -44,6 +44,18 @@ test('actual satellite tiles and failure-tolerant map tiles are wired in command
   assert.match(command, /tile\.openstreetmap\.org/);
 });
 
+test('user zoom stops the scripted flight and the map stays inside the drawn world', () => {
+  // A zoom by wheel, +/- button, double-click, pinch or keyboard must cancel the flight, or its next phase undoes the zoom.
+  assert.match(command, /function userTookZoom\(\)\{if\(!flight\.hidden\)cancelTravel\(\);\}/);
+  for (const ev of ['"wheel",userTookZoom', '"dblclick",userTookZoom', '"touchstart"', '"keydown"', '"pointerdown",userTookZoom']) {
+    assert.ok(command.includes(ev), ev);
+  }
+  assert.match(command, /var zoomControl=L\.control\.zoom\(/);
+  // Same world limit idea as the Korean room (polgame.js WORLD), with wide longitude so worldCopyJump still works.
+  assert.match(command, /map\.setMaxBounds\(L\.latLngBounds\(\[\[-60,-540\],\[78,540\]\]\)\)/);
+  assert.match(command, /maxBoundsViscosity=1/);
+});
+
 test('public preview labels disconnected AI, real-time prices and signals honestly', () => {
   assert.match(usa, /PREVIEW · PUBLIC SOURCES/);
   assert.match(usa, /AI 분석 OFF · 실시간 시세 OFF/);
