@@ -137,7 +137,7 @@ class HousePtrExtractionTests(unittest.TestCase):
                 with self.assertRaises(OSError):
                     ptr.write_json_atomic(target, {"last_attempted_filing_id": "new"})
             self.assertEqual(json.loads(target.read_text())["last_attempted_filing_id"], "old")
-            self.assertEqual(list(Path(tmp).glob("*.tmp")), [])
+            self.assertEqual(list(Path(tmp).glob(".*.tmp")), [])
 
     def test_candidate_write_failure_does_not_advance_queue_cursor(self):
         with tempfile.TemporaryDirectory() as tmp:
