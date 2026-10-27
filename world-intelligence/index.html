@@ -210,7 +210,7 @@ async function showTradeMission(){
   try{
    const result=await searchBills(q);if(id!==sequence)return;
    clearEvidence('◉ VERIFIED LEGISLATION');
-   el('div','데이터 갱신: '+(result.updated||'확인 불가'),'').className='muted';
+   el('div','데이터 갱신: '+(result.updated||'확인 불가')).className='muted';
    if(!result.matches.length){el('p','현재 수집된 법안에서 검색어와 일치하는 결과가 없습니다. 관련 법안이 없다는 뜻은 아닙니다.')}
    for(const b of result.matches){
     const item=el('div');item.style.cssText='padding:9px 0;border-bottom:1px solid #244052';
