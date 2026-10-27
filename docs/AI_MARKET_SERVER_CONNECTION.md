@@ -1,9 +1,23 @@
+## 그록(Grok) API도 선택 가능 — 2026-10-27 추가
+
+- xAI 개발자 Console: https://console.x.ai/ → API Keys → XAI_API_KEY 발급. Grok 앱/X Premium 구독과 API 결제는 별개.
+- 기존 Cloudflare Worker `red-meadow-fcc6`의 Settings → Variables and Secrets → Add에서 **Secret** 이름 `XAI_API_KEY`, 값은 xAI에서 만든 API 키로 저장. GitHub 파일이나 채팅에 키를 입력하지 말 것.
+- GitHub의 수동 배포 workflow: https://github.com/91cleaner/money-tracker/actions/workflows/deploy-private-worker.yml (Cloudflare 배포 자격증명 필요). 배포 후 관리자 로그인 `/command`에서 **◉ AI 조사 → AI 분석: Grok** 선택.
+- Grok은 공식 `https://api.x.ai/v1/responses`를 사용하며 기본 모델은 `grok-4.7` (`XAI_MODEL`로 변경 가능). 기본적으로 웹검색 도구를 사용하며 X 게시물 검색은 **체크박스를 켤 때만** 활성화된다.
+- xAI Web Search 및 X Search, Grok 토큰 비용은 각각 API 사용량 기준 별도로 발생한다. `max_turns=2`로 조사 반복 횟수를 제한했지만 엄격한 예산 한도는 xAI Console에서 직접 설정하고 모니터링해야 한다.
+- AI 응답에는 검색 출처 URL, X 검색 시 조회 게시물·프로필 수, 제공자가 반환한 호출 비용(있는 경우)이 표시된다. 이는 원문 검증이나 주가 인과관계를 보증하지 않는다.
+- 기존 `OPENAI_API_KEY`는 선택사항이며 없어도 `XAI_API_KEY`만으로 Grok 분석을 실행할 수 있다. 시세 `FINNHUB_API_TOKEN`도 별도 선택사항이다.
+- **현 상태: GitHub 코드 연결·모의 테스트 완료, Cloudflare 실제 배포·Grok API 실호출·비용 청구 결과 확인은 미완료.** 키가 없다면 화면에 미연결로 표시한다.
+
+공식 설명: https://docs.x.ai/developers/tools/web-search 및 https://docs.x.ai/developers/tools/x-search
+
+---
 # 중요 업데이트 — 기존 관리자 서버에 통합됨 (2026-10-27)
 
 - 기존 Cloudflare Worker: cloudflare/admin-worker.js / wrangler.jsonc. GitHub OAuth 관리자로만 로그인되도록 설계돼 있음.
 - 신규 AI API: 기존 Worker의 /api/analyze에 통합, 로그인을 검증한 다음 server/worker.mjs의 createResult 호출.
 - 인증된 기존 /command 화면에 **AI 조사** 창과 /api/health 상태 확인, 시세/뉴스/AI 브리핑 창을 추가.
-- 필요한 실행 조건: 기존 Worker 재배포, OpenAI API 키를 Cloudflare Secret OPENAI_API_KEY로 설정. FINNHUB_API_TOKEN은 시세 기능용 선택 사항.
+- 필요한 실행 조건: 기존 Worker 재배포, xAI 또는 OpenAI API 키를 Cloudflare Secret으로 설정. FINNHUB_API_TOKEN은 시세 기능용 선택 사항.
 - 기존 GitHub OAuth 관리자는 API 호출 인증 경계로 사용. 별도 Cloudflare Access 추가는 보안 강화 옵션이며 이 관리자 OAuth 경로에서 필수는 아님.
 - **코드 커밋은 완료. 실제 Cloudflare 배포 및 API 키 설정 확인 전에는 AI 라이브 연결은 미완료**.
 - 현재 공개 GitHub Pages 미국 프리뷰는 여전히 외부에 공개되므로 공개 HTML/JS에 비밀키나 내부 데이터 업로드 금지.
@@ -25,7 +39,7 @@ Cloudflare에서 기존 Worker의 OPENAI_API_KEY를 Secret으로 추가하고, �
 
 ## 실제 배포에 필요한 순서
 1. Cloudflare 계정에서 Zero Trust와 Workers를 설정한다.
-2. Cloudflare Workers에 server/worker.mjs를 배포한다. OPENAI_API_KEY를 Worker Secret으로 등록한다. OPENAI_MODEL은 기본 gpt-4.1-mini 또는 사용 가능한 모델로 지정한다.
+2. Cloudflare Workers에 server/worker.mjs를 배포한다. XAI_API_KEY 또는 OPENAI_API_KEY를 Worker Secret으로 등록한다. Grok 모델 기본값은 grok-4.7이며 OpenAI 모델 기본값은 gpt-4.1-mini다.
 3. 금융 시세는 FINNHUB_API_TOKEN을 Worker Secret으로 추가할 수 있다. 상품 계약에서 실시간성·재배포 권한 확인 필수. 토큰이 없으면 시세 미연결로 명확히 표시한다.
 4. Cloudflare Access에서 **Worker 전체 트래픽(프로덕션, 프리뷰 포함)**을 운영자의 이메일만 허용하도록 보호한다. OTP/2FA와 기기 정책을 검증한다.
 5. 다른 기기나 로그아웃 상태에서 /api/analyze, /health, 모든 미국 HTML/JS/JSON 접근이 차단되는지 직접 확인한다. 그 이후 ACCESS_PROTECTED=true로 Worker 게이트를 연다. 환경 변수는 인증의 대체재가 아니다.
