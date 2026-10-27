@@ -19,7 +19,7 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from collect import category, mask_addr  # noqa: E402  계약과 같은 분야 나누기
-from privacy import names  # noqa: E402
+from privacy import names as mask_person_names  # noqa: E402
 
 ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
 OUT = os.path.join(ROOT, "data", "open_bids.json")
@@ -204,7 +204,7 @@ def main():
         if (it.get("close") or "") <= nowtxt:
             continue
         # 기존 파일에서 이어받은 공고도 포함해 공개 전 주소·인명을 다시 가린다.
-        it["title"] = mask_addr(names(it.get("title") or ""))
+        it["title"] = mask_addr(mask_person_names(it.get("title") or ""))
         r = rc.get((it["slug"], it["cat"])) or rk.get(it["cat"])
         it["ref"] = {"rate": r[0], "n": r[1], "scope": "city" if (it["slug"], it["cat"]) in rc else "all"} if r else None
         items.append(slim(it))
