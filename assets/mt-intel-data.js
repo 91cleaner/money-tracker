@@ -11,6 +11,7 @@ var SOURCES={
   tsmc:{title:"미 상무부 · TSMC Arizona 지원 발표",url:"https://www.commerce.gov/news/press-releases/2024/11/biden-harris-administration-announces-chips-incentives-award-tsmc"},
   chipsAwards:{title:"NIST · CHIPS 지원 내역",url:"https://www.nist.gov/chips/chips-program-office-awards"},
   houseTrades:{title:"미 하원 서기처 · 금융거래 원문",url:"https://disclosures-clerk.house.gov/FinancialDisclosure"},
+  nvidia:{title:"NVIDIA · FY2027 2분기 공식 실적",url:"https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027"},
   ustr:{title:"USTR · 미국 무역대표부",url:"https://ustr.gov/"},
   trade:{title:"ITA · 미국 국제무역청",url:"https://www.trade.gov/"},
   fed:{title:"연방준비제도 · 통화정책",url:"https://www.federalreserve.gov/monetarypolicy.htm"},
@@ -27,6 +28,7 @@ var MISSIONS=[
  node("chips-sponsor","워싱턴 D.C. · 하원",38.8899,-77.0091,14,"팀 라이언 · 당시 하원의원","Congress.gov에 기재된 H.R.4346 원 발의자: Tim Ryan (D-OH-13). 당시의 발의 기록이며 현재 재직을 의미하지 않습니다.","법안 → 원 발의 의원","chipsLaw"),
  node("chips-intel","오하이오 · 뉴올버니",40.0806,-82.8088,12,"Intel · 미국 반도체 투자","NIST의 CHIPS 지원 사업 기록에 Intel의 오하이오 뉴올버니 프로젝트가 기재돼 있습니다. 법안과 정책상 연결이며 의원 개인거래의 증거는 아닙니다.","법률 → 공식 지원 사업 → 기업","intel"),
  node("chips-tsmc","애리조나 · 피닉스",33.4484,-112.0740,11,"TSMC Arizona · 지원 기록","미국 상무부는 2024년 11월 TSMC Arizona에 최대 66억 달러의 직접 지원금 수여를 발표했습니다.","법률 → 공식 지원 사업 → 기업","tsmc"),
+ node("chips-nvda","캘리포니아 · NVIDIA 본사",37.37064,-121.96708,15,"NVIDIA · 설계기업의 산업정책 노출","NVIDIA는 미국 산타클라라에 본사를 둔 AI 반도체 설계 기업입니다. 2026년 8월 실적 발표에서 중국 데이터센터 컴퓨트 매출을 다음 분기 전망에 포함하지 않았다고 밝혔습니다. CHIPS법과의 연결은 산업정책 맥락이며, 이 회사가 해당 법의 직접 보조금을 받았다는 증거가 아닙니다.","산업정책 → 기업 사업환경 · 직접 지원 입증 아님","nvidia","context"),
  node("chips-trades","워싱턴 D.C. · 공시 출처",38.8899,-77.0091,12,"의원 주식거래 데이터 · 미연결","하원 금융공시 원문은 공개돼 있지만, 이 관제실에는 개별 거래를 수집·검증해 법안 및 인물과 매칭한 데이터가 아직 없습니다. 거래를 추정하거나 만들어 표시하지 않습니다.","공개 거래 원문 → 자동 수집 미연결","houseTrades","unconnected")
  ]},
  {id:"trade",title:"미중 관세 → 공급망",short:"관세·무역",keywords:["관세","무역","중국","미중","트럼프 관세","tariff","tariffs","trade","수출통제","수입","관세법"],summary:"미국 무역정책 출처에서 중국과 미국 기업으로 이동하는 탐색 경로",symbols:"XLI · SPY (연결 맥락만 표시)",steps:[
