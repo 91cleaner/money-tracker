@@ -78,6 +78,28 @@ function build(){
     source_date:f.date,location:ent&&{lat:ent.lat,lng:ent.lng,label:"사건·공시와 연결된 기관·사업장 좌표"},route:"spacex"});
   }
  }
+ // Official Federal Register notices: metadata only, not news summaries.
+ const register=read("data/search/us-federal-register.json",{records:[]});
+ const usAlias={"semiconductor":"반도체","Taiwan":"대만","South Korea":"한국","Japan":"일본","export controls":"수출규제","artificial intelligence":"인공지능","advanced computing":"첨단 컴퓨팅","SpaceX":"스페이스엑스"};
+ for(const m of register.records||[]){
+  if(!m.id||!m.source_url)continue;
+  const keywords=m.search_terms||[];
+  push({id:"federal-register-"+m.id,type:"regulation",title:"미국 연방관보 · "+m.title,
+   aliases:["미국","연방관보","규제",...keywords,...keywords.map(k=>usAlias[k]).filter(Boolean),...(m.agency||[])],
+   summary:"미국 연방관보 "+m.type+" 문서. 발행일 "+m.date+". 법적 효력·시행일과 개별 기업 관련 여부는 원문에서 확인할 것.",
+   source:"U.S. Federal Register",url:m.source_url,source_date:m.date,location:null,route:null});
+ }
+ // Japanese Diet meeting metadata: record identifiers and original URLs only, no unlicensed full transcript copies.
+ const jpDiet=read("data/search/japan-diet.json",{records:[]});
+ const jpAlias={"半導体":"반도체","台湾":"대만","韓国":"한국","経済安全保障":"경제안보","輸出規制":"수출규제","人工知能":"인공지능"};
+ for(const m of jpDiet.records||[]){
+  if(!m.id||!m.source_url)continue;
+  push({id:"japan-diet-"+m.id,type:"minutes",title:"일본 국회 · "+m.title,
+   aliases:["일본","국회 회의록",m.house,m.meeting,...(m.matched_terms||[]),...(m.matched_terms||[]).map(k=>jpAlias[k]).filter(Boolean),...(m.speaker_samples||[])],
+   summary:"국립국회도서관 회의록 · 개최일 "+m.date+". 키워드 검색결과이며 이 문서가 어떤 법안에 찬성 또는 반대했다는 의미는 아님.",
+   source:"National Diet Library of Japan",url:m.source_url,source_date:m.date,
+   location:{lat:35.677,lng:139.745,label:"도쿄 · 국회 기록 출처 (현장 발언 위치가 아님)"},route:null});
+ }
  const filing=read("data/search/sec-filings.json",{filings:[]});
  for(const f of filing.filings||[]){
   push({id:"filing-"+f.cik+"-"+f.accession,type:"filing",
