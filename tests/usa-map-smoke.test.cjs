@@ -62,7 +62,7 @@ test('country selection remains intentional, without a redirect into the US map'
 test('mobile query focus and compact map explanation stay usable', () => {
   assert.match(usa, /#usCmd input\{font-size:16px;/);
   assert.match(usa, /id="mt-map-only-controller"/);
-  assert.match(usa, /if\(file\.hidden\)\{file\.classList\.remove\('mt-peek'\);return\}/);
+  assert.match(usa, /if\(file\.hidden\)\{if\(file\.classList\.contains\('mt-peek'\)\)/);
   assert.match(usa, /if\(!close\.isConnected\)file\.appendChild\(close\)/);
   assert.match(usa, /aria-label','추적 설명 닫기'/);
 });

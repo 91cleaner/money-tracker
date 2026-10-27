@@ -34,7 +34,7 @@ jobs:
           assert.match(us,/assets\/mt-command-ui\.js\?v=/, 'Browser must load versioned map scripts');
           assert.match(us,/mt-map-only-controller/, 'Map-first detail overlay must load');
           assert.match(us,/#usCmd input\{font-size:16px;/, 'Mobile query input must not trigger iOS focus zoom');
-          assert.match(us,/if\(file\.hidden\)\{file\.classList\.remove\('mt-peek'\);return\}/, 'Detail overlay must not depend on legacy .on class');
+          assert.match(us,/if\(file\.hidden\)\{if\(file\.classList\.contains\('mt-peek'\)\)/, 'Detail overlay must not depend on legacy .on class');
           const command = fs.readFileSync('assets/mt-command-ui.js','utf8');
           assert.match(command,/dark\.on\("tileerror"/, 'Base map needs tile error handling');
           assert.match(command,/tile\.openstreetmap\.org/, 'Base map needs independent fallback provider');

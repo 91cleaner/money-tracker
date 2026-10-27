@@ -345,7 +345,7 @@ body.mt-keyboard-open #usCmd{bottom:6px!important}
   function update(){
    // The command UI clears children and uses hidden=false without adding .on.
    // Restore the small overlay and close control after every file render.
-   if(file.hidden){file.classList.remove('mt-peek');return}
+   if(file.hidden){if(file.classList.contains('mt-peek'))file.classList.remove('mt-peek');return}
    if(!peek.isConnected)file.appendChild(peek);
    if(!close.isConnected)file.appendChild(close);
    var heading=file.querySelector('h3,.nm,h2,.fh');
@@ -356,7 +356,8 @@ body.mt-keyboard-open #usCmd{bottom:6px!important}
    var strong=document.createElement('strong');strong.textContent=title;
    var line=document.createElement('span');line.textContent=summary;
    peek.append(strong,line);
-   file.classList.add('mt-peek');file.hidden=false;
+   // Avoid self-triggering MutationObserver loops on unchanged class/hidden attributes.
+   if(!file.classList.contains('mt-peek'))file.classList.add('mt-peek');
   }
   var observer=new MutationObserver(function(){update()});
   observer.observe(file,{attributes:true,attributeFilter:['class','hidden'],childList:true,subtree:false});
