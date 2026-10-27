@@ -39,6 +39,11 @@ css.textContent=[
 "#mtResearch .mt-auto-research h4{margin:9px 0 4px;color:#9fffca;font-size:12px}",
 "#mtResearch .mt-auto-group{border-top:1px solid #295c3d;padding:4px 0}",
 "#mtResearch .mt-auto-hit{border-top:1px solid #193b2b;padding:8px 0}",
+"#mtResearch .mt-case-file{border:1px solid #377555;border-radius:8px;padding:9px;margin-top:10px}",
+"#mtResearch .mt-case-file summary{cursor:pointer;color:#bdffc9;font-weight:800;line-height:1.6}",
+"#mtResearch .mt-case-item{border-top:1px solid #284d37;padding:9px 0}",
+"#mtResearch .mt-case-item strong{color:#a6ffd0;font-size:11px}",
+"#mtResearch .mt-case-item p{font-size:11px;line-height:1.5}",
 "#mtResearch .mt-auto-link{color:#d3ffdf;text-decoration:underline;font-size:12px;line-height:1.55;font-weight:600;overflow-wrap:anywhere}",
 "#mtResearch .mt-auto-hit small{display:block;margin:3px 0}",
 "#mtResearch .mt-auto-research .mt-r-head{align-items:baseline;flex-wrap:wrap}",
@@ -149,6 +154,38 @@ function runPublicResearch(question,report){
   });
  }).catch(function(){if(!current())return;wiki.replaceChildren();add(wiki,"p","mt-r-muted","백과 조회 오류");});
 }
+function renderCaseEvidence(topic){
+ if(topic!=="spacex")return;
+ var box=add(panel,"details","mt-case-file");
+ add(box,"summary","","CASE FILE / SPCX 공식 기록 · 증거 원문 연결");
+ var inner=add(box,"div","mt-case-rows");
+ add(inner,"p","mt-r-muted","2026-10-27 기준 보관 데이터 파일 불러오는 중…");
+ var ticket=researchSerial;
+ fetch("data/us/cases/spcx-2026-10-27.json",{cache:"no-store"}).then(function(r){
+  if(!r.ok)throw Error("data unavailable");return r.json();
+ }).then(function(data){
+  if(ticket!==researchSerial||!box.isConnected)return;
+  inner.replaceChildren();
+  if(data.id!=="case-us-spcx-20261027"||!Array.isArray(data.facts)||!Array.isArray(data.sources)){
+   add(inner,"p","mt-r-muted","데이터 형식 확인 실패");return;
+  }
+  var sources={};data.sources.forEach(function(src){sources[src.id]=src;});
+  add(inner,"p","mt-r-muted",data.as_of+" 기준 · "+data.facts.length+"개 사건·가격·공시 기록 / 실제 시세 자동 갱신 아님");
+  data.facts.forEach(function(row){
+   var rec=add(inner,"div","mt-case-item");
+   add(rec,"strong","",row.date+" · "+row.name);
+   add(rec,"p","",row.statement_ko);
+   var src=sources[row.source_id];
+   if(src&&/^https:\/\//.test(src.url)){
+    var a=add(rec,"a","mt-auto-link",src.publisher+" / 원문 ↗");a.href=src.url;a.target="_blank";a.rel="noopener noreferrer";
+   }
+  });
+  add(inner,"p","mt-r-muted","관계 자료의 사실 연결과 분석 가설을 혼동하지 않습니다. 기간 이후 사건은 자동 뉴스 검색에서 별도 확인하세요.");
+ }).catch(function(){
+  if(ticket!==researchSerial||!box.isConnected)return;
+  inner.replaceChildren();add(inner,"p","mt-r-muted","보관된 증거 파일을 불러오지 못했습니다. 공식 원문 링크는 위 실적·정책 항목에서 확인할 수 있습니다.");
+ });
+}
 function render(query){
  var result=engine.analyze(query);panel.hidden=false;while(panel.firstChild)panel.removeChild(panel.firstChild);
  var head=add(panel,"div","mt-r-head");add(head,"span","mt-r-kicker","MONEY TRACKER / INTELLIGENCE BRIEF");
@@ -186,6 +223,7 @@ function render(query){
   add(panel,"p","mt-r-insight",result.insight);
  }
 
+ renderCaseEvidence(result.id);
  add(panel,"h3","","05 · 관제실 지도 추적");
  add(panel,"p","mt-r-muted","경로를 선택하면 법안·정책·기업·역사 원문으로 이동합니다. 지도는 단계별로 이동하며 중간에 직접 조작할 수 있습니다.");
  var routes=add(panel,"div","mt-r-choices");
