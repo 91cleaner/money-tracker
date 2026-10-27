@@ -10,6 +10,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {createHash} from "node:crypto";
+import {snapshotChanged} from "./collection-snapshot.mjs";
 const root=path.resolve(import.meta.dirname,"..");
 const stamp=()=>new Date().toISOString();
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
@@ -18,9 +19,9 @@ function write(rel,data){
  const target=path.join(root,rel);
  fs.mkdirSync(path.dirname(target),{recursive:true});
  const old=load(rel,null);
- const rowsA=JSON.stringify(old?.records||old?.filings||[]);
- const rowsB=JSON.stringify(data?.records||data?.filings||[]);
- if(old&&rowsA===rowsB){console.log("UNCHANGED",rel);return false;}
+ // Preserve changes to collector health even when no new records arrive.
+ // Ignore retrieved_at-only differences to avoid unnecessary Git commits.
+ if(!snapshotChanged(old,data)){console.log("UNCHANGED",rel);return false;}
  fs.writeFileSync(target,JSON.stringify(data,null,2)+"\n");
  console.log("UPDATED",rel,"rows",data?.records?.length||data?.filings?.length||0);
  return true;
