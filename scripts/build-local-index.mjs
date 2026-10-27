@@ -89,6 +89,21 @@ function build(){
    summary:"미국 연방관보 "+m.type+" 문서. 발행일 "+m.date+". 법적 효력·시행일과 개별 기업 관련 여부는 원문에서 확인할 것.",
    source:"U.S. Federal Register",url:m.source_url,source_date:m.date,location:null,route:null});
  }
+ // Taiwan Legislative Yuan: official current-term member and legislative bill metadata.
+ const taiwan=read("data/search/taiwan-legislature.json",{records:[]});
+ const trad={"半導體":"반도체","人工智慧":"인공지능","經濟安全":"경제안보","供應鏈":"공급망","能源":"에너지","台美":"미국 대만","國防":"국방"};
+ for(const record of taiwan.records||[]){
+  if(!record.id||!record.source_url)continue;
+  const isBill=record.kind==="bill",term=record.matched_terms||[];
+  push({id:"taiwan-legislature-"+record.id,type:isBill?"bill":"lawmaker",
+   title:"대만 입법원 · "+record.title,aliases:["대만","대만 법안","臺灣","立法院",...term,...term.map(x=>trad[x]).filter(Boolean),record.proposer,record.party,record.committee],
+   summary:isBill?"대만 입법원 제"+record.term+"대 의안 "+(record.bill_number||"")+
+    " / 제안자 "+(record.proposer||"원문 참조")+" / 의안 상태 "+(record.status||"원문 확인")+". 실제 통과나 시행 여부는 공식 원문 검증 필요.":
+    "대만 입법원 제"+record.term+"대 의원 · 정당 "+(record.party||"원문 확인")+
+    " · 지역구 "+(record.district||"원문 확인")+" · 위원회 "+(record.committee||"원문 확인")+". 현재 재직 여부는 기준일 확인 필요.",
+   source:"Taiwan Legislative Yuan Official Open Data",url:record.source_url,source_date:record.date||null,
+   location:{lat:25.0478,lng:121.5209,label:"타이베이 · 대만 입법원 공식 자료 기관"},route:null});
+ }
  // Japanese Diet meeting metadata: record identifiers and original URLs only, no unlicensed full transcript copies.
  const jpDiet=read("data/search/japan-diet.json",{records:[]});
  const jpAlias={"半導体":"반도체","台湾":"대만","韓国":"한국","経済安全保障":"경제안보","輸出規制":"수출규제","人工知能":"인공지능"};
