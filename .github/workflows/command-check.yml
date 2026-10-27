@@ -82,9 +82,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # The public page must NOT load the paid AI bridge (mt-backend.js was removed in 4cb174a; unit tests assert the same).
           for attempt in $(seq 1 20); do
             html="$(curl -fsSL --max-time 18 "$URL?check=$GITHUB_SHA-$attempt" || true)"
-            if [[ "$html" == *'mt-intel-data.js'* && "$html" == *'mt-command-ui.js'* && "$html" == *'mt-photo.js'* && "$html" == *'mt-query-engine.js'* && "$html" == *'mt-research-ui.js'* && "$html" == *'mt-open-research.js'* && "$html" == *'mt-news-discovery.js'* && "$html" == *'mt-backend.js'* ]]; then
+            if [[ "$html" == *'mt-intel-data.js'* && "$html" == *'mt-command-ui.js'* && "$html" == *'mt-photo.js'* && "$html" == *'mt-query-engine.js'* && "$html" == *'mt-research-ui.js'* && "$html" == *'mt-open-research.js'* && "$html" == *'mt-news-discovery.js'* && "$html" == *'mt-local-search.js'* && "$html" != *'mt-backend.js'* ]]; then
               curl -fsSL --max-time 18 "https://91cleaner.github.io/money-tracker/assets/mt-command-ui.js?check=$GITHUB_SHA" | grep -q 'window.MTCommand'
               entry="$(curl -fsSL --max-time 18 "https://91cleaner.github.io/money-tracker/?check=$GITHUB_SHA-$attempt" || true)"
               if [[ "$entry" != *'national.html'* || "$entry" != *'usa-command.html'* ]]; then
