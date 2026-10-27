@@ -1,6 +1,6 @@
 /* Open-source encyclopedia lookup for unmatched user questions.
- * No AI, no market quotes, no account credentials. ONLY runs after operator presses "공개 백과 조회".
- * Search terms are transmitted to Wikimedia; results are reference leads, not verified market causes.
+ * No AI, no market quotes, no account credentials. Runs on user-submitted questions with minimized entity keywords.
+ * Search subjects are transmitted to Wikimedia; results are reference leads, not verified market causes.
  */
 (function(root,factory){
  var api=factory();
