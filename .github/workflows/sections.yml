@@ -31,8 +31,29 @@ jobs:
       - run: |
           git config user.name "money-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
-          # 개인정보 가리기가 기존 공고에도 적용되면 함께 저장해야 다음 실행에서 재발하지 않는다.
-          git add data/sec_*.json data/open_bids.json
-          git diff --cached --quiet && exit 0
+          # mask_names.py recursively rewrites data/**/*.json, not just sec_*.json.
+          # Stage *all* validated/sanitized data so rebase never fails on
+          # unstaged privacy fixes and the fixes persist for future runs.
+          git add -A -- data
+          # A non-data tracked modification is unexpected: fail closed.
+          if ! git diff --quiet; then
+            echo '::error::Unexpected unstaged changes outside data/; refusing to publish.'
+            git status --short
+            exit 1
+          fi
+          if git diff --cached --quiet; then echo '변경 없음'; exit 0; fi
           git commit -m "추적 파일 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
-          git pull --rebase && git push
+          # Other collectors may advance main. Retry non-force pushes, but
+          # never silently discard conflicting upstream data changes.
+          for attempt in 1 2 3 4; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo '::error::Data conflict while rebasing; upstream preserved.'
+              exit 1
+            fi
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          echo '::error::Main advanced repeatedly; no data overwritten.'
+          exit 1
