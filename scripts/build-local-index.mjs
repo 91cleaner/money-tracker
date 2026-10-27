@@ -9,7 +9,7 @@ import {createRequire} from "node:module";
 const require=createRequire(import.meta.url);
 const root=path.resolve(import.meta.dirname,"..");
 function read(p,fallback=null){try{return JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));}catch(e){if(e.code==="ENOENT")return fallback;throw e;}}
-function safeUrl(url){return /^https:\/\/[a-z0-9.-]+\//i.test(url||"")?url:null;}
+function safeUrl(url){return /^https:\/\/[a-z0-9.-]+(?::\d+)?(?:\/|$)/i.test(url||"")?url:null;}
 function coords(loc,label){
  if(!loc)return null;
  const lat=Number(loc.lat??loc[0]),lng=Number(loc.lng??loc[1]);
