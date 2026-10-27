@@ -73,8 +73,10 @@ for year in [YEAR - 1, YEAR]:
     except Exception as exc:
         errors.append({"year":year,"error":str(exc)[:180]})
         print(year, "failed", str(exc))
-if not success and not archive:
-    raise SystemExit("No verified House filing metadata; will not publish fabricated records")
+if not success:
+    # Do not stamp a cached archive with a fresh collected_at when every
+    # official source request failed. Keep the previous verified snapshot intact.
+    raise SystemExit("All House Clerk index downloads failed; keeping prior archive unchanged")
 records = sorted(archive.values(), key=lambda x:(x.get("year",0),x.get("filing_date",""),x["id"]),reverse=True)
 payload = {"schema_version":1,"dataset":"US House financial disclosure filing index","collected_at":NOW.isoformat(),"source":"US House Clerk public financial disclosures","source_url":"https://disclosures-clerk.house.gov/FinancialDisclosure","records":records,"errors":errors,"caveat":"Filing metadata, not parsed securities trades. A filing is not evidence of wrongdoing or profit."}
 existing.write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
