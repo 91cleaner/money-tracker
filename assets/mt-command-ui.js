@@ -54,6 +54,17 @@ function setStatus(s){stat.textContent=s;}
 function clear(node){while(node.firstChild)node.removeChild(node.firstChild);}
 function hideChoices(){choices.hidden=true;clear(choices);}
 function hideFile(){file.hidden=true;clear(file);}
+function renderWelcome(){
+ clear(choices);choices.hidden=false;
+ var title=elem("div","mt-choice-head");title.appendChild(elem("strong","","MONEY TRACKER · 관제실 준비 완료"));
+ title.appendChild(button("✕",hideChoices,"mt-x"));choices.appendChild(title);
+ choices.appendChild(elem("p","mt-choice-note","기업·주식·의원·법안·금리·세계정세에 관해 자유롭게 질문하세요. 아래 주제는 예시일 뿐, 특정 기업이 기본 설정된 것은 아닙니다."));
+ var topics=[["history","세계정세 · 역사"],["rates","금리 · 시장"],["trade","관세 · 국제무역"],["chips","법안 · 산업"],["disclosures","의원 · 거래 공시"]];
+ topics.forEach(function(topic){
+  choices.appendChild(button(topic[1]+" ›",function(){selectMission(topic[0]);},"mt-choice"));
+ });
+ setStatus("전체 관제실 대기 중 · 검색어를 입력하거나 주제를 선택하세요");
+}
 function renderChoices(items,unknown){
  clear(choices);choices.hidden=false;
  var head=elem("div","mt-choice-head");
@@ -69,7 +80,7 @@ function renderChoices(items,unknown){
 }
 function findQuery(){
  var q=query.value.trim();
- if(!q){renderChoices(data.missions,false);query.focus();return;}
+ if(!q){renderWelcome();query.focus();return;}
  if(window.MTResearch&&typeof window.MTResearch.show==="function"){hideChoices();window.MTResearch.show(q);setStatus("질문 분석 · 검증된 사실 / 원인 가설 / 사용자 판단");return;}
  var general=/^(미국|세계|기업|의원|시장|뉴스|투자|증시)$/i.test(q);
  var results=general?data.missions:data.search(q);
@@ -192,6 +203,23 @@ window.addEventListener("resize",function(){
 });
 var params=new URLSearchParams(window.location.search),requested=params.get("mission");
 if(requested&&data.getMission(requested))selectMission(requested);
-else renderChoices(data.missions,false);
-window.MTCommand={map:map,selectMission:selectMission,selectStep:selectStep,travelTo:travelTo,cancelTravel:cancelTravel,search:function(q){query.value=q;findQuery();},getCurrent:function(){return state.mission?{mission:state.mission.id,step:state.step}:null;}};
+else renderWelcome();
+function resetCommand(){
+ cancelTravel();
+ hideFile();
+ if(window.MTResearch&&typeof window.MTResearch.close==="function")window.MTResearch.close();
+ state.mission=null;state.step=0;query.value="";
+ pins.clearLayers();lines.clearLayers();
+ root.querySelectorAll(".pg-bar button").forEach(function(b){b.setAttribute("aria-pressed","false");});
+ if(intro)intro.textContent="세계지도를 직접 탐색하세요 · 기업·법안·의원·세계정세에 관해 자유롭게 질문하세요";
+ var next=new URL(window.location.href);next.searchParams.delete("mission");
+ window.history.replaceState(null,"",next.pathname+next.search+next.hash);
+ map.flyTo([39,-98],Math.max(3.5,map.getMinZoom()),{duration:.85});
+ renderWelcome();
+}
+var reset=button("초기화",resetCommand,"mt-reset");
+reset.id="mtReset";reset.setAttribute("aria-label","검색 초기화 및 전체 관제실로 돌아가기");
+form.insertBefore(reset,form.querySelector('button[type="submit"],button:not([type])'));
+
+window.MTCommand={map:map,selectMission:selectMission,selectStep:selectStep,travelTo:travelTo,cancelTravel:cancelTravel,reset:resetCommand,search:function(q){query.value=q;findQuery();},getCurrent:function(){return state.mission?{mission:state.mission.id,step:state.step}:null;}};
 })();
