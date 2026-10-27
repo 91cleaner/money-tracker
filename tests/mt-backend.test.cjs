@@ -41,9 +41,11 @@ test("bridge handles explicit unconfigured server response",async()=>{
  assert.equal(r.status,"server-error");
  assert.equal(r.code,"access-not-enabled");
 });
-test("command contains private backend module, and unconfigured state displayed",()=>{
+test("production pages omit paid AI bridge, while dormant source remains for later",()=>{
  const ui=fs.readFileSync(path.join(__dirname,"../assets/mt-research-ui.js"),"utf8");
  const html=fs.readFileSync(path.join(__dirname,"../usa-command.html"),"utf8");
- assert.match(ui,/window\.MTBackend\.analyze\(question\)/);
- assert.match(html,/assets\/mt-backend\.js/);
+ assert.match(ui,/renderIndexedSearch\(query\)/);
+ assert.doesNotMatch(ui,/^\s*renderLiveBackend\(query\);/m);
+ assert.doesNotMatch(html,/src="assets\/mt-backend\.js/);
+ assert.match(html,/src="assets\/mt-local-search\.js/);
 });
