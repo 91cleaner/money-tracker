@@ -24,6 +24,8 @@ def js_string(value):
 
 def build():
     page = (ROOT / "world-intelligence/index.html").read_text(encoding="utf-8")
+    if "L.map('map'" not in page or 'id="map"' not in page or 'src="./evidence.js"' not in page:
+        raise SystemExit("Refusing to replace authenticated command map with a redirect or non-map page")
     script = (ROOT / "world-intelligence/evidence.js").read_text(encoding="utf-8")
     data = {}
     for route, relative in FILES.items():
