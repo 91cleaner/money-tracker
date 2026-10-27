@@ -34,7 +34,7 @@ function node(id,place,lat,lng,zoom,title,text,connection,source,kind){
  return {id:id,place:place,lat:lat,lng:lng,zoom:zoom,title:title,text:text,connection:connection,source:SOURCES[source],kind:kind||"document"};
 }
 var MISSIONS=[
- {id:"spacex",title:"SPCX 주가 → 발사장 → NASA → SEC",short:"스페이스X 시장·사업 추적",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","starship","스타십","starlink","스타링크","팰컨9","falcon9"],summary:"최근 실제 발사 기록·NASA 임무·FAA 규제 검토를 지도로 추적합니다.",symbols:"NASDAQ SPCX (2026-06-12 상장) · 실시간 시세 API 미연결",steps:[
+ {id:"spacex",title:"SPCX 주가 → 발사장 → NASA → SEC",short:"스페이스X 시장·사업 추적",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","spcx","starship","스타십","starlink","스타링크","팰컨9","falcon9"],summary:"최근 실제 발사 기록·NASA 임무·FAA 규제 검토를 지도로 추적합니다.",symbols:"NASDAQ SPCX (2026-06-12 상장) · 실시간 시세 API 미연결",steps:[
  node("spacex-market","뉴욕 · 나스닥 마켓사이트",40.7573,-73.9855,14,"SPCX · 증시 기록에서 조사 시작","SpaceX는 2026년 6월 12일 SPCX로 나스닥에 상장했습니다. 같은 날짜의 주가·거래량과 공개된 실적·자금조달 사건을 비교해야 하며, 시장건물 좌표는 거래 체결 장소를 의미하지 않습니다.","공식 IPO → 종목 식별","spacexIPO"),
  node("spacex-starbase","텍사스 · 스타베이스",25.997,-97.156,11,"Starbase · Starship 개발·발사","SpaceX 공식 기록상 Starship Flight 14가 2026년 9월 28일 스타베이스에서 발사됐습니다. 시험 결과와 향후 일정은 각각 공식 자료를 확인해야 합니다.","Starship 시험 → 발사장 · 개발 진척","spacex"),
  node("spacex-nasa","플로리다 · 케이프커내버럴",28.562,-80.577,11,"Crew-13 · NASA 유인 수송","NASA는 SpaceX Crew-13이 2026년 10월 1일 Cape Canaveral에서 발사됐다고 발표했습니다. 스타십 개발과 다른 상용 유인 수송 사업입니다.","공식 임무 → 정부 고객·계약","spacexNASA"),
