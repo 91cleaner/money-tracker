@@ -39,3 +39,33 @@ jobs:
           path: .
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify published entry and US command
+        shell: bash
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          python3 - <<'PY'
+          import os, time, urllib.request
+          base = os.environ['SITE_URL'].rstrip('/') + '/'
+          checks = {
+            '': ['시스템 연결 상태', 'usa-command.html'],
+            'usa-command.html': ['id="usCmd"', '실시간 시세: 미연결'],
+            'assets/mt-command-ui.js': [],
+          }
+          for path, expected in checks.items():
+            error = None
+            for attempt in range(8):
+              try:
+                req = urllib.request.Request(base + path, headers={'Cache-Control': 'no-cache'})
+                with urllib.request.urlopen(req, timeout=20) as response:
+                  body = response.read().decode('utf-8')
+                  if response.status != 200 or any(marker not in body for marker in expected):
+                    raise AssertionError(f'Unexpected response for {path}: {response.status}')
+                print('PASS', base + path)
+                break
+              except Exception as exc:
+                error = exc
+                time.sleep(10)
+            else:
+              raise RuntimeError(f'Published page failed: {path}: {error}')
+          PY
