@@ -54,6 +54,13 @@ header strong{color:#d6eff4!important;font-family:ui-monospace,Consolas,monospac
 #mtTrace[hidden]{display:none}
 #mtTrace b{color:#83e6e3}
 @media(max-width:650px){#mtOpsBar{left:8px;top:84px;font-size:9px;padding:5px}#mtTrace{left:8px;bottom:137px;font-size:10px;max-width:56vw}}
+</style><style id="mt-candidate-panel-style">
+#candidatePanel{position:fixed;z-index:1700;top:150px;left:12px;width:min(380px,calc(100vw - 24px));max-height:calc(100dvh - 330px);overflow-y:auto;background:#061827f7;border:1px solid #5b91a0;border-left:3px solid #68c7d0;border-radius:6px;padding:14px;box-shadow:0 12px 35px #0008}
+#candidatePanel[hidden]{display:none!important}#candidatePanel h2{font:700 13px ui-monospace,Consolas,monospace;color:#8ce1e4;margin:0 0 8px}
+#candidatePanel p{font-size:12px;line-height:1.55;color:#c3d8df;margin:0 0 10px}#candidateList{display:grid;gap:8px}
+#candidateList button{display:block;text-align:left;width:100%;background:#0b2c3b;border-radius:5px;border:1px solid #4c7a88;padding:12px}
+#candidatePanel small{display:block;margin-top:10px;color:#8aa8b4;line-height:1.5}
+@media(max-width:650px){#candidatePanel{top:140px;left:8px;max-height:calc(100dvh - 295px);padding:10px}}
 </style></head><body>
 <header><strong>◉ MONEY TRACKER / GLOBAL COMMAND</strong><span>PUBLIC SOURCE INTELLIGENCE · MAP FIRST</span><button id="fullscreen" aria-label="전체화면">⛶</button></header>
 <div id="mapFrame">
@@ -62,6 +69,7 @@ header strong{color:#d6eff4!important;font-family:ui-monospace,Consolas,monospac
 <div id="status">세계지도 준비 중 · 지도를 직접 이동할 수 있습니다</div>
 <nav id="controls" aria-label="관제실 조작"><button id="world">🌐 전체지도</button><button id="toggle">☷ 메뉴</button><button id="closeBrief" hidden>✕ 설명 닫기</button></nav>
 <section id="menu" hidden><h3>◉ TRACKING OPTIONS</h3><div id="topics"></div><p style="font-size:11px;color:#9cbac6">주제를 선택하거나 아래 질문창에서 직접 명령하세요.</p></section>
+<section id="candidatePanel" hidden aria-live="polite" aria-label="추적 경로 선택"><h2 id="candidateTitle">추적 경로 선택</h2><p id="candidateHelp"></p><div id="candidateList"></div><small>규칙 기반 경로 선택 · AI 분석 미연결 · 실시간 거래 데이터 미연결</small></section>
 <section id="brief" hidden aria-live="polite"><h2 id="briefTitle"></h2><p id="briefText"></p><p id="briefStocks"></p><small id="briefCaveat"></small><div class="actions"><button id="previous">← 이전</button><button id="next">다음 지역 →</button></div><p><a id="source" target="_blank" rel="noopener noreferrer">관련 공식 자료 확인 ↗</a></p></section>
 <form id="ask"><input id="question" aria-label="추적 질문" placeholder="무엇을 추적할까요? 예: 미국 금리가 주식에 미치는 영향" maxlength="300" required><button type="submit">추적 ↵</button></form>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -89,20 +97,29 @@ if(window.L){try{
 }catch(e){$('map').style.display='none';status.textContent='지도 엔진 오류 · 개략 지도 표시'}}
 else{$('map').style.display='none';status.textContent='지도 라이브러리 연결 실패 · 개략 지도 표시'}
 function go(name){const p=places[name];if(!p)return;if(map){map.invalidateSize();map.flyTo(p,Math.max(4,map.getZoom()<4?4:Math.min(5,map.getZoom())),{duration:1.5});if(marker)map.removeLayer(marker);marker=L.circleMarker(p,{radius:9,color:'#005c7c',weight:3,fillColor:'#54d9e6',fillOpacity:.7}).addTo(map)}else{status.textContent=name+' 추적 · 실제 지도 연결 시 위치 이동 가능'}}
-function show(){if(!mission)return;const [name,explain]=mission.stops[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length;$('briefText').textContent=name+' — '+explain;$('briefStocks').textContent='미국 종목·ETF 조사 대상: '+mission.stocks;$('briefCaveat').textContent='주제별 탐색 시나리오입니다. 실시간 투자 신호가 아니며 인과관계는 별도 검증해야 합니다.';$('source').href=mission.url;$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(name)}
-function start(c){mission=c;step=0;$('menu').hidden=true;show()}
+function show(){if(!mission)return;const [name,explain]=mission.stops[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length;$('briefText').textContent=name+' — '+explain;$('briefStocks').textContent='미국 종목·ETF 조사 대상: '+mission.stocks;$('briefCaveat').textContent='시연용 가상 탐색 경로입니다. AI·실시간 거래 데이터 미연결. 표시된 관계는 투자 신호나 입증된 인과관계가 아닙니다.';$('source').href=mission.url;$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(name)}
+function start(c){mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#36b6cc',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
 $('topics').replaceChildren(...cases.map(c=>{const b=document.createElement('button');b.textContent=c.title;b.onclick=()=>start(c);return b}));
-$('ask').addEventListener('submit',e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;const c=cases.find(c=>c.re.test(q));if(c)start(c);else{mission=null;$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ 추가 데이터 연결 필요';$('briefText').textContent='이 질문은 현재 연결된 주제별 추적 범위 밖입니다. 지원 주제를 메뉴에서 선택해 주세요.';$('briefStocks').textContent='';$('briefCaveat').textContent='범용 AI 분석 및 실시간 시세는 아직 연결되지 않았습니다.';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true}});
+function showCandidates(q){
+ const matches=cases.filter(c=>c.re.test(q));
+ const choices=matches.length?matches:cases;
+ const panel=$('candidatePanel'),list=$('candidateList');
+ $('brief').hidden=true;$('closeBrief').hidden=true;panel.hidden=false;
+ $('candidateTitle').textContent=matches.length?'◉ 관련 작전 경로 선택':'◉ 지원되는 작전 경로';
+ $('candidateHelp').textContent=matches.length?'질문과 관련된 탐색 경로입니다. 하나를 선택해야 지도가 이동합니다.':'질문을 분석할 AI가 아직 연결되지 않았습니다. 아래 시연 경로 중 하나를 선택할 수 있습니다.';
+ list.replaceChildren(...choices.map(c=>{const b=document.createElement('button');b.type='button';b.dataset.mission=c.title;b.textContent=c.title+' · 경로 시작';b.addEventListener('click',()=>start(c));return b}));
+}
+$('ask').addEventListener('submit',e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;showCandidates(q)});
 $('previous').onclick=()=>{if(mission&&step>0){step--;show()}};
 $('next').onclick=()=>{if(mission&&step<mission.stops.length-1){step++;show()}};
 $('toggle').onclick=()=>{$('menu').hidden=!$('menu').hidden};
 $('closeBrief').onclick=()=>{$('brief').hidden=true;$('closeBrief').hidden=true};
-$('world').onclick=()=>{if(map){map.flyTo([20,0],2,{duration:1.2});if(marker){map.removeLayer(marker);marker=null}}mission=null;$('brief').hidden=true;$('closeBrief').hidden=true;$('menu').hidden=true;status.textContent='세계지도 · 자유 탐색'};
+$('world').onclick=()=>{if(map){map.flyTo([20,0],2,{duration:1.2});if(marker){map.removeLayer(marker);marker=null}}mission=null;if(map&&route){map.removeLayer(route);route=null}$('candidatePanel').hidden=true;$('brief').hidden=true;$('closeBrief').hidden=true;$('menu').hidden=true;status.textContent='세계지도 · 자유 탐색'};
 $('fullscreen').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.();
 })();
 </script><script id="mt-ops-controller">
 (function(){function init(){
-const hud=document.createElement('div');hud.id='opsHud';hud.innerHTML='<strong>◉ OSINT / OPERATIONS</strong><div id="opsState">STANDBY · WORLD VIEW</div><div>PUBLIC DATA · NOT CLASSIFIED</div>';document.body.append(hud);
+const hud=document.createElement('div');hud.id='opsHud';hud.innerHTML='<strong>◉ OSINT / OPERATIONS</strong><div id="opsState">STANDBY · WORLD VIEW</div><div>AI OFFLINE · LIVE TRADES OFFLINE</div>';document.body.append(hud);
 const reticle=document.createElement('div');reticle.id='opsReticle';reticle.setAttribute('aria-hidden','true');document.body.append(reticle);
 const steps=document.createElement('div');steps.id='opsSteps';document.body.append(steps);
 const brief=document.getElementById('brief'),form=document.getElementById('ask'),next=document.getElementById('next'),previous=document.getElementById('previous'),world=document.getElementById('world'),topics=document.getElementById('topics');
@@ -111,20 +128,20 @@ function update(){
  const body=document.getElementById('briefText')?.textContent||'';
  const active=brief&&!brief.hidden;
  document.getElementById('opsState').textContent=active?'TARGET ACQUIRED · ANALYSIS':'STANDBY · WORLD VIEW';
- if(active){steps.classList.add('mt-visible');steps.replaceChildren();const heading=document.createElement('strong');heading.textContent='◉ MISSION TRACK / VERIFIED CONTEXT';steps.append(heading);const p=document.createElement('div');p.textContent=title;steps.append(p);const d=document.createElement('div');d.textContent=body.slice(0,105);steps.append(d)}else steps.classList.remove('mt-visible');
+ if(active){steps.classList.add('mt-visible');steps.replaceChildren();const heading=document.createElement('strong');heading.textContent='◉ MISSION TRACK / DEMO CONTEXT';steps.append(heading);const p=document.createElement('div');p.textContent=title;steps.append(p);const d=document.createElement('div');d.textContent=body.slice(0,105);steps.append(d)}else steps.classList.remove('mt-visible');
 }
 function acquire(){reticle.classList.add('mt-targeting');setTimeout(()=>reticle.classList.remove('mt-targeting'),1450);setTimeout(update,50)}
-form?.addEventListener('submit',acquire);next?.addEventListener('click',acquire);previous?.addEventListener('click',acquire);topics?.addEventListener('click',e=>{if(e.target.closest('button'))acquire()});world?.addEventListener('click',()=>{reticle.classList.remove('mt-targeting');setTimeout(update,20)});
+document.getElementById('candidatePanel')?.addEventListener('click',e=>{if(e.target.closest('button[data-mission]'))acquire()});next?.addEventListener('click',acquire);previous?.addEventListener('click',acquire);topics?.addEventListener('click',e=>{if(e.target.closest('button'))acquire()});world?.addEventListener('click',()=>{reticle.classList.remove('mt-targeting');setTimeout(update,20)});
 document.getElementById('closeBrief')?.addEventListener('click',()=>setTimeout(update,20));
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
 </script><script id="mt-gotham-ops-v1">
 (function(){function init(){
-const bar=document.createElement('div');bar.id='mtOpsBar';bar.innerHTML='<b>OPERATIONAL OVERVIEW</b><div><span class="dot"></span>MAP LINK ACTIVE</div><div>GEOINT / PUBLIC SOURCES</div>';document.body.append(bar);
+const bar=document.createElement('div');bar.id='mtOpsBar';bar.innerHTML='<b>OPERATIONAL OVERVIEW</b><div><span class="dot"></span>MAP LINK ACTIVE</div><div>DEMO ROUTES / NO LIVE DATA</div>';document.body.append(bar);
 const trace=document.createElement('div');trace.id='mtTrace';trace.hidden=true;document.body.append(trace);
 const form=document.getElementById('ask'),brief=document.getElementById('brief'),next=document.getElementById('next'),previous=document.getElementById('previous'),world=document.getElementById('world'),topics=document.getElementById('topics');
 function sync(){if(!brief||brief.hidden){trace.hidden=true;return}const title=document.getElementById('briefTitle')?.textContent||'MISSION';const desc=document.getElementById('briefText')?.textContent||'';trace.hidden=false;trace.replaceChildren();const b=document.createElement('b');b.textContent='◉ TRACKING / '+title;trace.append(b);const p=document.createElement('div');p.textContent=desc.slice(0,110);trace.append(p)}
-for(const el of [form,next,previous,topics])el?.addEventListener(el===form?'submit':'click',()=>setTimeout(sync,90));
+for(const el of [document.getElementById('candidatePanel'),next,previous,topics])el?.addEventListener('click',()=>setTimeout(sync,90));
 world?.addEventListener('click',()=>setTimeout(sync,90));document.getElementById('closeBrief')?.addEventListener('click',()=>setTimeout(sync,90));
 }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
 </script></body></html>
