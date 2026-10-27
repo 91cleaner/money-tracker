@@ -59,12 +59,42 @@ def extract(raw,record):
                         item.update(source_page=page_number, source_table=table_number, source_row=row_number)
                         output.append(item)
     return output
+def select_records(records, previous_status, limit):
+    """Advance through the review queue instead of re-reading its first PDFs forever.
+
+    Keep the cursor in the committed status file, so scheduled Actions runs
+    resume where the previous run stopped. Wrap after reaching the queue end.
+    """
+    if not isinstance(records, list):
+        raise ValueError("Invalid PTR queue records")
+    valid = [row for row in records if isinstance(row, dict) and row.get("id")]
+    if not valid:
+        return []
+    last_id = previous_status.get("last_attempted_filing_id")
+    if not last_id:
+        prior = previous_status.get("filings", [])
+        if isinstance(prior, list) and prior:
+            last_id = prior[-1].get("filing_id") if isinstance(prior[-1], dict) else None
+    start = 0
+    for index, row in enumerate(valid):
+        if row["id"] == last_id:
+            start = (index + 1) % len(valid)
+            break
+    return [valid[(start + i) % len(valid)] for i in range(min(limit, len(valid)))]
+
+
 def main():
     if not QUEUE.exists() or QUEUE.stat().st_size==0:
         print("No verified PTR index queue; skipping extraction")
         return
     queue=json.loads(QUEUE.read_text(encoding="utf-8"))
-    records=queue.get("records",[])[:MAX_DOCS]
+    previous_status={}
+    if STATUS.exists() and STATUS.stat().st_size:
+        try:
+            previous_status=json.loads(STATUS.read_text(encoding="utf-8"))
+            if not isinstance(previous_status,dict):previous_status={}
+        except (OSError,ValueError,TypeError):previous_status={}
+    records=select_records(queue.get("records",[]),previous_status,MAX_DOCS)
     trades=[];results=[]
     for record in records:
         url=record.get("document_url","")
@@ -80,7 +110,7 @@ def main():
             results.append({"filing_id":record["id"],"status":"parsed_needs_review" if found else "no_verified_rows","rows":len(found)})
         except Exception as exc:
             results.append({"filing_id":record.get("id"),"status":"error","reason":type(exc).__name__})
-    status={"checked_at":dt.datetime.now(dt.timezone.utc).isoformat(),"attempted":len(results),"rows":len(trades),"filings":results,"warning":"Digital text only. All extracted trades require source review. No OCR, no guessed rows."}
+    status={"checked_at":dt.datetime.now(dt.timezone.utc).isoformat(),"attempted":len(results),"rows":len(trades),"filings":results,"last_attempted_filing_id":records[-1]["id"] if records else previous_status.get("last_attempted_filing_id"),"warning":"Digital text only. All extracted trades require source review. No OCR, no guessed rows."}
     STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     # Do not replace a previously collected dataset with empty output on outage.
     if trades:
