@@ -74,7 +74,19 @@ css.textContent=[
 "#mtResearch .mt-r-photo img{display:block;width:100%;height:auto;max-height:175px;object-fit:contain;background:#07100b;border-radius:5px}",
 "#mtResearch .mt-r-photo a{font-size:10px;color:#9ce8bb;text-decoration:underline}",
 "@media(max-width:950px){#mtResearch{top:105px;left:8px;right:8px;width:auto;max-height:calc(100dvh - 300px);padding:11px}#mtResearch h2{font-size:17px}}",
-"@media(max-height:610px){#mtResearch{max-height:calc(100dvh - 175px)}}"
+"@media(max-height:610px){#mtResearch{max-height:calc(100dvh - 175px)}}",
+/* Search results default to a short, dismissible map caption. Full evidence remains one tap away. */
+"#mtResearch:not(.mt-expanded){top:auto!important;bottom:calc(72px + env(safe-area-inset-bottom,0px))!important;left:10px!important;right:auto!important;width:min(370px,calc(100% - 20px))!important;max-height:164px!important;overflow:hidden!important;padding:10px 12px!important}",
+"#mtResearch:not(.mt-expanded)>:not(.mt-r-head):not(h2):not(.mt-r-ticker):not(.mt-quick-summary):not(.mt-quick-actions){display:none!important}",
+"#mtResearch:not(.mt-expanded) h2{font-size:14px!important;line-height:1.25!important;margin:4px 0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
+"#mtResearch:not(.mt-expanded) .mt-r-head{margin:0!important}",
+"#mtResearch .mt-quick-summary{font:12px/1.45 system-ui,sans-serif;color:#b8efc9;margin:4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}",
+"#mtResearch .mt-quick-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px}",
+"#mtResearch .mt-quick-actions button,#mtResearch .mt-quick-actions a{border:1px solid #418a5e;border-radius:6px;background:#103c27;color:#e1ffed;padding:6px 8px;font:12px system-ui;text-decoration:none;cursor:pointer}",
+"#mtResearch.mt-expanded{top:64px!important;bottom:calc(72px + env(safe-area-inset-bottom,0px))!important;left:10px!important;right:auto!important;width:min(465px,calc(100% - 20px))!important;max-height:calc(100dvh - 145px)!important;overflow:auto!important}",
+"body.mt-keyboard-open #mtResearch{display:none!important}",
+"@media(orientation:landscape){#mtResearch:not(.mt-expanded){bottom:52px!important;width:min(350px,43vw)!important;max-height:125px!important}#mtResearch:not(.mt-expanded) .mt-r-ticker{display:none!important}#mtResearch.mt-expanded{top:48px!important;bottom:52px!important;max-height:calc(100dvh - 100px)!important}}"
+
 ].join("\n");
 document.head.appendChild(css);
 function el(tag,cls,value){var x=document.createElement(tag);if(cls)x.className=cls;if(value!==undefined)x.textContent=value;return x;}
@@ -88,7 +100,7 @@ function sourceBlock(parent,datum){
  if(datum.asOf)add(b,"p","mt-r-muted","기준: "+datum.asOf);
  link(b,datum.source);
 }
-function renderIndexedSearch(question){
+function renderIndexedSearch(question,onResults){
  var local=window.MTLocalSearch;
  var section=add(panel,"section","mt-local-index");
  add(section,"h3","","LOCAL INTELLIGENCE / 저장 자료 검색");
@@ -100,6 +112,7 @@ function renderIndexedSearch(question){
   if(ticket!==researchSerial||!section.isConnected)return;
   var total=index.documents.length;
   head.textContent="공개 자료 색인 "+total+"건 · AI 호출 0회 · 마지막 색인 생성 "+(index.built_at||"미확인")+" · 원문 기준일은 항목별 확인";
+   if(typeof onResults==="function")onResults(index,results);
   hits.replaceChildren();
   if(!results.length){
    add(hits,"p","mt-r-muted","해당 표현과 일치하는 저장 기록이 없습니다. 출처 목록이나 유사한 법안·기업 이름으로 다시 검색하세요. 없는 자료를 만들어 답하지 않습니다.");
@@ -299,13 +312,38 @@ function renderLiveBackend(question){
 function render(query){
  researchSerial++;
  if(typeof api.beginQuestion==="function")api.beginQuestion();
- var result=engine.analyze(query);panel.hidden=false;while(panel.firstChild)panel.removeChild(panel.firstChild);
+ var result=engine.analyze(query);panel.hidden=false;panel.classList.remove("mt-expanded");while(panel.firstChild)panel.removeChild(panel.firstChild);
+ if(window.MTQuickPin){try{api.map.removeLayer(window.MTQuickPin)}catch(e){}window.MTQuickPin=null;}
  var head=add(panel,"div","mt-r-head");add(head,"span","mt-r-kicker","MONEY TRACKER / INTELLIGENCE BRIEF");
  button(head,"✕ 닫기",close,"mt-r-x");
  add(panel,"h2","",result.title);
  add(panel,"div","mt-r-ticker",result.ticker+" · "+result.topicGroup);
  add(panel,"p","mt-r-lead",result.opening);
- renderIndexedSearch(query);
+ var quick=add(panel,"p","mt-quick-summary","저장된 공식 자료에서 일치하는 기록을 확인하는 중…");
+ var quickActions=add(panel,"div","mt-quick-actions");
+ var expand=button(quickActions,"자료 자세히",function(){
+  var opened=panel.classList.toggle("mt-expanded");
+  expand.textContent=opened?"지도만 보기":"자료 자세히";
+  if(opened)panel.scrollTop=0;
+ });
+ var firstRoute=result.missions.find(function(id){return window.MTIntelData&&window.MTIntelData.getMission(id);});
+ if(firstRoute)button(quickActions,"경로 추적 →",function(){api.selectMission(firstRoute);close();});
+ var sourceAnchor=add(quickActions,"a","","원문 ↗");sourceAnchor.hidden=true;sourceAnchor.target="_blank";sourceAnchor.rel="noopener noreferrer";
+ renderIndexedSearch(query,function(index,results){
+  if(!results.length){quick.textContent="일치하는 저장 자료 없음 · 임의 사실 생성 안 함 · 상세 자료에서 다른 검색어를 확인하세요.";return;}
+  var top=results[0],when=top.source_date||"날짜 미확인";
+  quick.textContent=top.title+" · "+(top.summary||"원문 확인 필요").slice(0,100)+" · "+when;
+  if(/^https:\\/\\//.test(top.url)){sourceAnchor.href=top.url;sourceAnchor.hidden=false;}
+  // A geolocated, high-confidence match may move the map; no invented coordinates.
+  var place=top.location,lat=place&&Number(place.lat),lng=place&&Number(place.lng);
+  if(top.relevance>=20&&Number.isFinite(lat)&&Number.isFinite(lng)&&Math.abs(lat)<=90&&Math.abs(lng)<=180){
+   if(window.L&&api.map){
+    var pin=window.L.circleMarker([lat,lng],{radius:8,color:"#c8ff96",fillColor:"#288b50",fillOpacity:.85,weight:2}).addTo(api.map);
+    pin.bindTooltip(top.title);window.MTQuickPin=pin;
+   }
+   if(typeof api.travelTo==="function")api.travelTo([lat,lng],Math.max(5,Math.min(10,Number(place.zoom)||8)),place.label||top.title);
+  }
+ });
  // Paid model/API calls intentionally disabled: index/search documents first.
  renderSpaceXBrief(result);
  if(!result.photo&&result.location&&window.MTPhoto){var photoSlot=add(panel,"div","mt-r-livephoto");window.MTPhoto.render(photoSlot,result.id,result.location.name);}
