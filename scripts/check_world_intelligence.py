@@ -1,105 +1,165 @@
 #!/usr/bin/env python3
-"""Read-only health checks for the public-data flat world map.
-Does not require map API keys, tokens, or third-party Python packages.
+"""Read-only checks for the current MONEY TRACKER satellite map and evidence schema.
+
+Checks integrity and source labeling; does not claim a browser or live deployment test.
 """
 import datetime as dt
 import json
-import pathlib
+from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
 import tempfile
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-errors = []
-warnings = []
+ROOT = Path(__file__).resolve().parents[1]
+errors, warnings = [], []
 
 
-def check(condition, message):
-    if not condition:
+def check(ok, message):
+    if not ok:
         errors.append(message)
 
 
-def read_json(relative):
-    p = ROOT / relative
-    if not p.exists():
-        errors.append(f"Missing required dataset: {relative}")
+def load(relative, required=True):
+    path = ROOT / relative
+    if not path.exists() or not path.stat().st_size:
+        (errors if required else warnings).append("Missing or empty dataset: " + relative)
         return {}
     try:
-        return json.loads(p.read_text(encoding="utf-8"))
+        value = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(value, dict):
+            raise ValueError("expected JSON object")
+        return value
     except (ValueError, OSError) as exc:
-        errors.append(f"Invalid JSON: {relative}: {exc}")
+        (errors if required else warnings).append(f"Invalid dataset {relative}: {exc}")
         return {}
 
 
 page = ROOT / "world-intelligence/index.html"
 if not page.exists():
-    errors.append("World intelligence map HTML missing")
+    errors.append("Satellite map HTML missing")
 else:
     html = page.read_text(encoding="utf-8")
-    for needle in ("id=\"realEarth\"", "L.map('realEarth'", "tile.openstreetmap.org",
-                   "cdn.jsdelivr.net/npm/leaflet", "id=\"journey\"",
-                   "id=\"intelFeed\"", "id=\"intelBrief\"", "#rotate{display:none!important}"):
-        check(needle in html, f"Map page missing expected feature: {needle}")
-    scripts = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", html, flags=re.I | re.S)
+    for marker in ('id="mapFrame"', 'id="map"', 'id="ask"',
+                   'id="candidatePanel"', 'id="brief"', 'id="question"',
+                   'server.arcgisonline.com', 'window.moneyTrackerMap',
+                   'src="./evidence.js"'):
+        check(marker in html, "Map missing feature: " + marker)
+    check("document.getElementById('intelLines'),code=" not in html,
+          "Old concatenated JavaScript corruption detected")
+    check("fallback.style.display='block'" in html,
+          "Offline fallback missing")
+    scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, flags=re.I | re.S)
+    evidence = ROOT / "world-intelligence/evidence.js"
+    check(evidence.is_file(), "Source evidence overlay script missing")
+    if evidence.is_file():
+        js = evidence.read_text(encoding="utf-8")
+        for marker in ("data/us/bills.json", "data/us/trades.json",
+                       "ptr-crosschecks.json", "machine_parsed_requires_review",
+                       "disclosures-clerk.house.gov", "www.congress.gov"):
+            check(marker in js, "Evidence overlay missing source guard: " + marker)
     if shutil.which("node"):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory() as tmp:
             for i, script in enumerate(scripts, 1):
-                p = pathlib.Path(directory) / f"inline-{i}.js"
-                p.write_text(script, encoding="utf-8")
-                result = subprocess.run(["node", "--check", str(p)], capture_output=True, text=True)
-                if result.returncode:
-                    errors.append(f"Inline JavaScript {i} syntax error: {result.stderr[-400:]}")
+                target = Path(tmp) / f"inline-{i}.js"
+                target.write_text(script, encoding="utf-8")
+                run = subprocess.run(["node", "--check", str(target)],
+                                     capture_output=True, text=True)
+                check(run.returncode == 0, f"Inline JS {i} syntax: {run.stderr[-350:]}")
+            if evidence.is_file():
+                run = subprocess.run(["node", "--check", str(evidence)],
+                                     capture_output=True, text=True)
+                check(run.returncode == 0, "Evidence JS syntax: " + run.stderr[-350:])
     else:
-        warnings.append("Node.js not installed; JavaScript syntax check skipped")
+        warnings.append("Node unavailable: JavaScript syntax not checked")
 
-signals_page = ROOT / "world-intelligence/us-signals.html"
-if signals_page.exists():
-    signals_html = signals_page.read_text(encoding="utf-8")
-    check("../../data/" not in signals_html,
-          "US Signal Lab has broken two-level data URLs on GitHub Pages")
-else:
-    errors.append("US Signal Lab HTML missing")
+bills = load("data/us/bills.json")
+recent = bills.get("recent")
+stats = bills.get("stat")
+check(isinstance(recent, dict) and bool(recent), "Congress bills recent map missing")
+check(isinstance(stats, dict) and bool(stats), "Congress bills member statistics missing")
+bill_count = 0
+if isinstance(recent, dict):
+    for member, items in recent.items():
+        if not isinstance(items, list):
+            errors.append("Congress bill list invalid for member " + member)
+            continue
+        bill_count += len(items)
+        for item in items:
+            if not isinstance(item, dict) or not str(item.get("u", "")).startswith(
+                    "https://www.congress.gov/bill/"):
+                errors.append("Congress bill missing official source URL")
+                break
 
-bills = read_json("data/us/bills.json")
-trades = read_json("data/us/trades.json")
-index = read_json("data/index.json")
-check(isinstance(bills.get("stat"), dict) and len(bills.get("stat", {})) > 0,
-      "US congressional bills dataset has no member statistics")
-check(isinstance(trades.get("trades"), list) and len(trades.get("trades", [])) > 0,
-      "US House transactions dataset is empty")
-check(isinstance(index.get("cities"), list) and len(index.get("cities", [])) > 0,
-      "Korean municipal data index is empty")
-
+trades = load("data/us/trades.json")
+records = trades.get("records")
+check(isinstance(records, list), "House PTR schema must use records array")
 today = dt.datetime.now(dt.timezone.utc).date()
-for name, value in [("US bills", bills.get("updated")), ("US trades", trades.get("updated")),
-                    ("Korean municipal index", index.get("updated"))]:
-    if not value:
-        warnings.append(f"{name}: update timestamp missing")
-        continue
-    try:
-        date = dt.date.fromisoformat(str(value)[:10])
-        if (today - date).days > 2:
-            warnings.append(f"{name}: data is {(today - date).days} days old")
-    except ValueError:
-        warnings.append(f"{name}: unparseable update timestamp {value}")
+valid_candidates = 0
+if isinstance(records, list):
+    for i, r in enumerate(records):
+        if not isinstance(r, dict):
+            errors.append(f"House PTR row {i} is not an object")
+            continue
+        if r.get("verification") != "machine_parsed_requires_review":
+            errors.append(f"House PTR row {i} lacks explicit unverified label")
+        if not str(r.get("source_pdf", "")).startswith(
+                "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/"):
+            errors.append(f"House PTR row {i} has no official PDF")
+        else:
+            valid_candidates += 1
+        try:
+            when = dt.date.fromisoformat(r["transaction_date"])
+            if when > today:
+                warnings.append(f"House PTR row {i} future transaction date")
+            low, high = int(r["amount_min_usd"]), int(r["amount_max_usd"])
+            if low < 1 or high < low:
+                raise ValueError("invalid amount range")
+        except (ValueError, TypeError, KeyError) as exc:
+            errors.append(f"House PTR row {i} invalid date/amount: {exc}")
+    if not records:
+        warnings.append("No House PTR candidate rows: do not show trade signals")
 
-future = [row for row in trades.get("trades", [])
-          if isinstance(row, dict) and str(row.get("d", "")) > today.isoformat()]
-if future:
-    warnings.append(f"{len(future)} transaction(s) have future-dated transaction dates; verify source PDFs")
-if any("403" in str(line) or "Access Denied" in str(line) for line in trades.get("log", [])):
-    warnings.append("Senate disclosure index access denied (403); Senate data completeness unverified")
+ledger = load("data/us/ptr-crosschecks.json", required=False)
+checks = ledger.get("checks", [])
+check(isinstance(checks, list), "PTR crosscheck ledger must contain checks array")
+if isinstance(checks, list) and isinstance(records, list):
+    for item in checks:
+        if not isinstance(item, dict):
+            errors.append("Invalid PTR crosscheck item")
+            continue
+        if item.get("result") != "matches_reported_filing_fields":
+            errors.append("Unsupported PTR crosscheck result")
+        fields = ("filing_id", "ticker", "transaction_date", "type",
+                  "amount_min_usd", "amount_max_usd")
+        if not any(all(item.get(key) == r.get(key) for key in fields)
+                   for r in records if isinstance(r, dict)):
+            errors.append("PTR crosscheck does not match archived candidate row")
+        if not str(item.get("source_pdf", "")).startswith(
+                "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/"):
+            errors.append("PTR crosscheck source is not official")
+
 for optional in ("data/us-macro.json", "data/us-house-filings.json"):
-    if not (ROOT / optional).exists():
-        warnings.append(f"Optional official dataset not generated: {optional}")
+    path = ROOT / optional
+    if not path.exists() or not path.stat().st_size:
+        warnings.append("Missing or empty optional dataset: " + optional)
 
-print(f"World intelligence health: {len(errors)} error(s), {len(warnings)} warning(s)")
-print(f"US House trades: {len(trades.get('trades', []))}; US bill members: {len(bills.get('stat', {}))}; "
-      f"Korean cities: {len(index.get('cities', []))}")
-for message in warnings:
-    print("WARNING:", message)
-for message in errors:
-    print("ERROR:", message, file=sys.stderr)
+status = load("data/us-ingestion-status.json", required=False)
+health = status.get("file_health", {})
+if isinstance(health, dict):
+    for name in ("us-house-filings.json", "us-macro.json"):
+        claimed = health.get(name, {})
+        path = ROOT / "data" / name
+        if isinstance(claimed, dict) and claimed.get("status") == "present" and (
+                not path.exists() or not path.stat().st_size):
+            warnings.append("Stale ingestion status claims present but file is empty: " + name)
+
+print(f"World map health: {len(errors)} errors; {len(warnings)} warnings")
+print(f"Congress bill records: {bill_count}; House PTR unverified candidates: {valid_candidates}; "
+      f"PDF field crosschecks: {len(checks) if isinstance(checks, list) else 0}")
+for warning in warnings:
+    print("WARNING:", warning)
+for error in errors:
+    print("ERROR:", error, file=sys.stderr)
 sys.exit(1 if errors else 0)
