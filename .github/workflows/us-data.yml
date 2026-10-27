@@ -6,6 +6,7 @@ on:
       - 'scripts/collect_us_macro.py'
       - 'scripts/collect_house_filings.py'
       - '.github/workflows/us-data.yml'
+      - 'scripts/audit_data_coverage.py'
   schedule:
     - cron: '17 5 * * *'
   workflow_dispatch:
@@ -48,6 +49,9 @@ jobs:
           payload={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'macro_run':os.environ.get('MACRO_OUTCOME'),'house_run':os.environ.get('HOUSE_OUTCOME'),'files_present':datasets,'warning':'File existence is not equivalent to complete or fresh data.'}
           p.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n')
           PY
+      - name: Audit data coverage (missing, empty, invalid)
+        if: always()
+        run: python scripts/audit_data_coverage.py
       - name: Commit changed data
         run: |
           git config user.name "money-tracker-data-bot"
