@@ -37,7 +37,7 @@ function hyp(title,reason,verify,ref){return {title:title,reason:reason,verify:v
 function signal(title,watch,ifPositive,ifNegative){return {title:title,watch:watch,up:ifPositive,down:ifNegative};}
 var TOPICS={
  spacex:{
-  id:"spacex",label:"스페이스X",ticker:"NASDAQ: SPCX · 2026-06-12 상장",group:"우주산업·발사·정부계약",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","스페이스x","스타십","starship","스타링크","starlink","팰컨9","falcon 9","falcon9","드래곤 우주선","crew-13","crs-35"],route:["spacex","history","trade"],point:{lat:25.997,-97.156,zoom:10,name:"텍사스 스타베이스 · Starship 시험 발사 시설"},
+  id:"spacex",label:"스페이스X",ticker:"NASDAQ: SPCX · 2026-06-12 상장",group:"우주산업·발사·정부계약",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","스페이스x","스타십","starship","스타링크","starlink","팰컨9","falcon 9","falcon9","드래곤 우주선","crew-13","crs-35"],route:["spacex","history","trade"],point:{lat:25.997,lng:-97.156,zoom:10,name:"텍사스 스타베이스 · Starship 시험 발사 시설"},
   facts:[
     datum("상장 정보","SpaceX는 2026년 6월 12일 미국 나스닥에 SPCX로 신규 상장했습니다. 비상장 기업이 아닙니다.","spacexIPO","2026-06-12"),
     datum("최근 3분기 SEC 실적","2026년 3분기 연결 매출 145억7,500만 달러, 전년 동기 55억7,600만 달러. 여러 사업부 통합 실적입니다.","spacexSEC","2026-09-30 마감 분기"),
