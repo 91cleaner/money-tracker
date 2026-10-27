@@ -125,7 +125,7 @@ function analyze(query){
  var interrogative=intent==="cause"?"왜 움직이는지":intent==="rise"?"상승 여력을":intent==="decision"?"다음 판단을":intent==="timing"?"지금 확인할 일정을":"어떤 연결이 있는지";
  var opening;
  if(isFallback){
-  opening="질문과 직접 맞는 종목·사건을 아직 식별하지 못했습니다. 그렇다고 빈 화면을 보여주지 않습니다. 아래에는 현재 확인 가능한 기업 실적, 법안, 연준 데이터와 추적 경로를 제공합니다. 질문에 대한 직접적인 원인으로 오해하지 않도록 구분했습니다.";
+  opening="질문을 받았습니다. 준비된 주제와 일치하지 않아 현재 공개 백과 자료에서 질문에 가까운 문서를 찾아보겠습니다. 이 조회는 최신 뉴스·주가 검색이나 생성형 AI 추론이 아닙니다. 확인한 문서와 직접 확인하지 못한 내용을 구분하겠습니다.";
  }else if(intent==="cause"){
   opening=topic.label+"의 하락 원인을 묻는 질문으로 해석했습니다. 실제 해당 시점에 주가가 하락했는지, 하락폭과 뉴스가 무엇인지는 현재 시세·뉴스 피드가 미연결이라 확인되지 않았습니다. 아래는 공시·정책에 근거한 원인 후보이며 확인된 당일 원인이 아닙니다.";
  }else if(intent==="rise"){
@@ -137,11 +137,11 @@ function analyze(query){
  }else opening=topic.label+"에서 "+interrogative+" 탐색합니다. 공식 자료와 관련 산업·법안·역사를 연결하되 현재 시점의 확인되지 않은 사실은 표시하지 않습니다.";
  var title=isFallback?"연결 가능한 데이터부터 추적":topic.label+(intent==="cause"?" · 하락 원인 분석":intent==="rise"?" · 상승 요인 분석":intent==="decision"?" · 사용자 판단 브리핑":" · 관제실 브리핑");
  return {
-  query:String(query),id:topic.id,topic:topic.label,ticker:topic.ticker,topicGroup:topic.group,
+  query:String(query),id:isFallback?"open":topic.id,topic:isFallback?"공개 자료 탐색":topic.label,ticker:isFallback?"OPEN SEARCH":topic.ticker,topicGroup:isFallback?"범용 조사 시험 기능":topic.group,
   intent:intent,isFallback:isFallback,title:title,opening:opening,
-  facts:isFallback?[TOPICS.nvda.facts[0],TOPICS.chips.facts[0],TOPICS.rates.facts[0]]:topic.facts,assumptions:topic.risks,signals:topic.signals,
-  insight:topic.insight,missions:isFallback?["nvda","chips","trade","rates","history","disclosures"]:topic.route,
-  location:topic.point,photo:isFallback?null:(topic.photo||null),asOf:"자료별 기준일 확인 · 실시간 미연결",
+  facts:isFallback?[]:topic.facts,assumptions:isFallback?[]:topic.risks,signals:isFallback?[]:topic.signals,
+  insight:isFallback?"찾은 문서의 주제·연도·출처가 질문과 일치하는지 먼저 확인하세요. 일치하지 않는 자료를 억지로 연결하거나 최신 사건의 원인을 추정하지 않습니다.":topic.insight,missions:isFallback?["history","rates","trade","chips","disclosures"]:topic.route,
+  location:isFallback?null:topic.point,photo:isFallback?null:(topic.photo||null),asOf:"자료별 기준일 확인 · 실시간 미연결",
   caveat:"이 분석은 보관된 공식 자료를 기반으로 한 규칙형 조사 브리핑입니다. 생성형 AI·실시간 뉴스·실시간 시세에 연결되어 있지 않습니다. 현재 주가 방향이나 당일 급락 원인을 확인했다고 주장하지 않습니다.",
   scenarios:topic.signals.length?topic.signals[0]:null,
   userChoice:["강세 가설","중립·관찰","약세 가설"]
