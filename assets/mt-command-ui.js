@@ -14,6 +14,21 @@ var oldHud=root.querySelector(".pg-top .mono");if(oldHud)oldHud.innerHTML="◉ S
 var map=L.map(root.querySelector(".pg-map"),{zoomControl:false,attributionControl:true,minZoom:2,maxZoom:18,worldCopyJump:true,zoomSnap:0.25});
 map.attributionControl.setPrefix(false);
 var dark=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:18,maxNativeZoom:11,noWrap:false,attribution:"Map © Esri"}).addTo(map);
+var tileFailures=0,tileFallbackActive=false;
+dark.on("tileerror",function(){
+ if(tileFallbackActive||++tileFailures<3)return;
+ tileFallbackActive=true;
+ map.removeLayer(dark);
+ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+  maxZoom:18,attribution:"© OpenStreetMap contributors"
+ }).addTo(map).bringToBack();
+ var warning=document.createElement("div");
+ warning.id="mtTileFallback";
+ warning.setAttribute("role","status");
+ warning.style.cssText="position:absolute;z-index:760;left:10px;top:60px;max-width:320px;background:#102b1c;color:#dcffe8;border:1px solid #80c79a;border-radius:8px;padding:7px 10px;font:12px system-ui;pointer-events:none";
+ warning.textContent="기본 지도 서버 연결 오류 · 대체 지도 사용 중";
+ root.appendChild(warning);
+});
 var satPane=map.createPane("sat");satPane.style.zIndex="450";satPane.style.filter="brightness(.8) contrast(1.12) saturate(.85)";
 var labelPane=map.createPane("satlab");labelPane.style.zIndex="460";labelPane.style.pointerEvents="none";
 var sat=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{pane:"sat",minZoom:6,maxZoom:18,maxNativeZoom:18,opacity:0,noWrap:false}).addTo(map);
