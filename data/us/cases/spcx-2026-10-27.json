@@ -1,0 +1,277 @@
+{
+  "version": "1.0.0",
+  "id": "case-us-spcx-20261027",
+  "as_of": "2026-10-27",
+  "title": "SPCX 최근 사건·주가·공식 기록 조사",
+  "kind": "public-evidence-snapshot",
+  "status": "historical-not-live",
+  "scope": "SpaceX is listed as NASDAQ: SPCX since 2026-06-12. This dossier is NOT a real-time price feed. Market movements do not prove specific causes.",
+  "entities": [
+    {
+      "id": "spcx",
+      "type": "listed_company",
+      "name": "Space Exploration Technologies Corp.",
+      "ticker": "SPCX",
+      "exchange": "NASDAQ",
+      "sec_cik": "0001181412",
+      "lat": 25.997,
+      "lng": -97.156
+    },
+    {
+      "id": "nasdaq",
+      "type": "market_venue",
+      "name": "NASDAQ",
+      "lat": 40.7573,
+      "lng": -73.9855
+    },
+    {
+      "id": "starbase",
+      "type": "facility",
+      "name": "Starbase, Texas",
+      "lat": 25.997,
+      "lng": -97.156
+    },
+    {
+      "id": "nasa",
+      "type": "agency",
+      "name": "NASA",
+      "lat": 38.8833,
+      "lng": -77.0164
+    },
+    {
+      "id": "crew13",
+      "type": "mission",
+      "name": "Crew-13 launch",
+      "lat": 28.562,
+      "lng": -80.577
+    },
+    {
+      "id": "crs35",
+      "type": "mission",
+      "name": "CRS-35 cargo mission",
+      "lat": 28.562,
+      "lng": -80.577
+    },
+    {
+      "id": "starship14",
+      "type": "mission",
+      "name": "Starship Flight 14",
+      "lat": 25.997,
+      "lng": -97.156
+    },
+    {
+      "id": "faa",
+      "type": "agency",
+      "name": "Federal Aviation Administration",
+      "lat": 38.887,
+      "lng": -77.025
+    },
+    {
+      "id": "secq3",
+      "type": "filing",
+      "name": "SpaceX 2026 Q3 Form 10-Q",
+      "lat": 38.894,
+      "lng": -77.028
+    }
+  ],
+  "sources": [
+    {
+      "id": "IPO",
+      "publisher": "SpaceX Investor Relations",
+      "url": "https://ir.spacex.com/updates/releases-details/2026/Space-Exploration-Technologies-Corp--Announces-Closing-of-Initial-Public-Offering-Including-Full-Exercise-of-Underwriters-Option-to-Purchase-Additional-Shares-2026-RgoR-Y1Vwh/"
+    },
+    {
+      "id": "SEC",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm"
+    },
+    {
+      "id": "PRICE",
+      "publisher": "Stock Analysis",
+      "url": "https://stockanalysis.com/stocks/spcx/history/"
+    },
+    {
+      "id": "STARSHIP",
+      "publisher": "SpaceX",
+      "url": "https://www.spacex.com/launches/starship-flight-14"
+    },
+    {
+      "id": "CREW",
+      "publisher": "NASA",
+      "url": "https://www.nasa.gov/news-release/nasas-spacex-crew-13-launches-to-international-space-station/"
+    },
+    {
+      "id": "CRS",
+      "publisher": "NASA",
+      "url": "https://www.nasa.gov/mission/nasas-spacex-crs-35/"
+    },
+    {
+      "id": "FAA",
+      "publisher": "FAA",
+      "url": "https://www.faa.gov/space/stakeholder_engagement/spacex_starship_ccsfs"
+    },
+    {
+      "id": "FR",
+      "publisher": "Federal Register",
+      "url": "https://www.govinfo.gov/content/pkg/FR-2026-10-14/html/2026-20963.htm"
+    },
+    {
+      "id": "LOCKUP",
+      "publisher": "Benzinga / TradingView",
+      "url": "https://www.tradingview.com/news/benzinga%3A525f00c05094b%3A0-spacex-stock-slides-as-second-lockup-expires/"
+    }
+  ],
+  "facts": [
+    {
+      "id": "ipo",
+      "date": "2026-06-12",
+      "subject": "spcx",
+      "name": "SpaceX shares began trading under SPCX",
+      "statement_ko": "SpaceX는 2026년 6월 12일 나스닥에서 SPCX로 거래를 시작했다.",
+      "source_id": "IPO",
+      "confidence": "primary"
+    },
+    {
+      "id": "q3-revenue",
+      "date": "2026-09-30",
+      "subject": "secq3",
+      "name": "Q3 revenue (USD million)",
+      "value": 14575,
+      "unit": "USD million",
+      "prior_year": 5576,
+      "statement_ko": "SEC 10-Q 기준 2026년 3분기 연결 매출 145억7,500만 달러, 전년 동기 55억7,600만 달러.",
+      "source_id": "SEC",
+      "confidence": "primary"
+    },
+    {
+      "id": "q3-connectivity",
+      "date": "2026-09-30",
+      "subject": "secq3",
+      "name": "Connectivity segment revenue (USD million)",
+      "value": 5248,
+      "unit": "USD million",
+      "prior_year": 3097,
+      "statement_ko": "2026년 3분기 연결 사업 매출 52억4,800만 달러, 전년 동기 30억9,700만 달러.",
+      "source_id": "SEC",
+      "confidence": "primary"
+    },
+    {
+      "id": "close1022",
+      "date": "2026-10-22",
+      "subject": "spcx",
+      "name": "SPCX historical daily close",
+      "value": 144.75,
+      "unit": "USD",
+      "daily_change_percent": -9.14,
+      "statement_ko": "10월 22일 SPCX 종가 144.75달러, 전일 대비 9.14% 하락. 과거 일별 가격 자료이며 실시간 시세 아님.",
+      "source_id": "PRICE",
+      "confidence": "third-party-historical"
+    },
+    {
+      "id": "close1026",
+      "date": "2026-10-26",
+      "subject": "spcx",
+      "name": "SPCX historical daily close",
+      "value": 146.9,
+      "unit": "USD",
+      "daily_change_percent": -0.4,
+      "statement_ko": "10월 26일 SPCX 종가 146.90달러, 전일 대비 0.40% 하락. 과거 일별 가격 자료이며 실시간 시세 아님.",
+      "source_id": "PRICE",
+      "confidence": "third-party-historical"
+    },
+    {
+      "id": "flight14",
+      "date": "2026-09-28",
+      "subject": "starship14",
+      "name": "Starship flight 14",
+      "statement_ko": "Starship Flight 14가 9월 28일 Starbase에서 발사됐다.",
+      "source_id": "STARSHIP",
+      "confidence": "primary"
+    },
+    {
+      "id": "crew13",
+      "date": "2026-10-01",
+      "subject": "crew13",
+      "name": "Crew-13 launch",
+      "statement_ko": "NASA는 10월 1일 SpaceX Crew-13 발사를 발표했다.",
+      "source_id": "CREW",
+      "confidence": "primary"
+    },
+    {
+      "id": "crs35",
+      "date": "2026-10-13",
+      "subject": "crs35",
+      "name": "CRS-35 mission",
+      "statement_ko": "NASA는 CRS-35 화물 임무의 발사일을 10월 13일로 기록한다.",
+      "source_id": "CRS",
+      "confidence": "primary"
+    },
+    {
+      "id": "faa",
+      "date": "2026-10-14",
+      "subject": "faa",
+      "name": "Federal environmental review",
+      "statement_ko": "연방관보는 텍사스 Starbase의 발사 운영 확대와 관련한 환경 검토 착수를 공고했다.",
+      "source_id": "FR",
+      "confidence": "primary"
+    }
+  ],
+  "edges": [
+    {
+      "subject": "spcx",
+      "predicate": "listed_on",
+      "object": "nasdaq",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "IPO"
+    },
+    {
+      "subject": "spcx",
+      "predicate": "filed",
+      "object": "secq3",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "SEC"
+    },
+    {
+      "subject": "spcx",
+      "predicate": "launched",
+      "object": "starship14",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "STARSHIP"
+    },
+    {
+      "subject": "spcx",
+      "predicate": "contractor_for",
+      "object": "crew13",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "CREW"
+    },
+    {
+      "subject": "spcx",
+      "predicate": "contractor_for",
+      "object": "crs35",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "CRS"
+    },
+    {
+      "subject": "faa",
+      "predicate": "reviews_licensing_environment",
+      "object": "starbase",
+      "relation_type": "POLICY_CONTEXT",
+      "source_id": "FR"
+    },
+    {
+      "subject": "starship14",
+      "predicate": "potentially_relevant_to_investor_expectations",
+      "object": "spcx",
+      "relation_type": "HYPOTHESIS",
+      "source_id": "STARSHIP"
+    }
+  ],
+  "open_questions": [
+    "2026-10-22 주가 하락 당시 거래량·대형 투자자 매물·락업 해제의 정확한 관계는 무엇인가?",
+    "3분기 실적이 공개 전 시장 컨센서스와 어떻게 달랐나?",
+    "스타십 개발비·차입 계획이 회사 현금흐름과 주가 평가에 어떤 영향을 줄 수 있나?",
+    "FAA 허가/심사의 진행 단계와 실제 발사 일정은 어떻게 다른가?"
+  ],
+  "notice": "값과 날짜는 원문에서 다시 확인할 수 있도록 설계된 고정 스냅샷입니다. 뉴스 제목은 원인 확정의 증거가 아니며 미상장 기업이라고 표시해서는 안 됩니다."
+}
