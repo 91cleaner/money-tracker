@@ -47,8 +47,22 @@ jobs:
           if p.exists():
               try: previous=json.loads(p.read_text())
               except (ValueError,OSError): pass
-          datasets={name:pathlib.Path('data/'+name).exists() for name in ['us-macro.json','us-house-filings.json','us-events.json']}
-          payload={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'macro_run':os.environ.get('MACRO_OUTCOME'),'house_run':os.environ.get('HOUSE_OUTCOME'),'files_present':datasets,'warning':'File existence is not equivalent to complete or fresh data.'}
+          expected={'us-macro.json':'series','us-house-filings.json':'records','us-events.json':'events'}
+          def check(name, key):
+              path=pathlib.Path('data')/name
+              if not path.exists(): return {'status':'missing','records':0}
+              if not path.stat().st_size: return {'status':'empty','records':0}
+              try:
+                  data=json.loads(path.read_text(encoding='utf-8'))
+                  records=data.get(key) if isinstance(data,dict) else None
+                  if not isinstance(records,(list,dict)): return {'status':'invalid','records':0}
+                  count=len(records)
+                  return {'status':'present' if count else 'empty','records':count}
+              except (OSError,ValueError,UnicodeError):
+                  return {'status':'invalid','records':0}
+          health={name:check(name,key) for name,key in expected.items()}
+          datasets={name:info['status']=='present' for name,info in health.items()}
+          payload={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'macro_run':os.environ.get('MACRO_OUTCOME'),'house_run':os.environ.get('HOUSE_OUTCOME'),'files_present':datasets,'file_health':health,'warning':'A successful collector step or existing file does not prove nonempty, fresh or verified data.'}
           p.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n')
           PY
       - name: Build House PTR review queue from verified filing index
