@@ -1,5 +1,10 @@
 name: 추적 파일 섹션 갱신
 on:
+  push:
+    paths:
+      - 'collector/mask_names.py'
+      - 'collector/sections/open_bids.py'
+      - '.github/workflows/sections.yml'
   schedule:
     - cron: "47 * * * *"
   workflow_dispatch: {}
