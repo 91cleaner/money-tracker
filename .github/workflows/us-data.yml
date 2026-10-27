@@ -10,6 +10,7 @@ on:
       - 'scripts/build_ptr_research_queue.py'
       - 'scripts/extract_house_ptr.py'
       - 'tests/test_house_ptr_extraction.py'
+      - 'tests/test_house_filing_archive.py'
       - 'tests/test_ptr_research_queue.py'
       - 'scripts/sync_command_worker.py'
   schedule:
@@ -29,8 +30,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Test House PTR queue calendar order and candidate provenance
+      - name: Test House filing freshness, PTR queue and candidate provenance
         run: |
+          python -m unittest discover -s tests -p 'test_house_filing_archive.py'
           python -m unittest discover -s tests -p 'test_ptr_research_queue.py'
           python -m unittest discover -s tests -p 'test_house_ptr_extraction.py'
       - name: Fetch official macro series
