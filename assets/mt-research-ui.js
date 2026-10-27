@@ -58,16 +58,19 @@ function render(query){
  add(panel,"h2","",result.title);
  add(panel,"div","mt-r-ticker",result.ticker+" · "+result.topicGroup);
  add(panel,"p","mt-r-lead",result.opening);
+ if(!result.photo&&window.MTPhoto){var photoSlot=add(panel,"div","mt-r-livephoto");window.MTPhoto.render(photoSlot,result.id,result.location.name);}
  if(result.photo&&/^https:\/\/thumb\.wikimedia\.org\//.test(result.photo.url)){
   var photo=add(panel,"figure","mt-r-photo");
   var picture=add(photo,"img","");picture.src=result.photo.url;picture.alt="검증된 실제 장소 사진 · "+result.location.name;picture.loading="lazy";
-  picture.onerror=function(){photo.remove();};
+  picture.onerror=function(){photo.remove();if(window.MTPhoto){var recover=add(panel,"div","mt-r-livephoto");window.MTPhoto.render(recover,result.id,result.location.name);}};
   var credit=add(photo,"figcaption","");var creditLink=add(credit,"a","",result.photo.credit+" · 사진 원본 / 라이선스");
   creditLink.href=result.photo.source;creditLink.target="_blank";creditLink.rel="noopener noreferrer";
  }
  if(result.isFallback){
   add(panel,"h3","","확인 가능한 탐색 경로");
   add(panel,"p","mt-r-muted","질문과 일치하는 사실은 찾지 못했지만, 다음 관계망으로 조사를 시작할 수 있습니다. 현재 사건의 사실 여부는 확인되지 않았습니다.");
+  add(panel,"h3","","지금 확인 가능한 실제 공개 데이터 (질문과 직접 관련 없는 참고 자료)");
+  result.facts.forEach(function(d){sourceBlock(panel,d);});
  }else{
   add(panel,"h3","","01 · 확인된 자료");
   result.facts.forEach(function(d){sourceBlock(panel,d);});
@@ -113,7 +116,7 @@ function render(query){
  if(result.location){
   var center=result.location;
   var zoom=Math.min(10,Math.max(5,center.zoom||8));
-  if(typeof api.travelTo==="function")api.travelTo([center.lat,center.lng],zoom);
+  if(typeof api.travelTo==="function")api.travelTo([center.lat,center.lng],zoom,result.topic+" / 브리핑 조회");
   else map.flyTo([center.lat,center.lng],zoom,{duration:1.5});
  }
  return result;
