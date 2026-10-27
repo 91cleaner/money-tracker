@@ -28,10 +28,11 @@ test("arbitrary nonsensical questions still yield a useful and clearly bounded i
  const r=engine.analyze("외계인이 과자를 훔쳤는데 주식시장에 영향 있어?");
  assert.equal(r.isFallback,true);
  assert.ok(r.missions.length>=3);
- assert.ok(r.assumptions.length>0);
- assert.ok(r.facts.length>=3,"unknown query still shows verified but unrelated example data");
- assert.match(r.opening,/직접 맞는 종목|확인 가능한 기업 실적/);
- assert.ok(r.facts.every(d=>/^https:\/\//.test(d.source.url)));
+ assert.equal(r.id,"open");
+ assert.equal(r.location,null,"unknown queries must not send map to Taiwan");
+ assert.equal(r.assumptions.length,0,"do not invent reasons based on unrelated history");
+ assert.equal(r.facts.length,0,"do not show NVIDIA facts for arbitrary question");
+ assert.match(r.opening,/공개 백과 자료|질문을 받았습니다/);
 });
 test("user decides; the engine never asserts current prices or trade execution",()=>{
  for(const q of ["NVDA 사야 돼?","펠로시 왜 샀어?","금리 지금 얼마야","엔비디아 오늘 폭락했어?"]){
