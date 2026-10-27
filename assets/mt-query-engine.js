@@ -19,6 +19,11 @@ var SRC={
  sec:{title:"미국 SEC · EDGAR 기업 공시",url:"https://www.sec.gov/edgar/search/"},
  history:{title:"미 국무부 역사실 · 외교사",url:"https://history.state.gov/"},
  trades:{title:"미 하원 서기처 · 금융공시",url:"https://disclosures-clerk.house.gov/FinancialDisclosure"},
+ spacexLaunches:{title:"SpaceX · 공식 발사·임무 기록",url:"https://www.spacex.com/launches"},
+ spacexCrew:{title:"NASA · SpaceX Crew-13 발사 (2026-10-01)",url:"https://www.nasa.gov/news-release/nasas-spacex-crew-13-launches-to-international-space-station/"},
+ spacexCargo:{title:"NASA · SpaceX CRS-35 임무 (2026-10-13)",url:"https://www.nasa.gov/mission/nasas-spacex-crs-35/"},
+ spacexFAA:{title:"FAA · Starship Cape Canaveral 발사·허가 심사",url:"https://www.faa.gov/space/stakeholder_engagement/spacex_starship_ccsfs"},
+ spacexTexasFAA:{title:"미국 연방관보 · Starbase 환경영향평가 공고 (2026-10-14)",url:"https://www.govinfo.gov/content/pkg/FR-2026-10-14/html/2026-20963.htm"},
  tsa:{title:"미국 증권거래위원회 · 투자정보",url:"https://www.investor.gov/"}
 };
 function source(ref){return SRC[ref];}
@@ -26,6 +31,28 @@ function datum(label,value,ref,date){return {label:label,value:value,source:sour
 function hyp(title,reason,verify,ref){return {title:title,reason:reason,verify:verify,source:source(ref)};}
 function signal(title,watch,ifPositive,ifNegative){return {title:title,watch:watch,up:ifPositive,down:ifNegative};}
 var TOPICS={
+ spacex:{
+  id:"spacex",label:"스페이스X",ticker:"SpaceX · 비상장 / 별도 주가 없음",group:"우주산업·발사·정부계약",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","스페이스x","스타십","starship","스타링크","starlink","팰컨9","falcon 9","falcon9","드래곤 우주선","crew-13","crs-35"],route:["spacex","history","trade"],point:{lat:25.997,-97.156,zoom:10,name:"텍사스 스타베이스 · Starship 시험 발사 시설"},
+  facts:[
+    datum("최근 스타십 시험 기록","SpaceX 공식 발사 기록에 Starship Flight 14가 2026년 9월 28일 발사된 것으로 기재되어 있습니다.","spacexLaunches","2026-09-28"),
+    datum("유인우주선 임무","NASA에 따르면 2026년 10월 1일 SpaceX의 Crew-13 임무가 국제우주정거장을 향해 발사됐습니다.","spacexCrew","2026-10-01"),
+    datum("화물 수송 임무","NASA는 CRS-35 화물 보급 임무의 발사일을 2026년 10월 13일로 기록합니다.","spacexCargo","2026-10-13"),
+    datum("발사 규제·인프라","FAA는 Cape Canaveral SLC-37 관련 Starship 상업 발사에 별도 운항면허 변경이 필요하다고 설명합니다.","spacexFAA","2026-10 공개 안내"),
+    datum("텍사스 발사 운영의 규제 검토","2026년 10월 14일 연방관보에 Starbase의 향후 Starship 운영을 다루는 환경영향평가 공고가 게재됐습니다.","spacexTexasFAA","2026-10-14")
+  ],
+  risks:[
+    hyp("스타십 개발 진척","시험 발사는 기술을 개선하기 위한 과정입니다. 발사 성공·실패·개발 일정은 공식 기록과 후속 발표로 판단해야 하며, 발사 횟수만으로 회사의 현재 상태를 단정할 수 없습니다.","Starship Flight 14 이후 공식 기술 보고와 다음 시험 일정을 확인하세요.","spacexLaunches"),
+    hyp("NASA 계약 및 운송 임무","Crew Dragon 유인 수송과 ISS 화물 보급은 스타십 시험과 별개 사업입니다. 최근 발사를 보면 회사 전체가 무엇 때문에 움직이는지 구분할 수 있습니다.","NASA Crew-13, CRS-35 공식 발표와 계약 일정·임무 상태를 각각 확인하세요.","spacexCrew"),
+    hyp("FAA 규제·발사장 확대","신규 발사 시설과 비행 횟수 확대에는 환경 심사와 운항면허 조건이 걸릴 수 있습니다. 심사 중인 사업을 이미 승인·완료된 사업처럼 해석하면 안 됩니다.","FAA 공고에서 신청·심사·승인 단계를 나눠 살펴보세요.","spacexFAA"),
+    hyp("상장주식과의 간접 연결","SpaceX는 자체 상장 주식 티커가 없는 비상장 기업입니다. 상장 기업에 미치는 영향은 실제 공개 계약·공급망 자료를 별도로 확인해야 합니다.","개별 상장기업 계약 공시와 SpaceX 조달 발표가 실제로 일치하는지 확인하세요.","spacexLaunches")
+  ],
+  signals:[
+    signal("스타십 시험","다음 공식 비행 일정, 시험 결과, 재사용·엔진 관련 발표","새 시험의 목표 충족","일정 지연이나 검증 필요 사항 증가"),
+    signal("사업별 NASA 임무","유인 및 화물 임무 성과, 공식 계약·임무 일정","임무 수행 및 계약 확대","일정 변경·임무 차질"),
+    signal("규제 단계","FAA의 환경 검토, 운항면허 변경 심사 상태","검증 완료 및 허가 진전","추가 보완 요구 또는 일정 변경")
+  ],
+  insight:"‘요즘 왜 그러느냐’는 질문부터 여러 갈래로 나누면 정확해집니다. 스타십 개발 시험, NASA 정기 운송, 스타링크 사업, 규제 심사는 별개의 데이터입니다. 현재 이상 징후가 있다는 단정 없이, 최근 공식 사건의 날짜와 사업별 진행 상태부터 확인하세요."
+ },
  nvda:{
   id:"nvda",label:"엔비디아",ticker:"NVDA",group:"반도체·AI",keywords:["엔비디아","nvidia","nvda","젠슨황","jensen huang","h100","h200","blackwell","rubin","gpu","그래픽카드"],route:["chips","trade","rates"],point:{lat:37.37064,lng:-121.96708,zoom:15,name:"NVIDIA 본사 · 2788 San Tomas Expressway, Santa Clara"},
   photo:{url:"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/2788-2888_San_Tomas_Expwy.jpg/960px-2788-2888_San_Tomas_Expwy.jpg",source:"https://commons.wikimedia.org/wiki/File:2788-2888_San_Tomas_Expwy.jpg",credit:"NVIDIA 본사 실사진 · Coolcaesar (2023) · CC BY-SA 4.0"},
