@@ -322,4 +322,43 @@ body.mt-keyboard-open #usCmd{bottom:6px!important}
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
+</script><style id="mt-map-only-overlay">
+/* Always keep the map visible. Case details are optional, never a full-screen blocker. */
+#pg .pg-file{display:none!important}
+#pg .pg-file.mt-peek{display:block!important;position:absolute!important;left:10px!important;right:auto!important;top:auto!important;bottom:calc(72px + env(safe-area-inset-bottom,0px))!important;width:min(320px,calc(100% - 20px))!important;max-height:118px!important;overflow:hidden!important;padding:10px 40px 10px 12px!important;border-radius:12px!important;opacity:1!important;transform:none!important;pointer-events:auto!important}
+#pg .pg-file.mt-peek > :not(.mt-peek-content):not(.mt-peek-close){display:none!important}
+#pg .mt-peek-content{font-size:12px!important;line-height:1.45!important;max-height:94px!important;overflow:hidden!important;color:#d5f7e1}
+#pg .mt-peek-content strong{display:block;color:#80ffad;font-size:12px;margin-bottom:4px}
+#pg .mt-peek-close{position:absolute;right:5px;top:5px;min-width:34px;min-height:34px;border:1px solid #4a8b62;border-radius:8px;background:#10291b;color:white;font-size:20px;cursor:pointer}
+@media(orientation:landscape){#pg .pg-file.mt-peek{left:10px!important;bottom:56px!important;width:min(290px,35vw)!important;max-height:105px!important}}
+</style>
+<script id="mt-map-only-controller">
+(function(){
+ function boot(){
+  var file=document.getElementById('usFile'),root=document.getElementById('pg');
+  if(!file||!root)return;
+  var peek=document.createElement('div');peek.className='mt-peek-content';
+  var close=document.createElement('button');close.type='button';close.className='mt-peek-close';close.textContent='×';close.setAttribute('aria-label','추적 설명 닫기');
+  function dismiss(){file.classList.remove('mt-peek');file.classList.remove('on');file.hidden=true}
+  close.addEventListener('click',dismiss);
+  file.appendChild(peek);file.appendChild(close);
+  function update(){
+   var active=file.classList.contains('on')&&!file.hidden;
+   if(!active){file.classList.remove('mt-peek');return}
+   var heading=file.querySelector('h3,.nm,h2,.fh');
+   var paragraph=Array.from(file.querySelectorAll('p,.ds,.tr')).find(function(e){return e.textContent.trim().length>18});
+   var title=heading?heading.textContent.trim().slice(0,75):'추적 위치 · 정보';
+   var summary=paragraph?paragraph.textContent.trim().slice(0,115):'해당 위치의 공개 기록을 지도에서 추적하고 있습니다.';
+   peek.replaceChildren();
+   var strong=document.createElement('strong');strong.textContent=title;
+   var line=document.createElement('span');line.textContent=summary;
+   peek.append(strong,line);
+   file.classList.add('mt-peek');file.hidden=false;
+  }
+  var observer=new MutationObserver(function(){update()});
+  observer.observe(file,{attributes:true,attributeFilter:['class','hidden'],childList:true,subtree:false});
+  update();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
 </script></head><body><header class="nbar"><a class="mt-home" href="./" aria-label="입장 화면으로 돌아가기">🟢 MONEY TRACKER / 미국 관제실</a><small>USA · GLOBAL INTELLIGENCE · 공개 자료</small></header><div id="pg"><div class="pg-map"></div><div class="pg-scan"></div><div class="pg-top"><div class="pg-box"><div class="live"><i></i>PREVIEW · PUBLIC SOURCES</div><div class="ttl">미국 · 세계 추적실</div></div><div class="pg-box mono">◉ US / GLOBAL OPERATIONS<br>공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결</div></div><div class="pg-say">무엇이든 물어보세요 · 사실과 추론을 구분하며 지도에서 추적합니다</div><div class="pg-file" id="usFile" hidden></div><form id="usCmd"><input id="usQuery" placeholder="무엇이든 질문하세요 · 기업 · 주가 · 법안 · 세계 사건" aria-label="작전 명령" required><button>추적 ↵</button></form><div class="pg-bar" role="toolbar" aria-label="지도 작전"><button data-w="chips">◈<span>반도체</span></button><button data-w="trade">▤<span>관세</span></button><button data-w="rates">⌁<span>금리</span></button></div></div><script src="assets/vendor/leaflet/leaflet.js"></script><script src="assets/mt-intel-data.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-photo.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-command-ui.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-query-engine.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-open-research.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-news-discovery.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-backend.js?v=server-bridge-20261027"></script><script src="assets/mt-research-ui.js?v=server-bridge-20261027"></script></body></html>
