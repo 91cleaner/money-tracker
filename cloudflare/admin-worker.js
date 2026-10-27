@@ -5,8 +5,8 @@ const ORIGIN = 'https://red-meadow-fcc6.leecheolhan91.workers.dev';
 const encoder = new TextEncoder();
 const cookie = (name,value,maxAge) => name+'='+encodeURIComponent(value)+'; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age='+maxAge;
 function parseCookie(req,name){return (req.headers.get('Cookie')||'').split(';').map(x=>x.trim()).find(x=>x.startsWith(name+'='))?.slice(name.length+1)||''}
-function b64url(bytes){return btoa(String.fromCharCode(...bytes)).replace(/\\+/g,'-').replace(/\\//g,'_').replace(/=+$/,'')}
-function unbase(s){return Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-s.length%4)%4)),x=>x.charCodeAt(0))}
+function b64url(bytes){return btoa(String.fromCharCode(...bytes)).replaceAll('+','-').replaceAll('/','_').replace(/=+$/,'')}
+function unbase(s){const normalized=s.replaceAll('-','+').replaceAll('_','/');const padded=normalized.padEnd(Math.ceil(normalized.length/4)*4,'=');return Uint8Array.from(atob(padded),ch=>ch.charCodeAt(0))}
 async function signature(data,secret){const k=await crypto.subtle.importKey('raw',encoder.encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);return b64url(new Uint8Array(await crypto.subtle.sign('HMAC',k,encoder.encode(data))))}
 async function seal(payload,secret){const p=b64url(encoder.encode(JSON.stringify(payload)));return p+'.'+await signature(p,secret)}
 async function unseal(value,secret){const [p,s]=value.split('.');if(!p||!s)return null;const expected=await signature(p,secret);if(s.length!==expected.length)return null;let diff=0;for(let i=0;i<s.length;i++)diff|=s.charCodeAt(i)^expected.charCodeAt(i);if(diff)return null;try{const v=JSON.parse(new TextDecoder().decode(unbase(p)));return v.exp>Date.now()?v:null}catch{return null}}
