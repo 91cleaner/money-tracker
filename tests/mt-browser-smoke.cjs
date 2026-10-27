@@ -27,7 +27,15 @@ async function main(){
   page.on("pageerror",e=>errors.push(e.message));
   page.on("request",req=>{if(/(?:api\.x\.ai|api\.openai\.com|api\.finnhub\.io|\/api\/analyze)/.test(req.url()))paidCalls.push(req.url());});
   const out=path.join(base,"artifacts");fs.mkdirSync(out,{recursive:true});
-  await page.goto("http://127.0.0.1:"+port+"/usa-command.html",{waitUntil:"domcontentloaded"});
+  // The offline smoke must not wait on third-party map tiles or live news services.
+  // "commit" waits only for local response headers; the next assertion waits for
+  // actual JS/map initialization, so a broken page still fails the test.
+  await page.route("**/*",route=>{
+   const url=route.request().url();
+   if(url.startsWith("http://127.0.0.1:"+port+"/"))return route.continue();
+   return route.abort();
+  });
+  await page.goto("http://127.0.0.1:"+port+"/usa-command.html",{waitUntil:"commit",timeout:45000});
   await page.waitForFunction(()=>!!window.MTCommand&&!!window.MTResearch&&!!window.MTLocalSearch,{timeout:20000});
   assert.ok(await page.locator(".leaflet-container").count(),"map mounted");
   assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"neutral startup");
