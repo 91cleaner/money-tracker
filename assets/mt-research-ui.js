@@ -333,7 +333,7 @@ function render(query){
   if(!results.length){quick.textContent="일치하는 저장 자료 없음 · 임의 사실 생성 안 함 · 상세 자료에서 다른 검색어를 확인하세요.";return;}
   var top=results[0],when=top.source_date||"날짜 미확인";
   quick.textContent=top.title+" · "+(top.summary||"원문 확인 필요").slice(0,100)+" · "+when;
-  if(/^https:\\/\\//.test(top.url)){sourceAnchor.href=top.url;sourceAnchor.hidden=false;}
+  if(String(top.url||"").startsWith("https://")){sourceAnchor.href=top.url;sourceAnchor.hidden=false;}
   // A geolocated, high-confidence match may move the map; no invented coordinates.
   var place=top.location,lat=place&&Number(place.lat),lng=place&&Number(place.lng);
   if(top.relevance>=20&&Number.isFinite(lat)&&Number.isFinite(lng)&&Math.abs(lat)<=90&&Math.abs(lng)<=180){
