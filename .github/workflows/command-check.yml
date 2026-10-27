@@ -8,6 +8,8 @@ on:
       - 'world-intelligence/index.html'
       - 'assets/mt-*.js'
       - 'server/*.mjs'
+      - 'cloudflare/admin-worker.js'
+      - 'wrangler.jsonc'
       - 'data/us/cases/*.json'
       - 'docs/SEARCH_ROADMAP.md'
       - 'tests/mt-*.cjs'
@@ -31,6 +33,7 @@ jobs:
           node --check assets/mt-research-ui.js
           node --check assets/mt-backend.js
           node --check server/worker.mjs
+          node --check cloudflare/admin-worker.js
           node --check assets/mt-open-research.js
           node --check assets/mt-news-discovery.js
           node --check tests/mt-command.test.cjs
@@ -38,9 +41,10 @@ jobs:
           node --check tests/mt-open-research.test.cjs
           node --check tests/mt-spacex-research.test.cjs
           node --check tests/mt-backend.test.cjs
+          node --check tests/mt-admin-ai.test.cjs
           node --check tests/mt-browser-smoke.cjs
       - name: Unit tests
-        run: node --test tests/mt-command.test.cjs tests/mt-research.test.cjs tests/mt-open-research.test.cjs tests/mt-spacex-research.test.cjs tests/mt-backend.test.cjs
+        run: node --test tests/mt-command.test.cjs tests/mt-research.test.cjs tests/mt-open-research.test.cjs tests/mt-spacex-research.test.cjs tests/mt-backend.test.cjs tests/mt-admin-ai.test.cjs
   browser:
     name: Real Chromium smoke (desktop and mobile)
     needs: unit
