@@ -39,6 +39,9 @@ css.textContent=[
 "#mtResearch .mt-auto-research h4{margin:9px 0 4px;color:#9fffca;font-size:12px}",
 "#mtResearch .mt-auto-group{border-top:1px solid #295c3d;padding:4px 0}",
 "#mtResearch .mt-auto-hit{border-top:1px solid #193b2b;padding:8px 0}",
+"#mtResearch .mt-spacex-fastbrief{border:1px solid #559665;border-radius:9px;background:rgba(24,59,35,.75);padding:9px 11px;margin:10px 0}",
+"#mtResearch .mt-spacex-fastbrief h3{margin:0 0 6px;color:#c7ffe2}",
+"#mtResearch .mt-spacex-fastbrief p{font-size:12px;line-height:1.65}",
 "#mtResearch .mt-case-file{border:1px solid #377555;border-radius:8px;padding:9px;margin-top:10px}",
 "#mtResearch .mt-case-file summary{cursor:pointer;color:#bdffc9;font-weight:800;line-height:1.6}",
 "#mtResearch .mt-case-item{border-top:1px solid #284d37;padding:9px 0}",
@@ -154,6 +157,18 @@ function runPublicResearch(question,report){
   });
  }).catch(function(){if(!current())return;wiki.replaceChildren();add(wiki,"p","mt-r-muted","백과 조회 오류");});
 }
+function renderSpaceXBrief(report){
+ if(report.id!=="spacex")return;
+ var box=add(panel,"section","mt-spacex-fastbrief");
+ add(box,"h3","","CASE BRIEF · 스페이스X 최근 현황");
+ add(box,"p","","① 2026년 6월 상장된 주식 SPCX의 움직임과 ② Starship·NASA·Starlink 사업의 진행 상황은 서로 다른 문제입니다.");
+ add(box,"p","","③ 10월 22일 주가 하락과 3분기 실적은 확인할 수 있지만, 락업 해제·차입·개발비 중 무엇이 실제 원인이었는지는 기사·수급·공시를 대조해야 합니다.");
+ add(box,"p","mt-r-muted","확인된 사실: 상장 및 3분기 실적(회사 IR·SEC), 과거 일별 주가 기록(제3자). 미확인: 당일 확정 원인·실시간 현재가.");
+ var row=add(box,"div","mt-r-choices");
+ button(row,"SPCX 주가·SEC →",function(){api.selectMission("spacex");close();},"mt-r-btn");
+ button(row,"Starship 발사장 →",function(){api.selectMission("spacex");api.selectStep(1);close();},"mt-r-btn");
+ button(row,"FAA 정책 추적 →",function(){api.selectMission("spacex");api.selectStep(5);close();},"mt-r-btn");
+}
 function renderCaseEvidence(topic){
  if(topic!=="spacex")return;
  var box=add(panel,"details","mt-case-file");
@@ -193,6 +208,7 @@ function render(query){
  add(panel,"h2","",result.title);
  add(panel,"div","mt-r-ticker",result.ticker+" · "+result.topicGroup);
  add(panel,"p","mt-r-lead",result.opening);
+ renderSpaceXBrief(result);
  runPublicResearch(query,result);
  if(!result.photo&&result.location&&window.MTPhoto){var photoSlot=add(panel,"div","mt-r-livephoto");window.MTPhoto.render(photoSlot,result.id,result.location.name);}
  if(result.photo&&/^https:\/\/thumb\.wikimedia\.org\//.test(result.photo.url)){
