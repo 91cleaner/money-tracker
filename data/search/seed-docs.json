@@ -1,0 +1,276 @@
+{
+  "version": 1,
+  "description": "Evidence directory; sources may need re-verification; not a live market feed.",
+  "items": [
+    {
+      "id": "chips-law",
+      "type": "law",
+      "title": "CHIPS and Science Act · 미국 반도체 지원법",
+      "aliases": [
+        "CHIPS법",
+        "칩스법",
+        "반도체법",
+        "H.R.4346",
+        "CHIPS Act"
+      ],
+      "summary": "2022년 제정된 미국 반도체 지원·과학법. 특정 날짜 주가의 직접적 원인으로 단정할 수 없습니다.",
+      "source": "Congress.gov",
+      "url": "https://www.congress.gov/bill/117th-congress/house-bill/4346",
+      "source_date": "2022-08-09",
+      "location": {
+        "lat": 38.8899,
+        "lng": -77.0091,
+        "label": "미국 의회 · 정책 문서"
+      },
+      "route": "chips"
+    },
+    {
+      "id": "chips-sponsor",
+      "type": "lawmaker",
+      "title": "팀 라이언 · H.R.4346 발의자",
+      "aliases": [
+        "Tim Ryan",
+        "팀 라이언",
+        "미국 칩스법 발의자"
+      ],
+      "summary": "법안 원문상 당시 원 발의 의원. 현재 재직을 의미하지 않습니다.",
+      "source": "Congress.gov",
+      "url": "https://www.congress.gov/bill/117th-congress/house-bill/4346",
+      "source_date": "2021",
+      "location": {
+        "lat": 38.8899,
+        "lng": -77.0091,
+        "label": "미국 의회 · 역사적 입법 기록"
+      },
+      "route": "chips"
+    },
+    {
+      "id": "chips-tsmc",
+      "type": "company",
+      "title": "TSMC Arizona · 반도체 공장 지원",
+      "aliases": [
+        "TSMC",
+        "대만 파운드리",
+        "미국 반도체 공장"
+      ],
+      "summary": "미 상무부의 CHIPS 인센티브 수여 기록. 지원과 투자수익의 인과관계는 별도 분석이 필요합니다.",
+      "source": "U.S. Department of Commerce",
+      "url": "https://www.commerce.gov/news/press-releases/2024/11/biden-harris-administration-announces-chips-incentives-award-tsmc",
+      "source_date": "2024-11",
+      "location": {
+        "lat": 33.4484,
+        "lng": -112.074,
+        "label": "애리조나 피닉스 지역"
+      },
+      "route": "chips"
+    },
+    {
+      "id": "nvda-ir",
+      "type": "company",
+      "title": "NVIDIA · 실적·공시 출처",
+      "aliases": [
+        "엔비디아",
+        "nvidia",
+        "nvda",
+        "젠슨 황",
+        "GPU",
+        "AI 반도체",
+        "블랙웰"
+      ],
+      "summary": "NVIDIA 공식 투자자 자료. 당일 주가 하락의 원인은 현재 시세와 발표 전 예상치 자료 없이 확정할 수 없습니다.",
+      "source": "NVIDIA Investor Relations",
+      "url": "https://investor.nvidia.com/",
+      "source_date": null,
+      "location": {
+        "lat": 37.3727,
+        "lng": -121.9694,
+        "label": "산타클라라 · 본사 소재 지역"
+      },
+      "route": "nvda"
+    },
+    {
+      "id": "spacex-records",
+      "type": "company",
+      "title": "SpaceX · 공시·발사·사업 자료",
+      "aliases": [
+        "스페이스엑스",
+        "SpaceX",
+        "SPCX",
+        "스타십",
+        "스타링크",
+        "Starship",
+        "Starlink"
+      ],
+      "summary": "발사 기록과 재무공시를 별개의 증거로 구분합니다. 실시간 주가와 거래 데이터는 제공하지 않습니다.",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm",
+      "source_date": "2026-09-30",
+      "location": {
+        "lat": 25.997,
+        "lng": -97.156,
+        "label": "텍사스 스타베이스 · 발사 시설"
+      },
+      "route": "spacex"
+    },
+    {
+      "id": "fed-policy",
+      "type": "policy",
+      "title": "Federal Reserve · 금리·FOMC",
+      "aliases": [
+        "연준",
+        "연방준비제도",
+        "금리",
+        "FOMC",
+        "Fed",
+        "인플레이션"
+      ],
+      "summary": "연준 공식 통화정책과 FOMC 발표 자료. 기준 날짜를 확인해야 합니다.",
+      "source": "Federal Reserve",
+      "url": "https://www.federalreserve.gov/monetarypolicy.htm",
+      "source_date": null,
+      "location": {
+        "lat": 38.8929,
+        "lng": -77.0457,
+        "label": "워싱턴 D.C. · 연방준비제도"
+      },
+      "route": "rates"
+    },
+    {
+      "id": "fred-series",
+      "type": "dataset",
+      "title": "FRED · 미국 경제 지표",
+      "aliases": [
+        "FRED",
+        "10년물",
+        "미국채",
+        "국채금리",
+        "경제지표"
+      ],
+      "summary": "FRED 공개 시계열. 가격 전망이 아니라 관측값과 기준일을 확인하는 데이터입니다.",
+      "source": "Federal Reserve Bank of St. Louis",
+      "url": "https://fred.stlouisfed.org/",
+      "source_date": null,
+      "location": {
+        "lat": 38.8929,
+        "lng": -77.0457,
+        "label": "미국 통화정책 출처"
+      },
+      "route": "rates"
+    },
+    {
+      "id": "ustr-tariff",
+      "type": "policy",
+      "title": "USTR · 미국 관세·무역 정책",
+      "aliases": [
+        "관세",
+        "중국",
+        "미중",
+        "수출규제",
+        "USTR",
+        "무역"
+      ],
+      "summary": "관세 적용 품목과 시행 날짜를 공식 문서에서 확인합니다.",
+      "source": "USTR",
+      "url": "https://ustr.gov/",
+      "source_date": null,
+      "location": {
+        "lat": 38.8951,
+        "lng": -77.0364,
+        "label": "워싱턴 D.C. · 무역대표부"
+      },
+      "route": "trade"
+    },
+    {
+      "id": "house-ptr",
+      "type": "dataset",
+      "title": "미 하원 의원 금융공시 원문",
+      "aliases": [
+        "펠로시",
+        "Nancy Pelosi",
+        "낸시 펠로시",
+        "PTR",
+        "의원 매매",
+        "정치인 주식거래",
+        "금융공시"
+      ],
+      "summary": "하원 공식 공시를 찾아볼 수 있습니다. 개별 거래 내역이 자동 수집되었다는 뜻은 아닙니다.",
+      "source": "U.S. House Clerk",
+      "url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+      "source_date": null,
+      "location": {
+        "lat": 38.8899,
+        "lng": -77.0091,
+        "label": "미국 하원 · 공시 출처"
+      },
+      "route": "disclosures"
+    },
+    {
+      "id": "sec-edgar",
+      "type": "dataset",
+      "title": "SEC EDGAR · 기업 공시",
+      "aliases": [
+        "SEC",
+        "EDGAR",
+        "10-Q",
+        "10-K",
+        "8-K",
+        "기업 공시",
+        "분기실적"
+      ],
+      "summary": "기업 재무·공시 원문을 확인하는 SEC 공개 API 안내.",
+      "source": "U.S. SEC",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+      "source_date": null,
+      "location": {
+        "lat": 38.894,
+        "lng": -77.028,
+        "label": "SEC 기관 위치"
+      },
+      "route": null
+    },
+    {
+      "id": "history-state",
+      "type": "history",
+      "title": "미 국무부 역사실 · 외교사",
+      "aliases": [
+        "세계사",
+        "역사",
+        "한미",
+        "냉전",
+        "외교",
+        "대만해협"
+      ],
+      "summary": "역사 원문을 조사할 수 있는 공식 자료 출처. 오늘의 뉴스로 오인하지 마세요.",
+      "source": "Office of the Historian",
+      "url": "https://history.state.gov/",
+      "source_date": null,
+      "location": {
+        "lat": 38.8951,
+        "lng": -77.0364,
+        "label": "워싱턴 D.C. · 역사 문서 출처"
+      },
+      "route": "history"
+    },
+    {
+      "id": "faa-starship",
+      "type": "policy",
+      "title": "FAA · Starship 발사·환경 심사",
+      "aliases": [
+        "스타십 규제",
+        "Starbase",
+        "FAA",
+        "스페이스엑스 허가"
+      ],
+      "summary": "Starship 발사 허가·환경 검토의 공식 안내. 신청·심사·승인을 구분합니다.",
+      "source": "FAA",
+      "url": "https://www.faa.gov/space/stakeholder_engagement/spacex_starship_ccsfs",
+      "source_date": null,
+      "location": {
+        "lat": 38.887,
+        "lng": -77.025,
+        "label": "워싱턴 D.C. · FAA 정책 기관"
+      },
+      "route": "spacex"
+    }
+  ]
+}
