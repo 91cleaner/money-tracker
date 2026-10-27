@@ -65,6 +65,18 @@ async function run(){
   await page.locator("#mtReset").click();
   assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"reset clears mission");
   assert.match(await page.locator("#mtChoices").innerText(),/관제실 준비 완료/);
+  await page.locator("#usQuery").fill("스페이스엑스는 왜그래 요즘");
+  await page.locator("#usCmd button:last-child").click();
+  assert.match(await page.locator("#mtResearch h2").innerText(),/스페이스X.*요즘/);
+  assert.match(await page.locator("#mtResearch").innerText(),/SPCX/);
+  assert.match(await page.locator("#mtResearch").innerText(),/2026년 6월/);
+  assert.ok(await page.locator("#mtResearch .mt-auto-research").count(),"automatic live evidence section");
+  assert.ok(await page.locator("#mtResearch .mt-spacex-fastbrief").count(),"SpaceX easy language brief");
+  assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"old mission cleared on new question");
+  await page.locator("#mtResearch .mt-spacex-fastbrief button").first().click();
+  await page.waitForFunction(()=>window.MTCommand.getCurrent()?.mission==="spacex");
+  assert.match(await page.locator("#usFile").innerText(),/SPCX/);
+  await page.screenshot({path:path.join(out,"spcx-command.png"),fullPage:true});
   await page.setViewportSize({width:390,height:844});
   await page.waitForTimeout(400);
   assert.ok(await page.locator("#usCmd").isVisible(),"mobile command");
