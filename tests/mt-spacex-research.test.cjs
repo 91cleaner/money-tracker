@@ -88,12 +88,13 @@ test("SpaceX evidence JSON has IDs, authentic source URLs, dated market observat
   assert.ok(["VERIFIED_DIRECT","POLICY_CONTEXT","SUPPLY_CHAIN_CONTEXT","TEMPORAL_PROXIMITY","HYPOTHESIS"].includes(edge.relation_type));
  }
 });
-test("UI automatically runs external public evidence discovery on submit rather than requiring a click",()=>{
+test("UI uses local indexed records and keeps automatic AI/news lookups disabled",()=>{
  const js=fs.readFileSync(path.join(__dirname,"../assets/mt-research-ui.js"),"utf8");
  const html=fs.readFileSync(path.join(__dirname,"../usa-command.html"),"utf8");
- assert.match(js,/runPublicResearch\(query,result\)/);
- assert.match(js,/searcher\.retrieve\(question\)/);
- assert.match(js,/encyclopedia\.research\(info\.term\)/);
+ assert.match(js,/renderIndexedSearch\(query\)/);
  assert.match(js,/data\/us\/cases\/spcx-2026-10-27\.json/);
- assert.match(html,/mt-news-discovery\.js/);
+ assert.doesNotMatch(js,/^\s*runPublicResearch\(query,result\);/m);
+ assert.doesNotMatch(js,/^\s*renderLiveBackend\(query\);/m);
+ assert.match(html,/assets\/mt-local-search\.js/);
+ assert.doesNotMatch(html,/src="assets\/mt-backend\.js/);
 });
