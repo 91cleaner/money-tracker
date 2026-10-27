@@ -26,9 +26,9 @@ background:radial-gradient(120% 140% at 0% 0%,#0f3a22 0%,#06140c 55%,#040b07 100
   const tick = () => { const k = new Date(Date.now() + 9 * 3600e3); const sec = k.getUTCHours() * 3600 + k.getUTCMinutes() * 60 + k.getUTCSeconds() + k.getUTCMilliseconds() / 1000; num.firstChild.textContent = won(per * n / (365 * 86400) * sec); };
   fetch('data/national/support.json').then((r) => r.json()).then((d) => { const x = (d.allowance || []).find((y) => y.amount); if (x) per = Number(x.amount); }).catch(() => {});
   const place = () => { const t = document.getElementById('mytop'); if (!t) return false; t.before(wrap); return true; }; // 홈 맨 위: 처음 들어와도 의원 추적부터
-  // 미국 의회(주식 거래) 입구도 바로 아래에
+  // 미국 입구: 영어 의회 추적기는 2026-10-26부터 비공개, 지금 us.html은 미국 관제실 미리보기(개발 중)
   const us = document.createElement('a'); us.className = 'htk htk-us'; us.href = 'us.html';
-  us.innerHTML = '<span class="fl">🇺🇸</span><span class="t"><span class="k">CONGRESS TRACKER</span><b class="u1">미국 의원 535명 주식 거래 레이더</b><span class="s">누가 무슨 주식을 샀나 · 법안 · 1:1 비교 (영어)</span></span><span class="go">입장</span>';
+  us.innerHTML = '<span class="fl">🇺🇸</span><span class="t"><span class="k">USA COMMAND · PREVIEW</span><b class="u1">미국 정보 관제실</b><span class="s">개발 중 미리보기 · 지도에서 사건·법안·기업 추적</span></span><span class="go">입장</span>';
   const wrap = document.createElement('div'); wrap.className = 'htk-wrap'; wrap.append(a, us);
   let tries = 0; const t = setInterval(() => { if (place() || ++tries > 40) { clearInterval(t); if (!wrap.isConnected) { const d = document.getElementById('dive'); if (d) d.before(wrap); } } }, 150);
   tick(); setInterval(tick, matchMedia('(prefers-reduced-motion: reduce)').matches ? 1000 : 120);
