@@ -8,46 +8,61 @@ const root = path.resolve(__dirname, '..');
 const read = name => fs.readFileSync(path.join(root, name), 'utf8');
 const usa = read('usa-command.html');
 const index = read('index.html');
+const command = read('assets/mt-command-ui.js');
 
-test('미국 관제실: 인라인 JavaScript 구문이 유효하다', () => {
+test('US command inline JavaScript parses', () => {
   const inline = [...usa.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
     .filter(([, attrs]) => !/\bsrc\s*=/.test(attrs));
-  assert.ok(inline.length > 0, '인라인 지도 스크립트가 있어야 합니다');
+  assert.ok(inline.length > 0);
   inline.forEach(([, , source], i) => assert.doesNotThrow(
     () => new vm.Script(source, { filename: 'usa-command.inline-' + i + '.js' })
   ));
 });
 
-test('단일 세계지도에서 질문 → 작전 → 지도 추적 흐름을 유지한다', () => {
-  assert.match(usa, /class="pg-map"/);
-  assert.match(usa, /id="usCmd"/);
-  assert.match(usa, /id="usQuery"/);
-  assert.match(usa, /addEventListener\('submit'/);
-  assert.match(usa, /function pick\(k\)/);
-  assert.match(usa, /function show\(\)/);
-  assert.match(usa, /map\.flyTo\(/);
-  assert.doesNotMatch(usa, /<button[^>]*data-w="(?:us|world|kr)"/,
-    '국가 전환 버튼을 하단에 다시 추가하지 마세요');
+test('one map: question -> evidence selection -> route (no automatic invented answer)', () => {
+  for (const marker of ['class="pg-map"', 'id="usCmd"', 'id="usQuery"', 'id="usFile"']) {
+    assert.ok(usa.includes(marker), marker);
+  }
+  assert.match(usa, /assets\/mt-command-ui\.js\?v=/);
+  assert.match(usa, /assets\/mt-research-ui\.js\?v=/);
+  assert.match(command, /form\.addEventListener\("submit"/);
+  assert.match(command, /window\.MTResearch\.show\(q\)/);
+  assert.match(command, /function selectMission\(id\)/);
+  assert.match(command, /function selectStep\(index\)/);
+  assert.match(command, /map\.flyTo\(/);
+  assert.match(command, /getCurrent:function/);
+  assert.doesNotMatch(usa, /<button[^>]*data-w="(?:us|world|kr)"/);
 });
 
-test('위성 전환: 실제 영상·지명 타일과 줌 이벤트를 유지한다', () => {
-  assert.match(usa, /World_Imagery\/MapServer\/tile/);
-  assert.match(usa, /World_Boundaries_and_Places\/MapServer\/tile/);
-  assert.match(usa, /map\.on\('zoom zoomend moveend',satFade\)/);
-  assert.match(usa, /sat\.setOpacity\(o\)/);
-  assert.match(usa, /satLab\.setOpacity\(o\*\.85\)/);
-  assert.match(usa, /leaflet-sat-pane\{z-index:250!important/);
-  assert.match(usa, /leaflet-satlab-pane\{z-index:260!important/);
+test('actual satellite tiles and failure-tolerant map tiles are wired in command JS', () => {
+  assert.match(command, /World_Imagery\/MapServer\/tile/);
+  assert.match(command, /World_Boundaries_and_Places\/MapServer\/tile/);
+  assert.match(command, /map\.on\("zoom zoomend",syncSatellite\)/);
+  assert.match(command, /sat\.setOpacity\(opacity\)/);
+  assert.match(command, /satLabels\.setOpacity\(opacity\*\.86\)/);
+  assert.match(command, /dark\.on\("tileerror"/);
+  assert.match(command, /tile\.openstreetmap\.org/);
 });
 
-test('데이터 연결 상태를 정직하게 표시한다', () => {
-  assert.match(usa, /공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결/);
+test('public preview labels disconnected AI, real-time prices and signals honestly', () => {
   assert.match(usa, /PREVIEW · PUBLIC SOURCES/);
-  assert.match(usa, /실시간 투자 신호가 아닙니다/);
-  assert.match(usa, /관련 공식 자료/);
+  assert.match(usa, /AI 분석 OFF · 실시간 시세 OFF/);
+  assert.match(command, /실시간 거래 데이터·AI 분석·매수\/매도 신호는 제공되지 않습니다/);
+  assert.match(command, /거래\/시세\/AI 미연결/);
 });
 
-test('메인 진입은 국가 선택 화면을 건너뛰고 미국 세계지도에 진입한다', () => {
-  assert.match(index, /location\.replace\('usa-command\.html'/);
-  assert.match(index, /http-equiv="refresh" content="0;url=usa-command\.html"/);
+test('country selection remains intentional, without a redirect into the US map', () => {
+  assert.match(index, /href="national\.html"/);
+  assert.match(index, /href="usa-command\.html"/);
+  assert.match(index, /시스템 연결 상태/);
+  assert.match(index, /비공개 관리자 데이터는 별도 인증 필요/);
+  assert.doesNotMatch(index, /location\.replace\('usa-command\.html'/);
+});
+
+test('mobile query focus and compact map explanation stay usable', () => {
+  assert.match(usa, /#usCmd input\{font-size:16px;/);
+  assert.match(usa, /id="mt-map-only-controller"/);
+  assert.match(usa, /if\(file\.hidden\)\{file\.classList\.remove\('mt-peek'\);return\}/);
+  assert.match(usa, /if\(!close\.isConnected\)file\.appendChild\(close\)/);
+  assert.match(usa, /aria-label','추적 설명 닫기'/);
 });

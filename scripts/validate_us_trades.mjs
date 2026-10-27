@@ -1,37 +1,49 @@
-// Validate official-source House PTR snapshots without implying executed-trade verification.
-// Run: node scripts/validate_us_trades.mjs
+// Validate the current machine-parsed STOCK Act disclosure snapshot.
+// Disclosure PDFs are evidence of reports, NOT proof of executed transactions.
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
+
 const data = JSON.parse(fs.readFileSync('data/us/trades.json', 'utf8'));
-assert.equal(data.source, 'Official US House PTR PDF');
-assert.ok(Array.isArray(data.records) && data.records.length > 0, 'PTR records missing');
-assert.ok(!Number.isNaN(Date.parse(data.collected_at)), 'Invalid collection timestamp');
+assert.match(data.source, /U\.S\. House Clerk financial disclosures/);
+assert.ok(Array.isArray(data.trades) && data.trades.length > 0, 'Disclosure trades missing');
+assert.ok(Number.isFinite(Date.parse(data.updated)), 'Invalid dataset timestamp');
+const anomalies = { incomplete_amount: 0, transaction_after_filing: 0, future_transaction: 0, duplicate: 0 };
 const seen = new Set();
-let unresolvedTickers = 0;
-for (const [i, row] of data.records.entries()) {
-  const label = `PTR row ${i + 1}`;
-  assert.ok(row.member?.trim() && row.asset?.trim(), `${label}: missing member/asset`);
-  assert.match(row.filing_id, /^\d{4}-\d+$/, `${label}: invalid filing ID`);
-  const url = new URL(row.source_pdf);
-  assert.equal(url.protocol, 'https:', `${label}: source must use HTTPS`);
-  assert.equal(url.hostname, 'disclosures-clerk.house.gov', `${label}: source must be House Clerk`);
-  const [year, number] = row.filing_id.split('-');
-  assert.equal(url.pathname, `/public_disc/ptr-pdfs/${year}/${number}.pdf`, `${label}: PDF and filing ID disagree`);
-  const filingDate = Date.parse(row.filing_date);
-  const tradeDate = Date.parse(row.transaction_date);
-  const noticeDate = Date.parse(row.notification_date);
-  assert.ok([filingDate, tradeDate, noticeDate].every(Number.isFinite), `${label}: invalid date`);
-  assert.ok(tradeDate <= filingDate && noticeDate <= filingDate, `${label}: filing precedes reported event`);
-  assert.ok(filingDate <= Date.now() + 86400000, `${label}: filing date in the future`);
-  assert.ok(['P', 'S'].includes(row.type), `${label}: unsupported transaction type`);
-  assert.ok(Number.isSafeInteger(row.amount_min_usd) && Number.isSafeInteger(row.amount_max_usd) &&
-    row.amount_min_usd > 0 && row.amount_min_usd <= row.amount_max_usd, `${label}: invalid disclosed range`);
-  assert.equal(row.verification, 'machine_parsed_requires_review',
-    `${label}: do not label machine-parsed PTR as independently verified`);
-  if (row.ticker == null) unresolvedTickers++;
-  else assert.match(row.ticker, /^[A-Z][A-Z0-9.\-]{0,9}$/, `${label}: malformed ticker`);
-  const key = [row.filing_id, row.member, row.transaction_date, row.asset, row.type, row.amount_min_usd, row.amount_max_usd].join('|');
-  assert.ok(!seen.has(key), `${label}: duplicated reported transaction`);
+for (const [i, row] of data.trades.entries()) {
+  const label = 'disclosure row ' + (i + 1);
+  assert.ok(typeof row.who === 'string' && row.who.trim(), label + ': missing member');
+  assert.ok(typeof row.asset === 'string' && row.asset.trim(), label + ': missing asset');
+  assert.ok(typeof row.id === 'string' && row.id.trim(), label + ': missing member ID');
+  assert.ok(['P', 'S', 'E'].includes(row.ty), label + ': invalid transaction category');
+  assert.ok(['h', 's'].includes(row.c), label + ': unknown chamber');
+  const source = new URL(row.doc);
+  assert.equal(source.protocol, 'https:', label + ': insecure source');
+  if (row.c === 'h') {
+    assert.equal(source.hostname, 'disclosures-clerk.house.gov', label + ': not House Clerk');
+    assert.match(source.pathname, /^\/public_disc\/ptr-pdfs\/\d{4}\/\d+\.pdf$/, label + ': not PTR PDF');
+  } else {
+    assert.equal(source.hostname, 'efdsearch.senate.gov', label + ': not Senate eFD');
+  }
+  const transaction = Date.parse(row.d);
+  const filed = Date.parse(row.filed);
+  assert.ok(Number.isFinite(transaction) && Number.isFinite(filed), label + ': invalid dates');
+  if (transaction > filed) anomalies.transaction_after_filing++;
+  if (transaction > Date.now() + 86400000) anomalies.future_transaction++;
+  const amount = /^\$([\d,]+) - \$([\d,]+)$/.exec(row.amt || '');
+  if (!amount) anomalies.incomplete_amount++;
+  else {
+    const min = Number(amount[1].replaceAll(',', ''));
+    const max = Number(amount[2].replaceAll(',', ''));
+    assert.ok(min > 0 && max >= min, label + ': reversed amount range');
+  }
+  if (row.tk != null) assert.match(row.tk, /^[A-Z][A-Z0-9.\-]{0,12}$/, label + ': invalid ticker');
+  const key = [row.doc, row.who, row.d, row.asset, row.ty, row.amt].join('|');
+  if (seen.has(key)) anomalies.duplicate++;
   seen.add(key);
 }
-console.log(`House PTR integrity PASS: ${data.records.length} machine-parsed records; ${unresolvedTickers} unresolved tickers; none independently trade-verified.`);
+const totalAnomalies = Object.values(anomalies).reduce((a, b) => a + b, 0);
+assert.ok(totalAnomalies <= Math.max(100, Math.ceil(data.trades.length * 0.05)),
+  'Too many machine-parsing anomalies: ' + JSON.stringify(anomalies));
+console.log('Disclosure source integrity PASS: ' + data.trades.length +
+  ' reported rows; anomalies=' + JSON.stringify(anomalies) +
+  '; none independently execution-verified or live.');

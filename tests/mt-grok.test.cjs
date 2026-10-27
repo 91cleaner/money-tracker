@@ -61,12 +61,10 @@ test("request for Grok cannot leak an OpenAI API key as a fallback",async()=>{
  assert.equal(out.ai.provider,"grok");
  assert.equal(calls.some(c=>c.url.includes("api.openai.com")||c.url.includes("api.x.ai")),false);
 });
-test("current private GitHub OAuth administrator screens expose Grok choice and safe X opt-in",()=>{
+test("current private administrator gateway pauses paid AI and requires owner authentication",()=>{
  const source=fs.readFileSync(path.join(__dirname,"../cloudflare/admin-worker.js"),"utf8");
- assert.match(source,/env\.XAI_API_KEY/);
- assert.match(source,/AI_OPERATOR_OVERLAY/);
- assert.match(source,/mt-ai-provider/);
- assert.match(source,/mt-ai-x-search/);
- assert.match(source,/payload\?\.includeX===true/);
+ assert.doesNotMatch(source,/env\.XAI_API_KEY/);
+ assert.match(source,/ai:false,grok:false,openai:false,market:false,paused:true/);
+ assert.match(source,/error:'ai-paused'/);
  assert.match(source,/session\.login\.toLowerCase\(\)!==env\.ADMIN_GITHUB_LOGIN\.toLowerCase\(\)/);
 });
