@@ -8,7 +8,11 @@ test("question about NVDA decline gives evidence, hypotheses, sources, not a fak
  assert.equal(r.intent,"cause");
  assert.equal(r.isFallback,false);
  assert.match(r.title,/하락 원인/);
- assert.ok(r.facts.length>=3);
+ assert.ok(r.facts.length>=4);
+ assert.match(r.facts.map(d=>d.value).join(" "),/중국 데이터센터/);
+ assert.ok(Math.abs(r.location.lng-(-121.96708))<0.001);
+ assert.match(r.photo.source,/commons.wikimedia.org/);
+ assert.match(r.photo.credit,/CC BY-SA 4.0/);
  assert.ok(r.assumptions.length>=4);
  assert.ok(r.missions.includes("chips"));
  assert.match(r.opening,/미연결/);
