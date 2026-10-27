@@ -386,4 +386,29 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  reset.onclick=()=>{if(m)m.classList.remove('mt-active');if(input)input.value='';if(status)status.textContent='세계 전체 보기 · 지도를 자유롭게 움직이거나 질문을 입력하세요.';if(typeof window.focusCountry==='function'){const map=document.querySelector('#realEarth');if(map&&map._leaflet_id){/* map reset is dispatched below */}}document.dispatchEvent(new Event('mt-reset-world'))};
  const dock=document.getElementById('mtDock');if(dock)dock.prepend(reset);
 }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
+</script><style id="mt-emergency-map-visibility">
+html,body,#app{min-height:100%;background:#081a2a!important}
+.main{display:flex!important;flex:1 1 auto!important;min-height:0!important}
+.main>.map{display:block!important;position:relative!important;flex:1 1 auto!important;min-width:0!important;min-height:300px!important;background:#b9dce7!important}
+#realEarth{display:block;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:2!important;background:#b9dce7!important}
+#realEarth .leaflet-container{background:#b9dce7!important}
+#realEarth .leaflet-tile{filter:none!important}
+#world{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important;display:block!important;opacity:1!important;background:#c2e1e9!important;filter:none!important}
+#world path{fill:#4e9ca4!important;stroke:#e8ffff!important;stroke-width:1.8!important}
+#realEarth.mt-no-tiles{display:none!important}
+header{flex-shrink:0!important}
+</style><script id="mt-emergency-map-guard">
+(function(){
+ function ready(){
+  const earth=document.getElementById('realEarth'),svg=document.getElementById('world');
+  if(!earth||!svg)return;
+  svg.style.display='block';svg.style.transform='none';svg.style.transformOrigin='center';
+  let tileSeen=false;
+  const mark=()=>{if(earth.querySelector('.leaflet-tile-loaded')){tileSeen=true;earth.classList.remove('mt-no-tiles');svg.style.opacity='0'}};
+  const observer=new MutationObserver(mark);observer.observe(earth,{subtree:true,childList:true,attributes:true,attributeFilter:['class','src']});
+  setTimeout(()=>{mark();if(!tileSeen){earth.classList.add('mt-no-tiles');svg.style.opacity='1'}},5000);
+  window.addEventListener('mt-reset-world',()=>{svg.style.transform='none'});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
+})();
 </script></body></html>
