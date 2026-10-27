@@ -76,6 +76,20 @@ header strong{color:#d6eff4!important;font-family:ui-monospace,Consolas,monospac
 #mtTargetBanner.on{display:block}
 @media(prefers-reduced-motion:reduce){#mtRadar:after,.mtTargetPulse,.mtPath{animation:none}}
 @media(max-width:650px){#mtTargetBanner{top:139px;left:8px;font-size:10px;max-width:160px}}
+</style><style id="mt-satellite-operation-v1">
+#mapFrame{background:#0a1c29!important}
+#map{background:#0a1c29!important}
+#map .leaflet-tile{filter:brightness(.83) saturate(.84) contrast(1.14)!important}
+#mtRadar:before{opacity:.20!important}
+#mtRadar:after{opacity:.22!important}
+#opsHud{right:10px!important;top:56px!important;font-size:10px!important;padding:6px 9px!important}
+#mtOpsBar{top:58px!important;left:10px!important;font-size:10px!important;padding:6px 9px!important}
+#opsSteps{display:none!important}
+#mtTrace{display:none!important}
+#brief{right:10px!important;top:105px!important;max-height:calc(100dvh - 260px)!important}
+#mtTargetBanner{top:110px!important;left:10px!important}
+#status{top:102px!important;left:10px!important;background:#061724dc!important;color:#c0e7ec!important}
+@media(max-width:650px){#opsHud{top:52px!important;right:6px!important}#mtOpsBar{top:52px!important;left:6px!important}#brief{top:98px!important;right:7px!important;left:7px!important;max-height:37dvh!important}#status{top:98px!important;left:7px!important;max-width:48vw!important}}
 </style></head><body>
 <header><strong>◉ MONEY TRACKER / GLOBAL COMMAND</strong><span>PUBLIC SOURCE INTELLIGENCE · MAP FIRST</span><button id="fullscreen" aria-label="전체화면">⛶</button></header>
 <div id="mapFrame">
@@ -103,7 +117,7 @@ let map=null,mission=null,step=0,route=null,marker=null,loaded=0;
 const fallback=$('fallback'),status=$('status');
 if(window.L){try{
  map=L.map('map',{zoomControl:false,worldCopyJump:false,minZoom:2,maxZoom:15,maxBounds:[[-85,-180],[85,180]],maxBoundsViscosity:1}).setView([20,0],2);
- const tile=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,noWrap:true,attribution:'&copy; OpenStreetMap contributors'});
+ const tile=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,noWrap:true,attribution:'Tiles &copy; Esri, Maxar, Earthstar Geographics and the GIS User Community'});
  tile.on('tileload',()=>{loaded++;fallback.style.display='none';$('map').style.opacity='1';status.textContent='실제 지리 기반 세계지도 · 자유 탐색'});
  tile.on('tileerror',()=>{if(!loaded)status.textContent='지도 서버 연결 확인 중 · 대체 지도 표시'});
  tile.addTo(map);$('map').style.opacity='0';
