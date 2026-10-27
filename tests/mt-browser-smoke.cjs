@@ -46,9 +46,10 @@ async function main(){
   assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"operator chooses route");
   assert.equal(paidCalls.length,0,"no paid AI or quote API requests");
   await page.locator("#mtResearch .mt-quick-actions button").first().click();
-  const first=page.locator("#mtResearch .mt-local-doc").first();
-  await first.locator("button").click();
-  await page.waitForFunction(()=>window.MTCommand.getCurrent()!=null,{timeout:12000});
+  const trace=page.locator("#mtResearch .mt-local-doc").filter({hasText:"NVIDIA 본사"}).first();
+  assert.ok(await trace.count(),"known NVIDIA route appears among indexed evidence");
+  await trace.locator("button").click();
+  await page.waitForFunction(()=>window.MTCommand.getCurrent()?.mission==="nvda",{timeout:12000});
   assert.ok(await page.locator("#usFile").isVisible(),"operator selected map evidence");
   await page.screenshot({path:path.join(out,"offline-command-desktop.png"),fullPage:true});
   await page.locator("#mtReset").click();
