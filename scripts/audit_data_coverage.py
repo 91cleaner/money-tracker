@@ -21,20 +21,43 @@ def inspect(name, relative):
         return result
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
-        if isinstance(data, dict):
-            for key in ("events", "trades", "transactions", "filings", "observations", "cities"):
-                if isinstance(data.get(key), list):
-                    result["records"] = len(data[key])
-                    break
-            if name == "congress_bills":
-                result["records"] = sum(len(v) for v in data.get("recent", {}).values() if isinstance(v, list))
-            result["source_updated"] = data.get("updated") or data.get("checked_at")
-        elif isinstance(data, list):
-            result["records"] = len(data)
-        result["status"] = "present" if result["records"] is None or result["records"] > 0 else "empty"
-    except (ValueError, UnicodeError, OSError) as exc:
+        if not isinstance(data, dict):
+            raise ValueError("expected JSON object")
+        if name == "congress_bills":
+            recent = data.get("recent")
+            if not isinstance(recent, dict):
+                raise ValueError("missing recent legislation map")
+            if any(not isinstance(items, list) for items in recent.values()):
+                raise ValueError("invalid member legislation list")
+            result["records"] = sum(len(items) for items in recent.values())
+            result["members"] = len(recent)
+        elif name == "us_macro":
+            series = data.get("series")
+            if not isinstance(series, dict):
+                raise ValueError("missing FRED series")
+            if any(not isinstance(entry, dict) or not isinstance(entry.get("points"), list)
+                   for entry in series.values()):
+                raise ValueError("invalid FRED observations")
+            result["records"] = sum(len(entry["points"]) for entry in series.values())
+            result["series"] = len(series)
+        else:
+            key = {
+                "congress_trades": "records",
+                "house_filings": "records",
+                "historical_events": "events",
+                "korean_municipal_contracts": "cities",
+            }[name]
+            rows = data.get(key)
+            if not isinstance(rows, list):
+                raise ValueError("missing or invalid " + key + " array")
+            result["records"] = len(rows)
+        result["source_updated"] = (data.get("updated") or data.get("collected_at")
+                                    or data.get("checked_at") or data.get("generated_at"))
+        result["status"] = "present" if result["records"] > 0 else "empty"
+    except (ValueError, TypeError, UnicodeError, OSError) as exc:
         result["status"] = "invalid"
         result["error"] = type(exc).__name__
+
     return result
 
 report = {
