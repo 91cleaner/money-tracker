@@ -55,7 +55,8 @@ function renderChoices(items,unknown){
 function findQuery(){
  var q=query.value.trim();
  if(!q){renderChoices(data.missions,false);query.focus();return;}
- var results=data.search(q);
+ var general=/^(미국|세계|기업|의원|시장|뉴스|투자|증시)$/i.test(q);
+ var results=general?data.missions:data.search(q);
  renderChoices(results.length?results:data.missions.slice(0,5),!results.length);
 }
 form.addEventListener("submit",function(event){event.preventDefault();findQuery();});
@@ -126,5 +127,6 @@ window.addEventListener("resize",function(){
 });
 var params=new URLSearchParams(window.location.search),requested=params.get("mission");
 if(requested&&data.getMission(requested))selectMission(requested);
+else renderChoices(data.missions,false);
 window.MTCommand={map:map,selectMission:selectMission,selectStep:selectStep,search:function(q){query.value=q;findQuery();},getCurrent:function(){return state.mission?{mission:state.mission.id,step:state.step}:null;}};
 })();
