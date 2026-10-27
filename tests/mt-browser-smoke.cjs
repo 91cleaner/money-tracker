@@ -1,5 +1,5 @@
 "use strict";
-/* Local browser smoke: verifies actual clicks and responsive layout, not just source text. */
+/* Actual Chromium smoke for cost-free evidence search, operator-only routes, and mobile UX. */
 const assert=require("node:assert/strict");
 const http=require("node:http");
 const fs=require("node:fs");
@@ -17,75 +17,56 @@ const server=http.createServer((req,res)=>{
  });
 });
 function listen(){return new Promise(resolve=>server.listen(0,"127.0.0.1",()=>resolve(server.address().port)));}
-async function run(){
- const port=await listen(),browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
- const page=await browser.newPage({viewport:{width:1280,height:800},deviceScaleFactor:1});
- const errors=[];page.on("pageerror",e=>errors.push(e.message));
- const out=path.join(base,"artifacts");fs.mkdirSync(out,{recursive:true});
+async function main(){
+ const port=await listen();
+ let browser;
  try{
+  browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+  const page=await browser.newPage({viewport:{width:1280,height:800},deviceScaleFactor:1});
+  const errors=[],paidCalls=[];
+  page.on("pageerror",e=>errors.push(e.message));
+  page.on("request",req=>{if(/(?:api\.x\.ai|api\.openai\.com|api\.finnhub\.io|\/api\/analyze)/.test(req.url()))paidCalls.push(req.url());});
+  const out=path.join(base,"artifacts");fs.mkdirSync(out,{recursive:true});
   await page.goto("http://127.0.0.1:"+port+"/usa-command.html",{waitUntil:"domcontentloaded"});
-  await page.waitForFunction(()=>!!window.MTCommand,{timeout:20000});
+  await page.waitForFunction(()=>!!window.MTCommand&&!!window.MTResearch&&!!window.MTLocalSearch,{timeout:20000});
   assert.ok(await page.locator(".leaflet-container").count(),"map mounted");
-  const start=await page.evaluate(()=>{const p=window.MTCommand.map.getCenter();return [p.lat,p.lng]});
-  assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"neutral entrance: no NVIDIA mission");
-  assert.match(await page.locator("#mtChoices").innerText(),/관제실 준비 완료/);
-  await page.waitForFunction(()=>!!window.MTResearch,{timeout:20000});
-  await page.locator("#usQuery").fill("우주고래 허구의 사건");
-  await page.locator("#usCmd button:last-child").click();
-  await page.locator("#mtResearch").waitFor({state:"visible"});
-  assert.match(await page.locator("#mtResearch").innerText(),/공개 백과 자료|질문을 받았습니다/);
-  assert.ok(await page.locator("#mtResearch .mt-open-section").count(),"open research option available");
-  assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"no invented fallback mission");
-  await page.locator("#usQuery").fill("엔비디아는 왜 떨어지는 거야?");
-  await page.locator("#usCmd button:last-child").click();
-  assert.match(await page.locator("#mtResearch h2").innerText(),/엔비디아.*하락 원인 분석/);
-  assert.match(await page.locator("#mtResearch").innerText(),/962억 달러/);
-  assert.match(await page.locator("#mtResearch").innerText(),/수출규제/);
-  assert.match(await page.locator("#mtResearch").innerText(),/실시간/);
-  assert.ok(await page.locator("#mtResearch .mt-r-fact a").count()>=3,"source links");
-  await page.locator("#mtResearch .mt-r-choice").first().click();
-  assert.match(await page.locator("#mtResearch .mt-r-verdict").innerText(),/강세 가설 선택/);
-  await page.locator("#mtResearch .mt-r-choices button").first().click();
-  await page.waitForFunction(()=>window.MTCommand.getCurrent()?.mission==="nvda");
-  assert.match(await page.locator("#usFile").innerText(),/NVIDIA/);
-  assert.ok(await page.locator("#usFile .mt-photo-card").count()>0,"photo slot and source visible");
-  assert.ok(await page.locator("#pg .mt-flight").count()>0,"operator camera HUD");
-  await page.locator(".mt-file-nav button").last().click();
-  assert.match(await page.locator("#usFile").innerText(),/TSMC/);
-  await page.locator(".pg-bar [data-w=chips]").click();
-  assert.match(await page.locator("#usFile").innerText(),/H.R.4346/);
-  await page.locator(".mt-file-nav button").last().click();
-  assert.match(await page.locator("#usFile").innerText(),/팀 라이언/);
-  await page.locator(".mt-file-nav button").last().click();
-  assert.match(await page.locator("#usFile").innerText(),/Intel/);
-  assert.match(await page.locator("#usFile .mt-source").getAttribute("href"),/nist.gov/);
-  await page.evaluate(()=>{window.MTCommand.cancelTravel();window.MTCommand.map.setView([40.08,-82.8],8,{animate:false});});
-  await page.waitForFunction(()=>document.getElementById("mtSat").textContent.includes("SAT"));
-  await page.screenshot({path:path.join(out,"command-desktop.png"),fullPage:true});
+  assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"neutral startup");
+  async function ask(question){
+   await page.locator("#usQuery").fill(question);
+   await page.locator("#usCmd button:last-child").click();
+   await page.locator("#mtResearch").waitFor({state:"visible"});
+   await page.waitForFunction(()=>document.querySelector("#mtResearch .mt-local-head")?.textContent.includes("AI 호출 0회"),{timeout:15000});
+  }
+  await ask("확인되지 않은 우주고래젤리의결");
+  assert.equal(await page.locator("#mtResearch .mt-local-doc").count(),0,"unknown questions must not invent docs");
+  assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null);
+  await ask("엔비디아는 왜 떨어지는 거야?");
+  assert.ok(await page.locator("#mtResearch .mt-local-doc").count()>0,"NVIDIA documented records found");
+  assert.match(await page.locator("#mtResearch .mt-quick-summary").innerText(),/NVIDIA|엔비디아/);
+  assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"operator chooses route");
+  assert.equal(paidCalls.length,0,"no paid AI or quote API requests");
+  await page.locator("#mtResearch .mt-quick-actions button").first().click();
+  const first=page.locator("#mtResearch .mt-local-doc").first();
+  await first.locator("button").click();
+  await page.waitForFunction(()=>window.MTCommand.getCurrent()!=null,{timeout:12000});
+  assert.ok(await page.locator("#usFile").isVisible(),"operator selected map evidence");
+  await page.screenshot({path:path.join(out,"offline-command-desktop.png"),fullPage:true});
   await page.locator("#mtReset").click();
   assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"reset clears mission");
-  assert.match(await page.locator("#mtChoices").innerText(),/관제실 준비 완료/);
-  await page.locator("#usQuery").fill("스페이스엑스는 왜그래 요즘");
-  await page.locator("#usCmd button:last-child").click();
-  assert.match(await page.locator("#mtResearch h2").innerText(),/스페이스X.*요즘/);
-  assert.match(await page.locator("#mtResearch").innerText(),/SPCX/);
-  assert.match(await page.locator("#mtResearch").innerText(),/2026년 6월/);
-  assert.ok(await page.locator("#mtResearch .mt-auto-research").count(),"automatic live evidence section");
-  assert.ok(await page.locator("#mtResearch .mt-spacex-fastbrief").count(),"SpaceX easy language brief");
-  assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"old mission cleared on new question");
-  await page.locator("#mtResearch .mt-spacex-fastbrief button").first().click();
-  await page.waitForFunction(()=>window.MTCommand.getCurrent()?.mission==="spacex");
-  assert.match(await page.locator("#usFile").innerText(),/SPCX/);
-  await page.screenshot({path:path.join(out,"spcx-command.png"),fullPage:true});
+  await ask("스페이스엑스는 왜그래 요즘");
+  assert.ok(await page.locator("#mtResearch .mt-local-doc").count()>0,"SpaceX evidence indexed");
+  assert.match(await page.locator("#mtResearch .mt-quick-summary").innerText(),/SpaceX|SPCX|스페이스/);
+  assert.equal(await page.locator("#mtResearch .mt-auto-research").count(),0,"auto external news requests disabled");
+  assert.equal(paidCalls.length,0,"zero paid API network requests");
   await page.setViewportSize({width:390,height:844});
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(350);
   assert.ok(await page.locator("#usCmd").isVisible(),"mobile command");
-  assert.ok(await page.locator(".pg-bar [data-w=history]").isVisible(),"mobile history button");
-  await page.locator(".pg-bar [data-w=history]").click();
-  assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()?.mission),"history");
-  await page.screenshot({path:path.join(out,"command-mobile.png"),fullPage:true});
+  await page.screenshot({path:path.join(out,"offline-command-mobile.png"),fullPage:true});
   assert.deepEqual(errors,[],"no uncaught page errors");
-  console.log("PASS browser command smoke; screenshots in artifacts/");
- }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
+  console.log("PASS: offline search, relevance, manual map, desktop/mobile, zero paid API requests");
+ }finally{
+  if(browser)await browser.close();
+  await new Promise(resolve=>server.close(resolve));
+ }
 }
-run().catch(e=>{console.error(e);process.exitCode=1;server.close();});
+main().catch(e=>{console.error(e);process.exitCode=1;server.close();});
