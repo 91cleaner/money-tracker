@@ -1,20 +1,20 @@
 {
-  "checked_at": "2026-10-27T08:02:40.737527+00:00",
-  "macro_run": "failure",
+  "checked_at": "2026-10-27T21:47:46.221608+00:00",
+  "macro_run": "success",
   "house_run": "success",
   "files_present": {
-    "us-macro.json": false,
+    "us-macro.json": true,
     "us-house-filings.json": true,
     "us-events.json": true
   },
   "file_health": {
     "us-macro.json": {
-      "status": "missing",
-      "records": 0
+      "status": "present",
+      "records": 5
     },
     "us-house-filings.json": {
       "status": "present",
-      "records": 4764
+      "records": 4766
     },
     "us-events.json": {
       "status": "present",
