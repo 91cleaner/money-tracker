@@ -1,0 +1,43 @@
+name: Command room smoke checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check public entry and command wiring
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const assert = require('node:assert/strict');
+          const entry = fs.readFileSync('index.html','utf8');
+          const us = fs.readFileSync('usa-command.html','utf8');
+          assert.match(entry,/href="national\.html"/);
+          assert.match(entry,/href="usa-command\.html"/);
+          assert.match(entry,/실시간 의원 거래 데이터/);
+          assert.match(entry,/접근 제한/);
+          assert.match(us,/공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결/);
+          assert.match(us,/id="usQuery"/);
+          assert.match(us,/id="usCmd"/);
+          assert.match(us,/class="pg-map"/);
+          for (const file of ['assets/vendor/leaflet/leaflet.js','assets/mt-intel-data.js','assets/mt-command-ui.js','assets/mt-query-engine.js','assets/mt-research-ui.js']) {
+            assert.ok(fs.existsSync(file), 'Missing map/command dependency: '+file);
+          }
+          console.log('Command smoke checks passed');
+          NODE
+      - name: JavaScript syntax
+        shell: bash
+        run: |
+          for file in assets/mt-intel-data.js assets/mt-command-ui.js assets/mt-query-engine.js assets/mt-research-ui.js; do
+            node --check "$file"
+          done
