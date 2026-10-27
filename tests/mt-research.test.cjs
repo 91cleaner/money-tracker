@@ -29,8 +29,9 @@ test("arbitrary nonsensical questions still yield a useful and clearly bounded i
  assert.equal(r.isFallback,true);
  assert.ok(r.missions.length>=3);
  assert.ok(r.assumptions.length>0);
- assert.equal(r.facts.length,0);
- assert.match(r.opening,/지어내지 않겠습니다/);
+ assert.ok(r.facts.length>=3,"unknown query still shows verified but unrelated example data");
+ assert.match(r.opening,/직접 맞는 종목|확인 가능한 기업 실적/);
+ assert.ok(r.facts.every(d=>/^https:\/\//.test(d.source.url)));
 });
 test("user decides; the engine never asserts current prices or trade execution",()=>{
  for(const q of ["NVDA 사야 돼?","펠로시 왜 샀어?","금리 지금 얼마야","엔비디아 오늘 폭락했어?"]){
