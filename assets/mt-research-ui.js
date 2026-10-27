@@ -34,6 +34,9 @@ css.textContent=[
 "#mtResearch .mt-r-verdict{border:1px solid #397450;padding:9px;border-radius:7px;margin-top:7px;background:#0a2518;color:#d7f9e2}",
 "#mtResearch .mt-r-warning{font-size:10px;color:#a7bdb0;border-top:1px solid #315140;padding-top:10px;margin-top:12px}",
 "#mtResearch .mt-r-ticker{font:11px ui-monospace,monospace;color:#91f6c2}",
+"#mtResearch .mt-r-photo{margin:9px 0;padding:6px;border:1px solid #315b45;border-radius:8px;background:#0a1d14}",
+"#mtResearch .mt-r-photo img{display:block;width:100%;height:auto;max-height:175px;object-fit:contain;background:#07100b;border-radius:5px}",
+"#mtResearch .mt-r-photo a{font-size:10px;color:#9ce8bb;text-decoration:underline}",
 "@media(max-width:950px){#mtResearch{top:105px;left:8px;right:8px;width:auto;max-height:calc(100dvh - 300px);padding:11px}#mtResearch h2{font-size:17px}}",
 "@media(max-height:610px){#mtResearch{max-height:calc(100dvh - 175px)}}"
 ].join("\n");
@@ -55,6 +58,13 @@ function render(query){
  add(panel,"h2","",result.title);
  add(panel,"div","mt-r-ticker",result.ticker+" · "+result.topicGroup);
  add(panel,"p","mt-r-lead",result.opening);
+ if(result.photo&&/^https:\/\/thumb\.wikimedia\.org\//.test(result.photo.url)){
+  var photo=add(panel,"figure","mt-r-photo");
+  var picture=add(photo,"img","");picture.src=result.photo.url;picture.alt="검증된 실제 장소 사진 · "+result.location.name;picture.loading="lazy";
+  picture.onerror=function(){photo.remove();};
+  var credit=add(photo,"figcaption","");var creditLink=add(credit,"a","",result.photo.credit+" · 사진 원본 / 라이선스");
+  creditLink.href=result.photo.source;creditLink.target="_blank";creditLink.rel="noopener noreferrer";
+ }
  if(result.isFallback){
   add(panel,"h3","","확인 가능한 탐색 경로");
   add(panel,"p","mt-r-muted","질문과 일치하는 사실은 찾지 못했지만, 다음 관계망으로 조사를 시작할 수 있습니다. 현재 사건의 사실 여부는 확인되지 않았습니다.");
