@@ -1,0 +1,38 @@
+name: Deploy protected MONEY TRACKER administrator research Worker
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check deployment authentication
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CF_TOKEN" ] || [ -z "$CF_ACCOUNT" ]; then
+            echo "::error::Missing CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID GitHub Actions secrets"
+            exit 1
+          fi
+      - name: Install Wrangler
+        run: npm install --no-save --package-lock=false wrangler@4
+      - name: Validate Worker script
+        run: |
+          node --check cloudflare/admin-worker.js
+          node --check server/worker.mjs
+          node --test tests/mt-admin-ai.test.cjs
+      - name: Deploy existing protected GitHub OAuth administrator Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler deploy --config wrangler.jsonc
+      - name: Deployment note
+        run: |
+          echo "Worker source was deployed; AI key presence and end-to-end owner login were NOT verified in this workflow."
+          echo "Set OPENAI_API_KEY as a Cloudflare Worker secret, and optionally FINNHUB_API_TOKEN, then check /api/health after owner login."
