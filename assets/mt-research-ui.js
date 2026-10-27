@@ -34,6 +34,17 @@ css.textContent=[
 "#mtResearch .mt-r-verdict{border:1px solid #397450;padding:9px;border-radius:7px;margin-top:7px;background:#0a2518;color:#d7f9e2}",
 "#mtResearch .mt-r-warning{font-size:10px;color:#a7bdb0;border-top:1px solid #315140;padding-top:10px;margin-top:12px}",
 "#mtResearch .mt-r-ticker{font:11px ui-monospace,monospace;color:#91f6c2}",
+"#mtResearch .mt-local-index{border:1px solid #3a855e;border-radius:10px;padding:10px;margin:11px 0;background:#061a12}",
+"#mtResearch .mt-local-index h3{margin:1px 0 5px;font-size:14px}",
+"#mtResearch .mt-local-head{font-size:11px;color:#b4e7c5}",
+"#mtResearch .mt-local-doc{padding:9px 0;border-top:1px solid #244630}",
+"#mtResearch .mt-local-title{font-size:12px;font-weight:800;color:#d5ffe5;line-height:1.55}",
+"#mtResearch .mt-local-desc{font-size:11px;line-height:1.55;color:#bcd9c7}",
+"#mtResearch .mt-local-meta{font-size:10px;color:#83bca0;margin:5px 0}",
+"#mtResearch .mt-local-actions{display:flex;gap:6px;flex-wrap:wrap;margin:5px 0}",
+"#mtResearch .mt-local-actions a,#mtResearch .mt-local-actions button{padding:5px 8px;background:#0f3422;color:#c9fcd9;border:1px solid #377655;border-radius:5px;font-size:11px;cursor:pointer;text-decoration:none}",
+"#mtResearch .mt-local-more{background:#174d30;border:1px solid #478f5d;border-radius:7px;color:#dfffeb;padding:7px 10px;cursor:pointer}",
+
 "#mtResearch .mt-auto-research{border:1px solid #478365;background:rgba(8,31,20,.8);border-radius:10px;padding:10px;margin:12px 0}",
 "#mtResearch .mt-auto-research h3{margin:0 0 5px;font-size:13px}",
 "#mtResearch .mt-auto-research h4{margin:9px 0 4px;color:#9fffca;font-size:12px}",
@@ -76,6 +87,50 @@ function sourceBlock(parent,datum){
  var b=add(parent,"div","mt-r-fact");add(b,"b","",datum.label);add(b,"p","",datum.value);
  if(datum.asOf)add(b,"p","mt-r-muted","기준: "+datum.asOf);
  link(b,datum.source);
+}
+function renderIndexedSearch(question){
+ var local=window.MTLocalSearch;
+ var section=add(panel,"section","mt-local-index");
+ add(section,"h3","","LOCAL INTELLIGENCE / 저장 자료 검색");
+ var head=add(section,"p","mt-local-head","저장된 공식 자료·인물·법안 기록을 조회하고 있습니다.");
+ var hits=add(section,"div","mt-local-hits");
+ if(!local){head.textContent="로컬 색인 모듈 미연결";return;}
+ var ticket=researchSerial;
+ function display(index,results){
+  if(ticket!==researchSerial||!section.isConnected)return;
+  var total=index.documents.length;
+  head.textContent="공개 자료 색인 "+total+"건 · AI 호출 0회 · 마지막 색인 생성 "+(index.built_at||"미확인")+" · 원문 기준일은 항목별 확인";
+  hits.replaceChildren();
+  if(!results.length){
+   add(hits,"p","mt-r-muted","해당 표현과 일치하는 저장 기록이 없습니다. 출처 목록이나 유사한 법안·기업 이름으로 다시 검색하세요. 없는 자료를 만들어 답하지 않습니다.");
+   return;
+  }
+  function renderItem(item){
+   var card=add(hits,"div","mt-local-doc");
+   add(card,"div","mt-local-title",item.title);
+   add(card,"p","mt-local-desc",item.summary||"원문에서 추가 확인 필요");
+   add(card,"div","mt-local-meta",(item.type||"공식 자료")+" · "+(item.source||"출처 확인")+" · "+(item.source_date||"자료 기준일 별도 확인"));
+   var actions=add(card,"div","mt-local-actions");
+   var url=add(actions,"a","","원문 ↗");url.href=item.url;url.target="_blank";url.rel="noopener noreferrer";
+   if(item.location||item.route){
+    button(actions,"⌖ 지도에서 추적",function(){
+     if(item.route&&window.MTIntelData&&window.MTIntelData.getMission(item.route))api.selectMission(item.route);
+     else if(item.location&&typeof api.travelTo==="function")api.travelTo([item.location.lat,item.location.lng],11,item.location.label||item.title);
+     close();
+    },"mt-r-btn");
+   }
+  }
+  results.slice(0,6).forEach(renderItem);
+  if(results.length>6){
+   button(hits,"추가 "+Math.min(results.length-6,12)+"개 보기",function(e){
+    const more=results.slice(6,18);more.forEach(renderItem);e.target.remove();
+   },"mt-local-more");
+  }
+ }
+ local.load().then(function(index){
+  const results=local.search(index,question,{limit:18});
+  display(index,results);
+ }).catch(function(err){if(ticket!==researchSerial||!section.isConnected)return;head.textContent="로컬 검색 오류 · "+String(err.message||err);});
 }
 function openLookup(question){
  if(!window.MTOpenResearch)return;
@@ -242,6 +297,7 @@ function renderLiveBackend(question){
  }).catch(function(){if(ticket===researchSerial&&box.isConnected)status.textContent="AI 검색 서버 응답 오류";});
 }
 function render(query){
+ researchSerial++;
  if(typeof api.beginQuestion==="function")api.beginQuestion();
  var result=engine.analyze(query);panel.hidden=false;while(panel.firstChild)panel.removeChild(panel.firstChild);
  var head=add(panel,"div","mt-r-head");add(head,"span","mt-r-kicker","MONEY TRACKER / INTELLIGENCE BRIEF");
@@ -249,9 +305,9 @@ function render(query){
  add(panel,"h2","",result.title);
  add(panel,"div","mt-r-ticker",result.ticker+" · "+result.topicGroup);
  add(panel,"p","mt-r-lead",result.opening);
+ renderIndexedSearch(query);
+ // Paid model/API calls intentionally disabled: index/search documents first.
  renderSpaceXBrief(result);
- runPublicResearch(query,result);
- renderLiveBackend(query);
  if(!result.photo&&result.location&&window.MTPhoto){var photoSlot=add(panel,"div","mt-r-livephoto");window.MTPhoto.render(photoSlot,result.id,result.location.name);}
  if(result.photo&&/^https:\/\/thumb\.wikimedia\.org\//.test(result.photo.url)){
   var photo=add(panel,"figure","mt-r-photo");
@@ -308,12 +364,7 @@ function render(query){
  }
  add(panel,"p","mt-r-warning",result.caveat);
  panel.scrollTop=0;
- if(result.location){
-  var center=result.location;
-  var zoom=Math.min(10,Math.max(5,center.zoom||8));
-  if(typeof api.travelTo==="function")api.travelTo([center.lat,center.lng],zoom,result.topic+" / 브리핑 조회");
-  else map.flyTo([center.lat,center.lng],zoom,{duration:1.5});
- }
+ // Do not move the map on a query. Operator must select an evidence point.
  return result;
 }
 window.MTResearch={show:render,close:close};
