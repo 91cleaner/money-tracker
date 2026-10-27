@@ -87,5 +87,48 @@ class HousePtrExtractionTests(unittest.TestCase):
             self.assertEqual(json.loads(output.read_text(encoding="utf-8"))["records"][0]["asset"], "saved")
 
 
+    def test_queue_cursor_rotates_and_wraps_without_skipping_last(self):
+        rows = [{"id": str(i)} for i in range(1, 6)]
+        first = ptr.select_records(rows, {}, 2)
+        self.assertEqual([r["id"] for r in first], ["1", "2"])
+        second = ptr.select_records(rows, {"last_attempted_filing_id": "2"}, 2)
+        self.assertEqual([r["id"] for r in second], ["3", "4"])
+        third = ptr.select_records(rows, {"last_attempted_filing_id": "4"}, 2)
+        self.assertEqual([r["id"] for r in third], ["5", "1"])
+        self.assertEqual([r["id"] for r in ptr.select_records(rows, {"last_attempted_filing_id": "missing"}, 2)], ["1", "2"])
+
+    def test_queue_cursor_resumes_from_legacy_status(self):
+        rows = [{"id": str(i)} for i in range(1, 4)]
+        previous = {"filings": [{"filing_id": "1"}, {"filing_id": "2"}]}
+        self.assertEqual([r["id"] for r in ptr.select_records(rows, previous, 2)], ["3", "1"])
+        self.assertEqual(ptr.select_records([], previous, 2), [])
+        with self.assertRaises(ValueError):
+            ptr.select_records("bad payload", previous, 2)
+
+    def test_main_persists_cursor_across_scheduled_runs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            queue, output, status = (root / x for x in ("queue.json", "candidates.json", "status.json"))
+            rows = [{
+                "id": "2026-" + str(i),
+                "member": "Example Member",
+                "filing_date": "10/20/2026",
+                "document_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/" + str(i) + ".pdf",
+            } for i in range(1, 4)]
+            queue.write_text(json.dumps({"records": rows}), encoding="utf-8")
+            with patch.object(ptr, "QUEUE", queue), patch.object(ptr, "OUT", output), \\
+                 patch.object(ptr, "STATUS", status), patch.object(ptr, "MAX_DOCS", 2), \\
+                 patch.object(ptr.urllib.request, "urlopen", return_value=FakeResponse()), \\
+                 patch.object(ptr, "extract", return_value=[]):
+                ptr.main()
+                first = json.loads(status.read_text(encoding="utf-8"))
+                ptr.main()
+                second = json.loads(status.read_text(encoding="utf-8"))
+            self.assertEqual([x["filing_id"] for x in first["filings"]], ["2026-1", "2026-2"])
+            self.assertEqual(first["last_attempted_filing_id"], "2026-2")
+            self.assertEqual([x["filing_id"] for x in second["filings"]], ["2026-3", "2026-1"])
+            self.assertEqual(second["last_attempted_filing_id"], "2026-1")
+
+
 if __name__ == "__main__":
     unittest.main()
