@@ -1,0 +1,33 @@
+name: MONEY TRACKER security and research lab checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify JS syntax
+        run: |
+          node --check worker/private-api.js
+          node --check assets/mt-intel-lab.js
+          node --check assets/mt-engagement.js
+      - name: Test private API rejection
+        run: node --test worker/private-api.test.mjs
+      - name: Build and validate public artifact
+        run: |
+          python3 scripts/prepare-public-pages.py
+          test -f .public-pages/intel-lab.html
+          test -f .public-pages/data/us/members.json
+          test -f .public-pages/data/us/bills/A000055.json
+          test ! -e .public-pages/cloudflare/admin-worker.js
+          test ! -e .public-pages/worker/private-api.js
+          test ! -e .public-pages/wrangler.jsonc
+          test ! -e .public-pages/collector/collect.py
+          grep -q 'href="intel-lab.html"' .public-pages/index.html
