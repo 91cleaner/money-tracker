@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/build-local-index.mjs'
       - 'scripts/collect-public-records.mjs'
+      - 'scripts/collection-snapshot.mjs'
       - 'data/search/seed-docs.json'
       - 'data/search/*-sources.json'
       - 'data/search/relations.json'
@@ -33,6 +34,7 @@ jobs:
       - name: Syntax checks
         run: |
           node --check scripts/collect-public-records.mjs
+          node --check scripts/collection-snapshot.mjs
           node --check scripts/build-local-index.mjs
           node --check assets/mt-local-search.js
       - name: Collect official US/Taiwan/Japan records and optional SEC
