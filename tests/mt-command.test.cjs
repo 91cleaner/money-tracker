@@ -31,6 +31,14 @@ test("every source is HTTPS and every map point is valid",()=>{
   assert.ok(!nodeIds.has(s.id),"duplicate ID "+s.id);nodeIds.add(s.id);
  }));
 });
+test("NVIDIA link is industry context, not an invented direct CHIPS subsidy",()=>{
+ const mission=intel.getMission("chips");
+ const n=mission.steps.find(s=>s.id==="chips-nvda");
+ assert.ok(n);
+ assert.equal(n.kind,"context");
+ assert.match(n.text,/직접 보조금을 받았다는 증거가 아닙니다/);
+ assert.ok(Math.abs(n.lng-(-121.96708))<0.001);
+});
 test("unconnected stock disclosures are clearly flagged",()=>{
  const disclosures=intel.getMission("disclosures");
  assert.ok(disclosures.steps.every(s=>s.kind==="unconnected"));
