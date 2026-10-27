@@ -78,42 +78,60 @@ function drawRoute(m){
   circle.on("click",function(){selectStep(i);});
  });
 }
-var travelTimers=[],travelGeneration=0;
+var travelGeneration=0,travelCleanup=null;
+var flight=elem("div","mt-flight");flight.hidden=true;root.append(flight);
+var flightText=elem("span","mt-flight-text","");
+var flightSkip=button("SKIP ↳",function(){
+ if(!flight._goal)return;
+ var d=flight._goal;cancelTravel();map.setView(d.p,d.z,{animate:false});
+},"mt-flight-skip");
+flight.append(flightText,flightSkip);
 function cancelTravel(){
  travelGeneration++;
- travelTimers.forEach(function(t){clearTimeout(t);});travelTimers=[];
- if(map&&map.stop)map.stop();
+ if(travelCleanup){travelCleanup();travelCleanup=null;}
+ map.stop();flight.hidden=true;
 }
-function travelTo(point,zoom){
+function travelTo(point,zoom,caption){
  cancelTravel();
- var token=travelGeneration,origin=map.getCenter(),startZoom=map.getZoom();
+ var serial=travelGeneration;
+ var target=L.latLng(point),start=map.getCenter();
  var wanted=Math.max(map.getMinZoom(),Math.min(18,zoom||10));
  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
  if(reduce){map.setView(point,wanted,{animate:false});return;}
- var distance=Math.abs(origin.lat-point[0])+Math.abs(origin.lng-point[1]);
- if(distance<.7&&Math.abs(startZoom-wanted)<1.5){
-  map.flyTo(point,wanted,{animate:true,duration:1.0});return;
+ var meters=start.distanceTo(target),wide=Math.max(map.getMinZoom(),meters>1500000?3.75:meters>350000?5:Math.min(8,Math.max(5,map.getZoom()-2)));
+ var phases=[
+  {where:start,z:wide,delay:.70,label:"01 / OVERVIEW · 위치 확보"},
+  {where:target,z:wide,delay:1.15,label:"02 / VECTOR · 추적 이동"},
+  {where:target,z:wanted,delay:1.35,label:"03 / TARGET LOCK · 현장 접근"}
+ ];
+ if(meters<20000)phases.splice(1,1);
+ flight.hidden=false;flight._goal={p:point,z:wanted};
+ function advance(i){
+  if(serial!==travelGeneration)return;
+  if(i===phases.length){flight.hidden=true;travelCleanup=null;return;}
+  var phase=phases[i],done=false,timer;
+  flightText.textContent=phase.label+(caption?" · "+caption:"");
+  function next(){
+   if(done)return;
+   done=true;map.off("moveend",next);
+   clearTimeout(timer);travelCleanup=null;
+   if(serial===travelGeneration)advance(i+1);
+  }
+  travelCleanup=function(){done=true;map.off("moveend",next);clearTimeout(timer);};
+  map.once("moveend",next);
+  timer=setTimeout(next,(phase.delay+.9)*1000);
+  map.flyTo(phase.where,phase.z,{animate:true,duration:phase.delay});
  }
- var mid=[origin.lat+(point[0]-origin.lat)*.45,origin.lng+(point[1]-origin.lng)*.45];
- var overview=Math.max(map.getMinZoom(),Math.min(4.25,startZoom,wanted));
- map.flyTo(mid,overview,{animate:true,duration:1.0});
- travelTimers.push(setTimeout(function(){
-  if(token!==travelGeneration)return;
-  map.flyTo(point,Math.max(map.getMinZoom(),Math.min(6.5,wanted)),{animate:true,duration:1.1});
- },1150));
- travelTimers.push(setTimeout(function(){
-  if(token!==travelGeneration)return;
-  map.flyTo(point,wanted,{animate:true,duration:1.2});
- },2450));
+ advance(0);
 }
-map.on("mousedown touchstart",cancelTravel);
+map.on("dragstart",function(){if(!flight.hidden)cancelTravel();});
 function selectStep(index){
  if(!state.mission||index<0||index>=state.mission.steps.length)return;
  state.step=index;
  var m=state.mission,step=m.steps[index];
  drawRoute(m);renderFile(m,step);
  var wanted=Math.max(map.getMinZoom(),step.zoom||10);
- travelTo(stopLocation(step),wanted);
+ travelTo(stopLocation(step),wanted,m.short+" "+(index+1)+"/"+m.steps.length);
  setStatus(m.short+" · "+(index+1)+"/"+m.steps.length+" · "+(step.kind==="unconnected"?"데이터 미연결":"공식 출처 제공"));
 }
 function openSource(step){
@@ -127,6 +145,8 @@ function renderFile(m,s){
  file.appendChild(elem("p","mt-place",s.place));
  var kind=s.kind==="unconnected"?"미연결":s.kind==="context"?"탐색 맥락":"공식 기록";file.appendChild(elem("div","mt-databadge",kind));
  file.appendChild(elem("p","mt-detail",s.text));
+ var photoHolder=elem("div","mt-file-photo");file.appendChild(photoHolder);
+ if(window.MTPhoto)window.MTPhoto.render(photoHolder,s.id,s.place);
  file.appendChild(elem("div","mt-rel","↳ "+s.connection));
  var trail=elem("div","mt-trail");
  m.steps.forEach(function(n,i){var b=button((i+1)+" "+n.title,function(){selectStep(i);},"mt-stage"+(i===state.step?" active":""));b.setAttribute("aria-current",i===state.step?"step":"false");trail.appendChild(b);});
