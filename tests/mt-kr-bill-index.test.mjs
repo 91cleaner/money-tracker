@@ -18,6 +18,8 @@ test("indexes Korean bills with source links, proposer, and honest snapshot stat
  assert.equal(docs[0].type,"bill");
  assert.equal(docs[1].url,"https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_12345678");
  assert.match(docs[1].summary,/원안가결/);
+ assert.ok(docs[1].aliases.includes("홍길동"),"voted bill must retain proposer link");
+ assert.match(docs[1].summary,/대표발의자: 홍길동/);
  assert.doesNotMatch(docs[1].summary,/주가|매수|매도/);
 });
 
