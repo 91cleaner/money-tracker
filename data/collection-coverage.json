@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-10-27T08:02:47.655434+00:00",
+  "datasets": {
+    "congress_bills": {
+      "path": "data/us/bills.json",
+      "status": "present",
+      "records": 3172,
+      "members": 539,
+      "source_updated": "2026-10-26 15:23 UTC"
+    },
+    "congress_trades": {
+      "path": "data/us/trades.json",
+      "status": "present",
+      "records": 32,
+      "source_updated": "2026-10-27T08:02:47.566170+00:00"
+    },
+    "house_filings": {
+      "path": "data/us-house-filings.json",
+      "status": "present",
+      "records": 4764,
+      "source_updated": "2026-10-27T08:02:40.048386+00:00"
+    },
+    "us_macro": {
+      "path": "data/us-macro.json",
+      "status": "missing",
+      "records": null
+    },
+    "historical_events": {
+      "path": "data/us-events.json",
+      "status": "present",
+      "records": 5,
+      "source_updated": null
+    },
+    "korean_municipal_contracts": {
+      "path": "data/index.json",
+      "status": "present",
+      "records": 85,
+      "source_updated": "2026-10-25T10:47:49.001536+09:00"
+    }
+  },
+  "limitations": [
+    "File presence does not establish accuracy, completeness, freshness or license compliance.",
+    "Legislator disclosures may report transaction amount ranges, not exact amounts.",
+    "Historical correlation is not proof of causation or investment advice."
+  ]
+}

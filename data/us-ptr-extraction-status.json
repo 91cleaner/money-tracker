@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-10-27T08:02:47.566170+00:00",
+  "attempted": 8,
+  "rows": 32,
+  "filings": [
+    {
+      "filing_id": "2026-20035411",
+      "status": "parsed_needs_review",
+      "rows": 5
+    },
+    {
+      "filing_id": "2026-20035410",
+      "status": "no_verified_rows",
+      "rows": 0
+    },
+    {
+      "filing_id": "2026-20035408",
+      "status": "parsed_needs_review",
+      "rows": 24
+    },
+    {
+      "filing_id": "2025-9115676",
+      "status": "no_verified_rows",
+      "rows": 0
+    },
+    {
+      "filing_id": "2025-20032051",
+      "status": "parsed_needs_review",
+      "rows": 1
+    },
+    {
+      "filing_id": "2026-20035403",
+      "status": "parsed_needs_review",
+      "rows": 1
+    },
+    {
+      "filing_id": "2026-20035401",
+      "status": "no_verified_rows",
+      "rows": 0
+    },
+    {
+      "filing_id": "2025-20032040",
+      "status": "parsed_needs_review",
+      "rows": 1
+    }
+  ],
+  "warning": "Digital text only. All extracted trades require source review. No OCR, no guessed rows."
+}
