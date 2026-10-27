@@ -9,6 +9,7 @@ on:
       - 'scripts/audit_data_coverage.py'
       - 'scripts/build_ptr_research_queue.py'
       - 'scripts/extract_house_ptr.py'
+      - 'scripts/sync_command_worker.py'
   schedule:
     - cron: '17 5 * * *'
   workflow_dispatch:
@@ -79,11 +80,14 @@ jobs:
       - name: Audit data coverage (missing, empty, invalid)
         if: always()
         run: python scripts/audit_data_coverage.py
-      - name: Commit changed data
+      - name: Refresh authenticated command map data snapshot
+        if: always()
+        run: python scripts/sync_command_worker.py
+      - name: Commit changed data and command snapshot
         run: |
           git config user.name "money-tracker-data-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data/
+          git add -A data/ cloudflare/admin-worker.js
           if ! git diff --cached --quiet; then
             git commit -m "data: refresh US macro observations"
             git push
