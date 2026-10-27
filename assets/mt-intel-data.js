@@ -18,6 +18,11 @@ var SOURCES={
   nyfed:{title:"뉴욕 연준 · 공식 사이트",url:"https://www.newyorkfed.org/"},
   history:{title:"미 국무부 역사실 · 역사 자료",url:"https://history.state.gov/"},
   congress:{title:"Congress.gov · 법안 검색",url:"https://www.congress.gov/"},
+  spacex:{title:"SpaceX · 공식 발사 기록",url:"https://www.spacex.com/launches"},
+  spacexNASA:{title:"NASA · Crew-13 발사 발표 (2026-10-01)",url:"https://www.nasa.gov/news-release/nasas-spacex-crew-13-launches-to-international-space-station/"},
+  spacexCRS:{title:"NASA · CRS-35 보급 임무 (2026-10-13)",url:"https://www.nasa.gov/mission/nasas-spacex-crs-35/"},
+  spacexFAA:{title:"FAA · Cape Canaveral Starship 검토",url:"https://www.faa.gov/space/stakeholder_engagement/spacex_starship_ccsfs"},
+  spacexTexas:{title:"미 연방관보 · 2026-10-14 Starbase 검토 공고",url:"https://www.govinfo.gov/content/pkg/FR-2026-10-14/html/2026-20963.htm"},
   nvidiaIR:{title:"NVIDIA 공식 실적 발표 · FY2027 Q2 (2026-08-26)",url:"https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027/"},
   nvidiaHQ:{title:"NVIDIA 공식 본사 주소 · Santa Clara",url:"https://www.nvidia.com/en-us/contact/"},
   tsmcHQ:{title:"TSMC 공식 본사 · Hsinchu Science Park",url:"https://www.tsmc.com/english/aboutTSMC/business_contacts"}
@@ -26,6 +31,13 @@ function node(id,place,lat,lng,zoom,title,text,connection,source,kind){
  return {id:id,place:place,lat:lat,lng:lng,zoom:zoom,title:title,text:text,connection:connection,source:SOURCES[source],kind:kind||"document"};
 }
 var MISSIONS=[
+ {id:"spacex",title:"SpaceX · 텍사스 → 플로리다 → 워싱턴",short:"스페이스X 상황 추적",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","starship","스타십","starlink","스타링크","팰컨9","falcon9"],summary:"최근 실제 발사 기록·NASA 임무·FAA 규제 검토를 지도로 추적합니다.",symbols:"SpaceX는 비상장 · 주가/매수 신호 미연결",steps:[
+ node("spacex-starbase","텍사스 · 스타베이스",25.997,-97.156,11,"Starbase · Starship 개발·발사","SpaceX 공식 기록상 Starship Flight 14가 2026년 9월 28일 스타베이스에서 발사됐습니다. 시험 결과와 향후 일정은 각각 공식 자료를 확인해야 합니다.","Starship 시험 → 발사장 · 개발 진척","spacex"),
+ node("spacex-nasa","플로리다 · 케이프커내버럴",28.562,-80.577,11,"Crew-13 · NASA 유인 수송","NASA는 SpaceX Crew-13이 2026년 10월 1일 Cape Canaveral에서 발사됐다고 발표했습니다. 스타십 개발과 다른 상용 유인 수송 사업입니다.","공식 임무 → 정부 고객·계약","spacexNASA"),
+ node("spacex-cargo","플로리다 · Cape Canaveral",28.562,-80.577,12,"CRS-35 · 우주정거장 화물 임무","NASA는 CRS-35 화물 보급 임무의 발사일을 2026년 10월 13일로 기록합니다. 상업 화물 수송과 시험용 Starship을 혼동하지 않습니다.","유인 수송 → 화물 수송 사업","spacexCRS"),
+ node("spacex-licensing","워싱턴 D.C. · FAA 정책",38.887,-77.025,12,"FAA · 발사 허가·환경 영향 검토","FAA의 Cape Canaveral SLC-37 관련 자료는 향후 Starship 상업 운항을 위한 기존 면허 변경 필요성을 설명합니다. 검토 진행과 최종 승인 여부는 별도 확인해야 합니다.","발사장 확대 → 연방 항공 규제","spacexFAA","context"),
+ node("spacex-return","텍사스 · Starbase",25.997,-97.156,10,"2026-10-14 · 텍사스 운영 공고","2026년 10월 14일 미 연방관보에는 Starbase의 Starship 운영 확대 제안을 평가하기 위한 환경영향평가 절차가 공고됐습니다.","규제 문서 → 현장 향후 운영","spacexTexas","context")
+ ]},
  {id:"nvda",title:"NVIDIA → 대만 공급망 → 미국 법안",short:"엔비디아 · 주가 요인",keywords:["엔비디아","nvidia","nvda","젠슨황","젠슨 황","gpu","blackwell","rubin","엔비디아 주가"],summary:"2026년 8월 NVIDIA 공식 실적 → 대만 반도체 공급망 → 미국 의회·연준을 따라가는 조사 경로",symbols:"NVDA · TSM · SOXX (실시간 시세 미연결)",steps:[
  node("nvda-santa","미국 · 산타클라라 (본사 소재지)",37.3727,-121.9694,12,"NVIDIA 본사 · 실적에서 출발","NVIDIA는 캘리포니아 산타클라라에 본사를 둡니다. 2026년 8월 발표된 FY2027 2분기 매출은 962억 달러입니다. 지도 지점은 본사 소재 지역을 가리키며 실시간 주가 정보가 아닙니다.","실적 발표 → 주가 기대와 비교","nvidiaIR"),
  node("nvda-tsmc","대만 · 신주 과학단지 (본사 소재 지역)",24.785,121.008,11,"TSMC · 생산 공급망 추적","TSMC 본사는 대만 신주 과학단지에 있습니다. NVIDIA의 반도체 생산 및 공급망 노출을 분석할 때 관련 생산업체의 공식 자료와 기업 공시를 함께 조사해야 합니다.","AI칩 설계 → 위탁생산 공급망 (개별 계약 검증 필요)","tsmcHQ","context"),
