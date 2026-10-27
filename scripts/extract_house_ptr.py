@@ -10,6 +10,7 @@ import io
 import json
 import os
 import re
+import tempfile
 import urllib.request
 from pathlib import Path
 
@@ -27,6 +28,25 @@ def date(v):
     try:return dt.datetime.strptime(v,"%m/%d/%Y").date().isoformat()
     except ValueError:return None
 def clean(v):return " ".join(str(v or "").split())
+
+
+def write_json_atomic(path, payload, *, compact=False):
+    """Publish complete JSON, keeping the previous snapshot if writing fails."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            if compact:
+                json.dump(payload, stream, ensure_ascii=False, separators=(",", ":"))
+            else:
+                json.dump(payload, stream, ensure_ascii=False, indent=2)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
 def parse_row(cells,record):
     cells=[clean(x) for x in cells]
     if len(cells)<7:return None
@@ -111,18 +131,20 @@ def main():
         except Exception as exc:
             results.append({"filing_id":record.get("id"),"status":"error","reason":type(exc).__name__})
     status={"checked_at":dt.datetime.now(dt.timezone.utc).isoformat(),"attempted":len(results),"rows":len(trades),"filings":results,"last_attempted_filing_id":records[-1]["id"] if records else previous_status.get("last_attempted_filing_id"),"warning":"Digital text only. All extracted trades require source review. No OCR, no guessed rows."}
-    STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    # Save candidates before advancing the cursor; failed writes must be retried.
     # Do not replace a previously collected dataset with empty output on outage.
     if trades:
         previous=[]
         if OUT.exists() and OUT.stat().st_size:
-            try:previous=json.loads(OUT.read_text(encoding="utf-8")).get("records",[])
-            except (ValueError,TypeError):pass
+            existing=json.loads(OUT.read_text(encoding="utf-8"))
+            if not isinstance(existing,dict) or not isinstance(existing.get("records"),list):
+                raise ValueError("Invalid existing PTR candidates; refusing to overwrite")
+            previous=existing["records"]
         combined={}
         for row in previous+trades:
             key=(row.get("filing_id"),row.get("source_page"),row.get("source_table"),row.get("source_row"),row.get("owner"),row.get("transaction_date"),row.get("asset"),row.get("type"),row.get("amount_min_usd"),row.get("amount_max_usd"),row.get("notification_date"))
             combined[key]=row
-        OUT.parent.mkdir(parents=True,exist_ok=True)
-        OUT.write_text(json.dumps({"schema_version":1,"collected_at":status["checked_at"],"source":"Official US House PTR PDF","records":list(combined.values()),"caveat":"Machine-parsed, not independently verified; amount bands are not exact transaction values."},ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
+        write_json_atomic(OUT, {"schema_version":1,"collected_at":status["checked_at"],"source":"Official US House PTR PDF","records":list(combined.values()),"caveat":"Machine-parsed, not independently verified; amount bands are not exact transaction values."}, compact=True)
+    write_json_atomic(STATUS, status)
     print(json.dumps({"attempted":len(results),"rows":len(trades)}))
 if __name__=="__main__":main()
