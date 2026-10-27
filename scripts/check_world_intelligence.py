@@ -74,6 +74,41 @@ else:
     else:
         warnings.append("Node unavailable: JavaScript syntax not checked")
 
+worker = ROOT / "cloudflare/admin-worker.js"
+if not worker.exists():
+    errors.append("Authenticated Cloudflare Worker missing")
+else:
+    worker_source = worker.read_text(encoding="utf-8")
+    check(worker.stat().st_size < 1024 * 1024,
+          "Worker exceeds 1 MiB GitHub Contents API limit")
+    for marker in ("// BEGIN GENERATED COMMAND ASSETS",
+                   "const COMMAND_EVIDENCE_JS=", "const COMMAND_DATA=",
+                   "Object.prototype.hasOwnProperty.call(COMMAND_DATA,path)",
+                   "script-src 'self'", "connect-src 'self'"):
+        check(marker in worker_source, "Authenticated Worker missing: " + marker)
+    if shutil.which("node"):
+        run = subprocess.run(["node", "--input-type=module", "--check"],
+                             input=worker_source, capture_output=True, text=True)
+        check(run.returncode == 0, "Worker JavaScript syntax: " + run.stderr[-350:])
+    # A UI/data commit can precede its separate generated Worker sync commit.
+    # Flag temporary drift without mislabeling it as a live deployment failure.
+    try:
+        decoder = json.JSONDecoder()
+        pos = worker_source.index("const COMMAND_HTML=") + len("const COMMAND_HTML=")
+        bundled_html, _ = decoder.raw_decode(worker_source[pos:])
+        if page.exists() and bundled_html != html:
+            warnings.append("Worker HTML snapshot differs from map source; sync pending")
+        pos = worker_source.index("const COMMAND_DATA=") + len("const COMMAND_DATA=")
+        bundled_data, _ = decoder.raw_decode(worker_source[pos:])
+        for route, relative in (
+                ("/data/us/trades.json", "data/us/trades.json"),
+                ("/data/us/ptr-crosschecks.json", "data/us/ptr-crosschecks.json")):
+            if json.loads(bundled_data[route]) != json.loads(
+                    (ROOT / relative).read_text(encoding="utf-8")):
+                warnings.append("Worker dataset snapshot differs from " + relative)
+    except (ValueError, KeyError, OSError) as exc:
+        errors.append("Cannot inspect authenticated Worker snapshots: " + str(exc))
+
 bills = load("data/us/bills.json")
 recent = bills.get("recent")
 stats = bills.get("stat")
