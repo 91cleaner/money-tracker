@@ -1,0 +1,67 @@
+/* MONEY TRACKER curated evidence paths. Verified historical records, NOT a live feed. */
+(function(root,factory){
+  var api=factory();
+  if(typeof module==="object"&&module.exports){module.exports=api;}
+  root.MTIntelData=api;
+})(typeof globalThis!=="undefined"?globalThis:this,function(){
+"use strict";
+var SOURCES={
+  chipsLaw:{title:"Congress.gov · H.R.4346",url:"https://www.congress.gov/bill/117th-congress/house-bill/4346"},
+  intel:{title:"NIST · Intel Ohio 수혜 프로젝트",url:"https://www.nist.gov/chips/intel-corporation-ohio-new-albany"},
+  tsmc:{title:"미 상무부 · TSMC Arizona 지원 발표",url:"https://www.commerce.gov/news/press-releases/2024/11/biden-harris-administration-announces-chips-incentives-award-tsmc"},
+  chipsAwards:{title:"NIST · CHIPS 지원 내역",url:"https://www.nist.gov/chips/chips-program-office-awards"},
+  houseTrades:{title:"미 하원 서기처 · 금융거래 원문",url:"https://disclosures-clerk.house.gov/FinancialDisclosure"},
+  ustr:{title:"USTR · 미국 무역대표부",url:"https://ustr.gov/"},
+  trade:{title:"ITA · 미국 국제무역청",url:"https://www.trade.gov/"},
+  fed:{title:"연방준비제도 · 통화정책",url:"https://www.federalreserve.gov/monetarypolicy.htm"},
+  nyfed:{title:"뉴욕 연준 · 공식 사이트",url:"https://www.newyorkfed.org/"},
+  history:{title:"미 국무부 역사실 · 역사 자료",url:"https://history.state.gov/"},
+  congress:{title:"Congress.gov · 법안 검색",url:"https://www.congress.gov/"}
+};
+function node(id,place,lat,lng,zoom,title,text,connection,source,kind){
+ return {id:id,place:place,lat:lat,lng:lng,zoom:zoom,title:title,text:text,connection:connection,source:SOURCES[source],kind:kind||"document"};
+}
+var MISSIONS=[
+ {id:"chips",title:"CHIPS법 → 발의 의원 → 기업",short:"반도체 공급망",keywords:["반도체","칩스","chips","h.r.4346","hr4346","4346","tsmc","인텔","intel","대만","타이완","엔비디아","nvidia","nvda","법안","의원 기업","공급망"],summary:"공식 입법 기록과 기업 지원 기록을 따라가는 검증된 역사적 관계 경로",symbols:"INTC · TSM · SOXX (시세 미연결)",steps:[
+ node("chips-bill","워싱턴 D.C. · 의회",38.8899,-77.0091,13,"H.R.4346 / CHIPS and Science Act","2022년 8월 9일 Public Law 117-167로 제정된 미국 반도체·과학 관련 법률입니다.","법안 원문 · 법률 제정","chipsLaw"),
+ node("chips-sponsor","워싱턴 D.C. · 하원",38.8899,-77.0091,14,"팀 라이언 · 당시 하원의원","Congress.gov에 기재된 H.R.4346 원 발의자: Tim Ryan (D-OH-13). 당시의 발의 기록이며 현재 재직을 의미하지 않습니다.","법안 → 원 발의 의원","chipsLaw"),
+ node("chips-intel","오하이오 · 뉴올버니",40.0806,-82.8088,12,"Intel · 미국 반도체 투자","NIST의 CHIPS 지원 사업 기록에 Intel의 오하이오 뉴올버니 프로젝트가 기재돼 있습니다. 법안과 정책상 연결이며 의원 개인거래의 증거는 아닙니다.","법률 → 공식 지원 사업 → 기업","intel"),
+ node("chips-tsmc","애리조나 · 피닉스",33.4484,-112.0740,11,"TSMC Arizona · 지원 기록","미국 상무부는 2024년 11월 TSMC Arizona에 최대 66억 달러의 직접 지원금 수여를 발표했습니다.","법률 → 공식 지원 사업 → 기업","tsmc"),
+ node("chips-trades","워싱턴 D.C. · 공시 출처",38.8899,-77.0091,12,"의원 주식거래 데이터 · 미연결","하원 금융공시 원문은 공개돼 있지만, 이 관제실에는 개별 거래를 수집·검증해 법안 및 인물과 매칭한 데이터가 아직 없습니다. 거래를 추정하거나 만들어 표시하지 않습니다.","공개 거래 원문 → 자동 수집 미연결","houseTrades","unconnected")
+ ]},
+ {id:"trade",title:"미중 관세 → 공급망",short:"관세·무역",keywords:["관세","무역","중국","미중","트럼프 관세","tariff","tariffs","trade","수출통제","수입","관세법"],summary:"미국 무역정책 출처에서 중국과 미국 기업으로 이동하는 탐색 경로",symbols:"XLI · SPY (연결 맥락만 표시)",steps:[
+ node("trade-ustr","워싱턴 D.C.",38.8951,-77.0364,13,"미국 무역대표부 USTR","관세·무역조치의 공식 발표와 관련 문서는 USTR에서 확인해야 합니다. 여기에는 실시간 관세 변경 피드가 연결되어 있지 않습니다.","정책 출처","ustr","context"),
+ node("trade-cn","베이징 · 중국",39.9042,116.4074,9,"중국 공급망 · 탐색 지역","중국과 미국 간 무역 이슈가 발생하는 지리적 탐색 지점입니다. 현재 사건의 발생·영향을 실시간 판정하지 않습니다.","미중 무역 연결 · 탐색","trade","context"),
+ node("trade-us","워싱턴 D.C.",38.8951,-77.0364,12,"미국 산업·기업 영향 검토","공식 무역 자료를 기준으로 품목, 적용 날짜, 기업 노출 정도를 별도로 검증해야 합니다. 개별 종목 매수·매도 신호는 제공하지 않습니다.","관련 미국 산업 검토","ustr","context")
+ ]},
+ {id:"rates",title:"연준 → 금융시장",short:"금리·연준",keywords:["연준","금리","fomc","fed","연방준비","기준금리","채권","물가","inflation","interest rate","뉴욕 연준"],summary:"공식 연준 통화정책 기록과 시장 영향 검토 지점을 연결",symbols:"TLT · QQQ · XLF (실시간 미연결)",steps:[
+ node("rates-fed","워싱턴 D.C. · Fed",38.8929,-77.0457,14,"연방준비제도 · 통화정책","FOMC 의결·정책 발표는 연방준비제도 공식 사이트에서 확인할 수 있습니다. 최신 결정 자동 업데이트는 아직 연결하지 않았습니다.","연준 공식 기록","fed","context"),
+ node("rates-ny","뉴욕 · 연방준비은행",40.7082,-74.0086,14,"뉴욕 연방준비은행","금융시장 운영 및 정책 관련 자료를 뉴욕 연방준비은행의 공식 사이트에서 확인할 수 있습니다.","통화정책 → 금융시장","nyfed","context")
+ ]},
+ {id:"history",title:"세계사 → 미국 전략",short:"세계사·외교",keywords:["세계사","역사","냉전","대만해협","세계","미국사","외교","history","taiwan","한국","한미","일본"],summary:"과거 외교 기록을 미국과 아시아의 지정학적 위치에 연결",symbols:"역사 자료 · 시세 미연결",steps:[
+ node("history-dc","워싱턴 D.C.",38.8951,-77.0364,11,"미국 외교문서 출처","미 국무부 역사실은 미국의 외교사와 원문 사료에 접근할 수 있는 출처입니다. 구체 사건 연대표 자동 추출은 미연결입니다.","공식 역사 출처","history","context"),
+ node("history-tw","타이베이 · 대만",25.0330,121.5654,10,"대만해협 · 역사 탐색","미국·대만·중국 관계의 역사적 배경을 조사할 지점입니다. 특정 사건이나 시장 반응을 확인 없이 단정하지 않습니다.","역사 배경 · 지정학 연결","history","context"),
+ node("history-kr","서울 · 대한민국",37.5665,126.9780,11,"한미 관계 · 역사 탐색","미국의 동아시아 전략과 한미 외교사의 연결을 지도 위에서 탐색합니다. 연대기 정밀 데이터는 미연결입니다.","역사 맥락 · 미국 전략","history","context")
+ ]},
+ {id:"disclosures",title:"의원 공개 거래 신고",short:"공시 원문",keywords:["주식거래","거래","매수","매도","펠로시","pelosi","nancy","투자","공시","disclosure","stock","ptr","의원 매매"],summary:"미 하원 공식 금융공시 접근 — 아직 개별 거래 데이터베이스는 미연결",symbols:"실거래 데이터 미연결",steps:[
+ node("trades-house","워싱턴 D.C. · 의회",38.8899,-77.0091,13,"미 하원 금융공시 원문","하원 서기처가 공개하는 금융공시 및 Periodic Transaction Report 열람 페이지입니다. 이 앱은 개인별 거래내역을 가져오거나 매매금액을 추정하지 않습니다.","원문 공개 · 자동 연결 미완료","houseTrades","unconnected"),
+ node("trades-graph","워싱턴 D.C. · 법안",38.8899,-77.0091,14,"공시 ↔ 법안 자동 매칭 · 미연결","의원 식별자, 거래일, 신고일, 금액 구간, 법안 타임라인의 자동 매칭 엔진은 구축되지 않았습니다. 해당 관계가 있는 것처럼 꾸며 표시하지 않습니다.","거래 ↔ 법안 · 미구현","congress","unconnected")
+ ]}
+];
+var BY_ID={};MISSIONS.forEach(function(m){BY_ID[m.id]=m;});
+function normalize(value){return String(value==null?"":value).trim().toLocaleLowerCase().replace(/\s+/g," ");}
+function search(query){
+ var q=normalize(query);
+ if(!q){return MISSIONS.slice();}
+ var words=q.split(/[\s,?!·/→]+/).filter(function(w){return w.length>=2;});
+ var hits=MISSIONS.map(function(m){
+  var score=0;
+  m.keywords.forEach(function(k){var term=normalize(k);if(q.indexOf(term)!==-1)score+=term.length>=4?5:3;else if(words.some(function(w){return w.length>=3&&term.indexOf(w)!==-1;}))score+=1;});
+  if(normalize(m.title).indexOf(q)!==-1)score+=8;
+  return {mission:m,score:score};
+ }).filter(function(x){return x.score>0;}).sort(function(a,b){return b.score-a.score;});
+ return hits.map(function(x){return x.mission;}).slice(0,5);
+}
+function getMission(id){return BY_ID[id]||null;}
+return {sources:SOURCES,missions:MISSIONS,search:search,normalize:normalize,getMission:getMission};
+});
