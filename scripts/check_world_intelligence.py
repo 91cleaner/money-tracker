@@ -98,6 +98,11 @@ else:
         bundled_html, _ = decoder.raw_decode(worker_source[pos:])
         if page.exists() and bundled_html != html:
             warnings.append("Worker HTML snapshot differs from map source; sync pending")
+        pos = worker_source.index("const COMMAND_EVIDENCE_JS=") + len("const COMMAND_EVIDENCE_JS=")
+        bundled_js, _ = decoder.raw_decode(worker_source[pos:])
+        evidence_path = ROOT / "world-intelligence/evidence.js"
+        if evidence_path.exists() and bundled_js != evidence_path.read_text(encoding="utf-8"):
+            warnings.append("Worker evidence JS snapshot differs from source; sync pending")
         pos = worker_source.index("const COMMAND_DATA=") + len("const COMMAND_DATA=")
         bundled_data, _ = decoder.raw_decode(worker_source[pos:])
         for route, relative in (
