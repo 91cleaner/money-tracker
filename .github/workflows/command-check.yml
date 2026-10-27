@@ -23,10 +23,13 @@ jobs:
         run: |
           node --check assets/mt-intel-data.js
           node --check assets/mt-command-ui.js
+          node --check assets/mt-query-engine.js
+          node --check assets/mt-research-ui.js
           node --check tests/mt-command.test.cjs
+          node --check tests/mt-research.test.cjs
           node --check tests/mt-browser-smoke.cjs
       - name: Unit tests
-        run: node --test tests/mt-command.test.cjs
+        run: node --test tests/mt-command.test.cjs tests/mt-research.test.cjs
   browser:
     name: Real Chromium smoke (desktop and mobile)
     needs: unit
@@ -62,7 +65,7 @@ jobs:
           set -euo pipefail
           for attempt in $(seq 1 20); do
             html="$(curl -fsSL --max-time 18 "$URL?check=$GITHUB_SHA-$attempt" || true)"
-            if [[ "$html" == *'mt-intel-data.js'* && "$html" == *'mt-command-ui.js'* ]]; then
+            if [[ "$html" == *'mt-intel-data.js'* && "$html" == *'mt-command-ui.js'* && "$html" == *'mt-query-engine.js'* && "$html" == *'mt-research-ui.js'* ]]; then
               curl -fsSL --max-time 18 "https://91cleaner.github.io/money-tracker/assets/mt-command-ui.js?check=$GITHUB_SHA" | grep -q 'window.MTCommand'
               echo "DEPLOY VERIFIED: pages HTML and controller served."
               exit 0
