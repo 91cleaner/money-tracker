@@ -1,0 +1,74 @@
+name: MONEY TRACKER command validation
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'us.html'
+      - 'usa-command.html'
+      - 'world-intelligence/index.html'
+      - 'assets/mt-*.js'
+      - 'tests/mt-*.cjs'
+      - '.github/workflows/command-check.yml'
+  workflow_dispatch:
+jobs:
+  unit:
+    name: Search logic and syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: |
+          node --check assets/mt-intel-data.js
+          node --check assets/mt-command-ui.js
+          node --check tests/mt-command.test.cjs
+          node --check tests/mt-browser-smoke.cjs
+      - name: Unit tests
+        run: node --test tests/mt-command.test.cjs
+  browser:
+    name: Real Chromium smoke (desktop and mobile)
+    needs: unit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test dependency
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Click through the control room
+        run: node tests/mt-browser-smoke.cjs
+      - name: Save desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: money-tracker-browser-smoke
+          path: artifacts/
+          if-no-files-found: ignore
+  deployed:
+    name: GitHub Pages content check
+    needs: browser
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm the deployed HTML serves the new command scripts
+        env:
+          URL: https://91cleaner.github.io/money-tracker/usa-command.html
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 20); do
+            html="$(curl -fsSL --max-time 18 "$URL?check=$GITHUB_SHA-$attempt" || true)"
+            if [[ "$html" == *'mt-intel-data.js'* && "$html" == *'mt-command-ui.js'* ]]; then
+              curl -fsSL --max-time 18 "https://91cleaner.github.io/money-tracker/assets/mt-command-ui.js?check=$GITHUB_SHA" | grep -q 'window.MTCommand'
+              echo "DEPLOY VERIFIED: pages HTML and controller served."
+              exit 0
+            fi
+            echo "Deployment pending ($attempt/20)"
+            sleep 15
+          done
+          echo "::error::Deployed site does not yet contain command scripts."
+          exit 1
