@@ -256,4 +256,26 @@ html,body{width:100%;height:100%;overflow:hidden!important}
 #usCmd input,#usCmd input:focus,#usCmd textarea,#usCmd select{font-size:16px!important;line-height:1.35!important}
 @media(max-width:650px){#usCmd input,#usCmd input:focus{font-size:16px!important}}
 @media(orientation:landscape){#usCmd input,#usCmd input:focus{font-size:16px!important}}
-</style></head><body><header class="nbar"><a class="mt-home" href="./" aria-label="입장 화면으로 돌아가기">🟢 MONEY TRACKER / 미국 관제실</a><small>USA · GLOBAL INTELLIGENCE · 공개 자료</small></header><div id="pg"><div class="pg-map"></div><div class="pg-scan"></div><div class="pg-top"><div class="pg-box"><div class="live"><i></i>PREVIEW · PUBLIC SOURCES</div><div class="ttl">미국 · 세계 추적실</div></div><div class="pg-box mono">◉ US / GLOBAL OPERATIONS<br>공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결</div></div><div class="pg-say">무엇이든 물어보세요 · 사실과 추론을 구분하며 지도에서 추적합니다</div><div class="pg-file" id="usFile" hidden></div><form id="usCmd"><input id="usQuery" placeholder="무엇이든 질문하세요 · 기업 · 주가 · 법안 · 세계 사건" aria-label="작전 명령" required><button>추적 ↵</button></form><div class="pg-bar" role="toolbar" aria-label="지도 작전"><button data-w="chips">◈<span>반도체</span></button><button data-w="trade">▤<span>관세</span></button><button data-w="rates">⌁<span>금리</span></button></div></div><script src="assets/vendor/leaflet/leaflet.js"></script><script src="assets/mt-intel-data.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-photo.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-command-ui.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-query-engine.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-open-research.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-news-discovery.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-backend.js?v=server-bridge-20261027"></script><script src="assets/mt-research-ui.js?v=server-bridge-20261027"></script></body></html>
+</style><style id="mt-ios-focus-final">
+html{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+#usCmd input,#usCmd input:focus,#usCmd input:active{font-size:18px!important;line-height:24px!important;transform:none!important;zoom:1!important}
+#usCmd{transform:none!important}
+</style>
+<script>
+/* Restore accidental page pinch zoom after iOS keyboard closes, without disabling accessibility zoom. */
+(function(){
+ var initial=document.querySelector('meta[name="viewport"]');
+ if(initial)initial.setAttribute('content','width=device-width, initial-scale=1, viewport-fit=cover');
+ window.addEventListener('DOMContentLoaded',function(){
+  var input=document.getElementById('usQuery');
+  if(!input)return;
+  input.style.setProperty('font-size','18px','important');
+  input.addEventListener('blur',function(){
+   if(window.visualViewport && window.visualViewport.scale>1.01){
+    var vp=document.querySelector('meta[name="viewport"]');
+    if(vp){vp.setAttribute('content','width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover');setTimeout(function(){vp.setAttribute('content','width=device-width, initial-scale=1, viewport-fit=cover')},100)}
+   }
+  });
+ });
+})();
+</script></head><body><header class="nbar"><a class="mt-home" href="./" aria-label="입장 화면으로 돌아가기">🟢 MONEY TRACKER / 미국 관제실</a><small>USA · GLOBAL INTELLIGENCE · 공개 자료</small></header><div id="pg"><div class="pg-map"></div><div class="pg-scan"></div><div class="pg-top"><div class="pg-box"><div class="live"><i></i>PREVIEW · PUBLIC SOURCES</div><div class="ttl">미국 · 세계 추적실</div></div><div class="pg-box mono">◉ US / GLOBAL OPERATIONS<br>공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결</div></div><div class="pg-say">무엇이든 물어보세요 · 사실과 추론을 구분하며 지도에서 추적합니다</div><div class="pg-file" id="usFile" hidden></div><form id="usCmd"><input id="usQuery" placeholder="무엇이든 질문하세요 · 기업 · 주가 · 법안 · 세계 사건" aria-label="작전 명령" required><button>추적 ↵</button></form><div class="pg-bar" role="toolbar" aria-label="지도 작전"><button data-w="chips">◈<span>반도체</span></button><button data-w="trade">▤<span>관세</span></button><button data-w="rates">⌁<span>금리</span></button></div></div><script src="assets/vendor/leaflet/leaflet.js"></script><script src="assets/mt-intel-data.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-photo.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-command-ui.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-query-engine.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-open-research.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-news-discovery.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-backend.js?v=server-bridge-20261027"></script><script src="assets/mt-research-ui.js?v=server-bridge-20261027"></script></body></html>
