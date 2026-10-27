@@ -204,6 +204,16 @@ window.addEventListener("resize",function(){
 var params=new URLSearchParams(window.location.search),requested=params.get("mission");
 if(requested&&data.getMission(requested))selectMission(requested);
 else renderWelcome();
+function beginQuestion(){
+ cancelTravel();
+ hideFile();
+ hideChoices();
+ pins.clearLayers();lines.clearLayers();
+ state.mission=null;state.step=0;
+ root.querySelectorAll(".pg-bar button").forEach(function(b){b.setAttribute("aria-pressed","false");});
+ if(intro)intro.textContent="질문 조사 중 · 관련 근거에서 현장 좌표를 찾으면 지도를 움직입니다";
+ setStatus("질문 분석 진행 중 · 실시간 시세·AI 백엔드는 아직 미연결");
+}
 function resetCommand(){
  cancelTravel();
  hideFile();
@@ -221,5 +231,5 @@ var reset=button("초기화",resetCommand,"mt-reset");
 reset.id="mtReset";reset.setAttribute("aria-label","검색 초기화 및 전체 관제실로 돌아가기");
 form.insertBefore(reset,form.querySelector('button[type="submit"],button:not([type])'));
 
-window.MTCommand={map:map,selectMission:selectMission,selectStep:selectStep,travelTo:travelTo,cancelTravel:cancelTravel,reset:resetCommand,search:function(q){query.value=q;findQuery();},getCurrent:function(){return state.mission?{mission:state.mission.id,step:state.step}:null;}};
+window.MTCommand={map:map,selectMission:selectMission,selectStep:selectStep,travelTo:travelTo,cancelTravel:cancelTravel,reset:resetCommand,beginQuestion:beginQuestion,search:function(q){query.value=q;findQuery();},getCurrent:function(){return state.mission?{mission:state.mission.id,step:state.step}:null;}};
 })();
