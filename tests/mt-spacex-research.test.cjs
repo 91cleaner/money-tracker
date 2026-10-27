@@ -91,7 +91,7 @@ test("SpaceX evidence JSON has IDs, authentic source URLs, dated market observat
 test("UI uses local indexed records and keeps automatic AI/news lookups disabled",()=>{
  const js=fs.readFileSync(path.join(__dirname,"../assets/mt-research-ui.js"),"utf8");
  const html=fs.readFileSync(path.join(__dirname,"../usa-command.html"),"utf8");
- assert.match(js,/renderIndexedSearch\(query\)/);
+ assert.match(js,/renderIndexedSearch\(query,function\(index,results\)/);
  assert.match(js,/data\/us\/cases\/spcx-2026-10-27\.json/);
  assert.doesNotMatch(js,/^\s*runPublicResearch\(query,result\);/m);
  assert.doesNotMatch(js,/^\s*renderLiveBackend\(query\);/m);
