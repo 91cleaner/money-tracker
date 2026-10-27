@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "red-meadow-fcc6",
+  "main": "cloudflare/admin-worker.js",
+  "compatibility_date": "2026-10-27",
+  "keep_vars": true
+}
