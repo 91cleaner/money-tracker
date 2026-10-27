@@ -202,6 +202,7 @@ function renderCaseEvidence(topic){
  });
 }
 function render(query){
+ if(typeof api.beginQuestion==="function")api.beginQuestion();
  var result=engine.analyze(query);panel.hidden=false;while(panel.firstChild)panel.removeChild(panel.firstChild);
  var head=add(panel,"div","mt-r-head");add(head,"span","mt-r-kicker","MONEY TRACKER / INTELLIGENCE BRIEF");
  button(head,"✕ 닫기",close,"mt-r-x");
