@@ -23,6 +23,9 @@ var SOURCES={
   spacexCRS:{title:"NASA · CRS-35 보급 임무 (2026-10-13)",url:"https://www.nasa.gov/mission/nasas-spacex-crs-35/"},
   spacexFAA:{title:"FAA · Cape Canaveral Starship 검토",url:"https://www.faa.gov/space/stakeholder_engagement/spacex_starship_ccsfs"},
   spacexTexas:{title:"미 연방관보 · 2026-10-14 Starbase 검토 공고",url:"https://www.govinfo.gov/content/pkg/FR-2026-10-14/html/2026-20963.htm"},
+  spacexIPO:{title:"SpaceX IR · 2026-06-12 상장 SPCX",url:"https://ir.spacex.com/updates/releases-details/2026/Space-Exploration-Technologies-Corp--Announces-Closing-of-Initial-Public-Offering-Including-Full-Exercise-of-Underwriters-Option-to-Purchase-Additional-Shares-2026-RgoR-Y1Vwh/"},
+  spacexSEC:{title:"SEC · SpaceX 2026 3분기 Form 10-Q",url:"https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm"},
+  spacexStockHistory:{title:"Stock Analysis · SPCX 종가 기록",url:"https://stockanalysis.com/stocks/spcx/history/"},
   nvidiaIR:{title:"NVIDIA 공식 실적 발표 · FY2027 Q2 (2026-08-26)",url:"https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027/"},
   nvidiaHQ:{title:"NVIDIA 공식 본사 주소 · Santa Clara",url:"https://www.nvidia.com/en-us/contact/"},
   tsmcHQ:{title:"TSMC 공식 본사 · Hsinchu Science Park",url:"https://www.tsmc.com/english/aboutTSMC/business_contacts"}
@@ -31,10 +34,12 @@ function node(id,place,lat,lng,zoom,title,text,connection,source,kind){
  return {id:id,place:place,lat:lat,lng:lng,zoom:zoom,title:title,text:text,connection:connection,source:SOURCES[source],kind:kind||"document"};
 }
 var MISSIONS=[
- {id:"spacex",title:"SpaceX · 텍사스 → 플로리다 → 워싱턴",short:"스페이스X 상황 추적",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","starship","스타십","starlink","스타링크","팰컨9","falcon9"],summary:"최근 실제 발사 기록·NASA 임무·FAA 규제 검토를 지도로 추적합니다.",symbols:"SpaceX는 비상장 · 주가/매수 신호 미연결",steps:[
+ {id:"spacex",title:"SPCX 주가 → 발사장 → NASA → SEC",short:"스페이스X 시장·사업 추적",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","starship","스타십","starlink","스타링크","팰컨9","falcon9"],summary:"최근 실제 발사 기록·NASA 임무·FAA 규제 검토를 지도로 추적합니다.",symbols:"NASDAQ SPCX (2026-06-12 상장) · 실시간 시세 API 미연결",steps:[
+ node("spacex-market","뉴욕 · 나스닥 마켓사이트",40.7573,-73.9855,14,"SPCX · 증시 기록에서 조사 시작","SpaceX는 2026년 6월 12일 SPCX로 나스닥에 상장했습니다. 같은 날짜의 주가·거래량과 공개된 실적·자금조달 사건을 비교해야 하며, 시장건물 좌표는 거래 체결 장소를 의미하지 않습니다.","공식 IPO → 종목 식별","spacexIPO"),
  node("spacex-starbase","텍사스 · 스타베이스",25.997,-97.156,11,"Starbase · Starship 개발·발사","SpaceX 공식 기록상 Starship Flight 14가 2026년 9월 28일 스타베이스에서 발사됐습니다. 시험 결과와 향후 일정은 각각 공식 자료를 확인해야 합니다.","Starship 시험 → 발사장 · 개발 진척","spacex"),
  node("spacex-nasa","플로리다 · 케이프커내버럴",28.562,-80.577,11,"Crew-13 · NASA 유인 수송","NASA는 SpaceX Crew-13이 2026년 10월 1일 Cape Canaveral에서 발사됐다고 발표했습니다. 스타십 개발과 다른 상용 유인 수송 사업입니다.","공식 임무 → 정부 고객·계약","spacexNASA"),
  node("spacex-cargo","플로리다 · Cape Canaveral",28.562,-80.577,12,"CRS-35 · 우주정거장 화물 임무","NASA는 CRS-35 화물 보급 임무의 발사일을 2026년 10월 13일로 기록합니다. 상업 화물 수송과 시험용 Starship을 혼동하지 않습니다.","유인 수송 → 화물 수송 사업","spacexCRS"),
+ node("spacex-sec","워싱턴 D.C. · SEC 공시 확인",38.894,-77.028,13,"2026년 3분기 SEC 10-Q · 재무 검증","SEC 10-Q에 2026년 3분기 연결 매출 145억7,500만 달러와 Starlink 중심 Connectivity 매출 52억4,800만 달러가 기재됐습니다. 시장 예상치와 비교하지 않은 숫자만으로 주가 변동 원인을 단정하지 않습니다.","종목 → 실적 수치·사업부 기록","spacexSEC"),
  node("spacex-licensing","워싱턴 D.C. · FAA 정책",38.887,-77.025,12,"FAA · 발사 허가·환경 영향 검토","FAA의 Cape Canaveral SLC-37 관련 자료는 향후 Starship 상업 운항을 위한 기존 면허 변경 필요성을 설명합니다. 검토 진행과 최종 승인 여부는 별도 확인해야 합니다.","발사장 확대 → 연방 항공 규제","spacexFAA","context"),
  node("spacex-return","텍사스 · Starbase",25.997,-97.156,10,"2026-10-14 · 텍사스 운영 공고","2026년 10월 14일 미 연방관보에는 Starbase의 Starship 운영 확대 제안을 평가하기 위한 환경영향평가 절차가 공고됐습니다.","규제 문서 → 현장 향후 운영","spacexTexas","context")
  ]},
