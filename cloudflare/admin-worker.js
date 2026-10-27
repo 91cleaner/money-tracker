@@ -25,9 +25,9 @@ export default {async fetch(request,env){
   const saved=await unseal(decodeURIComponent(parseCookie(request,'mt_oauth')),env.SESSION_SECRET);
   const clear=cookie('mt_oauth','',0);
   if(!state||!code||!saved||state!==saved.state)return new Response('Invalid OAuth state',{status:403,headers:{'Set-Cookie':clear}});
-  const tokenResponse=await fetch('https://github.com/login/oauth/access_token',{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},body:JSON.stringify({client_id:env.GITHUB_CLIENT_ID,client_secret:env.GITHUB_CLIENT_SECRET,code,redirect_uri:ORIGIN+'/auth/callback'})});
+  const tokenResponse=await fetch('https://github.com/login/oauth/access_token',{method:'POST',headers:{Accept:'application/json','Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({client_id:env.GITHUB_CLIENT_ID,client_secret:env.GITHUB_CLIENT_SECRET,code,redirect_uri:ORIGIN+'/auth/callback'}).toString()});
   if(!tokenResponse.ok)return json({error:'OAuth exchange failed'},502);
-  const token=await tokenResponse.json();if(!token.access_token)return json({error:'OAuth exchange rejected'},403);
+  const token=await tokenResponse.json();if(!token.access_token){const allowed=['incorrect_client_credentials','bad_verification_code','redirect_uri_mismatch','unverified_user_email','application_suspended'];return json({error:'OAuth exchange rejected',github_error:allowed.includes(token.error)?token.error:'other',hint:token.error==='incorrect_client_credentials'?'Check Client ID and Client Secret in Cloudflare':token.error==='bad_verification_code'?'Restart login from /auth/login':'Check GitHub OAuth app callback URL'},403)}
   const userResponse=await fetch('https://api.github.com/user',{headers:{Authorization:'Bearer '+token.access_token,Accept:'application/vnd.github+json','User-Agent':'money-tracker-admin'}});
   if(!userResponse.ok)return json({error:'GitHub identity verification failed'},403);
   const user=await userResponse.json();
