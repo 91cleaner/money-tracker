@@ -9,6 +9,7 @@ on:
       - 'scripts/audit_data_coverage.py'
       - 'scripts/build_ptr_research_queue.py'
       - 'scripts/extract_house_ptr.py'
+      - 'tests/test_house_ptr_extraction.py'
       - 'scripts/sync_command_worker.py'
   schedule:
     - cron: '17 5 * * *'
