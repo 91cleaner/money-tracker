@@ -28,6 +28,23 @@ function build(){
  function push(x){const d=doc(x);if(d&&!ids.has(d.id)){docs.push(d);ids.add(d.id);}}
  const seed=read("data/search/seed-docs.json",{items:[]});
  for(const item of seed.items||[])push(item);
+ // Cross-border public source directories. All source URLs remain traceable.
+ for(const country of ["us","tw","jp","kr"]){
+  const countryFile=read("data/search/"+country+"-sources.json",{items:[]});
+  for(const item of countryFile.items||[]){
+   push({...item,type:item.type||"source",aliases:[...(item.aliases||[]),country,({us:"미국",tw:"대만",jp:"일본",kr:"한국"})[country]]});
+  }
+ }
+ // Curated source-backed relationships, not AI-generated causality.
+ const graph=read("data/search/relations.json",{nodes:[],edges:[]});
+ for(const node of graph.nodes||[]){
+  const source=(graph.sources||[]).find(src=>src.id===node.source_id);
+  if(!source?.url)continue;
+  push({id:"graph-"+node.id,type:node.type||"entity",title:node.title,
+   aliases:node.aliases||[],summary:node.summary||"연결 관계 확인은 근거 자료 원문과 관련 날짜를 함께 검토해야 합니다.",
+   source:source.name,url:source.url,source_date:node.date||null,location:node.location||null,
+   route:node.route||null});
+ }
  const members=read("data/us/members.json",{members:[]});
  for(const m of members.members||[]){
   if(!m.id||!m.name||!safeUrl(m.url))continue;
@@ -78,6 +95,7 @@ function build(){
    source:"Federal Reserve Bank of St. Louis · FRED",url:series.url,source_date:obs.date,route:"rates"});
  }
  docs.sort((a,b)=>a.id.localeCompare(b.id,"en"));
+ // Keep the index deterministic and deduplicate by stable identifiers.
  const counts={};
  for(const d of docs)counts[d.type]=(counts[d.type]||0)+1;
  const outPath=path.join(root,"data/search/index.json");
