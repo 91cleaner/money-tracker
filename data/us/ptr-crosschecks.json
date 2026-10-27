@@ -16,6 +16,58 @@
       "source_pdf": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035411.pdf",
       "result": "matches_reported_filing_fields",
       "note": "Official PTR PDF page 1 reports Chubb (CB), sale S, 08/19/2026, $15,001-$50,000. This confirms what was reported, not independent execution or beneficial ownership."
+    },
+    {
+      "filing_id": "2026-20035411",
+      "member": "Maria Elvira Salazar",
+      "ticker": "MRK",
+      "asset": "Merck & Company, Inc. Common Stock (MRK) [ST]",
+      "transaction_date": "2026-08-19",
+      "type": "P",
+      "amount_min_usd": 15001,
+      "amount_max_usd": 50000,
+      "source_pdf": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035411.pdf",
+      "result": "matches_reported_filing_fields",
+      "note": "Official House PTR PDF (filing #20035411, pages 1–2) lists this asset, transaction type, date and amount band. This is a field-level disclosure cross-check, not independent trade execution verification."
+    },
+    {
+      "filing_id": "2026-20035411",
+      "member": "Maria Elvira Salazar",
+      "ticker": "MRNA",
+      "asset": "Moderna, Inc. - Common Stock (MRNA) [ST]",
+      "transaction_date": "2026-08-19",
+      "type": "P",
+      "amount_min_usd": 1001,
+      "amount_max_usd": 15000,
+      "source_pdf": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035411.pdf",
+      "result": "matches_reported_filing_fields",
+      "note": "Official House PTR PDF (filing #20035411, pages 1–2) lists this asset, transaction type, date and amount band. This is a field-level disclosure cross-check, not independent trade execution verification."
+    },
+    {
+      "filing_id": "2026-20035411",
+      "member": "Maria Elvira Salazar",
+      "ticker": "QCOM",
+      "asset": "QUALCOMM Incorporated - Common Stock (QCOM) [ST]",
+      "transaction_date": "2026-08-12",
+      "type": "S",
+      "amount_min_usd": 1001,
+      "amount_max_usd": 15000,
+      "source_pdf": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035411.pdf",
+      "result": "matches_reported_filing_fields",
+      "note": "Official House PTR PDF (filing #20035411, pages 1–2) lists this asset, transaction type, date and amount band. This is a field-level disclosure cross-check, not independent trade execution verification."
+    },
+    {
+      "filing_id": "2026-20035411",
+      "member": "Maria Elvira Salazar",
+      "ticker": "SPCX",
+      "asset": "Space Exploration Technologies Corp. - Class A Common Stock (SPCX) [ST]",
+      "transaction_date": "2026-08-12",
+      "type": "P",
+      "amount_min_usd": 1001,
+      "amount_max_usd": 15000,
+      "source_pdf": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035411.pdf",
+      "result": "matches_reported_filing_fields",
+      "note": "Official House PTR PDF (filing #20035411, pages 1–2) lists this asset, transaction type, date and amount band. This is a field-level disclosure cross-check, not independent trade execution verification."
     }
   ],
   "caveat": "The filing is a self-reported disclosure. Cross-checking the PDF does not prove a trade executed, identify ultimate owner, or establish any relation to legislation."
