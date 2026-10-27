@@ -8,6 +8,7 @@ on:
       - '.github/workflows/us-data.yml'
       - 'scripts/audit_data_coverage.py'
       - 'scripts/build_ptr_research_queue.py'
+      - 'scripts/extract_house_ptr.py'
   schedule:
     - cron: '17 5 * * *'
   workflow_dispatch:
@@ -53,6 +54,14 @@ jobs:
       - name: Build House PTR review queue from verified filing index
         if: always()
         run: python scripts/build_ptr_research_queue.py
+      - name: Install digital PDF table extractor
+        run: python -m pip install 'pdfplumber==0.11.7'
+      - name: Extract candidate PTR transactions from official digital PDFs
+        if: always()
+        env:
+          PTR_MAX_DOCS: '8'
+        run: python scripts/extract_house_ptr.py
+        continue-on-error: true
       - name: Audit data coverage (missing, empty, invalid)
         if: always()
         run: python scripts/audit_data_coverage.py
