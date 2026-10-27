@@ -24,6 +24,12 @@ def js_string(value):
 
 def build():
     page = (ROOT / "world-intelligence/index.html").read_text(encoding="utf-8")
+    if 'http-equiv="refresh"' in page and "usa-command.html" in page:
+        # 7b8cbca (10/27) retired this page into a redirect to usa-command.html. Keep the last good
+        # authenticated snapshot instead of failing every data run (us-data.yml commits only after this step).
+        print("::warning::world-intelligence/index.html is retired (redirect to usa-command.html); "
+              "authenticated Worker snapshot left unchanged.")
+        return False
     if "L.map('map'" not in page or 'id="map"' not in page or 'src="./evidence.js"' not in page:
         raise SystemExit("Refusing to replace authenticated command map with a redirect or non-map page")
     script = (ROOT / "world-intelligence/evidence.js").read_text(encoding="utf-8")
