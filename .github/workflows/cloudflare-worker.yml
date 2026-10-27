@@ -1,0 +1,40 @@
+name: Cloudflare Worker checks and gated deploy
+on:
+  push:
+    branches: [main]
+    paths: ['worker/**','wrangler.toml','.github/workflows/cloudflare-worker.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check worker/index.js
+      - run: |
+          node --input-type=module <<'NODE'
+          import handler from './worker/index.js';
+          const h=handler.default;
+          const env={ALLOWED_ORIGIN:'https://91cleaner.github.io'};
+          const health=await h.fetch(new Request('https://example.workers.dev/health'),env);
+          if((await health.json()).ai!=='not-connected')throw Error('Incorrect connection status');
+          const blocked=await h.fetch(new Request('https://example.workers.dev/api/analyze',{method:'POST',headers:{Origin:'https://evil.example','content-type':'application/json'},body:'{"question":"test"}'}),env);
+          if(blocked.status!==403)throw Error('Origin gate failed');
+          const safe=await h.fetch(new Request('https://example.workers.dev/api/analyze',{method:'POST',headers:{Origin:'https://91cleaner.github.io','content-type':'application/json'},body:'{"question":"NVIDIA"}'}),env);
+          if(safe.status!==503)throw Error('AI unexpectedly enabled');
+          NODE
+  deploy:
+    needs: check
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: cloudflare-worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
