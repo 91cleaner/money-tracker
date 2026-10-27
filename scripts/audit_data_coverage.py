@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPECS = {
     "congress_bills": "data/us/bills.json",
     "congress_trades": "data/us/trades.json",
+    "house_ptr_candidates": "data/us/house-ptr-candidates.json",
     "house_filings": "data/us-house-filings.json",
     "us_macro": "data/us-macro.json",
     "historical_events": "data/us-events.json",
@@ -42,7 +43,8 @@ def inspect(name, relative):
             result["series"] = len(series)
         else:
             key = {
-                "congress_trades": "records",
+                "congress_trades": "trades",
+                "house_ptr_candidates": "records",
                 "house_filings": "records",
                 "historical_events": "events",
                 "korean_municipal_contracts": "cities",
@@ -51,6 +53,10 @@ def inspect(name, relative):
             if not isinstance(rows, list):
                 raise ValueError("missing or invalid " + key + " array")
             result["records"] = len(rows)
+        if name == "congress_trades":
+            result["data_kind"] = "reported_disclosures_not_verified_executions"
+        elif name == "house_ptr_candidates":
+            result["data_kind"] = "machine_parsed_candidates_require_review"
         result["source_updated"] = (data.get("updated") or data.get("collected_at")
                                     or data.get("checked_at") or data.get("generated_at"))
         result["status"] = "present" if result["records"] > 0 else "empty"
