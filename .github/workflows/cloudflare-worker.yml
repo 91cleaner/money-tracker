@@ -18,7 +18,7 @@ jobs:
       - run: |
           node --input-type=module <<'NODE'
           import handler from './worker/index.js';
-          const h=handler.default;
+          const h=handler;
           const env={ALLOWED_ORIGIN:'https://91cleaner.github.io'};
           const health=await h.fetch(new Request('https://example.workers.dev/health'),env);
           if((await health.json()).ai!=='not-connected')throw Error('Incorrect connection status');
@@ -26,6 +26,10 @@ jobs:
           if(blocked.status!==403)throw Error('Origin gate failed');
           const safe=await h.fetch(new Request('https://example.workers.dev/api/analyze',{method:'POST',headers:{Origin:'https://91cleaner.github.io','content-type':'application/json'},body:'{"question":"NVIDIA"}'}),env);
           if(safe.status!==503)throw Error('AI unexpectedly enabled');
+          const denied=await h.fetch(new Request('https://example.workers.dev/api/analyze',{method:'POST',headers:{Origin:'https://91cleaner.github.io','content-type':'application/json'},body:'{"question":"NVIDIA"}'}),{...env,OPENAI_API_KEY:'test-key'});
+          if(denied.status!==503)throw Error('AI accessible without owner authentication');
+          const options=await h.fetch(new Request('https://example.workers.dev/api/analyze',{method:'OPTIONS',headers:{Origin:'https://91cleaner.github.io'}}),env);
+          if(options.status!==204)throw Error('CORS preflight broken');
           NODE
   deploy:
     needs: check
