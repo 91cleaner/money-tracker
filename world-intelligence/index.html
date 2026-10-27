@@ -117,24 +117,64 @@ async function showTradeMission(){
 </style><div id="mtAssistant" aria-label="지도 분석 명령"><div id="mtAnalysis" aria-live="polite"><p>◉ MONEY TRACKER / 명령 대기</p><p>질문하면 지도 위에 분석 경로를 표시합니다.</p></div><div id="mtModes"><button type="button" data-mode="보수적" aria-pressed="true">보수적</button><button type="button" data-mode="단기" aria-pressed="false">단기 대응</button><button type="button" data-mode="장기" aria-pressed="false">장기 보유</button></div><form id="mtAskForm"><input id="mtAskInput" aria-label="분석 질문" placeholder="예: 대만 반도체와 미국 법안이 한국에 미치는 영향" maxlength="250"><button type="submit">분석 시작 ↵</button></form></div><script>
 (function(){
  const form=document.getElementById('mtAskForm'),input=document.getElementById('mtAskInput'),box=document.getElementById('mtAnalysis');
- let mode='보수적',job=0;
- document.querySelectorAll('#mtModes button').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('#mtModes button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))}));
- function line(s,warning){const p=document.createElement('p');p.textContent='> '+s;if(warning)p.className='warn';box.append(p);box.scrollTop=box.scrollHeight}
- function choose(q){const names=[];if(/대만|반도체|tsmc|칩/i.test(q))names.push('대만');if(/미국|의회|법안|주식|매도|매수|나스닥/i.test(q)||!names.length)names.push('미국');if(/한국|국내|삼성|하이닉스/i.test(q))names.push('한국');if(/일본/i.test(q))names.push('일본');if(/중국/i.test(q))names.push('중국');return [...new Set(names)]}
- form.addEventListener('submit',e=>{
-  e.preventDefault();const q=input.value.trim();if(!q)return;
-  const current=++job;box.replaceChildren();line('OPERATOR REQUEST / '+q);line('RISK PROFILE / '+mode);
-  const names=choose(q);line('ROUTE / '+names.join(' → '));
-  names.forEach((name,i)=>setTimeout(()=>{if(job!==current)return;if(typeof window.focusCountry==='function')window.focusCountry(name);line('REGION LOCK / '+name+' · 공개자료 탐색')},350+i*950));
-  setTimeout(()=>{if(job!==current)return;
-   const topics=[];
-   if(/반도체|대만|tsmc|칩/i.test(q))topics.push('대만 공급망 변화는 미국의 반도체 정책 및 한국 수출기업과 함께 확인해야 합니다.');
-   if(/미국|의회|법안|주식|매도|매수/i.test(q))topics.push('미국 의회 공시와 법안은 원문·발표일·거래일을 분리해 검증해야 합니다.');
-   if(!topics.length)topics.push('질문과 연결된 공개자료를 확인해야 구체적인 판단이 가능합니다.');
-   topics.forEach(t=>line('ANALYST / '+t));
-   line('SCENARIO / '+(mode==='단기'?'단기 변동성·유동성·손절 기준 우선 점검':mode==='장기'?'장기 정책 지속성·실적·밸류에이션 우선 점검':'하방 위험·분산·현금 비중 우선 점검'));
-   line('VERIFY / 현재 응답은 키워드 기반 탐색 안내입니다. 실시간 AI 분석·가격 예측이 아닙니다.',true);
-  },500+names.length*950);
- });
+ const modes=document.querySelectorAll('#mtModes button');
+ let mode='보수적',sequence=0,mission=[],cursor=-1;
+ const targets={
+  '미국':{name:'미국',why:'미국 의회와 정책, 공개 거래 공시의 관계를 조사합니다.'},
+  '대만':{name:'대만',why:'반도체 제조 및 공급망의 역할을 살펴봅니다.'},
+  '한국':{name:'한국',why:'국내 반도체 기업과 수출·산업 구조를 살펴봅니다.'},
+  '일본':{name:'일본',why:'소재·장비 산업과 반도체 정책의 역사적 배경을 살펴봅니다.'},
+  '중국':{name:'중국',why:'수출 규제와 공급망 정책의 연관성을 살펴봅니다.'}
+ };
+ const recommendations={
+  '미국':['대만','한국','일본'],'대만':['미국','한국','일본'],
+  '한국':['미국','대만','일본'],'일본':['미국','한국','대만'],'중국':['미국','대만','한국']
+ };
+ const css=document.createElement('style');
+ css.textContent='#mtNext{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}#mtNext button{font-size:11px;padding:5px 8px}#mtTrace{font-size:10px;color:#8ba9b7;margin-top:5px}';
+ document.head.append(css);
+ const next=document.createElement('div');next.id='mtNext';box.after(next);
+ const trace=document.createElement('div');trace.id='mtTrace';next.after(trace);
+ modes.forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;modes.forEach(x=>x.setAttribute('aria-pressed',String(x===b)))}));
+ function line(s,warning=false){const p=document.createElement('p');p.textContent='> '+s;if(warning)p.className='warn';box.append(p);box.scrollTop=box.scrollHeight}
+ function route(q){
+  const names=[];if(/대만|반도체|tsmc|칩|엔비디아|nvidia/i.test(q))names.push('대만');
+  if(/미국|의회|법안|주식|매도|매수|나스닥|엔비디아|nvidia/i.test(q)||!names.length)names.push('미국');
+  if(/한국|국내|삼성|하이닉스/i.test(q))names.push('한국');
+  if(/일본/i.test(q))names.push('일본');if(/중국/i.test(q))names.push('중국');
+  return [...new Set(names)];
+ }
+ function showNext(country){
+  next.replaceChildren();
+  const suggestions=recommendations[country]||['미국','한국','대만'];
+  suggestions.forEach(name=>{
+   const b=document.createElement('button');b.type='button';b.textContent='추적 → '+name;
+   b.addEventListener('click',()=>follow(name));next.append(b);
+  });
+  const back=document.createElement('button');back.type='button';back.textContent='↶ 이전 추적';back.disabled=cursor<=0;
+  back.addEventListener('click',()=>{if(cursor>0){cursor--;focus(mission[cursor],false)}});next.append(back);
+ }
+ function focus(name,record=true){
+  if(record){mission=mission.slice(0,cursor+1);mission.push(name);cursor=mission.length-1}
+  trace.textContent='MISSION HISTORY / '+mission.map((n,i)=>i===cursor?'['+n+']':n).join(' → ');
+  if(typeof window.focusCountry==='function')window.focusCountry(name);
+  line('REGION LOCK / '+name);
+  line('RESEARCH / '+targets[name].why);
+  showNext(name);
+ }
+ function follow(name){sequence++;box.replaceChildren();line('OPERATOR / NEXT TARGET '+name);focus(name)}
+ function run(q){
+  const id=++sequence;mission=[];cursor=-1;box.replaceChildren();next.replaceChildren();
+  line('MISSION / '+q);line('PROFILE / '+mode);
+  const names=route(q);line('ROUTE / '+names.join(' → '));
+  names.forEach((name,i)=>setTimeout(()=>{if(sequence===id)focus(name)},250+i*800));
+  setTimeout(()=>{
+   if(sequence!==id)return;
+   line('ASSESSMENT / '+(mode==='단기'?'단기 변동성과 유동성 확인':'장기'===mode?'장기 실적과 정책 지속성 확인':'하방 위험과 분산 가능성 확인'));
+   line('EVIDENCE / 법안·공시·기업 실적의 원문과 날짜를 별도 확인해야 합니다.',true);
+   line('LIMIT / 현재는 규칙 기반 탐색이며 AI 실시간 분석이나 투자 추천이 아닙니다.',true);
+  },400+names.length*800);
+ }
+ form.addEventListener('submit',e=>{e.preventDefault();const q=input.value.trim();if(q)run(q)});
 })();
 </script></body></html>
