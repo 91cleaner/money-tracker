@@ -200,14 +200,33 @@ document.getElementById('mtTradeOpen')?.addEventListener('click',showTradeMissio
  function searchBills(q){
   const words=(q.toLowerCase().match(/[a-z]{3,}|[가-힣]{2,}/g)||[]).filter(w=>!['미국','관련','법안','추적','알려줘','의원','주식','거래','분석','반도체'].includes(w));
   const seeds=/반도체|칩|nvidia|엔비디아|삼성|tsmc/i.test(q)?['semiconductor','chips','artificial intelligence','export control']:words;
+  const latestOnly=seeds.length===0;
   return loadBills().then(data=>{
    const matches=[];for(const [member,items] of Object.entries(data.recent||{})){
     if(!Array.isArray(items))continue;
-    for(const b of items){const name=(b.n||'').toLowerCase();if(seeds.some(w=>name.includes(w.toLowerCase())))matches.push({...b,member})}
+    for(const b of items){const name=(b.n||'').toLowerCase();if(latestOnly||seeds.some(w=>name.includes(w.toLowerCase())))matches.push({...b,member})}
    }
    matches.sort((a,b)=>String(b.d||'').localeCompare(String(a.d||'')));
-   return {matches:matches.slice(0,8),updated:data.updated};
+   return {matches:matches.slice(0,8),updated:data.updated,latestOnly};
   });
+ }
+ function showSponsor(b){
+  const related=(billsCache?.recent?.[b.member]||[]).filter(x=>x&&x.u&&x.no);
+  related.sort((a,z)=>String(z.d||'').localeCompare(String(a.d||'')));
+  clearEvidence('◉ LEGISLATION → SPONSOR');
+  el('p','법안 '+(b.no||'번호 미확인')+' → 후원 의원 식별자 '+b.member);
+  el('p','의원 이름과 소속 정당은 아직 검증된 인물 데이터와 연결되지 않았습니다. 식별자만 표시합니다.').className='muted';
+  sourceLink('선택한 법안 원문 ↗',b.u,intel);
+  el('strong','동일 후원 의원의 수집된 법안 '+related.length+'건');
+  for(const r of related.slice(0,12)){
+   const item=el('div');item.style.cssText='padding:7px 0;border-top:1px solid #244052';
+   el('div',(r.no||'번호 미확인')+' · '+(r.n||'제목 미확인'),item);
+   el('div','발의 '+(r.d||'미확인')+' · 최근 진행 '+(r.a||'미확인'),item).className='muted';
+   sourceLink('Congress.gov ↗',r.u,item);
+  }
+  el('p','기업과의 직접적 이해관계 및 실제 의원 거래 내역은 아직 연결·검증되지 않았습니다. 법안 후원 사실만으로 특정 기업의 수혜나 의원 거래를 추론하지 않습니다.').className='muted';
+  const official=el('a','미국 하원 공시 검색 ↗');official.href='https://disclosures-clerk.house.gov/FinancialDisclosure/ViewSearch';official.target='_blank';official.rel='noopener noreferrer';
+  const back=el('button','← 법안 검색 결과');back.addEventListener('click',()=>investigate(input.value.trim()||'미국 의회 법안'));
  }
  async function investigate(q){
   const id=++sequence;mission=[];cursor=-1;box.replaceChildren();next.replaceChildren();
@@ -217,7 +236,7 @@ document.getElementById('mtTradeOpen')?.addEventListener('click',showTradeMissio
   try{
    const result=await searchBills(q);if(id!==sequence)return;
    clearEvidence('◉ VERIFIED LEGISLATION');
-   el('div','데이터 갱신: '+(result.updated||'확인 불가')).className='muted';
+   el('div','데이터 갱신: '+(result.updated||'확인 불가')+' · '+(result.latestOnly?'검색어 없음: 수집된 최신 법안 표시':'제목 키워드 일치')).className='muted';
    if(!result.matches.length){el('p','현재 수집된 법안에서 검색어와 일치하는 결과가 없습니다. 관련 법안이 없다는 뜻은 아닙니다.')}
    for(const b of result.matches){
     const item=el('div');item.style.cssText='padding:9px 0;border-bottom:1px solid #244052';
@@ -226,7 +245,7 @@ document.getElementById('mtTradeOpen')?.addEventListener('click',showTradeMissio
     el('div','최근 진행: '+(b.a||'미확인'),item);
     sourceLink('Congress.gov 원문 ↗',b.u,item);
     const btn=el('button','이 법안 추적',item);
-    btn.addEventListener('click',()=>{sequence++;box.replaceChildren();line('LAW TARGET / '+(b.no||'')+' '+(b.n||''));line('SPONSOR ID / '+b.member);line('LAST ACTION / '+(b.a||'미확인'));focus('미국');showNext('미국')});
+    btn.addEventListener('click',()=>{sequence++;box.replaceChildren();line('LAW TARGET / '+(b.no||'')+' '+(b.n||''));line('SPONSOR ID / '+b.member);line('LAST ACTION / '+(b.a||'미확인'));focus('미국');showSponsor(b)});
    }
    line('SOURCE / '+result.matches.length+'건의 법안 기록 표시 · 의원 거래 공시와는 별개입니다.');
    line('TRADES / 실거래 데이터 연결 전이므로 의원 매수·매도·보유 여부를 표시하지 않습니다.',true);
