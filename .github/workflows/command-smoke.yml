@@ -30,6 +30,11 @@ jobs:
           assert.match(us,/id="usQuery"/);
           assert.match(us,/id="usCmd"/);
           assert.match(us,/class="pg-map"/);
+          assert.match(us,/brightness\\(\\.94\\)/, 'Map must not be excessively dark');
+          assert.match(us,/operator5-20261027/, 'Browser must load refreshed map scripts');
+          const command = fs.readFileSync('assets/mt-command-ui.js','utf8');
+          assert.match(command,/dark\\.on\\("tileerror"/, 'Base map needs tile error handling');
+          assert.match(command,/tile\\.openstreetmap\\.org/, 'Base map needs independent fallback provider');
           for (const file of ['assets/vendor/leaflet/leaflet.js','assets/mt-intel-data.js','assets/mt-command-ui.js','assets/mt-query-engine.js','assets/mt-research-ui.js']) {
             assert.ok(fs.existsSync(file), 'Missing map/command dependency: '+file);
           }
