@@ -1,3 +1,18 @@
+# 중요 업데이트 — 기존 관리자 서버에 통합됨 (2026-10-27)
+
+- 기존 Cloudflare Worker: cloudflare/admin-worker.js / wrangler.jsonc. GitHub OAuth 관리자로만 로그인되도록 설계돼 있음.
+- 신규 AI API: 기존 Worker의 /api/analyze에 통합, 로그인을 검증한 다음 server/worker.mjs의 createResult 호출.
+- 인증된 기존 /command 화면에 **AI 조사** 창과 /api/health 상태 확인, 시세/뉴스/AI 브리핑 창을 추가.
+- 필요한 실행 조건: 기존 Worker 재배포, OpenAI API 키를 Cloudflare Secret OPENAI_API_KEY로 설정. FINNHUB_API_TOKEN은 시세 기능용 선택 사항.
+- 기존 GitHub OAuth 관리자는 API 호출 인증 경계로 사용. 별도 Cloudflare Access 추가는 보안 강화 옵션이며 이 관리자 OAuth 경로에서 필수는 아님.
+- **코드 커밋은 완료. 실제 Cloudflare 배포 및 API 키 설정 확인 전에는 AI 라이브 연결은 미완료**.
+- 현재 공개 GitHub Pages 미국 프리뷰는 여전히 외부에 공개되므로 공개 HTML/JS에 비밀키나 내부 데이터 업로드 금지.
+- 기존 Worker가 이미 제공하는 관리자 관제실과 공개 Pages 미국 관제실은 서로 다른 화면. /command 에 먼저 AI 연결을 붙였으며 Pages 미국 프리뷰는 의도적으로 백엔드 차단 상태.
+
+### 운영자가 마지막으로 해야 할 일
+Cloudflare에서 기존 Worker의 OPENAI_API_KEY를 Secret으로 추가하고, 현재 wrangler.jsonc의 main=cloudflare/admin-worker.js 설정대로 배포. secrets를 이 채팅·GitHub·프런트엔드에 절대 붙여넣지 말 것.
+
+---
 # MONEY TRACKER — AI·시장 데이터 서버 연결 상태
 
 기준일 2026-10-27: 서버 코드와 프런트엔드 연결 코드는 구현했으나, **실제 서버 배포·인증·API 키는 미설정**. 실시간 데이터/AI를 연결 완료라고 표시하지 않는다.
