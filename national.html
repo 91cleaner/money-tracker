@@ -84,7 +84,7 @@
 }
 </style></head>
 <body data-page="national">
-<header class="nbar"><a class="mt-brand" href="./" aria-label="MONEY TRACKER 홈"><span class="mt-mark">MT</span><span class="mt-brand-name">MONEY TRACKER</span></a><button id="mtWorldMode" type="button" style="background:#10392c;color:#b9ffcf;border:1px solid #5a9c78;border-radius:9px;padding:9px 12px;cursor:pointer;font-weight:800">🌐 세계 작전</button><span>갱신 <span id="upd">—</span></span></header>
+<header class="nbar"><a class="mt-brand" href="./" aria-label="MONEY TRACKER 홈"><span class="mt-mark">MT</span><span class="mt-brand-name">MONEY TRACKER</span></a><span>갱신 <span id="upd">—</span></span></header>
 <main class="nw">
   <div id="pg"></div>
   <h1 style="margin-top:20px">정부 지출 · 자세한 자료</h1>
@@ -131,17 +131,5 @@
  }
 }
 </style>
-<style id="mt-unified-room-css">
-#mtUnifiedWorld{position:fixed;inset:0;z-index:99999;background:#06131c;display:none;flex-direction:column}
-#mtUnifiedWorld.open{display:flex}
-#mtUnifiedBar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:51px;background:#08151d;border-bottom:1px solid #346456;padding:7px 12px;color:#c8ffdf;font:700 13px system-ui}
-#mtUnifiedBar button{background:#16452e;border:1px solid #58a47b;color:#effff3;padding:9px 14px;border-radius:7px;cursor:pointer}
-#mtUnifiedWorld iframe{border:0;flex:1;min-height:0;width:100%;background:#071b23}
-.nbar .mt-brand{pointer-events:none}
-@media(max-width:600px){.nbar{display:flex!important;flex-wrap:nowrap!important;align-items:center!important}.nbar #mtWorldMode{font-size:12px;padding:9px!important}.nbar .mt-brand{grid-column:auto!important}}
-</style>
-<div id="mtUnifiedWorld" role="dialog" aria-label="세계 작전 추적실" aria-modal="true"><div id="mtUnifiedBar"><span>◉ MONEY TRACKER / GLOBAL OPERATIONS</span><button id="mtBackNational" type="button">← 한국 관제실</button></div><iframe id="mtUnifiedFrame" title="세계 작전 지도" loading="lazy" data-src="world-intelligence/index.html"></iframe></div>
-<script>
-(function(){const shell=document.getElementById('mtUnifiedWorld'),frame=document.getElementById('mtUnifiedFrame');const open=()=>{if(!frame.src)frame.src=frame.dataset.src;shell.classList.add('open');document.body.style.overflow='hidden'};const close=()=>{shell.classList.remove('open');document.body.style.overflow='';};document.getElementById('mtWorldMode').addEventListener('click',open);document.getElementById('mtBackNational').addEventListener('click',close);window.addEventListener('keydown',e=>{if(e.key==='Escape'&&shell.classList.contains('open'))close()})})();
-</script></body>
+</body>
 </html>
