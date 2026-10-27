@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "country": "jp",
+  "updated": "2026-10-27",
+  "description": "Public official source directory. Do not interpret source links as verified current facts.",
+  "items": [
+    {
+      "id": "jp-diet-minutes",
+      "type": "dataset",
+      "title": "일본 국립국회도서관 · 국회 회의록 검색 API",
+      "aliases": [
+        "일본 의회",
+        "일본 국회",
+        "国会",
+        "국회 회의록",
+        "반도체 논의",
+        "경제안보"
+      ],
+      "summary": "일본 국회 회의록의 날짜·위원회·발언자·원문 링크를 공개 JSON API에서 수집할 수 있다. 과도한 대량 요청 금지.",
+      "source": "National Diet Library of Japan",
+      "url": "https://kokkai.ndl.go.jp/api.html",
+      "source_date": null,
+      "country": "jp",
+      "location": {
+        "lat": 35.677,
+        "lng": 139.745,
+        "label": "JP 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "jp-diet-laws",
+      "type": "dataset",
+      "title": "일본 국립국회도서관 · 법률·법안 심의 기록",
+      "aliases": [
+        "일본 법안",
+        "일본 법률",
+        "日法律",
+        "国会審議"
+      ],
+      "summary": "1886년 이후 일본 법률·법안 심의 정보에 대한 검색 색인. 원문과 날짜 검증이 필요.",
+      "source": "National Diet Library Japan",
+      "url": "https://www.ndl.go.jp/en/diet",
+      "source_date": null,
+      "country": "jp",
+      "location": {
+        "lat": 35.677,
+        "lng": 139.745,
+        "label": "JP 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "jp-us-relations",
+      "type": "agreement",
+      "title": "일본 외무성 · 2026 미일 관계 기본자료",
+      "aliases": [
+        "미일 동맹",
+        "일본 미국",
+        "미국 일본 통상",
+        "투자"
+      ],
+      "summary": "일본 외무성이 2026년 8월 공개한 미일 동맹·안보·교역·투자 기초자료.",
+      "source": "Ministry of Foreign Affairs of Japan",
+      "url": "https://www.mofa.go.jp/na/na1/us/page23e_000329.html",
+      "source_date": "2026-08-07",
+      "country": "jp",
+      "location": {
+        "lat": 35.681,
+        "lng": 139.767,
+        "label": "JP 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "jp-taiwan-relations",
+      "type": "history",
+      "title": "일본 외무성 · 대만 관계 기본자료",
+      "aliases": [
+        "대만 일본",
+        "일본 대만해협",
+        "Taiwan Japan",
+        "日台関係"
+      ],
+      "summary": "일본 외무성이 2026년 6월 공개한 대만 관계 개요. 비정부 실무관계와 대만해협 평화에 대한 외무성 설명을 포함.",
+      "source": "Ministry of Foreign Affairs of Japan",
+      "url": "https://www.mofa.go.jp/region/asia-paci/taiwan/data.html",
+      "source_date": "2026-06-03",
+      "country": "jp",
+      "location": {
+        "lat": 35.681,
+        "lng": 139.767,
+        "label": "JP 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "jp-jpkr-us-trilateral",
+      "type": "agreement",
+      "title": "2023 한미일 캠프데이비드 정상회의 공동성명",
+      "aliases": [
+        "한미일",
+        "캠프 데이비드",
+        "안보",
+        "수출통제",
+        "기술 보호"
+      ],
+      "summary": "2023년 세 정상의 합의문에 기술보호·수출통제 협력 및 안보 협력이 포함되어 있다. 당시의 정책이며 현재 진행 정도는 추적 필요.",
+      "source": "Republic of Korea Ministry of Foreign Affairs",
+      "url": "https://www.mofa.go.kr/www/brd/m_3973/view.do?page=1&seq=367956",
+      "source_date": "2023-08-18",
+      "country": "jp",
+      "location": {
+        "lat": 35.681,
+        "lng": 139.767,
+        "label": "JP 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "jp-boj",
+      "type": "dataset",
+      "title": "일본은행 · 금융·통화정책 자료",
+      "aliases": [
+        "일본은행",
+        "BOJ",
+        "엔화",
+        "엔캐리",
+        "일본 금리"
+      ],
+      "summary": "일본은행의 정책결정·기준일·환율/금융시장 영향을 구분하여 조사하는 공식 출처.",
+      "source": "Bank of Japan",
+      "url": "https://www.boj.or.jp/en/",
+      "source_date": null,
+      "country": "jp",
+      "location": {
+        "lat": 35.687,
+        "lng": 139.77,
+        "label": "JP 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    }
+  ]
+}
