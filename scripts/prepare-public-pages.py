@@ -7,7 +7,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / ".public-pages"
 PUBLIC_DIRS = ("assets", "data", "c", "s", "world-intelligence", "3ac9ae3", "9590438", "b387449")
-PUBLIC_EXTENSIONS = {".html", ".css", ".js", ".json", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico", ".webmanifest", ".txt"}
+# .geojson: national map country borders (polgame.js), .csv: trip downloads (national.js) — both are fetched by public pages
+PUBLIC_EXTENSIONS = {".html", ".css", ".js", ".json", ".geojson", ".csv", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico", ".webmanifest", ".txt"}
 PUBLIC_ROOT_FILES = {".nojekyll"}
 EXCLUDED_PARTS = {"__pycache__", ".git", "private", "internal", "secrets", "credentials", "debug"}
 BLOCKED_NAMES = {".env", "wrangler.jsonc", "wrangler.toml"}
@@ -38,7 +39,7 @@ for dirname in PUBLIC_DIRS:
         target = OUT / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, target)
-for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js"):
+for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js", "data/national/countries-110m.geojson", "search.html", "assets/se.js", "data/search/se/core.json"):
     if not (OUT / required).exists():
         sys.exit(f"Missing required public file: {required}")
 for forbidden in ("cloudflare/admin-worker.js", "worker/private-api.js", "wrangler.jsonc", "collector/collect.py", ".github/workflows/deploy-pages.yml"):
