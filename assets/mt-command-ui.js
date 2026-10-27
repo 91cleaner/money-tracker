@@ -13,6 +13,9 @@ var intro=root.querySelector(".pg-say");if(intro)intro.textContent="사건을 �
 var oldHud=root.querySelector(".pg-top .mono");if(oldHud)oldHud.innerHTML="◉ SOURCE-BACKED INTELLIGENCE<br>거래 데이터 · AI · 실시간 시세: 미연결";
 var map=L.map(root.querySelector(".pg-map"),{zoomControl:false,attributionControl:true,minZoom:2,maxZoom:18,worldCopyJump:true,zoomSnap:0.25});
 map.attributionControl.setPrefix(false);
+/* Same idea as the Korean room (polgame.js WORLD): keep panning inside the drawn world so the user cannot drag into the empty black void above/below the tiles.
+   Longitude is wide (±540) so worldCopyJump still lets the user pan across the date line. */
+map.setMaxBounds(L.latLngBounds([[-60,-540],[78,540]]));map.options.maxBoundsViscosity=1;
 var dark=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:18,maxNativeZoom:11,noWrap:false,attribution:"Map © Esri"}).addTo(map);
 var tileFailures=0,tileFallbackActive=false;
 dark.on("tileerror",function(){
@@ -36,7 +39,7 @@ var satLabels=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/
 function minZoomForViewport(){return Math.max(2,Math.ceil(Math.log2(Math.max(320,root.querySelector(".pg-map").clientWidth)/256)*4)/4);}
 map.setMinZoom(minZoomForViewport());
 map.setView([39,-98],Math.max(3.5,map.getMinZoom()));
-L.control.zoom({position:"bottomright"}).addTo(map);
+var zoomControl=L.control.zoom({position:"bottomright"}).addTo(map);
 var pins=L.layerGroup().addTo(map),lines=L.layerGroup().addTo(map);
 var satTag=document.createElement("div");satTag.id="mtSat";satTag.textContent="MAP · STRATEGIC";root.appendChild(satTag);
 function syncSatellite(){
@@ -146,6 +149,19 @@ function travelTo(point,zoom,caption){
  advance(0);
 }
 map.on("dragstart",function(){if(!flight.hidden)cancelTravel();});
+/* A deliberate zoom must win over the scripted flight. Before, only dragging stopped the flight, so a zoom made with the
+   +/- buttons, mouse wheel, double-click, pinch or keyboard was undone when the flight's next phase flew back in to the target zoom. */
+function userTookZoom(){if(!flight.hidden)cancelTravel();}
+(function(){
+ var box=map.getContainer(),capture={capture:true,passive:true};
+ box.addEventListener("wheel",userTookZoom,capture);
+ box.addEventListener("dblclick",userTookZoom,true);
+ box.addEventListener("touchstart",function(e){if(e.touches&&e.touches.length>1)userTookZoom();},capture);
+ box.addEventListener("keydown",function(e){if(e.key==="+"||e.key==="="||e.key==="-"||e.key==="_")userTookZoom();},true);
+ var zc=zoomControl.getContainer();
+ zc.addEventListener("pointerdown",userTookZoom,true);
+ zc.addEventListener("click",userTookZoom,true);
+})();
 function selectStep(index){
  if(!state.mission||index<0||index>=state.mission.steps.length)return;
  state.step=index;
