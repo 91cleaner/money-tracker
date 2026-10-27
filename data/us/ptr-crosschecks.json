@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-27",
+  "source": "US House Clerk PTR PDF",
+  "method": "Cross-check of archived machine-extracted fields against text visible in the original official House PTR PDF",
+  "checks": [
+    {
+      "filing_id": "2026-20035411",
+      "member": "Maria Elvira Salazar",
+      "ticker": "CB",
+      "asset": "Chubb Limited Common Stock (CB) [ST]",
+      "transaction_date": "2026-08-19",
+      "type": "S",
+      "amount_min_usd": 15001,
+      "amount_max_usd": 50000,
+      "source_pdf": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035411.pdf",
+      "result": "matches_reported_filing_fields",
+      "note": "Official PTR PDF page 1 reports Chubb (CB), sale S, 08/19/2026, $15,001-$50,000. This confirms what was reported, not independent execution or beneficial ownership."
+    }
+  ],
+  "caveat": "The filing is a self-reported disclosure. Cross-checking the PDF does not prove a trade executed, identify ultimate owner, or establish any relation to legislation."
+}
