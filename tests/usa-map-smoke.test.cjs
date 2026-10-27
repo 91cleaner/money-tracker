@@ -41,7 +41,8 @@ test('위성 전환: 실제 영상·지명 타일과 줌 이벤트를 유지한�
 });
 
 test('데이터 연결 상태를 정직하게 표시한다', () => {
-  assert.match(usa, /시장 데이터 · 실시간 연결 전/);
+  assert.match(usa, /공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결/);
+  assert.match(usa, /PREVIEW · PUBLIC SOURCES/);
   assert.match(usa, /실시간 투자 신호가 아닙니다/);
   assert.match(usa, /관련 공식 자료/);
 });
