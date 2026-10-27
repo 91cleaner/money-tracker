@@ -50,7 +50,7 @@ else:
           "Old concatenated JavaScript corruption detected")
     check("fallback.style.display='block'" in html,
           "Offline fallback missing")
-    scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, flags=re.I | re.S)
+    scripts = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", html, flags=re.I | re.S)
     evidence = ROOT / "world-intelligence/evidence.js"
     check(evidence.is_file(), "Source evidence overlay script missing")
     if evidence.is_file():
