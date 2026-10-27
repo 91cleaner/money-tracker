@@ -24,6 +24,11 @@ var SRC={
  spacexCargo:{title:"NASA · SpaceX CRS-35 임무 (2026-10-13)",url:"https://www.nasa.gov/mission/nasas-spacex-crs-35/"},
  spacexFAA:{title:"FAA · Starship Cape Canaveral 발사·허가 심사",url:"https://www.faa.gov/space/stakeholder_engagement/spacex_starship_ccsfs"},
  spacexTexasFAA:{title:"미국 연방관보 · Starbase 환경영향평가 공고 (2026-10-14)",url:"https://www.govinfo.gov/content/pkg/FR-2026-10-14/html/2026-20963.htm"},
+ spacexIPO:{title:"SpaceX IR · 2026-06-15 IPO 완료 (SPCX)",url:"https://ir.spacex.com/updates/releases-details/2026/Space-Exploration-Technologies-Corp--Announces-Closing-of-Initial-Public-Offering-Including-Full-Exercise-of-Underwriters-Option-to-Purchase-Additional-Shares-2026-RgoR-Y1Vwh/"},
+ spacexSEC:{title:"미국 SEC · SpaceX 2026년 3분기 10-Q",url:"https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm"},
+ spacexStockHistory:{title:"Stock Analysis · SPCX 가격 기록 (지연·과거 자료)",url:"https://stockanalysis.com/stocks/spcx/history/"},
+ spacexLockup:{title:"Benzinga · IPO 락업 해제와 SPCX",url:"https://www.tradingview.com/news/benzinga%3A525f00c05094b%3A0-spacex-stock-slides-as-second-lockup-expires/"},
+ spacexIR:{title:"SpaceX · 투자자관계·실적",url:"https://ir.spacex.com/investors/"},
  tsa:{title:"미국 증권거래위원회 · 투자정보",url:"https://www.investor.gov/"}
 };
 function source(ref){return SRC[ref];}
@@ -32,8 +37,12 @@ function hyp(title,reason,verify,ref){return {title:title,reason:reason,verify:v
 function signal(title,watch,ifPositive,ifNegative){return {title:title,watch:watch,up:ifPositive,down:ifNegative};}
 var TOPICS={
  spacex:{
-  id:"spacex",label:"스페이스X",ticker:"SpaceX · 비상장 / 별도 주가 없음",group:"우주산업·발사·정부계약",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","스페이스x","스타십","starship","스타링크","starlink","팰컨9","falcon 9","falcon9","드래곤 우주선","crew-13","crs-35"],route:["spacex","history","trade"],point:{lat:25.997,-97.156,zoom:10,name:"텍사스 스타베이스 · Starship 시험 발사 시설"},
+  id:"spacex",label:"스페이스X",ticker:"NASDAQ: SPCX · 2026-06-12 상장",group:"우주산업·발사·정부계약",keywords:["스페이스엑스","스페이스 엑스","space x","spacex","스페이스x","스타십","starship","스타링크","starlink","팰컨9","falcon 9","falcon9","드래곤 우주선","crew-13","crs-35"],route:["spacex","history","trade"],point:{lat:25.997,-97.156,zoom:10,name:"텍사스 스타베이스 · Starship 시험 발사 시설"},
   facts:[
+    datum("상장 정보","SpaceX는 2026년 6월 12일 미국 나스닥에 SPCX로 신규 상장했습니다. 비상장 기업이 아닙니다.","spacexIPO","2026-06-12"),
+    datum("최근 3분기 SEC 실적","2026년 3분기 연결 매출 145억7,500만 달러, 전년 동기 55억7,600만 달러. 여러 사업부 통합 실적입니다.","spacexSEC","2026-09-30 마감 분기"),
+    datum("스타링크 중심 연결사업 매출","2026년 3분기 Connectivity 매출 52억4,800만 달러(전년 동기 30억9,700만 달러). 회사 10-Q 공시 기준입니다.","spacexSEC","2026-09-30 마감 분기"),
+    datum("최근 주가 기록 · 실시간 아님","10월 22일 SPCX 종가 144.75달러(-9.14%), 10월 26일 종가 146.90달러(-0.40%). 시세 사이트의 과거 일별 기록입니다.","spacexStockHistory","2026-10-22·2026-10-26"),
     datum("최근 스타십 시험 기록","SpaceX 공식 발사 기록에 Starship Flight 14가 2026년 9월 28일 발사된 것으로 기재되어 있습니다.","spacexLaunches","2026-09-28"),
     datum("유인우주선 임무","NASA에 따르면 2026년 10월 1일 SpaceX의 Crew-13 임무가 국제우주정거장을 향해 발사됐습니다.","spacexCrew","2026-10-01"),
     datum("화물 수송 임무","NASA는 CRS-35 화물 보급 임무의 발사일을 2026년 10월 13일로 기록합니다.","spacexCargo","2026-10-13"),
@@ -44,14 +53,16 @@ var TOPICS={
     hyp("스타십 개발 진척","시험 발사는 기술을 개선하기 위한 과정입니다. 발사 성공·실패·개발 일정은 공식 기록과 후속 발표로 판단해야 하며, 발사 횟수만으로 회사의 현재 상태를 단정할 수 없습니다.","Starship Flight 14 이후 공식 기술 보고와 다음 시험 일정을 확인하세요.","spacexLaunches"),
     hyp("NASA 계약 및 운송 임무","Crew Dragon 유인 수송과 ISS 화물 보급은 스타십 시험과 별개 사업입니다. 최근 발사를 보면 회사 전체가 무엇 때문에 움직이는지 구분할 수 있습니다.","NASA Crew-13, CRS-35 공식 발표와 계약 일정·임무 상태를 각각 확인하세요.","spacexCrew"),
     hyp("FAA 규제·발사장 확대","신규 발사 시설과 비행 횟수 확대에는 환경 심사와 운항면허 조건이 걸릴 수 있습니다. 심사 중인 사업을 이미 승인·완료된 사업처럼 해석하면 안 됩니다.","FAA 공고에서 신청·심사·승인 단계를 나눠 살펴보세요.","spacexFAA"),
-    hyp("상장주식과의 간접 연결","SpaceX는 자체 상장 주식 티커가 없는 비상장 기업입니다. 상장 기업에 미치는 영향은 실제 공개 계약·공급망 자료를 별도로 확인해야 합니다.","개별 상장기업 계약 공시와 SpaceX 조달 발표가 실제로 일치하는지 확인하세요.","spacexLaunches")
+    hyp("IPO 이후 매물·자금조달 부담","SPCX는 2026년 상장됐고, 상장 이후 의무보유 해제 시점과 막대한 AI 인프라 투자 비용 등이 시장에서 거론됐습니다. 실제 특정 거래일의 하락 원인으로 단정할 수는 없습니다.","공개된 락업 해제 일정, 신규 차입·자본지출 공시, 같은 날 주가와 거래량을 비교하세요.","spacexLockup"),
+    hyp("사업부별 실적과 시장 기대 차이","SpaceX의 10-Q에는 발사·Starlink 연결사업·AI 인프라 관련 사업이 함께 실립니다. 매출 성장만으로 주가를 설명하기 어렵고 주가에 반영됐던 성장 기대와 비용을 비교해야 합니다.","2026년 3분기 SEC 공시의 각 사업부 매출·이익과 당시 시장 예상치를 분리해 확인하세요.","spacexSEC")
   ],
   signals:[
     signal("스타십 시험","다음 공식 비행 일정, 시험 결과, 재사용·엔진 관련 발표","새 시험의 목표 충족","일정 지연이나 검증 필요 사항 증가"),
     signal("사업별 NASA 임무","유인 및 화물 임무 성과, 공식 계약·임무 일정","임무 수행 및 계약 확대","일정 변경·임무 차질"),
-    signal("규제 단계","FAA의 환경 검토, 운항면허 변경 심사 상태","검증 완료 및 허가 진전","추가 보완 요구 또는 일정 변경")
+    signal("규제 단계","FAA의 환경 검토, 운항면허 변경 심사 상태","검증 완료 및 허가 진전","추가 보완 요구 또는 일정 변경"),
+    signal("SPCX 증시 수급·자금조달","거래량, 락업 해제 관련 공시, 새 차입과 자본지출","공시 우려 완화·비용 통제","매물 증가·자금 비용 부담")
   ],
-  insight:"‘요즘 왜 그러느냐’는 질문부터 여러 갈래로 나누면 정확해집니다. 스타십 개발 시험, NASA 정기 운송, 스타링크 사업, 규제 심사는 별개의 데이터입니다. 현재 이상 징후가 있다는 단정 없이, 최근 공식 사건의 날짜와 사업별 진행 상태부터 확인하세요."
+  insight:"SPCX의 주가 변동과 Starship 시험은 같은 이야기가 아닙니다. 우선 2026년 10월 22일 급락 당시 시장 수급·실적·차입·투자 비용을 확인하고, 사업 측면에서는 스타십/NASA/스타링크/FAA를 따로 추적하세요. 관제실은 사실과 가능한 원인을 분리하고 최종 해석은 사용자가 합니다."
  },
  nvda:{
   id:"nvda",label:"엔비디아",ticker:"NVDA",group:"반도체·AI",keywords:["엔비디아","nvidia","nvda","젠슨황","jensen huang","h100","h200","blackwell","rubin","gpu","그래픽카드"],route:["chips","trade","rates"],point:{lat:37.37064,lng:-121.96708,zoom:15,name:"NVIDIA 본사 · 2788 San Tomas Expressway, Santa Clara"},
@@ -131,6 +142,7 @@ var TOPICS={
 var ALL=Object.keys(TOPICS).map(function(k){return TOPICS[k]});
 function norm(q){return String(q==null?"":q).toLowerCase().normalize("NFKC").replace(/[\u200b-\u200d]/g,"").replace(/\s+/g," ").trim();}
 function classifyIntent(q){
+ if(/왜그래|왜이래|요즘|근황|무슨일|뭔일|최근 어떻게|어때|what happened|whats going on/i.test(q)&&!/떨어|하락|폭락|급락|오르|상승|급등|폭등/i.test(q))return "situation";
  if(/왜|이유|원인|떨어|하락|급락|폭락|빠지|내리|떡락|why|down|drop|crash/i.test(q))return "cause";
  if(/오르|상승|급등|폭등|강세|올라|rise|up|surge/i.test(q))return "rise";
  if(/사야|팔아|매수|매도|투자|전망|앞으로|어떻게|어디로|방향|buy|sell/i.test(q))return "decision";
@@ -153,6 +165,8 @@ function analyze(query){
  var opening;
  if(isFallback){
   opening="질문을 받았습니다. 준비된 주제와 일치하지 않아 현재 공개 백과 자료에서 질문에 가까운 문서를 찾아보겠습니다. 이 조회는 최신 뉴스·주가 검색이나 생성형 AI 추론이 아닙니다. 확인한 문서와 직접 확인하지 못한 내용을 구분하겠습니다.";
+ }else if(intent==="situation"){
+  opening=topic.label+"에 최근 어떤 일이 있었는지 묻는 질문으로 해석했습니다. 회사 공식 발표·SEC 재무제표·관련 정책 자료를 날짜순으로 보여주고, 주가 움직임과 사업 활동을 나눠 설명합니다. 기사 제목과 가격 방향만으로 특정 원인을 확정하지 않습니다.";
  }else if(intent==="cause"){
   opening=topic.label+"의 하락 원인을 묻는 질문으로 해석했습니다. 실제 해당 시점에 주가가 하락했는지, 하락폭과 뉴스가 무엇인지는 현재 시세·뉴스 피드가 미연결이라 확인되지 않았습니다. 아래는 공시·정책에 근거한 원인 후보이며 확인된 당일 원인이 아닙니다.";
  }else if(intent==="rise"){
@@ -162,7 +176,7 @@ function analyze(query){
  }else if(intent==="timing"){
   opening="최신 상황·일정을 묻는 질문입니다. 이 관제실은 실시간 뉴스와 가격 API가 연결되지 않았습니다. 아래 공식 출처에서 날짜를 확인하고, 자료가 최신인지 먼저 검증해야 합니다.";
  }else opening=topic.label+"에서 "+interrogative+" 탐색합니다. 공식 자료와 관련 산업·법안·역사를 연결하되 현재 시점의 확인되지 않은 사실은 표시하지 않습니다.";
- var title=isFallback?"연결 가능한 데이터부터 추적":topic.label+(intent==="cause"?" · 하락 원인 분석":intent==="rise"?" · 상승 요인 분석":intent==="decision"?" · 사용자 판단 브리핑":" · 관제실 브리핑");
+ var title=isFallback?"연결 가능한 데이터부터 추적":topic.label+(intent==="situation"?" · 요즘 무슨 일이 있나":intent==="cause"?" · 하락 원인 분석":intent==="rise"?" · 상승 요인 분석":intent==="decision"?" · 사용자 판단 브리핑":" · 관제실 브리핑");
  return {
   query:String(query),id:isFallback?"open":topic.id,topic:isFallback?"공개 자료 탐색":topic.label,ticker:isFallback?"OPEN SEARCH":topic.ticker,topicGroup:isFallback?"범용 조사 시험 기능":topic.group,
   intent:intent,isFallback:isFallback,title:title,opening:opening,
