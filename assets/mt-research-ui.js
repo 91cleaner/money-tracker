@@ -326,23 +326,14 @@ function render(query){
   expand.textContent=opened?"지도만 보기":"자료 자세히";
   if(opened)panel.scrollTop=0;
  });
- var firstRoute=result.missions.find(function(id){return window.MTIntelData&&window.MTIntelData.getMission(id);});
- if(firstRoute)button(quickActions,"경로 추적 →",function(){api.selectMission(firstRoute);close();});
+ // Investigation routes are offered per actual matched document below, not guessed from unrelated keywords.
  var sourceAnchor=add(quickActions,"a","","원문 ↗");sourceAnchor.hidden=true;sourceAnchor.target="_blank";sourceAnchor.rel="noopener noreferrer";
  renderIndexedSearch(query,function(index,results){
   if(!results.length){quick.textContent="일치하는 저장 자료 없음 · 임의 사실 생성 안 함 · 상세 자료에서 다른 검색어를 확인하세요.";return;}
   var top=results[0],when=top.source_date||"날짜 미확인";
   quick.textContent=top.title+" · "+(top.summary||"원문 확인 필요").slice(0,100)+" · "+when;
   if(String(top.url||"").startsWith("https://")){sourceAnchor.href=top.url;sourceAnchor.hidden=false;}
-  // A geolocated, high-confidence match may move the map; no invented coordinates.
-  var place=top.location,lat=place&&Number(place.lat),lng=place&&Number(place.lng);
-  if(top.relevance>=20&&Number.isFinite(lat)&&Number.isFinite(lng)&&Math.abs(lat)<=90&&Math.abs(lng)<=180){
-   if(window.L&&api.map){
-    var pin=window.L.circleMarker([lat,lng],{radius:8,color:"#c8ff96",fillColor:"#288b50",fillOpacity:.85,weight:2}).addTo(api.map);
-    pin.bindTooltip(top.title);window.MTQuickPin=pin;
-   }
-   if(typeof api.travelTo==="function")api.travelTo([lat,lng],Math.max(5,Math.min(10,Number(place.zoom)||8)),place.label||top.title);
-  }
+  // Searching does not move the map automatically. An operator chooses a document\u0027s trace control.
  });
  // Paid model/API calls intentionally disabled: index/search documents first.
  renderSpaceXBrief(result);
