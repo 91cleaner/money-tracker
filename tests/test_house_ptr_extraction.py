@@ -129,6 +129,58 @@ class HousePtrExtractionTests(unittest.TestCase):
             self.assertEqual([x["filing_id"] for x in second["filings"]], ["2026-3", "2026-1"])
             self.assertEqual(second["last_attempted_filing_id"], "2026-1")
 
+    def test_atomic_writer_preserves_existing_json_on_replace_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "status.json"
+            target.write_text('{"last_attempted_filing_id":"old"}\n', encoding="utf-8")
+            with patch.object(ptr.os, "replace", side_effect=OSError("disk full")):
+                with self.assertRaises(OSError):
+                    ptr.write_json_atomic(target, {"last_attempted_filing_id": "new"})
+            self.assertEqual(json.loads(target.read_text())["last_attempted_filing_id"], "old")
+            self.assertEqual(list(Path(tmp).glob("*.tmp")), [])
+
+    def test_candidate_write_failure_does_not_advance_queue_cursor(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            queue, output, status = (root / x for x in ("queue.json", "candidates.json", "status.json"))
+            record = {
+                "id": "2026-1", "member": "Example Member", "filing_date": "10/20/2026",
+                "document_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/1.pdf",
+            }
+            queue.write_text(json.dumps({"records": [record]}), encoding="utf-8")
+            status.write_text('{"last_attempted_filing_id":"old"}', encoding="utf-8")
+            output.write_text('{"records":[{"asset":"saved"}]}', encoding="utf-8")
+            row = {"filing_id": record["id"], "asset": "New asset", "transaction_date": "2026-10-10"}
+            with (patch.object(ptr, "QUEUE", queue), patch.object(ptr, "OUT", output),
+                  patch.object(ptr, "STATUS", status), patch.object(ptr, "MAX_DOCS", 1),
+                  patch.object(ptr.urllib.request, "urlopen", return_value=FakeResponse()),
+                  patch.object(ptr, "extract", return_value=[row]),
+                  patch.object(ptr, "write_json_atomic", side_effect=OSError("disk full"))):
+                with self.assertRaises(OSError):
+                    ptr.main()
+            self.assertEqual(json.loads(status.read_text())["last_attempted_filing_id"], "old")
+            self.assertEqual(json.loads(output.read_text())["records"][0]["asset"], "saved")
+
+    def test_malformed_existing_candidates_are_never_overwritten(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            queue, output, status = (root / x for x in ("queue.json", "candidates.json", "status.json"))
+            record = {
+                "id": "2026-1", "member": "Example Member", "filing_date": "10/20/2026",
+                "document_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/1.pdf",
+            }
+            queue.write_text(json.dumps({"records": [record]}), encoding="utf-8")
+            output.write_text('{"records":"corrupted"}', encoding="utf-8")
+            with (patch.object(ptr, "QUEUE", queue), patch.object(ptr, "OUT", output),
+                  patch.object(ptr, "STATUS", status), patch.object(ptr, "MAX_DOCS", 1),
+                  patch.object(ptr.urllib.request, "urlopen", return_value=FakeResponse()),
+                  patch.object(ptr, "extract", return_value=[{"asset": "new"}])):
+                with self.assertRaises(ValueError):
+                    ptr.main()
+            self.assertEqual(output.read_text(), '{"records":"corrupted"}')
+            self.assertFalse(status.exists())
+
+
 
 if __name__ == "__main__":
     unittest.main()
