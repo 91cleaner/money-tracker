@@ -1,7 +1,7 @@
 /**
  * MONEY TRACKER secure AI research backend.
  * Deploy behind Cloudflare Access (all traffic, owner email only).
- * Server-side secrets: OPENAI_API_KEY (required), FINNHUB_API_TOKEN (optional).
+ * Server-side secrets: XAI_API_KEY or OPENAI_API_KEY (AI), FINNHUB_API_TOKEN (optional).
  * Never expose a Worker publicly with these integrations.
  */
 const json=(value,status=200,headers={})=>new Response(JSON.stringify(value),{status,headers:{"content-type":"application/json; charset=utf-8","cache-control":"no-store","x-content-type-options":"nosniff",...headers}});
@@ -56,40 +56,73 @@ const schema={
   warning:{type:"string"}
  }
 };
-async function analyzeQuestion(question,headlines,quote,env){
- if(!env.OPENAI_API_KEY)return {status:"not-configured",brief:null};
+function pickProvider(env,requested){
+ if(requested==="grok"||requested==="openai")return requested;
+ return env.XAI_API_KEY?"grok":"openai";
+}
+function publicCitations(j){
+ return (Array.isArray(j.citations)?j.citations:[]).filter(u=>typeof u==="string"&&/^https:\/\//i.test(u)&&u.length<2000).slice(0,18);
+}
+async function analyzeQuestion(question,headlines,quote,env,options={}){
+ const provider=pickProvider(env,options.provider);
+ const grok=provider==="grok";
+ const key=grok?env.XAI_API_KEY:env.OPENAI_API_KEY;
+ if(!key)return {status:"not-configured",provider,brief:null,citations:[]};
  const now=new Date().toISOString();
  const sources=headlines.items.map((x,i)=>({index:i+1,title:x.title,source:x.source,url:x.url,date:x.at}));
  const body={
-  model:env.OPENAI_MODEL||"gpt-4.1-mini",
+  model:grok?(env.XAI_MODEL||"grok-4.7"):(env.OPENAI_MODEL||"gpt-4.1-mini"),
   store:false,
   input:[
-   {role:"system",content:"You are MONEY TRACKER, an evidence-based Korean market and geopolitical research analyst. Answer in natural Korean comprehensible to a high school student. Never pretend articles were fully read: only headlines and publisher metadata are provided; treat them as investigation leads, not verified event facts. Distinguish documented numerical quote observations from hypotheses. Never invent bills, stock prices, politician trades, exact causes, investment returns or dates. Be explicit when no data is available. List competing hypotheses and disconfirming checks. Do not give buy/sell commands. Keep it concise. Return JSON adhering to schema."},
-   {role:"user",content:JSON.stringify({question,asOf:now,newsProviderStatus:headlines.status,headlines:sources,quote,notes:"News headlines are leads, not full articles; quote may be delayed or unavailable."})}
+   {role:"system",content:"You are MONEY TRACKER, an evidence-first Korean intelligence analyst. Explain clearly enough for high school students. Never fabricate politicians' trades, current prices, exact stock decline causes, or legal events. Ground claims in reliable cited documents with dates; distinguish documents actually read from search results or headlines. X posts express opinion or claims and need independent verification. Explain the strongest alternative explanations and what evidence would falsify them. Do not decide buy/sell for the user. Respond strictly in Korean JSON following the schema."},
+   {role:"user",content:JSON.stringify({question,asOf:now,newsProviderStatus:headlines.status,headlines:sources,quote,notes:"Dates and sources are critical. Live quotes may be absent/delayed. In the absence of evidence say '미확인'."})}
   ],
   text:{format:{type:"json_schema",name:"money_tracker_brief",strict:true,schema}},
-  max_output_tokens:1600
+  max_output_tokens:grok?3800:1600
  };
+ if(grok){
+  body.tools=[{type:"web_search"}];
+  // X search is deliberately an opt-in paid investigation tool.
+  if(options.includeX===true)body.tools.push({type:"x_search"});
+  body.max_turns=2;
+  body.reasoning={effort:"low"};
+  body.include=["no_inline_citations"];
+ }
+ const endpoint=grok?"https://api.x.ai/v1/responses":"https://api.openai.com/v1/responses";
  try{
-  const resp=await fetch("https://api.openai.com/v1/responses",{
-   method:"POST",signal:AbortSignal.timeout(24000),headers:{"authorization":"Bearer "+env.OPENAI_API_KEY,"content-type":"application/json"},body:JSON.stringify(body)
+  const resp=await fetch(endpoint,{
+   method:"POST",signal:AbortSignal.timeout(grok?45000:24000),
+   headers:{"authorization":"Bearer "+key,"content-type":"application/json"},
+   body:JSON.stringify(body)
   });
-  if(!resp.ok)return {status:"provider-error",brief:null};
-  const j=await resp.json();const text=textOf(j);const parsed=JSON.parse(text);
-  return {status:"ok",brief:parsed};
- }catch{return {status:"unavailable",brief:null};}
+  if(!resp.ok)return {status:resp.status===429?"rate-limited":"provider-error",provider,brief:null,citations:[],httpStatus:resp.status};
+  const j=await resp.json();
+  const parsed=JSON.parse(textOf(j));
+  const usage=j.usage||{},tool=usage.server_side_tool_usage_details||{};
+  const billed=Number(usage.cost_in_usd_ticks);
+  return {
+   status:"ok",provider,model:body.model,brief:parsed,
+   citations:grok?publicCitations(j):[],
+   tools:{webSearch:grok,xSearch:grok&&options.includeX===true,webCalls:tool.web_search_calls||0,xPostsFetched:tool.x_posts_fetched||0,xProfilesFetched:tool.x_users_fetched||0},
+   ...(grok&&Number.isFinite(billed)?{reportedCostUSD:Math.round(billed/1e6)/1e4}:{})
+  };
+ }catch{return {status:"unavailable",provider,brief:null,citations:[]};}
 }
-export async function createResult(question,env){
+export async function createResult(question,env,options={}){
  const [headlines,quote]=await Promise.all([getHeadlines(question),getQuote(question,env)]);
- const ai=await analyzeQuestion(question,headlines,quote,env);
- return {query:question,generatedAt:new Date().toISOString(),news:headlines,market:quote,ai,scope:"Official company/legislative materials require separate retrieval and verification; headline snippets are not evidence of causation.",operatorDecision:true};
+ const ai=await analyzeQuestion(question,headlines,quote,env,options);
+ return {
+  query:question,generatedAt:new Date().toISOString(),news:headlines,market:quote,ai,
+  scope:"Recent web/X results can be leads but are not proof of stock causation. Quotations and official sources need checking.",
+  operatorDecision:true
+ };
 }
 export default {
  async fetch(request,env){
   const url=new URL(request.url);
   // Block health, AI, and all other routes until Cloudflare Access is actually configured.
   if(env.ACCESS_PROTECTED!=="true")return json({error:"access-not-enabled",message:"Configure Cloudflare Access and set ACCESS_PROTECTED=true after verification."},503);
-  if(url.pathname==="/health")return json({status:"ok",ai:!!env.OPENAI_API_KEY,quotes:!!env.FINNHUB_API_TOKEN,privateAccess:"edge-policy-required"});
+  if(url.pathname==="/health")return json({status:"ok",ai:!!(env.XAI_API_KEY||env.OPENAI_API_KEY),grok:!!env.XAI_API_KEY,openai:!!env.OPENAI_API_KEY,quotes:!!env.FINNHUB_API_TOKEN,privateAccess:"edge-policy-required"});
   if(url.pathname!=="/api/analyze")return json({error:"not-found"},404);
   if(request.method!=="POST")return json({error:"POST only"},405);
   // IMPORTANT: Do not rely on request Origin or a client-side key for authentication.
@@ -99,7 +132,9 @@ export default {
   let data;try{data=await request.json()}catch{return json({error:"invalid-json"},400)}
   const question=safeQuery(data?.question);
   if(question.length<2)return json({error:"question-required"},400);
-  const output=await createResult(question,env);
+  const provider=data?.provider==="grok"||data?.provider==="openai"?data.provider:undefined;
+  const includeX=provider==="grok"&&data?.includeX===true;
+  const output=await createResult(question,env,{provider,includeX});
   return json(output);
  }
 };
