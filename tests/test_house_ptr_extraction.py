@@ -116,10 +116,10 @@ class HousePtrExtractionTests(unittest.TestCase):
                 "document_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/" + str(i) + ".pdf",
             } for i in range(1, 4)]
             queue.write_text(json.dumps({"records": rows}), encoding="utf-8")
-            with patch.object(ptr, "QUEUE", queue), patch.object(ptr, "OUT", output), \\
-                 patch.object(ptr, "STATUS", status), patch.object(ptr, "MAX_DOCS", 2), \\
-                 patch.object(ptr.urllib.request, "urlopen", return_value=FakeResponse()), \\
-                 patch.object(ptr, "extract", return_value=[]):
+            with (patch.object(ptr, "QUEUE", queue), patch.object(ptr, "OUT", output),
+                  patch.object(ptr, "STATUS", status), patch.object(ptr, "MAX_DOCS", 2),
+                  patch.object(ptr.urllib.request, "urlopen", return_value=FakeResponse()),
+                  patch.object(ptr, "extract", return_value=[])):
                 ptr.main()
                 first = json.loads(status.read_text(encoding="utf-8"))
                 ptr.main()
