@@ -55,16 +55,11 @@ function clear(node){while(node.firstChild)node.removeChild(node.firstChild);}
 function hideChoices(){choices.hidden=true;clear(choices);}
 function hideFile(){file.hidden=true;clear(file);}
 function renderWelcome(){
- clear(choices);choices.hidden=false;
- var title=elem("div","mt-choice-head");title.appendChild(elem("strong","","MONEY TRACKER · 관제실 준비 완료"));
- title.appendChild(button("✕",hideChoices,"mt-x"));choices.appendChild(title);
- choices.appendChild(elem("p","mt-choice-note","기업·주식·의원·법안·금리·세계정세에 관해 자유롭게 질문하세요. 아래 주제는 예시일 뿐, 특정 기업이 기본 설정된 것은 아닙니다."));
- var topics=[["history","세계정세 · 역사"],["rates","금리 · 시장"],["trade","관세 · 국제무역"],["chips","법안 · 산업"],["disclosures","의원 · 거래 공시"]];
- topics.forEach(function(topic){
-  choices.appendChild(button(topic[1]+" ›",function(){selectMission(topic[0]);},"mt-choice"));
- });
- setStatus("전체 관제실 대기 중 · 검색어를 입력하거나 주제를 선택하세요");
+ // Map-first idle state: do not cover the map with a full welcome/choice panel.
+ hideChoices();
+ setStatus("지도 탐색 대기 · 기업·법안·의원·세계정세를 검색하세요 · AI/시세 미연결");
 }
+
 function renderChoices(items,unknown){
  clear(choices);choices.hidden=false;
  var head=elem("div","mt-choice-head");
