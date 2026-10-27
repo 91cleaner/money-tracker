@@ -6,6 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {createRequire} from "node:module";
+import {koreanBillDocuments} from "./kr-bill-index.mjs";
 const require=createRequire(import.meta.url);
 const root=path.resolve(import.meta.dirname,"..");
 function read(p,fallback=null){try{return JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));}catch(e){if(e.code==="ENOENT")return fallback;throw e;}}
@@ -45,6 +46,11 @@ function build(){
    source:source.name,url:source.url,source_date:node.date||null,location:node.location||null,
    route:node.route||null});
  }
+ // Korean Assembly bill proposals and voted laws from saved official API snapshots.
+ // This is searchable evidence, NOT live bill status or a verified company impact.
+ const krSecurity=read("data/national/security.json",{bills:[],lead:{}});
+ const krMembers=read("data/national/members.json",{members:[]});
+ for(const item of koreanBillDocuments(krSecurity,krMembers))push(item);
  const members=read("data/us/members.json",{members:[]});
  for(const m of members.members||[]){
   if(!m.id||!m.name||!safeUrl(m.url))continue;
