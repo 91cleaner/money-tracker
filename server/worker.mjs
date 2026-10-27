@@ -87,12 +87,13 @@ export async function createResult(question,env){
 export default {
  async fetch(request,env){
   const url=new URL(request.url);
-  if(url.pathname==="/health")return json({status:"ok",ai:!!env.OPENAI_API_KEY,quotes:!!env.FINNHUB_API_TOKEN,privateAccess:"must-be-configured-at-Cloudflare-edge"});
+  // Block health, AI, and all other routes until Cloudflare Access is actually configured.
+  if(env.ACCESS_PROTECTED!=="true")return json({error:"access-not-enabled",message:"Configure Cloudflare Access and set ACCESS_PROTECTED=true after verification."},503);
+  if(url.pathname==="/health")return json({status:"ok",ai:!!env.OPENAI_API_KEY,quotes:!!env.FINNHUB_API_TOKEN,privateAccess:"edge-policy-required"});
   if(url.pathname!=="/api/analyze")return json({error:"not-found"},404);
   if(request.method!=="POST")return json({error:"POST only"},405);
   // IMPORTANT: Do not rely on request Origin or a client-side key for authentication.
   // Cloudflare Access MUST protect every Worker production/preview hostname at the edge.
-  if(env.ACCESS_PROTECTED!=="true")return json({error:"access-not-enabled",message:"Configure Cloudflare Access and set ACCESS_PROTECTED=true after verification."},503);
   const length=Number(request.headers.get("content-length")||0);
   if(length>3000)return json({error:"input-too-large"},413);
   let data;try{data=await request.json()}catch{return json({error:"invalid-json"},400)}
