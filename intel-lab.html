@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MONEY TRACKER — 의원·법안 추적 실험실</title>
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#06100c;color:#dcf8e7;font:14px/1.5 system-ui,sans-serif}
+header{padding:12px 18px;background:#071a11;border-bottom:1px solid #286043;display:flex;align-items:center;justify-content:space-between;gap:12px}header a{color:#a1ffd0}header strong{letter-spacing:.14em}
+main{display:grid;grid-template-columns:minmax(320px,40%) 1fr;min-height:calc(100dvh - 64px)}aside{padding:16px;overflow:auto;max-height:calc(100dvh - 64px);border-right:1px solid #28543e}#intelMap{height:calc(100dvh - 64px);background:#12251b}
+h1{font-size:21px;margin:0 0 8px}h2{font-size:16px;margin:18px 0 8px;color:#9ef5c0}p{margin:8px 0}.muted,small{color:#a5bdaf;font-size:12px}input{width:100%;background:#091d12;border:1px solid #43875e;border-radius:8px;padding:13px;color:#fff;font:inherit}
+#results{display:flex;flex-wrap:wrap;gap:6px;max-height:165px;overflow:auto;margin:12px 0}.result,button{background:#153d27;color:#eafff1;border:1px solid #448c62;border-radius:7px;padding:8px;cursor:pointer}.result:hover,button:hover{background:#245a39}
+#selected{border-top:1px solid #27573d;padding-top:12px}#portrait img{height:100px;max-width:90px;object-fit:cover;border-radius:6px;float:right;margin-left:12px}#committees{padding-left:20px}.bill{border:1px solid #255039;border-radius:9px;background:#0c2116;padding:10px;margin:8px 0}.bill strong{display:block}.bill small{display:block;margin:4px 0}.bill p{font-size:12px}.source{color:#8bf1b4;font-size:12px}
+#status{padding:8px 10px;background:#10281b;border-radius:8px;color:#a1d8b9}footer{font-size:11px;color:#a6b8ac;margin-top:20px}
+@media(max-width:760px){main{display:flex;flex-direction:column}#intelMap{height:38dvh;min-height:240px;order:0}aside{order:1;max-height:none;overflow:visible;border:0;padding:12px}header{font-size:12px}h1{font-size:18px}}
+</style></head><body>
+<header><strong>MONEY TRACKER / INTELLIGENCE LAB</strong><nav><a href="index.html">입구</a> · <a href="usa-command.html">미국 관제실</a></nav></header>
+<main><aside>
+<h1>미국 의원 → 법안 → 지역 추적</h1>
+<p class="muted">공개 의회 기록 기반 실험실. 의원의 실제 주식거래·특정 기업과의 관계는 검증된 데이터가 없으면 연결하지 않습니다.</p>
+<p id="status" role="status">공개 데이터 불러오는 중…</p>
+<button type="button" id="startMission">추적 시작</button>
+<h2>의원 이름 또는 주 검색</h2><input id="search" placeholder="예: Maria Cantwell / WA" aria-label="의원 검색">
+<div id="results"></div>
+<section id="selected" hidden><div id="portrait"></div><h2 id="name"></h2><p id="bio"></p><h2>위원회</h2><ul id="committees"></ul><h2>법안 타임라인</h2><p id="billCount" class="muted"></p><div id="bills"></div></section>
+<footer>지도 좌표는 의원 공개 지역 정보이며 실제 이동 경로가 아닙니다. 데이터 업데이트 시점은 원천 데이터마다 다릅니다. 분석 결과는 투자 권유가 아닙니다.</footer>
+</aside><div id="intelMap" aria-label="의원 지역 추적 지도"></div></main>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script src="assets/mt-intel-lab.js"></script></body></html>
