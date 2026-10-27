@@ -1,0 +1,41 @@
+name: Deploy MONEY TRACKER Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate entry points and scripts
+        run: |
+          test -f index.html
+          test -f usa-command.html
+          test -f national.html
+          test -f assets/vendor/leaflet/leaflet.js
+          test -f assets/mt-command-ui.js
+          test -f assets/mt-query-engine.js
+          node --check assets/mt-command-ui.js
+          node --check assets/mt-query-engine.js
+          grep -q 'href="usa-command.html"' index.html
+          grep -q '실시간 시세: 미연결' usa-command.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
