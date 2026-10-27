@@ -7,6 +7,8 @@ on:
       - 'usa-command.html'
       - 'world-intelligence/index.html'
       - 'assets/mt-*.js'
+      - 'data/us/cases/*.json'
+      - 'docs/SEARCH_ROADMAP.md'
       - 'tests/mt-*.cjs'
       - '.github/workflows/command-check.yml'
   workflow_dispatch:
