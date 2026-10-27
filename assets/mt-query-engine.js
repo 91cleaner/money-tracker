@@ -141,7 +141,7 @@ function analyze(query){
   intent:intent,isFallback:isFallback,title:title,opening:opening,
   facts:isFallback?[]:topic.facts,assumptions:topic.risks,signals:topic.signals,
   insight:topic.insight,missions:isFallback?["chips","trade","rates","history","disclosures"]:topic.route,
-  location:topic.point,asOf:"자료별 기준일 확인 · 실시간 미연결",
+  location:topic.point,photo:isFallback?null:(topic.photo||null),asOf:"자료별 기준일 확인 · 실시간 미연결",
   caveat:"이 분석은 보관된 공식 자료를 기반으로 한 규칙형 조사 브리핑입니다. 생성형 AI·실시간 뉴스·실시간 시세에 연결되어 있지 않습니다. 현재 주가 방향이나 당일 급락 원인을 확인했다고 주장하지 않습니다.",
   scenarios:topic.signals.length?topic.signals[0]:null,
   userChoice:["강세 가설","중립·관찰","약세 가설"]
