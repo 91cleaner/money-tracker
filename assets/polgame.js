@@ -224,6 +224,7 @@
 
   // ── 지도 ──
   const map = L.map($('.pg-map'), { zoomControl: false, attributionControl: true, zoomSnap: 0.25, minZoom: 0, maxZoom: 11, worldCopyJump: false, tap: false });
+  window.mtCommandMap = map; // unified command-room controls share this exact original Leaflet map
   map.attributionControl.setPrefix(false);
   // 크게 줌아웃해도 대륙이 옆으로 되풀이되지 않게: 지구 한 바퀴(유럽 서쪽 ~ 아메리카 동쪽)만 보이게 묶고, 그 폭이 화면을 꽉 채우는 데까지만 줌아웃
   const WORLD = L.latLngBounds([[-60, -25], [78, 335]]);
