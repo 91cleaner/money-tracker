@@ -112,18 +112,51 @@ html,body{width:100%;height:100%;overflow:hidden!important}
 #pg .leaflet-pane.leaflet-sat-pane{z-index:250!important;filter:brightness(.82) contrast(1.12) saturate(.86)!important}
 #pg .leaflet-pane.leaflet-satlab-pane{z-index:260!important}
 #pg.sat .satb{opacity:1}
-</style></head><body><header class="nbar"><span>🟢 MONEY TRACKER / 미국 관제실</span><small>USA · GLOBAL INTELLIGENCE · 공개 자료</small></header><div id="pg"><div class="pg-map"></div><div class="pg-scan"></div><div class="pg-top"><div class="pg-box"><div class="live"><i></i>PREVIEW · PUBLIC SOURCES</div><div class="ttl">미국 · 세계 추적실</div></div><div class="pg-box mono">◉ US / GLOBAL OPERATIONS<br>공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결</div></div><div class="pg-say">미국에서 시작 · 국가와 사건을 선택해 지도에서 추적하세요</div><div class="pg-file" id="usFile" hidden></div><form id="usCmd"><input id="usQuery" placeholder="대만 반도체, 관세, 금리, 한국, 세계사…" aria-label="작전 명령" required><button>추적 ↵</button></form><div class="pg-bar" role="toolbar" aria-label="지도 작전"><button data-w="chips">◈<span>반도체</span></button><button data-w="trade">▤<span>관세</span></button><button data-w="rates">⌁<span>금리</span></button></div></div><script src="assets/vendor/leaflet/leaflet.js"></script><script>
-(function(){const root=document.getElementById('pg'),box=document.getElementById('usFile'),query=document.getElementById('usQuery'),buttons=[...document.querySelectorAll('.pg-bar button')];const map=L.map(document.querySelector('.pg-map'),{zoomControl:false,attributionControl:true,minZoom:2,maxZoom:18,worldCopyJump:false,zoomSnap:.25});map.attributionControl.setPrefix(false);map.setMaxBounds(L.latLngBounds([[-70,-180],[80,180]]));map.options.maxBoundsViscosity=1;L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,maxNativeZoom:11,noWrap:false,attribution:'Map tiles © Esri'}).addTo(map);const fitWorldZoom=()=>Math.max(2,Math.ceil(Math.log2(Math.max(320,document.querySelector('.pg-map').clientWidth)/256)*4)/4);map.setMinZoom(fitWorldZoom());map.setView([39,-98],Math.max(4,map.getMinZoom()));
-map.createPane('sat');map.getPane('sat').style.zIndex=250;map.getPane('sat').style.filter='brightness(.72) contrast(1.12) saturate(.75)';
-map.createPane('satlab');map.getPane('satlab').style.zIndex=260;map.getPane('satlab').style.pointerEvents='none';
-const sat=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{pane:'sat',maxZoom:18,minZoom:6,opacity:0,noWrap:false,attribution:'위성: Esri, Maxar, Earthstar Geographics'}).addTo(map);
-const satLab=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{pane:'satlab',maxZoom:18,minZoom:7,opacity:0,noWrap:false}).addTo(map);
-const satFade=()=>{const z=map.getZoom(),o=Math.max(0,Math.min(1,(z-6.5)/1.5));sat.setOpacity(o);satLab.setOpacity(o*.85);root.classList.toggle('sat',o>.6)};
-map.on('zoom zoomend moveend',satFade);satFade();
-const satTag=document.createElement('div');satTag.className='satb';satTag.innerHTML='<i></i>SAT · 위성 영상';root.append(satTag);L.control.zoom({position:'bottomright'}).addTo(map);let markers=L.layerGroup().addTo(map),route=L.layerGroup().addTo(map),current=null,step=0;
-const ops={us:{name:'미국 작전',stops:[['미국',39,-98,'미국 의회·산업·기업을 연결하는 출발 지점입니다.']],symbols:'SPY · QQQ · XLI',url:'https://www.congress.gov/'},world:{name:'세계 정보 작전',stops:[['미국',39,-98,'미국 시장의 관점에서 세계 사건을 추적합니다.'],['대만',23.7,121,'대만의 반도체 공급망 집중과 지정학적 위험을 살펴봅니다.'],['한국',36.4,127.8,'한국 기업과 산업의 미국 시장 연결을 살펴봅니다.']],symbols:'SPY · SOXX · EWY',url:'https://www.trade.gov/'},kr:{name:'한미 산업 연계',stops:[['미국',39,-98,'미국의 정책·산업 수요를 검토합니다.'],['한국',36.4,127.8,'한국의 수출·반도체·배터리 산업을 살펴봅니다.']],symbols:'EWY · SOXX · XLI',url:'https://www.trade.gov/'},chips:{name:'대만 반도체 공급망',stops:[['미국',39,-98,'미국 반도체 산업과 정책을 검토합니다.'],['대만',23.7,121,'대만 반도체 제조 공급망을 검토합니다.']],symbols:'SOXX · NVDA · TSM',url:'https://www.congress.gov/bill/117th-congress/house-bill/4346'},trade:{name:'미중 관세',stops:[['미국',39,-98,'미국의 관세 정책과 수입 비용을 확인합니다.'],['중국',35,104,'중국 제조업 공급망과 미국 수입품 연결을 확인합니다.']],symbols:'XLI · XLY · SPY',url:'https://ustr.gov/'},rates:{name:'미국 연준과 금리',stops:[['미국',38.9,-77.04,'워싱턴 D.C.의 연준 통화정책을 확인합니다.']],symbols:'TLT · QQQ · XLF',url:'https://www.federalreserve.gov/monetarypolicy.htm'}};
-function show(){const o=current,s=o.stops[step];markers.clearLayers();route.clearLayers();map.flyTo([s[1],s[2]],step===0&&o===ops.us?4:5,{duration:1.2});L.circleMarker([s[1],s[2]],{radius:10,color:'#9affc2',weight:2,fillColor:'#16b965',fillOpacity:.7}).addTo(markers);if(step){const p=o.stops[step-1];L.polyline([[p[1],p[2]],[s[1],s[2]]],{color:'#74ffb0',dashArray:'8 8',weight:3}).addTo(route)}box.hidden=false;box.innerHTML='<h3>◉ '+o.name+' · '+(step+1)+'/'+o.stops.length+'</h3><p>'+s[0]+' — '+s[3]+'</p><p>연관 시장 관찰: '+o.symbols+'</p><small>공개자료를 확인하기 위한 탐색 경로이며 실시간 투자 신호가 아닙니다.</small><p><a href="'+o.url+'" target="_blank" rel="noopener">관련 공식 자료 ↗</a></p>';const prev=document.createElement('button');prev.textContent='← 이전';prev.disabled=step===0;prev.onclick=()=>{step--;show()};const next=document.createElement('button');next.textContent='다음 지역 →';next.disabled=step===o.stops.length-1;next.onclick=()=>{step++;show()};const close=document.createElement('button');close.textContent='닫기';close.onclick=()=>box.hidden=true;box.append(prev,next,close)}
-function pick(k){current=ops[k];step=0;buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.w===k)));if(k==='us'){markers.clearLayers();route.clearLayers();map.flyTo([39,-98],4,{duration:1.2});box.hidden=true}else show()}
-buttons.forEach(b=>b.addEventListener('click',()=>pick(b.dataset.w)));document.getElementById('usCmd').addEventListener('submit',e=>{e.preventDefault();const v=query.value.trim();const k=/대만|반도체|tsmc|엔비디아/i.test(v)?'chips':/관세|무역|중국/i.test(v)?'trade':/금리|연준|물가/i.test(v)?'rates':/한국|한미/i.test(v)?'kr':/세계|역사/i.test(v)?'world':'us';pick(k)});window.addEventListener('resize',()=>{map.setMinZoom(fitWorldZoom());map.invalidateSize()});
-})();
-</script></body></html>
+</style><style id="mt-v2-ui">
+#pg .pg-file[hidden],#mtChoices[hidden]{display:none!important}
+#pg .pg-map{background:#030b07!important}
+#pg .pg-file{top:114px!important;right:12px!important;left:auto!important;bottom:auto!important;width:min(440px,calc(100% - 24px))!important;max-height:calc(100dvh - 185px)!important;overflow:auto!important;overscroll-behavior:contain;z-index:780!important;box-shadow:0 15px 40px #000b!important}
+#pg .pg-bar{left:auto!important;right:12px!important;transform:none!important;bottom:12px!important;display:flex!important;gap:5px!important;width:auto!important}
+#pg .pg-bar button{width:66px!important;height:48px!important;flex-shrink:0!important;font-size:12px!important}
+#pg .pg-bar button[aria-pressed="true"]{background:rgba(54,180,99,.3)!important;border-color:#7dffb0!important;color:#dbffe8!important}
+#usCmd{bottom:13px!important;left:12px!important;width:min(430px,calc(100% - 24px))!important;z-index:790!important}
+#mtChoices{position:absolute;z-index:785;left:12px;bottom:79px;width:min(440px,calc(100% - 24px));max-height:min(410px,50dvh);overflow:auto;overscroll-behavior:contain;padding:11px;background:rgba(1,17,11,.98);border:1px solid #398b60;border-radius:12px;box-shadow:0 10px 35px #000c;color:#dcffe9}
+#mtChoices .mt-choice-head,#pg .mt-file-head{display:flex;justify-content:space-between;gap:8px;align-items:center}
+#mtChoices .mt-choice-note{font-size:11px;line-height:1.55;color:#a6cdb8;margin:8px 0}
+#mtChoices .mt-choice{display:block;width:100%;text-align:left;background:#071e14;border:1px solid #1b5938;border-radius:7px;color:#dbffe8;padding:9px 11px;margin:6px 0;cursor:pointer;font-weight:700;font-size:13px}
+#mtChoices .mt-choice:hover,#mtChoices .mt-choice:focus-visible{border-color:#8df9b2;background:#103523}
+#mtChoices .mt-choice-desc{display:block;font-weight:400;line-height:1.4;color:#9fc9b3;font-size:11px;margin-top:3px}
+#pg .mt-x{border:1px solid #2b5f43;border-radius:6px;background:#103021;color:#d3ffe5;font-size:13px;padding:4px 9px;cursor:pointer}
+#pg .mt-kicker{font-size:10px;color:#7cf8ab;letter-spacing:.12em}
+#pg .mt-file-title{margin:8px 0 4px;font-size:18px;line-height:1.35;color:#e8fff0}
+#pg .mt-place{font-size:12px;color:#a4cab4;margin:0 0 6px}
+#pg .mt-databadge{font-size:10px;display:inline-block;padding:3px 9px;border:1px solid #3a8256;border-radius:5px;color:#97fbc0;margin-bottom:6px}
+#pg .mt-detail{font-size:13px;line-height:1.65;color:#e0f8e8;margin:6px 0}
+#pg .mt-rel{font-size:11px;color:#88f3b2;padding:8px 0;border-top:1px solid #214b35}
+#pg .mt-trail{display:flex;gap:5px;overflow:auto;max-width:100%;padding:9px 0 12px;scrollbar-width:thin}
+#pg .mt-stage{flex:0 0 145px;text-align:left;white-space:normal;min-height:48px;padding:8px;border:1px solid #2a6546;background:#071a11;color:#bddec9;border-radius:7px;font-size:11px;cursor:pointer}
+#pg .mt-stage.active{border-color:#b7ffa2;background:#205335;color:white}
+#pg .mt-source{display:block;padding:10px;background:#143b27;border:1px solid #418c5c;border-radius:7px;color:#d5ffe0;font-size:12px;text-decoration:none;overflow-wrap:anywhere}
+#pg .mt-caution{font-size:10px;color:#91bea5;line-height:1.4}
+#pg .mt-file-nav{display:flex;gap:8px;margin-top:10px}
+#pg .mt-file-nav button{flex:1;padding:10px 5px;background:#153e28;border:1px solid #43825c;border-radius:7px;color:#dcffe8;cursor:pointer}
+#pg .mt-file-nav button:disabled{opacity:.4;cursor:default}
+#mtStatus{position:absolute;z-index:720;left:12px;bottom:137px;max-width:440px;font:10px ui-monospace,monospace;color:#98d5b4;background:#04150fbf;border:1px solid #244b38;padding:6px 8px;border-radius:5px;pointer-events:none}
+#mtSat{position:absolute;z-index:720;left:12px;top:104px;font:10px ui-monospace,monospace;color:#a2ffba;background:#04150fd9;border:1px solid #3e7354;padding:5px 9px;border-radius:5px;pointer-events:none}
+#pg .satb{display:none!important}
+#pg .leaflet-bottom.leaflet-right{bottom:75px!important}
+#pg .leaflet-tile-pane{filter:none!important}
+#pg .leaflet-tile-pane .leaflet-layer:first-child{filter:sepia(1) hue-rotate(80deg) saturate(.9) brightness(.55) contrast(1.15)!important}
+@media(max-width:950px){
+ #pg .pg-bar{left:50%!important;right:auto!important;transform:translateX(-50%)!important;bottom:82px!important;max-width:calc(100% - 10px)!important}
+ #pg .pg-bar button{width:clamp(55px,17vw,69px)!important;height:46px!important}
+ #usCmd{bottom:12px!important;left:8px!important;right:8px!important;width:auto!important}
+ #mtChoices{bottom:144px;left:8px;width:calc(100% - 16px);max-height:34dvh}
+ #mtStatus{left:8px;bottom:139px;max-width:calc(100% - 16px);font-size:9px}
+ #mtSat{top:105px;left:8px}
+ #pg .pg-file{top:157px!important;right:8px!important;left:8px!important;width:auto!important;max-height:calc(100dvh - 310px)!important}
+ #pg .leaflet-bottom.leaflet-right{bottom:153px!important}
+ #pg .pg-say{top:67px!important;font-size:11px!important}
+}
+@media(max-height:620px){#pg .pg-file{max-height:calc(100dvh - 210px)!important}#mtChoices{max-height:35dvh}}
+</style></head><body><header class="nbar"><span>🟢 MONEY TRACKER / 미국 관제실</span><small>USA · GLOBAL INTELLIGENCE · 공개 자료</small></header><div id="pg"><div class="pg-map"></div><div class="pg-scan"></div><div class="pg-top"><div class="pg-box"><div class="live"><i></i>PREVIEW · PUBLIC SOURCES</div><div class="ttl">미국 · 세계 추적실</div></div><div class="pg-box mono">◉ US / GLOBAL OPERATIONS<br>공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결</div></div><div class="pg-say">미국에서 시작 · 국가와 사건을 선택해 지도에서 추적하세요</div><div class="pg-file" id="usFile" hidden></div><form id="usCmd"><input id="usQuery" placeholder="대만 반도체, 관세, 금리, 한국, 세계사…" aria-label="작전 명령" required><button>추적 ↵</button></form><div class="pg-bar" role="toolbar" aria-label="지도 작전"><button data-w="chips">◈<span>반도체</span></button><button data-w="trade">▤<span>관세</span></button><button data-w="rates">⌁<span>금리</span></button></div></div><script src="assets/vendor/leaflet/leaflet.js"></script><script src="assets/mt-intel-data.js?v=20261027a"></script><script src="assets/mt-command-ui.js?v=20261027a"></script></body></html>
