@@ -314,4 +314,41 @@ document.getElementById('mtTradeOpen')?.addEventListener('click',showTradeMissio
  f.addEventListener('submit',()=>{if(input.value.trim())a.classList.add('mt-asked')});
  if(dock)dock.setAttribute('aria-label','지도 분석 메뉴');
 }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready()})();
+</script><style id="mt-market-mission-style">
+#mtMarketMission{display:none;position:fixed;right:12px;top:65px;z-index:3200;width:min(355px,calc(100vw - 24px));max-height:58dvh;overflow:auto;background:#061a2aef;border:1px solid #368a99;border-radius:12px;padding:12px;color:#d9f4fa;font:12px/1.6 system-ui,sans-serif;box-shadow:0 10px 30px #000a}
+#mtMarketMission.mt-active{display:block}#mtMarketMission h3{margin:0 0 8px;color:#72e4d1;font-size:13px}#mtMarketMission p{margin:7px 0}#mtMarketMission button{font-size:11px;margin:3px;padding:7px}#mtMarketMission small{color:#9db9c7}
+@media(max-width:700px){#mtMarketMission{top:50px;right:7px;max-height:38dvh}}
+</style><script id="mt-market-mission-controller">
+(function(){
+const missions=[
+ {test:/대만|타이완|taiwan|tsmc|반도체|칩|chip/i,title:'대만 해협 · 글로벌 반도체',stops:[['중국','중국의 대만 정책과 해협 긴장은 공급망 위험을 평가할 때 중요한 지정학적 배경입니다.'],['대만','대만은 첨단 반도체 제조의 핵심 거점입니다. 생산과 운송 차질 가능성을 구분해 검토합니다.'],['미국','미국 반도체·클라우드·전자기기 업종의 공급망 노출과 관련 정책을 확인합니다.']],sector:'반도체 · 기술 · 산업재',symbols:'NVDA · AMD · TSM · SOXX',source:'https://www.congress.gov/bill/117th-congress/house-bill/4346'},
+ {test:/전쟁|중동|이란|이스라엘|석유|유가|oil|energy|opec/i,title:'에너지 · 지정학 위험',stops:[['미국','에너지 가격과 미국 물가·금리·기업 비용의 연결 경로를 검토합니다.'],['중국','주요 원유 수입국의 수요 변화가 글로벌 에너지 시장에 영향을 줄 수 있습니다.'],['미국','미국 에너지 생산자와 항공·운송 기업에 서로 다른 시나리오를 적용합니다.']],sector:'에너지 · 항공 · 운송 · 소비재',symbols:'XLE · XOM · CVX · JETS',source:'https://www.eia.gov/'},
+ {test:/금리|연준|fed|은행|금융|인플레이션|물가|채권/i,title:'미국 금리 · 금융시장',stops:[['미국','연방준비제도 정책과 국채 금리, 은행 조달비용 및 성장주 가치평가의 관계를 검토합니다.']],sector:'금융 · 기술 · 부동산 · 채권',symbols:'XLF · KRE · QQQ · TLT',source:'https://www.federalreserve.gov/monetarypolicy.htm'},
+ {test:/국방|방산|군사|무기|defense|나토|nato/i,title:'국방예산 · 방산 산업',stops:[['미국','미국 국방예산과 조달 계약의 실제 승인·집행 단계부터 확인합니다.'],['한국','동맹국의 방위력 투자와 공급망을 별도 자료로 확인합니다.'],['미국','미국 방산 기업의 수주와 매출 인식은 예산 발표와 시차가 있을 수 있습니다.']],sector:'방산 · 항공우주 · 산업재',symbols:'ITA · LMT · RTX · NOC',source:'https://www.defense.gov/'},
+ {test:/관세|무역|중국|수출|tariff|trade/i,title:'무역 · 관세 정책',stops:[['중국','미중 무역정책과 관세 적용 대상 및 발효 시점을 구분합니다.'],['미국','미국 수입기업과 국내 생산기업의 비용 및 가격 전가 가능성을 비교합니다.']],sector:'소비재 · 산업재 · 기술 · 운송',symbols:'XLY · XLI · SPY',source:'https://ustr.gov/'}
+];
+function init(){
+ const form=document.getElementById('mtAskForm'),input=document.getElementById('mtAskInput');if(!form||!input)return;
+ const panel=document.createElement('section');panel.id='mtMarketMission';panel.setAttribute('aria-label','미국 주식시장 추적 임무');document.body.append(panel);
+ let timer=[],index=0,active=null;
+ function clear(){timer.forEach(clearTimeout);timer=[]}
+ function show(i){if(!active)return;index=i;const [country,desc]=active.stops[i];if(typeof window.focusCountry==='function')window.focusCountry(country);
+ const narr=document.getElementById('mtNarratorText');if(narr)narr.textContent=country+' / '+desc;
+ panel.replaceChildren();const title=document.createElement('h3');title.textContent='◉ '+active.title+' · '+(i+1)+'/'+active.stops.length;panel.append(title);
+ const p=document.createElement('p');p.textContent=country+' — '+desc;panel.append(p);
+ const sec=document.createElement('p');sec.textContent='미국 시장 관련 업종: '+active.sector;panel.append(sec);
+ const sym=document.createElement('p');sym.textContent='조사 대상 종목·ETF 예시: '+active.symbols;panel.append(sym);
+ const small=document.createElement('small');small.textContent='시나리오 탐색용 예시입니다. 실시간 가격·수익률·매수/매도 신호가 아닙니다.';panel.append(small);
+ const nav=document.createElement('div');const prev=document.createElement('button');prev.textContent='← 이전';prev.disabled=i===0;prev.onclick=()=>{clear();show(i-1)};nav.append(prev);
+ const next=document.createElement('button');next.textContent=i===active.stops.length-1?'처음으로':'다음 지역 →';next.onclick=()=>{clear();show((i+1)%active.stops.length)};nav.append(next);
+ const close=document.createElement('button');close.textContent='닫기';close.onclick=()=>{clear();panel.classList.remove('mt-active')};nav.append(close);panel.append(nav);
+ const link=document.createElement('a');link.href=active.source;link.target='_blank';link.rel='noopener noreferrer';link.textContent='관련 공식 자료 ↗';link.style.color='#80dded';panel.append(link);
+ }
+ form.addEventListener('submit',e=>{const q=input.value.trim();const match=missions.find(m=>m.test.test(q));if(!match)return;
+ e.preventDefault();e.stopImmediatePropagation();clear();active=match;panel.classList.add('mt-active');document.getElementById('mtAssistant')?.classList.add('mt-asked');show(0);
+ for(let i=1;i<match.stops.length;i++)timer.push(setTimeout(()=>show(i),i*4200));
+ },true);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
 </script></body></html>
