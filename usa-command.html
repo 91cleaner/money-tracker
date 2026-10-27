@@ -204,4 +204,27 @@ html,body{width:100%;height:100%;overflow:hidden!important}
  #pg .pg-top .pg-box{padding:5px 7px!important}
  #pg .pg-say{top:93px!important}
 }
+</style><style id="mt-landscape-hotfix">
+/* iPhone landscape: CSS viewport may exceed 650px in embedded browsers. */
+@media (orientation:landscape) and (pointer:coarse), (orientation:landscape) and (max-height:900px) {
+ html,body{height:100dvh!important;overflow:hidden!important}
+ .nbar{height:30px!important;min-height:30px!important;padding:0 9px!important;font-size:11px!important}
+ .nbar small{display:none!important}
+ #pg{height:calc(100dvh - 30px)!important;min-height:0!important;margin:0!important;width:100vw!important}
+ #pg .pg-top{top:4px!important;left:6px!important;right:6px!important}
+ #pg .pg-top .pg-box{padding:3px 6px!important;max-width:46%!important}
+ #pg .pg-top .pg-box:last-child{font-size:0!important;max-width:105px!important}
+ #pg .pg-top .pg-box:last-child:after{content:"LIVE DATA / AI OFF";font:700 9px monospace;color:#ffca80}
+ #pg .pg-say{top:40px!important;font-size:10px!important}
+ #pg .pg-bar{position:absolute!important;left:6px!important;right:auto!important;bottom:6px!important;top:auto!important;transform:none!important;width:auto!important;max-width:calc(100% - 280px)!important;padding:2px!important;gap:0!important}
+ #pg .pg-bar button{width:42px!important;height:36px!important;font-size:9px!important;gap:1px!important}
+ #pg .pg-bar .ic{height:15px!important;width:15px!important}
+ #usCmd{position:absolute!important;top:auto!important;left:auto!important;right:6px!important;bottom:6px!important;width:min(48vw,360px)!important;max-width:calc(100% - 16px)!important;padding:3px!important;gap:3px!important}
+ #usCmd input{min-height:32px!important;padding:5px!important;font-size:12px!important}
+ #usCmd button{min-height:32px!important;padding:4px 7px!important;font-size:11px!important}
+ #pg .pg-file{position:absolute!important;left:auto!important;right:6px!important;top:36px!important;bottom:48px!important;width:min(43vw,420px)!important;max-height:calc(100% - 88px)!important;overflow:auto!important;padding:8px!important}
+ #pg .pg-file.min{top:auto!important;bottom:48px!important}
+ #pg .pg-mobile-panel-controls{top:33px!important}
+ #pg .leaflet-control-zoom{margin-top:55px!important}
+}
 </style></head><body><header class="nbar"><a class="mt-home" href="./" aria-label="입장 화면으로 돌아가기">🟢 MONEY TRACKER / 미국 관제실</a><small>USA · GLOBAL INTELLIGENCE · 공개 자료</small></header><div id="pg"><div class="pg-map"></div><div class="pg-scan"></div><div class="pg-top"><div class="pg-box"><div class="live"><i></i>PREVIEW · PUBLIC SOURCES</div><div class="ttl">미국 · 세계 추적실</div></div><div class="pg-box mono">◉ US / GLOBAL OPERATIONS<br>공개 거래 데이터 · AI 분석 · 실시간 시세: 미연결</div></div><div class="pg-say">무엇이든 물어보세요 · 사실과 추론을 구분하며 지도에서 추적합니다</div><div class="pg-file" id="usFile" hidden></div><form id="usCmd"><input id="usQuery" placeholder="무엇이든 질문하세요 · 기업 · 주가 · 법안 · 세계 사건" aria-label="작전 명령" required><button>추적 ↵</button></form><div class="pg-bar" role="toolbar" aria-label="지도 작전"><button data-w="chips">◈<span>반도체</span></button><button data-w="trade">▤<span>관세</span></button><button data-w="rates">⌁<span>금리</span></button></div></div><script src="assets/vendor/leaflet/leaflet.js"></script><script src="assets/mt-intel-data.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-photo.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-command-ui.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-query-engine.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-open-research.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-news-discovery.js?v=spcx-case-r3-20261027"></script><script src="assets/mt-backend.js?v=server-bridge-20261027"></script><script src="assets/mt-research-ui.js?v=server-bridge-20261027"></script></body></html>
