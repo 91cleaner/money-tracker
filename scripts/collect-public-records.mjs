@@ -9,6 +9,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import {createHash} from "node:crypto";
 const root=path.resolve(import.meta.dirname,"..");
 const stamp=()=>new Date().toISOString();
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
@@ -28,7 +29,7 @@ const trim=(x,n=260)=>String(x??"").replace(/\s+/g," ").trim().slice(0,n);
 const isUrl=s=>/^https:\/\/[a-z0-9.-]+(?:\/|$)/i.test(s||"");
 async function json(url,options={}){
  const u=new URL(url);
- const domains=["www.federalregister.gov","kokkai.ndl.go.jp","data.sec.gov"];
+ const domains=["www.federalregister.gov","kokkai.ndl.go.jp","data.sec.gov","data.ly.gov.tw"];
  if(!domains.includes(u.hostname))throw Error("unlisted host "+u.hostname);
  const r=await fetch(url,{signal:AbortSignal.timeout(18000),headers:{
   "Accept":"application/json",
@@ -100,6 +101,64 @@ async function japanDiet(){
  write("data/search/japan-diet.json",{version:1,source:"National Diet Library official meeting_list API",retrieved_at:stamp(),status:errors.length?"partial":"ok",errors,records});
  return {count:records.length,errors};
 }
+function twRows(value){
+ if(Array.isArray(value))return value;
+ if(!value||typeof value!=="object")return [];
+ for(const k of ["data","records","result","items","list","rows","bill","legislator"]){
+  if(Array.isArray(value[k]))return value[k];
+  if(value[k]&&Array.isArray(value[k].data))return value[k].data;
+ }
+ for(const v of Object.values(value))if(Array.isArray(v)&&v.every(x=>typeof x==="object"))return v;
+ return [];
+}
+async function taiwanLegislature(){
+ // Official Legislative Yuan Open Data Service, 11th term (2024–2028).
+ // Datasets documented at data.ly.gov.tw/getds.action?id=16 and id=20.
+ const term=String(process.env.TW_LEGISLATURE_TERM||"11");
+ if(!/^(?:[1-9]|1[0-3])$/.test(term))return {status:"invalid-term",count:0};
+ const previous=load("data/search/taiwan-legislature.json",{records:[]}),entries=new Map();
+ for(const r of previous.records||[])if(r.id)entries.set(r.id,r);
+ const errors=[];
+ const configs=[
+  {kind:"legislator",endpoint:"ID16Action.action",query:null},
+  ...["半導體","人工智慧","經濟安全","供應鏈","能源","台美","國防"].map(q=>({kind:"bill",endpoint:"ID20Action.action",query:q}))
+ ];
+ for(const conf of configs){
+  try{
+   const u=new URL("https://data.ly.gov.tw/odw/"+conf.endpoint);
+   u.searchParams.set("term",term);u.searchParams.set("fileType","json");
+   if(conf.query)u.searchParams.set("billName",conf.query);
+   const data=await json(u.toString()),records=twRows(data);
+   if(!records.length){errors.push(conf.kind+":"+(conf.query||"all")+" yielded no supported JSON rows");continue;}
+   for(const v of records.slice(0,250)){
+    if(!v||typeof v!=="object")continue;
+    const isBill=conf.kind==="bill";
+    const name=trim(isBill?(v.billName||v.title||""):(v.name||v.ename||""),200);
+    if(!name)continue;
+    const billNum=trim(v.billNo||v.billNum||"",90);
+    const dedupKey=[term,conf.kind,billNum||name,trim(v.billOrg||v.party||"",90)].join("|");
+    const id=createHash("sha256").update(dedupKey).digest("hex").slice(0,22);
+    const old=entries.get(id);
+    const officialLink=isBill&&typeof v.pdfUrl==="string"&&isUrl(v.pdfUrl)?v.pdfUrl:u.toString();
+    const record={id,kind:conf.kind,title:name,date:trim(v.proposeDate||v.date||v.onboardDate||"",20),
+     term,source:"Taiwan Legislative Yuan official Open Data",source_url:officialLink,
+     original_api_url:u.toString(),
+     ...(isBill?{bill_number:billNum,proposer:trim(v.billProposer||v.billOrg||"",180),
+      status:trim(v.billStatus||"",120),cosigners:trim(v.billCosignatory||"",220)}:
+      {party:trim(v.party||"",100),district:trim(v.areaName||"",100),committee:trim(v.committee||"",150)}),
+     matched_terms:[...new Set([...(old?.matched_terms||[]),...(conf.query?[conf.query]:[])])],
+     retrieved_at:stamp()};
+    entries.set(id,record);
+   }
+   console.log("TAIWAN LEGISLATURE",conf.kind,conf.query||"member list",records.length);
+  }catch(e){errors.push((conf.query||"members")+": "+e.message);console.warn("SKIP TW",conf.query||"members",e.message);}
+  await pause(1000);
+ }
+ const records=[...entries.values()].sort((a,b)=>b.date.localeCompare(a.date)||a.id.localeCompare(b.id)).slice(0,900);
+ write("data/search/taiwan-legislature.json",{version:1,source:"Official Taiwan Legislative Yuan Open Data Service",term,
+  retrieved_at:stamp(),status:errors.length?"partial":"ok",errors,records});
+ return {count:records.length,errors};
+}
 async function usSec(){
  const ua=String(process.env.SEC_USER_AGENT||"").trim();
  if(!ua||!ua.includes("@")){
@@ -135,7 +194,7 @@ async function usSec(){
  return {count:filings.length,errors};
 }
 const report={created_at:stamp(),pipeline:"official-public-no-ai",collectors:{}};
-for(const [name,fn] of [["us_federal_register",federalRegister],["japan_diet",japanDiet],["us_sec",usSec]]){
+for(const [name,fn] of [["us_federal_register",federalRegister],["japan_diet",japanDiet],["taiwan_legislature",taiwanLegislature],["us_sec",usSec]]){
  try{report.collectors[name]=await fn();}catch(e){report.collectors[name]={status:"failed",error:e.message};}
 }
 fs.mkdirSync(path.join(root,"data/search"),{recursive:true});
