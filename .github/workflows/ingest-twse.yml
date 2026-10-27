@@ -1,0 +1,29 @@
+name: Ingest Taiwan TWSE companies
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 2 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: ingest-twse
+  cancel-in-progress: false
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch and validate official records
+        run: node scripts/ingest-twse.mjs
+      - name: Commit verified records only
+        run: |
+          if ! git diff --quiet -- data/ingestion/twse-companies.json; then
+            git config user.name "money-tracker-data-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/ingestion/twse-companies.json
+            git commit -m "data(tw): refresh verified TWSE company records"
+            git push
+          fi
