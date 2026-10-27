@@ -6,7 +6,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / ".public-pages"
-PUBLIC_DIRS = ("assets", "data", "c")
+PUBLIC_DIRS = ("assets", "data", "c", "s", "world-intelligence", "3ac9ae3", "9590438", "b387449")
 PUBLIC_EXTENSIONS = {".html", ".css", ".js", ".json", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico", ".webmanifest", ".txt"}
 PUBLIC_ROOT_FILES = {".nojekyll"}
 EXCLUDED_PARTS = {"__pycache__", ".git", "private", "internal", "secrets", "credentials", "debug"}
