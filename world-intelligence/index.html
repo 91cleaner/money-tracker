@@ -61,6 +61,21 @@ header strong{color:#d6eff4!important;font-family:ui-monospace,Consolas,monospac
 #candidateList button{display:block;text-align:left;width:100%;background:#0b2c3b;border-radius:5px;border:1px solid #4c7a88;padding:12px}
 #candidatePanel small{display:block;margin-top:10px;color:#8aa8b4;line-height:1.5}
 @media(max-width:650px){#candidatePanel{top:140px;left:8px;max-height:calc(100dvh - 295px);padding:10px}}
+</style><style id="mt-living-map">
+#mapFrame{isolation:isolate}#map .leaflet-tile{filter:brightness(.87) saturate(.72) contrast(1.12)!important}
+#mtRadar{position:absolute;inset:0;z-index:450;pointer-events:none;overflow:hidden}
+#mtRadar:before{content:"";position:absolute;inset:-50%;background:repeating-linear-gradient(0deg,transparent 0 76px,#a9ebff16 77px,#a9ebff16 78px),repeating-linear-gradient(90deg,transparent 0 76px,#a9ebff16 77px,#a9ebff16 78px);opacity:.55}
+#mtRadar:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,#9cecff0c 48%,#9cecff22 50%,transparent 53%);background-size:100% 220%;animation:mtSweep 9s linear infinite;opacity:.45}
+@keyframes mtSweep{from{background-position:0 -100%}to{background-position:0 100%}}
+#mtRadarLabel{position:absolute;right:20px;bottom:16px;color:#b9f4f4c9;font:10px ui-monospace,monospace;letter-spacing:.12em}
+.mtTargetPulse{width:18px;height:18px;border:2px solid #5ff8e3;border-radius:50%;box-shadow:0 0 0 5px #57efd533,0 0 18px #55f5d8;animation:mtPulse 1.7s ease-out infinite}
+@keyframes mtPulse{0%{box-shadow:0 0 0 0 #59f5e48a,0 0 12px #5ef8dc}100%{box-shadow:0 0 0 24px #59f5e400,0 0 2px #5ef8dc}}
+.mtPath{stroke:#64e9dc;stroke-width:2.5;stroke-dasharray:10 10;filter:drop-shadow(0 0 5px #1ae8ce);animation:mtMarch 2.5s linear infinite}
+@keyframes mtMarch{to{stroke-dashoffset:-40}}
+#mtTargetBanner{position:fixed;top:156px;left:12px;z-index:1250;color:#a8f8e7;background:#061a2bea;border-left:2px solid #65ebd9;padding:7px 10px;font:11px/1.5 ui-monospace,monospace;max-width:220px;display:none}
+#mtTargetBanner.on{display:block}
+@media(prefers-reduced-motion:reduce){#mtRadar:after,.mtTargetPulse,.mtPath{animation:none}}
+@media(max-width:650px){#mtTargetBanner{top:139px;left:8px;font-size:10px;max-width:160px}}
 </style></head><body>
 <header><strong>◉ MONEY TRACKER / GLOBAL COMMAND</strong><span>PUBLIC SOURCE INTELLIGENCE · MAP FIRST</span><button id="fullscreen" aria-label="전체화면">⛶</button></header>
 <div id="mapFrame">
@@ -143,5 +158,28 @@ const form=document.getElementById('ask'),brief=document.getElementById('brief')
 function sync(){if(!brief||brief.hidden){trace.hidden=true;return}const title=document.getElementById('briefTitle')?.textContent||'MISSION';const desc=document.getElementById('briefText')?.textContent||'';trace.hidden=false;trace.replaceChildren();const b=document.createElement('b');b.textContent='◉ TRACKING / '+title;trace.append(b);const p=document.createElement('div');p.textContent=desc.slice(0,110);trace.append(p)}
 for(const el of [document.getElementById('candidatePanel'),next,previous,topics])el?.addEventListener('click',()=>setTimeout(sync,90));
 world?.addEventListener('click',()=>setTimeout(sync,90));document.getElementById('closeBrief')?.addEventListener('click',()=>setTimeout(sync,90));
+}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
+</script><script id="mt-living-map-controller">
+(function(){function init(){
+const frame=document.getElementById('mapFrame');if(!frame)return;
+const radar=document.createElement('div');radar.id='mtRadar';radar.setAttribute('aria-hidden','true');radar.innerHTML='<div id="mtRadarLabel">GEOINT // LIVE VIEWPORT</div>';frame.append(radar);
+const banner=document.createElement('div');banner.id='mtTargetBanner';document.body.append(banner);
+const coords={'미국':[39,-98],'중국':[35,104],'대만':[23.7,121],'한국':[36.4,127.8],'일본':[36,138],'사우디':[24,45]};
+let last=null,route=null,pulse=null,tracked=null;
+function acquire(){
+const b=document.getElementById('brief'),txt=document.getElementById('briefText')?.textContent||'';
+if(!b||b.hidden)return;const name=Object.keys(coords).find(k=>txt.startsWith(k+' —'));if(!name)return;
+banner.classList.add('on');banner.textContent='◉ TARGET LOCK // '+name+'\nCOORD '+coords[name].map(v=>v.toFixed(2)).join(' / ');
+const el=document.querySelector('#map.leaflet-container');if(!el||!window.L)return;
+let m=null;for(const key in el){if(key.startsWith('_leaflet_id'))break}try{const id=el._leaflet_id;if(id&&L.Map&&L.Map.prototype){m=Object.values(window).find(v=>v instanceof L.Map&&v._container===el)||null}}catch(e){}
+if(!m)return;
+if(pulse)m.removeLayer(pulse);pulse=L.marker(coords[name],{icon:L.divIcon({className:'',html:'<div class="mtTargetPulse"></div>',iconSize:[18,18],iconAnchor:[9,9]})}).addTo(m);
+if(route){m.removeLayer(route);route=null}
+if(last&&last!==name){route=L.polyline([coords[last],coords[name]],{className:'mtPath',color:'#64e9dc',weight:2.5,dashArray:'10 10',opacity:.9}).addTo(m)}
+last=name;
+}
+const obs=new MutationObserver(()=>setTimeout(acquire,40));const title=document.getElementById('briefTitle'),desc=document.getElementById('briefText');if(title)obs.observe(title,{childList:true});if(desc)obs.observe(desc,{childList:true});
+document.getElementById('world')?.addEventListener('click',()=>{banner.classList.remove('on');last=null});
+document.getElementById('closeBrief')?.addEventListener('click',()=>banner.classList.remove('on'));
 }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
 </script></body></html>
