@@ -33,7 +33,7 @@ header strong{letter-spacing:.19em!important}
 #opsSteps.mt-visible{display:block}
 #opsSteps strong{color:#70e8d9}
 @media(max-width:650px){#opsHud{right:8px;top:55px;font-size:9px;padding:5px}#opsSteps{top:89px;left:8px;max-width:48vw;font-size:10px}}
-</style></head><body>
+</style><style id="mt-question-visibility-fix">#ask{display:flex!important;visibility:visible!important;opacity:1!important;z-index:3000!important;bottom:0!important;position:fixed!important}#mapFrame{bottom:72px!important}#controls{bottom:86px!important}@media(max-width:650px){#mapFrame{bottom:70px!important}}</style></head><body>
 <header><strong>◉ MONEY TRACKER / GLOBAL COMMAND</strong><span>PUBLIC SOURCE INTELLIGENCE · MAP FIRST</span><button id="fullscreen" aria-label="전체화면">⛶</button></header>
 <div id="mapFrame">
 <svg id="fallback" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" aria-label="오프라인 개략 세계지도"><path d="M70 80 190 40 295 92 270 155 225 185 180 250 145 195 80 175Z M205 260 295 250 325 315 290 410 245 465 210 360Z M420 95 525 72 565 110 590 170 555 225 520 200 480 260 445 215Z M505 240 585 235 625 320 600 425 545 465 500 380Z M585 75 810 55 930 125 890 220 790 260 720 215 665 260 590 185Z M810 335 910 325 955 385 925 450 835 440Z"/></svg>
@@ -59,7 +59,7 @@ let map=null,mission=null,step=0,route=null,marker=null,loaded=0;
 const fallback=$('fallback'),status=$('status');
 if(window.L){try{
  map=L.map('map',{zoomControl:false,worldCopyJump:true,minZoom:2,maxZoom:15}).setView([20,0],2);
- const tile=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19,attribution:'&copy; OpenStreetMap &copy; CARTO'});
+ const tile=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'});
  tile.on('tileload',()=>{loaded++;fallback.style.display='none';$('map').style.opacity='1';status.textContent='실제 지리 기반 세계지도 · 자유 탐색'});
  tile.on('tileerror',()=>{if(!loaded)status.textContent='지도 서버 연결 확인 중 · 대체 지도 표시'});
  tile.addTo(map);$('map').style.opacity='0';
