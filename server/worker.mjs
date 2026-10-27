@@ -122,6 +122,7 @@ export default {
   const url=new URL(request.url);
   // Block health, AI, and all other routes until Cloudflare Access is actually configured.
   if(env.ACCESS_PROTECTED!=="true")return json({error:"access-not-enabled",message:"Configure Cloudflare Access and set ACCESS_PROTECTED=true after verification."},503);
+  if(url.pathname==="/api/analyze")return json({error:"ai-paused",message:"Paid AI and live market requests are paused. Use the offline source index."},503);
   if(url.pathname==="/health")return json({status:"ok",ai:!!(env.XAI_API_KEY||env.OPENAI_API_KEY),grok:!!env.XAI_API_KEY,openai:!!env.OPENAI_API_KEY,quotes:!!env.FINNHUB_API_TOKEN,privateAccess:"edge-policy-required"});
   if(url.pathname!=="/api/analyze")return json({error:"not-found"},404);
   if(request.method!=="POST")return json({error:"POST only"},405);
