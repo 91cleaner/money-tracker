@@ -9,6 +9,7 @@ var PAGES={
  "chips-sponsor":"Tim Ryan (Ohio politician)",
  "chips-intel":"New Albany, Ohio",
  "chips-tsmc":"Taiwan Semiconductor Manufacturing Company",
+ "chips-nvda":"Nvidia",
  "chips-trades":"United States Capitol",
  "nvda-santa":"Nvidia",
  "nvda-tsmc":"Hsinchu Science Park",
@@ -47,7 +48,7 @@ function render(container,key,caption){
  link.href="https://en.wikipedia.org/wiki/"+encodeURIComponent(title.replace(/ /g,"_"));
  link.target="_blank";link.rel="noopener noreferrer";
  frame.append(head,note,link);container.append(frame);
- var verified=VERIFIED[key];
+ var verified=VERIFIED[key]||(key==="chips-nvda"?VERIFIED["nvda-santa"]:null);
  if(verified)link.href=verified.source;
  function show(data){
   if(!frame.isConnected)return;
