@@ -55,6 +55,7 @@ function renderChoices(items,unknown){
 function findQuery(){
  var q=query.value.trim();
  if(!q){renderChoices(data.missions,false);query.focus();return;}
+ if(window.MTResearch&&typeof window.MTResearch.show==="function"){hideChoices();window.MTResearch.show(q);setStatus("질문 분석 · 검증된 사실 / 원인 가설 / 사용자 판단");return;}
  var general=/^(미국|세계|기업|의원|시장|뉴스|투자|증시)$/i.test(q);
  var results=general?data.missions:data.search(q);
  renderChoices(results.length?results:data.missions.slice(0,5),!results.length);
@@ -77,13 +78,42 @@ function drawRoute(m){
   circle.on("click",function(){selectStep(i);});
  });
 }
+var travelTimers=[],travelGeneration=0;
+function cancelTravel(){
+ travelGeneration++;
+ travelTimers.forEach(function(t){clearTimeout(t);});travelTimers=[];
+ if(map&&map.stop)map.stop();
+}
+function travelTo(point,zoom){
+ cancelTravel();
+ var token=travelGeneration,origin=map.getCenter(),startZoom=map.getZoom();
+ var wanted=Math.max(map.getMinZoom(),Math.min(18,zoom||10));
+ var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ if(reduce){map.setView(point,wanted,{animate:false});return;}
+ var distance=Math.abs(origin.lat-point[0])+Math.abs(origin.lng-point[1]);
+ if(distance<.7&&Math.abs(startZoom-wanted)<1.5){
+  map.flyTo(point,wanted,{animate:true,duration:1.0});return;
+ }
+ var mid=[origin.lat+(point[0]-origin.lat)*.45,origin.lng+(point[1]-origin.lng)*.45];
+ var overview=Math.max(map.getMinZoom(),Math.min(4.25,startZoom,wanted));
+ map.flyTo(mid,overview,{animate:true,duration:1.0});
+ travelTimers.push(setTimeout(function(){
+  if(token!==travelGeneration)return;
+  map.flyTo(point,Math.max(map.getMinZoom(),Math.min(6.5,wanted)),{animate:true,duration:1.1});
+ },1150));
+ travelTimers.push(setTimeout(function(){
+  if(token!==travelGeneration)return;
+  map.flyTo(point,wanted,{animate:true,duration:1.2});
+ },2450));
+}
+map.on("mousedown touchstart",cancelTravel);
 function selectStep(index){
  if(!state.mission||index<0||index>=state.mission.steps.length)return;
  state.step=index;
  var m=state.mission,step=m.steps[index];
  drawRoute(m);renderFile(m,step);
  var wanted=Math.max(map.getMinZoom(),step.zoom||10);
- map.flyTo(stopLocation(step),wanted,{animate:true,duration:1.0});
+ travelTo(stopLocation(step),wanted);
  setStatus(m.short+" · "+(index+1)+"/"+m.steps.length+" · "+(step.kind==="unconnected"?"데이터 미연결":"공식 출처 제공"));
 }
 function openSource(step){
@@ -128,5 +158,5 @@ window.addEventListener("resize",function(){
 var params=new URLSearchParams(window.location.search),requested=params.get("mission");
 if(requested&&data.getMission(requested))selectMission(requested);
 else renderChoices(data.missions,false);
-window.MTCommand={map:map,selectMission:selectMission,selectStep:selectStep,search:function(q){query.value=q;findQuery();},getCurrent:function(){return state.mission?{mission:state.mission.id,step:state.step}:null;}};
+window.MTCommand={map:map,selectMission:selectMission,selectStep:selectStep,travelTo:travelTo,cancelTravel:cancelTravel,search:function(q){query.value=q;findQuery();},getCurrent:function(){return state.mission?{mission:state.mission.id,step:state.step}:null;}};
 })();
