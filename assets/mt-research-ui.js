@@ -34,6 +34,11 @@ css.textContent=[
 "#mtResearch .mt-r-verdict{border:1px solid #397450;padding:9px;border-radius:7px;margin-top:7px;background:#0a2518;color:#d7f9e2}",
 "#mtResearch .mt-r-warning{font-size:10px;color:#a7bdb0;border-top:1px solid #315140;padding-top:10px;margin-top:12px}",
 "#mtResearch .mt-r-ticker{font:11px ui-monospace,monospace;color:#91f6c2}",
+"#mtResearch .mt-open-section{border-top:1px solid #305943;margin-top:12px;padding-top:8px}",
+"#mtResearch .mt-open-result{padding:9px 0;border-top:1px solid #285540}",
+"#mtResearch .mt-open-link{font-weight:800;color:#a5ffcc;text-decoration:underline}",
+"#mtResearch .mt-open-result p{font-size:11px}",
+"#mtResearch button.mt-r-btn:disabled{opacity:.5;cursor:wait}",
 "#mtResearch .mt-r-photo{margin:9px 0;padding:6px;border:1px solid #315b45;border-radius:8px;background:#0a1d14}",
 "#mtResearch .mt-r-photo img{display:block;width:100%;height:auto;max-height:175px;object-fit:contain;background:#07100b;border-radius:5px}",
 "#mtResearch .mt-r-photo a{font-size:10px;color:#9ce8bb;text-decoration:underline}",
@@ -51,6 +56,31 @@ function sourceBlock(parent,datum){
  if(datum.asOf)add(b,"p","mt-r-muted","기준: "+datum.asOf);
  link(b,datum.source);
 }
+function openLookup(question){
+ if(!window.MTOpenResearch)return;
+ var part=add(panel,"section","mt-open-section");
+ add(part,"h3","","공개 백과 자료 직접 조회 · 시범 기능");
+ add(part,"p","mt-r-muted","질문과 관련된 공개 백과 문서를 직접 찾습니다. 클릭하면 검색어가 외부 Wikimedia 서버로 전송됩니다. 비공개 투자 전략이 포함된 질문에는 사용하지 마세요. 최신 시세·뉴스·인과관계까지 검증하는 기능은 아닙니다.");
+ var resultHost=add(part,"div","mt-open-results");
+ var btn=button(part,"↗ 공개 백과에서 관련 문서 찾기",async function(){
+  btn.disabled=true;
+  resultHost.replaceChildren(el("p","mt-r-muted","공개 문서를 조회하는 중…"));
+  var found=await window.MTOpenResearch.research(question);
+  if(!part.isConnected)return;
+  resultHost.replaceChildren();
+  if(found.status==="ok"){
+   add(resultHost,"p","mt-r-muted",found.results.length+"개 문서 검색됨 · 검색어: "+found.searched+" · 관련성·날짜는 직접 확인 필요");
+   found.results.forEach(function(item){
+    var block=add(resultHost,"div","mt-open-result");
+    var a=add(block,"a","mt-open-link",item.title+" ↗");
+    a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
+    if(item.summary)add(block,"p","mt-r-muted",item.summary);
+    add(block,"small","mt-r-muted",item.source+" · "+item.lang+" · 백과 문서, 당일 시장 뉴스 아님");
+   });
+  }else add(resultHost,"p","mt-r-muted",found.status==="empty"?"일치하는 백과 문서를 발견하지 못했습니다. 기업 공시나 공식 발표를 추가로 확인해야 합니다.":"외부 자료 조회에 실패했습니다. 네트워크 또는 Wikimedia 접근을 확인하세요.");
+  btn.disabled=false;
+ },"mt-r-btn");
+}
 function render(query){
  var result=engine.analyze(query);panel.hidden=false;while(panel.firstChild)panel.removeChild(panel.firstChild);
  var head=add(panel,"div","mt-r-head");add(head,"span","mt-r-kicker","MONEY TRACKER / INTELLIGENCE BRIEF");
@@ -58,7 +88,7 @@ function render(query){
  add(panel,"h2","",result.title);
  add(panel,"div","mt-r-ticker",result.ticker+" · "+result.topicGroup);
  add(panel,"p","mt-r-lead",result.opening);
- if(!result.photo&&window.MTPhoto){var photoSlot=add(panel,"div","mt-r-livephoto");window.MTPhoto.render(photoSlot,result.id,result.location.name);}
+ if(!result.photo&&result.location&&window.MTPhoto){var photoSlot=add(panel,"div","mt-r-livephoto");window.MTPhoto.render(photoSlot,result.id,result.location.name);}
  if(result.photo&&/^https:\/\/thumb\.wikimedia\.org\//.test(result.photo.url)){
   var photo=add(panel,"figure","mt-r-photo");
   var picture=add(photo,"img","");picture.src=result.photo.url;picture.alt="검증된 실제 장소 사진 · "+result.location.name;picture.loading="lazy";
@@ -69,8 +99,7 @@ function render(query){
  if(result.isFallback){
   add(panel,"h3","","확인 가능한 탐색 경로");
   add(panel,"p","mt-r-muted","질문과 일치하는 사실은 찾지 못했지만, 다음 관계망으로 조사를 시작할 수 있습니다. 현재 사건의 사실 여부는 확인되지 않았습니다.");
-  add(panel,"h3","","지금 확인 가능한 실제 공개 데이터 (질문과 직접 관련 없는 참고 자료)");
-  result.facts.forEach(function(d){sourceBlock(panel,d);});
+  add(panel,"p","mt-r-muted","특정 기업이나 국가를 임의로 추적 대상으로 정하지 않았습니다.");
  }else{
   add(panel,"h3","","01 · 확인된 자료");
   result.facts.forEach(function(d){sourceBlock(panel,d);});
@@ -87,6 +116,7 @@ function render(query){
   add(panel,"h3","","04 · 핵심 해석");
   add(panel,"p","mt-r-insight",result.insight);
  }
+ openLookup(result.query);
  add(panel,"h3","","05 · 관제실 지도 추적");
  add(panel,"p","mt-r-muted","경로를 선택하면 법안·정책·기업·역사 원문으로 이동합니다. 지도는 단계별로 이동하며 중간에 직접 조작할 수 있습니다.");
  var routes=add(panel,"div","mt-r-choices");
