@@ -9,7 +9,7 @@
 })(typeof globalThis!=="undefined"?globalThis:this,function(){
 "use strict";
 var ALIASES=[
- {re:/(?:스페이스\s?엑스|spacex|space x|스타십|starship|스타링크|starlink|팰컨9|falcon 9)/i,term:"SpaceX",entity:"spacex",description:"우주산업 · Starship / NASA / Starlink"},
+ {re:/(?:스페이스\s?엑스|spacex|spcx|space x|스타십|starship|스타링크|starlink|팰컨9|falcon 9)/i,term:"SpaceX",entity:"spacex",description:"우주산업 · Starship / NASA / Starlink"},
  {re:/(?:엔비디아|nvidia|nvda|젠슨\s?황|blackwell)/i,term:"NVIDIA",entity:"nvda",description:"AI 반도체 기업"},
  {re:/(?:마이크로소프트|microsoft|msft)/i,term:"Microsoft",entity:"microsoft",description:"상장 기술기업"},
  {re:/(?:테슬라|tesla|tsla|사이버트럭|옵티머스)/i,term:"Tesla",entity:"tesla",description:"전기차 · AI 기업"},
