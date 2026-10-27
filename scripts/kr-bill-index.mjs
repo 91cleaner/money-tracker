@@ -26,7 +26,7 @@ export function koreanBillDocuments(security,members,{maxRecent=900,maxVoted=120
   return {id:"kr-bill-"+id,type:"bill",title:"한국 국회 법안 · "+name,
    aliases:["한국","대한민국","국회","법안","의안",proposer,tidy(member?.party,60),committee].filter(Boolean),
    summary:detail,source:"대한민국 열린국회정보 · 저장된 공식 응답",
-   url:OFFICIAL+encodeURIComponent(id),source_date,location:ASSEMBLY,route:null};
+   url:OFFICIAL+encodeURIComponent(id),source_date,location:ASSEMBLY,route:null,proposer_name:proposer};
  };
  const voted=(security?.bills||[]).filter(b=>!b?.kind||b.kind==="법률안").map(b=>make(b,null,"voted")).filter(Boolean)
   .sort((a,b)=>(b.source_date||"").localeCompare(a.source_date||"")||a.id.localeCompare(b.id));
@@ -40,7 +40,14 @@ export function koreanBillDocuments(security,members,{maxRecent=900,maxVoted=120
  proposed.sort((a,b)=>(b.source_date||"").localeCompare(a.source_date||"")||a.id.localeCompare(b.id));
  let added=0;
  for(const d of proposed){
-  if(seen.has(d.id))continue;
+  if(seen.has(d.id)){
+   // A voted bill can also appear in a member's proposals. Keep the official
+   // vote result AND the proposer relationship rather than dropping either.
+   const prior=seen.get(d.id);
+   seen.set(d.id,{...prior,aliases:[...new Set([...prior.aliases,...d.aliases])],
+    summary:prior.summary+(d.proposer_name?" 대표발의자: "+d.proposer_name+".":"")});
+   continue;
+  }
   if(added>=Math.max(0,Math.min(2500,maxRecent)))break;
   seen.set(d.id,d);added++;
  }
