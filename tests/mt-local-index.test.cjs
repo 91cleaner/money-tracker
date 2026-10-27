@@ -49,7 +49,7 @@ test("every result has source URL; no fictional market price or automatic AI inf
  const ui=fs.readFileSync(path.join(root,"assets/mt-research-ui.js"),"utf8");
  assert.match(page,/assets\/mt-local-search\.js/);
  assert.doesNotMatch(page,/src="assets\/mt-backend\.js/);
- assert.match(ui,/renderIndexedSearch\(query\)/);
+ assert.match(ui,/renderIndexedSearch\(query,/);
  assert.doesNotMatch(ui,/^\s*renderLiveBackend\(query\);/m);
  assert.doesNotMatch(ui,/^\s*runPublicResearch\(query,result\);/m);
 });
