@@ -68,16 +68,19 @@ async function disclosures(q,id){
  let data;
  try{data=tradesCache||(tradesCache=await json('../data/us/trades.json'))}
  catch(e){if(id===requestId)p('거래 후보 데이터 불러오기 실패: '+e.message);return}
+ let checks=[];
+ try{const reviewed=await json('../data/us/ptr-crosschecks.json');checks=Array.isArray(reviewed.checks)?reviewed.checks:[]}catch(e){/* Optional review ledger not deployed. */}
  if(id!==requestId)return;
  const rows=(Array.isArray(data.records)?data.records:[]).filter(r=>r&&r.verification==='machine_parsed_requires_review'&&typeof r.source_pdf==='string'&&/^https:\/\/disclosures-clerk\.house\.gov\/public_disc\/ptr-pdfs\//.test(r.source_pdf));
  const raw=q.toLowerCase().replace(/의원|거래|주식|공시|매수|매도|추적|ptr|house|disclosure|congress/gi,'').trim();
  const matched=raw.length>=2?rows.filter(r=>[r.member,r.ticker,r.asset].some(v=>String(v||'').toLowerCase().includes(raw))):rows;
- p('기계 추출 후보 '+rows.length+'건 · 검증 완료 0건 · 원문 링크가 있는 후보만 표시');
+ const checked=r=>checks.some(x=>x.result==='matches_reported_filing_fields'&&x.filing_id===r.filing_id&&x.ticker===r.ticker&&x.transaction_date===r.transaction_date&&x.type===r.type&&x.amount_min_usd===r.amount_min_usd&&x.amount_max_usd===r.amount_max_usd);
+ p('기계 추출 후보 '+rows.length+'건 · 공식 PDF 신고 필드 대조 '+rows.filter(checked).length+'건 · 거래 실행 독립 검증 0건');
  if(!matched.length){p('질문에 일치하는 검토 후보가 없습니다. 해당 거래가 없었다는 뜻은 아닙니다.');return}
  matched.slice(0,6).forEach(r=>{
   const el=row();el.append(text('strong',r.member+' · '+(r.ticker||r.asset||'종목 미상')));
   el.append(text('div',(r.transaction_date||'거래일 미상')+' · '+(r.type==='P'?'매수 표기':r.type==='S'?'매도 표기':'기타 표기')+' · $'+r.amount_min_usd+'–$'+r.amount_max_usd));
-  el.append(text('div','상태: 기계 추출 / 원문 대조 필요'));
+  el.append(text('div',checked(r)?'상태: 공식 신고 PDF의 필드 대조 완료 (실제 체결 독립 검증 아님)':'상태: 기계 추출 / 원문 대조 필요'));
   el.append(link('미국 하원 공식 신고 PDF ↗',r.source_pdf));
  });
  p('투자 신호로 사용하지 마세요. 신고 지연, 소유자, 정정 및 OCR·표 추출 오류 가능성이 있습니다.');
