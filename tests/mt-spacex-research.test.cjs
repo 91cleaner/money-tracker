@@ -8,7 +8,7 @@ const intel=require("../assets/mt-intel-data.js");
 const latest=require("../assets/mt-news-discovery.js");
 
 test("natural SpaceX questions give specific current-market and policy evidence, not generic fallback",()=>{
- for(const q of ["스페이스엑스는 왜그래 요즘","SpaceX 근황 알려줘","SPACEX 무슨일이야?","스타십 최근 뉴스"]){
+ for(const q of ["스페이스엑스는 왜그래 요즘","SpaceX 근황 알려줘","SPACEX 무슨일이야?","SPCX 왜 떨어졌어?","스타십 최근 뉴스"]){
   const result=engine.analyze(q);
   assert.equal(result.id,"spacex",q);
   assert.equal(result.isFallback,false,q);
@@ -35,7 +35,7 @@ test("SPCX is listed, not an unlisted company; official evidence linked",()=>{
  assert.equal(intel.search("스페이스엑스는 왜그래 요즘")[0].id,"spacex");
 });
 test("latest public news search extracts SpaceX from casual Korean and English",()=>{
- for(const q of ["스페이스엑스는 왜그래 요즘","spacex stock why down?","스타십 요즘 어떻게 되고 있어?"]){
+ for(const q of ["스페이스엑스는 왜그래 요즘","spacex stock why down?","SPCX share down?","스타십 요즘 어떻게 되고 있어?"]){
   const a=latest.subject(q);
   assert.equal(a.valid,true);
   assert.equal(a.entity,"spacex");
