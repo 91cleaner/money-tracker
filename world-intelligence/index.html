@@ -116,12 +116,12 @@ const cases=[
 let map=null,mission=null,step=0,route=null,marker=null,loaded=0;
 const fallback=$('fallback'),status=$('status');
 if(window.L){try{
- map=L.map('map',{zoomControl:false,worldCopyJump:false,minZoom:2,maxZoom:15,maxBounds:[[-85,-180],[85,180]],maxBoundsViscosity:1}).setView([20,0],2);
+ map=L.map('map',{zoomControl:false,worldCopyJump:false,minZoom:2,maxZoom:15,maxBounds:[[-85,-180],[85,180]],maxBoundsViscosity:1}).setView([20,0],2);window.moneyTrackerMap=map;
  const tile=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,noWrap:true,attribution:'Tiles &copy; Esri, Maxar, Earthstar Geographics and the GIS User Community'});
- tile.on('tileload',()=>{loaded++;fallback.style.display='none';$('map').style.opacity='1';status.textContent='실제 지리 기반 세계지도 · 자유 탐색'});
+ tile.on('tileload',()=>{loaded++;$('map').style.display='block';fallback.style.display='none';$('map').style.opacity='1';if(loaded===1)map.invalidateSize();status.textContent='실제 지리 기반 세계지도 · 자유 탐색'});
  tile.on('tileerror',()=>{if(!loaded)status.textContent='지도 서버 연결 확인 중 · 대체 지도 표시'});
  tile.addTo(map);$('map').style.opacity='0';
- setTimeout(()=>{if(!loaded){$('map').style.display='none';fallback.style.display='block';status.textContent='외부 지도 서버 연결 실패 · 개략 지도 표시'}} ,8500);
+ setTimeout(()=>{if(!loaded){$('map').style.opacity='0';fallback.style.display='block';status.textContent='지도 타일 지연 · 개략 지도 표시 (연결 복구 시 자동 전환)'}} ,8500);
  map.on('dragstart',()=>{status.textContent='수동 탐색 · 자유롭게 지도를 이동하세요'});
 }catch(e){$('map').style.display='none';status.textContent='지도 엔진 오류 · 개략 지도 표시'}}
 else{$('map').style.display='none';status.textContent='지도 라이브러리 연결 실패 · 개략 지도 표시'}
@@ -185,7 +185,7 @@ const b=document.getElementById('brief'),txt=document.getElementById('briefText'
 if(!b||b.hidden)return;const name=Object.keys(coords).find(k=>txt.startsWith(k+' —'));if(!name)return;
 banner.classList.add('on');banner.textContent='◉ TARGET LOCK // '+name+'\nCOORD '+coords[name].map(v=>v.toFixed(2)).join(' / ');
 const el=document.querySelector('#map.leaflet-container');if(!el||!window.L)return;
-let m=null;for(const key in el){if(key.startsWith('_leaflet_id'))break}try{const id=el._leaflet_id;if(id&&L.Map&&L.Map.prototype){m=Object.values(window).find(v=>v instanceof L.Map&&v._container===el)||null}}catch(e){}
+const m=window.moneyTrackerMap||null;
 if(!m)return;
 if(pulse)m.removeLayer(pulse);pulse=L.marker(coords[name],{icon:L.divIcon({className:'',html:'<div class="mtTargetPulse"></div>',iconSize:[18,18],iconAnchor:[9,9]})}).addTo(m);
 if(route){m.removeLayer(route);route=null}
@@ -196,4 +196,4 @@ const obs=new MutationObserver(()=>setTimeout(acquire,40));const title=document.
 document.getElementById('world')?.addEventListener('click',()=>{banner.classList.remove('on');last=null});
 document.getElementById('closeBrief')?.addEventListener('click',()=>banner.classList.remove('on'));
 }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
-</script></body></html>
+</script><script src="./evidence.js" defer></script></body></html>
