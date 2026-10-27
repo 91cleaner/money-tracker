@@ -26,7 +26,7 @@ function node(id,place,lat,lng,zoom,title,text,connection,source,kind){
  return {id:id,place:place,lat:lat,lng:lng,zoom:zoom,title:title,text:text,connection:connection,source:SOURCES[source],kind:kind||"document"};
 }
 var MISSIONS=[
- {id:"nvda",title:"NVIDIA → 대만 공급망 → 미국 법안",short:"엔비디아 · 주가 요인",keywords:["젠슨황","젠슨 황","gpu","blackwell","rubin","왜떨어져","왜 하락","엔비디아 주가"],summary:"2026년 8월 NVIDIA 공식 실적 → 대만 반도체 공급망 → 미국 의회·연준을 따라가는 조사 경로",symbols:"NVDA · TSM · SOXX (실시간 시세 미연결)",steps:[
+ {id:"nvda",title:"NVIDIA → 대만 공급망 → 미국 법안",short:"엔비디아 · 주가 요인",keywords:["엔비디아","nvidia","nvda","젠슨황","젠슨 황","gpu","blackwell","rubin","왜떨어져","왜 하락","엔비디아 주가"],summary:"2026년 8월 NVIDIA 공식 실적 → 대만 반도체 공급망 → 미국 의회·연준을 따라가는 조사 경로",symbols:"NVDA · TSM · SOXX (실시간 시세 미연결)",steps:[
  node("nvda-santa","미국 · 산타클라라 (본사 소재지)",37.3727,-121.9694,12,"NVIDIA 본사 · 실적에서 출발","NVIDIA는 캘리포니아 산타클라라에 본사를 둡니다. 2026년 8월 발표된 FY2027 2분기 매출은 962억 달러입니다. 지도 지점은 본사 소재 지역을 가리키며 실시간 주가 정보가 아닙니다.","실적 발표 → 주가 기대와 비교","nvidiaIR"),
  node("nvda-tsmc","대만 · 신주 과학단지 (본사 소재 지역)",24.785,121.008,11,"TSMC · 생산 공급망 추적","TSMC 본사는 대만 신주 과학단지에 있습니다. NVIDIA의 반도체 생산 및 공급망 노출을 분석할 때 관련 생산업체의 공식 자료와 기업 공시를 함께 조사해야 합니다.","AI칩 설계 → 위탁생산 공급망 (개별 계약 검증 필요)","tsmcHQ","context"),
  node("nvda-capitol","미국 · 워싱턴 D.C. 의회",38.8899,-77.0091,13,"미국 의회 · 반도체 산업정책","CHIPS and Science Act는 2022년 제정된 산업정책의 역사적 사실입니다. 이 법률만으로 특정 날짜의 NVIDIA 주가 하락 원인이 확인되지는 않습니다.","공급망 → 산업정책·법안","chipsLaw"),
