@@ -42,9 +42,10 @@ jobs:
           node --check tests/mt-spacex-research.test.cjs
           node --check tests/mt-backend.test.cjs
           node --check tests/mt-admin-ai.test.cjs
+          node --check tests/mt-grok.test.cjs
           node --check tests/mt-browser-smoke.cjs
       - name: Unit tests
-        run: node --test tests/mt-command.test.cjs tests/mt-research.test.cjs tests/mt-open-research.test.cjs tests/mt-spacex-research.test.cjs tests/mt-backend.test.cjs tests/mt-admin-ai.test.cjs
+        run: node --test tests/mt-command.test.cjs tests/mt-research.test.cjs tests/mt-open-research.test.cjs tests/mt-spacex-research.test.cjs tests/mt-backend.test.cjs tests/mt-admin-ai.test.cjs tests/mt-grok.test.cjs
   browser:
     name: Real Chromium smoke (desktop and mobile)
     needs: unit
