@@ -20,7 +20,7 @@ h1{font-size:21px;margin:0 0 8px}h2{font-size:16px;margin:18px 0 8px;color:#9ef5
 <button type="button" id="startMission">추적 시작</button>
 <h2>의원 이름 또는 주 검색</h2><input id="search" placeholder="예: Maria Cantwell / WA" aria-label="의원 검색">
 <div id="results"></div>
-<section id="selected" hidden><div id="portrait"></div><h2 id="name"></h2><p id="bio"></p><h2>위원회</h2><ul id="committees"></ul><h2>법안 타임라인</h2><p id="billCount" class="muted"></p><div id="bills"></div></section>
+<section id="selected" hidden><div id="portrait"></div><h2 id="name"></h2><p id="bio"></p><h2>위원회</h2><ul id="committees"></ul><h2>법안 타임라인</h2><p id="traceStatus" class="muted" role="status"></p><p id="billCount" class="muted"></p><div id="bills"></div></section>
 <footer>지도 좌표는 의원 공개 지역 정보이며 실제 이동 경로가 아닙니다. 데이터 업데이트 시점은 원천 데이터마다 다릅니다. 분석 결과는 투자 권유가 아닙니다.</footer>
 </aside><div id="intelMap" aria-label="의원 지역 추적 지도"></div></main>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
