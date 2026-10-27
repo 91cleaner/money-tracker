@@ -86,3 +86,18 @@ test("official collectors and nightly GitHub workflow have no model API dependen
  assert.match(wf,/30 15,18 \* \* \*/);
  assert.match(wf,/scripts\/build-local-index\.mjs/);
 });
+
+test("collector snapshot changes detect outages without timestamp-only churn",async()=>{
+ const {snapshotChanged}=await import("../scripts/collection-snapshot.mjs");
+ const old={status:"ok",errors:[],records:[{id:"doc-1",title:"original",retrieved_at:"2026-10-26"}]};
+ assert.equal(snapshotChanged(null,old),true,"first collection must be written");
+ assert.equal(snapshotChanged(old,{...old,retrieved_at:"2026-10-27",records:[{...old.records[0],retrieved_at:"2026-10-27"}]}),false,
+  "timestamps alone must not create a new data commit");
+ assert.equal(snapshotChanged(old,{...old,status:"partial",errors:["HTTP 503"]}),true,
+  "failed source health must be published even if old records are retained");
+ assert.equal(snapshotChanged(old,{...old,records:[{...old.records[0],title:"corrected"}]}),true,
+  "changed official metadata must be published");
+ const filings={status:"ok",errors:[],filings:[{accession:"0001",retrieved_at:"2026-10-26"}]};
+ assert.equal(snapshotChanged(filings,{...filings,filings:[{accession:"0001",retrieved_at:"2026-10-27"}]}),false,
+  "SEC filing timestamps alone must not cause churn");
+});
