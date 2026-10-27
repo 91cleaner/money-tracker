@@ -27,11 +27,13 @@ function hyp(title,reason,verify,ref){return {title:title,reason:reason,verify:v
 function signal(title,watch,ifPositive,ifNegative){return {title:title,watch:watch,up:ifPositive,down:ifNegative};}
 var TOPICS={
  nvda:{
-  id:"nvda",label:"엔비디아",ticker:"NVDA",group:"반도체·AI",keywords:["엔비디아","nvidia","nvda","젠슨황","jensen huang","h100","h200","blackwell","rubin","gpu","그래픽카드"],route:["chips","trade","rates"],point:{lat:37.3719,lng:-122.0355,zoom:12,name:"미국 캘리포니아 · 산타클라라"},
+  id:"nvda",label:"엔비디아",ticker:"NVDA",group:"반도체·AI",keywords:["엔비디아","nvidia","nvda","젠슨황","jensen huang","h100","h200","blackwell","rubin","gpu","그래픽카드"],route:["chips","trade","rates"],point:{lat:37.37064,lng:-121.96708,zoom:15,name:"NVIDIA 본사 · 2788 San Tomas Expressway, Santa Clara"},
+  photo:{url:"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/2788-2888_San_Tomas_Expwy.jpg/960px-2788-2888_San_Tomas_Expwy.jpg",source:"https://commons.wikimedia.org/wiki/File:2788-2888_San_Tomas_Expwy.jpg",credit:"NVIDIA 본사 실사진 · Coolcaesar (2023) · CC BY-SA 4.0"},
   facts:[
    datum("FY2027 2분기 매출","962억 달러 · 전년 동기 대비 106% 증가","nvidiaQ2","2026-07-26 마감 분기"),
    datum("같은 분기 데이터센터 매출","890억 달러 · 전년 동기 대비 117% 증가","nvidiaQ2","2026-07-26 마감 분기"),
-   datum("같은 분기 총이익률","GAAP 기준 75.0%","nvidiaQ2","2026-07-26 마감 분기")
+   datum("같은 분기 총이익률","GAAP 기준 75.0%","nvidiaQ2","2026-07-26 마감 분기"),
+   datum("다음 분기 회사 전망","FY2027 3분기 매출 전망 1,080억 달러(±2%). 중국 데이터센터 컴퓨트 매출은 전망에 포함하지 않음","nvidiaQ2","2026-08-26 발표")
   ],
   risks:[
    hyp("실적과 시장 기대의 차이","실적이 좋아도 투자자가 예상한 성장률보다 낮으면 주가가 떨어질 수 있습니다. 지금 실제 하락 원인이라는 뜻은 아닙니다.","발표 전 시장 컨센서스와 매출·총이익률·가이던스의 차이를 비교하세요.","nvidiaIR"),
