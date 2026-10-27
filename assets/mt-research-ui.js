@@ -34,6 +34,15 @@ css.textContent=[
 "#mtResearch .mt-r-verdict{border:1px solid #397450;padding:9px;border-radius:7px;margin-top:7px;background:#0a2518;color:#d7f9e2}",
 "#mtResearch .mt-r-warning{font-size:10px;color:#a7bdb0;border-top:1px solid #315140;padding-top:10px;margin-top:12px}",
 "#mtResearch .mt-r-ticker{font:11px ui-monospace,monospace;color:#91f6c2}",
+"#mtResearch .mt-auto-research{border:1px solid #478365;background:rgba(8,31,20,.8);border-radius:10px;padding:10px;margin:12px 0}",
+"#mtResearch .mt-auto-research h3{margin:0 0 5px;font-size:13px}",
+"#mtResearch .mt-auto-research h4{margin:9px 0 4px;color:#9fffca;font-size:12px}",
+"#mtResearch .mt-auto-group{border-top:1px solid #295c3d;padding:4px 0}",
+"#mtResearch .mt-auto-hit{border-top:1px solid #193b2b;padding:8px 0}",
+"#mtResearch .mt-auto-link{color:#d3ffdf;text-decoration:underline;font-size:12px;line-height:1.55;font-weight:600;overflow-wrap:anywhere}",
+"#mtResearch .mt-auto-hit small{display:block;margin:3px 0}",
+"#mtResearch .mt-auto-research .mt-r-head{align-items:baseline;flex-wrap:wrap}",
+
 "#mtResearch .mt-open-section{border-top:1px solid #305943;margin-top:12px;padding-top:8px}",
 "#mtResearch .mt-open-result{padding:9px 0;border-top:1px solid #285540}",
 "#mtResearch .mt-open-link{font-weight:800;color:#a5ffcc;text-decoration:underline}",
@@ -50,7 +59,8 @@ function el(tag,cls,value){var x=document.createElement(tag);if(cls)x.className=
 function add(parent,tag,cls,value){var x=el(tag,cls,value);parent.appendChild(x);return x;}
 function button(parent,label,cb,cls){var x=el("button",cls||"mt-r-btn",label);x.type="button";x.addEventListener("click",cb);parent.appendChild(x);return x;}
 function link(parent,source){if(!source||!/^https:\/\/[a-z0-9.-]+\//i.test(source.url))return;var a=el("a","",source.title+" ↗");a.href=source.url;a.target="_blank";a.rel="noopener noreferrer";parent.appendChild(a);}
-function close(){panel.hidden=true;}
+var researchSerial=0;
+function close(){researchSerial++;panel.hidden=true;}
 function sourceBlock(parent,datum){
  var b=add(parent,"div","mt-r-fact");add(b,"b","",datum.label);add(b,"p","",datum.value);
  if(datum.asOf)add(b,"p","mt-r-muted","기준: "+datum.asOf);
@@ -81,6 +91,64 @@ function openLookup(question){
   btn.disabled=false;
  },"mt-r-btn");
 }
+/* Auto research uses public GDELT headline lookup + Wikipedia article discovery.
+ * Headlines are not proof of causation. No private operator text is sent if it resembles a secret.
+ * Both sources are independently fault-tolerant; a failed request does not leave an empty screen.
+ */
+function runPublicResearch(question,report){
+ var ticket=++researchSerial;
+ var host=add(panel,"section","mt-auto-research");
+ var head=add(host,"div","mt-r-head");
+ add(head,"h3","","01 / 관련 공개 자료 직접 조사");
+ add(head,"span","mt-r-kicker","GDELT · WIKIMEDIA");
+ add(host,"p","mt-r-muted","입력 질문에서 인식한 주제어만 외부 공개 검색에 전송합니다. 검색어와 기사 제목은 원문 근거를 직접 확인하기 위한 단서이며 AI가 당일 주가 원인을 검증했다는 뜻이 아닙니다.");
+ var feeds=add(host,"div","mt-auto-feeds");
+ var news=add(feeds,"div","mt-auto-group");
+ var wiki=add(feeds,"div","mt-auto-group");
+ add(news,"p","mt-r-muted","최근 뉴스 검색 대기 중…");
+ add(wiki,"p","mt-r-muted","공개 백과 문서 조회 대기 중…");
+ var searcher=window.MTNewsDiscovery,encyclopedia=window.MTOpenResearch;
+ var info=searcher?searcher.subject(question):{valid:false,reason:"unavailable"};
+ if(!info.valid){
+  news.replaceChildren();
+  wiki.replaceChildren();
+  add(news,"p","mt-r-muted",info.reason==="sensitive"?"개인정보·비밀정보가 포함된 질문은 외부 검색에 보내지 않았습니다.":"외부 검색에 사용할 대상·기업·사건을 특정하지 못했습니다. 주제의 고유명사를 입력하면 더 정확히 조사할 수 있습니다.");
+  add(wiki,"p","mt-r-muted","명확한 검색 대상이 없어 관련 없는 자료를 억지로 보여주지 않습니다.");
+  return;
+ }
+ add(head,"span","mt-r-kicker","검색 대상: "+info.term);
+ function current(){return ticket===researchSerial&&!panel.hidden&&host.isConnected;}
+ if(!searcher){news.replaceChildren();add(news,"p","mt-r-muted","뉴스 연결 코드 미로딩");}
+ else searcher.retrieve(question).then(function(data){
+  if(!current())return;
+  news.replaceChildren();
+  add(news,"h4","","최근 공개 보도 · "+info.term);
+  if(data.status!=="ok"){
+   add(news,"p","mt-r-muted",data.status==="empty"?"최근 2주 검색에서 해당 기사 결과가 없습니다. 이것이 실제 사건이 없다는 뜻은 아닙니다.":"뉴스 서버에 접근하지 못했습니다. 네트워크·API 상태를 확인해야 합니다. 이미 확인된 공식 기록은 아래에 따로 표시합니다.");
+   return;
+  }
+  add(news,"p","mt-r-muted",data.items.length+"개 관련 기사 · GDELT 발견 일자 기준 · 기사 내용의 사실 여부는 원문에서 재확인");
+  data.items.slice(0,6).forEach(function(item){
+   var row=add(news,"div","mt-auto-hit");
+   var a=add(row,"a","mt-auto-link",item.title+" ↗");a.href=item.url;a.rel="noopener noreferrer";a.target="_blank";
+   add(row,"small","mt-r-muted",item.date+" (발견 시점) · "+(item.source||"언론사 미기재"));
+  });
+ }).catch(function(){if(!current())return;news.replaceChildren();add(news,"p","mt-r-muted","뉴스 검색 오류 · 공식 출처 아래에서 확인");});
+ if(!encyclopedia){wiki.replaceChildren();add(wiki,"p","mt-r-muted","백과 검색 코드 미로딩");}
+ else encyclopedia.research(info.term).then(function(data){
+  if(!current())return;wiki.replaceChildren();
+  add(wiki,"h4","","배경지식 · 공식 기록과 별개");
+  if(data.status!=="ok"){
+   add(wiki,"p","mt-r-muted","백과 자료를 불러오지 못했거나 관련 문서가 없습니다.");return;
+  }
+  data.results.slice(0,3).forEach(function(item){
+   var row=add(wiki,"div","mt-auto-hit");
+   var a=add(row,"a","mt-auto-link",item.title+" ↗");a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
+   if(item.summary)add(row,"p","mt-r-muted",item.summary);
+   add(row,"small","mt-r-muted",item.source+" · 백과사전, 현재 뉴스 아님");
+  });
+ }).catch(function(){if(!current())return;wiki.replaceChildren();add(wiki,"p","mt-r-muted","백과 조회 오류");});
+}
 function render(query){
  var result=engine.analyze(query);panel.hidden=false;while(panel.firstChild)panel.removeChild(panel.firstChild);
  var head=add(panel,"div","mt-r-head");add(head,"span","mt-r-kicker","MONEY TRACKER / INTELLIGENCE BRIEF");
@@ -88,6 +156,7 @@ function render(query){
  add(panel,"h2","",result.title);
  add(panel,"div","mt-r-ticker",result.ticker+" · "+result.topicGroup);
  add(panel,"p","mt-r-lead",result.opening);
+ runPublicResearch(query,result);
  if(!result.photo&&result.location&&window.MTPhoto){var photoSlot=add(panel,"div","mt-r-livephoto");window.MTPhoto.render(photoSlot,result.id,result.location.name);}
  if(result.photo&&/^https:\/\/thumb\.wikimedia\.org\//.test(result.photo.url)){
   var photo=add(panel,"figure","mt-r-photo");
@@ -97,7 +166,7 @@ function render(query){
   creditLink.href=result.photo.source;creditLink.target="_blank";creditLink.rel="noopener noreferrer";
  }
  if(result.isFallback){
-  add(panel,"h3","","확인 가능한 탐색 경로");
+  add(panel,"h3","","관련 기록 및 추가 조사 방향");
   add(panel,"p","mt-r-muted","질문과 일치하는 사실은 찾지 못했지만, 다음 관계망으로 조사를 시작할 수 있습니다. 현재 사건의 사실 여부는 확인되지 않았습니다.");
   add(panel,"p","mt-r-muted","특정 기업이나 국가를 임의로 추적 대상으로 정하지 않았습니다.");
  }else{
@@ -116,7 +185,7 @@ function render(query){
   add(panel,"h3","","04 · 핵심 해석");
   add(panel,"p","mt-r-insight",result.insight);
  }
- openLookup(result.query);
+
  add(panel,"h3","","05 · 관제실 지도 추적");
  add(panel,"p","mt-r-muted","경로를 선택하면 법안·정책·기업·역사 원문으로 이동합니다. 지도는 단계별로 이동하며 중간에 직접 조작할 수 있습니다.");
  var routes=add(panel,"div","mt-r-choices");
