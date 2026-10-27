@@ -1,0 +1,33 @@
+name: World Command smoke
+on:
+  push:
+    paths:
+      - 'world-intelligence/index.html'
+      - 'tests/world-command-smoke.test.mjs'
+      - '.github/workflows/world-command-smoke.yml'
+  workflow_dispatch:
+jobs:
+  source-smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check world command source and JavaScript syntax
+        run: node --test tests/world-command-smoke.test.mjs
+  deployed-page-smoke:
+    if: github.event_name == 'workflow_dispatch'
+    needs: source-smoke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify public GitHub Pages deployment
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 6 --retry-delay 15 --retry-all-errors --max-time 20 \
+            'https://91cleaner.github.io/money-tracker/world-intelligence/?smoke=1' -o page.html
+          grep -q 'id="candidatePanel"' page.html
+          grep -q 'tile.openstreetmap.org' page.html
+          grep -q 'AI 분석 미연결' page.html
