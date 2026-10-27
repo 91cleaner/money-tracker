@@ -184,9 +184,13 @@ if isinstance(checks, list) and isinstance(records, list):
             errors.append("Unsupported PTR crosscheck result")
         fields = ("filing_id", "ticker", "transaction_date", "type",
                   "amount_min_usd", "amount_max_usd")
-        if not any(all(item.get(key) == r.get(key) for key in fields)
-                   for r in records if isinstance(r, dict)):
-            errors.append("PTR crosscheck does not match archived candidate row")
+        same_filing = [r for r in records if isinstance(r, dict) and r.get("filing_id") == item.get("filing_id")]
+        if not same_filing:
+            # The extraction queue rotates through filings (newest first since 7d2508443), so a hand-checked
+            # filing may simply not be in the current candidate archive. That is not a data mismatch.
+            warnings.append("PTR crosscheck filing not in current candidate archive: " + str(item.get("filing_id")))
+        elif not any(all(item.get(key) == r.get(key) for key in fields) for r in same_filing):
+            errors.append("PTR crosscheck does not match archived candidate row: " + str(item.get("filing_id")))
         if not str(item.get("source_pdf", "")).startswith(
                 "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/"):
             errors.append("PTR crosscheck source is not official")
