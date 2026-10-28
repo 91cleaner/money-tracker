@@ -109,11 +109,15 @@ def tw():
         d = dt.datetime.strptime(pd.group(1), "%d %b %Y").date().isoformat() if pd else ("-".join(d2.groups()) if d2 else None)
         out.append({"id": "ey:" + hid(u), "kind": "news", "t": t, "d": d, "u": u, "dept": "行政院", "src": "行政院 本院新聞 RSS", "tags": tags(t)})
     try:
-        h = get("https://www.trade.gov.tw/Pages/List.aspx?nodeID=39").decode("utf-8", "replace")
-        for m in re.finditer(r"""<a[^>]+href=['"]?([^'" >]*Detail\.aspx\?nodeID=39&(?:amp;)?pid=(\d+))['"]?[^>]*>(.*?)</a>""", h, re.S | re.I):
-            t = T(m.group(3)); seg = h[max(0, m.start() - 400):m.end() + 400]; d = re.search(r"(20\d\d)[/-](\d\d)[/-](\d\d)", seg)
-            if len(t) < 4: continue
-            out.append({"id": "trade:" + m.group(2), "kind": "notice", "t": t, "d": "-".join(d.groups()) if d else None, "u": "https://www.trade.gov.tw/Pages/Detail.aspx?nodeID=39&pid=" + m.group(2), "dept": "經濟部國際貿易署", "src": "經濟部國際貿易署 貿易政策", "tags": tags(t)})
+        b = get("https://www.trade.gov.tw/RSS/List.aspx?nodeID=39").decode("utf-8", "replace")  # 공식 RSS(공고 목록은 JS 로드)
+        for it in re.findall(r"<item>(.*?)</item>", b, re.S):
+            t = T(re.sub(r"<!\[CDATA\[|\]\]>", "", (re.search(r"<title>(.*?)</title>", it, re.S) or [0, ""])[1])); u = T(re.sub(r"<!\[CDATA\[|\]\]>", "", (re.search(r"<link>(.*?)</link>", it, re.S) or [0, ""])[1]))
+            pd = re.search(r"<pubDate>(?:\w+, )?(\d+ \w+ \d{4})", it); d2 = re.search(r"(20\d\d)[/-](\d\d)[/-](\d\d)", it)
+            d = dt.datetime.strptime(pd.group(1), "%d %b %Y").date().isoformat() if pd else ("-".join(d2.groups()) if d2 else None)
+            pid = re.search(r"pid=(\d+)", u)
+            if len(t) < 4 or not u or re.search(r"公示送達|停機|系統維護|身分證", t): continue  # 개인 대상 송달·사이트 공지 제외
+            out.append({"id": "trade:" + (pid.group(1) if pid else hid(u)), "kind": "notice", "t": t, "d": d, "u": html.unescape(u), "dept": "經濟部國際貿易署", "src": "經濟部國際貿易署 公告訊息 RSS", "tags": tags(t)})
+        print("trade.gov.tw items", sum(1 for x in out if x["id"].startswith("trade:")))
     except Exception as e: print("trade.gov.tw fail", type(e).__name__)
     return out, {"source": "行政院 本院新聞 RSS + 經濟部國際貿易署", "source_url": "https://www.ey.gov.tw/RSS_Content.aspx?ModuleType=3"}
 SRC = {"jp": jp, "eu": eu, "cn": cn, "tw": tw}
