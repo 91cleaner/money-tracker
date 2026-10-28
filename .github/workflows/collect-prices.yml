@@ -19,9 +19,10 @@ jobs:
       - run: python3 scripts/collect_prices.py "${{ github.event.inputs.days || '7' }}"
         env:
           POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
+      - run: python3 scripts/build_insights.py
       - run: |
           git config user.name "github-actions[bot]"; git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git add data/us/prices
+          git add data/us/prices data/us/insights.json
           git diff --cached --quiet && exit 0
           git commit -m "data: US EOD prices $(date -u +%F)"
           for i in 1 2 3 4 5; do git pull --rebase -q && git push && exit 0; sleep $((i*10)); done; exit 1
