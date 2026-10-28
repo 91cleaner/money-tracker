@@ -34,3 +34,18 @@ test('links are restricted to https and data is inserted as text', () => {
   assert.match(script, /function safe\(u\) \{ return \/\^https:/);
   assert.doesNotMatch(script, /innerHTML/);
 });
+
+test('one-month close comparison clamps month-end dates, including leap years', () => {
+  // Exercise the actual inline helper rather than a copied date implementation.
+  const start = script.indexOf('function shiftMonth(iso)');
+  const end = script.indexOf('function change(', start);
+  assert.ok(start >= 0 && end > start, 'shiftMonth helper is present');
+  const shiftMonth = vm.runInNewContext(script.slice(start, end) + '\nshiftMonth;');
+  for (const [input, expected] of [
+    ['2026-03-31', '2026-02-28'],
+    ['2024-03-31', '2024-02-29'],
+    ['2026-05-31', '2026-04-30'],
+    ['2026-01-31', '2025-12-31'],
+    ['2026-06-15', '2026-05-15'],
+  ]) assert.equal(shiftMonth(input), expected, input);
+});
