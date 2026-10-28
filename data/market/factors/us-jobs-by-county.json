@@ -1,0 +1,3285 @@
+{
+ "source": "U.S. Bureau of Labor Statistics · QCEW open data",
+ "source_url": "https://www.bls.gov/cew/additional-resources/open-data/",
+ "note": "민간 부문(own_code 5) 분기 3번째 달 고용. 비공개(disclosure N) 지역 제외. 지도 좌표는 아직 없음(FIPS 코드로 연결 예정). 약 5~6개월 지연 발표.",
+ "collected_at": "2026-10-28T01:52:52.864Z",
+ "industries": {
+  "3254": {
+   "label": "제약·의약품 제조",
+   "period": "2026-Q1",
+   "counties": [
+    {
+     "fips": "17097",
+     "name": "Lake County, Illinois",
+     "employment": 17586,
+     "yoy_change": 239,
+     "weekly_wage": 9152,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "18097",
+     "name": "Marion County, Indiana",
+     "employment": 15787,
+     "yoy_change": -333,
+     "weekly_wage": 11239,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42091",
+     "name": "Montgomery County, Pennsylvania",
+     "employment": 11606,
+     "yoy_change": -505,
+     "weekly_wage": 5449,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36103",
+     "name": "Suffolk County, New York",
+     "employment": 11067,
+     "yoy_change": 106,
+     "weekly_wage": 1798,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06073",
+     "name": "San Diego County, California",
+     "employment": 8929,
+     "yoy_change": 720,
+     "weekly_wage": 3079,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06037",
+     "name": "Los Angeles County, California",
+     "employment": 8413,
+     "yoy_change": 121,
+     "weekly_wage": 1920,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06081",
+     "name": "San Mateo County, California",
+     "employment": 7535,
+     "yoy_change": -444,
+     "weekly_wage": 12589,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37063",
+     "name": "Durham County, North Carolina",
+     "employment": 6744,
+     "yoy_change": -258,
+     "weekly_wage": 5372,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "24031",
+     "name": "Montgomery County, Maryland",
+     "employment": 6468,
+     "yoy_change": -35,
+     "weekly_wage": 9617,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "34035",
+     "name": "Somerset County, New Jersey",
+     "employment": 5260,
+     "yoy_change": -106,
+     "weekly_wage": 7217,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "34023",
+     "name": "Middlesex County, New Jersey",
+     "employment": 5225,
+     "yoy_change": -336,
+     "weekly_wage": 4445,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "04013",
+     "name": "Maricopa County, Arizona",
+     "employment": 4801,
+     "yoy_change": 202,
+     "weekly_wage": 1576,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25017",
+     "name": "Middlesex County, Massachusetts",
+     "employment": 4495,
+     "yoy_change": 162,
+     "weekly_wage": 9814,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48439",
+     "name": "Tarrant County, Texas",
+     "employment": 3732,
+     "yoy_change": -43,
+     "weekly_wage": 3810,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06059",
+     "name": "Orange County, California",
+     "employment": 3683,
+     "yoy_change": -434,
+     "weekly_wage": 2760,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "34021",
+     "name": "Mercer County, New Jersey",
+     "employment": 3477,
+     "yoy_change": -52,
+     "weekly_wage": 9244,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12011",
+     "name": "Broward County, Florida",
+     "employment": 3373,
+     "yoy_change": 527,
+     "weekly_wage": 1777,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26077",
+     "name": "Kalamazoo County, Michigan",
+     "employment": 3290,
+     "yoy_change": -244,
+     "weekly_wage": 2929,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "55025",
+     "name": "Dane County, Wisconsin",
+     "employment": 3230,
+     "yoy_change": -24,
+     "weekly_wage": 2247,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39049",
+     "name": "Franklin County, Ohio",
+     "employment": 2854,
+     "yoy_change": 181,
+     "weekly_wage": 2003,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17031",
+     "name": "Cook County, Illinois",
+     "employment": 2795,
+     "yoy_change": 57,
+     "weekly_wage": 3124,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49035",
+     "name": "Salt Lake County, Utah",
+     "employment": 2719,
+     "yoy_change": 333,
+     "weekly_wage": 2564,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "29189",
+     "name": "St. Louis County, Missouri",
+     "employment": 2636,
+     "yoy_change": -112,
+     "weekly_wage": 2002,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25027",
+     "name": "Worcester County, Massachusetts",
+     "employment": 2575,
+     "yoy_change": 68,
+     "weekly_wage": 4283,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06001",
+     "name": "Alameda County, California",
+     "employment": 2540,
+     "yoy_change": -95,
+     "weekly_wage": 3356,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49049",
+     "name": "Utah County, Utah",
+     "employment": 2320,
+     "yoy_change": -171,
+     "weekly_wage": 1168,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "27053",
+     "name": "Hennepin County, Minnesota",
+     "employment": 2287,
+     "yoy_change": 94,
+     "weekly_wage": 1928,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "23005",
+     "name": "Cumberland County, Maine",
+     "employment": 2240,
+     "yoy_change": -178,
+     "weekly_wage": 3206,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36087",
+     "name": "Rockland County, New York",
+     "employment": 2185,
+     "yoy_change": -141,
+     "weekly_wage": 4765,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "20091",
+     "name": "Johnson County, Kansas",
+     "employment": 2113,
+     "yoy_change": -65,
+     "weekly_wage": 2167,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "45045",
+     "name": "Greenville County, South Carolina",
+     "employment": 2113,
+     "yoy_change": -22,
+     "weekly_wage": 1859,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12086",
+     "name": "Miami-Dade County, Florida",
+     "employment": 2050,
+     "yoy_change": -150,
+     "weekly_wage": 2269,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "08013",
+     "name": "Boulder County, Colorado",
+     "employment": 2013,
+     "yoy_change": -84,
+     "weekly_wage": 2016,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48453",
+     "name": "Travis County, Texas",
+     "employment": 2002,
+     "yoy_change": -89,
+     "weekly_wage": 2534,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36029",
+     "name": "Erie County, New York",
+     "employment": 1996,
+     "yoy_change": -171,
+     "weekly_wage": 2048,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "33015",
+     "name": "Rockingham County, New Hampshire",
+     "employment": 1936,
+     "yoy_change": 150,
+     "weekly_wage": 3040,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48201",
+     "name": "Harris County, Texas",
+     "employment": 1931,
+     "yoy_change": -139,
+     "weekly_wage": 7038,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "72017",
+     "name": "Barceloneta Municipio, Puerto Rico",
+     "employment": 1919,
+     "yoy_change": 0,
+     "weekly_wage": 2493,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12103",
+     "name": "Pinellas County, Florida",
+     "employment": 1818,
+     "yoy_change": -87,
+     "weekly_wage": 2071,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17043",
+     "name": "DuPage County, Illinois",
+     "employment": 1719,
+     "yoy_change": 31,
+     "weekly_wage": 1496,
+     "period": "2026-Q1"
+    }
+   ],
+   "states": [
+    {
+     "fips": "06000",
+     "name": "California -- Statewide",
+     "employment": 43037,
+     "yoy_change": -461,
+     "weekly_wage": 4719,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "34000",
+     "name": "New Jersey -- Statewide",
+     "employment": 28866,
+     "yoy_change": -1539,
+     "weekly_wage": 5996,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37000",
+     "name": "North Carolina -- Statewide",
+     "employment": 26144,
+     "yoy_change": -1126,
+     "weekly_wage": 3204,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36000",
+     "name": "New York -- Statewide",
+     "employment": 25400,
+     "yoy_change": -94,
+     "weekly_wage": 2395,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17000",
+     "name": "Illinois -- Statewide",
+     "employment": 24958,
+     "yoy_change": 203,
+     "weekly_wage": 7244,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "18000",
+     "name": "Indiana -- Statewide",
+     "employment": 23632,
+     "yoy_change": 298,
+     "weekly_wage": 8398,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42000",
+     "name": "Pennsylvania -- Statewide",
+     "employment": 19521,
+     "yoy_change": -1223,
+     "weekly_wage": 4342,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48000",
+     "name": "Texas -- Statewide",
+     "employment": 15975,
+     "yoy_change": 614,
+     "weekly_wage": 3326,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12000",
+     "name": "Florida -- Statewide",
+     "employment": 13527,
+     "yoy_change": 189,
+     "weekly_wage": 2310,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "72000",
+     "name": "Puerto Rico -- Statewide",
+     "employment": 12136,
+     "yoy_change": -1148,
+     "weekly_wage": 2471,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26000",
+     "name": "Michigan -- Statewide",
+     "employment": 11197,
+     "yoy_change": 30,
+     "weekly_wage": 2425,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25000",
+     "name": "Massachusetts -- Statewide",
+     "employment": 10312,
+     "yoy_change": 240,
+     "weekly_wage": 6181,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "24000",
+     "name": "Maryland -- Statewide",
+     "employment": 8955,
+     "yoy_change": -185,
+     "weekly_wage": 7748,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49000",
+     "name": "Utah -- Statewide",
+     "employment": 8231,
+     "yoy_change": 357,
+     "weekly_wage": 1665,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39000",
+     "name": "Ohio -- Statewide",
+     "employment": 8154,
+     "yoy_change": 927,
+     "weekly_wage": 2359,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "29000",
+     "name": "Missouri -- Statewide",
+     "employment": 6719,
+     "yoy_change": -194,
+     "weekly_wage": 2255,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "55000",
+     "name": "Wisconsin -- Statewide",
+     "employment": 6494,
+     "yoy_change": -115,
+     "weekly_wage": 2040,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "45000",
+     "name": "South Carolina -- Statewide",
+     "employment": 6449,
+     "yoy_change": -151,
+     "weekly_wage": 2118,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "27000",
+     "name": "Minnesota -- Statewide",
+     "employment": 5451,
+     "yoy_change": -44,
+     "weekly_wage": 2343,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "04000",
+     "name": "Arizona -- Statewide",
+     "employment": 5013,
+     "yoy_change": 73,
+     "weekly_wage": 1594,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "08000",
+     "name": "Colorado -- Statewide",
+     "employment": 4835,
+     "yoy_change": -176,
+     "weekly_wage": 1916,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "20000",
+     "name": "Kansas -- Statewide",
+     "employment": 4588,
+     "yoy_change": -237,
+     "weekly_wage": 2089,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53000",
+     "name": "Washington -- Statewide",
+     "employment": 4088,
+     "yoy_change": -139,
+     "weekly_wage": 2465,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "19000",
+     "name": "Iowa -- Statewide",
+     "employment": 4035,
+     "yoy_change": -41,
+     "weekly_wage": 1962,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "51000",
+     "name": "Virginia -- Statewide",
+     "employment": 4006,
+     "yoy_change": 1080,
+     "weekly_wage": 2857,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "13000",
+     "name": "Georgia -- Statewide",
+     "employment": 3634,
+     "yoy_change": 121,
+     "weekly_wage": 2347,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "47000",
+     "name": "Tennessee -- Statewide",
+     "employment": 2810,
+     "yoy_change": -335,
+     "weekly_wage": 2847,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "09000",
+     "name": "Connecticut -- Statewide",
+     "employment": 2777,
+     "yoy_change": -131,
+     "weekly_wage": 3994,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "23000",
+     "name": "Maine -- Statewide",
+     "employment": 2608,
+     "yoy_change": -186,
+     "weekly_wage": 2965,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "31000",
+     "name": "Nebraska -- Statewide",
+     "employment": 2523,
+     "yoy_change": -91,
+     "weekly_wage": 2062,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "33000",
+     "name": "New Hampshire -- Statewide",
+     "employment": 2306,
+     "yoy_change": 150,
+     "weekly_wage": 2872,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "21000",
+     "name": "Kentucky -- Statewide",
+     "employment": 2132,
+     "yoy_change": 112,
+     "weekly_wage": 2576,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "01000",
+     "name": "Alabama -- Statewide",
+     "employment": 1569,
+     "yoy_change": 104,
+     "weekly_wage": 2136,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "32000",
+     "name": "Nevada -- Statewide",
+     "employment": 1517,
+     "yoy_change": 117,
+     "weekly_wage": 1154,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "44000",
+     "name": "Rhode Island -- Statewide",
+     "employment": 1237,
+     "yoy_change": -41,
+     "weekly_wage": 4167,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "41000",
+     "name": "Oregon -- Statewide",
+     "employment": 1110,
+     "yoy_change": -154,
+     "weekly_wage": 1567,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "28000",
+     "name": "Mississippi -- Statewide",
+     "employment": 1103,
+     "yoy_change": -23,
+     "weekly_wage": 1322,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "40000",
+     "name": "Oklahoma -- Statewide",
+     "employment": 831,
+     "yoy_change": -16,
+     "weekly_wage": 1775,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "22000",
+     "name": "Louisiana -- Statewide",
+     "employment": 811,
+     "yoy_change": 2,
+     "weekly_wage": 1550,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "35000",
+     "name": "New Mexico -- Statewide",
+     "employment": 808,
+     "yoy_change": -34,
+     "weekly_wage": 1378,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "54000",
+     "name": "West Virginia -- Statewide",
+     "employment": 776,
+     "yoy_change": -62,
+     "weekly_wage": 3625,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "10000",
+     "name": "Delaware -- Statewide",
+     "employment": 688,
+     "yoy_change": 67,
+     "weekly_wage": 2522,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "30000",
+     "name": "Montana -- Statewide",
+     "employment": 646,
+     "yoy_change": 2,
+     "weekly_wage": 1376,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "50000",
+     "name": "Vermont -- Statewide",
+     "employment": 500,
+     "yoy_change": 22,
+     "weekly_wage": 2820,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "05000",
+     "name": "Arkansas -- Statewide",
+     "employment": 422,
+     "yoy_change": -65,
+     "weekly_wage": 1261,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "16000",
+     "name": "Idaho -- Statewide",
+     "employment": 405,
+     "yoy_change": 33,
+     "weekly_wage": 2038,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "11000",
+     "name": "District of Columbia, not unknown",
+     "employment": 101,
+     "yoy_change": -22,
+     "weekly_wage": 10337,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "56000",
+     "name": "Wyoming -- Statewide",
+     "employment": 64,
+     "yoy_change": -1,
+     "weekly_wage": 906,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "02000",
+     "name": "Alaska -- Statewide",
+     "employment": 18,
+     "yoy_change": 1,
+     "weekly_wage": 1448,
+     "period": "2026-Q1"
+    }
+   ],
+   "url": "https://data.bls.gov/cew/apps/table_maker/v4/table_maker.htm#type=2&year=2026&qtr=1&own=5&ind=3254"
+  },
+  "3344": {
+   "label": "반도체·전자부품 제조",
+   "period": "2026-Q1",
+   "counties": [
+    {
+     "fips": "06085",
+     "name": "Santa Clara County, California",
+     "employment": 43000,
+     "yoy_change": 1196,
+     "weekly_wage": 13753,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "04013",
+     "name": "Maricopa County, Arizona",
+     "employment": 21264,
+     "yoy_change": -998,
+     "weekly_wage": 4016,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "41067",
+     "name": "Washington County, Oregon",
+     "employment": 20406,
+     "yoy_change": -3343,
+     "weekly_wage": 4998,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48453",
+     "name": "Travis County, Texas",
+     "employment": 14945,
+     "yoy_change": -772,
+     "weekly_wage": 3350,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48113",
+     "name": "Dallas County, Texas",
+     "employment": 13665,
+     "yoy_change": -3411,
+     "weekly_wage": 5980,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06059",
+     "name": "Orange County, California",
+     "employment": 13606,
+     "yoy_change": -115,
+     "weekly_wage": 6715,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06037",
+     "name": "Los Angeles County, California",
+     "employment": 8435,
+     "yoy_change": 95,
+     "weekly_wage": 2210,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12009",
+     "name": "Brevard County, Florida",
+     "employment": 7720,
+     "yoy_change": -672,
+     "weekly_wage": 3481,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "16001",
+     "name": "Ada County, Idaho",
+     "employment": 6852,
+     "yoy_change": 522,
+     "weekly_wage": 5085,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06001",
+     "name": "Alameda County, California",
+     "employment": 6491,
+     "yoy_change": -204,
+     "weekly_wage": 3387,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06073",
+     "name": "San Diego County, California",
+     "employment": 5548,
+     "yoy_change": -77,
+     "weekly_wage": 5434,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25017",
+     "name": "Middlesex County, Massachusetts",
+     "employment": 5464,
+     "yoy_change": -222,
+     "weekly_wage": 3902,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48085",
+     "name": "Collin County, Texas",
+     "employment": 4771,
+     "yoy_change": -647,
+     "weekly_wage": 3524,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12103",
+     "name": "Pinellas County, Florida",
+     "employment": 3483,
+     "yoy_change": 648,
+     "weekly_wage": 1581,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "27053",
+     "name": "Hennepin County, Minnesota",
+     "employment": 3447,
+     "yoy_change": -56,
+     "weekly_wage": 2392,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "33011",
+     "name": "Hillsborough County, New Hampshire",
+     "employment": 3284,
+     "yoy_change": -75,
+     "weekly_wage": 2776,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53011",
+     "name": "Clark County, Washington",
+     "employment": 3085,
+     "yoy_change": 43,
+     "weekly_wage": 2571,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25027",
+     "name": "Worcester County, Massachusetts",
+     "employment": 3034,
+     "yoy_change": 303,
+     "weekly_wage": 3094,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17043",
+     "name": "DuPage County, Illinois",
+     "employment": 2816,
+     "yoy_change": 75,
+     "weekly_wage": 2368,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06111",
+     "name": "Ventura County, California",
+     "employment": 2779,
+     "yoy_change": -87,
+     "weekly_wage": 2569,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36029",
+     "name": "Erie County, New York",
+     "employment": 2693,
+     "yoy_change": -3,
+     "weekly_wage": 1779,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17031",
+     "name": "Cook County, Illinois",
+     "employment": 2419,
+     "yoy_change": -81,
+     "weekly_wage": 1391,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37063",
+     "name": "Durham County, North Carolina",
+     "employment": 2217,
+     "yoy_change": -1180,
+     "weekly_wage": 3272,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17097",
+     "name": "Lake County, Illinois",
+     "employment": 2034,
+     "yoy_change": 120,
+     "weekly_wage": 1655,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25009",
+     "name": "Essex County, Massachusetts",
+     "employment": 1986,
+     "yoy_change": 50,
+     "weekly_wage": 4158,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36103",
+     "name": "Suffolk County, New York",
+     "employment": 1920,
+     "yoy_change": -168,
+     "weekly_wage": 1919,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48439",
+     "name": "Tarrant County, Texas",
+     "employment": 1915,
+     "yoy_change": 20,
+     "weekly_wage": 2009,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37081",
+     "name": "Guilford County, North Carolina",
+     "employment": 1908,
+     "yoy_change": 28,
+     "weekly_wage": 3149,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "41051",
+     "name": "Multnomah County, Oregon",
+     "employment": 1773,
+     "yoy_change": -102,
+     "weekly_wage": 2170,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48491",
+     "name": "Williamson County, Texas",
+     "employment": 1718,
+     "yoy_change": 472,
+     "weekly_wage": 2653,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26125",
+     "name": "Oakland County, Michigan",
+     "employment": 1687,
+     "yoy_change": 58,
+     "weekly_wage": 2339,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "55101",
+     "name": "Racine County, Wisconsin",
+     "employment": 1679,
+     "yoy_change": 0,
+     "weekly_wage": 991,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48181",
+     "name": "Grayson County, Texas",
+     "employment": 1649,
+     "yoy_change": 218,
+     "weekly_wage": 2964,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "45045",
+     "name": "Greenville County, South Carolina",
+     "employment": 1610,
+     "yoy_change": -57,
+     "weekly_wage": 1652,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48201",
+     "name": "Harris County, Texas",
+     "employment": 1585,
+     "yoy_change": 172,
+     "weekly_wage": 2011,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "08041",
+     "name": "El Paso County, Colorado",
+     "employment": 1519,
+     "yoy_change": -186,
+     "weekly_wage": 2177,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "27003",
+     "name": "Anoka County, Minnesota",
+     "employment": 1468,
+     "yoy_change": -39,
+     "weekly_wage": 2273,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53033",
+     "name": "King County, Washington",
+     "employment": 1428,
+     "yoy_change": -11,
+     "weekly_wage": 5753,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "35001",
+     "name": "Bernalillo County, New Mexico",
+     "employment": 1420,
+     "yoy_change": -167,
+     "weekly_wage": 2319,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "41005",
+     "name": "Clackamas County, Oregon",
+     "employment": 1414,
+     "yoy_change": -1,
+     "weekly_wage": 1879,
+     "period": "2026-Q1"
+    }
+   ],
+   "states": [
+    {
+     "fips": "06000",
+     "name": "California -- Statewide",
+     "employment": 85366,
+     "yoy_change": 649,
+     "weekly_wage": 9076,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48000",
+     "name": "Texas -- Statewide",
+     "employment": 46876,
+     "yoy_change": -3128,
+     "weekly_wage": 3858,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "41000",
+     "name": "Oregon -- Statewide",
+     "employment": 25518,
+     "yoy_change": -3674,
+     "weekly_wage": 4472,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "04000",
+     "name": "Arizona -- Statewide",
+     "employment": 22325,
+     "yoy_change": -1006,
+     "weekly_wage": 3997,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12000",
+     "name": "Florida -- Statewide",
+     "employment": 17939,
+     "yoy_change": 274,
+     "weekly_wage": 4038,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36000",
+     "name": "New York -- Statewide",
+     "employment": 17330,
+     "yoy_change": 472,
+     "weekly_wage": 2649,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25000",
+     "name": "Massachusetts -- Statewide",
+     "employment": 13014,
+     "yoy_change": 127,
+     "weekly_wage": 3548,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26000",
+     "name": "Michigan -- Statewide",
+     "employment": 12160,
+     "yoy_change": 258,
+     "weekly_wage": 1994,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17000",
+     "name": "Illinois -- Statewide",
+     "employment": 11683,
+     "yoy_change": -55,
+     "weekly_wage": 1680,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42000",
+     "name": "Pennsylvania -- Statewide",
+     "employment": 10113,
+     "yoy_change": 714,
+     "weekly_wage": 1864,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "27000",
+     "name": "Minnesota -- Statewide",
+     "employment": 10023,
+     "yoy_change": -166,
+     "weekly_wage": 2117,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39000",
+     "name": "Ohio -- Statewide",
+     "employment": 9269,
+     "yoy_change": 180,
+     "weekly_wage": 1916,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "29000",
+     "name": "Missouri -- Statewide",
+     "employment": 9223,
+     "yoy_change": 172,
+     "weekly_wage": 2150,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "16000",
+     "name": "Idaho -- Statewide",
+     "employment": 8206,
+     "yoy_change": 276,
+     "weekly_wage": 4541,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53000",
+     "name": "Washington -- Statewide",
+     "employment": 7247,
+     "yoy_change": 109,
+     "weekly_wage": 3378,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "55000",
+     "name": "Wisconsin -- Statewide",
+     "employment": 6829,
+     "yoy_change": 315,
+     "weekly_wage": 1263,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "34000",
+     "name": "New Jersey -- Statewide",
+     "employment": 6344,
+     "yoy_change": -75,
+     "weekly_wage": 2023,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37000",
+     "name": "North Carolina -- Statewide",
+     "employment": 5549,
+     "yoy_change": -1169,
+     "weekly_wage": 3131,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "33000",
+     "name": "New Hampshire -- Statewide",
+     "employment": 4768,
+     "yoy_change": -117,
+     "weekly_wage": 2365,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "08000",
+     "name": "Colorado -- Statewide",
+     "employment": 4742,
+     "yoy_change": -134,
+     "weekly_wage": 3914,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "35000",
+     "name": "New Mexico -- Statewide",
+     "employment": 4417,
+     "yoy_change": -757,
+     "weekly_wage": 2779,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "51000",
+     "name": "Virginia -- Statewide",
+     "employment": 3912,
+     "yoy_change": 156,
+     "weekly_wage": 2280,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "18000",
+     "name": "Indiana -- Statewide",
+     "employment": 3561,
+     "yoy_change": -326,
+     "weekly_wage": 1603,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "09000",
+     "name": "Connecticut -- Statewide",
+     "employment": 3492,
+     "yoy_change": -31,
+     "weekly_wage": 2821,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "45000",
+     "name": "South Carolina -- Statewide",
+     "employment": 3247,
+     "yoy_change": 472,
+     "weekly_wage": 1700,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49000",
+     "name": "Utah -- Statewide",
+     "employment": 3140,
+     "yoy_change": 82,
+     "weekly_wage": 2498,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "13000",
+     "name": "Georgia -- Statewide",
+     "employment": 2181,
+     "yoy_change": 376,
+     "weekly_wage": 2674,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "24000",
+     "name": "Maryland -- Statewide",
+     "employment": 2140,
+     "yoy_change": 95,
+     "weekly_wage": 1711,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "50000",
+     "name": "Vermont -- Statewide",
+     "employment": 2033,
+     "yoy_change": -97,
+     "weekly_wage": 2266,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "20000",
+     "name": "Kansas -- Statewide",
+     "employment": 1660,
+     "yoy_change": 87,
+     "weekly_wage": 1144,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "47000",
+     "name": "Tennessee -- Statewide",
+     "employment": 1656,
+     "yoy_change": 97,
+     "weekly_wage": 1712,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "01000",
+     "name": "Alabama -- Statewide",
+     "employment": 1653,
+     "yoy_change": -31,
+     "weekly_wage": 1590,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "31000",
+     "name": "Nebraska -- Statewide",
+     "employment": 1410,
+     "yoy_change": -69,
+     "weekly_wage": 1533,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "23000",
+     "name": "Maine -- Statewide",
+     "employment": 1362,
+     "yoy_change": -90,
+     "weekly_wage": 2115,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "05000",
+     "name": "Arkansas -- Statewide",
+     "employment": 1058,
+     "yoy_change": -48,
+     "weekly_wage": 1413,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "32000",
+     "name": "Nevada -- Statewide",
+     "employment": 1008,
+     "yoy_change": -55,
+     "weekly_wage": 1272,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "46000",
+     "name": "South Dakota -- Statewide",
+     "employment": 961,
+     "yoy_change": 11,
+     "weekly_wage": 1192,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "21000",
+     "name": "Kentucky -- Statewide",
+     "employment": 863,
+     "yoy_change": 28,
+     "weekly_wage": 1730,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "19000",
+     "name": "Iowa -- Statewide",
+     "employment": 796,
+     "yoy_change": 10,
+     "weekly_wage": 1453,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "44000",
+     "name": "Rhode Island -- Statewide",
+     "employment": 558,
+     "yoy_change": -14,
+     "weekly_wage": 1476,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "40000",
+     "name": "Oklahoma -- Statewide",
+     "employment": 540,
+     "yoy_change": -45,
+     "weekly_wage": 1724,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "28000",
+     "name": "Mississippi -- Statewide",
+     "employment": 488,
+     "yoy_change": 62,
+     "weekly_wage": 783,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "72000",
+     "name": "Puerto Rico -- Statewide",
+     "employment": 354,
+     "yoy_change": 30,
+     "weekly_wage": 1740,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "10000",
+     "name": "Delaware -- Statewide",
+     "employment": 239,
+     "yoy_change": 8,
+     "weekly_wage": 1612,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "30000",
+     "name": "Montana -- Statewide",
+     "employment": 131,
+     "yoy_change": 12,
+     "weekly_wage": 1833,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "54000",
+     "name": "West Virginia -- Statewide",
+     "employment": 130,
+     "yoy_change": 10,
+     "weekly_wage": 901,
+     "period": "2026-Q1"
+    }
+   ],
+   "url": "https://data.bls.gov/cew/apps/table_maker/v4/table_maker.htm#type=2&year=2026&qtr=1&own=5&ind=3344"
+  },
+  "3359": {
+   "label": "기타 전기장비(배터리 포함) 제조",
+   "period": "2026-Q1",
+   "counties": [
+    {
+     "fips": "06085",
+     "name": "Santa Clara County, California",
+     "employment": 4260,
+     "yoy_change": 86,
+     "weekly_wage": 9649,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17031",
+     "name": "Cook County, Illinois",
+     "employment": 2428,
+     "yoy_change": -453,
+     "weekly_wage": 2139,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "04013",
+     "name": "Maricopa County, Arizona",
+     "employment": 2391,
+     "yoy_change": 255,
+     "weekly_wage": 2422,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06037",
+     "name": "Los Angeles County, California",
+     "employment": 2330,
+     "yoy_change": -409,
+     "weekly_wage": 2453,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49035",
+     "name": "Salt Lake County, Utah",
+     "employment": 2145,
+     "yoy_change": 349,
+     "weekly_wage": 1910,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48201",
+     "name": "Harris County, Texas",
+     "employment": 1923,
+     "yoy_change": 463,
+     "weekly_wage": 2274,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06059",
+     "name": "Orange County, California",
+     "employment": 1781,
+     "yoy_change": 2,
+     "weekly_wage": 1908,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06073",
+     "name": "San Diego County, California",
+     "employment": 1690,
+     "yoy_change": 106,
+     "weekly_wage": 1834,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17043",
+     "name": "DuPage County, Illinois",
+     "employment": 1558,
+     "yoy_change": 566,
+     "weekly_wage": 2023,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "33015",
+     "name": "Rockingham County, New Hampshire",
+     "employment": 1457,
+     "yoy_change": 20,
+     "weekly_wage": 1762,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48113",
+     "name": "Dallas County, Texas",
+     "employment": 1368,
+     "yoy_change": 174,
+     "weekly_wage": 1476,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48439",
+     "name": "Tarrant County, Texas",
+     "employment": 1354,
+     "yoy_change": 182,
+     "weekly_wage": 2588,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17089",
+     "name": "Kane County, Illinois",
+     "employment": 1316,
+     "yoy_change": 124,
+     "weekly_wage": 2049,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06001",
+     "name": "Alameda County, California",
+     "employment": 1180,
+     "yoy_change": -204,
+     "weekly_wage": 5543,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "09110",
+     "name": "Capitol Planning Region, Connecticut",
+     "employment": 1164,
+     "yoy_change": -50,
+     "weekly_wage": 2013,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "13135",
+     "name": "Gwinnett County, Georgia",
+     "employment": 1155,
+     "yoy_change": 109,
+     "weekly_wage": 1646,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36103",
+     "name": "Suffolk County, New York",
+     "employment": 1150,
+     "yoy_change": -44,
+     "weekly_wage": 5403,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25027",
+     "name": "Worcester County, Massachusetts",
+     "employment": 1105,
+     "yoy_change": 86,
+     "weekly_wage": 2137,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "32003",
+     "name": "Clark County, Nevada",
+     "employment": 1081,
+     "yoy_change": 127,
+     "weekly_wage": 1598,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42047",
+     "name": "Elk County, Pennsylvania",
+     "employment": 1040,
+     "yoy_change": -68,
+     "weekly_wage": 1449,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "45045",
+     "name": "Greenville County, South Carolina",
+     "employment": 1007,
+     "yoy_change": -106,
+     "weekly_wage": 2193,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42043",
+     "name": "Dauphin County, Pennsylvania",
+     "employment": 964,
+     "yoy_change": 0,
+     "weekly_wage": 1666,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37081",
+     "name": "Guilford County, North Carolina",
+     "employment": 927,
+     "yoy_change": 113,
+     "weekly_wage": 1904,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25017",
+     "name": "Middlesex County, Massachusetts",
+     "employment": 897,
+     "yoy_change": -399,
+     "weekly_wage": 2751,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42003",
+     "name": "Allegheny County, Pennsylvania",
+     "employment": 886,
+     "yoy_change": 0,
+     "weekly_wage": 1673,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06071",
+     "name": "San Bernardino County, California",
+     "employment": 875,
+     "yoy_change": 114,
+     "weekly_wage": 1402,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "20209",
+     "name": "Wyandotte County, Kansas",
+     "employment": 828,
+     "yoy_change": 0,
+     "weekly_wage": 2405,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39035",
+     "name": "Cuyahoga County, Ohio",
+     "employment": 731,
+     "yoy_change": 1,
+     "weekly_wage": 2157,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37023",
+     "name": "Burke County, North Carolina",
+     "employment": 730,
+     "yoy_change": -51,
+     "weekly_wage": 1251,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39155",
+     "name": "Trumbull County, Ohio",
+     "employment": 730,
+     "yoy_change": 0,
+     "weekly_wage": 3028,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26125",
+     "name": "Oakland County, Michigan",
+     "employment": 721,
+     "yoy_change": -73,
+     "weekly_wage": 2171,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12103",
+     "name": "Pinellas County, Florida",
+     "employment": 713,
+     "yoy_change": 48,
+     "weekly_wage": 1428,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "27053",
+     "name": "Hennepin County, Minnesota",
+     "employment": 689,
+     "yoy_change": 54,
+     "weekly_wage": 2407,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48085",
+     "name": "Collin County, Texas",
+     "employment": 675,
+     "yoy_change": 140,
+     "weekly_wage": 1461,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42091",
+     "name": "Montgomery County, Pennsylvania",
+     "employment": 656,
+     "yoy_change": 25,
+     "weekly_wage": 1559,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36067",
+     "name": "Onondaga County, New York",
+     "employment": 652,
+     "yoy_change": -12,
+     "weekly_wage": 2447,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36029",
+     "name": "Erie County, New York",
+     "employment": 651,
+     "yoy_change": 21,
+     "weekly_wage": 1604,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "45091",
+     "name": "York County, South Carolina",
+     "employment": 640,
+     "yoy_change": 61,
+     "weekly_wage": 1985,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39061",
+     "name": "Hamilton County, Ohio",
+     "employment": 631,
+     "yoy_change": -73,
+     "weekly_wage": 1780,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "33011",
+     "name": "Hillsborough County, New Hampshire",
+     "employment": 630,
+     "yoy_change": -8,
+     "weekly_wage": 2438,
+     "period": "2026-Q1"
+    }
+   ],
+   "states": [
+    {
+     "fips": "42000",
+     "name": "Pennsylvania -- Statewide",
+     "employment": 15667,
+     "yoy_change": 83,
+     "weekly_wage": 1458,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06000",
+     "name": "California -- Statewide",
+     "employment": 15392,
+     "yoy_change": -570,
+     "weekly_wage": 4383,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37000",
+     "name": "North Carolina -- Statewide",
+     "employment": 13620,
+     "yoy_change": 1620,
+     "weekly_wage": 1963,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48000",
+     "name": "Texas -- Statewide",
+     "employment": 11006,
+     "yoy_change": 1407,
+     "weekly_wage": 2122,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39000",
+     "name": "Ohio -- Statewide",
+     "employment": 10165,
+     "yoy_change": -942,
+     "weekly_wage": 1902,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "13000",
+     "name": "Georgia -- Statewide",
+     "employment": 8959,
+     "yoy_change": 1071,
+     "weekly_wage": 1597,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17000",
+     "name": "Illinois -- Statewide",
+     "employment": 8197,
+     "yoy_change": 743,
+     "weekly_wage": 2054,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "45000",
+     "name": "South Carolina -- Statewide",
+     "employment": 6420,
+     "yoy_change": 170,
+     "weekly_wage": 1837,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36000",
+     "name": "New York -- Statewide",
+     "employment": 6306,
+     "yoy_change": -456,
+     "weekly_wage": 2505,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "29000",
+     "name": "Missouri -- Statewide",
+     "employment": 6151,
+     "yoy_change": -74,
+     "weekly_wage": 1507,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26000",
+     "name": "Michigan -- Statewide",
+     "employment": 5514,
+     "yoy_change": 737,
+     "weekly_wage": 2031,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12000",
+     "name": "Florida -- Statewide",
+     "employment": 4896,
+     "yoy_change": -34,
+     "weekly_wage": 1948,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "47000",
+     "name": "Tennessee -- Statewide",
+     "employment": 4454,
+     "yoy_change": -759,
+     "weekly_wage": 2137,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25000",
+     "name": "Massachusetts -- Statewide",
+     "employment": 3952,
+     "yoy_change": -338,
+     "weekly_wage": 2548,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "20000",
+     "name": "Kansas -- Statewide",
+     "employment": 3734,
+     "yoy_change": 1334,
+     "weekly_wage": 1602,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "09000",
+     "name": "Connecticut -- Statewide",
+     "employment": 3458,
+     "yoy_change": -138,
+     "weekly_wage": 2083,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "34000",
+     "name": "New Jersey -- Statewide",
+     "employment": 3457,
+     "yoy_change": 60,
+     "weekly_wage": 1721,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "18000",
+     "name": "Indiana -- Statewide",
+     "employment": 3209,
+     "yoy_change": 23,
+     "weekly_wage": 1436,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "33000",
+     "name": "New Hampshire -- Statewide",
+     "employment": 3116,
+     "yoy_change": -5,
+     "weekly_wage": 1838,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "04000",
+     "name": "Arizona -- Statewide",
+     "employment": 2786,
+     "yoy_change": 394,
+     "weekly_wage": 2398,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49000",
+     "name": "Utah -- Statewide",
+     "employment": 2783,
+     "yoy_change": 515,
+     "weekly_wage": 1873,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "55000",
+     "name": "Wisconsin -- Statewide",
+     "employment": 2195,
+     "yoy_change": -126,
+     "weekly_wage": 1365,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "01000",
+     "name": "Alabama -- Statewide",
+     "employment": 2102,
+     "yoy_change": 25,
+     "weekly_wage": 1608,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "21000",
+     "name": "Kentucky -- Statewide",
+     "employment": 2090,
+     "yoy_change": -752,
+     "weekly_wage": 1708,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "27000",
+     "name": "Minnesota -- Statewide",
+     "employment": 1642,
+     "yoy_change": 26,
+     "weekly_wage": 2261,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "51000",
+     "name": "Virginia -- Statewide",
+     "employment": 1564,
+     "yoy_change": 194,
+     "weekly_wage": 1593,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "19000",
+     "name": "Iowa -- Statewide",
+     "employment": 1492,
+     "yoy_change": -12,
+     "weekly_wage": 1358,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "05000",
+     "name": "Arkansas -- Statewide",
+     "employment": 1410,
+     "yoy_change": -56,
+     "weekly_wage": 1367,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "41000",
+     "name": "Oregon -- Statewide",
+     "employment": 1180,
+     "yoy_change": -200,
+     "weekly_wage": 1909,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "24000",
+     "name": "Maryland -- Statewide",
+     "employment": 1081,
+     "yoy_change": 48,
+     "weekly_wage": 2489,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "31000",
+     "name": "Nebraska -- Statewide",
+     "employment": 1025,
+     "yoy_change": 9,
+     "weekly_wage": 1283,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "10000",
+     "name": "Delaware -- Statewide",
+     "employment": 1005,
+     "yoy_change": 66,
+     "weekly_wage": 2399,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "72000",
+     "name": "Puerto Rico -- Statewide",
+     "employment": 982,
+     "yoy_change": -7,
+     "weekly_wage": 813,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53000",
+     "name": "Washington -- Statewide",
+     "employment": 893,
+     "yoy_change": -102,
+     "weekly_wage": 2455,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "08000",
+     "name": "Colorado -- Statewide",
+     "employment": 853,
+     "yoy_change": 51,
+     "weekly_wage": 2260,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "16000",
+     "name": "Idaho -- Statewide",
+     "employment": 522,
+     "yoy_change": 89,
+     "weekly_wage": 1867,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "44000",
+     "name": "Rhode Island -- Statewide",
+     "employment": 488,
+     "yoy_change": -82,
+     "weekly_wage": 1813,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "50000",
+     "name": "Vermont -- Statewide",
+     "employment": 405,
+     "yoy_change": 26,
+     "weekly_wage": 1735,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "54000",
+     "name": "West Virginia -- Statewide",
+     "employment": 399,
+     "yoy_change": -49,
+     "weekly_wage": 1554,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "28000",
+     "name": "Mississippi -- Statewide",
+     "employment": 349,
+     "yoy_change": 39,
+     "weekly_wage": 1251,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "40000",
+     "name": "Oklahoma -- Statewide",
+     "employment": 333,
+     "yoy_change": 0,
+     "weekly_wage": 1633,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "23000",
+     "name": "Maine -- Statewide",
+     "employment": 260,
+     "yoy_change": 16,
+     "weekly_wage": 2124,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "30000",
+     "name": "Montana -- Statewide",
+     "employment": 141,
+     "yoy_change": -22,
+     "weekly_wage": 1631,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "35000",
+     "name": "New Mexico -- Statewide",
+     "employment": 116,
+     "yoy_change": 21,
+     "weekly_wage": 1448,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "22000",
+     "name": "Louisiana -- Statewide",
+     "employment": 61,
+     "yoy_change": 5,
+     "weekly_wage": 4261,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "11000",
+     "name": "District of Columbia, not unknown",
+     "employment": 5,
+     "yoy_change": 0,
+     "weekly_wage": 8212,
+     "period": "2026-Q1"
+    }
+   ],
+   "url": "https://data.bls.gov/cew/apps/table_maker/v4/table_maker.htm#type=2&year=2026&qtr=1&own=5&ind=3359"
+  },
+  "3361": {
+   "label": "자동차 제조",
+   "period": "2026-Q1",
+   "counties": [
+    {
+     "fips": "26163",
+     "name": "Wayne County, Michigan",
+     "employment": 24244,
+     "yoy_change": -995,
+     "weekly_wage": 2258,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48029",
+     "name": "Bexar County, Texas",
+     "employment": 5868,
+     "yoy_change": -83,
+     "weekly_wage": 1735,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17031",
+     "name": "Cook County, Illinois",
+     "employment": 5480,
+     "yoy_change": -83,
+     "weekly_wage": 2302,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39095",
+     "name": "Lucas County, Ohio",
+     "employment": 4358,
+     "yoy_change": 0,
+     "weekly_wage": 2137,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26045",
+     "name": "Eaton County, Michigan",
+     "employment": 4219,
+     "yoy_change": -271,
+     "weekly_wage": 2002,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "47119",
+     "name": "Maury County, Tennessee",
+     "employment": 3593,
+     "yoy_change": 0,
+     "weekly_wage": 2816,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26125",
+     "name": "Oakland County, Michigan",
+     "employment": 853,
+     "yoy_change": -15,
+     "weekly_wage": 3146,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06037",
+     "name": "Los Angeles County, California",
+     "employment": 816,
+     "yoy_change": 199,
+     "weekly_wage": 4587,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06071",
+     "name": "San Bernardino County, California",
+     "employment": 323,
+     "yoy_change": 106,
+     "weekly_wage": 1571,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "01073",
+     "name": "Jefferson County, Alabama",
+     "employment": 306,
+     "yoy_change": -212,
+     "weekly_wage": 1540,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39049",
+     "name": "Franklin County, Ohio",
+     "employment": 257,
+     "yoy_change": -77,
+     "weekly_wage": 1815,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06073",
+     "name": "San Diego County, California",
+     "employment": 158,
+     "yoy_change": 9,
+     "weekly_wage": 2083,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "32003",
+     "name": "Clark County, Nevada",
+     "employment": 129,
+     "yoy_change": -112,
+     "weekly_wage": 1213,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "47999",
+     "name": "Unknown Or Undefined, Tennessee",
+     "employment": 125,
+     "yoy_change": -3,
+     "weekly_wage": 1960,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26999",
+     "name": "Unknown Or Undefined, Michigan",
+     "employment": 108,
+     "yoy_change": -695,
+     "weekly_wage": 3195,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "51999",
+     "name": "Unknown Or Undefined, Virginia",
+     "employment": 84,
+     "yoy_change": 9,
+     "weekly_wage": 5874,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48999",
+     "name": "Unknown Or Undefined, Texas",
+     "employment": 81,
+     "yoy_change": 2,
+     "weekly_wage": 2688,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "29999",
+     "name": "Unknown Or Undefined, Missouri",
+     "employment": 40,
+     "yoy_change": 7,
+     "weekly_wage": 2551,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49035",
+     "name": "Salt Lake County, Utah",
+     "employment": 32,
+     "yoy_change": 6,
+     "weekly_wage": 3171,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "01999",
+     "name": "Unknown Or Undefined, Alabama",
+     "employment": 23,
+     "yoy_change": 6,
+     "weekly_wage": 2675,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12999",
+     "name": "Unknown Or Undefined, Florida",
+     "employment": 23,
+     "yoy_change": -4,
+     "weekly_wage": 3257,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17999",
+     "name": "Unknown Or Undefined, Illinois",
+     "employment": 18,
+     "yoy_change": -13,
+     "weekly_wage": 5097,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53999",
+     "name": "Unknown Or Undefined, Washington",
+     "employment": 18,
+     "yoy_change": 0,
+     "weekly_wage": 5301,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "13121",
+     "name": "Fulton County, Georgia",
+     "employment": 17,
+     "yoy_change": -22,
+     "weekly_wage": 5088,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06111",
+     "name": "Ventura County, California",
+     "employment": 12,
+     "yoy_change": 1,
+     "weekly_wage": 898,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12011",
+     "name": "Broward County, Florida",
+     "employment": 11,
+     "yoy_change": -1,
+     "weekly_wage": 2139,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37999",
+     "name": "Unknown Or Undefined, North Carolina",
+     "employment": 11,
+     "yoy_change": -3,
+     "weekly_wage": 4046,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "16999",
+     "name": "Unknown Or Undefined, Idaho",
+     "employment": 9,
+     "yoy_change": 3,
+     "weekly_wage": 2681,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39999",
+     "name": "Unknown Or Undefined, Ohio",
+     "employment": 8,
+     "yoy_change": 4,
+     "weekly_wage": 2625,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "24999",
+     "name": "Unknown Or Undefined, Maryland",
+     "employment": 7,
+     "yoy_change": 1,
+     "weekly_wage": 3026,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12099",
+     "name": "Palm Beach County, Florida",
+     "employment": 6,
+     "yoy_change": 0,
+     "weekly_wage": 4000,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12086",
+     "name": "Miami-Dade County, Florida",
+     "employment": 5,
+     "yoy_change": 0,
+     "weekly_wage": 554,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12103",
+     "name": "Pinellas County, Florida",
+     "employment": 4,
+     "yoy_change": 0,
+     "weekly_wage": 1823,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36999",
+     "name": "Unknown Or Undefined, New York",
+     "employment": 4,
+     "yoy_change": 0,
+     "weekly_wage": 2318,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53061",
+     "name": "Snohomish County, Washington",
+     "employment": 4,
+     "yoy_change": 0,
+     "weekly_wage": 1011,
+     "period": "2026-Q1"
+    }
+   ],
+   "states": [
+    {
+     "fips": "26000",
+     "name": "Michigan -- Statewide",
+     "employment": 43795,
+     "yoy_change": -2345,
+     "weekly_wage": 2253,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06000",
+     "name": "California -- Statewide",
+     "employment": 29694,
+     "yoy_change": 1629,
+     "weekly_wage": 3295,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48000",
+     "name": "Texas -- Statewide",
+     "employment": 29040,
+     "yoy_change": 883,
+     "weekly_wage": 2323,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "01000",
+     "name": "Alabama -- Statewide",
+     "employment": 21608,
+     "yoy_change": -1019,
+     "weekly_wage": 1707,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "18000",
+     "name": "Indiana -- Statewide",
+     "employment": 21109,
+     "yoy_change": 298,
+     "weekly_wage": 2093,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "21000",
+     "name": "Kentucky -- Statewide",
+     "employment": 21008,
+     "yoy_change": -2304,
+     "weekly_wage": 2254,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "47000",
+     "name": "Tennessee -- Statewide",
+     "employment": 19208,
+     "yoy_change": -1494,
+     "weekly_wage": 2147,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39000",
+     "name": "Ohio -- Statewide",
+     "employment": 19110,
+     "yoy_change": -588,
+     "weekly_wage": 1817,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "45000",
+     "name": "South Carolina -- Statewide",
+     "employment": 15347,
+     "yoy_change": -265,
+     "weekly_wage": 1941,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "29000",
+     "name": "Missouri -- Statewide",
+     "employment": 13622,
+     "yoy_change": -187,
+     "weekly_wage": 2436,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17000",
+     "name": "Illinois -- Statewide",
+     "employment": 12968,
+     "yoy_change": 2,
+     "weekly_wage": 2205,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "28000",
+     "name": "Mississippi -- Statewide",
+     "employment": 5039,
+     "yoy_change": -1366,
+     "weekly_wage": 1884,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "55000",
+     "name": "Wisconsin -- Statewide",
+     "employment": 4673,
+     "yoy_change": -42,
+     "weekly_wage": 1948,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "13000",
+     "name": "Georgia -- Statewide",
+     "employment": 4548,
+     "yoy_change": 223,
+     "weekly_wage": 1806,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42000",
+     "name": "Pennsylvania -- Statewide",
+     "employment": 3416,
+     "yoy_change": -277,
+     "weekly_wage": 1501,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "51000",
+     "name": "Virginia -- Statewide",
+     "employment": 2913,
+     "yoy_change": -934,
+     "weekly_wage": 1456,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12000",
+     "name": "Florida -- Statewide",
+     "employment": 2167,
+     "yoy_change": 169,
+     "weekly_wage": 1400,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "40000",
+     "name": "Oklahoma -- Statewide",
+     "employment": 1810,
+     "yoy_change": 0,
+     "weekly_wage": 1118,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53000",
+     "name": "Washington -- Statewide",
+     "employment": 1443,
+     "yoy_change": 0,
+     "weekly_wage": 3539,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36000",
+     "name": "New York -- Statewide",
+     "employment": 413,
+     "yoy_change": 11,
+     "weekly_wage": 1201,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "19000",
+     "name": "Iowa -- Statewide",
+     "employment": 337,
+     "yoy_change": 31,
+     "weekly_wage": 1216,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "32000",
+     "name": "Nevada -- Statewide",
+     "employment": 294,
+     "yoy_change": -100,
+     "weekly_wage": 1732,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "24000",
+     "name": "Maryland -- Statewide",
+     "employment": 217,
+     "yoy_change": -11,
+     "weekly_wage": 1351,
+     "period": "2026-Q1"
+    }
+   ],
+   "url": "https://data.bls.gov/cew/apps/table_maker/v4/table_maker.htm#type=2&year=2026&qtr=1&own=5&ind=3361"
+  },
+  "3364": {
+   "label": "항공우주 제품·부품 제조",
+   "period": "2026-Q1",
+   "counties": [
+    {
+     "fips": "06037",
+     "name": "Los Angeles County, California",
+     "employment": 53388,
+     "yoy_change": 1358,
+     "weekly_wage": 3127,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53033",
+     "name": "King County, Washington",
+     "employment": 39682,
+     "yoy_change": 661,
+     "weekly_wage": 3771,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53061",
+     "name": "Snohomish County, Washington",
+     "employment": 37519,
+     "yoy_change": 82,
+     "weekly_wage": 3431,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "20173",
+     "name": "Sedgwick County, Kansas",
+     "employment": 29430,
+     "yoy_change": 1406,
+     "weekly_wage": 2179,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48439",
+     "name": "Tarrant County, Texas",
+     "employment": 22647,
+     "yoy_change": 94,
+     "weekly_wage": 3554,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "04013",
+     "name": "Maricopa County, Arizona",
+     "employment": 17026,
+     "yoy_change": 210,
+     "weekly_wage": 2888,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "09110",
+     "name": "Capitol Planning Region, Connecticut",
+     "employment": 16180,
+     "yoy_change": -109,
+     "weekly_wage": 3853,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06073",
+     "name": "San Diego County, California",
+     "employment": 12723,
+     "yoy_change": 243,
+     "weekly_wage": 3213,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06059",
+     "name": "Orange County, California",
+     "employment": 10797,
+     "yoy_change": -176,
+     "weekly_wage": 3002,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12009",
+     "name": "Brevard County, Florida",
+     "employment": 10341,
+     "yoy_change": 1187,
+     "weekly_wage": 2948,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39061",
+     "name": "Hamilton County, Ohio",
+     "employment": 8521,
+     "yoy_change": 443,
+     "weekly_wage": 5213,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "40143",
+     "name": "Tulsa County, Oklahoma",
+     "employment": 8258,
+     "yoy_change": 106,
+     "weekly_wage": 2040,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "01089",
+     "name": "Madison County, Alabama",
+     "employment": 7265,
+     "yoy_change": 622,
+     "weekly_wage": 2823,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12095",
+     "name": "Orange County, Florida",
+     "employment": 7225,
+     "yoy_change": 0,
+     "weekly_wage": 3521,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48113",
+     "name": "Dallas County, Texas",
+     "employment": 6977,
+     "yoy_change": 490,
+     "weekly_wage": 3200,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25009",
+     "name": "Essex County, Massachusetts",
+     "employment": 6754,
+     "yoy_change": 329,
+     "weekly_wage": 3994,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06085",
+     "name": "Santa Clara County, California",
+     "employment": 6601,
+     "yoy_change": 478,
+     "weekly_wage": 5178,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49057",
+     "name": "Weber County, Utah",
+     "employment": 4896,
+     "yoy_change": 187,
+     "weekly_wage": 3063,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12099",
+     "name": "Palm Beach County, Florida",
+     "employment": 4043,
+     "yoy_change": 161,
+     "weekly_wage": 4116,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48029",
+     "name": "Bexar County, Texas",
+     "employment": 4009,
+     "yoy_change": -7,
+     "weekly_wage": 2178,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "40109",
+     "name": "Oklahoma County, Oklahoma",
+     "employment": 3846,
+     "yoy_change": -67,
+     "weekly_wage": 3062,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "18097",
+     "name": "Marion County, Indiana",
+     "employment": 3729,
+     "yoy_change": 146,
+     "weekly_wage": 3391,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42045",
+     "name": "Delaware County, Pennsylvania",
+     "employment": 3594,
+     "yoy_change": -47,
+     "weekly_wage": 3389,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49035",
+     "name": "Salt Lake County, Utah",
+     "employment": 3148,
+     "yoy_change": 262,
+     "weekly_wage": 2207,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "01097",
+     "name": "Mobile County, Alabama",
+     "employment": 3074,
+     "yoy_change": 188,
+     "weekly_wage": 1714,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "09130",
+     "name": "Lower Connecticut River Valley Planning Region, Connecticut",
+     "employment": 2814,
+     "yoy_change": -221,
+     "weekly_wage": 3005,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12086",
+     "name": "Miami-Dade County, Florida",
+     "employment": 2801,
+     "yoy_change": -42,
+     "weekly_wage": 2016,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25017",
+     "name": "Middlesex County, Massachusetts",
+     "employment": 2556,
+     "yoy_change": 154,
+     "weekly_wage": 3799,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39017",
+     "name": "Butler County, Ohio",
+     "employment": 2468,
+     "yoy_change": 106,
+     "weekly_wage": 7376,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53053",
+     "name": "Pierce County, Washington",
+     "employment": 2166,
+     "yoy_change": -226,
+     "weekly_wage": 2448,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39085",
+     "name": "Lake County, Ohio",
+     "employment": 2042,
+     "yoy_change": 140,
+     "weekly_wage": 1499,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48999",
+     "name": "Unknown Or Undefined, Texas",
+     "employment": 2036,
+     "yoy_change": 1626,
+     "weekly_wage": 4333,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "29183",
+     "name": "St. Charles County, Missouri",
+     "employment": 2026,
+     "yoy_change": -15,
+     "weekly_wage": 2760,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12011",
+     "name": "Broward County, Florida",
+     "employment": 1897,
+     "yoy_change": 246,
+     "weekly_wage": 2804,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26125",
+     "name": "Oakland County, Michigan",
+     "employment": 1836,
+     "yoy_change": 105,
+     "weekly_wage": 2749,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06029",
+     "name": "Kern County, California",
+     "employment": 1616,
+     "yoy_change": -218,
+     "weekly_wage": 3045,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "08005",
+     "name": "Arapahoe County, Colorado",
+     "employment": 1616,
+     "yoy_change": 133,
+     "weekly_wage": 2718,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12031",
+     "name": "Duval County, Florida",
+     "employment": 1549,
+     "yoy_change": -165,
+     "weekly_wage": 2445,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48485",
+     "name": "Wichita County, Texas",
+     "employment": 1513,
+     "yoy_change": 88,
+     "weekly_wage": 1927,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "06111",
+     "name": "Ventura County, California",
+     "employment": 1400,
+     "yoy_change": 18,
+     "weekly_wage": 1788,
+     "period": "2026-Q1"
+    }
+   ],
+   "states": [
+    {
+     "fips": "06000",
+     "name": "California -- Statewide",
+     "employment": 96669,
+     "yoy_change": 2768,
+     "weekly_wage": 3252,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "53000",
+     "name": "Washington -- Statewide",
+     "employment": 81467,
+     "yoy_change": 464,
+     "weekly_wage": 3538,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "48000",
+     "name": "Texas -- Statewide",
+     "employment": 51260,
+     "yoy_change": 1475,
+     "weekly_wage": 3120,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "12000",
+     "name": "Florida -- Statewide",
+     "employment": 36399,
+     "yoy_change": 2027,
+     "weekly_wage": 3003,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "20000",
+     "name": "Kansas -- Statewide",
+     "employment": 32932,
+     "yoy_change": 1399,
+     "weekly_wage": 2143,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "04000",
+     "name": "Arizona -- Statewide",
+     "employment": 32574,
+     "yoy_change": 559,
+     "weekly_wage": 3078,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "09000",
+     "name": "Connecticut -- Statewide",
+     "employment": 28115,
+     "yoy_change": -440,
+     "weekly_wage": 3808,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "13000",
+     "name": "Georgia -- Statewide",
+     "employment": 25760,
+     "yoy_change": 1234,
+     "weekly_wage": 2491,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "39000",
+     "name": "Ohio -- Statewide",
+     "employment": 21031,
+     "yoy_change": 931,
+     "weekly_wage": 4152,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "29000",
+     "name": "Missouri -- Statewide",
+     "employment": 19234,
+     "yoy_change": 937,
+     "weekly_wage": 3121,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "01000",
+     "name": "Alabama -- Statewide",
+     "employment": 16666,
+     "yoy_change": 951,
+     "weekly_wage": 2276,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "40000",
+     "name": "Oklahoma -- Statewide",
+     "employment": 13739,
+     "yoy_change": 279,
+     "weekly_wage": 2261,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "49000",
+     "name": "Utah -- Statewide",
+     "employment": 13319,
+     "yoy_change": 206,
+     "weekly_wage": 2610,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "42000",
+     "name": "Pennsylvania -- Statewide",
+     "employment": 10903,
+     "yoy_change": 559,
+     "weekly_wage": 2924,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "45000",
+     "name": "South Carolina -- Statewide",
+     "employment": 9951,
+     "yoy_change": 1085,
+     "weekly_wage": 2587,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "25000",
+     "name": "Massachusetts -- Statewide",
+     "employment": 9860,
+     "yoy_change": 474,
+     "weekly_wage": 4580,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "08000",
+     "name": "Colorado -- Statewide",
+     "employment": 9341,
+     "yoy_change": 517,
+     "weekly_wage": 4062,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "37000",
+     "name": "North Carolina -- Statewide",
+     "employment": 7096,
+     "yoy_change": 210,
+     "weekly_wage": 2625,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "26000",
+     "name": "Michigan -- Statewide",
+     "employment": 6991,
+     "yoy_change": 549,
+     "weekly_wage": 2585,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "18000",
+     "name": "Indiana -- Statewide",
+     "employment": 5750,
+     "yoy_change": 303,
+     "weekly_wage": 2899,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "17000",
+     "name": "Illinois -- Statewide",
+     "employment": 5267,
+     "yoy_change": 936,
+     "weekly_wage": 1847,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "36000",
+     "name": "New York -- Statewide",
+     "employment": 4887,
+     "yoy_change": -28,
+     "weekly_wage": 2469,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "05000",
+     "name": "Arkansas -- Statewide",
+     "employment": 4706,
+     "yoy_change": 189,
+     "weekly_wage": 1713,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "41000",
+     "name": "Oregon -- Statewide",
+     "employment": 3965,
+     "yoy_change": 564,
+     "weekly_wage": 2293,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "21000",
+     "name": "Kentucky -- Statewide",
+     "employment": 3543,
+     "yoy_change": 74,
+     "weekly_wage": 2175,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "54000",
+     "name": "West Virginia -- Statewide",
+     "employment": 2820,
+     "yoy_change": 130,
+     "weekly_wage": 2171,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "47000",
+     "name": "Tennessee -- Statewide",
+     "employment": 2797,
+     "yoy_change": 94,
+     "weekly_wage": 1776,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "24000",
+     "name": "Maryland -- Statewide",
+     "employment": 2528,
+     "yoy_change": 116,
+     "weekly_wage": 2555,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "50000",
+     "name": "Vermont -- Statewide",
+     "employment": 2476,
+     "yoy_change": 400,
+     "weekly_wage": 2058,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "27000",
+     "name": "Minnesota -- Statewide",
+     "employment": 2418,
+     "yoy_change": 386,
+     "weekly_wage": 2462,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "51000",
+     "name": "Virginia -- Statewide",
+     "employment": 2050,
+     "yoy_change": 52,
+     "weekly_wage": 3451,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "55000",
+     "name": "Wisconsin -- Statewide",
+     "employment": 1753,
+     "yoy_change": 56,
+     "weekly_wage": 1646,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "28000",
+     "name": "Mississippi -- Statewide",
+     "employment": 1685,
+     "yoy_change": 181,
+     "weekly_wage": 1951,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "34000",
+     "name": "New Jersey -- Statewide",
+     "employment": 1624,
+     "yoy_change": 91,
+     "weekly_wage": 2187,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "22000",
+     "name": "Louisiana -- Statewide",
+     "employment": 1269,
+     "yoy_change": -6,
+     "weekly_wage": 2366,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "19000",
+     "name": "Iowa -- Statewide",
+     "employment": 1243,
+     "yoy_change": 0,
+     "weekly_wage": 1882,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "31000",
+     "name": "Nebraska -- Statewide",
+     "employment": 1163,
+     "yoy_change": 172,
+     "weekly_wage": 1674,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "33000",
+     "name": "New Hampshire -- Statewide",
+     "employment": 1124,
+     "yoy_change": 44,
+     "weekly_wage": 1998,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "16000",
+     "name": "Idaho -- Statewide",
+     "employment": 744,
+     "yoy_change": 0,
+     "weekly_wage": 1645,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "32000",
+     "name": "Nevada -- Statewide",
+     "employment": 574,
+     "yoy_change": 32,
+     "weekly_wage": 1559,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "30000",
+     "name": "Montana -- Statewide",
+     "employment": 473,
+     "yoy_change": 63,
+     "weekly_wage": 2146,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "35000",
+     "name": "New Mexico -- Statewide",
+     "employment": 451,
+     "yoy_change": -10,
+     "weekly_wage": 2718,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "10000",
+     "name": "Delaware -- Statewide",
+     "employment": 374,
+     "yoy_change": 36,
+     "weekly_wage": 1872,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "02000",
+     "name": "Alaska -- Statewide",
+     "employment": 151,
+     "yoy_change": 21,
+     "weekly_wage": 1519,
+     "period": "2026-Q1"
+    },
+    {
+     "fips": "11000",
+     "name": "District of Columbia, not unknown",
+     "employment": 6,
+     "yoy_change": 0,
+     "weekly_wage": 2438,
+     "period": "2026-Q1"
+    }
+   ],
+   "url": "https://data.bls.gov/cew/apps/table_maker/v4/table_maker.htm#type=2&year=2026&qtr=1&own=5&ind=3364"
+  }
+ }
+}
