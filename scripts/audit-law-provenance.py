@@ -28,19 +28,25 @@ def iso_day(value):
 def https_url(value):
     if not isinstance(value, str):
         return False
-    p = urlsplit(value)
-    return p.scheme == "https" and bool(p.hostname) and not p.username and not p.password
+    try:
+        p = urlsplit(value)
+        return p.scheme == "https" and bool(p.hostname) and not p.username and not p.password
+    except ValueError:  # malformed IPv6 brackets/ports are bad source links, not fatal audit errors
+        return False
 
 
-def enacted_without_action_date(cc, row):
+def enacted_status(cc, row):
     status = str(row.get("st") or "")
-    enacted = (
+    return (
         (cc == "kr" and "가결" in status)
         or (cc == "jp" and "成立" in status)
         or (cc == "tw" and "三讀" in status)
         or (cc == "us" and bool(re.search(r"Became Public Law|Signed by President", status, re.I)))
     )
-    return enacted and not iso_day(row.get("sd"))
+
+
+def enacted_without_action_date(cc, row):
+    return enacted_status(cc, row) and not iso_day(row.get("sd"))
 
 
 def audit_document(cc, doc, today=None):
@@ -50,8 +56,9 @@ def audit_document(cc, doc, today=None):
     rows = doc["rows"]
     counts = {"rows": len(rows), "duplicate_id": 0, "missing_title": 0,
               "bad_url": 0, "bad_introduction_date": 0, "bad_action_date": 0,
-              "future_action_date": 0, "action_before_introduction": 0,
-              "enacted_action_date_missing": 0}
+              "future_introduction_date": 0, "future_action_date": 0,
+              "action_before_introduction": 0, "enacted_action_date_missing": 0,
+              "enacted_action_date_invalid": 0}
     seen = set()
     for row in rows:
         if not isinstance(row, dict):
@@ -67,6 +74,8 @@ def audit_document(cc, doc, today=None):
         introduced = iso_day(row.get("d"))
         if row.get("d") and not introduced:
             counts["bad_introduction_date"] += 1
+        if introduced and introduced > today:
+            counts["future_introduction_date"] += 1
         action = iso_day(row.get("sd"))
         if row.get("sd") and not action:
             counts["bad_action_date"] += 1
@@ -76,6 +85,11 @@ def audit_document(cc, doc, today=None):
             counts["action_before_introduction"] += 1
         if enacted_without_action_date(cc, row):
             counts["enacted_action_date_missing"] += 1
+        # An existing date is not necessarily a usable historical market event.
+        # Keep this separate from missing dates to avoid inventing an event day.
+        if (enacted_status(cc, row) and action and
+                (action > today or (introduced and action < introduced))):
+            counts["enacted_action_date_invalid"] += 1
     counts["count_mismatch"] = int(doc.get("count") != len(rows))
     counts["missing_corpus_source"] = int(not https_url(doc.get("source_url")))
     return counts
