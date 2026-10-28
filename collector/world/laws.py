@@ -31,12 +31,17 @@ PROBE = os.environ.get("LAWS_PROBE") == "1"  # 브랜치 시험: 저장 대신 �
 NOW = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
 
 
-def get(url, data=None, headers=None, timeout=40, insecure_retry=False):
+def get(url, data=None, headers=None, timeout=40, insecure_retry=False, legacy=False):
     h = dict(UA)
     h.update(headers or {})
     req = urllib.request.Request(url, data=data, headers=h)
+    ctx = None
+    if legacy:
+        # 대만 立法院 서버는 옛 TLS 재협상을 써서 OpenSSL 3 기본값이 거부한다(UNSAFE_LEGACY_RENEGOTIATION_DISABLED).
+        ctx = ssl.create_default_context()
+        ctx.options |= getattr(ssl, "OP_LEGACY_SERVER_CONNECT", 0x4)
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
+        with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
             return r.read()
     except ssl.SSLError:
         if not insecure_retry:
@@ -44,6 +49,8 @@ def get(url, data=None, headers=None, timeout=40, insecure_retry=False):
         # 일부 정부 사이트는 중간 인증서를 빼먹는다. 공개 자료 '읽기'만 하므로 이 경우에 한해 검증 없이 다시 시도하고 기록한다.
         print("::warning::laws: TLS chain incomplete for " + urllib.parse.urlsplit(url).netloc + " — retried without verification (read-only public data)")
         ctx = ssl._create_unverified_context()
+        if legacy:
+            ctx.options |= getattr(ssl, "OP_LEGACY_SERVER_CONNECT", 0x4)
         with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
             return r.read()
 
@@ -166,14 +173,23 @@ def jp():
     except Exception as e:
         print("::warning::laws jp: menu " + why(e))
         return len(rows)
-    sessions = sorted({int(x) for x in re.findall(r"kaiji(\d{3})\.htm", menu)}, reverse=True)[:int(os.environ.get("JP_SESSIONS", "6"))]
-    if not sessions:
-        print("::warning::laws jp: no session links on menu.htm (layout changed?) sample=" + strip(menu)[:200])
+    cur = re.search(r"第\s*(\d{3})\s*回国会", strip(menu))
+    links = {int(x) for x in re.findall(r"kaiji(\d{3})\.htm", menu)}
+    top = int(cur.group(1)) if cur else (max(links) if links else 0)
+    if not top:
+        print("::warning::laws jp: cannot find current session number sample=" + strip(menu)[:200])
+        return len(rows)
+    n = int(os.environ.get("JP_SESSIONS", "8"))
+    sessions = list(range(top, max(top - n, 150), -1))
     for s in sessions:
-        try:
-            page = jp_text(get(JP_BASE + "kaiji%d.htm" % s))
-        except Exception as e:
-            print("::warning::laws jp: session %d %s" % (s, why(e)))
+        page = None
+        for name in (("menu.htm",) if s == top else ()) + ("kaiji%d.htm" % s,):
+            try:
+                page = menu if name == "menu.htm" else jp_text(get(JP_BASE + name))
+                break
+            except Exception as e:
+                print("::warning::laws jp: session %d %s %s" % (s, name, why(e)))
+        if page is None:
             continue
         # 표: 種類(閣法/衆法/参法 등) 블록 안의 행 = 提出回次 | 番号 | 議案件名 | 審議状況 | 経過 | 本文
         kind = ""
@@ -190,11 +206,12 @@ def jp():
                 if not re.match(r"^\d+$", cells[0]) or not re.match(r"^\d+$", cells[1]):
                     continue
                 link = re.search(r'href="([^"]+)"', tds[4] if len(tds) > 4 else tr)
-                url = urllib.parse.urljoin(JP_BASE + "kaiji%d.htm" % s, html.unescape(link.group(1))) if link else JP_BASE + "kaiji%d.htm" % s
+                url = urllib.parse.urljoin(JP_BASE + "menu.htm", html.unescape(link.group(1))) if link else JP_BASE + "menu.htm"
                 bid = "%s-%s-%s-%s" % (s, kind or "議案", cells[0], cells[1])
                 rows[bid] = {"id": bid, "t": cells[2], "d": "", "st": cells[3], "sd": "", "u": url, "by": kind, "k": kind, "session": s, "submitted_session": int(cells[0])}
         if len(rows) == n0:
-            print("::warning::laws jp: session %d parsed 0 rows (layout?) sample=%s" % (s, strip(page)[:200]))
+            trs = re.findall(r"<tr[^>]*>(.*?)</tr>", page, flags=re.I | re.S)
+            print("::warning::laws jp: session %d parsed 0 rows (layout?) tables=%d rows=%d first_row=%s" % (s, len(re.findall(r"<table", page, flags=re.I)), len(trs), strip(trs[1] if len(trs) > 1 else page)[:240]))
         time.sleep(1.0)
     save("jp", rows, {"cc": "jp", "source": "衆議院 議案情報 (shugiin.go.jp)", "source_url": JP_BASE + "menu.htm",
                       "note": "d is empty: the bill list has no dates; 'session' = Diet session where it was listed"})
@@ -211,7 +228,7 @@ def tw():
     for _ in range(1):
         url = "https://data.ly.gov.tw/odw/ID20Action.action?" + urllib.parse.urlencode({"term": term, "sessionPeriod": "", "sessionTimes": "", "meetingTimes": "", "billName": "", "billOrg": "", "billProposer": "", "billCosignatory": "", "fileType": "json"})
         try:
-            d = json.loads(get(url, insecure_retry=True, timeout=60).decode("utf-8-sig"))
+            d = json.loads(get(url, insecure_retry=True, legacy=True, timeout=90).decode("utf-8-sig"))
         except Exception as e:
             tried.append("data.ly.gov.tw ID20: " + why(e))
             break
@@ -223,31 +240,59 @@ def tw():
             rows["ly-" + bid] = {"id": "ly-" + bid, "t": b.get("billName") or b.get("議案名稱") or "", "d": str(b.get("date") or b.get("提案日期") or ""),
                                  "st": b.get("billStatus") or b.get("議案狀態") or "", "sd": "", "by": b.get("billOrg") or b.get("billProposer") or "",
                                  "u": b.get("pdfUrl") or b.get("docUrl") or "https://ppg.ly.gov.tw/ppg/bills/%s/details" % bid, "k": "議案"}
-    # 2) g0v 立法院 API (공식 데이터를 다시 정리해 주는 공개 API)
+    # 2) g0v 立法院 API (공식 데이터를 다시 정리해 주는 공개 API). 천천히, 429면 기다렸다가, 다음 실행에서 이어서.
     if not rows or tried:
-        for page in range(1, int(os.environ.get("TW_PAGES", "20")) + 1):
+        state_path = os.path.join(OUT, "tw.state.json")
+        try:
+            state = json.load(open(state_path, encoding="utf-8"))
+        except (OSError, ValueError):
+            state = {}
+        page = int(state.get("next_page") or 1)
+        today = date.today().isoformat()
+        budget = time.time() + float(os.environ.get("TW_BUDGET_MIN", "12")) * 60
+        done_all = False
+        while time.time() < budget:
             url = "https://ly.govapi.tw/v2/bills?" + urllib.parse.urlencode({"屆": term, "page": page, "limit": 200})
-            try:
-                d = json.loads(get(url, timeout=60).decode("utf-8"))
-            except Exception as e:
-                tried.append("ly.govapi.tw v2: " + why(e))
+            d = None
+            for wait in (0, 30, 90):
+                if wait:
+                    time.sleep(wait)
+                try:
+                    d = json.loads(get(url, timeout=60).decode("utf-8"))
+                    break
+                except Exception as e:
+                    if getattr(e, "code", None) == 429:
+                        continue
+                    tried.append("ly.govapi.tw v2 page %d: %s" % (page, why(e)))
+                    break
+            if d is None:
+                if not any("page %d" % page in t for t in tried):
+                    tried.append("ly.govapi.tw v2 page %d: HTTP 429 after retries (will resume)" % page)
                 break
             items = d.get("bills") or d.get("data") or []
-            if page == 1 and items:
-                print("::notice::laws tw: ly.govapi.tw fields=" + ",".join(list(items[0].keys())[:25]))
             for b in items:
                 bid = str(b.get("議案編號") or b.get("billNo") or "")
                 if not bid:
                     continue
-                prop = b.get("提案人") or b.get("提案單位") or ""
+                prop = b.get("提案人") or b.get("提案單位/提案委員") or b.get("提案單位") or ""
                 if isinstance(prop, list):
                     prop = "、".join(map(str, prop[:5]))
-                rows["ly-" + bid] = {"id": "ly-" + bid, "t": b.get("議案名稱") or b.get("billName") or "", "d": str(b.get("提案日期") or b.get("最新進度日期") or "")[:10],
-                                     "st": b.get("議案狀態") or "", "sd": str(b.get("最新進度日期") or "")[:10], "by": str(prop),
+                latest = str(b.get("最新進度日期") or "")[:10]
+                first = str(b.get("提案日期") or "")[:10]
+                if not first and latest and latest <= today:
+                    first = latest  # 제안일이 없으면 지난 진행 날짜만(앞으로 열릴 회의 날짜는 쓰지 않음)
+                rows["ly-" + bid] = {"id": "ly-" + bid, "t": b.get("議案名稱") or b.get("billName") or "", "d": first,
+                                     "st": b.get("議案狀態") or "", "sd": latest, "by": str(prop)[:120],
                                      "u": b.get("url") or "https://ppg.ly.gov.tw/ppg/bills/%s/details" % bid, "k": b.get("議案類別") or "議案"}
             if len(items) < 200:
+                done_all = True
                 break
-            time.sleep(0.5)
+            page += 1
+            time.sleep(3)
+        if not PROBE:
+            os.makedirs(OUT, exist_ok=True)
+            json.dump({"next_page": 1 if done_all else page, "updated": NOW}, open(state_path, "w", encoding="utf-8"))
+        print("laws tw: g0v pages up to %d%s" % (page, " (complete)" if done_all else " (resume next run)"))
     for t in tried:
         print("::warning::laws tw: " + t)
     save("tw", rows, {"cc": "tw", "source": "立法院 開放資料 / g0v 立法院 API", "source_url": "https://data.ly.gov.tw/", "term": term})
