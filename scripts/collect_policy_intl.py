@@ -11,7 +11,7 @@ TAGS = {  # 다국어 제목 키워드 → 섹터
     "tech_ai": r"人工知能|\bAI\b|artificial intelligence|情報通信|電気通信|データ|digital|数字|數位|人工智能|資通訊|cyber|サイバー",
     "shipbuilding": r"造船|船舶|海運|shipbuild|maritime|航運",
     "defense": r"防衛|defen[cs]e|国防|國防|軍|dual-use|両用|两用",
-    "energy": r"エネルギー|電力|原子力|ガス|石油|水素|energy|electricity|能源|電力|核",
+    "energy": r"エネルギー|電力|原子力|ガス|石油|水素|energy|electricity|能源|電力|核电|核能|核電",
     "clean_energy": r"脱炭素|再生可能|太陽光|風力|CBAM|carbon|climate|renewable|碳|綠能|绿色",
     "health": r"医薬品|医療|薬|pharma|medic|health|医药|醫藥|醫療",
     "trade": r"関税|輸出|輸入|貿易|外為|tariff|anti-dumping|export|import|trade|关税|出口|进口|貿易|關稅|輸出|管制",
@@ -81,7 +81,24 @@ SELECT DISTINCT ?celex ?date ?title WHERE { ?w cdm:resource_legal_id_celex ?cele
         out.append({"id": "ec:" + ref, "kind": "press", "t": t, "d": r.get("eventDate"), "u": "https://ec.europa.eu/commission/presscorner/detail/en/" + ref.lower().replace("/", "_"), "dept": "EU 집행위원회",
                     "src": "European Commission Press corner", "tags": tags(t + " " + (r.get("leadText") or "")), "focus": f, "focus_ko": [FK[x] for x in f]})
     return out, {"source": "EUR-Lex/Publications Office SPARQL(규칙·결정·지침) + European Commission Press corner", "source_url": "https://op.europa.eu/en/web/webtools/linked-data-and-sparql"}
-SRC = {"jp": jp, "eu": eu}
+# ---------- 중국 ----------
+def cn():
+    """中国政府网 最新政策 JSON (robots: /zhengce/zuixin 허용) + 商务部 政策发布 목록(공식 페이지 빌드 API)."""
+    out = []
+    for r in json.loads(get("https://www.gov.cn/zhengce/zuixin/ZUIXINZHENGCE.json")):
+        t = T(r.get("TITLE")); u = r.get("URL") or ""
+        if t and u: out.append({"id": "govcn:" + hid(u), "kind": "policy", "t": t, "d": (r.get("DOCRELPUBTIME") or "")[:10] or None, "u": u, "dept": "国务院", "src": "中国政府网 最新政策", "tags": tags(t)})
+    try:
+        q = "parseType=bulidstatic&webId=8f43c7ad3afc411fb56f281724b73708&tplSetId=52551ea0e2c14bca8c84792f7aa37ead&pageType=column&tagId=%E5%88%86%E9%A1%B5%E5%88%97%E8%A1%A8&editType=null&pageId=fc8bdff48fa345a48b651c1285b70b8f"
+        h = json.loads(get("https://www.mofcom.gov.cn/api-gateway/jpaas-publish-server/front/page/build/unit?" + q))["data"]["html"]
+        for li in re.findall(r"<li.*?</li>", h, re.S):
+            m = re.search(r'href="([^"]+)"[^>]*title="([^"]+)"', li); d = re.search(r"(20\d\d-\d\d-\d\d)", li)
+            if not m: continue
+            u = m.group(1) if m.group(1).startswith("http") else "https://www.mofcom.gov.cn" + m.group(1); t = T(m.group(2))
+            out.append({"id": "mofcom:" + hid(u), "kind": "notice", "t": t, "d": d.group(1) if d else None, "u": u, "dept": "商务部", "src": "商务部 政策发布", "tags": tags(t)})
+    except Exception as e: print("mofcom fail", type(e).__name__)
+    return out, {"source": "中国政府网 最新政策 + 商务部 政策发布", "source_url": "https://www.gov.cn/zhengce/zuixin/"}
+SRC = {"jp": jp, "eu": eu, "cn": cn}
 def main():
     cc = sys.argv[1]; p = os.path.join(ROOT, "data", "policy", f"{cc}.json"); os.makedirs(os.path.dirname(p), exist_ok=True)
     old = json.load(open(p)) if os.path.exists(p) else {"items": []}; seen = {i["id"]: i for i in old["items"]}; n0 = len(seen)
