@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MONEY TRACKER — 의원 상세</title>
 <meta name="description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="MONEY TRACKER — 미국 의원 파일"><meta property="og:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
+<meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 의원 파일"><meta name="twitter:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
+<meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
 *{box-sizing:border-box}
@@ -116,6 +121,7 @@ header.bar input.nm{width:200px;text-transform:none}
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
 <script src="assets/insights-card.js?v=ins-20261028"></script>
+<script src="assets/share.js?v=share-20261028"></script>
 <script>
 (function () {
   "use strict";
@@ -213,6 +219,17 @@ header.bar input.nm{width:200px;text-transform:none}
     else cm.appendChild(el("p", "note", "데이터에 위원회 정보가 없습니다."));
     head.appendChild(cm);
     var acts = el("div", "actions"), mapBtn = el("a", "btn", "🛰 지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(mapName); acts.appendChild(mapBtn);
+    if (window.MTShare) {
+      // 공유: insights.json 의원 항목 → 없으면 이 페이지의 신고 건수 (원문 PTR 링크)
+      var sh = INS && INS.members ? window.MTShare.pick(INS.members[id] || INS.members[name]) : null;
+      if (!sh && rows.length) {
+        var nP = 0, nS = 0; rows.forEach(function (x) { var t = String(x.ty || "").charAt(0); if (t === "P") nP++; else if (t === "S") nS++; });
+        sh = { line: "주식 거래 신고(PTR) " + rows.length + "건(구입 " + nP + "·처분 " + nS + "), 가장 최근 신고일 " + (rows[0].filed || "-") + " (신고 기준, 데이터상)", src: /^https:/.test(rows[0].doc || "") ? rows[0].doc : "https://disclosures-clerk.house.gov/FinancialDisclosure", date: rows[0].filed || "" };
+      }
+      sh = sh || {};
+      acts.appendChild(window.MTShare.button({ head: name + " 의원", line: sh.line, src: sh.src, date: sh.date, url: window.MTShare.url({ n: Q || name }) }));
+      window.MTShare.meta("MONEY TRACKER — " + name + " 의원 파일", sh.line || "미국 의원 공개 기록 정리 · 신고 기준 · 투자 조언 아님");
+    }
     head.appendChild(acts);
     app.appendChild(head);
 

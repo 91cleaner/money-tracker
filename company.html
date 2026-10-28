@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MONEY TRACKER — 회사 상세</title>
 <meta name="description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="MONEY TRACKER — 미국 회사 파일"><meta property="og:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
+<meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 회사 파일"><meta name="twitter:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
+<meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
 *{box-sizing:border-box}
@@ -90,6 +95,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
 <script src="assets/insights-card.js?v=ins-20261028"></script>
+<script src="assets/share.js?v=share-20261028"></script>
 <script>
 (function () {
   "use strict";
@@ -250,6 +256,15 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     } else meta.textContent = "SEC 업종 정보 없음";
     head.appendChild(meta);
     var acts = el("div", "actions"), mapBtn = el("a", "btn", "🛰 지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(T); acts.appendChild(mapBtn);
+    if (window.MTShare) {
+      // 공유: insights.json 핵심 1줄 → 없으면 신고 건수 → 없으면 SEC 업종 (모두 원문 링크와 함께)
+      var coName = (ent && ent.name) || (sec && sec.name) || T, sh = ins && ins.companies ? window.MTShare.pick(ins.companies[T]) : null;
+      if (!sh && trades.length) sh = { line: "하원 PTR 신고 " + trades.length + "건, 가장 최근 신고일 " + (trades[0].filed || "-") + " (신고 기준, 데이터상)", src: /^https:/.test(trades[0].doc || "") ? trades[0].doc : "https://disclosures-clerk.house.gov/FinancialDisclosure", date: trades[0].filed || "" };
+      if (!sh && sec) sh = { line: "SEC 등록 업종 SIC " + sec.sic + " " + (sec.sic_desc || ""), src: sec.source_url, date: "" };
+      sh = sh || {};
+      acts.appendChild(window.MTShare.button({ head: coName + (coName === T ? "" : "(" + T + ")"), line: sh.line, src: sh.src, date: sh.date, url: window.MTShare.url({ t: T }) }));
+      window.MTShare.meta("MONEY TRACKER — " + coName + " (" + T + ") 회사 파일", sh.line || "미국 상장사 공개 기록 정리 · 투자 조언 아님");
+    }
     head.appendChild(acts);
     app.appendChild(head);
 

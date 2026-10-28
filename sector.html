@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MONEY TRACKER — 업종 상세</title>
 <meta name="description" content="업종별 공개 기록: 소속 회사 종가, 의원 거래 신고, 연방 계약·로비 합계, 공시 사업장. 데이터상 정리이며 투자 조언 아님.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="MONEY TRACKER — 미국 업종 파일"><meta property="og:description" content="업종별 공개 기록: 소속 회사 종가, 의원 거래 신고, 연방 계약·로비 합계, 공시 사업장. 데이터상 정리이며 투자 조언 아님.">
+<meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 업종 파일"><meta name="twitter:description" content="업종별 공개 기록: 소속 회사 종가, 의원 거래 신고, 연방 계약·로비 합계, 공시 사업장. 데이터상 정리이며 투자 조언 아님.">
+<meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff;--sell:#ffb35d}
 *{box-sizing:border-box}
@@ -88,6 +93,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 </header>
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
+<script src="assets/share.js?v=share-20261028"></script>
 <script>
 (function () {
   "use strict";
@@ -163,7 +169,15 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var st = el("div", "stats");
     [[cos.length + "곳", "소속 회사"], [recent.length + "건", "최근 " + WINDOW + "일 의원 거래 신고"], [nP + " / " + nS, "구입(P) / 처분(S) 신고"], [ref || "-", "거래 신고 기준일"]].forEach(function (x) { var d = el("div"); d.append(el("b", "", x[0]), el("span", "", x[1])); st.appendChild(d); });
     head.appendChild(st);
-    var acts = el("div", "actions"); var mb = el("a", "btn", "🛰 지도에서 보기"); mb.href = "world-intelligence/?q=" + encodeURIComponent(sec.name); acts.appendChild(mb); head.appendChild(acts);
+    var acts = el("div", "actions"); var mb = el("a", "btn", "🛰 지도에서 보기"); mb.href = "world-intelligence/?q=" + encodeURIComponent(sec.name); acts.appendChild(mb);
+    if (window.MTShare) {
+      // 공유: insights.json 업종 항목 → 없으면 최근 90일 신고 건수 (하원 공시 원문 페이지)
+      var sh = ins && ins.sectors ? window.MTShare.pick(ins.sectors[S]) : null;
+      if (!sh) sh = { line: "최근 " + WINDOW + "일 의원 거래 신고 " + recent.length + "건(구입 " + nP + "·처분 " + nS + "), 소속 회사 " + cos.length + "곳 (신고 기준, 데이터상)", src: "https://disclosures-clerk.house.gov/FinancialDisclosure", date: ref };
+      acts.appendChild(window.MTShare.button({ head: sec.name + " 업종", line: sh.line, src: sh.src, date: sh.date, url: window.MTShare.url({ s: S }) }));
+      window.MTShare.meta("MONEY TRACKER — " + sec.name + " 업종 파일", sh.line);
+    }
+    head.appendChild(acts);
     app.appendChild(head);
 
     // 2) companies with prices
