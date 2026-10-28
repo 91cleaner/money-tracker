@@ -13,6 +13,7 @@ import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -22,7 +23,7 @@ OUT = os.path.join("data", "kr", "labor.json")
 HOLD = os.path.join("data", "nps", "kr_holdings.json")
 DART = "https://opendart.fss.or.kr/api/"
 KEEP_DAYS = 365
-FIRST_DAYS = 89
+FIRST_DAYS = 80  # corp_code 없이 조회하면 기간은 최대 3개월
 DAYS = 10
 
 # (종류 id, 제목 정규식). 앞에서부터 먼저 맞는 것을 쓴다.
@@ -103,10 +104,22 @@ def http_json(url, tries=3):
         try:
             with urllib.request.urlopen(url, timeout=30) as r:
                 return json.loads(r.read().decode("utf-8"))
-        except Exception as e:  # 주소(키 포함)는 오류 글에 넣지 않는다
+        except urllib.error.HTTPError as e:  # 주소(키 포함)는 오류 글에 넣지 않는다
+            last = f"HTTP {e.code}"
+        except Exception as e:
             last = type(e).__name__
             time.sleep(3 * (i + 1))
     raise RuntimeError("요청 실패: " + str(last))
+
+
+def mask(text):
+    """로그에 남기는 글에서 비밀 값(키)을 가린다."""
+    t = str(text)
+    for k in ("DART_API_KEY", "DATA_GO_KR_KEY"):
+        v = os.environ.get(k)
+        if v:
+            t = t.replace(v, "***")
+    return t
 
 
 def dart_list(bgn, end, ty):
@@ -187,7 +200,8 @@ def main():
                 have[d["rcept_no"]] = d
             status["dart"].update(status="ok", reason="")
         except Exception as e:
-            status["dart"].update(status="error", reason=str(e)[:120])
+            status["dart"].update(status="error", reason=mask(e)[:200])
+            print(f"::warning::dart 실패: {mask(e)[:200]} (기간 {bgn}~{end})", file=sys.stderr)
     else:
         status["dart"]["reason"] = "DART_API_KEY 없음 (opendart.fss.or.kr 에서 무료 발급)"
     cut = (today - timedelta(days=KEEP_DAYS)).isoformat()
@@ -204,7 +218,8 @@ def main():
             else:
                 status["moel_stats"].update(status="error", reason="응답에서 업종·월·건수 줄을 읽지 못함")
         except Exception as e:
-            status["moel_stats"].update(status="error", reason=str(e)[:120])
+            status["moel_stats"].update(status="error", reason=mask(e)[:200])
+            print(f"::warning::moel_stats 실패: {mask(e)[:200]}", file=sys.stderr)
     else:
         status["moel_stats"]["reason"] = "LABOR_STATS_URL(공공데이터포털 활용신청 후 받은 주소) 또는 DATA_GO_KR_KEY 없음"
     status["nlrc"]["reason"] = "키 없이 받을 수 있는 공개 API·정기 파일을 확인하지 못해 수집하지 않음. 원문 사이트 링크만 제공."
@@ -220,11 +235,16 @@ def main():
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
     print(f"labor: 공시 {len(disc)}건, 업종 {len(inds)}개, 상태 " + ", ".join(f"{k}={v['status']}" for k, v in status.items()))
+    tried = [v["status"] for v in status.values() if v["status"] != "skipped"]
+    if tried and "ok" not in tried:
+        print("::error::시도한 소스가 모두 실패했습니다", file=sys.stderr)
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
     try:
-        main()
+        sys.exit(main())
     except Exception as e:
         print(f"::warning::labor 실패: {type(e).__name__}")
         sys.exit(0)
