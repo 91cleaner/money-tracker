@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "built_at": "2026-10-28T01:53:38.263Z",
+  "built_at": "2026-10-28T01:57:41.523Z",
   "counts": {
     "calendar": 29,
     "event": 12,
@@ -8,12 +8,12 @@
     "lawmaker": 540,
     "company": 9,
     "regulation": 728,
+    "country": 23,
     "policy": 3,
-    "factor": 27,
+    "factor": 28,
     "dataset": 25,
     "agreement": 8,
     "relation": 2,
-    "country": 4,
     "history": 3,
     "minutes": 46,
     "bill": 944,
@@ -986,6 +986,405 @@
       "route": null
     },
     {
+      "id": "country-profile-AUS",
+      "type": "country",
+      "title": "나라 특성 · 호주 (AUS)",
+      "aliases": [
+        "호주",
+        "AUS",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 1.80조 달러 (2025) · 성장률 1.4% (2025) · 인구 27.6백만 (2025) · 수출/GDP 23.2% (2025) · 물가상승률 2.9% (2025) · 국방비 353억 달러 (2025) · 국방비/GDP 1.92% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/AUS",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-BRA",
+      "type": "country",
+      "title": "나라 특성 · 브라질 (BRA)",
+      "aliases": [
+        "브라질",
+        "BRA",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 2.28조 달러 (2025) · 성장률 2.3% (2025) · 인구 212.8백만 (2025) · 수출/GDP 17.8% (2025) · 물가상승률 5.0% (2025) · 국방비 239억 달러 (2025) · 국방비/GDP 1.05% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/BRA",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-CAN",
+      "type": "country",
+      "title": "나라 특성 · 캐나다 (CAN)",
+      "aliases": [
+        "캐나다",
+        "CAN",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 2.32조 달러 (2025) · 성장률 1.7% (2025) · 인구 41.7백만 (2025) · 수출/GDP 31.3% (2025) · 물가상승률 2.1% (2025) · 국방비 375억 달러 (2025) · 국방비/GDP 1.63% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/CAN",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-CHN",
+      "type": "country",
+      "title": "나라 특성 · 중국 (CHN)",
+      "aliases": [
+        "중국",
+        "CHN",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 19.50조 달러 (2025) · 성장률 5.0% (2025) · 인구 1406.6백만 (2025) · 수출/GDP 21.1% (2025) · 물가상승률 0.1% (2025) · 국방비 3,355억 달러 (2025) · 국방비/GDP 1.72% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/CHN",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-DEU",
+      "type": "country",
+      "title": "나라 특성 · 독일 (DEU)",
+      "aliases": [
+        "독일",
+        "DEU",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 5.05조 달러 (2025) · 성장률 0.2% (2025) · 인구 83.5백만 (2025) · 수출/GDP 40.4% (2025) · 물가상승률 2.2% (2025) · 국방비 1,136억 달러 (2025) · 국방비/GDP 2.27% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/DEU",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-FRA",
+      "type": "country",
+      "title": "나라 특성 · 프랑스 (FRA)",
+      "aliases": [
+        "프랑스",
+        "FRA",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 3.37조 달러 (2025) · 성장률 0.8% (2025) · 인구 68.7백만 (2025) · 수출/GDP 33.4% (2025) · 물가상승률 0.9% (2025) · 국방비 680억 달러 (2025) · 국방비/GDP 2.03% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/FRA",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-GBR",
+      "type": "country",
+      "title": "나라 특성 · 영국 (GBR)",
+      "aliases": [
+        "영국",
+        "GBR",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 4.00조 달러 (2025) · 성장률 1.4% (2025) · 인구 69.5백만 (2025) · 수출/GDP 30.6% (2025) · 물가상승률 3.9% (2025) · 국방비 890억 달러 (2025) · 국방비/GDP 2.35% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/GBR",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-IND",
+      "type": "country",
+      "title": "나라 특성 · 인도 (IND)",
+      "aliases": [
+        "인도",
+        "IND",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 3.96조 달러 (2025) · 성장률 7.6% (2025) · 인구 1463.9백만 (2025) · 수출/GDP 22.3% (2025) · 물가상승률 2.4% (2025) · 국방비 921억 달러 (2025) · 국방비/GDP 2.30% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/IND",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-ISR",
+      "type": "country",
+      "title": "나라 특성 · 이스라엘 (ISR)",
+      "aliases": [
+        "이스라엘",
+        "ISR",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 0.61조 달러 (2025) · 성장률 2.9% (2025) · 인구 10.1백만 (2025) · 수출/GDP 27.6% (2025) · 물가상승률 3.0% (2025) · 국방비 483억 달러 (2025) · 국방비/GDP 7.81% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/ISR",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-ITA",
+      "type": "country",
+      "title": "나라 특성 · 이탈리아 (ITA)",
+      "aliases": [
+        "이탈리아",
+        "ITA",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 2.55조 달러 (2025) · 성장률 0.5% (2025) · 인구 58.9백만 (2025) · 수출/GDP 32.2% (2025) · 물가상승률 1.5% (2025) · 국방비 481억 달러 (2025) · 국방비/GDP 1.89% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/ITA",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-JPN",
+      "type": "country",
+      "title": "나라 특성 · 일본 (JPN)",
+      "aliases": [
+        "일본",
+        "JPN",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 4.44조 달러 (2025) · 성장률 1.2% (2025) · 인구 123.4백만 (2025) · 수출/GDP 22.0% (2024) · 물가상승률 3.2% (2025) · 국방비 622억 달러 (2025) · 국방비/GDP 1.41% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/JPN",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-KOR",
+      "type": "country",
+      "title": "나라 특성 · 한국 (KOR)",
+      "aliases": [
+        "한국",
+        "KOR",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 1.87조 달러 (2025) · 성장률 1.0% (2025) · 인구 51.7백만 (2025) · 수출/GDP 45.8% (2025) · 물가상승률 2.1% (2025) · 국방비 478억 달러 (2025) · 국방비/GDP 2.60% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/KOR",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-MEX",
+      "type": "country",
+      "title": "나라 특성 · 멕시코 (MEX)",
+      "aliases": [
+        "멕시코",
+        "MEX",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 1.83조 달러 (2025) · 성장률 0.6% (2025) · 인구 131.9백만 (2025) · 수출/GDP 39.6% (2025) · 물가상승률 3.8% (2025) · 국방비 136억 달러 (2025) · 국방비/GDP 0.74% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/MEX",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-NLD",
+      "type": "country",
+      "title": "나라 특성 · 네덜란드 (NLD)",
+      "aliases": [
+        "네덜란드",
+        "NLD",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 1.33조 달러 (2025) · 성장률 1.8% (2025) · 인구 18.1백만 (2025) · 수출/GDP 80.7% (2025) · 물가상승률 3.2% (2025) · 국방비 289억 달러 (2025) · 국방비/GDP 2.19% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/NLD",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-RUS",
+      "type": "country",
+      "title": "나라 특성 · 러시아 (RUS)",
+      "aliases": [
+        "러시아",
+        "RUS",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 2.56조 달러 (2025) · 성장률 1.0% (2025) · 인구 143.5백만 (2025) · 수출/GDP 18.2% (2025) · 물가상승률 8.7% (2025) · 국방비 1,904억 달러 (2025) · 국방비/GDP 7.50% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/RUS",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-SAU",
+      "type": "country",
+      "title": "나라 특성 · 사우디아라비아 (SAU)",
+      "aliases": [
+        "사우디아라비아",
+        "SAU",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 1.28조 달러 (2025) · 성장률 4.5% (2025) · 인구 37.0백만 (2025) · 수출/GDP 29.7% (2025) · 물가상승률 2.0% (2025) · 국방비 832억 달러 (2025) · 국방비/GDP 6.48% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/SAU",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-UKR",
+      "type": "country",
+      "title": "나라 특성 · 우크라이나 (UKR)",
+      "aliases": [
+        "우크라이나",
+        "UKR",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 0.21조 달러 (2025) · 성장률 1.8% (2025) · 인구 39.0백만 (2025) · 수출/GDP 25.3% (2025) · 물가상승률 12.7% (2025) · 국방비 841억 달러 (2025) · 국방비/GDP 39.56% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/UKR",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-USA",
+      "type": "country",
+      "title": "나라 특성 · 미국 (USA)",
+      "aliases": [
+        "미국",
+        "USA",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 30.77조 달러 (2025) · 성장률 2.2% (2025) · 인구 341.8백만 (2025) · 수출/GDP 11.0% (2024) · 물가상승률 2.9% (2024) · 국방비 9,544억 달러 (2025) · 국방비/GDP 3.12% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/USA",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "country-profile-VNM",
+      "type": "country",
+      "title": "나라 특성 · 베트남 (VNM)",
+      "aliases": [
+        "베트남",
+        "VNM",
+        "나라 특성",
+        "GDP",
+        "인구",
+        "국방비",
+        "수출 비중",
+        "물가"
+      ],
+      "summary": "GDP 0.51조 달러 (2025) · 성장률 8.0% (2025) · 인구 101.6백만 (2025) · 수출/GDP 98.2% (2025) · 물가상승률 3.3% (2025) · 국방비 105억 달러 (2025) · 국방비/GDP 2.15% (2025). 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+      "source": "World Bank Open Data",
+      "url": "https://data.worldbank.org/country/VNM",
+      "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
       "id": "faa-starship",
       "type": "policy",
       "title": "FAA · Starship 발사·환경 심사",
@@ -1078,6 +1477,23 @@
       "route": null
     },
     {
+      "id": "factor-country_profiles",
+      "type": "factor",
+      "title": "참고 요인 · 나라 특성(GDP·성장률·인구·수출 비중·물가·국방비)",
+      "aliases": [
+        "나라 특성(GDP·성장률·인구·수출 비중·물가·국방비)",
+        "country",
+        "요인",
+        "시장 전체(지수)"
+      ],
+      "summary": "자동 수집 중인 자료와 연결됨 · 함께 보는 업종: 시장 전체(지수) · 출처: World Bank Open Data API (연간). 투자 신호가 아닙니다.",
+      "source": "World Bank Open Data API (연간)",
+      "url": "https://data.worldbank.org/",
+      "source_date": "2026-10-28",
+      "location": null,
+      "route": null
+    },
+    {
       "id": "factor-defense_spending",
       "type": "factor",
       "title": "참고 요인 · 국가별 국방비",
@@ -1087,9 +1503,9 @@
         "요인",
         "방산·항공우주"
       ],
-      "summary": "수집 예정(아직 자료 없음) · 함께 보는 업종: 방산·항공우주 · 출처: SIPRI Military Expenditure Database. 투자 신호가 아닙니다.",
-      "source": "SIPRI Military Expenditure Database",
-      "url": "https://www.sipri.org/databases/milex",
+      "summary": "자동 수집 중인 자료와 연결됨 · 함께 보는 업종: 방산·항공우주 · 출처: World Bank API · 군사비(원 출처 SIPRI), 연간. 투자 신호가 아닙니다.",
+      "source": "World Bank API · 군사비(원 출처 SIPRI), 연간",
+      "url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD",
       "source_date": "2026-10-28",
       "location": null,
       "route": null
@@ -46128,7 +46544,7 @@
         "다우존스",
         "코스피"
       ],
-      "summary": "함께 확인할 공개 지표: 미국 기준금리(연방기금 실효금리), 미국 10년 국채 금리, 미국 소비자물가지수, 미국 실업률, 원/달러 환율, 엔/달러 환율 외 6개 · 관련 법안 주제: 금리·통화정책, 관세·무역·수출통제 · 대표 종목: S&P 500, 나스닥 종합, 다우존스, 코스피, 코스닥, 닛케이 225 외 4개. 참고용 연결이며 예상·추천이 아닙니다.",
+      "summary": "함께 확인할 공개 지표: 미국 기준금리(연방기금 실효금리), 미국 10년 국채 금리, 미국 소비자물가지수, 미국 실업률, 원/달러 환율, 엔/달러 환율 외 7개 · 관련 법안 주제: 금리·통화정책, 관세·무역·수출통제 · 대표 종목: S&P 500, 나스닥 종합, 다우존스, 코스피, 코스닥, 닛케이 225 외 4개. 참고용 연결이며 예상·추천이 아닙니다.",
       "source": "MONEY TRACKER 업종·요인 참고표",
       "url": "https://github.com/91cleaner/money-tracker/blob/main/data/market/sectors.json",
       "source_date": "2026-10-28",
