@@ -1,0 +1,54 @@
+name: Market factors (Taiwan monthly revenue, ECB rates, FRED extra) — NO AI
+on:
+  schedule:
+    - cron: '10 23 * * *'   # 매일 08:10 KST
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/collect-market-factors.mjs'
+      - 'tests/market-factors.test.mjs'
+      - '.github/workflows/market-factors.yml'
+permissions:
+  contents: write
+concurrency:
+  group: market-factors
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parser unit tests
+        run: node --test tests/market-factors.test.mjs
+      - name: Collect official factors (each source fails independently, previous data kept)
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: node scripts/collect-market-factors.mjs
+      - name: Archive collected files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: market-factors-${{ github.run_number }}
+          path: data/market/factors/
+          if-no-files-found: ignore
+          retention-days: 7
+      # Branch pushes only test the real network fetch; data is committed from main only.
+      - name: Commit changed factor data (main only)
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          git config user.name 'money-tracker-data-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/market/factors/
+          if git diff --staged --quiet; then echo 'No changes.'; exit 0; fi
+          git commit -m 'data(market): refresh official factors [skip ci]'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then git rebase --abort || true; echo '::error::Upstream conflict; artifact retained.'; exit 1; fi
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 10))
+          done
+          exit 1
