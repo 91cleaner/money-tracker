@@ -64,6 +64,12 @@ class LivePagesExposureTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "unexpected redirect"):
             audit_mod.status_for(self.BASE, "x.json", opener)
 
+    def test_legacy_source_canaries_are_blocked(self):
+        # These files exist in the repo but should never be shipped by the
+        # allowlisted Pages artifact. A legacy branch publisher may serve them.
+        expected = {"server/worker.mjs", "wrangler.toml", "HANDOFF.md", "docs/AI-ROLES.md"}
+        self.assertTrue(expected.issubset(set(audit_mod.BLOCKED)))
+
     def test_public_trade_disclosures_not_blocked(self):
         self.assertNotIn("data/us/trades.json", audit_mod.BLOCKED)
 
