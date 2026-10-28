@@ -47,7 +47,7 @@
 ### 2026-10-28 오후 추가 진행 (자동 수집, 모두 `scripts/collect-market-factors.mjs` 한 파일·`market-factors.yml` 매일 08:10 KST)
 - 나라 특성: 세계은행 API 19개국 × 7개 지표(GDP·성장률·인구·수출/GDP·물가·국방비 금액·국방비/GDP, 국방비 원 출처 SIPRI) → `data/market/factors/country-profiles.json`, 나라별 검색 항목 `country-profile-<ISO3>`.
 - 한국·일본 월간 수출: FRED의 OECD MEI 시리즈(`XTEXVA01KRM667S`, `XTEXVA01JPM667S`)를 `fred-extra.json`에 수집 중. FRED 원문에서 단위 확인 완료(미국 달러, 월간, 계절조정; 한국 2026-08 약 1,004억 달러) → `kr_exports` collected로 전환. 더 정확한 1~10일 수출은 관세청(data.go.kr 키 `DATA_GO_KR_KEY`로 해당 API 활용신청 필요).
-- 한국 품목별 수출(반도체 8542·승용차 8703·배터리 8507·선박 8901·석유제품 2710·통신기기 8517): `krCustomsExports` 수집기 추가(관세청 `apis.data.go.kr/1220000/Itemtrade/getItemtradeList`, 워크플로에 `DATA_GO_KR_KEY` 전달). **2026-10-28 실행 결과 HTTP 403 — 저장된 공공데이터포털 키가 이 API 활용 승인을 받지 않은 것으로 보임.** 운영자가 공공데이터포털에서 '관세청_품목별 수출입실적(GW)' 활용신청 → 승인되면 자동으로 `data/market/factors/kr-exports-by-item.json`이 생김. 엔드포인트 경로가 다르면 403 대신 404가 날 것이니 그때 경로 확인. 다른 수집에는 영향 없음.
+- 한국 품목별 수출(반도체 8542·승용차 8703·배터리 8507·선박 8901·석유제품 2710·통신기기 8517): `krCustomsExports` 수집기 추가(관세청 `apis.data.go.kr/1220000/Itemtrade/getItemtradeList`, 워크플로에 `DATA_GO_KR_KEY` 전달). **운영자가 2026-10-28 활용신청 → 승인 후 수집 성공**(API는 조회기간 1년 이내만 허용 → 12개월씩 두 번 조회). `data/market/factors/kr-exports-by-item.json`. 2026-09 HS 8542 수출 431억 달러 — 산업부 '반도체'(603억 달러)와 분류 범위가 달라 숫자가 다름(파일 note에 명시).
 - 요인 현황: 28개 중 27개 수집 중. 남은 planned: `us_facilities`(EPA 시설). 대만 기준금리는 BIS에 없음. 한국은행 회의 일정은 여전히 `calendar.json`의 pending(공식 연간표 미확인).
 
 - **관제실 상황판**(`assets/mt-market-board.js`, `usa-command.html` 맨 끝 스크립트 한 줄): 오른쪽 위 "▦ 상황판" 버튼 → 접히는 패널(기본 닫힘)에 다가오는 공식 일정, 각국 기준금리, 대만 월매출(TSMC 등 전년 대비), 최근 미·중 수출통제 고시, 업종 선택 시 함께 볼 지표. 데스크톱·모바일 실제 Chromium 확인(패널 열린 상태에서도 지도 줌 버튼 사용 가능). 다른 모듈을 건드리지 않는 독립 파일.

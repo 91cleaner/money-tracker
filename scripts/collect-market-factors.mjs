@@ -455,7 +455,7 @@ async function euParliamentVotes() {
 
 
 // Korea Customs Service item trade (관세청 품목별 수출입실적) via data.go.kr. Needs DATA_GO_KR_KEY with this API approved.
-const HS = { "8542": "반도체(집적회로)", "8703": "승용차", "8507": "축전지(배터리)", "8901": "선박", "2710": "석유제품", "8517": "통신기기(휴대폰 등)" };
+const HS = { "8542": "집적회로(HS 8542, 반도체 핵심 품목)", "8703": "승용차", "8507": "축전지(배터리)", "8901": "선박", "2710": "석유제품", "8517": "통신기기(휴대폰 등)" };
 export function parseCustomsXml(xml) {
   const code = (String(xml).match(/<resultCode>([^<]*)<\/resultCode>/) || [])[1], msg = (String(xml).match(/<resultMsg>([^<]*)<\/resultMsg>/) || [])[1];
   if (code && code !== "00") throw Error("data.go.kr result " + code + " " + (msg || ""));
@@ -493,7 +493,7 @@ async function krCustomsExports() {
   }
   if (!Object.keys(out).length) throw Error("no customs items returned");
   writeJson("kr-exports-by-item.json", { source: "관세청 품목별 수출입실적 (공공데이터포털)", source_url: "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
-    note: "HS 4단위 품목별 월간 수출·수입액(달러). 잠정치는 이후 바뀔 수 있음.", collected_at: now(), items: out });
+    note: "HS 4단위 품목별 월간 수출·수입액(달러, 관세청). 산업통상자원부 발표 품목 분류(예: 반도체 = 집적회로+메모리 모듈 등)와 범위가 달라 숫자가 다를 수 있음(2026-09: HS 8542 431억 달러 vs 산업부 반도체 603억 달러). 잠정치는 이후 바뀔 수 있음.", collected_at: now(), items: out });
   return Object.entries(out).map(([k, v]) => k + "@" + v.latest.month).join(",");
 }
 
