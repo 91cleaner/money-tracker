@@ -161,6 +161,64 @@ def trade_parts(ent, mem_by_id):
         n += 1
     json.dump({"updated": T[0].get("filed") if T else None, "note": "하원 PTR 신고 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.", "trades": [dict(tk=t["tk"], who=t["who"], ty=t["ty"], amt=t.get("amt"), d=t.get("d"), fd=t.get("filed"), doc=t["doc"]) for t in T[:20]]}, open(os.path.join(ROOT, "data", "us", "trades-recent.json"), "w"), ensure_ascii=False, indent=0)
     return len(T), n
+
+LANDMARK = [  # 제정 법률(공식 congress.gov 페이지)
+    {"no": "HR 4346", "n": "CHIPS and Science Act", "ko": ["칩스법", "반도체지원법", "chips act", "chips and science act"], "law": "Public Law 117-167", "ad": "2022-08-09", "a": "Became Public Law No: 117-167.", "u": "https://www.congress.gov/bill/117th-congress/house-bill/4346", "c": 117, "topic": "semis"},
+    {"no": "HR 5376", "n": "Inflation Reduction Act of 2022", "ko": ["인플레이션 감축법", "ira", "인플레감축법"], "law": "Public Law 117-169", "ad": "2022-08-16", "a": "Became Public Law No: 117-169.", "u": "https://www.congress.gov/bill/117th-congress/house-bill/5376", "c": 117, "topic": "energy"}]
+TOPICS = {"tariff": (["관세", "tariff", "tariffs", "무역"], r"tariff|import dut|reciprocal trade|trade agreement|trade act", "관세·무역 법안"), "export": (["수출통제", "수출 통제", "수출규제", "export control"], r"export", "수출통제 법안"),
+    "china": (["중국 법안", "대중 규제", "china bill"], r"china|chinese|ccp|prc", "중국 관련 법안"), "semis": (["반도체 법안", "칩 법안", "semiconductor bill"], r"semiconductor|chip", "반도체 법안"),
+    "energy": (["에너지 법안", "energy bill"], r"energy|oil|gas|nuclear", "에너지 법안")}
+CTRY_RE = {"cn": r"china|chinese|prc|ccp", "tw": r"taiwan", "kr": r"korea", "jp": r"japan", "eu": r"europe|european"}
+def bill_parts(ent, mem_by_id):
+    d = opt("data", "us", "bills.json"); seen = {}; spons = {}
+    for mid, arr in (d.get("recent") or {}).items():
+        for b in arr:
+            if b.get("no") and b.get("u"): seen[b["no"]] = b; spons[b["no"]] = mid
+    lob = {}
+    for tk, c in (LB.get("companies") or {}).items():
+        for no, k in c.get("bills_mentioned", []): lob.setdefault(no, []).append((tk, k))
+    cm = {e["aliases"][0].lower(): k for k, e in ent.items() if e["type"] == "committee"}
+    cap = CENT["dc"]; n = 0; topic_bills = {t: [] for t in TOPICS}
+    items = [dict(b, sp=spons.get(no)) for no, b in seen.items()] + [dict(x, sp=None) for x in LANDMARK]
+    for b in items:
+        no = re.sub(r"\s+", " ", b["no"].upper()); low = b["n"].lower()
+        tops = [t for t, (_, rx, _) in TOPICS.items() if re.search(rx, low)] + ([b["topic"]] if b.get("topic") else [])
+        if not (no in lob or b.get("law") or b.get("pass") or tops or b.get("c")): continue
+        st = "법률 제정(" + b["law"] + ")" if isinstance(b.get("law"), str) else ("법률 제정" if b.get("law") else ("한 원 통과" if b.get("pass") else "계류"))
+        r = [{"region": f"{cap[0]} · 의회", "lat": cap[2], "lon": cap[3], "title": f"{b['no']} 현재 상태", "kind": "bill", "ref": "bill:" + no,
+              "fact": f"{b['n']}. 상태: {st}. 최근 조치({b.get('ad') or '-'}): {b.get('a') or '-'}", "source_url": b["u"], "date": b.get("ad")}]
+        m = mem_by_id.get(b.get("sp")) or {}
+        if m.get("ll"):
+            r.append({"region": f"발의 의원 지역구 · {m.get('state')}", "lat": m["ll"][0], "lon": m["ll"][1], "title": "대표 발의", "kind": "cmte", "ref": "sponsor:" + m["id"],
+                      "fact": f"대표 발의 {m['name']}({m.get('party')}-{m.get('state')}). 발의일 {b.get('d') or '-'}.", "source_url": b["u"], "date": b.get("d")})
+        mm = re.search(r"Committee on (?:the )?([A-Z][A-Za-z ,&]+?)[.;]", b.get("a") or "")
+        if mm:
+            k = cm.get(mm.group(1).strip().lower())
+            if k and ent[k]["route"]:
+                h = ent[k]["route"][0]
+                r.append({"region": h["region"], "lat": h["lat"], "lon": h["lon"], "title": "회부 위원회", "kind": "cmte", "ref": k, "fact": f"최근 조치에 회부 위원회로 {mm.group(1).strip()} 기재.", "source_url": b["u"], "date": b.get("ad")})
+        for cc, rx in CTRY_RE.items():
+            if re.search(rx, low) and cc in CENT:
+                c0 = CENT[cc]; r.append({"region": c0[0], "lat": c0[2], "lon": c0[3], "title": "법안 제목에 언급", "kind": "reg", "ref": "country:" + cc, "fact": f"법안 제목에 {c0[0]} 관련 표현이 있음(제목 기준, 영향 단정 아님).", "source_url": b["u"], "date": b.get("ad")})
+        for tk, k in sorted(lob.get(no, []), key=lambda x: -x[1])[:5]:
+            e = ent.get("company:" + tk)
+            if not e or not e["route"] or e["route"][0].get("lat") is None: continue
+            h = e["route"][0]
+            r.append({"region": f"{e['name']} ({tk})", "lat": h["lat"], "lon": h["lon"], "title": "로비 공시에 번호 언급", "kind": "lobby", "ref": "lobbying:" + tk,
+                      "fact": f"데이터상 {e['name']} 로비 공시 활동 설명에 {no} 언급 {k}회(회기 미표기, 원문 확인 필요).", "source_url": LB["companies"][tk]["source_url"], "date": LB.get("updated")})
+        nos = {no, no.replace(" ", ""), no.replace("HR ", "H.R.").replace("S ", "S.")}
+        ent["bill:" + no + (f":{b['c']}" if b.get("c") else "")] = {"type": "bill", "name": f"{b['no']} {b['n']}", "aliases": sorted(nos) + [b["n"]] + b.get("ko", []) + (["NDAA", "국방수권법"] if "national defense authorization act" in low else []), "route": r}
+        for t in set(tops): topic_bills[t].append((b.get("ad") or "", b, no))
+        n += 1
+    for t, lst in topic_bills.items():
+        if not lst: continue
+        lst.sort(key=lambda x: x[0], reverse=True); r = []
+        for i, (_, b, no) in enumerate(lst[:8]):
+            r.append({"region": f"{cap[0]} · {b['no']}", "lat": cap[2] + 0.02 * (i % 3 - 1), "lon": cap[3] + 0.02 * (i // 3 - 1), "title": b["no"], "kind": "bill", "ref": "bill:" + no,
+                      "fact": f"{b['n']} — 최근 조치({b.get('ad') or '-'}): {b.get('a') or '-'}", "source_url": b["u"], "date": b.get("ad")})
+        kw, _, label = TOPICS[t]
+        ent["topic:" + t] = {"type": "topic", "name": label, "aliases": kw + [label], "route": r}
+    return n
 def main():
     sec = J("data", "market", "sectors.json"); factors = {f["id"]: f for f in sec["factors"]}
     sectors = {s["id"]: s for s in sec["sectors"]}
@@ -275,6 +333,7 @@ def main():
     mem_by_id = {m["id"]: m for m in J("data", "us", "members.json")["members"]}
     nt, nm = trade_parts(ent, mem_by_id)
     print("trades", nt, "members", nm)
+    print("bills", bill_parts(ent, mem_by_id))
     res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR 신고 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
            "with_route": sum(1 for e in ent.values() if e["route"]), "money_stops": {k: sum(1 for e in ent.values() for x in e["route"] if (x.get("ref") or "").startswith(k)) for k in ("awards:", "lobbying:", "pac:")}, "entities": ent}
