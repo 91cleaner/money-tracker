@@ -14,6 +14,7 @@
   "use strict";
   if (window.MTShare) return;
   var LIMIT = 280, URLW = 23;
+  var I18N = window.MTI18N, tr = function (s) { return I18N ? I18N.tr(s) : s; }; // EN: Korean page strings -> English
   var script = document.currentScript;
   var BASE = (function () { try { return new URL("..", script.src).href; } catch (e) { return ""; } })(); // repo root
 
@@ -32,9 +33,13 @@
   function text(o) {
     o = o || {};
     var url = (/^https?:\/\/\S+$/.test(o.url || "") ? o.url : "") || location.href.split("#")[0], src = https(o.src), head = String(o.head || "").trim();
-    var tail = (src ? "\n출처: " + src : "") + (o.date ? (src ? " (" : "\n") + o.date + " 기준" + (src ? ")" : "") : "") + "\n" + url;
+    var EN = I18N && I18N.isEn;
+    var tail = EN ? (src ? "\nSource: " + src : "") + (o.date ? (src ? " (as of " : "\nAs of ") + I18N.dateEn(o.date) + (src ? ")" : "") : "") + "\n" + url
+      : (src ? "\n출처: " + src : "") + (o.date ? (src ? " (" : "\n") + o.date + " 기준" + (src ? ")" : "") : "") + "\n" + url;
     var fixed = weight(tail.replace(src, "").replace(url, "")) + URLW * (src ? 2 : 1);
-    var body = String(o.line || "").trim();
+    if (EN) head = head.replace(/ (의원|업종)$/, "");
+    head = tr(head);
+    var body = tr(String(o.line || "").trim());
     var first = head && body ? head + " · " + body : (head || body);
     return cut(first, LIMIT - fixed) + tail;
   }
@@ -64,6 +69,7 @@
   }
   function meta(title, desc) {
     if (!document.head) return;
+    title = tr(title); desc = tr(desc);
     if (title) { setMeta("property", "og:title", title); setMeta("name", "twitter:title", title); }
     if (desc) { desc = cut(desc, 300); setMeta("property", "og:description", desc); setMeta("name", "twitter:description", desc); }
   }
@@ -72,10 +78,11 @@
     var a = document.createElement("a");
     a.className = "btn mt-share";
     a.target = "_blank"; a.rel = "noopener noreferrer";
-    a.textContent = "𝕏 공유";
+    var EN = I18N && I18N.isEn;
+    a.textContent = EN ? "𝕏 Share" : "𝕏 공유";
     a.href = href(o);
-    a.title = "X에 공유: " + text(o);
-    a.setAttribute("aria-label", "X에 공유 (새 창)");
+    a.title = (EN ? "Share on X: " : "X에 공유: ") + text(o);
+    a.setAttribute("aria-label", EN ? "Share on X (new window)" : "X에 공유 (새 창)");
     return a;
   }
 
@@ -96,7 +103,8 @@
     if (!a && srcP && srcP.parentNode) {
       var p = document.createElement("p"); p.id = "mtShareP"; p.hidden = true;
       a = document.createElement("a"); a.id = "mtShareX"; a.target = "_blank"; a.rel = "noopener noreferrer";
-      a.textContent = "𝕏 이 경로 공유"; a.setAttribute("aria-label", "X에 공유 (새 창)");
+      var EN = I18N && I18N.isEn;
+      a.textContent = EN ? "𝕏 Share this route" : "𝕏 이 경로 공유"; a.setAttribute("aria-label", EN ? "Share on X (new window)" : "X에 공유 (새 창)");
       p.appendChild(a); srcP.after(p);
     }
     return a;
@@ -115,16 +123,16 @@
     var bag = INS && (kind === "company" ? INS.companies : kind === "sector" ? INS.sectors : kind === "member" ? INS.members : null);
     var p = bag ? pick(bag[key] || (e && bag[e.name])) : null;
     if (!p) p = { line: [step.region, step.fact].filter(Boolean).join(" — "), src: https(step.source_url), date: step.date || "" };
-    var name = (e && e.name) || String(m.title || "").replace(/ 경로$/, "");
+    var name = (e && e.name) || String(m.title || "").replace(/ (경로|route)$/, "");
     var head = kind === "company" && e && e.symbol ? name + "(" + e.symbol + ")" : name;
     var o = { head: head, line: p.line, src: p.src, date: p.date, url: url({ q: (e && (e.symbol || (kind === "member" && e.aliases && e.aliases[0]))) || name }) };
     if (my !== seq) return; // a newer stop was shown while we were loading
-    a.href = href(o); a.title = "X에 공유: " + text(o); box.hidden = false;
+    a.href = href(o); a.title = (I18N && I18N.isEn ? "Share on X: " : "X에 공유: ") + text(o); box.hidden = false;
     // Same link on the route control bar (#mtBar, shown only for data routes), so it is visible without scrolling the brief.
     var bar = document.getElementById("mtBar"), bx = document.getElementById("mtShareBarX");
     if (bar && !bx) {
       bx = document.createElement("a"); bx.id = "mtShareBarX"; bx.target = "_blank"; bx.rel = "noopener noreferrer"; bx.textContent = "𝕏";
-      bx.setAttribute("aria-label", "이 경로 X에 공유 (새 창)");
+      bx.setAttribute("aria-label", I18N && I18N.isEn ? "Share this route on X (new window)" : "이 경로 X에 공유 (새 창)");
       bx.style.cssText = "display:inline-flex;align-items:center;justify-content:center;min-height:36px;min-width:36px;padding:0 10px;background:#04170b;color:#5dff9e;border:1px solid #2bff88;border-radius:6px;font:inherit;text-decoration:none;white-space:nowrap";
       bar.appendChild(bx);
     }
