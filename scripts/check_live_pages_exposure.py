@@ -19,6 +19,11 @@ BLOCKED = (
     "wrangler.jsonc",
     ".github/workflows/deploy-pages.yml",
     "collector/collect.py",
+    # Canary paths that must exist in the source tree but never in curated Pages.
+    "server/worker.mjs",
+    "wrangler.toml",
+    "HANDOFF.md",
+    "docs/AI-ROLES.md",
 )
 
 
