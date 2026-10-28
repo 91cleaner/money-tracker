@@ -126,6 +126,14 @@ if (import.meta.url === "file://" + process.argv[1]) {
     catch (e) { results[name] = "FAILED: " + e.message; warn(name + " failed — previous file kept: " + e.message); }
   }
   console.log("::notice::RESULTS " + JSON.stringify(results));
+  // Sample values so a reviewer can check the fetched numbers against the official sites without downloading artifacts.
+  try {
+    const rd = f => JSON.parse(fs.readFileSync(path.join(OUT, f), "utf8"));
+    const tw = rd("tw-monthly-revenue.json"), ecb = rd("ecb-rates.json"), fr = rd("fred-extra.json");
+    const sample = { tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
+      ecb: Object.fromEntries(Object.entries(ecb.series || {}).map(([k, v]) => [k, v.latest])), fred: Object.fromEntries(Object.entries(fr.series || {}).map(([k, v]) => [k, v.latest])) };
+    console.log("::notice::SAMPLE " + JSON.stringify(sample));
+  } catch (e) { warn("sample summary unavailable: " + e.message); }
   fs.mkdirSync(OUT, { recursive: true });
   fs.writeFileSync(path.join(OUT, "status.json"), JSON.stringify({ results }, null, 1) + "\n");
   if (Object.values(results).every(v => v.startsWith("FAILED"))) process.exit(1);
