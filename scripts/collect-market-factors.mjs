@@ -7,6 +7,7 @@
  *  - US FDA new drug approvals (openFDA Drugs@FDA, keyless)
  *  - US county jobs for key industries (BLS QCEW open data, keyless)
  *  - Country profiles (GDP, population, exports %GDP, inflation, military spending) from the World Bank API
+ *  - UK House of Commons divisions (Commons Votes API) and European Parliament roll-call votes (HowTheyVote.eu)
  *  - FRED extra series (housing starts, copper, Korea/Japan monthly exports): fredgraph CSV, or the official API when FRED_API_KEY is set
  * Each source is independent: if one fails, its previous file is kept and a ::warning:: is printed.
  * Output: data/market/factors/*.json. Values are stored as published; nothing is estimated or filled in.
@@ -168,6 +169,14 @@ export function parseWorldBank(json) {
   }
   for (const k of Object.keys(by)) by[k].points.sort((a, b) => a.year - b.year);
   return by;
+}
+
+
+export function parseUkDivisions(rows) {
+  if (!Array.isArray(rows)) throw Error("unexpected UK Commons votes response");
+  return rows.filter(r => r && Number.isFinite(Number(r.DivisionId)) && r.Title).map(r => ({
+    id: Number(r.DivisionId), date: String(r.Date || "").slice(0, 10), number: r.Number ?? null, title: String(r.Title).slice(0, 300),
+    ayes: num(r.AyeCount), noes: num(r.NoCount), url: "https://votes.parliament.uk/votes/commons/division/" + Number(r.DivisionId) }));
 }
 
 function writeJson(file, data) {
@@ -363,6 +372,40 @@ async function worldBankCountries() {
   return Object.keys(out).length + " indicators";
 }
 
+
+async function ukCommonsVotes() {
+  const all = [];
+  for (let skip = 0; skip < 200; skip += 25) {
+    const url = "https://commonsvotes-api.parliament.uk/data/divisions.json/search?queryParameters.take=25&queryParameters.skip=" + skip;
+    const rows = parseUkDivisions(await (await get(url)).json());
+    all.push(...rows); if (rows.length < 25) break;
+  }
+  if (all.length < 10) throw Error("too few UK divisions: " + all.length);
+  const file = "uk-commons-divisions.json";
+  let old = {}; try { old = JSON.parse(fs.readFileSync(path.join(OUT, file), "utf8")); } catch {}
+  const by = new Map((old.divisions || []).map(d => [d.id, d])); for (const d of all) by.set(d.id, d);
+  const divisions = [...by.values()].sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id).slice(0, 1000);
+  writeJson(file, { source: "UK Parliament · Commons Votes API", source_url: "https://commonsvotes-api.parliament.uk/swagger/ui/index",
+    note: "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.", collected_at: now(), count: divisions.length, divisions });
+  return divisions.length + " divisions";
+}
+
+// European Parliament roll-call votes via HowTheyVote.eu (open data built from official EP records). Probe + store summaries.
+async function euParliamentVotes() {
+  const json = await (await get("https://howtheyvote.eu/api/votes?page_size=100", 40000)).json();
+  const rows = Array.isArray(json) ? json : (json.results || json.data || []);
+  const votes = rows.filter(v => v && v.id && (v.display_title || v.title)).map(v => ({ id: v.id, date: String(v.timestamp || v.date || "").slice(0, 10),
+    title: String(v.display_title || v.title).slice(0, 300), result: v.result || null, url: "https://howtheyvote.eu/votes/" + v.id }));
+  if (!votes.length) throw Error("no votes parsed; keys: " + Object.keys(json || {}).slice(0, 8).join(","));
+  const file = "eu-parliament-votes.json";
+  let old = {}; try { old = JSON.parse(fs.readFileSync(path.join(OUT, file), "utf8")); } catch {}
+  const by = new Map((old.votes || []).map(d => [String(d.id), d])); for (const d of votes) by.set(String(d.id), d);
+  const all = [...by.values()].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 1500);
+  writeJson(file, { source: "HowTheyVote.eu (European Parliament roll-call votes, built from official EP records)", source_url: "https://howtheyvote.eu/",
+    note: "유럽의회 기명 표결 요약과 링크. 의원별 표는 링크에서 확인. 원 출처 유럽의회 공식 기록.", collected_at: now(), count: all.length, votes: all });
+  return all.length + " votes";
+}
+
 async function chinaMofcomProbe() {
   const res = await fetch("https://www.mofcom.gov.cn/", { headers: UA, signal: AbortSignal.timeout(20000) });
   const html = await res.text();
@@ -374,7 +417,7 @@ async function chinaMofcomProbe() {
 
 if (import.meta.url === "file://" + process.argv[1]) {
   const results = {};
-  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates, fdaApprovals, qcewJobs, worldBankCountries })) {
+  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates, fdaApprovals, qcewJobs, worldBankCountries, ukCommonsVotes, euParliamentVotes })) {
     try { results[name] = "ok: " + await fn(); }
     catch (e) { results[name] = "FAILED: " + e.message; warn(name + " failed — previous file kept: " + e.message); }
   }
@@ -388,7 +431,8 @@ if (import.meta.url === "file://" + process.argv[1]) {
     const fda = (() => { try { const f = rd("us-fda-approvals.json"); return { count: f.count, novel: f.novel_count, latest: f.items.filter(x => x.novel).slice(0, 2).map(x => x.date + " " + x.brand.join("/") + " · " + x.sponsor) }; } catch { return null; } })();
     const jobs = (() => { try { const f = rd("us-jobs-by-county.json"); return Object.fromEntries(Object.entries(f.industries).map(([k, v]) => [k, v.period + " top: " + (v.counties[0] ? v.counties[0].name + " " + v.counties[0].employment : "-")])); } catch { return null; } })();
     const wb = (() => { try { const f = rd("country-profiles.json").indicators; return { KOR_gdp: f["NY.GDP.MKTP.CD"]?.countries?.KOR?.latest, KOR_mil_pct: f["MS.MIL.XPND.GD.ZS"]?.countries?.KOR?.latest, USA_mil: f["MS.MIL.XPND.CD"]?.countries?.USA?.latest }; } catch { return null; } })();
-    const sample = { wb, jobs, fda, policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
+    const votes = (() => { const o = {}; try { o.uk = rd("uk-commons-divisions.json").divisions.slice(0, 2).map(d => d.date + " " + d.title.slice(0, 60) + " " + d.ayes + ":" + d.noes); } catch {} try { o.eu = rd("eu-parliament-votes.json").votes.slice(0, 2).map(d => d.date + " " + d.title.slice(0, 60)); } catch {} return o; })();
+    const sample = { votes, wb, jobs, fda, policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
       ecb: Object.fromEntries(Object.entries(ecb.series || {}).map(([k, v]) => [k, v.latest])), fred: Object.fromEntries(Object.entries(fr.series || {}).map(([k, v]) => [k, v.latest])) };
     console.log("::notice::SAMPLE " + JSON.stringify(sample));
   } catch (e) { warn("sample summary unavailable: " + e.message); }

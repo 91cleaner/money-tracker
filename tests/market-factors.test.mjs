@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals, parseQcew, parseWorldBank } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals, parseQcew, parseWorldBank, parseUkDivisions } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -96,4 +96,10 @@ test("World Bank rows group by ISO3 and skip empty values", () => {
   const by = parseWorldBank(json);
   assert.deepEqual(by.KOR.points, [{ year: 2023, value: 2.8 }, { year: 2024, value: 2.6 }]);
   assert.throws(() => parseWorldBank({ message: "x" }), /unexpected/);
+});
+
+test("UK Commons divisions keep id, date, title, counts and official link", () => {
+  const out = parseUkDivisions([{ DivisionId: 2001, Date: "2026-10-21T00:00:00", Number: 300, Title: "Finance Bill: Third Reading", AyeCount: 320, NoCount: 180 }, { Title: "no id" }]);
+  assert.deepEqual(out, [{ id: 2001, date: "2026-10-21", number: 300, title: "Finance Bill: Third Reading", ayes: 320, noes: 180, url: "https://votes.parliament.uk/votes/commons/division/2001" }]);
+  assert.throws(() => parseUkDivisions({}), /unexpected/);
 });
