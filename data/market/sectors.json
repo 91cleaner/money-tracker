@@ -172,7 +172,8 @@
    "kind": "trade",
    "status": "planned",
    "source": "관세청 수출입무역통계",
-   "source_url": "https://tradedata.go.kr/"
+   "source_url": "https://tradedata.go.kr/",
+   "note": "FRED(OECD MEI) 한국 월간 수출액 시리즈 XTEXVA01KRM667S를 data/market/factors/fred-extra.json에 수집 중이나 단위 확인 전이라 planned 유지"
   },
   {
    "id": "tw_monthly_revenue",
@@ -238,9 +239,13 @@
    "id": "defense_spending",
    "label": "국가별 국방비",
    "kind": "policy",
-   "status": "planned",
-   "source": "SIPRI Military Expenditure Database",
-   "source_url": "https://www.sipri.org/databases/milex"
+   "status": "collected",
+   "source": "World Bank API · 군사비(원 출처 SIPRI), 연간",
+   "source_url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD",
+   "data": {
+    "file": "data/market/factors/country-profiles.json",
+    "list": "_indicators"
+   }
   },
   {
    "id": "drug_approvals",
@@ -297,6 +302,18 @@
     "file": "data/market/factors/policy-rates.json",
     "series": "GB"
    }
+  },
+  {
+   "id": "country_profiles",
+   "label": "나라 특성(GDP·성장률·인구·수출 비중·물가·국방비)",
+   "kind": "country",
+   "status": "collected",
+   "source": "World Bank Open Data API (연간)",
+   "source_url": "https://data.worldbank.org/",
+   "data": {
+    "file": "data/market/factors/country-profiles.json",
+    "list": "_indicators"
+   }
   }
  ],
  "sectors": [
@@ -316,7 +333,8 @@
     "jp_policy_rate",
     "ecb_policy_rate",
     "cn_policy_rate",
-    "uk_policy_rate"
+    "uk_policy_rate",
+    "country_profiles"
    ],
    "law_topics": [
     "rates",

@@ -99,3 +99,14 @@ test('FDA approvals and county jobs are searchable with official links', async (
   for (const d of [...fda, ...jobs]) assert.ok(https(d.url), d.id);
   assert.ok(jobs.every(d => /일자리/.test(d.title)));
 });
+
+test('country profiles are searchable per country', async () => {
+  const { countryProfileDocuments } = await import('../scripts/market-reference-index.mjs');
+  const docs = countryProfileDocuments(json('data/market/factors/country-profiles.json'));
+  assert.ok(docs.length >= 10);
+  const kor = docs.find(d => d.id === 'country-profile-KOR');
+  assert.ok(kor && /GDP/.test(kor.summary) && kor.aliases.includes('한국'));
+  const usa = docs.find(d => d.id === 'country-profile-USA');
+  assert.match(usa.summary, /국방비 [0-9,]{4,}억 달러/, 'US military spending shown in 억 달러 (e.g. 9,544억 달러)');
+  for (const d of docs) assert.match(d.url, /^https:\/\/data\.worldbank\.org\/country\//);
+});

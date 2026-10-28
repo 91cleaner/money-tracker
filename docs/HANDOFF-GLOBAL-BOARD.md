@@ -44,6 +44,11 @@
 - Brave Search API: 1,000회당 $5, 매달 $5 무료 크레딧.
 - 질문 1개 ≈ 웹검색 1회 + 요약 1회 ≈ 약 9원. 하루 1,000건이면 월 약 25만 원. 질문당 검색을 여러 번 하거나 공개 무제한이면 급증 → 한도 필수.
 
+### 2026-10-28 오후 추가 진행 (자동 수집, 모두 `scripts/collect-market-factors.mjs` 한 파일·`market-factors.yml` 매일 08:10 KST)
+- 나라 특성: 세계은행 API 19개국 × 7개 지표(GDP·성장률·인구·수출/GDP·물가·국방비 금액·국방비/GDP, 국방비 원 출처 SIPRI) → `data/market/factors/country-profiles.json`, 나라별 검색 항목 `country-profile-<ISO3>`.
+- 한국·일본 월간 수출: FRED의 OECD MEI 시리즈(`XTEXVA01KRM667S`, `XTEXVA01JPM667S`)를 `fred-extra.json`에 수집 중. **단위·계절조정 여부를 아직 확인 못 해서 화면·검색에는 안 씀**(한국 2026-08 값 100,418,800,000). FRED 시리즈 페이지에서 단위 확인 후 `kr_exports`를 collected로 바꿀 것. 더 정확한 1~10일 수출은 관세청(data.go.kr 키 `DATA_GO_KR_KEY`로 해당 API 활용신청 필요).
+- 요인 현황: 28개 중 25개 수집 중. 남은 planned: `kr_exports`(단위 확인), `us_facilities`(EPA 시설), 그리고 대만 기준금리는 BIS에 없음.
+
 ## 5. 이 세션이 끝낸 일
 - **PR #85 (main 병합됨):** 미국 관제실 지도에서 미션 비행 중 사용자가 줌(버튼·휠·더블클릭·핀치·키보드)하면 비행이 끝날 때 z13으로 되돌아가던 오류 수정(`assets/mt-command-ui.js`의 `userTookZoom`). 한국 엔진(`polgame.js` WORLD)처럼 위도 -60~78로 이동 범위 제한(경도 ±540, 날짜변경선 통과 유지).
 - 테스트: `tests/mt-zoom-browser.cjs`(실제 Chromium, 외부 타일 차단 상태에서 위성 전환·줌 버튼·경계·비행 중 줌 검사), `command-check.yml` 브라우저 단계에 포함. `tests/usa-map-smoke.test.cjs`에 계약 테스트 추가.

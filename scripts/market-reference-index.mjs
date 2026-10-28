@@ -74,3 +74,20 @@ export function jobsDocuments(file){
   summary:"민간 고용 상위: "+(v.counties||[]).slice(0,5).map(c=>(c.name||c.fips)+" "+c.employment.toLocaleString("en-US")+"명"+(c.yoy_change!=null?" (전년 대비 "+(c.yoy_change>=0?"+":"")+c.yoy_change.toLocaleString("en-US")+")":"")).join(" · ")+". BLS QCEW 분기 자료, 약 5~6개월 지연.",
   source:"U.S. BLS · QCEW",url:v.url,source_date:null,route:null}));
 }
+
+const KO = {USA:"미국",CHN:"중국",JPN:"일본",KOR:"한국",DEU:"독일",GBR:"영국",FRA:"프랑스",NLD:"네덜란드",IND:"인도",RUS:"러시아",ITA:"이탈리아",CAN:"캐나다",AUS:"호주",SAU:"사우디아라비아",ISR:"이스라엘",UKR:"우크라이나",VNM:"베트남",MEX:"멕시코",BRA:"브라질"};
+/** One search entry per country from the World Bank profile indicators. */
+export function countryProfileDocuments(file){
+ const ind=file?.indicators||{},isos=new Set();
+ for(const v of Object.values(ind))for(const k of Object.keys(v.countries||{}))isos.add(k);
+ const fmt=(id,iso,f)=>{const l=ind[id]?.countries?.[iso]?.latest;return l?f(l.value)+" ("+l.year+")":null;};
+ return [...isos].sort().map(iso=>{
+  const parts=[["GDP",fmt("NY.GDP.MKTP.CD",iso,v=>(v/1e12).toFixed(2)+"조 달러")],["성장률",fmt("NY.GDP.MKTP.KD.ZG",iso,v=>v.toFixed(1)+"%")],["인구",fmt("SP.POP.TOTL",iso,v=>(v/1e6).toFixed(1)+"백만")],
+   ["수출/GDP",fmt("NE.EXP.GNFS.ZS",iso,v=>v.toFixed(1)+"%")],["물가상승률",fmt("FP.CPI.TOTL.ZG",iso,v=>v.toFixed(1)+"%")],["국방비",fmt("MS.MIL.XPND.CD",iso,v=>Math.round(v/1e8).toLocaleString("en-US")+"억 달러")],["국방비/GDP",fmt("MS.MIL.XPND.GD.ZS",iso,v=>v.toFixed(2)+"%")]].filter(p=>p[1]);
+  const name=KO[iso]||iso;
+  return {id:"country-profile-"+iso,type:"country",title:"나라 특성 · "+name+" ("+iso+")",
+   aliases:[name,iso,"나라 특성","GDP","인구","국방비","수출 비중","물가"],
+   summary:parts.map(p=>p[0]+" "+p[1]).join(" · ")+". 세계은행 연간 자료(국방비 원 출처 SIPRI), 1~2년 지연.",
+   source:"World Bank Open Data",url:"https://data.worldbank.org/country/"+iso,source_date:null,route:null};
+ });
+}
