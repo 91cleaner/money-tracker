@@ -103,3 +103,16 @@ export function parliamentVoteDocuments(uk,eu){
   source:"HowTheyVote.eu · European Parliament",url:v.url,source_date:v.date||null,route:null});
  return out;
 }
+
+/** Company connection cards from data/market/company-links.json (sector → factors with latest values, exact-code records). */
+export function companyLinkDocuments(file){
+ const fmt=l=>!l?"자료 없음":l.count!=null?l.count+"건":l.unit==="yoy%"?(l.value>=0?"+":"")+Number(l.value).toFixed(1)+"% 전년 대비 ("+l.date+")":(Math.abs(l.value)>=1e8?Math.round(l.value/1e8).toLocaleString("en-US")+"억":Number(l.value).toLocaleString("en-US",{maximumFractionDigits:2}))+" ("+String(l.date).slice(0,10)+")";
+ return (file?.companies||[]).map(c=>{
+  const fl=(c.factors||[]).filter(f=>f.status==="collected").slice(0,6).map(f=>tidy(f.label,30)+" "+fmt(f.latest));
+  const ex=(c.exact||[]).map(e=>e.kind==="tw_monthly_revenue"?"월매출 "+e.month+" 전년 대비 "+(e.yoy_pct>=0?"+":"")+Number(e.yoy_pct).toFixed(1)+"% (종목코드 일치)":e.kind);
+  return {id:"company-links-"+c.id,type:"relation",title:"기업 연결 · "+tidy(c.name,40)+" ("+tidy(c.symbol,20)+")",
+   aliases:["기업 연결","연결",...(c.sectors||[]).map(s=>s.label)], // company name only in the title, so the company's own records keep ranking first
+   summary:"업종: "+(c.sectors||[]).map(s=>s.label).join(", ")+(ex.length?" · "+ex.join(" · "):"")+" · 함께 볼 지표: "+fl.join(" · ")+". 참고용 연결이며 원인 관계를 단정하지 않습니다.",
+   source:"MONEY TRACKER 기업 연결표",url:"https://github.com/91cleaner/money-tracker/blob/main/data/market/company-links.json",source_date:null,route:null};
+ });
+}

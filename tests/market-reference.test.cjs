@@ -123,3 +123,17 @@ test('sector entries do not use company names as aliases (company questions must
   const docs = marketReferenceDocuments(sectors, calendar, () => '엔비디아', t => t).filter(d => d.type === 'sector');
   for (const d of docs) assert.ok(!d.aliases.includes('엔비디아'), d.id);
 });
+
+test('company connection table links companies to sectors, live factor values and exact-code records', async () => {
+  const { buildCompanyLinks } = await import('../scripts/build-company-links.mjs');
+  const markets = fs.readdirSync(path.join(root, 'data/markets')).filter(f => f.endsWith('.json') && f !== 'index.json').map(f => ({ id: f.slice(0, -5), ...json('data/markets/' + f) }));
+  const companies = buildCompanyLinks({ markets, sectors, load: p => { try { return json(p); } catch { return null; } } });
+  const tsmc = companies.find(c => c.id === '2330_TW');
+  assert.ok(tsmc && tsmc.sectors.some(s => s.id === 'semiconductor'));
+  assert.ok(tsmc.exact.some(e => e.kind === 'tw_monthly_revenue' && e.match === 'stock code 2330'));
+  assert.ok(tsmc.factors.some(f => f.status === 'collected' && f.latest), 'factors carry latest values');
+  assert.ok(!companies.some(c => c.id === 'GSPC' || c.id === 'KRW_X'), 'indexes and FX are not companies');
+  const { companyLinkDocuments } = await import('../scripts/market-reference-index.mjs');
+  const docs = companyLinkDocuments({ companies });
+  assert.ok(docs.every(d => !d.aliases.includes(d.title.split(' · ')[1].split(' (')[0])), 'company name only in title');
+});
