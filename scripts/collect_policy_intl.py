@@ -52,7 +52,36 @@ def jpx():
     p = os.path.join(ROOT, "data", "jp", "listed.json"); os.makedirs(os.path.dirname(p), exist_ok=True)
     json.dump({"date": f"{day[:4]}-{day[4:6]}-{day[6:8]}" if day else None, "source": "JPX 東証上場銘柄一覧", "source_url": u, "n": len(c), "c": c}, open(p, "w"), ensure_ascii=False, separators=(",", ":"))
     print("jpx listed", len(c))
-SRC = {"jp": jp}
+# ---------- EU ----------
+FOCUS = {"chips": r"Chips Act|semiconductor", "dual_use": r"dual-use|dual use|export control", "anti_dumping": r"anti-dumping|countervailing|anti-subsidy|safeguard",
+         "cbam": r"carbon border|CBAM", "batteries": r"batter(y|ies)", "sanctions": r"restrictive measures"}
+FK = {"chips": "반도체법·반도체", "dual_use": "이중용도·수출통제", "anti_dumping": "반덤핑·상계관세", "cbam": "탄소국경조정(CBAM)", "batteries": "배터리", "sanctions": "제재(제한조치)"}
+def eu():
+    import urllib.parse
+    out = []; since = (dt.date.today() - dt.timedelta(days=int(os.environ.get("DAYS") or 45))).isoformat()
+    q = """PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+SELECT DISTINCT ?celex ?date ?title WHERE { ?w cdm:resource_legal_id_celex ?celex ; cdm:work_date_document ?date .
+ FILTER(?date >= "%s"^^<http://www.w3.org/2001/XMLSchema#date>) FILTER(REGEX(STR(?celex), "^3[0-9]{4}[RDL][0-9]+$"))
+ ?e cdm:expression_belongs_to_work ?w ; cdm:expression_title ?title ; cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
+} ORDER BY DESC(?date) LIMIT 1500""" % since
+    q2 = q.replace('"%s"' % since, '"%s"' % (dt.date.today() - dt.timedelta(days=1100)).isoformat()).replace("} ORDER BY", 'FILTER(REGEX(?title, "Chips Act|semiconductor|dual-use|carbon border|batter|critical raw", "i")) } ORDER BY').replace("LIMIT 1500", "LIMIT 400")
+    B = []
+    for qq in (q, q2):
+        try: B += json.loads(get("https://publications.europa.eu/webapi/rdf/sparql?" + urllib.parse.urlencode({"query": qq, "format": "application/sparql-results+json"}), 150))["results"]["bindings"]
+        except Exception as e: print("sparql fail", type(e).__name__)
+    for b in B:
+        c = b["celex"]["value"]; t = b["title"]["value"]; f = [k for k, rx in FOCUS.items() if re.search(rx, t, re.I)]
+        kind = {"R": "regulation", "D": "decision", "L": "directive"}[c[5]]
+        out.append({"id": "celex:" + c, "kind": kind, "t": t[:400], "d": b["date"]["value"], "u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:" + c, "dept": "EU 관보(Official Journal)",
+                    "src": "EUR-Lex/Publications Office SPARQL", "tags": tags(t), "focus": f, "focus_ko": [FK[x] for x in f]})
+    p = json.loads(get("https://ec.europa.eu/commission/presscorner/api/search?language=en&pagesize=100&documentType=IP"))
+    for r in p.get("docuLanguageListResources") or []:
+        if (r.get("docutype") or {}).get("code") not in ("IP", "STATEMENT", "QANDA"): continue
+        t = r.get("title") or ""; ref = r.get("refCode") or ""; f = [k for k, rx in FOCUS.items() if re.search(rx, t + " " + (r.get("leadText") or ""), re.I)]
+        out.append({"id": "ec:" + ref, "kind": "press", "t": t, "d": r.get("eventDate"), "u": "https://ec.europa.eu/commission/presscorner/detail/en/" + ref.lower().replace("/", "_"), "dept": "EU 집행위원회",
+                    "src": "European Commission Press corner", "tags": tags(t + " " + (r.get("leadText") or "")), "focus": f, "focus_ko": [FK[x] for x in f]})
+    return out, {"source": "EUR-Lex/Publications Office SPARQL(규칙·결정·지침) + European Commission Press corner", "source_url": "https://op.europa.eu/en/web/webtools/linked-data-and-sparql"}
+SRC = {"jp": jp, "eu": eu}
 def main():
     cc = sys.argv[1]; p = os.path.join(ROOT, "data", "policy", f"{cc}.json"); os.makedirs(os.path.dirname(p), exist_ok=True)
     old = json.load(open(p)) if os.path.exists(p) else {"items": []}; seen = {i["id"]: i for i in old["items"]}; n0 = len(seen)
