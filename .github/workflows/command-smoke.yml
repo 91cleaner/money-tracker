@@ -21,11 +21,10 @@ jobs:
           const fs = require('node:fs');
           const assert = require('node:assert/strict');
           const entry = fs.readFileSync('index.html','utf8');
-          const us = fs.readFileSync('usa-command.html','utf8');
+          const us = fs.readFileSync('usa-command-legacy.html','utf8');
           assert.match(entry,/href="national\.html"/);
-          assert.match(entry,/href="usa-command\.html"/);
+          assert.match(entry,/href="world-intelligence\/"/);
           assert.match(entry,/실시간 의원 거래 데이터/);
-          assert.match(entry,/비공개 관리자 데이터는 별도 인증 필요/);
           assert.match(us,/AI 분석 OFF · 실시간 시세 OFF/);
           assert.match(us,/id="usQuery"/);
           assert.match(us,/id="usCmd"/);

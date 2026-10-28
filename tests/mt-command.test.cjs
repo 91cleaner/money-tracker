@@ -45,11 +45,11 @@ test("unconnected stock disclosures are clearly flagged",()=>{
  assert.ok(intel.getMission("chips").steps.some(s=>s.kind==="unconnected"));
 });
 test("single map entry and UI script references are present",()=>{
- const html=fs.readFileSync(path.join(__dirname,"../usa-command.html"),"utf8");
+ const html=fs.readFileSync(path.join(__dirname,"../usa-command-legacy.html"),"utf8");
  const index=fs.readFileSync(path.join(__dirname,"../index.html"),"utf8");
  assert.match(html,/mt-intel-data\.js/);
  assert.match(html,/mt-command-ui\.js/);
  assert.doesNotMatch(html,/function pick\(k\)/);
  assert.match(html,/#mtChoices\[hidden\]/);
- assert.match(index,/usa-command\.html/);
+ assert.match(index,/world-intelligence\//);
 });

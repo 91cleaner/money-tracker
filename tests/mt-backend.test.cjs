@@ -43,7 +43,7 @@ test("bridge handles explicit unconfigured server response",async()=>{
 });
 test("production pages omit paid AI bridge, while dormant source remains for later",()=>{
  const ui=fs.readFileSync(path.join(__dirname,"../assets/mt-research-ui.js"),"utf8");
- const html=fs.readFileSync(path.join(__dirname,"../usa-command.html"),"utf8");
+ const html=fs.readFileSync(path.join(__dirname,"../usa-command-legacy.html"),"utf8");
  assert.match(ui,/renderIndexedSearch\(query,function\(index,results\)/);
  assert.doesNotMatch(ui,/^\s*renderLiveBackend\(query\);/m);
  assert.doesNotMatch(html,/src="assets\/mt-backend\.js/);

@@ -80,7 +80,7 @@ jobs:
     steps:
       - name: Confirm the deployed HTML serves the new command scripts
         env:
-          URL: https://91cleaner.github.io/money-tracker/usa-command.html
+          URL: https://91cleaner.github.io/money-tracker/usa-command-legacy.html
         shell: bash
         run: |
           set -euo pipefail
@@ -90,7 +90,7 @@ jobs:
             if [[ "$html" == *'mt-intel-data.js'* && "$html" == *'mt-command-ui.js'* && "$html" == *'mt-photo.js'* && "$html" == *'mt-query-engine.js'* && "$html" == *'mt-research-ui.js'* && "$html" == *'mt-open-research.js'* && "$html" == *'mt-news-discovery.js'* && "$html" == *'mt-local-search.js'* && "$html" != *'mt-backend.js'* ]]; then
               curl -fsSL --max-time 18 "https://91cleaner.github.io/money-tracker/assets/mt-command-ui.js?check=$GITHUB_SHA" | grep -q 'window.MTCommand'
               entry="$(curl -fsSL --max-time 18 "https://91cleaner.github.io/money-tracker/?check=$GITHUB_SHA-$attempt" || true)"
-              if [[ "$entry" != *'national.html'* || "$entry" != *'usa-command.html'* ]]; then
+              if [[ "$entry" != *'national.html'* || "$entry" != *'world-intelligence/'* ]]; then
                 echo "Entrance screen has not deployed yet."
                 sleep 15
                 continue

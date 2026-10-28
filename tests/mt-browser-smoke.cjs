@@ -35,7 +35,7 @@ async function main(){
    if(url.startsWith("http://127.0.0.1:"+port+"/"))return route.continue();
    return route.abort();
   });
-  await page.goto("http://127.0.0.1:"+port+"/usa-command.html",{waitUntil:"commit",timeout:45000});
+  await page.goto("http://127.0.0.1:"+port+"/usa-command-legacy.html",{waitUntil:"commit",timeout:45000});
   await page.waitForFunction(()=>!!window.MTCommand&&!!window.MTResearch&&!!window.MTLocalSearch,{timeout:20000});
   assert.ok(await page.locator(".leaflet-container").count(),"map mounted");
   assert.equal(await page.evaluate(()=>window.MTCommand.getCurrent()),null,"neutral startup");

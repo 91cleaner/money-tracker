@@ -27,7 +27,7 @@ async function load(browser,port,viewport,touch){
  const errors=[];
  page.on("pageerror",e=>errors.push(e.message));
  await page.route("**/*",route=>route.request().url().startsWith("http://127.0.0.1:"+port+"/")?route.continue():route.abort());
- await page.goto("http://127.0.0.1:"+port+"/usa-command.html",{waitUntil:"commit",timeout:45000});
+ await page.goto("http://127.0.0.1:"+port+"/usa-command-legacy.html",{waitUntil:"commit",timeout:45000});
  await page.waitForFunction(()=>!!window.MTCommand&&!!window.MTCommand.map,{timeout:20000});
  const read=()=>page.evaluate(()=>{
   const m=window.MTCommand.map,layer=document.querySelector(".leaflet-sat-pane .leaflet-layer");

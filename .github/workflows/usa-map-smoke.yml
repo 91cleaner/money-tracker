@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'usa-command.html'
+      - 'usa-command-legacy.html'
       - 'index.html'
       - 'tests/**'
       - 'data/market/**'
@@ -12,6 +13,7 @@ on:
   pull_request:
     paths:
       - 'usa-command.html'
+      - 'usa-command-legacy.html'
       - 'index.html'
       - 'tests/**'
       - 'data/market/**'
@@ -49,12 +51,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          target="https://91cleaner.github.io/money-tracker/usa-command.html"
+          target="https://91cleaner.github.io/money-tracker/usa-command-legacy.html"
           for i in $(seq 1 15); do
             if curl --fail --silent --show-error --location --max-time 20 \
               -H 'Cache-Control: no-cache' \
               "${target}?sha=${GITHUB_SHA}&attempt=${i}" -o /tmp/mt-live.html \
-              && cmp -s usa-command.html /tmp/mt-live.html; then
+              && cmp -s usa-command-legacy.html /tmp/mt-live.html; then
               echo "GitHub Pages HTML matches checked-out commit."
               exit 0
             fi
