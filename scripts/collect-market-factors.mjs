@@ -2,6 +2,8 @@
  * MONEY TRACKER — keyless official factor collectors (NO AI, no paid data).
  *  - Taiwan listed-company monthly revenue: TWSE OpenAPI t187ap05_L (TSMC, MediaTek, Foxconn, Delta…)
  *  - ECB deposit facility rate: ECB Data Portal API (FM dataset)
+ *  - US trade controls: Federal Register API documents from BIS (export controls, Entity List) and USTR (tariffs)
+ *  - China MOFCOM: reachability probe only
  *  - FRED extra series (housing starts, copper): fredgraph CSV, or the official API when FRED_API_KEY is set
  * Each source is independent: if one fails, its previous file is kept and a ::warning:: is printed.
  * Output: data/market/factors/*.json. Values are stored as published; nothing is estimated or filled in.
@@ -50,6 +52,18 @@ export function parseCsvSeries(text, dateKey, valueKey) {
   }
   if (!points.length) throw Error("no observations");
   return points;
+}
+
+
+const CHINA = /\b(China|Chinese|PRC|People's Republic of China|Hong Kong|Macau)\b/i;
+export function parseFedRegDocs(json, agencyLabel) {
+  const rows = json && Array.isArray(json.results) ? json.results : null;
+  if (!rows) throw Error("unexpected Federal Register response");
+  return rows.filter(r => r && r.document_number && r.title && /^https:\/\/www\.federalregister\.gov\//.test(r.html_url || "")).map(r => {
+    const text = r.title + " " + (r.abstract || "");
+    return { id: r.document_number, date: r.publication_date, type: r.type, agency: agencyLabel, title: String(r.title).slice(0, 300),
+      url: r.html_url, china: CHINA.test(text), entity_list: /entity list/i.test(r.title), tariff: /tariff|section 301|duty|duties/i.test(text) };
+  });
 }
 
 function writeJson(file, data) {
@@ -119,9 +133,34 @@ async function fredExtra() {
   return Object.keys(out.series).join(",");
 }
 
+
+async function usTradeControls() {
+  const agencies = { "industry-and-security-bureau": "Commerce · Bureau of Industry and Security (수출통제)", "trade-representative-office-of-united-states": "USTR (관세·무역)" };
+  const all = [];
+  for (const [slug, label] of Object.entries(agencies)) {
+    const q = new URL("https://www.federalregister.gov/api/v1/documents.json");
+    q.searchParams.set("per_page", "200"); q.searchParams.set("order", "newest");
+    q.searchParams.append("conditions[agencies][]", slug);
+    for (const f of ["document_number", "title", "type", "publication_date", "html_url", "abstract"]) q.searchParams.append("fields[]", f);
+    all.push(...parseFedRegDocs(await (await get(q.href)).json(), label));
+  }
+  if (all.length < 20) throw Error("too few Federal Register trade documents: " + all.length);
+  all.sort((a, b) => String(b.date).localeCompare(String(a.date)) || a.id.localeCompare(b.id));
+  writeJson("us-trade-controls.json", { source: "Federal Register API (BIS, USTR)", source_url: "https://www.federalregister.gov/developers/documentation/api/v1",
+    note: "공식 고시 제목·날짜·원문 링크만 저장. china/entity_list/tariff 표시는 제목·요약의 단어로 자동 분류한 것이라 원문 확인 필요.",
+    collected_at: now(), count: all.length, china_count: all.filter(d => d.china).length, entity_list_count: all.filter(d => d.entity_list).length, documents: all });
+  return all.length + " docs (china " + all.filter(d => d.china).length + ")";
+}
+
+// Reachability probe only (no parsing yet): can GitHub Actions reach China's MOFCOM site? Recorded for the next step.
+async function chinaMofcomProbe() {
+  const res = await fetch("https://www.mofcom.gov.cn/", { headers: UA, signal: AbortSignal.timeout(20000) });
+  return "HTTP " + res.status + " (" + (await res.text()).length + " bytes)";
+}
+
 if (import.meta.url === "file://" + process.argv[1]) {
   const results = {};
-  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra })) {
+  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcomProbe })) {
     try { results[name] = "ok: " + await fn(); }
     catch (e) { results[name] = "FAILED: " + e.message; warn(name + " failed — previous file kept: " + e.message); }
   }
@@ -136,5 +175,5 @@ if (import.meta.url === "file://" + process.argv[1]) {
   } catch (e) { warn("sample summary unavailable: " + e.message); }
   fs.mkdirSync(OUT, { recursive: true });
   fs.writeFileSync(path.join(OUT, "status.json"), JSON.stringify({ results }, null, 1) + "\n");
-  if (Object.values(results).every(v => v.startsWith("FAILED"))) process.exit(1);
+  if (["taiwanRevenue", "ecbRates", "fredExtra", "usTradeControls"].every(k => String(results[k]).startsWith("FAILED"))) process.exit(1);
 }
