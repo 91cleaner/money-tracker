@@ -117,3 +117,9 @@ test('UK and EU parliament votes are searchable with official links', async () =
   assert.ok(docs.some(d => d.id.startsWith('uk-division-')) && docs.some(d => d.id.startsWith('eu-vote-')));
   for (const d of docs) assert.ok(https(d.url), d.id);
 });
+
+test('sector entries do not use company names as aliases (company questions must rank company records first)', async () => {
+  const { marketReferenceDocuments } = await import('../scripts/market-reference-index.mjs');
+  const docs = marketReferenceDocuments(sectors, calendar, () => '엔비디아', t => t).filter(d => d.type === 'sector');
+  for (const d of docs) assert.ok(!d.aliases.includes('엔비디아'), d.id);
+});

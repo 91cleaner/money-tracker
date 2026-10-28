@@ -78,3 +78,15 @@ test('mobile query focus and compact map explanation stay usable', () => {
   assert.match(usa, /if\(!close\.isConnected\)file\.appendChild\(close\)/);
   assert.match(usa, /aria-label','추적 설명 닫기'/);
 });
+
+test('market situation board is loaded as its own module and stays neutral', () => {
+  const board = read('assets/mt-market-board.js');
+  assert.match(usa, /<script src="assets\/mt-market-board\.js\?v=[^"]+"><\/script><\/body>/);
+  assert.doesNotThrow(() => new vm.Script(board, { filename: 'mt-market-board.js' }));
+  assert.match(board, /예상·추천 아님/);
+  assert.doesNotMatch(board, /매수|매도|오를 것|내릴 것/);
+  for (const f of ['calendar.json', 'sectors.json', 'factors/policy-rates.json', 'factors/tw-monthly-revenue.json', 'factors/us-trade-controls.json', 'factors/cn-mofcom-announcements.json']) {
+    assert.ok(board.includes('"' + f + '"'), f);
+    assert.ok(fs.existsSync(path.join(root, 'data/market', f)), 'data/market/' + f);
+  }
+});
