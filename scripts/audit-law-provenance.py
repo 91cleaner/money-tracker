@@ -35,15 +35,18 @@ def https_url(value):
         return False
 
 
-def enacted_without_action_date(cc, row):
+def enacted_status(cc, row):
     status = str(row.get("st") or "")
-    enacted = (
+    return (
         (cc == "kr" and "가결" in status)
         or (cc == "jp" and "成立" in status)
         or (cc == "tw" and "三讀" in status)
         or (cc == "us" and bool(re.search(r"Became Public Law|Signed by President", status, re.I)))
     )
-    return enacted and not iso_day(row.get("sd"))
+
+
+def enacted_without_action_date(cc, row):
+    return enacted_status(cc, row) and not iso_day(row.get("sd"))
 
 
 def audit_document(cc, doc, today=None):
@@ -84,9 +87,8 @@ def audit_document(cc, doc, today=None):
             counts["enacted_action_date_missing"] += 1
         # An existing date is not necessarily a usable historical market event.
         # Keep this separate from missing dates to avoid inventing an event day.
-        if (not enacted_without_action_date(cc, row) and action and
-                (action > today or (introduced and action < introduced)) and
-                enacted_without_action_date(cc, dict(row, sd=""))):
+        if (enacted_status(cc, row) and action and
+                (action > today or (introduced and action < introduced))):
             counts["enacted_action_date_invalid"] += 1
     counts["count_mismatch"] = int(doc.get("count") != len(rows))
     counts["missing_corpus_source"] = int(not https_url(doc.get("source_url")))
