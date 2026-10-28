@@ -2,13 +2,31 @@
 
 A public-source intelligence prototype connecting world history, legislation, macroeconomic data, and U.S. congressional financial disclosures on a **flat world map**.
 
+## Current status and release blockers (checked 2026-10-29 KST)
+
+> **Not a private deployment.** The GitHub repository is currently **public**, and GitHub Pages must also be treated as public. Earlier live Pages checks returned HTTP 200 for 10 restricted/source-file paths (see [exposure-check PR #213](https://github.com/91cleaner/money-tracker/pull/213) and [response PR #214](https://github.com/91cleaner/money-tracker/pull/214)). A successful Pages build does **not** mean the leak is fixed. Those PRs are pending; this README change does not fix hosting or revoke access. Do not put secrets or private data in this repository.
+
+| Capability | Status / user-facing interpretation |
+| --- | --- |
+| Flat world-map command room | Prototype exists; production end-to-end behavior is not established by a build alone. |
+| Question → candidate selection → map trace | **Known bug**: ticker/company search can bypass candidate selection and start a trace immediately ([issue #174](https://github.com/91cleaner/money-tracker/issues/174)). |
+| U.S. House PTR disclosures | Stored **public filings**, not independently verified executed trades, live holdings, or comprehensive Congress coverage. Reported transaction values are ranges. |
+| Bills → lawmakers → companies | Research navigation across records; temporal proximity is **not** evidence of influence, wrongdoing, or causation. |
+| AI-generated analysis / AI search | **NOT CONNECTED**. Static/precomputed answers must not be presented as live AI responses. |
+| Live quotes / live executed-trade feed | **NOT CONNECTED**. Historical prices and filed transactions are not live market data. |
+| Private/admin-only access | **NOT VERIFIED for the deployed site**. Worker OAuth configuration cannot protect public GitHub Pages files. |
+| Deployment security | **BLOCKED** until the Pages source, allowlisted artifact, restricted-file responses, and repository visibility are reviewed and independently rechecked. |
+
+Before treating the site as production-ready, switch Pages to the intended allowlisted Actions deployment, confirm restricted URLs return 404/410, verify authenticated routes separately, and run the map/search mobile smoke tests. See [Pages response runbook PR #214](https://github.com/91cleaner/money-tracker/pull/214). None of these steps is claimed completed here.
+
+
 ## Entry points
 - `index.html` — country selection
 - `world-intelligence/index.html` — flat world-map command center and guided country exploration
 - `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research
 - `us.html` — U.S. command entry
 
-## Verified data and caveats
+## Data sources and verification limits
 - `data/us/bills.json` — U.S. congressional legislation summary from Congress.gov. The **Congress.gov API requires a key** for its collection workflow; this is separate from the map.
 - `data/us/trades.json` — parsed public U.S. House PTR transactions, linked to House Clerk source PDFs. Transaction amounts are ranges; records are not investment advice or evidence of misconduct. The Senate index has reported HTTP 403 errors; do not imply complete Senate coverage.
 - `data/us-events.json` — curated historical milestones with source URLs, not causal investment signals.
@@ -20,7 +38,7 @@ A public-source intelligence prototype connecting world history, legislation, ma
 The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional Esri satellite imagery. **No map API key is required.** It depends on external tile/CDN availability; a simplified offline schematic is shown when providers cannot be reached. The satellite imagery is not a live satellite feed. The country-to-country lines show exploration paths, not proof of causation.
 
 ## Authenticated command room
-- Cloudflare Worker `/command` is built from `world-intelligence/index.html`, rather than maintaining a separate schematic map. `/evidence.js` and `/data/us/*` routes require the existing GitHub OAuth administrator session.
+- The Cloudflare Worker `/command` implementation is designed around `world-intelligence/index.html`, rather than a separate schematic map. Its `/evidence.js` and `/data/us/*` handlers are intended to require a GitHub OAuth administrator session **when the Worker is correctly deployed and configured**; this has not been independently verified for the live service. It does not protect the public GitHub Pages site.
 - `python scripts/sync_command_worker.py` embeds a compact, source-linked Congress.gov bill snapshot and the current House PTR research candidates into `cloudflare/admin-worker.js`. Every bill remains available; long action descriptions are shortened in the Worker only. The original full data stays in `data/us/bills.json`.
 - `.github/workflows/sync-command.yml` regenerates the Worker when map or evidence data changes. `us-data.yml` also regenerates it after scheduled collection.
 - **Source synchronization is not a Cloudflare deployment.** The Worker still requires a successful Wrangler deployment, and live `/command` functionality must be tested after deployment. GitHub OAuth access is not device-only access.
