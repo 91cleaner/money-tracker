@@ -3,9 +3,9 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#020805">
 <title>MONEY TRACKER · 국가 선택</title>
-<meta name="description" content="대한민국 국회 또는 미국 의회를 선택해 공개 데이터를 추적하세요.">
+<meta name="description" content="대한민국 국회와 미국 관제실(세계 지도)에서 공개 데이터를 추적하세요.">
 <meta property="og:title" content="MONEY TRACKER · 어느 나라를 추적할까요?">
-<meta property="og:description" content="대한민국 국회와 미국 의회. 국가를 선택하고 추적을 시작하세요.">
+<meta property="og:description" content="대한민국 국회와 미국 관제실. 국가를 선택하고 추적을 시작하세요.">
 <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
 <link rel="manifest" href="manifest.webmanifest?v=20261025brand2">
 <link rel="apple-touch-icon" href="assets/icons/radar2-apple.png">
@@ -49,17 +49,15 @@ footer{text-align:center;color:#668675;font-size:11px;line-height:1.8}
 <main>
  <div class="brand"><span class="logo">MT</span><span>MONEY TRACKER</span></div>
  <div class="intro"><div class="eyebrow">지역 고르기</div><h1>어느 곳을<br>살펴보시겠습니까?</h1><p>국가를 고르고 공개 기록을 살펴보세요.</p></div>
- <a href="world-intelligence/" class="district-entry"><span>🌐 <strong>미국 관제실 · 세계 지도</strong></span><span>기업·의원·법안·로비·연방 계약을 지도에서 추적 ›</span></a>
  <form class="se-entry" action="search.html" method="get" role="search"><label for="se-entry-q">🔍 무엇이든 검색</label><div><input id="se-entry-q" name="q" type="search" enterkeyhint="search" placeholder="업체 · 시 · 계약 · 의원 · 법안 · 종목" autocomplete="off" required><button type="submit">검색</button></div><small>계약 9만여 건 · 업체 4만여 곳 · 의원 299명 · 법안 · 국민연금 종목 — 돈의 흐름까지</small></form>
  <a href="my-region.html" class="district-entry"><span>📍 <strong>내 지역부터 찾아보기</strong></span><span>우리 동네 의원 · 예산 · 계약 알아보기 ›</span></a>
  <nav class="choices" aria-label="살펴보기 선택">
   <a class="country kr" href="national.html"><span class="flag" aria-hidden="true">🇰🇷</span><span><strong>대한민국</strong><small>국회의원 · 정당 · 국외활동<br>한국 국회 살펴보기</small></span><span class="arrow" aria-hidden="true">›</span></a>
-  <a class="country us" href="usa-command.html"><span class="flag" aria-hidden="true">🇺🇸</span><span><strong>미국 (준비 중)</strong><small>Congress · 주식 거래 · 레이더<br>미국 살펴보기 · 개발 중</small></span><span class="arrow" aria-hidden="true">›</span></a>
-  <a class="country us" href="world-intelligence/"><span class="flag" aria-hidden="true">🌐</span><span><strong>미국 관제실</strong><small>세계 지도 · 공급망 · 로비 · 의원 거래<br>데이터상 연결 따라가기</small></span><span class="arrow" aria-hidden="true">›</span></a>
+  <a class="country us" href="world-intelligence/"><span class="flag" aria-hidden="true">🇺🇸</span><span><strong>🌐 미국 관제실</strong><small>세계 지도 · 공급망 · 로비 · 의원 거래<br>데이터상 연결 따라가기</small></span><span class="arrow" aria-hidden="true">›</span></a>
  </nav>
  <a class="secondary" href="intel-lab.html">🔎 의원·법안 실제 데이터 추적 실험실 입장</a>
  <a class="country local" href="contracts.html"><span class="flag" aria-hidden="true">🏙️</span><span><strong>지역 계약·예산</strong><small>전국 지자체 계약 · 예산 · 입찰<br>우리 동네 예산 살펴보기</small></span><span class="arrow" aria-hidden="true">›</span></a>
- <section role="status" aria-label="데이터 연결 상태" style="padding:13px 15px;border:1px solid #385344;border-radius:12px;background:#0a1b12;color:#b9d5c4;font-size:12px;line-height:1.8"><strong style="color:#e7fff0">시스템 연결 상태</strong><div>실시간 의원 거래 데이터: <strong>연결 미확인</strong></div><div>생성형 AI 분석: <strong>연결 미확인</strong></div><div>미국 살펴보기: <strong>준비 중 · 공개 자료만</strong></div><small>여기 숫자는 공개 자료만 씁니다. 없는 거래는 만들지 않습니다.</small></section>
+ <section role="status" aria-label="데이터 연결 상태" style="padding:13px 15px;border:1px solid #385344;border-radius:12px;background:#0a1b12;color:#b9d5c4;font-size:12px;line-height:1.8"><strong style="color:#e7fff0">시스템 연결 상태</strong><div>실시간 의원 거래 데이터: <strong>연결 미확인</strong></div><div>생성형 AI 분석: <strong>연결 미확인</strong></div><div>미국 관제실: <strong>공개 자료만 · 투자 신호 아님</strong></div><small>여기 숫자는 공개 자료만 씁니다. 없는 거래는 만들지 않습니다.</small></section>
  <footer>공개 자료 기반 · 기록은 잘못의 증거가 아닙니다.<br>© MONEY TRACKER</footer>
 </main>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><script src="assets/mt-engagement.js"></script></body></html>
