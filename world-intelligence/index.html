@@ -6,7 +6,7 @@
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER | 세계 관제실"><meta name="twitter:description" content="미국 의회 법안·의원 거래 신고·회사 공장·다른 나라 정책을 지도 위 경로로 따라가는 관제실. 공개 자료 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
-<script src="../assets/i18n.js?v=i18n-20261028"></script>
+<script src="../assets/i18n.js?v=i18n-20261028b"></script>
 <script src="../assets/share.js?v=share-20261028" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
@@ -63,6 +63,7 @@ header strong{color:#d6eff4!important;font-family:ui-monospace,Consolas,monospac
 #mtTrace b{color:#83e6e3}
 @media(max-width:650px){#mtOpsBar{left:8px;top:84px;font-size:9px;padding:5px}#mtTrace{left:8px;bottom:137px;font-size:10px;max-width:56vw}}
 </style><style id="mt-candidate-panel-style">
+#whyPanel{position:fixed;z-index:1700;top:150px;left:12px;width:min(420px,calc(100vw - 24px));max-height:calc(100dvh - 250px);overflow-y:auto;background:#061827f7;border:1px solid #5b91a0;border-left:3px solid #68c7d0;border-radius:6px;padding:12px}#whyPanel[hidden]{display:none!important}#whyPanel .whyX{position:absolute;top:6px;right:8px;background:none;border:0;color:#8ce1e4;font-size:16px;cursor:pointer}#whyPanel .mt-ec{margin:0;border:0;background:none;padding:0}.mt-ec-full{margin-top:10px;border:1px solid #4b9c65;border-radius:7px;background:#155032;color:#eaffef;padding:9px 14px;font:700 13px system-ui;cursor:pointer}@media(max-width:650px){#whyPanel{top:140px;left:8px;max-height:calc(100dvh - 295px)}}
 #candidatePanel{position:fixed;z-index:1700;top:150px;left:12px;width:min(380px,calc(100vw - 24px));max-height:calc(100dvh - 330px);overflow-y:auto;background:#061827f7;border:1px solid #5b91a0;border-left:3px solid #68c7d0;border-radius:6px;padding:14px;box-shadow:0 12px 35px #0008}
 #candidatePanel[hidden]{display:none!important}#candidatePanel h2{font:700 13px ui-monospace,Consolas,monospace;color:#8ce1e4;margin:0 0 8px}
 #candidatePanel p{font-size:12px;line-height:1.55;color:#c3d8df;margin:0 0 10px}#candidateList{display:grid;gap:8px}
@@ -153,7 +154,7 @@ if(window.L){try{
 else{$('map').style.display='none';status.textContent='지도 라이브러리 연결 실패 · 개략 지도 표시'}
 function go(name){const p=places[name];if(!p)return;if(map){map.invalidateSize();map.flyTo(p,Math.max(4,map.getZoom()<4?4:Math.min(5,map.getZoom())),{duration:2.2,easeLinearity:.2});if(marker)map.removeLayer(marker);marker=L.circleMarker(p,{radius:9,color:'#005c7c',weight:3,fillColor:'#54d9e6',fillOpacity:.7}).addTo(map)}else{status.textContent=name+' 추적 · 실제 지도 연결 시 위치 이동 가능'}}
 function show(){if(!mission)return;if(mission.ticker){const t=mission.meta[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length+' · '+t.title;$('briefText').textContent=t.region+' — '+t.fact;$('briefStocks').textContent=(t.date?'기준일 '+t.date+' · ':'')+'출처: '+(t.source_url?'아래 링크':'내부 데이터 분류');$('briefCaveat').textContent=mission.caveat||'데이터상 공개 자료 정리임. 투자 신호 아님.';if(t.source_url)$('source').href=t.source_url;else $('source').removeAttribute('href');$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(t.region);window.mtAfterShow&&window.mtAfterShow();return}const [name,explain]=mission.stops[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length;$('briefText').textContent=name+' — '+explain;$('briefStocks').textContent='미국 종목·ETF 조사 대상: '+mission.stocks;$('briefCaveat').textContent='시연용 가상 탐색 경로입니다. AI·실시간 거래 데이터 미연결. 표시된 관계는 투자 신호나 입증된 인과관계가 아닙니다.';$('source').href=mission.url;$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(name)}
-function start(c){mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#36b6cc',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
+function start(c){const wp=document.getElementById('whyPanel');if(wp)wp.hidden=true;mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#36b6cc',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
 $('topics').replaceChildren(...cases.map(c=>{const b=document.createElement('button');b.textContent=c.title;b.onclick=()=>start(c);return b}));
 function showCandidates(q){
  const matches=cases.filter(c=>c.re.test(q));
@@ -194,12 +195,23 @@ $('briefTitle').textContent=r.priv?'◉ '+r.priv+' · 비상장 기업':r.pop?'�
 $('briefText').textContent=r.priv?r.priv+'은(는) 증시에 상장되지 않아 주가 데이터가 없습니다. 같은 업종의 상장 기업·업종 경로를 대신 보여드려요.':r.pop?'"'+(r.key||q)+'"와 딱 맞는 항목은 없어요. 많이 찾는 경로를 대신 골라봤어요.':'"'+(r.key||q)+'"와 딱 맞는 항목은 없지만 가까운 항목이 있어요.';
 const box=$('briefStocks');box.replaceChildren();r.sug.forEach(id=>{const e=searchIdx.entities[id];const bt=document.createElement('button');bt.className='mtSug';bt.textContent='▸ '+e.name+(e.symbol?' ('+e.symbol+')':'')+' · '+({company:'기업',sector:'업종',country:'나라',committee:'상임위',member:'의원',bill:'법안',topic:'법안 주제'}[e.type]||'');bt.onclick=()=>start(routeOf(id));box.append(bt)});
 $('briefCaveat').textContent='AI 미연결 · 수집된 데이터만 검색합니다.';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true}
-$('ask').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}if(tr){start(tr);return}showCandidates(q)});
+function hideWhy(){const w=$('whyPanel');if(w)w.hidden=true}
+// 검색어 의도: 이름만 → 전체 경로 투어 / 왜·주가·떨어·올라 → 최근 주가 설명 / 관세·수출통제 같은 주제어 → 그 유형만 걸러서
+function showWhy(tr,it){
+ const T=tr.ticker.replace(/^company:/,'');let w=$('whyPanel');
+ if(!w){w=document.createElement('section');w.id='whyPanel';w.setAttribute('aria-live','polite');document.body.append(w)}
+ w.hidden=false;w.replaceChildren();$('menu').hidden=true;$('candidatePanel').hidden=true;$('brief').hidden=true;$('closeBrief').hidden=true;
+ const x=document.createElement('button');x.type='button';x.className='whyX';x.textContent='✕';x.setAttribute('aria-label','닫기');x.onclick=hideWhy;w.append(x);
+ const box=document.createElement('div');w.append(box);status.textContent=T+' · '+(it.mode==='why'?'최근 주가 설명':'주제별 기록')+' · 지도는 움직이지 않습니다';
+ return MTEventContext.recentCard(box,{base:'../',ticker:T,topic:it.topic,onFull:()=>{hideWhy();start(tr)}});
+}
+$('ask').addEventListener('submit',async e=>{e.preventDefault();hideWhy();const q=$('question').value.trim();if(!q)return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}
+ if(tr){const it=window.MTEventContext?MTEventContext.intent(q):{mode:'tour'};if(it.mode!=='tour'&&/^company:[A-Z][A-Z0-9-]{0,5}(\.[A-Z])?$/.test(tr.ticker||'')){showWhy(tr,it);return}start(tr);return}showCandidates(q)});
 $('previous').onclick=()=>{if(mission&&step>0){step--;show()}};
 $('next').onclick=()=>{if(mission&&step<mission.stops.length-1){step++;show()}};
 $('toggle').onclick=()=>{$('menu').hidden=!$('menu').hidden};
 $('closeBrief').onclick=()=>{$('brief').hidden=true;$('closeBrief').hidden=true};
-$('world').onclick=()=>{if(map){map.flyTo([20,0],2,{duration:1.2});if(marker){map.removeLayer(marker);marker=null}}mission=null;if(map&&route){map.removeLayer(route);route=null}$('candidatePanel').hidden=true;$('brief').hidden=true;$('closeBrief').hidden=true;$('menu').hidden=true;status.textContent='세계지도 · 자유 탐색'};
+$('world').onclick=()=>{hideWhy();if(map){map.flyTo([20,0],2,{duration:1.2});if(marker){map.removeLayer(marker);marker=null}}mission=null;if(map&&route){map.removeLayer(route);route=null}$('candidatePanel').hidden=true;$('brief').hidden=true;$('closeBrief').hidden=true;$('menu').hidden=true;status.textContent='세계지도 · 자유 탐색'};
 $('fullscreen').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.();
 })();
 </script><script id="mt-ops-controller">
@@ -252,7 +264,8 @@ const obs=new MutationObserver(()=>setTimeout(acquire,40));const title=document.
 document.getElementById('world')?.addEventListener('click',()=>{banner.classList.remove('on');last=null});
 document.getElementById('closeBrief')?.addEventListener('click',()=>banner.classList.remove('on'));
 }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
-</script><script src="./evidence.js" defer></script><script id="mt-one-room-controller">
+</script><script src="../assets/mt-event-context.js?v=ec-20261028"></script>
+<script src="./evidence.js" defer></script><script id="mt-one-room-controller">
 (function(){function init(){
 const dock=document.createElement('nav');dock.id='mtOneDock';dock.setAttribute('aria-label','통합 관제실 도구');
 const actions=[['◎ 전체','world'],['◉ 미국','us'],['◉ 한국','kr'],['⌁ 세계사','history'],['▤ 법안','law'],['⌕ 추적','track']];

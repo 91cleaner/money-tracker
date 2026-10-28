@@ -316,7 +316,45 @@
     en: { aria: "한국어로 전환", title: "한국어로 전환 (Switch to Korean)" }
   };
 
-  var api = { lang: lang, isEn: isEn, tr: tr, toEn: toEn, date: date, dateEn: dateEn, usd: usd, krw: krw, money: money, koUsd: koUsd,
+  // ---------- "same period" event-context card (assets/mt-event-context.js) ----------
+  // Neutral wording only: "same period ... happened", "past n times average ... (per data)". Never "because / due to / recommend".
+  var CTX = {
+    ko: {
+      title: "같은 기간 있었던 일", titleRecent: "최근 주가 설명", changeHead: "최근 종가 변화",
+      change: "{label} 종가 {from} → {to} ({pct}) · {d1} → {d2}", w1: "1주", m1: "1달", ev: "이 날 전후 {n}일",
+      sameIntro: "{from}~{to} 사이, 저장된 공식 기록에 이런 일이 있었다 ({n}건, 가까운 날짜 순)",
+      sameItem: "같은 기간 {md} {label}의 「{title}」 건이 있었다.", sameEarn: "같은 기간 {md} {name} 실적 발표(SEC 8-K 2.02)가 있었다.",
+      sameNone: "이 기간 안에 저장된 자료에서 찾은 다른 정책·발표는 없다.",
+      pastHead: "과거 비슷한 발표 때 반응", pastLine: "과거 {n}번 {type} 때 {tk}의 {win} 평균 {pct} (데이터상) · 표본 {n}개 · 오른 {up}번, 내린 {down}번",
+      pastSmall: "표본이 적어 참고만 하세요.", pastNone: "비교할 과거 비슷한 발표가 저장된 가격 기간 안에 없다 (표본 0).",
+      winAfter: "{after}일 뒤까지", winAround: "앞 {before}일~뒤 {after}일", typeSuffix: "발표",
+      earnType: "실적 발표", polType: "{cc} 정책·발표",
+      srcHead: "출처", srcPrice: "가격", srcPolicy: "정책·발표", srcEarn: "실적 발표일", asOf: "기준일", link: "원문 ↗",
+      disclaimer: "상관관계일 뿐 원인이 아닙니다. 투자 조언이 아닙니다. 같은 기간에 함께 있었던 기록을 나란히 놓은 것입니다.",
+      topicOnly: "'{topic}' 관련 기록만 걸러서 보여 줍니다.", fullRoute: "전체 경로 보기", close: "닫기", noPrice: "이 종목의 가격 자료가 없어 주가 변화는 계산하지 못했다.",
+      topics: { tariff: "관세", import_232: "232조(수입 안보 조사)", sanctions: "제재", export_control: "수출통제" },
+      cc: { us: "미국", kr: "한국", jp: "일본", eu: "EU", cn: "중국", tw: "대만" }
+    },
+    en: {
+      title: "What else happened in the same period", titleRecent: "Recent price context", changeHead: "Recent closing-price change",
+      change: "{label} close {from} → {to} ({pct}) · {d1} → {d2}", w1: "1 week", m1: "1 month", ev: "{n} days around this date",
+      sameIntro: "Between {from} and {to}, the stored official records show these items ({n}, nearest date first)",
+      sameItem: "Same period, {md}: {label} — \"{title}\" was published.", sameEarn: "Same period, {md}: {name} reported earnings (SEC 8-K Item 2.02).",
+      sameNone: "No other policy items or announcements were found in the stored data for this period.",
+      pastHead: "Past reaction to similar announcements", pastLine: "{n} past case(s) of {type}: {tk}'s average {win} return was {pct} (per data) · sample size {n} · up {up}, down {down}",
+      pastSmall: "Small sample; treat as a rough reference only.", pastNone: "No comparable past announcements fall inside the stored price history (sample size 0).",
+      winAfter: "{after}-day", winAround: "{before} days before to {after} days after", typeSuffix: "announcement",
+      earnType: "earnings report", polType: "{cc} policy item",
+      srcHead: "Sources", srcPrice: "Prices", srcPolicy: "Policy items", srcEarn: "Earnings dates", asOf: "as of", link: "Source ↗",
+      disclaimer: "Correlation only, not a cause. Not investment advice. This lines up records from the same period side by side.",
+      topicOnly: "Showing only records tagged '{topic}'.", fullRoute: "See the full route", close: "Close", noPrice: "No price data for this ticker, so price changes were not calculated.",
+      topics: { tariff: "tariffs", import_232: "Section 232", sanctions: "sanctions", export_control: "export controls" },
+      cc: { us: "US", kr: "South Korea", jp: "Japan", eu: "EU", cn: "China", tw: "Taiwan" },
+      types: { "USTR(무역대표부)": "USTR notice", "대통령 조치": "presidential action", "포고문": "proclamation", "행정명령": "executive order", "대통령 공고": "presidential notice", "대통령 메모": "presidential memorandum", "재무부 OFAC(해외자산통제국)": "Treasury OFAC rule", "대통령 결정": "presidential determination", "상무부 BIS(산업안보국)": "Commerce BIS rule" }
+    }
+  };
+
+  var api = { lang: lang, isEn: isEn, ctx: CTX, tr: tr, toEn: toEn, date: date, dateEn: dateEn, usd: usd, krw: krw, money: money, koUsd: koUsd,
     set: function (l) { setLang(l); }, url: function (l) { return withLang(root.location ? root.location.href : "", l); } };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   root.MTI18N = api;

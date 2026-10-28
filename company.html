@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 회사 파일"><meta name="twitter:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
-<script src="assets/i18n.js?v=i18n-20261028"></script>
+<script src="assets/i18n.js?v=i18n-20261028b"></script>
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
 *{box-sizing:border-box}
@@ -110,6 +110,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
 <script src="assets/insights-card.js?v=ins-20261028"></script>
+<script src="assets/mt-event-context.js?v=ec-20261028"></script>
 <script src="assets/share.js?v=share-20261028"></script>
 <script>
 (function () {
@@ -208,6 +209,8 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
           });
           if (g.list.length > 10) pinbox.appendChild(el("div", "s", "외 " + (g.list.length - 10) + "건 — 아래 목록 참고"));
           pinbox.hidden = false;
+          // 같은 기간 있었던 일 + 과거 비슷한 발표 때 반응 (원인 단정 없음, assets/mt-event-context.js)
+          if (window.MTEventContext && T) { var holder = el("div"); pinbox.appendChild(holder); window.MTEventContext.eventCard(holder, { ticker: T, pin: g.list[0], pins: pinsAll, base: "", whitehouse: window.__mtWh }); }
         });
         wrap.appendChild(b);
       });
@@ -296,7 +299,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades.json"), get("data/us/lobbying.json"),
     get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json"), get("data/us/whitehouse.json")])
   .then(function (r) {
-    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8], wh = r[9] || {};
+    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8], wh = r[9] || {}; window.__mtWh = r[9] || null;
     var ent = (si.entities || {})["company:" + T], sec = (ts.tickers || {})[T];
     var trades = ((tr.trades) || []).filter(function (x) { return String(x.tk || "").toUpperCase() === T; })
       .sort(function (a, b) { return String(b.filed || "").localeCompare(String(a.filed || "")) || String(b.d || "").localeCompare(String(a.d || "")); });
@@ -337,7 +340,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     trades.forEach(function (x) { if (/^\d{4}-\d{2}-\d{2}$/.test(x.filed || "")) { var lg = days(x.d, x.filed); pins.push({ k: "t", date: x.filed, title: (x.who || "-") + " · " + (TY[String(x.ty || "").charAt(0)] || x.ty || "-") + " · " + (x.amt || "-"), sub: "신고 기준" + (x.d ? " · 거래일 " + x.d : "") + (lg != null ? " · 신고까지 " + lg + "일(법정 최대 45일)" : ""), url: x.doc }); } });
     var rt0 = (routes.routes || {})[T];
     ((rt0 && rt0.stops) || []).forEach(function (s) { if (/^\d{4}-\d{2}-\d{2}$/.test(s.date || "") && /^https:\/\/www\.congress\.gov\/bill\//.test(s.source_url || "")) pins.push({ k: "b", date: s.date, title: s.title, sub: s.fact, url: s.source_url }); });
-    ((wh.items) || []).forEach(function (w) { if (/^\d{4}-\d{2}-\d{2}$/.test(w.date || "") && ((w.tickers || []).indexOf(T) >= 0 || (w.tickers_product || []).indexOf(T) >= 0)) pins.push({ k: "w", date: w.date, title: w.ko || w.t, sub: (w.src || "") + " · 회사·제품명 언급 기준, 영향 단정 아님", url: w.u }); });
+    ((wh.items) || []).forEach(function (w) { if (/^\d{4}-\d{2}-\d{2}$/.test(w.date || "") && ((w.tickers || []).indexOf(T) >= 0 || (w.tickers_product || []).indexOf(T) >= 0)) pins.push({ k: "w", id: w.id, date: w.date, title: w.ko || w.t, sub: (w.src || "") + " · 회사·제품명 언급 기준, 영향 단정 아님", url: w.u }); });
     app.appendChild(priceBlock(parsePrices(pr), pr, pins));
 
     // 3) trades

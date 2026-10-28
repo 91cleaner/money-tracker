@@ -74,3 +74,5 @@
 - main은 수집 봇과 다른 세션이 수시로 커밋한다. 작업 전후로 `git pull`, PR 전에 충돌 확인.
 - `data/search/index.json`은 봇이 자주 다시 만든다. PR이 충돌하면 브랜치를 main 위로 rebase하고 `git show origin/main:data/search/index.json > data/search/index.json && node scripts/build-local-index.mjs`로 다시 만든 뒤 계속하면 된다.
 - GitHub Actions 로그와 아티팩트 다운로드는 이 작업 환경에서 막혀 있다. 그래서 수집기는 결과를 `::notice::RESULTS`/`::notice::SAMPLE` 주석으로 남기고, check-run annotations API로 읽는다(`market-factors.yml`은 브랜치 push 때 수집만 시험).
+
+- **"같은 기간 있었던 일" 카드 + 검색 의도별 첫 화면 (#201)**: `assets/mt-event-context.js`(로직·화면), 문구 표는 `assets/i18n.js`의 `ctx`(KO/EN). 회사 페이지 차트 핀을 누르면 그 날짜 전후 7일의 다른 정책·발표와 과거 같은 종류 발표 때 그 종목 평균 수익률(표본 수 포함)이 붙는다. 관제실(`world-intelligence/index.html`)은 검색어가 이름만이면 전체 경로 투어, 왜·주가·떨어/올라 포함이면 "최근 주가 설명"(경로 투어는 "전체 경로 보기" 버튼 뒤), 관세·수출통제·제재·232조 같은 주제어면 그 유형만 걸러 시작. 규칙: `MTEventContext.intent()`. 테스트: `tests/event-context.test.cjs`. 실적 발표일은 `scripts/collect-earnings-8k.mjs`(SEC 8-K Item 2.02 → `data/us/earnings.json`)가 만들면 자동으로 붙고, 파일이 없으면 생략. **워크플로 연결은 아직 안 함**(봇 권한으로 .github/workflows 수정 불가) — 운영자가 매일 실행 단계를 추가할 것. 가격 자료가 2025-12-15부터라 과거 표본이 적다(표본 수를 항상 표시).
