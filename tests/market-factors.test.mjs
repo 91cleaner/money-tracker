@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals, parseQcew, parseWorldBank, parseUkDivisions, unzipFirst, parseGazetteer } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals, parseQcew, parseWorldBank, parseUkDivisions, unzipFirst, parseGazetteer, parseCustomsXml } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -116,4 +116,10 @@ test("single-entry zip reader and Gazetteer parser", async () => {
   const g = parseGazetteer(text);
   assert.deepEqual(g["04013"], { lat: 33.3, lng: -112.4, name: "County 13, AZ" });
   assert.throws(() => unzipFirst(Buffer.from("nope")), /not a zip/);
+});
+
+test("Korea customs XML parses months and fails on API error codes", () => {
+  const ok = "<response><header><resultCode>00</resultCode></header><body><items><item><year>2026.09</year><hsCd>854231</hsCd><expDlr>1000</expDlr><impDlr>200</impDlr></item><item><year>총계</year></item></items></body></response>";
+  assert.deepEqual(parseCustomsXml(ok), [{ month: "2026-09", hs: "854231", exp_usd: 1000, imp_usd: 200 }]);
+  assert.throws(() => parseCustomsXml("<resultCode>30</resultCode><resultMsg>SERVICE KEY IS NOT REGISTERED ERROR.</resultMsg>"), /30/);
 });

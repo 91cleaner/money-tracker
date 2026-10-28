@@ -26,6 +26,7 @@ jobs:
       - name: Collect official factors (each source fails independently, previous data kept)
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
         run: node scripts/collect-market-factors.mjs
       - name: Archive collected files
         if: always()
