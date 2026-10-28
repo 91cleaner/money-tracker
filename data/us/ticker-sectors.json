@@ -82,7 +82,7 @@
   "other": []
  },
  "committee_trade_counts": {
-  "_flag": "INTERNAL ONLY — 위원회·업종 단위 집계. 개별 의원 거래 화면 공개 금지(HANDOFF).",
+  "_flag": "위원회·업종 단위 집계(자체 분류). 개별 거래는 PTR 신고 기준으로 공개(2026-10-28 결정).",
   "by_sector": {
    "technology": {
     "Energy and Commerce": 59,

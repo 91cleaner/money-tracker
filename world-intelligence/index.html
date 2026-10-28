@@ -164,7 +164,7 @@ async function loadIdx(){if(!searchIdx){const r=await fetch('../data/search-inde
 function routeOf(id){const e=searchIdx.entities[id];if(!e||!e.route.length)return null;e.route.forEach(s=>{places[s.region]=[s.lat,s.lon]});return{ticker:id,title:e.name+(e.symbol?' ('+e.symbol+')':'')+' 경로',stops:e.route.map(s=>[s.region,s.fact]),meta:e.route,caveat:'누적 공개 데이터에서 자동 생성한 경로 · AI 미연결 · 투자 신호 아님. 원인 관계를 단정하지 않습니다.',url:e.route[0].source_url,stocks:''}}
 function bigram(a,b){if(a.length<2||b.length<2)return 0;const g=x=>{const m=new Set();for(let i=0;i<x.length-1;i++)m.add(x.slice(i,i+2));return m};const A=g(a),B=g(b);let c=0;A.forEach(x=>{if(B.has(x))c++});return 2*c/(A.size+B.size)}
 async function tickerRoute(q){try{await loadIdx()}catch(e){return null}
-const E=searchIdx.entities,pri={company:3,sector:2,country:1,committee:0};
+const E=searchIdx.entities,pri={company:3,member:2,sector:2,country:1,committee:0};
 let toks=q.split(/\s+/).map(t=>{t=norm(t);for(let i=0;i<3;i++)t=t.replace(PART,'');return t}).filter(Boolean);const full=norm(q);
 let best=null,bs=0;
 for(const [re,id] of ALIAS)if(re.test(q.trim())&&E[id]&&E[id].route.length)return routeOf(id);
@@ -184,7 +184,7 @@ return{none:true,key:main,sug:list,pop}}
 window.mtApi={loadIdx,routeOf,start:c=>start(c)};window.mtCur=()=>mission&&mission.ticker?mission:null;function showNone(q,r){$('candidatePanel').hidden=true;$('brief').hidden=false;$('closeBrief').hidden=false;
 $('briefTitle').textContent=r.priv?'◉ '+r.priv+' · 비상장 기업':r.pop?'◉ 이런 건 어때요':'◉ 아직 데이터 없음 · 대신 이건 있어요';
 $('briefText').textContent=r.priv?r.priv+'은(는) 증시에 상장되지 않아 주가 데이터가 없습니다. 같은 업종의 상장 기업·업종 경로를 대신 보여드려요.':r.pop?'"'+(r.key||q)+'"와 딱 맞는 항목은 없어요. 많이 찾는 경로를 대신 골라봤어요.':'"'+(r.key||q)+'"와 딱 맞는 항목은 없지만 가까운 항목이 있어요.';
-const box=$('briefStocks');box.replaceChildren();r.sug.forEach(id=>{const e=searchIdx.entities[id];const bt=document.createElement('button');bt.className='mtSug';bt.textContent='▸ '+e.name+(e.symbol?' ('+e.symbol+')':'')+' · '+({company:'기업',sector:'업종',country:'나라',committee:'상임위'}[e.type]||'');bt.onclick=()=>start(routeOf(id));box.append(bt)});
+const box=$('briefStocks');box.replaceChildren();r.sug.forEach(id=>{const e=searchIdx.entities[id];const bt=document.createElement('button');bt.className='mtSug';bt.textContent='▸ '+e.name+(e.symbol?' ('+e.symbol+')':'')+' · '+({company:'기업',sector:'업종',country:'나라',committee:'상임위',member:'의원'}[e.type]||'');bt.onclick=()=>start(routeOf(id));box.append(bt)});
 $('briefCaveat').textContent='AI 미연결 · 수집된 데이터만 검색합니다.';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true}
 $('ask').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}if(tr){start(tr);return}showCandidates(q)});
 $('previous').onclick=()=>{if(mission&&step>0){step--;show()}};
@@ -300,7 +300,8 @@ loadIdx().then(ix=>{const ids=Object.keys(ix.entities).filter(k=>{const e=ix.ent
  const go=document.createElement('button');go.textContent='▶ 추적 시작';go.onclick=()=>{c.remove();start(routeOf(id))};c.append(x,b,p,sm,go);document.body.append(c)}).catch(()=>{});
 // 실시간 경보 줄 (수집 데이터의 실제 항목만)
 async function j(u){try{const r=await fetch(u,{cache:'no-store'});return r.ok?r.json():null}catch(e){return null}}
-Promise.all([j('../data/us/bills.json'),j('../data/market/factors/cn-mofcom-announcements.json'),j('../data/market/company-links.json')]).then(([bl,mo,cl])=>{const items=[];
+Promise.all([j('../data/us/bills.json'),j('../data/market/factors/cn-mofcom-announcements.json'),j('../data/market/company-links.json'),j('../data/us/trades-recent.json')]).then(([bl,mo,cl,tr])=>{const items=[];
+ if(tr&&tr.trades){tr.trades.filter(x=>x.tk&&x.doc).sort((a,b)=>(b.fd||'').localeCompare(a.fd||'')).slice(0,3).forEach(x=>items.push({d:x.fd,t:'하원 PTR 신고 · '+x.who+' · '+x.tk+' '+({P:'구입',S:'처분',E:'교환'}[x.ty]||x.ty)+' '+x.amt+' (신고 기준)',u:x.doc,ll:[38.8899,-77.0091]}))}
  if(bl&&bl.recent){const seen=new Set(),all=[];Object.values(bl.recent).forEach(a=>a.forEach(x=>{if(!seen.has(x.no)){seen.add(x.no);all.push(x)}}));all.sort((a,b)=>(b.ad||b.d||'').localeCompare(a.ad||a.d||''));all.slice(0,6).forEach(x=>items.push({d:x.ad||x.d,t:'미 의회 법안 '+x.no+' · '+x.n,u:x.u,ll:[38.8899,-77.0091]}))}
  if(mo&&mo.items){mo.items.slice(0,3).forEach(x=>items.push({d:x.date||(mo.collected_at||'').slice(0,10)+' 수집',t:'중국 상무부 공고 '+(String(x.number||'').replace(/^(\d{4})\D+(\d+)$/,'$1년 제$2호')||x.title.slice(0,40)),u:x.url,ll:[39.9042,116.4074]}))}
  if(cl&&cl.companies){const seen=new Set();const C={kr:[36.4,127.8],tw:[23.7,121],jp:[36,138],us:[39,-98],eu:[50.5,9]};cl.companies.forEach(c=>c.factors.forEach(f=>{if(seen.has(f.id)||!f.latest||!f.latest.date)return;seen.add(f.id);const cc=f.id.split('_')[0]==='fx'?({fx_krw:'kr',fx_twd:'tw',fx_jpy:'jp',fx_eur:'eu'}[f.id]):f.id.split('_')[0];if(C[cc])items.push({d:f.latest.date,t:'지표 갱신 · '+f.label,u:f.source_url,ll:C[cc]})}))}
@@ -345,4 +346,10 @@ const prev=window.mtAfterShow;window.mtAfterShow=()=>{prev&&prev();const m=windo
  (t.links||[]).forEach((l,j)=>{if(!j)box.append('관련 법안: ');const a=document.createElement('a');a.href=l.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=l.label+' ↗';box.append(a)});sched()};
 document.getElementById('world')&&document.getElementById('world').addEventListener('click',()=>{g.clearLayers();leg.hidden=true;cur=null;stop()});
 document.getElementById('closeBrief')&&document.getElementById('closeBrief').addEventListener('click',()=>{stop()});})();</script>
+<style id="mt-trades-css">#mtTrades{margin:6px 0;font:11px/1.5 ui-monospace,Menlo,monospace;color:#bfffd6;max-height:150px;overflow:auto}#mtTrades table{border-collapse:collapse;width:100%}#mtTrades td,#mtTrades th{padding:1px 4px;border-bottom:1px solid rgba(93,255,158,.15);text-align:left;white-space:nowrap}#mtTrades a{color:#5dff9e}</style>
+<script id="mt-trades-js">(()=>{const prev=window.mtAfterShow;window.mtAfterShow=async()=>{prev&&prev();const box=document.getElementById('mtTrades')||Object.assign(document.createElement('div'),{id:'mtTrades'});if(!box.parentNode)document.getElementById('briefCaveat').before(box);box.replaceChildren();
+const m=window.mtCur&&window.mtCur();if(!m||!window.mtApi)return;const idx=await window.mtApi.loadIdx();const e=idx.entities[m.ticker];if(!e||!e.trades||!e.trades.length)return;
+const h=document.createElement('div');h.textContent='의원 주식 거래 · 하원 PTR 신고 기준 '+(e.trade_n||e.trades.length)+'건 중 최근 '+e.trades.length+'건 · 거래일→신고일 최대 45일 차이 가능 · 투자 조언 아님';box.append(h);
+const tb=document.createElement('table');tb.innerHTML='<tr><th>의원</th><th>당-주</th><th>유형(신고대로)</th><th>금액 구간</th><th>거래일</th><th>신고일</th><th>원문</th></tr>';
+e.trades.forEach(t=>{const tr=document.createElement('tr');[t.who,t.ps,t.ty,t.amt,t.d,t.fd].forEach(v=>{const td=document.createElement('td');td.textContent=v||'-';tr.append(td)});const td=document.createElement('td'),a=document.createElement('a');a.href=t.doc;a.target='_blank';a.rel='noopener noreferrer';a.textContent='PTR ↗';td.append(a);tr.append(td);tb.append(tr)});box.append(tb)}})();</script>
 </body></html>
