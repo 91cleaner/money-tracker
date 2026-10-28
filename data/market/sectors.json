@@ -188,11 +188,15 @@
   },
   {
    "id": "us_export_controls",
-   "label": "미국 수출통제·Entity List 고시",
+   "label": "미국 수출통제·Entity List·관세 고시",
    "kind": "policy",
-   "status": "planned",
-   "source": "Federal Register(이미 수집 중인 연방관보에서 분류 예정)",
-   "source_url": "https://www.federalregister.gov/"
+   "status": "collected",
+   "source": "Federal Register API · BIS 수출통제·Entity List, USTR 관세 고시 (매일 자동 수집)",
+   "source_url": "https://www.federalregister.gov/developers/documentation/api/v1",
+   "data": {
+    "file": "data/market/factors/us-trade-controls.json",
+    "list": "documents"
+   }
   },
   {
    "id": "us_housing_starts",
