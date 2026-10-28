@@ -8,6 +8,11 @@ P = {
  "정책브리핑 정책뉴스(1371000/policyNewsService)": f"https://apis.data.go.kr/1371000/policyNewsService/policyNewsList?serviceKey={ek}&startDate={f(s)}&endDate={f(e)}",
  "국회사무처 의안정보 getBillInfoList(9710000/BillInfoService2)": f"https://apis.data.go.kr/9710000/BillInfoService2/getBillInfoList?serviceKey={ek}&numOfRows=5&pageNo=1&ord=A01&start_ord=22&end_ord=22",
  "국회사무처 의안정보 getRecentRceptList(9710000/BillInfoService2)": f"https://apis.data.go.kr/9710000/BillInfoService2/getRecentRceptList?serviceKey={ek}&numOfRows=5&pageNo=1",
+ "보도자료 http": f"http://apis.data.go.kr/1371000/pressReleaseService/pressReleaseList?serviceKey={ek}&startDate={f(s)}&endDate={f(e)}",
+ "정책뉴스 http": f"http://apis.data.go.kr/1371000/policyNewsService/policyNewsList?serviceKey={ek}&startDate={f(s)}&endDate={f(e)}",
+ "의안정보 http BillInfoService2": f"http://apis.data.go.kr/9710000/BillInfoService2/getBillInfoList?serviceKey={ek}&numOfRows=5&pageNo=1",
+ "과기정통부 보도자료(1721000/msitpressreleaseinfo)": f"https://apis.data.go.kr/1721000/msitpressreleaseinfo/pressReleaseList?serviceKey={ek}&numOfRows=5&pageNo=1",
+ "열린국회정보 의원발의 pSize100 키없음": "https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=2&pSize=100&AGE=22",
  "열린국회정보 의원발의법률안(nzmimeepazxkubdpn, 키없음)": "https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=1&pSize=5&AGE=22",
  "열린국회정보 법률안 전체(TVBPMBILL11, 키없음)": "https://open.assembly.go.kr/portal/openapi/TVBPMBILL11?Type=json&pIndex=1&pSize=5",
 }
