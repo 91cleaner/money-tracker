@@ -41,6 +41,7 @@
 
   // ---------- exact strings (a whole text node / attribute) ----------
   var EXACT = {
+    "한눈에 보기": "At a glance", "주가 기록(종가)": "Closing price record", "국회에 올라온 법안": "Bill filed in the National Assembly", "대만 정부 발표": "Taiwan government announcement", "중국 정부 발표": "Chinese government announcement", "일본 정부 발표": "Japanese government announcement",
     "의원": "Member", "종목": "Asset", "구분": "Type", "신고일": "Filed", "거래일": "Traded", "금액": "Amount", "금액 구간": "Amount range", "신고까지": "Lag", "원문": "Source",
     "티커": "Ticker", "회사": "Company", "종가": "Close", "1일": "1D", "1주": "1W", "1달": "1M", "최근 흐름": "Trend", "열기": "Open", "연초 대비": "YTD",
     "구입": "Buy", "처분": "Sale", "교환": "Exchange", "구입(P)": "Purchase (P)", "처분(S)": "Sale (S)", "교환(E)": "Exchange (E)",
@@ -54,6 +55,20 @@
   // ---------- templates with numbers (whole sentence shape; applied before phrases) ----------
   var D = "(\\d{4}-\\d{2}-\\d{2})";
   var RULES = [
+    // 한국 종목 경로 카드(쉬운 말투) — build_search_index.py kr_company_routes()
+    [/^(.+?)(?:은|는) 한국 대표 (.+?) 회사예요\. 최근 한 달 미국이 (?:.+?) 관련 문서를 (\d+)번 냈어요\. 제목 말을 보고 같은 분야로 묶은 것이라, 이 회사와 직접 관계가 있다는 뜻은 아니에요\./,
+      "$1 is a major Korean $2 company. In the last month the US issued $3 documents about $2. They were grouped by words in the titles, so this does not mean they are directly about this company."],
+    [/^(.+?)(?:은|는) 한국 대표 (.+?) 회사예요\. 최근 석 달 미국이 (?:.+?) 관련 문서를 (\d+)번 냈어요\. 제목 말을 보고 같은 분야로 묶은 것이라, 이 회사와 직접 관계가 있다는 뜻은 아니에요\./,
+      "$1 is a major Korean $2 company. In the last three months the US issued $3 documents about $2. They were grouped by words in the titles, so this does not mean they are directly about this company."],
+    [/^(.+?)의 마지막 종가는 ([\d,]+)원이에요\((\S+)\)\.(?: 한 달쯤 전\((\S+)\)에는 ([\d,]+)원이었어요\.)? 장이 끝날 때 값이고 실시간이 아니에요\./,
+      "$1 last closed at KRW $2 ($3).$4 This is the end-of-day price, not live."],
+    [/^미국에서 (\S+)에 (.+?) 분야 문서가 나왔어요: /, "A US document on $2 came out on $1: "],
+    [/^국회에 '(.+)' 법안이 올라왔어요\((\S+)\)\. 낸 사람: (.+?)\. 이름만 보고 같은 분야로 묶었어요\./, "A bill was filed in the Korean National Assembly ($2): '$1'. Filed by: $3. Grouped into this field by its title only."],
+    [/^(대만|중국|일본) 정부가 (\S+)에 (.+?) 분야로 보이는 글을 올렸어요: (.+) \(원문 언어 그대로예요\. 제목 말만 보고 묶었어요\.\)$/, "The $1 government posted this on $2, which looks related to $3: $4 (original language; grouped by title words only)."],
+    [/^미국 회사 (.+?)\((\S+?)\)가 낸 보고서에 (.+?)(?:이|가) 거래처로 나와요\. 원문: /, "In a report filed by US company $1 ($2), $3 is named as a supplier. Original text: "],
+    [/^요즘 값은 (.+?)이에요\((\S+)\)\./, "Recent value: $1 ($2)."],
+    [/ 같이 보는 숫자일 뿐, 서로 원인이라는 뜻은 아니에요\./, " Shown side by side only; it does not mean one causes the other."],
+    [/^이 사이트가 직접 묶은 거라 공식 담당 위원회는 아닐 수 있어요\. (상원|하원) 위원 (\d+)명이 있어요\./, "Grouped by this site, so it may not be the official committee. $2 members in the $1."],
     // insights.json lines
     [new RegExp("하원 PTR 신고 최근 (\\d+)일\\(" + D + "~" + D + "\\) (\\d+)건\\(구입 (\\d+)·처분 (\\d+),? 의원 (\\d+)명\\), 직전 (\\d+)일 (\\d+)건\\. 신고 기준, 거래일→신고일 최대 (\\d+)일 차이 가능\\."),
       "House PTR filings, last $1 days ($2~$3): $4 (buys $5 · sales $6, $7 members); prior $8 days: $9. Based on filings; disclosed (PTR), up to $10-day lag."],
