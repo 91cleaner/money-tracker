@@ -157,7 +157,9 @@ function showCandidates(q){
  list.replaceChildren(...choices.map(c=>{const b=document.createElement('button');b.type='button';b.dataset.mission=c.title;b.textContent=c.title+' · 경로 시작';b.addEventListener('click',()=>start(c));return b}));
 }
 let searchIdx=null;const norm=x=>(x||'').toLowerCase().replace(/[\s·().,\-?!'"]/g,'');
-const PART=/(에서는|에서|으로|은|는|이|가|을|를|의|도|에|랑|과|와|요|주가|요즘|왜|좀)$/;
+const PART=/(에서는|에서|으로|은|는|이|가|을|를|의|도|에|랑|과|와|요|주가|주식|요즘|왜|좀|왜이래|이래|어때|뭐야|임|냐|야|떡락|떡상|폭락|급등|하락|상승)$/;
+const ALIAS=[[/구글|알파벳|google|alphabet/i,'company:GOOGL'],[/페이스북|facebook|인스타그램/i,'company:META'],[/^삼성$|삼성 ?주가|samsung/i,'company:005930.KS'],[/하이닉스|hynix/i,'company:000660.KS'],[/넷플릭스|netflix/i,'company:NFLX'],[/디즈니|disney/i,'company:DIS'],[/보잉|boeing/i,'company:BA'],[/버크셔|버핏|berkshire/i,'company:BRK.B'],[/월마트|walmart/i,'company:WMT'],[/코스트코|costco/i,'company:COST'],[/나이키|nike/i,'company:NKE'],[/브로드컴|broadcom/i,'company:AVGO'],[/퀄컴|qualcomm/i,'company:QCOM'],[/일라이 ?릴리|릴리|eli lilly/i,'company:LLY'],[/쿠팡|coupang/i,'company:CPNG'],[/테슬|tesla/i,'company:TSLA'],[/^apple|apple /i,'company:AAPL'],[/nvidia|엔비/i,'company:NVDA'],[/amazon/i,'company:AMZN'],[/lg ?에너지|lg ?엔솔|엔솔/i,'company:373220.KS'],[/유가|기름값|oil/i,'sector:energy'],[/방산|방위산업/,'sector:defense'],[/군사위|국방위/,'committee:rep:Armed Services'],[/금융위원회|금융서비스위/,'committee:rep:Financial Services'],[/에너지.?상무/,'committee:rep:Energy and Commerce']];
+const PRIV=[[/스페이스\s*x|스페이스엑스|spacex|space\s*x/i,'스페이스X','defense'],[/오픈\s*ai|openai|챗gpt|chatgpt/i,'오픈AI','tech_ai'],[/앤트로픽|anthropic/i,'앤트로픽','tech_ai'],[/\bxai\b|엑스에이아이/i,'xAI','tech_ai'],[/스트라이프|stripe/i,'스트라이프','finance'],[/바이트댄스|bytedance|틱톡|tiktok/i,'바이트댄스','tech_ai'],[/데이터브릭스|databricks/i,'데이터브릭스','tech_ai'],[/쉬인|shein/i,'쉬인','consumer']];
 async function loadIdx(){if(!searchIdx){const r=await fetch('../data/search-index.json',{cache:'no-store'});searchIdx=await r.json()}return searchIdx}
 function routeOf(id){const e=searchIdx.entities[id];if(!e||!e.route.length)return null;e.route.forEach(s=>{places[s.region]=[s.lat,s.lon]});return{ticker:id,title:e.name+(e.symbol?' ('+e.symbol+')':'')+' 경로',stops:e.route.map(s=>[s.region,s.fact]),meta:e.route,caveat:'누적 공개 데이터에서 자동 생성한 경로 · AI 미연결 · 투자 신호 아님. 원인 관계를 단정하지 않습니다.',url:e.route[0].source_url,stocks:''}}
 function bigram(a,b){if(a.length<2||b.length<2)return 0;const g=x=>{const m=new Set();for(let i=0;i<x.length-1;i++)m.add(x.slice(i,i+2));return m};const A=g(a),B=g(b);let c=0;A.forEach(x=>{if(B.has(x))c++});return 2*c/(A.size+B.size)}
@@ -165,20 +167,23 @@ async function tickerRoute(q){try{await loadIdx()}catch(e){return null}
 const E=searchIdx.entities,pri={company:3,sector:2,country:1,committee:0};
 let toks=q.split(/\s+/).map(t=>{t=norm(t);for(let i=0;i<3;i++)t=t.replace(PART,'');return t}).filter(Boolean);const full=norm(q);
 let best=null,bs=0;
+for(const [re,id] of ALIAS)if(re.test(q.trim())&&E[id]&&E[id].route.length)return routeOf(id);
 for(const [id,e] of Object.entries(E)){if(!e.route.length)continue;for(const a of e.aliases.concat(e.kw||[])){const na=norm(a);if(!na)continue;let sc=0;const isAl=(e.aliases||[]).includes(a);
- if(toks.includes(na)||full===na)sc=100+na.length;else if(isAl&&na.length>=3&&/[^a-z0-9]/.test(na)&&full.includes(na))sc=80+na.length;else if(na.length>=4&&full.includes(na)&&(e.aliases||[]).includes(a))sc=60+na.length;
+ if(toks.includes(na)||full===na)sc=100+na.length;else if(isAl&&na.length>=3&&/[^a-z0-9]/.test(na)&&full.includes(na))sc=80+na.length;else if(na.length>=4&&full.includes(na)&&(e.aliases||[]).includes(a)&&(/[^a-z0-9]/.test(na)||new RegExp('(^|[^a-z])'+na.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'([^a-z]|$)').test(full)))sc=60+na.length;
  if(sc){sc+=pri[e.type]||0;if(sc>bs){bs=sc;best=id}}}}
 if(best)return routeOf(best);
+for(const [re,nm,sec] of PRIV)if(re.test(q)){const se=E['sector:'+sec];return{none:true,priv:nm,key:nm,sug:['sector:'+sec].concat((se&&se.companies||[]).map(c=>'company:'+c).filter(id=>E[id]&&E[id].route.length)).slice(0,4)}}
 // 근접 제안: 키워드 부분 일치(업종) + 이름 유사도
 const sug=new Map();
 for(const [id,e] of Object.entries(E)){if(!e.route.length)continue;for(const k of (e.kw||[])){const nk=norm(k);if(nk.length>=2&&toks.some(t=>t.includes(nk))){sug.set(id,999);(e.companies||[]).forEach(c=>{if(E['company:'+c]&&!sug.has('company:'+c))sug.set('company:'+c,500)})}}}
 const main=toks.slice().sort((a,b)=>b.length-a.length)[0]||full;
 for(const [id,e] of Object.entries(E)){if(!e.route.length)continue;let m=0;for(const a of e.aliases){m=Math.max(m,bigram(norm(a),main))}if(m>=.34&&!sug.has(id))sug.set(id,m*100)}
-const list=[...sug.entries()].sort((a,b)=>b[1]-a[1]).slice(0,3).map(([id])=>id);
-return{none:true,key:main,sug:list}}
+const list=[...sug.entries()].sort((a,b)=>b[1]-a[1]).slice(0,3).map(([id])=>id);let pop=false;
+if(!list.length){pop=true;for(const id of ['sector:semiconductor','company:NVDA','company:TSLA','sector:defense','company:AAPL'])if(E[id]&&E[id].route.length)list.push(id)}
+return{none:true,key:main,sug:list,pop}}
 window.mtApi={loadIdx,routeOf,start:c=>start(c)};window.mtCur=()=>mission&&mission.ticker?mission:null;function showNone(q,r){$('candidatePanel').hidden=true;$('brief').hidden=false;$('closeBrief').hidden=false;
-$('briefTitle').textContent=r.sug.length?'◉ 아직 데이터 없음 · 대신 이건 있어요':'◉ 데이터 없음';
-$('briefText').textContent='"'+(r.key||q)+'"에 맞는 기업·업종·나라·상임위가 누적 데이터에 없습니다.';
+$('briefTitle').textContent=r.priv?'◉ '+r.priv+' · 비상장 기업':r.pop?'◉ 이런 건 어때요':'◉ 아직 데이터 없음 · 대신 이건 있어요';
+$('briefText').textContent=r.priv?r.priv+'은(는) 증시에 상장되지 않아 주가 데이터가 없습니다. 같은 업종의 상장 기업·업종 경로를 대신 보여드려요.':r.pop?'"'+(r.key||q)+'"와 딱 맞는 항목은 없어요. 많이 찾는 경로를 대신 골라봤어요.':'"'+(r.key||q)+'"와 딱 맞는 항목은 없지만 가까운 항목이 있어요.';
 const box=$('briefStocks');box.replaceChildren();r.sug.forEach(id=>{const e=searchIdx.entities[id];const bt=document.createElement('button');bt.className='mtSug';bt.textContent='▸ '+e.name+(e.symbol?' ('+e.symbol+')':'')+' · '+({company:'기업',sector:'업종',country:'나라',committee:'상임위'}[e.type]||'');bt.onclick=()=>start(routeOf(id));box.append(bt)});
 $('briefCaveat').textContent='AI 미연결 · 수집된 데이터만 검색합니다.';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true}
 $('ask').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}if(tr){start(tr);return}showCandidates(q)});
