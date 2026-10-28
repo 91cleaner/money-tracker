@@ -152,7 +152,7 @@ def main():
                "recent": recent, "markets": syms, "index": MARKET_INDEX, "events": ev,
                "note": "법안 제목에 주제 낱말이 들어 있으면 묶음(words). 통과 = 미국 법률 성립·한국 가결·대만 三讀·일본 成立·EU 채택. 시세 변화는 같은 시기 기록이며 원인을 증명하지 않음."}
         dump("topic-%s.json" % tp["id"], doc)
-        topics_out.append({"id": tp["id"], "label": tp["label"], "query": tp["query"] + [w.strip() for w in tp["words"]][:12],
+        topics_out.append({"id": tp["id"], "label": tp["label"], "tags": tp["tags"], "query": tp["query"] + [w.strip() for w in tp["words"]][:12],
                            "count": sum(P["count"].values()), "by": dict(P["count"])})
 
     # 자유 검색용 제목 목록
