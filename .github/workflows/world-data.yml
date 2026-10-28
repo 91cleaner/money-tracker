@@ -18,7 +18,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,10 +30,13 @@ jobs:
       - name: 세계 법안
         run: python collector/world/laws.py ${{ github.event.inputs.only }}
         continue-on-error: true
-        timeout-minutes: 25
+        timeout-minutes: 32
         env:
           CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY || secrets.ONGRESS_API_KEY || vars.CONGRESS_API_KEY }}
           LAWS_PROBE: ${{ github.ref != 'refs/heads/main' && '1' || '' }}
+      - name: 관제실 흐름 자료(주제별 법안·시세·통과 전후 변화)
+        run: python collector/world/build_flow.py
+        continue-on-error: true
       - name: 쌓인 양 요약
         if: always()
         run: |
@@ -54,7 +57,7 @@ jobs:
         run: |
           git config user.name "money-tracker-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -A data/laws data/markets
+          git add -A data/laws data/markets data/world
           git diff --cached --quiet && { echo "변화 없음"; exit 0; }
           git commit -m "관제실 세계 데이터 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
           for i in 1 2 3 4; do git pull --rebase && git push && exit 0; sleep $((i*5)); done

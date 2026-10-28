@@ -107,45 +107,60 @@ US_KIND = {"HR": "house-bill", "S": "senate-bill", "HRES": "house-resolution", "
 
 
 def us():
+    """119대(현재) + 과거 의회(US_CONGRESSES, 기본 119,118,117). 과거 의회는 한 번 다 받으면(backfilled) 이후엔 바뀐 것만."""
     key = (os.environ.get("CONGRESS_API_KEY") or "").strip()
     if not key:
         print("::warning::laws us: CONGRESS_API_KEY empty — skipped")
         return 0
-    congress = int(os.environ.get("US_CONGRESS", "119"))
+    congresses = [int(x) for x in os.environ.get("US_CONGRESSES", "119,118,117").split(",") if x.strip()]
     rows, prev = load("us")
+    backfilled = set(prev.get("backfilled") or [])
+    if any(r.startswith("119-") for r in rows):
+        backfilled.add(119)  # 첫 실행에서 119대는 이미 다 받음
+    budget = time.time() + float(os.environ.get("US_BUDGET_MIN", "18")) * 60
     since = (prev.get("updated") or "")[:10]
-    off, got, budget = 0, 0, time.time() + 9 * 60
-    while time.time() < budget:
-        q = {"api_key": key, "format": "json", "limit": 250, "offset": off, "sort": "updateDate+desc"}
-        if since:  # 지난번 이후 바뀐 것만
-            q["fromDateTime"] = since + "T00:00:00Z"
-        url = "https://api.congress.gov/v3/bill/%d?%s" % (congress, urllib.parse.urlencode(q, safe="+"))
-        try:
-            d = json.loads(get(url).decode("utf-8"))
-        except Exception as e:
-            print("::warning::laws us: congress.gov " + why(e))
-            break
-        items = d.get("bills") or []
-        for b in items:
-            t = (b.get("type") or "").upper()
-            num = b.get("number")
-            if not t or not num:
-                continue
-            la = b.get("latestAction") or {}
-            bid = "%d-%s%s" % (congress, t, num)
-            old = rows.get(bid, {})
-            rows[bid] = {"id": bid, "t": b.get("title") or "", "d": old.get("d") or b.get("introducedDate") or la.get("actionDate") or "",
-                         "st": (la.get("text") or "")[:200], "sd": la.get("actionDate") or "",
-                         "u": "https://www.congress.gov/bill/%dth-congress/%s/%s" % (congress, US_KIND.get(t, "house-bill"), num),
-                         "by": b.get("originChamber") or "", "k": t}
-        got += len(items)
-        if len(items) < 250:
-            break
-        off += 250
-        time.sleep(0.4)
-    save("us", rows, {"cc": "us", "source": "Congress.gov API (Library of Congress)", "source_url": "https://www.congress.gov/", "congress": congress,
+    for congress in congresses:
+        off, got, complete = int((prev.get("resume") or {}).get(str(congress), 0)), 0, False
+        incremental = congress in backfilled and since
+        while time.time() < budget:
+            q = {"api_key": key, "format": "json", "limit": 250, "offset": off, "sort": "updateDate+desc"}
+            if incremental:
+                q["fromDateTime"] = since + "T00:00:00Z"
+            url = "https://api.congress.gov/v3/bill/%d?%s" % (congress, urllib.parse.urlencode(q, safe="+"))
+            try:
+                d = json.loads(get(url).decode("utf-8"))
+            except Exception as e:
+                print("::warning::laws us %d: congress.gov %s" % (congress, why(e)))
+                break
+            items = d.get("bills") or []
+            for b in items:
+                t = (b.get("type") or "").upper()
+                num = b.get("number")
+                if not t or not num:
+                    continue
+                la = b.get("latestAction") or {}
+                bid = "%d-%s%s" % (congress, t, num)
+                old = rows.get(bid, {})
+                rows[bid] = {"id": bid, "t": b.get("title") or "", "d": old.get("d") or b.get("introducedDate") or la.get("actionDate") or "",
+                             "st": (la.get("text") or "")[:200], "sd": la.get("actionDate") or "",
+                             "u": "https://www.congress.gov/bill/%dth-congress/%s/%s" % (congress, US_KIND.get(t, "house-bill"), num),
+                             "by": b.get("originChamber") or "", "k": t, "congress": congress}
+            got += len(items)
+            off += len(items)
+            if len(items) < 250:
+                complete = True
+                break
+            time.sleep(0.4)
+        if complete:
+            backfilled.add(congress)
+            (prev.setdefault("resume", {})).pop(str(congress), None)
+        elif not incremental:
+            prev.setdefault("resume", {})[str(congress)] = off  # 다음 실행에서 이어서
+        print("laws us %d: fetched %d%s" % (congress, got, " (complete)" if complete else " (resume at %d)" % off))
+    save("us", rows, {"cc": "us", "source": "Congress.gov API (Library of Congress)", "source_url": "https://www.congress.gov/", "congresses": congresses,
+                      "backfilled": sorted(backfilled), "resume": prev.get("resume") or {},
                       "note": "d = introduced date when known, otherwise first seen latest-action date"})
-    print("laws us: fetched %d, total %d" % (got, len(rows)))
+    print("laws us: total %d" % len(rows))
     return len(rows)
 
 
@@ -213,10 +228,58 @@ def jp():
             trs = re.findall(r"<tr[^>]*>(.*?)</tr>", page, flags=re.I | re.S)
             print("::warning::laws jp: session %d parsed 0 rows (layout?) tables=%d rows=%d first_row=%s" % (s, len(re.findall(r"<table", page, flags=re.I)), len(trs), strip(trs[1] if len(trs) > 1 else page)[:240]))
         time.sleep(1.0)
+    jp_dates(rows)
     save("jp", rows, {"cc": "jp", "source": "衆議院 議案情報 (shugiin.go.jp)", "source_url": JP_BASE + "menu.htm",
-                      "note": "d is empty: the bill list has no dates; 'session' = Diet session where it was listed"})
+                      "note": "d = 衆議院 議案受理日(경과 페이지), sd = 성립·공포 등 마지막 날짜. 날짜는 하루 예산만큼 채움"})
     print("laws jp: sessions %s total %d" % (sessions, len(rows)))
     return len(rows)
+
+
+ERA = {"令和": 2018, "平成": 1988, "昭和": 1925}
+
+
+def jp_date(txt):
+    m = re.search(r"(令和|平成|昭和)\s*(元|\d+)\s*年\s*(\d+)\s*月\s*(\d+)\s*日", txt)
+    if not m:
+        return ""
+    y = 1 if m.group(2) == "元" else int(m.group(2))
+    return "%04d-%02d-%02d" % (ERA[m.group(1)] + y, int(m.group(3)), int(m.group(4)))
+
+
+def jp_dates(rows):
+    """경과 페이지에서 衆議院 議案受理年月日(제출)·성립/공포 날짜를 읽는다. 예산 안에서 날짜 없는 것부터."""
+    budget = time.time() + float(os.environ.get("JP_DATE_BUDGET_MIN", "8")) * 60
+    todo = [r for r in rows.values() if not r.get("d") and "/keika/" in (r.get("u") or "")]
+    todo.sort(key=lambda r: -int(r.get("session") or 0))
+    done = 0
+    for r in todo:
+        if time.time() > budget:
+            break
+        try:
+            page = strip(jp_text(get(r["u"])))
+        except Exception as e:
+            print("::warning::laws jp keika %s %s" % (r["id"], why(e)))
+            time.sleep(2)
+            continue
+        recv = re.search(r"衆議院議案受理年月日\s*(\S+\s*\S*\s*\S*)", page)
+        d = jp_date(recv.group(1)) if recv else ""
+        if not d:  # 참의원 先議 등: 참의원 受理 날짜
+            recv = re.search(r"参議院議案受理年月日\s*(\S+\s*\S*\s*\S*)", page)
+            d = jp_date(recv.group(1)) if recv else ""
+        last = ""
+        for label in ("公布年月日", "成立年月日", "衆議院議決年月日"):
+            m = re.search(label + r"\s*(\S+\s*\S*\s*\S*)", page)
+            if m and jp_date(m.group(1)):
+                last = jp_date(m.group(1))
+                break
+        if d:
+            r["d"] = d
+        if last:
+            r["sd"] = last
+        done += 1
+        time.sleep(0.8)
+    left = sum(1 for r in rows.values() if not r.get("d"))
+    print("laws jp: dates filled %d this run, %d still without date" % (done, left))
 
 
 # ── 대만: 立法院 ─────────────────────────────────────────────────
@@ -233,11 +296,19 @@ def tw():
             tried.append("data.ly.gov.tw ID20: " + why(e))
             break
         items = d.get("dataList") or d.get("data") or (d if isinstance(d, list) else [])
+        if items:
+            print("::notice::laws tw official fields=" + ",".join(list(items[0].keys())[:30]) + " sample=" + json.dumps(items[0], ensure_ascii=False)[:400])
+        today = date.today().isoformat()
         for b in items:
             bid = str(b.get("billNo") or b.get("議案編號") or "")
             if not bid:
                 continue
-            rows["ly-" + bid] = {"id": "ly-" + bid, "t": b.get("billName") or b.get("議案名稱") or "", "d": str(b.get("date") or b.get("提案日期") or ""),
+            raw_d = str(b.get("date") or b.get("提案日期") or b.get("billDate") or b.get("receiveDate") or b.get("收文日期") or "")[:10].replace("/", "-")
+            if re.match(r"^\d{7}$", raw_d.replace("-", "")):  # 民國 날짜(예: 1131015) → 서기
+                x = raw_d.replace("-", ""); raw_d = "%04d-%s-%s" % (int(x[:3]) + 1911, x[3:5], x[5:7])
+            if raw_d > today:
+                raw_d = ""
+            rows["ly-" + bid] = {"id": "ly-" + bid, "t": b.get("billName") or b.get("議案名稱") or "", "d": raw_d,
                                  "st": b.get("billStatus") or b.get("議案狀態") or "", "sd": "", "by": b.get("billOrg") or b.get("billProposer") or "",
                                  "u": b.get("pdfUrl") or b.get("docUrl") or "https://ppg.ly.gov.tw/ppg/bills/%s/details" % bid, "k": "議案"}
     # 2) g0v 立法院 API (공식 데이터를 다시 정리해 주는 공개 API). 천천히, 429면 기다렸다가, 다음 실행에서 이어서.
