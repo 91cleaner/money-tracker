@@ -1,10 +1,140 @@
 {
   "version": 1,
   "source": "Official Federal Register JSON API",
-  "retrieved_at": "2026-10-27T14:59:13.333Z",
+  "retrieved_at": "2026-10-28T16:14:24.053Z",
   "status": "ok",
   "errors": [],
   "records": [
+    {
+      "id": "2026-21929",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/10/28/2026-21929/van-type-trailers-and-subassemblies-thereof-from-the-peoples-republic-of-china-antidumping-duty",
+      "date": "2026-10-28",
+      "title": "Van-Type Trailers and Subassemblies Thereof From the People's Republic of China: Antidumping Duty Order and Countervailing Duty Order",
+      "type": "Notice",
+      "agency": [
+        "Commerce Department",
+        "International Trade Administration"
+      ],
+      "search_terms": [
+        "export controls"
+      ],
+      "retrieved_at": "2026-10-28T16:14:20.956Z"
+    },
+    {
+      "id": "2026-21939",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/10/28/2026-21939/exemptions-to-permit-circumvention-of-access-controls-on-copyrighted-works",
+      "date": "2026-10-28",
+      "title": "Exemptions To Permit Circumvention of Access Controls on Copyrighted Works",
+      "type": "Proposed Rule",
+      "agency": [
+        "Library of Congress",
+        "Copyright Office, Library of Congress"
+      ],
+      "search_terms": [
+        "semiconductor",
+        "artificial intelligence",
+        "advanced computing"
+      ],
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
+    },
+    {
+      "id": "2026-21943",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/10/28/2026-21943/health-data-technology-and-interoperability-onc-deregulatory-actions-to-unleash-prosperity",
+      "date": "2026-10-28",
+      "title": "Health Data, Technology, and Interoperability: ONC Deregulatory Actions To Unleash Prosperity",
+      "type": "Rule",
+      "agency": [
+        "Health and Human Services Department",
+        ""
+      ],
+      "search_terms": [
+        "export controls",
+        "artificial intelligence",
+        "advanced computing"
+      ],
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
+    },
+    {
+      "id": "2026-21948",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/10/28/2026-21948/ncua-draft-2027-2028-budget",
+      "date": "2026-10-28",
+      "title": "NCUA Draft 2027-2028 Budget",
+      "type": "Notice",
+      "agency": [
+        "National Credit Union Administration"
+      ],
+      "search_terms": [
+        "artificial intelligence"
+      ],
+      "retrieved_at": "2026-10-28T16:14:21.743Z"
+    },
+    {
+      "id": "2026-21966",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/10/28/2026-21966/internal-revenue-service-advisory-council-public-meeting",
+      "date": "2026-10-28",
+      "title": "Internal Revenue Service Advisory Council; Public Meeting",
+      "type": "Notice",
+      "agency": [
+        "Treasury Department",
+        "Internal Revenue Service"
+      ],
+      "search_terms": [
+        "artificial intelligence"
+      ],
+      "retrieved_at": "2026-10-28T16:14:21.743Z"
+    },
+    {
+      "id": "2026-21989",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/10/28/2026-21989/etc-tiger-pipeline-llc-notice-of-schedule-for-the-preparation-of-an-environmental-assessment-for-the",
+      "date": "2026-10-28",
+      "title": "ETC Tiger Pipeline, LLC; Notice of Schedule for the Preparation of an Environmental Assessment for the Franklin Farms Project",
+      "type": "Notice",
+      "agency": [
+        "Energy Department",
+        "Federal Energy Regulatory Commission"
+      ],
+      "search_terms": [
+        "artificial intelligence"
+      ],
+      "retrieved_at": "2026-10-28T16:14:21.743Z"
+    },
+    {
+      "id": "2026-21992",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/10/28/2026-21992/submission-for-omb-review-comment-request",
+      "date": "2026-10-28",
+      "title": "Submission for OMB Review; Comment Request",
+      "type": "Notice",
+      "agency": [
+        "Agriculture Department"
+      ],
+      "search_terms": [
+        "export controls"
+      ],
+      "retrieved_at": "2026-10-28T16:14:20.956Z"
+    },
+    {
+      "id": "2026-21998",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/10/28/2026-21998/agency-information-collection-activities-establishment-of-annual-migratory-bird-hunting-seasons",
+      "date": "2026-10-28",
+      "title": "Agency Information Collection Activities; Establishment of Annual Migratory Bird Hunting Seasons",
+      "type": "Notice",
+      "agency": [
+        "Interior Department",
+        "Fish and Wildlife Service"
+      ],
+      "search_terms": [
+        "export controls"
+      ],
+      "retrieved_at": "2026-10-28T16:14:20.956Z"
+    },
     {
       "id": "2026-21840",
       "source": "Federal Register",
@@ -20,7 +150,7 @@
         "Taiwan",
         "export controls"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.099Z"
+      "retrieved_at": "2026-10-28T16:14:20.956Z"
     },
     {
       "id": "2026-21884",
@@ -37,7 +167,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-10-27T14:59:11.705Z"
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
     },
     {
       "id": "2026-21896",
@@ -53,7 +183,7 @@
         "semiconductor",
         "export controls"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.099Z"
+      "retrieved_at": "2026-10-28T16:14:20.956Z"
     },
     {
       "id": "2026-21920",
@@ -68,7 +198,7 @@
       "search_terms": [
         "export controls"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.099Z"
+      "retrieved_at": "2026-10-28T16:14:20.956Z"
     },
     {
       "id": "2026-21922",
@@ -84,7 +214,7 @@
       "search_terms": [
         "export controls"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.099Z"
+      "retrieved_at": "2026-10-28T16:14:20.956Z"
     },
     {
       "id": "2026-21723",
@@ -100,7 +230,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.885Z"
+      "retrieved_at": "2026-10-28T16:14:21.743Z"
     },
     {
       "id": "2026-21754",
@@ -115,7 +245,7 @@
       "search_terms": [
         "export controls"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.099Z"
+      "retrieved_at": "2026-10-28T16:14:20.956Z"
     },
     {
       "id": "2026-21786",
@@ -134,7 +264,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-10-27T14:59:11.705Z"
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
     },
     {
       "id": "2026-21794",
@@ -151,7 +281,7 @@
         "Japan",
         "export controls"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.099Z"
+      "retrieved_at": "2026-10-28T16:14:20.956Z"
     },
     {
       "id": "2026-21818",
@@ -167,7 +297,7 @@
         "export controls",
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-21658",
@@ -183,7 +313,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.885Z"
+      "retrieved_at": "2026-10-28T16:14:21.743Z"
     },
     {
       "id": "2026-21693",
@@ -199,7 +329,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-10-27T14:59:06.949Z"
+      "retrieved_at": "2026-10-28T16:14:17.627Z"
     },
     {
       "id": "2026-21701",
@@ -214,7 +344,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-21706",
@@ -232,7 +362,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-10-27T14:59:11.705Z"
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
     },
     {
       "id": "2026-21710",
@@ -247,7 +377,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.885Z"
+      "retrieved_at": "2026-10-28T16:14:21.743Z"
     },
     {
       "id": "2026-21714",
@@ -280,7 +410,7 @@
         "Taiwan",
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-21578",
@@ -295,7 +425,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-10-27T14:59:10.885Z"
+      "retrieved_at": "2026-10-28T16:14:21.743Z"
     },
     {
       "id": "2026-21630",
@@ -310,7 +440,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-10-27T14:59:06.949Z"
+      "retrieved_at": "2026-10-28T16:14:17.627Z"
     },
     {
       "id": "2026-21485",
@@ -404,7 +534,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-21254",
@@ -450,7 +580,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-21279",
@@ -466,7 +596,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-21306",
@@ -482,7 +612,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-21319",
@@ -497,7 +627,7 @@
       "search_terms": [
         "advanced computing"
       ],
-      "retrieved_at": "2026-10-27T14:59:11.705Z"
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
     },
     {
       "id": "2026-21361",
@@ -513,7 +643,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-21362",
@@ -529,7 +659,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-21377",
@@ -544,7 +674,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-21124",
@@ -560,7 +690,7 @@
         "semiconductor",
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-21149",
@@ -576,7 +706,7 @@
         "advanced computing",
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-21028",
@@ -591,7 +721,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-21039",
@@ -607,7 +737,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-10-27T14:59:06.949Z"
+      "retrieved_at": "2026-10-28T16:14:17.627Z"
     },
     {
       "id": "2026-21040",
@@ -623,7 +753,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-10-27T14:59:06.949Z"
+      "retrieved_at": "2026-10-28T16:14:17.627Z"
     },
     {
       "id": "2026-21041",
@@ -639,7 +769,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-10-27T14:59:06.949Z"
+      "retrieved_at": "2026-10-28T16:14:17.627Z"
     },
     {
       "id": "2026-21043",
@@ -655,7 +785,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-21051",
@@ -670,7 +800,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-10-27T14:59:06.949Z"
+      "retrieved_at": "2026-10-28T16:14:17.627Z"
     },
     {
       "id": "2026-21067",
@@ -685,7 +815,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-20897",
@@ -701,7 +831,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-20898",
@@ -717,7 +847,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-20904",
@@ -732,7 +862,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-20934",
@@ -748,7 +878,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-20935",
@@ -764,7 +894,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-20941",
@@ -795,7 +925,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-20982",
@@ -810,7 +940,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-10-27T14:59:06.949Z"
+      "retrieved_at": "2026-10-28T16:14:17.627Z"
     },
     {
       "id": "2026-20988",
@@ -825,7 +955,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-20993",
@@ -840,7 +970,7 @@
       "search_terms": [
         "Taiwan"
       ],
-      "retrieved_at": "2026-10-27T14:59:07.725Z"
+      "retrieved_at": "2026-10-28T16:14:18.392Z"
     },
     {
       "id": "2026-20888",
@@ -855,7 +985,7 @@
       "search_terms": [
         "advanced computing"
       ],
-      "retrieved_at": "2026-10-27T14:59:11.705Z"
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
     },
     {
       "id": "2026-20704",
@@ -870,7 +1000,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-20705",
@@ -886,7 +1016,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-20614",
@@ -901,7 +1031,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-20673",
@@ -916,7 +1046,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-20526",
@@ -932,7 +1062,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-20547",
@@ -948,7 +1078,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-20447",
@@ -967,7 +1097,7 @@
       "search_terms": [
         "advanced computing"
       ],
-      "retrieved_at": "2026-10-27T14:59:11.705Z"
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
     },
     {
       "id": "2026-20466",
@@ -983,7 +1113,7 @@
         "South Korea",
         "advanced computing"
       ],
-      "retrieved_at": "2026-10-27T14:59:11.705Z"
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
     },
     {
       "id": "2026-20489",
@@ -999,7 +1129,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-20371",
@@ -1015,7 +1145,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-20384",
@@ -1031,7 +1161,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-10-27T14:59:09.300Z"
+      "retrieved_at": "2026-10-28T16:14:20.187Z"
     },
     {
       "id": "2026-20247",
@@ -1046,7 +1176,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-20281",
@@ -1063,7 +1193,7 @@
         "South Korea",
         "advanced computing"
       ],
-      "retrieved_at": "2026-10-27T14:59:11.705Z"
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
     },
     {
       "id": "2026-20160",
@@ -1079,7 +1209,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-10-27T14:59:08.523Z"
+      "retrieved_at": "2026-10-28T16:14:19.266Z"
     },
     {
       "id": "2026-19964",
@@ -1111,7 +1241,7 @@
       "search_terms": [
         "advanced computing"
       ],
-      "retrieved_at": "2026-10-27T14:59:11.705Z"
+      "retrieved_at": "2026-10-28T16:14:22.571Z"
     },
     {
       "id": "2026-19860",
@@ -1142,7 +1272,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-19132",
@@ -1157,7 +1287,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-19139",
@@ -1172,7 +1302,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-18855",
@@ -1188,7 +1318,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-18778",
@@ -1203,7 +1333,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-18282",
@@ -1218,7 +1348,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-18135",
@@ -1234,7 +1364,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-16615",
@@ -1249,7 +1379,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     },
     {
       "id": "2026-15089",
@@ -1265,7 +1395,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-10-27T14:59:12.613Z"
+      "retrieved_at": "2026-10-28T16:14:23.339Z"
     }
   ]
 }
