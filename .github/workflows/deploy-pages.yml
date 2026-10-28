@@ -34,8 +34,8 @@ jobs:
           node --check assets/mt-query-engine.js
           node --check assets/mt-intel-lab.js
           test -f intel-lab.html
-          grep -q 'href="usa-command.html"' index.html
-          grep -q '실시간 시세 OFF' usa-command.html
+          grep -q 'href="world-intelligence/' index.html
+          grep -q '실시간 시세 OFF' usa-command-legacy.html
       - name: Run private API fail-closed tests
         run: node --test worker/private-api.test.mjs
       - name: Build public-only artifact
@@ -62,8 +62,8 @@ jobs:
           import os, time, urllib.request
           base = os.environ['SITE_URL'].rstrip('/') + '/'
           checks = {
-            '': ['시스템 연결 상태', 'usa-command.html'],
-            'usa-command.html': ['id="usCmd"', '실시간 시세 OFF', 'mt-map-only-controller'],
+            '': ['시스템 연결 상태', 'world-intelligence/'],
+            'usa-command-legacy.html': ['id="usCmd"', '실시간 시세 OFF', 'mt-map-only-controller'],
             'assets/mt-command-ui.js': [],
           }
           for path, expected in checks.items():
