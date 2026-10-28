@@ -81,7 +81,7 @@ test('mobile query focus and compact map explanation stay usable', () => {
 
 test('market situation board is loaded as its own module and stays neutral', () => {
   const board = read('assets/mt-market-board.js');
-  assert.match(usa, /<script src="assets\/mt-market-board\.js\?v=[^"]+"><\/script><\/body>/);
+  assert.match(usa, /<script src="assets\/mt-market-board\.js\?v=[^"]+"><\/script>(<script[^>]*><\/script>)*<\/body>/);
   assert.doesNotThrow(() => new vm.Script(board, { filename: 'mt-market-board.js' }));
   assert.match(board, /예상·추천 아님/);
   assert.doesNotMatch(board, /매수|매도|오를 것|내릴 것/);
@@ -89,4 +89,20 @@ test('market situation board is loaded as its own module and stays neutral', () 
     assert.ok(board.includes('"' + f + '"'), f);
     assert.ok(fs.existsSync(path.join(root, 'data/market', f)), 'data/market/' + f);
   }
+});
+
+test('satellite ops mode is its own module, uses collected data, and states coordinate precision', () => {
+  const ops = read('assets/mt-satellite-ops.js');
+  assert.match(usa, /<script src="assets\/mt-satellite-ops\.js\?v=[^"]+"><\/script><\/body>/);
+  assert.doesNotThrow(() => new vm.Script(ops, { filename: 'mt-satellite-ops.js' }));
+  for (const f of ['market/factors/us-jobs-by-county.json', 'market/factors/tw-monthly-revenue.json', 'market/factors/kr-exports-by-item.json', 'market/semis-trades-summary.json']) {
+    assert.ok(ops.includes('"' + f + '"'), f);
+    assert.ok(fs.existsSync(path.join(root, 'data', f)), 'data/' + f);
+  }
+  assert.match(ops, /도시 대표 좌표\(공장 정확한 위치 아님\)/);
+  assert.match(ops, /잘잘못을 말하는 것은 아닙니다/);
+  assert.match(ops, /판단은 당신이 하세요/);
+  assert.doesNotMatch(ops, /매수 추천|매도 추천|오를 것|내릴 것/);
+  assert.match(ops, /mt-ops-rec .leaflet-control-zoom/, 'recording mode hides UI clutter');
+  assert.doesNotMatch(ops, /mt-ops-rec[^"]*leaflet-control-attribution/, 'map attribution stays visible while recording');
 });

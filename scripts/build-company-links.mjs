@@ -70,6 +70,20 @@ export function buildCompanyLinks({ markets, sectors, load }) {
   return out;
 }
 
+
+const SEMI_TICKERS = ["NVDA", "TSM", "INTC", "MU", "AMD", "AVGO", "QCOM", "ASML", "AMAT", "LRCX", "KLAC", "TXN", "ADI", "MRVL", "ARM", "SMCI"];
+/** Small summary of lawmakers' disclosed trades in semiconductor tickers (public House PTR records), for the map briefing. */
+export function semiTradesSummary(trades) {
+  const rows = (trades?.trades || []).filter(r => SEMI_TICKERS.includes(String(r.tk || "").toUpperCase()) && /^\d{4}-\d{2}-\d{2}$/.test(r.d || ""));
+  const by = {}; for (const r of rows) by[r.tk] = (by[r.tk] || 0) + 1;
+  const latest = rows.slice().sort((a, b) => b.d.localeCompare(a.d))[0] || null;
+  return { about: "미국 하원의원이 공시한 반도체 종목 거래 건수(공개 PTR 기록). 거래 사실의 기록일 뿐 잘잘못 판단 아님.", source: trades?.source || "U.S. House Clerk financial disclosures",
+    source_url: "https://disclosures-clerk.house.gov/FinancialDisclosure", count: rows.length,
+    from: rows.length ? rows.map(r => r.d).sort()[0] : null, to: latest ? latest.d : null,
+    by_ticker: Object.entries(by).sort((a, b) => b[1] - a[1]).map(([tk, n]) => ({ tk, n })),
+    latest: latest ? { d: latest.d, tk: latest.tk, ty: latest.ty, amt: latest.amt, who: latest.who, doc: latest.doc } : null };
+}
+
 if (import.meta.url === "file://" + process.argv[1]) {
   const dir = path.join(root, "data/markets");
   const markets = fs.readdirSync(dir).filter(f => f.endsWith(".json") && f !== "index.json").map(f => ({ id: f.slice(0, -5), ...read("data/markets/" + f, {}) }));
@@ -81,4 +95,7 @@ if (import.meta.url === "file://" + process.argv[1]) {
   const prev = read("data/market/company-links.json");
   if (prev && JSON.stringify(prev) === JSON.stringify(data)) { console.log("UNCHANGED company-links.json"); }
   else { fs.writeFileSync(target, JSON.stringify(data, null, 1) + "\n"); console.log("UPDATED company-links.json", companies.length, "companies"); }
+  const sum = semiTradesSummary(read("data/us/trades.json"));
+  const sp = path.join(root, "data/market/semis-trades-summary.json"), prevSum = read("data/market/semis-trades-summary.json");
+  if (!(prevSum && JSON.stringify(prevSum) === JSON.stringify(sum))) { fs.writeFileSync(sp, JSON.stringify(sum, null, 1) + "\n"); console.log("UPDATED semis-trades-summary.json", sum.count); }
 }

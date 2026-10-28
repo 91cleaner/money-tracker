@@ -1,0 +1,82 @@
+{
+ "about": "미국 하원의원이 공시한 반도체 종목 거래 건수(공개 PTR 기록). 거래 사실의 기록일 뿐 잘잘못 판단 아님.",
+ "source": "U.S. House Clerk financial disclosures · U.S. Senate eFD (STOCK Act periodic transaction reports)",
+ "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+ "count": 184,
+ "from": "2025-09-22",
+ "to": "2026-10-09",
+ "by_ticker": [
+  {
+   "tk": "NVDA",
+   "n": 38
+  },
+  {
+   "tk": "AVGO",
+   "n": 24
+  },
+  {
+   "tk": "TSM",
+   "n": 21
+  },
+  {
+   "tk": "AMD",
+   "n": 21
+  },
+  {
+   "tk": "MU",
+   "n": 12
+  },
+  {
+   "tk": "ADI",
+   "n": 10
+  },
+  {
+   "tk": "INTC",
+   "n": 10
+  },
+  {
+   "tk": "LRCX",
+   "n": 9
+  },
+  {
+   "tk": "QCOM",
+   "n": 8
+  },
+  {
+   "tk": "ASML",
+   "n": 8
+  },
+  {
+   "tk": "TXN",
+   "n": 7
+  },
+  {
+   "tk": "AMAT",
+   "n": 6
+  },
+  {
+   "tk": "MRVL",
+   "n": 5
+  },
+  {
+   "tk": "KLAC",
+   "n": 3
+  },
+  {
+   "tk": "SMCI",
+   "n": 1
+  },
+  {
+   "tk": "ARM",
+   "n": 1
+  }
+ ],
+ "latest": {
+  "d": "2026-10-09",
+  "tk": "TSM",
+  "ty": "P",
+  "amt": "$1,001 - $15,000",
+  "who": "Cleo Fields",
+  "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035669.pdf"
+ }
+}
