@@ -3,7 +3,7 @@
  *  - Taiwan listed-company monthly revenue: TWSE OpenAPI t187ap05_L (TSMC, MediaTek, Foxconn, Delta…)
  *  - ECB deposit facility rate: ECB Data Portal API (FM dataset)
  *  - US trade controls: Federal Register API documents from BIS (export controls, Entity List) and USTR (tariffs)
- *  - China MOFCOM: reachability probe only
+ *  - China MOFCOM: 政策发布 announcement titles/numbers/links (export-control tagging by title words)
  *  - FRED extra series (housing starts, copper): fredgraph CSV, or the official API when FRED_API_KEY is set
  * Each source is independent: if one fails, its previous file is kept and a ::warning:: is printed.
  * Output: data/market/factors/*.json. Values are stored as published; nothing is estimated or filled in.
@@ -64,6 +64,24 @@ export function parseFedRegDocs(json, agencyLabel) {
     return { id: r.document_number, date: r.publication_date, type: r.type, agency: agencyLabel, title: String(r.title).slice(0, 300),
       url: r.html_url, china: CHINA.test(text), entity_list: /entity list/i.test(r.title), tariff: /tariff|section 301|duty|duties/i.test(text) };
   });
+}
+
+
+export function parseMofcomList(html, base = "https://www.mofcom.gov.cn/") {
+  const out = [], seen = new Set(), src = String(html || "");
+  for (const m of src.matchAll(/<a\b[^>]*href=["']([^"'#]*\/zwgk\/zcfb\/art\/[^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+    const title = m[2].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+    let url; try { url = new URL(m[1], base).href; } catch { continue; }
+    if (!title || seen.has(url) || !/^https:\/\/www\.mofcom\.gov\.cn\//.test(url)) continue;
+    seen.add(url);
+    const after = src.slice(m.index + m[0].length, m.index + m[0].length + 300);
+    const date = (after.match(/(20\d{2}-\d{2}-\d{2})/) || [])[1] || null;
+    const no = title.match(/公告\s*(20\d{2})\s*年\s*第\s*(\d+)\s*号/);
+    const targets = ["美国", "日本", "欧盟", "台湾", "韩国", "英国", "加拿大", "荷兰", "德国"].filter(c => title.includes(c));
+    out.push({ title: title.slice(0, 200), url, date, number: no ? no[1] + "-" + no[2] : null,
+      export_control: /出口管制|两用物项|管控名单|关注名单|不可靠实体/.test(title), targets });
+  }
+  return out;
 }
 
 function writeJson(file, data) {
@@ -153,14 +171,42 @@ async function usTradeControls() {
 }
 
 // Reachability probe only (no parsing yet): can GitHub Actions reach China's MOFCOM site? Recorded for the next step.
+export function anchorLinks(html, base) {
+  const out = [];
+  for (const m of String(html || "").matchAll(/<a\b[^>]*href=["']([^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+    const text = m[2].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+    try { if (text) out.push({ text: text.slice(0, 120), url: new URL(m[1], base).href }); } catch {}
+  }
+  return out;
+}
+async function chinaMofcom() {
+  const pages = ["https://www.mofcom.gov.cn/zwgk/zcfb/index.html", "https://www.mofcom.gov.cn/"];
+  const found = [];
+  for (const u of pages) { try { found.push(...parseMofcomList(await (await get(u, 25000)).text())); } catch (e) { warn("MOFCOM " + u + ": " + e.message); } }
+  if (!found.length) throw Error("no MOFCOM announcement links parsed (page layout may have changed)");
+  const file = "cn-mofcom-announcements.json";
+  let old = {}; try { old = JSON.parse(fs.readFileSync(path.join(OUT, file), "utf8")); } catch {}
+  const byUrl = new Map((old.items || []).map(x => [x.url, x]));
+  for (const x of found) byUrl.set(x.url, { ...(byUrl.get(x.url) || {}), ...x, date: x.date || byUrl.get(x.url)?.date || null });
+  const items = [...byUrl.values()].sort((a, b) => String(b.number || b.date || "").localeCompare(String(a.number || a.date || ""), "en", { numeric: true })).slice(0, 500);
+  writeJson(file, { source: "中华人民共和国商务部 · 政策发布", source_url: pages[0],
+    note: "공고 제목·번호·원문 링크만 저장(본문 저장 안 함). export_control·targets는 제목 단어 기준 자동 분류라 원문 확인 필요. 이전 수집분은 누적 보관.",
+    collected_at: now(), count: items.length, export_control_count: items.filter(x => x.export_control).length, items });
+  return items.length + " items (export control " + items.filter(x => x.export_control).length + ")";
+}
+
 async function chinaMofcomProbe() {
   const res = await fetch("https://www.mofcom.gov.cn/", { headers: UA, signal: AbortSignal.timeout(20000) });
-  return "HTTP " + res.status + " (" + (await res.text()).length + " bytes)";
+  const html = await res.text();
+  // Discovery aid for the next step: show which homepage links look like announcement / export-control lists.
+  const hits = anchorLinks(html, "https://www.mofcom.gov.cn/").filter(a => /公告|出口管制|政策发布|管控名单|不可靠实体/.test(a.text)).slice(0, 15);
+  console.log("::notice::MOFCOM_LINKS " + JSON.stringify(hits));
+  return "HTTP " + res.status + " (" + html.length + " bytes, " + hits.length + " candidate links)";
 }
 
 if (import.meta.url === "file://" + process.argv[1]) {
   const results = {};
-  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcomProbe })) {
+  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom })) {
     try { results[name] = "ok: " + await fn(); }
     catch (e) { results[name] = "FAILED: " + e.message; warn(name + " failed — previous file kept: " + e.message); }
   }
@@ -169,7 +215,8 @@ if (import.meta.url === "file://" + process.argv[1]) {
   try {
     const rd = f => JSON.parse(fs.readFileSync(path.join(OUT, f), "utf8"));
     const tw = rd("tw-monthly-revenue.json"), ecb = rd("ecb-rates.json"), fr = rd("fred-extra.json");
-    const sample = { tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
+    const cn = (() => { try { return rd("cn-mofcom-announcements.json").items.slice(0, 3).map(x => x.number + " " + x.title.slice(0, 50)); } catch { return null; } })();
+    const sample = { cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
       ecb: Object.fromEntries(Object.entries(ecb.series || {}).map(([k, v]) => [k, v.latest])), fred: Object.fromEntries(Object.entries(fr.series || {}).map(([k, v]) => [k, v.latest])) };
     console.log("::notice::SAMPLE " + JSON.stringify(sample));
   } catch (e) { warn("sample summary unavailable: " + e.message); }

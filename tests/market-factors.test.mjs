@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -37,4 +37,15 @@ test("Federal Register trade documents are tagged by title words only", () => {
   assert.deepEqual([out[0].china, out[0].entity_list, out[0].tariff], [true, true, false]);
   assert.deepEqual([out[1].china, out[1].entity_list, out[1].tariff], [false, false, true]);
   assert.throws(() => parseFedRegDocs({}, "BIS"), /unexpected/);
+});
+
+test("MOFCOM policy list parses announcement numbers and export-control tags from titles", () => {
+  const html = `<ul><li><a href="/zwgk/zcfb/art/2026/art_9ce3.html" target="_blank">商务部 海关总署公告2026年第50号 公布对盾构机等物项实施出口管制的决定</a><span>2026-10-20</span></li>
+  <li><a href="https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_aaaa.html">商务部公告2026年第23号 公布将10家美国实体列入出口管制管控名单决定</a></li>
+  <li><a href="/zwgk/zcfb/art/2026/art_9ce3.html">dup</a><a href="/other/page.html">商务部公告 other</a></li></ul>`;
+  const out = parseMofcomList(html);
+  assert.equal(out.length, 2);
+  assert.deepEqual([out[0].number, out[0].date, out[0].export_control], ["2026-50", "2026-10-20", true]);
+  assert.equal(out[0].url, "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_9ce3.html");
+  assert.deepEqual(out[1].targets, ["美国"]);
 });
