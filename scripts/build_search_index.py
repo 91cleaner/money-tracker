@@ -2,9 +2,9 @@
 """누적 데이터 → data/search-index.json (검색 개체 + 자동 생성 경로).
 
 입력: data/market/company-links.json, data/market/sectors.json, data/us/members.json(위원회 이름만),
-      data/us/ticker-sectors.json(있으면), data/us/trades.json(티커 목록만).
+      data/us/ticker-sectors.json(있으면), data/us/trades.json(하원 PTR 신고 거래).
 경로의 사실·출처는 모두 입력 데이터에서 가져온다. 손으로 쓴 사실 없음.
-개별 의원 거래는 넣지 않는다(HANDOFF). AI 미연결.
+미국 하원 의원 주식 거래(data/us/trades.json, PTR 신고 기준)는 2026-10-28 결정으로 공개. AI 미연결.
   python3 scripts/build_search_index.py
 """
 import json, os, re
@@ -117,6 +117,50 @@ def money_stops(tk, st_ll, bills_by_no):
             "fact": f"데이터상 {pc['cycle']} 선거주기 {pc['committee_name']}의 연방 후보 위원회 기부 합계 {usd(pc['to_federal_candidates_usd'])}(~{pc.get('coverage_end')}). 임직원 자발 기부 PAC이며 회사 자금 아님.",
             "source_url": pc["source_url"], "date": pc.get("coverage_end"), "ref": "pac:" + tk})
     return out
+
+TY = {"P": "구입(P)", "S": "처분(S)", "E": "교환(E)"}
+KO_MEM = {"Gilbert Cisneros": "길버트 시스네로스", "Lisa McClain": "리사 매클레인", "April McClain Delaney": "에이프릴 매클레인 딜레이니", "Julie Johnson": "줄리 존슨",
+    "Kevin Hern": "케빈 헌", "Josh Gottheimer": "조시 고트하이머", "Maria Elvira Salazar": "마리아 엘비라 살라자르", "Jared Moskowitz": "재러드 모스코위츠",
+    "Marjorie Taylor Greene": "마조리 테일러 그린", "Byron Donalds": "바이런 도널즈", "Ro Khanna": "로 칸나", "Dan Crenshaw": "댄 크렌쇼", "Scott H. Peters": "스콧 피터스",
+    "Rob Bresnahan": "롭 브레스너핸", "Nancy Pelosi": "낸시 펠로시"}
+def trade_parts(ent, mem_by_id):
+    T = opt("data", "us", "trades.json").get("trades", [])
+    T = [t for t in T if t.get("tk") and t.get("doc")]
+    T.sort(key=lambda t: (t.get("filed") or "", t.get("d") or ""), reverse=True)
+    by_tk, by_who = {}, {}
+    for t in T:
+        m = mem_by_id.get(t.get("id")) or {}
+        row = {"who": t["who"], "ps": f"{m.get('party') or '?'}-{m.get('state') or '?'}", "ty": TY.get(t["ty"], t["ty"]), "amt": t.get("amt"), "d": t.get("d"), "fd": t.get("filed"), "doc": t["doc"]}
+        by_tk.setdefault(t["tk"], []).append(row); by_who.setdefault(t["who"], []).append(t)
+    dc = CENT["dc"]
+    for tk, rows in by_tk.items():
+        e = ent.get("company:" + tk)
+        if not e: continue
+        e["trades"] = rows[:5]; e["trade_n"] = len(rows)
+        e["route"].append({"region": f"{dc[0]} · 의원 거래", "lat": dc[2] - 0.05, "lon": dc[3] - 0.05, "title": "의원 주식 거래(하원 PTR)", "kind": "trade", "ref": "trade:" + tk,
+            "fact": f"데이터상 하원 PTR 신고 {len(rows)}건, 최근 신고일 {rows[0]['fd']}. 신고 기준이며 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
+            "source_url": rows[0]["doc"], "date": rows[0]["fd"]})
+    n = 0
+    for who, ts in by_who.items():
+        m = mem_by_id.get(ts[0].get("id")) or {}
+        cnt = {}
+        for t in ts: cnt[t["tk"]] = cnt.get(t["tk"], 0) + 1
+        r = []
+        for tk, c in sorted(cnt.items(), key=lambda x: -x[1]):
+            e = ent.get("company:" + tk)
+            if not e or not e["route"] or e["route"][0].get("lat") is None: continue
+            last = next(t for t in ts if t["tk"] == tk); h = e["route"][0]
+            r.append({"region": f"{e['name']} ({tk})", "lat": h["lat"], "lon": h["lon"], "title": f"{e['name']} 거래 신고", "kind": "trade", "ref": "trade:" + tk,
+                "fact": f"데이터상 {who} 의원 {tk} 거래 신고 {c}건. 최근: {TY.get(last['ty'], last['ty'])} {last.get('amt')}, 거래일 {last.get('d')}, 신고일 {last.get('filed')}. 신고 기준, 투자 조언 아님.",
+                "source_url": last["doc"], "date": last.get("filed")})
+            if len(r) >= 8: break
+        if not r: continue
+        last = (who.split() or [who])[-1]
+        al = [who, last] + ([KO_MEM[who], KO_MEM[who].split()[-1]] if who in KO_MEM else [])
+        ent["member:" + (ts[0].get("id") or who)] = {"type": "member", "name": who + (f" ({m.get('party')}-{m.get('state')})" if m else ""), "aliases": al, "route": r, "trade_n": len(ts)}
+        n += 1
+    json.dump({"updated": T[0].get("filed") if T else None, "note": "하원 PTR 신고 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.", "trades": [dict(tk=t["tk"], who=t["who"], ty=t["ty"], amt=t.get("amt"), d=t.get("d"), fd=t.get("filed"), doc=t["doc"]) for t in T[:20]]}, open(os.path.join(ROOT, "data", "us", "trades-recent.json"), "w"), ensure_ascii=False, indent=0)
+    return len(T), n
 def main():
     sec = J("data", "market", "sectors.json"); factors = {f["id"]: f for f in sec["factors"]}
     sectors = {s["id"]: s for s in sec["sectors"]}
@@ -228,7 +272,10 @@ def main():
     for e in ent.values():
         e["route"] = [x for x in e["route"] if x and x.get("lat") is not None]
         e["aliases"] = sorted({a for a in e["aliases"] if a})
-    res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 개별 의원 거래 미포함.",
+    mem_by_id = {m["id"]: m for m in J("data", "us", "members.json")["members"]}
+    nt, nm = trade_parts(ent, mem_by_id)
+    print("trades", nt, "members", nm)
+    res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR 신고 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
            "with_route": sum(1 for e in ent.values() if e["route"]), "money_stops": {k: sum(1 for e in ent.values() for x in e["route"] if (x.get("ref") or "").startswith(k)) for k in ("awards:", "lobbying:", "pac:")}, "entities": ent}
     json.dump(res, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
