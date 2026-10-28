@@ -57,3 +57,15 @@ test('calendar events are official, dated, sorted and not running out', () => {
   const soon = new Date(Date.now() + 60 * 86400e3).toISOString().slice(0, 10);
   assert.ok(prev >= soon, 'calendar ends ' + prev + ' — add next year\'s official dates to data/market/calendar.json');
 });
+
+test('sectors, factors and calendar are in the offline search index with sources', async () => {
+  const { marketReferenceDocuments } = await import('../scripts/market-reference-index.mjs');
+  const docs = marketReferenceDocuments(sectors, calendar, () => null, t => t);
+  assert.equal(docs.filter(d => d.type === 'sector').length, sectors.sectors.length);
+  assert.equal(docs.filter(d => d.type === 'factor').length, sectors.factors.length);
+  assert.equal(docs.filter(d => d.type === 'calendar').length, calendar.events.length);
+  for (const d of docs) { assert.ok(https(d.url), d.id + ' url'); assert.doesNotMatch(d.summary, /매수|매도|오를 것|내릴 것/); }
+  const index = json('data/search/index.json');
+  const ids = new Set(index.documents.map(d => d.id));
+  for (const id of ['sector-semiconductor', 'factor-us_policy_rate', 'calendar-us-2026-12-09']) assert.ok(ids.has(id), 'index has ' + id + ' (run node scripts/build-local-index.mjs)');
+});
