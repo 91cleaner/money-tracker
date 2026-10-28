@@ -1,0 +1,375 @@
+{
+ "updated": "2026-10-28",
+ "source": "SEC EDGAR 10-K/20-F 원문(Item 2 Properties 등)",
+ "note": "좌표는 도시·단지 단위 대략 위치(approx). quote는 공시 원문 인용. 한국 기업(삼성전자·SK하이닉스·현대차·LG) 사업장 현황은 DART 원문 확인 전이라 미포함.",
+ "skipped": [
+  "005930.KS",
+  "000660.KS",
+  "005380.KS",
+  "LG"
+ ],
+ "companies": {
+  "TSLA": [
+   {
+    "name": "본사 · 텍사스 오스틴",
+    "kind": "hq",
+    "lat": 30.22,
+    "lon": -97.62,
+    "approx": true,
+    "quote": "We are headquartered in Austin, Texas.",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+    "form": "10-K 2025 Item 2"
+   },
+   {
+    "name": "기가팩토리 텍사스 · 오스틴",
+    "kind": "factory",
+    "lat": 30.22,
+    "lon": -97.62,
+    "approx": true,
+    "quote": "Gigafactory Texas Austin, Texas Owned",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+    "form": "10-K 2025 Item 2"
+   },
+   {
+    "name": "프리몬트 공장 · 캘리포니아",
+    "kind": "factory",
+    "lat": 37.49,
+    "lon": -121.94,
+    "approx": true,
+    "quote": "Fremont Factory Fremont, California Owned",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+    "form": "10-K 2025 Item 2"
+   },
+   {
+    "name": "기가팩토리 네바다 · 스파크스",
+    "kind": "factory",
+    "lat": 39.54,
+    "lon": -119.44,
+    "approx": true,
+    "quote": "Gigafactory Nevada Sparks, Nevada Owned",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+    "form": "10-K 2025 Item 2"
+   },
+   {
+    "name": "기가팩토리 베를린 · 그륀하이데",
+    "kind": "factory",
+    "lat": 52.39,
+    "lon": 13.79,
+    "approx": true,
+    "quote": "Gigafactory Berlin-Brandenburg Grunheide, Germany Owned",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+    "form": "10-K 2025 Item 2"
+   },
+   {
+    "name": "기가팩토리 상하이",
+    "kind": "factory",
+    "lat": 30.88,
+    "lon": 121.77,
+    "approx": true,
+    "quote": "Gigafactory Shanghai Shanghai, China",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+    "form": "10-K 2025 Item 2"
+   },
+   {
+    "name": "기가팩토리 뉴욕 · 버펄로",
+    "kind": "factory",
+    "lat": 42.86,
+    "lon": -78.85,
+    "approx": true,
+    "quote": "Gigafactory New York Buffalo, New York Leased",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+    "form": "10-K 2025 Item 2"
+   },
+   {
+    "name": "메가팩토리 래스롭 · 캘리포니아",
+    "kind": "factory",
+    "lat": 37.81,
+    "lon": -121.28,
+    "approx": true,
+    "quote": "Megafactory Lathrop Lathrop, California Leased",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+    "form": "10-K 2025 Item 2"
+   }
+  ],
+  "INTC": [
+   {
+    "name": "생산 팹 · 오리건",
+    "kind": "factory",
+    "lat": 45.54,
+    "lon": -122.96,
+    "approx": true,
+    "quote": "our key production fabs were in Oregon (ramping Intel 18A)",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+    "form": "10-K 2025"
+   },
+   {
+    "name": "생산 팹 · 애리조나",
+    "kind": "factory",
+    "lat": 33.27,
+    "lon": -111.88,
+    "approx": true,
+    "quote": "Arizona (Intel 7 and ramping Intel 18A)",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+    "form": "10-K 2025"
+   },
+   {
+    "name": "생산 팹 · 아일랜드",
+    "kind": "factory",
+    "lat": 53.37,
+    "lon": -6.52,
+    "approx": true,
+    "quote": "Ireland (Intel 4 and Intel 3)",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+    "form": "10-K 2025"
+   },
+   {
+    "name": "생산 팹 · 이스라엘",
+    "kind": "factory",
+    "lat": 31.6,
+    "lon": 34.77,
+    "approx": true,
+    "quote": "Israel (Intel 7)",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+    "form": "10-K 2025"
+   },
+   {
+    "name": "조립·테스트 · 뉴멕시코",
+    "kind": "factory",
+    "lat": 35.24,
+    "lon": -106.66,
+    "approx": true,
+    "quote": "New Mexico being our key advanced packaging facility",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+    "form": "10-K 2025"
+   },
+   {
+    "name": "조립·테스트 · 말레이시아",
+    "kind": "factory",
+    "lat": 5.36,
+    "lon": 100.3,
+    "approx": true,
+    "quote": "a new advanced packaging facility being built in Malaysia",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+    "form": "10-K 2025"
+   },
+   {
+    "name": "조립·테스트 · 베트남",
+    "kind": "factory",
+    "lat": 10.85,
+    "lon": 106.8,
+    "approx": true,
+    "quote": "key assembly and test facilities were in China, New Mexico, Vietnam and Malaysia",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+    "form": "10-K 2025"
+   }
+  ],
+  "MU": [
+   {
+    "name": "본사 · 아이다호 보이시",
+    "kind": "hq",
+    "lat": 43.53,
+    "lon": -116.15,
+    "approx": true,
+    "quote": "Our corporate headquarters are located in Boise, Idaho.",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+    "form": "10-K FY2026 Item 2"
+   },
+   {
+    "name": "대만 · 웨이퍼 생산",
+    "kind": "factory",
+    "lat": 24.0,
+    "lon": 120.6,
+    "approx": true,
+    "quote": "Taiwan R&D, wafer fabrication, component assembly and test",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+    "form": "10-K FY2026 Item 2"
+   },
+   {
+    "name": "싱가포르 · 웨이퍼 생산",
+    "kind": "factory",
+    "lat": 1.37,
+    "lon": 103.89,
+    "approx": true,
+    "quote": "Singapore R&D, wafer fabrication",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+    "form": "10-K FY2026 Item 2"
+   },
+   {
+    "name": "일본 · 웨이퍼 생산",
+    "kind": "factory",
+    "lat": 34.4,
+    "lon": 132.7,
+    "approx": true,
+    "quote": "Japan R&D, wafer fabrication",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+    "form": "10-K FY2026 Item 2"
+   },
+   {
+    "name": "말레이시아 · 조립·테스트",
+    "kind": "factory",
+    "lat": 5.36,
+    "lon": 100.3,
+    "approx": true,
+    "quote": "Malaysia Component assembly and test",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+    "form": "10-K FY2026 Item 2"
+   },
+   {
+    "name": "중국 · 조립·테스트",
+    "kind": "factory",
+    "lat": 34.3,
+    "lon": 108.9,
+    "approx": true,
+    "quote": "China Component assembly and test",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+    "form": "10-K FY2026 Item 2"
+   },
+   {
+    "name": "인도 · 조립·테스트",
+    "kind": "factory",
+    "lat": 23.1,
+    "lon": 72.6,
+    "approx": true,
+    "quote": "India Component assembly and test",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+    "form": "10-K FY2026 Item 2"
+   },
+   {
+    "name": "뉴욕 · 신규 메모리 생산지(계획)",
+    "kind": "factory",
+    "lat": 43.2,
+    "lon": -76.2,
+    "approx": true,
+    "quote": "plans to invest in leading-edge memory manufacturing sites in Idaho and New York",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+    "form": "10-K FY2026 Item 2"
+   }
+  ],
+  "NVDA": [
+   {
+    "name": "본사 · 캘리포니아 샌타클래라",
+    "kind": "hq",
+    "lat": 37.37,
+    "lon": -121.96,
+    "approx": true,
+    "quote": "Our headquarters is in Santa Clara, California.",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+    "form": "10-K FY2026 Item 2"
+   },
+   {
+    "name": "공급사 TSMC(파운드리) · 대만 신주",
+    "kind": "supplier",
+    "lat": 24.77,
+    "lon": 121.01,
+    "approx": true,
+    "quote": "We utilize foundries, such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+    "form": "10-K FY2026"
+   },
+   {
+    "name": "공급사 삼성전자(파운드리·메모리) · 한국",
+    "kind": "supplier",
+    "lat": 37.26,
+    "lon": 127.03,
+    "approx": true,
+    "quote": "foundries, such as ... TSMC, and Samsung Electronics Co., Ltd. ... We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+    "form": "10-K FY2026"
+   },
+   {
+    "name": "공급사 SK하이닉스(메모리) · 한국 이천",
+    "kind": "supplier",
+    "lat": 37.27,
+    "lon": 127.44,
+    "approx": true,
+    "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung.",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+    "form": "10-K FY2026"
+   },
+   {
+    "name": "공급사 마이크론(메모리) · 아이다호",
+    "kind": "supplier",
+    "lat": 43.53,
+    "lon": -116.15,
+    "approx": true,
+    "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung.",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+    "form": "10-K FY2026"
+   }
+  ],
+  "AAPL": [
+   {
+    "name": "본사 · 캘리포니아 쿠퍼티노",
+    "kind": "hq",
+    "lat": 37.33,
+    "lon": -122.01,
+    "approx": true,
+    "quote": "The Company's headquarters is located in Cupertino, California.",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+    "form": "10-K FY2025 Item 2"
+   }
+  ],
+  "TSM": [
+   {
+    "name": "본사 · 신주과학단지",
+    "kind": "hq",
+    "lat": 24.77,
+    "lon": 121.01,
+    "approx": true,
+    "quote": "No. 8, Li-Hsin Road 6 Hsinchu Science Park Hsinchu",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+    "form": "20-F 2025"
+   },
+   {
+    "name": "타이중 팹 · 중부과학단지",
+    "kind": "factory",
+    "lat": 24.21,
+    "lon": 120.62,
+    "approx": true,
+    "quote": "land ... for our Taichung fabs",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+    "form": "20-F 2025"
+   },
+   {
+    "name": "타이난 팹 · 남부과학단지",
+    "kind": "factory",
+    "lat": 23.11,
+    "lon": 120.27,
+    "approx": true,
+    "quote": "the fabs located in Southern Taiwan Science Park",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+    "form": "20-F 2025"
+   },
+   {
+    "name": "애리조나 · 생산능력 확대",
+    "kind": "factory",
+    "lat": 33.75,
+    "lon": -112.13,
+    "approx": true,
+    "quote": "continued to add capacity ... in Arizona, U.S., in Kumamoto, Japan and in Dresden, Germany",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+    "form": "20-F 2025"
+   },
+   {
+    "name": "구마모토 · 생산능력 확대",
+    "kind": "factory",
+    "lat": 32.88,
+    "lon": 130.84,
+    "approx": true,
+    "quote": "in Kumamoto, Japan",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+    "form": "20-F 2025"
+   },
+   {
+    "name": "드레스덴 · 생산능력 확대",
+    "kind": "factory",
+    "lat": 51.05,
+    "lon": 13.74,
+    "approx": true,
+    "quote": "in Dresden, Germany",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+    "form": "20-F 2025"
+   }
+  ]
+ }
+}

@@ -219,6 +219,20 @@ def bill_parts(ent, mem_by_id):
         kw, _, label = TOPICS[t]
         ent["topic:" + t] = {"type": "topic", "name": label, "aliases": kw + [label], "route": r}
     return n
+def facility_stops(ent):
+    F = opt("data", "us", "facilities.json").get("companies", {}); n = 0
+    for tk, fs in F.items():
+        for key in ["company:" + tk] + (["company:2330.TW"] if tk == "TSM" else []):
+            e = ent.get(key)
+            if not e: continue
+            add = []
+            for f in fs:
+                if f["kind"] == "hq" and e["route"] and "본사" in (e["route"][0].get("title") or ""): continue
+                lab = {"hq": "본사", "factory": "공장", "supplier": "공급사"}[f["kind"]]
+                add.append({"region": f["name"], "lat": f["lat"], "lon": f["lon"], "title": f"{lab}(공시)" + (" · 대략 위치" if f.get("approx") else ""), "kind": "supply", "ref": "facility:" + tk,
+                    "fact": f"{f['form']} 원문: \"{f['quote']}\" (좌표는 대략 위치)", "source_url": f["source_url"], "date": None})
+            e["route"][1:1] = add[:6]; n += len(add[:6])
+    return n
 def main():
     sec = J("data", "market", "sectors.json"); factors = {f["id"]: f for f in sec["factors"]}
     sectors = {s["id"]: s for s in sec["sectors"]}
@@ -334,6 +348,7 @@ def main():
     nt, nm = trade_parts(ent, mem_by_id)
     print("trades", nt, "members", nm)
     print("bills", bill_parts(ent, mem_by_id))
+    print("facility stops", facility_stops(ent))
     res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR 신고 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
            "with_route": sum(1 for e in ent.values() if e["route"]), "money_stops": {k: sum(1 for e in ent.values() for x in e["route"] if (x.get("ref") or "").startswith(k)) for k in ("awards:", "lobbying:", "pac:")}, "entities": ent}
