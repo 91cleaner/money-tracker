@@ -472,8 +472,8 @@ async function krCustomsExports() {
   const key = (process.env.DATA_GO_KR_KEY || "").trim();
   if (!key) throw Error("DATA_GO_KR_KEY not set");
   // The API only accepts periods of up to one year, so ask for two consecutive 12-month windows.
-  const now = new Date(), ym = d => d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, "0");
-  const mon = back => new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - back, 1));
+  const today = new Date(), ym = d => d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, "0");
+  const mon = back => new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - back, 1));
   const windows = [[mon(11), mon(0)], [mon(23), mon(12)]];
   const out = {};
   for (const [hs, label] of Object.entries(HS)) {
