@@ -1,0 +1,27 @@
+name: Claude
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened]
+  pull_request_review_comment:
+    types: [created]
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+jobs:
+  claude:
+    if: contains(github.event.comment.body || github.event.issue.body, '@claude') && (github.event.comment.user.login || github.event.issue.user.login) == '91cleaner'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: |
+            --allowedTools "Bash(git:*),Bash(node:*),Bash(npm:*),Bash(npx:*),Bash(python3:*),Bash(ls:*),Bash(cat:*),Bash(rg:*),Bash(grep:*),Bash(jq:*),Bash(gh pr:*),Edit,Write,Read,Glob,Grep"
