@@ -34,6 +34,7 @@
   const moreLinks = [
     ['search.html', '🔍 통합 검색 (업체·계약·의원·법안·종목)'],
     ['rank.html', '순위'],
+    ['weekly.html', '주간 순위표 (미국 공개 기록)'],
     ['spend.html', '추적'],
     ['bid.html', '우리 동네 입찰'],
     ['principles.html', '중립성 원칙'],

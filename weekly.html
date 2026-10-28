@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MONEY TRACKER — 주간 순위표</title>
+<meta name="description" content="이번 주 의원 거래 신고가 많은 회사·의원 Top 10, 로비 공시(최근 분기)와 연방 계약(누적) 상위 회사. 공개 기록 정리이며 투자 조언 아님.">
+<style>
+:root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--link:#7fd8ff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#020806f0;border-bottom:1px solid var(--line)}
+header.bar .brand{font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--g)}
+header.bar .crumb{font:12px ui-monospace,Menlo,monospace;color:var(--mut)}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.panel.span2{grid-column:1/-1}
+.panel h1{margin:0 0 6px;font-size:20px;color:#eafff2}
+.panel h2{margin:0 0 10px;font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--g)}
+.note{margin:8px 0 0;color:var(--mut);font-size:12px}
+ol{margin:0;padding:0;list-style:none}
+li{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #12301f}
+li .r{font:700 12px ui-monospace,Menlo,monospace;color:var(--mut)}
+li .v{font:700 13px ui-monospace,Menlo,monospace;color:#eafff2;white-space:nowrap}
+.bar2{grid-column:2/-1;height:4px;background:#0a2416;border-radius:2px;overflow:hidden}.bar2 i{display:block;height:100%;background:var(--g)}
+.empty{color:var(--mut);padding:14px 6px;border:1px dashed var(--line);border-radius:8px;text-align:center}
+footer.foot{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:var(--mut);font-size:12px}
+footer.foot .disc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#03100a}
+@media(max-width:800px){main{grid-template-columns:minmax(0,1fr);padding:12px 10px 30px}}
+</style>
+</head>
+<body>
+<header class="bar"><a class="brand" href="./">◉ MONEY TRACKER</a><span class="crumb">WEEKLY BOARD / 공개 기록 정리</span></header>
+<main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
+<footer class="foot"><div class="disc">
+  이 표는 공개 기록의 건수·금액을 센 것일 뿐 잘잘못이나 전망을 뜻하지 않으며 투자 조언 아님.
+  의원 거래는 <b>신고 기준</b>(하원 PTR 신고일)이며 거래일과 신고일 사이에 최대 45일 차이가 있을 수 있습니다.
+  구간은 오늘이 아니라 자료 속 가장 최근 신고일부터 거꾸로 7일이고, 자료가 갱신될 때마다 자동으로 바뀝니다.
+  출처: U.S. House Clerk 재산공개(PTR), lda.gov 로비 공시, USAspending.gov.
+</div></footer>
+<script src="assets/weekly-board.js?v=wk-20261028"></script>
+<script>
+(function () {
+  "use strict";
+  var app = document.getElementById("app");
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function get(p) { return fetch(p).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function usd(n) { return n >= 1e9 ? "$" + (n / 1e9).toFixed(2) + "B" : n >= 1e6 ? "$" + (n / 1e6).toFixed(1) + "M" : "$" + Math.round(n).toLocaleString("en-US"); }
+  function board(title, rows, unit, link, fmt) {
+    var p = el("section", "panel"); p.appendChild(el("h2", "", title));
+    if (!rows.length) { p.appendChild(el("div", "empty", "표시할 자료가 없습니다.")); return p; }
+    var ol = el("ol"), max = rows[0].n;
+    rows.forEach(function (r, i) {
+      var li = el("li"), a = el("a", "", r.key); a.href = link + encodeURIComponent(r.key);
+      li.append(el("span", "r", String(i + 1)), a, el("span", "v", fmt ? fmt(r.n) : r.n + unit));
+      var b = el("div", "bar2"), bi = el("i"); bi.style.width = (max ? r.n / max * 100 : 0).toFixed(0) + "%"; b.appendChild(bi); li.appendChild(b);
+      ol.appendChild(li);
+    });
+    p.appendChild(ol); return p;
+  }
+  Promise.all([get("data/us/trades.json"), get("data/us/lobbying.json"), get("data/us/federal-awards.json")]).then(function (a) {
+    var W = MTWeekly.weeklyFilings((a[0] && a[0].trades) || [], 10);
+    app.replaceChildren();
+    var head = el("section", "panel span2"); head.appendChild(el("h1", "", "이번 주 공개 기록 순위표"));
+    head.appendChild(el("div", "note", W.from ? "의원 거래 신고 " + W.from + " ~ " + W.to + " (신고일 기준 7일, 총 " + W.total + "건)" : "신고 자료를 불러오지 못했습니다."));
+    app.appendChild(head);
+    app.appendChild(board("신고가 많은 회사 Top 10", W.companies, "건", "company.html?t="));
+    app.appendChild(board("신고가 많은 의원 Top 10", W.members, "건", "member.html?n="));
+    var L = MTWeekly.latestQuarterLobbying(a[1], 10), F = MTWeekly.awardsTotal(a[2], 10);
+    var lp = board("로비 공시 보고액 Top 10 (" + (L.quarter || "-") + " 분기)", L.rows, "", "company.html?t=", usd);
+    lp.appendChild(el("p", "note", "LDA 공시는 분기 단위라 주간 순위가 아닙니다. 보고된 금액 기준이며 원문 확인 필요."));
+    app.appendChild(lp);
+    var fp = board("연방 계약 수령액 Top 10 (자료 기간 누적)", F.rows, "", "company.html?t=", usd);
+    fp.appendChild(el("p", "note", (F.period ? F.period[0] + " ~ " + F.period[1] + " 누적. " : "") + "날짜별 계약 자료가 없어 주간 순위가 아닙니다. 이름 일치 기준이라 누락·혼입 가능."));
+    app.appendChild(fp);
+  });
+})();
+</script>
+</body>
+</html>
