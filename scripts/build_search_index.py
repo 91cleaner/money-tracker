@@ -75,7 +75,24 @@ SECTOR_KW = {  # 검색용 한/영 키워드(사실 아님, 검색어 연결용)
  "consumer": ["소비재", "명품", "유통", "리테일", "retail"], "crypto": ["코인", "비트코인", "가상자산", "crypto", "bitcoin"],
  "safe_haven": ["금", "채권", "gold", "bond"], "industrial": ["기계", "산업재", "industrial"], "market": ["시장", "증시", "지수", "market"],
 }
-KR_NOTE = " 관세청 품목별 수출입실적(공공데이터포털) HS 4단위 집계라 산업부 발표 '반도체' 전체 수출과 범위가 다름."
+KR_NOTE = " 관세청이 품목 코드(HS 4자리)로 센 숫자라서, 산업부가 발표하는 '반도체' 전체 수출과 범위가 달라요."
+KR_ALIASES = {  # 한국 주요 종목 별명(검색어 연결용, 사실 아님)
+ "005930.KS": ["삼성", "삼전", "삼성 반도체", "삼성반도체", "삼성전자 반도체", "samsung", "samsung electronics", "삼성 전자"],
+ "000660.KS": ["하이닉스", "하닉", "닉스", "sk hynix", "hynix", "에스케이하이닉스", "sk 하이닉스", "하이닉스 반도체"],
+ "005380.KS": ["현대자동차", "현차", "현대 자동차", "hyundai motor", "hyundai"],
+ "006400.KS": ["삼성sdi", "삼성 sdi", "삼성에스디아이", "samsung sdi", "삼성 배터리", "에스디아이"],
+ "012450.KS": ["한화에어로", "한화 에어로", "한화에어로스페이스", "hanwha aerospace", "한화 방산", "한화 우주"],
+ "035420.KS": ["naver", "네이버 포털", "네이버 ai"],
+ "105560.KS": ["kb", "kb금융지주", "kb 금융", "kb financial"],
+ "207940.KS": ["삼바", "삼성바이오", "삼성 바이오", "samsung biologics", "삼성 바이오로직스"],
+ "329180.KS": ["현대중공업", "hd현대중공업", "hd 현대중공업", "hd hyundai heavy", "hd현대 조선", "현대 조선"],
+ "373220.KS": ["엘지에너지솔루션", "lg에너지솔루션", "lg 에너지솔루션", "엔솔", "lg엔솔", "lges", "lg energy solution", "lg 배터리"],
+}
+def josa(w, a, b):
+    """받침 있으면 a, 없으면 b (은/는, 이/가)."""
+    ch = (w or " ")[-1]
+    if "가" <= ch <= "힣": return a if (ord(ch) - 0xAC00) % 28 else b
+    return b
 def fmt(lt):
     v = lt.get("value")
     if isinstance(v, (int, float)) and lt.get("unit") == "usd" and v >= 1e8: return f"약 {v/1e8:,.1f}억 달러"
@@ -296,6 +313,58 @@ def intl_policy(ent):
         if k.startswith("company:") and k.endswith(".T") and k[8:-2] in X:
             r = X[k[8:-2]]; e.setdefault("aliases", []); e["aliases"] += [a for a in [r[0]] if a not in e["aliases"]]; e["jpx"] = {"name": r[0], "market": r[1], "s33": r[2], "s17": r[3]}
     return n
+def stop(region, lat, lon, title, fact, url, date=None, ref=None):
+    return {"region": region, "lat": lat, "lon": lon, "title": title, "fact": fact, "source_url": url, "date": date, "ref": ref}
+KR_URL = "https://www.data.go.kr/data/15094808/openapi.do"
+def kr_company_routes(ent):
+    """한국 종목(.KS): 주가·국회 의안·미국 조치·미국 거래처·대만/중국/일본 정책을 출처 링크 있는 카드로 붙인다. 관련 0건이면 카드를 만들지 않는다."""
+    import datetime as dt
+    links = J("data", "market", "company-links.json")["companies"]
+    W = opt("data", "us", "whitehouse.json"); WI = W.get("items") or []
+    K = [b for b in (opt("data", "policy", "kr.json").get("items") or []) if b.get("kind") != "press"]
+    FAC = opt("data", "us", "facilities.json").get("companies", {})
+    try: base = dt.date.fromisoformat((W.get("updated") or "")[:10])
+    except ValueError: base = None
+    WIN = [(30, "한 달"), (90, "석 달")]  # 한 달에 0건이면 석 달로 넓혀 보고, 그래도 0건이면 한눈에 보기 카드를 숨김
+    kr, dc, us = CENT["kr"], CENT["dc"], CENT["us"]; n = 0
+    for c in links:
+        sym = c["symbol"]; e = ent.get("company:" + sym)
+        if not e or not sym.endswith(".KS"): continue
+        sids = [x["id"] for x in c["sectors"]]; lab = c["sectors"][0]["label"] if c["sectors"] else ""
+        nm = c["name"]; add = []
+        pj = opt("data", "kr", "prices", sym.split(".")[0] + ".json")  # 금융위원회 주식시세정보(공공데이터포털)
+        if pj.get("c") and pj.get("d"):
+            last, ld = pj["c"][-1], pj["d"][-1]; prev = pj["c"][-22] if len(pj["c"]) > 22 else None
+            f = f"{nm}의 마지막 종가는 {last:,}원이에요({ld})."
+            if prev: f += f" 한 달쯤 전({pj['d'][-22]})에는 {prev:,}원이었어요."
+            add.append(stop(kr[0] + " · 증시", kr[2], kr[3], "주가 기록(종가)", f + " 장이 끝날 때 값이고 실시간이 아니에요.", pj.get("source_url") or KR_URL, ld, "krprice:" + sym))
+        us_all = sorted([b for b in WI if set(sids) & set(b.get("sectors", [])) and b.get("u")], key=lambda b: b.get("date") or "", reverse=True)
+        us_month, wl = [], ""
+        for days, wl in WIN:
+            us_month = [b for b in us_all if base and (b.get("date") or "") >= str(base - dt.timedelta(days=days))]
+            if us_month: break
+        if us_month:
+            first = f"{nm}{josa(nm, '은', '는')} 한국 대표 {lab} 회사예요. 최근 {wl} 미국이 {lab} 관련 문서를 {len(us_month)}번 냈어요."
+            add.insert(0, stop("미국 · 백악관과 관련 부처", dc[2], dc[3], "한눈에 보기", first + " 제목 말을 보고 같은 분야로 묶은 것이라, 이 회사와 직접 관계가 있다는 뜻은 아니에요.", us_month[0]["u"], us_month[0].get("date"), "uswh:" + sym))
+        for i, b in enumerate(us_all[:3]):
+            add.append(stop("미국 · 워싱턴 D.C.", dc[2] + 0.02 * (i - 1), dc[3] + 0.02, f"미국 {b.get('type') or '조치'}", f"미국에서 {b.get('date')}에 {lab} 분야 문서가 나왔어요: {b['t']}", b["u"], b.get("date"), "uswh:" + b["id"]))
+        for tk, fs in FAC.items():  # 미국 회사 공시에 이 회사가 공급사로 나온 경우
+            for fa in fs:
+                if fa.get("kind") == "supplier" and fa.get("source_url") and (fa.get("name") or "").replace("공급사 ", "", 1).startswith(nm):
+                    un = (ent.get("company:" + tk) or {}).get("name") or tk
+                    add.append(stop("미국 · " + un, us[2], us[3], f"미국 회사 {un}의 거래처", f"미국 회사 {un}({tk})가 낸 보고서에 {nm}{josa(nm, '이', '가')} 거래처로 나와요. 원문: \"{fa['quote']}\"", fa["source_url"], None, "supply:" + tk))
+        kb = sorted([b for b in K if set(sids) & set(b.get("tags", [])) and b.get("u")], key=lambda b: b.get("d") or "", reverse=True)[:3]
+        for i, b in enumerate(kb):
+            add.append(stop("대한민국 국회 · 서울 여의도", 37.5318 + 0.01 * (i - 1), 126.9142 + 0.01, "국회에 올라온 법안", f"국회에 '{b['t']}' 법안이 올라왔어요({b.get('d')}). 낸 사람: {b.get('by') or '-'}. 이름만 보고 같은 분야로 묶었어요.", b["u"], b.get("d"), "krbill:" + b["id"]))
+        for cc in ("tw", "cn", "jp"):
+            cn_, _t, place, la, lo, _a = CP[cc]
+            pl = sorted([b for b in (opt("data", "policy", cc + ".json").get("items") or []) if set(sids) & set(b.get("tags", [])) and b.get("u")], key=lambda b: b.get("d") or "", reverse=True)[:1]
+            for b in pl:
+                add.append(stop(f"{cn_} · {place}", la, lo, f"{cn_} 정부 발표", f"{cn_} 정부가 {b.get('d')}에 {lab} 분야로 보이는 글을 올렸어요: {b['t']} (원문 언어 그대로예요. 제목 말만 보고 묶었어요.)", b["u"], b.get("d"), f"{cc}pol:" + b["id"]))
+        add = [x for x in add if x.get("source_url")]
+        e["route"] = add + [x for x in e["route"] if x.get("source_url")]
+        n += len(add)
+    return n
 def main():
     sec = J("data", "market", "sectors.json"); factors = {f["id"]: f for f in sec["factors"]}
     sectors = {s["id"]: s for s in sec["sectors"]}
@@ -331,7 +400,7 @@ def main():
             for ch in ("sen", "rep"):
                 if (ch, n) in cm:
                     d = CENT["dc"]
-                    out.append(stop(f"{d[0]} {CH[ch]}", d[2], d[3], f"연관 위원회({CH[ch]}): {n}", f"자체 분류, 공식 관할 아님. 데이터상 {CH[ch]} 위원 {cm[(ch, n)]}명(members.json).",
+                    out.append(stop(f"{d[0]} {CH[ch]}", d[2], d[3], f"연관 위원회({CH[ch]}): {n}", f"이 사이트가 직접 묶은 거라 공식 담당 위원회는 아닐 수 있어요. {CH[ch]} 위원 {cm[(ch, n)]}명이 있어요.",
                                     "https://www.congress.gov/committees", None, f"committee:{ch}:{n}"))
         return out[:2]
     def factor_stops(sid, limit=3):
@@ -340,7 +409,7 @@ def main():
             c = factor_country(fid); f = factors.get(fid)
             if not c or not f or c in seen: continue
             seen.add(c); k = CENT[c]
-            out.append(stop(k[0], k[2], k[3], f"함께 볼 지표: {f['label']}", f"데이터상 {sectors[sid]['label']} 업종과 함께 보는 지표로 연결됨. 출처: {f.get('source','공식 통계')}.",
+            out.append(stop(k[0], k[2], k[3], f"함께 볼 지표: {f['label']}", f"{sectors[sid]['label']} 분야와 같이 보는 숫자예요. 출처: {f.get('source','공식 통계')}. 원인이라는 뜻은 아니에요.",
                             f.get("source_url"), None, "factor:" + fid))
             if len(out) >= limit: break
         return out
@@ -352,7 +421,7 @@ def main():
         r = []
         mk = [c for c in links if sid in [x["id"] for x in c["sectors"]] and c["region"] in CENT][:3]
         for c in mk:
-            k = CENT[c["region"]]; r.append(stop(k[0], k[2], k[3], f"대표 종목: {c['name']}", f"데이터상 {s['label']} 업종 추적 종목 {c['name']}({c['symbol']}).", None, None, "company:" + c["symbol"]))
+            k = CENT[c["region"]]; r.append(stop(k[0], k[2], k[3], f"대표 종목: {c['name']}", f"{s['label']} 분야에서 지켜보는 회사예요: {c['name']}({c['symbol']}).", None, None, "company:" + c["symbol"]))
         r += factor_stops(sid) + cmte_stops(sid)
         ent["sector:" + sid] = {"type": "sector", "name": s["label"], "aliases": [s["label"], s.get("label_en", ""), sid] + s["label"].split("·"), "kw": SECTOR_KW.get(sid, []), "route": r, "companies": [c["symbol"] for c in links if sid in [x["id"] for x in c["sectors"]]][:6]}
     # 추적 기업(한/영)
@@ -364,17 +433,18 @@ def main():
         if ll:
             r.append(stop(f"본사 {t.get('hq_city','')}, {t['hq_state_or_country']}", ll[0], ll[1], "본사 위치(SEC 주소)", f"데이터상 SEC 제출 서류 사업장 주소가 {t.get('hq_city')} {t['hq_state_or_country']}임. 업종 코드 SIC {t.get('sic')} {t.get('sic_desc')}.", t["source_url"]))
         elif k:
-            r.append(stop(k[0], k[2], k[3], f"{c['name']} 소속 시장", f"데이터상 {c['name']}({c['symbol']})은 {k[0]} 시장 종목으로 분류됨.", None))
+            if not c["symbol"].endswith(".KS"):  # 한국 종목은 kr_company_routes()가 출처 있는 카드로 채움
+                r.append(stop(k[0], k[2], k[3], f"{c['name']}이(가) 상장된 나라", f"{c['name']}({c['symbol']})은 {k[0]} 증시에 올라 있는 회사예요.", None))
         for f in c.get("factors", [])[:4]:
             cc = factor_country(f["id"])
-            if cc and cc != c["region"] and all(x["region"] != CENT[cc][0] for x in r):
-                lt = f.get("latest") or {}
-                r.append(stop(CENT[cc][0], CENT[cc][2], CENT[cc][3], f"함께 볼 지표: {f['label']}", f"데이터상 최신값 {fmt(lt)} ({lt.get('date')}).{KR_NOTE if f['id'].startswith('kr_exp_') else ''} 원인 관계 단정 아님.", f.get("source_url"), lt.get("date"), "factor:" + f["id"]))
+            lt = f.get("latest") or {}
+            if cc and cc != c["region"] and all(x["region"] != CENT[cc][0] for x in r) and lt.get("value") is not None:
+                r.append(stop(CENT[cc][0], CENT[cc][2], CENT[cc][3], f"함께 볼 지표: {f['label']}", f"요즘 값은 {fmt(lt)}이에요({lt.get('date')}).{KR_NOTE if f['id'].startswith('kr_exp_') else ''} 같이 보는 숫자일 뿐, 서로 원인이라는 뜻은 아니에요.", f.get("source_url"), lt.get("date"), "factor:" + f["id"]))
         r += money_stops(c["symbol"], st_ll, bills_by_no)
         if sid: r += cmte_stops(sid)[:1]
         name_en = (t or {}).get("name") or ""
         ent["company:" + c["symbol"]] = {"type": "company", "name": c["name"], "symbol": c["symbol"], "sector": sid,
-            "aliases": [c["name"], c["symbol"], c["symbol"].split(".")[0], name_en], "route": r}
+            "aliases": [c["name"], c["symbol"], c["symbol"].split(".")[0], name_en] + KR_ALIASES.get(c["symbol"], []), "route": r}
     # 거래 데이터의 나머지 티커(SEC 매핑 있는 것)
     for tk, t in ts.items():
         if "company:" + tk in ent: continue
@@ -407,12 +477,17 @@ def main():
     for e in ent.values():
         e["route"] = [x for x in e["route"] if x and x.get("lat") is not None]
         e["aliases"] = sorted({a for a in e["aliases"] if a})
+    # 질문 이해기(assets/intent.js)용 회사 별명·오타 변형: data/intent-lexicon.json nicknames → aliases
+    nick = (opt("data", "intent-lexicon.json") or {}).get("nicknames", {})
+    for tk, names in nick.items():
+        e = ent.get("company:" + tk)
+        if e: e["aliases"] = sorted(set(e["aliases"]) | {a for a in names if a})
     mem_by_id = {m["id"]: m for m in J("data", "us", "members.json")["members"]}
     nt, nm = trade_parts(ent, mem_by_id)
     print("trades", nt, "members", nm)
     print("bills", bill_parts(ent, mem_by_id))
     print("facility stops", facility_stops(ent))
-    print("kr policy", kr_policy(ent)); print("wh topics", wh_topics(ent)); print("intl policy", intl_policy(ent))
+    print("kr policy", kr_policy(ent)); print("wh topics", wh_topics(ent)); print("intl policy", intl_policy(ent)); print("kr company stops", kr_company_routes(ent))
     res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR 신고 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
            "with_route": sum(1 for e in ent.values() if e["route"]), "money_stops": {k: sum(1 for e in ent.values() for x in e["route"] if (x.get("ref") or "").startswith(k)) for k in ("awards:", "lobbying:", "pac:")}, "entities": ent}
