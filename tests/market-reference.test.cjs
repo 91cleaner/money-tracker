@@ -20,7 +20,9 @@ test('every factor has a source link, and collected factors point at real data',
     if (f.market) assert.ok(fs.existsSync(path.join(root, 'data/markets', f.market + '.json')), f.id + ' market file ' + f.market);
     if (f.data) {
       const d = json(f.data.file);
-      assert.ok(d.series && d.series[f.data.series], f.id + ' series ' + f.data.series + ' in ' + f.data.file);
+      if (f.data.series) assert.ok(d.series && d.series[f.data.series], f.id + ' series ' + f.data.series + ' in ' + f.data.file);
+      if (f.data.company) assert.ok(d.history && d.history[f.data.company], f.id + ' company ' + f.data.company + ' in ' + f.data.file);
+      assert.ok(f.data.series || f.data.company, f.id + ' data link needs series or company');
     }
     if (f.status === 'collected') assert.ok(f.data || f.market, f.id + ' collected but no data link');
   }
