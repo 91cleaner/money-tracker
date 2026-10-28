@@ -182,9 +182,13 @@
    "id": "cn_export_controls",
    "label": "중국 상무부 수출통제 공고",
    "kind": "policy",
-   "status": "planned",
-   "source": "中华人民共和国商务部",
-   "source_url": "https://www.mofcom.gov.cn/"
+   "status": "collected",
+   "source": "中华人民共和国商务部 · 政策发布 공고 (매일 자동 수집·누적)",
+   "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html",
+   "data": {
+    "file": "data/market/factors/cn-mofcom-announcements.json",
+    "list": "items"
+   }
   },
   {
    "id": "us_export_controls",
