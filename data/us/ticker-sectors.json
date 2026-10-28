@@ -2,6 +2,7 @@
  "updated": "2026-10-28",
  "source": "SEC EDGAR company_tickers.json + data.sec.gov submissions (SIC, business address)",
  "note": "SIC→sector는 앱용 단순화 매핑. 본사는 SEC 제출 서류 사업장 주소 기준.",
+ "sector_committees_note": "자체 분류, 공식 관할 아님.",
  "sector_committees": {
   "technology": [
    "Commerce, Science, and Transportation",

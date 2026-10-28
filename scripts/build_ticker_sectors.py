@@ -113,7 +113,7 @@ def main():
         "updated": time.strftime("%Y-%m-%d"),
         "source": "SEC EDGAR company_tickers.json + data.sec.gov submissions (SIC, business address)",
         "note": "SIC→sector는 앱용 단순화 매핑. 본사는 SEC 제출 서류 사업장 주소 기준.",
-        "sector_committees": SECTOR_COMMITTEES,
+        "sector_committees_note": "자체 분류, 공식 관할 아님.", "sector_committees": SECTOR_COMMITTEES,
         "committee_trade_counts": {"_flag": "INTERNAL ONLY — 위원회·업종 단위 집계. 개별 의원 거래 화면 공개 금지(HANDOFF).",
                                    "by_sector": {k: dict(v) for k, v in agg.items()}},
         "total_tickers": len(counts), "mapped": len(out), "unmapped": sorted(set(missing)),
