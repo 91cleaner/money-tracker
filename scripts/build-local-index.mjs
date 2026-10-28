@@ -7,7 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {createRequire} from "node:module";
 import {koreanBillDocuments} from "./kr-bill-index.mjs";
-import {marketReferenceDocuments} from "./market-reference-index.mjs";
+import {marketReferenceDocuments,tradeControlDocuments} from "./market-reference-index.mjs";
 const require=createRequire(import.meta.url);
 const root=path.resolve(import.meta.dirname,"..");
 function read(p,fallback=null){try{return JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));}catch(e){if(e.code==="ENOENT")return fallback;throw e;}}
@@ -143,6 +143,7 @@ function build(){
  let topicText="";try{topicText=fs.readFileSync(path.join(root,"collector/world/topics.py"),"utf8");}catch(e){}
  const topicLabels=Object.fromEntries([...topicText.matchAll(/\{"id": "([a-z_]+)", "label": "([^"]+)"/g)].map(m=>[m[1],m[2]]));
  for(const item of marketReferenceDocuments(read("data/market/sectors.json",{}),read("data/market/calendar.json",{}),marketName,t=>topicLabels[t]||t))push(item);
+ for(const item of tradeControlDocuments(read("data/market/factors/us-trade-controls.json",{})))push(item);
  docs.sort((a,b)=>a.id.localeCompare(b.id,"en"));
  // Keep the index deterministic and deduplicate by stable identifiers.
  const counts={};

@@ -36,3 +36,14 @@ export function marketReferenceDocuments(sectors,calendar,marketName=()=>null,to
  }
  return out;
 }
+
+/** US export-control / Entity List / tariff notices collected by scripts/collect-market-factors.mjs. */
+export function tradeControlDocuments(file){
+ return (file?.documents||[]).map(d=>{
+  const tags=[d.entity_list&&"Entity List",d.tariff&&"관세",d.china&&"중국"].filter(Boolean);
+  return {id:"trade-"+d.id,type:"regulation",title:"미국 무역·수출통제 고시 · "+tidy(d.title,140),
+   aliases:["수출통제","export controls","무역","미국 상무부",d.agency,...tags,...(d.china?["China","대중국 조치"]:[])],
+   summary:tidy(d.agency,80)+" · "+tidy(d.type,30)+" · 게재일 "+d.date+(tags.length?" · 자동 분류: "+tags.join(", ")+"(제목·요약 단어 기준, 원문 확인 필요)":"")+". 공식 고시 원문 링크.",
+   source:"Federal Register",url:d.url,source_date:d.date||null,route:null};
+ });
+}

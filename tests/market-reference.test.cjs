@@ -22,7 +22,8 @@ test('every factor has a source link, and collected factors point at real data',
       const d = json(f.data.file);
       if (f.data.series) assert.ok(d.series && d.series[f.data.series], f.id + ' series ' + f.data.series + ' in ' + f.data.file);
       if (f.data.company) assert.ok(d.history && d.history[f.data.company], f.id + ' company ' + f.data.company + ' in ' + f.data.file);
-      assert.ok(f.data.series || f.data.company, f.id + ' data link needs series or company');
+      if (f.data.list) assert.ok(Array.isArray(d[f.data.list]) && d[f.data.list].length, f.id + ' list ' + f.data.list + ' in ' + f.data.file);
+      assert.ok(f.data.series || f.data.company || f.data.list, f.id + ' data link needs series, company or list');
     }
     if (f.status === 'collected') assert.ok(f.data || f.market, f.id + ' collected but no data link');
   }
@@ -70,4 +71,13 @@ test('sectors, factors and calendar are in the offline search index with sources
   const index = json('data/search/index.json');
   const ids = new Set(index.documents.map(d => d.id));
   for (const id of ['sector-semiconductor', 'factor-us_policy_rate', 'calendar-us-2026-12-09']) assert.ok(ids.has(id), 'index has ' + id + ' (run node scripts/build-local-index.mjs)');
+});
+
+test('US trade-control notices are searchable with official links', async () => {
+  const { tradeControlDocuments } = await import('../scripts/market-reference-index.mjs');
+  const file = json('data/market/factors/us-trade-controls.json');
+  const docs = tradeControlDocuments(file);
+  assert.equal(docs.length, file.documents.length);
+  for (const d of docs) assert.match(d.url, /^https:\/\/www\.federalregister\.gov\//);
+  assert.ok(docs.some(d => d.aliases.includes('중국')), 'China-related notices carry the 중국 alias');
 });
