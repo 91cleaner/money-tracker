@@ -7,6 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {createRequire} from "node:module";
 import {koreanBillDocuments} from "./kr-bill-index.mjs";
+import {marketReferenceDocuments} from "./market-reference-index.mjs";
 const require=createRequire(import.meta.url);
 const root=path.resolve(import.meta.dirname,"..");
 function read(p,fallback=null){try{return JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));}catch(e){if(e.code==="ENOENT")return fallback;throw e;}}
@@ -137,6 +138,11 @@ function build(){
    summary:series.title+"의 최근 저장 관측값: "+obs.value+" "+series.unit+" (관측일 "+obs.date+"). 발표 시차와 개정 가능성 있음. 투자 신호가 아닙니다.",
    source:"Federal Reserve Bank of St. Louis · FRED",url:series.url,source_date:obs.date,route:"rates"});
  }
+ // Sector → factor reference map and official market calendar (data/market). Reference only, no forecast.
+ const marketName=stem=>read("data/markets/"+stem+".json",{})?.name||null;
+ let topicText="";try{topicText=fs.readFileSync(path.join(root,"collector/world/topics.py"),"utf8");}catch(e){}
+ const topicLabels=Object.fromEntries([...topicText.matchAll(/\{"id": "([a-z_]+)", "label": "([^"]+)"/g)].map(m=>[m[1],m[2]]));
+ for(const item of marketReferenceDocuments(read("data/market/sectors.json",{}),read("data/market/calendar.json",{}),marketName,t=>topicLabels[t]||t))push(item);
  docs.sort((a,b)=>a.id.localeCompare(b.id,"en"));
  // Keep the index deterministic and deduplicate by stable identifiers.
  const counts={};
