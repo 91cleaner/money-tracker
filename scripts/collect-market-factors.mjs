@@ -453,6 +453,45 @@ async function euParliamentVotes() {
   return all.length + " votes";
 }
 
+
+// Korea Customs Service item trade (관세청 품목별 수출입실적) via data.go.kr. Needs DATA_GO_KR_KEY with this API approved.
+const HS = { "8542": "반도체(집적회로)", "8703": "승용차", "8507": "축전지(배터리)", "8901": "선박", "2710": "석유제품", "8517": "통신기기(휴대폰 등)" };
+export function parseCustomsXml(xml) {
+  const code = (String(xml).match(/<resultCode>([^<]*)<\/resultCode>/) || [])[1], msg = (String(xml).match(/<resultMsg>([^<]*)<\/resultMsg>/) || [])[1];
+  if (code && code !== "00") throw Error("data.go.kr result " + code + " " + (msg || ""));
+  const items = [];
+  for (const m of String(xml).matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+    const f = k => (m[1].match(new RegExp("<" + k + ">([^<]*)</" + k + ">")) || [])[1];
+    const ym = String(f("year") || "").replace(".", "-");
+    if (!/^\d{4}-\d{2}$/.test(ym)) continue;
+    items.push({ month: ym, hs: f("hsCd") || null, exp_usd: num(f("expDlr")), imp_usd: num(f("impDlr")) });
+  }
+  return items;
+}
+async function krCustomsExports() {
+  const key = (process.env.DATA_GO_KR_KEY || "").trim();
+  if (!key) throw Error("DATA_GO_KR_KEY not set");
+  const end = new Date(), start = new Date(Date.UTC(end.getUTCFullYear() - 2, end.getUTCMonth(), 1));
+  const ym = d => d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, "0");
+  const out = {};
+  for (const [hs, label] of Object.entries(HS)) {
+    const url = "https://apis.data.go.kr/1220000/Itemtrade/getItemtradeList?serviceKey=" + encodeURIComponent(key) + "&strtYymm=" + ym(start) + "&endYymm=" + ym(end) + "&hsSgn=" + hs;
+    let res;
+    try { res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(30000) }); }
+    catch (e) { throw Error("customs fetch failed for HS " + hs + ": " + e.name); } // never include the URL (it contains the key)
+    if (!res.ok) throw Error("customs HTTP " + res.status + " for HS " + hs);
+    const items = parseCustomsXml(await res.text());
+    const byMonth = {};
+    for (const it of items) { const b = (byMonth[it.month] ||= { month: it.month, exp_usd: 0, imp_usd: 0 }); b.exp_usd += it.exp_usd || 0; b.imp_usd += it.imp_usd || 0; }
+    const points = Object.values(byMonth).sort((a, b) => a.month.localeCompare(b.month));
+    if (points.length) out[hs] = { label, points, latest: points.at(-1) };
+  }
+  if (!Object.keys(out).length) throw Error("no customs items returned");
+  writeJson("kr-exports-by-item.json", { source: "관세청 품목별 수출입실적 (공공데이터포털)", source_url: "https://www.data.go.kr/data/15100475/openapi.do",
+    note: "HS 4단위 품목별 월간 수출·수입액(달러). 잠정치는 이후 바뀔 수 있음.", collected_at: now(), items: out });
+  return Object.entries(out).map(([k, v]) => k + "@" + v.latest.month).join(",");
+}
+
 async function chinaMofcomProbe() {
   const res = await fetch("https://www.mofcom.gov.cn/", { headers: UA, signal: AbortSignal.timeout(20000) });
   const html = await res.text();
@@ -464,7 +503,7 @@ async function chinaMofcomProbe() {
 
 if (import.meta.url === "file://" + process.argv[1]) {
   const results = {};
-  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates, fdaApprovals, qcewJobs, worldBankCountries, ukCommonsVotes, euParliamentVotes })) {
+  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates, fdaApprovals, qcewJobs, worldBankCountries, ukCommonsVotes, euParliamentVotes, krCustomsExports })) {
     try { results[name] = "ok: " + await fn(); }
     catch (e) { results[name] = "FAILED: " + e.message; warn(name + " failed — previous file kept: " + e.message); }
   }
@@ -479,7 +518,8 @@ if (import.meta.url === "file://" + process.argv[1]) {
     const jobs = (() => { try { const f = rd("us-jobs-by-county.json"); return Object.fromEntries(Object.entries(f.industries).map(([k, v]) => [k, v.period + " top: " + (v.counties[0] ? v.counties[0].name + " " + v.counties[0].employment : "-")])); } catch { return null; } })();
     const wb = (() => { try { const f = rd("country-profiles.json").indicators; return { KOR_gdp: f["NY.GDP.MKTP.CD"]?.countries?.KOR?.latest, KOR_mil_pct: f["MS.MIL.XPND.GD.ZS"]?.countries?.KOR?.latest, USA_mil: f["MS.MIL.XPND.CD"]?.countries?.USA?.latest }; } catch { return null; } })();
     const votes = (() => { const o = {}; try { o.uk = rd("uk-commons-divisions.json").divisions.slice(0, 2).map(d => d.date + " " + d.title.slice(0, 60) + " " + d.ayes + ":" + d.noes); } catch {} try { o.eu = rd("eu-parliament-votes.json").votes.slice(0, 2).map(d => d.date + " " + d.title.slice(0, 60)); } catch {} return o; })();
-    const sample = { votes, wb, jobs, fda, policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
+    const kr = (() => { try { const f = rd("kr-exports-by-item.json").items; return Object.fromEntries(Object.entries(f).map(([k, v]) => [k, v.latest])); } catch { return null; } })();
+    const sample = { kr_exports: kr, votes, wb, jobs, fda, policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
       ecb: Object.fromEntries(Object.entries(ecb.series || {}).map(([k, v]) => [k, v.latest])), fred: Object.fromEntries(Object.entries(fr.series || {}).map(([k, v]) => [k, v.latest])) };
     console.log("::notice::SAMPLE " + JSON.stringify(sample));
   } catch (e) { warn("sample summary unavailable: " + e.message); }
