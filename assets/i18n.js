@@ -47,6 +47,7 @@
     "법안": "Bills", "규제": "Regulation", "위원회": "Committee", "연방 계약": "Federal contracts", "로비": "Lobbying", "후원": "PAC", "의원 거래": "Member trades", "본사·공장": "HQ & plants", "기타 지표": "Other indicators",
     "하원": "House", "상원": "Senate", "민주당": "Democratic", "공화당": "Republican", "무소속": "Independent",
     "미국": "United States", "중국": "China", "대만": "Taiwan", "한국": "South Korea", "일본": "Japan", "영국": "United Kingdom", "독일": "Germany", "사우디": "Saudi Arabia", "유럽": "Europe",
+    "같은 기간 있었던 일": "What happened in the same period",
     "전체": "All", "미정": "TBD", "대표 발의": "Sponsor", "회부 위원회": "Referred committee",
     "MONEY TRACKER — 회사 상세": "MONEY TRACKER — Company file", "MONEY TRACKER — 미국 회사 파일": "MONEY TRACKER — US Company File"
   };
@@ -54,6 +55,16 @@
   // ---------- templates with numbers (whole sentence shape; applied before phrases) ----------
   var D = "(\\d{4}-\\d{2}-\\d{2})";
   var RULES = [
+    // event context card (assets/event-context.js): "same-period" wording stays neutral
+    [/^같은 기간 (\d+\/\d+) (백악관·관보|한국|일본|EU|중국|대만) 발표 '(.+)'이\(가\) 있었다\.$/, function (m, md, who, title) {
+      var w = { "백악관·관보": "White House / Federal Register", "한국": "South Korean", "일본": "Japanese", "EU": "EU", "중국": "Chinese", "대만": "Taiwanese" }[who];
+      return "In the same period (" + md + "), a " + w + " announcement '" + title + "' was published."; }],
+    [/^같은 기간 같은 분야 기록이 (\d+)건 더 있었다\(데이터상\)\.$/, "In the same period, $1 more records in the same field appear (data shows)."],
+    [/^이 이벤트 전후\((\d{4}-\d{2}-\d{2})~(\d{4}-\d{2}-\d{2})\) 종가는 ([+-][\d.]+%)였다\(데이터상\)\.$/, "Closing price around this event ($1~$2): $3 (data shows)."],
+    [/^과거 비슷한 발표 (\d+)번, 같은 길이\((\d+)일\) 구간 평균 ([+-][\d.]+%)\(데이터상, 표본 (\d+)개(, 적어서 참고만)?\)\.$/,
+      function (m, n, d, avg, k, few) { return "In " + n + " past similar announcements, the average over the same-length window (" + d + " days) was " + avg + " (data shows; sample of " + k + (few ? ", small, for reference only" : "") + ")."; }],
+    [/^과거 비슷한 발표의 가격 기록은 표본 0개라 평균을 내지 않았다\.$/, "No average is shown: there are 0 past similar announcements with price records."],
+    [/^상관관계일 뿐 원인이 아님\. 투자 조언 아님\.$/, "Correlation only, not a cause. Not investment advice."],
     // insights.json lines
     [new RegExp("하원 PTR 신고 최근 (\\d+)일\\(" + D + "~" + D + "\\) (\\d+)건\\(구입 (\\d+)·처분 (\\d+),? 의원 (\\d+)명\\), 직전 (\\d+)일 (\\d+)건\\. 신고 기준, 거래일→신고일 최대 (\\d+)일 차이 가능\\."),
       "House PTR filings, last $1 days ($2~$3): $4 (buys $5 · sales $6, $7 members); prior $8 days: $9. Based on filings; disclosed (PTR), up to $10-day lag."],
