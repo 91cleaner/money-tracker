@@ -39,6 +39,27 @@ def passed(cc, r):
     return 0
 
 
+def valid_day(value):
+    """Return a verified, non-future ISO calendar day or empty string."""
+    try:
+        day = date.fromisoformat(str(value or "")[:10])
+        return day.isoformat() if day <= date.today() else ""
+    except (TypeError, ValueError):
+        return ""
+
+
+def event_date(cc, row):
+    """A passage event must use the actual action date, never introduction date.
+
+    US/KR/JP/TW: 'd' is introduction/submission, 'sd' is status/action.
+    EU: corpus consists of adopted acts, whose 'd' is document date.
+    Missing action dates must not generate misleading market-return events.
+    """
+    if passed(cc, row) != 2:
+        return ""
+    return valid_day(row.get("d") if cc == "eu" else row.get("sd"))
+
+
 def topic_hits(title):
     t = " " + (title or "").lower() + " "
     out = []
@@ -117,8 +138,9 @@ def main():
                 if day[:7] >= first_month:
                     P["monthly"][cc][day[:7]] += 1
                 P["recent"][cc].append(r)
-                if p == 2 and day:
-                    P["events"].append((day, cc, r))
+                action_day = event_date(cc, r)
+                if action_day:
+                    P["events"].append((action_day, cc, r))
 
     topics_out = []
     for tp in TOPICS:
@@ -131,7 +153,7 @@ def main():
         recent = {}
         for cc in CCS:
             rows = sorted(P["recent"][cc], key=lambda r: (r.get("d") or "", r["id"]), reverse=True)[:60]
-            recent[cc] = [{"t": r["t"][:220], "d": r.get("d") or "", "st": (r.get("st") or "")[:80], "u": r.get("u") or "", "by": (r.get("by") or "")[:60], "p": passed(cc, r)} for r in rows]
+            recent[cc] = [{"t": r["t"][:220], "d": r.get("d") or "", "st": (r.get("st") or "")[:80], "u": r.get("u") or "", "by": (r.get("by") or "")[:60], "p": passed(cc, r), "pd": event_date(cc, r)} for r in rows]
         # 통과된 법안 전후 시세(최근 3년, 지역별 대표 지수 + 주제 시세 앞 2개)
         ev = []
         stock_like = [s for s in syms if s["region"] not in ("fx", "commodity", "rates", "crypto")]
@@ -150,7 +172,7 @@ def main():
                "count": dict(P["count"]), "passed": dict(P["passed"]), "months": months,
                "monthly": {cc: [P["monthly"][cc].get(mo, 0) for mo in months] for cc in CCS},
                "recent": recent, "markets": syms, "index": MARKET_INDEX, "events": ev,
-               "note": "법안 제목에 주제 낱말이 들어 있으면 묶음(words). 통과 = 미국 법률 성립·한국 가결·대만 三讀·일본 成立·EU 채택. 시세 변화는 같은 시기 기록이며 원인을 증명하지 않음."}
+               "note": "법안 제목 낱말로 주제 분류. 전후 시세는 확인된 통과/성립 날짜(sd; EU는 문서일 d)가 있을 때만 계산하며 인과를 증명하지 않음. 통과일 미확인 법안은 시세 이벤트에서 제외."}
         dump("topic-%s.json" % tp["id"], doc)
         topics_out.append({"id": tp["id"], "label": tp["label"], "tags": tp["tags"], "query": tp["query"] + [w.strip() for w in tp["words"]][:12],
                            "count": sum(P["count"].values()), "by": dict(P["count"])})
@@ -161,7 +183,8 @@ def main():
         rows = laws[cc].get("rows", [])
         doc = {"cc": cc, "source": laws[cc].get("source"), "updated": laws[cc].get("updated"),
                "t": [r["t"][:200] for r in rows], "d": [r.get("d") or "" for r in rows], "st": [(r.get("st") or "")[:60] for r in rows],
-               "u": [r.get("u") or "" for r in rows], "p": [passed(cc, r) for r in rows]}
+               "u": [r.get("u") or "" for r in rows], "p": [passed(cc, r) for r in rows],
+               "pd": [event_date(cc, r) for r in rows]}
         dump("titles-%s.json" % cc, doc)
         sizes[cc] = len(rows)
 
