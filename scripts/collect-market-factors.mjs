@@ -84,6 +84,24 @@ export function parseMofcomList(html, base = "https://www.mofcom.gov.cn/") {
   return out;
 }
 
+
+export function parseBisCsv(text) {
+  const lines = String(text || "").trim().split(/\r?\n/);
+  const head = lines.shift().split(",").map(h => h.replace(/^"|"$/g, "").trim());
+  const ai = head.findIndex(h => /^REF_AREA/i.test(h)), ti = head.indexOf("TIME_PERIOD"), vi = head.indexOf("OBS_VALUE");
+  if (ai < 0 || ti < 0 || vi < 0) throw Error("BIS CSV columns missing");
+  const by = {};
+  for (const line of lines) {
+    const c = line.split(",").map(x => x.replace(/^"|"$/g, "").trim());
+    const area = c[ai].split(":")[0], v = num(c[vi]);
+    if (v == null || !/^\d{4}-\d{2}(-\d{2})?$/.test(c[ti])) continue;
+    (by[area] ||= []).push({ date: c[ti], value: v });
+  }
+  for (const k of Object.keys(by)) by[k].sort((a, b) => a.date.localeCompare(b.date));
+  if (!Object.keys(by).length) throw Error("no BIS observations");
+  return by;
+}
+
 function writeJson(file, data) {
   fs.mkdirSync(OUT, { recursive: true });
   const target = path.join(OUT, file);
@@ -195,6 +213,22 @@ async function chinaMofcom() {
   return items.length + " items (export control " + items.filter(x => x.export_control).length + ")";
 }
 
+
+async function bisPolicyRates() {
+  const areas = { KR: "한국은행 기준금리", JP: "일본은행 정책금리", CN: "중국인민은행 정책금리", TW: "대만 중앙은행 정책금리", GB: "영란은행 기준금리", US: "미국 연준 정책금리", XM: "유럽중앙은행 정책금리" };
+  const keys = Object.keys(areas).join("+");
+  const urls = ["https://stats.bis.org/api/v1/data/WS_CBPOL/M." + keys + "/all?format=csv&startPeriod=2015-01",
+                "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M." + keys + "?format=csv&startPeriod=2015-01"];
+  let by = null, used = null, last = null;
+  for (const u of urls) { try { by = parseBisCsv(await (await get(u, 40000)).text()); used = u; break; } catch (e) { last = e; warn("BIS " + u + ": " + e.message); } }
+  if (!by) throw last || Error("BIS fetch failed");
+  const series = {};
+  for (const [k, label] of Object.entries(areas)) if (by[k]) series[k] = { label: label + " (%)", points: by[k].slice(-140), latest: by[k].at(-1) };
+  writeJson("policy-rates.json", { source: "Bank for International Settlements · Central bank policy rates (WS_CBPOL, monthly)", source_url: "https://data.bis.org/topics/CBPOL", api_url: used,
+    note: "월말 기준 BIS 집계값. 각 중앙은행 발표 직후에는 반영이 늦을 수 있음.", collected_at: now(), series });
+  return Object.keys(series).join(",");
+}
+
 async function chinaMofcomProbe() {
   const res = await fetch("https://www.mofcom.gov.cn/", { headers: UA, signal: AbortSignal.timeout(20000) });
   const html = await res.text();
@@ -206,7 +240,7 @@ async function chinaMofcomProbe() {
 
 if (import.meta.url === "file://" + process.argv[1]) {
   const results = {};
-  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom })) {
+  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates })) {
     try { results[name] = "ok: " + await fn(); }
     catch (e) { results[name] = "FAILED: " + e.message; warn(name + " failed — previous file kept: " + e.message); }
   }
@@ -216,7 +250,8 @@ if (import.meta.url === "file://" + process.argv[1]) {
     const rd = f => JSON.parse(fs.readFileSync(path.join(OUT, f), "utf8"));
     const tw = rd("tw-monthly-revenue.json"), ecb = rd("ecb-rates.json"), fr = rd("fred-extra.json");
     const cn = (() => { try { return rd("cn-mofcom-announcements.json").items.slice(0, 3).map(x => x.number + " " + x.title.slice(0, 50)); } catch { return null; } })();
-    const sample = { cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
+    const pr = (() => { try { return Object.fromEntries(Object.entries(rd("policy-rates.json").series).map(([k, v]) => [k, v.latest])); } catch { return null; } })();
+    const sample = { policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
       ecb: Object.fromEntries(Object.entries(ecb.series || {}).map(([k, v]) => [k, v.latest])), fred: Object.fromEntries(Object.entries(fr.series || {}).map(([k, v]) => [k, v.latest])) };
     console.log("::notice::SAMPLE " + JSON.stringify(sample));
   } catch (e) { warn("sample summary unavailable: " + e.message); }

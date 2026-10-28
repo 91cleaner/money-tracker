@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -48,4 +48,12 @@ test("MOFCOM policy list parses announcement numbers and export-control tags fro
   assert.deepEqual([out[0].number, out[0].date, out[0].export_control], ["2026-50", "2026-10-20", true]);
   assert.equal(out[0].url, "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_9ce3.html");
   assert.deepEqual(out[1].targets, ["美国"]);
+});
+
+test("BIS policy-rate CSV groups observations by country", () => {
+  const csv = "FREQ:Frequency,REF_AREA:Reference area,TIME_PERIOD:Time period,OBS_VALUE:Value\nM:Monthly,KR:Korea,2026-08,2.75\nM:Monthly,KR:Korea,2026-09,3.00\nM:Monthly,JP:Japan,2026-09,0.75\nM:Monthly,JP:Japan,2026-10,NaN\n";
+  const out = parseBisCsv(csv.replace("FREQ:Frequency,REF_AREA:Reference area,TIME_PERIOD:Time period,OBS_VALUE:Value", "FREQ,REF_AREA,TIME_PERIOD,OBS_VALUE"));
+  assert.deepEqual(out.KR.at(-1), { date: "2026-09", value: 3 });
+  assert.equal(out.JP.length, 1);
+  assert.throws(() => parseBisCsv("A,B\n1,2"), /columns/);
 });
