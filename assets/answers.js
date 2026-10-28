@@ -25,8 +25,9 @@
       var per = d.answers[intent || 'overview'];
       if (!per) return null;
       var p = PERIODS.indexOf(period) >= 0 ? period : '1m';
-      var a = per[p] || per['1m'] || null;
-      return a ? Object.assign({ symbol: d.symbol, name: d.name, asof: d.asof, period: p }, a) : null;
+      // An explicit 1w/3m/1y request must not silently display a 1m answer.
+      var a = per[p] || null;
+      return a ? Object.assign({}, a, { symbol: d.symbol, name: d.name, asof: d.asof, period: p }) : null;
     });
   }
 
