@@ -1,0 +1,191 @@
+#!/usr/bin/env python3
+"""누적 데이터 → data/search-index.json (검색 개체 + 자동 생성 경로).
+
+입력: data/market/company-links.json, data/market/sectors.json, data/us/members.json(위원회 이름만),
+      data/us/ticker-sectors.json(있으면), data/us/trades.json(티커 목록만).
+경로의 사실·출처는 모두 입력 데이터에서 가져온다. 손으로 쓴 사실 없음.
+개별 의원 거래는 넣지 않는다(HANDOFF). AI 미연결.
+  python3 scripts/build_search_index.py
+"""
+import json, os, re
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+J = lambda *p: json.load(open(os.path.join(ROOT, *p)))
+OUT = os.path.join(ROOT, "data", "search-index.json")
+
+CENT = {  # 나라·지역 대표 좌표(근사)
+ "us": ("미국", "United States", 39.0, -98.0), "kr": ("한국", "South Korea", 36.4, 127.8),
+ "tw": ("대만", "Taiwan", 23.7, 121.0), "jp": ("일본", "Japan", 36.0, 138.0),
+ "cn": ("중국", "China", 35.0, 104.0), "eu": ("유럽", "Europe", 50.5, 9.0),
+ "uk": ("영국", "United Kingdom", 54.0, -2.0), "commodity": ("국제 원자재 시장", "Global commodities", 25.0, -40.0),
+ "dc": ("미국 워싱턴 D.C.(의회)", "Washington D.C.", 38.8899, -77.0091),
+}
+CITY_LL = {  # SEC 사업장 주소 도시 → 좌표(공개 지명 좌표 근사). 없으면 주 중심 근사.
+ "NEW YORK,NY": (40.7128, -74.006), "HOUSTON,TX": (29.7604, -95.3698), "SAN FRANCISCO,CA": (37.7749, -122.4194),
+ "ATLANTA,GA": (33.749, -84.388), "CHICAGO,IL": (41.8781, -87.6298), "DALLAS,TX": (32.7767, -96.797),
+ "BOSTON,MA": (42.3601, -71.0589), "SAN JOSE,CA": (37.3382, -121.8863), "AUSTIN,TX": (30.2672, -97.7431),
+ "SAN DIEGO,CA": (32.7157, -117.1611), "SANTA CLARA,CA": (37.3541, -121.9552), "MILWAUKEE,WI": (43.0389, -87.9065),
+ "STAMFORD,CT": (41.0534, -73.5387), "DENVER,CO": (39.7392, -104.9903), "ARLINGTON,VA": (38.8816, -77.091),
+ "PHILADELPHIA,PA": (39.9526, -75.1652), "CAMBRIDGE,MA": (42.3736, -71.1097), "SEATTLE,WA": (47.6062, -122.3321),
+ "MINNEAPOLIS,MN": (44.9778, -93.265), "CHARLOTTE,NC": (35.2271, -80.8431), "RESTON,VA": (38.9586, -77.357),
+ "WILMINGTON,DE": (39.7391, -75.5398), "PHOENIX,AZ": (33.4484, -112.074), "NASHVILLE,TN": (36.1627, -86.7816),
+ "PALO ALTO,CA": (37.4419, -122.143), "TEMPE,AZ": (33.4255, -111.94), "IRVING,TX": (32.814, -96.9489),
+ "MIAMI,FL": (25.7617, -80.1918), "JACKSONVILLE,FL": (30.3322, -81.6557), "CINCINNATI,OH": (39.1031, -84.512),
+ "INDIANAPOLIS,IN": (39.7684, -86.1581), "WALTHAM,MA": (42.3765, -71.2356), "MOUNTAIN VIEW,CA": (37.3861, -122.0839),
+ "PITTSBURGH,PA": (40.4406, -79.9959), "CLEVELAND,OH": (41.4993, -81.6944), "COLUMBUS,OH": (39.9612, -82.9988),
+ "MEMPHIS,TN": (35.1495, -90.049), "NORWALK,CT": (41.1177, -73.4082), "ST LOUIS,MO": (38.627, -90.1994),
+ "LAS VEGAS,NV": (36.1699, -115.1398), "CUPERTINO,CA": (37.323, -122.0322), "REDMOND,WA": (47.674, -122.1215),
+ "MENLO PARK,CA": (37.453, -122.1817), "BETHESDA,MD": (38.9847, -77.0947), "SUNNYVALE,CA": (37.3688, -122.0363),
+ "LONDON,X0": (51.5074, -0.1278), "TORONTO,A6": (43.6532, -79.3832), "DUBLIN,L2": (53.3498, -6.2603),
+}
+def hq_ll(t, st_ll):
+    k = (t.get("hq_city") or "").upper() + "," + (t.get("hq_state_or_country") or "")
+    if k in CITY_LL: return list(CITY_LL[k]), "도시 좌표"
+    if t.get("hq_state_or_country") in st_ll: return st_ll[t["hq_state_or_country"]], "주 중심 근사"
+    return None, None
+SEC_FOREIGN = {"F4": "cn", "F5": "tw", "M5": "kr", "M0": "jp", "X0": "uk", "K3": "cn"}
+def factor_country(fid):
+    for p, c in (("kr_", "kr"), ("tw_", "tw"), ("jp_", "jp"), ("cn_", "cn"), ("us_", "us"), ("uk_", "uk"), ("ecb_", "eu"),
+                 ("fx_krw", "kr"), ("fx_twd", "tw"), ("fx_jpy", "jp"), ("fx_eur", "eu")):
+        if fid.startswith(p): return c
+    return None
+# SEC SIC 섹터 → sectors.json id
+SEC2APP = {"technology": "tech_ai", "communications": "tech_ai", "healthcare": "health", "financials": "finance",
+ "real_estate": "housing", "energy": "energy", "utilities": "energy", "mining": "industrial", "aerospace_defense": "defense",
+ "industrials": "industrial", "transportation": "industrial", "construction": "housing", "consumer_staples": "consumer",
+ "consumer_discretionary": "consumer", "materials": "industrial", "agriculture": "consumer"}
+SEMI_SIC = {"3674", "3559"}
+# 앱 섹터 → 상임위(공식 이름은 members.json cmits에서 확인된 것만 사용)
+APP_CMTE = {"semiconductor": ["Commerce, Science, and Transportation", "House Select the Strategic Competition Between the United States and the Chinese Communist Party"],
+ "tech_ai": ["Commerce, Science, and Transportation", "Energy and Commerce"], "finance": ["Banking, Housing, and Urban Affairs", "Financial Services"],
+ "energy": ["Energy and Natural Resources", "Energy and Commerce"], "clean_energy": ["Energy and Natural Resources", "Environment and Public Works"],
+ "battery_ev": ["Energy and Natural Resources", "Energy and Commerce"], "auto": ["Commerce, Science, and Transportation", "Energy and Commerce"],
+ "defense": ["Armed Services"], "shipbuilding": ["Armed Services", "Transportation and Infrastructure"],
+ "health": ["Health, Education, Labor, and Pensions", "Energy and Commerce"], "housing": ["Banking, Housing, and Urban Affairs", "Financial Services"],
+ "industrial": ["Commerce, Science, and Transportation", "Transportation and Infrastructure"], "consumer": ["Commerce, Science, and Transportation", "Energy and Commerce"],
+ "crypto": ["Banking, Housing, and Urban Affairs", "Financial Services"]}  # safe_haven·market는 근거 약해 연결 안 함
+
+SECTOR_KW = {  # 검색용 한/영 키워드(사실 아님, 검색어 연결용)
+ "defense": ["방산", "방위", "국방", "우주", "항공", "항공우주", "space", "aerospace", "defense", "스페이스", "로켓", "미사일"],
+ "semiconductor": ["반도체", "칩", "chip", "chips", "semiconductor", "파운드리", "메모리", "gpu"],
+ "battery_ev": ["전기차", "배터리", "2차전지", "이차전지", "ev", "battery", "리튬"],
+ "auto": ["자동차", "차", "car", "auto"], "finance": ["은행", "금융", "보험", "bank", "banks", "finance"],
+ "energy": ["석유", "원유", "가스", "oil", "gas", "에너지"], "health": ["제약", "바이오", "헬스케어", "병원", "pharma", "biotech", "신약"],
+ "tech_ai": ["ai", "인공지능", "소프트웨어", "클라우드", "software", "cloud", "빅테크"], "housing": ["부동산", "주택", "건설", "housing"],
+ "shipbuilding": ["조선", "해운", "선박", "ship"], "clean_energy": ["태양광", "풍력", "청정에너지", "탄소", "solar"],
+ "consumer": ["소비재", "명품", "유통", "리테일", "retail"], "crypto": ["코인", "비트코인", "가상자산", "crypto", "bitcoin"],
+ "safe_haven": ["금", "채권", "gold", "bond"], "industrial": ["기계", "산업재", "industrial"], "market": ["시장", "증시", "지수", "market"],
+}
+KR_NOTE = " 관세청 품목별 수출입실적(공공데이터포털) HS 4단위 집계라 산업부 발표 '반도체' 전체 수출과 범위가 다름."
+def fmt(lt):
+    v = lt.get("value")
+    if isinstance(v, (int, float)) and lt.get("unit") == "usd" and v >= 1e8: return f"약 {v/1e8:,.1f}억 달러"
+    return f"{v:,}" if isinstance(v, (int, float)) else str(v)
+def main():
+    sec = J("data", "market", "sectors.json"); factors = {f["id"]: f for f in sec["factors"]}
+    sectors = {s["id"]: s for s in sec["sectors"]}
+    links = J("data", "market", "company-links.json")["companies"]
+    members = J("data", "us", "members.json")["members"]
+    CH = {"sen": "상원", "rep": "하원"}
+    cm = {}  # (chamber, name) -> count  (상·하원 분리)
+    for m in members:
+        for k in m.get("cmits", []):
+            n = re.sub(r" \(.*", "", k)
+            if "January 6" in n: continue  # 118대 의회 한시 소위, 제외
+            key = (m.get("chamber", "rep"), n); cm[key] = cm.get(key, 0) + 1
+    ts = {}
+    p = os.path.join(ROOT, "data", "us", "ticker-sectors.json")
+    if os.path.exists(p): ts = json.load(open(p)).get("tickers", {})
+    st_ll = {}
+    for m in members:
+        if m.get("ll") and m.get("state"): st_ll.setdefault(m["state"], []).append(m["ll"])
+    st_ll = {k: [round(sum(a[0] for a in v) / len(v), 3), round(sum(a[1] for a in v) / len(v), 3)] for k, v in st_ll.items()}
+
+    ent = {}
+    def stop(region, lat, lon, title, fact, url, date=None, ref=None):
+        return {"region": region, "lat": lat, "lon": lon, "title": title, "fact": fact, "source_url": url, "date": date, "ref": ref}
+    def cmte_stops(sid):
+        out = []
+        for n in APP_CMTE.get(sid, []):
+            for ch in ("sen", "rep"):
+                if (ch, n) in cm:
+                    d = CENT["dc"]
+                    out.append(stop(f"{d[0]} {CH[ch]}", d[2], d[3], f"연관 위원회({CH[ch]}): {n}", f"자체 분류, 공식 관할 아님. 데이터상 {CH[ch]} 위원 {cm[(ch, n)]}명(members.json).",
+                                    "https://www.congress.gov/committees", None, f"committee:{ch}:{n}"))
+        return out[:2]
+    def factor_stops(sid, limit=3):
+        out, seen = [], set()
+        for fid in sectors.get(sid, {}).get("factors", []):
+            c = factor_country(fid); f = factors.get(fid)
+            if not c or not f or c in seen: continue
+            seen.add(c); k = CENT[c]
+            out.append(stop(k[0], k[2], k[3], f"함께 볼 지표: {f['label']}", f"데이터상 {sectors[sid]['label']} 업종과 함께 보는 지표로 연결됨. 출처: {f.get('source','공식 통계')}.",
+                            f.get("source_url"), None, "factor:" + fid))
+            if len(out) >= limit: break
+        return out
+    def sector_stop(sid):
+        s = sectors[sid]; return stop("업종 · " + s["label"], None, None, f"업종: {s['label']}", f"데이터상 {s['label']} 업종으로 분류됨. 연결 지표 {len(s.get('factors',[]))}개, 법안 주제 {', '.join(s.get('law_topics',[]))}.", None, None, "sector:" + sid)
+
+    # 업종
+    for sid, s in sectors.items():
+        r = []
+        mk = [c for c in links if sid in [x["id"] for x in c["sectors"]] and c["region"] in CENT][:3]
+        for c in mk:
+            k = CENT[c["region"]]; r.append(stop(k[0], k[2], k[3], f"대표 종목: {c['name']}", f"데이터상 {s['label']} 업종 추적 종목 {c['name']}({c['symbol']}).", None, None, "company:" + c["symbol"]))
+        r += factor_stops(sid) + cmte_stops(sid)
+        ent["sector:" + sid] = {"type": "sector", "name": s["label"], "aliases": [s["label"], s.get("label_en", ""), sid] + s["label"].split("·"), "kw": SECTOR_KW.get(sid, []), "route": r, "companies": [c["symbol"] for c in links if sid in [x["id"] for x in c["sectors"]]][:6]}
+    # 추적 기업(한/영)
+    for c in links:
+        sid = c["sectors"][0]["id"] if c["sectors"] else None
+        k = CENT.get(c["region"]); r = []
+        t = ts.get(c["symbol"])
+        ll = hq_ll(t, st_ll)[0] if t else None
+        if ll:
+            r.append(stop(f"본사 {t.get('hq_city','')}, {t['hq_state_or_country']}", ll[0], ll[1], "본사 위치(SEC 주소)", f"데이터상 SEC 제출 서류 사업장 주소가 {t.get('hq_city')} {t['hq_state_or_country']}임. 업종 코드 SIC {t.get('sic')} {t.get('sic_desc')}.", t["source_url"]))
+        elif k:
+            r.append(stop(k[0], k[2], k[3], f"{c['name']} 소속 시장", f"데이터상 {c['name']}({c['symbol']})은 {k[0]} 시장 종목으로 분류됨.", None))
+        for f in c.get("factors", [])[:4]:
+            cc = factor_country(f["id"])
+            if cc and cc != c["region"] and all(x["region"] != CENT[cc][0] for x in r):
+                lt = f.get("latest") or {}
+                r.append(stop(CENT[cc][0], CENT[cc][2], CENT[cc][3], f"함께 볼 지표: {f['label']}", f"데이터상 최신값 {fmt(lt)} ({lt.get('date')}).{KR_NOTE if f['id'].startswith('kr_exp_') else ''} 원인 관계 단정 아님.", f.get("source_url"), lt.get("date"), "factor:" + f["id"]))
+        if sid: r += cmte_stops(sid)[:1]
+        name_en = (t or {}).get("name") or ""
+        ent["company:" + c["symbol"]] = {"type": "company", "name": c["name"], "symbol": c["symbol"], "sector": sid,
+            "aliases": [c["name"], c["symbol"], c["symbol"].split(".")[0], name_en], "route": r}
+    # 거래 데이터의 나머지 티커(SEC 매핑 있는 것)
+    for tk, t in ts.items():
+        if "company:" + tk in ent: continue
+        sid = "semiconductor" if str(t.get("sic")) in SEMI_SIC else SEC2APP.get(t.get("sector"))
+        r = []
+        hq = t.get("hq_state_or_country")
+        ll = hq_ll(t, st_ll)[0]
+        if ll:
+            r.append(stop(f"본사 {t.get('hq_city','')}, {hq}", ll[0], ll[1], "본사 위치(SEC 주소)", f"데이터상 SEC 제출 서류 사업장 주소가 {t.get('hq_city')} {hq}임. SIC {t.get('sic')} {t.get('sic_desc')}.", t["source_url"]))
+        elif hq in SEC_FOREIGN:
+            k = CENT[SEC_FOREIGN[hq]]; r.append(stop(k[0], k[2], k[3], "본사 소재국(SEC 주소)", f"데이터상 SEC 제출 서류 사업장 주소 소재지가 {t.get('hq_desc')}임.", t["source_url"]))
+        if sid: r += factor_stops(sid, 2) + cmte_stops(sid)[:1]
+        ent["company:" + tk] = {"type": "company", "name": t.get("name") or tk, "symbol": tk, "sector": sid, "aliases": [tk, t.get("name") or ""], "route": r}
+    # 상임위
+    for (ch, n), c in cm.items():
+        d = CENT["dc"]; sids = [x for x, v in APP_CMTE.items() if n in v]
+        r = [stop(f"{d[0]} {CH[ch]}", d[2], d[3], f"{CH[ch]} 위원회: {n}", f"데이터상 {CH[ch]} 위원 {c}명(members.json).", "https://www.congress.gov/committees")]
+        for x in sids[:3]:
+            fs = factor_stops(x, 1)
+            if fs: r.append(dict(fs[0], title=f"연관 업종(자체 분류, 공식 관할 아님): {sectors[x]['label']}"))
+        ent[f"committee:{ch}:{n}"] = {"type": "committee", "name": f"{n} ({CH[ch]})", "aliases": [n, f"{n} {CH[ch]}"], "route": r}
+    # 나라
+    for cid, k in CENT.items():
+        if cid in ("dc", "commodity"): continue
+        fs = [f for f in factors.values() if factor_country(f["id"]) == cid][:4]
+        r = [stop(k[0], k[2], k[3], f"{k[0]} 지표: {f['label']}", f"데이터상 {k[0]} 관련 수집 지표. 출처: {f.get('source','공식 통계')}.", f.get("source_url"), None, "factor:" + f["id"]) for f in fs]
+        ent["country:" + cid] = {"type": "country", "name": k[0], "aliases": [k[0], k[1], cid.upper()], "route": r}
+    # 좌표 없는 정류장(업종 정류장) 제거, 빈 경로 표시
+    for e in ent.values():
+        e["route"] = [x for x in e["route"] if x and x.get("lat") is not None]
+        e["aliases"] = sorted({a for a in e["aliases"] if a})
+    res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 개별 의원 거래 미포함.",
+           "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
+           "with_route": sum(1 for e in ent.values() if e["route"]), "entities": ent}
+    json.dump(res, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
+    print(res["counts"], "with_route", res["with_route"], "bytes", os.path.getsize(OUT))
+main()
