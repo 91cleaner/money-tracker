@@ -269,7 +269,9 @@ def jp_date(txt):
 def jp_dates(rows):
     """경과 페이지에서 衆議院 議案受理年月日(제출)·성립/공포 날짜를 읽는다. 예산 안에서 날짜 없는 것부터."""
     budget = time.time() + float(os.environ.get("JP_DATE_BUDGET_MIN", "8")) * 60
-    todo = [r for r in rows.values() if not r.get("d") and "/keika/" in (r.get("u") or "")]
+    week_ago = (date.today() - timedelta(days=7)).isoformat()
+    # 受理 날짜 칸이 아직 빈 법안(예비심사 등)은 7일에 한 번만 다시 본다
+    todo = [r for r in rows.values() if not r.get("d") and "/keika/" in (r.get("u") or "") and (r.get("d_try") or "") < week_ago]
     todo.sort(key=lambda r: -int(r.get("session") or 0))
     done = miss = 0
     for r in todo:
@@ -294,6 +296,9 @@ def jp_dates(rows):
             print("::warning::laws jp keika no date %s sample=%s" % (r["id"], page[max(0, i - 60): i + 160] if i >= 0 else page[:300]))
         if d:
             r["d"] = d
+            r.pop("d_try", None)
+        else:
+            r["d_try"] = date.today().isoformat()
         if last:
             r["sd"] = last
         done += 1
