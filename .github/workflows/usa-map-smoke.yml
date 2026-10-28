@@ -6,6 +6,7 @@ on:
     paths:
       - 'usa-command.html'
       - 'usa-command-legacy.html'
+      - 'usa-command-legacy.html'
       - 'index.html'
       - 'tests/**'
       - 'data/market/**'
@@ -13,6 +14,7 @@ on:
   pull_request:
     paths:
       - 'usa-command.html'
+      - 'usa-command-legacy.html'
       - 'usa-command-legacy.html'
       - 'index.html'
       - 'tests/**'
