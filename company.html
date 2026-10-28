@@ -10,6 +10,7 @@
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 회사 파일"><meta name="twitter:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
+<script src="assets/i18n.js?v=i18n-20261028"></script>
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
 *{box-sizing:border-box}
@@ -45,7 +46,14 @@ main{max-width:1180px;margin:0 auto;padding:18px 16px 40px;display:grid;grid-tem
 .kv span{font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
 .up{color:var(--up)!important}.down{color:var(--down)!important}
 .empty{color:var(--mut);font:13px ui-monospace,Menlo,monospace;padding:18px 6px;border:1px dashed var(--line);border-radius:8px;text-align:center}
-svg.spark{width:100%;height:120px;display:block;margin-top:10px}
+svg.spark{width:100%;height:120px;display:block}
+.rng{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.rng button{background:#04150d;border:1px solid var(--line2);color:var(--g2);border-radius:6px;padding:4px 12px;min-height:32px;cursor:pointer;font:12px ui-monospace,Menlo,monospace}.rng button[aria-pressed=true]{background:#0d3b22;border-color:var(--g);color:#eafff2;font-weight:700}
+.chartw{position:relative;margin-top:8px}
+.pin{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid #020a06;padding:0;cursor:pointer}
+.pin:focus-visible,.pin[aria-pressed=true]{outline:2px solid #fff;outline-offset:1px}
+.pin.k-t{background:#ffd36b}.pin.k-b{background:#7fd8ff}.pin.k-w{background:#ff9bf0}
+.pinlg{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font:11px ui-monospace,Menlo,monospace;color:var(--mut)}.pinlg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
+.pinbox{margin-top:8px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#03130b;font-size:12.5px}.pinbox .k{font:700 11px ui-monospace,Menlo,monospace;color:var(--g)}.pinbox .s{color:var(--mut);font-size:12px}.pinbox div+div{margin-top:6px}
 .note{margin:8px 0 0;color:var(--mut);font-size:12px}
 .warnnote{margin:0 0 10px;padding:8px 10px;border-left:3px solid var(--warn);background:#1c1606;color:#f3e3b4;font-size:12.5px;border-radius:0 6px 6px 0}
 table{width:100%;border-collapse:collapse;font-size:12.5px}
@@ -82,6 +90,12 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
  table.trades td.lbl::before{content:attr(data-l) " ";color:var(--mut);font:11px ui-monospace,Menlo,monospace}
  ol.tl::before{left:82px}ol.tl li{grid-template-columns:74px 1fr;gap:16px}ol.tl li::before{left:79px}ol.tl .d{font-size:11px;white-space:nowrap}
  footer.foot{padding:0 10px 30px}
+}
+@media(max-width:480px){
+ html,body{overflow-wrap:anywhere}
+ .panel{overflow-x:auto}
+ ol.tl li{grid-template-columns:74px minmax(0,1fr);gap:12px}
+ .hero .nm{font-size:22px}
 }
 </style>
 </head>
@@ -133,7 +147,9 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   function shiftMonth(iso) { var t = new Date(iso + "T00:00:00Z"); t.setUTCMonth(t.getUTCMonth() - 1); return t.toISOString().slice(0, 10); }
   function change(last, base) { return base ? (last.c / base.c - 1) * 100 : null; }
 
-  function priceBlock(rows, meta) {
+  var RANGES = [["1주", 7], ["1달", 31], ["1년", 366], ["전체", 0]];
+  var PINK = { t: ["k-t", "의원 거래 신고(신고일 기준)"], b: ["k-b", "법안"], w: ["k-w", "백악관·관보 조치"] };
+  function priceBlock(rows, meta, pinsAll) {
     var p = panel("주가 · 종가 기준");
     if (rows.length < 2) { p.appendChild(el("div", "empty", "주가 데이터 준비 중")); return p; }
     var last = rows[rows.length - 1], prev = rows[rows.length - 2];
@@ -149,13 +165,60 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       b.append(v, lab); kv.appendChild(b);
     });
     p.appendChild(kv);
-    var pts = rows.slice(-130), min = Math.min.apply(null, pts.map(function (r) { return r.c; })), max = Math.max.apply(null, pts.map(function (r) { return r.c; }));
-    var W = 600, H = 120, path = pts.map(function (r, i) { var x = pts.length > 1 ? i / (pts.length - 1) * W : 0, yv = max > min ? H - 6 - (r.c - min) / (max - min) * (H - 12) : H / 2; return (i ? "L" : "M") + x.toFixed(1) + " " + yv.toFixed(1); }).join(" ");
-    var ns = "http://www.w3.org/2000/svg", svg = document.createElementNS(ns, "svg"); svg.setAttribute("viewBox", "0 0 " + W + " " + H); svg.setAttribute("preserveAspectRatio", "none"); svg.setAttribute("class", "spark");
-    svg.setAttribute("role", "img"); svg.setAttribute("aria-label", "최근 " + pts.length + "거래일 종가 추이 " + pts[0].d + " ~ " + last.d);
-    var pa = document.createElementNS(ns, "path"); pa.setAttribute("d", path); pa.setAttribute("fill", "none"); pa.setAttribute("stroke", "#5dff9e"); pa.setAttribute("stroke-width", "1.6"); pa.setAttribute("vector-effect", "non-scaling-stroke");
-    svg.appendChild(pa); p.appendChild(svg);
-    p.appendChild(el("p", "note", "최근 " + pts.length + "거래일 종가 " + pts[0].d + " ~ " + last.d + " · 범위 " + min.toLocaleString("en-US") + " ~ " + max.toLocaleString("en-US") + (meta && meta.source ? " · 출처: " + meta.source : "")));
+    var rng = el("div", "rng"); rng.setAttribute("role", "group"); rng.setAttribute("aria-label", "차트 기간");
+    var wrap = el("div", "chartw"), pinbox = el("div", "pinbox"), note = el("p", "note"), cur = RANGES[1];
+    pinbox.hidden = true; pinbox.setAttribute("aria-live", "polite");
+    p.appendChild(rng); p.appendChild(wrap);
+    var lg = el("div", "pinlg"); Object.keys(PINK).forEach(function (k) { var s = el("span"), i = el("i"); i.className = PINK[k][0]; i.style.background = { t: "#ffd36b", b: "#7fd8ff", w: "#ff9bf0" }[k]; s.append(i, PINK[k][1]); lg.appendChild(s); });
+    p.appendChild(lg); p.appendChild(pinbox); p.appendChild(note);
+    function draw() {
+      var pts = cur[1] ? rows.filter(function (r) { return r.d >= shift(last.d, cur[1]); }) : rows;
+      if (pts.length < 2) pts = rows.slice(-2);
+      wrap.replaceChildren(); pinbox.hidden = true;
+      var min = Math.min.apply(null, pts.map(function (r) { return r.c; })), max = Math.max.apply(null, pts.map(function (r) { return r.c; }));
+      var W = 600, H = 120;
+      function yv(c) { return max > min ? H - 6 - (c - min) / (max - min) * (H - 12) : H / 2; }
+      function xv(i) { return pts.length > 1 ? i / (pts.length - 1) * W : 0; }
+      var path = pts.map(function (r, i) { return (i ? "L" : "M") + xv(i).toFixed(1) + " " + yv(r.c).toFixed(1); }).join(" ");
+      var ns = "http://www.w3.org/2000/svg", svg = document.createElementNS(ns, "svg"); svg.setAttribute("viewBox", "0 0 " + W + " " + H); svg.setAttribute("preserveAspectRatio", "none"); svg.setAttribute("class", "spark");
+      svg.setAttribute("role", "img"); svg.setAttribute("aria-label", cur[0] + " 종가 추이 " + pts[0].d + " ~ " + last.d);
+      var pa = document.createElementNS(ns, "path"); pa.setAttribute("d", path); pa.setAttribute("fill", "none"); pa.setAttribute("stroke", "#5dff9e"); pa.setAttribute("stroke-width", "1.6"); pa.setAttribute("vector-effect", "non-scaling-stroke");
+      svg.appendChild(pa); wrap.appendChild(svg);
+      // 핀: 같은 거래일·같은 종류는 하나로 묶음. 휴장일 날짜는 다음 거래일에 표시.
+      var groups = {}, inRange = 0;
+      pinsAll.forEach(function (pn) {
+        if (pn.date < pts[0].d || pn.date > last.d) return;
+        var idx = -1; for (var i = 0; i < pts.length; i++) if (pts[i].d >= pn.date) { idx = i; break; }
+        if (idx < 0) return; inRange++;
+        var key = pn.k + idx; (groups[key] = groups[key] || { k: pn.k, i: idx, list: [] }).list.push(pn);
+      });
+      Object.keys(groups).forEach(function (key) {
+        var g = groups[key], b = el("button", "pin " + PINK[g.k][0]); b.type = "button"; b.setAttribute("aria-pressed", "false");
+        b.style.left = (xv(g.i) / W * 100).toFixed(2) + "%"; b.style.top = (yv(pts[g.i].c) / H * 100).toFixed(2) + "%";
+        b.setAttribute("aria-label", PINK[g.k][1] + " " + g.list[0].date + (g.list.length > 1 ? " 외 " + (g.list.length - 1) + "건" : ""));
+        b.title = b.getAttribute("aria-label");
+        b.addEventListener("click", function () {
+          Array.prototype.forEach.call(wrap.querySelectorAll(".pin"), function (x) { x.setAttribute("aria-pressed", "false"); });
+          b.setAttribute("aria-pressed", "true"); pinbox.replaceChildren();
+          g.list.slice(0, 10).forEach(function (pn) {
+            var d = el("div"); d.appendChild(el("div", "k", pn.date + " · " + PINK[pn.k][1]));
+            d.appendChild(el("div", "", pn.title)); var s = el("div", "s"); if (pn.sub) s.appendChild(document.createTextNode(pn.sub + (pn.url ? " · " : "")));
+            if (pn.url) s.appendChild(link("출처 ↗", pn.url)); d.appendChild(s); pinbox.appendChild(d);
+          });
+          if (g.list.length > 10) pinbox.appendChild(el("div", "s", "외 " + (g.list.length - 10) + "건 — 아래 목록 참고"));
+          pinbox.hidden = false;
+        });
+        wrap.appendChild(b);
+      });
+      var mn = Math.min.apply(null, pts.map(function (r) { return r.c; })), mx = max;
+      note.textContent = cur[0] + " 종가 " + pts[0].d + " ~ " + last.d + " · 범위 " + mn.toLocaleString("en-US") + " ~ " + mx.toLocaleString("en-US") + (meta && meta.source ? " · 출처: " + meta.source : "") + " · 핀 " + inRange + "건. 핀은 같은 기간 공개 기록의 날짜일 뿐 주가 변동의 원인을 뜻하지 않습니다. 의원 거래는 신고일 기준이며 실제 거래는 최대 45일 앞설 수 있습니다. 연방 계약은 날짜별 자료가 없어 핀으로 표시하지 않습니다.";
+    }
+    RANGES.forEach(function (rg) {
+      var b = el("button", "", rg[0]); b.type = "button"; b.setAttribute("aria-pressed", rg === cur ? "true" : "false");
+      b.addEventListener("click", function () { cur = rg; Array.prototype.forEach.call(rng.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); draw(); });
+      rng.appendChild(b);
+    });
+    draw();
     return p;
   }
 
@@ -230,9 +293,9 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   if (!T) { notFound(); renderFoot({}); return; }
   document.title = "MONEY TRACKER — " + T + " 회사 상세";
   Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades.json"), get("data/us/lobbying.json"),
-    get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json")])
+    get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json"), get("data/us/whitehouse.json")])
   .then(function (r) {
-    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8];
+    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8], wh = r[9] || {};
     var ent = (si.entities || {})["company:" + T], sec = (ts.tickers || {})[T];
     var trades = ((tr.trades) || []).filter(function (x) { return String(x.tk || "").toUpperCase() === T; })
       .sort(function (a, b) { return String(b.filed || "").localeCompare(String(a.filed || "")) || String(b.d || "").localeCompare(String(a.d || "")); });
@@ -269,7 +332,12 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     app.appendChild(head);
 
     // 2) prices
-    app.appendChild(priceBlock(parsePrices(pr), pr));
+    var pins = [];
+    trades.forEach(function (x) { if (/^\d{4}-\d{2}-\d{2}$/.test(x.filed || "")) { var lg = days(x.d, x.filed); pins.push({ k: "t", date: x.filed, title: (x.who || "-") + " · " + (TY[String(x.ty || "").charAt(0)] || x.ty || "-") + " · " + (x.amt || "-"), sub: "신고 기준" + (x.d ? " · 거래일 " + x.d : "") + (lg != null ? " · 신고까지 " + lg + "일(법정 최대 45일)" : ""), url: x.doc }); } });
+    var rt0 = (routes.routes || {})[T];
+    ((rt0 && rt0.stops) || []).forEach(function (s) { if (/^\d{4}-\d{2}-\d{2}$/.test(s.date || "") && /^https:\/\/www\.congress\.gov\/bill\//.test(s.source_url || "")) pins.push({ k: "b", date: s.date, title: s.title, sub: s.fact, url: s.source_url }); });
+    ((wh.items) || []).forEach(function (w) { if (/^\d{4}-\d{2}-\d{2}$/.test(w.date || "") && ((w.tickers || []).indexOf(T) >= 0 || (w.tickers_product || []).indexOf(T) >= 0)) pins.push({ k: "w", date: w.date, title: w.ko || w.t, sub: (w.src || "") + " · 회사·제품명 언급 기준, 영향 단정 아님", url: w.u }); });
+    app.appendChild(priceBlock(parsePrices(pr), pr, pins));
 
     // 3) trades
     app.appendChild(tradesBlock(trades, members));
