@@ -1,10 +1,70 @@
 {
 "updated": "2026-10-28",
 "country": "kr",
-"source": "열린국회정보 open.assembly.go.kr 국회의원 발의법률안(22대)",
+"source": "열린국회정보 open.assembly.go.kr 국회의원 발의법률안(22대) + 과학기술정보통신부 보도자료(공공데이터포털)",
 "source_url": "https://open.assembly.go.kr/portal/data/service/selectAPIServicePage.do/OOWY4R001216HX11439",
-"note": "법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
+"note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
+{
+"id": "msit:f0d42dd001ee",
+"kind": "press",
+"t": "AI로 이룬 공공혁신, 국민이 누리는 변화 「2026 공공기관 AI 혁신 성과대회」 개최",
+"d": "2026-10-28",
+"dept": "디지털사회기획과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187898",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:e60f2f980add",
+"kind": "press",
+"t": "과학수도 대전에 한국형 혁신 AI･SW  인재양성 거점 ‘이노베이션아카데미’ 개소",
+"d": "2026-10-28",
+"dept": "소프트웨어기반조성팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187897",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:f7784a936aab",
+"kind": "press",
+"t": "대한민국 미래성장과 국민의 삶 개선을 위해 과학기술 정책과 경제·산업 정책의 역량을 결집",
+"d": "2026-10-28",
+"dept": "과학기술·인공지능정책협력담당관",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187894",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:b6dde10e591e",
+"kind": "press",
+"t": "3대 Mega·7대 Seed 프로젝트의 조력자, 연구산업! - 「국제 연구산업 컨벤션 2026」 개최 -",
+"d": "2026-10-28",
+"dept": "연구산업진흥과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187893",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:da4ed34429e6",
+"kind": "press",
+"t": "[보도참고] 국민 누구나 24시간 이용하는 ‘AI 건강도우미 챗봇’ 운영 시작",
+"d": "2026-10-28",
+"dept": "디지털사회기획과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187896",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:394a3017f451",
+"kind": "press",
+"t": "과기정통부, 「2026 민간투자형 SW사업 통합설명회」 개최",
+"d": "2026-10-28",
+"dept": "소프트웨어산업과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187895",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
 {
 "id": "PRC_FA78A322CFED4F9B9B0A1FC04B040C",
 "no": "2222156",
@@ -518,6 +578,18 @@
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_8D5F61F326094DCC98476D1FC2A3BE&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
+},
+{
+"id": "msit:ba7cfd13a58b",
+"kind": "press",
+"t": "과기정통부, 국제 원자력기구(IAEA) 원자력 장관회의 한국 첫 개최",
+"d": "2026-10-27",
+"dept": "원자력연구협력팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187891",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"energy"
+]
 },
 {
 "id": "PRC_1E3B8E6E7C204DFDBF8546C5575BAD",
@@ -1073,6 +1145,36 @@
 "res": null,
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2B6J0J8I2J4H1H0G0V0V5U5U0T9R7&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
+"tags": []
+},
+{
+"id": "msit:3cbd821c9a3d",
+"kind": "press",
+"t": "6만 기술사, 재난재해 대응기술 실증을 주도한다",
+"d": "2026-10-26",
+"dept": "과학기술안전기반팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187889",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:a8eb2ee5b5a9",
+"kind": "press",
+"t": "“전자파 안전 30년, 신뢰로 잇는 미래” 「전자파 안전포럼」 개최",
+"d": "2026-10-26",
+"dept": "국립전파연구원 전자파안전협력팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187886",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:d52f000b4bbb",
+"kind": "press",
+"t": "상상이 현실이 되는 하루, 국립중앙과학관 「2026 메이커 PLAY」 31일 개최",
+"d": "2026-10-26",
+"dept": "국립중앙과학관 기초과학과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187890",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
 "tags": []
 },
 {
@@ -6001,130 +6103,6 @@
 "tags": [
 "finance"
 ]
-},
-{
-"id": "PRC_S2T6S0Z9A2Y2Z1X6Y2W0X1E8D5E6C3",
-"no": "2221623",
-"t": "관세법 일부개정법률안",
-"d": "2026-09-29",
-"by": "김상훈의원 등 14인",
-"cmte": "재정경제기획위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2T6S0Z9A2Y2Z1X6Y2W0X1E8D5E6C3&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": [
-"trade"
-]
-},
-{
-"id": "PRC_Q2P6N0O9V2W2V1V6T1S6T4O9P6N0O3",
-"no": "2221617",
-"t": "기업구조조정 촉진법 일부개정법률안",
-"d": "2026-09-29",
-"by": "김상훈의원 등 13인",
-"cmte": "정무위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2P6N0O9V2W2V1V6T1S6T4O9P6N0O3&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_J2R6S0Q9Q2P2N1O6W1W7V1V6T4S3T6",
-"no": "2221613",
-"t": "조세특례제한법 일부개정법률안",
-"d": "2026-09-29",
-"by": "김상훈의원 등 14인",
-"cmte": "재정경제기획위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2R6S0Q9Q2P2N1O6W1W7V1V6T4S3T6&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_R2P6Q0O9P2N3O1W4U1V9T3U0S4S7B1",
-"no": "2221612",
-"t": "지방세법 일부개정법률안",
-"d": "2026-09-29",
-"by": "윤후덕의원 등 10인",
-"cmte": "행정안전위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2P6Q0O9P2N3O1W4U1V9T3U0S4S7B1&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_G2E6F0D7D1L5K1K4I5J6I3I6E3C7D9",
-"no": "2221610",
-"t": "초·중등교육법 일부개정법률안",
-"d": "2026-09-29",
-"by": "이주영의원 등 10인",
-"cmte": "교육위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2E6F0D7D1L5K1K4I5J6I3I6E3C7D9&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_Q2M6M0K9L0J3K1I7J0R9P4Q4O5P2N3",
-"no": "2221609",
-"t": "조세특례제한법 일부개정법률안",
-"d": "2026-09-29",
-"by": "서영교의원 등 10인",
-"cmte": "재정경제기획위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2M6M0K9L0J3K1I7J0R9P4Q4O5P2N3&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_N2M6N0L9L2K2K1S6T5R0P3Q8O4P8L5",
-"no": "2221608",
-"t": "공공주택 특별법 일부개정법률안",
-"d": "2026-09-29",
-"by": "엄태영의원 등 10인",
-"cmte": "국토교통위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2M6N0L9L2K2K1S6T5R0P3Q8O4P8L5&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": [
-"housing"
-]
-},
-{
-"id": "PRC_C2A5I0J4H0I1G1H6F5B2B2Z5A8Z2Z3",
-"no": "2221602",
-"t": "공교육 정상화 촉진 및 선행교육 규제에 관한 특별법 일부개정법률안",
-"d": "2026-09-28",
-"by": "김문수의원 등 11인",
-"cmte": "교육위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2A5I0J4H0I1G1H6F5B2B2Z5A8Z2Z3&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_C1054F64ACFD46E9B1C9983DAAA6C3",
-"no": "2221601",
-"t": "표시·광고의 공정화에 관한 법률 일부개정법률안",
-"d": "2026-09-28",
-"by": "한민수의원 등 12인",
-"cmte": "정무위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C1054F64ACFD46E9B1C9983DAAA6C3&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_D2C6C0A7B3J1K1I5H0H9F4G5O4O5N4",
-"no": "2221600",
-"t": "국회에서의 증언·감정 등에 관한 법률 일부개정법률안",
-"d": "2026-09-28",
-"by": "문진석의원 등 10인",
-"cmte": "국회운영위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2C6C0A7B3J1K1I5H0H9F4G5O4O5N4&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
 }
 ]
 }
