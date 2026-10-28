@@ -95,8 +95,26 @@ if KI:
         if not any(33 <= (t.get("lat") or 0) <= 39 and 124 <= (t.get("lon") or 0) <= 131 for t in e.get("route", [])): continue
         sid = sector.get(tk); k = [i for i in KI if sid in i["tags"]]; tr = [i for i in KI if "trade" in i["tags"]]
         add(tk, "policy", f"한국 국회 발의 법률안 {d0}~{d1} {len(KI)}건 중 {SEC.get(sid, sid)} 관련 {len(k)}건, 관세·통상 관련 {len(tr)}건" + (f", 과기정통부 보도자료 {len(KS)}건 중 {SEC.get(sid, sid)} 관련 {sum(1 for i in KS if sid in i['tags'])}건" if KS else "") + "(제목 키워드 기준, 영향 단정 아님).", KP.get("source_url"), d1)
+# 7) 백악관·대통령 조치 전후 같은 기간 종가(인과 아님)
+WH = [i for i in (J("data", "us", "whitehouse.json").get("items") or []) if i["kind"] == "presdoc" and i["type"] in ("행정명령", "포고문", "대통령 메모", "대통령 조치") and i.get("date")]
+PD = os.path.join(ROOT, "data", "us", "prices"); DAYS = sorted(f[:10] for f in os.listdir(PD) if re.match(r"\d{4}-\d{2}-\d{2}\.json$", f)) if os.path.isdir(PD) else []
+_pc = {}
+def close(d, tk):
+    if d not in _pc: _pc[d] = J("data", "us", "prices", d + ".json").get("c", {})
+    return _pc[d].get(tk)
+if WH and DAYS:
+    lim = (dt.date.fromisoformat(DAYS[-1]) - dt.timedelta(days=120)).isoformat()
+    for tk in comp:
+        sid = sector.get(tk); a = next((i for i in WH if i["date"] >= lim and (tk in i["tickers"] or (sid and sid in i["sectors"]))), None)
+        if not a: continue
+        b0 = [d for d in DAYS if d < a["date"]]; a1 = [d for d in DAYS if d >= a["date"]]
+        if not b0 or not a1: continue
+        d0, d1 = b0[-1], a1[min(4, len(a1) - 1)]; c0, c1 = close(d0, tk), close(d1, tk)
+        if not c0 or not c1: continue
+        why = "종목명 언급" if tk in a["tickers"] else f"{SEC.get(sid, sid)} 키워드"
+        add(tk, "wh", f"백악관·대통령 조치 {a['date']} {a['type']} '{a['t'][:70]}'({why}) 발표 전후 종가 {d0} ${c0:,.2f} → {d1} ${c1:,.2f} ({(c1/c0-1)*100:+.1f}%, 같은 기간 데이터상, 인과 아님).", a["u"], d1)
 # 요약 3줄: 우선순위 award > lobby > trade > supply > price
-PRI = {"award": 0, "lobby": 1, "trade": 2, "supply": 3, "policy": 4, "price": 5}
+PRI = {"award": 0, "lobby": 1, "trade": 2, "supply": 3, "policy": 4, "wh": 4.5, "price": 5}
 for tk, o in OUT.items(): o["summary"] = [l["text"] for l in sorted(o["lines"], key=lambda l: PRI[l["kind"]])[:3]]
 if "TSM" in OUT: OUT["2330.TW"] = OUT["TSM"]
 json.dump({"updated": dt.date.today().isoformat(), "about": "저장된 공개 데이터에서 규칙으로 계산한 비교 수치. AI 미연결. 인과 아님. 투자 조언 아님.", "companies": OUT},

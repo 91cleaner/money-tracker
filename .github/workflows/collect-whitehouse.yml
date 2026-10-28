@@ -1,0 +1,20 @@
+name: Collect White House / presidential actions
+on:
+  schedule: [{cron: '15 0,6,12,18 * * *'}]
+  workflow_dispatch: {inputs: {days: {description: 'backfill days', required: false, default: ''}}}
+permissions: {contents: write}
+concurrency: {group: data-push, cancel-in-progress: false}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/collect_whitehouse.py
+        env: {DAYS: '${{ github.event.inputs.days }}'}
+      - run: python3 scripts/build_search_index.py && python3 scripts/build_insights.py
+      - run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/us/whitehouse.json data/search-index.json data/us/insights.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: White House/presidential actions $(date -u +%F)"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push && exit 0; sleep $((i*7)); done; exit 1
