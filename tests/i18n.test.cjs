@@ -116,3 +116,18 @@ test('saved choice applies without ?lang; ?lang=ko overrides it; default is KO a
   const k = fakeEnv('?lang=ko', { 'mt.lang': 'en' }); assert.equal(k.win.MTI18N.isEn, false); assert.equal(k.store['mt.lang'], 'ko');
   const d = fakeEnv('', {}); assert.equal(d.win.MTI18N.isEn, false); assert.equal(d.h2.textContent, '의원 거래 신고 (하원 PTR)'); assert.equal(d.td.textContent, '2026-10-01');
 });
+
+test('follow-up: card labels, WH types, company chart strings are English; names use Latin alias', () => {
+  const en = s => api.toEn(s);
+  const cases = {
+    '엔비디아 (NVDA) 경로': 'route', '공시': 'Filings', '대략 위치': 'Approx. location', '함께 볼 지표: 유로/달러 환율': 'Indicator to watch: EUR/USD',
+    '로비 공시(LDA)': 'Lobbying disclosure (LDA)', '의원 주식 거래(하원 PTR)': 'Member stock trades (House PTR)', '연계 PAC 후원': 'Linked PAC',
+    '포고문': 'Proclamation', '상무부 BIS(산업안보국)': 'Commerce BIS', '대통령 조치': 'Presidential action', '1년': '1Y', '주간 순위표': 'Weekly ranking',
+    '의원 거래 신고(신고일 기준)': 'by filing date', '백악관·관보 조치': 'Federal Register', '1년 종가 추이 2026-01-02 ~ 2026-10-27': '1Y closing-price trend Jan 2, 2026',
+    '의원 거래 신고(신고일 기준) 2026-10-01 외 3건': 'and 3 more'
+  };
+  for (const [k, v] of Object.entries(cases)) { const o = en(k); assert.ok(o.includes(v), k + ' -> ' + o); }
+  const note = en('1달 종가 2026-09-27 ~ 2026-10-27 · 범위 100 ~ 120 · 출처: Massive · 핀 2건. 핀은 같은 기간 공개 기록의 날짜일 뿐 주가 변동의 원인을 뜻하지 않습니다. 의원 거래는 신고일 기준이며 실제 거래는 최대 45일 앞설 수 있습니다. 연방 계약은 날짜별 자료가 없어 핀으로 표시하지 않습니다.');
+  assert.ok(!/[가-힣]/.test(note) && /not investment advice/i.test(note), note);
+  assert.equal(api.name({ name: '엔비디아', symbol: 'NVDA', aliases: ['NVDA', 'NVIDIA CORP', '엔비디아'] }), '엔비디아'); // KO mode keeps the Korean name (EN picks the Latin alias: "Nvidia Corp.")
+});

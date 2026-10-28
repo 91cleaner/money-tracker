@@ -47,6 +47,8 @@
     "법안": "Bills", "규제": "Regulation", "위원회": "Committee", "연방 계약": "Federal contracts", "로비": "Lobbying", "후원": "PAC", "의원 거래": "Member trades", "본사·공장": "HQ & plants", "기타 지표": "Other indicators",
     "하원": "House", "상원": "Senate", "민주당": "Democratic", "공화당": "Republican", "무소속": "Independent",
     "미국": "United States", "중국": "China", "대만": "Taiwan", "한국": "South Korea", "일본": "Japan", "영국": "United Kingdom", "독일": "Germany", "사우디": "Saudi Arabia", "유럽": "Europe",
+    "1년": "1Y", "주간 순위표": "Weekly ranking", "공시": "Filings", "대략 위치": "Approx. location", "관보 조치": "Federal Register actions", "포고문": "Proclamation", "행정명령": "Executive Order", "대통령 조치": "Presidential action", "대통령 메모": "Presidential memorandum", "대통령 공고": "Presidential notice", "대통령 결정": "Presidential determination",
+    "상무부 BIS(산업안보국)": "Commerce BIS (Bureau of Industry and Security)", "USTR(무역대표부)": "USTR (Trade Representative)", "재무부 OFAC(해외자산통제국)": "Treasury OFAC (Office of Foreign Assets Control)",
     "전체": "All", "미정": "TBD", "대표 발의": "Sponsor", "회부 위원회": "Referred committee",
     "MONEY TRACKER — 회사 상세": "MONEY TRACKER — Company file", "MONEY TRACKER — 미국 회사 파일": "MONEY TRACKER — US Company File"
   };
@@ -78,6 +80,13 @@
       function (m, d, type, title, kw, d1, p1, d2, p2, ch) { return "White House / presidential action " + d + " " + EXACT_DOC(type) + " '" + title + "' (" + kw + " keywords): closing price " + d1 + " " + p1 + " → " + d2 + " " + p2 + " (" + ch + ", same period per data, not causal)."; }],
     [/(\d{4}) ?년 (\d)분기 보고 금액 합계 약 (\$[\d,.]+[KMB]?)/, "Q$2 $1 reported total approx. $3"],
     [/(\d{4}) ?년 (\d)분기 · 업종 내 (\d+)곳 보고 금액 합계 약 (\$[\d,.]+[KMB]?)/, "Q$2 $1 · $3 companies in sector, reported total approx. $4"],
+    // company chart (company.html)
+    [/^(1주|1달|1년|전체) 종가 추이 (\S+) ~ (\S+)$/, function (m, r, a, b) { return RNG[r] + " closing-price trend " + a + " ~ " + b; }],
+    [/^(1주|1달|1년|전체) 종가 (\S+) ~ (\S+) · 범위 (\S+) ~ (\S+)(?: · 출처: (.+?))? · 핀 (\d+)건\. 핀은 같은 기간 공개 기록의 날짜일 뿐 주가 변동의 원인을 뜻하지 않습니다\. 의원 거래는 신고일 기준이며 실제 거래는 최대 45일 앞설 수 있습니다\. 연방 계약은 날짜별 자료가 없어 핀으로 표시하지 않습니다\.$/,
+      function (m, r, a, b, lo, hi, src, n) { return RNG[r] + " closing prices " + a + " ~ " + b + " · range " + lo + " ~ " + hi + (src ? " · Source: " + src : "") + " · " + n + " pin" + (n === "1" ? "" : "s") + ". Pins are only the dates of public records in the same period and do not mean they caused price moves. Member trades are by filing date (Disclosed (PTR), up to 45-day lag), so actual trades can be up to 45 days earlier. Federal contracts have no per-date data and are not shown as pins. Not investment advice."; }],
+    [/ 외 (\d+)건 — 아래 목록 참고$/, " and $1 more — see list below"], [/ 외 (\d+)건$/, " and $1 more"],
+    [/ · 회사·제품명 언급 기준, 영향 단정 아님$/, " · Based on company / product-name mentions; no impact implied"],
+    [/^신고 기준( · 거래일 (\S+))?( · 신고까지 (\d+)일\(법정 최대 45일\))?$/, function (m, a, td, b, n) { return "Based on filings" + (td ? " · Traded " + td : "") + (n ? " · Lag " + n + " days (statutory max 45)" : ""); }],
     // company / member / sector pages
     [/(\S.*?) 회사 상세$/, "$1 · Company file"], [/(\S.*?) 의원 상세$/, "$1 · Member file"], [/(\S.*?) 업종 상세$/, "$1 · Sector file"],
     [/(\S.*?) 회사 파일$/, "$1 · Company file"], [/(\S.*?) 의원 파일$/, "$1 · Member file"], [/(\S.*?) 업종 파일$/, "$1 · Sector file"],
@@ -130,7 +139,7 @@
     [/조사한 카드 (\d+)개 · 다음 '(.+)'까지 (\d+)개/, "$1 cards opened · $3 more to '$2'"], [/조사한 카드 (\d+)개 · 최고 계급/, "$1 cards opened · top rank"],
     [/🔥 연속 임무 완료 (\d+)일/, "🔥 $1-day mission streak"],
     [/(\d+) \/ (\d+) 완료 · 매일 실제 신고 자료로 새로 정해짐 \((\S+)\)/, "$1 / $2 done · refreshed daily from real filings ($3)"],
-    [/^(회사|의원|업종) (?!거래|상세|파일|선택|미분류)(\S.*)$/, function (m, k, v) { return { "회사": "Company ", "의원": "Member ", "업종": "Sector " }[k] + v; }],
+    [/^(회사|의원|업종) (?!거래|주식|상세|파일|선택|미분류)(\S.*)$/, function (m, k, v) { return { "회사": "Company ", "의원": "Member ", "업종": "Sector " }[k] + v; }],
     [/지난 확인 이후 새 신고 (\d+)건/, "$1 new filings since last check"], [/ · 기준 신고일 /, " · baseline filing date "], [/ · 추적 시작 /, " · tracking since "],
     [/ · 지난 방문 이후 새 신고/, " · new since last visit"], [/신고 (\S+) · 거래 (\S+)/, "Filed $1 · Traded $2"],
     // world command room
@@ -172,6 +181,7 @@
     [/함께 볼 지표: 미국 (\d+)년 국채 금리/, "Indicator to watch: US $1-year Treasury yield"],
     [/함께 볼 지표: 한국 (.+?)\((HS \d+), 월간\)/, function (m, n, hs) { return "Indicator to watch: Korea " + ({ "통신기기 수출": "telecom equipment exports", "석유제품 수출": "petroleum product exports", "집적회로 수출": "integrated circuit exports" }[n.replace(/ $/, "")] || n) + " (" + hs + ", monthly)"; }]
   ];
+  var RNG = { "1주": "1W", "1달": "1M", "1년": "1Y", "전체": "All-time" };
   function EXACT_DOC(t) { return { "포고문": "Proclamation", "행정명령": "Executive Order", "대통령 조치": "Presidential action", "대통령 메모": "Presidential memorandum", "대통령 공고": "Presidential notice", "대통령 결정": "Presidential determination" }[t] || t; }
 
   // ---------- phrases (substring, longest first) ----------
@@ -193,6 +203,14 @@
     ["데이터상 수령자·의뢰인 이름이 회사명으로 시작하는 기록만 합산한 값입니다. 자회사·동명 법인이 빠지거나 섞일 수 있어 원문 확인이 필요합니다.", "Sums only records where the recipient / client name starts with the company name. Subsidiaries may be missing and same-name entities may be mixed in, so check the source."],
     ["SEC 연차보고서 사업장 항목 기준. 좌표가 도시·단지 단위 대략 위치라 나라는 좌표로 대략 분류했습니다.", "Based on the sites item of SEC annual reports. Coordinates are approximate city / campus locations, so countries are roughly classified from coordinates."],
     ["신고 기준입니다.", "Based on filings."], ["투자 조언 아님. ", "Not investment advice. "], ["투자 조언이 아닙니다", "not investment advice"], ["투자 조언 아님", "Not investment advice"], ["투자 신호 아님", "not an investment signal"], ["인과 아님", "not causal"],
+    // route labels / indicators / White House block (world command room)
+    ["함께 볼 지표: ", "Indicator to watch: "], ["유로/달러 환율", "EUR/USD exchange rate"], ["원/달러 환율", "KRW/USD exchange rate"], ["미국 산업생산지수", "US industrial production index"], ["미국 소비자물가지수", "US consumer price index"], ["한국은행 기준금리", "Bank of Korea base rate"], ["미국 기준금리(연방기금 실효금리)", "US policy rate (effective federal funds rate)"],
+    ["의원 주식 거래(하원 PTR)", "Member stock trades (House PTR)"], ["의원 주식 거래", "Member stock trades"], ["로비 공시(LDA)", "Lobbying disclosure (LDA)"], ["로비 공시에 번호 언급", "Number mentioned in lobbying disclosures"], ["로비 공시", "Lobbying disclosure"], ["연계 PAC 후원", "Linked PAC contributions"], ["연방 계약", "Federal contracts"],
+    ["공장(공시)", "Plant (filed)"], ["공급사(공시)", "Supplier (filed)"], ["대략 위치", "approx. location"], ["관보(", "Federal Register ("], ["관보", "Federal Register"], ["본사 위치", "HQ location"], ["현재 상태", "current status"], ["법안 제목에 언급", "Mentioned in bill title"],
+    ["상무부 BIS(산업안보국)", "Commerce BIS (Bureau of Industry and Security)"], ["USTR(무역대표부)", "USTR (Trade Representative)"], ["재무부 OFAC(해외자산통제국)", "Treasury OFAC (Office of Foreign Assets Control)"], ["산업안보국", "Bureau of Industry and Security"],
+    ["포고문", "Proclamation"], ["행정명령", "Executive Order"], ["대통령 조치", "Presidential action"], ["대통령 메모", "Presidential memorandum"], ["대통령 공고", "Presidential notice"], ["대통령 결정", "Presidential determination"],
+    ["백악관·관보 조치", "White House / Federal Register actions"], ["관보 조치", "Federal Register actions"], ["의원 거래 신고(신고일 기준)", "Member trade filings (by filing date)"], ["(Filed 기준)", "(by filing date)"], ["신고일 기준", "by filing date"], ["(신고일 기준)", "(by filing date)"], ["차트 기간", "Chart period"],
+    ["주간 순위표", "Weekly ranking"],
     // page chrome
     ["MONEY TRACKER — 미국 회사 파일", "MONEY TRACKER — US Company File"], ["MONEY TRACKER — 회사 상세", "MONEY TRACKER — Company file"],
     ["미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.", "Public records by US listed company: member trade filings, lobbying disclosures, PAC, filing links. Organized from the data; not investment advice."],
@@ -310,13 +328,19 @@
     cache[s] = out; cacheN++;
     return out;
   }
+  // Korean company name -> English (EN only): first Latin alias of a search-index entity, else the name as is
+  function name(ent) {
+    var n = ent && ent.name; if (!isEn || !n || !HANGUL.test(n)) return n;
+    var al = (ent.aliases || []).filter(function (a) { return !HANGUL.test(a) && /[A-Za-z]{3}/.test(a.replace(/\.[A-Z]{1,2}$/, "")) && a !== ent.symbol; }).sort(function (a, b) { return b.length - a.length; })[0];
+    return al ? al.replace(/\b([A-Z])([A-Z]+)\b/g, function (m, a, b) { return /^(INC|CORP|CO|LTD|PLC|ETF|ADR|USA|AMD|IBM|TSMC)$/.test(m) ? (m === "INC" || m === "CORP" || m === "LTD" ? a + b.toLowerCase() + "." : m) : a + b.toLowerCase(); }).replace(/\b(Inc|Corp|Ltd)\.?$/, "$1.") : n;
+  }
   // UI string that is not Korean source text (button labels owned by this file)
   var UI = {
     ko: { aria: "English로 전환", title: "Switch to English" },
     en: { aria: "한국어로 전환", title: "한국어로 전환 (Switch to Korean)" }
   };
 
-  var api = { lang: lang, isEn: isEn, tr: tr, toEn: toEn, date: date, dateEn: dateEn, usd: usd, krw: krw, money: money, koUsd: koUsd,
+  var api = { lang: lang, name: name, isEn: isEn, tr: tr, toEn: toEn, date: date, dateEn: dateEn, usd: usd, krw: krw, money: money, koUsd: koUsd,
     set: function (l) { setLang(l); }, url: function (l) { return withLang(root.location ? root.location.href : "", l); } };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   root.MTI18N = api;
