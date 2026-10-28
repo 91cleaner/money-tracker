@@ -34,7 +34,7 @@
   var RATE = { KR: "한국", US: "미국", XM: "유로존", JP: "일본", CN: "중국", GB: "영국" };
   var loaded = false;
 
-  function render(cal, sectors, rates, tw, usTrade, cn) {
+  function render(cal, sectors, rates, tw, usTrade, cn, krx) {
     panel.replaceChildren();
     var x = el("button", "x", "×"); x.type = "button"; x.setAttribute("aria-label", "상황판 닫기"); x.addEventListener("click", toggle); panel.appendChild(x);
     panel.appendChild(el("p", "muted", "공개 자료 그대로 · 예상·추천 아님 · 판단은 이용자"));
@@ -57,6 +57,16 @@
     });
     panel.appendChild(el("p", "muted")).appendChild(link("출처: 대만증권거래소 공시", tw && tw.source_url));
 
+    if (krx && krx.items) {
+      panel.appendChild(el("h4", "", "한국 품목별 수출 (관세청)"));
+      [["8542", "집적회로(반도체)"], ["8703", "승용차"], ["2710", "석유제품"], ["8901", "선박"], ["8507", "배터리"]].forEach(function (pair) {
+        var it = krx.items[pair[0]]; if (!it || !it.latest) return;
+        var l = it.latest, pm = (Number(l.month.slice(0, 4)) - 1) + l.month.slice(4), prev = (it.points || []).filter(function (p) { return p.month === pm; })[0];
+        var yoy = prev && prev.exp_usd ? (l.exp_usd / prev.exp_usd - 1) * 100 : null;
+        panel.appendChild(row(pair[1] + " · " + l.month, Math.round(l.exp_usd / 1e8).toLocaleString("en-US") + "억 달러" + (yoy == null ? "" : " (" + (yoy >= 0 ? "+" : "") + yoy.toFixed(1) + "%)")));
+      });
+      panel.appendChild(el("p", "muted")).appendChild(link("출처: 관세청 (HS 품목 기준, 산업부 분류와 다를 수 있음)", krx.source_url));
+    }
     panel.appendChild(el("h4", "", "최근 수출통제·관세 고시"));
     ((usTrade && usTrade.documents) || []).filter(function (d) { return d.entity_list || d.china; }).slice(0, 3)
       .forEach(function (d) { panel.appendChild(row(link("미국 · " + d.title.slice(0, 54), d.url), d.date)); });
@@ -82,7 +92,7 @@
   function load() {
     if (loaded) return; loaded = true;
     panel.replaceChildren(el("p", "muted", "공개 자료 불러오는 중…"));
-    Promise.all(["calendar.json", "sectors.json", "factors/policy-rates.json", "factors/tw-monthly-revenue.json", "factors/us-trade-controls.json", "factors/cn-mofcom-announcements.json"].map(get))
+    Promise.all(["calendar.json", "sectors.json", "factors/policy-rates.json", "factors/tw-monthly-revenue.json", "factors/us-trade-controls.json", "factors/cn-mofcom-announcements.json", "factors/kr-exports-by-item.json"].map(get))
       .then(function (r) { render.apply(null, r); })
       .catch(function () { panel.replaceChildren(el("p", "muted", "자료를 불러오지 못했습니다.")); loaded = false; });
   }

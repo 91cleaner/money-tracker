@@ -317,6 +317,78 @@
     "file": "data/market/factors/country-profiles.json",
     "list": "_indicators"
    }
+  },
+  {
+   "id": "kr_exp_semis",
+   "label": "한국 집적회로 수출(HS 8542, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8542"
+   }
+  },
+  {
+   "id": "kr_exp_cars",
+   "label": "한국 승용차 수출(HS 8703, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8703"
+   }
+  },
+  {
+   "id": "kr_exp_batteries",
+   "label": "한국 축전지 수출(HS 8507, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8507"
+   }
+  },
+  {
+   "id": "kr_exp_ships",
+   "label": "한국 선박 수출(HS 8901, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8901"
+   }
+  },
+  {
+   "id": "kr_exp_oil",
+   "label": "한국 석유제품 수출(HS 2710, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "2710"
+   }
+  },
+  {
+   "id": "kr_exp_telecom",
+   "label": "한국 통신기기 수출(HS 8517, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8517"
+   }
   }
  ],
  "sectors": [
@@ -361,6 +433,7 @@
    "label": "반도체",
    "label_en": "Semiconductors",
    "factors": [
+    "kr_exp_semis",
     "us_10y",
     "fx_krw",
     "fx_twd",
@@ -396,6 +469,7 @@
    "label": "IT·소프트웨어·AI",
    "label_en": "Tech, software & AI",
    "factors": [
+    "kr_exp_telecom",
     "us_10y",
     "us_policy_rate",
     "fx_krw",
@@ -448,6 +522,7 @@
    "label": "에너지·석유·가스",
    "label_en": "Energy",
    "factors": [
+    "kr_exp_oil",
     "oil_wti",
     "fx_eur",
     "us_industrial"
@@ -485,6 +560,7 @@
    "label": "배터리·전기차",
    "label_en": "Batteries & EVs",
    "factors": [
+    "kr_exp_batteries",
     "copper",
     "fx_krw",
     "kr_exports",
@@ -509,6 +585,7 @@
    "label": "자동차",
    "label_en": "Autos",
    "factors": [
+    "kr_exp_cars",
     "fx_krw",
     "fx_jpy",
     "oil_wti",
@@ -555,6 +632,7 @@
    "label": "조선·해운",
    "label_en": "Shipbuilding & shipping",
    "factors": [
+    "kr_exp_ships",
     "oil_wti",
     "fx_krw",
     "kr_exports"

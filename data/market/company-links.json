@@ -15,6 +15,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
      "status": "collected",
@@ -135,6 +146,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_cars",
+     "label": "한국 승용차 수출(HS 8703, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 5705503855,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "fx_krw",
      "label": "원/달러 환율",
      "status": "collected",
@@ -214,6 +236,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -334,6 +367,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_batteries",
+     "label": "한국 축전지 수출(HS 8507, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 723652254,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "copper",
      "label": "구리 가격",
@@ -469,6 +513,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -735,6 +790,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
      "status": "collected",
@@ -802,6 +868,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -931,6 +1008,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -1103,6 +1191,17 @@
      "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
     },
     {
+     "id": "kr_exp_ships",
+     "label": "한국 선박 수출(HS 8901, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 3576726350,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "oil_wti",
      "label": "WTI 원유 가격",
      "status": "collected",
@@ -1143,6 +1242,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_batteries",
+     "label": "한국 축전지 수출(HS 8507, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 723652254,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "copper",
      "label": "구리 가격",
@@ -1221,6 +1331,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -1381,6 +1502,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_cars",
+     "label": "한국 승용차 수출(HS 8703, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 5705503855,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "fx_krw",
      "label": "원/달러 환율",
      "status": "collected",
@@ -1460,6 +1592,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -1671,6 +1814,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
      "status": "collected",
@@ -1729,6 +1883,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -1792,6 +1957,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -1882,6 +2058,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -2003,6 +2190,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_oil",
+     "label": "한국 석유제품 수출(HS 2710, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 7243406411,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "oil_wti",
      "label": "WTI 원유 가격",
      "status": "collected",
@@ -2051,6 +2249,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -2160,6 +2369,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -2726,6 +2946,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_batteries",
+     "label": "한국 축전지 수출(HS 8507, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 723652254,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "copper",
      "label": "구리 가격",
      "status": "collected",
@@ -2910,6 +3141,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
      "status": "collected",
@@ -2969,6 +3211,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
      "status": "collected",
@@ -3027,6 +3280,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -3204,6 +3468,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
@@ -3496,6 +3771,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
      "status": "collected",
@@ -3631,6 +3917,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_semis",
+     "label": "한국 집적회로 수출(HS 8542, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 43116428429,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
      "status": "collected",
@@ -3755,6 +4052,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_batteries",
+     "label": "한국 축전지 수출(HS 8507, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 723652254,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "copper",
      "label": "구리 가격",
      "status": "collected",
@@ -3812,6 +4120,17 @@
      "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
     },
     {
+     "id": "kr_exp_cars",
+     "label": "한국 승용차 수출(HS 8703, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 5705503855,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "fx_jpy",
      "label": "엔/달러 환율",
      "status": "collected",
@@ -3863,6 +4182,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_oil",
+     "label": "한국 석유제품 수출(HS 2710, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 7243406411,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "oil_wti",
      "label": "WTI 원유 가격",
@@ -3972,6 +4302,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_oil",
+     "label": "한국 석유제품 수출(HS 2710, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 7243406411,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "oil_wti",
      "label": "WTI 원유 가격",
@@ -4188,6 +4529,17 @@
    ],
    "factors": [
     {
+     "id": "kr_exp_telecom",
+     "label": "한국 통신기기 수출(HS 8517, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 848514995,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
+    {
      "id": "us_10y",
      "label": "미국 10년 국채 금리",
      "status": "collected",
@@ -4303,6 +4655,17 @@
     }
    ],
    "factors": [
+    {
+     "id": "kr_exp_oil",
+     "label": "한국 석유제품 수출(HS 2710, 월간)",
+     "status": "collected",
+     "latest": {
+      "value": 7243406411,
+      "date": "2026-09",
+      "unit": "usd"
+     },
+     "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81"
+    },
     {
      "id": "oil_wti",
      "label": "WTI 원유 가격",

@@ -48,7 +48,8 @@
 - 나라 특성: 세계은행 API 19개국 × 7개 지표(GDP·성장률·인구·수출/GDP·물가·국방비 금액·국방비/GDP, 국방비 원 출처 SIPRI) → `data/market/factors/country-profiles.json`, 나라별 검색 항목 `country-profile-<ISO3>`.
 - 한국·일본 월간 수출: FRED의 OECD MEI 시리즈(`XTEXVA01KRM667S`, `XTEXVA01JPM667S`)를 `fred-extra.json`에 수집 중. FRED 원문에서 단위 확인 완료(미국 달러, 월간, 계절조정; 한국 2026-08 약 1,004억 달러) → `kr_exports` collected로 전환. 더 정확한 1~10일 수출은 관세청(data.go.kr 키 `DATA_GO_KR_KEY`로 해당 API 활용신청 필요).
 - 한국 품목별 수출(반도체 8542·승용차 8703·배터리 8507·선박 8901·석유제품 2710·통신기기 8517): `krCustomsExports` 수집기 추가(관세청 `apis.data.go.kr/1220000/Itemtrade/getItemtradeList`, 워크플로에 `DATA_GO_KR_KEY` 전달). **운영자가 2026-10-28 활용신청 → 승인 후 수집 성공**(API는 조회기간 1년 이내만 허용 → 12개월씩 두 번 조회). `data/market/factors/kr-exports-by-item.json`. 2026-09 HS 8542 수출 431억 달러 — 산업부 '반도체'(603억 달러)와 분류 범위가 달라 숫자가 다름(파일 note에 명시).
-- 요인 현황: 28개 중 27개 수집 중. 남은 planned: `us_facilities`(EPA 시설). 대만 기준금리는 BIS에 없음. 한국은행 회의 일정은 여전히 `calendar.json`의 pending(공식 연간표 미확인).
+- 한국 품목별 수출 6개를 업종 요인으로 연결(`kr_exp_semis` 등, 반도체·자동차·배터리·조선·에너지·IT 업종), 검색 항목 `kr-export-<HS>`(전년 같은 달 대비 포함), 상황판에 '한국 품목별 수출' 섹션 추가.
+- 요인 현황: 34개 중 33개 수집 중(남은 planned: `us_facilities`). 남은 planned: `us_facilities`(EPA 시설). 대만 기준금리는 BIS에 없음. 한국은행 회의 일정은 여전히 `calendar.json`의 pending(공식 연간표 미확인).
 
 - **관제실 상황판**(`assets/mt-market-board.js`, `usa-command.html` 맨 끝 스크립트 한 줄): 오른쪽 위 "▦ 상황판" 버튼 → 접히는 패널(기본 닫힘)에 다가오는 공식 일정, 각국 기준금리, 대만 월매출(TSMC 등 전년 대비), 최근 미·중 수출통제 고시, 업종 선택 시 함께 볼 지표. 데스크톱·모바일 실제 Chromium 확인(패널 열린 상태에서도 지도 줌 버튼 사용 가능). 다른 모듈을 건드리지 않는 독립 파일.
 - 주의: 업종표 검색 항목의 별칭에 종목명을 넣으면 "엔비디아는 왜…" 같은 질문에서 업종표가 기업 기록보다 먼저 나와 `tests/mt-browser-smoke.cjs`가 실패한다. 종목명은 요약에만 둘 것(테스트로 막아 둠).

@@ -24,7 +24,8 @@ test('every factor has a source link, and collected factors point at real data',
       if (f.data.company) assert.ok(d.history && d.history[f.data.company], f.id + ' company ' + f.data.company + ' in ' + f.data.file);
       if (f.data.list && f.data.list.startsWith('_')) { const o = d[f.data.list.slice(1)]; assert.ok(o && Object.keys(o).length, f.id + ' map ' + f.data.list + ' in ' + f.data.file); }
       else if (f.data.list) assert.ok(Array.isArray(d[f.data.list]) && d[f.data.list].length, f.id + ' list ' + f.data.list + ' in ' + f.data.file);
-      assert.ok(f.data.series || f.data.company || f.data.list, f.id + ' data link needs series, company or list');
+      if (f.data.item) assert.ok(d.items && d.items[f.data.item], f.id + ' item ' + f.data.item + ' in ' + f.data.file);
+      assert.ok(f.data.series || f.data.company || f.data.list || f.data.item, f.id + ' data link needs series, company, list or item');
     }
     if (f.status === 'collected') assert.ok(f.data || f.market, f.id + ' collected but no data link');
   }
@@ -136,4 +137,11 @@ test('company connection table links companies to sectors, live factor values an
   const { companyLinkDocuments } = await import('../scripts/market-reference-index.mjs');
   const docs = companyLinkDocuments({ companies });
   assert.ok(docs.every(d => !d.aliases.includes(d.title.split(' · ')[1].split(' (')[0])), 'company name only in title');
+});
+
+test('Korea exports by item are searchable and labelled with their HS scope', async () => {
+  const { krExportDocuments } = await import('../scripts/market-reference-index.mjs');
+  const docs = krExportDocuments(json('data/market/factors/kr-exports-by-item.json'));
+  const semis = docs.find(d => d.id === 'kr-export-8542');
+  assert.ok(semis && /HS 8542/.test(semis.title) && /억 달러/.test(semis.summary));
 });
