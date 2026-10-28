@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals, parseQcew, parseWorldBank, parseUkDivisions } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals, parseQcew, parseWorldBank, parseUkDivisions, unzipFirst, parseGazetteer } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -102,4 +102,18 @@ test("UK Commons divisions keep id, date, title, counts and official link", () =
   const out = parseUkDivisions([{ DivisionId: 2001, Date: "2026-10-21T00:00:00", Number: 300, Title: "Finance Bill: Third Reading", AyeCount: 320, NoCount: 180 }, { Title: "no id" }]);
   assert.deepEqual(out, [{ id: 2001, date: "2026-10-21", number: 300, title: "Finance Bill: Third Reading", ayes: 320, noes: 180, url: "https://votes.parliament.uk/votes/commons/division/2001" }]);
   assert.throws(() => parseUkDivisions({}), /unexpected/);
+});
+
+test("single-entry zip reader and Gazetteer parser", async () => {
+  const zlib = await import("node:zlib");
+  const rows = ["USPS\tGEOID\tANSICODE\tNAME\tALAND\tAWATER\tALAND_SQMI\tAWATER_SQMI\tINTPTLAT\tINTPTLONG"];
+  for (let i = 0; i < 1100; i++) rows.push("AZ\t" + String(4000 + i).padStart(5, "0") + "\t1\tCounty " + i + "\t1\t1\t1\t1\t33.3\t-112.4");
+  const text = rows.join("\n"), raw = zlib.deflateRawSync(Buffer.from(text));
+  const name = Buffer.from("g.txt"), h = Buffer.alloc(30);
+  h.writeUInt32LE(0x04034b50, 0); h.writeUInt16LE(8, 8); h.writeUInt32LE(raw.length, 18); h.writeUInt32LE(text.length, 22); h.writeUInt16LE(name.length, 26);
+  const zip = Buffer.concat([h, name, raw]);
+  assert.equal(unzipFirst(zip), text);
+  const g = parseGazetteer(text);
+  assert.deepEqual(g["04013"], { lat: 33.3, lng: -112.4, name: "County 13, AZ" });
+  assert.throws(() => unzipFirst(Buffer.from("nope")), /not a zip/);
 });

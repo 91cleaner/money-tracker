@@ -14,6 +14,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import zlib from "node:zlib";
 const root = path.resolve(import.meta.dirname, "..");
 const OUT = path.join(root, "data/market/factors");
 const UA = { "User-Agent": "MONEY-TRACKER-research/1.0 (+https://91cleaner.github.io/money-tracker/)" };
@@ -177,6 +178,46 @@ export function parseUkDivisions(rows) {
   return rows.filter(r => r && Number.isFinite(Number(r.DivisionId)) && r.Title).map(r => ({
     id: Number(r.DivisionId), date: String(r.Date || "").slice(0, 10), number: r.Number ?? null, title: String(r.Title).slice(0, 300),
     ayes: num(r.AyeCount), noes: num(r.NoCount), url: "https://votes.parliament.uk/votes/commons/division/" + Number(r.DivisionId) }));
+}
+
+
+/** Minimal reader for a single-entry ZIP (Census Gazetteer files). Returns the first file's text. */
+export function unzipFirst(buf) {
+  const b = Buffer.from(buf);
+  if (b.readUInt32LE(0) !== 0x04034b50) throw Error("not a zip file");
+  const method = b.readUInt16LE(8), csize = b.readUInt32LE(18), nlen = b.readUInt16LE(26), xlen = b.readUInt16LE(28);
+  const start = 30 + nlen + xlen;
+  let size = csize;
+  if (size === 0 || start + size > b.length) { // sizes in data descriptor: use the central directory instead
+    const cd = b.lastIndexOf(Buffer.from([0x50, 0x4b, 0x01, 0x02]));
+    if (cd < 0) throw Error("zip central directory missing");
+    size = b.readUInt32LE(cd + 20);
+  }
+  const data = b.subarray(start, start + size);
+  return (method === 0 ? data : zlib.inflateRawSync(data)).toString("utf8");
+}
+export function parseGazetteer(text) {
+  const lines = String(text || "").trim().split(/\r?\n/);
+  const head = lines.shift().replace(/^\uFEFF/, "").split(/\t|\|/).map(h => h.trim().toUpperCase());
+  const gi = head.indexOf("GEOID"), ni = head.indexOf("NAME"), ui = head.indexOf("USPS"), la = head.indexOf("INTPTLAT"), lo = head.indexOf("INTPTLONG");
+  if (gi < 0 || la < 0 || lo < 0) { const e = Error("Gazetteer columns missing"); e.head = head.join(","); throw e; }
+  const out = {};
+  for (const line of lines) {
+    const c = line.split(/\t|\|/).map(x => x.trim()), lat = num(c[la]), lng = num(c[lo]);
+    if (/^\d{5}$/.test(c[gi]) && lat != null && lng != null) out[c[gi]] = { lat, lng, name: ni >= 0 ? c[ni] + (ui >= 0 ? ", " + c[ui] : "") : null };
+  }
+  if (Object.keys(out).length < 1000) throw Error("too few Gazetteer counties");
+  return out;
+}
+async function countyCentroids() {
+  for (const y of [2025, 2024, 2023]) {
+    try {
+      const res = await fetch("https://www2.census.gov/geo/docs/maps-data/data/gazetteer/" + y + "_Gazetteer/" + y + "_Gaz_counties_national.zip", { headers: UA, signal: AbortSignal.timeout(60000) });
+      if (!res.ok) continue;
+      return { year: y, map: parseGazetteer(unzipFirst(Buffer.from(await res.arrayBuffer()))) };
+    } catch (e) { warn("Gazetteer " + y + ": " + e.message + " (header starts: " + String(e.head || "").slice(0, 80) + ")"); }
+  }
+  return null;
 }
 
 function writeJson(file, data) {
@@ -346,10 +387,16 @@ async function qcewJobs() {
     if (!out[code]) warn("QCEW " + code + ": no recent quarter available");
   }
   if (!Object.keys(out).length) throw Error("no QCEW industry data");
+  // Attach official county centroids (Census Gazetteer internal points) so the map can draw the counties.
+  const cent = await countyCentroids();
+  let placed = 0;
+  if (cent) for (const v of Object.values(out)) for (const c of v.counties) { const g = cent.map[c.fips]; if (g) { c.lat = g.lat; c.lng = g.lng; placed++; } }
+  else warn("county centroids unavailable; counties saved without coordinates");
   writeJson("us-jobs-by-county.json", { source: "U.S. Bureau of Labor Statistics · QCEW open data", source_url: "https://www.bls.gov/cew/additional-resources/open-data/",
-    note: "민간 부문(own_code 5) 분기 3번째 달 고용. 비공개(disclosure N) 지역 제외. 지도 좌표는 아직 없음(FIPS 코드로 연결 예정). 약 5~6개월 지연 발표.",
+    note: "민간 부문(own_code 5) 분기 3번째 달 고용. 비공개(disclosure N) 지역 제외. 카운티 lat/lng는 미국 인구조사국 Gazetteer 내부 대표점(카운티 중심 근처, 공장 위치 아님). 약 5~6개월 지연 발표.",
+    coordinates_source: cent ? "U.S. Census Bureau Gazetteer " + cent.year + " counties (INTPTLAT/INTPTLONG)" : null,
     collected_at: now(), industries: out });
-  return Object.entries(out).map(([k, v]) => k + "@" + v.period).join(",");
+  return Object.entries(out).map(([k, v]) => k + "@" + v.period).join(",") + " · coords " + placed;
 }
 
 
