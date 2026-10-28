@@ -20,6 +20,7 @@ import re
 import ssl
 import sys
 import time
+import unicodedata
 import urllib.parse
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
@@ -183,6 +184,20 @@ def strip(s):
 
 def jp():
     rows, _ = load("jp")
+    # 계속심사 법안은 회기마다 다시 실리므로 (종류, 제출회차, 번호) 하나로 합친다(최근 회기 상태 유지)
+    merged = {}
+    for r in rows.values():
+        key = "%s-%s-%s" % (r.get("k") or "議案", r.get("submitted_session") or "", r["id"].split("-")[-1])
+        old = merged.get(key)
+        if old is None or int(r.get("session") or 0) > int(old.get("session") or 0):
+            if old:
+                r["d"] = r.get("d") or old.get("d", "")
+                r["sd"] = r.get("sd") or old.get("sd", "")
+            r["id"] = key
+            merged[key] = r
+        elif not old.get("d") and r.get("d"):
+            old["d"] = r["d"]
+    rows = merged
     try:
         menu = jp_text(get(JP_BASE + "menu.htm"))
     except Exception as e:
@@ -194,7 +209,7 @@ def jp():
     if not top:
         print("::warning::laws jp: cannot find current session number sample=" + strip(menu)[:200])
         return len(rows)
-    n = int(os.environ.get("JP_SESSIONS", "8"))
+    n = int(os.environ.get("JP_SESSIONS", "30"))  # 약 10년
     sessions = list(range(top, max(top - n, 150), -1))
     for s in sessions:
         page = None
@@ -208,7 +223,7 @@ def jp():
             continue
         # 표: 種類(閣法/衆法/参法 등) 블록 안의 행 = 提出回次 | 番号 | 議案件名 | 審議状況 | 経過 | 本文
         kind = ""
-        n0 = len(rows)
+        parsed = 0
         for block in re.split(r"(?=<caption)", page, flags=re.I):
             cap = re.search(r"<caption[^>]*>(.*?)</caption>", block, flags=re.I | re.S)
             if cap:
@@ -222,9 +237,14 @@ def jp():
                     continue
                 link = re.search(r'href="([^"]+)"', tds[4] if len(tds) > 4 else tr)
                 url = urllib.parse.urljoin(JP_BASE + "menu.htm", html.unescape(link.group(1))) if link else JP_BASE + "menu.htm"
-                bid = "%s-%s-%s-%s" % (s, kind or "議案", cells[0], cells[1])
-                rows[bid] = {"id": bid, "t": cells[2], "d": "", "st": cells[3], "sd": "", "u": url, "by": kind, "k": kind, "session": s, "submitted_session": int(cells[0])}
-        if len(rows) == n0:
+                bid = "%s-%s-%s" % (kind or "議案", cells[0], cells[1])
+                parsed += 1
+                old = rows.get(bid)
+                if old and int(old.get("session") or 0) > s:
+                    continue  # 더 최근 회기 상태가 이미 있음
+                rows[bid] = {"id": bid, "t": cells[2], "d": (old or {}).get("d", ""), "st": cells[3], "sd": (old or {}).get("sd", ""), "u": url,
+                             "by": kind, "k": kind, "session": s, "submitted_session": int(cells[0])}
+        if not parsed:
             trs = re.findall(r"<tr[^>]*>(.*?)</tr>", page, flags=re.I | re.S)
             print("::warning::laws jp: session %d parsed 0 rows (layout?) tables=%d rows=%d first_row=%s" % (s, len(re.findall(r"<table", page, flags=re.I)), len(trs), strip(trs[1] if len(trs) > 1 else page)[:240]))
         time.sleep(1.0)
@@ -249,9 +269,11 @@ def jp_date(txt):
 def jp_dates(rows):
     """경과 페이지에서 衆議院 議案受理年月日(제출)·성립/공포 날짜를 읽는다. 예산 안에서 날짜 없는 것부터."""
     budget = time.time() + float(os.environ.get("JP_DATE_BUDGET_MIN", "8")) * 60
-    todo = [r for r in rows.values() if not r.get("d") and "/keika/" in (r.get("u") or "")]
+    week_ago = (date.today() - timedelta(days=7)).isoformat()
+    # 受理 날짜 칸이 아직 빈 법안(예비심사 등)은 7일에 한 번만 다시 본다
+    todo = [r for r in rows.values() if not r.get("d") and "/keika/" in (r.get("u") or "") and (r.get("d_try") or "") < week_ago]
     todo.sort(key=lambda r: -int(r.get("session") or 0))
-    done = 0
+    done = miss = 0
     for r in todo:
         if time.time() > budget:
             break
@@ -261,19 +283,22 @@ def jp_dates(rows):
             print("::warning::laws jp keika %s %s" % (r["id"], why(e)))
             time.sleep(2)
             continue
-        recv = re.search(r"衆議院議案受理年月日\s*(\S+\s*\S*\s*\S*)", page)
-        d = jp_date(recv.group(1)) if recv else ""
-        if not d:  # 참의원 先議 등: 참의원 受理 날짜
-            recv = re.search(r"参議院議案受理年月日\s*(\S+\s*\S*\s*\S*)", page)
-            d = jp_date(recv.group(1)) if recv else ""
-        last = ""
-        for label in ("公布年月日", "成立年月日", "衆議院議決年月日"):
-            m = re.search(label + r"\s*(\S+\s*\S*\s*\S*)", page)
-            if m and jp_date(m.group(1)):
-                last = jp_date(m.group(1))
-                break
+        page = unicodedata.normalize("NFKC", page)  # 전각 숫자·공백 → 반각
+
+        def after(label):
+            i = page.find(label)
+            return jp_date(page[i + len(label): i + len(label) + 40]) if i >= 0 else ""
+        d = after("衆議院議案受理年月日") or after("参議院議案受理年月日") or after("議案受理年月日")
+        last = after("公布年月日") or after("成立年月日") or after("衆議院議決年月日")
+        if not d and miss < 2:
+            miss += 1
+            i = page.find("受理")
+            print("::warning::laws jp keika no date %s sample=%s" % (r["id"], page[max(0, i - 60): i + 160] if i >= 0 else page[:300]))
         if d:
             r["d"] = d
+            r.pop("d_try", None)
+        else:
+            r["d_try"] = date.today().isoformat()
         if last:
             r["sd"] = last
         done += 1
