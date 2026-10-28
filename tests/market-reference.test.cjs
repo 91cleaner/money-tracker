@@ -81,3 +81,11 @@ test('US trade-control notices are searchable with official links', async () => 
   for (const d of docs) assert.match(d.url, /^https:\/\/www\.federalregister\.gov\//);
   assert.ok(docs.some(d => d.aliases.includes('중국')), 'China-related notices carry the 중국 alias');
 });
+
+test('China MOFCOM announcements are searchable with official links', async () => {
+  const { mofcomDocuments } = await import('../scripts/market-reference-index.mjs');
+  const file = json('data/market/factors/cn-mofcom-announcements.json');
+  const docs = mofcomDocuments(file);
+  assert.ok(docs.length >= 1 && docs.length === file.items.length);
+  for (const d of docs) { assert.match(d.url, /^https:\/\/www\.mofcom\.gov\.cn\//); assert.ok(d.aliases.includes('중국')); }
+});

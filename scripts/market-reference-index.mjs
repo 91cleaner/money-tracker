@@ -47,3 +47,12 @@ export function tradeControlDocuments(file){
    source:"Federal Register",url:d.url,source_date:d.date||null,route:null};
  });
 }
+
+/** China MOFCOM announcements collected by scripts/collect-market-factors.mjs (titles and links only). */
+export function mofcomDocuments(file){
+ return (file?.items||[]).filter(x=>/^https:\/\/www\.mofcom\.gov\.cn\//.test(x.url||"")).map(x=>({
+  id:"cn-mofcom-"+(x.number||x.url.split("/").pop().replace(/\.html$/,"")),type:"regulation",title:"중국 상무부 공고 · "+tidy(x.title,150),
+  aliases:["중국","China","중국 상무부","MOFCOM","商务部",...(x.export_control?["수출통제","出口管制","대중국","희토류"]:[]),...(x.targets||[])],
+  summary:"중국 상무부 공고"+(x.number?" "+x.number.replace("-","년 제")+"호":"")+(x.export_control?" · 자동 분류: 수출통제 관련(제목 단어 기준, 원문 확인 필요)":"")+(x.targets?.length?" · 제목에 나온 대상: "+x.targets.join(", "):"")+". 원문은 중국어 공식 페이지.",
+  source:"中华人民共和国商务部",url:x.url,source_date:x.date||null,route:null}));
+}
