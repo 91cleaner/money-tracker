@@ -21,7 +21,7 @@ test("PAID AI routes fail closed after owner auth, even if old keys are present"
  assert.match(standalone,/if\(url\.pathname==="\/api\/analyze"\)return json\(\{error:"ai-paused"/);
 });
 test("no Grok/AI panel appears on private or public control room while gathering data",()=>{
- const publicHtml=fs.readFileSync(path.join(__dirname,"../usa-command.html"),"utf8");
+ const publicHtml=fs.readFileSync(path.join(__dirname,"../usa-command-legacy.html"),"utf8");
  assert.match(worker,/return new Response\(COMMAND_HTML,\{headers:/);
  assert.doesNotMatch(worker,/AI_OPERATOR_OVERLAY/);
  assert.doesNotMatch(publicHtml,/src="assets\/mt-backend\.js/);

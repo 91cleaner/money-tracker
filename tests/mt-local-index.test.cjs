@@ -45,7 +45,7 @@ test("every result has source URL; no fictional market price or automatic AI inf
    assert.ok(Math.abs(doc.location.lng)<=180);
   }
  }
- const page=fs.readFileSync(path.join(root,"usa-command.html"),"utf8");
+ const page=fs.readFileSync(path.join(root,"usa-command-legacy.html"),"utf8");
  const ui=fs.readFileSync(path.join(root,"assets/mt-research-ui.js"),"utf8");
  assert.match(page,/assets\/mt-local-search\.js/);
  assert.doesNotMatch(page,/src="assets\/mt-backend\.js/);

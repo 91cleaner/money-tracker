@@ -37,7 +37,7 @@ test("no fabricated results when Wikipedia is unavailable",async()=>{
 test("external search is explicit opt-in and neutral command is the default",()=>{
  const ui=fs.readFileSync(path.join(__dirname,"../assets/mt-research-ui.js"),"utf8");
  const cmd=fs.readFileSync(path.join(__dirname,"../assets/mt-command-ui.js"),"utf8");
- const page=fs.readFileSync(path.join(__dirname,"../usa-command.html"),"utf8");
+ const page=fs.readFileSync(path.join(__dirname,"../usa-command-legacy.html"),"utf8");
  assert.match(ui,/클릭하면 검색어가 외부 Wikimedia 서버로 전송/);
  assert.match(ui,/window\.MTOpenResearch\.research\(question\)/);
  assert.match(cmd,/else renderWelcome\(\)/);
