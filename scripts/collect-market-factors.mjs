@@ -4,6 +4,7 @@
  *  - ECB deposit facility rate: ECB Data Portal API (FM dataset)
  *  - US trade controls: Federal Register API documents from BIS (export controls, Entity List) and USTR (tariffs)
  *  - China MOFCOM: 政策发布 announcement titles/numbers/links (export-control tagging by title words)
+ *  - US FDA new drug approvals (openFDA Drugs@FDA, keyless)
  *  - FRED extra series (housing starts, copper): fredgraph CSV, or the official API when FRED_API_KEY is set
  * Each source is independent: if one fails, its previous file is kept and a ::warning:: is printed.
  * Output: data/market/factors/*.json. Values are stored as published; nothing is estimated or filled in.
@@ -111,6 +112,24 @@ export function parseBisCsv(text) {
   for (const k of Object.keys(by)) by[k].sort((a, b) => a.date.localeCompare(b.date));
   if (!Object.keys(by).length) throw Error("no BIS observations");
   return by;
+}
+
+
+const ymd = v => /^\d{8}$/.test(String(v || "")) ? String(v).replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3") : null;
+export function parseFdaApprovals(json, since) {
+  const rows = json && Array.isArray(json.results) ? json.results : null;
+  if (!rows) throw Error("unexpected openFDA response");
+  const out = [];
+  for (const r of rows) {
+    const orig = (r.submissions || []).filter(x => x.submission_type === "ORIG" && x.submission_status === "AP").map(x => ({ ...x, date: ymd(x.submission_status_date) })).filter(x => x.date && x.date >= since).sort((a, b) => a.date.localeCompare(b.date))[0];
+    if (!orig || !/^[A-Z]{2,4}\d{4,7}$/.test(r.application_number || "")) continue;
+    const brand = [...new Set((r.products || []).map(p => p.brand_name).filter(Boolean))].slice(0, 3);
+    const ingredients = [...new Set((r.products || []).flatMap(p => (p.active_ingredients || []).map(a => a.name)).filter(Boolean))].slice(0, 4);
+    out.push({ application: r.application_number, sponsor: String(r.sponsor_name || "").slice(0, 80), brand, ingredients, date: orig.date,
+      novel: /TYPE 1/.test(orig.submission_class_code || ""), class_code: orig.submission_class_code || null,
+      url: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=" + r.application_number.replace(/^\D+/, "") });
+  }
+  return out.sort((a, b) => b.date.localeCompare(a.date) || a.application.localeCompare(b.application));
 }
 
 function writeJson(file, data) {
@@ -241,6 +260,19 @@ async function bisPolicyRates() {
   return Object.keys(series).join(",");
 }
 
+
+async function fdaApprovals() {
+  const since = new Date(Date.now() - 400 * 86400e3).toISOString().slice(0, 10);
+  const range = since.replace(/-/g, "") + "+TO+" + new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const url = "https://api.fda.gov/drug/drugsfda.json?search=submissions.submission_type:ORIG+AND+submissions.submission_status:AP+AND+submissions.submission_status_date:[" + range + "]&limit=1000";
+  const items = parseFdaApprovals(await (await get(url, 40000)).json(), since);
+  if (items.length < 10) throw Error("too few FDA approvals parsed: " + items.length);
+  writeJson("us-fda-approvals.json", { source: "U.S. FDA · openFDA Drugs@FDA API", source_url: "https://open.fda.gov/apis/drug/drugsfda/",
+    note: "최근 약 13개월 신규 허가(ORIG·AP). novel=true는 신규 분자(제출 분류 TYPE 1). 기업·주가 영향은 단정하지 않음. openFDA는 FDA 공식 웹사이트와 지연·차이가 있을 수 있음.",
+    collected_at: now(), since, count: items.length, novel_count: items.filter(x => x.novel).length, items });
+  return items.length + " approvals (novel " + items.filter(x => x.novel).length + ")";
+}
+
 async function chinaMofcomProbe() {
   const res = await fetch("https://www.mofcom.gov.cn/", { headers: UA, signal: AbortSignal.timeout(20000) });
   const html = await res.text();
@@ -252,7 +284,7 @@ async function chinaMofcomProbe() {
 
 if (import.meta.url === "file://" + process.argv[1]) {
   const results = {};
-  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates })) {
+  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates, fdaApprovals })) {
     try { results[name] = "ok: " + await fn(); }
     catch (e) { results[name] = "FAILED: " + e.message; warn(name + " failed — previous file kept: " + e.message); }
   }
@@ -263,7 +295,8 @@ if (import.meta.url === "file://" + process.argv[1]) {
     const tw = rd("tw-monthly-revenue.json"), ecb = rd("ecb-rates.json"), fr = rd("fred-extra.json");
     const cn = (() => { try { return rd("cn-mofcom-announcements.json").items.slice(0, 3).map(x => x.number + " " + x.title.slice(0, 50)); } catch { return null; } })();
     const pr = (() => { try { return Object.fromEntries(Object.entries(rd("policy-rates.json").series).map(([k, v]) => [k, v.latest])); } catch { return null; } })();
-    const sample = { policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
+    const fda = (() => { try { const f = rd("us-fda-approvals.json"); return { count: f.count, novel: f.novel_count, latest: f.items.filter(x => x.novel).slice(0, 2).map(x => x.date + " " + x.brand.join("/") + " · " + x.sponsor) }; } catch { return null; } })();
+    const sample = { fda, policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
       ecb: Object.fromEntries(Object.entries(ecb.series || {}).map(([k, v]) => [k, v.latest])), fred: Object.fromEntries(Object.entries(fr.series || {}).map(([k, v]) => [k, v.latest])) };
     console.log("::notice::SAMPLE " + JSON.stringify(sample));
   } catch (e) { warn("sample summary unavailable: " + e.message); }

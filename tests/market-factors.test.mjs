@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -62,4 +62,16 @@ test("CSV rows keep quoted commas together", () => {
   assert.deepEqual(csvRow('M,"TW:Taiwan, China",2026-09,"2,000"'), ["M", "TW:Taiwan, China", "2026-09", "2,000"]);
   const out = parseBisCsv('FREQ,REF_AREA,TIME_PERIOD,OBS_VALUE\nM,"XM:Euro area, 20",2026-09,2.15\n');
   assert.deepEqual(out.XM, [{ date: "2026-09", value: 2.15 }]);
+});
+
+test("openFDA approvals keep original approvals in range and flag novel molecules", () => {
+  const json = { results: [
+    { application_number: "NDA219999", sponsor_name: "ACME", products: [{ brand_name: "NEWDRUG", active_ingredients: [{ name: "XYZ" }] }],
+      submissions: [{ submission_type: "ORIG", submission_status: "AP", submission_status_date: "20260915", submission_class_code: "TYPE 1" }, { submission_type: "SUPPL", submission_status: "AP", submission_status_date: "20261001" }] },
+    { application_number: "ANDA200000", sponsor_name: "GEN", products: [{ brand_name: "OLD" }], submissions: [{ submission_type: "ORIG", submission_status: "AP", submission_status_date: "20240101" }] },
+    { application_number: "BLA761234", sponsor_name: "BIO", products: [], submissions: [{ submission_type: "ORIG", submission_status: "AP", submission_status_date: "20261010", submission_class_code: "TYPE 5" }] } ] };
+  const out = parseFdaApprovals(json, "2025-09-01");
+  assert.deepEqual(out.map(x => [x.application, x.date, x.novel]), [["BLA761234", "2026-10-10", false], ["NDA219999", "2026-09-15", true]]);
+  assert.match(out[1].url, /ApplNo=219999$/);
+  assert.throws(() => parseFdaApprovals({}, "2025-01-01"), /unexpected/);
 });
