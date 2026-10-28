@@ -50,7 +50,7 @@ jobs:
   browser:
     name: Real Chromium smoke (desktop and mobile)
     needs: unit
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # playwright 1.56 --with-deps 는 Ubuntu 26 패키지를 아직 모름
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
