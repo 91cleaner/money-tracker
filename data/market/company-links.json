@@ -1,0 +1,4344 @@
+{
+ "about": "추적 중인 기업마다 업종·함께 볼 지표(최신값)·종목코드로 정확히 연결된 기록·이름이 일치한 기록을 모은 참고 연결표. 이름 일치는 동명이인·다른 법인일 수 있어 원문 확인 필요. 원인 관계를 단정하지 않음.",
+ "count": 54,
+ "companies": [
+  {
+   "id": "000660_KS",
+   "symbol": "000660.KS",
+   "name": "SK하이닉스",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "005380_KS",
+   "symbol": "005380.KS",
+   "name": "현대차",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "auto",
+     "label": "자동차"
+    }
+   ],
+   "factors": [
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "auto",
+    "trade",
+    "battery_ev"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "005930_KS",
+   "symbol": "005930.KS",
+   "name": "삼성전자",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "006400_KS",
+   "symbol": "006400.KS",
+   "name": "삼성SDI",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "battery_ev",
+     "label": "배터리·전기차"
+    }
+   ],
+   "factors": [
+    {
+     "id": "copper",
+     "label": "구리 가격",
+     "status": "collected",
+     "latest": {
+      "value": 14473.05590909091,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "battery_ev",
+    "trade",
+    "climate"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "012450_KS",
+   "symbol": "012450.KS",
+   "name": "한화에어로스페이스",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "defense",
+     "label": "방산·항공우주"
+    }
+   ],
+   "factors": [
+    {
+     "id": "defense_spending",
+     "label": "국가별 국방비",
+     "status": "collected",
+     "latest": {
+      "count": 7
+     },
+     "source_url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "defense"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "035420_KS",
+   "symbol": "035420.KS",
+   "name": "네이버",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "105560_KS",
+   "symbol": "105560.KS",
+   "name": "KB금융",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "finance",
+     "label": "금융·은행·보험"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "kr_policy_rate",
+     "label": "한국은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "jp_policy_rate",
+     "label": "일본은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 1.25,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "ecb_policy_rate",
+     "label": "유럽중앙은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 2.5,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://data.ecb.europa.eu/"
+    },
+    {
+     "id": "us_unemployment",
+     "label": "미국 실업률",
+     "status": "collected",
+     "latest": {
+      "value": 4.2,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/UNRATE"
+    },
+    {
+     "id": "uk_policy_rate",
+     "label": "영란은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    }
+   ],
+   "law_topics": [
+    "finance",
+    "rates"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "207940_KS",
+   "symbol": "207940.KS",
+   "name": "삼성바이오로직스",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "health",
+     "label": "헬스케어·제약·바이오"
+    }
+   ],
+   "factors": [
+    {
+     "id": "drug_approvals",
+     "label": "미국 신약 승인",
+     "status": "collected",
+     "latest": {
+      "count": 242
+     },
+     "source_url": "https://open.fda.gov/apis/drug/drugsfda/"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "health"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "2308_TW",
+   "symbol": "2308.TW",
+   "name": "델타일렉트로닉스",
+   "region": "tw",
+   "sectors": [
+    {
+     "id": "clean_energy",
+     "label": "청정에너지·탄소"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "copper",
+     "label": "구리 가격",
+     "status": "collected",
+     "latest": {
+      "value": 14473.05590909091,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+    }
+   ],
+   "law_topics": [
+    "climate",
+    "energy"
+   ],
+   "exact": [
+    {
+     "kind": "tw_monthly_revenue",
+     "match": "stock code 2308",
+     "month": "2026-09",
+     "revenue_twd_thousand": 65399563,
+     "yoy_pct": 14.613858860431652,
+     "url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    }
+   ],
+   "name_matches": []
+  },
+  {
+   "id": "2317_TW",
+   "symbol": "2317.TW",
+   "name": "폭스콘(홍하이)",
+   "region": "tw",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [
+    {
+     "kind": "tw_monthly_revenue",
+     "match": "stock code 2317",
+     "month": "2026-09",
+     "revenue_twd_thousand": 1158633235,
+     "yoy_pct": 38.41573533086287,
+     "url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    }
+   ],
+   "name_matches": []
+  },
+  {
+   "id": "2330_TW",
+   "symbol": "2330.TW",
+   "name": "TSMC",
+   "region": "tw",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [
+    {
+     "kind": "tw_monthly_revenue",
+     "match": "stock code 2330",
+     "month": "2026-09",
+     "revenue_twd_thousand": 511857399,
+     "yoy_pct": 54.64861207105231,
+     "url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    }
+   ],
+   "name_matches": []
+  },
+  {
+   "id": "2454_TW",
+   "symbol": "2454.TW",
+   "name": "미디어텍",
+   "region": "tw",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [
+    {
+     "kind": "tw_monthly_revenue",
+     "match": "stock code 2454",
+     "month": "2026-09",
+     "revenue_twd_thousand": 55399497,
+     "yoy_pct": 1.9684131750496783,
+     "url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    }
+   ],
+   "name_matches": []
+  },
+  {
+   "id": "329180_KS",
+   "symbol": "329180.KS",
+   "name": "HD현대중공업",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "defense",
+     "label": "방산·항공우주"
+    },
+    {
+     "id": "shipbuilding",
+     "label": "조선·해운"
+    }
+   ],
+   "factors": [
+    {
+     "id": "defense_spending",
+     "label": "국가별 국방비",
+     "status": "collected",
+     "latest": {
+      "count": 7
+     },
+     "source_url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    },
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    }
+   ],
+   "law_topics": [
+    "defense",
+    "shipbuilding",
+    "trade"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "373220_KS",
+   "symbol": "373220.KS",
+   "name": "LG에너지솔루션",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "battery_ev",
+     "label": "배터리·전기차"
+    }
+   ],
+   "factors": [
+    {
+     "id": "copper",
+     "label": "구리 가격",
+     "status": "collected",
+     "latest": {
+      "value": 14473.05590909091,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "battery_ev",
+    "trade",
+    "climate"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "6758_T",
+   "symbol": "6758.T",
+   "name": "소니",
+   "region": "jp",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "7011_T",
+   "symbol": "7011.T",
+   "name": "미쓰비시중공업",
+   "region": "jp",
+   "sectors": [
+    {
+     "id": "defense",
+     "label": "방산·항공우주"
+    },
+    {
+     "id": "industrial",
+     "label": "산업재·기계"
+    }
+   ],
+   "factors": [
+    {
+     "id": "defense_spending",
+     "label": "국가별 국방비",
+     "status": "collected",
+     "latest": {
+      "count": 7
+     },
+     "source_url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "copper",
+     "label": "구리 가격",
+     "status": "collected",
+     "latest": {
+      "value": 14473.05590909091,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "us_facilities",
+     "label": "미국 공장·시설 위치",
+     "status": "planned",
+     "latest": null,
+     "source_url": "https://www.epa.gov/frs"
+    }
+   ],
+   "law_topics": [
+    "defense",
+    "trade",
+    "energy"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "7203_T",
+   "symbol": "7203.T",
+   "name": "도요타",
+   "region": "jp",
+   "sectors": [
+    {
+     "id": "auto",
+     "label": "자동차"
+    }
+   ],
+   "factors": [
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "auto",
+    "trade",
+    "battery_ev"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "8035_T",
+   "symbol": "8035.T",
+   "name": "도쿄일렉트론",
+   "region": "jp",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "8306_T",
+   "symbol": "8306.T",
+   "name": "미쓰비시UFJ",
+   "region": "jp",
+   "sectors": [
+    {
+     "id": "finance",
+     "label": "금융·은행·보험"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "kr_policy_rate",
+     "label": "한국은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "jp_policy_rate",
+     "label": "일본은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 1.25,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "ecb_policy_rate",
+     "label": "유럽중앙은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 2.5,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://data.ecb.europa.eu/"
+    },
+    {
+     "id": "us_unemployment",
+     "label": "미국 실업률",
+     "status": "collected",
+     "latest": {
+      "value": 4.2,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/UNRATE"
+    },
+    {
+     "id": "uk_policy_rate",
+     "label": "영란은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    }
+   ],
+   "law_topics": [
+    "finance",
+    "rates"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "9984_T",
+   "symbol": "9984.T",
+   "name": "소프트뱅크그룹",
+   "region": "jp",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "AAPL",
+   "symbol": "AAPL",
+   "name": "애플",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "AMZN",
+   "symbol": "AMZN",
+   "name": "아마존",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    },
+    {
+     "id": "consumer",
+     "label": "소비재·명품·유통"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "us_cpi",
+     "label": "미국 소비자물가지수",
+     "status": "collected",
+     "latest": {
+      "value": 336.298,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/CPIAUCSL"
+    },
+    {
+     "id": "us_unemployment",
+     "label": "미국 실업률",
+     "status": "collected",
+     "latest": {
+      "value": 4.2,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/UNRATE"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor",
+    "trade"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "ASML_AS",
+   "symbol": "ASML.AS",
+   "name": "ASML",
+   "region": "eu",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "CL_F",
+   "symbol": "CL=F",
+   "name": "WTI 원유 선물",
+   "region": "commodity",
+   "sectors": [
+    {
+     "id": "energy",
+     "label": "에너지·석유·가스"
+    }
+   ],
+   "factors": [
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    }
+   ],
+   "law_topics": [
+    "energy"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "GOOGL",
+   "symbol": "GOOGL",
+   "name": "알파벳(구글)",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "ICLN",
+   "symbol": "ICLN",
+   "name": "글로벌 청정에너지 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "clean_energy",
+     "label": "청정에너지·탄소"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "copper",
+     "label": "구리 가격",
+     "status": "collected",
+     "latest": {
+      "value": 14473.05590909091,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+    }
+   ],
+   "law_topics": [
+    "climate",
+    "energy"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "INTC",
+   "symbol": "INTC",
+   "name": "인텔",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "ITA",
+   "symbol": "ITA",
+   "name": "미국 항공우주·방산 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "defense",
+     "label": "방산·항공우주"
+    }
+   ],
+   "factors": [
+    {
+     "id": "defense_spending",
+     "label": "국가별 국방비",
+     "status": "collected",
+     "latest": {
+      "count": 7
+     },
+     "source_url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "defense"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "IXIC",
+   "symbol": "^IXIC",
+   "name": "나스닥 종합",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "market",
+     "label": "시장 전체(지수)"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_cpi",
+     "label": "미국 소비자물가지수",
+     "status": "collected",
+     "latest": {
+      "value": 336.298,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/CPIAUCSL"
+    },
+    {
+     "id": "us_unemployment",
+     "label": "미국 실업률",
+     "status": "collected",
+     "latest": {
+      "value": 4.2,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/UNRATE"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "kr_policy_rate",
+     "label": "한국은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "jp_policy_rate",
+     "label": "일본은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 1.25,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "ecb_policy_rate",
+     "label": "유럽중앙은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 2.5,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://data.ecb.europa.eu/"
+    },
+    {
+     "id": "cn_policy_rate",
+     "label": "중국인민은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 3,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "uk_policy_rate",
+     "label": "영란은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "country_profiles",
+     "label": "나라 특성(GDP·성장률·인구·수출 비중·물가·국방비)",
+     "status": "collected",
+     "latest": {
+      "count": 7
+     },
+     "source_url": "https://data.worldbank.org/"
+    }
+   ],
+   "law_topics": [
+    "rates",
+    "trade"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "JPM",
+   "symbol": "JPM",
+   "name": "JP모건",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "finance",
+     "label": "금융·은행·보험"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "kr_policy_rate",
+     "label": "한국은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "jp_policy_rate",
+     "label": "일본은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 1.25,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "ecb_policy_rate",
+     "label": "유럽중앙은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 2.5,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://data.ecb.europa.eu/"
+    },
+    {
+     "id": "us_unemployment",
+     "label": "미국 실업률",
+     "status": "collected",
+     "latest": {
+      "value": 4.2,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/UNRATE"
+    },
+    {
+     "id": "uk_policy_rate",
+     "label": "영란은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    }
+   ],
+   "law_topics": [
+    "finance",
+    "rates"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "KQ11",
+   "symbol": "^KQ11",
+   "name": "코스닥",
+   "region": "kr",
+   "sectors": [
+    {
+     "id": "market",
+     "label": "시장 전체(지수)"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_cpi",
+     "label": "미국 소비자물가지수",
+     "status": "collected",
+     "latest": {
+      "value": 336.298,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/CPIAUCSL"
+    },
+    {
+     "id": "us_unemployment",
+     "label": "미국 실업률",
+     "status": "collected",
+     "latest": {
+      "value": 4.2,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/UNRATE"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "kr_policy_rate",
+     "label": "한국은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "jp_policy_rate",
+     "label": "일본은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 1.25,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "ecb_policy_rate",
+     "label": "유럽중앙은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 2.5,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://data.ecb.europa.eu/"
+    },
+    {
+     "id": "cn_policy_rate",
+     "label": "중국인민은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 3,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "uk_policy_rate",
+     "label": "영란은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "country_profiles",
+     "label": "나라 특성(GDP·성장률·인구·수출 비중·물가·국방비)",
+     "status": "collected",
+     "latest": {
+      "count": 7
+     },
+     "source_url": "https://data.worldbank.org/"
+    }
+   ],
+   "law_topics": [
+    "rates",
+    "trade"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "LIT",
+   "symbol": "LIT",
+   "name": "리튬·2차전지 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "battery_ev",
+     "label": "배터리·전기차"
+    }
+   ],
+   "factors": [
+    {
+     "id": "copper",
+     "label": "구리 가격",
+     "status": "collected",
+     "latest": {
+      "value": 14473.05590909091,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "battery_ev",
+    "trade",
+    "climate"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "LMT",
+   "symbol": "LMT",
+   "name": "록히드마틴",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "defense",
+     "label": "방산·항공우주"
+    }
+   ],
+   "factors": [
+    {
+     "id": "defense_spending",
+     "label": "국가별 국방비",
+     "status": "collected",
+     "latest": {
+      "count": 7
+     },
+     "source_url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "defense"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "MC_PA",
+   "symbol": "MC.PA",
+   "name": "LVMH",
+   "region": "eu",
+   "sectors": [
+    {
+     "id": "consumer",
+     "label": "소비재·명품·유통"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_cpi",
+     "label": "미국 소비자물가지수",
+     "status": "collected",
+     "latest": {
+      "value": 336.298,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/CPIAUCSL"
+    },
+    {
+     "id": "us_unemployment",
+     "label": "미국 실업률",
+     "status": "collected",
+     "latest": {
+      "value": 4.2,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/UNRATE"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    }
+   ],
+   "law_topics": [
+    "trade"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "META",
+   "symbol": "META",
+   "name": "메타",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "MSFT",
+   "symbol": "MSFT",
+   "name": "마이크로소프트",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "MU",
+   "symbol": "MU",
+   "name": "마이크론",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "NOVO_B_CO",
+   "symbol": "NOVO-B.CO",
+   "name": "노보 노디스크",
+   "region": "eu",
+   "sectors": [
+    {
+     "id": "health",
+     "label": "헬스케어·제약·바이오"
+    }
+   ],
+   "factors": [
+    {
+     "id": "drug_approvals",
+     "label": "미국 신약 승인",
+     "status": "collected",
+     "latest": {
+      "count": 242
+     },
+     "source_url": "https://open.fda.gov/apis/drug/drugsfda/"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "health"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "NVDA",
+   "symbol": "NVDA",
+   "name": "엔비디아",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "PFE",
+   "symbol": "PFE",
+   "name": "화이자",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "health",
+     "label": "헬스케어·제약·바이오"
+    }
+   ],
+   "factors": [
+    {
+     "id": "drug_approvals",
+     "label": "미국 신약 승인",
+     "status": "collected",
+     "latest": {
+      "count": 242
+     },
+     "source_url": "https://open.fda.gov/apis/drug/drugsfda/"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "health"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "RHM_DE",
+   "symbol": "RHM.DE",
+   "name": "라인메탈",
+   "region": "eu",
+   "sectors": [
+    {
+     "id": "defense",
+     "label": "방산·항공우주"
+    }
+   ],
+   "factors": [
+    {
+     "id": "defense_spending",
+     "label": "국가별 국방비",
+     "status": "collected",
+     "latest": {
+      "count": 7
+     },
+     "source_url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "defense"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "RTX",
+   "symbol": "RTX",
+   "name": "RTX(레이시온)",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "defense",
+     "label": "방산·항공우주"
+    }
+   ],
+   "factors": [
+    {
+     "id": "defense_spending",
+     "label": "국가별 국방비",
+     "status": "collected",
+     "latest": {
+      "count": 7
+     },
+     "source_url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "defense"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "SAP_DE",
+   "symbol": "SAP.DE",
+   "name": "SAP",
+   "region": "eu",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "SIE_DE",
+   "symbol": "SIE.DE",
+   "name": "지멘스",
+   "region": "eu",
+   "sectors": [
+    {
+     "id": "industrial",
+     "label": "산업재·기계"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "copper",
+     "label": "구리 가격",
+     "status": "collected",
+     "latest": {
+      "value": 14473.05590909091,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "us_facilities",
+     "label": "미국 공장·시설 위치",
+     "status": "planned",
+     "latest": null,
+     "source_url": "https://www.epa.gov/frs"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "trade",
+    "energy"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "SOXX",
+   "symbol": "SOXX",
+   "name": "미국 반도체 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "semiconductor",
+     "label": "반도체"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "fx_twd",
+     "label": "대만달러/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 32.39,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/TWD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "tw_monthly_revenue",
+     "label": "대만 상장사 월매출(TSMC 등)",
+     "status": "collected",
+     "latest": {
+      "value": 54.64861207105231,
+      "date": "2026-09",
+      "unit": "yoy%"
+     },
+     "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "TSLA",
+   "symbol": "TSLA",
+   "name": "테슬라",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "battery_ev",
+     "label": "배터리·전기차"
+    },
+    {
+     "id": "auto",
+     "label": "자동차"
+    }
+   ],
+   "factors": [
+    {
+     "id": "copper",
+     "label": "구리 가격",
+     "status": "collected",
+     "latest": {
+      "value": 14473.05590909091,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "kr_exports",
+     "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+     "status": "collected",
+     "latest": {
+      "value": 100418800000,
+      "date": "2026-08-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    },
+    {
+     "id": "cn_export_controls",
+     "label": "중국 상무부 수출통제 공고",
+     "status": "collected",
+     "latest": {
+      "count": 6
+     },
+     "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    }
+   ],
+   "law_topics": [
+    "battery_ev",
+    "trade",
+    "climate",
+    "auto"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "TTE_PA",
+   "symbol": "TTE.PA",
+   "name": "토탈에너지",
+   "region": "eu",
+   "sectors": [
+    {
+     "id": "energy",
+     "label": "에너지·석유·가스"
+    }
+   ],
+   "factors": [
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    }
+   ],
+   "law_topics": [
+    "energy"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "XHB",
+   "symbol": "XHB",
+   "name": "미국 주택건설 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "housing",
+     "label": "주택·건설·부동산"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "us_housing_starts",
+     "label": "미국 주택 착공",
+     "status": "collected",
+     "latest": {
+      "value": 1221,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/HOUST"
+    },
+    {
+     "id": "kr_policy_rate",
+     "label": "한국은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    }
+   ],
+   "law_topics": [
+    "housing",
+    "rates"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "XLE",
+   "symbol": "XLE",
+   "name": "미국 에너지 업종 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "energy",
+     "label": "에너지·석유·가스"
+    }
+   ],
+   "factors": [
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    }
+   ],
+   "law_topics": [
+    "energy"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "XLF",
+   "symbol": "XLF",
+   "name": "미국 금융 업종 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "finance",
+     "label": "금융·은행·보험"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "kr_policy_rate",
+     "label": "한국은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "jp_policy_rate",
+     "label": "일본은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 1.25,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    },
+    {
+     "id": "ecb_policy_rate",
+     "label": "유럽중앙은행 정책금리",
+     "status": "collected",
+     "latest": {
+      "value": 2.5,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://data.ecb.europa.eu/"
+    },
+    {
+     "id": "us_unemployment",
+     "label": "미국 실업률",
+     "status": "collected",
+     "latest": {
+      "value": 4.2,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/UNRATE"
+    },
+    {
+     "id": "uk_policy_rate",
+     "label": "영란은행 기준금리",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09"
+     },
+     "source_url": "https://data.bis.org/topics/CBPOL"
+    }
+   ],
+   "law_topics": [
+    "finance",
+    "rates"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "XLI",
+   "symbol": "XLI",
+   "name": "미국 산업재 업종 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "industrial",
+     "label": "산업재·기계"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    },
+    {
+     "id": "copper",
+     "label": "구리 가격",
+     "status": "collected",
+     "latest": {
+      "value": 14473.05590909091,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "fx_jpy",
+     "label": "엔/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 157.9,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/JPY%3DX/"
+    },
+    {
+     "id": "us_facilities",
+     "label": "미국 공장·시설 위치",
+     "status": "planned",
+     "latest": null,
+     "source_url": "https://www.epa.gov/frs"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "trade",
+    "energy"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "XLK",
+   "symbol": "XLK",
+   "name": "미국 기술 업종 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "tech_ai",
+     "label": "IT·소프트웨어·AI"
+    }
+   ],
+   "factors": [
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "us_policy_rate",
+     "label": "미국 기준금리(연방기금 실효금리)",
+     "status": "collected",
+     "latest": {
+      "value": 3.75,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_export_controls",
+     "label": "미국 수출통제·Entity List·관세 고시",
+     "status": "collected",
+     "latest": {
+      "count": 400
+     },
+     "source_url": "https://www.federalregister.gov/developers/documentation/api/v1"
+    }
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "XLV",
+   "symbol": "XLV",
+   "name": "미국 헬스케어 업종 ETF",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "health",
+     "label": "헬스케어·제약·바이오"
+    }
+   ],
+   "factors": [
+    {
+     "id": "drug_approvals",
+     "label": "미국 신약 승인",
+     "status": "collected",
+     "latest": {
+      "count": 242
+     },
+     "source_url": "https://open.fda.gov/apis/drug/drugsfda/"
+    },
+    {
+     "id": "us_10y",
+     "label": "미국 10년 국채 금리",
+     "status": "collected",
+     "latest": {
+      "value": 5,
+      "date": "2026-10-26"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+     "id": "fx_krw",
+     "label": "원/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1332.08,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/KRW%3DX/"
+    },
+    {
+     "id": "us_jobs_by_county",
+     "label": "미국 카운티별 업종 고용",
+     "status": "collected",
+     "latest": {
+      "count": 5
+     },
+     "source_url": "https://www.bls.gov/cew/additional-resources/open-data/"
+    }
+   ],
+   "law_topics": [
+    "health"
+   ],
+   "exact": [],
+   "name_matches": []
+  },
+  {
+   "id": "XOM",
+   "symbol": "XOM",
+   "name": "엑슨모빌",
+   "region": "us",
+   "sectors": [
+    {
+     "id": "energy",
+     "label": "에너지·석유·가스"
+    }
+   ],
+   "factors": [
+    {
+     "id": "oil_wti",
+     "label": "WTI 원유 가격",
+     "status": "collected",
+     "latest": {
+      "value": 101.09,
+      "date": "2026-10-27"
+     },
+     "source_url": "https://finance.yahoo.com/quote/CL%3DF/"
+    },
+    {
+     "id": "fx_eur",
+     "label": "유로/달러 환율",
+     "status": "collected",
+     "latest": {
+      "value": 1.1126,
+      "date": "2026-10-28"
+     },
+     "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/"
+    },
+    {
+     "id": "us_industrial",
+     "label": "미국 산업생산지수",
+     "status": "collected",
+     "latest": {
+      "value": 103.9506,
+      "date": "2026-09-01"
+     },
+     "source_url": "https://fred.stlouisfed.org/series/INDPRO"
+    }
+   ],
+   "law_topics": [
+    "energy"
+   ],
+   "exact": [],
+   "name_matches": []
+  }
+ ]
+}

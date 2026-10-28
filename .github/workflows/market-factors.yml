@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - 'scripts/collect-market-factors.mjs'
+      - 'scripts/build-company-links.mjs'
       - 'tests/market-factors.test.mjs'
       - '.github/workflows/market-factors.yml'
 permissions:
@@ -28,6 +29,8 @@ jobs:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
         run: node scripts/collect-market-factors.mjs
+      - name: Rebuild company connection table (offline, from collected files)
+        run: node scripts/build-company-links.mjs
       - name: Archive collected files
         if: always()
         uses: actions/upload-artifact@v4
@@ -43,7 +46,7 @@ jobs:
         run: |
           git config user.name 'money-tracker-data-bot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/market/factors/
+          git add data/market/factors/ data/market/company-links.json
           if git diff --staged --quiet; then echo 'No changes.'; exit 0; fi
           git commit -m 'data(market): refresh official factors [skip ci]'
           for attempt in 1 2 3; do
