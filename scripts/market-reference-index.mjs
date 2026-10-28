@@ -17,7 +17,7 @@ export function marketReferenceDocuments(sectors,calendar,marketName=()=>null,to
   const fl=(s.factors||[]).map(id=>factors.get(id)?.label).filter(Boolean);
   const names=(s.markets||[]).map(m=>marketName(m)||m);
   out.push({id:"sector-"+s.id,type:"sector",title:"업종 참고표 · "+tidy(s.label,60),
-   aliases:[s.label,s.label_en,"업종","섹터",...(s.law_topics||[]).map(topicLabel).slice(0,3),...fl.slice(0,6),...names.slice(0,6)],
+   aliases:[s.label,s.label_en,"업종","섹터",...(s.law_topics||[]).map(topicLabel).slice(0,3),...fl.slice(0,6)], // company names stay in the summary only, so company questions still rank the company record first
    summary:"함께 확인할 공개 지표: "+list(fl)+" · 관련 법안 주제: "+list((s.law_topics||[]).map(topicLabel))+" · 대표 종목: "+list(names)+". 참고용 연결이며 예상·추천이 아닙니다.",
    source:"MONEY TRACKER 업종·요인 참고표",url:TABLE_URL,source_date:sectors.updated||null,route:null});
  }

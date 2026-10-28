@@ -49,6 +49,9 @@
 - 한국·일본 월간 수출: FRED의 OECD MEI 시리즈(`XTEXVA01KRM667S`, `XTEXVA01JPM667S`)를 `fred-extra.json`에 수집 중. FRED 원문에서 단위 확인 완료(미국 달러, 월간, 계절조정; 한국 2026-08 약 1,004억 달러) → `kr_exports` collected로 전환. 더 정확한 1~10일 수출은 관세청(data.go.kr 키 `DATA_GO_KR_KEY`로 해당 API 활용신청 필요).
 - 요인 현황: 28개 중 27개 수집 중. 남은 planned: `us_facilities`(EPA 시설). 대만 기준금리는 BIS에 없음. 한국은행 회의 일정은 여전히 `calendar.json`의 pending(공식 연간표 미확인).
 
+- **관제실 상황판**(`assets/mt-market-board.js`, `usa-command.html` 맨 끝 스크립트 한 줄): 오른쪽 위 "▦ 상황판" 버튼 → 접히는 패널(기본 닫힘)에 다가오는 공식 일정, 각국 기준금리, 대만 월매출(TSMC 등 전년 대비), 최근 미·중 수출통제 고시, 업종 선택 시 함께 볼 지표. 데스크톱·모바일 실제 Chromium 확인(패널 열린 상태에서도 지도 줌 버튼 사용 가능). 다른 모듈을 건드리지 않는 독립 파일.
+- 주의: 업종표 검색 항목의 별칭에 종목명을 넣으면 "엔비디아는 왜…" 같은 질문에서 업종표가 기업 기록보다 먼저 나와 `tests/mt-browser-smoke.cjs`가 실패한다. 종목명은 요약에만 둘 것(테스트로 막아 둠).
+
 ## 5. 이 세션이 끝낸 일
 - **PR #85 (main 병합됨):** 미국 관제실 지도에서 미션 비행 중 사용자가 줌(버튼·휠·더블클릭·핀치·키보드)하면 비행이 끝날 때 z13으로 되돌아가던 오류 수정(`assets/mt-command-ui.js`의 `userTookZoom`). 한국 엔진(`polgame.js` WORLD)처럼 위도 -60~78로 이동 범위 제한(경도 ±540, 날짜변경선 통과 유지).
 - 테스트: `tests/mt-zoom-browser.cjs`(실제 Chromium, 외부 타일 차단 상태에서 위성 전환·줌 버튼·경계·비행 중 줌 검사), `command-check.yml` 브라우저 단계에 포함. `tests/usa-map-smoke.test.cjs`에 계약 테스트 추가.
