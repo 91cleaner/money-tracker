@@ -198,12 +198,12 @@ export function unzipFirst(buf) {
 }
 export function parseGazetteer(text) {
   const lines = String(text || "").trim().split(/\r?\n/);
-  const head = lines.shift().split("\t").map(h => h.trim());
+  const head = lines.shift().replace(/^\uFEFF/, "").split(/\t|\|/).map(h => h.trim().toUpperCase());
   const gi = head.indexOf("GEOID"), ni = head.indexOf("NAME"), ui = head.indexOf("USPS"), la = head.indexOf("INTPTLAT"), lo = head.indexOf("INTPTLONG");
-  if (gi < 0 || la < 0 || lo < 0) throw Error("Gazetteer columns missing");
+  if (gi < 0 || la < 0 || lo < 0) { const e = Error("Gazetteer columns missing"); e.head = head.join(","); throw e; }
   const out = {};
   for (const line of lines) {
-    const c = line.split("\t").map(x => x.trim()), lat = num(c[la]), lng = num(c[lo]);
+    const c = line.split(/\t|\|/).map(x => x.trim()), lat = num(c[la]), lng = num(c[lo]);
     if (/^\d{5}$/.test(c[gi]) && lat != null && lng != null) out[c[gi]] = { lat, lng, name: ni >= 0 ? c[ni] + (ui >= 0 ? ", " + c[ui] : "") : null };
   }
   if (Object.keys(out).length < 1000) throw Error("too few Gazetteer counties");
@@ -215,7 +215,7 @@ async function countyCentroids() {
       const res = await fetch("https://www2.census.gov/geo/docs/maps-data/data/gazetteer/" + y + "_Gazetteer/" + y + "_Gaz_counties_national.zip", { headers: UA, signal: AbortSignal.timeout(60000) });
       if (!res.ok) continue;
       return { year: y, map: parseGazetteer(unzipFirst(Buffer.from(await res.arrayBuffer()))) };
-    } catch (e) { warn("Gazetteer " + y + ": " + e.message); }
+    } catch (e) { warn("Gazetteer " + y + ": " + e.message + " (header starts: " + String(e.head || "").slice(0, 80) + ")"); }
   }
   return null;
 }
