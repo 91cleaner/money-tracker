@@ -44,9 +44,15 @@ test('available period is labeled correctly even if source data has a conflictin
   });
 });
 
-test('unknown period defaults to 1m and is accurately labeled', async () => {
+test('unsupported explicit period returns null instead of a misleading 1m answer', async () => {
   await withAnswerFixture(fixture, async (answers) => {
-    const a = await answers.get('NVDA', 'overview', 'today');
+    assert.equal(await answers.get('NVDA', 'overview', 'today'), null);
+  });
+});
+
+test('omitted period defaults to 1m and is accurately labeled', async () => {
+  await withAnswerFixture(fixture, async (answers) => {
+    const a = await answers.get('NVDA', 'overview');
     assert.equal(a.period, '1m');
     assert.equal(a.ko[0], '1개월 종가 기록');
   });
