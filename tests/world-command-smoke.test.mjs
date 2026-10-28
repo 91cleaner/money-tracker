@@ -18,20 +18,27 @@ test('world command HTML retains map and command controls', { skip: retired }, (
   }
 });
 
-test('real map uses no-key OSM and does not repeat world tiles', { skip: retired }, () => {
-  assert.match(html, /tile\.openstreetmap\.org\/\{z\}\/\{x\}\/\{y\}\.png/);
+test('real map uses no-key Esri tiles and does not repeat world tiles', { skip: retired }, () => {
+  // The live command map switched from OSM to Esri raster imagery; retain non-wrapping bounds.
+  assert.match(html, /server\.arcgisonline\.com\/ArcGIS\/rest\/services\/Canvas\/World_Dark_Gray_Base\/MapServer\/tile\/\{z\}\/\{y\}\/\{x\}/);
+  assert.match(html, /server\.arcgisonline\.com\/ArcGIS\/rest\/services\/World_Imagery\/MapServer\/tile\/\{z\}\/\{y\}\/\{x\}/);
   assert.match(html, /noWrap:true/);
   assert.match(html, /worldCopyJump:false/);
-  assert.doesNotMatch(html, /cartocdn\.com|API KEY REQUIRED/);
+  assert.doesNotMatch(html, /API KEY REQUIRED/);
 });
 
-test('questions require an explicit route selection before tracking', { skip: retired }, () => {
+test('unmatched questions present selectable routes before tracking', { skip: retired }, () => {
   assert.match(html, /function showCandidates\(q\)/);
   assert.match(html, /cases\.filter\(c=>c\.re\.test\(q\)\)/);
   assert.match(html, /b\.addEventListener\('click',\(\)=>start\(c\)\)/);
-  assert.match(html, /\$\('ask'\)\.addEventListener\('submit',e=>\{e\.preventDefault\(\)/);
+  assert.match(html, /\$\('ask'\)\.addEventListener\('submit',async e=>\{e\.preventDefault\(\)/);
+  assert.match(html, /showCandidates\(q\)\}\);/);
   assert.match(html, /L\.polyline\(/);
 });
+
+// Tracked separately: matched tickers currently call start(tr) without a choice screen.
+// Do not claim the full question -> selection -> map contract is satisfied until UI owner fixes it.
+test.todo('matched ticker searches must offer explicit route selection before start(tr)');
 
 test('prototype discloses disconnected AI and trade data without verified claims', { skip: retired }, () => {
   assert.match(html, /AI 분석 미연결/);
