@@ -2,6 +2,15 @@ name: 관제실 세계 데이터 쌓기
 # 한국·미국·일본·대만·유럽 법안(data/laws)과 세계 주가 역사(data/markets)를 매일 쌓는다.
 # main 에서는 커밋, 다른 브랜치(시험)에서는 저장 없이 표본·실패 이유만 주석으로 남긴다.
 on:
+  # Rebuild checked-in law/market views immediately when their logic changes.
+  # Push runs skip network collectors and only regenerate derived data/world files.
+  push:
+    branches: [main]
+    paths:
+      - 'collector/world/build_flow.py'
+      - 'assets/mt-world-flow.js'
+      - 'tests/test_world_flow_dates.py'
+      - '.github/workflows/world-data.yml'
   schedule:
     - cron: "23 22 * * *"   # 매일 07:23 KST (미국 장 마감 뒤)
   workflow_dispatch:
@@ -24,10 +33,12 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.11"}
       - name: 세계 주가 역사
+        if: github.event_name != 'push'
         run: python collector/world/markets.py
         continue-on-error: true
         timeout-minutes: 15
       - name: 세계 법안
+        if: github.event_name != 'push'
         run: python collector/world/laws.py ${{ github.event.inputs.only }}
         continue-on-error: true
         timeout-minutes: 32
