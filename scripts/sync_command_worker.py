@@ -22,6 +22,19 @@ def js_string(value):
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
 
 
+# Keys the map's evidence overlay (world-intelligence/evidence.js) actually reads from /data/us/trades.json:
+# it only uses `records` (machine-parsed PTR candidates). The full `trades` ledger (1.5 MB) is never read
+# there, so it is left out of the Worker snapshot to stay under GitHub's 1 MiB contents limit. Same behaviour.
+TRADES_WORKER_KEYS = ("updated", "source", "note", "records")
+
+
+def worker_payload(route, payload):
+    """Return the JSON object embedded in the Worker for `route` (also used by check_world_intelligence.py)."""
+    if route == "/data/us/trades.json":
+        return {k: payload[k] for k in TRADES_WORKER_KEYS if k in payload}
+    return payload
+
+
 def build():
     page = (ROOT / "world-intelligence/index.html").read_text(encoding="utf-8")
     if 'http-equiv="refresh"' in page and "usa-command.html" in page:
@@ -61,6 +74,8 @@ def build():
                 "recent": recent,
             }
             raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+        elif route == "/data/us/trades.json":
+            raw = json.dumps(worker_payload(route, payload), ensure_ascii=False, separators=(",", ":"))
         data[route] = raw
     output = (
         BEGIN
