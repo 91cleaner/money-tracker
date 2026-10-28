@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 회사 파일"><meta name="twitter:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
-<script src="assets/i18n.js?v=i18n-20261028"></script>
+<script src="assets/i18n.js?v=i18n-20261028b"></script>
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
 *{box-sizing:border-box}
@@ -148,6 +148,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   function shiftMonth(iso) { var t = new Date(iso + "T00:00:00Z"); t.setUTCMonth(t.getUTCMonth() - 1); return t.toISOString().slice(0, 10); }
   function change(last, base) { return base ? (last.c / base.c - 1) * 100 : null; }
 
+  function nmOf(e) { return window.MTI18N && window.MTI18N.name ? window.MTI18N.name(e) : e.name; }
   var RANGES = [["1주", 7], ["1달", 31], ["1년", 366], ["전체", 0]];
   var PINK = { t: ["k-t", "의원 거래 신고(신고일 기준)"], b: ["k-b", "법안"], w: ["k-w", "백악관·관보 조치"] };
   function priceBlock(rows, meta, pinsAll) {
@@ -310,7 +311,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var secLabel = ent && ent.sector && si.entities["sector:" + ent.sector] ? si.entities["sector:" + ent.sector].name : (sec ? sec.sector : null);
     var head = panel("COMPANY FILE", null, false), hero = el("div", "hero");
     hero.appendChild(el("span", "tk", T));
-    hero.appendChild(el("span", "nm", (ent && ent.name) || (sec && sec.name) || T));
+    hero.appendChild(el("span", "nm", (ent && nmOf(ent)) || (sec && sec.name) || T));
     if (secLabel) { var secEl = el(ent && ent.sector ? "a" : "span", "sec", secLabel); if (ent && ent.sector) secEl.href = "sector.html?s=" + encodeURIComponent(ent.sector); hero.appendChild(secEl); }
     head.appendChild(hero);
     var meta = el("div", "meta");
@@ -322,7 +323,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var acts = el("div", "actions"), mapBtn = el("a", "btn", "🛰 지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(T); acts.appendChild(mapBtn);
     if (window.MTShare) {
       // 공유: insights.json 핵심 1줄 → 없으면 신고 건수 → 없으면 SEC 업종 (모두 원문 링크와 함께)
-      var coName = (ent && ent.name) || (sec && sec.name) || T, sh = ins && ins.companies ? window.MTShare.pick(ins.companies[T]) : null;
+      var coName = (ent && nmOf(ent)) || (sec && sec.name) || T, sh = ins && ins.companies ? window.MTShare.pick(ins.companies[T]) : null;
       if (!sh && trades.length) sh = { line: "하원 PTR 신고 " + trades.length + "건, 가장 최근 신고일 " + (trades[0].filed || "-") + " (신고 기준, 데이터상)", src: /^https:/.test(trades[0].doc || "") ? trades[0].doc : "https://disclosures-clerk.house.gov/FinancialDisclosure", date: trades[0].filed || "" };
       if (!sh && sec) sh = { line: "SEC 등록 업종 SIC " + sec.sic + " " + (sec.sic_desc || ""), src: sec.source_url, date: "" };
       sh = sh || {};
@@ -337,7 +338,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     trades.forEach(function (x) { if (/^\d{4}-\d{2}-\d{2}$/.test(x.filed || "")) { var lg = days(x.d, x.filed); pins.push({ k: "t", date: x.filed, title: (x.who || "-") + " · " + (TY[String(x.ty || "").charAt(0)] || x.ty || "-") + " · " + (x.amt || "-"), sub: "신고 기준" + (x.d ? " · 거래일 " + x.d : "") + (lg != null ? " · 신고까지 " + lg + "일(법정 최대 45일)" : ""), url: x.doc }); } });
     var rt0 = (routes.routes || {})[T];
     ((rt0 && rt0.stops) || []).forEach(function (s) { if (/^\d{4}-\d{2}-\d{2}$/.test(s.date || "") && /^https:\/\/www\.congress\.gov\/bill\//.test(s.source_url || "")) pins.push({ k: "b", date: s.date, title: s.title, sub: s.fact, url: s.source_url }); });
-    ((wh.items) || []).forEach(function (w) { if (/^\d{4}-\d{2}-\d{2}$/.test(w.date || "") && ((w.tickers || []).indexOf(T) >= 0 || (w.tickers_product || []).indexOf(T) >= 0)) pins.push({ k: "w", date: w.date, title: w.ko || w.t, sub: (w.src || "") + " · 회사·제품명 언급 기준, 영향 단정 아님", url: w.u }); });
+    ((wh.items) || []).forEach(function (w) { if (/^\d{4}-\d{2}-\d{2}$/.test(w.date || "") && ((w.tickers || []).indexOf(T) >= 0 || (w.tickers_product || []).indexOf(T) >= 0)) pins.push({ k: "w", date: w.date, title: (window.MTI18N && window.MTI18N.isEn ? w.t : w.ko || w.t), sub: (w.src || "") + " · 회사·제품명 언급 기준, 영향 단정 아님", url: w.u }); });
     app.appendChild(priceBlock(parsePrices(pr), pr, pins));
 
     // 3) trades
