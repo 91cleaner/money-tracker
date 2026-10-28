@@ -103,6 +103,12 @@ header.bar input.nm{width:200px;text-transform:none}
  header.bar input.nm{width:150px}
  .bars .r{grid-template-columns:minmax(0,110px) minmax(0,1fr) auto}
 }
+@media(max-width:480px){
+ html,body{overflow-wrap:anywhere}
+ .panel{overflow-x:auto}
+ ol.tl li{grid-template-columns:74px minmax(0,1fr);gap:12px}
+ .hero .nm{font-size:22px}
+}
 </style>
 
 </head>
