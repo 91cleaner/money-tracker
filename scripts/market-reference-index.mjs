@@ -91,3 +91,15 @@ export function countryProfileDocuments(file){
    source:"World Bank Open Data",url:"https://data.worldbank.org/country/"+iso,source_date:null,route:null};
  });
 }
+
+/** UK House of Commons divisions and European Parliament roll-call votes. */
+export function parliamentVoteDocuments(uk,eu){
+ const out=[];
+ for(const d of uk?.divisions||[])if(/^https:\/\/votes\.parliament\.uk\//.test(d.url||""))out.push({id:"uk-division-"+d.id,type:"vote",title:"영국 하원 표결 · "+tidy(d.title,150),
+  aliases:["영국","UK","하원","House of Commons","표결","의회"],summary:"표결일 "+d.date+" · 찬성 "+(d.ayes??"?")+" / 반대 "+(d.noes??"?")+". 의원별 표는 원문에서 확인.",
+  source:"UK Parliament · Commons Votes",url:d.url,source_date:d.date||null,route:null});
+ for(const v of eu?.votes||[])if(/^https:\/\/howtheyvote\.eu\//.test(v.url||""))out.push({id:"eu-vote-"+v.id,type:"vote",title:"유럽의회 표결 · "+tidy(v.title,150),
+  aliases:["유럽","EU","유럽의회","European Parliament","표결","의회"],summary:"표결일 "+v.date+(v.result?" · 결과 "+v.result:"")+". 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+  source:"HowTheyVote.eu · European Parliament",url:v.url,source_date:v.date||null,route:null});
+ return out;
+}
