@@ -34,9 +34,10 @@ jobs:
         env:
           CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY || secrets.ONGRESS_API_KEY || vars.CONGRESS_API_KEY }}
           LAWS_PROBE: ${{ github.ref != 'refs/heads/main' && '1' || '' }}
+      - name: 법안 통과일 정확성 회귀 테스트
+        run: python -m unittest discover -s tests -p 'test_world_flow_dates.py'
       - name: 관제실 흐름 자료(주제별 법안·시세·통과 전후 변화)
         run: python collector/world/build_flow.py
-        continue-on-error: true
       - name: 쌓인 양 요약
         if: always()
         run: |
