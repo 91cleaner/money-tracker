@@ -1,0 +1,26 @@
+name: World law provenance audit (read-only)
+on:
+  pull_request:
+    paths:
+      - 'data/laws/**'
+      - 'scripts/audit-law-provenance.py'
+      - 'tests/test_law_provenance_audit.py'
+      - '.github/workflows/law-provenance-audit.yml'
+  schedule:
+    - cron: '5 23 * * *'  # 08:05 KST, after world-data collection
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Regression tests
+        run: python -m unittest discover -s tests -p 'test_law_provenance_audit.py' -v
+      - name: Audit five law corpora without changing source data
+        run: python scripts/audit-law-provenance.py
