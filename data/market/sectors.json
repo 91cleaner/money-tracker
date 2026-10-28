@@ -134,17 +134,25 @@
    "id": "kr_policy_rate",
    "label": "한국은행 기준금리",
    "kind": "rates",
-   "status": "planned",
-   "source": "한국은행 ECOS",
-   "source_url": "https://ecos.bok.or.kr/"
+   "status": "collected",
+   "source": "BIS 중앙은행 정책금리 WS_CBPOL (월간, 매일 확인) · 원 출처 한국은행",
+   "source_url": "https://data.bis.org/topics/CBPOL",
+   "data": {
+    "file": "data/market/factors/policy-rates.json",
+    "series": "KR"
+   }
   },
   {
    "id": "jp_policy_rate",
    "label": "일본은행 정책금리",
    "kind": "rates",
-   "status": "planned",
-   "source": "일본은행",
-   "source_url": "https://www.boj.or.jp/en/"
+   "status": "collected",
+   "source": "BIS 중앙은행 정책금리 WS_CBPOL (월간, 매일 확인) · 원 출처 일본은행",
+   "source_url": "https://data.bis.org/topics/CBPOL",
+   "data": {
+    "file": "data/market/factors/policy-rates.json",
+    "series": "JP"
+   }
   },
   {
    "id": "ecb_policy_rate",
@@ -257,6 +265,30 @@
    "status": "planned",
    "source": "EPA Facility Registry Service",
    "source_url": "https://www.epa.gov/frs"
+  },
+  {
+   "id": "cn_policy_rate",
+   "label": "중국인민은행 정책금리",
+   "kind": "rates",
+   "status": "collected",
+   "source": "BIS 중앙은행 정책금리 WS_CBPOL (월간) · 원 출처 중국인민은행",
+   "source_url": "https://data.bis.org/topics/CBPOL",
+   "data": {
+    "file": "data/market/factors/policy-rates.json",
+    "series": "CN"
+   }
+  },
+  {
+   "id": "uk_policy_rate",
+   "label": "영란은행 기준금리",
+   "kind": "rates",
+   "status": "collected",
+   "source": "BIS 중앙은행 정책금리 WS_CBPOL (월간) · 원 출처 영란은행",
+   "source_url": "https://data.bis.org/topics/CBPOL",
+   "data": {
+    "file": "data/market/factors/policy-rates.json",
+    "series": "GB"
+   }
   }
  ],
  "sectors": [
@@ -274,7 +306,9 @@
     "fx_eur",
     "kr_policy_rate",
     "jp_policy_rate",
-    "ecb_policy_rate"
+    "ecb_policy_rate",
+    "cn_policy_rate",
+    "uk_policy_rate"
    ],
    "law_topics": [
     "rates",
@@ -365,7 +399,8 @@
     "kr_policy_rate",
     "jp_policy_rate",
     "ecb_policy_rate",
-    "us_unemployment"
+    "us_unemployment",
+    "uk_policy_rate"
    ],
    "law_topics": [
     "finance",
