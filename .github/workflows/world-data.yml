@@ -1,0 +1,61 @@
+name: 관제실 세계 데이터 쌓기
+# 한국·미국·일본·대만·유럽 법안(data/laws)과 세계 주가 역사(data/markets)를 매일 쌓는다.
+# main 에서는 커밋, 다른 브랜치(시험)에서는 저장 없이 표본·실패 이유만 주석으로 남긴다.
+on:
+  schedule:
+    - cron: "23 22 * * *"   # 매일 07:23 KST (미국 장 마감 뒤)
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "laws 지역만 (예: tw eu). 비우면 전체"
+        required: false
+        default: ""
+permissions:
+  contents: write
+concurrency:
+  group: world-data
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: 세계 주가 역사
+        run: python collector/world/markets.py
+        continue-on-error: true
+        timeout-minutes: 15
+      - name: 세계 법안
+        run: python collector/world/laws.py ${{ github.event.inputs.only }}
+        continue-on-error: true
+        timeout-minutes: 25
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY || secrets.ONGRESS_API_KEY || vars.CONGRESS_API_KEY }}
+          LAWS_PROBE: ${{ github.ref != 'refs/heads/main' && '1' || '' }}
+      - name: 쌓인 양 요약
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, glob, os
+          parts = []
+          for p in sorted(glob.glob('data/laws/*.json')):
+              try: parts.append(os.path.basename(p)[:-5] + '=' + str(json.load(open(p)).get('count')))
+              except Exception: pass
+          try:
+              m = json.load(open('data/markets/index.json'))['series']
+              parts.append('markets=%d (%s~)' % (len(m), min(s['first'] for s in m)))
+          except Exception: pass
+          print('::notice::world data ' + ' '.join(parts))
+          PY
+      - name: 커밋 (main 만)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "money-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A data/laws data/markets
+          git diff --cached --quiet && { echo "변화 없음"; exit 0; }
+          git commit -m "관제실 세계 데이터 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do git pull --rebase && git push && exit 0; sleep $((i*5)); done
+          echo "::warning::세계 데이터 커밋을 올리지 못했습니다(다음 실행에서 다시)."
