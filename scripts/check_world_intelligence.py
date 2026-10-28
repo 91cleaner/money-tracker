@@ -4,6 +4,7 @@
 Checks integrity and source labeling; does not claim a browser or live deployment test.
 """
 import datetime as dt
+import importlib.util
 import json
 from pathlib import Path
 import re
@@ -64,7 +65,9 @@ elif not RETIRED:
         for marker in ("data/us/bills.json", "data/us/trades.json",
                        "ptr-crosschecks.json", "machine_parsed_requires_review",
                        "disclosures-clerk.house.gov", "www.congress.gov"):
-            check(marker in js, "Evidence overlay missing source guard: " + marker)
+            # Domain guards are written as regular expressions in evidence.js (dots escaped).
+            check(marker in js or marker.replace(".", "\\.") in js,
+                  "Evidence overlay missing source guard: " + marker)
     if shutil.which("node"):
         with tempfile.TemporaryDirectory() as tmp:
             for i, script in enumerate(scripts, 1):
@@ -111,11 +114,15 @@ else:
             warnings.append("Worker evidence JS snapshot differs from source; sync pending")
         pos = worker_source.index("const COMMAND_DATA=") + len("const COMMAND_DATA=")
         bundled_data, _ = decoder.raw_decode(worker_source[pos:])
+        # The Worker embeds only what the map reads (see sync_command_worker.worker_payload); compare like with like.
+        spec = importlib.util.spec_from_file_location("sync_command_worker", ROOT / "scripts/sync_command_worker.py")
+        sync = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(sync)
         for route, relative in (
                 ("/data/us/trades.json", "data/us/trades.json"),
                 ("/data/us/ptr-crosschecks.json", "data/us/ptr-crosschecks.json")):
-            if json.loads(bundled_data[route]) != json.loads(
-                    (ROOT / relative).read_text(encoding="utf-8")):
+            expected = sync.worker_payload(route, json.loads((ROOT / relative).read_text(encoding="utf-8")))
+            if json.loads(bundled_data[route]) != expected:
                 warnings.append("Worker dataset snapshot differs from " + relative)
     except (ValueError, KeyError, OSError) as exc:
         errors.append("Cannot inspect authenticated Worker snapshots: " + str(exc))
