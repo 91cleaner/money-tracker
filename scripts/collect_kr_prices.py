@@ -4,12 +4,22 @@
 출처: 공공데이터포털 금융위원회_주식시세정보(getStockPriceInfo). 키는 env DATA_GO_KR_KEY(출력 금지).
 사용: collect_kr_prices.py [days]   (기본 40일; 처음 채울 때는 400 권장)
 """
-import datetime as dt, json, os, sys, time, urllib.parse, urllib.request
+import datetime as dt, json, os, sys, time, urllib.error, urllib.parse, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "data", "kr", "prices")
 API = "https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo"
 SRC_URL = "https://www.data.go.kr/data/15094808/openapi.do"
-KEY = os.environ.get("DATA_GO_KR_KEY", "")
+# 포털은 Encoding/Decoding 두 가지 키를 준다. 이미 인코딩된 키(%2B, %3D 포함)를 다시 인코딩하면 인증 실패(401/403)가 나므로
+# 먼저 풀어서(unquote) 원문으로 만든 뒤 한 번만 인코딩한다. 원문 키에는 '%'가 없어 두 형태 모두 안전하다.
+KEY = urllib.parse.unquote(os.environ.get("DATA_GO_KR_KEY", "").strip())
+
+
+def mask(text):
+    """로그에 키가 섞여 나오지 않도록 원문·인코딩 형태를 모두 가린다."""
+    if KEY:
+        for k in (KEY, urllib.parse.quote(KEY, safe=""), urllib.parse.quote_plus(KEY)):
+            text = text.replace(k, "***")
+    return text
 
 
 def codes():
@@ -39,16 +49,23 @@ def parse(j):
 
 
 def fetch(code, begin, end):
-    q = urllib.parse.urlencode({"serviceKey": KEY, "resultType": "json", "numOfRows": 1000, "pageNo": 1,
-                                "likeSrtnCd": code, "beginBasDt": begin, "endBasDt": end})
+    params = {"resultType": "json", "numOfRows": 1000, "pageNo": 1,
+              "likeSrtnCd": code, "beginBasDt": begin, "endBasDt": end}
+    q = "serviceKey=" + urllib.parse.quote(KEY, safe="") + "&" + urllib.parse.urlencode(params)
     for i in range(3):
         try:
             req = urllib.request.Request(API + "?" + q, headers={"User-Agent": "MoneyTracker"})
             with urllib.request.urlopen(req, timeout=60) as r:
                 return json.load(r)
+        except urllib.error.HTTPError as e:
+            try:
+                body = e.read().decode("utf8", "replace")[:200]
+            except Exception:
+                body = ""
+            print(code, "retry HTTPError", e.code, mask(body).replace("\n", " "))
         except Exception as e:  # 키가 URL에 들어 있으므로 예외 본문은 찍지 않고 종류만 남김
             print(code, "retry", type(e).__name__)
-            time.sleep(5 * (i + 1))
+        time.sleep(5 * (i + 1))
     return None
 
 
@@ -68,7 +85,8 @@ def main():
     begin = end - dt.timedelta(days=days)
     os.makedirs(OUT, exist_ok=True)
     ok = 0
-    for code, name in codes().items():
+    targets = codes()
+    for code, name in targets.items():
         j = fetch(code, begin.strftime("%Y%m%d"), end.strftime("%Y%m%d"))
         rows = parse(j) if j else []
         if not rows:
@@ -82,7 +100,10 @@ def main():
         json.dump(doc, open(p, "w", encoding="utf8"), ensure_ascii=False, separators=(",", ":"))
         ok += 1
         time.sleep(0.5)
-    print("saved", ok)
+    print("saved", ok, "of", len(targets))
+    if targets and ok == 0:
+        print("전 종목 실패 — 워크플로를 실패 처리합니다")
+        return 1
     return 0
 
 
