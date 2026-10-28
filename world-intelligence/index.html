@@ -8,6 +8,7 @@
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <script src="../assets/i18n.js?v=i18n-20261028b"></script>
 <script src="../assets/share.js?v=share-20261028" defer></script>
+<script src="../assets/intent.js" defer></script><script src="../assets/answers.js" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{color-scheme:dark;--a:#65e6ed;--b:#061421}*{box-sizing:border-box}body{margin:0;background:#07131e;color:#e8f7fc;font:14px system-ui,sans-serif}button,input{font:inherit}button{cursor:pointer;color:#c9eff8;background:#0a2737;border:1px solid #32677b;border-radius:9px;padding:10px}button:hover,button:focus-visible{border-color:var(--a)}button[hidden],[hidden]{display:none!important}
@@ -194,7 +195,13 @@ $('briefTitle').textContent=r.priv?'◉ '+r.priv+' · 비상장 기업':r.pop?'�
 $('briefText').textContent=r.priv?r.priv+'은(는) 증시에 상장되지 않아 주가 데이터가 없습니다. 같은 업종의 상장 기업·업종 경로를 대신 보여드려요.':r.pop?'"'+(r.key||q)+'"와 딱 맞는 항목은 없어요. 많이 찾는 경로를 대신 골라봤어요.':'"'+(r.key||q)+'"와 딱 맞는 항목은 없지만 가까운 항목이 있어요.';
 const box=$('briefStocks');box.replaceChildren();r.sug.forEach(id=>{const e=searchIdx.entities[id];const bt=document.createElement('button');bt.className='mtSug';bt.textContent='▸ '+e.name+(e.symbol?' ('+e.symbol+')':'')+' · '+({company:'기업',sector:'업종',country:'나라',committee:'상임위',member:'의원',bill:'법안',topic:'법안 주제'}[e.type]||'');bt.onclick=()=>start(routeOf(id));box.append(bt)});
 $('briefCaveat').textContent='AI 미연결 · 수집된 데이터만 검색합니다.';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true}
-$('ask').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}if(tr){start(tr);return}showCandidates(q)});
+$('ask').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;if(await mtIntentCard(q))return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}if(tr){start(tr);return}showCandidates(q)});
+async function mtIntentCard(q){try{const I=window.MTIntent,A=window.MTAnswers;if(!I||!A)return false;A.setBase('../data/answers/');const ix=await loadIdx();if(!window.mtLex)window.mtLex=await fetch('../data/intent-lexicon.json').then(r=>r.json());const pl=A.plan(I.parse(q,I.build(ix,window.mtLex)));if(!pl)return false;const a=await A.get(pl.symbol,pl.intent,pl.period);if(!a)return false;
+const en=!!(window.MTI18N&&window.MTI18N.isEn),L=(en&&a.en&&a.en.length?a.en:a.ko)||[];if(!L.length)return false;
+$('candidatePanel').hidden=true;$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+(a.name||pl.symbol)+' ('+pl.symbol+') · '+(en?'recent price, explained':'최근 주가 설명');$('briefText').textContent=L.join(' ');
+const box=$('briefStocks');box.replaceChildren();(a.src||[]).forEach(u=>{if(!/^https:/.test(u))return;const l=document.createElement('a');l.href=u;l.target='_blank';l.rel='noopener noreferrer';l.textContent=(en?'Source ↗ ':'출처 ↗ ')+new URL(u).hostname;l.style.cssText='display:block;color:#5dff9e';box.append(l)});
+const go=document.createElement('button');go.className='mtSug';go.textContent=en?'▶ See the full route':'▶ 전체 경로 보기';go.onclick=()=>{const r=routeOf('company:'+pl.symbol);if(r)start(r)};box.append(go);
+$('briefCaveat').textContent=en?'Correlation only, not a cause. Not investment advice.':'상관관계일 뿐 원인이 아닙니다. 데이터상 같은 기간 기록이며 투자 조언이 아닙니다.';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true;return true}catch(e){return false}}
 $('previous').onclick=()=>{if(mission&&step>0){step--;show()}};
 $('next').onclick=()=>{if(mission&&step<mission.stops.length-1){step++;show()}};
 $('toggle').onclick=()=>{$('menu').hidden=!$('menu').hidden};

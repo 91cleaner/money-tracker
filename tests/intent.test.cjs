@@ -218,3 +218,33 @@ test('pre-written explain structure (no AI key needed): url and lines', () => {
   assert.equal(schema.paid_api_allowed, false);
   assert.ok(schema.fields.summary_ko && schema.fields.summary_en && schema.fields.sources);
 });
+
+/* 관제실 검색 분기: overview 는 기존 투어, 그 외 의도는 MTAnswers 카드 먼저 */
+const A = require('../assets/answers.js');
+const htmlWI = read('world-intelligence/index.html');
+
+test('world-intelligence loads intent.js and answers.js', () => {
+  assert.match(htmlWI, /<script src="\.\.\/assets\/intent\.js"/);
+  assert.match(htmlWI, /<script src="\.\.\/assets\/answers\.js"/);
+});
+
+test('plan(): name only -> null (tour kept); why/topic -> answer card', () => {
+  assert.equal(A.plan(P('엔비디아')), null);
+  assert.equal(A.plan(P('NVDA')), null);
+  const w = A.plan(P('엔비디아 주가 왜 그래'));
+  assert.equal(w.symbol, 'NVDA');
+  assert.equal(w.intent, 'why');
+  assert.equal(A.plan(P('why is NVDA down')).intent, 'why');
+  assert.equal(A.plan(P('NVDA export controls')).intent, 'export_control');
+  assert.equal(A.plan(P('엔비디아 관세')).intent, 'tariff');
+  assert.equal(A.plan(P('엔비디아 이번달 왜 떨어져')).period, '1m');
+  assert.equal(A.plan(P('블라블라 왜 떨어져')), null);
+});
+
+test('handler: card first, EN uses a.en, caveats kept', () => {
+  assert.ok(htmlWI.includes('if(await mtIntentCard(q))return;const tr=await tickerRoute'));
+  assert.ok(htmlWI.includes('en&&a.en&&a.en.length?a.en:a.ko'));
+  assert.ok(htmlWI.includes('데이터상 같은 기간 기록이며 투자 조언이 아닙니다'));
+  assert.ok(htmlWI.includes('Correlation only, not a cause. Not investment advice.'));
+  assert.ok(htmlWI.includes('전체 경로 보기'));
+});

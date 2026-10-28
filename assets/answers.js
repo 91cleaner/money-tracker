@@ -6,6 +6,20 @@
   var cache = {};
   var BASE = 'data/answers/';
   var PERIODS = ['1w', '1m', '3m', '1y'];
+  var TOPIC_IDS = ['tariff', 'export_control', 'subsidy', 'china', 'taiwan'];
+  var PERIOD_KEY = { today: '1w', week: '1w', month: '1m', year: '1y' };
+
+  // MTIntent.parse() 결과 -> {symbol, intent, period}. overview(이름만)나 회사 없음이면 null = 기존 경로 투어 유지.
+  function plan(parsed) {
+    if (!parsed || parsed.status !== 'ok' || !parsed.company || !parsed.intent || parsed.intent === 'overview') return null;
+    var id = parsed.intent;
+    if (id === 'topic') {
+      var t = (parsed.topics || []).map(function (x) { return x.id; }).filter(function (x) { return TOPIC_IDS.indexOf(x) >= 0; })[0];
+      id = t || 'why';
+    } else if (id === 'supply') id = 'supply_chain';
+    var pid = parsed.period && parsed.period.id;
+    return { symbol: parsed.company.symbol, intent: id, period: PERIOD_KEY[pid] || '1m' };
+  }
 
   function load(sym) {
     var key = String(sym || '').toUpperCase();
@@ -34,7 +48,9 @@
     return fetch(BASE + '_trends.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   }
 
-  var api = { load: load, get: get, trends: trends, PERIODS: PERIODS };
+  function setBase(b) { BASE = b; cache = {}; }
+
+  var api = { load: load, get: get, trends: trends, plan: plan, setBase: setBase, PERIODS: PERIODS };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.MTAnswers = api;
 })(typeof window !== 'undefined' ? window : globalThis);
