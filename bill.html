@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MONEY TRACKER — 법안 상세</title>
+<meta name="description" content="미국 의회 법안 하나가 발의 의원 → 로비 공시 회사 → 해외 사업장 → 다른 나라 정책으로 어떻게 이어지는지 공개 기록으로 정리. 데이터상 정리이며 투자 조언 아님.">
+<style>
+:root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--link:#7fd8ff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;overflow-wrap:anywhere}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#020806f0;border-bottom:1px solid var(--line)}
+header.bar .brand{font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--g);white-space:nowrap}
+header.bar .crumb{font:12px ui-monospace,Menlo,monospace;color:var(--mut)}
+header.bar .sp{flex:1}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.panel h2{margin:0 0 10px;font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--g)}
+.panel h2 .n{color:var(--mut);font-weight:400}
+.span2{grid-column:1/-1}
+.hero .no{display:inline-block;font:700 12px ui-monospace,Menlo,monospace;color:var(--g2);border:1px solid var(--line2);border-radius:999px;padding:2px 10px}
+.hero .nm{margin:8px 0 0;font:700 22px/1.25 system-ui,sans-serif;color:var(--g)}
+.meta{margin-top:8px;color:var(--mut);font-size:12.5px}
+.btn{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--g);background:#0d3b22;color:#eafff2;font:700 13px ui-monospace,Menlo,monospace;margin:10px 8px 0 0}
+.empty{color:var(--mut);font:13px ui-monospace,Menlo,monospace;padding:14px 6px;border:1px dashed var(--line);border-radius:8px;text-align:center}
+.note{margin:8px 0 0;color:var(--mut);font-size:12px}
+.warnnote{margin:0 0 10px;padding:8px 10px;border-left:3px solid var(--warn);background:#1c1606;color:#f3e3b4;font-size:12.5px;border-radius:0 6px 6px 0}
+.flow{list-style:none;margin:0;padding:0}
+.flow>li{padding:9px 10px;margin:0 0 8px;border:1px solid var(--line);border-radius:8px;background:#03130b;min-width:0}
+.flow .k{font:700 11px ui-monospace,Menlo,monospace;color:var(--g);letter-spacing:.06em}
+.flow ul{margin:6px 0 0;padding-left:18px}
+.flow .s{font-size:12px;color:var(--mut)}
+.arrow{color:var(--line2);text-align:center;font:12px ui-monospace,Menlo,monospace;margin:-2px 0 6px}
+ol.tl{list-style:none;margin:0;padding:0}
+ol.tl li{display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;padding:7px 0;border-bottom:1px solid #12301f}
+ol.tl .d{font:12px ui-monospace,Menlo,monospace;color:var(--g2)}
+ol.tl .k{font:700 11px ui-monospace,Menlo,monospace;color:var(--g)}
+ol.tl .s{font-size:12px;color:var(--mut)}
+.more{margin-top:8px;background:none;border:1px solid var(--line2);color:var(--g2);border-radius:6px;padding:5px 10px;cursor:pointer;font:12px ui-monospace,Menlo,monospace}
+footer.foot{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:var(--mut);font-size:12px}
+footer.foot .disc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#03100a}
+footer.foot b{color:var(--warn)}
+footer.foot ul{margin:6px 0 0;padding-left:18px}
+@media(max-width:900px){
+ main{grid-template-columns:minmax(0,1fr);padding:12px 10px 30px;gap:12px}
+ header.bar{padding:8px 10px}
+ header.bar .crumb{display:none}
+ .hero .nm{font-size:19px}
+ ol.tl li{grid-template-columns:72px minmax(0,1fr);gap:8px}
+ footer.foot{padding:0 10px 30px}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <span class="crumb">US BILL FILE / 공개 기록 정리</span>
+  <span class="sp"></span>
+  <a href="world-intelligence/">관제실 ›</a>
+</header>
+<main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
+<footer class="foot"><div class="disc" id="foot"></div></footer>
+<script>
+(function () {
+  "use strict";
+  var app = document.getElementById("app"), foot = document.getElementById("foot");
+  var raw = (new URLSearchParams(location.search).get("id") || "").trim().slice(0, 40);
+  // "S 2572", "S.2572", "hr4213" → "S 2572", "HR 4213"
+  // 117대 법안은 색인 키에 회기가 붙는다("HR 4346:117"). 같은 번호가 119대에도 있을 수 있어 키를 그대로 유지한다.
+  function normNo(s) { var m = String(s || "").toUpperCase().replace(/[.\s]+/g, "").match(/^([A-Z]{1,6})(\d{1,5})(?::(\d{2,3}))?$/); return m ? m[1] + " " + m[2] + (m[3] ? ":" + m[3] : "") : ""; }
+  var NO = normNo(raw);
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function safe(u) { return /^https:\/\/[a-z0-9.-]+(?:[/?#]|$)/i.test(u || "") ? u : null; }
+  function link(text, url) { var u = safe(url); if (!u) return el("span", "", text); var a = el("a", "", text); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; return a; }
+  function local(text, href) { var a = el("a", "", text); a.href = href; return a; }
+  function get(p) { return fetch(p, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function panel(title, count, span) { var p = el("section", "panel" + (span ? " span2" : "")); var h = el("h2", "", title); if (count != null) h.appendChild(el("span", "n", " · " + count)); p.appendChild(h); return p; }
+  function arr(x) { return Array.isArray(x) ? x : []; }
+  function d10(s) { return /^\d{4}-\d{2}-\d{2}/.test(s || "") ? String(s).slice(0, 10) : ""; }
+
+  // Coarse country from approximate facility coordinates (filings give city/campus-level points, no country field).
+  var BOX = [["대만", 21.8, 25.5, 119.5, 122.2], ["한국", 33, 38.7, 124.5, 131], ["일본", 30, 46, 129, 146], ["싱가포르", 1.15, 1.48, 103.6, 104.1], ["말레이시아", 0.8, 7.5, 99.5, 119.5],
+    ["베트남", 8.2, 23.4, 102.1, 109.5], ["중국", 18, 54, 73, 135], ["인도", 6.5, 35.7, 68, 97.4], ["이스라엘", 29.4, 33.4, 34.2, 35.9], ["아일랜드", 51.3, 55.5, -10.7, -5.9],
+    ["독일", 47.2, 55.1, 5.8, 15.1], ["미국", 24, 50, -125, -66]];
+  function country(lat, lon) { for (var i = 0; i < BOX.length; i++) { var b = BOX[i]; if (lat >= b[1] && lat <= b[2] && lon >= b[3] && lon <= b[4]) return b[0]; } return "기타(분류 불가)"; }
+  var POL = [["kr", "한국"], ["jp", "일본"], ["eu", "EU"]];
+
+  function foother() {
+    foot.replaceChildren();
+    foot.appendChild(el("b", "", "읽기 전에"));
+    var ul = el("ul");
+    ["공개 기록을 모아 보여 주는 정리이며 투자 조언이 아닙니다. 원인 관계를 뜻하지 않습니다.",
+     "로비 공시(LDA)의 법안 번호는 활동 설명에서 자동 추출한 것이라 회기가 적혀 있지 않습니다. 같은 번호의 다른 회기(예: 118대 의회) 법안일 수 있으니 공시 원문으로 확인하세요.",
+     "다른 나라 정책은 제목 키워드로 업종을 맞춘 것이며, 이 법안과의 관련성을 뜻하지 않습니다.",
+     "출처: Congress.gov, LDA(lda.gov), SEC EDGAR 10-K, 각국 공식 발표(열린국회정보·e-Gov·EUR-Lex), Federal Register."].forEach(function (t) { ul.appendChild(el("li", "", t)); });
+    foot.appendChild(ul);
+  }
+
+  function notFound(msg, list) {
+    app.replaceChildren();
+    var p = panel("법안", null, true);
+    p.appendChild(el("div", "empty", msg));
+    if (list && list.length) {
+      var ul = el("ul", "note");
+      list.slice(0, 12).forEach(function (n) { var li = el("li"); li.appendChild(local(n, "bill.html?id=" + encodeURIComponent(n))); ul.appendChild(li); });
+      p.appendChild(ul);
+    }
+    app.appendChild(p); foother();
+  }
+
+  Promise.all([get("data/search-index.json"), get("data/us/bills.json"), get("data/us/facilities.json"), get("data/policy/kr.json"), get("data/policy/jp.json"), get("data/policy/eu.json"), get("data/us/whitehouse.json")])
+  .then(function (r) {
+    var si = r[0] || {}, bills = r[1] || {}, fac = r[2] || {}, pol = { kr: r[3], jp: r[4], eu: r[5] }, wh = r[6];
+    var E = si.entities || {};
+    var known = Object.keys(E).filter(function (k) { return E[k] && E[k].type === "bill"; }).map(function (k) { return k.slice(5); });
+    if (!NO) return notFound("주소에 법안 번호가 필요합니다. 예: bill.html?id=HR 4213", known);
+    var ent = E["bill:" + NO];
+    if (!ent && NO.indexOf(":") < 0) { var alt = Object.keys(E).filter(function (k) { return k.indexOf("bill:" + NO + ":") === 0; })[0]; if (alt) { NO = alt.slice(5); ent = E[alt]; } }
+    if (!ent) return notFound(NO + " 은(는) 수집된 법안 목록에 없습니다.", known);
+
+    var route = arr(ent.route);
+    var status = route.filter(function (s) { return s.kind === "bill"; })[0] || {};
+    var sponsor = route.filter(function (s) { return /^sponsor:/.test(s.ref || ""); })[0];
+    var lobby = route.filter(function (s) { return s.kind === "lobby"; });
+    var rec = null;
+    var recent = bills.recent && typeof bills.recent === "object" ? bills.recent : {};
+    var NUM = NO.split(":")[0], SES = NO.split(":")[1];
+    // bills.json "recent" holds the current Congress only, so it never matches an older-session key
+    Object.keys(recent).forEach(function (k) { arr(recent[k]).forEach(function (b) { if (!rec && b && !SES && b.no === NUM) rec = b; }); });
+    var title = ent.name.replace(NUM + " ", "");
+    var url = status.source_url || (rec && rec.u);
+    document.title = NUM + " — MONEY TRACKER 법안 상세";
+
+    app.replaceChildren();
+    var hero = panel("법안", null, true); hero.className += " hero";
+    hero.querySelector("h2").remove();
+    hero.appendChild(el("span", "no", NUM + (SES ? " · " + SES + "대 의회" : "")));
+    hero.appendChild(el("h1", "nm", title));
+    hero.appendChild(el("div", "meta", status.fact || "상태 기록 없음"));
+    var acts = el("div");
+    var b1 = link("Congress.gov 원문 ↗", url); if (b1.tagName === "A") { b1.className = "btn"; acts.appendChild(b1); }
+    var b2 = local("🗺️ 관제실에서 보기", "world-intelligence/?q=" + encodeURIComponent(NUM)); b2.className = "btn"; acts.appendChild(b2);
+    hero.appendChild(acts);
+    app.appendChild(hero);
+
+    // ---- companies named in lobbying filings (number only, no session)
+    var comps = lobby.map(function (s) {
+      var t = String(s.ref || "").replace(/^lobbying:/, "");
+      var ce = E["company:" + t] || {};
+      var m = String(s.fact || "").match(/언급 (\d+)회/);
+      return { t: t, name: s.region, n: m ? +m[1] : 0, sector: ce.sector, url: s.source_url, lat: s.lat, lon: s.lon };
+    }).filter(function (c) { return /^[A-Z][A-Z0-9.\-]{0,9}$/.test(c.t); });
+
+    // ---- overseas sites of those companies
+    var fc = fac.companies && typeof fac.companies === "object" ? fac.companies : {};
+    var byCountry = {};
+    comps.forEach(function (c) {
+      arr(fc[c.t]).forEach(function (f) {
+        if (typeof f.lat !== "number" || typeof f.lon !== "number") return;
+        var cn = country(f.lat, f.lon);
+        if (cn === "미국") return;
+        (byCountry[cn] = byCountry[cn] || []).push({ c: c, f: f });
+      });
+    });
+    var cNames = Object.keys(byCountry).sort(function (a, b) { return byCountry[b].length - byCountry[a].length; });
+
+    // ---- other countries' policy items by company sector (keyword tags; no causal claim)
+    var sectors = {}; comps.forEach(function (c) { if (c.sector) sectors[c.sector] = 1; });
+    var polHits = [];
+    POL.forEach(function (p) {
+      var d = pol[p[0]]; if (!d) return;
+      var hit = arr(d.items).filter(function (b) { return arr(b.tags).some(function (t) { return sectors[t]; }); })
+        .sort(function (a, b) { return String(b.d).localeCompare(String(a.d)); }).slice(0, 3);
+      hit.forEach(function (b) { polHits.push({ cc: p[1], b: b }); });
+    });
+
+    // ---- flow panel
+    var fp = panel("지도 위 흐름", "미국 의회 → 회사 → 해외 사업장 → 다른 나라 정책", true);
+    fp.appendChild(el("div", "warnnote", "아래 연결은 번호 일치·업종 키워드 기준의 공개 기록 정리입니다. 인과나 영향을 뜻하지 않으며, 로비 공시 법안 번호에는 회기가 없어 다른 회기 법안일 수 있습니다."));
+    var fl = el("ul", "flow");
+    var s1 = el("li"); s1.appendChild(el("div", "k", "① 미국 의회 · 워싱턴 D.C."));
+    s1.appendChild(el("div", "", NUM + " · " + (status.fact || "")));
+    if (sponsor) { var sm = String(sponsor.fact || "").match(/대표 발의 (.+?)\(/); var line = el("div", "s", sponsor.region + " · "); if (sm) line.appendChild(local(sm[1] + " 의원 기록", "member.html?n=" + encodeURIComponent(sm[1]))); else line.appendChild(document.createTextNode(sponsor.fact || "")); s1.appendChild(line); }
+    fl.appendChild(s1); fl.appendChild(el("div", "arrow", "▼"));
+    var s2 = el("li"); s2.appendChild(el("div", "k", "② 로비 공시에 번호가 언급된 회사 · " + comps.length + "곳"));
+    if (!comps.length) s2.appendChild(el("div", "s", "수집된 로비 공시에서 이 번호를 언급한 회사 없음"));
+    else { var u2 = el("ul"); comps.slice(0, 12).forEach(function (c) { var li = el("li"); li.appendChild(local(c.name, "company.html?t=" + encodeURIComponent(c.t))); li.appendChild(document.createTextNode(" · 언급 " + c.n + "회 ")); li.appendChild(link("공시 ↗", c.url)); u2.appendChild(li); }); s2.appendChild(u2); }
+    fl.appendChild(s2); fl.appendChild(el("div", "arrow", "▼"));
+    var s3 = el("li"); s3.appendChild(el("div", "k", "③ 해외 공장·사업장 (SEC 10-K 기재, 좌표는 대략) · " + cNames.length + "개국"));
+    if (!cNames.length) s3.appendChild(el("div", "s", "위 회사들의 수집된 공시 사업장 중 미국 밖 위치 없음"));
+    else { var u3 = el("ul"); cNames.forEach(function (cn) { var li = el("li", "", cn + " · " + byCountry[cn].length + "곳 — "); var seen = {}; byCountry[cn].slice(0, 6).forEach(function (x, i) { var k = x.c.t + x.f.name; if (seen[k]) return; seen[k] = 1; if (i) li.appendChild(document.createTextNode(", ")); li.appendChild(link(x.c.t + " " + x.f.name, x.f.source_url)); }); u3.appendChild(li); }); s3.appendChild(u3); }
+    fl.appendChild(s3); fl.appendChild(el("div", "arrow", "▼"));
+    var s4 = el("li"); s4.appendChild(el("div", "k", "④ 다른 나라 정책 (같은 업종 키워드) · " + polHits.length + "건"));
+    if (!polHits.length) s4.appendChild(el("div", "s", "수집 기간 내 업종 키워드에 맞는 발표 없음"));
+    else { var u4 = el("ul"); polHits.forEach(function (x) { var li = el("li", "", x.cc + " · " + (d10(x.b.d) || "-") + " · " + String(x.b.t || "").slice(0, 90) + " "); li.appendChild(link("원문 ↗", x.b.u)); u4.appendChild(li); }); s4.appendChild(u4); }
+    fl.appendChild(s4);
+    fp.appendChild(fl); app.appendChild(fp);
+
+    // ---- timeline
+    var ev = [];
+    route.forEach(function (s) { if (s.kind === "bill" || /^sponsor:/.test(s.ref || "")) ev.push({ d: d10(s.date), k: s.kind === "bill" ? "최근 조치" : "대표 발의", t: s.fact, u: s.source_url }); });
+    if (rec && d10(rec.d) && !ev.some(function (e) { return e.d === d10(rec.d) && e.k === "대표 발의"; })) ev.push({ d: d10(rec.d), k: "발의", t: rec.n, u: rec.u });
+    comps.slice(0, 6).forEach(function (c) { ev.push({ d: d10(lobby[0] && lobby[0].date), k: "로비 공시", t: c.name + " 공시에 번호 언급 " + c.n + "회 (회기 미표기, 수집일 기준)", u: c.url }); });
+    polHits.forEach(function (x) { ev.push({ d: d10(x.b.d), k: x.cc + " 정책", t: String(x.b.t || "").slice(0, 100), u: x.b.u }); });
+    arr(wh && wh.items).filter(function (b) { return arr(b.sectors).some(function (t) { return sectors[t]; }); }).slice(0, 4).forEach(function (b) {
+      ev.push({ d: d10(b.date), k: b.grp || (b.kind === "presdoc" ? "백악관·대통령 조치" : "관련 부처 관보 문서"), t: String(b.t || "").slice(0, 100), u: b.u });
+    });
+    ev = ev.filter(function (e) { return e.t; }).sort(function (a, b) { return String(b.d).localeCompare(String(a.d)); });
+    var tp = panel("최근 무슨 일", ev.length + "건", true);
+    if (!ev.length) tp.appendChild(el("div", "empty", "표시할 기록이 없습니다"));
+    else {
+      var ol = el("ol", "tl"), shown = 8;
+      var paint = function () {
+        ol.replaceChildren();
+        ev.slice(0, shown).forEach(function (e) {
+          var li = el("li"); li.appendChild(el("div", "d", e.d || "-"));
+          var b = el("div"); b.appendChild(el("div", "k", e.k)); b.appendChild(el("div", "", e.t + " "));
+          if (safe(e.u)) b.lastChild.appendChild(link("원문 ↗", e.u));
+          li.appendChild(b); ol.appendChild(li);
+        });
+        if (more) more.hidden = shown >= ev.length;
+      };
+      var more = null;
+      tp.appendChild(ol);
+      if (ev.length > shown) { more = el("button", "more", "더 보기"); more.type = "button"; more.onclick = function () { shown += 8; paint(); }; tp.appendChild(more); }
+      paint();
+    }
+    tp.appendChild(el("p", "note", "날짜는 각 기록의 기준일입니다(로비 공시는 수집일). 서로 다른 기준의 날짜가 섞여 있습니다."));
+    app.appendChild(tp);
+    foother();
+  });
+})();
+</script>
+</body>
+</html>

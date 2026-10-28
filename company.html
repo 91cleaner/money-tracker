@@ -83,6 +83,12 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
  ol.tl::before{left:82px}ol.tl li{grid-template-columns:74px 1fr;gap:16px}ol.tl li::before{left:79px}ol.tl .d{font-size:11px;white-space:nowrap}
  footer.foot{padding:0 10px 30px}
 }
+@media(max-width:480px){
+ html,body{overflow-wrap:anywhere}
+ .panel{overflow-x:auto}
+ ol.tl li{grid-template-columns:74px minmax(0,1fr);gap:12px}
+ .hero .nm{font-size:22px}
+}
 </style>
 </head>
 <body>
