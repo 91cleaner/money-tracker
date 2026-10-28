@@ -238,7 +238,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var head = panel("COMPANY FILE", null, false), hero = el("div", "hero");
     hero.appendChild(el("span", "tk", T));
     hero.appendChild(el("span", "nm", (ent && ent.name) || (sec && sec.name) || T));
-    if (secLabel) hero.appendChild(el("span", "sec", secLabel));
+    if (secLabel) { var secEl = el(ent && ent.sector ? "a" : "span", "sec", secLabel); if (ent && ent.sector) secEl.href = "sector.html?s=" + encodeURIComponent(ent.sector); hero.appendChild(secEl); }
     head.appendChild(hero);
     var meta = el("div", "meta");
     if (sec) {

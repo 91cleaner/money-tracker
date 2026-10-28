@@ -268,7 +268,7 @@ header.bar input.nm{width:200px;text-transform:none}
       secs.forEach(function (s) {
         var rw = el("div", "r"), b = el("div", "b"), ii = el("i");
         ii.style.width = (bySec[s] / smax * 100).toFixed(1) + "%"; b.appendChild(ii);
-        rw.append(el("div", "l", s === "_none" ? "업종 미분류" : E["sector:" + s].name), b, el("div", "v", bySec[s] + "건"));
+        rw.append((function () { var d = el("div", "l"); if (s === "_none") d.textContent = "업종 미분류"; else { var a = el("a", "", E["sector:" + s].name); a.href = "sector.html?s=" + encodeURIComponent(s); d.appendChild(a); } return d; })(), b, el("div", "v", bySec[s] + "건"));
         sb.appendChild(rw);
       });
       secP.appendChild(sb);
