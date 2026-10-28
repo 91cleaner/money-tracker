@@ -1,0 +1,21 @@
+name: Collect policy (intl official sources)
+on:
+  schedule: [{cron: '40 1,10 * * *'}]
+  workflow_dispatch: {}
+permissions: {contents: write}
+concurrency: {group: data-push-intl, cancel-in-progress: false}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q openpyxl
+      - run: |
+          for cc in $(python3 -c "import sys;sys.path.insert(0,'scripts');import collect_policy_intl as c;print(' '.join(c.SRC))"); do python3 scripts/collect_policy_intl.py $cc || echo "$cc failed"; done
+      - run: python3 scripts/build_search_index.py && python3 scripts/build_insights.py
+      - run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/policy data/jp data/search-index.json data/us/insights.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: intl policy $(date -u +%F)"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push && exit 0; sleep $((i*7)); done; exit 1

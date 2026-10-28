@@ -274,6 +274,28 @@ def wh_topics(ent):
     for sid, lab in LAB.items():
         T("wh-" + sid, f"{lab} 관련 백악관·대통령 조치 및 관련 부처 관보 문서", [f"{lab} 행정명령", f"백악관 {lab}", f"{lab} 대통령 조치"], [b for b in I if sid in b["sectors"]])
     return n
+CP = {"jp": ("일본", "일본 정부·관보성 발표", "도쿄 가스미가세키", 35.6745, 139.7515, ["일본 정책", "일본 정부", "일본 규제", "일본 의견수렴", "파브코메", "일본 발표"]),
+      "eu": ("EU", "EU 법령·집행위 발표", "브뤼셀", 50.8433, 4.3826, ["EU 정책", "EU 규제", "유럽 규제", "EU 법령", "유럽연합", "EU 발표"]),
+      "cn": ("중국", "중국 정부 정책 발표", "베이징", 39.9087, 116.3975, ["중국 정책", "중국 정부", "중국 규제", "중국 발표", "중국 수출통제"]),
+      "tw": ("대만", "대만 정부 정책 발표", "타이베이", 25.0330, 121.5200, ["대만 정책", "대만 정부", "대만 규제", "대만 발표"])}
+def intl_policy(ent):
+    n = 0; LAB = {s["id"]: s["label"] for s in J("data", "market", "sectors.json")["sectors"]}; LAB["trade"] = "관세·무역"
+    for cc, (nm, title, place, la, lo, al) in CP.items():
+        I = opt("data", "policy", cc + ".json").get("items") or []
+        if not I: continue
+        def stops(L):
+            return [{"region": f"{nm} · {place}(대략 위치)", "lat": la + 0.01 * (i % 3 - 1), "lon": lo + 0.01 * (i // 3 - 1), "title": b.get("dept") or b["src"], "kind": "policy", "ref": f"{cc}pol:" + b["id"],
+                     "fact": b["t"] + " · " + b["src"] + " (제목 키워드 기준, 영향 단정 아님)", "source_url": b["u"], "date": b.get("d")} for i, b in enumerate(L[:8])]
+        ent[f"topic:{cc}-policy"] = {"type": "topic", "name": f"{title}(최신순)", "aliases": al, "route": stops(I)}; n += 1
+        for k, lab in LAB.items():
+            L = [b for b in I if k in b.get("tags", [])]
+            if L: ent[f"topic:{cc}-{k}"] = {"type": "topic", "name": f"{nm} {lab} 관련 정부 발표", "aliases": [f"{nm} {lab} 정책", f"{nm} {lab} 규제", f"{nm} {lab}"], "route": stops(L)}; n += 1
+    # JPX 상장 목록: 도쿄 상장 종목 별칭(일본어 종목명)·업종
+    X = opt("data", "jp", "listed.json").get("c") or {}
+    for k, e in ent.items():
+        if k.startswith("company:") and k.endswith(".T") and k[8:-2] in X:
+            r = X[k[8:-2]]; e.setdefault("aliases", []); e["aliases"] += [a for a in [r[0]] if a not in e["aliases"]]; e["jpx"] = {"name": r[0], "market": r[1], "s33": r[2], "s17": r[3]}
+    return n
 def main():
     sec = J("data", "market", "sectors.json"); factors = {f["id"]: f for f in sec["factors"]}
     sectors = {s["id"]: s for s in sec["sectors"]}
@@ -390,7 +412,7 @@ def main():
     print("trades", nt, "members", nm)
     print("bills", bill_parts(ent, mem_by_id))
     print("facility stops", facility_stops(ent))
-    print("kr policy", kr_policy(ent)); print("wh topics", wh_topics(ent))
+    print("kr policy", kr_policy(ent)); print("wh topics", wh_topics(ent)); print("intl policy", intl_policy(ent))
     res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR 신고 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
            "with_route": sum(1 for e in ent.values() if e["route"]), "money_stops": {k: sum(1 for e in ent.values() for x in e["route"] if (x.get("ref") or "").startswith(k)) for k in ("awards:", "lobbying:", "pac:")}, "entities": ent}
