@@ -8,15 +8,15 @@
 <meta property="og:title" content="우리 시는 얼마나 계약했을까? · MONEY TRACKER"><meta property="og:description" content="전국 85개 시의 공개 계약을 지도로. 어디에 얼마를, 어느 업체에. 출처 나라장터.">
 <meta property="og:url" content="https://91cleaner.github.io/money-tracker/"><meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
-<meta name="description" content="전국 85개 시의 공개 계약을 모아 어디와 얼마나 계약했는지, 데이터상 이상 징후는 없는지 쉽게 보여줍니다.">
+<meta name="description" content="전국 85개 시의 공개 계약을 모아 어디와 얼마나 계약했는지, 눈여겨볼 점은 없는지 쉽게 보여줍니다.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="assets/style.css?v=202610249300">
 <link rel="stylesheet" href="assets/sec.css?v=202610249700">
-<link rel="stylesheet" href="assets/theme.css?v=202610249300">
-<link rel="stylesheet" href="assets/refresh.css?v=202610249700">
+<link rel="stylesheet" href="assets/theme.css?v=202610281630">
+<link rel="stylesheet" href="assets/refresh.css?v=202610281630">
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
 #more-links .more-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
@@ -26,15 +26,12 @@
 .fun-fold{margin:16px 0}.fun-fold>summary{cursor:pointer;min-height:48px;display:flex;align-items:center;justify-content:center;border:1px solid #2a3541;border-radius:14px;color:#ffb020;font-weight:700}
 .bidinfo.bid-1{border:0!important;background:transparent!important;padding:2px 0 0!important;margin:4px 0 0!important;font-size:12.5px!important;color:#9aa6b2!important}
 .bidinfo.bid-1 a{color:#8fb4ff}
-.country-switch{display:flex;gap:6px;align-items:center}.country-switch a,.country-entry a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:8px 12px;border-radius:10px;border:1px solid #536174;color:inherit;text-decoration:none;font-size:13px;font-weight:700}.country-entry{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1100px;margin:10px auto;padding:12px 16px;border:1px solid #354455;border-radius:14px;background:#111b26;color:#fff}.country-entry>div{display:flex;gap:8px;flex-wrap:wrap}.country-entry a{background:#203245;color:#fff}@media(max-width:600px){.stickybar{display:flex;justify-content:space-between;gap:8px}.stickybar .brand{font-size:14px}.country-switch a{font-size:12px;padding:6px 8px}.country-entry{margin:8px 10px}.country-entry>div{width:100%}.country-entry a{flex:1;padding:12px 6px;font-size:13px}}
+.country-switch{display:flex;gap:6px;align-items:center}.country-switch a,.country-entry a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:8px 12px;border-radius:10px;border:1px solid #536174;color:inherit;text-decoration:none;font-size:13px;font-weight:700}.country-entry{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1100px;margin:10px auto;padding:12px 16px;border:1px solid #354455;border-radius:14px;background:#111b26;color:#fff}.country-entry>div{display:flex;gap:8px;flex-wrap:wrap}.country-entry a{background:#203245;color:#fff}@media(max-width:600px){.stickybar{display:flex;justify-content:space-between;gap:8px}.stickybar .brand{font-size:14px}.country-switch a{font-size:12px;padding:6px 8px}.country-entry{margin:8px 10px}.country-entry>div{width:100%}.country-entry a{flex:1 1 0;min-width:0;padding:12px 6px;font-size:13px}}
+@media(max-width:767px){.country-entry,.country-entry>div,.stickybar,.country-switch{max-width:100%;min-width:0;box-sizing:border-box}.country-switch a{min-width:0}}
 </style>
 <link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MONEY TRACKER"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<style>
-/* Dedicated entry/exit navigation; the old six-item site tabbar is redundant. */
-.mt-room-exit{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:14px;z-index:3000;display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 15px;border-radius:999px;border:1px solid #3b6951;background:#0b2417;color:#c7ffdc;text-decoration:none;font:800 13px Pretendard,system-ui;box-shadow:0 3px 14px #0009}
-@media(max-width:600px){body{padding-bottom:20px!important}.tabbar-bot,.tabbar-top{display:none!important}}
-</style></head>
-<body data-page="home"><a class="mt-room-exit" href="./" aria-label="추적실 나가기, 입장 화면으로">✕ 나가기</a>
+</head>
+<body data-page="home">
 <header class="stickybar"><a class="brand" href="./">MONEY TRACKER</a><nav class="country-switch" aria-label="국가 선택"><a href="national.html">🇰🇷 한국</a><a href="us.html?lang=ko">🇺🇸 미국</a></nav></header>
 <section class="country-entry" aria-label="국가별 추적 선택"><strong>어느 나라를 추적할까요?</strong><div><a href="national.html">🇰🇷 한국 국회 추적</a><a href="us.html?lang=ko">🇺🇸 미국 의회 추적</a></div></section>
 <main class="wrap">
@@ -84,7 +81,7 @@
 
   <section class="sec home-alerts" hidden>
     <h2>이번 주 눈에 띄는 패턴</h2>
-    <p class="sub">자동으로 찾은 <b>데이터상 이상 징후</b>(눈여겨볼 만한 점)입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있습니다. <span id="nat-alerts-n"></span></p>
+    <p class="sub">자동으로 찾은 <b>눈여겨볼 점</b>입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있습니다. <span id="nat-alerts-n"></span></p>
     <div class="alerts" id="nat-alerts-list"></div>
   </section>
 
@@ -97,8 +94,8 @@
       <span style="display:block;margin-top:10px;font-weight:700">더 보기 목록 열기 ›</span>
     </a>
     <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding:2px 0 6px"><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#sole">경쟁 없는 계약</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#cost">비용 비교</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#fest">축제·행사</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#subsidy">보조금</a><a class="chip" style="display:inline-flex;align-items:center" href="spend.html#pay">공공기관 보수</a></div>
-    <a href="national.html" style="display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#151b23;border:1px solid #2a3541;color:#fff;text-decoration:none;font-weight:700">국회 추적 · 의원 299명 출장·발의·표결 기록 ›</a>
-    <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent=(d.period?`${+d.period[0].slice(5,7)}월 ${+d.period[0].slice(8)}일~${+d.period[1].slice(5,7)}월 ${+d.period[1].slice(8)}일 `:'')+'공고 없이 바로 맺은 수의계약 '+Math.round(d.sum/1e8).toLocaleString()+'억원';document.getElementById('tt-line').textContent='85개 시 · '+d.n.toLocaleString()+'건 · 데이터상 이상 징후 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
+    <a href="national.html" style="display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#151b23;border:1px solid #2a3541;color:#fff;text-decoration:none;font-weight:700">국회 살펴보기 · 의원 299명 출장·법 만들기·찬반 기록 ›</a>
+    <script>fetch('data/sec_sole.json').then(r=>r.json()).then(d=>{document.getElementById('tt-sum').textContent=(d.period?`${+d.period[0].slice(5,7)}월 ${+d.period[0].slice(8)}일~${+d.period[1].slice(5,7)}월 ${+d.period[1].slice(8)}일 `:'')+'공고 없이 바로 맺은 수의계약 '+Math.round(d.sum/1e8).toLocaleString()+'억원';document.getElementById('tt-line').textContent='85개 시 · '+d.n.toLocaleString()+'건 · 눈여겨볼 점 '+d.flag_n+'건 · 출처 나라장터'}).catch(()=>{})</script>
   </section>
   <section class="sec" id="ranksec" hidden>
     <h2>전국 업체 순위</h2>
@@ -109,7 +106,7 @@
 
   <section class="sec" id="about" hidden>
     <h2>원칙</h2>
-    <p class="sub">공개된 공식 자료만 쓰고, 모든 항목에 출처를 답니다. 단정 대신 "데이터상 이상 징후"라고만 씁니다.</p>
+    <p class="sub">공개된 공식 자료만 쓰고, 모든 항목에 출처를 답니다. 단정 대신 "눈여겨볼 점"이라고만 씁니다.</p>
     <details class="morebox"><summary>더 보기 · 어떻게 만드나요?</summary>
     <ol class="steps">
       <li><b>모으고</b><span>조달청 나라장터에 공개된 시·구청 계약을 매시간 모읍니다.</span></li>
@@ -118,7 +115,7 @@
     </ol>
     <ul class="principles">
       <li>정부·지자체가 이미 공개한 데이터만 쓰고, 모든 항목에 출처를 답니다.</li>
-      <li>"사기", "횡령" 같은 단정 대신 "데이터상 이상 징후"라고만 씁니다. 정상적인 이유가 있을 수 있습니다.</li>
+      <li>"사기", "횡령" 같은 단정 대신 "눈여겨볼 점"이라고만 씁니다. 정상적인 이유가 있을 수 있습니다.</li>
       <li>개인 이름은 다루지 않습니다. 업체명과 계약 정보만 보여주고, 업체 주소는 시·군·구까지만 표시합니다.</li>
       <li>기관이나 업체가 해명을 보내면 해당 항목 바로 아래에 그대로 싣습니다.</li>
     </ul>
@@ -132,7 +129,7 @@
       <a href="spend.html#sole"><b>공고 없이 맺은 계약</b><span>경쟁 없이 바로 맺은 계약 묶음</span></a>
       <a href="rank.html"><b>전국 업체 순위</b><span>계약을 가장 많이 받은 업체</span></a>
       <a href="bid.html"><b>우리 동네 입찰</b><span>지금 열린 입찰공고, 마감 임박 순 · 낙찰률</span></a>
-      <a href="national.html"><b>국회 추적</b><span>의원 출장·발의·표결 기록을 지도에서</span></a>
+      <a href="national.html"><b>국회 살펴보기</b><span>의원 출장·법 만들기·찬반 기록을 지도에서</span></a>
       <a href="principles.html"><b>원칙·정정 요청</b><span>어떻게 만들고, 틀리면 어디로</span></a>
     </div>
   </section>
@@ -143,15 +140,15 @@
     <span>만든 사람: @청소부</span>
   </footer>
 </main>
-<script src="assets/period.js?v=202610247400"></script>
+<script src="assets/period.js?v=202610281630"></script>
 <script src="assets/mask.js?v=202610246200"></script>
 <script src="assets/region.js?v=202610246200"></script>
-<script src="assets/app.js?v=202610251100"></script>
+<script src="assets/app.js?v=202610281630"></script>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/mapkit.js?v=202610251700"></script>
-<script src="assets/dive.js?v=202610251100"></script>
+<script src="assets/dive.js?v=202610281630"></script>
 <script src="assets/replay.js?v=202610251010" defer></script>
-<script src="assets/today.js?v=202610251000"></script><script src="assets/hometrack.js?v=202610280700" defer></script>
+<script src="assets/today.js?v=202610281630"></script><script src="assets/hometrack.js?v=202610281630" defer></script>
 <script src="assets/game.js?v=202610246500"></script>
 <script src="assets/daily.js?v=202610246500"></script>
 <script src="assets/pcl.js?v=202610246200"></script>
@@ -161,6 +158,7 @@
 <script src="assets/tabs.js?v=202610251100"></script>
 <script src="assets/fun.js?v=202610251100"></script>
 
-<script src="assets/fx.js?v=202610251100"></script><script src="assets/visits.js?v=202610251055" defer></script>
-<script src="assets/pwa.js?v=202610251330" defer></script>
+<script src="assets/fx.js?v=202610281630"></script><script src="assets/visits.js?v=202610281630" defer></script>
+<script src="assets/nav.js?v=202610281630"></script>
+<script src="assets/pwa.js?v=202610281630" defer></script>
 </body></html>

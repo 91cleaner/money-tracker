@@ -48,7 +48,7 @@
       rcpt.innerHTML = `<div class="tr-h">🧾 ${k === 0 ? '오늘의 영수증' : '지난 영수증'} <span class="tr-nav"><button type="button" data-d="1" aria-label="전날 영수증" ${k >= items.length - 1 ? 'disabled' : ''}>‹</button>${md(it.date)}<button type="button" data-d="-1" aria-label="다음 영수증" ${k === 0 ? 'disabled' : ''}>›</button></span></div>
         <div class="tr-a">${esc(won(p.amount))}<small>${esc(p.cname)}</small></div>
         <div class="tr-t">${esc(mask(p.title))}</div>
-        <div class="tr-s">${esc(mask(p.vendor || ''))}${p.vregion ? ' · ' + esc(String(p.vregion).split(' ').slice(0, 2).join(' ')) : ''} · ${p.ann === false ? '공고 없이 계약' : p.ann ? '공고 있음' : esc(p.method || '')} · 그날 85개 시 계약 ${Number(it.n).toLocaleString('ko-KR')}건 중 가장 큰 금액</div>
+        <div class="tr-s">${esc(mask(p.vendor || ''))}${p.vregion ? ' · ' + esc(String(p.vregion).split(' ').slice(0, 2).join(' ')) : ''} · ${p.ann === false ? '공고 없이 계약' : p.ann ? '미리 알림' : esc(p.method || '')} · 그날 85개 시 계약 ${Number(it.n).toLocaleString('ko-KR')}건 중 가장 큰 금액</div>
         <div class="tr-b">${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">나라장터 원문 ↗</a>` : ''}<a href="city.html?c=${esc(p.slug)}">${esc(p.cname)} 보기</a></div>`;
       rcpt.querySelectorAll('button[data-d]').forEach((b) => b.onclick = () => { k = Math.max(0, Math.min(items.length - 1, k + Number(b.dataset.d))); paintR(); });
     };

@@ -187,6 +187,24 @@ function satView(box, geo, cities, onPick) {
     previewFly(p, z) { const ll = toLL(p); return {lat: ll[0], lng: ll[1], z: Math.min(z, 9.5)}; },
     jump(p, z) { pend = null; map.stop(); map.invalidateSize(); map.setView(toLL(p), Math.min(z, 9.5), {animate: false}); },
     fitNow(pts) { if (!pts || !pts.length) return; pend = null; map.stop(); map.invalidateSize(); map._noRelocal = (map._noRelocal || 0) + 1; map.fitBounds(L.latLngBounds(pts.map(toLL)).pad(0.22), {animate: false, maxZoom: 8, padding: [40, 40]}); setTimeout(() => { map._noRelocal = Math.max(0, (map._noRelocal || 1) - 1); scheduleDeclutter(); }, 0); },
+    // 도시 페이지: 전국이 아니라 그 시 주변으로 맞춰, 노란 고리가 아래 가장자리에서 잘리지 않게 한다.
+    fitCity(anchor, pts) {
+      if (!anchor || !pts || !pts.length) return;
+      pend = null; map.stop(); map.invalidateSize();
+      map._noRelocal = (map._noRelocal || 0) + 1;
+      map.fitBounds(L.latLngBounds(pts.map(toLL)), {animate: false, maxZoom: 11, paddingTopLeft: [28, 44], paddingBottomRight: [28, 84]});
+      const keepIn = () => {
+        const sz = map.getSize(); if (!sz || !sz.y) return;
+        const pt = map.latLngToContainerPoint(toLL(anchor));
+        const margin = 72;
+        let dy = 0;
+        if (pt.y > sz.y - margin) dy = pt.y - (sz.y - margin);
+        else if (pt.y < 52) dy = pt.y - 52;
+        if (dy) map.panBy([0, dy], {animate: false});
+      };
+      keepIn();
+      setTimeout(() => { map._noRelocal = Math.max(0, (map._noRelocal || 1) - 1); scheduleDeclutter(); }, 0);
+    },
     onsize: null,
     select(slug) { selSlug = slug || null; dots.forEach((m, s) => m.setStyle(s === slug ? {fillOpacity: 0.95, fillColor: '#0a84ff', weight: 3} : {fillOpacity: slug ? 0.3 : 0.55, weight: 1.5})); },
     lines(list, maxA, labels) {
@@ -349,6 +367,19 @@ function svgView(box, geo, cities, onPick) {
     previewFly(p) { return {vb: fitBox([p], 160).slice()}; },
     jump(p) { cancelAnimationFrame(anim); vb = fitBox([p], 160); svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); camFn(); },
     fitNow(pts) { if (!pts || !pts.length) return; cancelAnimationFrame(anim); vb = fitBox(pts, 36); svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); camFn(); },
+    fitCity(anchor, pts) {
+      if (!anchor || !pts || !pts.length) return;
+      cancelAnimationFrame(anim);
+      vb = fitBox(pts, 80);
+      const boxH = box.clientHeight || 1;
+      const gap = (vb[1] + vb[3] - anchor[1]) * (boxH / vb[3]);
+      if (gap < 72) {
+        const need = 72 * vb[3] / boxH;
+        const shift = need - (vb[1] + vb[3] - anchor[1]);
+        vb[1] = Math.max(0, Math.min((geo.h || vb[3]) - vb[3], vb[1] + shift));
+      }
+      svg.setAttribute('viewBox', vb.join(' ')); sizes(); labelFit(); camFn();
+    },
     onsize: null,
     set oncam(fn) { camFn = fn || (() => {}); },
     get oncam() { return camFn; },
@@ -416,7 +447,15 @@ async function moneyMap(root, opts = {}) {
   const syncMapHome = () => { if (!view || !view.homeBtn || !homeCam) return; view.homeBtn.classList.toggle('is-home', mode === homeMode && cur === homeCur && !view.hlOn() && view.sameCam(homeCam)); };
   // 지도 칸이 숨겨져 있다 열리면(도시 페이지 탭) 처음 화면을 그 크기에 다시 맞춘다
   const flowPts = (c) => [c.p, ...(c.flows || []).filter((f) => f.p).map((f) => f.p)];
-  const seatFixed = () => { const c = dataOf(opts.fixed); if (!c || !view || !c.p) return; view._seating = 1; if (view.fitNow) view.fitNow(flowPts(c)); else if (view.jump) view.jump(c.p, 8); if (cur === opts.fixed) drawCity(c); view._seating = 0; homeCam = view.readCam(); homeMode = 'city'; homeCur = opts.fixed; seated = true; nudged = false; syncMapHome(); };
+  // 시 페이지는 그 시와 가까운 흐름만 화면에 담는다. 먼 선은 그려지되, 시·노란 고리를 아래쪽으로 밀어내지 않는다.
+  const cityAreaPts = (c) => {
+    if (!c || !c.p) return [];
+    const near = (c.flows || []).filter((f) => f.p && Math.hypot(f.p[0] - c.p[0], f.p[1] - c.p[1]) < 90);
+    const pts = [c.p, ...near.map((f) => f.p)];
+    pts.push([c.p[0] - 48, c.p[1] - 40], [c.p[0] + 48, c.p[1] + 88]);
+    return pts;
+  };
+  const seatFixed = () => { const c = dataOf(opts.fixed); if (!c || !view || !c.p) return; view._seating = 1; const area = cityAreaPts(c); if (view.fitCity) view.fitCity(c.p, area); else if (view.fitNow) view.fitNow(area.length ? area : flowPts(c)); else if (view.jump) view.jump(c.p, 9); if (cur === opts.fixed) drawCity(c); view._seating = 0; homeCam = view.readCam(); homeMode = 'city'; homeCur = opts.fixed; seated = true; nudged = false; syncMapHome(); };
   const dataOf = (slug) => { const c = fl.cities[slug]; if (!c || cat === '전체') return c;
     const b = (c.by_cat || {})[cat] || {total: 0, known: 0, local: 0, count: 0, flows: []}; return {...c, ...b, other: null, cat}; };
   const pickCity = (slug) => { if (opts.fixed) return; setSeg('city'); showCity(slug, {fly: true, z: 9}); if (matchMedia('(max-width: 899px)').matches) setTimeout(() => panel.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 300); };

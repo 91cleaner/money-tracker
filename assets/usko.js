@@ -5,7 +5,7 @@
   let ko = false; try { ko = (new URLSearchParams(location.search).get('lang') || localStorage.getItem(K)) === 'ko'; } catch (e) { /* 무시 */ }
   // [영어, 한국어] — 긴 문장부터(짧은 낱말이 먼저 바뀌어 문장이 깨지지 않게)
   const P = [
-    ['CONGRESS TRACKER', '미국 의회 추적실'], ['U.S. CONGRESS', '미국 의회'], ['Congress pay accrued today', '오늘 의원 세비 누적'],
+    ['CONGRESS TRACKER', '미국 의회 살펴보기'], ['U.S. CONGRESS', '미국 의회'], ['Congress pay accrued today', '오늘 의원 월급 누적'],
     ['Congress Trading Dashboard', '미국 의원 주식 거래 대시보드'],
     ['When they bought, when they sold, what they traded — and who beat the market. Disclosed trades of House members, last 12 months. Senate filings coming soon.', '언제 샀고, 언제 팔았고, 무엇을 거래했는지, 그리고 누가 시장을 이겼는지. 하원 의원이 신고한 최근 12개월 거래예요. 상원은 곧 들어와요.'],
     ["House members' disclosed trades · Senate filings coming soon", '하원 의원 신고 거래 · 상원은 곧 추가'],
