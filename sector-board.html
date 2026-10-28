@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MONEY TRACKER — 업종 히트맵</title>
+<meta name="description" content="업종별 최근 7일 의원 거래 신고 수와 같은 기간 종가 변화(중앙값). 데이터상 같은 기간의 숫자이며 인과·투자 조언 아님.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="MONEY TRACKER — 업종 히트맵"><meta property="og:description" content="업종별 최근 7일 의원 거래 신고 수와 같은 기간 종가 변화(중앙값). 데이터상 같은 기간의 숫자이며 인과·투자 조언 아님.">
+<meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 업종 히트맵"><meta name="twitter:description" content="업종별 최근 7일 의원 거래 신고 수와 같은 기간 종가 변화(중앙값). 데이터상 같은 기간의 숫자이며 인과·투자 조언 아님.">
+<meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
+<style>
+:root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,#00000000 0 2px,#00ff6608 3px,#00000000 4px)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:49;background:radial-gradient(ellipse at 50% 30%,#0b3a2200 40%,#000a 100%)}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.mono{font-family:ui-monospace,Menlo,Consolas,"D2Coding",monospace}
+header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#020806f0;border-bottom:1px solid var(--line)}
+header.bar .brand{font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--g)}
+header.bar .crumb{font:12px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.06em}
+header.bar .sp{flex:1}
+header.bar form{display:flex;gap:6px}
+header.bar input{width:120px;background:#04150d;border:1px solid var(--line2);border-radius:6px;color:var(--g2);font:16px ui-monospace,Menlo,monospace;padding:4px 8px;text-transform:uppercase}
+header.bar button{background:#0b2a19;border:1px solid var(--line2);border-radius:6px;color:var(--g);font:700 12px ui-monospace,Menlo,monospace;padding:0 10px;cursor:pointer}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 0 18px rgba(40,255,140,.06) inset;padding:14px 16px;min-width:0}
+.panel h2{margin:0 0 10px;font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--g)}
+.panel h2 .n{color:var(--mut);font-weight:400}
+.span2{grid-column:1/-1}
+.hero{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 18px}
+.hero .tk{font:700 34px/1 ui-monospace,Menlo,monospace;color:var(--g);letter-spacing:.04em;text-shadow:0 0 12px rgba(93,255,158,.35)}
+.hero .nm{font-size:20px;font-weight:700;color:#eafff2}
+.hero .sec{font:12px ui-monospace,Menlo,monospace;color:var(--g2);border:1px solid var(--line2);border-radius:999px;padding:2px 10px}
+.meta{margin-top:8px;color:var(--mut);font-size:12.5px}
+.actions{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--g);background:#0d3b22;color:#eafff2;font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.04em}
+.btn:hover{background:#145531;text-decoration:none}
+.kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:6px}
+.kv div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#03130b}
+.kv div:first-child{grid-column:1/-1;display:flex;align-items:baseline;gap:10px}.kv div:first-child b{font-size:24px}
+.kv b{display:block;font:700 18px ui-monospace,Menlo,monospace;color:#eafff2}
+.kv span{font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+.up{color:var(--up)!important}.down{color:var(--down)!important}
+.empty{color:var(--mut);font:13px ui-monospace,Menlo,monospace;padding:18px 6px;border:1px dashed var(--line);border-radius:8px;text-align:center}
+svg.spark{width:100%;height:120px;display:block;margin-top:10px}
+.note{margin:8px 0 0;color:var(--mut);font-size:12px}
+.warnnote{margin:0 0 10px;padding:8px 10px;border-left:3px solid var(--warn);background:#1c1606;color:#f3e3b4;font-size:12.5px;border-radius:0 6px 6px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid #12301f;vertical-align:top}
+th{font:700 11px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.05em;white-space:nowrap}
+td.num,th.num{text-align:right;white-space:nowrap}
+td .pill{font:11px ui-monospace,Menlo,monospace;padding:1px 6px;border-radius:5px;border:1px solid var(--line2);white-space:nowrap}
+.more{margin-top:8px;background:none;border:1px solid var(--line2);color:var(--g2);border-radius:6px;padding:5px 10px;cursor:pointer;font:12px ui-monospace,Menlo,monospace}
+ol.tl{list-style:none;margin:0;padding:0;position:relative}
+ol.tl::before{content:"";position:absolute;left:84px;top:4px;bottom:4px;width:1px;background:var(--line2)}
+ol.tl li{display:grid;grid-template-columns:76px 1fr;gap:16px;padding:8px 0;position:relative}
+ol.tl li::before{content:"";position:absolute;left:81px;top:14px;width:7px;height:7px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g)}
+ol.tl .d{font:12px ui-monospace,Menlo,monospace;color:var(--g2);padding-top:3px}
+ol.tl .k{font:700 11px ui-monospace,Menlo,monospace;color:var(--g);letter-spacing:.06em}
+ol.tl .t{color:#eafff2}
+ol.tl .s{font-size:12px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips a,.chips span{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--line2);border-radius:999px;padding:3px 10px;color:var(--g2)}
+footer.foot{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:var(--mut);font-size:12px}
+footer.foot .disc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#03100a}
+footer.foot b{color:var(--warn)}
+footer.foot ul{margin:6px 0 0;padding-left:18px}
+@media(max-width:900px){
+ main{grid-template-columns:minmax(0,1fr);padding:12px 10px 30px;gap:12px}
+ header.bar{padding:8px 10px;flex-wrap:wrap}
+ header.bar .crumb{display:none}
+ header.bar input{width:96px}
+ .hero .tk{font-size:28px}.hero .nm{font-size:17px}
+ .kv{grid-template-columns:repeat(2,minmax(0,1fr))}
+ table.trades thead{display:none}
+ table.trades tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px 0;border-bottom:1px solid #12301f}
+ table.trades td{border:0;padding:0}
+ table.trades td.who{grid-column:1/-1;font-weight:700;color:#eafff2}
+ table.trades td.lbl::before{content:attr(data-l) " ";color:var(--mut);font:11px ui-monospace,Menlo,monospace}
+ ol.tl::before{left:82px}ol.tl li{grid-template-columns:74px 1fr;gap:16px}ol.tl li::before{left:79px}ol.tl .d{font-size:11px;white-space:nowrap}
+ footer.foot{padding:0 10px 30px}
+}
+/* member.html 추가 */
+header.bar input.nm{width:200px;text-transform:none}
+.hero .pt{font:700 13px ui-monospace,Menlo,monospace;border-radius:6px;padding:2px 8px;border:1px solid var(--line2);color:var(--g2)}
+.cm{margin-top:10px}
+.cm h3{margin:0 0 6px;font:700 11px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.08em}
+.bars{display:grid;gap:6px}
+.bars .r{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:12.5px}
+.bars .r .l{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bars .r .b{height:10px;background:#062014;border:1px solid #12301f;border-radius:3px;position:relative;overflow:hidden}
+.bars .r .b i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#1f8a50,#5dff9e)}
+.bars .r .b i.s{background:linear-gradient(90deg,#8a5a1f,#ffb35d)}
+.bars .r .v{font:12px ui-monospace,Menlo,monospace;color:var(--g2);white-space:nowrap}
+.legend{margin-top:8px;font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+.legend i{display:inline-block;width:10px;height:8px;border-radius:2px;margin:0 4px 0 10px;vertical-align:middle}
+.ov{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:#03130b;margin-top:8px}
+.ov b{color:#eafff2}
+.ov .chips{margin-top:6px}
+.filter{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+.filter input,.filter select{background:#04150d;border:1px solid var(--line2);border-radius:6px;color:var(--g2);font:16px ui-monospace,Menlo,monospace;padding:4px 8px;min-width:0}
+.filter input{flex:1 1 160px}
+.pick{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+@media(max-width:900px){
+ header.bar input.nm{width:150px}
+ .bars .r{grid-template-columns:minmax(0,110px) minmax(0,1fr) auto}
+}
+
+.heat{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.cell{display:block;border:1px solid var(--line2);border-radius:8px;padding:10px 12px;color:#eafff2;min-height:96px}
+.cell:hover{text-decoration:none;border-color:var(--g)}
+.cell b{display:block;font-size:13px;margin-bottom:4px}
+.cell .chg{font:700 20px ui-monospace,Menlo,monospace}
+.cell .ev{font:12px ui-monospace,Menlo,monospace;margin-top:4px;color:#d5f7e1}
+.cell .sm{font:11px ui-monospace,Menlo,monospace;color:#b9d8c4;margin-top:2px}
+.cell.na{background:#03130b}
+.key{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+.key i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <span class="crumb">SECTOR HEATMAP / 공개 기록 정리</span>
+  <a class="mono" href="sector.html">업종 파일</a>
+  <a class="mono" href="weekly.html">주간 순위표</a>
+</header>
+<main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
+<footer class="foot"><div class="disc" id="foot"></div></footer>
+<script>
+(function () {
+  "use strict";
+  var app = document.getElementById("app"), foot = document.getElementById("foot");
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function get(p) { return fetch(p, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function isoAdd(iso, n) { return new Date(Date.parse(iso + "T00:00:00Z") + n * 864e5).toISOString().slice(0, 10); }
+  function median(a) { if (!a.length) return null; var s = a.slice().sort(function (x, y) { return x - y; }), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; }
+  // Diverging blue (down) / orange (up) so colour is never the only cue: the signed number is always printed.
+  function shade(v) {
+    if (v == null) return "";
+    var a = Math.min(1, Math.abs(v) / 8), c = v >= 0 ? "255,179,93" : "93,170,255";
+    return "background:rgba(" + c + "," + (0.12 + a * 0.5).toFixed(2) + ")";
+  }
+
+  Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades.json"), get("data/us/prices/summary.json")]).then(function (r) {
+    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, pr = r[3] || {}, E = si.entities || {};
+    var map = ts.tickers || {}, P = pr.t || {}, trades = tr.trades || [];
+    var names = {}; Object.keys(E).forEach(function (k) { if (E[k].type === "sector") names[k.slice(7)] = E[k].name; });
+    var filed = trades.map(function (x) { return x.filed; }).filter(function (d) { return /^\d{4}-\d{2}-\d{2}$/.test(d || ""); }).sort();
+    app.replaceChildren();
+    if (!filed.length) { var e = el("section", "panel span2"); e.appendChild(el("div", "empty", "신고 자료가 없습니다.")); app.appendChild(e); return; }
+    var end = filed[filed.length - 1], start = isoAdd(end, -6);
+    var S = {};
+    function sec(id) { return S[id] || (S[id] = { id: id, ev: 0, w: [], n: 0 }); }
+    Object.keys(map).forEach(function (t) { var s = map[t] && map[t].sector; if (!s) return; var o = sec(s); o.n++; if (P[t] && typeof P[t].w1 === "number") o.w.push(P[t].w1); });
+    trades.forEach(function (x) {
+      if (!(x.filed >= start && x.filed <= end)) return;
+      var t = String(x.tk || "").toUpperCase(), s = map[t] && map[t].sector; if (s) sec(s).ev++;
+    });
+    var rows = Object.keys(S).map(function (id) { var o = S[id]; o.med = median(o.w); return o; }).sort(function (a, b) { return b.ev - a.ev || a.id.localeCompare(b.id); });
+
+    var head = el("section", "panel span2"); head.appendChild(el("h2", "", "SECTOR HEATMAP"));
+    head.appendChild(el("p", "", "이벤트: 신고일 " + start + " ~ " + end + " 의원 거래 신고(PTR) 건수 · 가격: 업종 내 종목들의 최근 1주 종가 변화 중앙값" + (pr.date ? " (" + pr.date + " 기준)" : "")));
+    head.appendChild(el("p", "warnnote", "데이터상 같은 기간에 나란히 놓은 숫자일 뿐 한쪽이 다른 쪽의 원인이라는 뜻이 아닙니다. 하원 PTR 신고 기준이며 거래일→신고일 최대 45일 차이가 있을 수 있습니다. 투자 조언 아님."));
+    app.appendChild(head);
+
+    var p = el("section", "panel span2"); p.appendChild(el("h2", "", "업종별 (신고 많은 순)"));
+    var g = el("div", "heat");
+    rows.forEach(function (o) {
+      var a = el("a", "cell" + (o.med == null ? " na" : "")); a.href = "sector.html?s=" + encodeURIComponent(o.id); if (o.med != null) a.setAttribute("style", shade(o.med));
+      a.appendChild(el("b", "", names[o.id] || o.id));
+      a.appendChild(el("div", "chg", o.med == null ? "가격 자료 없음" : (o.med >= 0 ? "▲ +" : "▼ ") + o.med.toFixed(1) + "%"));
+      a.appendChild(el("div", "ev", "신고 " + o.ev + "건"));
+      a.appendChild(el("div", "sm", "종목 " + o.n + "개 중 가격 " + o.w.length + "개"));
+      a.setAttribute("aria-label", (names[o.id] || o.id) + " 신고 " + o.ev + "건, 1주 종가 변화 중앙값 " + (o.med == null ? "자료 없음" : o.med.toFixed(1) + "%"));
+      g.appendChild(a);
+    });
+    p.appendChild(g);
+    var key = el("div", "key"), k1 = el("span"), i1 = el("i"), k2 = el("span"), i2 = el("i");
+    i1.setAttribute("style", "background:rgba(93,170,255,.5)"); i2.setAttribute("style", "background:rgba(255,179,93,.5)");
+    k1.append(i1, document.createTextNode("▼ 1주 종가 하락")); k2.append(i2, document.createTextNode("▲ 1주 종가 상승"));
+    key.append(k1, k2, el("span", "", "색 진하기 = 변화 크기(±8%에서 최대)")); p.appendChild(key);
+    p.appendChild(el("p", "note", "업종은 SEC 업종코드를 단순화한 자체 분류입니다. 신고 건수는 티커가 있는 거래 항목만 센 것이며, 종목 수가 적은 업종은 중앙값이 한두 종목에 좌우됩니다. 카드를 누르면 업종 파일로 이동합니다."));
+    app.appendChild(p);
+
+    foot.replaceChildren(); foot.appendChild(el("b", "", "읽기 전 확인"));
+    foot.appendChild(document.createTextNode(" 공개 기록과 종가를 나란히 정리한 것이며 어떤 판단이나 투자 조언 아님."));
+    var ul = el("ul");
+    [["의원 거래: 미국 하원 사무처 재산공개 PTR (data/us/trades.json)", tr.updated], ["업종: SEC EDGAR 업종코드 (data/us/ticker-sectors.json)", ts.updated], ["종가: Massive(구 Polygon) 일별 수정종가 (data/us/prices/summary.json)", pr.date]].forEach(function (s) { ul.appendChild(el("li", "", s[0] + (s[1] ? " · 갱신 " + s[1] : ""))); });
+    foot.appendChild(ul);
+  });
+})();
+</script>
+</body>
+</html>
