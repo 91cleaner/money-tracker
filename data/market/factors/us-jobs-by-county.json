@@ -1,8 +1,9 @@
 {
  "source": "U.S. Bureau of Labor Statistics · QCEW open data",
  "source_url": "https://www.bls.gov/cew/additional-resources/open-data/",
- "note": "민간 부문(own_code 5) 분기 3번째 달 고용. 비공개(disclosure N) 지역 제외. 지도 좌표는 아직 없음(FIPS 코드로 연결 예정). 약 5~6개월 지연 발표.",
- "collected_at": "2026-10-28T01:52:52.864Z",
+ "note": "민간 부문(own_code 5) 분기 3번째 달 고용. 비공개(disclosure N) 지역 제외. 카운티 lat/lng는 미국 인구조사국 Gazetteer 내부 대표점(카운티 중심 근처, 공장 위치 아님). 약 5~6개월 지연 발표.",
+ "coordinates_source": "U.S. Census Bureau Gazetteer 2025 counties (INTPTLAT/INTPTLONG)",
+ "collected_at": "2026-10-28T02:13:26.982Z",
  "industries": {
   "3254": {
    "label": "제약·의약품 제조",
@@ -14,7 +15,9 @@
      "employment": 17586,
      "yoy_change": 239,
      "weekly_wage": 9152,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.185968,
+     "lng": -87.805939
     },
     {
      "fips": "18097",
@@ -22,7 +25,9 @@
      "employment": 15787,
      "yoy_change": -333,
      "weekly_wage": 11239,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.782976,
+     "lng": -86.135794
     },
     {
      "fips": "42091",
@@ -30,7 +35,9 @@
      "employment": 11606,
      "yoy_change": -505,
      "weekly_wage": 5449,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.209999,
+     "lng": -75.370201
     },
     {
      "fips": "36103",
@@ -38,7 +45,9 @@
      "employment": 11067,
      "yoy_change": 106,
      "weekly_wage": 1798,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.943554,
+     "lng": -72.692218
     },
     {
      "fips": "06073",
@@ -46,7 +55,9 @@
      "employment": 8929,
      "yoy_change": 720,
      "weekly_wage": 3079,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.023604,
+     "lng": -116.776117
     },
     {
      "fips": "06037",
@@ -54,7 +65,9 @@
      "employment": 8413,
      "yoy_change": 121,
      "weekly_wage": 1920,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.196398,
+     "lng": -118.261862
     },
     {
      "fips": "06081",
@@ -62,7 +75,9 @@
      "employment": 7535,
      "yoy_change": -444,
      "weekly_wage": 12589,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 37.414672,
+     "lng": -122.371546
     },
     {
      "fips": "37063",
@@ -70,7 +85,9 @@
      "employment": 6744,
      "yoy_change": -258,
      "weekly_wage": 5372,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 36.033828,
+     "lng": -78.878125
     },
     {
      "fips": "24031",
@@ -78,7 +95,9 @@
      "employment": 6468,
      "yoy_change": -35,
      "weekly_wage": 9617,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.137381,
+     "lng": -77.203063
     },
     {
      "fips": "34035",
@@ -86,7 +105,9 @@
      "employment": 5260,
      "yoy_change": -106,
      "weekly_wage": 7217,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.565527,
+     "lng": -74.619938
     },
     {
      "fips": "34023",
@@ -94,7 +115,9 @@
      "employment": 5225,
      "yoy_change": -336,
      "weekly_wage": 4445,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.439621,
+     "lng": -74.40743
     },
     {
      "fips": "04013",
@@ -102,7 +125,9 @@
      "employment": 4801,
      "yoy_change": 202,
      "weekly_wage": 1576,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.345176,
+     "lng": -112.49893
     },
     {
      "fips": "25017",
@@ -110,7 +135,9 @@
      "employment": 4495,
      "yoy_change": 162,
      "weekly_wage": 9814,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.481721,
+     "lng": -71.394916
     },
     {
      "fips": "48439",
@@ -118,7 +145,9 @@
      "employment": 3732,
      "yoy_change": -43,
      "weekly_wage": 3810,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 32.772119,
+     "lng": -97.291224
     },
     {
      "fips": "06059",
@@ -126,7 +155,9 @@
      "employment": 3683,
      "yoy_change": -434,
      "weekly_wage": 2760,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.675687,
+     "lng": -117.777207
     },
     {
      "fips": "34021",
@@ -134,7 +165,9 @@
      "employment": 3477,
      "yoy_change": -52,
      "weekly_wage": 9244,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.282503,
+     "lng": -74.703724
     },
     {
      "fips": "12011",
@@ -142,7 +175,9 @@
      "employment": 3373,
      "yoy_change": 527,
      "weekly_wage": 1777,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 26.193535,
+     "lng": -80.476683
     },
     {
      "fips": "26077",
@@ -150,7 +185,9 @@
      "employment": 3290,
      "yoy_change": -244,
      "weekly_wage": 2929,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.246266,
+     "lng": -85.532854
     },
     {
      "fips": "55025",
@@ -158,7 +195,9 @@
      "employment": 3230,
      "yoy_change": -24,
      "weekly_wage": 2247,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 43.067468,
+     "lng": -89.417852
     },
     {
      "fips": "39049",
@@ -166,7 +205,9 @@
      "employment": 2854,
      "yoy_change": 181,
      "weekly_wage": 2003,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.969875,
+     "lng": -83.009086
     },
     {
      "fips": "17031",
@@ -174,7 +215,9 @@
      "employment": 2795,
      "yoy_change": 57,
      "weekly_wage": 3124,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.894294,
+     "lng": -87.645455
     },
     {
      "fips": "49035",
@@ -182,7 +225,9 @@
      "employment": 2719,
      "yoy_change": 333,
      "weekly_wage": 2564,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.667883,
+     "lng": -111.92424
     },
     {
      "fips": "29189",
@@ -190,7 +235,9 @@
      "employment": 2636,
      "yoy_change": -112,
      "weekly_wage": 2002,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 38.640438,
+     "lng": -90.445497
     },
     {
      "fips": "25027",
@@ -198,7 +245,9 @@
      "employment": 2575,
      "yoy_change": 68,
      "weekly_wage": 4283,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.311693,
+     "lng": -71.940282
     },
     {
      "fips": "06001",
@@ -206,7 +255,9 @@
      "employment": 2540,
      "yoy_change": -95,
      "weekly_wage": 3356,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 37.647139,
+     "lng": -121.912488
     },
     {
      "fips": "49049",
@@ -214,7 +265,9 @@
      "employment": 2320,
      "yoy_change": -171,
      "weekly_wage": 1168,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.120418,
+     "lng": -111.668563
     },
     {
      "fips": "27053",
@@ -222,7 +275,9 @@
      "employment": 2287,
      "yoy_change": 94,
      "weekly_wage": 1928,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 45.006121,
+     "lng": -93.475228
     },
     {
      "fips": "23005",
@@ -230,7 +285,9 @@
      "employment": 2240,
      "yoy_change": -178,
      "weekly_wage": 3206,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 43.808348,
+     "lng": -70.330375
     },
     {
      "fips": "36087",
@@ -238,7 +295,9 @@
      "employment": 2185,
      "yoy_change": -141,
      "weekly_wage": 4765,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.154628,
+     "lng": -74.024662
     },
     {
      "fips": "20091",
@@ -246,7 +305,9 @@
      "employment": 2113,
      "yoy_change": -65,
      "weekly_wage": 2167,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 38.883907,
+     "lng": -94.82233
     },
     {
      "fips": "45045",
@@ -254,7 +315,9 @@
      "employment": 2113,
      "yoy_change": -22,
      "weekly_wage": 1859,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.892645,
+     "lng": -82.372077
     },
     {
      "fips": "12086",
@@ -262,7 +325,9 @@
      "employment": 2050,
      "yoy_change": -150,
      "weekly_wage": 2269,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 25.616009,
+     "lng": -80.50375
     },
     {
      "fips": "08013",
@@ -270,7 +335,9 @@
      "employment": 2013,
      "yoy_change": -84,
      "weekly_wage": 2016,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.094971,
+     "lng": -105.39771
     },
     {
      "fips": "48453",
@@ -278,7 +345,9 @@
      "employment": 2002,
      "yoy_change": -89,
      "weekly_wage": 2534,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 30.239513,
+     "lng": -97.69127
     },
     {
      "fips": "36029",
@@ -286,7 +355,9 @@
      "employment": 1996,
      "yoy_change": -171,
      "weekly_wage": 2048,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.752759,
+     "lng": -78.778192
     },
     {
      "fips": "33015",
@@ -294,7 +365,9 @@
      "employment": 1936,
      "yoy_change": 150,
      "weekly_wage": 3040,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.988664,
+     "lng": -71.09908
     },
     {
      "fips": "48201",
@@ -302,7 +375,9 @@
      "employment": 1931,
      "yoy_change": -139,
      "weekly_wage": 7038,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 29.857273,
+     "lng": -95.393037
     },
     {
      "fips": "72017",
@@ -310,7 +385,9 @@
      "employment": 1919,
      "yoy_change": 0,
      "weekly_wage": 2493,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 18.469997,
+     "lng": -66.558226
     },
     {
      "fips": "12103",
@@ -318,7 +395,9 @@
      "employment": 1818,
      "yoy_change": -87,
      "weekly_wage": 2071,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 27.905342,
+     "lng": -82.798066
     },
     {
      "fips": "17043",
@@ -326,7 +405,9 @@
      "employment": 1719,
      "yoy_change": 31,
      "weekly_wage": 1496,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.852058,
+     "lng": -88.086039
     }
    ],
    "states": [
@@ -735,7 +816,9 @@
      "employment": 43000,
      "yoy_change": 1196,
      "weekly_wage": 13753,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 37.221614,
+     "lng": -121.68954
     },
     {
      "fips": "04013",
@@ -743,7 +826,9 @@
      "employment": 21264,
      "yoy_change": -998,
      "weekly_wage": 4016,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.345176,
+     "lng": -112.49893
     },
     {
      "fips": "41067",
@@ -751,7 +836,9 @@
      "employment": 20406,
      "yoy_change": -3343,
      "weekly_wage": 4998,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 45.553542,
+     "lng": -123.097615
     },
     {
      "fips": "48453",
@@ -759,7 +846,9 @@
      "employment": 14945,
      "yoy_change": -772,
      "weekly_wage": 3350,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 30.239513,
+     "lng": -97.69127
     },
     {
      "fips": "48113",
@@ -767,7 +856,9 @@
      "employment": 13665,
      "yoy_change": -3411,
      "weekly_wage": 5980,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 32.766987,
+     "lng": -96.778424
     },
     {
      "fips": "06059",
@@ -775,7 +866,9 @@
      "employment": 13606,
      "yoy_change": -115,
      "weekly_wage": 6715,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.675687,
+     "lng": -117.777207
     },
     {
      "fips": "06037",
@@ -783,7 +876,9 @@
      "employment": 8435,
      "yoy_change": 95,
      "weekly_wage": 2210,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.196398,
+     "lng": -118.261862
     },
     {
      "fips": "12009",
@@ -791,7 +886,9 @@
      "employment": 7720,
      "yoy_change": -672,
      "weekly_wage": 3481,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 28.298311,
+     "lng": -80.700333
     },
     {
      "fips": "16001",
@@ -799,7 +896,9 @@
      "employment": 6852,
      "yoy_change": 522,
      "weekly_wage": 5085,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 43.451476,
+     "lng": -116.244376
     },
     {
      "fips": "06001",
@@ -807,7 +906,9 @@
      "employment": 6491,
      "yoy_change": -204,
      "weekly_wage": 3387,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 37.647139,
+     "lng": -121.912488
     },
     {
      "fips": "06073",
@@ -815,7 +916,9 @@
      "employment": 5548,
      "yoy_change": -77,
      "weekly_wage": 5434,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.023604,
+     "lng": -116.776117
     },
     {
      "fips": "25017",
@@ -823,7 +926,9 @@
      "employment": 5464,
      "yoy_change": -222,
      "weekly_wage": 3902,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.481721,
+     "lng": -71.394916
     },
     {
      "fips": "48085",
@@ -831,7 +936,9 @@
      "employment": 4771,
      "yoy_change": -647,
      "weekly_wage": 3524,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.194482,
+     "lng": -96.579428
     },
     {
      "fips": "12103",
@@ -839,7 +946,9 @@
      "employment": 3483,
      "yoy_change": 648,
      "weekly_wage": 1581,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 27.905342,
+     "lng": -82.798066
     },
     {
      "fips": "27053",
@@ -847,7 +956,9 @@
      "employment": 3447,
      "yoy_change": -56,
      "weekly_wage": 2392,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 45.006121,
+     "lng": -93.475228
     },
     {
      "fips": "33011",
@@ -855,7 +966,9 @@
      "employment": 3284,
      "yoy_change": -75,
      "weekly_wage": 2776,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.911532,
+     "lng": -71.723055
     },
     {
      "fips": "53011",
@@ -863,7 +976,9 @@
      "employment": 3085,
      "yoy_change": 43,
      "weekly_wage": 2571,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 45.77173,
+     "lng": -122.485953
     },
     {
      "fips": "25027",
@@ -871,7 +986,9 @@
      "employment": 3034,
      "yoy_change": 303,
      "weekly_wage": 3094,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.311693,
+     "lng": -71.940282
     },
     {
      "fips": "17043",
@@ -879,7 +996,9 @@
      "employment": 2816,
      "yoy_change": 75,
      "weekly_wage": 2368,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.852058,
+     "lng": -88.086039
     },
     {
      "fips": "06111",
@@ -887,7 +1006,9 @@
      "employment": 2779,
      "yoy_change": -87,
      "weekly_wage": 2569,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.358748,
+     "lng": -119.133145
     },
     {
      "fips": "36029",
@@ -895,7 +1016,9 @@
      "employment": 2693,
      "yoy_change": -3,
      "weekly_wage": 1779,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.752759,
+     "lng": -78.778192
     },
     {
      "fips": "17031",
@@ -903,7 +1026,9 @@
      "employment": 2419,
      "yoy_change": -81,
      "weekly_wage": 1391,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.894294,
+     "lng": -87.645455
     },
     {
      "fips": "37063",
@@ -911,7 +1036,9 @@
      "employment": 2217,
      "yoy_change": -1180,
      "weekly_wage": 3272,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 36.033828,
+     "lng": -78.878125
     },
     {
      "fips": "17097",
@@ -919,7 +1046,9 @@
      "employment": 2034,
      "yoy_change": 120,
      "weekly_wage": 1655,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.185968,
+     "lng": -87.805939
     },
     {
      "fips": "25009",
@@ -927,7 +1056,9 @@
      "employment": 1986,
      "yoy_change": 50,
      "weekly_wage": 4158,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.642708,
+     "lng": -70.864909
     },
     {
      "fips": "36103",
@@ -935,7 +1066,9 @@
      "employment": 1920,
      "yoy_change": -168,
      "weekly_wage": 1919,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.943554,
+     "lng": -72.692218
     },
     {
      "fips": "48439",
@@ -943,7 +1076,9 @@
      "employment": 1915,
      "yoy_change": 20,
      "weekly_wage": 2009,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 32.772119,
+     "lng": -97.291224
     },
     {
      "fips": "37081",
@@ -951,7 +1086,9 @@
      "employment": 1908,
      "yoy_change": 28,
      "weekly_wage": 3149,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 36.079065,
+     "lng": -79.788665
     },
     {
      "fips": "41051",
@@ -959,7 +1096,9 @@
      "employment": 1773,
      "yoy_change": -102,
      "weekly_wage": 2170,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 45.547711,
+     "lng": -122.417363
     },
     {
      "fips": "48491",
@@ -967,7 +1106,9 @@
      "employment": 1718,
      "yoy_change": 472,
      "weekly_wage": 2653,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 30.649082,
+     "lng": -97.605065
     },
     {
      "fips": "26125",
@@ -975,7 +1116,9 @@
      "employment": 1687,
      "yoy_change": 58,
      "weekly_wage": 2339,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.660452,
+     "lng": -83.38421
     },
     {
      "fips": "55101",
@@ -983,7 +1126,9 @@
      "employment": 1679,
      "yoy_change": 0,
      "weekly_wage": 991,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.780392,
+     "lng": -87.771599
     },
     {
      "fips": "48181",
@@ -991,7 +1136,9 @@
      "employment": 1649,
      "yoy_change": 218,
      "weekly_wage": 2964,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.624548,
+     "lng": -96.675777
     },
     {
      "fips": "45045",
@@ -999,7 +1146,9 @@
      "employment": 1610,
      "yoy_change": -57,
      "weekly_wage": 1652,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.892645,
+     "lng": -82.372077
     },
     {
      "fips": "48201",
@@ -1007,7 +1156,9 @@
      "employment": 1585,
      "yoy_change": 172,
      "weekly_wage": 2011,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 29.857273,
+     "lng": -95.393037
     },
     {
      "fips": "08041",
@@ -1015,7 +1166,9 @@
      "employment": 1519,
      "yoy_change": -186,
      "weekly_wage": 2177,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 38.8311,
+     "lng": -104.527681
     },
     {
      "fips": "27003",
@@ -1023,7 +1176,9 @@
      "employment": 1468,
      "yoy_change": -39,
      "weekly_wage": 2273,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 45.27411,
+     "lng": -93.242723
     },
     {
      "fips": "53033",
@@ -1031,7 +1186,9 @@
      "employment": 1428,
      "yoy_change": -11,
      "weekly_wage": 5753,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 47.490552,
+     "lng": -121.833977
     },
     {
      "fips": "35001",
@@ -1039,7 +1196,9 @@
      "employment": 1420,
      "yoy_change": -167,
      "weekly_wage": 2319,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 35.053628,
+     "lng": -106.66908
     },
     {
      "fips": "41005",
@@ -1047,7 +1206,9 @@
      "employment": 1414,
      "yoy_change": -1,
      "weekly_wage": 1879,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 45.160493,
+     "lng": -122.195127
     }
    ],
    "states": [
@@ -1432,7 +1593,9 @@
      "employment": 4260,
      "yoy_change": 86,
      "weekly_wage": 9649,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 37.221614,
+     "lng": -121.68954
     },
     {
      "fips": "17031",
@@ -1440,7 +1603,9 @@
      "employment": 2428,
      "yoy_change": -453,
      "weekly_wage": 2139,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.894294,
+     "lng": -87.645455
     },
     {
      "fips": "04013",
@@ -1448,7 +1613,9 @@
      "employment": 2391,
      "yoy_change": 255,
      "weekly_wage": 2422,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.345176,
+     "lng": -112.49893
     },
     {
      "fips": "06037",
@@ -1456,7 +1623,9 @@
      "employment": 2330,
      "yoy_change": -409,
      "weekly_wage": 2453,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.196398,
+     "lng": -118.261862
     },
     {
      "fips": "49035",
@@ -1464,7 +1633,9 @@
      "employment": 2145,
      "yoy_change": 349,
      "weekly_wage": 1910,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.667883,
+     "lng": -111.92424
     },
     {
      "fips": "48201",
@@ -1472,7 +1643,9 @@
      "employment": 1923,
      "yoy_change": 463,
      "weekly_wage": 2274,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 29.857273,
+     "lng": -95.393037
     },
     {
      "fips": "06059",
@@ -1480,7 +1653,9 @@
      "employment": 1781,
      "yoy_change": 2,
      "weekly_wage": 1908,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.675687,
+     "lng": -117.777207
     },
     {
      "fips": "06073",
@@ -1488,7 +1663,9 @@
      "employment": 1690,
      "yoy_change": 106,
      "weekly_wage": 1834,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.023604,
+     "lng": -116.776117
     },
     {
      "fips": "17043",
@@ -1496,7 +1673,9 @@
      "employment": 1558,
      "yoy_change": 566,
      "weekly_wage": 2023,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.852058,
+     "lng": -88.086039
     },
     {
      "fips": "33015",
@@ -1504,7 +1683,9 @@
      "employment": 1457,
      "yoy_change": 20,
      "weekly_wage": 1762,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.988664,
+     "lng": -71.09908
     },
     {
      "fips": "48113",
@@ -1512,7 +1693,9 @@
      "employment": 1368,
      "yoy_change": 174,
      "weekly_wage": 1476,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 32.766987,
+     "lng": -96.778424
     },
     {
      "fips": "48439",
@@ -1520,7 +1703,9 @@
      "employment": 1354,
      "yoy_change": 182,
      "weekly_wage": 2588,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 32.772119,
+     "lng": -97.291224
     },
     {
      "fips": "17089",
@@ -1528,7 +1713,9 @@
      "employment": 1316,
      "yoy_change": 124,
      "weekly_wage": 2049,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.939594,
+     "lng": -88.42804
     },
     {
      "fips": "06001",
@@ -1536,7 +1723,9 @@
      "employment": 1180,
      "yoy_change": -204,
      "weekly_wage": 5543,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 37.647139,
+     "lng": -121.912488
     },
     {
      "fips": "09110",
@@ -1544,7 +1733,9 @@
      "employment": 1164,
      "yoy_change": -50,
      "weekly_wage": 2013,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.81697,
+     "lng": -72.575886
     },
     {
      "fips": "13135",
@@ -1552,7 +1743,9 @@
      "employment": 1155,
      "yoy_change": 109,
      "weekly_wage": 1646,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.958756,
+     "lng": -84.025735
     },
     {
      "fips": "36103",
@@ -1560,7 +1753,9 @@
      "employment": 1150,
      "yoy_change": -44,
      "weekly_wage": 5403,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.943554,
+     "lng": -72.692218
     },
     {
      "fips": "25027",
@@ -1568,7 +1763,9 @@
      "employment": 1105,
      "yoy_change": 86,
      "weekly_wage": 2137,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.311693,
+     "lng": -71.940282
     },
     {
      "fips": "32003",
@@ -1576,7 +1773,9 @@
      "employment": 1081,
      "yoy_change": 127,
      "weekly_wage": 1598,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 36.21413,
+     "lng": -115.014398
     },
     {
      "fips": "42047",
@@ -1584,7 +1783,9 @@
      "employment": 1040,
      "yoy_change": -68,
      "weekly_wage": 1449,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.427332,
+     "lng": -78.653937
     },
     {
      "fips": "45045",
@@ -1592,7 +1793,9 @@
      "employment": 1007,
      "yoy_change": -106,
      "weekly_wage": 2193,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.892645,
+     "lng": -82.372077
     },
     {
      "fips": "42043",
@@ -1600,7 +1803,9 @@
      "employment": 964,
      "yoy_change": 0,
      "weekly_wage": 1666,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.412565,
+     "lng": -76.792634
     },
     {
      "fips": "37081",
@@ -1608,7 +1813,9 @@
      "employment": 927,
      "yoy_change": 113,
      "weekly_wage": 1904,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 36.079065,
+     "lng": -79.788665
     },
     {
      "fips": "25017",
@@ -1616,7 +1823,9 @@
      "employment": 897,
      "yoy_change": -399,
      "weekly_wage": 2751,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.481721,
+     "lng": -71.394916
     },
     {
      "fips": "42003",
@@ -1624,7 +1833,9 @@
      "employment": 886,
      "yoy_change": 0,
      "weekly_wage": 1673,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.469757,
+     "lng": -79.980451
     },
     {
      "fips": "06071",
@@ -1632,7 +1843,9 @@
      "employment": 875,
      "yoy_change": 114,
      "weekly_wage": 1402,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.856661,
+     "lng": -116.181571
     },
     {
      "fips": "20209",
@@ -1640,7 +1853,9 @@
      "employment": 828,
      "yoy_change": 0,
      "weekly_wage": 2405,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.115384,
+     "lng": -94.763087
     },
     {
      "fips": "39035",
@@ -1648,7 +1863,9 @@
      "employment": 731,
      "yoy_change": 1,
      "weekly_wage": 2157,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.555037,
+     "lng": -81.604957
     },
     {
      "fips": "37023",
@@ -1656,7 +1873,9 @@
      "employment": 730,
      "yoy_change": -51,
      "weekly_wage": 1251,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 35.746182,
+     "lng": -81.70618
     },
     {
      "fips": "39155",
@@ -1664,7 +1883,9 @@
      "employment": 730,
      "yoy_change": 0,
      "weekly_wage": 3028,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.306374,
+     "lng": -80.7704
     },
     {
      "fips": "26125",
@@ -1672,7 +1893,9 @@
      "employment": 721,
      "yoy_change": -73,
      "weekly_wage": 2171,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.660452,
+     "lng": -83.38421
     },
     {
      "fips": "12103",
@@ -1680,7 +1903,9 @@
      "employment": 713,
      "yoy_change": 48,
      "weekly_wage": 1428,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 27.905342,
+     "lng": -82.798066
     },
     {
      "fips": "27053",
@@ -1688,7 +1913,9 @@
      "employment": 689,
      "yoy_change": 54,
      "weekly_wage": 2407,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 45.006121,
+     "lng": -93.475228
     },
     {
      "fips": "48085",
@@ -1696,7 +1923,9 @@
      "employment": 675,
      "yoy_change": 140,
      "weekly_wage": 1461,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.194482,
+     "lng": -96.579428
     },
     {
      "fips": "42091",
@@ -1704,7 +1933,9 @@
      "employment": 656,
      "yoy_change": 25,
      "weekly_wage": 1559,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.209999,
+     "lng": -75.370201
     },
     {
      "fips": "36067",
@@ -1712,7 +1943,9 @@
      "employment": 652,
      "yoy_change": -12,
      "weekly_wage": 2447,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 43.006516,
+     "lng": -76.196134
     },
     {
      "fips": "36029",
@@ -1720,7 +1953,9 @@
      "employment": 651,
      "yoy_change": 21,
      "weekly_wage": 1604,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.752759,
+     "lng": -78.778192
     },
     {
      "fips": "45091",
@@ -1728,7 +1963,9 @@
      "employment": 640,
      "yoy_change": 61,
      "weekly_wage": 1985,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.970187,
+     "lng": -81.183187
     },
     {
      "fips": "39061",
@@ -1736,7 +1973,9 @@
      "employment": 631,
      "yoy_change": -73,
      "weekly_wage": 1780,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.196927,
+     "lng": -84.544187
     },
     {
      "fips": "33011",
@@ -1744,7 +1983,9 @@
      "employment": 630,
      "yoy_change": -8,
      "weekly_wage": 2438,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.911532,
+     "lng": -71.723055
     }
    ],
    "states": [
@@ -2129,7 +2370,9 @@
      "employment": 24244,
      "yoy_change": -995,
      "weekly_wage": 2258,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.284664,
+     "lng": -83.261953
     },
     {
      "fips": "48029",
@@ -2137,7 +2380,9 @@
      "employment": 5868,
      "yoy_change": -83,
      "weekly_wage": 1735,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 29.448671,
+     "lng": -98.520147
     },
     {
      "fips": "17031",
@@ -2145,7 +2390,9 @@
      "employment": 5480,
      "yoy_change": -83,
      "weekly_wage": 2302,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.894294,
+     "lng": -87.645455
     },
     {
      "fips": "39095",
@@ -2153,7 +2400,9 @@
      "employment": 4358,
      "yoy_change": 0,
      "weekly_wage": 2137,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.682321,
+     "lng": -83.468903
     },
     {
      "fips": "26045",
@@ -2161,7 +2410,9 @@
      "employment": 4219,
      "yoy_change": -271,
      "weekly_wage": 2002,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.58953,
+     "lng": -84.84645
     },
     {
      "fips": "47119",
@@ -2169,7 +2420,9 @@
      "employment": 3593,
      "yoy_change": 0,
      "weekly_wage": 2816,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 35.615696,
+     "lng": -87.077763
     },
     {
      "fips": "26125",
@@ -2177,7 +2430,9 @@
      "employment": 853,
      "yoy_change": -15,
      "weekly_wage": 3146,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.660452,
+     "lng": -83.38421
     },
     {
      "fips": "06037",
@@ -2185,7 +2440,9 @@
      "employment": 816,
      "yoy_change": 199,
      "weekly_wage": 4587,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.196398,
+     "lng": -118.261862
     },
     {
      "fips": "06071",
@@ -2193,7 +2450,9 @@
      "employment": 323,
      "yoy_change": 106,
      "weekly_wage": 1571,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.856661,
+     "lng": -116.181571
     },
     {
      "fips": "01073",
@@ -2201,7 +2460,9 @@
      "employment": 306,
      "yoy_change": -212,
      "weekly_wage": 1540,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.553444,
+     "lng": -86.896536
     },
     {
      "fips": "39049",
@@ -2209,7 +2470,9 @@
      "employment": 257,
      "yoy_change": -77,
      "weekly_wage": 1815,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.969875,
+     "lng": -83.009086
     },
     {
      "fips": "06073",
@@ -2217,7 +2480,9 @@
      "employment": 158,
      "yoy_change": 9,
      "weekly_wage": 2083,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.023604,
+     "lng": -116.776117
     },
     {
      "fips": "32003",
@@ -2225,7 +2490,9 @@
      "employment": 129,
      "yoy_change": -112,
      "weekly_wage": 1213,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 36.21413,
+     "lng": -115.014398
     },
     {
      "fips": "47999",
@@ -2273,7 +2540,9 @@
      "employment": 32,
      "yoy_change": 6,
      "weekly_wage": 3171,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.667883,
+     "lng": -111.92424
     },
     {
      "fips": "01999",
@@ -2313,7 +2582,9 @@
      "employment": 17,
      "yoy_change": -22,
      "weekly_wage": 5088,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.790034,
+     "lng": -84.468182
     },
     {
      "fips": "06111",
@@ -2321,7 +2592,9 @@
      "employment": 12,
      "yoy_change": 1,
      "weekly_wage": 898,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.358748,
+     "lng": -119.133145
     },
     {
      "fips": "12011",
@@ -2329,7 +2602,9 @@
      "employment": 11,
      "yoy_change": -1,
      "weekly_wage": 2139,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 26.193535,
+     "lng": -80.476683
     },
     {
      "fips": "37999",
@@ -2369,7 +2644,9 @@
      "employment": 6,
      "yoy_change": 0,
      "weekly_wage": 4000,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 26.649126,
+     "lng": -80.448354
     },
     {
      "fips": "12086",
@@ -2377,7 +2654,9 @@
      "employment": 5,
      "yoy_change": 0,
      "weekly_wage": 554,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 25.616009,
+     "lng": -80.50375
     },
     {
      "fips": "12103",
@@ -2385,7 +2664,9 @@
      "employment": 4,
      "yoy_change": 0,
      "weekly_wage": 1823,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 27.905342,
+     "lng": -82.798066
     },
     {
      "fips": "36999",
@@ -2401,7 +2682,9 @@
      "employment": 4,
      "yoy_change": 0,
      "weekly_wage": 1011,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 48.054913,
+     "lng": -121.765038
     }
    ],
    "states": [
@@ -2602,7 +2885,9 @@
      "employment": 53388,
      "yoy_change": 1358,
      "weekly_wage": 3127,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.196398,
+     "lng": -118.261862
     },
     {
      "fips": "53033",
@@ -2610,7 +2895,9 @@
      "employment": 39682,
      "yoy_change": 661,
      "weekly_wage": 3771,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 47.490552,
+     "lng": -121.833977
     },
     {
      "fips": "53061",
@@ -2618,7 +2905,9 @@
      "employment": 37519,
      "yoy_change": 82,
      "weekly_wage": 3431,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 48.054913,
+     "lng": -121.765038
     },
     {
      "fips": "20173",
@@ -2626,7 +2915,9 @@
      "employment": 29430,
      "yoy_change": 1406,
      "weekly_wage": 2179,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 37.681045,
+     "lng": -97.461054
     },
     {
      "fips": "48439",
@@ -2634,7 +2925,9 @@
      "employment": 22647,
      "yoy_change": 94,
      "weekly_wage": 3554,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 32.772119,
+     "lng": -97.291224
     },
     {
      "fips": "04013",
@@ -2642,7 +2935,9 @@
      "employment": 17026,
      "yoy_change": 210,
      "weekly_wage": 2888,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.345176,
+     "lng": -112.49893
     },
     {
      "fips": "09110",
@@ -2650,7 +2945,9 @@
      "employment": 16180,
      "yoy_change": -109,
      "weekly_wage": 3853,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.81697,
+     "lng": -72.575886
     },
     {
      "fips": "06073",
@@ -2658,7 +2955,9 @@
      "employment": 12723,
      "yoy_change": 243,
      "weekly_wage": 3213,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.023604,
+     "lng": -116.776117
     },
     {
      "fips": "06059",
@@ -2666,7 +2965,9 @@
      "employment": 10797,
      "yoy_change": -176,
      "weekly_wage": 3002,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.675687,
+     "lng": -117.777207
     },
     {
      "fips": "12009",
@@ -2674,7 +2975,9 @@
      "employment": 10341,
      "yoy_change": 1187,
      "weekly_wage": 2948,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 28.298311,
+     "lng": -80.700333
     },
     {
      "fips": "39061",
@@ -2682,7 +2985,9 @@
      "employment": 8521,
      "yoy_change": 443,
      "weekly_wage": 5213,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.196927,
+     "lng": -84.544187
     },
     {
      "fips": "40143",
@@ -2690,7 +2995,9 @@
      "employment": 8258,
      "yoy_change": 106,
      "weekly_wage": 2040,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 36.120318,
+     "lng": -95.941813
     },
     {
      "fips": "01089",
@@ -2698,7 +3005,9 @@
      "employment": 7265,
      "yoy_change": 622,
      "weekly_wage": 2823,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.764238,
+     "lng": -86.55108
     },
     {
      "fips": "12095",
@@ -2706,7 +3015,9 @@
      "employment": 7225,
      "yoy_change": 0,
      "weekly_wage": 3521,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 28.514391,
+     "lng": -81.323284
     },
     {
      "fips": "48113",
@@ -2714,7 +3025,9 @@
      "employment": 6977,
      "yoy_change": 490,
      "weekly_wage": 3200,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 32.766987,
+     "lng": -96.778424
     },
     {
      "fips": "25009",
@@ -2722,7 +3035,9 @@
      "employment": 6754,
      "yoy_change": 329,
      "weekly_wage": 3994,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.642708,
+     "lng": -70.864909
     },
     {
      "fips": "06085",
@@ -2730,7 +3045,9 @@
      "employment": 6601,
      "yoy_change": 478,
      "weekly_wage": 5178,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 37.221614,
+     "lng": -121.68954
     },
     {
      "fips": "49057",
@@ -2738,7 +3055,9 @@
      "employment": 4896,
      "yoy_change": 187,
      "weekly_wage": 3063,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.270325,
+     "lng": -111.876883
     },
     {
      "fips": "12099",
@@ -2746,7 +3065,9 @@
      "employment": 4043,
      "yoy_change": 161,
      "weekly_wage": 4116,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 26.649126,
+     "lng": -80.448354
     },
     {
      "fips": "48029",
@@ -2754,7 +3075,9 @@
      "employment": 4009,
      "yoy_change": -7,
      "weekly_wage": 2178,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 29.448671,
+     "lng": -98.520147
     },
     {
      "fips": "40109",
@@ -2762,7 +3085,9 @@
      "employment": 3846,
      "yoy_change": -67,
      "weekly_wage": 3062,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 35.554611,
+     "lng": -97.409401
     },
     {
      "fips": "18097",
@@ -2770,7 +3095,9 @@
      "employment": 3729,
      "yoy_change": 146,
      "weekly_wage": 3391,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.782976,
+     "lng": -86.135794
     },
     {
      "fips": "42045",
@@ -2778,7 +3105,9 @@
      "employment": 3594,
      "yoy_change": -47,
      "weekly_wage": 3389,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.916685,
+     "lng": -75.398818
     },
     {
      "fips": "49035",
@@ -2786,7 +3115,9 @@
      "employment": 3148,
      "yoy_change": 262,
      "weekly_wage": 2207,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 40.667883,
+     "lng": -111.92424
     },
     {
      "fips": "01097",
@@ -2794,7 +3125,9 @@
      "employment": 3074,
      "yoy_change": 188,
      "weekly_wage": 1714,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 30.684572,
+     "lng": -88.196568
     },
     {
      "fips": "09130",
@@ -2802,7 +3135,9 @@
      "employment": 2814,
      "yoy_change": -221,
      "weekly_wage": 3005,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.420307,
+     "lng": -72.493525
     },
     {
      "fips": "12086",
@@ -2810,7 +3145,9 @@
      "employment": 2801,
      "yoy_change": -42,
      "weekly_wage": 2016,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 25.616009,
+     "lng": -80.50375
     },
     {
      "fips": "25017",
@@ -2818,7 +3155,9 @@
      "employment": 2556,
      "yoy_change": 154,
      "weekly_wage": 3799,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.481721,
+     "lng": -71.394916
     },
     {
      "fips": "39017",
@@ -2826,7 +3165,9 @@
      "employment": 2468,
      "yoy_change": 106,
      "weekly_wage": 7376,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.439747,
+     "lng": -84.565734
     },
     {
      "fips": "53053",
@@ -2834,7 +3175,9 @@
      "employment": 2166,
      "yoy_change": -226,
      "weekly_wage": 2448,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 47.051413,
+     "lng": -122.15324
     },
     {
      "fips": "39085",
@@ -2842,7 +3185,9 @@
      "employment": 2042,
      "yoy_change": 140,
      "weekly_wage": 1499,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 41.778142,
+     "lng": -81.19733
     },
     {
      "fips": "48999",
@@ -2858,7 +3203,9 @@
      "employment": 2026,
      "yoy_change": -15,
      "weekly_wage": 2760,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 38.781102,
+     "lng": -90.674915
     },
     {
      "fips": "12011",
@@ -2866,7 +3213,9 @@
      "employment": 1897,
      "yoy_change": 246,
      "weekly_wage": 2804,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 26.193535,
+     "lng": -80.476683
     },
     {
      "fips": "26125",
@@ -2874,7 +3223,9 @@
      "employment": 1836,
      "yoy_change": 105,
      "weekly_wage": 2749,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 42.660452,
+     "lng": -83.38421
     },
     {
      "fips": "06029",
@@ -2882,7 +3233,9 @@
      "employment": 1616,
      "yoy_change": -218,
      "weekly_wage": 3045,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 35.346629,
+     "lng": -118.729506
     },
     {
      "fips": "08005",
@@ -2890,7 +3243,9 @@
      "employment": 1616,
      "yoy_change": 133,
      "weekly_wage": 2718,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 39.644554,
+     "lng": -104.331706
     },
     {
      "fips": "12031",
@@ -2898,7 +3253,9 @@
      "employment": 1549,
      "yoy_change": -165,
      "weekly_wage": 2445,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 30.335245,
+     "lng": -81.648113
     },
     {
      "fips": "48485",
@@ -2906,7 +3263,9 @@
      "employment": 1513,
      "yoy_change": 88,
      "weekly_wage": 1927,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 33.988212,
+     "lng": -98.70801
     },
     {
      "fips": "06111",
@@ -2914,7 +3273,9 @@
      "employment": 1400,
      "yoy_change": 18,
      "weekly_wage": 1788,
-     "period": "2026-Q1"
+     "period": "2026-Q1",
+     "lat": 34.358748,
+     "lng": -119.133145
     }
    ],
    "states": [
