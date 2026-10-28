@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -56,4 +56,10 @@ test("BIS policy-rate CSV groups observations by country", () => {
   assert.deepEqual(out.KR.at(-1), { date: "2026-09", value: 3 });
   assert.equal(out.JP.length, 1);
   assert.throws(() => parseBisCsv("A,B\n1,2"), /columns/);
+});
+
+test("CSV rows keep quoted commas together", () => {
+  assert.deepEqual(csvRow('M,"TW:Taiwan, China",2026-09,"2,000"'), ["M", "TW:Taiwan, China", "2026-09", "2,000"]);
+  const out = parseBisCsv('FREQ,REF_AREA,TIME_PERIOD,OBS_VALUE\nM,"XM:Euro area, 20",2026-09,2.15\n');
+  assert.deepEqual(out.XM, [{ date: "2026-09", value: 2.15 }]);
 });

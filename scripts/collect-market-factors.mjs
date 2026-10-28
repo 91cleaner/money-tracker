@@ -85,15 +85,26 @@ export function parseMofcomList(html, base = "https://www.mofcom.gov.cn/") {
 }
 
 
+
+export function csvRow(line) {
+  const out = []; let cur = "", q = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (q) { if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; } else if (ch === '"') q = false; else cur += ch; }
+    else if (ch === '"') q = true; else if (ch === ",") { out.push(cur.trim()); cur = ""; } else cur += ch;
+  }
+  out.push(cur.trim()); return out;
+}
+
 export function parseBisCsv(text) {
   const lines = String(text || "").trim().split(/\r?\n/);
-  const head = lines.shift().split(",").map(h => h.replace(/^"|"$/g, "").trim());
+  const head = csvRow(lines.shift());
   const ai = head.findIndex(h => /^REF_AREA/i.test(h)), ti = head.indexOf("TIME_PERIOD"), vi = head.indexOf("OBS_VALUE");
   if (ai < 0 || ti < 0 || vi < 0) throw Error("BIS CSV columns missing");
   const by = {};
   for (const line of lines) {
-    const c = line.split(",").map(x => x.replace(/^"|"$/g, "").trim());
-    const area = c[ai].split(":")[0], v = num(c[vi]);
+    const c = csvRow(line);
+    const area = String(c[ai] || "").split(":")[0], v = num(c[vi]);
     if (v == null || !/^\d{4}-\d{2}(-\d{2})?$/.test(c[ti])) continue;
     (by[area] ||= []).push({ date: c[ti], value: v });
   }
@@ -223,6 +234,7 @@ async function bisPolicyRates() {
   for (const u of urls) { try { by = parseBisCsv(await (await get(u, 40000)).text()); used = u; break; } catch (e) { last = e; warn("BIS " + u + ": " + e.message); } }
   if (!by) throw last || Error("BIS fetch failed");
   const series = {};
+  console.log("::notice::BIS_AREAS " + JSON.stringify(Object.fromEntries(Object.entries(by).map(([k, v]) => [k, v.length + " to " + v.at(-1).date]))));
   for (const [k, label] of Object.entries(areas)) if (by[k]) series[k] = { label: label + " (%)", points: by[k].slice(-140), latest: by[k].at(-1) };
   writeJson("policy-rates.json", { source: "Bank for International Settlements · Central bank policy rates (WS_CBPOL, monthly)", source_url: "https://data.bis.org/topics/CBPOL", api_url: used,
     note: "월말 기준 BIS 집계값. 각 중앙은행 발표 직후에는 반영이 늦을 수 있음.", collected_at: now(), series });
