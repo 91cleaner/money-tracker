@@ -7,17 +7,19 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TAGS = {"semiconductor": r"반도체|파운드리|메모리", "battery_ev": r"배터리|2차전지|이차전지|전기자동차|전기차|리튬", "auto": r"자동차|모빌리티",
         "tech_ai": r"인공지능|데이터|클라우드|정보통신|소프트웨어|플랫폼", "shipbuilding": r"조선|선박|해운|해사", "defense": r"방위산업|방산|국방|군사",
         "energy": r"에너지|원자력|전력|전기사업|가스|석유|수소|신재생", "clean_energy": r"탄소|기후|재생에너지|태양광|풍력", "health": r"바이오|제약|의약품|약사법|의료기기|첨단재생",
-        "trade": r"관세|수출|수입|통상|무역|대외무역|외국환", "finance": r"금융|은행|보험|자본시장|증권|가상자산", "crypto": r"가상자산", "housing": r"주택|건축|부동산|도시정비"}
+        "trade": r"관세|수출|수출입|통상|무역|대외무역|외국환", "finance": r"금융|은행|보험|자본시장|증권|가상자산", "crypto": r"가상자산", "housing": r"주택|건축|부동산|도시정비"}
 def main():
     key = os.environ.get("ASSEMBLY_KEY", "").strip(); p = os.path.join(ROOT, "data", "policy", "kr.json"); os.makedirs(os.path.dirname(p), exist_ok=True)
     old = json.load(open(p)) if os.path.exists(p) else {"items": []}; seen = {i["id"]: i for i in old["items"]}; got = 0
     q = {"Type": "json", "pIndex": 1, "pSize": 100 if key else 10, "AGE": 22}
     if key: q["KEY"] = key
-    u = "https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?" + urllib.parse.urlencode(q)
-    try:
-        with urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=60) as r: d = json.load(r)
-        rows = d["nzmimeepazxkubdpn"][1]["row"]
-    except Exception as e: print("fetch fail", type(e).__name__); rows = []
+    rows = []
+    for pi in range(1, 6 if key else 2):
+        q["pIndex"] = pi; u = "https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?" + urllib.parse.urlencode(q)
+        try:
+            with urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=60) as r: d = json.load(r)
+            rows += d["nzmimeepazxkubdpn"][1]["row"]
+        except Exception as e: print("fetch fail page", pi, type(e).__name__); break
     for b in rows:
         t = b.get("BILL_NAME") or ""; bid = b.get("BILL_ID")
         if not bid or not t: continue

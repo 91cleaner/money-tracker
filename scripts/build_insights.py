@@ -87,8 +87,16 @@ for tk, fs in (FA.get("companies") or {}).items():
     prod = uniq([f for f in fs if f["kind"] == "factory"]); sup = [f for f in fs if f["kind"] == "supplier"]
     if len(prod) >= 2: add(tk, "supply", f"{form} 생산시설 {len(prod)}곳(본사 제외) 중 {dist(prod)}(좌표 기준 대략).", src, None)
     elif sup: add(tk, "supply", f"{form}에 언급된 공급사 {len(sup)}곳: {dist(sup)}(공급사 소재지 좌표 기준 대략).", src, None)
+# 6) 한국 국회 의안(경로에 한국 정류장 있는 기업)
+KP = J("data", "policy", "kr.json"); KI = KP.get("items") or []
+if KI:
+    d0 = min(i["d"] for i in KI if i.get("d")); d1 = max(i["d"] for i in KI if i.get("d"))
+    for tk, e in comp.items():
+        if not any(33 <= (t.get("lat") or 0) <= 39 and 124 <= (t.get("lon") or 0) <= 131 for t in e.get("route", [])): continue
+        sid = sector.get(tk); k = [i for i in KI if sid in i["tags"]]; tr = [i for i in KI if "trade" in i["tags"]]
+        add(tk, "policy", f"한국 국회 발의 법률안 {d0}~{d1} {len(KI)}건 중 {SEC.get(sid, sid)} 관련 {len(k)}건, 관세·통상 관련 {len(tr)}건(법안명 키워드 기준, 영향 단정 아님).", KP.get("source_url"), d1)
 # 요약 3줄: 우선순위 award > lobby > trade > supply > price
-PRI = {"award": 0, "lobby": 1, "trade": 2, "supply": 3, "price": 4}
+PRI = {"award": 0, "lobby": 1, "trade": 2, "supply": 3, "policy": 4, "price": 5}
 for tk, o in OUT.items(): o["summary"] = [l["text"] for l in sorted(o["lines"], key=lambda l: PRI[l["kind"]])[:3]]
 if "TSM" in OUT: OUT["2330.TW"] = OUT["TSM"]
 json.dump({"updated": dt.date.today().isoformat(), "about": "저장된 공개 데이터에서 규칙으로 계산한 비교 수치. AI 미연결. 인과 아님. 투자 조언 아님.", "companies": OUT},
