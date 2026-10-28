@@ -9,7 +9,7 @@ h1,h2,.eyebrow{letter-spacing:-.01em}h2{text-transform:uppercase;font-weight:800
 .eyebrow{font-family:ui-monospace,Menlo,monospace;color:#3dff7a!important;font-size:12px;letter-spacing:.12em}
 .counter b,.alert .a,.case .amt,.rcp,.stats b{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-variant-numeric:tabular-nums}
 .alert,.case,.counter{border:1px solid #2a3540;background:#0c1116e6!important}
-.alert{position:relative}.alert::after{content:"데이터상 이상 징후";position:absolute;right:12px;bottom:10px;transform:rotate(-6deg);border:2px solid #ff4d4d;color:#ff4d4d;font:800 12px var(--sans);padding:1px 5px;border-radius:3px;opacity:.75;pointer-events:none}
+.alert{position:relative}.alert::after{content:"눈여겨볼 점";position:absolute;right:12px;bottom:10px;transform:rotate(-6deg);border:2px solid #ff4d4d;color:#ff4d4d;font:800 12px var(--sans);padding:1px 5px;border-radius:3px;opacity:.75;pointer-events:none}
 
 .counter span::before,.case .no::after{content:"● 추적 중";color:#ffb020;font:700 12px ui-monospace,monospace;margin-right:6px;animation:blink 1.6s steps(2) infinite}
 .case .no::after{margin-left:8px}

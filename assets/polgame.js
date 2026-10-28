@@ -1,4 +1,4 @@
-/* 정부 지출 '국회 돈 추적실': 화면 전체가 지도인 게임 화면.
+/* 정부 지출 '국회 돈 살펴보기': 화면 전체가 지도인 게임 화면.
    아래 도구 칸(1~5)을 바꿔 끼우면 지도가 바뀐다. 의원을 누르면 공식 사진이 들어간 '기록 파일'이 열리고, 다녀온 나라로 비행 경로가 그려진다.
    공개 기록을 보기 쉽게 모은 것일 뿐, 잘잘못을 따지지 않는다(문구도 그렇게 쓴다). */
 (async () => {
@@ -117,8 +117,8 @@
 `;
   document.head.append(css);
   root.innerHTML = `<div class="pg-map" aria-label="국회의원 지도"></div><div class="pg-scan"></div>
-  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl">국회 돈 추적실 <button type="button" class="snd" aria-label="소리 켜기·끄기"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="m" d="m16 9.5 5 5m0-5-5 5" style="display:none"/></svg></button></div></div>
-  <div class="pg-box ctr"><div class="n mono">0원</div><div class="l">오늘 의원 <span class="nmem">300</span>명 세비 누적(지급 기준)</div></div></div>
+  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl">국회 돈 살펴보기 <button type="button" class="snd" aria-label="소리 켜기·끄기"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="m" d="m16 9.5 5 5m0-5-5 5" style="display:none"/></svg></button></div></div>
+  <div class="pg-box ctr"><div class="n mono">0원</div><div class="l">오늘 의원 <span class="nmem">300</span>명 의원 월급 누적(지급 기준)</div></div></div>
   <div class="pg-say mono"></div>
   <div class="pg-file" role="dialog" aria-label="기록 파일"></div>
   <nav class="pg-bar" aria-label="도구">

@@ -308,7 +308,7 @@
       } else bl = '<section class="card"><p class="note">법안 자료를 받는 중이에요…</p></section>';
       return back + '<section class="card head"><p class="eyebrow">국회의원 · 22대</p><h2>' + esc(m[1]) + '</h2><p class="sub">' + esc(m[2] + ' · ' + m[3] + (m[4] ? ' · ' + m[4] : '')) + '</p>' +
         '<p class="meta">' + esc(m[5]) + '<br>' + esc('국외 출장 기록 ' + m[7] + '건 · 대표 발의 ' + m[6] + '건') + '</p>' +
-        '<p class="links"><a href="national.html?mp=' + encodeURIComponent(m[1]) + '">국회 추적실에서 표결·출장·징계안 보기 ›</a></p></section>' + bl;
+        '<p class="links"><a href="national.html?mp=' + encodeURIComponent(m[1]) + '">국회 살펴보기에서 법 만들기·찬반·출장·징계안 보기 ›</a></p></section>' + bl;
     }
     if (t === 's') {
       const s = S.core.stocks.find((x) => x[0] === key);

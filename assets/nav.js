@@ -1,5 +1,5 @@
-/* 위·아래 탭 6개. 순서: 🇰🇷 국회 · 🇺🇸 USA · 우리 동네 · 국민연금 · 뉴스 · 더보기(의원 추적이 먼저).
-   게임·퀴즈는 메뉴에 넣지 않는다. ?c= 는 앞의 네 탭에 붙인다.
+/* 폰은 아래 탭만: 우리 동네 세금 · 정부 지출 · 국민연금 주식 · 뉴스 · 더보기.
+   넓은 화면은 위 탭만. 게임·퀴즈는 메뉴에 넣지 않는다.
    도시 페이지의 우리 동네 세금은 그 도시 지도로 남긴다. */
 (() => {
   const pg = document.body.dataset.page || '';
@@ -17,10 +17,9 @@
   };
   const fixedMap = (pg === 'city' && q.get('c')) ? ('city.html' + location.search + '#map') : addQ('./#map');
   const tabs = [
-    ['nat', addQ('national.html'), '🇰🇷 국회'],
-    ['us', 'us.html', '🇺🇸 USA'],
-    ['map', fixedMap, '우리 동네'],
-    ['nps', addQ('nps.html'), '국민연금'],
+    ['map', fixedMap, '우리 동네 세금'],
+    ['nat', addQ('national.html'), '정부 지출'],
+    ['nps', addQ('nps.html'), '국민연금 주식'],
     ['news', addQ('news.html'), '뉴스'],
   ];
   const act = (k) => {
@@ -134,6 +133,7 @@ body.has-tabbar{padding-top:56px;padding-bottom:calc(72px + env(safe-area-inset-
 @media (max-width:767px){
   .tabbar-top{display:none !important}
   body.has-tabbar{padding-top:0 !important}
+  .tabbar a,.tabbar button{font-size:11px;letter-spacing:-.08em;padding:4px 1px}
 }
 @media (min-width:768px){
   .tabbar-bot{display:none !important}

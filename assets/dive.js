@@ -1,4 +1,4 @@
-// 홈 '세금 길' 다이브: 지도 → 지역 검색 시 비행 → 돈 흐름 선 → 바텀시트(총액 → 데이터상 이상 징후 → 업체)
+// 홈 '세금 길' 다이브: 지도 → 지역 검색 시 비행 → 돈 흐름 선 → 바텀시트(총액 → 눈여겨볼 점 → 업체)
 (async () => {
   const root = document.getElementById('dive'); if (!root || !window.L) return;
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -316,7 +316,7 @@
       if (Math.hypot(b[0] - a[0], b[1] - a[1]) >= 18) arcs.push({pts, w, col, n: Math.max(1, Math.round(1 + 5 * Math.sqrt(f.amount / mx))), d: i * 0.12});
     });
     const oc = BY[slug] || {}; L.circleMarker(toLL(a), {pane: 'dvTop', renderer: gTop, radius: 15, color: '#0b0f13', weight: 6, opacity: 0.7, fill: false, interactive: false, className: 'dv-ring-bg'}).addTo(gF); L.circleMarker(toLL(a), {pane: 'dvTop', renderer: gTop, radius: 15, color: '#ffd60a', weight: 3, fill: false, interactive: false, className: 'dv-ring'}).addTo(gF);
-    L.tooltip({permanent: true, direction: 'top', className: 'klab dv-org', offset: [0, -10], interactive: false}).setLatLng(toLL(a)).setContent(esc((oc.name || '') + ' (일을 맡긴 곳)')).addTo(gF);
+    L.tooltip({permanent: true, direction: 'top', className: 'klab dv-org', offset: [0, -10], interactive: false}).setLatLng(toLL(a)).setContent(esc((oc.name || '') + ' (돈 낸 곳)')).addTo(gF);
     scheduleRelayout(); FX.set(arcs, hold);
   };
   // 돈 흐름 입자 (canvas · 도시 화면에서만)
@@ -391,7 +391,7 @@
 
   // 시트 레이어
   const setH = (lv) => sheet.dataset.lv = lv;
-  const src = '<p class="dv-src"><abbr title="데이터상 이상 징후는 위법을 뜻하지 않으며 정상적인 이유가 있을 수 있습니다. 여러 업체가 함께 맡은 계약은 나눈 비율이 확인된 것만 그 비율대로 나눠 셉니다.">ⓘ</abbr> 출처 조달청 나라장터</p>';
+  const src = '<p class="dv-src"><abbr title="눈여겨볼 점는 위법을 뜻하지 않으며 정상적인 이유가 있을 수 있습니다. 여러 업체가 함께 맡은 계약은 나눈 비율이 확인된 것만 그 비율대로 나눠 셉니다.">ⓘ</abbr> 출처 조달청 나라장터</p>';
   const share = (title, u) => { u = new URL(u, location.href).href;
     if (navigator.share) return navigator.share({title, url: u}).catch(() => {});
     window.mtCopy ? mtCopy(u) : toast('링크: ' + u); };
@@ -413,12 +413,12 @@
     const fd = (x) => x ? x.replace(/-/g, '.') : ''; T(`${fd(k.fr)} ~ ${fd(k.to)} 동안 맺은 계약 금액 합계`, 64, 400, 32, '#cfd8e3', 500);
     g.fillStyle = 'rgba(255,255,255,.12)'; g.fillRect(64, 436, 1072, 2);
     T(`계약 금액이 전국 ${k.of}개 시 중 ${k.rank}번째로 많아요`, 64, 496, 40, '#e8eef5', 700);
-    T(`데이터상 이상 징후 ${k.n.toLocaleString('ko-KR')}건`, 64, 556, 40, '#ff9f0a', 700); T('(눈여겨볼 만한 점, 잘못이라는 뜻은 아니에요)', 64 + g.measureText(`데이터상 이상 징후 ${k.n.toLocaleString('ko-KR')}건`).width + 16, 556, 26, '#8fa0b3', 500);
+    T(`눈여겨볼 점 ${k.n.toLocaleString('ko-KR')}건`, 64, 556, 40, '#ff9f0a', 700); T('(눈여겨볼 만한 점, 잘못이라는 뜻은 아니에요)', 64 + g.measureText(`눈여겨볼 점 ${k.n.toLocaleString('ko-KR')}건`).width + 16, 556, 26, '#8fa0b3', 500);
     T('출처: 조달청 나라장터 공공데이터', 64, 624, 26, '#8fa0b3', 500); T(k.link.replace(/^https?:\/\//, '').replace(/\?.*$/, ''), 1136, 624, 26, '#8fa0b3', 600, 'right');
     return cv; };
   window.__mtCard = (slug) => { const k = CARD(slug || cur); return k ? drawCard(k).toDataURL('image/png') : null; };
   const shareCard = async (slug) => { const k = CARD(slug); if (!k) return; const cv = drawCard(k);
-    const text = `우리 시는 ${k.when} 얼마나 계약했을까? ${k.name}는 계약 금액 ${krw(k.total)}, 전국 ${k.of}개 시 중 ${k.rank}번째로 많아요. 데이터상 이상 징후 ${k.n}건, 우리 시는 어떨까?`;
+    const text = `우리 시는 ${k.when} 얼마나 계약했을까? ${k.name}는 계약 금액 ${krw(k.total)}, 전국 ${k.of}개 시 중 ${k.rank}번째로 많아요. 눈여겨볼 점 ${k.n}건, 우리 시는 어떨까?`;
     const blob = await new Promise((r) => cv.toBlob(r, 'image/png')); const file = blob && new File([blob], `money-tracker-${slug}.png`, {type: 'image/png'});
     if (file && navigator.canShare && navigator.canShare({files: [file]})) { try { await navigator.share({files: [file], text: text + ' ' + k.link, url: k.link}); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     const xu = 'https://x.com/intent/post?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(k.link);
@@ -452,11 +452,36 @@
     return `<div class="t5"><div class="t5-h"><b>${esc(CAT)} TOP 5 시</b>${shb(CAT + ' 계약 TOP 5 시 · 세금추적단', './?cat=' + encodeURIComponent(CAT))}</div><ol>${L_.map(({c, v, n}, i) =>
       `<li><button type="button" data-s="${c.slug}"><span class="t5-r">${i + 1}</span><span class="t5-m"><b>${esc(c.short || c.name)}</b><small>${n}건 · 건당 평균 ${krw(n ? v / n : v)}</small><small class="t5-v" data-s="${c.slug}"></small>${fest ? `<small class="t5-ag" data-s="${c.slug}"></small>` : ''}</span><em>${krw(v)}</em></button></li>`).join('')}</ol>
       ${fest ? '<p class="small t5-n">공연 용역 금액에는 무대·음향·연출이 포함되며 개인 출연료가 아님 · 행사대행은 축제 전체 운영 계약</p>' : ''}<p class="dv-src">출처 조달청 나라장터</p></div>`; };
-  const L0 = (keep) => { cur = null; seq++; flowRefs = []; if (locMk) { locMk.remove(); locMk = null; } gF.clearLayers(); FX.set([]); sheet.classList.remove('has-flow-note'); gL.addTo(map); setTimeout(relayout, 960); setH(0); dim(null);
+  // 처음 전국 화면: 실제 나라 흐름(flows.json nation)만 주황 선으로. 없는 선은 그리지 않는다.
+  const drawNation = () => {
+    gF.clearLayers(); flowRefs = []; locMk = null; FX.set([]); REST = {n: 0, amt: 0}; flowCity = null;
+    const rows = (fl.nation || []).filter((f) => f && f.p && fl.cities[f.from] && fl.cities[f.from].p && inKR(toLL(f.p)) && inKR(toLL(fl.cities[f.from].p))).slice(0, 25);
+    if (!rows.length) { if (window.__syncMapLg) window.__syncMapLg(); return; }
+    const mx = Math.max(...rows.map((f) => f.amount || 0), 1);
+    const arcs = [];
+    rows.forEach((f, i) => {
+      const a = fl.cities[f.from].p, b = f.p;
+      let pts;
+      if (window.mtArc) pts = mtArc(a, b).map(toLL);
+      else {
+        const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.min(d * 0.28, 60);
+        const mxp = (a[0] + b[0]) / 2 - (dy / d) * o, myp = (a[1] + b[1]) / 2 + (dx / d) * o;
+        pts = [];
+        for (let t = 0; t <= 1.0001; t += 1 / 24) pts.push(toLL([(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * mxp + t * t * b[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * myp + t * t * b[1]]));
+      }
+      const w = window.mtW ? mtW(f.amount, mx) : 1.5 + 7 * Math.sqrt((f.amount || 0) / mx), col = '#ff9f0a';
+      L.polyline(pts, {color: col, weight: w, opacity: 0.85, interactive: false, className: 'dv-line'}).addTo(gF);
+      L.circleMarker(toLL(b), {radius: 3 + w / 4, color: '#fff', weight: 1, fillColor: col, fillOpacity: 0.95, interactive: false}).addTo(gF);
+      if (Math.hypot(b[0] - a[0], b[1] - a[1]) >= 18) arcs.push({pts, w, col, n: Math.max(1, Math.round(1 + 5 * Math.sqrt((f.amount || 0) / mx))), d: i * 0.04});
+    });
+    FX.set(arcs);
+    if (window.__syncMapLg) window.__syncMapLg();
+  };
+  const L0 = (keep) => { cur = null; seq++; flowRefs = []; if (locMk) { locMk.remove(); locMk = null; } drawNation(); sheet.classList.remove('has-flow-note'); gL.addTo(map); setTimeout(relayout, 960); setH(0); dim(null);
     if (box.clientWidth && keep !== true) { userMoved = false; map._dvHome = 1; map.flyToBounds(KR, {...krPad(), duration: RM ? 0 : 0.8}); }
     const tot = C.reduce((s, c) => s + TOT(c.slug), 0);
     strip(null); body.innerHTML = `<p class="dv-v dv-v0">${krw(tot)} <small>${CAT === '전체' ? '전국 85개 시 · ' + PL() : '전국 · ' + esc(CAT) + ' (지도도 이 분야 기준)'}</small></p>${CAT === '전체' ? '' : top5()}<p class="dv-l">지역을 검색하거나 원을 누르세요 ${shb('세금추적단', './')}</p>`
-      + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc((window.plainT || String)(c.top_alert.title.replace(/^데이터상 이상 징후:\s*/, '')))}</b><span>${esc(c.top_alert.detail || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
+      + (W.length ? `<p class="dv-k" style="margin-top:12px">이번 주 눈여겨볼 점</p><div class="dv-car">${W.map((c) => `<button type="button" class="dv-card" data-s="${c.slug}"><b>${esc(c.short || c.name)} · ${esc((window.plainT || String)(c.top_alert.title.replace(/^(?:데이터상 이상 징후|눈여겨볼 점):\s*/, '')))}</b><span>${esc(c.top_alert.detail || '')}</span><em>${krw(c.top_alert.amount)} ›</em></button>`).join('')}</div><p class="dv-cnt"></p>` : '');
     body.querySelectorAll('.t5 [data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); const cw = body.querySelector('.dv-car'); if (cw) { car(cw); cw.querySelectorAll('[data-s]').forEach((b) => (b.onclick = () => go({c: b.dataset.s}))); } ex(false); syncHome(); };
   const W = (() => { const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10); return C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk).sort((a, b) => (b.top_alert.amount || 0) - (a.top_alert.amount || 0)).slice(0, 9); })();
   const strip = (c, tot) => { let s = root.querySelector('.dv-strip'); if (!c) { s && (s.hidden = true); return; }
@@ -514,7 +539,7 @@
       card('전국 85개 시 중에서', `${k.rank}번째`, `${k.when} 계약 금액이 ${k.of}개 시 중 ${k.rank}번째로 많아요.`, SR),
       card('다른 지역 업체가 받은 돈', out ? out + '%' : '확인 중', out ? `업체 위치를 아는 금액 중 ${out}%가 다른 지역 업체에 갔어요.` : '업체 주소를 아직 확인하고 있어요.', SR + ' · 업체 주소 기준'),
       card('계약 금액이 가장 큰 종류', top ? esc(top[0]) : '자료 없음', top ? `${krw(top[1])}, 전체의 ${Math.round(top[1] / (k.total || 1) * 100)}%예요.` : '', SR + ' · 제목으로 나눈 종류'),
-      card('데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small>', `${k.n.toLocaleString('ko-KR')}건`, k.n ? `가장 많은 유형: ${esc(KN[tk[0]] || tk[0])} ${tk[1]}건. 위법을 뜻하지 않고, 정상적인 이유가 있을 수 있어요.` : '이 기간에는 자동으로 찾은 패턴이 없어요.', SR + ' · 자동 패턴 검사'),
+      card('눈여겨볼 점', `${k.n.toLocaleString('ko-KR')}건`, k.n ? `가장 많은 유형: ${esc(KN[tk[0]] || tk[0])} ${tk[1]}건. 위법을 뜻하지 않고, 정상적인 이유가 있을 수 있어요.` : '이 기간에는 자동으로 찾은 패턴이 없어요.', SR + ' · 자동 패턴 검사'),
       `<div class="wr-c wr-share"><p class="wr-t">친구에게 보여 주기</p><img alt="${esc(k.name)} 공유 이미지" src="${drawCard(k).toDataURL('image/png')}"><button type="button" class="wr-btn dv-shc">이 카드 공유</button><p class="wr-src">${SR}</p></div>`];
     el.innerHTML = `<p class="dv-k">우리 시 한눈에 보기 <span class="wr-n">1 / ${cs.length}</span></p><div class="wr-row">${cs.join('')}</div>`;
     const row = el.querySelector('.wr-row'), n = el.querySelector('.wr-n'); row.onscroll = () => { const w = row.firstElementChild.offsetWidth + 10; n.textContent = `${Math.min(cs.length, Math.round(row.scrollLeft / w) + 1)} / ${cs.length}`; };
@@ -528,7 +553,7 @@
     strip(c.name, c.total); extLine(slug); sheet.classList.toggle('has-flow-note', flowNote); body.innerHTML = `<div class="dv-head"><button type="button" class="dv-nav" data-d="-1" aria-label="이전 지역">‹</button><div><p class="dv-name">${esc(c.name)}${gu ? ' ' + esc(gu) : ''}</p><p class="dv-v">${krw(c.total)} <small class="dv-incl">시청과 산하 기관 포함</small></p></div><button type="button" class="dv-nav" data-d="1" aria-label="다음 지역">›</button></div>
       <p class="dv-l dv-l1"><span class="dv-meta">${PL()} · ${c.total ? (out != null ? `<b class="dv-out">다른 지역 업체 ${out}%</b>` : '다른 지역 업체 비율 확인 중') : '아직 수집된 계약 없음'}</span> <button type="button" class="dv-sh dv-shc" aria-label="이 지역 결과 공유">공유</button> <button type="button" class="dv-chip" hidden>이상 징후 <b class="dv-n">0</b>건</button></p>
       ${flowNote ? `<p class="dv-flow-note">${FLOW_NOTE}</p>` : ''}
-      <div class="dv-more"><div class="dv-wrap" aria-label="우리 시 한눈에 보기"></div><div class="dv-t3">${top3(f)}</div><p class="dv-k">데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
+      <div class="dv-more"><div class="dv-wrap" aria-label="우리 시 한눈에 보기"></div><div class="dv-t3">${top3(f)}</div><p class="dv-k">눈여겨볼 점</p><div class="dv-cards dv-car"><div class="skel-box">찾는 중…</div><div class="skel-box"></div></div><p class="dv-cnt"></p>
       <a class="gobtn" href="city.html?c=${slug}${gu ? '&gu=' + encodeURIComponent(gu) : ''}">이 시 전체 보기</a>${src}</div>`;
     ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
     body.querySelectorAll('.dv-nav').forEach((b) => (b.onclick = () => go({c: sib(slug, +b.dataset.d)}, true)));
@@ -554,7 +579,7 @@
       body.innerHTML = `<div class="dv-vh"><button type="button" class="dv-back" aria-label="${esc(BY[slug].name)}로 돌아가기">‹</button><p class="dv-name">${esc(v.name)}</p>${shb(v.name + ' 계약', 'vendor.html?v=' + vid)}</div><p class="dv-v" style="text-align:center">${krw(v.total)}</p>
         <p class="dv-l">${esc((v.region || '소재지 확인 중').split(' ').slice(-1)[0])} · <button type="button" class="dv-chip">계약 ${v.count}건</button></p>
         <div class="dv-more">${a ? `<div class="dv-card on"><b>${esc((window.plainT || String)(a.title))}</b><span>${esc((window.maskT || ((x) => x))(a.detail))}${(window.plainTag || (() => ''))(a.detail)}</span></div>` : ''}
-        <div class="dv-rows">${rows.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(r.date)} · ${esc((window.maskT || ((x) => x))(r.title))}${r.jshare ? ` <i class="jvb">함께 맡음 ${r.jshare}%</i>` : ''}${/단가/.test(r.title || '') && window.plainTag ? window.plainTag(r.title) : ''}${r.ann === true ? ' <i class="ann-y">공고 있음</i>' : r.ann === false ? ' <i class="ann-n">공고 없음</i>' : ''}</span><b>${krw(r.amount)} 원문 ›</b></a>`).join('')}</div>
+        <div class="dv-rows">${rows.map((r) => `<a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(r.date)} · ${esc((window.maskT || ((x) => x))(r.title))}${r.jshare ? ` <i class="jvb">함께 맡음 ${r.jshare}%</i>` : ''}${/단가/.test(r.title || '') && window.plainTag ? window.plainTag(r.title) : ''}${r.ann === true ? ' <i class="ann-y">미리 알림</i>' : r.ann === false ? ' <i class="ann-n">공고 없음</i>' : ''}</span><b>${krw(r.amount)} 원문 ›</b></a>`).join('')}</div>
         <a class="gobtn" href="vendor.html?v=${vid}">업체 전체 보기</a>${src}</div>`;
       ex(false); body.querySelector('.dv-chip').onclick = () => ex(true);
       body.querySelector('.dv-back').onclick = () => history.back();
@@ -586,7 +611,7 @@
     else if (dy > 70 && Math.abs(dy) > Math.abs(dx) && sheet.dataset.lv !== '0') history.state && history.state.dv ? history.back() : go({}, true);
     else if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 1.5 && cur && sheet.dataset.lv === '1') go({c: sib(cur, dx < 0 ? 1 : -1)}, true); }, {passive: true});
   render();
-  // 첫 방문(주소에 지역 없음): 이번 주 가장 눈에 띄는 데이터상 이상 징후 1건으로 날아간다
+  // 첫 방문(주소에 지역 없음): 이번 주 가장 눈에 띄는 눈여겨볼 점 1건으로 날아간다
   try {
     const wk = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10), RK = {split: 3, increase: 3, repeat: 2, big: 1, threshold: 0};
     const pk = !RM && !location.search && !sessionStorage.getItem('dvPick') && C.filter((c) => c.top_alert && (c.top_alert.detail || '').slice(0, 10) >= wk)
@@ -594,14 +619,14 @@
     if (pk && !root.querySelector('.dv-car')) { sessionStorage.setItem('dvPick', '1'); const A = pk.top_alert; // 지도 카드에 이상 징후 목록이 이미 있으면 겹치므로 생략
       setTimeout(() => {
         const d = document.createElement('div'); d.className = 'dv-pick';
-        d.innerHTML = `<button type="button" class="dv-pk-line"><span>이번 주 데이터상 이상 징후(눈여겨볼 만한 점)</span> <b>${esc(pk.short || pk.name)} ${krw(A.amount)}</b> ›</button>
+        d.innerHTML = `<button type="button" class="dv-pk-line"><span>이번 주 눈여겨볼 점</span> <b>${esc(pk.short || pk.name)} ${krw(A.amount)}</b> ›</button>
           <div class="dv-pk-x"><p class="dv-pk-r">${esc((window.plainT || String)(A.title))}</p><div class="dv-pk-b"><a href="https://www.g2b.go.kr" target="_blank" rel="noopener">나라장터 원문</a><button type="button" data-sh>공유</button><button type="button" data-x>닫기</button></div>
           <p class="dv-pk-s">출처: 조달청 나라장터(공공데이터포털) · 위법을 뜻하지 않아요</p></div>`;
         d.querySelector('.dv-pk-line').onclick = () => { if (d.classList.toggle('open')) go({c: pk.slug, _pick: 1}); };
         sheet.append(d);
         d.querySelector('[data-x]').onclick = () => { d.remove(); if (cur) go({}, true); };
         d.querySelector('[data-sh]').onclick = () => { const u = location.href.replace(/[^/]*([?#].*)?$/, '') + 'c/' + pk.slug + '.html#' + A.key;
-          navigator.share ? navigator.share({title: '데이터상 이상 징후 · ' + pk.name, url: u}).catch(() => {}) : window.mtCopy && mtCopy(u); };
+          navigator.share ? navigator.share({title: '눈여겨볼 점 · ' + pk.name, url: u}).catch(() => {}) : window.mtCopy && mtCopy(u); };
         addEventListener('popstate', () => d.remove(), {once: true});
         const rm = () => { const c = new URLSearchParams(location.search).get('c'); if (c && c !== pk.slug) d.remove(); };
         addEventListener('click', () => setTimeout(rm, 50)); }, 600); }

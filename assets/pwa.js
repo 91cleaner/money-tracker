@@ -26,6 +26,7 @@
     box.innerHTML = `<img src="assets/icons/radar2-192.png" alt=""><span class="t">${html}</span>${btn ? '<button type="button" class="go">설치</button>' : ''}<button type="button" class="x" aria-label="닫기">×</button>`;
     box.querySelector('.x').onclick = close;
     const go = box.querySelector('.go'); if (go) go.onclick = async () => { if (!deferred) return; deferred.prompt(); try { await deferred.userChoice; } catch (e) { /* 무시 */ } deferred = null; box.remove(); };
+    box.classList.add('below-map');
     const at = document.querySelector('.visits') || document.getElementById('mytop');
     if (at) at.after(box); else { const m = document.querySelector('main'); if (m) m.prepend(box); }
   };
