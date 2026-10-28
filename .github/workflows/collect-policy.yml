@@ -17,6 +17,7 @@ jobs:
       - run: python3 scripts/collect_policy_kr.py
         env:
           ASSEMBLY_KEY: ${{ secrets.ASSEMBLY_KEY }}
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
       - run: python3 scripts/build_search_index.py && python3 scripts/build_insights.py
       - run: |
           git config user.name "github-actions[bot]"; git config user.email "41898283+github-actions[bot]@users.noreply.github.com"

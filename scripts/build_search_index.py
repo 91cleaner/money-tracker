@@ -236,7 +236,11 @@ def facility_stops(ent):
 KR_LAB = {"semiconductor": "반도체", "battery_ev": "배터리·전기차", "auto": "자동차", "tech_ai": "AI·IT", "shipbuilding": "조선", "defense": "방산", "energy": "에너지", "clean_energy": "탄소·기후",
           "health": "바이오·제약", "trade": "관세·통상", "finance": "금융", "crypto": "가상자산", "housing": "주택·부동산"}
 def kr_policy(ent):
-    K = opt("data", "policy", "kr.json"); I = K.get("items") or []; n = 0
+    K = opt("data", "policy", "kr.json"); A = K.get("items") or []; I = [b for b in A if b.get("kind") != "press"]; P = [b for b in A if b.get("kind") == "press"]; n = 0
+    if P:
+        ent["topic:kr-msit"] = {"type": "topic", "name": "한국 과학기술정보통신부 최근 보도자료", "aliases": ["과기정통부 보도자료", "과기부 보도자료", "한국 정부 보도자료", "한국 정책 보도자료", "과학기술정보통신부"],
+            "route": [{"region": "과학기술정보통신부 · 정부세종청사(대략 위치)", "lat": 36.503 + 0.01 * (i % 3 - 1), "lon": 127.262 + 0.01 * (i // 3 - 1), "title": (b.get("dept") or "보도자료"), "kind": "press", "ref": "krpress:" + b["id"],
+                       "fact": b["t"] + " · " + b["src"] + " (제목 기준, 영향 단정 아님)", "source_url": b["u"], "date": b.get("d")} for i, b in enumerate(P[:8])]}; n += 1
     def stops(L):
         return [{"region": "대한민국 국회 · 서울 여의도", "lat": 37.5318 + 0.01 * (i % 3 - 1), "lon": 126.9142 + 0.01 * (i // 3 - 1), "title": (b.get("no") or "") + " 발의", "kind": "bill", "ref": "krbill:" + b["id"],
                  "fact": f"{b['t']} · 발의 {b.get('by') or '-'} · 소관위 {b.get('cmte') or '미정'} (법안명 기준, 영향 단정 아님)", "source_url": b["u"], "date": b.get("d")} for i, b in enumerate(L[:8])]
