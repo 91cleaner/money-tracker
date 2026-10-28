@@ -40,6 +40,13 @@ test('ranks go from 신입 요원 to 관제실 대장 by opened cards', () => {
   for (let i = 1; i < ranks.length; i++) assert.ok(ranks[i][0] > ranks[i - 1][0]);
 });
 
+test('member dex: collects opened member cards against the members.json roster', () => {
+  assert.match(js, /data\/us\/members\.json/);
+  assert.match(js, /의원 도감/);
+  assert.match(js, /"member:"/);
+  assert.ok(fs.existsSync(path.join(root, 'data/us/members.json')));
+});
+
 test('attached to company, member and world-intelligence with one script line each', () => {
   assert.match(read('company.html'), /<script src="assets\/commander\.js\?v=[^"]+"><\/script>\n<\/body>/);
   assert.match(read('member.html'), /<script src="assets\/commander\.js\?v=[^"]+"><\/script>\n<\/body>/);

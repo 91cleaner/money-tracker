@@ -77,7 +77,7 @@
   dock.appendChild(mainBtn);
   var panel = el("section"); panel.id = "mtCmdPanel"; panel.hidden = true; panel.setAttribute("aria-label", "대장 모드 패널");
   document.body.append(dock, panel);
-  var tab = "missions", data = { trades: null, latest: [], maxFiled: null, sectorsOf: null };
+  var tab = "missions", data = { members: null, trades: null, latest: [], maxFiled: null, sectorsOf: null };
 
   function paintDock() {
     if (starBtn) { var on = !!(st.stars[key(page.type, page.id)]); starBtn.textContent = on ? "★ 추적 중" : "☆ 추적"; starBtn.className = on ? "on" : ""; starBtn.setAttribute("aria-pressed", String(on)); starBtn.setAttribute("aria-label", on ? "추적 목록에서 빼기" : "추적 목록에 넣기"); }
@@ -153,12 +153,12 @@
     var bar = el("div", "bar"), bi = el("i"); bi.style.width = (r.next ? Math.min(100, (n - r.at) / (r.next[0] - r.at) * 100) : 100).toFixed(0) + "%"; bar.appendChild(bi); panel.appendChild(bar);
     if (st.streak.n) panel.appendChild(el("p", "fire", "🔥 연속 임무 완료 " + st.streak.n + "일"));
     var tabs = el("div", "tabs"); tabs.setAttribute("role", "tablist");
-    [["missions", "추적 임무"], ["watch", "추적 목록"], ["feed", "새 신고"]].forEach(function (t) {
+    [["missions", "추적 임무"], ["watch", "추적 목록"], ["dex", "의원 도감"], ["feed", "새 신고"]].forEach(function (t) {
       var b = el("button", "", t[1]); b.type = "button"; b.setAttribute("role", "tab"); b.setAttribute("aria-selected", String(tab === t[0]));
       b.addEventListener("click", function () { tab = t[0]; render(); }); tabs.appendChild(b);
     });
     panel.appendChild(tabs);
-    if (tab === "missions") renderMissions(); else if (tab === "watch") renderWatch(); else renderFeed();
+    if (tab === "missions") renderMissions(); else if (tab === "watch") renderWatch(); else if (tab === "dex") renderDex(); else renderFeed();
     panel.appendChild(el("p", "note", "브라우저에만 저장(로그인 없음). 하원 PTR 신고 기준이며 거래일→신고일 최대 45일 차이가 있을 수 있습니다. 공개 기록일 뿐 잘잘못 판단이 아니며 투자 조언 아님."));
   }
   function renderMissions() {
@@ -182,6 +182,33 @@
       ul.appendChild(li);
     });
     panel.appendChild(ul);
+  }
+  // Member dex: every member card opened in this browser is collected; progress is against the roster in members.json.
+  function dexInfo() {
+    var roster = data.members || [], byName = {}, got = [];
+    roster.forEach(function (m) { byName[String(m.name || "").toLowerCase()] = m; });
+    Object.keys(st.opened).forEach(function (k) {
+      if (k.indexOf("member:") !== 0) return;
+      var nm = k.slice(7), m = byName[nm.toLowerCase()];
+      if (m) got.push({ name: m.name, party: m.party, chamber: m.chamber, state: m.state, at: st.opened[k] });
+    });
+    got.sort(function (a, b) { return String(b.at).localeCompare(String(a.at)) || a.name.localeCompare(b.name); });
+    return { total: roster.length, got: got };
+  }
+  function renderDex() {
+    if (!data.members) { panel.appendChild(el("p", "m", "의원 명단 불러오는 중…")); return; }
+    var d = dexInfo();
+    panel.appendChild(el("p", "", "의원 도감 " + d.got.length + " / " + d.total + "명"));
+    var bar = el("div", "bar"), bi = el("i"); bi.style.width = (d.total ? Math.min(100, d.got.length / d.total * 100) : 0).toFixed(1) + "%"; bar.appendChild(bi); panel.appendChild(bar);
+    var ul = el("ul");
+    if (!d.got.length) ul.appendChild(el("li", "", "아직 열어본 의원 카드가 없습니다. 의원 페이지를 열면 도감에 기록됩니다."));
+    d.got.forEach(function (g) {
+      var li = el("li"), a = el("a", "", g.name); a.href = href("member", g.name); li.appendChild(a);
+      li.appendChild(el("div", "m", (g.chamber === "sen" ? "상원" : "하원") + " · " + (g.party || "-") + " · " + (g.state || "-") + " · 열람 " + g.at));
+      ul.appendChild(li);
+    });
+    panel.appendChild(ul);
+    panel.appendChild(el("p", "m", "공식 의원 명단(@unitedstates/congress-legislators) 기준 · 이 브라우저에서 카드를 연 의원만 표시됩니다."));
   }
   function renderFeed() {
     var ul = el("ul"), list = data.latest.slice(0, 30);
@@ -208,6 +235,7 @@
   if (page) { st.opened[key(page.type, page.id)] = st.opened[key(page.type, page.id)] || today(); save(); }
   streakAlive();
   paintDock();
+  get("data/us/members.json").then(function (mb) { data.members = (mb && mb.members) || []; if (!panel.hidden && tab === "dex") render(); });
   get("data/us/trades.json").then(function (tr) {
     var t = (tr && tr.trades) || [];
     data.trades = t;
