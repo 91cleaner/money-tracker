@@ -95,6 +95,19 @@ if KI:
         if not any(33 <= (t.get("lat") or 0) <= 39 and 124 <= (t.get("lon") or 0) <= 131 for t in e.get("route", [])): continue
         sid = sector.get(tk); k = [i for i in KI if sid in i["tags"]]; tr = [i for i in KI if "trade" in i["tags"]]
         add(tk, "policy", f"한국 국회 발의 법률안 {d0}~{d1} {len(KI)}건 중 {SEC.get(sid, sid)} 관련 {len(k)}건, 관세·통상 관련 {len(tr)}건" + (f", 과기정통부 보도자료 {len(KS)}건 중 {SEC.get(sid, sid)} 관련 {sum(1 for i in KS if sid in i['tags'])}건" if KS else "") + "(제목 키워드 기준, 영향 단정 아님).", KP.get("source_url"), d1)
+# 6b) 해외 정부 발표(경로에 해당국 정류장 있는 기업)
+BOX = {"jp": lambda la, lo: 30 <= la <= 46 and 129.5 <= lo <= 146 and not (33 <= la <= 39 and lo <= 131), "eu": lambda la, lo: 35 <= la <= 71 and -11 <= lo <= 31,
+       "cn": lambda la, lo: 18 <= la <= 54 and 73 <= lo <= 135 and not (33 <= la <= 39 and 124 <= lo <= 131) and not (21.8 <= la <= 25.4 and 119.5 <= lo <= 122.2) and not (lo >= 129.5 and la >= 30),
+       "tw": lambda la, lo: 21.8 <= la <= 25.4 and 119.5 <= lo <= 122.2}
+NMC = {"jp": "일본", "eu": "EU", "cn": "중국", "tw": "대만"}
+for cc, inbox in BOX.items():
+    CPd = J("data", "policy", cc + ".json"); CI = CPd.get("items") or []
+    if not CI: continue
+    ds = [i["d"] for i in CI if i.get("d")]; d0, d1 = min(ds), max(ds)
+    for tk, e in comp.items():
+        if not any(inbox(t.get("lat") or 0, t.get("lon") or 0) for t in e.get("route", [])): continue
+        sid = sector.get(tk); k = [i for i in CI if sid in i["tags"]]; tr = [i for i in CI if "trade" in i["tags"]]
+        add(tk, "policy", f"{NMC[cc]} 정부 발표 {d0}~{d1} {len(CI)}건 중 {SEC.get(sid, sid)} 관련 {len(k)}건, 무역·관세 관련 {len(tr)}건(제목 키워드 기준, 영향 단정 아님).", CPd.get("source_url"), d1)
 # 7) 백악관·대통령 조치 전후 같은 기간 종가(인과 아님)
 WH = [i for i in (J("data", "us", "whitehouse.json").get("items") or []) if i["kind"] == "presdoc" and i["type"] in ("행정명령", "포고문", "대통령 메모", "대통령 조치") and i.get("date")]
 PD = os.path.join(ROOT, "data", "us", "prices"); DAYS = sorted(f[:10] for f in os.listdir(PD) if re.match(r"\d{4}-\d{2}-\d{2}\.json$", f)) if os.path.isdir(PD) else []
