@@ -131,3 +131,22 @@ test('follow-up: card labels, WH types, company chart strings are English; names
   assert.ok(!/[가-힣]/.test(note) && /not investment advice/i.test(note), note);
   assert.equal(api.name({ name: '엔비디아', symbol: 'NVDA', aliases: ['NVDA', 'NVIDIA CORP', '엔비디아'] }), '엔비디아'); // KO mode keeps the Korean name (EN picks the Latin alias: "Nvidia Corp.")
 });
+
+test('follow-up 2: NVDA route / indicator / lobbying / PAC data leave no Korean in EN', () => {
+  const left = [];
+  const check = s => { if (typeof s === 'string' && /[가-힣]/.test(s) && /[가-힣]/.test(api.toEn(s))) left.push(s.slice(0, 70)); };
+  const walk = (o, skip) => { if (Array.isArray(o)) o.forEach(x => walk(x, skip)); else if (o && typeof o === 'object') Object.entries(o).forEach(([k, v]) => { if (!skip.includes(k)) walk(v, skip); }); else check(o); };
+  const idx = JSON.parse(read('data/search-index.json'));
+  walk(Object.values(idx.entities).filter(e => e.symbol === 'NVDA' || (e.aliases || []).includes('NVDA')), ['aliases', 'name']); // names are shown through api.name(); aliases are search terms
+  walk(JSON.parse(read('data/us/ticker-routes.json')).routes, ['aliases', 'factcheck']); // factcheck is an internal note, not rendered
+  walk(JSON.parse(read('data/us/insights.json')).companies.NVDA, []);
+  assert.deepEqual(left, [], 'Korean left in EN');
+  const t = api.toEn;
+  assert.equal(t('함께 볼 지표: 미국 10년 국채 금리'), 'Indicator to watch: US 10-year Treasury yield');
+  assert.equal(t('함께 볼 지표: 대만달러/달러 환율'), 'Indicator to watch: TWD/USD exchange rate');
+  assert.match(t('요즘 값은 약 431.2억 달러이에요(2026-09).'), /^Recent value: approx\. \$43\.12B \(Sep 2026\)\.$/);
+  assert.equal(t('유형(신고대로)'), 'Type (as filed)');
+  assert.equal(t('아래 링크'), 'Link below');
+  assert.equal(t('◉ 지원되는 작전 경로'), '◉ Supported routes');
+  assert.equal(api.tr('공급사 TSMC(파운드리)'), '공급사 TSMC(파운드리)', 'KO mode untouched');
+});

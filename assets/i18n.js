@@ -51,7 +51,18 @@
     "1년": "1Y", "주간 순위표": "Weekly ranking", "공시": "Filings", "대략 위치": "Approx. location", "관보 조치": "Federal Register actions", "포고문": "Proclamation", "행정명령": "Executive Order", "대통령 조치": "Presidential action", "대통령 메모": "Presidential memorandum", "대통령 공고": "Presidential notice", "대통령 결정": "Presidential determination",
     "상무부 BIS(산업안보국)": "Commerce BIS (Bureau of Industry and Security)", "USTR(무역대표부)": "USTR (Trade Representative)", "재무부 OFAC(해외자산통제국)": "Treasury OFAC (Office of Foreign Assets Control)",
     "전체": "All", "미정": "TBD", "대표 발의": "Sponsor", "회부 위원회": "Referred committee",
-    "MONEY TRACKER — 회사 상세": "MONEY TRACKER — Company file", "MONEY TRACKER — 미국 회사 파일": "MONEY TRACKER — US Company File"
+    "MONEY TRACKER — 회사 상세": "MONEY TRACKER — Company file", "MONEY TRACKER — 미국 회사 파일": "MONEY TRACKER — US Company File",
+    "아래 링크": "Link below", "내부 데이터 분류": "Internal data classification", "유형(신고대로)": "Type (as filed)", "당-주": "Party-State", "법안 상세 페이지 ›": "Bill detail page ›", "수정종가": "Adjusted close", "기준": "Basis",
+    // NVDA hand-written route stops (data/us/ticker-routes.json)
+    "본사 위치 확인됨": "HQ location confirmed", "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 산타클라라임.": "Data shows the business address in SEC filings is Santa Clara, California.",
+    "칩 생산은 외부 파운드리 의존": "Chip production relies on external foundries", "10-K에서 자체 공장 없이 TSMC·삼성전자 등 파운드리에 칩 생산을 맡긴다고 밝힘.": "The 10-K says it has no fabs of its own and outsources chip production to foundries such as TSMC and Samsung Electronics.",
+    "중국 등 수출 허가 요건 공시": "Disclosure of export license requirement for China and others", "반도체 지원법 제정": "CHIPS Act enacted",
+    "미 정부가 H20 칩을 중국 등(홍콩·마카오, D:5 국가 포함)으로 수출할 때 허가가 필요하다고 2025-04-09 통보했다고 8-K로 공시함(제출 2025-04-15).": "The 8-K discloses that on Apr 9, 2025 the US government notified the company that a license is required to export H20 chips to China and others (incl. Hong Kong, Macau and D:5 countries) (filed Apr 15, 2025).",
+    // command-room demo routes
+    "대만 해협의 지정학적 위험을 검토합니다.": "Reviews geopolitical risk in the Taiwan Strait.", "반도체 제조 집중과 생산 차질 가능성을 살펴봅니다.": "Looks at concentration of chip manufacturing and possible production disruptions.", "미국 기술기업의 공급망 노출을 확인합니다.": "Checks US tech companies' supply-chain exposure.",
+    "연준 정책과 국채금리, 은행주·성장주의 반응을 분석합니다.": "Analyzes Fed policy, Treasury yields and the reaction of bank and growth stocks.", "중동 에너지 공급과 운송 위험을 검토합니다.": "Reviews Middle East energy supply and shipping risks.", "미국 에너지·항공·운송 업종의 상반된 영향을 비교합니다.": "Compares the opposing effects on US energy, airline and transport sectors.",
+    "무역 상대국의 생산·수출 구조를 확인합니다.": "Checks the production and export structure of trading partners.", "관세 적용 대상과 미국 기업의 비용 전가 가능성을 검토합니다.": "Reviews which goods tariffs apply to and whether US companies can pass costs on.", "국방예산 승인과 실제 조달·계약의 차이를 확인합니다.": "Checks the gap between approved defense budgets and actual procurement and contracts.",
+    "동맹국의 방위산업 공급망을 살펴봅니다.": "Looks at allies' defense-industry supply chains.", "미국 방산 기업의 수주와 실적을 비교합니다.": "Compares US defense companies' orders and results."
   };
 
   // ---------- templates with numbers (whole sentence shape; applied before phrases) ----------
@@ -163,7 +174,7 @@
     [/(.+)은\(는\) 증시에 상장되지 않아 주가 데이터가 없습니다\. 같은 업종의 상장 기업·업종 경로를 대신 보여드려요\./, "$1 is not publicly listed, so there is no price data. Showing listed companies and the sector route instead."],
     [/"(.+)"와 딱 맞는 항목은 없어요\. 많이 찾는 경로를 대신 골라봤어요\./, "No exact match for \"$1\". Here are popular routes instead."],
     [/"(.+)"와 딱 맞는 항목은 없지만 가까운 항목이 있어요\./, "No exact match for \"$1\", but there are close ones."],
-    [/^(.+) 경로$/, "$1 route"], [/ 경로 시작$/, " · start route"],
+    [/^(?!◉)(.+) 경로$/, "$1 route"], [/ 경로 시작$/, " · start route"],
     [/(\d+)곳\. 공개 기록 경로를 따라가세요\./, "$1 stops. Follow the public-record route."], [/ · 정류장 /, " · stops "],
     [/의원 주식 거래 · 하원 PTR 신고 기준 (\d+)건 중 최근 (\d+)건 · 거래일→신고일 최대 (\d+)일 차이 가능 · 투자 조언 아님/, "Member stock trades · $2 most recent of $1 House PTR filings · Disclosed (PTR), up to $3-day lag · Not investment advice"],
     [/하원 PTR 신고 · /, "House PTR filings · "],
@@ -193,7 +204,15 @@
     [/미국 워싱턴 D\.C\.\(의회\)/, "Washington, D.C. (U.S. Congress)"], [/발의 의원 지역구 · /, "Sponsor's district · "], [/백악관 · 워싱턴 DC/, "White House · Washington, DC"],
     [/대한민국 국회 · 서울 여의도/, "National Assembly of Korea · Yeouido, Seoul"], [/\(대략 위치\)/, "(approx. location)"], [/브뤼셀/, "Brussels"], [/베이징/, "Beijing"],
     [/백악관·대통령 조치 · (행정명령|포고문|대통령 조치) (.+)/, function (m, t, rest) { return "White House / presidential action · " + EXACT_DOC(t) + " " + rest.replace(/^(포고문|행정명령) /, ""); }],
-    [/함께 볼 지표: 미국 (\d+)년 국채 금리/, "Indicator to watch: US $1-year Treasury yield"],
+    [/미국 (\d+)년 국채 ?금리/, "US $1-year Treasury yield"],
+    // NVDA hand-written route stops (data/us/ticker-routes.json), indicator note, lobbying / PAC lines (data/search-index.json)
+    [/^(.+?)\((H\.R\.\d+|S\.\d+), (\d+)대 의회\)가 법으로 제정됨\. 업계 전반 대상 법률임\.$/, function (m, t, b, c) { var o = c % 100 > 10 && c % 100 < 14 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" }[c % 10] || "th"); return "The " + t + " (" + b + ", " + c + o + " Congress) was enacted into law. It applies to the industry as a whole."; }],
+    [/관세청이 품목 코드\(HS (\d+)자리\)로 센 숫자라서, 산업부가 발표하는 '(.+?)' 전체 수출과 범위가 달라요\./, "Counted by the Korea Customs Service by product code (HS $1-digit), so its scope differs from total '$2' exports published by the Ministry of Trade, Industry and Energy."],
+    [/데이터상 (\S+) 로비 공시 (\d+)건, 보고 금액 합계 약 ([\d,.]+(?:억|만)? ?달러)\./, "Data shows $2 lobbying disclosure filings for $1, reported total approx. $3."],
+    [/주요 이슈: /, "Top issues: "], [/수집 법안과 번호 일치: (.+?)\(회기 확인 필요\)\./, "Bill numbers matching collected bills: $1 (session needs checking)."],
+    [/데이터상 (\d{4}) 선거주기 (.+?)의 연방 후보 위원회 기부 합계 ([\d,.]+(?:억|만)? ?달러)\(~(\S+?)\)\. 임직원 자발 기부 PAC이며 회사 자금 아님\./, "Data shows the $1 election cycle: $2 contributed a total of $3 to federal candidate committees (through $4). A PAC funded by voluntary employee contributions, not company funds."],
+    [/^(.+?) · 로비$/, "$1 · Lobbying"], [/^(.+?) · 후원$/, "$1 · PAC"],
+    [/^(.+?) 원문: /, "$1 source text: "],
     [/함께 볼 지표: 한국 (.+?)\((HS \d+), 월간\)/, function (m, n, hs) { return "Indicator to watch: Korea " + ({ "통신기기 수출": "telecom equipment exports", "석유제품 수출": "petroleum product exports", "집적회로 수출": "integrated circuit exports" }[n.replace(/ $/, "")] || n) + " (" + hs + ", monthly)"; }]
   ];
   var RNG = { "1주": "1W", "1달": "1M", "1년": "1Y", "전체": "All-time" };
@@ -305,8 +324,16 @@
     ["지도 서버 연결 확인 중 · 대체 지도 표시", "Checking map server connection · showing fallback map"], ["지도 타일 지연 · 개략 지도 표시 (연결 복구 시 자동 전환)", "Map tiles delayed · showing rough map (switches automatically when connection recovers)"],
     ["지도 엔진 오류 · 개략 지도 표시", "Map engine error · showing rough map"], ["지도 라이브러리 연결 실패 · 개략 지도 표시", "Map library failed to load · showing rough map"],
     ["Alphabet Inc.", "Alphabet Inc."],
+    // indicators, names and places in route data (NVDA etc.)
+    ["대만달러/달러 환율", "TWD/USD exchange rate"], ["엔/달러 환율", "JPY/USD exchange rate"], ["위안/달러 환율", "CNY/USD exchange rate"], ["달러 환율", "USD exchange rate"], ["국채 금리", "Treasury yield"], ["미 의회 법안", "U.S. Congress bills"],
+    ["업종 코드", "industry code"], ["SEC 등록명", "SEC registered name"], ["SEC 등록 업종", "SEC-registered industry"], ["본사(SEC 주소)", "HQ (SEC address)"], ["(좌표는 대략 위치)", "(coordinates are approximate)"], ["원문: ", "Source text: "],
+    ["미국 워싱턴 D.C.", "Washington, D.C."], ["워싱턴 D.C.", "Washington, D.C."], ["캘리포니아", "California"], ["샌타클래라", "Santa Clara"], ["산타클라라", "Santa Clara"], ["신주", "Hsinchu"], ["이천", "Icheon"], ["아이다호", "Idaho"],
+    ["삼성전자", "Samsung Electronics"], ["SK하이닉스", "SK Hynix"], ["마이크론", "Micron"], ["파운드리", "foundry"], ["메모리", "memory"],
+    ["스페이스X", "SpaceX"], ["오픈AI", "OpenAI"], ["앤트로픽", "Anthropic"], ["스트라이프", "Stripe"], ["바이트댄스", "ByteDance"], ["데이터브릭스", "Databricks"], ["쉬인", "Shein"],
     // generic units / words (last)
-    ["의원 거래", "Member trades"], ["하원 PTR", "House PTR"], ["하원", "House"], ["상원", "Senate"], ["의원", "Member"], ["신고", "filing"], ["데이터상", "data shows"]
+    ["의원 거래", "Member trades"], ["하원 PTR", "House PTR"], ["하원", "House"], ["상원", "Senate"], ["의원", "Member"], ["신고", "filing"], ["데이터상", "data shows"],
+    // last-resort single words for text that reaches the page in pieces
+    ["수정종가", "adjusted close"], ["위원회", "committee"], ["경로", "route"], ["수집", "collected"], ["원문", "source"], ["후원", "PAC"], ["유형", "type"], ["대로", "as filed"], ["로비", "lobbying"], ["기준일", "as of"], ["기준", "basis"], ["출처", "Source"], ["지표 갱신", "Indicators updated"], ["관련 법안", "Related bills"], ["오늘의 임무", "Today's mission"], ["대상", "Target"], ["가격", "Price"], ["핵심", "Key"], ["주가", "Prices"], ["종가", "close"]
   ];
   var PHS = PH.slice().sort(function (a, b) { return b[0].length - a[0].length; });
 
@@ -333,6 +360,8 @@
         var r = RULES[i]; if (!r[0].test(out)) continue;
         out = out.replace(new RegExp(r[0].source, r[0].flags.replace("g", "") + "g"), r[1]);
       }
+      // Korean-unit dollar amounts in stored data: "약 431.2억 달러", "1,538만 달러", "0달러"
+      out = out.replace(/약 ?([\d,.]+)(억|만) ?달러/g, function (m, n, u) { return "approx. " + koUsd(n, u); }).replace(/([\d,.]+)(억|만) ?달러/g, function (m, n, u) { return koUsd(n, u); }).replace(/(\d[\d,]*)달러/g, function (m, n) { return usd(parseFloat(n.replace(/,/g, ""))); });
       if (HANGUL.test(out)) for (var j = 0; j < PHS.length; j++) if (out.indexOf(PHS[j][0]) >= 0) out = out.split(PHS[j][0]).join(PHS[j][1]);
       // leftover count suffixes (numbers followed by Korean units)
       out = out.replace(/(\d)건/g, function (m, d, i, str) { return /(^|[^\d,.])1$/.test(str.slice(0, i + 1)) ? d + " filing" : d + " filings"; }).replace(/(\d)곳/g, function (m, d, i, str) { return /(^|[^\d,.])1$/.test(str.slice(0, i + 1)) ? d + " company" : d + " companies"; }).replace(/(\d)일(?![가-힣])/g, "$1 days").replace(/(\d)명/g, "$1 members").replace(/(\d)개월/g, "$1 months");
