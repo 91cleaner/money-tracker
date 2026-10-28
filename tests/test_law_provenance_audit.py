@@ -44,6 +44,32 @@ class LawProvenanceAuditTests(unittest.TestCase):
         self.assertEqual(result["count_mismatch"], 1)
         self.assertEqual(result["missing_corpus_source"], 1)
 
+    def test_future_introduction_date_is_flagged(self):
+        result = self.inspect(dict(self.row, d="2026-12-01"))
+        self.assertEqual(result["future_introduction_date"], 1)
+        self.assertEqual(self.inspect(self.row)["future_introduction_date"], 0)
+
+    def test_enacted_date_must_be_historically_usable(self):
+        future = self.inspect(dict(self.row, sd="2026-12-01"))
+        self.assertEqual(future["enacted_action_date_invalid"], 1)
+        early = self.inspect(dict(self.row, sd="2025-12-31"))
+        self.assertEqual(early["enacted_action_date_invalid"], 1)
+        invalid = self.inspect(dict(self.row, sd="2026-02-30"))
+        self.assertEqual(invalid["enacted_action_date_missing"], 1)
+        self.assertEqual(invalid["bad_action_date"], 1)
+        valid = self.inspect(dict(self.row, sd="2026-02-03"))
+        self.assertEqual(valid["enacted_action_date_invalid"], 0)
+        pending = self.inspect(dict(self.row, st="審議中", sd="2026-12-01"))
+        self.assertEqual(pending["enacted_action_date_invalid"], 0)
+
+    def test_malformed_ipv6_urls_are_warnings_not_crashes(self):
+        result = audit.audit_document("jp", {
+            "count": 1, "source_url": "https://[invalid",
+            "rows": [dict(self.row, u="https://[invalid")]
+        })
+        self.assertEqual(result["bad_url"], 1)
+        self.assertEqual(result["missing_corpus_source"], 1)
+
     def test_missing_rows_is_fatal_not_silently_empty(self):
         with self.assertRaises(ValueError):
             audit.audit_document("jp", {"count": 0})
