@@ -3,14 +3,13 @@
 섹터 태그는 제목 키워드 기준(영향 단정 아님)."""
 import datetime as dt, email.utils, json, os, re, sys, urllib.request, xml.etree.ElementTree as ET
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FEEDS = {"산업통상자원부": "https://www.korea.kr/rss/dept_motie.xml", "기획재정부": "https://www.korea.kr/rss/dept_moef.xml",
-         "금융위원회": "https://www.korea.kr/rss/dept_fsc.xml", "과학기술정보통신부": "https://www.korea.kr/rss/dept_msit.xml",
-         "정책브리핑 보도자료": "https://www.korea.kr/rss/pressrelease.xml"}
+FEEDS = {"산업통상부": "https://www.korea.kr/rss/dept_motir.xml", "금융위원회": "https://www.korea.kr/rss/dept_fsc.xml", "관세청": "https://www.korea.kr/rss/dept_customs.xml",
+         "방위사업청": "https://www.korea.kr/rss/dept_dapa.xml", "정책브리핑 보도자료": "https://www.korea.kr/rss/pressrelease.xml", "정책뉴스": "https://www.korea.kr/rss/policy.xml"}
 TAGS = {"semiconductor": r"반도체|파운드리|HBM|메모리|팹", "battery": r"배터리|2차전지|이차전지|양극재|리튬", "auto": r"자동차|전기차|미래차|모빌리티",
         "ai": r"인공지능|AI|데이터센터|클라우드", "shipbuilding": r"조선|선박|해운", "defense": r"방산|방위산업|국방", "energy": r"에너지|원전|원자력|전력|LNG|수소|태양광|풍력",
         "bio": r"바이오|제약|의약품|백신", "trade": r"관세|수출|수입|통상|무역|FTA"}
 def get(u):
-    req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 MoneyTracker"})
+    req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36", "Accept": "application/rss+xml, application/xml, text/xml, */*"})
     with urllib.request.urlopen(req, timeout=40) as r: return r.read()
 def main():
     p = os.path.join(ROOT, "data", "policy", "kr.json")
