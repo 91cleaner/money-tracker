@@ -6,6 +6,18 @@
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
 {
+"id": "ec:IP/26/2274",
+"kind": "press",
+"t": "New Eurobarometer survey shows young people's growing engagement and views on participatory democracy, youth issues, and EU's added value in their lives ",
+"d": "2026-10-28",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2274",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": []
+},
+{
 "id": "ec:STATEMENT/26/2275",
 "kind": "press",
 "t": "Joint statement by High Representative/Vice-President Kallas and Commissioner Kos on the early parliamentary elections in Serbia",
@@ -329,6 +341,34 @@
 "focus_ko": []
 },
 {
+"id": "celex:32026D2448",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2448 of 26 October 2026 on the position to be taken on behalf of the European Union within the General Council of the World Trade Organization concerning the request for an extension of the WTO waiver permitting the European Union to grant autonomous trade preferences to the Western Balkans",
+"d": "2026-10-26",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2448",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [],
+"focus_ko": []
+},
+{
+"id": "celex:32026R2446",
+"kind": "regulation",
+"t": "Council Regulation (EU) 2026/2446 of 26 October 2026 amending Regulation (EU) 2023/2720 opening and providing for the management of autonomous Union tariff quotas for certain fishery products for the 2024-2026 period (Text with EEA relevance)",
+"d": "2026-10-26",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2446",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [],
+"focus_ko": []
+},
+{
 "id": "celex:32026D2347",
 "kind": "decision",
 "t": "Commission Implementing Decision (EU) 2026/2347 of 23 October 2026 amending Implementing Decision 2012/715/EU as regards the inclusion of the Republic of Singapore in the list of third countries established by that Decision",
@@ -619,6 +659,42 @@
 "tags": [
 "clean_energy"
 ],
+"focus": [],
+"focus_ko": []
+},
+{
+"id": "celex:32026R2379",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2379 of 21 October 2026 on the registration of the geographical indication Sümeg / Sümegi (PDO) in the Union register of geographical indications pursuant to Regulation (EU) 2024/1143 of the European Parliament and of the Council",
+"d": "2026-10-21",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2379",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": []
+},
+{
+"id": "celex:32026R2380",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2380 of 21 October 2026 on the registration of the geographical indication Cigeľská prírodná minerálna voda / Minerálna voda Cigeľka / Cigeľka (PDO) in the Union register of geographical indications pursuant to Regulation (EU) 2024/1143 of the European Parliament and of the Council",
+"d": "2026-10-21",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2380",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": []
+},
+{
+"id": "celex:32026D2402",
+"kind": "decision",
+"t": "Decision (EU) 2026/2402 of the European Parliament and of the Council of 21 October 2026 amending Decision (EU) 2015/1814 as regards the market stability reserve for buildings, road transport and additional sectors (Text with EEA relevance)",
+"d": "2026-10-21",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2402",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
 "focus": [],
 "focus_ko": []
 },
@@ -1122,6 +1198,18 @@
 "u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2165",
 "dept": "EU 집행위원회",
 "src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": []
+},
+{
+"id": "celex:32026R2300",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2300 of 15 October 2026 granting a Union authorisation for the biocidal product family Active chlorine based products BPF – CID LINES NV in accordance with Regulation (EU) No 528/2012 of the European Parliament and of the Council",
+"d": "2026-10-15",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2300",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
 "tags": [],
 "focus": [],
 "focus_ko": []
