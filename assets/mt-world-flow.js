@@ -226,7 +226,7 @@
       var list = (topic.recent[cc] || []).slice(0, 3);
       list.forEach(function (r) {
         var row = add(evb, 'div', 'mt-w-ev');
-        add(row, 'span', 'd', (r.d || '날짜 미상') + ' ' + FLAG[cc] + (r.p === 2 ? ' 통과' : ''));
+        add(row, 'span', 'd', (r.p === 2 ? (r.pd || '통과일 미확인') + ' ' + FLAG[cc] + ' 통과' : (r.d || '제출일 미확인') + ' ' + FLAG[cc] + ' 제출'));
         var a = add(row, safe(r.u) ? 'a' : 'span', 't', r.t);
         if (safe(r.u)) { a.href = safe(r.u); a.target = '_blank'; a.rel = 'noopener noreferrer'; }
         if (r.st) add(row, 'span', 'm', r.st);
@@ -272,7 +272,7 @@
         var cc = x[0], d = x[1]; per[cc] = 0; if (!d) return;
         for (var i = 0; i < d.t.length; i++) {
           var t = norm(d.t[i]);
-          if (toks.every(function (k) { return t.indexOf(k) >= 0; })) { per[cc]++; total++; if (hits.length < 400) hits.push({ cc: cc, t: d.t[i], d: d.d[i], st: d.st[i], u: d.u[i], p: d.p[i] }); }
+          if (toks.every(function (k) { return t.indexOf(k) >= 0; })) { per[cc]++; total++; if (hits.length < 400) hits.push({ cc: cc, t: d.t[i], d: d.d[i], st: d.st[i], u: d.u[i], p: d.p[i], pd: (d.pd || [])[i] || '' }); }
         }
       });
       status.textContent = total ? '제목에 "' + toks.join(' ') + '"가 들어간 법안 ' + n(total) + '건' : '"' + toks.join(' ') + '"가 들어간 법안 제목은 저장된 기록에 없어요. 다른 낱말(한국어·영어·일본어·중국어)로도 찾아보세요.';
@@ -283,7 +283,7 @@
       var evb = add(box, 'div', 'mt-w-evidence');
       hits.slice(0, 12).forEach(function (r) {
         var row = add(evb, 'div', 'mt-w-ev');
-        add(row, 'span', 'd', (r.d || '날짜 미상') + ' ' + FLAG[r.cc] + (r.p === 2 ? ' 통과' : ''));
+        add(row, 'span', 'd', (r.p === 2 ? (r.pd || '통과일 미확인') + ' ' + FLAG[r.cc] + ' 통과' : (r.d || '제출일 미확인') + ' ' + FLAG[r.cc] + ' 제출'));
         var a = add(row, safe(r.u) ? 'a' : 'span', 't', r.t);
         if (safe(r.u)) { a.href = safe(r.u); a.target = '_blank'; a.rel = 'noopener noreferrer'; }
         if (r.st) add(row, 'span', 'm', r.st);
