@@ -76,8 +76,8 @@ css.textContent=[
 "@media(max-width:950px){#mtResearch{top:105px;left:8px;right:8px;width:auto;max-height:calc(100dvh - 300px);padding:11px}#mtResearch h2{font-size:17px}}",
 "@media(max-height:610px){#mtResearch{max-height:calc(100dvh - 175px)}}",
 /* Search results default to a short, dismissible map caption. Full evidence remains one tap away. */
-"#mtResearch:not(.mt-expanded){top:auto!important;bottom:calc(72px + env(safe-area-inset-bottom,0px))!important;left:10px!important;right:auto!important;width:min(370px,calc(100% - 20px))!important;max-height:164px!important;overflow:hidden!important;padding:10px 12px!important}",
-"#mtResearch:not(.mt-expanded)>:not(.mt-r-head):not(h2):not(.mt-r-ticker):not(.mt-quick-summary):not(.mt-quick-actions){display:none!important}",
+"#mtResearch:not(.mt-expanded){top:auto!important;bottom:calc(72px + env(safe-area-inset-bottom,0px))!important;left:10px!important;right:auto!important;width:min(370px,calc(100% - 20px))!important;max-height:196px!important;overflow:hidden!important;padding:10px 12px!important}",
+"#mtResearch:not(.mt-expanded)>:not(.mt-r-head):not(h2):not(.mt-r-ticker):not(.mt-quick-summary):not(.mt-quick-actions):not(.mt-world-mini){display:none!important}",
 "#mtResearch:not(.mt-expanded) h2{font-size:14px!important;line-height:1.25!important;margin:4px 0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
 "#mtResearch:not(.mt-expanded) .mt-r-head{margin:0!important}",
 "#mtResearch .mt-quick-summary{font:12px/1.45 system-ui,sans-serif;color:#b8efc9;margin:4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}",
@@ -326,6 +326,12 @@ function render(query){
   expand.textContent=opened?"지도만 보기":"자료 자세히";
   if(opened)panel.scrollTop=0;
  });
+ // 세계 법안·주가 흐름(data/world, data/markets): 접힌 상태에서는 한 줄, 펼치면 그림·설명·근거·지도 따라가기
+ if(window.MTWorldFlow){
+  var worldMini=add(panel,"p","mt-world-mini","");
+  var world=add(panel,"div","mt-world");
+  window.MTWorldFlow.render(world,query,{api:api,mini:worldMini,actions:quickActions,expand:function(){panel.classList.add("mt-expanded");expand.textContent="지도만 보기";},collapse:function(){panel.classList.remove("mt-expanded");expand.textContent="자료 자세히";}});
+ }
  // Investigation routes are offered per actual matched document below, not guessed from unrelated keywords.
  var sourceAnchor=add(quickActions,"a","","원문 ↗");sourceAnchor.hidden=true;sourceAnchor.target="_blank";sourceAnchor.rel="noopener noreferrer";
  renderIndexedSearch(query,function(index,results){
