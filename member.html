@@ -180,6 +180,8 @@ header.bar input.nm{width:200px;text-transform:none}
 
     var ids = Q ? find(Q) : [];
     if (ids.length !== 1) { notFound(ids, byId, label, M); renderFoot(tr, si, mem); return; }
+    // 대장 모드 도감: 의원 명부(members.json)에 있는 의원 카드를 열었을 때만 알림 (assets/commander.js가 받음)
+    if (M[ids[0]]) { window.MTMemberOpened = { id: ids[0], name: M[ids[0]].name }; try { window.dispatchEvent(new CustomEvent("mt:member-opened", { detail: window.MTMemberOpened })); } catch (e) { } }
     render(ids[0], M[ids[0]], (byId[ids[0]] || []).slice(), E, tr);
     renderFoot(tr, si, mem);
   });
@@ -391,6 +393,6 @@ header.bar input.nm{width:200px;text-transform:none}
   }
 })();
 </script>
-<script src="assets/commander.js?v=cmdr-20261028"></script>
+<script src="assets/commander.js?v=cmdr-20261028b"></script>
 </body>
 </html>
