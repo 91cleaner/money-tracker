@@ -153,9 +153,21 @@ async function usTradeControls() {
 }
 
 // Reachability probe only (no parsing yet): can GitHub Actions reach China's MOFCOM site? Recorded for the next step.
+export function anchorLinks(html, base) {
+  const out = [];
+  for (const m of String(html || "").matchAll(/<a\b[^>]*href=["']([^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+    const text = m[2].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+    try { if (text) out.push({ text: text.slice(0, 120), url: new URL(m[1], base).href }); } catch {}
+  }
+  return out;
+}
 async function chinaMofcomProbe() {
   const res = await fetch("https://www.mofcom.gov.cn/", { headers: UA, signal: AbortSignal.timeout(20000) });
-  return "HTTP " + res.status + " (" + (await res.text()).length + " bytes)";
+  const html = await res.text();
+  // Discovery aid for the next step: show which homepage links look like announcement / export-control lists.
+  const hits = anchorLinks(html, "https://www.mofcom.gov.cn/").filter(a => /公告|出口管制|政策发布|管控名单|不可靠实体/.test(a.text)).slice(0, 15);
+  console.log("::notice::MOFCOM_LINKS " + JSON.stringify(hits));
+  return "HTTP " + res.status + " (" + html.length + " bytes, " + hits.length + " candidate links)";
 }
 
 if (import.meta.url === "file://" + process.argv[1]) {
