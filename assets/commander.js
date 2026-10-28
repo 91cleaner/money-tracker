@@ -1,6 +1,7 @@
 /* MONEY TRACKER — 대장 모드 (commander mode). Shared script for company / member / sector pages and world-intelligence.
    The visitor is the control-room commander: star companies, members and sectors; get three daily tracking missions
-   generated from real filings; rank up by opening cards; see new House PTR filings since the last visit.
+   generated from real filings; rank up by opening cards; see new House PTR filings since the last visit;
+   collect member cards into an 의원 도감 (progress vs. data/us/members.json).
    Browser storage only (localStorage), no login, no server. No buy/sell buttons, no recommendations,
    no invented live numbers, no betting, odds or leaderboards. Filings are shown on a filing-date basis. */
 (function () {
@@ -13,8 +14,8 @@
   var TY = { P: "구입(P)", S: "처분(S)", E: "교환(E)" };
 
   // ---------- storage (every access guarded: private mode / blocked storage must not break the page) ----------
-  function blank() { return { v: 1, stars: {}, opened: {}, streak: { n: 0, last: null }, missions: null, lastMaxFiled: null, prevMaxFiled: null }; }
-  function load() { try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); return s && s.v === 1 ? s : blank(); } catch (e) { return blank(); } }
+  function blank() { return { v: 1, stars: {}, opened: {}, streak: { n: 0, last: null }, missions: null, lastMaxFiled: null, prevMaxFiled: null, dex: {} }; }
+  function load() { try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && s.v === 1) { s.dex = s.dex || {}; return s; } return blank(); } catch (e) { return blank(); } }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* storage unavailable: keep in memory */ } }
   var st = load();
 
@@ -77,7 +78,7 @@
   dock.appendChild(mainBtn);
   var panel = el("section"); panel.id = "mtCmdPanel"; panel.hidden = true; panel.setAttribute("aria-label", "대장 모드 패널");
   document.body.append(dock, panel);
-  var tab = "missions", data = { trades: null, latest: [], maxFiled: null, sectorsOf: null };
+  var tab = "missions", data = { members: null, trades: null, latest: [], maxFiled: null, sectorsOf: null };
 
   function paintDock() {
     if (starBtn) { var on = !!(st.stars[key(page.type, page.id)]); starBtn.textContent = on ? "★ 추적 중" : "☆ 추적"; starBtn.className = on ? "on" : ""; starBtn.setAttribute("aria-pressed", String(on)); starBtn.setAttribute("aria-label", on ? "추적 목록에서 빼기" : "추적 목록에 넣기"); }
@@ -85,6 +86,16 @@
     mainBtn.replaceChildren(document.createTextNode("◉ " + r.name + (st.streak.n ? " · 🔥" + st.streak.n : "")));
     if (nNew) mainBtn.appendChild(el("span", "badge", String(nNew)));
   }
+
+  // ---------- 의원 도감 (member cards opened = collected; progress against members.json) ----------
+  var memberIds = null; // set of IDs in data/us/members.json once loaded
+  function dexCount() { return Object.keys(st.dex).filter(function (id) { return !memberIds || memberIds[id]; }).length; }
+  function collect(id, name) {
+    if (!/^[A-Z]\d{6}$/.test(id || "") || st.dex[id]) return;
+    st.dex[id] = { name: String(name || id).slice(0, 80), at: today() };
+    save(); if (!panel.hidden) render();
+  }
+  window.addEventListener("mt:member-opened", function (e) { if (e && e.detail) collect(e.detail.id, e.detail.name); });
 
   // ---------- stars ----------
   function toggleStar(type, id) {
@@ -153,12 +164,12 @@
     var bar = el("div", "bar"), bi = el("i"); bi.style.width = (r.next ? Math.min(100, (n - r.at) / (r.next[0] - r.at) * 100) : 100).toFixed(0) + "%"; bar.appendChild(bi); panel.appendChild(bar);
     if (st.streak.n) panel.appendChild(el("p", "fire", "🔥 연속 임무 완료 " + st.streak.n + "일"));
     var tabs = el("div", "tabs"); tabs.setAttribute("role", "tablist");
-    [["missions", "추적 임무"], ["watch", "추적 목록"], ["feed", "새 신고"]].forEach(function (t) {
+    [["missions", "추적 임무"], ["watch", "추적 목록"], ["feed", "새 신고"], ["dex", "의원 도감"]].forEach(function (t) {
       var b = el("button", "", t[1]); b.type = "button"; b.setAttribute("role", "tab"); b.setAttribute("aria-selected", String(tab === t[0]));
       b.addEventListener("click", function () { tab = t[0]; render(); }); tabs.appendChild(b);
     });
     panel.appendChild(tabs);
-    if (tab === "missions") renderMissions(); else if (tab === "watch") renderWatch(); else renderFeed();
+    if (tab === "missions") renderMissions(); else if (tab === "watch") renderWatch(); else if (tab === "dex") renderDex(); else renderFeed();
     panel.appendChild(el("p", "note", "브라우저에만 저장(로그인 없음). 하원 PTR 신고 기준이며 거래일→신고일 최대 45일 차이가 있을 수 있습니다. 공개 기록일 뿐 잘잘못 판단이 아니며 투자 조언 아님."));
   }
   function renderMissions() {
@@ -182,6 +193,20 @@
       ul.appendChild(li);
     });
     panel.appendChild(ul);
+  }
+  function renderDex() {
+    var total = memberIds ? Object.keys(memberIds).length : 0, got = dexCount();
+    panel.appendChild(el("p", "fire", total ? "수집한 의원 " + got + " / " + total + "명" : "수집한 의원 " + got + "명 (명부 불러오는 중…)"));
+    var bar = el("div", "bar"), bi = el("i"); bi.style.width = (total ? Math.min(100, got / total * 100) : 0).toFixed(1) + "%"; bar.appendChild(bi); panel.appendChild(bar);
+    var ids = Object.keys(st.dex).filter(function (id) { return !memberIds || memberIds[id]; }).sort(function (a, b) { return String(st.dex[b].at).localeCompare(String(st.dex[a].at)) || st.dex[a].name.localeCompare(st.dex[b].name); });
+    var ul = el("ul");
+    if (!ids.length) ul.appendChild(el("li", "", "아직 수집한 의원이 없습니다. 의원 페이지(member.html)를 열면 자동으로 도감에 들어갑니다."));
+    ids.forEach(function (id) {
+      var li = el("li"), a = el("a", "", st.dex[id].name); a.href = href("member", st.dex[id].name); li.appendChild(a);
+      li.appendChild(el("div", "m", "처음 연 날 " + st.dex[id].at)); ul.appendChild(li);
+    });
+    panel.appendChild(ul);
+    panel.appendChild(el("p", "m", "의원 명부(@unitedstates/congress-legislators) 기준 현직 의원 수 대비 연 카드 수입니다. 열람 기록일 뿐 평가가 아닙니다."));
   }
   function renderFeed() {
     var ul = el("ul"), list = data.latest.slice(0, 30);
@@ -208,6 +233,12 @@
   if (page) { st.opened[key(page.type, page.id)] = st.opened[key(page.type, page.id)] || today(); save(); }
   streakAlive();
   paintDock();
+  get("data/us/members.json").then(function (mm) {
+    memberIds = {}; ((mm && mm.members) || []).forEach(function (m) { if (m && m.id) memberIds[m.id] = 1; });
+    if (!Object.keys(memberIds).length) memberIds = null;
+    if (window.MTMemberOpened) collect(window.MTMemberOpened.id, window.MTMemberOpened.name);
+    paintDock(); if (!panel.hidden) render();
+  });
   get("data/us/trades.json").then(function (tr) {
     var t = (tr && tr.trades) || [];
     data.trades = t;
@@ -228,5 +259,5 @@
     ensureMissions(); checkMissions(); paintDock(); if (!panel.hidden) render();
   });
 
-  window.MTCommander = { state: function () { return JSON.parse(JSON.stringify(st)); }, page: page, open: function () { if (panel.hidden) toggle(); }, close: function () { if (!panel.hidden) toggle(); }, ranks: RANKS.map(function (r) { return r[1]; }) };
+  window.MTCommander = { state: function () { return JSON.parse(JSON.stringify(st)); }, page: page, dex: function () { return JSON.parse(JSON.stringify(st.dex)); }, open: function () { if (panel.hidden) toggle(); }, close: function () { if (!panel.hidden) toggle(); }, ranks: RANKS.map(function (r) { return r[1]; }) };
 })();
