@@ -315,7 +315,7 @@ Promise.all([j('../data/us/bills.json'),j('../data/market/factors/cn-mofcom-anno
 .mtFl{fill:none;stroke-linecap:round;stroke-dasharray:3000;stroke-dashoffset:3000;animation:mtDraw 1.6s ease-out forwards;filter:drop-shadow(0 0 4px currentColor)}
 .mtFl.dim{opacity:.22;animation:none;stroke-dashoffset:0}@keyframes mtDraw{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){.mtFl{animation:none;stroke-dashoffset:0}}
-#mtLegend{position:fixed;left:12px;top:118px;z-index:900;background:rgba(2,12,6,.88);border:1px solid rgba(93,255,158,.35);border-radius:8px;padding:6px 9px;font:11px/1.6 ui-monospace,Menlo,monospace;color:#bfffd6}
+#mtLegend{position:fixed;left:12px;top:150px;z-index:900;background:rgba(2,12,6,.88);border:1px solid rgba(93,255,158,.35);border-radius:8px;padding:6px 9px;font:11px/1.6 ui-monospace,Menlo,monospace;color:#bfffd6}
 #mtLegend i{display:inline-block;width:14px;height:3px;margin-right:5px;vertical-align:middle;border-radius:2px;box-shadow:0 0 4px currentColor}
 #mtLegend button{margin-top:4px;width:100%;background:rgba(93,255,158,.1);border:1px solid rgba(93,255,158,.4);color:#eafff2;border-radius:6px;font:inherit;cursor:pointer;padding:3px}
 #briefLinks a{color:#5dff9e;margin-right:8px}@media(max-width:600px){#mtLegend{top:auto;left:auto;right:8px;bottom:132px;font-size:10px;padding:4px 7px}}
@@ -331,7 +331,7 @@ function setup(m){g.clearLayers();drawn=new Set();lines=[];cur=m;const st=m.meta
  m.meta.forEach((t,i)=>{if(i===0||t.lat==null){lines.push(null);return}const k=kind(t);used.add(k);const pl=L.polyline(curve(hub,[t.lat,t.lon]),{color:COL[k],weight:k==='supply'?3:2.2,opacity:.9,className:'mtFl dim',interactive:false}).addTo(g);lines.push(pl);L.circleMarker([t.lat,t.lon],{radius:3,color:COL[k],fillOpacity:.9,weight:1,interactive:false}).addTo(g)});
  L.circleMarker(hub,{radius:6,color:'#ffd60a',fill:false,weight:2,interactive:false}).addTo(g);
  leg.innerHTML=[...used].map(k=>`<div><i style="background:${COL[k]};color:${COL[k]}"></i>${NAME[k]}</div>`).join('')+'<small>선 = 공개 자료상 연결, 인과 아님</small><button id="mtAll" type="button">전체 보기</button>';leg.hidden=false;
- leg.querySelector('#mtAll').onclick=()=>{stop();const b=L.latLngBounds(st.map(t=>[t.lat,t.lon]));map.flyToBounds(b.pad(.25),{duration:1.6,maxZoom:6})}}
+ leg.querySelector('#mtAll').onclick=e=>{e.stopPropagation();stop();map.stop();const b=L.latLngBounds(st.map(t=>[t.lat,t.lon])).pad(.25);setTimeout(()=>map.flyToBounds(b,{duration:1.6,maxZoom:6}),60)}}
 function reach(i){const pl=lines[i];if(!pl||drawn.has(i))return;drawn.add(i);const el=pl.getElement&&pl.getElement();if(el){el.classList.remove('dim');void el.getBBox;el.style.animation='none';el.getBoundingClientRect();el.style.animation=''}}
 // 자동 재생: 4초 머문 뒤 다음 정류장. 드래그·휠·클릭하면 멈춤
 let playing=true,tm=null;const btn=document.getElementById('mtPlay'),nx=document.getElementById('next');
