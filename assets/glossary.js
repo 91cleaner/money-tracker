@@ -13,7 +13,7 @@
     CLOSE: { name: "종가 (마감 가격)", body: "그날 장이 끝날 때의 마지막 가격이에요. 하루 중에 오르내린 값이 아니라 마감 때 값 하나만 보여 줘요. 실시간 가격이 아니에요." },
     EXPORT: { name: "수출통제", body: "나라가 어떤 물건이나 기술을 다른 나라에 못 팔게 하거나, 허락을 받아야 팔 수 있게 하는 규칙이에요. 예를 들어 미국은 첨단 반도체를 어느 나라에 팔 때 허가를 받게 하기도 해요." },
     S232: { name: "232조 (미국 무역확장법)", body: "미국 대통령이 나라 안전과 관련된 수입품에 관세를 매기거나 수입을 줄일 수 있게 한 법 조항이에요. 어떤 물건에 쓰였는지는 원문 링크에서 확인하세요." },
-    PROCL: { name: "포고문", body: "미국 대통령이 공식적으로 알리는 문서의 한 종류예요. 관세 같은 정책을 알릴 때도 쓰여요. 이 사이트는 제목과 원문 링크만 보여 줘요." }
+    PROCL: { name: "포고문", body: "미국 대통령이 공식적으로 알리는 문서의 한 종류예요. 관세 같은 정책을 알릴 때도 쓰여요. 이 사이트는 제목과 원문 링크만 보여 줘요." },
     LABOR: { name: "노사분규·파업 공시 (Korea labor strike disclosure)", body: "한국 기업이 금융감독원 전자공시(DART)나 거래소에 낸 공시 중 제목에 파업·노사분규·생산중단·영업정지가 들어간 것입니다. 공시가 있다고 실제 파업이 일어났다는 뜻은 아닙니다. In English: filings on Korea's DART system whose titles mention a strike, labor dispute, production halt or business suspension. Korean company or industry unions can pause factory output when pay talks break down, so investors read them next to prices; a filing alone does not mean a strike or a price effect." }
   };
   var PATTERNS = [
@@ -25,7 +25,7 @@
     ["CLOSE", /종가/],
     ["EXPORT", /수출통제|수출 통제/],
     ["S232", /232조|Section 232/i],
-    ["PROCL", /포고문/]
+    ["PROCL", /포고문/],
     ["LABOR", /파업|노사분규|labor strike/i]
   ];
   var SELECTOR = "h2,h3,th,.k,.kind,[data-term]";
