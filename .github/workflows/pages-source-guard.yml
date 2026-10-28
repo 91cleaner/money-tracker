@@ -1,0 +1,31 @@
+name: Pages source safety guard
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/pages-source-guard.yml'
+      - 'scripts/check_pages_source.py'
+      - 'tests/test_pages_source_guard.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/pages-source-guard.yml'
+      - 'scripts/check_pages_source.py'
+      - 'tests/test_pages_source_guard.py'
+  workflow_dispatch:
+  schedule:
+    - cron: '23 1 * * *'
+permissions:
+  contents: read
+  pages: read
+jobs:
+  verify-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Pages source guard regression tests
+        run: python3 -m unittest discover -s tests -p 'test_pages_source_guard.py' -v
+      - name: Check live GitHub Pages publishing source
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/check_pages_source.py
