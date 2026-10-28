@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals, parseQcew } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals, parseQcew, parseWorldBank } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -86,4 +86,14 @@ test("QCEW keeps private-sector county/state rows and drops undisclosed ones", (
   assert.deepEqual(out.counties, [{ fips: "04013", name: "Maricopa County, Arizona", employment: 21000, yoy_change: 1500, weekly_wage: 2900, period: "2026-Q1" }]);
   assert.equal(out.states[0].employment, 30000);
   assert.throws(() => parseQcew("a,b\n1,2"), /missing/);
+});
+
+test("World Bank rows group by ISO3 and skip empty values", () => {
+  const json = [{ page: 1 }, [
+    { countryiso3code: "KOR", country: { id: "KR", value: "Korea, Rep." }, date: "2024", value: 2.6 },
+    { countryiso3code: "KOR", country: { id: "KR", value: "Korea, Rep." }, date: "2025", value: null },
+    { countryiso3code: "KOR", country: { id: "KR", value: "Korea, Rep." }, date: "2023", value: 2.8 } ]];
+  const by = parseWorldBank(json);
+  assert.deepEqual(by.KOR.points, [{ year: 2023, value: 2.8 }, { year: 2024, value: 2.6 }]);
+  assert.throws(() => parseWorldBank({ message: "x" }), /unexpected/);
 });
