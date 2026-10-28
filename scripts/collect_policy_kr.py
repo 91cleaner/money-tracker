@@ -28,6 +28,7 @@ def main():
                 if l not in seen: seen[l] = {"t": t, "u": l, "d": d, "dept": dept, "tags": tags}; n += 1
             log[dept] = f"ok +{n}"
         except Exception as e: log[dept] = f"fail {type(e).__name__}: {str(e)[:80]}"
+    os.makedirs(os.path.dirname(p), exist_ok=True); print(json.dumps(log, ensure_ascii=False), flush=True)
     items = sorted(seen.values(), key=lambda x: x.get("d") or "", reverse=True)[:400]
     json.dump({"updated": dt.date.today().isoformat(), "country": "kr", "source": "대한민국 정책브리핑 korea.kr RSS(부처 보도자료)",
                "note": "제목·날짜·원문 링크만. 섹터 태그는 제목 키워드 기준, 영향 단정 아님. 투자 조언 아님.", "log": log, "items": items},
