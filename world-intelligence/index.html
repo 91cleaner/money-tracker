@@ -6,7 +6,7 @@
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER | 세계 관제실"><meta name="twitter:description" content="미국 의회 법안·의원 거래 신고·회사 공장·다른 나라 정책을 지도 위 경로로 따라가는 관제실. 공개 자료 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
-<script src="../assets/i18n.js?v=i18n-20261028"></script>
+<script src="../assets/i18n.js?v=i18n-20261028b"></script>
 <script src="../assets/share.js?v=share-20261028" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
@@ -169,7 +169,7 @@ const PART=/(에서는|에서|으로|은|는|이|가|을|를|의|도|에|랑|과
 const ALIAS=[[/구글|알파벳|google|alphabet/i,'company:GOOGL'],[/페이스북|facebook|인스타그램/i,'company:META'],[/^삼성$|삼성 ?주가|samsung/i,'company:005930.KS'],[/하이닉스|hynix/i,'company:000660.KS'],[/넷플릭스|netflix/i,'company:NFLX'],[/디즈니|disney/i,'company:DIS'],[/보잉|boeing/i,'company:BA'],[/버크셔|버핏|berkshire/i,'company:BRK.B'],[/월마트|walmart/i,'company:WMT'],[/코스트코|costco/i,'company:COST'],[/나이키|nike/i,'company:NKE'],[/브로드컴|broadcom/i,'company:AVGO'],[/퀄컴|qualcomm/i,'company:QCOM'],[/일라이 ?릴리|릴리|eli lilly/i,'company:LLY'],[/쿠팡|coupang/i,'company:CPNG'],[/테슬|tesla/i,'company:TSLA'],[/^apple|apple /i,'company:AAPL'],[/nvidia|엔비/i,'company:NVDA'],[/amazon/i,'company:AMZN'],[/lg ?에너지|lg ?엔솔|엔솔/i,'company:373220.KS'],[/유가|기름값|oil/i,'sector:energy'],[/방산|방위산업/,'sector:defense'],[/군사위|국방위/,'committee:rep:Armed Services'],[/금융위원회|금융서비스위/,'committee:rep:Financial Services'],[/에너지.?상무/,'committee:rep:Energy and Commerce']];
 const PRIV=[[/스페이스\s*x|스페이스엑스|spacex|space\s*x/i,'스페이스X','defense'],[/오픈\s*ai|openai|챗gpt|chatgpt/i,'오픈AI','tech_ai'],[/앤트로픽|anthropic/i,'앤트로픽','tech_ai'],[/\bxai\b|엑스에이아이/i,'xAI','tech_ai'],[/스트라이프|stripe/i,'스트라이프','finance'],[/바이트댄스|bytedance|틱톡|tiktok/i,'바이트댄스','tech_ai'],[/데이터브릭스|databricks/i,'데이터브릭스','tech_ai'],[/쉬인|shein/i,'쉬인','consumer']];
 async function loadIdx(){if(!searchIdx){const r=await fetch('../data/search-index.json',{cache:'no-store'});searchIdx=await r.json()}return searchIdx}
-function routeOf(id){const e=searchIdx.entities[id];if(!e||!e.route.length)return null;e.route.forEach(s=>{places[s.region]=[s.lat,s.lon]});return{ticker:id,title:e.name+(e.symbol?' ('+e.symbol+')':'')+' 경로',stops:e.route.map(s=>[s.region,s.fact]),meta:e.route,caveat:'누적 공개 데이터에서 자동 생성한 경로 · AI 미연결 · 투자 신호 아님. 원인 관계를 단정하지 않습니다.',url:e.route[0].source_url,stocks:''}}
+function routeOf(id){const e=searchIdx.entities[id];if(!e||!e.route.length)return null;e.route.forEach(s=>{places[s.region]=[s.lat,s.lon]});return{ticker:id,title:(window.MTI18N&&window.MTI18N.name?window.MTI18N.name(e):e.name)+(e.symbol?' ('+e.symbol+')':'')+' 경로',stops:e.route.map(s=>[s.region,s.fact]),meta:e.route,caveat:'누적 공개 데이터에서 자동 생성한 경로 · AI 미연결 · 투자 신호 아님. 원인 관계를 단정하지 않습니다.',url:e.route[0].source_url,stocks:''}}
 function bigram(a,b){if(a.length<2||b.length<2)return 0;const g=x=>{const m=new Set();for(let i=0;i<x.length-1;i++)m.add(x.slice(i,i+2));return m};const A=g(a),B=g(b);let c=0;A.forEach(x=>{if(B.has(x))c++});return 2*c/(A.size+B.size)}
 async function tickerRoute(q){try{await loadIdx()}catch(e){return null}
 const E=searchIdx.entities,pri={company:3,member:2,bill:2,topic:2,sector:2,country:1,committee:0};
@@ -303,7 +303,7 @@ new MutationObserver(sync).observe($('brief'),{attributes:true,attributeFilter:[
 loadIdx().then(ix=>{const ids=Object.keys(ix.entities).filter(k=>{const e=ix.entities[k];return (e.type==='sector'||(e.type==='company'&&/[가-힣]/.test(e.name)))&&e.route.length>=3}).sort();if(!ids.length)return;
  const d=new Date(),day=Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()))/864e5),id=ids[day%ids.length],e=ix.entities[id];
  const c=document.createElement('section');c.id='mtMission';const x=document.createElement('button');x.className='x';x.textContent='✕';x.onclick=()=>c.remove();
- const b=document.createElement('b');b.textContent='◉ 오늘의 임무 · '+d.toISOString().slice(0,10);const p=document.createElement('div');p.textContent='대상: '+e.name+(e.symbol?' ('+e.symbol+')':'')+' · 정류장 '+e.route.length+'곳. 공개 기록 경로를 따라가세요.';
+ const b=document.createElement('b');b.textContent='◉ 오늘의 임무 · '+d.toISOString().slice(0,10);const p=document.createElement('div');p.textContent='대상: '+(window.MTI18N&&window.MTI18N.name?window.MTI18N.name(e):e.name)+(e.symbol?' ('+e.symbol+')':'')+' · 정류장 '+e.route.length+'곳. 공개 기록 경로를 따라가세요.';
  const sm=document.createElement('div');sm.style.cssText='color:#7fb592;font-size:11px;margin-top:4px';sm.textContent='데이터 기반 자동 선택 · 투자 신호 아님';
  const go=document.createElement('button');go.textContent='▶ 추적 시작';go.onclick=()=>{c.remove();start(routeOf(id))};c.append(x,b,p,sm,go);document.body.append(c)}).catch(()=>{});
 // 실시간 경보 줄 (수집 데이터의 실제 항목만)
