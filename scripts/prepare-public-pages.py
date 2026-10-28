@@ -7,6 +7,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / ".public-pages"
 PUBLIC_DIRS = ("assets", "data", "c", "s", "world-intelligence", "3ac9ae3", "9590438", "b387449")
+# Private US trade datasets must never be shipped to public GitHub Pages.
+PRIVATE_DATA_FILES = {"data/us/trades.json", "data/us/house-ptr-candidates.json", "data/us/ptr-crosschecks.json"}
 # .geojson: national map country borders (polgame.js), .csv: trip downloads (national.js) — both are fetched by public pages
 PUBLIC_EXTENSIONS = {".html", ".css", ".js", ".json", ".geojson", ".csv", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico", ".webmanifest", ".txt"}
 PUBLIC_ROOT_FILES = {".nojekyll"}
@@ -20,6 +22,8 @@ def safe(path):
     if path.is_symlink():
         return False
     rel = path.relative_to(ROOT)
+    if rel.as_posix() in PRIVATE_DATA_FILES:
+        return False
     if any(part.lower() in EXCLUDED_PARTS or part.lower().startswith(".") for part in rel.parts):
         return rel.as_posix() in PUBLIC_ROOT_FILES
     if path.name.lower() in BLOCKED_NAMES or path.suffix.lower() in BLOCKED_SUFFIXES:
