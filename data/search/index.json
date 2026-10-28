@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "built_at": "2026-10-28T01:22:09.496Z",
+  "built_at": "2026-10-28T01:32:38.357Z",
   "counts": {
     "calendar": 29,
     "event": 12,
@@ -929,8 +929,8 @@
         "배터리·전기차",
         "산업재·기계"
       ],
-      "summary": "수집 예정(아직 자료 없음) · 함께 보는 업종: 청정에너지·탄소, 배터리·전기차, 산업재·기계 · 출처: FRED PCOPPUSDM. 투자 신호가 아닙니다.",
-      "source": "FRED PCOPPUSDM",
+      "summary": "자동 수집 중인 자료와 연결됨 · 함께 보는 업종: 청정에너지·탄소, 배터리·전기차, 산업재·기계 · 출처: FRED PCOPPUSDM (매일 자동 수집). 투자 신호가 아닙니다.",
+      "source": "FRED PCOPPUSDM (매일 자동 수집)",
       "url": "https://fred.stlouisfed.org/series/PCOPPUSDM",
       "source_date": "2026-10-28",
       "location": null,
@@ -981,8 +981,8 @@
         "시장 전체(지수)",
         "금융·은행·보험"
       ],
-      "summary": "수집 예정(아직 자료 없음) · 함께 보는 업종: 시장 전체(지수), 금융·은행·보험 · 출처: ECB Data Portal. 투자 신호가 아닙니다.",
-      "source": "ECB Data Portal",
+      "summary": "자동 수집 중인 자료와 연결됨 · 함께 보는 업종: 시장 전체(지수), 금융·은행·보험 · 출처: ECB Data Portal · 예금금리 DFR (매일 자동 수집). 투자 신호가 아닙니다.",
+      "source": "ECB Data Portal · 예금금리 DFR (매일 자동 수집)",
       "url": "https://data.ecb.europa.eu/",
       "source_date": "2026-10-28",
       "location": null,
@@ -1175,9 +1175,9 @@
         "요인",
         "반도체"
       ],
-      "summary": "수집 예정(아직 자료 없음) · 함께 보는 업종: 반도체 · 출처: 公開資訊觀測站(MOPS). 투자 신호가 아닙니다.",
-      "source": "公開資訊觀測站(MOPS)",
-      "url": "https://mops.twse.com.tw/",
+      "summary": "자동 수집 중인 자료와 연결됨 · 함께 보는 업종: 반도체 · 출처: TWSE OpenAPI t187ap05_L (매일 자동 수집). 투자 신호가 아닙니다.",
+      "source": "TWSE OpenAPI t187ap05_L (매일 자동 수집)",
+      "url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L",
       "source_date": "2026-10-28",
       "location": null,
       "route": null
@@ -1270,8 +1270,8 @@
         "요인",
         "주택·건설·부동산"
       ],
-      "summary": "수집 예정(아직 자료 없음) · 함께 보는 업종: 주택·건설·부동산 · 출처: FRED HOUST. 투자 신호가 아닙니다.",
-      "source": "FRED HOUST",
+      "summary": "자동 수집 중인 자료와 연결됨 · 함께 보는 업종: 주택·건설·부동산 · 출처: FRED HOUST (매일 자동 수집). 투자 신호가 아닙니다.",
+      "source": "FRED HOUST (매일 자동 수집)",
       "url": "https://fred.stlouisfed.org/series/HOUST",
       "source_date": "2026-10-28",
       "location": null,

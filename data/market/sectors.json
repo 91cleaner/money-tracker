@@ -150,9 +150,13 @@
    "id": "ecb_policy_rate",
    "label": "유럽중앙은행 정책금리",
    "kind": "rates",
-   "status": "planned",
-   "source": "ECB Data Portal",
-   "source_url": "https://data.ecb.europa.eu/"
+   "status": "collected",
+   "source": "ECB Data Portal · 예금금리 DFR (매일 자동 수집)",
+   "source_url": "https://data.ecb.europa.eu/",
+   "data": {
+    "file": "data/market/factors/ecb-rates.json",
+    "series": "DFR"
+   }
   },
   {
    "id": "kr_exports",
@@ -166,9 +170,13 @@
    "id": "tw_monthly_revenue",
    "label": "대만 상장사 월매출(TSMC 등)",
    "kind": "earnings",
-   "status": "planned",
-   "source": "公開資訊觀測站(MOPS)",
-   "source_url": "https://mops.twse.com.tw/"
+   "status": "collected",
+   "source": "TWSE OpenAPI t187ap05_L (매일 자동 수집)",
+   "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L",
+   "data": {
+    "file": "data/market/factors/tw-monthly-revenue.json",
+    "company": "2330"
+   }
   },
   {
    "id": "cn_export_controls",
@@ -190,17 +198,25 @@
    "id": "us_housing_starts",
    "label": "미국 주택 착공",
    "kind": "housing",
-   "status": "planned",
-   "source": "FRED HOUST",
-   "source_url": "https://fred.stlouisfed.org/series/HOUST"
+   "status": "collected",
+   "source": "FRED HOUST (매일 자동 수집)",
+   "source_url": "https://fred.stlouisfed.org/series/HOUST",
+   "data": {
+    "file": "data/market/factors/fred-extra.json",
+    "series": "HOUST"
+   }
   },
   {
    "id": "copper",
    "label": "구리 가격",
    "kind": "commodity",
-   "status": "planned",
-   "source": "FRED PCOPPUSDM",
-   "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM"
+   "status": "collected",
+   "source": "FRED PCOPPUSDM (매일 자동 수집)",
+   "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM",
+   "data": {
+    "file": "data/market/factors/fred-extra.json",
+    "series": "PCOPPUSDM"
+   }
   },
   {
    "id": "defense_spending",
