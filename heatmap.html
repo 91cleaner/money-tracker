@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MONEY TRACKER — 업종 히트맵 관제판</title>
+<meta name="description" content="업종별 최근 7일 의원 거래 신고 건수와 5거래일 종가 변화를 나란히 보는 관제판. 데이터상 같은 기간 기록이며 인과 아님, 투자 조언 아님.">
+<style>
+:root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--txt:#d5f7e1;--mut:#7fa58f;--link:#7fd8ff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#020806f0;border-bottom:1px solid var(--line)}
+header.bar .brand{font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--g)}
+header.bar .crumb{font:12px ui-monospace,Menlo,monospace;color:var(--mut)}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.panel h1{margin:0 0 6px;font-size:20px;color:#eafff2}
+.note{margin:6px 0 0;color:var(--mut);font-size:12.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.tile{display:block;border:1px solid var(--line2);border-radius:8px;padding:10px 12px;color:#fff;min-height:96px}
+.tile b{display:block;font-size:14px}
+.tile .ch{font:700 20px ui-monospace,Menlo,monospace;margin:4px 0}
+.tile small{display:block;font:11.5px ui-monospace,Menlo,monospace;color:#dfeee6}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font:12px ui-monospace,Menlo,monospace;color:var(--mut)}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.empty{color:var(--mut);padding:14px 6px;border:1px dashed var(--line);border-radius:8px;text-align:center}
+footer.foot{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:var(--mut);font-size:12px}
+footer.foot .disc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#03100a}
+</style>
+</head>
+<body>
+<header class="bar"><a class="brand" href="./">◉ MONEY TRACKER</a><span class="crumb">SECTOR HEATMAP / 공개 기록 정리</span></header>
+<main aria-live="polite">
+  <section class="panel">
+    <h1>업종 히트맵 관제판</h1>
+    <div class="note" id="period">공개 자료 불러오는 중…</div>
+    <div class="grid" id="grid" style="margin-top:12px"></div>
+    <div class="legend" aria-label="범례">
+      <span><i style="background:#1b4f7a"></i>▲ 종가 상승(중앙값)</span>
+      <span><i style="background:#7a4a1b"></i>▼ 종가 하락(중앙값)</span>
+      <span><i style="background:#26332c"></i>– 변화 계산 불가(가격 종목 3개 미만)</span>
+      <span>색이 진할수록 변화폭이 큼 · 숫자와 ▲▼ 기호로도 구분</span>
+    </div>
+  </section>
+</main>
+<footer class="foot"><div class="disc">
+  업종별 <b>의원 거래 신고 건수</b>(하원 PTR <b>신고 기준</b>, 거래일과 신고일 사이에 최대 45일 차이)와 <b>종가 변화</b>(수정종가, 5거래일 ≈ 1주)를
+  나란히 보여줄 뿐이며, 둘 사이의 인과를 뜻하지 않습니다. 업종은 SEC 업종코드(SIC)를 앱용으로 단순화한 분류입니다. 투자 조언 아님.
+  출처: U.S. House Clerk 재산공개(PTR), SEC EDGAR, Massive(구 Polygon) 일별 종가.
+</div></footer>
+<script src="assets/sector-heat.js?v=sh-20261028"></script>
+<script>
+(function () {
+  "use strict";
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function get(p) { return fetch(p).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function bg(ch) {
+    if (ch == null) return "#26332c";
+    var a = Math.min(1, Math.abs(ch) / 6) * 0.55 + 0.25;
+    return ch >= 0 ? "rgba(27,102,170," + a.toFixed(2) + ")" : "rgba(170,95,27," + a.toFixed(2) + ")";
+  }
+  Promise.all([get("data/us/ticker-sectors.json"), get("data/us/trades.json"), get("data/us/prices/summary.json")]).then(function (a) {
+    var H = MTSectorHeat.build(a[0] && a[0].tickers, a[1] && a[1].trades, a[2] && a[2].t);
+    var grid = document.getElementById("grid"), per = document.getElementById("period");
+    if (!H.rows.length) { per.textContent = "자료를 불러오지 못했습니다."; return; }
+    per.textContent = "의원 거래 신고 " + (H.from || "-") + " ~ " + (H.to || "-") + " (신고일 기준 7일) · 종가 변화는 " + ((a[2] && a[2].date) || "-") + " 기준 5거래일";
+    H.rows.forEach(function (r) {
+      var t = el("div", "tile"); t.style.background = bg(r.change);
+      t.appendChild(el("b", "", r.name));
+      t.appendChild(el("div", "ch", r.change == null ? "–" : (r.change >= 0 ? "▲ +" : "▼ ") + r.change.toFixed(1) + "%"));
+      t.appendChild(el("small", "", "최근 신고 " + r.events + "건"));
+      t.appendChild(el("small", "", "종목 " + r.tickers + " · 가격 " + r.priced));
+      t.setAttribute("aria-label", r.name + ": 최근 7일 신고 " + r.events + "건, 5거래일 종가 변화 " + (r.change == null ? "계산 불가" : r.change.toFixed(1) + "%"));
+      grid.appendChild(t);
+    });
+  });
+})();
+</script>
+</body>
+</html>
