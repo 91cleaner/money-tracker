@@ -1,0 +1,30 @@
+{
+ "updated": "2026-10-28",
+ "caveat": "데이터상 공개 자료 정리임. 투자 신호 아님.",
+ "note": "공식 출처(SEC 공시, congress.gov, 미 상무부 공시)만 사용. 확인 안 된 정류장은 넣지 않음.",
+ "routes": {
+  "NVDA": {
+   "name": "NVIDIA Corp",
+   "aliases": ["NVDA", "엔비디아", "NVIDIA"],
+   "stops": [
+    {"region": "미국 캘리포니아 산타클라라", "lat": 37.3708, "lon": -121.9640,
+     "title": "본사 위치 확인됨",
+     "fact": "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 산타클라라임.",
+     "source_url": "https://data.sec.gov/submissions/CIK0001045810.json", "date": "2026-10-28"},
+    {"region": "대만 신주", "lat": 24.7736, "lon": 120.9970,
+     "title": "칩 생산은 외부 파운드리 의존",
+     "fact": "10-K에서 자체 공장 없이 TSMC 등 파운드리에 칩 생산을 맡긴다고 밝힘.",
+     "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K", "date": "2025-02-26"},
+    {"region": "중국", "lat": 39.9042, "lon": 116.4074,
+     "title": "대중 수출 규제 영향 공시",
+     "fact": "미 정부가 H20 칩의 중국 수출에 허가를 요구한다고 통보받았다고 8-K로 공시함.",
+     "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=8-K", "date": "2025-04-15"},
+    {"region": "미국 워싱턴 D.C.", "lat": 38.8899, "lon": -77.0091,
+     "title": "반도체 지원법 제정",
+     "fact": "CHIPS and Science Act(H.R.4346, 117대 의회)가 법으로 제정됨. 업계 전반 대상 법률임.",
+     "source_url": "https://www.congress.gov/bill/117th-congress/house-bill/4346", "date": "2022-08-09"}
+   ],
+   "factcheck": ["10-K 제출일 2025-02-26 확인", "8-K H20 허가 요건 날짜 2025-04-15 확인"]
+  }
+ }
+}
