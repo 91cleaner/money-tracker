@@ -122,6 +122,7 @@ header.bar input.nm{width:200px;text-transform:none}
 <header class="bar">
   <a class="brand" href="./">◉ MONEY TRACKER</a>
   <span class="crumb">US MEMBER FILE / 공개 기록 정리</span>
+  <a class="mono" href="weekly.html">주간 순위표</a>
   <span class="sp"></span>
   <form id="go" role="search"><input id="goN" class="nm" list="names" aria-label="의원 이름 입력" placeholder="의원 이름" maxlength="60" autocomplete="off"><datalist id="names"></datalist><button>열기</button></form>
 </header>
@@ -180,6 +181,8 @@ header.bar input.nm{width:200px;text-transform:none}
 
     var ids = Q ? find(Q) : [];
     if (ids.length !== 1) { notFound(ids, byId, label, M); renderFoot(tr, si, mem); return; }
+    // 대장 모드 도감: 의원 명부(members.json)에 있는 의원 카드를 열었을 때만 알림 (assets/commander.js가 받음)
+    if (M[ids[0]]) { window.MTMemberOpened = { id: ids[0], name: M[ids[0]].name }; try { window.dispatchEvent(new CustomEvent("mt:member-opened", { detail: window.MTMemberOpened })); } catch (e) { } }
     render(ids[0], M[ids[0]], (byId[ids[0]] || []).slice(), E, tr);
     renderFoot(tr, si, mem);
   });
@@ -391,6 +394,6 @@ header.bar input.nm{width:200px;text-transform:none}
   }
 })();
 </script>
-<script src="assets/commander.js?v=cmdr-20261028"></script>
+<script src="assets/commander.js?v=cmdr-20261028b"></script>
 </body>
 </html>
