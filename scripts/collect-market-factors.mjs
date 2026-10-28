@@ -471,16 +471,21 @@ export function parseCustomsXml(xml) {
 async function krCustomsExports() {
   const key = (process.env.DATA_GO_KR_KEY || "").trim();
   if (!key) throw Error("DATA_GO_KR_KEY not set");
-  const end = new Date(), start = new Date(Date.UTC(end.getUTCFullYear() - 2, end.getUTCMonth(), 1));
-  const ym = d => d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, "0");
+  // The API only accepts periods of up to one year, so ask for two consecutive 12-month windows.
+  const now = new Date(), ym = d => d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, "0");
+  const mon = back => new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - back, 1));
+  const windows = [[mon(11), mon(0)], [mon(23), mon(12)]];
   const out = {};
   for (const [hs, label] of Object.entries(HS)) {
-    const url = "https://apis.data.go.kr/1220000/Itemtrade/getItemtradeList?serviceKey=" + encodeURIComponent(key) + "&strtYymm=" + ym(start) + "&endYymm=" + ym(end) + "&hsSgn=" + hs;
-    let res;
-    try { res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(30000) }); }
-    catch (e) { throw Error("customs fetch failed for HS " + hs + ": " + e.name); } // never include the URL (it contains the key)
-    if (!res.ok) throw Error("customs HTTP " + res.status + " for HS " + hs);
-    const items = parseCustomsXml(await res.text());
+    const items = [];
+    for (const [a, b] of windows) {
+      const url = "https://apis.data.go.kr/1220000/Itemtrade/getItemtradeList?serviceKey=" + encodeURIComponent(key) + "&strtYymm=" + ym(a) + "&endYymm=" + ym(b) + "&hsSgn=" + hs;
+      let res;
+      try { res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(30000) }); }
+      catch (e) { throw Error("customs fetch failed for HS " + hs + ": " + e.name); } // never include the URL (it contains the key)
+      if (!res.ok) throw Error("customs HTTP " + res.status + " for HS " + hs);
+      items.push(...parseCustomsXml(await res.text()));
+    }
     const byMonth = {};
     for (const it of items) { const b = (byMonth[it.month] ||= { month: it.month, exp_usd: 0, imp_usd: 0 }); b.exp_usd += it.exp_usd || 0; b.imp_usd += it.imp_usd || 0; }
     const points = Object.values(byMonth).sort((a, b) => a.month.localeCompare(b.month));
