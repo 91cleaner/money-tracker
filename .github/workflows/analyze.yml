@@ -1,0 +1,35 @@
+name: 분석 엔진 (종목별 답 묶음)
+# 수집기 실행 뒤(workflow_run) + 하루 4회. 유료 API·서버 없음 — 공개 저장소 Actions 무료 시간만 사용.
+on:
+  workflow_run:
+    workflows:
+      - Collect US prices (Massive EOD)
+      - Collect White House / presidential actions
+      - Collect policy (KR 국회 의안)
+      - Collect policy (intl official sources)
+    types: [completed]
+  schedule:
+    - cron: '15 0,6,12,18 * * *'
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: {group: analyze, cancel-in-progress: false}
+jobs:
+  run:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: 테스트
+        run: python3 tests/test_analyze.py
+      - name: 생성 + 검사(실패 시 data/answers 그대로, 커밋 안 함)
+        run: python3 scripts/analyze/run.py
+      - run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data/answers
+          git diff --cached --quiet && exit 0
+          git commit -m "data: answers $(date -u +%F)"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push && exit 0; sleep $((i*10)); done; exit 1
