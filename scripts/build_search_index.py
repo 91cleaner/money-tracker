@@ -80,6 +80,43 @@ def fmt(lt):
     v = lt.get("value")
     if isinstance(v, (int, float)) and lt.get("unit") == "usd" and v >= 1e8: return f"약 {v/1e8:,.1f}억 달러"
     return f"{v:,}" if isinstance(v, (int, float)) else str(v)
+
+def usd(v):
+    if v is None: return "-"
+    v = float(v)
+    if v >= 1e8: return f"약 {v/1e8:,.1f}억 달러"
+    if v >= 1e4: return f"약 {v/1e4:,.0f}만 달러"
+    return f"{v:,.0f}달러"
+def opt(*p):
+    f = os.path.join(ROOT, *p)
+    try: return json.load(open(f)) if os.path.exists(f) else {}
+    except ValueError: return {}
+AW = LB = PC = {}
+def money_stops(tk, st_ll, bills_by_no):
+    """연방 계약·로비·PAC 정류장 (data/us 수집 파일 값만 사용)."""
+    out, d = [], CENT["dc"]
+    fa = AW.get("companies", {}).get(tk)
+    if fa and fa.get("total_usd"):
+        s0 = (fa.get("top_states") or [{}])[0]; ll = st_ll.get(s0.get("code")); ag = (fa.get("top_agencies") or [{}])[0]
+        if ll:
+            p = AW.get("period", ["", ""])
+            out.append({"region": f"연방 계약 · {s0.get('name')}", "lat": ll[0], "lon": ll[1], "title": "연방 계약(USAspending)", "kind": "award",
+                "fact": f"데이터상 {p[0]}~{p[1]} 연방 계약 합계 {usd(fa['total_usd'])}. 최다 발주 기관 {ag.get('name','-')}, 주별 집계 1위 {s0.get('name','-')}. 수령자 이름 일치 기준.",
+                "source_url": fa["source_url"], "date": AW.get("updated"), "ref": "awards:" + tk})
+    lb = LB.get("companies", {}).get(tk)
+    if lb and lb.get("filings"):
+        iss = ", ".join(i[0] for i in lb.get("top_issues", [])[:3]); yrs = LB.get("years", ["", ""])
+        linked = [b for b, _ in lb.get("bills_mentioned", []) if b in bills_by_no][:3]
+        fact = f"데이터상 {yrs[0]}~{yrs[-1]} 로비 공시 {lb['filings']}건, 보고 금액 합계 {usd(lb['total_usd'])}. 주요 이슈: {iss or '-'}."
+        if linked: fact += " 수집 법안과 번호 일치: " + ", ".join(linked) + "(회기 확인 필요)."
+        out.append({"region": f"{d[0]} · 로비", "lat": d[2] + 0.03, "lon": d[3] - 0.04, "title": "로비 공시(LDA)", "kind": "lobby", "fact": fact,
+            "source_url": lb["source_url"], "date": LB.get("updated"), "ref": "lobbying:" + tk, "links": [{"label": b, "url": bills_by_no[b]} for b in linked]})
+    pc = PC.get("companies", {}).get(tk)
+    if pc and pc.get("to_federal_candidates_usd") is not None:
+        out.append({"region": f"{d[0]} · 후원", "lat": d[2] - 0.03, "lon": d[3] + 0.04, "title": "기업 연계 PAC 후원(FEC)", "kind": "pac",
+            "fact": f"데이터상 {pc['cycle']} 선거주기 {pc['committee_name']}의 연방 후보 위원회 기부 합계 {usd(pc['to_federal_candidates_usd'])}(~{pc.get('coverage_end')}). 임직원 자발 기부 PAC이며 회사 자금 아님.",
+            "source_url": pc["source_url"], "date": pc.get("coverage_end"), "ref": "pac:" + tk})
+    return out
 def main():
     sec = J("data", "market", "sectors.json"); factors = {f["id"]: f for f in sec["factors"]}
     sectors = {s["id"]: s for s in sec["sectors"]}
@@ -100,6 +137,12 @@ def main():
         if m.get("ll") and m.get("state"): st_ll.setdefault(m["state"], []).append(m["ll"])
     st_ll = {k: [round(sum(a[0] for a in v) / len(v), 3), round(sum(a[1] for a in v) / len(v), 3)] for k, v in st_ll.items()}
 
+    global AW, LB, PC
+    AW, LB, PC = opt("data", "us", "federal-awards.json"), opt("data", "us", "lobbying.json"), opt("data", "us", "pac-contributions.json")
+    bills_by_no = {}
+    for arr in (opt("data", "us", "bills.json").get("recent") or {}).values():
+        for b in arr:
+            if b.get("no") and b.get("u"): bills_by_no[re.sub(r"\s+", " ", b["no"].upper())] = b["u"]
     ent = {}
     def stop(region, lat, lon, title, fact, url, date=None, ref=None):
         return {"region": region, "lat": lat, "lon": lon, "title": title, "fact": fact, "source_url": url, "date": date, "ref": ref}
@@ -148,6 +191,7 @@ def main():
             if cc and cc != c["region"] and all(x["region"] != CENT[cc][0] for x in r):
                 lt = f.get("latest") or {}
                 r.append(stop(CENT[cc][0], CENT[cc][2], CENT[cc][3], f"함께 볼 지표: {f['label']}", f"데이터상 최신값 {fmt(lt)} ({lt.get('date')}).{KR_NOTE if f['id'].startswith('kr_exp_') else ''} 원인 관계 단정 아님.", f.get("source_url"), lt.get("date"), "factor:" + f["id"]))
+        r += money_stops(c["symbol"], st_ll, bills_by_no)
         if sid: r += cmte_stops(sid)[:1]
         name_en = (t or {}).get("name") or ""
         ent["company:" + c["symbol"]] = {"type": "company", "name": c["name"], "symbol": c["symbol"], "sector": sid,
@@ -163,6 +207,7 @@ def main():
             r.append(stop(f"본사 {t.get('hq_city','')}, {hq}", ll[0], ll[1], "본사 위치(SEC 주소)", f"데이터상 SEC 제출 서류 사업장 주소가 {t.get('hq_city')} {hq}임. SIC {t.get('sic')} {t.get('sic_desc')}.", t["source_url"]))
         elif hq in SEC_FOREIGN:
             k = CENT[SEC_FOREIGN[hq]]; r.append(stop(k[0], k[2], k[3], "본사 소재국(SEC 주소)", f"데이터상 SEC 제출 서류 사업장 주소 소재지가 {t.get('hq_desc')}임.", t["source_url"]))
+        r += money_stops(tk, st_ll, bills_by_no)
         if sid: r += factor_stops(sid, 2) + cmte_stops(sid)[:1]
         ent["company:" + tk] = {"type": "company", "name": t.get("name") or tk, "symbol": tk, "sector": sid, "aliases": [tk, t.get("name") or ""], "route": r}
     # 상임위
@@ -185,7 +230,7 @@ def main():
         e["aliases"] = sorted({a for a in e["aliases"] if a})
     res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 개별 의원 거래 미포함.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
-           "with_route": sum(1 for e in ent.values() if e["route"]), "entities": ent}
+           "with_route": sum(1 for e in ent.values() if e["route"]), "money_stops": {k: sum(1 for e in ent.values() for x in e["route"] if (x.get("ref") or "").startswith(k)) for k in ("awards:", "lobbying:", "pac:")}, "entities": ent}
     json.dump(res, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
     print(res["counts"], "with_route", res["with_route"], "bytes", os.path.getsize(OUT))
 main()
