@@ -477,6 +477,11 @@ def main():
     for e in ent.values():
         e["route"] = [x for x in e["route"] if x and x.get("lat") is not None]
         e["aliases"] = sorted({a for a in e["aliases"] if a})
+    # 질문 이해기(assets/intent.js)용 회사 별명·오타 변형: data/intent-lexicon.json nicknames → aliases
+    nick = (opt("data", "intent-lexicon.json") or {}).get("nicknames", {})
+    for tk, names in nick.items():
+        e = ent.get("company:" + tk)
+        if e: e["aliases"] = sorted(set(e["aliases"]) | {a for a in names if a})
     mem_by_id = {m["id"]: m for m in J("data", "us", "members.json")["members"]}
     nt, nm = trade_parts(ent, mem_by_id)
     print("trades", nt, "members", nm)
