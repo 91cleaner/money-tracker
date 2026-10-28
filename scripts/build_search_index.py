@@ -252,13 +252,13 @@ def kr_policy(ent):
     return n
 def wh_topics(ent):
     W = opt("data", "us", "whitehouse.json"); I = W.get("items") or []; n = 0
-    LL = {"presdoc": ("백악관 · 워싱턴 DC", 38.8977, -77.0365), "상무부 BIS(수출통제)": ("상무부 BIS · 워싱턴 DC", 38.8936, -77.0326), "USTR(무역대표부)": ("USTR · 워싱턴 DC", 38.8992, -77.0393), "재무부 OFAC(제재)": ("재무부 OFAC · 워싱턴 DC", 38.8981, -77.0345)}
+    LL = {"presdoc": ("백악관 · 워싱턴 DC", 38.8977, -77.0365), "상무부 BIS(산업안보국)": ("상무부 BIS · 워싱턴 DC", 38.8936, -77.0326), "USTR(무역대표부)": ("USTR · 워싱턴 DC", 38.8992, -77.0393), "재무부 OFAC(해외자산통제국)": ("재무부 OFAC · 워싱턴 DC", 38.8981, -77.0345)}
     def stops(L):
         out = []
         for i, b in enumerate(L[:10]):
             r, la, lo = LL.get("presdoc" if b["kind"] == "presdoc" else b["type"], LL["presdoc"])
-            out.append({"region": r, "lat": la + 0.004 * (i % 3 - 1), "lon": lo + 0.004 * (i // 3 - 1), "title": b["type"] + (f" EO {b['eo']}" if b.get("eo") else ""), "kind": "wh", "ref": "wh:" + b["id"],
-                        "fact": b["t"] + " · " + b["ko"] + " · 서명 " + (b.get("sign") or "-") + " · " + b["src"], "source_url": b["u"], "date": b.get("date")})
+            out.append({"region": r, "lat": la + 0.004 * (i % 3 - 1), "lon": lo + 0.004 * (i // 3 - 1), "title": (b.get("grp") or "") + " · " + b["type"] + (f" EO {b['eo']}" if b.get("eo") else "") + (f" 포고문 {b['procl']}" if b.get("procl") else ""), "kind": "wh", "ref": "wh:" + b["id"],
+                        "fact": b["t"] + " · " + b["ko"] + (" · 서명 " + b["sign"] if b.get("sign") else "") + (" · " + (b.get("tickers_product_label") or "") + " " + ",".join(b["tickers_product"]) if b.get("tickers_product") else "") + " · " + b["src"], "source_url": b["u"], "date": b.get("date")})
         return out
     P = [b for b in I if b["kind"] == "presdoc"]
     def T(key, name, al, L):
@@ -267,12 +267,12 @@ def wh_topics(ent):
     T("wh-all", "백악관·대통령 조치(최신순)", ["백악관", "대통령 조치", "백악관 발표", "white house", "presidential actions", "트럼프 행정명령"], P)
     T("wh-eo", "행정명령(최신순)", ["행정명령", "executive order", "대통령 행정명령"], [b for b in P if b["type"] == "행정명령"])
     T("wh-procl", "대통령 포고문(최신순)", ["포고문", "proclamation"], [b for b in P if b["type"] == "포고문"])
-    T("wh-tariff", "관세 관련 대통령 조치·USTR", ["관세", "관세 행정명령", "백악관 관세", "tariff", "section 232", "section 301"], [b for b in I if "tariff" in b["topics"]])
-    T("wh-export", "미국 수출통제(BIS·대통령 조치)", ["수출통제", "export control", "entity list", "BIS", "미국 수출통제"], [b for b in I if "export_control" in b["topics"]])
-    T("wh-sanction", "미국 제재(OFAC·대통령 조치)", ["제재", "OFAC", "sanctions", "미국 제재"], [b for b in I if "sanctions" in b["topics"]])
+    T("wh-tariff", "관세·수입제한 관련 백악관·대통령 조치 및 관련 부처 관보 문서", ["관세", "관세 행정명령", "백악관 관세", "tariff", "section 232", "232조", "수입제한", "section 301"], [b for b in I if "tariff" in b["topics"] or "import_232" in b["topics"]])
+    T("wh-export", "미국 수출통제(백악관·대통령 조치 및 관련 부처 관보 문서)", ["수출통제", "export control", "entity list", "BIS", "미국 수출통제"], [b for b in I if "export_control" in b["topics"]])
+    T("wh-sanction", "미국 제재(백악관·대통령 조치 및 관련 부처 관보 문서)", ["제재", "OFAC", "sanctions", "미국 제재"], [b for b in I if "sanctions" in b["topics"]])
     LAB = {s["id"]: s["label"] for s in J("data", "market", "sectors.json")["sectors"]}
     for sid, lab in LAB.items():
-        T("wh-" + sid, f"{lab} 관련 백악관·대통령 조치", [f"{lab} 행정명령", f"백악관 {lab}", f"{lab} 대통령 조치"], [b for b in I if sid in b["sectors"]])
+        T("wh-" + sid, f"{lab} 관련 백악관·대통령 조치 및 관련 부처 관보 문서", [f"{lab} 행정명령", f"백악관 {lab}", f"{lab} 대통령 조치"], [b for b in I if sid in b["sectors"]])
     return n
 def main():
     sec = J("data", "market", "sectors.json"); factors = {f["id"]: f for f in sec["factors"]}
