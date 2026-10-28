@@ -35,6 +35,7 @@ export function factorLatest(f, load) {
   if (f.data.series) { const s = d.series && d.series[f.data.series]; return s && s.latest ? { value: s.latest.value, date: s.latest.date } : null; }
   if (f.data.company) { const h = d.history && d.history[f.data.company]; const p = h && h.points.at(-1); return p ? { value: p.yoy_pct, date: p.month, unit: "yoy%" } : null; }
   if (f.data.list) { const k = f.data.list.replace(/^_/, ""), v = d[k]; return v ? { count: Array.isArray(v) ? v.length : Object.keys(v).length } : null; }
+  if (f.data.item) { const it = d.items && d.items[f.data.item]; return it && it.latest ? { value: it.latest.exp_usd, date: it.latest.month, unit: "usd" } : null; }
   return null;
 }
 

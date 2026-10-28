@@ -116,3 +116,16 @@ export function companyLinkDocuments(file){
    source:"MONEY TRACKER 기업 연결표",url:"https://github.com/91cleaner/money-tracker/blob/main/data/market/company-links.json",source_date:null,route:null};
  });
 }
+
+/** Korea monthly exports by HS item (Korea Customs Service). */
+export function krExportDocuments(file){
+ const eok=v=>v==null?"?":Math.round(v/1e8).toLocaleString("en-US")+"억 달러";
+ return Object.entries(file?.items||{}).map(([hs,v])=>{
+  const pts=v.points||[],l=v.latest,prev=pts.find(p=>p.month===(Number(l.month.slice(0,4))-1)+l.month.slice(4));
+  const yoy=prev&&prev.exp_usd?((l.exp_usd/prev.exp_usd-1)*100):null;
+  return {id:"kr-export-"+hs,type:"dataset",title:"한국 수출 · "+tidy(v.label,50)+" ("+l.month+")",
+   aliases:["한국 수출","수출","관세청","HS "+hs,v.label.split("(")[0]],
+   summary:l.month+" 수출 "+eok(l.exp_usd)+(yoy!=null?" (전년 같은 달 대비 "+(yoy>=0?"+":"")+yoy.toFixed(1)+"%)":"")+" · 수입 "+eok(l.imp_usd)+". 관세청 HS 품목 기준이라 산업부 발표 품목 분류와 숫자가 다를 수 있음.",
+   source:"관세청 · 공공데이터포털",url:file.source_url,source_date:null,route:null};
+ });
+}
