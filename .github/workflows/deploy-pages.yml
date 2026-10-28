@@ -40,6 +40,8 @@ jobs:
         run: node --test worker/private-api.test.mjs
       - name: Build public-only artifact
         run: python3 scripts/prepare-public-pages.py
+      - name: Verify public artifact privacy and required assets
+        run: python3 scripts/check-pages-artifact.py
       - name: Check excluded server files
         run: |
           test ! -e .public-pages/cloudflare/admin-worker.js
