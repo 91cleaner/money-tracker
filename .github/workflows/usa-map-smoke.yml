@@ -7,12 +7,14 @@ on:
       - 'usa-command.html'
       - 'index.html'
       - 'tests/**'
+      - 'data/market/**'
       - '.github/workflows/usa-map-smoke.yml'
   pull_request:
     paths:
       - 'usa-command.html'
       - 'index.html'
       - 'tests/**'
+      - 'data/market/**'
       - '.github/workflows/usa-map-smoke.yml'
   workflow_dispatch:
 
@@ -30,6 +32,8 @@ jobs:
           node-version: '22'
       - name: Verify syntax, map flow, satellite layers, and honest data status
         run: node --test tests/usa-map-smoke.test.cjs
+      - name: Sector-factor map and official market calendar integrity
+        run: node --test tests/market-reference.test.cjs
 
   pages-deployment:
     name: GitHub Pages deployment verification
