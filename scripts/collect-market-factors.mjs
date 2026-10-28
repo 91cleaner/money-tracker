@@ -487,7 +487,7 @@ async function krCustomsExports() {
     if (points.length) out[hs] = { label, points, latest: points.at(-1) };
   }
   if (!Object.keys(out).length) throw Error("no customs items returned");
-  writeJson("kr-exports-by-item.json", { source: "관세청 품목별 수출입실적 (공공데이터포털)", source_url: "https://www.data.go.kr/data/15100475/openapi.do",
+  writeJson("kr-exports-by-item.json", { source: "관세청 품목별 수출입실적 (공공데이터포털)", source_url: "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
     note: "HS 4단위 품목별 월간 수출·수입액(달러). 잠정치는 이후 바뀔 수 있음.", collected_at: now(), items: out });
   return Object.entries(out).map(([k, v]) => k + "@" + v.latest.month).join(",");
 }
