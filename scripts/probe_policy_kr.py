@@ -1,28 +1,19 @@
-#!/usr/bin/env python3
-"""한국 정책·의안 API 접근 확인. 키는 절대 출력하지 않음: HTTP 상태, resultCode/메시지, 항목 수만."""
-import os, re, urllib.request, urllib.parse, datetime as dt
-K = os.environ.get("DATA_GO_KR_KEY", "").strip(); ek = urllib.parse.quote(K, safe="")
-e = dt.date.today(); s = e - dt.timedelta(days=7); f = lambda d: d.strftime("%Y%m%d")
-P = {
- "정책브리핑 보도자료(1371000/pressReleaseService)": f"https://apis.data.go.kr/1371000/pressReleaseService/pressReleaseList?serviceKey={ek}&startDate={f(s)}&endDate={f(e)}",
- "정책브리핑 정책뉴스(1371000/policyNewsService)": f"https://apis.data.go.kr/1371000/policyNewsService/policyNewsList?serviceKey={ek}&startDate={f(s)}&endDate={f(e)}",
- "국회사무처 의안정보 getBillInfoList(9710000/BillInfoService2)": f"https://apis.data.go.kr/9710000/BillInfoService2/getBillInfoList?serviceKey={ek}&numOfRows=5&pageNo=1&ord=A01&start_ord=22&end_ord=22",
- "국회사무처 의안정보 getRecentRceptList(9710000/BillInfoService2)": f"https://apis.data.go.kr/9710000/BillInfoService2/getRecentRceptList?serviceKey={ek}&numOfRows=5&pageNo=1",
- "보도자료 http": f"http://apis.data.go.kr/1371000/pressReleaseService/pressReleaseList?serviceKey={ek}&startDate={f(s)}&endDate={f(e)}",
- "정책뉴스 http": f"http://apis.data.go.kr/1371000/policyNewsService/policyNewsList?serviceKey={ek}&startDate={f(s)}&endDate={f(e)}",
- "의안정보 http BillInfoService2": f"http://apis.data.go.kr/9710000/BillInfoService2/getBillInfoList?serviceKey={ek}&numOfRows=5&pageNo=1",
- "과기정통부 보도자료(1721000/msitpressreleaseinfo)": f"https://apis.data.go.kr/1721000/msitpressreleaseinfo/pressReleaseList?serviceKey={ek}&numOfRows=5&pageNo=1",
- "열린국회정보 의원발의 pSize100 키없음": "https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=2&pSize=100&AGE=22",
- "열린국회정보 의원발의법률안(nzmimeepazxkubdpn, 키없음)": "https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=1&pSize=5&AGE=22",
- "열린국회정보 법률안 전체(TVBPMBILL11, 키없음)": "https://open.assembly.go.kr/portal/openapi/TVBPMBILL11?Type=json&pIndex=1&pSize=5",
-}
-for name, u in P.items():
-    try:
-        r = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=40); st = r.status; b = r.read().decode("utf-8", "replace")
-    except urllib.error.HTTPError as x: st = x.code; b = x.read().decode("utf-8", "replace")
-    except Exception as x: print(f"[{name}] ERR {type(x).__name__}"); continue
-    if K: b = b.replace(K, "***").replace(ek, "***")
-    code = re.findall(r"<(?:resultCode|returnReasonCode|CODE)>([^<]+)<|\"CODE\"\s*:\s*\"([^\"]+)\"", b)[:1]
-    msg = re.findall(r"<(?:resultMsg|returnAuthMsg|MESSAGE)>([^<]+)<|\"MESSAGE\"\s*:\s*\"([^\"]+)\"", b)[:1]
-    n = len(re.findall(r"<item>|<NewsItem>|\"BILL_ID\"|\"BILL_NO\"", b)); tot = re.findall(r"<totalCount>(\d+)<|\"list_total_count\"\s*:\s*(\d+)", b)[:1]
-    print(f"[{name}] HTTP {st} code={code} msg={msg} items={n} total={tot} head={b[:160]!r}")
+import os,json,re,urllib.request,urllib.parse,datetime as dt
+k=os.environ.get('DATA_GO_KR_KEY','');ek=urllib.parse.quote(k,safe='')
+def get(u):
+  try:
+    r=urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'}),timeout=30);return r.status,r.read().decode('utf-8','replace')
+  except Exception as e: return 'ERR',str(e)[:120]
+def red(s): return s.replace(k,'***').replace(ek,'***') if k else s
+for i in ['15095335','15074632']:
+  s,b=get(f'https://www.data.go.kr/catalog/{i}/openapi.json')
+  try:
+    d=json.loads(b);print(i,'swagger',d.get('host'),d.get('basePath'),d.get('servers'),list(d.get('paths',{})))
+    for p,v in d['paths'].items():
+      for m in v.values(): print('  ',p,[x.get('name') for x in m.get('parameters',[])])
+  except Exception: print(i,'swagger',s,b[:150])
+e=dt.date.today();st=e-dt.timedelta(days=3);f=lambda x:x.strftime('%Y%m%d')
+U={'정책뉴스 policyNewsList':f'https://apis.data.go.kr/1371000/policyNewsService/policyNewsList?serviceKey={ek}&startDate={f(st)}&endDate={f(e)}',
+'과기부 msit':f'https://apis.data.go.kr/1721000/msitpressreleaseinfo/pressReleaseList?serviceKey={ek}&numOfRows=5&pageNo=1'}
+for n,u in U.items():
+  s,b=get(u);code=re.findall(r'<(?:resultCode|returnReasonCode)>([^<]*)',b);print(n,s,'codes',code,'items',len(re.findall(r'<(?:NewsItem|item)>',b)),'total',re.findall(r'<totalCount>(\d+)',b),red(b[:160]).replace('\n',' '))
