@@ -116,7 +116,7 @@ header{background:#090f12!important;border-bottom:1px solid #1d4435!important}he
 <nav id="controls" aria-label="관제실 조작"><button id="world">🌐 전체지도</button><button id="toggle">☷ 메뉴</button><button id="closeBrief" hidden>✕ 설명 닫기</button></nav>
 <section id="menu" hidden><h3>◉ TRACKING OPTIONS</h3><div id="topics"></div><p style="font-size:11px;color:#9cbac6">주제를 선택하거나 아래 질문창에서 직접 명령하세요.</p></section>
 <section id="candidatePanel" hidden aria-live="polite" aria-label="추적 경로 선택"><h2 id="candidateTitle">추적 경로 선택</h2><p id="candidateHelp"></p><div id="candidateList"></div><small>규칙 기반 경로 선택 · AI 분석 미연결 · 실시간 거래 데이터 미연결</small></section>
-<section id="brief" hidden aria-live="polite"><h2 id="briefTitle"></h2><p id="briefText"></p><p id="briefStocks"></p><small id="briefCaveat"></small><div class="actions"><button id="previous">← 이전</button><button id="next">다음 지역 →</button></div><p><a id="source" target="_blank" rel="noopener noreferrer">관련 공식 자료 확인 ↗</a></p></section>
+<section id="brief" hidden aria-live="polite"><h2 id="briefTitle"></h2><p id="briefText"></p><p id="briefStocks"></p><small id="briefCaveat"></small><div class="actions"><button id="previous">← 이전</button><button id="mtPlay" type="button" aria-label="자동 재생 멈춤">⏸</button><button id="next">다음 지역 →</button></div><p><a id="source" target="_blank" rel="noopener noreferrer">관련 공식 자료 확인 ↗</a></p></section>
 <form id="ask"><input id="question" aria-label="추적 질문" placeholder="무엇을 추적할까요? 예: 미국 금리가 주식에 미치는 영향" maxlength="300" required><button type="submit">추적 ↵</button></form>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -143,7 +143,7 @@ if(window.L){try{
  map.on('dragstart',()=>{status.textContent='수동 탐색 · 자유롭게 지도를 이동하세요'});
 }catch(e){$('map').style.display='none';status.textContent='지도 엔진 오류 · 개략 지도 표시'}}
 else{$('map').style.display='none';status.textContent='지도 라이브러리 연결 실패 · 개략 지도 표시'}
-function go(name){const p=places[name];if(!p)return;if(map){map.invalidateSize();map.flyTo(p,Math.max(4,map.getZoom()<4?4:Math.min(5,map.getZoom())),{duration:1.5});if(marker)map.removeLayer(marker);marker=L.circleMarker(p,{radius:9,color:'#005c7c',weight:3,fillColor:'#54d9e6',fillOpacity:.7}).addTo(map)}else{status.textContent=name+' 추적 · 실제 지도 연결 시 위치 이동 가능'}}
+function go(name){const p=places[name];if(!p)return;if(map){map.invalidateSize();map.flyTo(p,Math.max(4,map.getZoom()<4?4:Math.min(5,map.getZoom())),{duration:2.2,easeLinearity:.2});if(marker)map.removeLayer(marker);marker=L.circleMarker(p,{radius:9,color:'#005c7c',weight:3,fillColor:'#54d9e6',fillOpacity:.7}).addTo(map)}else{status.textContent=name+' 추적 · 실제 지도 연결 시 위치 이동 가능'}}
 function show(){if(!mission)return;if(mission.ticker){const t=mission.meta[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length+' · '+t.title;$('briefText').textContent=t.region+' — '+t.fact;$('briefStocks').textContent=(t.date?'기준일 '+t.date+' · ':'')+'출처: '+(t.source_url?'아래 링크':'내부 데이터 분류');$('briefCaveat').textContent=mission.caveat||'데이터상 공개 자료 정리임. 투자 신호 아님.';if(t.source_url)$('source').href=t.source_url;else $('source').removeAttribute('href');$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(t.region);window.mtAfterShow&&window.mtAfterShow();return}const [name,explain]=mission.stops[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length;$('briefText').textContent=name+' — '+explain;$('briefStocks').textContent='미국 종목·ETF 조사 대상: '+mission.stocks;$('briefCaveat').textContent='시연용 가상 탐색 경로입니다. AI·실시간 거래 데이터 미연결. 표시된 관계는 투자 신호나 입증된 인과관계가 아닙니다.';$('source').href=mission.url;$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(name)}
 function start(c){mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#36b6cc',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
 $('topics').replaceChildren(...cases.map(c=>{const b=document.createElement('button');b.textContent=c.title;b.onclick=()=>start(c);return b}));
@@ -176,7 +176,7 @@ const main=toks.slice().sort((a,b)=>b.length-a.length)[0]||full;
 for(const [id,e] of Object.entries(E)){if(!e.route.length)continue;let m=0;for(const a of e.aliases){m=Math.max(m,bigram(norm(a),main))}if(m>=.34&&!sug.has(id))sug.set(id,m*100)}
 const list=[...sug.entries()].sort((a,b)=>b[1]-a[1]).slice(0,3).map(([id])=>id);
 return{none:true,key:main,sug:list}}
-window.mtApi={loadIdx,routeOf,start:c=>start(c)};function showNone(q,r){$('candidatePanel').hidden=true;$('brief').hidden=false;$('closeBrief').hidden=false;
+window.mtApi={loadIdx,routeOf,start:c=>start(c)};window.mtCur=()=>mission&&mission.ticker?mission:null;function showNone(q,r){$('candidatePanel').hidden=true;$('brief').hidden=false;$('closeBrief').hidden=false;
 $('briefTitle').textContent=r.sug.length?'◉ 아직 데이터 없음 · 대신 이건 있어요':'◉ 데이터 없음';
 $('briefText').textContent='"'+(r.key||q)+'"에 맞는 기업·업종·나라·상임위가 누적 데이터에 없습니다.';
 const box=$('briefStocks');box.replaceChildren();r.sug.forEach(id=>{const e=searchIdx.entities[id];const bt=document.createElement('button');bt.className='mtSug';bt.textContent='▸ '+e.name+(e.symbol?' ('+e.symbol+')':'')+' · '+({company:'기업',sector:'업종',country:'나라',committee:'상임위'}[e.type]||'');bt.onclick=()=>start(routeOf(id));box.append(bt)});
@@ -297,7 +297,7 @@ loadIdx().then(ix=>{const ids=Object.keys(ix.entities).filter(k=>{const e=ix.ent
 async function j(u){try{const r=await fetch(u,{cache:'no-store'});return r.ok?r.json():null}catch(e){return null}}
 Promise.all([j('../data/us/bills.json'),j('../data/market/factors/cn-mofcom-announcements.json'),j('../data/market/company-links.json')]).then(([bl,mo,cl])=>{const items=[];
  if(bl&&bl.recent){const seen=new Set(),all=[];Object.values(bl.recent).forEach(a=>a.forEach(x=>{if(!seen.has(x.no)){seen.add(x.no);all.push(x)}}));all.sort((a,b)=>(b.ad||b.d||'').localeCompare(a.ad||a.d||''));all.slice(0,6).forEach(x=>items.push({d:x.ad||x.d,t:'미 의회 법안 '+x.no+' · '+x.n,u:x.u,ll:[38.8899,-77.0091]}))}
- if(mo&&mo.items){mo.items.slice(0,3).forEach(x=>items.push({d:x.date||(mo.collected_at||'').slice(0,10)+' 수집',t:'중국 상무부 공고 '+(x.number||'')+' · '+x.title.slice(0,40),u:x.url,ll:[39.9042,116.4074]}))}
+ if(mo&&mo.items){mo.items.slice(0,3).forEach(x=>items.push({d:x.date||(mo.collected_at||'').slice(0,10)+' 수집',t:'중국 상무부 공고 '+(String(x.number||'').replace(/^(\d{4})\D+(\d+)$/,'$1년 제$2호')||x.title.slice(0,40)),u:x.url,ll:[39.9042,116.4074]}))}
  if(cl&&cl.companies){const seen=new Set();const C={kr:[36.4,127.8],tw:[23.7,121],jp:[36,138],us:[39,-98],eu:[50.5,9]};cl.companies.forEach(c=>c.factors.forEach(f=>{if(seen.has(f.id)||!f.latest||!f.latest.date)return;seen.add(f.id);const cc=f.id.split('_')[0]==='fx'?({fx_krw:'kr',fx_twd:'tw',fx_jpy:'jp',fx_eur:'eu'}[f.id]):f.id.split('_')[0];if(C[cc])items.push({d:f.latest.date,t:'지표 갱신 · '+f.label,u:f.source_url,ll:C[cc]})}))}
  if(!items.length)return;items.sort((a,b)=>String(b.d).localeCompare(String(a.d)));const list=items.slice(0,14);
  const bar=document.createElement('div');bar.id='mtTicker';const lab=document.createElement('span');lab.className='lab';lab.textContent='● 수집 기록';const run=document.createElement('span');run.className='run';
@@ -305,4 +305,39 @@ Promise.all([j('../data/us/bills.json'),j('../data/market/factors/cn-mofcom-anno
  let k=0;setInterval(()=>{const m=window.moneyTrackerMap;if(!m)return;const it=list[k++%list.length];const c=L.circleMarker(it.ll,{radius:10,color:'#7dffa8',weight:2,fill:false,className:'mtPulse',interactive:false}).addTo(m);setTimeout(()=>m.removeLayer(c),3300)},3500)});
 })();
 </script>
+<style id="mt-flows">
+.mtFl{fill:none;stroke-linecap:round;stroke-dasharray:3000;stroke-dashoffset:3000;animation:mtDraw 1.6s ease-out forwards;filter:drop-shadow(0 0 4px currentColor)}
+.mtFl.dim{opacity:.22;animation:none;stroke-dashoffset:0}@keyframes mtDraw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.mtFl{animation:none;stroke-dashoffset:0}}
+#mtLegend{position:fixed;left:12px;top:118px;z-index:900;background:rgba(2,12,6,.88);border:1px solid rgba(93,255,158,.35);border-radius:8px;padding:6px 9px;font:11px/1.6 ui-monospace,Menlo,monospace;color:#bfffd6}
+#mtLegend i{display:inline-block;width:14px;height:3px;margin-right:5px;vertical-align:middle;border-radius:2px;box-shadow:0 0 4px currentColor}
+#mtLegend button{margin-top:4px;width:100%;background:rgba(93,255,158,.1);border:1px solid rgba(93,255,158,.4);color:#eafff2;border-radius:6px;font:inherit;cursor:pointer;padding:3px}
+#briefLinks a{color:#5dff9e;margin-right:8px}@media(max-width:600px){#mtLegend{top:auto;left:auto;right:8px;bottom:132px;font-size:10px;padding:4px 7px}}
+</style>
+<script id="mt-flows-js">(()=>{const map=window.moneyTrackerMap;if(!map||!window.L)return;
+// 한국 계약 지도(assets/map.js curve)와 같은 방식: 두 점 사이 수직 오프셋 0.28·거리의 2차 곡선 + 선 그리기 애니메이션
+const COL={supply:'#5dff9e',reg:'#ff5d73',cmte:'#ffd60a',award:'#4dd2ff',lobby:'#ff9f0a',pac:'#c58cff',trade:'#ff6ad5',other:'#8fa89a'};
+const NAME={supply:'본사·공장',reg:'규제',cmte:'위원회',award:'연방 계약',lobby:'로비',pac:'후원',trade:'의원 거래',other:'기타 지표'};
+const kind=t=>{const r=t.ref||'',x=(t.title||'')+' '+(t.region||'');if(t.kind==='award'||r.startsWith('awards:'))return'award';if(t.kind==='lobby'||r.startsWith('lobbying:'))return'lobby';if(t.kind==='pac'||r.startsWith('pac:'))return'pac';if(r.startsWith('trade')||/의원 거래/.test(x))return'trade';if(/위원회|committee/i.test(x))return'cmte';if(/규제|수출통제|상무부|관세|제재|BIS|MOFCOM/i.test(x))return'reg';if(/본사|공장|사업장|HQ|팹/.test(x))return'supply';return'other'};
+const curve=(a,b)=>{const dx=b[1]-a[1],dy=b[0]-a[0],d=Math.hypot(dx,dy)||1,o=d<6?Math.max(d*.6,.4):Math.min(d*.28,18),c=[(a[0]+b[0])/2+(dx/d)*o,(a[1]+b[1])/2-(dy/d)*o],out=[];for(let i=0;i<=32;i++){const u=i/32,v=1-u;out.push([v*v*a[0]+2*v*u*c[0]+u*u*b[0],v*v*a[1]+2*v*u*c[1]+u*u*b[1]])}return out};
+const g=L.layerGroup().addTo(map);let cur=null,drawn=new Set(),lines=[];const leg=document.createElement('div');leg.id='mtLegend';leg.hidden=true;document.body.append(leg);
+function setup(m){g.clearLayers();drawn=new Set();lines=[];cur=m;const st=m.meta.filter(t=>t.lat!=null);if(st.length<2){leg.hidden=true;return}const hub=[st[0].lat,st[0].lon],used=new Set();
+ m.meta.forEach((t,i)=>{if(i===0||t.lat==null){lines.push(null);return}const k=kind(t);used.add(k);const pl=L.polyline(curve(hub,[t.lat,t.lon]),{color:COL[k],weight:k==='supply'?3:2.2,opacity:.9,className:'mtFl dim',interactive:false}).addTo(g);lines.push(pl);L.circleMarker([t.lat,t.lon],{radius:3,color:COL[k],fillOpacity:.9,weight:1,interactive:false}).addTo(g)});
+ L.circleMarker(hub,{radius:6,color:'#ffd60a',fill:false,weight:2,interactive:false}).addTo(g);
+ leg.innerHTML=[...used].map(k=>`<div><i style="background:${COL[k]};color:${COL[k]}"></i>${NAME[k]}</div>`).join('')+'<small>선 = 공개 자료상 연결, 인과 아님</small><button id="mtAll" type="button">전체 보기</button>';leg.hidden=false;
+ leg.querySelector('#mtAll').onclick=()=>{stop();const b=L.latLngBounds(st.map(t=>[t.lat,t.lon]));map.flyToBounds(b.pad(.25),{duration:1.6,maxZoom:6})}}
+function reach(i){const pl=lines[i];if(!pl||drawn.has(i))return;drawn.add(i);const el=pl.getElement&&pl.getElement();if(el){el.classList.remove('dim');void el.getBBox;el.style.animation='none';el.getBoundingClientRect();el.style.animation=''}}
+// 자동 재생: 4초 머문 뒤 다음 정류장. 드래그·휠·클릭하면 멈춤
+let playing=true,tm=null;const btn=document.getElementById('mtPlay'),nx=document.getElementById('next');
+function paint(){if(btn){btn.textContent=playing?'⏸':'▶';btn.setAttribute('aria-label',playing?'자동 재생 멈춤':'자동 재생')}}
+function sched(){clearTimeout(tm);if(!playing)return;tm=setTimeout(()=>{if(playing&&nx&&!nx.disabled&&!document.getElementById('brief').hidden)nx.click();else{playing=false;paint()}},4000+2200)}
+function stop(){playing=false;clearTimeout(tm);paint()}
+if(btn)btn.onclick=e=>{e.stopPropagation();playing=!playing;paint();if(playing){if(nx.disabled&&cur){/* 끝이면 처음부터 */}sched()}else clearTimeout(tm)};
+map.on('dragstart',stop);map.getContainer().addEventListener('wheel',stop,{passive:true});map.on('click',stop);
+const prev=window.mtAfterShow;window.mtAfterShow=()=>{prev&&prev();const m=window.mtCur&&window.mtCur();if(!m)return;const ti=document.getElementById('briefTitle').textContent;const st=+(ti.match(/ · (\d+)\//)||[0,1])[1]-1;
+ if(m!==cur){setup(m);playing=true;paint()}reach(st);
+ const t=m.meta[st]||{},box=document.getElementById('briefLinks')||Object.assign(document.createElement('p'),{id:'briefLinks'});if(!box.parentNode)document.getElementById('briefStocks').after(box);box.replaceChildren();
+ (t.links||[]).forEach((l,j)=>{if(!j)box.append('관련 법안: ');const a=document.createElement('a');a.href=l.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=l.label+' ↗';box.append(a)});sched()};
+document.getElementById('world')&&document.getElementById('world').addEventListener('click',()=>{g.clearLayers();leg.hidden=true;cur=null;stop()});
+document.getElementById('closeBrief')&&document.getElementById('closeBrief').addEventListener('click',()=>{stop()});})();</script>
 </body></html>
