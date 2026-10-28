@@ -318,8 +318,14 @@ export function anchorLinks(html, base) {
 }
 async function chinaMofcom() {
   const pages = ["https://www.mofcom.gov.cn/zwgk/zcfb/index.html", "https://www.mofcom.gov.cn/"];
+  for (let i = 1; i <= 4; i++) pages.push("https://www.mofcom.gov.cn/zwgk/zcfb/index_" + i + ".html"); // older list pages, if the site provides them
   const found = [];
-  for (const u of pages) { try { found.push(...parseMofcomList(await (await get(u, 25000)).text())); } catch (e) { warn("MOFCOM " + u + ": " + e.message); } }
+  const perPage = {};
+  for (const u of pages) {
+    try { const got = parseMofcomList(await (await get(u, 25000)).text()); perPage[u.replace("https://www.mofcom.gov.cn", "")] = got.length; found.push(...got); }
+    catch (e) { perPage[u.replace("https://www.mofcom.gov.cn", "")] = e.message.slice(0, 30); }
+  }
+  console.log("::notice::MOFCOM_PAGES " + JSON.stringify(perPage));
   if (!found.length) throw Error("no MOFCOM announcement links parsed (page layout may have changed)");
   const file = "cn-mofcom-announcements.json";
   let old = {}; try { old = JSON.parse(fs.readFileSync(path.join(OUT, file), "utf8")); } catch {}
