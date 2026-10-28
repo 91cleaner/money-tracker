@@ -5,6 +5,7 @@
  *  - US trade controls: Federal Register API documents from BIS (export controls, Entity List) and USTR (tariffs)
  *  - China MOFCOM: 政策发布 announcement titles/numbers/links (export-control tagging by title words)
  *  - US FDA new drug approvals (openFDA Drugs@FDA, keyless)
+ *  - US county jobs for key industries (BLS QCEW open data, keyless)
  *  - FRED extra series (housing starts, copper): fredgraph CSV, or the official API when FRED_API_KEY is set
  * Each source is independent: if one fails, its previous file is kept and a ::warning:: is printed.
  * Output: data/market/factors/*.json. Values are stored as published; nothing is estimated or filled in.
@@ -130,6 +131,29 @@ export function parseFdaApprovals(json, since) {
       url: "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=" + r.application_number.replace(/^\D+/, "") });
   }
   return out.sort((a, b) => b.date.localeCompare(a.date) || a.application.localeCompare(b.application));
+}
+
+
+export function parseQcew(text, titles = {}) {
+  const lines = String(text || "").trim().split(/\r?\n/);
+  const head = csvRow(lines.shift());
+  const col = k => head.indexOf(k);
+  const need = ["area_fips", "own_code", "agglvl_code", "year", "qtr", "disclosure_code", "month3_emplvl"];
+  for (const k of need) if (col(k) < 0) throw Error("QCEW column missing: " + k);
+  const counties = [], states = [];
+  for (const line of lines) {
+    const c = csvRow(line), get = k => c[col(k)];
+    if (get("own_code") !== "5" || get("disclosure_code") === "N") continue;
+    const lvl = get("agglvl_code"), emp = num(get("month3_emplvl"));
+    if (emp == null || emp <= 0) continue;
+    const row = { fips: get("area_fips"), name: titles[get("area_fips")] || null, employment: emp,
+      yoy_change: col("oty_month3_emplvl_chg") >= 0 ? num(get("oty_month3_emplvl_chg")) : null,
+      weekly_wage: col("avg_wkly_wage") >= 0 ? num(get("avg_wkly_wage")) : null, period: get("year") + "-Q" + get("qtr") };
+    if (/^7[5-8]$/.test(lvl)) counties.push(row); else if (/^5[5-8]$/.test(lvl)) states.push(row);
+  }
+  counties.sort((a, b) => b.employment - a.employment); states.sort((a, b) => b.employment - a.employment);
+  if (!counties.length && !states.length) throw Error("no QCEW private-sector rows");
+  return { counties, states };
 }
 
 function writeJson(file, data) {
@@ -273,6 +297,37 @@ async function fdaApprovals() {
   return items.length + " approvals (novel " + items.filter(x => x.novel).length + ")";
 }
 
+
+async function qcewJobs() {
+  const industries = { "3344": "반도체·전자부품 제조", "3361": "자동차 제조", "3364": "항공우주 제품·부품 제조", "3254": "제약·의약품 제조", "3359": "기타 전기장비(배터리 포함) 제조" };
+  const titles = {};
+  try {
+    const t = await (await get("https://data.bls.gov/cew/doc/titles/area/area_titles.csv", 40000)).text();
+    for (const line of t.trim().split(/\r?\n/).slice(1)) { const c = csvRow(line); if (c[0]) titles[c[0]] = c[1]; }
+  } catch (e) { warn("QCEW area titles: " + e.message); }
+  const y = new Date().getUTCFullYear(), quarters = [];
+  for (let yy = y; yy >= y - 2; yy--) for (let q = 4; q >= 1; q--) quarters.push([yy, q]);
+  const out = {};
+  for (const [code, label] of Object.entries(industries)) {
+    for (const [yy, q] of quarters) {
+      try {
+        const res = await fetch("https://data.bls.gov/cew/data/api/" + yy + "/" + q + "/industry/" + code + ".csv", { headers: UA, signal: AbortSignal.timeout(40000) });
+        if (!res.ok) continue;
+        const { counties, states } = parseQcew(await res.text(), titles);
+        out[code] = { label, period: yy + "-Q" + q, counties: counties.slice(0, 40), states: states.slice(0, 55),
+          url: "https://data.bls.gov/cew/apps/table_maker/v4/table_maker.htm#type=2&year=" + yy + "&qtr=" + q + "&own=5&ind=" + code };
+        break;
+      } catch (e) { /* try the previous quarter */ }
+    }
+    if (!out[code]) warn("QCEW " + code + ": no recent quarter available");
+  }
+  if (!Object.keys(out).length) throw Error("no QCEW industry data");
+  writeJson("us-jobs-by-county.json", { source: "U.S. Bureau of Labor Statistics · QCEW open data", source_url: "https://www.bls.gov/cew/additional-resources/open-data/",
+    note: "민간 부문(own_code 5) 분기 3번째 달 고용. 비공개(disclosure N) 지역 제외. 지도 좌표는 아직 없음(FIPS 코드로 연결 예정). 약 5~6개월 지연 발표.",
+    collected_at: now(), industries: out });
+  return Object.entries(out).map(([k, v]) => k + "@" + v.period).join(",");
+}
+
 async function chinaMofcomProbe() {
   const res = await fetch("https://www.mofcom.gov.cn/", { headers: UA, signal: AbortSignal.timeout(20000) });
   const html = await res.text();
@@ -284,7 +339,7 @@ async function chinaMofcomProbe() {
 
 if (import.meta.url === "file://" + process.argv[1]) {
   const results = {};
-  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates, fdaApprovals })) {
+  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates, fdaApprovals, qcewJobs })) {
     try { results[name] = "ok: " + await fn(); }
     catch (e) { results[name] = "FAILED: " + e.message; warn(name + " failed — previous file kept: " + e.message); }
   }
@@ -296,7 +351,8 @@ if (import.meta.url === "file://" + process.argv[1]) {
     const cn = (() => { try { return rd("cn-mofcom-announcements.json").items.slice(0, 3).map(x => x.number + " " + x.title.slice(0, 50)); } catch { return null; } })();
     const pr = (() => { try { return Object.fromEntries(Object.entries(rd("policy-rates.json").series).map(([k, v]) => [k, v.latest])); } catch { return null; } })();
     const fda = (() => { try { const f = rd("us-fda-approvals.json"); return { count: f.count, novel: f.novel_count, latest: f.items.filter(x => x.novel).slice(0, 2).map(x => x.date + " " + x.brand.join("/") + " · " + x.sponsor) }; } catch { return null; } })();
-    const sample = { fda, policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
+    const jobs = (() => { try { const f = rd("us-jobs-by-county.json"); return Object.fromEntries(Object.entries(f.industries).map(([k, v]) => [k, v.period + " top: " + (v.counties[0] ? v.counties[0].name + " " + v.counties[0].employment : "-")])); } catch { return null; } })();
+    const sample = { jobs, fda, policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
       ecb: Object.fromEntries(Object.entries(ecb.series || {}).map(([k, v]) => [k, v.latest])), fred: Object.fromEntries(Object.entries(fr.series || {}).map(([k, v]) => [k, v.latest])) };
     console.log("::notice::SAMPLE " + JSON.stringify(sample));
   } catch (e) { warn("sample summary unavailable: " + e.message); }

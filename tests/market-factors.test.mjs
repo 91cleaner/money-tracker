@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs, parseMofcomList, parseBisCsv, csvRow, parseFdaApprovals, parseQcew } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -74,4 +74,16 @@ test("openFDA approvals keep original approvals in range and flag novel molecule
   assert.deepEqual(out.map(x => [x.application, x.date, x.novel]), [["BLA761234", "2026-10-10", false], ["NDA219999", "2026-09-15", true]]);
   assert.match(out[1].url, /ApplNo=219999$/);
   assert.throws(() => parseFdaApprovals({}, "2025-01-01"), /unexpected/);
+});
+
+test("QCEW keeps private-sector county/state rows and drops undisclosed ones", () => {
+  const csv = ['"area_fips","own_code","industry_code","agglvl_code","size_code","year","qtr","disclosure_code","month3_emplvl","avg_wkly_wage","oty_month3_emplvl_chg"',
+    '"04013","5","3344","76","0","2026","1","","21000","2900","1500"',
+    '"48453","5","3344","76","0","2026","1","N","0","0","0"',
+    '"04000","5","3344","56","0","2026","1","","30000","2800","2000"',
+    '"04013","1","3344","76","0","2026","1","","50","1000","0"'].join("\n");
+  const out = parseQcew(csv, { "04013": "Maricopa County, Arizona" });
+  assert.deepEqual(out.counties, [{ fips: "04013", name: "Maricopa County, Arizona", employment: 21000, yoy_change: 1500, weekly_wage: 2900, period: "2026-Q1" }]);
+  assert.equal(out.states[0].employment, 30000);
+  assert.throws(() => parseQcew("a,b\n1,2"), /missing/);
 });
