@@ -246,17 +246,25 @@
    "id": "drug_approvals",
    "label": "미국 신약 승인",
    "kind": "regulation",
-   "status": "planned",
-   "source": "U.S. FDA",
-   "source_url": "https://www.fda.gov/drugs/development-approval-process-drugs"
+   "status": "collected",
+   "source": "openFDA Drugs@FDA (매일 자동 수집)",
+   "source_url": "https://open.fda.gov/apis/drug/drugsfda/",
+   "data": {
+    "file": "data/market/factors/us-fda-approvals.json",
+    "list": "items"
+   }
   },
   {
    "id": "us_jobs_by_county",
    "label": "미국 카운티별 업종 고용",
    "kind": "jobs",
-   "status": "planned",
-   "source": "BLS QCEW",
-   "source_url": "https://www.bls.gov/cew/"
+   "status": "collected",
+   "source": "BLS QCEW open data (분기, 매일 확인)",
+   "source_url": "https://www.bls.gov/cew/additional-resources/open-data/",
+   "data": {
+    "file": "data/market/factors/us-jobs-by-county.json",
+    "list": "_industries"
+   }
   },
   {
    "id": "us_facilities",
@@ -340,7 +348,8 @@
     "tw_monthly_revenue",
     "us_export_controls",
     "cn_export_controls",
-    "us_industrial"
+    "us_industrial",
+    "us_jobs_by_county"
    ],
    "law_topics": [
     "semiconductor",
@@ -459,7 +468,8 @@
     "fx_krw",
     "kr_exports",
     "us_export_controls",
-    "cn_export_controls"
+    "cn_export_controls",
+    "us_jobs_by_county"
    ],
    "law_topics": [
     "battery_ev",
@@ -482,7 +492,8 @@
     "fx_jpy",
     "oil_wti",
     "us_policy_rate",
-    "kr_exports"
+    "kr_exports",
+    "us_jobs_by_county"
    ],
    "law_topics": [
     "auto",
@@ -502,7 +513,8 @@
    "factors": [
     "defense_spending",
     "fx_krw",
-    "fx_eur"
+    "fx_eur",
+    "us_jobs_by_county"
    ],
    "law_topics": [
     "defense"
@@ -542,7 +554,8 @@
    "factors": [
     "drug_approvals",
     "us_10y",
-    "fx_krw"
+    "fx_krw",
+    "us_jobs_by_county"
    ],
    "law_topics": [
     "health"

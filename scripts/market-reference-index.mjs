@@ -56,3 +56,21 @@ export function mofcomDocuments(file){
   summary:"중국 상무부 공고"+(x.number?" "+x.number.replace("-","년 제")+"호":"")+(x.export_control?" · 자동 분류: 수출통제 관련(제목 단어 기준, 원문 확인 필요)":"")+(x.targets?.length?" · 제목에 나온 대상: "+x.targets.join(", "):"")+". 원문은 중국어 공식 페이지.",
   source:"中华人民共和国商务部",url:x.url,source_date:x.date||null,route:null}));
 }
+
+/** US FDA new approvals (openFDA). */
+export function fdaDocuments(file){
+ return (file?.items||[]).filter(x=>/^https:\/\//.test(x.url||"")).map(x=>({
+  id:"fda-"+x.application,type:"regulation",title:"미국 FDA 허가 · "+tidy((x.brand||[]).join(" / ")||x.application,90)+" · "+tidy(x.sponsor,60),
+  aliases:["FDA","신약","허가","바이오","제약",x.sponsor,...(x.brand||[]),...(x.ingredients||[]),...(x.novel?["신규 분자","novel drug"]:[])],
+  summary:"허가일 "+x.date+" · 신청번호 "+x.application+(x.novel?" · 신규 분자(제출 분류 TYPE 1)":"")+(x.ingredients?.length?" · 성분: "+x.ingredients.join(", "):"")+". 기업 실적·주가 영향은 단정하지 않습니다.",
+  source:"U.S. FDA · openFDA",url:x.url,source_date:x.date||null,route:null}));
+}
+
+/** US county jobs by key industry (BLS QCEW). One entry per industry with the top counties. */
+export function jobsDocuments(file){
+ return Object.entries(file?.industries||{}).filter(([,v])=>/^https:\/\//.test(v.url||"")).map(([code,v])=>({
+  id:"jobs-"+code,type:"dataset",title:"미국 "+tidy(v.label,40)+" 일자리 · 카운티 상위 ("+v.period+")",
+  aliases:["일자리","고용","공장",v.label,"NAICS "+code,...(v.counties||[]).slice(0,6).map(c=>c.name).filter(Boolean)],
+  summary:"민간 고용 상위: "+(v.counties||[]).slice(0,5).map(c=>(c.name||c.fips)+" "+c.employment.toLocaleString("en-US")+"명"+(c.yoy_change!=null?" (전년 대비 "+(c.yoy_change>=0?"+":"")+c.yoy_change.toLocaleString("en-US")+")":"")).join(" · ")+". BLS QCEW 분기 자료, 약 5~6개월 지연.",
+  source:"U.S. BLS · QCEW",url:v.url,source_date:null,route:null}));
+}
