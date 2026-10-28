@@ -37,6 +37,8 @@ The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional
 - `.github/workflows/world-intelligence-health.yml` — static map and data integrity checks.
 - `python scripts/check_world_intelligence.py` — local read-only health check. With Node.js installed, also checks inline JavaScript syntax.
 
+**Active Pages exposure incident (2026-10-29):** Follow the [operator remediation and verification runbook](docs/PAGES-EXPOSURE-RESPONSE.md). Live restricted-path audit failed; a successful legacy Pages build is not proof of a safe deployment. Repository source is also public.
+
 **Important:** GitHub Pages is public. `noindex`, hidden links, or client-side controls are not authentication and do not restrict access to specific devices. Proper device-only access requires an authenticated gateway or private hosting.
 
 ## Principles
