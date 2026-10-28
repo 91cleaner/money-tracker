@@ -115,6 +115,7 @@ header.bar input.nm{width:200px;text-transform:none}
 </header>
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
+<script src="assets/insights-card.js?v=ins-20261028"></script>
 <script>
 (function () {
   "use strict";
@@ -138,8 +139,9 @@ header.bar input.nm{width:200px;text-transform:none}
   var PARTY = { D: "민주당", R: "공화당", I: "무소속" };
   var CH = { rep: "하원", sen: "상원" };
 
-  Promise.all([get("data/us/trades.json"), get("data/search-index.json"), get("data/us/members.json")]).then(function (r) {
-    var tr = r[0] || {}, si = r[1] || {}, mem = r[2] || {};
+  var INS = null; // data/us/insights.json (optional), used by render()
+  Promise.all([get("data/us/trades.json"), get("data/search-index.json"), get("data/us/members.json"), get("data/us/insights.json")]).then(function (r) {
+    var tr = r[0] || {}, si = r[1] || {}, mem = r[2] || {}; INS = r[3];
     var E = si.entities || {}, trades = tr.trades || [];
     var M = {}; (mem.members || []).forEach(function (m) { if (m && m.id) M[m.id] = m; });
     var byId = {}; trades.forEach(function (x) { if (x && x.id) (byId[x.id] = byId[x.id] || []).push(x); });
@@ -188,6 +190,8 @@ header.bar input.nm{width:200px;text-transform:none}
     var mapName = (ent && ent.aliases && ent.aliases[0]) || name;
     document.title = "MONEY TRACKER — " + name + " 의원 상세";
     app.replaceChildren();
+    // 0) 핵심 카드: insights.json에 의원 항목(members[ID] 또는 members[이름])이 있을 때만 맨 위에 표시
+    if (INS && INS.members && window.MTInsights) window.MTInsights.render(app, INS.members[id] || INS.members[name], INS);
 
     // 1) 신원: 이름·정당·주·상하원·위원회 (members.json에 있는 것만)
     var head = panel("MEMBER FILE", null, true), hero = el("div", "hero");
