@@ -6,7 +6,8 @@
  *  - China MOFCOM: 政策发布 announcement titles/numbers/links (export-control tagging by title words)
  *  - US FDA new drug approvals (openFDA Drugs@FDA, keyless)
  *  - US county jobs for key industries (BLS QCEW open data, keyless)
- *  - FRED extra series (housing starts, copper): fredgraph CSV, or the official API when FRED_API_KEY is set
+ *  - Country profiles (GDP, population, exports %GDP, inflation, military spending) from the World Bank API
+ *  - FRED extra series (housing starts, copper, Korea/Japan monthly exports): fredgraph CSV, or the official API when FRED_API_KEY is set
  * Each source is independent: if one fails, its previous file is kept and a ::warning:: is printed.
  * Output: data/market/factors/*.json. Values are stored as published; nothing is estimated or filled in.
  */
@@ -156,6 +157,19 @@ export function parseQcew(text, titles = {}) {
   return { counties, states };
 }
 
+
+export function parseWorldBank(json) {
+  if (!Array.isArray(json) || !Array.isArray(json[1])) throw Error("unexpected World Bank response");
+  const by = {};
+  for (const r of json[1]) {
+    const iso = r.countryiso3code || r.country?.id, v = typeof r.value === "number" ? r.value : null;
+    if (!iso || v == null || !/^\d{4}$/.test(r.date || "")) continue;
+    (by[iso] ||= { name: r.country?.value || iso, points: [] }).points.push({ year: Number(r.date), value: v });
+  }
+  for (const k of Object.keys(by)) by[k].points.sort((a, b) => a.year - b.year);
+  return by;
+}
+
 function writeJson(file, data) {
   fs.mkdirSync(OUT, { recursive: true });
   const target = path.join(OUT, file);
@@ -203,7 +217,8 @@ async function ecbRates() {
 
 async function fredExtra() {
   const key = (process.env.FRED_API_KEY || "").trim();
-  const series = { HOUST: "US housing starts (thousands, SAAR)", PCOPPUSDM: "Global copper price (USD per metric ton)" };
+  const series = { HOUST: "US housing starts (thousands, SAAR)", PCOPPUSDM: "Global copper price (USD per metric ton)",
+    XTEXVA01KRM667S: "Korea exports value (monthly, OECD MEI via FRED)", XTEXVA01JPM667S: "Japan exports value (monthly, OECD MEI via FRED)" };
   const out = { source: "Federal Reserve Bank of St. Louis · FRED", source_url: "https://fred.stlouisfed.org/", collected_at: now(), series: {} };
   for (const [id, label] of Object.entries(series)) {
     let points = null;
@@ -328,6 +343,26 @@ async function qcewJobs() {
   return Object.entries(out).map(([k, v]) => k + "@" + v.period).join(",");
 }
 
+
+async function worldBankCountries() {
+  const countries = "USA;CHN;JPN;KOR;DEU;GBR;FRA;NLD;IND;RUS;ITA;CAN;AUS;SAU;ISR;UKR;VNM;MEX;BRA";
+  const indicators = { "NY.GDP.MKTP.CD": "GDP (current US$)", "NY.GDP.MKTP.KD.ZG": "GDP growth (annual %)", "SP.POP.TOTL": "Population",
+    "NE.EXP.GNFS.ZS": "Exports of goods and services (% of GDP)", "FP.CPI.TOTL.ZG": "Inflation, consumer prices (annual %)",
+    "MS.MIL.XPND.CD": "Military expenditure (current US$, SIPRI)", "MS.MIL.XPND.GD.ZS": "Military expenditure (% of GDP, SIPRI)" };
+  const out = {};
+  for (const [id, label] of Object.entries(indicators)) {
+    try {
+      const url = "https://api.worldbank.org/v2/country/" + countries + "/indicator/" + id + "?format=json&per_page=2000&mrv=8";
+      const by = parseWorldBank(await (await get(url, 40000)).json());
+      out[id] = { label, url: "https://data.worldbank.org/indicator/" + id, countries: Object.fromEntries(Object.entries(by).map(([k, v]) => [k, { name: v.name, latest: v.points.at(-1), points: v.points }])) };
+    } catch (e) { warn("World Bank " + id + ": " + e.message); }
+  }
+  if (Object.keys(out).length < 3) throw Error("too few World Bank indicators");
+  writeJson("country-profiles.json", { source: "World Bank Open Data API (군사비 지표의 원 출처는 SIPRI)", source_url: "https://data.worldbank.org/",
+    note: "연간 자료, 1~2년 지연. 대만은 세계은행 자료에 없음.", collected_at: now(), indicators: out });
+  return Object.keys(out).length + " indicators";
+}
+
 async function chinaMofcomProbe() {
   const res = await fetch("https://www.mofcom.gov.cn/", { headers: UA, signal: AbortSignal.timeout(20000) });
   const html = await res.text();
@@ -339,7 +374,7 @@ async function chinaMofcomProbe() {
 
 if (import.meta.url === "file://" + process.argv[1]) {
   const results = {};
-  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates, fdaApprovals, qcewJobs })) {
+  for (const [name, fn] of Object.entries({ taiwanRevenue, ecbRates, fredExtra, usTradeControls, chinaMofcom, bisPolicyRates, fdaApprovals, qcewJobs, worldBankCountries })) {
     try { results[name] = "ok: " + await fn(); }
     catch (e) { results[name] = "FAILED: " + e.message; warn(name + " failed — previous file kept: " + e.message); }
   }
@@ -352,7 +387,8 @@ if (import.meta.url === "file://" + process.argv[1]) {
     const pr = (() => { try { return Object.fromEntries(Object.entries(rd("policy-rates.json").series).map(([k, v]) => [k, v.latest])); } catch { return null; } })();
     const fda = (() => { try { const f = rd("us-fda-approvals.json"); return { count: f.count, novel: f.novel_count, latest: f.items.filter(x => x.novel).slice(0, 2).map(x => x.date + " " + x.brand.join("/") + " · " + x.sponsor) }; } catch { return null; } })();
     const jobs = (() => { try { const f = rd("us-jobs-by-county.json"); return Object.fromEntries(Object.entries(f.industries).map(([k, v]) => [k, v.period + " top: " + (v.counties[0] ? v.counties[0].name + " " + v.counties[0].employment : "-")])); } catch { return null; } })();
-    const sample = { jobs, fda, policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
+    const wb = (() => { try { const f = rd("country-profiles.json").indicators; return { KOR_gdp: f["NY.GDP.MKTP.CD"]?.countries?.KOR?.latest, KOR_mil_pct: f["MS.MIL.XPND.GD.ZS"]?.countries?.KOR?.latest, USA_mil: f["MS.MIL.XPND.CD"]?.countries?.USA?.latest }; } catch { return null; } })();
+    const sample = { wb, jobs, fda, policy_rates: pr, cn, tw_month: tw.latest_month, tsmc: tw.history?.["2330"]?.points?.at(-1), mediatek: tw.history?.["2454"]?.points?.at(-1),
       ecb: Object.fromEntries(Object.entries(ecb.series || {}).map(([k, v]) => [k, v.latest])), fred: Object.fromEntries(Object.entries(fr.series || {}).map(([k, v]) => [k, v.latest])) };
     console.log("::notice::SAMPLE " + JSON.stringify(sample));
   } catch (e) { warn("sample summary unavailable: " + e.message); }
