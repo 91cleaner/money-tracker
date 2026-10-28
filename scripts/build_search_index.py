@@ -233,6 +233,23 @@ def facility_stops(ent):
                     "fact": f"{f['form']} 원문: \"{f['quote']}\" (좌표는 대략 위치)", "source_url": f["source_url"], "date": None})
             e["route"][1:1] = add[:6]; n += len(add[:6])
     return n
+KR_LAB = {"semiconductor": "반도체", "battery_ev": "배터리·전기차", "auto": "자동차", "tech_ai": "AI·IT", "shipbuilding": "조선", "defense": "방산", "energy": "에너지", "clean_energy": "탄소·기후",
+          "health": "바이오·제약", "trade": "관세·통상", "finance": "금융", "crypto": "가상자산", "housing": "주택·부동산"}
+def kr_policy(ent):
+    K = opt("data", "policy", "kr.json"); A = K.get("items") or []; I = [b for b in A if b.get("kind") != "press"]; P = [b for b in A if b.get("kind") == "press"]; n = 0
+    if P:
+        ent["topic:kr-msit"] = {"type": "topic", "name": "한국 과학기술정보통신부 최근 보도자료", "aliases": ["과기정통부 보도자료", "과기부 보도자료", "한국 정부 보도자료", "한국 정책 보도자료", "과학기술정보통신부"],
+            "route": [{"region": "과학기술정보통신부 · 정부세종청사(대략 위치)", "lat": 36.503 + 0.01 * (i % 3 - 1), "lon": 127.262 + 0.01 * (i // 3 - 1), "title": (b.get("dept") or "보도자료"), "kind": "press", "ref": "krpress:" + b["id"],
+                       "fact": b["t"] + " · " + b["src"] + " (제목 기준, 영향 단정 아님)", "source_url": b["u"], "date": b.get("d")} for i, b in enumerate(P[:8])]}; n += 1
+    def stops(L):
+        return [{"region": "대한민국 국회 · 서울 여의도", "lat": 37.5318 + 0.01 * (i % 3 - 1), "lon": 126.9142 + 0.01 * (i // 3 - 1), "title": (b.get("no") or "") + " 발의", "kind": "bill", "ref": "krbill:" + b["id"],
+                 "fact": f"{b['t']} · 발의 {b.get('by') or '-'} · 소관위 {b.get('cmte') or '미정'} (법안명 기준, 영향 단정 아님)", "source_url": b["u"], "date": b.get("d")} for i, b in enumerate(L[:8])]
+    if I:
+        ent["topic:kr-bills"] = {"type": "topic", "name": "한국 국회 최근 발의 법안", "aliases": ["한국 법안", "국회 법안", "한국 국회", "국회 의안", "발의 법안"], "route": stops(I)}; n += 1
+    for k, lab in KR_LAB.items():
+        L = [b for b in I if k in b.get("tags", [])]
+        if L: ent["topic:kr-" + k] = {"type": "topic", "name": f"한국 {lab} 법안", "aliases": [f"한국 {lab} 법안", f"{lab} 법안 한국", f"국회 {lab}"], "route": stops(L)}; n += 1
+    return n
 def main():
     sec = J("data", "market", "sectors.json"); factors = {f["id"]: f for f in sec["factors"]}
     sectors = {s["id"]: s for s in sec["sectors"]}
@@ -349,6 +366,7 @@ def main():
     print("trades", nt, "members", nm)
     print("bills", bill_parts(ent, mem_by_id))
     print("facility stops", facility_stops(ent))
+    print("kr policy", kr_policy(ent))
     res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR 신고 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
            "with_route": sum(1 for e in ent.values() if e["route"]), "money_stops": {k: sum(1 for e in ent.values() for x in e["route"] if (x.get("ref") or "").startswith(k)) for k in ("awards:", "lobbying:", "pac:")}, "entities": ent}

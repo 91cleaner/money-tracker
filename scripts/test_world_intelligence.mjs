@@ -23,12 +23,19 @@ test('every inline world-map script compiles', { skip: retired }, () => {
   ));
 });
 
-test('one map container and source-backed law-to-sponsor path exist', { skip: retired }, () => {
-  assert.equal((html.match(/id="realEarth"/g) || []).length, 1);
-  assert.match(html, /function showSponsor\(b\)/);
-  assert.match(html, /billsCache\?\.recent\?\.\[b\.member\]/);
-  assert.match(html, /showSponsor\(b\)/);
-  assert.match(html, /실거래 데이터 연결 전/);
+// The restored 10-26 map (current world-intelligence/index.html) has one Leaflet container id="map" and loads the
+// source-backed evidence overlay from ./evidence.js. The old realEarth/showSponsor markup no longer exists.
+test('one map container and source-backed evidence overlay exist', { skip: retired }, () => {
+  assert.equal((html.match(/id="map"/g) || []).length, 1);
+  for (const id of ['mapFrame', 'ask', 'question', 'brief', 'candidatePanel']) assert.match(html, new RegExp('id="' + id + '"'), id);
+  assert.match(html, /src="\.\/evidence\.js"/);
+  const evidence = read('world-intelligence/evidence.js');
+  assert.doesNotThrow(() => new Script(evidence, { filename: 'evidence.js' }));
+  assert.match(evidence, /billsCache/);
+  assert.match(evidence, /data\/us\/bills\.json/);
+  assert.match(evidence, /www\.congress\.gov|www\\\.congress\\\.gov/);
+  assert.match(evidence, /disclosures-clerk\\\.house\\\.gov|disclosures-clerk\.house\.gov/);
+  assert.match(evidence, /machine_parsed_requires_review/);
 });
 
 test('Congress.gov legislation archive has source-backed records', () => {

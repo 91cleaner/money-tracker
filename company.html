@@ -89,6 +89,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 </header>
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
+<script src="assets/insights-card.js?v=ins-20261028"></script>
 <script>
 (function () {
   "use strict";
@@ -223,22 +224,24 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   if (!T) { notFound(); renderFoot({}); return; }
   document.title = "MONEY TRACKER — " + T + " 회사 상세";
   Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades.json"), get("data/us/lobbying.json"),
-    get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json")])
+    get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json")])
   .then(function (r) {
-    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7];
+    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8];
     var ent = (si.entities || {})["company:" + T], sec = (ts.tickers || {})[T];
     var trades = ((tr.trades) || []).filter(function (x) { return String(x.tk || "").toUpperCase() === T; })
       .sort(function (a, b) { return String(b.filed || "").localeCompare(String(a.filed || "")) || String(b.d || "").localeCompare(String(a.d || "")); });
     if (!ent && !sec && !trades.length) { notFound(); renderFoot({ si: si, ts: ts, tr: tr }); return; }
     var members = {}; ((mem.members) || []).forEach(function (m) { if (m && m.id) members[m.id] = m; });
     app.replaceChildren();
+    // 0) 핵심 카드 (data/us/insights.json, 있으면 맨 위)
+    if (ins && ins.companies && window.MTInsights) window.MTInsights.render(app, ins.companies[T], ins);
 
     // 1) identity
     var secLabel = ent && ent.sector && si.entities["sector:" + ent.sector] ? si.entities["sector:" + ent.sector].name : (sec ? sec.sector : null);
     var head = panel("COMPANY FILE", null, false), hero = el("div", "hero");
     hero.appendChild(el("span", "tk", T));
     hero.appendChild(el("span", "nm", (ent && ent.name) || (sec && sec.name) || T));
-    if (secLabel) hero.appendChild(el("span", "sec", secLabel));
+    if (secLabel) { var secEl = el(ent && ent.sector ? "a" : "span", "sec", secLabel); if (ent && ent.sector) secEl.href = "sector.html?s=" + encodeURIComponent(ent.sector); hero.appendChild(secEl); }
     head.appendChild(hero);
     var meta = el("div", "meta");
     if (sec) {
@@ -277,7 +280,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     }
     ev.sort(function (a, b) { return b.date.localeCompare(a.date); });
     app.appendChild(timelineBlock(ev, undated, lob, ((si.money_stops || {})["awards:"] || 0) > 0));
-    renderFoot({ si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr });
+    renderFoot({ si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr, ins: ins });
   });
 
   function renderFoot(s) {
@@ -292,6 +295,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     if (s.lb && s.lb.updated) li("로비: " + (s.lb.source || "LDA"), s.lb.updated, s.lb.source_url);
     if (s.pac && s.pac.updated) li("PAC: " + (s.pac.source || "FEC"), s.pac.updated, "https://www.fec.gov/data/");
     if (s.routes && s.routes.updated) li("공시·규제 경로: data/us/ticker-routes.json", s.routes.updated, null);
+    if (s.ins && s.ins.updated) li("핵심 비교: data/us/insights.json (규칙 계산, 인과 아님)", s.ins.updated, null);
     li("주가: " + (s.pr ? (s.pr.source || "data/us/prices/") : "data/us/prices/ 자료 없음(준비 중)"), s.pr && (s.pr.updated || s.pr.as_of), null);
     foot.appendChild(ul);
   }
