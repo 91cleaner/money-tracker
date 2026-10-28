@@ -7,7 +7,9 @@
   var BASE = 'data/answers/';
   var PERIODS = ['1w', '1m', '3m', '1y'];
   var TOPIC_IDS = ['tariff', 'export_control', 'subsidy', 'china', 'taiwan'];
-  var PERIOD_KEY = { today: '1w', week: '1w', month: '1m', year: '1y' };
+  // Only map periods with the same meaning. 'today' is not a week; 'year' in
+  // MTIntent currently mixes YTD and rolling 12 months (see issue #220).
+  var PERIOD_KEY = { week: '1w', month: '1m' };
 
   // MTIntent.parse() 결과 -> {symbol, intent, period}. overview(이름만)나 회사 없음이면 null = 기존 경로 투어 유지.
   function plan(parsed) {
@@ -15,10 +17,16 @@
     var id = parsed.intent;
     if (id === 'topic') {
       var t = (parsed.topics || []).map(function (x) { return x.id; }).filter(function (x) { return TOPIC_IDS.indexOf(x) >= 0; })[0];
-      id = t || 'why';
+      // Unknown topics (e.g. earnings) must not silently become a 'why' answer.
+      if (!t) return null;
+      id = t;
     } else if (id === 'supply') id = 'supply_chain';
     var pid = parsed.period && parsed.period.id;
-    return { symbol: parsed.company.symbol, intent: id, period: PERIOD_KEY[pid] || '1m' };
+    // An explicitly requested unsupported/ambiguous period must not be
+    // substituted with a different period's prices or explanation.
+    if (parsed.periodExplicit && !pid) return null;
+    if (pid && !Object.prototype.hasOwnProperty.call(PERIOD_KEY, pid)) return null;
+    return { symbol: parsed.company.symbol, intent: id, period: pid ? PERIOD_KEY[pid] : '1m' };
   }
 
   function load(sym) {
