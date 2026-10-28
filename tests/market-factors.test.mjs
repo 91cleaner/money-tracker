@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { rocMonth, parseTwRevenue, parseCsvSeries } from "../scripts/collect-market-factors.mjs";
+import { rocMonth, parseTwRevenue, parseCsvSeries, parseFedRegDocs } from "../scripts/collect-market-factors.mjs";
 
 test("ROC year-month converts to ISO month", () => {
   assert.equal(rocMonth("11509"), "2026-09");
@@ -25,4 +25,16 @@ test("ECB / FRED CSV parsing keeps real observations only", () => {
   const fred = "observation_date,HOUST\n2026-08-01,1300\n2026-09-01,.\n";
   assert.deepEqual(parseCsvSeries(fred, "observation_date", "HOUST"), [{ date: "2026-08-01", value: 1300 }]);
   assert.throws(() => parseCsvSeries("a,b\n1,2", "TIME_PERIOD", "OBS_VALUE"), /columns/);
+});
+
+test("Federal Register trade documents are tagged by title words only", () => {
+  const json = { results: [
+    { document_number: "2026-1", title: "Additions to the Entity List", abstract: "entities in the People's Republic of China", type: "Rule", publication_date: "2026-10-20", html_url: "https://www.federalregister.gov/documents/2026/10/20/2026-1/x" },
+    { document_number: "2026-2", title: "Notice of Action: Section 301", abstract: "", type: "Notice", publication_date: "2026-10-19", html_url: "https://www.federalregister.gov/documents/2026/10/19/2026-2/y" },
+    { document_number: "2026-3", title: "Bad link", html_url: "https://evil.example/x" } ] };
+  const out = parseFedRegDocs(json, "BIS");
+  assert.equal(out.length, 2);
+  assert.deepEqual([out[0].china, out[0].entity_list, out[0].tariff], [true, true, false]);
+  assert.deepEqual([out[1].china, out[1].entity_list, out[1].tariff], [false, false, true]);
+  assert.throws(() => parseFedRegDocs({}, "BIS"), /unexpected/);
 });
