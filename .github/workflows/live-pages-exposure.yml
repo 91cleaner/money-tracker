@@ -1,0 +1,29 @@
+name: Live Pages restricted-file exposure audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/check_live_pages_exposure.py'
+      - 'tests/test_live_pages_exposure.py'
+      - '.github/workflows/live-pages-exposure.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/check_live_pages_exposure.py'
+      - 'tests/test_live_pages_exposure.py'
+      - '.github/workflows/live-pages-exposure.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '47 2 * * *'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regression tests
+        run: python3 -m unittest discover -s tests -p 'test_live_pages_exposure.py' -v
+      - name: Probe live Pages restricted paths (not PR previews)
+        if: github.event_name != 'pull_request'
+        run: python3 scripts/check_live_pages_exposure.py
