@@ -103,6 +103,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
 <script src="assets/share.js?v=share-20261028"></script>
+<script src="assets/labor-card.js?v=labor-20261028"></script>
 <script>
 (function () {
   "use strict";
@@ -288,6 +289,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       tlp.appendChild(ol);
     }
     app.appendChild(tlp);
+    if (window.MTLabor) window.MTLabor.load().then(function (ld) { if (ld) window.MTLabor.render(app, ld, { sectorId: S, title: "한국 업종 노사분규 추이 · Korea labor disputes (same industry)" }); });
     renderFoot({ si: si, ts: ts, tr: tr, px: px, aw: aw, lb: lb, fac: fac, routes: routes, ins: insList.length ? ins : null });
   });
 
