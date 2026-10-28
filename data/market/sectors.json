@@ -168,12 +168,15 @@
   },
   {
    "id": "kr_exports",
-   "label": "한국 수출입 통계(1~10일·월간)",
+   "label": "한국 수출액(월간, 미국 달러, 계절조정)",
    "kind": "trade",
-   "status": "planned",
-   "source": "관세청 수출입무역통계",
-   "source_url": "https://tradedata.go.kr/",
-   "note": "FRED(OECD MEI) 한국 월간 수출액 시리즈 XTEXVA01KRM667S를 data/market/factors/fred-extra.json에 수집 중이나 단위 확인 전이라 planned 유지"
+   "status": "collected",
+   "source": "FRED XTEXVA01KRM667S (OECD 국제상품무역통계, 월간·달러·계절조정). 1~10일 속보는 관세청",
+   "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S",
+   "data": {
+    "file": "data/market/factors/fred-extra.json",
+    "series": "XTEXVA01KRM667S"
+   }
   },
   {
    "id": "tw_monthly_revenue",
