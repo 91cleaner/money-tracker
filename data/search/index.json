@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "built_at": "2026-10-28T01:59:10.923Z",
+  "built_at": "2026-10-28T02:03:03.393Z",
   "counts": {
     "calendar": 29,
     "event": 12,
@@ -9,6 +9,7 @@
     "company": 9,
     "regulation": 728,
     "country": 23,
+    "vote": 300,
     "policy": 3,
     "factor": 28,
     "dataset": 25,
@@ -1381,6 +1382,1906 @@
       "source": "World Bank Open Data",
       "url": "https://data.worldbank.org/country/VNM",
       "source_date": null,
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-194869",
+      "type": "vote",
+      "title": "유럽의회 표결 · Feasibility of a 28th tax regime and its potential to support EU competitiveness",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-09 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/194869",
+      "source_date": "2026-07-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-194904",
+      "type": "vote",
+      "title": "유럽의회 표결 · Protection of the environment through criminal law",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-08 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/194904",
+      "source_date": "2026-07-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195719",
+      "type": "vote",
+      "title": "유럽의회 표결 · Establishment of the digital euro",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-09 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195719",
+      "source_date": "2026-07-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195749",
+      "type": "vote",
+      "title": "유럽의회 표결 · Ongoing persecution of Christians in Nigeria, notably the Kawel village massacre",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-09 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195749",
+      "source_date": "2026-07-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195769",
+      "type": "vote",
+      "title": "유럽의회 표결 · The threat of war crimes, the escalating violations of international humanitarian law and the human rights situation in El-Obeid, Sudan",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-09 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195769",
+      "source_date": "2026-07-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195775",
+      "type": "vote",
+      "title": "유럽의회 표결 · Temporary derogation from the ePrivacy directive",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-09 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195775",
+      "source_date": "2026-07-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195807",
+      "type": "vote",
+      "title": "유럽의회 표결 · Temporary derogation from the ePrivacy directive",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-09 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195807",
+      "source_date": "2026-07-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195830",
+      "type": "vote",
+      "title": "유럽의회 표결 · Nuclear decommissioning assistance programme of the Ignalina nuclear power plant in Lithuania for the period 2028-2034",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195830",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195831",
+      "type": "vote",
+      "title": "유럽의회 표결 · Instrument for Nuclear Safety Cooperation 2028-2034",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195831",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195833",
+      "type": "vote",
+      "title": "유럽의회 표결 · Implementation into Union law of measures adopted by regional fisheries management organisations",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195833",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195835",
+      "type": "vote",
+      "title": "유럽의회 표결 · General Fisheries Commission for the Mediterranean (GFCM): fishing in the GFCM Agreement area",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195835",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195849",
+      "type": "vote",
+      "title": "유럽의회 표결 · Implementation of the Council Recommendation on a Bridge to Jobs – Reinforcing the Youth Guarantee",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195849",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195850",
+      "type": "vote",
+      "title": "유럽의회 표결 · Global role of the euro",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195850",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195854",
+      "type": "vote",
+      "title": "유럽의회 표결 · EU-UK Agreement regarding cooperation on the application of their respective competition laws",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195854",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195855",
+      "type": "vote",
+      "title": "유럽의회 표결 · EU-Switzerland Agreement on the transfer of passenger name record (PNR) data for the prevention, detection, investigation and prosecution of terrorist",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195855",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195856",
+      "type": "vote",
+      "title": "유럽의회 표결 · EU-Iceland Agreement on the participation of Iceland in GOVSATCOM and in the Union Secure Connectivity Programme",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195856",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195857",
+      "type": "vote",
+      "title": "유럽의회 표결 · EU-Norway Agreement on the participation of Norway in GOVSATCOM and in the Union Secure Connectivity Programme",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195857",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195870",
+      "type": "vote",
+      "title": "유럽의회 표결 · Draft amending budget No 2/2026: update of revenue (own resources) and adjustments to expenditure",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195870",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195890",
+      "type": "vote",
+      "title": "유럽의회 표결 · The EU Youth Strategy 2019–2027",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195890",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195891",
+      "type": "vote",
+      "title": "유럽의회 표결 · Temporary trade-liberalisation measures applicable to Armenian products",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195891",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-195987",
+      "type": "vote",
+      "title": "유럽의회 표결 · Findings and recommendations of the Special Committee on the European Democracy Shield",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/195987",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196071",
+      "type": "vote",
+      "title": "유럽의회 표결 · Carbon Border Adjustment Mechanism: extension of its scope to downstream goods and anti-circumvention measures",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196071",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196109",
+      "type": "vote",
+      "title": "유럽의회 표결 · Establishing the Temporary Decarbonisation Fund",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196109",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196114",
+      "type": "vote",
+      "title": "유럽의회 표결 · Acceleration of permit-granting for defence readiness projects (Omnibus V)",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196114",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196116",
+      "type": "vote",
+      "title": "유럽의회 표결 · Simplification of intra-EU transfers of defence-related products and simplification of security and defence procurement (Omnibus V)",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196116",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196138",
+      "type": "vote",
+      "title": "유럽의회 표결 · Establishing the Single Market and Customs Programme for the period 2028-2034",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196138",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196143",
+      "type": "vote",
+      "title": "유럽의회 표결 · An EU health workforce crisis plan: sustainability of healthcare systems and employment and working conditions in the healthcare sector",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196143",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196147",
+      "type": "vote",
+      "title": "유럽의회 표결 · Impact of social media and the online environment on young people",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196147",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196156",
+      "type": "vote",
+      "title": "유럽의회 표결 · Gender inequalities in health, specifically as regards gender-specific conditions",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196156",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196157",
+      "type": "vote",
+      "title": "유럽의회 표결 · The role of social, economic and environmental standards in safeguarding fair competition for all aquatic food products and improving food security",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196157",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196161",
+      "type": "vote",
+      "title": "유럽의회 표결 · Defence readiness and facilitating defence investments and conditions for the defence industry (Omnibus V)",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196161",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196162",
+      "type": "vote",
+      "title": "유럽의회 표결 · An EU cardiovascular diseases strategy",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196162",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196176",
+      "type": "vote",
+      "title": "유럽의회 표결 · Hybrid warfare and the protection of the EU’s territorial integrity and critical security and defence infrastructure",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196176",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196227",
+      "type": "vote",
+      "title": "유럽의회 표결 · Market stability reserve for the buildings, road transport and additional sectors",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196227",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196438",
+      "type": "vote",
+      "title": "유럽의회 표결 · Market stability reserve for the EU Emissions Trading System (EU ETS): ceasing the invalidation of allowances",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-15 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196438",
+      "source_date": "2026-09-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196482",
+      "type": "vote",
+      "title": "유럽의회 표결 · Acceleration of permit-granting for defence readiness projects (Omnibus V)",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196482",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196483",
+      "type": "vote",
+      "title": "유럽의회 표결 · Objection pursuant to Rule 115(2) and (3): Genetically modified maize MON 87460",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196483",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196493",
+      "type": "vote",
+      "title": "유럽의회 표결 · Objection pursuant to Rule 115(2) and (3): Genetically modified soybean GMB151 x DAS-44406-6",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196493",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196510",
+      "type": "vote",
+      "title": "유럽의회 표결 · Objection pursuant to Rule 115(2) and (3): Genetically modified soybean MON 94313",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196510",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196519",
+      "type": "vote",
+      "title": "유럽의회 표결 · Defence readiness and facilitating defence investments and conditions for the defence industry (Omnibus V)",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-16 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196519",
+      "source_date": "2026-09-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196774",
+      "type": "vote",
+      "title": "유럽의회 표결 · Strengthening global health resilience in partner countries",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196774",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196796",
+      "type": "vote",
+      "title": "유럽의회 표결 · Narco-trafficking in Europe’s waters: protecting our borders and supporting our law enforcement officers",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196796",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-196838",
+      "type": "vote",
+      "title": "유럽의회 표결 · Evaluation of the Common Fisheries Policy and follow-up",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/196838",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197199",
+      "type": "vote",
+      "title": "유럽의회 표결 · The recent hybrid attacks and instrumentalisation of migrants in Ceuta and the need for a coordinated response to protect EU’s external borders",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197199",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197216",
+      "type": "vote",
+      "title": "유럽의회 표결 · Post-electoral repression in Zambia and the killing of Mutotwe Kafwaya",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197216",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197236",
+      "type": "vote",
+      "title": "유럽의회 표결 · Deteriorating situation of media freedom and freedom of expression in Hong Kong following the recent arrest of bookseller Leticia Wong and the convict",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197236",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197242",
+      "type": "vote",
+      "title": "유럽의회 표결 · Political prisoners in Cuba, in particular the case of Félix Navarro and his daughter Saylí Navarro",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-17 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197242",
+      "source_date": "2026-09-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197352",
+      "type": "vote",
+      "title": "유럽의회 표결 · Economic and budgetary surveillance of Member States in the euro area experiencing or threatened with serious difficulties with respect to their finan",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-06 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197352",
+      "source_date": "2026-10-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197356",
+      "type": "vote",
+      "title": "유럽의회 표결 · Alignment with the EU economic governance framework and further simplification of that framework",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-06 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197356",
+      "source_date": "2026-10-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197360",
+      "type": "vote",
+      "title": "유럽의회 표결 · Programme for agile and rapid defence innovation (AGILE)",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-06 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197360",
+      "source_date": "2026-10-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197457",
+      "type": "vote",
+      "title": "유럽의회 표결 · Recommendation on EU-China political relations",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-07 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197457",
+      "source_date": "2026-10-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197460",
+      "type": "vote",
+      "title": "유럽의회 표결 · Protection of workers from the risks related to exposure to carcinogens, mutagens or reprotoxic substances at work",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-06 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197460",
+      "source_date": "2026-10-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197464",
+      "type": "vote",
+      "title": "유럽의회 표결 · Mobilisation of the European Globalisation Adjustment Fund for Displaced Workers: application EGF/2026/002 ES/Galicia automotive ancillary – Spain",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-07 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197464",
+      "source_date": "2026-10-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197467",
+      "type": "vote",
+      "title": "유럽의회 표결 · Simplification of certain requirements for spatial information infrastructure in the Union (INSPIRE) (Omnibus VIII on environmental legislation)",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-06 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197467",
+      "source_date": "2026-10-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197470",
+      "type": "vote",
+      "title": "유럽의회 표결 · Empowering France to accede to the Inter-American Convention for the Protection and Conservation of Sea Turtles",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-07 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197470",
+      "source_date": "2026-10-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197472",
+      "type": "vote",
+      "title": "유럽의회 표결 · Funding arrangements and the use of a diversified funding strategy",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-06 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197472",
+      "source_date": "2026-10-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197484",
+      "type": "vote",
+      "title": "유럽의회 표결 · Psychosocial risks, stress and mental health at work",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-06 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197484",
+      "source_date": "2026-10-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197486",
+      "type": "vote",
+      "title": "유럽의회 표결 · CO2 emission class of heavy-duty vehicles with trailers",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-07 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197486",
+      "source_date": "2026-10-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197497",
+      "type": "vote",
+      "title": "유럽의회 표결 · Mobilisation of the European Globalisation Adjustment Fund for Displaced Workers: application EGF/2026/001 BE/Cora – Belgium",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-07 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197497",
+      "source_date": "2026-10-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197501",
+      "type": "vote",
+      "title": "유럽의회 표결 · Mobilisation of the European Globalisation Adjustment Fund for Displaced Workers: application EGF/2026/003 FI/Valmet Automotive – Finland",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-07 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197501",
+      "source_date": "2026-10-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197509",
+      "type": "vote",
+      "title": "유럽의회 표결 · Consular protection for unrepresented citizens of the Union in third countries",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-07 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197509",
+      "source_date": "2026-10-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197600",
+      "type": "vote",
+      "title": "유럽의회 표결 · The EU’s approach to corporate tax policy in a changing international environment",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-06 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197600",
+      "source_date": "2026-10-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-197601",
+      "type": "vote",
+      "title": "유럽의회 표결 · Programme for agile and rapid defence innovation (AGILE)",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-06 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/197601",
+      "source_date": "2026-10-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198051",
+      "type": "vote",
+      "title": "유럽의회 표결 · The need for an EU strategy to counter Islamist entryism and the influence of the Muslim Brotherhood network",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198051",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198175",
+      "type": "vote",
+      "title": "유럽의회 표결 · Objection pursuant to Rule 115(2), (3) and (4)(c): Certain botanical species containing hydroxyanthracene derivatives",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198175",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198176",
+      "type": "vote",
+      "title": "유럽의회 표결 · Objection pursuant to Rule 115(2), (3) and (4)(c): Monacolins from red yeast rice",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198176",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198193",
+      "type": "vote",
+      "title": "유럽의회 표결 · Objection pursuant to Rule 115(2), (3) and (4)(c): Lead in gunshot",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198193",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198194",
+      "type": "vote",
+      "title": "유럽의회 표결 · Objection pursuant to Rule 115(2), (3) and (4)(c): Lead in gunshot",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198194",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198204",
+      "type": "vote",
+      "title": "유럽의회 표결 · Pilot project on European Schools Alliances and its contribution to citizenship education, democratic competences and European values",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198204",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198216",
+      "type": "vote",
+      "title": "유럽의회 표결 · The 2026 undemocratic elections to the Russian State Duma and its implications on civil society",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198216",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198251",
+      "type": "vote",
+      "title": "유럽의회 표결 · Attempts by the ruling party Georgian Dream to ban opposition parties in Georgia",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198251",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198252",
+      "type": "vote",
+      "title": "유럽의회 표결 · The cases of Ali Karimli, Anar Mammadli and other political prisoners in Azerbaijan",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198252",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198261",
+      "type": "vote",
+      "title": "유럽의회 표결 · Human rights situation in Iran, notably the cases of Taraneh Rahimi and Leila Abolhasani",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-08 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198261",
+      "source_date": "2026-10-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198290",
+      "type": "vote",
+      "title": "유럽의회 표결 · Protection of adults: jurisdiction, applicable law, recognition and enforcement of measures and cooperation",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198290",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198291",
+      "type": "vote",
+      "title": "유럽의회 표결 · Connecting Europe through high-speed rail",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198291",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198292",
+      "type": "vote",
+      "title": "유럽의회 표결 · Cohesion policy in the EU’s eastern border regions: strengthening territorial resilience and cross‑border cooperation",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-22 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198292",
+      "source_date": "2026-10-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198299",
+      "type": "vote",
+      "title": "유럽의회 표결 · Mobilisation of the European Union Solidarity Fund: assistance to Malta, Italy, Portugal and Spain with regard to storms in 2026",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198299",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198302",
+      "type": "vote",
+      "title": "유럽의회 표결 · Boosting skills in the Union – opportunities for vocational education and training in times of transition",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198302",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198309",
+      "type": "vote",
+      "title": "유럽의회 표결 · Combating VAT fraud – the effectiveness of cross-border cooperation when it comes to VAT fraud and its impact on the EU budget",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198309",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198311",
+      "type": "vote",
+      "title": "유럽의회 표결 · Public interface connected to the Internal Market Information System for the declaration of posting of workers",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198311",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198325",
+      "type": "vote",
+      "title": "유럽의회 표결 · Pericles V exchange, assistance and training programme for the protection of the euro against counterfeiting 2028–2034",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198325",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198335",
+      "type": "vote",
+      "title": "유럽의회 표결 · Suspending the application of the rules on extended producer responsibility for waste, waste electrical and electronical equipment and single use plas",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198335",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198338",
+      "type": "vote",
+      "title": "유럽의회 표결 · Transport: enforcement of passenger rights in the Union",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198338",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198350",
+      "type": "vote",
+      "title": "유럽의회 표결 · Cohesion policy – the driving force in implementing the EU agenda for cities",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198350",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198357",
+      "type": "vote",
+      "title": "유럽의회 표결 · Discharge 2024: EU general budget – European Council and Council",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198357",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198386",
+      "type": "vote",
+      "title": "유럽의회 표결 · Guidelines for the employment policies of the Member States",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198386",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198405",
+      "type": "vote",
+      "title": "유럽의회 표결 · Erasmus+ programme 2028-2034",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-22 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198405",
+      "source_date": "2026-10-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198409",
+      "type": "vote",
+      "title": "유럽의회 표결 · Mobilisation of the European Globalisation Adjustment Fund for Displaced Workers: application EGF/2026/004 FI/Etelä-Suomi and Helsinki-Uusimaa paper –",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198409",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198423",
+      "type": "vote",
+      "title": "유럽의회 표결 · Suspending the application of the rules on extended producer responsibility for batteries and waste batteries and packaging and packaging waste (Omnib",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198423",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198425",
+      "type": "vote",
+      "title": "유럽의회 표결 · Amendments to the Critical Raw Materials Act",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198425",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198430",
+      "type": "vote",
+      "title": "유럽의회 표결 · Simplification of certain requirements and procedures for chemical products",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-22 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198430",
+      "source_date": "2026-10-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198774",
+      "type": "vote",
+      "title": "유럽의회 표결 · General budget of the European Union for the financial year 2027 – all sections",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198774",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198885",
+      "type": "vote",
+      "title": "유럽의회 표결 · Objection pursuant to Rule 114(3): Certification methodologies for carbon farming activities",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198885",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-198947",
+      "type": "vote",
+      "title": "유럽의회 표결 · Objection pursuant to Rule 115(2) and (3): Genetically modified soybean MON 87769",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/198947",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-199380",
+      "type": "vote",
+      "title": "유럽의회 표결 · Simplification of certain requirements and procedures for chemical products",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-22 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/199380",
+      "source_date": "2026-10-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-199470",
+      "type": "vote",
+      "title": "유럽의회 표결 · Revised heat and fuel benchmark values for 2026-2030",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-22 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/199470",
+      "source_date": "2026-10-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-199517",
+      "type": "vote",
+      "title": "유럽의회 표결 · Escalation of Russian strikes in the EU, particularly on Black Sea shipping, threatening human life, regional stability and food security",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-22 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/199517",
+      "source_date": "2026-10-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-199560",
+      "type": "vote",
+      "title": "유럽의회 표결 · Revised heat and fuel benchmark values for 2026-2030",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-22 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/199560",
+      "source_date": "2026-10-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-199567",
+      "type": "vote",
+      "title": "유럽의회 표결 · Reduction of methane emissions in the energy sector: postponement of certain obligations",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-22 · 결과 REJECTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/199567",
+      "source_date": "2026-10-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "eu-vote-199592",
+      "type": "vote",
+      "title": "유럽의회 표결 · Reduction of methane emissions in the energy sector: postponement of certain obligations",
+      "aliases": [
+        "유럽",
+        "EU",
+        "유럽의회",
+        "European Parliament",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-22 · 결과 ADOPTED. 의원별 표는 원문에서 확인(유럽의회 공식 기록 기반 HowTheyVote.eu).",
+      "source": "HowTheyVote.eu · European Parliament",
+      "url": "https://howtheyvote.eu/votes/199592",
+      "source_date": "2026-10-22",
       "location": null,
       "route": null
     },
@@ -54354,6 +56255,3806 @@
         "lng": 121.5654,
         "label": "TW 공식 자료 관련 위치 (실시간 인물 위치 아님)"
       },
+      "route": null
+    },
+    {
+      "id": "uk-division-2250",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Medical Devices (Fees Amendment) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-01-28 · 찬성 294 / 반대 108. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2250",
+      "source_date": "2026-01-28",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2251",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day: British Indian Ocean Territory",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-01-28 · 찬성 103 / 반대 284. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2251",
+      "source_date": "2026-01-28",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2252",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day: Youth unemployment",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-01-28 · 찬성 91 / 반대 287. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2252",
+      "source_date": "2026-01-28",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2253",
+      "type": "vote",
+      "title": "영국 하원 표결 · Universal Credit (Removal of Two Child Limit) Bill: Second Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-03 · 찬성 458 / 반대 104. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2253",
+      "source_date": "2026-02-03",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2254",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Greenhouse Gas Emissions Trading Scheme (Amendment) Order 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-04 · 찬성 392 / 반대 116. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2254",
+      "source_date": "2026-02-04",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2255",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Greenhouse Gas Emissions Trading Scheme (Amendment) (Extension to Maritime Activities) Order 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-11 · 찬성 362 / 반대 107. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2255",
+      "source_date": "2026-02-11",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2256",
+      "type": "vote",
+      "title": "영국 하원 표결 · Local Government Finance Report (England) 2026-27",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-11 · 찬성 277 / 반대 143. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2256",
+      "source_date": "2026-02-11",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2257",
+      "type": "vote",
+      "title": "영국 하원 표결 · Referendums Relating to Council Tax Increases (Principles) (England) Report 2026-27",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-11 · 찬성 279 / 반대 90. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2257",
+      "source_date": "2026-02-11",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2261",
+      "type": "vote",
+      "title": "영국 하원 표결 · Industry and Exports (Financial Assistance) Bill Committee: Amendment 1",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-23 · 찬성 161 / 반대 272. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2261",
+      "source_date": "2026-02-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2262",
+      "type": "vote",
+      "title": "영국 하원 표결 · Industry and Exports (Financial Assistance) Bill Committee: New Clause 2",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-23 · 찬성 156 / 반대 273. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2262",
+      "source_date": "2026-02-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2263",
+      "type": "vote",
+      "title": "영국 하원 표결 · Industry and Exports (Financial Assistance) Bill Committee: New Clause 3",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-23 · 찬성 77 / 반대 280. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2263",
+      "source_date": "2026-02-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2264",
+      "type": "vote",
+      "title": "영국 하원 표결 · Universal Credit (Removal of Two Child Limit) Bill Committee: New Clause 3",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-23 · 찬성 73 / 반대 256. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2264",
+      "source_date": "2026-02-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2265",
+      "type": "vote",
+      "title": "영국 하원 표결 · Universal Credit (Removal of Two Child Limit) Bill: Third Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-23 · 찬성 361 / 반대 84. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2265",
+      "source_date": "2026-02-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2266",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day: Protections for children from online harms",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-02-24 · 찬성 69 / 반대 279. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2266",
+      "source_date": "2026-02-24",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2267",
+      "type": "vote",
+      "title": "영국 하원 표결 · Representation of the People Bill: Reasoned Amendment to Second Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-02 · 찬성 105 / 반대 410. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2267",
+      "source_date": "2026-03-02",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2268",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 16",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-09 · 찬성 309 / 반대 181. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2268",
+      "source_date": "2026-03-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2269",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 17",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-09 · 찬성 306 / 반대 182. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2269",
+      "source_date": "2026-03-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2270",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 37",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-09 · 찬성 321 / 반대 106. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2270",
+      "source_date": "2026-03-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2271",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 38",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-09 · 찬성 307 / 반대 173. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2271",
+      "source_date": "2026-03-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2272",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 41",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-09 · 찬성 316 / 반대 171. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2272",
+      "source_date": "2026-03-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2273",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 44",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-09 · 찬성 315 / 반대 109. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2273",
+      "source_date": "2026-03-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2274",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 102",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-09 · 찬성 315 / 반대 163. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2274",
+      "source_date": "2026-03-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2275",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 106",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-09 · 찬성 304 / 반대 177. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2275",
+      "source_date": "2026-03-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2276",
+      "type": "vote",
+      "title": "영국 하원 표결 · Courts and Tribunals Bill: Reasoned Amendment to Second Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-10 · 찬성 203 / 반대 311. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2276",
+      "source_date": "2026-03-10",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2277",
+      "type": "vote",
+      "title": "영국 하원 표결 · Courts and Tribunals Bill: Second Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-10 · 찬성 304 / 반대 203. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2277",
+      "source_date": "2026-03-10",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2278",
+      "type": "vote",
+      "title": "영국 하원 표결 · Finance (No. 2) Bill Report Stage: New Clause 11",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-11 · 찬성 174 / 반대 292. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2278",
+      "source_date": "2026-03-11",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2279",
+      "type": "vote",
+      "title": "영국 하원 표결 · Finance (No. 2) Bill Report Stage: Amendment 5",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-11 · 찬성 172 / 반대 283. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2279",
+      "source_date": "2026-03-11",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2280",
+      "type": "vote",
+      "title": "영국 하원 표결 · Finance (No. 2) Bill Report Stage: Amendment 6",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-11 · 찬성 175 / 반대 292. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2280",
+      "source_date": "2026-03-11",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2281",
+      "type": "vote",
+      "title": "영국 하원 표결 · Finance (No. 2) Bill: Third Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-11 · 찬성 292 / 반대 161. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2281",
+      "source_date": "2026-03-11",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2282",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Employment Rights Act 2025 (Investigatory Powers) (Consequential Amendments) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-18 · 찬성 368 / 반대 107. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2282",
+      "source_date": "2026-03-18",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2283",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Higher Education (Fee Limits and Fee Limit Condition) (England) (Amendment) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-18 · 찬성 277 / 반대 99. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2283",
+      "source_date": "2026-03-18",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2284",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition day: Fuel duty",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-18 · 찬성 103 / 반대 259. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2284",
+      "source_date": "2026-03-18",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2285",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition day: Student loans",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-18 · 찬성 88 / 반대 266. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2285",
+      "source_date": "2026-03-18",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2286",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 1",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-23 · 찬성 280 / 반대 161. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2286",
+      "source_date": "2026-03-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2287",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 2",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-23 · 찬성 279 / 반대 167. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2287",
+      "source_date": "2026-03-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2288",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 3",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-23 · 찬성 280 / 반대 164. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2288",
+      "source_date": "2026-03-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2289",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 5",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-23 · 찬성 281 / 반대 167. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2289",
+      "source_date": "2026-03-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2290",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 6",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-23 · 찬성 278 / 반대 164. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2290",
+      "source_date": "2026-03-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2291",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day: Oil and gas",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-24 · 찬성 108 / 반대 297. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2291",
+      "source_date": "2026-03-24",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2292",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day: Defence",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-24 · 찬성 98 / 반대 306. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2292",
+      "source_date": "2026-03-24",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2293",
+      "type": "vote",
+      "title": "영국 하원 표결 · Victims and Courts Bill: motion to disagree with Lords Amendment 1",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-25 · 찬성 291 / 반대 158. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2293",
+      "source_date": "2026-03-25",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2294",
+      "type": "vote",
+      "title": "영국 하원 표결 · Victims and Courts Bill: motion to disagree with Lords Amendment 2",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-25 · 찬성 295 / 반대 162. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2294",
+      "source_date": "2026-03-25",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2295",
+      "type": "vote",
+      "title": "영국 하원 표결 · Victims and Courts Bill: motion to disagree with Lords Amendment 3",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-25 · 찬성 286 / 반대 163. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2295",
+      "source_date": "2026-03-25",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2296",
+      "type": "vote",
+      "title": "영국 하원 표결 · Victims and Courts Bill: motion to disagree with Lords Amendment 4",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-25 · 찬성 300 / 반대 149. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2296",
+      "source_date": "2026-03-25",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2297",
+      "type": "vote",
+      "title": "영국 하원 표결 · Victims and Courts Bill: motion to disagree with Lords Amendment 5",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-25 · 찬성 292 / 반대 162. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2297",
+      "source_date": "2026-03-25",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2298",
+      "type": "vote",
+      "title": "영국 하원 표결 · Victims and Courts Bill: motion to disagree with Lords Amendment 6",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-03-25 · 찬성 290 / 반대 163. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2298",
+      "source_date": "2026-03-25",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2300",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to disagree with Lords Amendment 2",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 307 / 반대 176. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2300",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2301",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to disagree with Lords Amendment 6",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 299 / 반대 169. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2301",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2303",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to disagree with Lords Amendment 11",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 291 / 반대 174. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2303",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2304",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to disagree with Lords Amendment 311",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 300 / 반대 101. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2304",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2305",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to disagree with Lords Amendment 333",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 301 / 반대 157. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2305",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2306",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to disagree with Lords Amendment 334",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 356 / 반대 90. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2306",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2308",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to disagree with Lords Amendment 342",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 281 / 반대 70. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2308",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2309",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to disagree with Lords Amendment 357",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 278 / 반대 73. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2309",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2310",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to disagree with Lords Amendment 359",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 277 / 반대 158. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2310",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2311",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to agree with all remaining Lords Amendments",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-14 · 찬성 247 / 반대 21. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2311",
+      "source_date": "2026-04-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2312",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pension Schemes Bill: motion to disagree with Lords Amendment 1",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 278 / 반대 158. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2312",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2313",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pensions Scheme Bill: motion to disagree with Lords Amendment 5",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 269 / 반대 103. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2313",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2314",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pension Schemes Bill: motion to disagree with Lords Amendment 15",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 276 / 반대 155. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2314",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2315",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pension Schemes Bill: motion to disagree with Lords Amendment 26",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 269 / 반대 162. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2315",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2316",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pension Schemes Bill: motion to disagree with Lords Amendment 35",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 275 / 반대 159. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2316",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2317",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pension Schemes Bill: motion to disagree with Lords Amendment 43",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 273 / 반대 159. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2317",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2318",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pension Schemes Bill: motion to disagree with Lords Amendment 77",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 271 / 반대 95. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2318",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2319",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pension Schemes Bill: motion to disagree with Lords Amendment 78",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 277 / 반대 150. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2319",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2320",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: Amendments (a) to (f) in lieu of Lords Amendment 38",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 256 / 반대 150. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2320",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2321",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 41B",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 254 / 반대 144. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2321",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2322",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: Amendments (a) to (e) in lieu of Lords Amendment 102",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 259 / 반대 136. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2322",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2323",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: Amendments (a) to (c) in lieu of Lords Amendment 106",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-15 · 찬성 248 / 반대 139. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2323",
+      "source_date": "2026-04-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2324",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: Amendment (a) to Amendment 2B and Amendment (b) to Amendment 2C in lieu of Lords Amendments 2D and 2E",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-20 · 찬성 293 / 반대 159. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2324",
+      "source_date": "2026-04-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2325",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: Amendments (a) to (d) in lieu of Lords Amendment 11",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-20 · 찬성 294 / 반대 156. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2325",
+      "source_date": "2026-04-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2326",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: Amendments (a) and (b) in lieu of Lords Amendment 342",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-20 · 찬성 294 / 반대 61. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2326",
+      "source_date": "2026-04-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2327",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: Amendments (a) to (b) in lieu of Lords Amendments 359 and 439",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-20 · 찬성 292 / 반대 158. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2327",
+      "source_date": "2026-04-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2328",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 2",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-21 · 찬성 293 / 반대 155. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2328",
+      "source_date": "2026-04-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2329",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 4",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-21 · 찬성 298 / 반대 152. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2329",
+      "source_date": "2026-04-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2330",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 13",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-21 · 찬성 297 / 반대 147. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2330",
+      "source_date": "2026-04-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2331",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 26",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-21 · 찬성 287 / 반대 149. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2331",
+      "source_date": "2026-04-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2332",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 36",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-21 · 찬성 288 / 반대 147. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2332",
+      "source_date": "2026-04-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2333",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 37",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-21 · 찬성 291 / 반대 144. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2333",
+      "source_date": "2026-04-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2334",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 41",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-21 · 찬성 284 / 반대 149. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2334",
+      "source_date": "2026-04-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2335",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 98",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-21 · 찬성 287 / 반대 150. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2335",
+      "source_date": "2026-04-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2336",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Energy Prices Act 2022 (Extension of Time Limit) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-22 · 찬성 380 / 반대 7. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2336",
+      "source_date": "2026-04-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2337",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pensions Schemes Bill: motion to disagree with Lords Amendments 15 to 24, 27, 30 to 34, 36, 38 to 42, 83 and 88, insist on Amendments 88A and 88C and",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-22 · 찬성 272 / 반대 149. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2337",
+      "source_date": "2026-04-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2338",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's Wellbeing and Schools Bill: motion to insist on Amendment 38J and disagree with Lords Amendments 38V to 38X",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-22 · 찬성 260 / 반대 161. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2338",
+      "source_date": "2026-04-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2339",
+      "type": "vote",
+      "title": "영국 하원 표결 · Crime and Policing Bill: motion to insist on Amendments 439C and 439D and disagree with Lords Amendments 439E and 439F",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-22 · 찬성 253 / 반대 143. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2339",
+      "source_date": "2026-04-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2340",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree with Lords Amendments 89B and 89C",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-27 · 찬성 273 / 반대 167. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2340",
+      "source_date": "2026-04-27",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2341",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree with Lords Amendments 36, 90 and 155, insist on Amendments 155A to 155F and prop",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-27 · 찬성 270 / 반대 170. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2341",
+      "source_date": "2026-04-27",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2342",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: motion to disagree with Lords Amendments 94B and 94C",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-27 · 찬성 269 / 반대 170. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2342",
+      "source_date": "2026-04-27",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2343",
+      "type": "vote",
+      "title": "영국 하원 표결 · English Devolution and Community Empowerment Bill: Amendments (a) to (h) in lieu of Lords Amendments 85 and 86, 97 to 116, 120, 121 and 123",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-27 · 찬성 271 / 반대 171. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2343",
+      "source_date": "2026-04-27",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2344",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pension Schemes Bill: motion to disagree with Lords Amendments 15 to 24, 27, 30 to 34, 36, 38 to 42, 83 and 88, insist on its Amendments 88A, 88C and",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-27 · 찬성 279 / 반대 164. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2344",
+      "source_date": "2026-04-27",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2345",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill: Carry-over motion",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-27 · 찬성 279 / 반대 176. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2345",
+      "source_date": "2026-04-27",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2346",
+      "type": "vote",
+      "title": "영국 하원 표결 · Children's School and Wellbeing Bill: Amendments (a) to (j) in lieu of Lords Amendments 38V to 38X",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-27 · 찬성 272 / 반대 64. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2346",
+      "source_date": "2026-04-27",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2347",
+      "type": "vote",
+      "title": "영국 하원 표결 · Privilege",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-28 · 찬성 223 / 반대 335. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2347",
+      "source_date": "2026-04-28",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2348",
+      "type": "vote",
+      "title": "영국 하원 표결 · Pension Schemes Bill: motion to disagree with Lords Amendments 15 to 24, 27, 30 to 34, 36, 38 to 42, 83 and 88, insist on Amendments 88C, 88E to 88P,",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-28 · 찬성 335 / 반대 158. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2348",
+      "source_date": "2026-04-28",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2349",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Asylum Seekers (Reception Conditions) (Amendment) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-28 · 찬성 308 / 반대 81. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2349",
+      "source_date": "2026-04-28",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2350",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Immigration and Asylum (Provision of Accommodation to Failed Asylum-Seekers) (Amendment) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-04-28 · 찬성 304 / 반대 28. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2350",
+      "source_date": "2026-04-28",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2351",
+      "type": "vote",
+      "title": "영국 하원 표결 · King's Speech Motion for an Address: amendment (i)",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-05-19 · 찬성 108 / 반대 323. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2351",
+      "source_date": "2026-05-19",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2352",
+      "type": "vote",
+      "title": "영국 하원 표결 · King's Speech Motion for an Address: amendment (o)",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-05-20 · 찬성 104 / 반대 317. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2352",
+      "source_date": "2026-05-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2353",
+      "type": "vote",
+      "title": "영국 하원 표결 · King's Speech Motion for an Address: amendment (l)",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-05-20 · 찬성 78 / 반대 408. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2353",
+      "source_date": "2026-05-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2354",
+      "type": "vote",
+      "title": "영국 하원 표결 · King's Speech Motion for an Address: amendment (p)",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-05-20 · 찬성 104 / 반대 316. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2354",
+      "source_date": "2026-05-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2355",
+      "type": "vote",
+      "title": "영국 하원 표결 · King's Speech Motion for an Address",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-05-20 · 찬성 307 / 반대 171. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2355",
+      "source_date": "2026-05-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2356",
+      "type": "vote",
+      "title": "영국 하원 표결 · Steel Industry (Nationalisation) Bill: Reasoned Amendment to Second Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-05-21 · 찬성 68 / 반대 242. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2356",
+      "source_date": "2026-05-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2357",
+      "type": "vote",
+      "title": "영국 하원 표결 · Armed Forces Bill Committee: New Clause 2",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-02 · 찬성 171 / 반대 302. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2357",
+      "source_date": "2026-06-02",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2358",
+      "type": "vote",
+      "title": "영국 하원 표결 · Armed Forces Bill Committee: New Clause 5",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-02 · 찬성 170 / 반대 301. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2358",
+      "source_date": "2026-06-02",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2359",
+      "type": "vote",
+      "title": "영국 하원 표결 · Armed Forces Bill Committee: New Clause 6",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-02 · 찬성 99 / 반대 371. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2359",
+      "source_date": "2026-06-02",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2360",
+      "type": "vote",
+      "title": "영국 하원 표결 · Armed Forces Bill Committee: New Clause 13",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-02 · 찬성 80 / 반대 298. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2360",
+      "source_date": "2026-06-02",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2361",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Agriculture (Delinked Payments) (Reductions) (England) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-03 · 찬성 302 / 반대 155. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2361",
+      "source_date": "2026-06-03",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2362",
+      "type": "vote",
+      "title": "영국 하원 표결 · Steel Industry (Nationalisation) Bill Committee: Amendment 12",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-08 · 찬성 81 / 반대 266. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2362",
+      "source_date": "2026-06-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2363",
+      "type": "vote",
+      "title": "영국 하원 표결 · Steel Industry (Nationalisation) Bill Committee: New Clause 2",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-08 · 찬성 65 / 반대 251. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2363",
+      "source_date": "2026-06-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2364",
+      "type": "vote",
+      "title": "영국 하원 표결 · Steel Industry (Nationalisation) Bill Committee: New Clause 8",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-08 · 찬성 145 / 반대 251. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2364",
+      "source_date": "2026-06-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2365",
+      "type": "vote",
+      "title": "영국 하원 표결 · Steel Industry (Nationalisation) Bill Committee: Amendment 20",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-09 · 찬성 90 / 반대 290. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2365",
+      "source_date": "2026-06-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2366",
+      "type": "vote",
+      "title": "영국 하원 표결 · Steel Industry (Nationalisation) Bill Committee: New Clause 12",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-09 · 찬성 94 / 반대 297. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2366",
+      "source_date": "2026-06-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2367",
+      "type": "vote",
+      "title": "영국 하원 표결 · Steel Industry (Nationalisation) Bill Committee: New Clause 4",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-09 · 찬성 157 / 반대 287. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2367",
+      "source_date": "2026-06-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2368",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Combined Authorities (Mayoral Elections) (Amendment) Order 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-09 · 찬성 356 / 반대 86. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2368",
+      "source_date": "2026-06-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2369",
+      "type": "vote",
+      "title": "영국 하원 표결 · Railways Bill Remaining Stages: New Clause 1",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-10 · 찬성 77 / 반대 271. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2369",
+      "source_date": "2026-06-10",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2370",
+      "type": "vote",
+      "title": "영국 하원 표결 · Railways Bill Remaining Stages: Amendment 143",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-10 · 찬성 167 / 반대 266. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2370",
+      "source_date": "2026-06-10",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2371",
+      "type": "vote",
+      "title": "영국 하원 표결 · Railways Bill Remaining Stages: Amendment 148",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-10 · 찬성 155 / 반대 279. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2371",
+      "source_date": "2026-06-10",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2372",
+      "type": "vote",
+      "title": "영국 하원 표결 · Railways Bill: Third Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-10 · 찬성 278 / 반대 149. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2372",
+      "source_date": "2026-06-10",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2373",
+      "type": "vote",
+      "title": "영국 하원 표결 · Royal Albert Hall Bill [Lords]: Revival",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-15 · 찬성 24 / 반대 37. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2373",
+      "source_date": "2026-06-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2374",
+      "type": "vote",
+      "title": "영국 하원 표결 · Cyber Security and Resilience (Network and Information Systems) Bill Remaining Stages: New Clause 13",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-16 · 찬성 77 / 반대 255. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2374",
+      "source_date": "2026-06-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2375",
+      "type": "vote",
+      "title": "영국 하원 표결 · Cyber Security and Resilience (Network and Information Systems) Bill Remaining Stages: New Clause 14",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-16 · 찬성 151 / 반대 258. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2375",
+      "source_date": "2026-06-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2376",
+      "type": "vote",
+      "title": "영국 하원 표결 · Cyber Security and Resilience (Network and Information Systems) Bill Remaining Stages: Amendment 3",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-16 · 찬성 162 / 반대 246. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2376",
+      "source_date": "2026-06-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2377",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Clean Air Zones Central Services (Fees) (England) (Amendment) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-16 · 찬성 262 / 반대 86. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2377",
+      "source_date": "2026-06-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2378",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Security (State Threats) Bill: Allocation of Time motion",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-17 · 찬성 233 / 반대 94. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2378",
+      "source_date": "2026-06-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2379",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Security (State Threats) Bill Committee: Amendment 3",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-17 · 찬성 85 / 반대 317. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2379",
+      "source_date": "2026-06-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2380",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Security (State Threats) Bill Committee: Amendment 8",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-17 · 찬성 143 / 반대 249. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2380",
+      "source_date": "2026-06-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2381",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Security (State Threats) Bill Committee: Amendment 13",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-17 · 찬성 135 / 반대 258. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2381",
+      "source_date": "2026-06-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2382",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Security (State Threats) Bill Committee: New Clause 3",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-17 · 찬성 144 / 반대 244. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2382",
+      "source_date": "2026-06-17",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2384",
+      "type": "vote",
+      "title": "영국 하원 표결 · Armed Forces Bill Report Stage: New Clause 4",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-22 · 찬성 164 / 반대 311. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2384",
+      "source_date": "2026-06-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2385",
+      "type": "vote",
+      "title": "영국 하원 표결 · Armed Forces Bill Report Stage: New Clause 11",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-22 · 찬성 104 / 반대 391. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2385",
+      "source_date": "2026-06-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2386",
+      "type": "vote",
+      "title": "영국 하원 표결 · Armed Forces Bill Report Stage: New Clause 22",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-22 · 찬성 74 / 반대 323. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2386",
+      "source_date": "2026-06-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2387",
+      "type": "vote",
+      "title": "영국 하원 표결 · Armed Forces Bill Report Stage: Amendment 11",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-22 · 찬성 171 / 반대 322. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2387",
+      "source_date": "2026-06-22",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2388",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition day: Defence spending and readiness",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-23 · 찬성 108 / 반대 307. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2388",
+      "source_date": "2026-06-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2389",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day Motion: Defence spending and readiness - Prime Minister's Amendment",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-23 · 찬성 294 / 반대 110. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2389",
+      "source_date": "2026-06-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2390",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day: Puberty blockers",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-23 · 찬성 112 / 반대 283. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2390",
+      "source_date": "2026-06-23",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2391",
+      "type": "vote",
+      "title": "영국 하원 표결 · Customs (Tariff and Miscellaneous Amendments) (No. 4) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-24 · 찬성 323 / 반대 160. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2391",
+      "source_date": "2026-06-24",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2392",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Carbon Budget Order 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-24 · 찬성 332 / 반대 94. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2392",
+      "source_date": "2026-06-24",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2393",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Climate Change Act 2008 (International Aviation and International Shipping) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-24 · 찬성 329 / 반대 94. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2393",
+      "source_date": "2026-06-24",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2394",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Climate Change Act 2008 (Credit Limit) Order 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-06-24 · 찬성 330 / 반대 93. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2394",
+      "source_date": "2026-06-24",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2395",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Employment Tribunal (Extension of Time Limits) (Miscellaneous Amendments and Transitional Provisions) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-01 · 찬성 322 / 반대 107. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2395",
+      "source_date": "2026-07-01",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2396",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Employment Tribunals Extension of Jurisdiction (England and Wales) (Amendment) Order 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-01 · 찬성 318 / 반대 107. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2396",
+      "source_date": "2026-07-01",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2397",
+      "type": "vote",
+      "title": "영국 하원 표결 · Taxation (Energy and Vehicles) Bill Committee: New Clause 2",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-01 · 찬성 80 / 반대 281. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2397",
+      "source_date": "2026-07-01",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2398",
+      "type": "vote",
+      "title": "영국 하원 표결 · Taxation (Energy and Vehicles) Bill Committee: New Clause 4",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-01 · 찬성 173 / 반대 282. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2398",
+      "source_date": "2026-07-01",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2399",
+      "type": "vote",
+      "title": "영국 하원 표결 · Taxation (Energy and Vehicles) Bill Committee: New Clause 5",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-01 · 찬성 177 / 반대 308. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2399",
+      "source_date": "2026-07-01",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2400",
+      "type": "vote",
+      "title": "영국 하원 표결 · National Security (State Threats) Bill: motion to agree to Lords Amendment 1",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-06 · 찬성 394 / 반대 85. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2400",
+      "source_date": "2026-07-06",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2401",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day: Early release of prisoners",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-07 · 찬성 115 / 반대 0. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2401",
+      "source_date": "2026-07-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2402",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Children’s Wellbeing and Schools Act 2026 (Establishment of Schools) (Consequential Amendments) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-08 · 찬성 369 / 반대 102. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2402",
+      "source_date": "2026-07-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2403",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Supply of Machinery (Safety) (Amendment etc.) and the EU Machinery Regulation (Enforcement etc. in Northern Ireland) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-08 · 찬성 317 / 반대 103. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2403",
+      "source_date": "2026-07-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2404",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Town and Country Planning (Discharge of Local Planning Authority Functions) (England) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-08 · 찬성 283 / 반대 182. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2404",
+      "source_date": "2026-07-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2405",
+      "type": "vote",
+      "title": "영국 하원 표결 · Immigration and Asylum Bill: Reasoned Amendment to Second Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-13 · 찬성 97 / 반대 358. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2405",
+      "source_date": "2026-07-13",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2406",
+      "type": "vote",
+      "title": "영국 하원 표결 · Immigration and Asylum Bill: Second Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-13 · 찬성 264 / 반대 90. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2406",
+      "source_date": "2026-07-13",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2407",
+      "type": "vote",
+      "title": "영국 하원 표결 · Public Office (Accountability) Bill Report Stage: Amendment 3",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-14 · 찬성 93 / 반대 323. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2407",
+      "source_date": "2026-07-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2408",
+      "type": "vote",
+      "title": "영국 하원 표결 · Public Office (Accountability) Bill Report Stage: Amendment 199",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-14 · 찬성 102 / 반대 409. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2408",
+      "source_date": "2026-07-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2409",
+      "type": "vote",
+      "title": "영국 하원 표결 · Public Office (Accountability) Bill Report Stage: Amendment 19",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-14 · 찬성 104 / 반대 412. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2409",
+      "source_date": "2026-07-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2410",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Trade Unions (Permissible Means of Voting) and Employment Rights (Unfair Dismissal) (Amendment) Order 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-15 · 찬성 330 / 반대 109. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2410",
+      "source_date": "2026-07-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2411",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Code of Practice on Electronic and Workplace Ballots for Statutory Trade Union Ballots",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-07-15 · 찬성 330 / 반대 109. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2411",
+      "source_date": "2026-07-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2413",
+      "type": "vote",
+      "title": "영국 하원 표결 · Representation of the People Bill: Report Stage: New Clause 65",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-02 · 찬성 166 / 반대 346. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2413",
+      "source_date": "2026-09-02",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2414",
+      "type": "vote",
+      "title": "영국 하원 표결 · Representation of the People Bill: Report Stage: New Clause 67",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-02 · 찬성 105 / 반대 410. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2414",
+      "source_date": "2026-09-02",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2415",
+      "type": "vote",
+      "title": "영국 하원 표결 · Representation of the People Bill: Report Stage: New Clause 88",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-02 · 찬성 85 / 반대 427. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2415",
+      "source_date": "2026-09-02",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2416",
+      "type": "vote",
+      "title": "영국 하원 표결 · Representation of the People Bill: Third Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-02 · 찬성 411 / 반대 102. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2416",
+      "source_date": "2026-09-02",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2417",
+      "type": "vote",
+      "title": "영국 하원 표결 · Motion to sit in private",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-04 · 찬성 1 / 반대 79. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2417",
+      "source_date": "2026-09-04",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2418",
+      "type": "vote",
+      "title": "영국 하원 표결 · Health Bill: Report Stage: New Clause 6",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-07 · 찬성 77 / 반대 317. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2418",
+      "source_date": "2026-09-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2419",
+      "type": "vote",
+      "title": "영국 하원 표결 · Health Bill: Report Stage: New Clause 145",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-07 · 찬성 170 / 반대 316. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2419",
+      "source_date": "2026-09-07",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2420",
+      "type": "vote",
+      "title": "영국 하원 표결 · Health Bill: Report Stage: New Clause 140",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-08 · 찬성 79 / 반대 300. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2420",
+      "source_date": "2026-09-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2421",
+      "type": "vote",
+      "title": "영국 하원 표결 · Health Bill: Report Stage: New Clause 142",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-08 · 찬성 108 / 반대 357. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2421",
+      "source_date": "2026-09-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2422",
+      "type": "vote",
+      "title": "영국 하원 표결 · Health Bill: Report Stage: New Clause 143",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-08 · 찬성 106 / 반대 302. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2422",
+      "source_date": "2026-09-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2423",
+      "type": "vote",
+      "title": "영국 하원 표결 · Health Bill: Report Stage: Amendment 1",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-08 · 찬성 162 / 반대 297. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2423",
+      "source_date": "2026-09-08",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2424",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Plant Health, Seeds, Seed Potatoes and Plant Propagating Material (Amendment) (Northern Ireland) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-09 · 찬성 371 / 반대 100. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2424",
+      "source_date": "2026-09-09",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2425",
+      "type": "vote",
+      "title": "영국 하원 표결 · Social Housing Bill [Lords]: Reasoned Amendment to Second Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-10 · 찬성 77 / 반대 292. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2425",
+      "source_date": "2026-09-10",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2427",
+      "type": "vote",
+      "title": "영국 하원 표결 · Closure motion",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-11 · 찬성 293 / 반대 218. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2427",
+      "source_date": "2026-09-11",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2428",
+      "type": "vote",
+      "title": "영국 하원 표결 · Terminally Ill Adults (End of Life) Bill: Second Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-09-11 · 찬성 270 / 반대 286. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2428",
+      "source_date": "2026-09-11",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2434",
+      "type": "vote",
+      "title": "영국 하원 표결 · Courts and Tribunals Bill Report Stage: New Clause 25",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-13 · 찬성 189 / 반대 306. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2434",
+      "source_date": "2026-10-13",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2435",
+      "type": "vote",
+      "title": "영국 하원 표결 · Courts and Tribunals Bill Report Stage: Amendment 1",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-13 · 찬성 196 / 반대 304. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2435",
+      "source_date": "2026-10-13",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2436",
+      "type": "vote",
+      "title": "영국 하원 표결 · Courts and Tribunals Bill Report Stage: Amendment 18",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-13 · 찬성 89 / 반대 312. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2436",
+      "source_date": "2026-10-13",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2437",
+      "type": "vote",
+      "title": "영국 하원 표결 · Courts and Tribunals Bill: Third Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-13 · 찬성 301 / 반대 193. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2437",
+      "source_date": "2026-10-13",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2438",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill: Carry-over extension motion",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-13 · 찬성 304 / 반대 179. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2438",
+      "source_date": "2026-10-13",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2439",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft ACAS Code of Practice on Time Off for Trade Union Duties and Activities",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-14 · 찬성 328 / 반대 114. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2439",
+      "source_date": "2026-10-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2440",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Code of Practice on the Right of Trade Unions to Access Workplaces",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-14 · 찬성 326 / 반대 115. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2440",
+      "source_date": "2026-10-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2441",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Trade Unions (Right to Access Workplaces) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-14 · 찬성 326 / 반대 115. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2441",
+      "source_date": "2026-10-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2442",
+      "type": "vote",
+      "title": "영국 하원 표결 · Carbon Border Adjustment Mechanism (Calculation of CBAM Rate and Determination of Carbon Price Relief) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-14 · 찬성 319 / 반대 115. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2442",
+      "source_date": "2026-10-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2443",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day motion: MoD Bicester and illegal migrants",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-14 · 찬성 113 / 반대 309. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2443",
+      "source_date": "2026-10-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2444",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition Day motion: Inheritance Tax",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-14 · 찬성 99 / 반대 291. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2444",
+      "source_date": "2026-10-14",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2445",
+      "type": "vote",
+      "title": "영국 하원 표결 · Highways (Financing) Bill: Second Reading: Reasoned Amendment",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-15 · 찬성 76 / 반대 231. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2445",
+      "source_date": "2026-10-15",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2446",
+      "type": "vote",
+      "title": "영국 하원 표결 · Motion to sit in private",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-16 · 찬성 1 / 반대 36. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2446",
+      "source_date": "2026-10-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2447",
+      "type": "vote",
+      "title": "영국 하원 표결 · Closure motion",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-16 · 찬성 13 / 반대 36. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2447",
+      "source_date": "2026-10-16",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2448",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill: Programme Motion",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-19 · 찬성 286 / 반대 163. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2448",
+      "source_date": "2026-10-19",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2449",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill Committee: Amendment 23",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-19 · 찬성 169 / 반대 327. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2449",
+      "source_date": "2026-10-19",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2450",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill Committee: Amendment 52",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-19 · 찬성 108 / 반대 327. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2450",
+      "source_date": "2026-10-19",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2451",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill Committee: Amendment 4",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-19 · 찬성 175 / 반대 319. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2451",
+      "source_date": "2026-10-19",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2452",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill Committee: Amendment 47",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-19 · 찬성 166 / 반대 328. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2452",
+      "source_date": "2026-10-19",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2453",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill Committee: New Clause 21",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-19 · 찬성 167 / 반대 327. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2453",
+      "source_date": "2026-10-19",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2454",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill Committee: Amendment 51",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 찬성 176 / 반대 329. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2454",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2455",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill Committee: Amendment 32",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 찬성 117 / 반대 331. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2455",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2456",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill Committee: New Clause 7",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 찬성 179 / 반대 336. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2456",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2457",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill Committee: New Clause 12",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 찬성 184 / 반대 330. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2457",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2458",
+      "type": "vote",
+      "title": "영국 하원 표결 · Northern Ireland Troubles Bill: Third Reading",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-20 · 찬성 330 / 반대 178. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2458",
+      "source_date": "2026-10-20",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2459",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Railways (Interoperability in Northern Ireland) (Convention on International Carriage by Rail) (Amendment) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 찬성 345 / 반대 108. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2459",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2460",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Code of Practice on Access and Unfair Practices During the Recognition and Derecognition Process",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 찬성 295 / 반대 111. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2460",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2461",
+      "type": "vote",
+      "title": "영국 하원 표결 · Withdrawal Agreement (Windsor Framework and Governance) (Amendment) Regulations 2026",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 찬성 345 / 반대 108. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2461",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2462",
+      "type": "vote",
+      "title": "영국 하원 표결 · Opposition day motion: Support for British farmers",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-21 · 찬성 57 / 반대 279. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2462",
+      "source_date": "2026-10-21",
+      "location": null,
+      "route": null
+    },
+    {
+      "id": "uk-division-2463",
+      "type": "vote",
+      "title": "영국 하원 표결 · Draft Town and Country Planning (Fees for Applications, Deemed Applications, Requests and Site Visits) (England) (Amendment and Transitional Provision",
+      "aliases": [
+        "영국",
+        "UK",
+        "하원",
+        "House of Commons",
+        "표결",
+        "의회"
+      ],
+      "summary": "표결일 2026-10-27 · 찬성 321 / 반대 66. 의원별 표는 원문에서 확인.",
+      "source": "UK Parliament · Commons Votes",
+      "url": "https://votes.parliament.uk/votes/commons/division/2463",
+      "source_date": "2026-10-27",
+      "location": null,
       "route": null
     },
     {

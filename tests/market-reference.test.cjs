@@ -110,3 +110,10 @@ test('country profiles are searchable per country', async () => {
   assert.match(usa.summary, /국방비 [0-9,]{4,}억 달러/, 'US military spending shown in 억 달러 (e.g. 9,544억 달러)');
   for (const d of docs) assert.match(d.url, /^https:\/\/data\.worldbank\.org\/country\//);
 });
+
+test('UK and EU parliament votes are searchable with official links', async () => {
+  const { parliamentVoteDocuments } = await import('../scripts/market-reference-index.mjs');
+  const docs = parliamentVoteDocuments(json('data/market/factors/uk-commons-divisions.json'), json('data/market/factors/eu-parliament-votes.json'));
+  assert.ok(docs.some(d => d.id.startsWith('uk-division-')) && docs.some(d => d.id.startsWith('eu-vote-')));
+  for (const d of docs) assert.ok(https(d.url), d.id);
+});
