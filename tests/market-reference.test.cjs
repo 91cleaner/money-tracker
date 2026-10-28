@@ -22,7 +22,8 @@ test('every factor has a source link, and collected factors point at real data',
       const d = json(f.data.file);
       if (f.data.series) assert.ok(d.series && d.series[f.data.series], f.id + ' series ' + f.data.series + ' in ' + f.data.file);
       if (f.data.company) assert.ok(d.history && d.history[f.data.company], f.id + ' company ' + f.data.company + ' in ' + f.data.file);
-      if (f.data.list) assert.ok(Array.isArray(d[f.data.list]) && d[f.data.list].length, f.id + ' list ' + f.data.list + ' in ' + f.data.file);
+      if (f.data.list && f.data.list.startsWith('_')) { const o = d[f.data.list.slice(1)]; assert.ok(o && Object.keys(o).length, f.id + ' map ' + f.data.list + ' in ' + f.data.file); }
+      else if (f.data.list) assert.ok(Array.isArray(d[f.data.list]) && d[f.data.list].length, f.id + ' list ' + f.data.list + ' in ' + f.data.file);
       assert.ok(f.data.series || f.data.company || f.data.list, f.id + ' data link needs series, company or list');
     }
     if (f.status === 'collected') assert.ok(f.data || f.market, f.id + ' collected but no data link');
@@ -88,4 +89,13 @@ test('China MOFCOM announcements are searchable with official links', async () =
   const docs = mofcomDocuments(file);
   assert.ok(docs.length >= 1 && docs.length === file.items.length);
   for (const d of docs) { assert.match(d.url, /^https:\/\/www\.mofcom\.gov\.cn\//); assert.ok(d.aliases.includes('중국')); }
+});
+
+test('FDA approvals and county jobs are searchable with official links', async () => {
+  const { fdaDocuments, jobsDocuments } = await import('../scripts/market-reference-index.mjs');
+  const fda = fdaDocuments(json('data/market/factors/us-fda-approvals.json'));
+  const jobs = jobsDocuments(json('data/market/factors/us-jobs-by-county.json'));
+  assert.ok(fda.length >= 10 && jobs.length >= 3);
+  for (const d of [...fda, ...jobs]) assert.ok(https(d.url), d.id);
+  assert.ok(jobs.every(d => /일자리/.test(d.title)));
 });
