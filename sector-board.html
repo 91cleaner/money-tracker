@@ -130,6 +130,7 @@ header.bar input.nm{width:200px;text-transform:none}
 </header>
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
+<script src="assets/labor-card.js?v=labor-20261028"></script>
 <script>
 (function () {
   "use strict";
@@ -186,6 +187,13 @@ header.bar input.nm{width:200px;text-transform:none}
     p.appendChild(el("p", "note", "업종은 SEC 업종코드를 단순화한 자체 분류입니다. 신고 건수는 티커가 있는 거래 항목만 센 것이며, 종목 수가 적은 업종은 중앙값이 한두 종목에 좌우됩니다. 카드를 누르면 업종 파일로 이동합니다."));
     app.appendChild(p);
 
+    if (window.MTLabor) window.MTLabor.load().then(function (ld) {
+      var lp = el("section", "panel span2"); lp.appendChild(el("h2", "", "한국 업종별 노사분규 추이 · Korea labor disputes by industry"));
+      lp.appendChild(el("p", "note", "고용노동부 월별 통계입니다. 위 미국 의원 거래·종가 칸과 별개의 자료이며 서로 연결하지 않았습니다. / Separate Korean data, not linked to the US figures above."));
+      window.MTLabor.trend(lp, ld, null);
+      lp.appendChild(el("p", "note", "자세히: ")); var la = el("a", "", "노사분규·파업 공시 Korea labor strike disclosure"); la.href = "labor.html"; lp.lastChild.appendChild(la);
+      app.appendChild(lp);
+    });
     foot.replaceChildren(); foot.appendChild(el("b", "", "읽기 전 확인"));
     foot.appendChild(document.createTextNode(" 공개 기록과 종가를 나란히 정리한 것이며 어떤 판단이나 투자 조언 아님."));
     var ul = el("ul");
