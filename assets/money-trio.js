@@ -36,7 +36,7 @@
       (a.top_agencies || []).slice(0, 3).forEach(function (g) { al.push(g.name + " " + usd(g.usd)); });
       al.unshift(t("기간 " + aw.period[0] + " ~ " + aw.period[1], "Period " + aw.period[0] + " – " + aw.period[1]));
     }
-    var c1 = card("🏛️", t("정부와 맺은 계약 (USAspending)", "Federal contracts (USAspending)"), a ? usd(a.total_usd) : null, al, a && a.source_url, "USAspending");
+    var c1 = card("🏛️", t("정부 계약 의무액 (USAspending)", "Federal contract obligations (USAspending)"), a ? usd(a.total_usd) : null, al, a && a.source_url, "USAspending");
     if (a && a.top_agencies && a.top_agencies[0] && a.total_usd > 0) { var b = el("div", "bar"), i = el("i"); i.style.width = Math.min(100, a.top_agencies[0].usd / a.total_usd * 100).toFixed(0) + "%"; b.appendChild(i); c1.insertBefore(b, c1.lastChild); }
     var ll = [];
     if (l) {

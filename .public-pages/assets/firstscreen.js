@@ -379,9 +379,9 @@
       if (aw) {
         var top = (aw.top_agencies || []).slice(0, 3), t = usd(aw.total_usd, lang);
         nodes.push({ id: 'gov', label: pick(lang, '미국 연방 정부', 'U.S. federal government'), big: '', sub: top.map(function (x) { return x.code; }).join(' · ') });
-        edges.push({ a: 'gov', b: 'co', label: pick(lang, '계약 ' + t, 'contracts ' + t) });
-        heads.push(lang === 'en' ? 'federal contracts of ' + t + ' in the data (' + (data.awards.period || []).join(' to ') + ')' : '연방 정부 계약 합계 ' + t + ' (' + (data.awards.period || []).join(' ~ ') + ')');
-        d.cards.push({ id: 'contract', title: pick(lang, '① 정부 계약', '1 Government contracts'), window: awWin, big: t, sub: pick(lang, '기간 합계 · 이름 일치 기준', 'period total · by name match'), lines: top.map(function (x) { return x.name + ' ' + usd(x.usd, lang); }).concat((aw.top_states || []).slice(0, 1).map(function (s) { return pick(lang, '주별 1위 ' + s.name, 'Top state ' + s.name); })) });
+        edges.push({ a: 'gov', b: 'co', label: pick(lang, '계약 의무액 ' + t, 'obligations ' + t) });
+        heads.push(lang === 'en' ? 'federal contract obligations of ' + t + ' (' + (data.awards.period || []).join(' to ') + ')' : '연방 정부 계약 의무액 합계 ' + t + ' (' + (data.awards.period || []).join(' ~ ') + ')');
+        d.cards.push({ id: 'contract', title: pick(lang, '① 정부 계약', '1 Government contracts'), window: awWin, big: t, sub: pick(lang, '기간 내 의무액 · 정확한 수령자 기준', 'obligations in period · exact recipient match'), lines: top.map(function (x) { return x.name + ' ' + usd(x.usd, lang); }).concat((aw.top_states || []).slice(0, 1).map(function (s) { return pick(lang, '주별 1위 ' + s.name, 'Top state ' + s.name); })) });
         srcs.push(aw.source_url);
       } else d.cards.push({ id: 'contract', title: pick(lang, '① 정부 계약', '1 Government contracts'), window: awWin, big: '—', lines: [pick(lang, NONE[0] + '.', NONE[1] + '.'),
         pick(lang, '연방 계약 자료(' + ((data.awards && data.awards.checked) || 0) + '개 기업 조회)에서 티커 ' + sym + ' 와 회사 이름 모두 맞는 수령자가 없었어요.', 'In the federal contract file (' + ((data.awards && data.awards.checked) || 0) + ' companies checked) no recipient matched the ticker ' + sym + ' or the company name.')] });
