@@ -463,8 +463,9 @@ header.bar input.nm{width:200px;text-transform:none}
       var b = el("button", "", tk + " · " + byTk[tk].n); b.type = "button"; b.addEventListener("click", function () { pick(tk, b); }); tabs.appendChild(b);
     });
     pick(tks[0], tabs.firstChild);
-  var EN = !!(window.MTI18N && window.MTI18N.isEn);
-  function T(ko, en) { return EN ? en : ko; }
+    return p;
+  }
+
   var VOTE = { Y: ["👍", "찬성", "Yes"], N: ["👎", "반대", "No"], P: ["✋", "기권(Present)", "Present"], X: ["💤", "불참", "Not voting"] };
   // 의원 타임라인: data/us/timeline/<ID>.json (Congress.gov API, 수집 스크립트 scripts/collect_congress_timeline.py) + 이 페이지의 거래 신고
   function timelinePanel(id, rows) {
