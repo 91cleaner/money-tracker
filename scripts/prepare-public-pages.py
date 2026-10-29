@@ -4,8 +4,8 @@ from pathlib import Path
 import shutil
 import sys
 
-# Prep-stage passcode gate + noindex. Set to False to make the site public again.
-SITE_GATE = True
+# Passcode gate removed (site is public). Kept as a flag for reference only.
+SITE_GATE = False
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / ".public-pages"
@@ -50,17 +50,6 @@ for dirname in PUBLIC_DIRS:
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_public_trades import build as build_public_trades
 build_public_trades(OUT / "data/us/trades_public.json")
-if SITE_GATE:
-    import re
-    (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /\n")
-    for page in OUT.rglob("*.html"):
-        depth = len(page.relative_to(OUT).parts) - 1
-        src = "../" * depth + "assets/mt-gate.js"
-        tag = f'<meta name="robots" content="noindex,nofollow"><script src="{src}"></script>'
-        html = page.read_text(encoding="utf-8", errors="surrogateescape")
-        m = re.search(r"<head[^>]*>", html, re.I)
-        html = html[:m.end()] + tag + html[m.end():] if m else tag + html
-        page.write_text(html, encoding="utf-8", errors="surrogateescape")
 for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js", "data/national/countries-110m.geojson", "search.html", "assets/se.js", "data/search/se/core.json", "data/us/trades_public.json"):
     if not (OUT / required).exists():
         sys.exit(f"Missing required public file: {required}")
