@@ -7,8 +7,10 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / ".public-pages"
 PUBLIC_DIRS = ("assets", "data", "c", "s", "world-intelligence", "3ac9ae3", "9590438", "b387449")
-# Private US trade datasets must never be shipped to public GitHub Pages.
-PRIVATE_DATA_FILES = {"data/us/trades.json", "data/us/house-ptr-candidates.json", "data/us/ptr-crosschecks.json"}
+# Unverified machine-extracted PTR candidates and internal crosschecks stay out of Pages.
+# The verified public House PTR ledger (data/us/trades.json) is intentionally public
+# per HANDOFF.md (owner decision, 2026-10-28); company/member pages fetch it.
+PRIVATE_DATA_FILES = {"data/us/house-ptr-candidates.json", "data/us/ptr-crosschecks.json"}
 # .geojson: national map country borders (polgame.js), .csv: trip downloads (national.js) — both are fetched by public pages
 PUBLIC_EXTENSIONS = {".html", ".css", ".js", ".json", ".geojson", ".csv", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico", ".webmanifest", ".txt"}
 PUBLIC_ROOT_FILES = {".nojekyll"}
@@ -43,7 +45,7 @@ for dirname in PUBLIC_DIRS:
         target = OUT / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, target)
-for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js", "data/national/countries-110m.geojson", "search.html", "assets/se.js", "data/search/se/core.json"):
+for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js", "data/national/countries-110m.geojson", "search.html", "assets/se.js", "data/search/se/core.json", "data/us/trades.json"):
     if not (OUT / required).exists():
         sys.exit(f"Missing required public file: {required}")
 for forbidden in ("cloudflare/admin-worker.js", "worker/private-api.js", "wrangler.jsonc", "collector/collect.py", ".github/workflows/deploy-pages.yml"):

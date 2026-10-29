@@ -8,6 +8,8 @@ required = (
     "index.html", "search.html", "national.html", "usa-command.html",
     "assets/se.js", "assets/mt-command-ui.js",
     "data/search/se/core.json", "data/national/countries-110m.geojson",
+    # Owner-approved public House PTR filings are required by company/member pages.
+    "data/us/trades.json",
 )
 missing = [name for name in required if not (root / name).is_file()]
 if missing:
@@ -16,7 +18,7 @@ if missing:
 forbidden = (
     "cloudflare/admin-worker.js", "worker/private-api.js",
     "wrangler.jsonc", "collector/collect.py",
-    "data/us/trades.json", "data/us/house-ptr-candidates.json",
+    "data/us/house-ptr-candidates.json",
     "data/us/ptr-crosschecks.json",
 )
 exposed = [name for name in forbidden if (root / name).exists()]
