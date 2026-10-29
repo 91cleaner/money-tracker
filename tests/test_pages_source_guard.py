@@ -24,5 +24,16 @@ class PagesSourceGuardTests(unittest.TestCase):
             check_pages_source([])
 
 
+    def test_deploy_workflow_blocks_legacy_source_before_artifact(self):
+        workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/deploy-pages.yml").read_text()
+        guard = "run: python3 scripts/check_pages_source.py"
+        self.assertIn("Require GitHub Actions Pages source before deployment", workflow)
+        self.assertIn("GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}", workflow)
+        self.assertIn("GITHUB_REPOSITORY: ${{ github.repository }}", workflow)
+        self.assertLess(workflow.index(guard), workflow.index("Build public-only artifact"))
+        self.assertLess(workflow.index(guard), workflow.index("actions/upload-pages-artifact@v3"))
+        self.assertLess(workflow.index(guard), workflow.index("actions/deploy-pages@v4"))
+
+
 if __name__ == "__main__":
     unittest.main()
