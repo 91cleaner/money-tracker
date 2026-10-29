@@ -3,7 +3,8 @@ on:
   workflow_dispatch: {}
   schedule:
     - cron: "41 12 * * *"   # 매일 21:41 KST (미국 아침)
-permissions: {contents: write}
+    - cron: "41 0 * * *"    # 매일 09:41 KST: 하원 색인이 늦게 올라와도 다음 반나절 안에 반영
+permissions: {contents: write, actions: write}
 concurrency: {group: us, cancel-in-progress: false}
 jobs:
   us:
@@ -30,3 +31,4 @@ jobs:
           git config user.name "money-tracker-bot"; git config user.email "actions@users.noreply.github.com"
           git add data/us; git diff --cached --quiet && exit 0
           git commit -m "미국 의회 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"; for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
+          GH_TOKEN=${{ github.token }} gh workflow run deploy-pages.yml --ref main || true
