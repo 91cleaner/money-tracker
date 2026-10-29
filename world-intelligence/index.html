@@ -6,7 +6,7 @@
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER | 세계 관제실"><meta name="twitter:description" content="미국 의회 법안·의원 거래 신고·회사 공장·다른 나라 정책을 지도 위 경로로 따라가는 관제실. 공개 자료 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
-<script src="../assets/i18n.js?v=i18n-20261029a"></script>
+<script src="../assets/i18n.js?v=i18n-20261029b"></script>
 <script src="../assets/share.js?v=share-20261028" defer></script>
 <script src="../assets/intent.js" defer></script><script src="../assets/answers.js" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -538,7 +538,7 @@ const hit=b=>(tk&&((b.tickers||[]).includes(tk)||(b.tickers_product||[]).include
 box.append(mk(L('hdr'),'#5dff9e'));const extra=[];R.forEach((b,i)=>{const n=item(b,tk);if(i>=3){n.hidden=true;extra.push(n)}box.append(n)});
 if(extra.length){const btn=document.createElement('button');btn.type='button';btn.style.cssText='margin:4px 0;padding:3px 10px;background:none;border:1px solid #5dff9e;border-radius:12px;color:#5dff9e;font:inherit;cursor:pointer';const set=o=>{btn.textContent=o?L('less'):L('more').replace('{n}',extra.length);btn.dataset.open=o?'1':''};set(false);btn.onclick=()=>{const o=!btn.dataset.open;extra.forEach(n=>n.hidden=!o);set(o)};box.append(btn)}
 box.append(mk(L('disc'),'#8fa89a'))};
-const tick=async()=>{const w=await ld(),all=Array.isArray(w&&w.items)?w.items.filter(b=>b&&b.t&&b.u&&/^https:\/\//.test(b.u)):[];const P=all.filter(b=>b.kind==='presdoc').slice(0,4),A=all.filter(b=>b.kind!=='presdoc').slice(0,3);if(!P.length&&!A.length)return;let n=0;const put=()=>{const run=document.querySelector('#mtTicker .run');if(!run){if(++n<40)setTimeout(put,500);return}if(run.querySelector('[data-wh]'))return;const add=(b,grp,color)=>{const s=document.createElement('span');s.className='it';s.dataset.wh='1';s.title=grp+' · '+(b.ko||b.type||'')+' · '+(b.src||'Federal Register')+' · 투자 조언 아님';const i=document.createElement('i');i.textContent='['+(b.date||'-')+' '+(grp===S.grpP?'🏛️ '+S.grpP:S.grpA)+' · '+(b.type||'')+'] ';i.style.color=color;s.append(i,document.createTextNode(String(b.t).slice(0,110)));s.onclick=()=>window.open(b.u,'_blank','noopener');run.prepend(s)};A.slice().reverse().forEach(b=>add(b,S.grpA,'#8fd3ff'));P.slice().reverse().forEach(b=>add(b,S.grpP,'#ffd60a'))};put()};
+const tick=async()=>{const w=await ld(),all=Array.isArray(w&&w.items)?w.items.filter(b=>b&&b.t&&b.u&&/^https:\/\//.test(b.u)):[];const P=all.filter(b=>b.kind==='presdoc').slice(0,4),A=all.filter(b=>b.kind!=='presdoc').slice(0,3);if(!P.length&&!A.length)return;let n=0;const put=()=>{const run=document.querySelector('#mtTicker .run');if(!run){if(++n<40)setTimeout(put,500);return}if(run.querySelector('[data-wh]'))return;const add=(b,grp,color)=>{const s=document.createElement('span');s.className='it';s.dataset.wh='1';s.title=grp+(EN?'':' · '+b.ko)+' · '+(b.type||'')+' · '+(b.src||'Federal Register')+(EN?' · Not investment advice':' · 투자 조언 아님');const i=document.createElement('i');i.textContent='['+(b.date||'-')+' '+(grp===S.grpP?'🏛️ '+S.grpP:S.grpA)+' · '+(b.type||'')+'] ';i.style.color=color;s.append(i,document.createTextNode(String(b.t).slice(0,110)));s.onclick=()=>window.open(b.u,'_blank','noopener');run.prepend(s)};A.slice().reverse().forEach(b=>add(b,S.grpA,'#8fd3ff'));P.slice().reverse().forEach(b=>add(b,S.grpP,'#ffd60a'))};put()};
 window.addEventListener('load',()=>setTimeout(tick,1200))})();</script>
 <script id="mt-cpol-js">(()=>{const S={head:'최근 이 나라의 관련 정책·발표',sub:' · 공식 발표(제목 키워드 기준, 영향 단정 아님)',none:'수집 기간 내 업종 키워드에 맞는 발표 없음',open:' 원문 ↗',foot:' · 같은 기간 데이터상 · 투자 조언 아님'};window.mtCPolStrings=S;
 const BOX={jp:(a,o)=>a>=30&&a<=46&&o>=129.5&&o<=146&&!(a>=33&&a<=39&&o<=131),tw:(a,o)=>a>=21.8&&a<=25.4&&o>=119.5&&o<=122.2,cn:(a,o)=>a>=18&&a<=54&&o>=73&&o<=135&&!(a>=33&&a<=39&&o>=124&&o<=131)&&!(a>=21.8&&a<=25.4&&o>=119.5&&o<=122.2)&&!(o>=129.5&&a>=30),eu:(a,o)=>a>=35&&a<=71&&o>=-11&&o<=31},C={};
@@ -596,8 +596,8 @@ let q=0;new MutationObserver(()=>{if(!q){q=1;requestAnimationFrame(()=>{q=0;sync
 #mtWatch{display:inline-block;margin:0 0 6px;padding:1px 8px;border:1px solid #ff5d73;border-radius:3px;color:#ff5d73;font:700 11px ui-monospace,Consolas,monospace;letter-spacing:.1em}
 #mtWatch[hidden]{display:none}
 @media(min-width:651px){body.mtc-open #brief{max-height:max(140px,calc(100dvh - 560px))}}
-@media(max-width:650px){#mtc{right:8px;bottom:134px;width:auto}#mtc[data-open="1"]{left:8px;width:auto;bottom:128px}
- #mtc .bd{max-height:44dvh}#mtc[data-open="1"] .bd{animation:mtcUp .3s ease-out}@keyframes mtcUp{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}}
+@media(max-width:650px){#mtc{right:8px;bottom:198px;width:auto}#mtc[data-open="1"]{left:8px;width:auto}
+ #mtc .bd{max-height:min(44dvh,calc(100dvh - 330px))}#mtc[data-open="1"] .bd{animation:mtcUp .3s ease-out}@keyframes mtcUp{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}}
 /* 지도 효과: 정류장 알림 펄스 · 레이더 스캔 · 아이콘 */
 .mtIc{background:none!important;border:0!important}
 .mtIc b{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#061827e6;border:2px solid var(--k,#65e6ed);font-size:12px;line-height:1;box-shadow:0 0 6px var(--k,#65e6ed);font-weight:400}
@@ -622,8 +622,9 @@ body.mtc-nofx .mtIc.lit b,body.mtc-nofx .mtStamp,body.mtc-nofx #mtc .num.land{an
 <script id="mt-console-js">(()=>{const map=window.moneyTrackerMap,$=id=>document.getElementById(id);if(!map||!window.L||!window.mtApi)return;
 // 관제 콘솔: 기간 다이얼·레이어 스위치·타임라인·감시 핀을 한 패널에 모은다. 공개 자료를 걸러 보는 도구일 뿐, 선·숫자는 원인을 뜻하지 않는다. 외부 라이브러리 없음.
 const RM=matchMedia('(prefers-reduced-motion:reduce)'),ST={get(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const EN=!!(window.MTI18N&&window.MTI18N.isEn),T=(k,e)=>EN?e:k;
 let fxOff=ST.get('mt-fx-off',false),pins=ST.get('mt-watch',[]);if(!Array.isArray(pins))pins=[];const fx=()=>!fxOff&&!RM.matches;document.body.classList.toggle('mtc-nofx',fxOff);
-const LAYERS=[['tariff','관세',/관세|tariff|section ?232|section ?301/i],['export','수출 단속',/수출\s*(통제|단속|제한|규제)|export[- ]?(control|restriction)|entity list|\bBIS\b|MOFCOM/i],['stock','의원 주식',null],['union','노조',/노조|노동조합|파업|단체협약|\bunion\b|\bstrike\b|NLRB|teamsters|\bUAW\b/i]];
+const LAYERS=[['tariff',T('관세','Tariffs'),/관세|tariff|section ?232|section ?301/i],['export',T('수출 단속','Export controls'),/수출\s*(통제|단속|제한|규제)|export[- ]?(control|restriction)|entity list|\bBIS\b|MOFCOM/i],['stock',T('의원 주식','Member trades'),null],['union',T('노조','Unions'),/노조|노동조합|파업|단체협약|\bunion\b|\bstrike\b|NLRB|teamsters|\bUAW\b/i]];
 const txt=t=>(t.title||'')+' '+(t.region||'')+' '+(t.fact||'');
 const layersOf=t=>{const r=t.ref||'',x=txt(t),o=[];if(t.kind==='trade'||r.startsWith('trade')||/의원 거래/.test(x))o.push('stock');LAYERS.forEach(l=>{if(l[2]&&l[2].test(x))o.push(l[0])});return o};
 const dms=t=>{const d=t.date&&Date.parse(String(t.date).slice(0,10));return d>0?d:null};
@@ -641,24 +642,24 @@ function iconOf(t,hub){const r=t.ref||'',x=txt(t),k=t.kind||'';if(hub)return['co
 let period=null,sel=new Set(),tl=null,dates=[],lastM=null,vis=[],mk=[],raf=0,tPlay=0,P=null;
 const ig=L.layerGroup().addTo(map),cur=()=>window.mtCur&&window.mtCur();
 // DOM
-const box=document.createElement('section');box.id='mtc';box.dataset.open='0';box.setAttribute('aria-label','관제 콘솔');
+const box=document.createElement('section');box.id='mtc';box.dataset.open='0';box.setAttribute('aria-label',T('관제 콘솔','Control console'));
 const hd=document.createElement('button');hd.type='button';hd.className='hd';hd.setAttribute('aria-expanded','false');hd.setAttribute('aria-controls','mtcBd');
-const hdT=document.createElement('b');hdT.textContent='⚙ 관제 콘솔';const hdI=document.createElement('i');hd.append(hdT,hdI);
+const hdT=document.createElement('b');hdT.textContent=T('⚙ 관제 콘솔','⚙ Control console');const hdI=document.createElement('i');hd.append(hdT,hdI);
 const bd=document.createElement('div');bd.className='bd';bd.id='mtcBd';
 const mkBtn=(t,cls)=>{const b=document.createElement('button');b.type='button';b.textContent=t;if(cls)b.className=cls;return b};
 const sec=(label,node)=>{const d=document.createElement('div'),l=document.createElement('div');l.className='lb';l.textContent=label;d.append(l,node);return d};
-const seg=document.createElement('div');seg.className='seg';seg.setAttribute('role','group');seg.setAttribute('aria-label','기간');
-const PER=[[7,'1주'],[30,'1달'],[90,'3달']],pb=PER.map(([d,n])=>{const b=mkBtn(n);b.setAttribute('aria-pressed','false');b.onclick=()=>{period=period===d?null:d;pb.forEach((x,i)=>x.setAttribute('aria-pressed',String(PER[i][0]===period)));apply()};return b});seg.append(...pb);
+const seg=document.createElement('div');seg.className='seg';seg.setAttribute('role','group');seg.setAttribute('aria-label',T('기간','Period'));
+const PER=[[7,T('1주','1 week')],[30,T('1달','1 month')],[90,T('3달','3 months')]],pb=PER.map(([d,n])=>{const b=mkBtn(n);b.setAttribute('aria-pressed','false');b.onclick=()=>{period=period===d?null:d;pb.forEach((x,i)=>x.setAttribute('aria-pressed',String(PER[i][0]===period)));apply()};return b});seg.append(...pb);
 const swd=document.createElement('div');swd.className='sw';const sb=LAYERS.map(l=>{const b=mkBtn(l[1]);b.setAttribute('role','switch');b.setAttribute('aria-checked','false');b.onclick=()=>{if(sel.has(l[0]))sel.delete(l[0]);else sel.add(l[0]);b.setAttribute('aria-checked',String(sel.has(l[0])));apply()};return b});swd.append(...sb);
-const tlw=document.createElement('div');tlw.className='tl';const tp=mkBtn('▶');tp.setAttribute('aria-label','날짜순 재생');const rg=document.createElement('input');rg.type='range';rg.min=0;rg.max=0;rg.value=0;rg.setAttribute('aria-label','날짜 슬라이더');const tlv=document.createElement('div');tlv.className='tlv';tlw.append(tp,rg);
+const tlw=document.createElement('div');tlw.className='tl';const tp=mkBtn('▶');tp.setAttribute('aria-label',T('날짜순 재생','Play by date'));const rg=document.createElement('input');rg.type='range';rg.min=0;rg.max=0;rg.value=0;rg.setAttribute('aria-label',T('날짜 슬라이더','Date slider'));const tlv=document.createElement('div');tlv.className='tlv';tlw.append(tp,rg);
 const nums=document.createElement('div');nums.className='nums';const n1=document.createElement('span');n1.className='num';const n2=document.createElement('span');n2.className='num';n2.hidden=true;nums.append(n1,n2);
 const nc=document.createElement('div');nc.className='nc';
-const pinB=mkBtn('📌 이 대상 감시','act');pinB.setAttribute('aria-pressed','false');const fxB=mkBtn('✨ 효과','act');fxB.setAttribute('aria-pressed',String(!fxOff));
+const pinB=mkBtn(T('📌 이 대상 감시','📌 Watch this'),'act');pinB.setAttribute('aria-pressed','false');const fxB=mkBtn(T('✨ 효과','✨ Effects'),'act');fxB.setAttribute('aria-pressed',String(!fxOff));
 const row=document.createElement('div');row.className='row';row.append(pinB,fxB);const pinsEl=document.createElement('div');pinsEl.className='pins';
-const note=document.createElement('div');note.className='nt';note.textContent='공개 자료를 걸러 보는 도구예요. 선과 숫자는 나란히 놓은 것일 뿐 원인을 뜻하지 않아요. Esc = 효과 건너뛰기.';
-bd.append(sec('기간 (다시 누르면 해제)',seg),sec('겹쳐 볼 층 (켜면 그 층만 표시)',swd),sec('날짜순 다시 보기',tlw),tlv,nums,nc,row,sec('감시 중',pinsEl),note);
+const note=document.createElement('div');note.className='nt';note.textContent=T('공개 자료를 걸러 보는 도구예요. 선과 숫자는 나란히 놓은 것일 뿐 원인을 뜻하지 않아요. Esc = 효과 건너뛰기.','A tool for filtering public records. Lines and numbers are shown side by side and do not imply cause. Esc = skip effects.');
+bd.append(sec(T('기간 (다시 누르면 해제)','Period (tap again to clear)'),seg),sec(T('겹쳐 볼 층 (켜면 그 층만 표시)','Layers (on = show only those)'),swd),sec(T('날짜순 다시 보기','Replay by date'),tlw),tlv,nums,nc,row,sec(T('감시 중','Watching'),pinsEl),note);
 box.append(hd,bd);document.body.append(box);
-const badge=document.createElement('div');badge.id='mtWatch';badge.hidden=true;badge.textContent='감시 중';const bt=$('briefTitle');if(bt&&bt.parentNode)bt.after(badge);
+const badge=document.createElement('div');badge.id='mtWatch';badge.hidden=true;badge.textContent=T('감시 중','WATCHING');const bt=$('briefTitle');if(bt&&bt.parentNode)bt.after(badge);
 hd.onclick=()=>{const o=box.dataset.open==='1'?'0':'1';box.dataset.open=o;hd.setAttribute('aria-expanded',String(o==='1'));document.body.classList.toggle('mtc-open',o==='1')};
 // 데이터 → 보이는 정류장 (허브=첫 정류장은 항상 표시, 날짜 없는 기록은 기간·타임라인에 걸리지 않음)
 const ref=m=>{let r=0;m.meta.forEach(t=>{const d=dms(t);if(d&&d>r)r=d});return r};
@@ -670,18 +671,22 @@ function stopPlay(){clearInterval(tPlay);tPlay=0;tp.textContent='▶'}
 function build(m){ig.clearLayers();mk=[];vis=[];m.meta.forEach((t,i)=>{if(t.lat==null)return;const [c,e]=iconOf(t,i===0);mk[i]=L.marker([t.lat,t.lon],{icon:L.divIcon({className:'mtIc '+c+(i===0?' hub':''),html:'<b aria-hidden="true">'+e+'</b>',iconSize:i?[24,24]:[30,30]}),interactive:false,keyboard:false,zIndexOffset:i===0?500:0}).addTo(ig)});
  dates=[...new Set(m.meta.map(dms).filter(Boolean))].sort((a,b)=>a-b);tl=null;rg.max=dates.length;rg.value=dates.length;rg.disabled=tp.disabled=dates.length<2;stopPlay()}
 const tk=m=>m&&/^company:/.test(m.ticker||'')?m.ticker.slice(8):'';
-function pct(m){const x=P&&P.t&&P.t[tk(m)];if(!x)return'';const v=period===7?x.w1:period===30?x.m1:null;return v==null?'':(v>0?'+':'')+v.toFixed(1)+'%'}
+const fmt=v=>v==null?'':(v>0?'+':'')+v.toFixed(1)+'%',M3={};
+// 3달 등락: 종목별 일별 종가 파일에서 계산. 기록이 90일에 못 미치면 null(준비 중 안내)
+function load3(k){if(!k||k in M3)return;M3[k]=undefined;fetch('../data/us/prices/'+encodeURIComponent(k)+'.json').then(r=>r.ok?r.json():null).then(j=>{const d=j&&j.d,c=j&&j.c;let v=null;if(Array.isArray(d)&&Array.isArray(c)&&d.length>1){const e=d.length-1,t=Date.parse(d[e])-90*864e5;if(Date.parse(d[0])<=t){let i=e;while(i>0&&Date.parse(d[i])>t)i--;if(c[i]&&c[e])v=(c[e]/c[i]-1)*100}}M3[k]=v}).catch(()=>{M3[k]=null}).then(()=>{if(period===90)apply()})}
+function pct(m){const k=tk(m),x=P&&P.t&&P.t[k];if(!x)return'';if(period===90){load3(k);return fmt(M3[k])}return fmt(period===7?x.w1:period===30?x.m1:null)}
+const soon=m=>period===90&&!!tk(m)&&M3[tk(m)]===null
 function stampN(el,v){if(el.textContent===v)return;el.textContent=v;if(!fx())return;el.classList.remove('land');void el.offsetWidth;el.classList.add('land')}
 const apply=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(paint)};
-function pinsPaint(){pinsEl.replaceChildren(...pins.map(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.n;b.title=p.n+' 경로 열기';b.onclick=()=>window.mtApi.loadIdx().then(()=>{const r=window.mtApi.routeOf(p.t);if(r)window.mtApi.start(r)}).catch(()=>{});return b}));if(!pins.length){const s=document.createElement('span');s.className='nt';s.textContent='아직 없어요. 경로를 연 뒤 📌를 눌러 보세요.';pinsEl.append(s)}hdI.textContent=pins.length?'감시 '+pins.length:''}
-function paint(){const m=cur();pinsPaint();if(!m||!m.meta){n1.textContent='—';n2.hidden=true;nc.textContent='경로를 열면 여기서 걸러 볼 수 있어요.';tlv.textContent='';pinB.setAttribute('aria-pressed','false');badge.hidden=true;return}
+function pinsPaint(){pinsEl.replaceChildren(...pins.map(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.n;b.title=T(p.n+' 경로 열기','Open route: '+p.n);b.onclick=()=>window.mtApi.loadIdx().then(()=>{const r=window.mtApi.routeOf(p.t);if(r)window.mtApi.start(r)}).catch(()=>{});return b}));if(!pins.length){const s=document.createElement('span');s.className='nt';s.textContent=T('아직 없어요. 경로를 연 뒤 📌를 눌러 보세요.','None yet. Open a route, then tap 📌.');pinsEl.append(s)}hdI.textContent=pins.length?T('감시 ','Watching ')+pins.length:''}
+function paint(){const m=cur();pinsPaint();if(!m||!m.meta){n1.textContent='—';n2.hidden=true;nc.textContent=T('경로를 열면 여기서 걸러 볼 수 있어요.','Open a route to filter it here.');tlv.textContent='';pinB.setAttribute('aria-pressed','false');badge.hidden=true;return}
  const V=calc(m),F=window.mtFlow,L_=F?F.lines():[],D=F?F.dots():[];let n=0,tot=0;
  m.meta.forEach((t,i)=>{const on=V[i];if(i){tot++;if(on)n++}[L_[i]&&L_[i].getElement&&L_[i].getElement(),D[i]&&D[i].getElement&&D[i].getElement(),mk[i]&&mk[i].getElement&&mk[i].getElement()].forEach(x=>{if(x)x.style.display=on?'':'none'});
   if(on&&vis[i]===false&&tl!=null&&i){drawLine(i);pulse(t)}vis[i]=on});
- tlv.textContent=tl==null?(dates.length>1?'전체 '+iso(dates[0])+' ~ '+iso(dates[dates.length-1]):'날짜가 있는 기록이 적어요'):tl===0?'처음 상태 (날짜 있는 기록 숨김)':'~ '+iso(dates[tl-1])+' 까지';
- stampN(n1,n+'건');const px=pct(m);n2.hidden=!px;if(px)stampN(n2,px);
- nc.textContent='보이는 공개 기록 '+n+' / '+tot+'건'+(px?' · 같은 기간 주가 '+px+' (나란히 본 것, 원인 아님)':period&&tk(m)?' · 이 기간의 주가 수치는 없어요':'');
- const pinned=pins.some(p=>p.t===m.ticker);pinB.setAttribute('aria-pressed',String(pinned));pinB.textContent=pinned?'📌 감시 해제':'📌 이 대상 감시';badge.hidden=!pinned}
+ tlv.textContent=tl==null?(dates.length>1?T('전체 ','All ')+iso(dates[0])+' ~ '+iso(dates[dates.length-1]):T('날짜가 있는 기록이 적어요','Few dated records')):tl===0?T('처음 상태 (날짜 있는 기록 숨김)','Start (dated records hidden)'):EN?'up to '+iso(dates[tl-1]):'~ '+iso(dates[tl-1])+' 까지';
+ stampN(n1,EN?String(n):n+'건');const px=pct(m);n2.hidden=!px;if(px)stampN(n2,px);
+ nc.textContent=T('보이는 공개 기록 '+n+' / '+tot+'건','Public records shown: '+n+' / '+tot)+(px?T(' · 같은 기간 주가 '+px+' (나란히 본 것, 원인 아님)',' · price change over the same period '+px+' (side by side, not a cause)'):soon(m)?' · '+T('3달 주가는 준비 중','3-month prices coming soon'):period&&period<90&&tk(m)?T(' · 이 기간의 주가 수치는 없어요',' · No price figure for this period'):'');
+ const pinned=pins.some(p=>p.t===m.ticker);pinB.setAttribute('aria-pressed',String(pinned));pinB.textContent=pinned?T('📌 감시 해제','📌 Stop watching'):T('📌 이 대상 감시','📌 Watch this');badge.hidden=!pinned}
 pinB.onclick=()=>{const m=cur();if(!m)return;const i=pins.findIndex(p=>p.t===m.ticker);if(i>=0)pins.splice(i,1);else pins.push({t:m.ticker,n:String(m.title).replace(/\s*(경로|route)$/i,'')});ST.set('mt-watch',pins);paint()};
 fxB.onclick=()=>{fxOff=!fxOff;ST.set('mt-fx-off',fxOff);document.body.classList.toggle('mtc-nofx',fxOff);fxB.setAttribute('aria-pressed',String(!fxOff))};
 // 타임라인 재생(0.65초마다 한 날짜씩)
