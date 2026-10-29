@@ -1,0 +1,31 @@
+# Copy to .github/workflows/build-briefing.yml (the bot cannot write that directory).
+name: Build daily briefing
+on:
+  schedule:
+    - cron: '50 7 * * *'   # after the collect-* jobs (fiscal 06:31 UTC etc.)
+  push:
+    branches: [main]
+    paths: ['scripts/build_briefing.py', '.github/workflows/build-briefing.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: briefing
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pick today's notable items (stdlib only, no network, no keys)
+        run: python scripts/build_briefing.py
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/briefing
+          git diff --staged --quiet || (git commit -m "data(briefing): daily briefing [skip ci]" && git pull --rebase origin main && git push)
