@@ -364,6 +364,48 @@ const prev=window.mtAfterShow;window.mtAfterShow=()=>{prev&&prev();const m=windo
  (t.links||[]).forEach((l,j)=>{if(!j)box.append('관련 법안: ');const a=document.createElement('a');a.href=l.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=l.label+' ↗';box.append(a)});sched()};
 document.getElementById('world')&&document.getElementById('world').addEventListener('click',()=>{g.clearLayers();leg.hidden=true;cur=null;stop()});
 document.getElementById('closeBrief')&&document.getElementById('closeBrief').addEventListener('click',()=>{stop()});})();</script>
+<style id="mt-tour-css">
+.leaflet-popup.mtTour .leaflet-popup-content-wrapper{background:#061a29f2;color:#eafff2;border:1px solid #68c7d0;border-radius:14px;box-shadow:0 8px 24px #0009}
+.leaflet-popup.mtTour .leaflet-popup-tip{background:#061a29f2;border:1px solid #68c7d0}
+.leaflet-popup.mtTour .leaflet-popup-content{margin:10px 12px;font:13px/1.55 system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;width:min(250px,64vw)!important}
+.mtTour .tz{font-weight:700;color:#ffd60a}.mtTour .tl2{margin-top:4px;color:#bfffd6}.mtTour .tg{margin-top:5px;font-size:10.5px;color:#8fa89a}
+.mtTour .td{letter-spacing:2px;font-size:9px;color:#68c7d0;margin-bottom:3px}
+.mtTour.pop .leaflet-popup-content-wrapper{animation:mtPop .35s ease-out}@keyframes mtPop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.mtTour.pop .leaflet-popup-content-wrapper{animation:none}}
+</style>
+<script id="mt-tour-js">(()=>{const map=window.moneyTrackerMap;if(!map||!window.L)return;
+// 가이드 투어 말풍선: 정류장마다 "그 지역에서 있었던 일" + "같은 기간 나타난 것"(주가 변동률)을 규칙 템플릿으로 생성. AI API 미사용, 원인 단정 없음.
+const en=()=>!!(window.MTI18N&&window.MTI18N.isEn);let P=null,pop=null,seq=0;
+const BOX=[['tw',21.5,25.5,119.5,122.5,'🇹🇼','대만','Taiwan'],['kr',33,39,124,131,'🇰🇷','한국','Korea'],['jp',30,46,129,146,'🇯🇵','일본','Japan'],['sg',1,1.8,103,104.5,'🇸🇬','싱가포르','Singapore'],['us',24,50,-125,-66,'🇺🇸','미국','the US'],['cn',18,54,73,135,'🇨🇳','중국','China']];
+const place=t=>{for(const b of BOX)if(t.lat>=b[1]&&t.lat<=b[2]&&t.lon>=b[3]&&t.lon<=b[4])return{f:b[5],n:en()?b[7]:b[6]};return{f:'🌏',n:en()?'Overseas':'해외'}};
+const TK=[[/TSMC|Taiwan Semiconductor|대만 ?(반도체|TSMC)/i,'TSM'],[/Micron|마이크론/i,'MU'],[/NVIDIA|엔비디아/i,'NVDA']];
+const pc=v=>(v>0?'+':'')+v.toFixed(1)+'%';
+function line1(t,C){const k=t.kind||'',x=(t.title||'')+' '+(t.region||''),n=(String(t.fact||'').match(/(\d+)\s*건/)||[])[1],E=en();
+ if(k==='supply'||/본사|공장|공급사|팹/.test(x)){const hq=/본사/.test(x),sp=/공급사/.test(x);return['🏭',E?`${hq?'The headquarters':sp?'A supplier':'A plant'} linked to ${C} is here.`:`${C}의 ${hq?'본사':sp?'공급사':'공장'}가 이곳에 있어요.`]}
+ if(k==='lobby')return['📣',E?`${C} filed ${n||'some'} lobbying report${n==1?'':'s'} here.`:`${C}의 로비 공시가 ${n?n+'건 ':''}있었어요.`];
+ if(k==='trade')return['🧾',E?`Lawmakers reported trades in ${C} stock.`:`의원들이 ${C} 주식을 사고팔았다고 신고했어요.`];
+ if(k==='bill')return['📜',E?`A bill tied to ${C} is in Congress.`:`${C}와 관련된 법안이 의회에 올라와 있어요.`];
+ if(k==='cmte')return['🏛️',E?`A congressional committee tied to ${C} shows up here.`:`${C}와 관련된 의회 위원회 기록이 있어요.`];
+ if(k==='wh')return['🇺🇸',E?`The US president issued an order or announcement on this topic.`:`미국 대통령이 이 주제로 발표하거나 명령한 기록이 있어요.`];
+ if(k==='reg')return['🛃',E?`There are tariff or export-control records here.`:`관세나 수출 제한과 관련된 기록이 있어요.`];
+ if(k==='award')return['💵',E?`${C} has US government contract records.`:`${C}의 미국 정부 계약 기록이 있어요.`];
+ if(k==='pac')return['🗳️',E?`There are political-donation records tied to ${C}.`:`${C}와 관련된 정치 후원 기록이 있어요.`];
+ if(k==='policy')return['📑',E?`This country has policy records on the topic.`:`이 나라의 관련 정책 기록이 있어요.`];
+ return['📍',E?`Public records mention this place for ${C}.`:`공개 자료에 ${C}와 관련된 이 지역 기록이 있어요.`]}
+function line2(t,tk){const x=P&&P.t&&P.t[tk];if(!x||x.m1==null)return'';const lo=x.from||'',hi=P.date||'',d=t.date&&String(t.date).slice(0,10);if(d&&lo&&(d<lo||d>hi))return'';
+ const s=(t.region||'')+' '+(t.fact||''),f=TK.find(r=>r[0].test(s)),k=f&&P.t[f[1]]&&P.t[f[1]].m1!=null?f[1]:tk,y=P.t[k],w=lo&&hi?` (${lo}~${hi})`:'';
+ return en()?`In the same period${w}, ${k} stock moved ${pc(y.m1)}. Just a side-by-side, not a reason.`:`같은 기간${w} ${k} 주가는 ${pc(y.m1)} 움직였어요. 나란히 놓고 본 것일 뿐 이유는 아니에요.`}
+function clear(){seq++;if(pop){map.removeLayer(pop);pop=null}}
+const prev=window.mtAfterShow;window.mtAfterShow=async()=>{prev&&prev();const my=++seq,m=window.mtCur&&window.mtCur();if(pop){map.removeLayer(pop);pop=null}if(!m||!/^company:/.test(m.ticker||''))return;
+ const ti=(document.getElementById('briefTitle')||{}).textContent||'',mm=ti.match(/ · (\d+)\/(\d+)/),i=mm?+mm[1]-1:0,N=mm?+mm[2]:m.meta.length,t=m.meta[i];if(!t||t.lat==null)return;
+ if(P===null)P=await fetch('../data/us/prices/summary.json').then(r=>r.ok?r.json():{}).catch(()=>({}));if(my!==seq)return;
+ const tk=m.ticker.slice(8),C=m.title.replace(/\s*\((.+?)\)\s*(경로|route)?\s*$/i,'').replace(/\s*(경로|route)$/i,'')||tk,pl=place(t),[ic,l1]=line1(t,C),l2=line2(t,tk);
+ const box=document.createElement('div'),dots=document.createElement('div');dots.className='td';dots.textContent=Array.from({length:Math.min(N,12)},(_,j)=>j===Math.min(i,11)?'●':'○').join('');
+ const a=document.createElement('div');a.className='tz';a.textContent=`${pl.f} ${pl.n}`;const b=document.createElement('div');b.textContent=`${ic} ${l1}`;box.append(dots,a,b);
+ if(l2){const c=document.createElement('div');c.className='tl2';c.textContent='⏱ '+l2;box.append(c)}
+ if(i===N-1){const g=document.createElement('div');g.className='tg';g.textContent=en()?'Lines on the map link public records. They do not show cause.':'지도 위 선은 공개 자료를 이은 것이고, 원인을 뜻하지 않아요.';box.append(g)}
+ pop=L.popup({className:'mtTour pop',closeButton:false,autoClose:false,closeOnClick:false,autoPan:false,offset:[0,-4],maxWidth:260}).setLatLng([t.lat,t.lon]).setContent(box).addTo(map)};
+document.getElementById('world')&&document.getElementById('world').addEventListener('click',clear);document.getElementById('closeBrief')&&document.getElementById('closeBrief').addEventListener('click',clear);})();</script>
 <style id="mt-trades-css">#mtTrades{margin:6px 0;font:11px/1.5 ui-monospace,Menlo,monospace;color:#bfffd6;max-height:150px;overflow:auto}#mtTrades table{border-collapse:collapse;width:100%}#mtTrades td,#mtTrades th{padding:1px 4px;border-bottom:1px solid rgba(93,255,158,.15);text-align:left;white-space:nowrap}#mtTrades a{color:#5dff9e}</style>
 <script id="mt-trades-js">(()=>{const prev=window.mtAfterShow;window.mtAfterShow=async()=>{prev&&prev();const box=document.getElementById('mtTrades')||Object.assign(document.createElement('div'),{id:'mtTrades'});if(!box.parentNode)document.getElementById('briefCaveat').before(box);box.replaceChildren();
 const m=window.mtCur&&window.mtCur();if(!m||!window.mtApi)return;const idx=await window.mtApi.loadIdx();const e=idx.entities[m.ticker];if(!e||!e.trades||!e.trades.length)return;
