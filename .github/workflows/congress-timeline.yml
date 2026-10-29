@@ -1,0 +1,35 @@
+# 실장이 .github/workflows/ 로 옮겨 주세요 (봇은 workflows 폴더를 못 고침).
+# 시크릿 CONGRESS_API_KEY (무료: https://api.congress.gov/sign-up/). 없으면 '키 필요' 상태만 기록하고 정상 종료.
+# 법안은 us.yml 의 collector/us/bills.py 결과(data/us/bills/)를 쓰므로 us.yml 보다 늦은 시각에 돌린다.
+name: Congress timeline
+on:
+  schedule:
+    - cron: '30 14 * * *'   # 매일 23:30 KST (us.yml 21:41 KST 이후)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: congress-timeline
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect (키가 없으면 건너뜀)
+        run: python scripts/collect_congress_timeline.py
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY || secrets.ONGRESS_API_KEY }}
+          TIMELINE_BUDGET_SEC: '1200'
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add data/us/timeline
+          git diff --cached --quiet && exit 0
+          git commit -m "data: 의원 타임라인 갱신 [skip ci]"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push && break; sleep 10; done

@@ -56,7 +56,7 @@
     // NVDA hand-written route stops (data/us/ticker-routes.json)
     "본사 위치 확인됨": "HQ location confirmed", "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 산타클라라임.": "Data shows the business address in SEC filings is Santa Clara, California.",
     "칩 생산은 외부 파운드리 의존": "Chip production relies on external foundries", "10-K에서 자체 공장 없이 TSMC·삼성전자 등 파운드리에 칩 생산을 맡긴다고 밝힘.": "The 10-K says it has no fabs of its own and outsources chip production to foundries such as TSMC and Samsung Electronics.",
-    "중국 등 수출 허가 요건 공시": "Disclosure of export license requirement for China and others", "반도체 지원법 제정": "CHIPS Act enacted",
+    "중국 등 수출 허가 요건 공시": "Disclosure of export license requirement for China and others", "반도체 지원법 제정": "CHIPS Act enacted", "CHIPS and Science Act(H.R.4346, 117대 의회)가 법으로 제정됨. 업계 전반 대상 법률임.": "The CHIPS and Science Act (H.R.4346, 117th Congress) was enacted into law. It applies to the whole industry.",
     "미 정부가 H20 칩을 중국 등(홍콩·마카오, D:5 국가 포함)으로 수출할 때 허가가 필요하다고 2025-04-09 통보했다고 8-K로 공시함(제출 2025-04-15).": "The 8-K discloses that on Apr 9, 2025 the US government notified the company that a license is required to export H20 chips to China and others (incl. Hong Kong, Macau and D:5 countries) (filed Apr 15, 2025).",
     // command-room demo routes
     "대만 해협의 지정학적 위험을 검토합니다.": "Reviews geopolitical risk in the Taiwan Strait.", "반도체 제조 집중과 생산 차질 가능성을 살펴봅니다.": "Looks at concentration of chip manufacturing and possible production disruptions.", "미국 기술기업의 공급망 노출을 확인합니다.": "Checks US tech companies' supply-chain exposure.",
@@ -220,6 +220,10 @@
 
   // ---------- phrases (substring, longest first) ----------
   var PH = [
+    // map page: source panel, Federal Register tooltips; glossary/price-source leftovers
+    ["공식 자료 조사 결과", "Official source findings"], ["자료창 닫기", "Close source panel"], ["(구 Polygon)", " (formerly Polygon)"],
+    ["제목 키워드 기준", "title-keyword basis"], ["관세·수입제한(232조)·청정에너지", "tariffs, import limits (Section 232) and clean energy"], ["수입제한", "import limits"], ["청정에너지", "clean energy"],
+    ["232조", "Section 232"], ["에너지", "energy"], ["주택", "housing"], ["기타", "other"], ["관세", "tariffs"], ["제재", "sanctions"], ["이란", "Iran"], ["베네수엘라", "Venezuela"], ["관련", "related"],
     // sectors (data/search-index.json names)
     ["시장 전체(지수)", "Broad market"], ["IT·소프트웨어·AI", "Tech, software & AI"], ["금융·은행·보험", "Finance, banking & insurance"], ["에너지·석유·가스", "Energy, oil & gas"], ["청정에너지·탄소", "Clean energy & carbon"],
     ["배터리·전기차", "Batteries & EVs"], ["방산·항공우주", "Defense & aerospace"], ["조선·해운", "Shipbuilding & shipping"], ["헬스케어·제약·바이오", "Healthcare, pharma & biotech"], ["주택·건설·부동산", "Housing, construction & real estate"],
@@ -323,7 +327,10 @@
     ["실제 지리 기반 세계지도 · 자유 탐색", "World map based on real geography · free exploration"], ["세계지도 · 자유 탐색", "World map · free exploration"], ["수동 탐색 · 자유롭게 지도를 이동하세요", "Manual exploration · pan the map freely"],
     ["지도 서버 연결 확인 중 · 대체 지도 표시", "Checking map server connection · showing fallback map"], ["지도 타일 지연 · 개략 지도 표시 (연결 복구 시 자동 전환)", "Map tiles delayed · showing rough map (switches automatically when connection recovers)"],
     ["지도 엔진 오류 · 개략 지도 표시", "Map engine error · showing rough map"], ["지도 라이브러리 연결 실패 · 개략 지도 표시", "Map library failed to load · showing rough map"],
-    ["Alphabet Inc.", "Alphabet Inc."],
+    ["Alphabet Inc.", "Alphabet Inc."], ["Massive(구 Polygon)", "Massive (formerly Polygon)"],
+    ["미 정부가 H20 칩을 중국 등(홍콩·마카오, D:5 국가 포함)으로 수출할 때 허가가 필요하다고", "The US government notified the company that a license is required to export H20 chips to China and others (incl. Hong Kong, Macau and D:5 countries) on"],
+    ["통보했다고 8-K로 공시함(제출 ", "as disclosed in an 8-K (filed "], ["10-K에서 자체 공장 없이 TSMC·삼성전자 등 파운드리에 칩 생산을 맡긴다고 밝힘.", "The 10-K says it has no fabs of its own and outsources chip production to foundries such as TSMC and Samsung Electronics."],
+    ["CHIPS and Science Act(H.R.4346, 117대 의회)가 법으로 제정됨. 업계 전반 대상 법률임.", "The CHIPS and Science Act (H.R.4346, 117th Congress) was enacted into law. It applies to the industry as a whole."],
     // indicators, names and places in route data (NVDA etc.)
     ["대만달러/달러 환율", "TWD/USD exchange rate"], ["엔/달러 환율", "JPY/USD exchange rate"], ["위안/달러 환율", "CNY/USD exchange rate"], ["달러 환율", "USD exchange rate"], ["국채 금리", "Treasury yield"], ["미 의회 법안", "U.S. Congress bills"],
     ["업종 코드", "industry code"], ["SEC 등록명", "SEC registered name"], ["SEC 등록 업종", "SEC-registered industry"], ["본사(SEC 주소)", "HQ (SEC address)"], ["(좌표는 대략 위치)", "(coordinates are approximate)"], ["원문: ", "Source text: "],
@@ -353,7 +360,9 @@
     if (typeof s !== "string" || !(HANGUL.test(s) || /\d{4}-\d{2}/.test(s))) return s;
     if (cache[s] != null) return cache[s];
     var lead = /^\s*/.exec(s)[0], trail = /\s*$/.exec(s)[0], core = s.slice(lead.length, s.length - trail.length), out;
+    var dot = /\s*[·•]\s*$/.exec(core), bare = dot ? core.slice(0, dot.index) : core; // "fact ·" : text node followed by a source link
     if (EXACT[core] != null) out = EXACT[core];
+    else if (dot && EXACT[bare] != null) out = EXACT[bare] + core.slice(dot.index);
     else {
       out = core;
       for (var i = 0; i < RULES.length; i++) {
@@ -381,7 +390,7 @@
   // UI string that is not Korean source text (button labels owned by this file)
   var UI = {
     ko: { aria: "English로 전환", title: "Switch to English" },
-    en: { aria: "한국어로 전환", title: "한국어로 전환 (Switch to Korean)" }
+    en: { aria: "Switch to Korean", title: "Switch to Korean" }
   };
 
   var api = { lang: lang, name: name, isEn: isEn, tr: tr, toEn: toEn, date: date, dateEn: dateEn, usd: usd, krw: krw, money: money, koUsd: koUsd,

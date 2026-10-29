@@ -1,0 +1,13 @@
+const assert = require("assert");
+const m = require("../assets/mt-econ-strip.js");
+const items = { cpi: { value: 3.7, prev: 3.4 }, unrate: { value: 4.2, prev: 4.2 }, y10: { value: 5.0, prev: 5.1 } };
+assert.strictEqual(m.dir(items.cpi), 1);
+assert.strictEqual(m.dir(items.unrate), 0);
+assert.strictEqual(m.dir(items.y10), -1);
+const ko = m.sameTime(items, false), en = m.sameTime(items, true);
+assert.ok(ko.startsWith("같은 기간") && ko.includes("올랐어요") && ko.includes("내렸어요"));
+assert.ok(en.startsWith("In the same period"));
+for (const t of [ko, en, JSON.stringify(m.DEF)]) assert.ok(!/때문에|추천|recommend|should buy/i.test(t), "금지 표현");
+assert.strictEqual(m.sameTime({}, false), "");
+assert.ok(m.spark([["a", 1], ["b", 2]], 10, 10).startsWith("M0"));
+console.log("econ-strip ok");

@@ -1,0 +1,30 @@
+# 실장이 .github/workflows/ 로 옮길 것 (봇은 workflows 폴더를 수정할 수 없음)
+name: Collect SEC filings (10-K/8-K + HQ address)
+on:
+  schedule:
+    - cron: '25 20 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: collect-sec-filings
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect (SEC 공개 API, 키 없음)
+        run: python scripts/collect_sec_filings.py
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add data/us/sec-filings.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: SEC 10-K/8-K 공시 목록 갱신"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push && break; sleep 10; done

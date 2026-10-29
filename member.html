@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 의원 파일"><meta name="twitter:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
-<script src="assets/i18n.js?v=i18n-20261028c"></script>
+<script src="assets/i18n.js?v=i18n-20261029a"></script>
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
 *{box-sizing:border-box}
@@ -115,6 +115,45 @@ header.bar input.nm{width:200px;text-transform:none}
  ol.tl li{grid-template-columns:74px minmax(0,1fr);gap:12px}
  .hero .nm{font-size:22px}
 }
+/* 주가 위 점 + 늦게 신고 배지 (이슈 #233) */
+.dotp .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 10px}
+.dotp .tabs button{min-height:40px;padding:0 16px;border-radius:999px;border:2px solid var(--line2);background:#04150d;color:var(--g2);font:700 16px ui-monospace,Menlo,monospace;cursor:pointer}
+.dotp .tabs button.on{background:#0d3b22;border-color:var(--g);color:#eafff2}
+.dotp svg.big{width:100%;height:auto;display:block;background:#03130b;border:1px solid var(--line);border-radius:10px}
+.dotp svg .ln{fill:none;stroke:#7fd1ff;stroke-width:2.5;stroke-linejoin:round}
+.dotp svg text{fill:#9dc4b0;font:13px ui-monospace,Menlo,monospace}
+.dotp svg circle.dt{cursor:pointer;stroke:#020a06;stroke-width:2}
+.dotp svg circle.dt.P{fill:#5dff9e}.dotp svg circle.dt.S{fill:#ffb35d}.dotp svg circle.dt.E{fill:#c9a7ff}
+.dotp svg circle.dt.sel,.dotp svg circle.dt:focus{stroke:#fff;stroke-width:3;outline:none}
+.dotp .say{margin-top:10px;padding:12px 14px;border:2px solid var(--line2);border-radius:10px;background:#04150d;font-size:17px;line-height:1.6;color:#eafff2}
+.dotp .say b{color:var(--g)}
+.dotp .lg{margin-top:8px;font-size:15px;color:var(--mut)}
+.dotp .lg i{display:inline-block;width:13px;height:13px;border-radius:50%;margin:0 5px 0 12px;vertical-align:-2px}
+.lag{display:inline-block;font-weight:700;font-size:14px;padding:2px 9px;border-radius:999px;border:1px solid var(--line2);white-space:nowrap}
+.lag.fast{color:#7dffa8}.lag.mid{color:#ffd36b;border-color:#8a6d1f}.lag.slow{color:#ff8a8a;border-color:#8a2f2f}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.badges span{font-size:15px;padding:4px 12px;border-radius:999px;border:1px solid var(--line2);background:#04150d;color:#eafff2}
+
+/* 타임라인 (게임형) */
+.tlx .big{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:6px 0 12px}
+.tlx .big div{border:2px solid var(--line2);border-radius:12px;padding:12px 8px;text-align:center;background:#03130b}
+.tlx .big b{display:block;font:800 30px/1.1 ui-monospace,Menlo,monospace;color:var(--g)}
+.tlx .big span{font-size:14px;color:var(--txt)}
+.tlx .badges{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.tlx .badges span{font-size:15px;font-weight:700;border-radius:999px;padding:6px 14px;border:2px solid var(--g);background:#0d3b22;color:#eafff2}
+.tlx .badges span.off{border-color:var(--line);background:none;color:var(--mut);font-weight:400}
+.tlx .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.tlx .tabs button{min-height:44px;padding:0 16px;font:700 16px system-ui,sans-serif;border-radius:10px;border:2px solid var(--line2);background:#04150d;color:var(--g2);cursor:pointer}
+.tlx .tabs button[aria-pressed=true]{background:#145531;border-color:var(--g);color:#fff}
+.tlx .mo{margin:14px 0 4px;font-size:18px;font-weight:800;color:var(--g)}
+.tlx .mo small{display:block;font-size:14px;font-weight:400;color:var(--mut)}
+.tlx .ev{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;padding:8px 0;border-bottom:1px solid #12301f;font-size:16px}
+.tlx .ev .ic{font-size:24px;line-height:1.2}
+.tlx .ev .t{color:#eafff2;font-weight:700}
+.tlx .ev .s{font-size:14px;color:var(--mut)}
+.tlx .keybox{border:2px dashed var(--warn);border-radius:12px;padding:14px;background:#1c1606;color:#f3e3b4;font-size:16px}
+.tlx .keybox b{display:block;font-size:20px;margin-bottom:4px}
+@media(max-width:600px){.tlx .big{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 
 </head>
@@ -129,6 +168,7 @@ header.bar input.nm{width:200px;text-transform:none}
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
 <script src="assets/insights-card.js?v=ins-20261028"></script>
+<script src="assets/money-trio.js?v=trio-20261029"></script>
 <script src="assets/share.js?v=share-20261028"></script>
 <script>
 (function () {
@@ -149,6 +189,15 @@ header.bar input.nm{width:200px;text-transform:none}
   function norm(s) { return String(s || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/\([^)]*\)/g, " ").replace(/[^a-z0-9가-힣 ]+/g, " ").replace(/\s+/g, " ").trim(); }
   function tkOk(t) { return /^[A-Z][A-Z0-9.\-]{0,9}$/.test(String(t || "")); }
   function n(v) { return Number(v || 0).toLocaleString("ko-KR"); }
+  var EN = !!(window.MTI18N && window.MTI18N.isEn);
+  function T(ko, en) { return EN ? en : ko; }
+  function lagInfo(l) { // 며칠 늦게 신고했는지 (신고일 - 거래일)
+    if (l == null || l < 0) return null;
+    var cls = l <= 14 ? "fast" : l <= 45 ? "mid" : "slow";
+    var txt = l === 0 ? T("같은 날 신고", "Reported same day") : T(l + "일 늦게 신고", "Reported " + l + (l === 1 ? " day" : " days") + " later");
+    if (l > 45) txt += T(" (45일 넘음)", " (over 45)");
+    return { cls: cls, txt: txt };
+  }
   var TY = { P: "구입(P)", S: "처분(S)", E: "교환(E)" };
   var PARTY = { D: "민주당", R: "공화당", I: "무소속" };
   var CH = { rep: "하원", sen: "상원" };
@@ -242,6 +291,7 @@ header.bar input.nm{width:200px;text-transform:none}
     }
     head.appendChild(acts);
     app.appendChild(head);
+    app.appendChild(timelinePanel(id, rows));
 
     // 2) 요약 숫자
     var cnt = { P: 0, S: 0, E: 0 }, lags = [], late = 0;
@@ -290,6 +340,12 @@ header.bar input.nm{width:200px;text-transform:none}
       if (noTk) topP.appendChild(el("p", "note", "티커가 없는 신고(국채·채권·비상장 자산 등) " + n(noTk) + "건은 종목 집계에서 뺐습니다."));
     }
     app.appendChild(topP);
+    // 이 의원이 신고한 종목 상위 3곳의 연방 계약·로비·PAC 기록 (같은 기간 공개 기록, 원인 단정 없음)
+    if (window.MTMoneyTrio && tks.length) {
+      var trioHost = el("div"); trioHost.style.gridColumn = "1 / -1"; app.appendChild(trioHost);
+      trioHost.appendChild(el("h2", "", "🎮 신고한 종목의 돈 기록 · 상위 3곳"));
+      tks.slice(0, 3).forEach(function (tk) { var h = el("div"); h.style.marginBottom = "12px"; trioHost.appendChild(h); window.MTMoneyTrio.render(h, tk, { title: "🎮 " + tk, span: false }); });
+    }
 
     var secP = panel("업종별 · 건수 기준");
     var secs = Object.keys(bySec).sort(function (a, b) { return bySec[b] - bySec[a]; });
@@ -328,8 +384,170 @@ header.bar input.nm{width:200px;text-transform:none}
     if (!any) ovP.appendChild(el("div", "empty", cms.length ? "데이터상 겹침이 없습니다 (위원회에 연결된 업종에서 거래 신고가 없거나, 위원회에 연결된 업종 분류가 아직 없음)" : "위원회 정보가 없어 비교하지 않았습니다"));
     app.appendChild(ovP);
 
+    // 4.5) 주가 위 점
+    app.appendChild(dotsBlock(rows, tks, byTk, lags, late));
+
     // 5) 거래 신고 목록
     app.appendChild(tradesBlock(rows, E, m && m.chamber, !(tr.trades || []).some(function (x) { return x.c === "s"; })));
+  }
+
+  // 주가 차트 위에 거래일마다 점 찍기. data/us/prices/<TICKER>.json (종가 시계열) 사용.
+  function dotsBlock(rows, tks, byTk, lags, late) {
+    var p = panel(T("주가 위에 찍은 점", "Dots on the price line"), null, true);
+    p.classList.add("dotp");
+    var bd = el("div", "badges");
+    if (lags.length) {
+      bd.appendChild(el("span", "", T("🕒 보통 " + lags[Math.floor(lags.length / 2)] + "일 늦게 신고", "🕒 Usually reported " + lags[Math.floor(lags.length / 2)] + " days later")));
+      bd.appendChild(el("span", "", T("🐢 가장 늦은 신고 " + lags[lags.length - 1] + "일", "🐢 Slowest report: " + lags[lags.length - 1] + " days")));
+    }
+    bd.appendChild(el("span", "", T("🚨 45일 넘긴 신고 " + late + "건", "🚨 Over 45 days: " + late)));
+    p.appendChild(bd);
+    p.appendChild(el("p", "note", T("점 하나 = 신고된 거래 하나예요. 점을 눌러 보세요! 공개 기록일 뿐이고, 사고팔라는 뜻이 아니에요.", "One dot = one reported trade. Tap a dot! This is a public record only, not advice to buy or sell.")));
+    if (!tks.length) { p.appendChild(el("div", "empty", T("티커가 있는 거래가 없어서 차트를 못 그려요", "No trades with a ticker, so no chart"))); return p; }
+    var tabs = el("div", "tabs"), box = el("div"), say = el("div", "say");
+    p.append(tabs, box, say);
+    var cache = {};
+    function pick(tk, btn) {
+      Array.prototype.forEach.call(tabs.children, function (b) { b.classList.toggle("on", b === btn); });
+      box.replaceChildren(); say.textContent = T("불러오는 중…", "Loading…");
+      (cache[tk] ? Promise.resolve(cache[tk]) : get("data/us/prices/" + encodeURIComponent(tk) + ".json").then(function (d) { return (cache[tk] = d); }))
+        .then(function (pr) { draw(tk, pr); });
+    }
+    function draw(tk, pr) {
+      box.replaceChildren();
+      var D = pr && pr.d, C = pr && pr.c;
+      if (!D || !C || D.length < 2) { say.textContent = T(tk + " 주가 자료가 아직 없어요.", "No price data for " + tk + " yet."); return; }
+      var W = 640, H = 280, L = 56, R = 14, Tp = 16, B = 34;
+      var t0 = Date.parse(D[0]), t1 = Date.parse(D[D.length - 1]);
+      var lo = Math.min.apply(null, C), hi = Math.max.apply(null, C), pad = (hi - lo) * 0.08 || 1; lo -= pad; hi += pad;
+      function X(t) { return L + (t - t0) / (t1 - t0) * (W - L - R); }
+      function Y(v) { return Tp + (hi - v) / (hi - lo) * (H - Tp - B); }
+      function near(d) { var t = Date.parse(d); for (var i = 0; i < D.length; i++) if (Date.parse(D[i]) >= t) return i; return -1; } // 그날 또는 다음 거래일
+      var NS = "http://www.w3.org/2000/svg";
+      function sv(tag, a) { var e = document.createElementNS(NS, tag); for (var k in a) e.setAttribute(k, a[k]); return e; }
+      var svg = sv("svg", { viewBox: "0 0 " + W + " " + H, "class": "big", role: "img", "aria-label": tk + T(" 주가와 거래 점", " price and trade dots") });
+      [0, 1, 2].forEach(function (i) { var v = lo + (hi - lo) * i / 2, y = Y(v); svg.appendChild(sv("line", { x1: L, x2: W - R, y1: y, y2: y, stroke: "#12301f" })); var t = sv("text", { x: L - 6, y: y + 4, "text-anchor": "end" }); t.textContent = "$" + Math.round(v); svg.appendChild(t); });
+      svg.appendChild(sv("polyline", { points: D.map(function (d, i) { return X(Date.parse(d)).toFixed(1) + "," + Y(C[i]).toFixed(1); }).join(" "), "class": "ln" }));
+      [[0, "start"], [D.length - 1, "end"]].forEach(function (a) { var t = sv("text", { x: a[0] ? W - R : L, y: H - 10, "text-anchor": a[1] }); t.textContent = D[a[0]]; svg.appendChild(t); });
+      var out = 0, circles = [];
+      rows.filter(function (r) { return r.tk === tk && r.d; }).forEach(function (r) {
+        var i = near(r.d); if (i < 0 || Date.parse(r.d) < t0 - 864e5) { out++; return; }
+        var ty = String(r.ty || "").charAt(0), cls = ty === "P" || ty === "S" ? ty : "E";
+        var c = sv("circle", { cx: X(Date.parse(D[i])).toFixed(1), cy: Y(C[i]).toFixed(1), r: 8, "class": "dt " + cls, tabindex: 0, role: "button", "aria-label": r.d + " " + (TY[ty] || "") });
+        function show() {
+          circles.forEach(function (x) { x.classList.remove("sel"); }); c.classList.add("sel");
+          var j = near(r.filed || ""), li = lagInfo(days(r.d, r.filed));
+          var verb = ty === "P" ? T("산 것으로", "a purchase") : ty === "S" ? T("판 것으로", "a sale") : T("바꾼 것으로", "an exchange");
+          say.replaceChildren();
+          var l1 = el("div"); l1.appendChild(el("b", "", r.d));
+          l1.appendChild(document.createTextNode(T(" 에 " + verb + " 신고된 거래예요. 금액은 구간으로만 나와요: " + (r.amt || "-"), " — reported as " + verb + ". Amount is only a range: " + (r.amt || "-"))));
+          say.appendChild(l1);
+          if (li) { var l2 = el("div"); l2.appendChild(el("span", "lag " + li.cls, li.txt)); l2.appendChild(document.createTextNode(T("  (신고일 " + r.filed + ")", "  (filed " + r.filed + ")"))); say.appendChild(l2); }
+          say.appendChild(el("div", "", j >= 0 && j !== i
+            ? T("같은 기간 종가는 $" + C[i].toFixed(2) + "에서 $" + C[j].toFixed(2) + "이었어요. (거래일 → 신고일)", "In the same period the close went from $" + C[i].toFixed(2) + " to $" + C[j].toFixed(2) + " (trade date → filing date).")
+            : T("그날 종가는 $" + C[i].toFixed(2) + "이었어요.", "The close that day was $" + C[i].toFixed(2) + ".")));
+          if (safe(r.doc)) { var d = el("div"); d.appendChild(link(T("신고서 원문 보기 ↗", "Open the filing ↗"), r.doc)); say.appendChild(d); }
+        }
+        c.addEventListener("click", show);
+        c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(); } });
+        c._show = show; circles.push(c); svg.appendChild(c);
+      });
+      box.appendChild(svg);
+      var lg = el("div", "lg"); lg.appendChild(document.createTextNode(T("파란 선 = 종가", "Blue line = close")));
+      [["#5dff9e", T("구입", "Purchase")], ["#ffb35d", T("처분", "Sale")], ["#c9a7ff", T("교환", "Exchange")]].forEach(function (a) { var i = el("i"); i.style.background = a[0]; lg.append(i, document.createTextNode(a[1])); });
+      box.appendChild(lg);
+      box.appendChild(el("p", "note", (pr.source ? T("출처: ", "Source: ") + pr.source + " · " : "") + T("차트 범위 밖 거래 " + out + "건은 점으로 안 찍었어요. 점은 같은 기간에 있었던 일을 보여 줄 뿐이에요.", out + " trades fall outside the chart range and are not dotted. Dots only show what happened in the same period.")));
+      if (circles.length) circles[circles.length - 1]._show(); else say.textContent = T("이 종목은 차트 범위 안에 찍을 거래가 없어요.", "No trades to dot within this chart range.");
+    }
+    tks.slice(0, 8).forEach(function (tk) {
+      var b = el("button", "", tk + " · " + byTk[tk].n); b.type = "button"; b.addEventListener("click", function () { pick(tk, b); }); tabs.appendChild(b);
+    });
+    pick(tks[0], tabs.firstChild);
+    return p;
+  }
+
+  var VOTE = { Y: ["👍", "찬성", "Yes"], N: ["👎", "반대", "No"], P: ["✋", "기권(Present)", "Present"], X: ["💤", "불참", "Not voting"] };
+  // 의원 타임라인: data/us/timeline/<ID>.json (Congress.gov API, 수집 스크립트 scripts/collect_congress_timeline.py) + 이 페이지의 거래 신고
+  function timelinePanel(id, rows) {
+    var p = panel(T("🎮 의원 타임라인", "🎮 Member timeline"), null, true); p.classList.add("tlx");
+    p.appendChild(el("p", "note", T("공개된 날짜와 사실만 늘어놓았어요. 같은 달에 있었던 일을 나란히 보여 줄 뿐, 서로 이어진다는 뜻은 아니에요.", "Only public dates and facts, in order. Things from the same month are shown side by side; that does not mean they are linked.")));
+    var box = el("div"); p.appendChild(box);
+    box.appendChild(el("div", "empty", T("불러오는 중…", "Loading…")));
+    Promise.all([get("data/us/timeline/status.json"), get("data/us/timeline/" + encodeURIComponent(id) + ".json")]).then(function (r) {
+      var st = r[0] || {}, f = r[1] || {}, ev = (f.events || []).slice();
+      box.replaceChildren();
+      if (st.status !== "ok") {
+        var kb = el("div", "keybox"); kb.appendChild(el("b", "", T("🔑 열쇠가 필요해요", "🔑 A key is needed")));
+        kb.appendChild(document.createTextNode(st.status === "needs_key" ? (EN ? st.en : st.ko) || "" : T("법안·표결 자료를 아직 모으지 못했어요.", "Bill and vote data has not been collected yet.")));
+        if (st.signup && safe(st.signup)) { kb.appendChild(document.createTextNode(" ")); kb.appendChild(link(T("무료 키 받기 ↗", "Get a free key ↗"), st.signup)); }
+        box.appendChild(kb);
+      }
+      rows.forEach(function (x) { if (x.filed) ev.push({ d: x.filed, k: "trade", t: String(x.asset || x.tk || "").slice(0, 100), ty: String(x.ty || "").charAt(0), u: x.doc }); });
+      ev = ev.filter(function (e) { return /^\d{4}-\d{2}-\d{2}/.test(e.d || ""); });
+      ev.sort(function (a, b) { return String(b.d).localeCompare(String(a.d)); });
+      if (!ev.length) { box.appendChild(el("div", "empty", T("보여 줄 기록이 아직 없어요", "No records to show yet"))); return; }
+      var nBill = 0, nPass = 0, nLaw = 0, nVote = 0, nCast = 0;
+      ev.forEach(function (e) { if (e.k === "intro") nBill++; else if (e.k === "pass") nPass++; else if (e.k === "law") nLaw++; else if (e.k === "vote") { nVote++; if (e.v !== "X") nCast++; } });
+      if (st.status === "ok") {
+        var big = el("div", "big");
+        [[nBill, T("📜 발의한 법안", "📜 Bills sponsored")], [nLaw, T("🏛 법이 된 법안", "🏛 Became law")], [nVote, T("🗳 하원 표결 기록", "🗳 House votes")], [nVote ? Math.round(nCast / nVote * 100) + "%" : "-", T("🙋 표결에 참여한 비율", "🙋 Votes taken part in")]]
+          .forEach(function (c) { var d = el("div"); d.append(el("b", "", String(c[0])), el("span", "", c[1])); big.appendChild(d); });
+        box.appendChild(big);
+        var bd = el("div", "badges");
+        [[nBill >= 1, T("🌱 법안 발의 시작", "🌱 First bill")], [nBill >= 10, T("📚 법안 10개 발의", "📚 10 bills")], [nLaw >= 1, T("🏛 법이 된 법안 있음", "🏛 Has a bill that became law")], [nVote >= 50, T("🗳 표결 50번 기록", "🗳 50 votes logged")], [nVote >= 20 && nCast / nVote >= 0.95, T("🙋 표결 참여 95% 이상", "🙋 95%+ of votes taken part in")]]
+          .forEach(function (b) { bd.appendChild(el("span", b[0] ? "" : "off", b[1])); });
+        box.appendChild(bd);
+      }
+      var tabs = el("div", "tabs"), list = el("div"), more = el("button", "more"), cur = "all", shown = 0, view = ev;
+      more.type = "button";
+      [["all", T("전체", "All")], ["bill", T("📜 법안", "📜 Bills")], ["vote", T("🗳 표결", "🗳 Votes")], ["trade", T("💼 거래 신고", "💼 Trade filings")]].forEach(function (t) {
+        var b = el("button", "", t[1]); b.type = "button"; b.setAttribute("aria-pressed", t[0] === "all" ? "true" : "false");
+        b.addEventListener("click", function () { cur = t[0]; Array.prototype.forEach.call(tabs.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); draw(); });
+        tabs.appendChild(b);
+      });
+      function describe(e) {
+        var ic, head, sub = [];
+        if (e.k === "intro") { ic = "📜"; head = T("법안을 냈어요", "Introduced a bill"); }
+        else if (e.k === "pass") { ic = "📈"; head = T("법안이 한쪽 의회를 통과했어요", "Bill passed one chamber"); }
+        else if (e.k === "law") { ic = "🏛"; head = T("법안이 법이 됐어요", "Bill became law"); }
+        else if (e.k === "vote") { var v = VOTE[e.v] || VOTE.X; ic = v[0]; head = T("하원 표결: ", "House vote: ") + (EN ? v[2] : v[1]); }
+        else { ic = "💼"; var ty = { P: T("구입", "Buy"), S: T("처분", "Sale"), E: T("교환", "Exchange") }[e.ty]; head = T("주식 거래 신고(PTR)", "Stock trade filing (PTR)") + (ty ? " · " + ty : ""); }
+        if (e.t) sub.push(e.no && e.k !== "vote" ? e.no + " · " + e.t : e.t);
+        if (e.k === "vote") { if (e.q) sub.push(e.q); if (e.r) sub.push(e.r); }
+        return [ic, head, sub];
+      }
+      function sameMonth(ds) {
+        var c = { b: 0, v: 0, t: 0 }; ev.forEach(function (e) { if (String(e.d).slice(0, 7) !== ds) return; if (e.k === "vote") c.v++; else if (e.k === "trade") c.t++; else c.b++; });
+        var bits = []; if (c.b) bits.push(T("법안 " + c.b + "건", c.b + " bill event" + (c.b > 1 ? "s" : ""))); if (c.v) bits.push(T("표결 " + c.v + "번", c.v + " vote" + (c.v > 1 ? "s" : ""))); if (c.t) bits.push(T("거래 신고 " + c.t + "건", c.t + " trade filing" + (c.t > 1 ? "s" : "")));
+        return T("같은 달에 ", "In the same month: ") + bits.join(" · ") + T("이 있었어요", "");
+      }
+      function addRows(k) {
+        var lastMo = shown ? String(view[shown - 1].d).slice(0, 7) : "";
+        view.slice(shown, shown + k).forEach(function (e) {
+          var mo = String(e.d).slice(0, 7);
+          if (mo !== lastMo) { lastMo = mo; var h = el("div", "mo", mo.slice(0, 4) + T("년 ", "-") + mo.slice(5) + T("월", "")); h.appendChild(el("small", "", sameMonth(mo))); list.appendChild(h); }
+          var d = describe(e), row = el("div", "ev"), b = el("div");
+          row.appendChild(el("div", "ic", d[0]));
+          b.appendChild(el("div", "t", d[1] + " · " + String(e.d).slice(0, 10)));
+          d[2].forEach(function (x) { b.appendChild(el("div", "s", x)); });
+          if (safe(e.u)) { var lk = el("div", "s"); lk.appendChild(link(T("원문 ↗", "Source ↗"), e.u)); b.appendChild(lk); }
+          row.appendChild(b); list.appendChild(row);
+        });
+        shown = Math.min(view.length, shown + k);
+        if (view.length > shown) { more.textContent = T("더 보기 (" + (view.length - shown) + "개 남음)", "Show more (" + (view.length - shown) + " left)"); if (!more.isConnected) box.appendChild(more); } else more.remove();
+      }
+      function draw() {
+        view = ev.filter(function (e) { return cur === "all" || (cur === "vote" ? e.k === "vote" : cur === "trade" ? e.k === "trade" : e.k !== "vote" && e.k !== "trade"); });
+        list.replaceChildren(); shown = 0;
+        if (!view.length) { list.appendChild(el("div", "empty", T("이 칸에는 기록이 없어요", "Nothing here"))); more.remove(); return; }
+        addRows(30);
+      }
+      more.addEventListener("click", function () { addRows(50); });
+      box.append(tabs, list); draw();
+      if (st.status === "ok" && st.notes) box.appendChild(el("p", "note", EN ? st.notes[1] : st.notes[0]));
+      box.appendChild(el("p", "note", T("거래 신고는 신고한 날 기준이라 실제 거래일보다 늦을 수 있어요. 투자 조언이 아니에요.", "Trade filings are listed by filing date, which can be later than the trade itself. Not investment advice.")));
+    });
+    return p;
   }
 
   function tradesBlock(rows, E, chamber, houseOnly) {
@@ -360,8 +578,12 @@ header.bar input.nm{width:200px;text-transform:none}
         var cells = [["lbl", "신고일", r.filed || "-"], ["lbl", "거래일", r.d || "-"]];
         cells.forEach(function (c) { var td = el("td", c[0], c[2]); td.setAttribute("data-l", c[1]); tr.appendChild(td); });
         tr.appendChild(who);
-        [["lbl", "구분", TY[String(r.ty || "").charAt(0)] || r.ty || "-"], ["lbl", "금액", r.amt || "-"], ["lbl num", "신고까지", lag == null ? "-" : lag + "일" + (lag > 45 ? " · 45일 초과" : "")]]
-          .forEach(function (c) { var td = el("td", c[0], c[2]); td.setAttribute("data-l", c[1]); if (/45일 초과/.test(c[2])) td.classList.add("down"); tr.appendChild(td); });
+        [["lbl", "구분", TY[String(r.ty || "").charAt(0)] || r.ty || "-"], ["lbl", "금액", r.amt || "-"], ["lbl num", "신고까지", ""]]
+          .forEach(function (c) {
+            var td = el("td", c[0], c[2]); td.setAttribute("data-l", c[1]);
+            if (c[1] === "신고까지") { var li = lagInfo(lag); if (li) td.appendChild(el("span", "lag " + li.cls, li.txt)); else td.textContent = "-"; }
+            tr.appendChild(td);
+          });
         var tdl = el("td", "lbl"); tdl.setAttribute("data-l", "원문"); tdl.appendChild(link("PTR ↗", r.doc)); tr.appendChild(tdl);
         tb.appendChild(tr);
       });
@@ -389,12 +611,13 @@ header.bar input.nm{width:200px;text-transform:none}
     function li(text, date, url) { var x = el("li"); x.appendChild(document.createTextNode(text + (date ? " · 기준일 " + date : "") + " ")); if (url) x.appendChild(link("↗", url)); ul.appendChild(x); }
     li("의원 거래: 미국 하원 사무처 재산공개 PTR (data/us/trades.json)", tr && tr.updated, "https://disclosures-clerk.house.gov/FinancialDisclosure");
     li("의원 명부·정당·위원회: @unitedstates/congress-legislators, CC0 (data/us/members.json)", null, "https://github.com/unitedstates/congress-legislators");
+    li("법안·하원 표결 타임라인: Congress.gov API, Library of Congress (data/us/timeline/)", null, "https://www.congress.gov/");
     li("종목·업종·위원회 연결: data/search-index.json (자체 분류, 공식 관할 아님)", si && si.updated, null);
     foot.appendChild(ul);
   }
 })();
 </script>
-<script src="assets/glossary.js?v=gl-20261028"></script>
+<script src="assets/glossary.js?v=gl-20261029"></script>
 <script src="assets/commander.js?v=cmdr-20261028b"></script>
 </body>
 </html>

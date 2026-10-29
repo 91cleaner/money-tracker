@@ -16,6 +16,23 @@
     PROCL: { name: "포고문", body: "미국 대통령이 공식적으로 알리는 문서의 한 종류예요. 관세 같은 정책을 알릴 때도 쓰여요. 이 사이트는 제목과 원문 링크만 보여 줘요." },
     LABOR: { name: "노사분규·파업 공시 (Korea labor strike disclosure)", body: "한국 기업이 금융감독원 전자공시(DART)나 거래소에 낸 공시 중 제목에 파업·노사분규·생산중단·영업정지가 들어간 것입니다. 공시가 있다고 실제 파업이 일어났다는 뜻은 아닙니다. In English: filings on Korea's DART system whose titles mention a strike, labor dispute, production halt or business suspension. Korean company or industry unions can pause factory output when pay talks break down, so investors read them next to prices; a filing alone does not mean a strike or a price effect." }
   };
+
+  // English wording for ?lang=en (same terms, plain words; no Korean left on screen)
+  var EN = {
+    PTR: { name: "PTR (Periodic Transaction Report)", body: "A form that US lawmakers (and spouses and dependent children) file to report stock trades. Under the STOCK Act it is due within 30 days of learning about a trade, and no later than 45 days after it. So the trade date and the filing date can differ, and this site shows dates by filing. Amounts are public as ranges, not exact values." },
+    "13F": { name: "13F (institutional holdings report)", body: "A quarterly report (Form 13F) that big investors managing over $100 million send to the SEC, listing the stocks they hold. It is due 45 days after the quarter ends, so it runs late, and it only covers certain securities, so some foreign assets may be missing." },
+    LDA: { name: "Lobbying (LDA filing)", body: "A quarterly filing under the Lobbying Disclosure Act. Lobbyists and lobbying firms report what they did with Congress and the executive branch, and how much was spent. The amount is what the report says. It does not tell whether the lobbying worked or what effect it had." },
+    OBL: { name: "Obligation", body: "The amount the government legally promised to pay on a federal contract. It can differ from the money actually paid, and it can go up or down if the contract changes." },
+    PAC: { name: "PAC (Political Action Committee)", body: "A group that collects money from company or group members and gives it to candidates or parties. Gifts are public at the Federal Election Commission (FEC). A gift record is just a fact. It does not mean anything was given in return." },
+    CLOSE: { name: "Closing price", body: "The last price when the market closed that day. It is one number at the close, not the ups and downs during the day. It is not a live price." },
+    EXPORT: { name: "Export controls", body: "Rules where a country bans selling some goods or technology abroad, or requires a permit first. For example, the US can require a permit to sell advanced chips to certain countries." },
+    S232: { name: "Section 232 (US Trade Expansion Act)", body: "A part of US law that lets the President put tariffs on, or cut, imports tied to national security. Check the source link to see which goods it was used on." },
+    PROCL: { name: "Proclamation", body: "A kind of official notice from the US President. It is sometimes used to announce policies like tariffs. This site only shows the title and the source link." },
+    LABOR: { name: "Labor strike filings (Korea)", body: "Filings that Korean companies sent to the DART system or an exchange with strike, labor dispute, production halt or business suspension in the title. A filing does not mean a strike really happened." }
+  };
+  var EN_NOTE = "Public-record term guide. Not investment advice.", EN_LABEL = " - what does this mean?";
+  var isEn = !!(window.MTI18N && window.MTI18N.isEn);
+  function tname(k) { return isEn && EN[k] ? EN[k].name : TERMS[k].name; }
   var PATTERNS = [
     ["PTR", /(^|[^A-Za-z])PTR(?![A-Za-z])/],
     ["13F", /(^|[^A-Za-z0-9])13F(?![A-Za-z0-9])/],
@@ -44,7 +61,7 @@
   document.head.appendChild(css);
 
   var pop = el("div"); pop.id = "mtGlPop"; pop.hidden = true; pop.setAttribute("role", "note");
-  var popName = el("b"), popBody = el("span"), popNote = el("small", "", "공개 기록 용어 설명이며 투자 조언 아님.");
+  var popName = el("b"), popBody = el("span"), popNote = el("small", "", isEn ? EN_NOTE : "공개 기록 용어 설명이며 투자 조언 아님.");
   pop.append(popName, popBody, popNote);
   document.body.appendChild(pop);
   var current = null;
@@ -54,7 +71,7 @@
     var t = TERMS[key]; if (!t) return;
     if (current) current.setAttribute("aria-expanded", "false");
     current = btn; btn.setAttribute("aria-expanded", "true");
-    popName.textContent = t.name; popBody.textContent = t.body; pop.hidden = false;
+    popName.textContent = tname(key); popBody.textContent = isEn && EN[key] ? EN[key].body : t.body; pop.hidden = false;
     var r = btn.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
     var left = Math.max(10, Math.min(r.left, window.innerWidth - w - 10));
     var top = r.bottom + 6; if (top + h > window.innerHeight - 10) top = Math.max(10, r.top - h - 6);
@@ -66,7 +83,7 @@
 
   function addButton(host, key) {
     var b = el("button", "mt-gl", "?"); b.type = "button";
-    b.setAttribute("aria-label", TERMS[key].name + " 뜻 보기"); b.setAttribute("aria-expanded", "false");
+    b.setAttribute("aria-label", isEn ? tname(key) + EN_LABEL : TERMS[key].name + " 뜻 보기"); b.setAttribute("aria-expanded", "false");
     b.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); if (current === b && !pop.hidden) close(); else open(b, key); });
     host.appendChild(b);
   }
