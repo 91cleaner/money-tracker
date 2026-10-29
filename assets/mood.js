@@ -156,7 +156,13 @@
     };
     var pt = pastText(past), ft = feelText(mood, past);
     var rows = Object.keys(groups).map(function (g) { return { id: g, n: groups[g].n, tilt: groups[g].tilt }; });
+    // 기록이 없을 때 이유를 말해 준다(빈 카드로 두지 않음)
+    var empty = mood === 'none' && past.n === 0;
+    var reasonKo = empty ? '보여 줄 근거가 아직 없어요: 전문가 ' + groups.experts.n + '건, CEO 발언 ' + groups.ceo.n + '건, 이 기간 의원 거래 ' + groups.members.n + '건, 비슷한 과거 사건 ' + past.n + '건.' : null;
+    var reasonEn = empty ? 'Nothing to show yet: ' + groups.experts.n + ' expert, ' + groups.ceo.n + ' CEO, ' + groups.members.n + ' lawmaker-trade records in this period, ' + past.n + ' similar past cases.' : null;
+    var win = inp.window && (inp.window.ko || inp.window.en) ? inp.window : null;
     var ko = {
+      window: win && win.ko || null, reason: reasonKo,
       title: '분위기 + 과거',
       mood: mood === 'none' ? MOOD_KO.none + ' (전문가·CEO·의원 거래)' : MOOD_KO[mood],
       rows: rows.map(function (r) { return GRP_KO[r.id] + ': ' + (r.n ? TILT_KO[r.tilt] + ' (' + r.n + '건)' : TILT_KO.none); }),
@@ -164,6 +170,7 @@
       note: '같은 기간 기록을 모아 본 것이고 원인을 뜻하지 않아요. 투자 조언이 아니에요.'
     };
     var en = {
+      window: win && win.en || null, reason: reasonEn,
       title: 'Mood + past',
       mood: mood === 'none' ? MOOD_EN.none + ' (experts, CEO, lawmaker trades)' : MOOD_EN[mood],
       rows: rows.map(function (r) { return GRP_EN[r.id] + ': ' + (r.n ? TILT_EN[r.tilt] + ' (' + r.n + ')' : TILT_EN.none); }),
@@ -179,7 +186,9 @@
     el.replaceChildren();
     function add(tag, text, css) { var n = doc.createElement(tag); n.textContent = text; if (css) n.style.cssText = css; el.append(n); return n; }
     add('h3', '◉ ' + t.title, 'margin:0 0 6px');
+    if (t.window) add('small', (isEn ? 'Period: ' : '기간: ') + t.window, 'display:block;margin:0 0 4px');
     add('p', t.mood, 'font-weight:700;margin:0 0 4px');
+    if (t.reason) add('p', t.reason, 'margin:0 0 4px;color:#ffcc85');
     var ul = doc.createElement('ul'); ul.style.cssText = 'margin:0 0 6px;padding-left:18px';
     t.rows.forEach(function (r) { var li = doc.createElement('li'); li.textContent = r; ul.append(li); });
     el.append(ul);
@@ -207,16 +216,30 @@
       getJson(base + 'data/history/opinions.json')
     ]).then(function (r) {
       var hist = (r[0] && r[0].events) || [], op = r[3] && r[3].symbols && r[3].symbols[sym] || {};
-      var trades = ((r[2] && r[2].trades) || []).filter(function (t) { return t.tk === sym; });
+      var win = pack && pack.window, trades = ((r[2] && r[2].trades) || []).filter(function (t) {
+        var day = t.fd || t.d;
+        return t.tk === sym && (!win || !win.from || (day >= win.from && day <= win.to)); // 다른 카드와 같은 기간 창
+      });
       return build({
         symbol: sym, asof: pack && pack.asof, drop: pack && pack.drop, events: pack && pack.events,
-        series: r[1], history: hist, trades: trades, opinions: op
+        series: r[1], history: hist, trades: trades, opinions: op, window: win
       });
+    });
+  }
+  // 화면에 연결: 카드를 el 에 그리고, 못 만들면 이유를 적는다. 항상 el 을 보이게 한다.
+  function show(el, base, symbol, pack, isEn) {
+    el.hidden = false;
+    return load(base, symbol, pack).then(function (c) { render(el, c, isEn); return c; }).catch(function (e) {
+      el.replaceChildren();
+      var p = el.ownerDocument.createElement('p');
+      p.textContent = isEn ? 'Mood + past card could not be built: ' + (e && e.message || 'data failed to load') : '분위기 + 과거 카드를 만들지 못했어요: ' + (e && e.message || '자료를 불러오지 못했어요');
+      el.append(p);
+      return null;
     });
   }
 
   var api = { scoreText: scoreText, groupTilt: groupTilt, tradesTilt: tradesTilt, mix: mix, findSimilar: findSimilar,
-    kindsOfEvents: kindsOfEvents, build: build, render: render, load: load, HORIZONS: HORIZONS };
+    kindsOfEvents: kindsOfEvents, build: build, render: render, load: load, show: show, HORIZONS: HORIZONS };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.MTMood = api;
 })(typeof window !== 'undefined' ? window : globalThis);

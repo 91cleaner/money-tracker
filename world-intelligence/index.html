@@ -8,7 +8,7 @@
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <script src="../assets/i18n.js?v=i18n-20261029b"></script>
 <script src="../assets/share.js?v=share-20261028" defer></script>
-<script src="../assets/intent.js" defer></script><script src="../assets/answers.js" defer></script><script src="../assets/firstscreen.js?v=20261029" defer></script><script src="../assets/mood.js" defer></script><script src="../assets/opinions.js?v=op-20261029" defer></script>
+<script src="../assets/intent.js" defer></script><script src="../assets/answers.js" defer></script><script src="../assets/firstscreen.js?v=20261029b" defer></script><script src="../assets/mood.js?v=20261029b" defer></script><script src="../assets/opinions.js?v=op-20261029" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{color-scheme:dark;--a:#65e6ed;--b:#061421}*{box-sizing:border-box}body{margin:0;background:#07131e;color:#e8f7fc;font:14px system-ui,sans-serif}button,input{font:inherit}button{cursor:pointer;color:#c9eff8;background:#0a2737;border:1px solid #32677b;border-radius:9px;padding:10px}button:hover,button:focus-visible{border-color:var(--a)}button[hidden],[hidden]{display:none!important}
@@ -169,7 +169,7 @@ if(window.L){try{
 }catch(e){$('map').style.display='none';status.textContent='지도 엔진 오류 · 개략 지도 표시'}}
 else{$('map').style.display='none';status.textContent='지도 라이브러리 연결 실패 · 개략 지도 표시'}
 function go(name){const p=places[name];if(!p)return;if(map){map.invalidateSize();map.flyTo(p,Math.max(4,map.getZoom()<4?4:Math.min(5,map.getZoom())),{duration:2.2,easeLinearity:.2});if(marker)map.removeLayer(marker);marker=L.circleMarker(p,{radius:9,color:'#005c7c',weight:3,fillColor:'#54d9e6',fillOpacity:.7}).addTo(map)}else{status.textContent=name+' 추적 · 실제 지도 연결 시 위치 이동 가능'}}
-function clearFirst(){const f=$("mtFirst");if(f)f.replaceChildren();const b=$("briefText");if(b)b.hidden=false;$("brief").classList.remove("mtfWide")}
+function clearFirst(){const f=$("mtFirst");if(f)f.replaceChildren();const mo=$("moodCard");if(mo){mo.hidden=true;mo.replaceChildren()}const b=$("briefText");if(b)b.hidden=false;$("brief").classList.remove("mtfWide")}
 function show(){if(!mission)return;if(mission.ticker){const t=mission.meta[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length+' · '+t.title;$('briefText').textContent=t.region+' — '+t.fact;$('briefStocks').textContent=(t.date?'기준일 '+t.date+' · ':'')+'출처: '+(t.source_url?'아래 링크':'내부 데이터 분류');$('briefCaveat').textContent=mission.caveat||'데이터상 공개 자료 정리임. 투자 신호 아님.';if(t.source_url)$('source').href=t.source_url;else $('source').removeAttribute('href');$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(t.region);window.mtAfterShow&&window.mtAfterShow();return}const [name,explain]=mission.stops[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length;$('briefText').textContent=name+' — '+explain;$('briefStocks').textContent='미국 종목·ETF 조사 대상: '+mission.stocks;$('briefCaveat').textContent='시연용 가상 탐색 경로입니다. AI·실시간 거래 데이터 미연결. 표시된 관계는 투자 신호나 입증된 인과관계가 아닙니다.';$('source').href=mission.url;$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(name)}
 function start(c){clearFirst();mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#36b6cc',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
 $('topics').replaceChildren(...cases.map(c=>{const b=document.createElement('button');b.textContent=c.title;b.onclick=()=>start(c);return b}));
@@ -215,13 +215,14 @@ $('briefCaveat').textContent='AI 미연결 · 수집된 데이터만 검색합�
 $('ask').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;clearFirst();if(await mtFirstCard(q))return;if(await mtIntentCard(q))return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}if(tr){start(tr);return}showCandidates(q)});
 const mtJson={};
 function mtGet(p){return mtJson[p]||(mtJson[p]=fetch('../data/'+p).then(r=>r.ok?r.json():null).catch(()=>null))}
-function mtNames(ix,sym){const ent=ix.entities['company:'+sym]||{},al=(ent.aliases||[]).slice().sort((a,b)=>b.length-a.length),ko=al.filter(x=>/[가-힣]/.test(x))[0]||sym;
+function mtNames(ix,sym){const ent=ix.entities['company:'+sym]||{},al=(ent.aliases||[]).slice().sort((a,b)=>b.length-a.length);
 const legal=al.filter(x=>/^[\x00-\x7f]+$/.test(x)&&/\b(corp|corporation|inc|co|ltd|plc|holdings)\b/i.test(x))[0];let en=null;try{en=legal?window.MTI18N.name({name:ent.name,symbol:ent.symbol,aliases:[legal]}):window.MTI18N.name(ent)}catch(e){}
-if(!en||/[가-힣]/.test(en))en=sym;return{ko:ko,en:en}}
+if(!en||/[가-힣]/.test(en))en=sym;return window.MTFirst.namesFor(ix,sym,en)}
 async function mtFirstCard(q){try{const I=window.MTIntent,F=window.MTFirst;if(!I||!F)return false;const ix=await loadIdx();
 if(!window.mtLex)window.mtLex=await fetch('../data/intent-lexicon.json').then(r=>r.json());
 const lex=await mtGet('first-screen-lexicon.json');const mem=await mtGet('us/members.json');
 const plan=F.understand(q,I,I.build(ix,window.mtLex),((mem&&mem.members)||[]).map(m=>({id:m.id,name:m.name})),lex||{});
+if(plan.kind==='overview'&&plan.symbol){const r=routeOf('company:'+plan.symbol);if(r){start(r);return true}}
 if(plan.kind==='overview'||plan.kind==='other'||plan.kind==='none')return false;
 const data=await F.fetchData(plan,mtGet);const en=!!(window.MTI18N&&window.MTI18N.isEn);
 const doc=F.build(plan,data,en?'en':'ko',plan.symbol?mtNames(ix,plan.symbol):null);if(!doc)return false;
@@ -230,7 +231,8 @@ $('briefTitle').textContent='◉ '+(doc.name?doc.name+' · ':'')+({why:en?'price
 $('briefText').hidden=true;$('briefStocks').replaceChildren();
 F.render(doc,$('mtFirst'),plan.symbol?()=>{const r=routeOf('company:'+plan.symbol);if(r)start(r)}:null);
 $('mtFirst').querySelectorAll('.mtfSuggest button').forEach(b=>b.onclick=()=>{$('question').value=b.dataset.q+' '+q.replace(/\s+/g,' ');$('ask').requestSubmit()});
-$('briefCaveat').textContent='';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true;return true}catch(e){return false}}
+if(plan.symbol&&window.MTMood){const mc=$('moodCard');mc.hidden=true;const pk=data.pack;window.MTMood.show(mc,'../',plan.symbol,{asof:pk&&pk.asof,drop:pk&&pk.periods&&pk.periods[plan.period]&&typeof pk.periods[plan.period].ret==='number'?pk.periods[plan.period].ret:undefined,events:pk&&pk.answers&&pk.answers.why&&pk.answers.why[plan.period]&&pk.answers.why[plan.period].events,window:F.windowPair(plan,data)},en)}
+$('briefCaveat').textContent='';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true;return true}catch(e){console.warn('mtFirstCard',e);return false}}
 async function mtIntentCard(q){try{const I=window.MTIntent,A=window.MTAnswers;if(!I||!A)return false;A.setBase('../data/answers/');const ix=await loadIdx();if(!window.mtLex)window.mtLex=await fetch('../data/intent-lexicon.json').then(r=>r.json());const pl=A.plan(I.parse(q,I.build(ix,window.mtLex)));if(!pl)return false;let a=await A.get(pl.symbol,pl.intent,pl.period);if(!a)return false;
 const en=!!(window.MTI18N&&window.MTI18N.isEn);let L=(en&&a.en&&a.en.length?a.en:a.ko)||[];if(!L.length)return false;
 if(en){const ent=ix.entities['company:'+pl.symbol]||{},legal=(ent.aliases||[]).filter(x=>/^[\x00-\x7f]+$/.test(x)&&/\b(corp|corporation|inc|co|ltd|plc|holdings)\b/i.test(x))[0];
