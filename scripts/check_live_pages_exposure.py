@@ -14,6 +14,9 @@ DEFAULT_BASE = "https://91cleaner.github.io/money-tracker/"
 BLOCKED = (
     "data/us/house-ptr-candidates.json",
     "data/us/ptr-crosschecks.json",
+    # Review-only PTR artifacts: explicitly excluded by the public Pages builder.
+    "data/us-ptr-research-queue.json",
+    "data/us-ptr-extraction-status.json",
     "worker/private-api.js",
     "cloudflare/admin-worker.js",
     "wrangler.jsonc",
@@ -28,26 +31,26 @@ BLOCKED = (
 
 
 def status_for(base, path, opener=urlopen):
+    # Probe GET, not HEAD: some hosts/CDNs return 404 for HEAD but serve the
+    # file with GET. A HEAD-only audit can therefore report a false negative.
+    # Range limits the response, and no response body is read or logged.
     url = urljoin(base, path)
     expected = urlsplit(base)
-    for method in ("HEAD", "GET"):
-        req = Request(url, method=method, headers={
-            "User-Agent": "money-tracker-pages-exposure-audit/1.0",
-            **({"Range": "bytes=0-0"} if method == "GET" else {}),
-        })
-        try:
-            with opener(req, timeout=12) as response:
-                final = urlsplit(response.geturl())
-                if (final.scheme, final.netloc) != (expected.scheme, expected.netloc):
-                    raise RuntimeError(f"unexpected redirect for {path}")
-                return response.status
-        except HTTPError as exc:
-            if exc.code == 405 and method == "HEAD":
-                continue
-            return exc.code
-        except (URLError, TimeoutError, OSError) as exc:
-            raise RuntimeError(f"network check failed for {path}: {type(exc).__name__}") from exc
-    raise RuntimeError(f"HTTP methods rejected for {path}")
+    req = Request(url, method="GET", headers={
+        "User-Agent": "money-tracker-pages-exposure-audit/1.1",
+        "Range": "bytes=0-0",
+        "Cache-Control": "no-cache",
+    })
+    try:
+        with opener(req, timeout=12) as response:
+            final = urlsplit(response.geturl())
+            if (final.scheme, final.netloc) != (expected.scheme, expected.netloc):
+                raise RuntimeError(f"unexpected redirect for {path}")
+            return response.status
+    except HTTPError as exc:
+        return exc.code
+    except (URLError, TimeoutError, OSError) as exc:
+        raise RuntimeError(f"network check failed for {path}: {type(exc).__name__}") from exc
 
 
 def audit(base, probe=status_for):
