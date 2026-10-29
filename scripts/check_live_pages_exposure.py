@@ -57,7 +57,8 @@ def audit(base, probe=status_for):
     if not base.endswith("/") or urlsplit(base).scheme != "https":
         raise ValueError("base URL must be an HTTPS directory ending in /")
     home = probe(base, "index.html")
-    if home != 200:
+    # Range GET may legitimately return 206 for an available homepage.
+    if home not in (200, 206):
         raise RuntimeError(f"site entry point unavailable: HTTP {home}")
     results = {}
     for path in BLOCKED:
