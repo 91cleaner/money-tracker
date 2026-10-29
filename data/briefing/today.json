@@ -1,6 +1,6 @@
 {
  "date": "2026-10-29",
- "generated_at": "2026-10-29T02:38Z",
+ "generated_at": "2026-10-29T02:43Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -322,6 +322,37 @@
    "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
    "share_ko": "하원 신고 늦은 순위 1위: Laurel Lee 53일 · 머니트래커",
    "share_en": "House late-filing board #1: Laurel Lee, 53 days · Money Tracker"
+  },
+  "latemove": {
+   "id": "latemove",
+   "kind": "latemove",
+   "icon": "🕰️",
+   "score": 14.4,
+   "layout": "list",
+   "date": "2026-10-16",
+   "badge_ko": "늦은 신고 + 큰 변동",
+   "badge_en": "LATE + BIG MOVE",
+   "title_ko": "45일 넘게 걸린 신고, 그 사이 주가는?",
+   "title_en": "Filed after 45 days: what did the price do meanwhile?",
+   "sub_ko": "하원 신고 중 45일 초과 · 거래일 종가 대비 최근 종가 변동(수정종가)",
+   "sub_en": "House filings past 45 days · latest close vs trade-date close (adjusted)",
+   "rows": [
+    {
+     "mark": "🕰️",
+     "label": "Lee BAC",
+     "value_ko": "53일 · 판 뒤 -18.7%",
+     "value_en": "53d · -18.7% since sale",
+     "tone": "red",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035490.pdf"
+    }
+   ],
+   "note_ko": "같은 기간 비교일 뿐 이유를 말하지 않아요. 금액은 구간이라 손익은 계산하지 않아요. 투자 조언 아님.",
+   "note_en": "Same-period comparison only, not a reason. Amounts are ranges, so no profit is computed. Not investment advice.",
+   "source_ko": "출처: 하원 PTR · 일별 수정종가 기준",
+   "source_en": "Source: House PTRs · daily adjusted closes",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "45일 넘겨 신고된 거래 중 Laurel Lee BAC: 거래일 대비 -18.7% · 머니트래커",
+   "share_en": "Filed past 45 days: Laurel Lee BAC, -18.7% since the trade date · Money Tracker"
   },
   "president": {
    "id": "president-adjusting-imports-of-robotics-industrial",

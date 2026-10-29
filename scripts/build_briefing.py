@@ -3,6 +3,7 @@
 
 Reads (read-only, no network, no keys):
   data/us/trades-recent.json   House PTR trades (trade -> filing days)
+  data/us/trades.json          House PTRs (late filings + same-period price move, % only)
   data/fr/presidential.json    presidential actions + same-period price moves
   data/us/insider-form4.json   SEC Form 4 open-market sales
   data/us/sec-filings.json     8-K filings
@@ -108,6 +109,72 @@ def build_late(today):
         source_url="https://disclosures-clerk.house.gov/FinancialDisclosure",
         **share('하원 신고 늦은 순위 1위: %s %d일' % (rows[0][1]["who"], top),
                 "House late-filing board #1: %s, %d days" % (rows[0][1]["who"], top)))
+
+
+# ------------------------------------------------- late filing + price move
+def px_on(pr, day):
+    """Close on `day` or the nearest prior trading day -> (date, close) or None."""
+    best = None
+    for dt, c in zip(pr.get("d") or [], pr.get("c") or []):
+        if dt <= day and c and c > 0:
+            best = (dt, c)
+    return best
+
+
+def build_latemove(today):
+    """Late filings (> 45 days) paired with a big same-period move. % only, never dollars."""
+    j = load("data/us/trades.json")
+    if not j:
+        return None
+    found, cache = [], {}
+    for t in j.get("trades", []):
+        tk, who, td, fl = t.get("tk"), t.get("who"), t.get("d"), t.get("filed")
+        if not (tk and who and td and fl) or t.get("ty", "")[:1] not in ("P", "S"):
+            continue
+        try:
+            lag = (d(fl) - d(td)).days
+        except ValueError:
+            continue
+        if lag <= 45 or (today - d(fl)).days > 14:
+            continue
+        if tk not in cache:
+            cache[tk] = load("data/us/prices/%s.json" % tk)
+        pr = cache[tk]
+        a = px_on(pr, td) if pr else None
+        last = (pr["d"][-1], pr["c"][-1]) if pr and pr.get("d") else None
+        if not a or not last or last[0] <= a[0]:
+            continue
+        pct = (last[1] / a[1] - 1) * 100
+        if abs(pct) >= 10 and abs(pct) <= 60:  # skip likely splits / bad ticks
+            found.append((abs(pct) * lag, lag, pct, t, a, last))
+    if not found:
+        return None
+    found.sort(key=lambda x: -x[0])
+    found = found[:3]
+    latest = max(x[3]["filed"] for x in found)
+    rows = []
+    for _, lag, pct, t, a, last in found:
+        verb = "산" if t["ty"][0] == "P" else "판"
+        rows.append({
+            "mark": "🕰️", "label": "%s %s" % (t["who"].split()[-1], t["tk"]),
+            "value_ko": "%d일 · %s 뒤 %+.1f%%" % (lag, verb, pct),
+            "value_en": "%dd · %+.1f%% since %s" % (lag, pct, "buy" if verb == "산" else "sale"),
+            "tone": "red" if pct < 0 else "green", "url": t.get("doc"),
+        })
+    w = found[0]
+    return card(
+        "latemove", "latemove", "🕰️", min(100, 40 + abs(w[2]) + w[1] / 4) * fresh(latest, today),
+        layout="list", date=latest, badge_ko="늦은 신고 + 큰 변동", badge_en="LATE + BIG MOVE",
+        title_ko="45일 넘게 걸린 신고, 그 사이 주가는?", title_en="Filed after 45 days: what did the price do meanwhile?",
+        sub_ko="하원 신고 중 45일 초과 · 거래일 종가 대비 최근 종가 변동(수정종가)",
+        sub_en="House filings past 45 days · latest close vs trade-date close (adjusted)",
+        rows=rows,
+        note_ko="같은 기간 비교일 뿐 이유를 말하지 않아요. 금액은 구간이라 손익은 계산하지 않아요. 투자 조언 아님.",
+        note_en="Same-period comparison only, not a reason. Amounts are ranges, so no profit is computed. Not investment advice.",
+        source_ko="출처: 하원 PTR · 일별 수정종가 기준", source_en="Source: House PTRs · daily adjusted closes",
+        source_url="https://disclosures-clerk.house.gov/FinancialDisclosure",
+        **share("45일 넘겨 신고된 거래 중 %s %s: 거래일 대비 %+.1f%%" % (w[3]["who"], w[3]["tk"], w[2]),
+                "Filed past 45 days: %s %s, %+.1f%% since the trade date" % (w[3]["who"], w[3]["tk"], w[2])))
 
 
 # ----------------------------------------------------------- presidential
@@ -341,10 +408,10 @@ def main():
     today = d(sys.argv[1]) if len(sys.argv) > 1 else datetime.now(timezone.utc).date()
     late, insider, debt = safe(build_late, today), safe(build_insider, today), safe(build_debt, today)
     pres = safe(build_president, today) or []
-    cands = [c for c in [late, insider, safe(build_movers, today), safe(build_filings, today)] + pres if c]
+    cands = [c for c in [late, insider, safe(build_latemove, today), safe(build_movers, today), safe(build_filings, today)] + pres if c]
     cands.sort(key=lambda c: -c["score"])
     top = [c for c in cands if c["score"] >= 15][:5]
-    cards = {k: v for k, v in (("late", late), ("president", pres[0] if pres else None), ("insider", insider), ("debt", debt)) if v}
+    cards = {k: v for k, v in (("late", late), ("latemove", next((c for c in cands if c["id"] == "latemove"), None)), ("president", pres[0] if pres else None), ("insider", insider), ("debt", debt)) if v}
     res = {"date": today.isoformat(), "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
            "site": SITE, "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
            "top": top, "cards": cards}
