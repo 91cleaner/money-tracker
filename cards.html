@@ -51,12 +51,13 @@ footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-siz
 .card .note{position:absolute;left:48px;right:48px;bottom:62px;font-size:22px;color:#ffd23f}
 .card .foot{position:absolute;left:48px;right:48px;bottom:16px;display:flex;justify-content:space-between;font-size:20px;color:#8fb0c8}
 .card .vs{display:flex;gap:30px;margin-top:10px}
-.card .pn{flex:1;border:5px solid #000;box-shadow:8px 8px 0 #000;border-radius:18px;padding:18px 24px;height:330px;overflow:hidden}
+.card .pn{flex:1;border:5px solid #000;box-shadow:8px 8px 0 #000;border-radius:18px;padding:16px 24px;height:340px;overflow:hidden}
 .card .pn.now{background:#ff3b5c;color:#fff}.card .pn.then{background:#14e08a;color:#111}
 .card .pn .tg{display:inline-block;background:#111;color:#fff;font-weight:900;font-size:24px;padding:2px 14px;border-radius:999px}
-.card .pn .pt{font-weight:900;font-size:32px;line-height:1.15;margin-top:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .pn .pt{font-weight:900;font-size:30px;line-height:1.15;margin-top:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .pn .po{font-size:17px;opacity:.7;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card .pn .pd{font-size:22px;opacity:.85;margin-top:6px}
-.card .pn .mv{font-weight:900;font-size:56px;margin-top:8px;white-space:nowrap}
+.card .pn .mv{font-weight:900;font-size:40px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card .big{font-weight:900;font-size:88px;line-height:1.05;color:#ff9f1c;margin:6px 0 10px;letter-spacing:-.04em;white-space:nowrap}
 .card .big small{display:block;font-size:34px;color:#e6f1fa;letter-spacing:0;margin-top:2px}
 .card.live .title::after{content:"▌";color:#ffd23f;animation:bl 1s steps(2) infinite}
@@ -82,11 +83,11 @@ footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-siz
   var SITE = 'https://91cleaner.github.io/money-tracker/cards.html';
   var T = {
     ko: { home: '홈', room: '미국 관제실', us: '미국', h1: '🛰️ 오늘의 브리핑', title: '오늘의 브리핑 · 상황실 카드 | Money Tracker',
-      lead: '공개 자료에서 매일 뽑은 눈에 띄는 기록이에요. 같은 기간 일어난 일의 기록일 뿐 이유를 말하지 않아요.',
-      today: '🔥 오늘의 브리핑 TOP', fixed: '🗂️ 상황실 카드', fixedLead: '매일 새로 만드는 고정 카드 4종이에요.',
+      lead: '공개 자료에서 매일 뽑은 눈에 띄는 기록이에요. 같은 기간에 일어난 일을 나란히 보여 줄 뿐, 이유는 말하지 않아요.',
+      today: '🔥 오늘의 브리핑 TOP', fixed: '🗂️ 상황실 카드', fixedLead: '매일 새로 만드는 단골 카드 4종이에요.',
       share: 'X로 공유 (PNG 저장)', png: 'PNG 저장', src: '출처 열기', none: '오늘 보여줄 데이터가 아직 없어요.',
       ok: 'PNG를 저장했어요', fail: 'PNG를 만들지 못했어요', asof: '기준',
-      foot: '공개 자료 기반 · 같은 기간 ≠ 원인 · 투자 조언이 아니에요 · 기록은 잘못의 증거가 아니에요.' },
+      foot: '공개 자료 기반 · 같은 기간 ≠ 원인 · 투자 조언이 아니에요 · 기록이 있다고 잘못했다는 뜻은 아니에요.' },
     en: { home: 'Home', room: 'US Situation Room', us: 'US', h1: "🛰️ Today's Briefing", title: "Today's Briefing · Situation Room Cards | Money Tracker",
       lead: 'Notable records picked daily from public data. They show what happened in the same period, never why.',
       today: "🔥 Today's top briefings", fixed: '🗂️ Situation room cards', fixedLead: 'Four standing cards, rebuilt daily.',
@@ -118,11 +119,12 @@ footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-siz
       [['now', c.now], ['then', c.then]].forEach(function (p) {
         var pn = el('div', 'pn ' + p[0]);
         pn.appendChild(el('span', 'tg', pick(p[1], 'tag')));
-        pn.appendChild(el('div', 'pt', p[1].title));
+        pn.appendChild(el('div', 'pt', pick(p[1], 'plain')));
+        pn.appendChild(el('div', 'po', p[1].title));
         pn.appendChild(el('div', 'pd', p[1].date + (p[1].period ? ' · ' + p[1].period : '')));
         if (p[1].moves) {
           p[1].moves.slice(0, 2).forEach(function (m) {
-            pn.appendChild(el('div', 'mv', m.sym + ' ' + (m.pct > 0 ? '+' : '') + m.pct.toFixed(1) + '% ' + (m.pct > 0 ? '📈' : '📉')));
+            pn.appendChild(el('div', 'mv', pick(m, 'name') + ' ' + (m.pct > 0 ? '+' : '') + m.pct.toFixed(1) + '% ' + (m.pct > 0 ? '📈' : '📉')));
           });
         }
         vs.appendChild(pn);
