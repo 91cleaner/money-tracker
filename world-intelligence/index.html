@@ -423,4 +423,4 @@ const lg=$('mtLegend');if(lg&&innerWidth<=600)lg.style.bottom=(b+bar.offsetHeigh
 function sync(){const br=$('brief'),m=window.mtCur&&window.mtCur();const on=!!(br&&!br.hidden&&m);if(bar.hidden!==!on)bar.hidden=!on;if(!on)return;const t=($('briefTitle')||{}).textContent||'',mm=t.match(/ · (\d+)\/(\d+)/);const v=mm?mm[1]+'/'+mm[2]:'';if(pos.textContent!==v)pos.textContent=v;place()}
 let q=0;new MutationObserver(()=>{if(!q){q=1;requestAnimationFrame(()=>{q=0;sync()})}}).observe(document.body,{subtree:true,attributes:true,attributeFilter:['hidden'],childList:true,characterData:true});addEventListener('resize',sync);sync()})();</script>
 <script src="../assets/commander.js?v=cmdr-20261028" defer></script>
-</body></html>
+<script src="../assets/mt-econ-strip.js?v=econ-20261029" defer></script></body></html>
