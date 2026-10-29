@@ -1,5 +1,8 @@
 """Regression tests for the fail-closed GitHub Pages artifact path policy."""
 import importlib.util
+import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -39,6 +42,41 @@ class PagesArtifactPolicyTests(unittest.TestCase):
                 self.add(name)
                 self.assertTrue(policy.violations(self.root), name)
                 (self.root / name).unlink()
+
+    def test_builder_excludes_review_queues_but_keeps_public_assets(self):
+        """The builder and auditor must agree on review-only data paths."""
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "scripts").mkdir()
+            shutil.copy2(
+                SCRIPT.parent / "prepare-public-pages.py",
+                root / "scripts" / "prepare-public-pages.py",
+            )
+            required = (
+                "index.html", "usa-command.html", "national.html",
+                "assets/mt-command-ui.js", "data/national/countries-110m.geojson",
+                "search.html", "assets/se.js", "data/search/se/core.json",
+            )
+            for name in required:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("fixture", encoding="utf-8")
+            for name in policy.PRIVATE_DATA_FILES:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("private test fixture", encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(root / "scripts" / "prepare-public-pages.py")],
+                cwd=root, capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            artifact = root / ".public-pages"
+            for name in policy.PRIVATE_DATA_FILES:
+                with self.subTest(name=name):
+                    self.assertFalse((artifact / name).exists(), name)
+            for name in required:
+                self.assertTrue((artifact / name).is_file(), name)
+            self.assertEqual(policy.violations(artifact), [])
 
     def test_hidden_and_internal_paths_are_blocked(self):
         for name in ("data/.env", "assets/.hidden.js", "data/internal/cache.json",
