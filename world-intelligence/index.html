@@ -79,7 +79,7 @@ header strong{color:#d6eff4!important;font-family:ui-monospace,Consolas,monospac
 #mtRadarLabel{position:absolute;right:20px;bottom:16px;color:#b9f4f4c9;font:10px ui-monospace,monospace;letter-spacing:.12em}
 .mtTargetPulse{width:18px;height:18px;border:2px solid #5ff8e3;border-radius:50%;box-shadow:0 0 0 5px #57efd533,0 0 18px #55f5d8;animation:mtPulse 1.7s ease-out infinite}
 @keyframes mtPulse{0%{box-shadow:0 0 0 0 #59f5e48a,0 0 12px #5ef8dc}100%{box-shadow:0 0 0 24px #59f5e400,0 0 2px #5ef8dc}}
-.mtPath{stroke:#64e9dc;stroke-width:2.5;stroke-dasharray:10 10;filter:drop-shadow(0 0 5px #1ae8ce);animation:mtMarch 2.5s linear infinite}
+.mtPath{stroke:#ff9f0a;stroke-width:2.5;stroke-dasharray:10 10;filter:drop-shadow(0 0 5px #ff9f0a);animation:mtMarch 2.5s linear infinite}
 @keyframes mtMarch{to{stroke-dashoffset:-40}}
 #mtTargetBanner{position:fixed;top:156px;left:12px;z-index:1250;color:#a8f8e7;background:#061a2bea;border-left:2px solid #65ebd9;padding:7px 10px;font:11px/1.5 ui-monospace,monospace;max-width:220px;display:none}
 #mtTargetBanner.on{display:block}
@@ -171,7 +171,7 @@ else{$('map').style.display='none';status.textContent='지도 라이브러리 �
 function go(name){const p=places[name];if(!p)return;if(map){map.invalidateSize();map.flyTo(p,Math.max(4,map.getZoom()<4?4:Math.min(5,map.getZoom())),{duration:2.2,easeLinearity:.2});if(marker)map.removeLayer(marker);marker=L.circleMarker(p,{radius:9,color:'#005c7c',weight:3,fillColor:'#54d9e6',fillOpacity:.7}).addTo(map)}else{status.textContent=name+' 추적 · 실제 지도 연결 시 위치 이동 가능'}}
 function clearFirst(){const f=$("mtFirst");if(f)f.replaceChildren();const b=$("briefText");if(b)b.hidden=false;$("brief").classList.remove("mtfWide")}
 function show(){if(!mission)return;if(mission.ticker){const t=mission.meta[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length+' · '+t.title;$('briefText').textContent=t.region+' — '+t.fact;$('briefStocks').textContent=(t.date?'기준일 '+t.date+' · ':'')+'출처: '+(t.source_url?'아래 링크':'내부 데이터 분류');$('briefCaveat').textContent=mission.caveat||'데이터상 공개 자료 정리임. 투자 신호 아님.';if(t.source_url)$('source').href=t.source_url;else $('source').removeAttribute('href');$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(t.region);window.mtAfterShow&&window.mtAfterShow();return}const [name,explain]=mission.stops[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length;$('briefText').textContent=name+' — '+explain;$('briefStocks').textContent='미국 종목·ETF 조사 대상: '+mission.stocks;$('briefCaveat').textContent='시연용 가상 탐색 경로입니다. AI·실시간 거래 데이터 미연결. 표시된 관계는 투자 신호나 입증된 인과관계가 아닙니다.';$('source').href=mission.url;$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(name)}
-function start(c){clearFirst();mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#36b6cc',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
+function start(c){clearFirst();mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#ff9f0a',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
 $('topics').replaceChildren(...cases.map(c=>{const b=document.createElement('button');b.textContent=c.title;b.onclick=()=>start(c);return b}));
 function showCandidates(q){
  const matches=cases.filter(c=>c.re.test(q));
@@ -291,7 +291,7 @@ const m=window.moneyTrackerMap||null;
 if(!m)return;
 if(pulse)m.removeLayer(pulse);pulse=L.marker(coords[name],{icon:L.divIcon({className:'',html:'<div class="mtTargetPulse"></div>',iconSize:[18,18],iconAnchor:[9,9]})}).addTo(m);
 if(route){m.removeLayer(route);route=null}
-if(last&&last!==name){route=L.polyline([coords[last],coords[name]],{className:'mtPath',color:'#64e9dc',weight:2.5,dashArray:'10 10',opacity:.9}).addTo(m)}
+if(last&&last!==name){route=L.polyline([coords[last],coords[name]],{className:'mtPath',color:'#ff9f0a',weight:2.5,dashArray:'10 10',opacity:.9}).addTo(m)}
 last=name;
 }
 const obs=new MutationObserver(()=>setTimeout(acquire,40));const title=document.getElementById('briefTitle'),desc=document.getElementById('briefText');if(title)obs.observe(title,{childList:true});if(desc)obs.observe(desc,{childList:true});
@@ -318,7 +318,7 @@ const status=document.getElementById('status');if(status)status.textContent='◉
 html body #map .mtDark img.leaflet-tile{filter:sepia(1) hue-rotate(70deg) saturate(1.3) brightness(.75) contrast(1.1)!important}
 html body #map .mtSat img.leaflet-tile{filter:sepia(.3) hue-rotate(65deg) saturate(.9) brightness(.85) contrast(1.1)!important}
 body.mt-briefing #mtMission{display:none!important}
-html body #map .leaflet-overlay-pane path{stroke:#6dff9e!important}
+html body #map .leaflet-overlay-pane path{stroke:#ff9f0a!important}html body #map .leaflet-overlay-pane path.mtOrb{stroke:#ff9f0a!important;fill:#ffd9a0!important}
 body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2500;background:repeating-linear-gradient(0deg,#00000000 0 2px,#00ff6608 3px,#00000000 4px)}
 #brief,#menu,#candidatePanel,#mtEvidence,#mtMission,#mtTicker,#controls button,#ask input,#ask button{background:var(--bg)!important;border:1px solid var(--gd)!important;border-radius:3px!important;color:#c9f7d6!important;font-family:ui-monospace,Consolas,"D2Coding",monospace!important;box-shadow:0 0 0 1px #0a1f12,0 6px 24px #000a!important}
 #brief{border-left:3px solid var(--g)!important}#brief h2,#mtMission b{color:var(--g)!important;letter-spacing:.06em}#brief a,#mtTicker a{color:#9effc0!important}
@@ -366,9 +366,11 @@ Promise.all([j('../data/us/bills.json'),j('../data/market/factors/cn-mofcom-anno
 })();
 </script>
 <style id="mt-flows">
-.mtFl{fill:none;stroke-linecap:round;stroke-dasharray:3000;stroke-dashoffset:3000;animation:mtDraw 1.6s ease-out forwards;filter:drop-shadow(0 0 4px currentColor)}
-.mtFl.dim{opacity:.22;animation:none;stroke-dashoffset:0}@keyframes mtDraw{to{stroke-dashoffset:0}}
-@media (prefers-reduced-motion:reduce){.mtFl{animation:none;stroke-dashoffset:0}}
+.mtFl{color:#ff9f0a;fill:none;stroke-linecap:round;stroke-dasharray:3000;stroke-dashoffset:3000;animation:mtDraw 1.6s ease-out forwards;filter:drop-shadow(0 0 4px currentColor)}
+.mtFl.dim{opacity:.45;animation:none;stroke-dashoffset:0}@keyframes mtDraw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.mtFl{animation:none;stroke-dashoffset:0}.mtOrb{display:none}}
+.mtOrb{fill:#ffd9a0;stroke:#ff9f0a;filter:drop-shadow(0 0 6px #ff9f0a) drop-shadow(0 0 2px #fff)}
+#mtLegend .mtNote{display:flex;align-items:center;gap:6px;color:#ffd9a0}#mtLegend .mtNote i{width:22px;height:5px;background:#ff9f0a}
 #mtLegend{position:fixed;left:12px;top:150px;z-index:900;background:rgba(2,12,6,.88);border:1px solid rgba(93,255,158,.35);border-radius:8px;padding:6px 9px;font:11px/1.6 ui-monospace,Menlo,monospace;color:#bfffd6}
 #mtLegend i{display:inline-block;width:14px;height:3px;margin-right:5px;vertical-align:middle;border-radius:2px;box-shadow:0 0 4px currentColor}
 #mtLegend button{margin-top:4px;width:100%;background:rgba(93,255,158,.1);border:1px solid rgba(93,255,158,.4);color:#eafff2;border-radius:6px;font:inherit;cursor:pointer;padding:3px}
@@ -376,15 +378,17 @@ Promise.all([j('../data/us/bills.json'),j('../data/market/factors/cn-mofcom-anno
 </style>
 <script id="mt-flows-js">(()=>{const map=window.moneyTrackerMap;if(!map||!window.L)return;
 // 한국 계약 지도(assets/map.js curve)와 같은 방식: 두 점 사이 수직 오프셋 0.28·거리의 2차 곡선 + 선 그리기 애니메이션
-const COL={bill:'#ffffff',supply:'#5dff9e',reg:'#ff5d73',cmte:'#ffd60a',award:'#4dd2ff',lobby:'#ff9f0a',pac:'#c58cff',trade:'#ff6ad5',other:'#8fa89a'};
+const OR='#ff9f0a',COL={bill:OR,supply:OR,reg:OR,cmte:OR,award:OR,lobby:OR,pac:OR,trade:OR,other:OR},FIRST={bill:1,reg:1};
+const RM=matchMedia('(prefers-reduced-motion: reduce)');let orbs=[];
+function orbLoop(t){if(!RM.matches)orbs.forEach(o=>{const n=o.p.length-1,u=((t/o.d+o.ph)%1)*n,i=Math.floor(u),f=u-i,a=o.p[i],b=o.p[Math.min(i+1,n)];o.m.setLatLng([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f])});requestAnimationFrame(orbLoop)}requestAnimationFrame(orbLoop);
 const NAME={bill:'법안',supply:'본사·공장',reg:'규제',cmte:'위원회',award:'연방 계약',lobby:'로비',pac:'후원',trade:'의원 거래',other:'기타 지표'};
 const kind=t=>{const r=t.ref||'',x=(t.title||'')+' '+(t.region||'');if(t.kind==='bill')return'bill';if(t.kind==='supply'||r.startsWith('facility:'))return'supply';if(t.kind==='trade')return'trade';if(t.kind==='award'||r.startsWith('awards:'))return'award';if(t.kind==='lobby'||r.startsWith('lobbying:'))return'lobby';if(t.kind==='pac'||r.startsWith('pac:'))return'pac';if(r.startsWith('trade')||/의원 거래/.test(x))return'trade';if(/위원회|committee/i.test(x))return'cmte';if(/규제|수출통제|상무부|관세|제재|BIS|MOFCOM/i.test(x))return'reg';if(/본사|공장|사업장|HQ|팹/.test(x))return'supply';return'other'};
 const curve=(a,b)=>{const dx=b[1]-a[1],dy=b[0]-a[0],d=Math.hypot(dx,dy)||1,o=d<6?Math.max(d*.6,.4):Math.min(d*.28,18),c=[(a[0]+b[0])/2+(dx/d)*o,(a[1]+b[1])/2-(dy/d)*o],out=[];for(let i=0;i<=32;i++){const u=i/32,v=1-u;out.push([v*v*a[0]+2*v*u*c[0]+u*u*b[0],v*v*a[1]+2*v*u*c[1]+u*u*b[1]])}return out};
 const g=L.layerGroup().addTo(map);let cur=null,drawn=new Set(),lines=[],dots=[];window.mtFlow={lines:()=>lines,dots:()=>dots};const leg=document.createElement('div');leg.id='mtLegend';leg.hidden=true;document.body.append(leg);
-function setup(m){g.clearLayers();drawn=new Set();lines=[];dots=[];cur=m;const st=m.meta.filter(t=>t.lat!=null);if(st.length<2){leg.hidden=true;return}const hub=[st[0].lat,st[0].lon],used=new Set();
- m.meta.forEach((t,i)=>{if(i===0||t.lat==null){lines.push(null);return}const k=kind(t);used.add(k);const pl=L.polyline(curve(hub,[t.lat,t.lon]),{color:COL[k],weight:k==='supply'?3:2.2,opacity:.9,className:'mtFl dim',interactive:false}).addTo(g);lines.push(pl);dots[i]=L.circleMarker([t.lat,t.lon],{radius:3,color:COL[k],fillOpacity:.9,weight:1,interactive:false}).addTo(g)});
+function setup(m){g.clearLayers();orbs=[];drawn=new Set();lines=[];dots=[];cur=m;const st=m.meta.filter(t=>t.lat!=null);if(st.length<2){leg.hidden=true;return}const hub=[st[0].lat,st[0].lon],used=new Set();
+ m.meta.forEach((t,i)=>{if(i===0||t.lat==null){lines.push(null);return}const k=kind(t);used.add(k);const pts=curve(hub,[t.lat,t.lon]),pl=L.polyline(pts,{color:COL[k],weight:FIRST[k]?5:2,opacity:.9,className:'mtFl dim',interactive:false}).addTo(g);lines.push(pl);const path=FIRST[k]?pts.slice().reverse():pts;for(let q=0;q<2;q++)orbs.push({p:path,d:FIRST[k]?2600:3400,ph:q/2+i*.13,m:L.circleMarker(path[0],{radius:FIRST[k]?4.5:3.2,color:OR,fillColor:'#ffd9a0',weight:1.5,fillOpacity:1,className:'mtOrb',interactive:false}).addTo(g)});dots[i]=L.circleMarker([t.lat,t.lon],{radius:3,color:COL[k],fillOpacity:.9,weight:1,interactive:false}).addTo(g)});
  L.circleMarker(hub,{radius:6,color:'#ffd60a',fill:false,weight:2,interactive:false}).addTo(g);
- leg.innerHTML=[...used].map(k=>`<div><i style="background:${COL[k]};color:${COL[k]}"></i>${NAME[k]}</div>`).join('')+'<small>선 = 공개 자료상 연결, 인과 아님</small><button id="mtAll" type="button">전체 보기</button>';leg.hidden=false;
+ const EN=!!(window.MTI18N&&window.MTI18N.isEn);leg.innerHTML='<div class="mtNote"><i></i>'+(EN?'Thick line = acts first':'진한 선 = 먼저 영향')+'</div><small>'+(EN?'Lines = public-record links, not cause':'선 = 공개 자료상 연결, 인과 아님')+'</small><button id="mtAll" type="button">전체 보기</button>';leg.hidden=false;
  leg.querySelector('#mtAll').onclick=e=>{e.stopPropagation();stop();map.stop();const b=L.latLngBounds(st.map(t=>[t.lat,t.lon])).pad(.25);setTimeout(()=>map.flyToBounds(b,{duration:1.6,maxZoom:6}),60)}}
 function reach(i){const pl=lines[i];if(!pl||drawn.has(i))return;drawn.add(i);const el=pl.getElement&&pl.getElement();if(el){el.classList.remove('dim');void el.getBBox;el.style.animation='none';el.getBoundingClientRect();el.style.animation=''}}
 // 자동 재생: 4초 머문 뒤 다음 정류장. 드래그·휠·클릭하면 멈춤
