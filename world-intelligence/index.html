@@ -596,7 +596,7 @@ let q=0;new MutationObserver(()=>{if(!q){q=1;requestAnimationFrame(()=>{q=0;sync
 #mtWatch{display:inline-block;margin:0 0 6px;padding:1px 8px;border:1px solid #ff5d73;border-radius:3px;color:#ff5d73;font:700 11px ui-monospace,Consolas,monospace;letter-spacing:.1em}
 #mtWatch[hidden]{display:none}
 @media(min-width:651px){body.mtc-open #brief{max-height:max(140px,calc(100dvh - 560px))}}
-@media(max-width:650px){#mtc{right:8px;bottom:198px;width:auto}#mtc[data-open="1"]{left:8px;width:auto}
+@media(max-width:650px){#mtc{right:8px;bottom:198px;width:auto}body:not(.mt-briefing):has(#mtMission:not([hidden])) #mtc{bottom:282px}#mtc[data-open="1"]{left:8px;width:auto}
  #mtc .bd{max-height:min(44dvh,calc(100dvh - 330px))}#mtc[data-open="1"] .bd{animation:mtcUp .3s ease-out}@keyframes mtcUp{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}}
 /* 지도 효과: 정류장 알림 펄스 · 레이더 스캔 · 아이콘 */
 .mtIc{background:none!important;border:0!important}
