@@ -89,7 +89,7 @@ test('의원: 로렐 리 BAC 거래 목록 + 판 뒤 주가 변화', async () =>
   const { doc, plan } = await screen('Laurel Lee BAC');
   assert.equal(plan.member.id, 'L000597');
   assert.equal(doc.kind, 'member');
-  const t = read('data/us/trades.json').trades.filter(x => x.id === 'L000597' && x.tk === 'BAC');
+  const t = read('data/us/trades_public.json').trades.filter(x => x.id === 'L000597' && x.tk === 'BAC');
   assert.ok(t.length >= 2);
   assert.equal(doc.cards[0].lines.length, Math.min(8, t.length));
   assert.match(doc.headline, /Laurel M?\.? ?Lee|Laurel Lee/);

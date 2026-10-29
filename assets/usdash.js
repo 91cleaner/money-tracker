@@ -4,7 +4,7 @@
   const box = document.getElementById('usdash'); if (!box) return;
   const j = (f) => fetch('data/us/' + f, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const [mem, tr, bl] = await Promise.all([j('members.json'), j('trades.json'), j('bills.json')]);
+  const [mem, tr, bl] = await Promise.all([j('members.json'), j('trades_public.json'), j('bills.json')]);
   if (!mem || !tr) { box.innerHTML = '<p class="dn">Charts are loading in the next update.</p>'; return; }
   const people = mem.members, byId = Object.fromEntries(people.map((m) => [m.id, m]));
   const trades = (tr.trades || []).filter((t) => t.d);

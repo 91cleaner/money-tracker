@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MONEY TRACKER — 주간 순위표</title>
+<meta name="description" content="이번 주 의원 거래 신고가 많은 회사·의원 Top 10, 로비·연방 계약 상위 회사. 공개 기록 건수 정리이며 투자 조언 아님.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="MONEY TRACKER — 주간 순위표"><meta property="og:description" content="이번 주 의원 거래 신고가 많은 회사·의원 Top 10, 로비·연방 계약 상위 회사. 공개 기록 건수 정리이며 투자 조언 아님.">
+<meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 주간 순위표"><meta name="twitter:description" content="이번 주 의원 거래 신고가 많은 회사·의원 Top 10, 로비·연방 계약 상위 회사. 공개 기록 건수 정리이며 투자 조언 아님.">
+<meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
+<style>
+:root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,#00000000 0 2px,#00ff6608 3px,#00000000 4px)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:49;background:radial-gradient(ellipse at 50% 30%,#0b3a2200 40%,#000a 100%)}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.mono{font-family:ui-monospace,Menlo,Consolas,"D2Coding",monospace}
+header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#020806f0;border-bottom:1px solid var(--line)}
+header.bar .brand{font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--g)}
+header.bar .crumb{font:12px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.06em}
+header.bar .sp{flex:1}
+
+header.bar input{width:120px;background:#04150d;border:1px solid var(--line2);border-radius:6px;color:var(--g2);font:16px ui-monospace,Menlo,monospace;padding:4px 8px;text-transform:uppercase}
+header.bar button{background:#0b2a19;border:1px solid var(--line2);border-radius:6px;color:var(--g);font:700 12px ui-monospace,Menlo,monospace;padding:0 10px;cursor:pointer}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 0 18px rgba(40,255,140,.06) inset;padding:14px 16px;min-width:0}
+.panel h2{margin:0 0 10px;font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--g)}
+.panel h2 .n{color:var(--mut);font-weight:400}
+.span2{grid-column:1/-1}
+.hero{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 18px}
+.hero .tk{font:700 34px/1 ui-monospace,Menlo,monospace;color:var(--g);letter-spacing:.04em;text-shadow:0 0 12px rgba(93,255,158,.35)}
+.hero .nm{font-size:20px;font-weight:700;color:#eafff2}
+.hero .sec{font:12px ui-monospace,Menlo,monospace;color:var(--g2);border:1px solid var(--line2);border-radius:999px;padding:2px 10px}
+.meta{margin-top:8px;color:var(--mut);font-size:12.5px}
+.actions{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--g);background:#0d3b22;color:#eafff2;font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.04em}
+.btn:hover{background:#145531;text-decoration:none}
+.kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:6px}
+.kv div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#03130b}
+.kv div:first-child{grid-column:1/-1;display:flex;align-items:baseline;gap:10px}.kv div:first-child b{font-size:24px}
+.kv b{display:block;font:700 18px ui-monospace,Menlo,monospace;color:#eafff2}
+.kv span{font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+.up{color:var(--up)!important}.down{color:var(--down)!important}
+.empty{color:var(--mut);font:13px ui-monospace,Menlo,monospace;padding:18px 6px;border:1px dashed var(--line);border-radius:8px;text-align:center}
+svg.spark{width:100%;height:120px;display:block;margin-top:10px}
+.note{margin:8px 0 0;color:var(--mut);font-size:12px}
+.warnnote{margin:0 0 10px;padding:8px 10px;border-left:3px solid var(--warn);background:#1c1606;color:#f3e3b4;font-size:12.5px;border-radius:0 6px 6px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid #12301f;vertical-align:top}
+th{font:700 11px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.05em;white-space:nowrap}
+td.num,th.num{text-align:right;white-space:nowrap}
+td .pill{font:11px ui-monospace,Menlo,monospace;padding:1px 6px;border-radius:5px;border:1px solid var(--line2);white-space:nowrap}
+.more{margin-top:8px;background:none;border:1px solid var(--line2);color:var(--g2);border-radius:6px;padding:5px 10px;cursor:pointer;font:12px ui-monospace,Menlo,monospace}
+ol.tl{list-style:none;margin:0;padding:0;position:relative}
+ol.tl::before{content:"";position:absolute;left:84px;top:4px;bottom:4px;width:1px;background:var(--line2)}
+ol.tl li{display:grid;grid-template-columns:76px 1fr;gap:16px;padding:8px 0;position:relative}
+ol.tl li::before{content:"";position:absolute;left:81px;top:14px;width:7px;height:7px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g)}
+ol.tl .d{font:12px ui-monospace,Menlo,monospace;color:var(--g2);padding-top:3px}
+ol.tl .k{font:700 11px ui-monospace,Menlo,monospace;color:var(--g);letter-spacing:.06em}
+ol.tl .t{color:#eafff2}
+ol.tl .s{font-size:12px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips a,.chips span{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--line2);border-radius:999px;padding:3px 10px;color:var(--g2)}
+footer.foot{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:var(--mut);font-size:12px}
+footer.foot .disc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#03100a}
+footer.foot b{color:var(--warn)}
+footer.foot ul{margin:6px 0 0;padding-left:18px}
+@media(max-width:900px){
+ main{grid-template-columns:minmax(0,1fr);padding:12px 10px 30px;gap:12px}
+ header.bar{padding:8px 10px;flex-wrap:wrap}
+ header.bar .crumb{display:none}
+ header.bar input{width:96px}
+ .hero .tk{font-size:28px}.hero .nm{font-size:17px}
+ .kv{grid-template-columns:repeat(2,minmax(0,1fr))}
+ table.trades thead{display:none}
+ table.trades tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px 0;border-bottom:1px solid #12301f}
+ table.trades td{border:0;padding:0}
+ table.trades td.who{grid-column:1/-1;font-weight:700;color:#eafff2}
+ table.trades td.lbl::before{content:attr(data-l) " ";color:var(--mut);font:11px ui-monospace,Menlo,monospace}
+ ol.tl::before{left:82px}ol.tl li{grid-template-columns:74px 1fr;gap:16px}ol.tl li::before{left:79px}ol.tl .d{font-size:11px;white-space:nowrap}
+ footer.foot{padding:0 10px 30px}
+}
+/* member.html 추가 */
+header.bar input.nm{width:200px;text-transform:none}
+.hero .pt{font:700 13px ui-monospace,Menlo,monospace;border-radius:6px;padding:2px 8px;border:1px solid var(--line2);color:var(--g2)}
+.cm{margin-top:10px}
+.cm h3{margin:0 0 6px;font:700 11px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.08em}
+.bars{display:grid;gap:6px}
+.bars .r{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:12.5px}
+.bars .r .l{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bars .r .b{height:10px;background:#062014;border:1px solid #12301f;border-radius:3px;position:relative;overflow:hidden}
+.bars .r .b i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#1f8a50,#5dff9e)}
+.bars .r .b i.s{background:linear-gradient(90deg,#8a5a1f,#ffb35d)}
+.bars .r .v{font:12px ui-monospace,Menlo,monospace;color:var(--g2);white-space:nowrap}
+.legend{margin-top:8px;font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+.legend i{display:inline-block;width:10px;height:8px;border-radius:2px;margin:0 4px 0 10px;vertical-align:middle}
+.ov{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:#03130b;margin-top:8px}
+.ov b{color:#eafff2}
+.ov .chips{margin-top:6px}
+.filter{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+.filter input,.filter select{background:#04150d;border:1px solid var(--line2);border-radius:6px;color:var(--g2);font:16px ui-monospace,Menlo,monospace;padding:4px 8px;min-width:0}
+.filter input{flex:1 1 160px}
+.pick{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+@media(max-width:900px){
+ header.bar input.nm{width:150px}
+ .bars .r{grid-template-columns:minmax(0,110px) minmax(0,1fr) auto}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <span class="crumb">WEEKLY BOARD / 공개 기록 건수 정리</span>
+</header>
+<main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
+<footer class="foot"><div class="disc" id="foot"></div></footer>
+<script>
+(function () {
+  "use strict";
+  var app = document.getElementById("app"), foot = document.getElementById("foot");
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function get(p) { return fetch(p, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function tkOk(t) { return /^[A-Z][A-Z0-9.\-]{0,9}$/.test(String(t || "")); }
+  function panel(title, sub) { var p = el("section", "panel"); p.appendChild(el("h2", "", title)); if (sub) p.appendChild(el("p", "note", sub)); return p; }
+  function usd(v) { v = Number(v || 0); return v >= 1e9 ? "$" + (v / 1e9).toFixed(2) + "B" : v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + Math.round(v).toLocaleString("en-US"); }
+  function isoAdd(iso, n) { return new Date(Date.parse(iso + "T00:00:00Z") + n * 864e5).toISOString().slice(0, 10); }
+  // rows: [{label, href, value, text}] already sorted; draws a numbered list with relative bars.
+  function list(p, rows, empty) {
+    if (!rows.length) { p.appendChild(el("div", "empty", empty)); return; }
+    var max = rows[0].value || 1, bars = el("div", "bars");
+    rows.forEach(function (r, i) {
+      var row = el("div", "r"), l = el("span", "l"), a = el("a", "", (i + 1) + ". " + r.label); a.href = r.href; l.appendChild(a);
+      var b = el("span", "b"), f = el("i"); f.style.width = Math.max(2, r.value / max * 100).toFixed(0) + "%"; b.appendChild(f);
+      row.append(l, b, el("span", "v", r.text)); bars.appendChild(row);
+    });
+    p.appendChild(bars);
+  }
+  function top(map, n) { return Object.keys(map).sort(function (a, b) { return map[b] - map[a] || a.localeCompare(b); }).slice(0, n); }
+
+  Promise.all([get("data/us/trades_public.json"), get("data/us/lobbying.json"), get("data/us/federal-awards.json")]).then(function (r) {
+    var tr = r[0] || {}, lob = r[1] || {}, aw = r[2] || {}, trades = tr.trades || [];
+    var filed = trades.map(function (x) { return x.filed; }).filter(function (d) { return /^\d{4}-\d{2}-\d{2}$/.test(d || ""); }).sort();
+    app.replaceChildren();
+    if (!filed.length) { var e = el("section", "panel span2"); e.appendChild(el("div", "empty", "신고 자료가 없습니다.")); app.appendChild(e); return; }
+    var end = filed[filed.length - 1], start = isoAdd(end, -6);
+    var week = trades.filter(function (x) { return x.filed >= start && x.filed <= end; });
+    var head = panel("THIS WEEK", null); head.className += " span2";
+    head.appendChild(el("p", "", "집계 기간: 신고일 " + start + " ~ " + end + " (자료에 있는 가장 최근 신고일 기준 7일) · 신고 " + week.length + "건"));
+    head.appendChild(el("p", "note", "하원 PTR 신고 기준이며 거래일→신고일 최대 45일 차이가 있을 수 있습니다. 건수가 많다고 문제가 있다는 뜻이 아닙니다. 새 신고가 수집되면 이 기간이 저절로 한 칸씩 이동합니다."));
+    app.appendChild(head);
+
+    var byCo = {}, byMem = {}, memName = {};
+    week.forEach(function (x) {
+      var t = String(x.tk || "").toUpperCase(); if (tkOk(t)) byCo[t] = (byCo[t] || 0) + 1;
+      if (x.who) { var k = x.id || x.who; byMem[k] = (byMem[k] || 0) + 1; memName[k] = x.who; }
+    });
+    var pc = panel("이번 주 신고가 많은 회사 Top 10", "종목 티커가 있는 신고만 셉니다. 채권·펀드 등 티커 없는 항목은 제외.");
+    list(pc, top(byCo, 10).map(function (t) { return { label: t, href: "company.html?t=" + encodeURIComponent(t), value: byCo[t], text: byCo[t] + "건" }; }), "이번 주 해당 신고가 없습니다.");
+    var pm = panel("이번 주 신고가 많은 의원 Top 10", "신고서 건수가 아니라 거래 항목 수입니다.");
+    list(pm, top(byMem, 10).map(function (k) { return { label: memName[k], href: "member.html?n=" + encodeURIComponent(memName[k]), value: byMem[k], text: byMem[k] + "건" }; }), "이번 주 해당 신고가 없습니다.");
+    app.append(pc, pm);
+
+    // Lobbying (LDA) and federal contracts carry no per-week dates in the repo: shown as clearly labelled non-weekly boards.
+    var LC = lob.companies || {}, qs = {};
+    Object.keys(LC).forEach(function (t) { Object.keys(LC[t].by_quarter || {}).forEach(function (q) { if (/^\d{4}-Q[1-4]$/.test(q) && LC[t].by_quarter[q] > 0) qs[q] = 1; }); });
+    var lq = Object.keys(qs).sort().pop(), lv = {};
+    if (lq) Object.keys(LC).forEach(function (t) { var v = LC[t].by_quarter[lq]; if (v > 0 && tkOk(t)) lv[t] = v; });
+    var pl = panel("로비 공시 금액 상위 회사 Top 10 (" + (lq || "-") + " 분기)", "주간 자료가 아닙니다. 로비공개법(LDA) 공시를 분기 단위로 모은 값이며 가장 최근 분기는 아직 일부만 제출됐을 수 있습니다.");
+    list(pl, top(lv, 10).map(function (t) { return { label: t, href: "company.html?t=" + encodeURIComponent(t), value: lv[t], text: usd(lv[t]) }; }), "로비 자료가 없습니다.");
+    var AC = aw.companies || {}, av = {};
+    Object.keys(AC).forEach(function (t) { if (AC[t].total_usd > 0 && tkOk(t)) av[t] = AC[t].total_usd; });
+    var per = aw.period || [];
+    var pa = panel("연방 계약 수령액 상위 회사 Top 10 (" + (per[0] || "?") + " ~ " + (per[1] || "?") + " 누적)", "주간 자료가 아닙니다. 계약 날짜별 자료가 저장소에 없어 기간 누적 합계만 보여줍니다. 이름이 비슷한 자회사·동명 법인이 섞였을 수 있습니다.");
+    list(pa, top(av, 10).map(function (t) { return { label: t, href: "company.html?t=" + encodeURIComponent(t), value: av[t], text: usd(av[t]) }; }), "연방 계약 자료가 없습니다.");
+    app.append(pl, pa);
+
+    foot.replaceChildren(); foot.appendChild(el("b", "", "읽기 전 확인"));
+    foot.appendChild(document.createTextNode(" 공개 기록의 건수·금액을 정리한 것이며 어떤 판단이나 투자 조언 아님. 순서는 많고 적음일 뿐 잘잘못이 아닙니다."));
+    var ul = el("ul");
+    [["의원 거래: 미국 하원 사무처 재산공개 PTR (data/us/trades.json)", tr.updated], ["로비: LDA 공시, lda.gov (data/us/lobbying.json)", lob.updated], ["연방 계약: USAspending.gov (data/us/federal-awards.json)", aw.updated]].forEach(function (s) { ul.appendChild(el("li", "", s[0] + (s[1] ? " · 갱신 " + s[1] : ""))); });
+    foot.appendChild(ul);
+  });
+})();
+</script>
+</body>
+</html>

@@ -13,7 +13,7 @@ const read = f => JSON.parse(fs.readFileSync(path.join(root, f), 'utf8'));
 test('inline script parses', () => { assert.doesNotThrow(() => new vm.Script(script, { filename: 'sector-board.inline.js' })); });
 
 test('reads repository data files that exist', () => {
-  for (const f of ['data/search-index.json', 'data/us/ticker-sectors.json', 'data/us/trades.json', 'data/us/prices/summary.json']) {
+  for (const f of ['data/search-index.json', 'data/us/ticker-sectors.json', 'data/us/trades_public.json', 'data/us/prices/summary.json']) {
     assert.ok(script.includes('"' + f + '"'), f);
     assert.ok(fs.existsSync(path.join(root, f)), f + ' exists');
   }

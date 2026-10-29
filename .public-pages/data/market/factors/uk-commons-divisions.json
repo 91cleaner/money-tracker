@@ -1,0 +1,1809 @@
+{
+ "source": "UK Parliament · Commons Votes API",
+ "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
+ "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
+ "collected_at": "2026-10-28T02:02:16.786Z",
+ "count": 200,
+ "divisions": [
+  {
+   "id": 2463,
+   "date": "2026-10-27",
+   "number": 105,
+   "title": "Draft Town and Country Planning (Fees for Applications, Deemed Applications, Requests and Site Visits) (England) (Amendment and Transitional Provision) Regulations 2026",
+   "ayes": 321,
+   "noes": 66,
+   "url": "https://votes.parliament.uk/votes/commons/division/2463"
+  },
+  {
+   "id": 2462,
+   "date": "2026-10-21",
+   "number": 104,
+   "title": "Opposition day motion: Support for British farmers",
+   "ayes": 57,
+   "noes": 279,
+   "url": "https://votes.parliament.uk/votes/commons/division/2462"
+  },
+  {
+   "id": 2461,
+   "date": "2026-10-21",
+   "number": 103,
+   "title": "Withdrawal Agreement (Windsor Framework and Governance) (Amendment)  Regulations 2026",
+   "ayes": 345,
+   "noes": 108,
+   "url": "https://votes.parliament.uk/votes/commons/division/2461"
+  },
+  {
+   "id": 2460,
+   "date": "2026-10-21",
+   "number": 102,
+   "title": "Draft Code of Practice on Access and Unfair Practices During the Recognition and  Derecognition Process",
+   "ayes": 295,
+   "noes": 111,
+   "url": "https://votes.parliament.uk/votes/commons/division/2460"
+  },
+  {
+   "id": 2459,
+   "date": "2026-10-21",
+   "number": 101,
+   "title": "Draft Railways (Interoperability in Northern Ireland) (Convention on International  Carriage by Rail) (Amendment) Regulations 2026",
+   "ayes": 345,
+   "noes": 108,
+   "url": "https://votes.parliament.uk/votes/commons/division/2459"
+  },
+  {
+   "id": 2458,
+   "date": "2026-10-20",
+   "number": 100,
+   "title": "Northern Ireland Troubles Bill: Third Reading",
+   "ayes": 330,
+   "noes": 178,
+   "url": "https://votes.parliament.uk/votes/commons/division/2458"
+  },
+  {
+   "id": 2457,
+   "date": "2026-10-20",
+   "number": 99,
+   "title": "Northern Ireland Troubles Bill Committee: New Clause 12",
+   "ayes": 184,
+   "noes": 330,
+   "url": "https://votes.parliament.uk/votes/commons/division/2457"
+  },
+  {
+   "id": 2456,
+   "date": "2026-10-20",
+   "number": 98,
+   "title": "Northern Ireland Troubles Bill Committee: New Clause 7",
+   "ayes": 179,
+   "noes": 336,
+   "url": "https://votes.parliament.uk/votes/commons/division/2456"
+  },
+  {
+   "id": 2455,
+   "date": "2026-10-20",
+   "number": 97,
+   "title": "Northern Ireland Troubles Bill Committee: Amendment 32",
+   "ayes": 117,
+   "noes": 331,
+   "url": "https://votes.parliament.uk/votes/commons/division/2455"
+  },
+  {
+   "id": 2454,
+   "date": "2026-10-20",
+   "number": 96,
+   "title": "Northern Ireland Troubles Bill Committee: Amendment 51",
+   "ayes": 176,
+   "noes": 329,
+   "url": "https://votes.parliament.uk/votes/commons/division/2454"
+  },
+  {
+   "id": 2453,
+   "date": "2026-10-19",
+   "number": 95,
+   "title": "Northern Ireland Troubles Bill Committee: New Clause 21",
+   "ayes": 167,
+   "noes": 327,
+   "url": "https://votes.parliament.uk/votes/commons/division/2453"
+  },
+  {
+   "id": 2452,
+   "date": "2026-10-19",
+   "number": 94,
+   "title": "Northern Ireland Troubles Bill Committee: Amendment 47",
+   "ayes": 166,
+   "noes": 328,
+   "url": "https://votes.parliament.uk/votes/commons/division/2452"
+  },
+  {
+   "id": 2451,
+   "date": "2026-10-19",
+   "number": 93,
+   "title": "Northern Ireland Troubles Bill Committee: Amendment 4",
+   "ayes": 175,
+   "noes": 319,
+   "url": "https://votes.parliament.uk/votes/commons/division/2451"
+  },
+  {
+   "id": 2450,
+   "date": "2026-10-19",
+   "number": 92,
+   "title": "Northern Ireland Troubles Bill Committee: Amendment 52",
+   "ayes": 108,
+   "noes": 327,
+   "url": "https://votes.parliament.uk/votes/commons/division/2450"
+  },
+  {
+   "id": 2449,
+   "date": "2026-10-19",
+   "number": 91,
+   "title": "Northern Ireland Troubles Bill Committee: Amendment 23",
+   "ayes": 169,
+   "noes": 327,
+   "url": "https://votes.parliament.uk/votes/commons/division/2449"
+  },
+  {
+   "id": 2448,
+   "date": "2026-10-19",
+   "number": 90,
+   "title": "Northern Ireland Troubles Bill: Programme Motion",
+   "ayes": 286,
+   "noes": 163,
+   "url": "https://votes.parliament.uk/votes/commons/division/2448"
+  },
+  {
+   "id": 2447,
+   "date": "2026-10-16",
+   "number": 89,
+   "title": "Closure motion",
+   "ayes": 13,
+   "noes": 36,
+   "url": "https://votes.parliament.uk/votes/commons/division/2447"
+  },
+  {
+   "id": 2446,
+   "date": "2026-10-16",
+   "number": 88,
+   "title": "Motion to sit in private",
+   "ayes": 1,
+   "noes": 36,
+   "url": "https://votes.parliament.uk/votes/commons/division/2446"
+  },
+  {
+   "id": 2445,
+   "date": "2026-10-15",
+   "number": 87,
+   "title": "Highways (Financing) Bill: Second Reading: Reasoned Amendment",
+   "ayes": 76,
+   "noes": 231,
+   "url": "https://votes.parliament.uk/votes/commons/division/2445"
+  },
+  {
+   "id": 2444,
+   "date": "2026-10-14",
+   "number": 86,
+   "title": "Opposition Day motion: Inheritance Tax",
+   "ayes": 99,
+   "noes": 291,
+   "url": "https://votes.parliament.uk/votes/commons/division/2444"
+  },
+  {
+   "id": 2443,
+   "date": "2026-10-14",
+   "number": 85,
+   "title": "Opposition Day motion: MoD Bicester and illegal migrants",
+   "ayes": 113,
+   "noes": 309,
+   "url": "https://votes.parliament.uk/votes/commons/division/2443"
+  },
+  {
+   "id": 2442,
+   "date": "2026-10-14",
+   "number": 84,
+   "title": "Carbon Border Adjustment Mechanism (Calculation of CBAM Rate and Determination  of Carbon Price Relief) Regulations 2026",
+   "ayes": 319,
+   "noes": 115,
+   "url": "https://votes.parliament.uk/votes/commons/division/2442"
+  },
+  {
+   "id": 2441,
+   "date": "2026-10-14",
+   "number": 83,
+   "title": "Draft Trade Unions (Right to Access Workplaces) Regulations 2026",
+   "ayes": 326,
+   "noes": 115,
+   "url": "https://votes.parliament.uk/votes/commons/division/2441"
+  },
+  {
+   "id": 2440,
+   "date": "2026-10-14",
+   "number": 82,
+   "title": "Draft Code of Practice on the Right of Trade Unions to Access Workplaces",
+   "ayes": 326,
+   "noes": 115,
+   "url": "https://votes.parliament.uk/votes/commons/division/2440"
+  },
+  {
+   "id": 2439,
+   "date": "2026-10-14",
+   "number": 81,
+   "title": " Draft ACAS Code of Practice on Time Off for Trade Union Duties and Activities",
+   "ayes": 328,
+   "noes": 114,
+   "url": "https://votes.parliament.uk/votes/commons/division/2439"
+  },
+  {
+   "id": 2438,
+   "date": "2026-10-13",
+   "number": 80,
+   "title": "Northern Ireland Troubles Bill: Carry-over extension motion",
+   "ayes": 304,
+   "noes": 179,
+   "url": "https://votes.parliament.uk/votes/commons/division/2438"
+  },
+  {
+   "id": 2437,
+   "date": "2026-10-13",
+   "number": 79,
+   "title": "Courts and Tribunals Bill: Third Reading",
+   "ayes": 301,
+   "noes": 193,
+   "url": "https://votes.parliament.uk/votes/commons/division/2437"
+  },
+  {
+   "id": 2436,
+   "date": "2026-10-13",
+   "number": 78,
+   "title": "Courts and Tribunals Bill Report Stage: Amendment 18",
+   "ayes": 89,
+   "noes": 312,
+   "url": "https://votes.parliament.uk/votes/commons/division/2436"
+  },
+  {
+   "id": 2435,
+   "date": "2026-10-13",
+   "number": 77,
+   "title": "Courts and Tribunals Bill Report Stage: Amendment 1",
+   "ayes": 196,
+   "noes": 304,
+   "url": "https://votes.parliament.uk/votes/commons/division/2435"
+  },
+  {
+   "id": 2434,
+   "date": "2026-10-13",
+   "number": 76,
+   "title": "Courts and Tribunals Bill Report Stage: New Clause 25",
+   "ayes": 189,
+   "noes": 306,
+   "url": "https://votes.parliament.uk/votes/commons/division/2434"
+  },
+  {
+   "id": 2428,
+   "date": "2026-09-11",
+   "number": 75,
+   "title": "Terminally Ill Adults (End of Life) Bill: Second Reading",
+   "ayes": 270,
+   "noes": 286,
+   "url": "https://votes.parliament.uk/votes/commons/division/2428"
+  },
+  {
+   "id": 2427,
+   "date": "2026-09-11",
+   "number": 74,
+   "title": "Closure motion",
+   "ayes": 293,
+   "noes": 218,
+   "url": "https://votes.parliament.uk/votes/commons/division/2427"
+  },
+  {
+   "id": 2425,
+   "date": "2026-09-10",
+   "number": 73,
+   "title": "Social Housing Bill [Lords]: Reasoned Amendment to Second Reading",
+   "ayes": 77,
+   "noes": 292,
+   "url": "https://votes.parliament.uk/votes/commons/division/2425"
+  },
+  {
+   "id": 2424,
+   "date": "2026-09-09",
+   "number": 72,
+   "title": "Draft Plant Health, Seeds, Seed Potatoes and Plant Propagating Material  (Amendment) (Northern Ireland) Regulations 2026",
+   "ayes": 371,
+   "noes": 100,
+   "url": "https://votes.parliament.uk/votes/commons/division/2424"
+  },
+  {
+   "id": 2423,
+   "date": "2026-09-08",
+   "number": 71,
+   "title": "Health Bill: Report Stage: Amendment 1",
+   "ayes": 162,
+   "noes": 297,
+   "url": "https://votes.parliament.uk/votes/commons/division/2423"
+  },
+  {
+   "id": 2422,
+   "date": "2026-09-08",
+   "number": 70,
+   "title": "Health Bill: Report Stage: New Clause 143",
+   "ayes": 106,
+   "noes": 302,
+   "url": "https://votes.parliament.uk/votes/commons/division/2422"
+  },
+  {
+   "id": 2421,
+   "date": "2026-09-08",
+   "number": 69,
+   "title": "Health Bill: Report Stage: New Clause 142",
+   "ayes": 108,
+   "noes": 357,
+   "url": "https://votes.parliament.uk/votes/commons/division/2421"
+  },
+  {
+   "id": 2420,
+   "date": "2026-09-08",
+   "number": 68,
+   "title": "Health Bill: Report Stage: New Clause 140",
+   "ayes": 79,
+   "noes": 300,
+   "url": "https://votes.parliament.uk/votes/commons/division/2420"
+  },
+  {
+   "id": 2419,
+   "date": "2026-09-07",
+   "number": 67,
+   "title": "Health Bill: Report Stage: New Clause 145",
+   "ayes": 170,
+   "noes": 316,
+   "url": "https://votes.parliament.uk/votes/commons/division/2419"
+  },
+  {
+   "id": 2418,
+   "date": "2026-09-07",
+   "number": 66,
+   "title": "Health Bill: Report Stage: New Clause 6",
+   "ayes": 77,
+   "noes": 317,
+   "url": "https://votes.parliament.uk/votes/commons/division/2418"
+  },
+  {
+   "id": 2417,
+   "date": "2026-09-04",
+   "number": 65,
+   "title": "Motion to sit in private",
+   "ayes": 1,
+   "noes": 79,
+   "url": "https://votes.parliament.uk/votes/commons/division/2417"
+  },
+  {
+   "id": 2416,
+   "date": "2026-09-02",
+   "number": 64,
+   "title": "Representation of the People Bill: Third Reading",
+   "ayes": 411,
+   "noes": 102,
+   "url": "https://votes.parliament.uk/votes/commons/division/2416"
+  },
+  {
+   "id": 2415,
+   "date": "2026-09-02",
+   "number": 63,
+   "title": "Representation of the People Bill: Report Stage: New Clause 88",
+   "ayes": 85,
+   "noes": 427,
+   "url": "https://votes.parliament.uk/votes/commons/division/2415"
+  },
+  {
+   "id": 2414,
+   "date": "2026-09-02",
+   "number": 62,
+   "title": "Representation of the People Bill: Report Stage: New Clause 67",
+   "ayes": 105,
+   "noes": 410,
+   "url": "https://votes.parliament.uk/votes/commons/division/2414"
+  },
+  {
+   "id": 2413,
+   "date": "2026-09-02",
+   "number": 61,
+   "title": "Representation of the People Bill: Report Stage: New Clause 65",
+   "ayes": 166,
+   "noes": 346,
+   "url": "https://votes.parliament.uk/votes/commons/division/2413"
+  },
+  {
+   "id": 2411,
+   "date": "2026-07-15",
+   "number": 60,
+   "title": "Draft Code of Practice on Electronic and Workplace Ballots for Statutory Trade Union Ballots",
+   "ayes": 330,
+   "noes": 109,
+   "url": "https://votes.parliament.uk/votes/commons/division/2411"
+  },
+  {
+   "id": 2410,
+   "date": "2026-07-15",
+   "number": 59,
+   "title": "Draft Trade Unions (Permissible Means of Voting) and Employment Rights (Unfair Dismissal) (Amendment) Order 2026",
+   "ayes": 330,
+   "noes": 109,
+   "url": "https://votes.parliament.uk/votes/commons/division/2410"
+  },
+  {
+   "id": 2409,
+   "date": "2026-07-14",
+   "number": 58,
+   "title": "Public Office (Accountability) Bill Report Stage: Amendment 19",
+   "ayes": 104,
+   "noes": 412,
+   "url": "https://votes.parliament.uk/votes/commons/division/2409"
+  },
+  {
+   "id": 2408,
+   "date": "2026-07-14",
+   "number": 57,
+   "title": "Public Office (Accountability) Bill Report Stage: Amendment 199 ",
+   "ayes": 102,
+   "noes": 409,
+   "url": "https://votes.parliament.uk/votes/commons/division/2408"
+  },
+  {
+   "id": 2407,
+   "date": "2026-07-14",
+   "number": 56,
+   "title": "Public Office (Accountability) Bill Report Stage: Amendment 3",
+   "ayes": 93,
+   "noes": 323,
+   "url": "https://votes.parliament.uk/votes/commons/division/2407"
+  },
+  {
+   "id": 2406,
+   "date": "2026-07-13",
+   "number": 55,
+   "title": "Immigration and Asylum Bill: Second Reading",
+   "ayes": 264,
+   "noes": 90,
+   "url": "https://votes.parliament.uk/votes/commons/division/2406"
+  },
+  {
+   "id": 2405,
+   "date": "2026-07-13",
+   "number": 54,
+   "title": "Immigration and Asylum Bill: Reasoned Amendment to Second Reading",
+   "ayes": 97,
+   "noes": 358,
+   "url": "https://votes.parliament.uk/votes/commons/division/2405"
+  },
+  {
+   "id": 2404,
+   "date": "2026-07-08",
+   "number": 53,
+   "title": "Draft Town and Country Planning (Discharge of Local Planning Authority Functions)  (England) Regulations 2026",
+   "ayes": 283,
+   "noes": 182,
+   "url": "https://votes.parliament.uk/votes/commons/division/2404"
+  },
+  {
+   "id": 2403,
+   "date": "2026-07-08",
+   "number": 52,
+   "title": "Draft Supply of Machinery (Safety) (Amendment etc.) and the EU Machinery Regulation  (Enforcement etc. in Northern Ireland) Regulations 2026",
+   "ayes": 317,
+   "noes": 103,
+   "url": "https://votes.parliament.uk/votes/commons/division/2403"
+  },
+  {
+   "id": 2402,
+   "date": "2026-07-08",
+   "number": 51,
+   "title": "Draft Children’s Wellbeing and Schools Act 2026 (Establishment of Schools)  (Consequential Amendments) Regulations 2026",
+   "ayes": 369,
+   "noes": 102,
+   "url": "https://votes.parliament.uk/votes/commons/division/2402"
+  },
+  {
+   "id": 2401,
+   "date": "2026-07-07",
+   "number": 50,
+   "title": "Opposition Day: Early release of prisoners",
+   "ayes": 115,
+   "noes": 0,
+   "url": "https://votes.parliament.uk/votes/commons/division/2401"
+  },
+  {
+   "id": 2400,
+   "date": "2026-07-06",
+   "number": 49,
+   "title": "National Security (State Threats) Bill: motion to agree to Lords Amendment 1",
+   "ayes": 394,
+   "noes": 85,
+   "url": "https://votes.parliament.uk/votes/commons/division/2400"
+  },
+  {
+   "id": 2399,
+   "date": "2026-07-01",
+   "number": 48,
+   "title": "Taxation (Energy and Vehicles) Bill Committee: New Clause 5",
+   "ayes": 177,
+   "noes": 308,
+   "url": "https://votes.parliament.uk/votes/commons/division/2399"
+  },
+  {
+   "id": 2398,
+   "date": "2026-07-01",
+   "number": 47,
+   "title": "Taxation (Energy and Vehicles) Bill Committee: New Clause 4",
+   "ayes": 173,
+   "noes": 282,
+   "url": "https://votes.parliament.uk/votes/commons/division/2398"
+  },
+  {
+   "id": 2397,
+   "date": "2026-07-01",
+   "number": 46,
+   "title": "Taxation (Energy and Vehicles) Bill Committee: New Clause 2",
+   "ayes": 80,
+   "noes": 281,
+   "url": "https://votes.parliament.uk/votes/commons/division/2397"
+  },
+  {
+   "id": 2396,
+   "date": "2026-07-01",
+   "number": 45,
+   "title": "Draft Employment Tribunals Extension of Jurisdiction (England and Wales) (Amendment) Order 2026",
+   "ayes": 318,
+   "noes": 107,
+   "url": "https://votes.parliament.uk/votes/commons/division/2396"
+  },
+  {
+   "id": 2395,
+   "date": "2026-07-01",
+   "number": 44,
+   "title": " Draft Employment Tribunal (Extension of Time Limits) (Miscellaneous Amendments and Transitional Provisions) Regulations 2026",
+   "ayes": 322,
+   "noes": 107,
+   "url": "https://votes.parliament.uk/votes/commons/division/2395"
+  },
+  {
+   "id": 2394,
+   "date": "2026-06-24",
+   "number": 43,
+   "title": "Draft Climate Change Act 2008 (Credit Limit) Order 2026",
+   "ayes": 330,
+   "noes": 93,
+   "url": "https://votes.parliament.uk/votes/commons/division/2394"
+  },
+  {
+   "id": 2393,
+   "date": "2026-06-24",
+   "number": 42,
+   "title": "Draft Climate Change Act 2008 (International Aviation and International Shipping) Regulations 2026",
+   "ayes": 329,
+   "noes": 94,
+   "url": "https://votes.parliament.uk/votes/commons/division/2393"
+  },
+  {
+   "id": 2392,
+   "date": "2026-06-24",
+   "number": 41,
+   "title": "Draft Carbon Budget Order 2026",
+   "ayes": 332,
+   "noes": 94,
+   "url": "https://votes.parliament.uk/votes/commons/division/2392"
+  },
+  {
+   "id": 2391,
+   "date": "2026-06-24",
+   "number": 40,
+   "title": "Customs (Tariff and Miscellaneous Amendments) (No. 4) Regulations 2026",
+   "ayes": 323,
+   "noes": 160,
+   "url": "https://votes.parliament.uk/votes/commons/division/2391"
+  },
+  {
+   "id": 2390,
+   "date": "2026-06-23",
+   "number": 39,
+   "title": "Opposition Day: Puberty blockers",
+   "ayes": 112,
+   "noes": 283,
+   "url": "https://votes.parliament.uk/votes/commons/division/2390"
+  },
+  {
+   "id": 2389,
+   "date": "2026-06-23",
+   "number": 38,
+   "title": "Opposition Day Motion: Defence spending and readiness - Prime Minister's Amendment",
+   "ayes": 294,
+   "noes": 110,
+   "url": "https://votes.parliament.uk/votes/commons/division/2389"
+  },
+  {
+   "id": 2388,
+   "date": "2026-06-23",
+   "number": 37,
+   "title": "Opposition day: Defence spending and readiness",
+   "ayes": 108,
+   "noes": 307,
+   "url": "https://votes.parliament.uk/votes/commons/division/2388"
+  },
+  {
+   "id": 2387,
+   "date": "2026-06-22",
+   "number": 36,
+   "title": "Armed Forces Bill Report Stage: Amendment 11",
+   "ayes": 171,
+   "noes": 322,
+   "url": "https://votes.parliament.uk/votes/commons/division/2387"
+  },
+  {
+   "id": 2386,
+   "date": "2026-06-22",
+   "number": 35,
+   "title": "Armed Forces Bill Report Stage: New Clause 22",
+   "ayes": 74,
+   "noes": 323,
+   "url": "https://votes.parliament.uk/votes/commons/division/2386"
+  },
+  {
+   "id": 2385,
+   "date": "2026-06-22",
+   "number": 34,
+   "title": "Armed Forces Bill Report Stage: New Clause 11",
+   "ayes": 104,
+   "noes": 391,
+   "url": "https://votes.parliament.uk/votes/commons/division/2385"
+  },
+  {
+   "id": 2384,
+   "date": "2026-06-22",
+   "number": 33,
+   "title": "Armed Forces Bill Report Stage: New Clause 4",
+   "ayes": 164,
+   "noes": 311,
+   "url": "https://votes.parliament.uk/votes/commons/division/2384"
+  },
+  {
+   "id": 2382,
+   "date": "2026-06-17",
+   "number": 32,
+   "title": "National Security (State Threats) Bill Committee: New Clause 3",
+   "ayes": 144,
+   "noes": 244,
+   "url": "https://votes.parliament.uk/votes/commons/division/2382"
+  },
+  {
+   "id": 2381,
+   "date": "2026-06-17",
+   "number": 31,
+   "title": "National Security (State Threats) Bill Committee: Amendment 13",
+   "ayes": 135,
+   "noes": 258,
+   "url": "https://votes.parliament.uk/votes/commons/division/2381"
+  },
+  {
+   "id": 2380,
+   "date": "2026-06-17",
+   "number": 30,
+   "title": "National Security (State Threats) Bill Committee: Amendment 8",
+   "ayes": 143,
+   "noes": 249,
+   "url": "https://votes.parliament.uk/votes/commons/division/2380"
+  },
+  {
+   "id": 2379,
+   "date": "2026-06-17",
+   "number": 29,
+   "title": "National Security (State Threats) Bill Committee: Amendment 3",
+   "ayes": 85,
+   "noes": 317,
+   "url": "https://votes.parliament.uk/votes/commons/division/2379"
+  },
+  {
+   "id": 2378,
+   "date": "2026-06-17",
+   "number": 28,
+   "title": "National Security (State Threats) Bill: Allocation of Time motion",
+   "ayes": 233,
+   "noes": 94,
+   "url": "https://votes.parliament.uk/votes/commons/division/2378"
+  },
+  {
+   "id": 2377,
+   "date": "2026-06-16",
+   "number": 27,
+   "title": "Draft Clean Air Zones Central Services (Fees) (England) (Amendment) Regulations 2026",
+   "ayes": 262,
+   "noes": 86,
+   "url": "https://votes.parliament.uk/votes/commons/division/2377"
+  },
+  {
+   "id": 2376,
+   "date": "2026-06-16",
+   "number": 26,
+   "title": "Cyber Security and Resilience (Network and Information Systems) Bill Remaining Stages: Amendment 3",
+   "ayes": 162,
+   "noes": 246,
+   "url": "https://votes.parliament.uk/votes/commons/division/2376"
+  },
+  {
+   "id": 2375,
+   "date": "2026-06-16",
+   "number": 25,
+   "title": "Cyber Security and Resilience (Network and Information Systems) Bill Remaining Stages: New Clause 14",
+   "ayes": 151,
+   "noes": 258,
+   "url": "https://votes.parliament.uk/votes/commons/division/2375"
+  },
+  {
+   "id": 2374,
+   "date": "2026-06-16",
+   "number": 24,
+   "title": "Cyber Security and Resilience (Network and Information Systems) Bill Remaining Stages: New Clause 13",
+   "ayes": 77,
+   "noes": 255,
+   "url": "https://votes.parliament.uk/votes/commons/division/2374"
+  },
+  {
+   "id": 2373,
+   "date": "2026-06-15",
+   "number": 23,
+   "title": "Royal Albert Hall Bill [Lords]: Revival",
+   "ayes": 24,
+   "noes": 37,
+   "url": "https://votes.parliament.uk/votes/commons/division/2373"
+  },
+  {
+   "id": 2372,
+   "date": "2026-06-10",
+   "number": 22,
+   "title": "Railways Bill: Third Reading",
+   "ayes": 278,
+   "noes": 149,
+   "url": "https://votes.parliament.uk/votes/commons/division/2372"
+  },
+  {
+   "id": 2371,
+   "date": "2026-06-10",
+   "number": 21,
+   "title": "Railways Bill Remaining Stages: Amendment 148",
+   "ayes": 155,
+   "noes": 279,
+   "url": "https://votes.parliament.uk/votes/commons/division/2371"
+  },
+  {
+   "id": 2370,
+   "date": "2026-06-10",
+   "number": 20,
+   "title": "Railways Bill Remaining Stages: Amendment 143",
+   "ayes": 167,
+   "noes": 266,
+   "url": "https://votes.parliament.uk/votes/commons/division/2370"
+  },
+  {
+   "id": 2369,
+   "date": "2026-06-10",
+   "number": 19,
+   "title": "Railways Bill Remaining Stages: New Clause 1",
+   "ayes": 77,
+   "noes": 271,
+   "url": "https://votes.parliament.uk/votes/commons/division/2369"
+  },
+  {
+   "id": 2368,
+   "date": "2026-06-09",
+   "number": 18,
+   "title": "Draft Combined Authorities (Mayoral Elections) (Amendment) Order 2026",
+   "ayes": 356,
+   "noes": 86,
+   "url": "https://votes.parliament.uk/votes/commons/division/2368"
+  },
+  {
+   "id": 2367,
+   "date": "2026-06-09",
+   "number": 17,
+   "title": "Steel Industry (Nationalisation) Bill Committee: New Clause 4",
+   "ayes": 157,
+   "noes": 287,
+   "url": "https://votes.parliament.uk/votes/commons/division/2367"
+  },
+  {
+   "id": 2366,
+   "date": "2026-06-09",
+   "number": 16,
+   "title": "Steel Industry (Nationalisation) Bill Committee: New Clause 12",
+   "ayes": 94,
+   "noes": 297,
+   "url": "https://votes.parliament.uk/votes/commons/division/2366"
+  },
+  {
+   "id": 2365,
+   "date": "2026-06-09",
+   "number": 15,
+   "title": "Steel Industry (Nationalisation) Bill Committee: Amendment 20",
+   "ayes": 90,
+   "noes": 290,
+   "url": "https://votes.parliament.uk/votes/commons/division/2365"
+  },
+  {
+   "id": 2364,
+   "date": "2026-06-08",
+   "number": 14,
+   "title": "Steel Industry (Nationalisation) Bill Committee: New Clause 8",
+   "ayes": 145,
+   "noes": 251,
+   "url": "https://votes.parliament.uk/votes/commons/division/2364"
+  },
+  {
+   "id": 2363,
+   "date": "2026-06-08",
+   "number": 13,
+   "title": "Steel Industry (Nationalisation) Bill Committee: New Clause 2",
+   "ayes": 65,
+   "noes": 251,
+   "url": "https://votes.parliament.uk/votes/commons/division/2363"
+  },
+  {
+   "id": 2362,
+   "date": "2026-06-08",
+   "number": 12,
+   "title": "Steel Industry (Nationalisation) Bill Committee: Amendment 12",
+   "ayes": 81,
+   "noes": 266,
+   "url": "https://votes.parliament.uk/votes/commons/division/2362"
+  },
+  {
+   "id": 2361,
+   "date": "2026-06-03",
+   "number": 11,
+   "title": "Draft Agriculture (Delinked Payments) (Reductions) (England) Regulations 2026",
+   "ayes": 302,
+   "noes": 155,
+   "url": "https://votes.parliament.uk/votes/commons/division/2361"
+  },
+  {
+   "id": 2360,
+   "date": "2026-06-02",
+   "number": 10,
+   "title": "Armed Forces Bill Committee: New Clause 13",
+   "ayes": 80,
+   "noes": 298,
+   "url": "https://votes.parliament.uk/votes/commons/division/2360"
+  },
+  {
+   "id": 2359,
+   "date": "2026-06-02",
+   "number": 9,
+   "title": "Armed Forces Bill Committee: New Clause 6",
+   "ayes": 99,
+   "noes": 371,
+   "url": "https://votes.parliament.uk/votes/commons/division/2359"
+  },
+  {
+   "id": 2358,
+   "date": "2026-06-02",
+   "number": 8,
+   "title": "Armed Forces Bill Committee: New Clause 5",
+   "ayes": 170,
+   "noes": 301,
+   "url": "https://votes.parliament.uk/votes/commons/division/2358"
+  },
+  {
+   "id": 2357,
+   "date": "2026-06-02",
+   "number": 7,
+   "title": "Armed Forces Bill Committee: New Clause 2",
+   "ayes": 171,
+   "noes": 302,
+   "url": "https://votes.parliament.uk/votes/commons/division/2357"
+  },
+  {
+   "id": 2356,
+   "date": "2026-05-21",
+   "number": 6,
+   "title": "Steel Industry (Nationalisation) Bill: Reasoned Amendment to Second Reading",
+   "ayes": 68,
+   "noes": 242,
+   "url": "https://votes.parliament.uk/votes/commons/division/2356"
+  },
+  {
+   "id": 2355,
+   "date": "2026-05-20",
+   "number": 5,
+   "title": "King's Speech Motion for an Address",
+   "ayes": 307,
+   "noes": 171,
+   "url": "https://votes.parliament.uk/votes/commons/division/2355"
+  },
+  {
+   "id": 2354,
+   "date": "2026-05-20",
+   "number": 4,
+   "title": "King's Speech Motion for an Address: amendment (p)",
+   "ayes": 104,
+   "noes": 316,
+   "url": "https://votes.parliament.uk/votes/commons/division/2354"
+  },
+  {
+   "id": 2353,
+   "date": "2026-05-20",
+   "number": 3,
+   "title": "King's Speech Motion for an Address: amendment (l)",
+   "ayes": 78,
+   "noes": 408,
+   "url": "https://votes.parliament.uk/votes/commons/division/2353"
+  },
+  {
+   "id": 2352,
+   "date": "2026-05-20",
+   "number": 2,
+   "title": "King's Speech Motion for an Address: amendment (o)",
+   "ayes": 104,
+   "noes": 317,
+   "url": "https://votes.parliament.uk/votes/commons/division/2352"
+  },
+  {
+   "id": 2351,
+   "date": "2026-05-19",
+   "number": 1,
+   "title": "King's Speech Motion for an Address: amendment (i)",
+   "ayes": 108,
+   "noes": 323,
+   "url": "https://votes.parliament.uk/votes/commons/division/2351"
+  },
+  {
+   "id": 2350,
+   "date": "2026-04-28",
+   "number": 515,
+   "title": "Draft Immigration and Asylum (Provision of Accommodation to Failed Asylum-Seekers) (Amendment) Regulations 2026",
+   "ayes": 304,
+   "noes": 28,
+   "url": "https://votes.parliament.uk/votes/commons/division/2350"
+  },
+  {
+   "id": 2349,
+   "date": "2026-04-28",
+   "number": 514,
+   "title": "Draft Asylum Seekers (Reception Conditions) (Amendment) Regulations 2026",
+   "ayes": 308,
+   "noes": 81,
+   "url": "https://votes.parliament.uk/votes/commons/division/2349"
+  },
+  {
+   "id": 2348,
+   "date": "2026-04-28",
+   "number": 513,
+   "title": "Pension Schemes Bill: motion to disagree with Lords Amendments 15 to 24, 27, 30 to 34, 36, 38 to 42, 83 and 88, insist on Amendments 88C, 88E to 88P, 88R, 88S and 88W, and propose Amendments (a) to (j) in lieu of Amendments 88A, 88T, 88U and 88V",
+   "ayes": 335,
+   "noes": 158,
+   "url": "https://votes.parliament.uk/votes/commons/division/2348"
+  },
+  {
+   "id": 2347,
+   "date": "2026-04-28",
+   "number": 512,
+   "title": "Privilege",
+   "ayes": 223,
+   "noes": 335,
+   "url": "https://votes.parliament.uk/votes/commons/division/2347"
+  },
+  {
+   "id": 2346,
+   "date": "2026-04-27",
+   "number": 511,
+   "title": "Children's School and Wellbeing Bill: Amendments (a) to (j) in lieu of Lords Amendments 38V to 38X",
+   "ayes": 272,
+   "noes": 64,
+   "url": "https://votes.parliament.uk/votes/commons/division/2346"
+  },
+  {
+   "id": 2345,
+   "date": "2026-04-27",
+   "number": 510,
+   "title": "Northern Ireland Troubles Bill: Carry-over motion",
+   "ayes": 279,
+   "noes": 176,
+   "url": "https://votes.parliament.uk/votes/commons/division/2345"
+  },
+  {
+   "id": 2344,
+   "date": "2026-04-27",
+   "number": 509,
+   "title": "Pension Schemes Bill: motion to disagree with Lords Amendments 15 to 24, 27, 30 to 34, 36, 38 to 42, 83 and 88, insist on its Amendments 88A, 88C and 88E to 88P and propose Amendments (a) to (f)",
+   "ayes": 279,
+   "noes": 164,
+   "url": "https://votes.parliament.uk/votes/commons/division/2344"
+  },
+  {
+   "id": 2343,
+   "date": "2026-04-27",
+   "number": 508,
+   "title": "English Devolution and Community Empowerment Bill: Amendments (a) to (h) in lieu of Lords Amendments 85 and 86, 97 to 116, 120, 121 and 123",
+   "ayes": 271,
+   "noes": 171,
+   "url": "https://votes.parliament.uk/votes/commons/division/2343"
+  },
+  {
+   "id": 2342,
+   "date": "2026-04-27",
+   "number": 507,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree with Lords Amendments 94B and 94C",
+   "ayes": 269,
+   "noes": 170,
+   "url": "https://votes.parliament.uk/votes/commons/division/2342"
+  },
+  {
+   "id": 2341,
+   "date": "2026-04-27",
+   "number": 506,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree with Lords Amendments 36, 90 and 155, insist on Amendments 155A to 155F and propose Amendment (a)",
+   "ayes": 270,
+   "noes": 170,
+   "url": "https://votes.parliament.uk/votes/commons/division/2341"
+  },
+  {
+   "id": 2340,
+   "date": "2026-04-27",
+   "number": 505,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree with Lords Amendments 89B and 89C",
+   "ayes": 273,
+   "noes": 167,
+   "url": "https://votes.parliament.uk/votes/commons/division/2340"
+  },
+  {
+   "id": 2339,
+   "date": "2026-04-22",
+   "number": 504,
+   "title": "Crime and Policing Bill: motion to insist on Amendments 439C and 439D and disagree with Lords Amendments 439E and 439F",
+   "ayes": 253,
+   "noes": 143,
+   "url": "https://votes.parliament.uk/votes/commons/division/2339"
+  },
+  {
+   "id": 2338,
+   "date": "2026-04-22",
+   "number": 503,
+   "title": "Children's Wellbeing and Schools Bill: motion to insist on Amendment 38J and disagree with Lords Amendments 38V to 38X",
+   "ayes": 260,
+   "noes": 161,
+   "url": "https://votes.parliament.uk/votes/commons/division/2338"
+  },
+  {
+   "id": 2337,
+   "date": "2026-04-22",
+   "number": 502,
+   "title": "Pensions Schemes Bill: motion to disagree with Lords Amendments 15 to 24, 27, 30 to 34, 36, 38 to 42, 83 and 88, insist on Amendments 88A and 88C and propose amendments (a) to (j) in lieu of Amendment 88B",
+   "ayes": 272,
+   "noes": 149,
+   "url": "https://votes.parliament.uk/votes/commons/division/2337"
+  },
+  {
+   "id": 2336,
+   "date": "2026-04-22",
+   "number": 501,
+   "title": "Draft Energy Prices Act 2022 (Extension of Time Limit) Regulations 2026",
+   "ayes": 380,
+   "noes": 7,
+   "url": "https://votes.parliament.uk/votes/commons/division/2336"
+  },
+  {
+   "id": 2335,
+   "date": "2026-04-21",
+   "number": 500,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 98",
+   "ayes": 287,
+   "noes": 150,
+   "url": "https://votes.parliament.uk/votes/commons/division/2335"
+  },
+  {
+   "id": 2334,
+   "date": "2026-04-21",
+   "number": 499,
+   "title": "\tEnglish Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 41",
+   "ayes": 284,
+   "noes": 149,
+   "url": "https://votes.parliament.uk/votes/commons/division/2334"
+  },
+  {
+   "id": 2333,
+   "date": "2026-04-21",
+   "number": 498,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 37",
+   "ayes": 291,
+   "noes": 144,
+   "url": "https://votes.parliament.uk/votes/commons/division/2333"
+  },
+  {
+   "id": 2332,
+   "date": "2026-04-21",
+   "number": 497,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 36",
+   "ayes": 288,
+   "noes": 147,
+   "url": "https://votes.parliament.uk/votes/commons/division/2332"
+  },
+  {
+   "id": 2331,
+   "date": "2026-04-21",
+   "number": 496,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 26",
+   "ayes": 287,
+   "noes": 149,
+   "url": "https://votes.parliament.uk/votes/commons/division/2331"
+  },
+  {
+   "id": 2330,
+   "date": "2026-04-21",
+   "number": 495,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 13",
+   "ayes": 297,
+   "noes": 147,
+   "url": "https://votes.parliament.uk/votes/commons/division/2330"
+  },
+  {
+   "id": 2329,
+   "date": "2026-04-21",
+   "number": 494,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 4",
+   "ayes": 298,
+   "noes": 152,
+   "url": "https://votes.parliament.uk/votes/commons/division/2329"
+  },
+  {
+   "id": 2328,
+   "date": "2026-04-21",
+   "number": 493,
+   "title": "English Devolution and Community Empowerment Bill: motion to disagree to Lords Amendment 2",
+   "ayes": 293,
+   "noes": 155,
+   "url": "https://votes.parliament.uk/votes/commons/division/2328"
+  },
+  {
+   "id": 2327,
+   "date": "2026-04-20",
+   "number": 492,
+   "title": "Crime and Policing Bill: Amendments (a) to (b) in lieu of Lords Amendments 359 and 439",
+   "ayes": 292,
+   "noes": 158,
+   "url": "https://votes.parliament.uk/votes/commons/division/2327"
+  },
+  {
+   "id": 2326,
+   "date": "2026-04-20",
+   "number": 491,
+   "title": "Crime and Policing Bill: Amendments (a) and (b) in lieu of Lords Amendment 342",
+   "ayes": 294,
+   "noes": 61,
+   "url": "https://votes.parliament.uk/votes/commons/division/2326"
+  },
+  {
+   "id": 2325,
+   "date": "2026-04-20",
+   "number": 490,
+   "title": "Crime and Policing Bill: Amendments (a) to (d) in lieu of Lords Amendment 11",
+   "ayes": 294,
+   "noes": 156,
+   "url": "https://votes.parliament.uk/votes/commons/division/2325"
+  },
+  {
+   "id": 2324,
+   "date": "2026-04-20",
+   "number": 489,
+   "title": "Crime and Policing Bill: Amendment (a) to Amendment 2B and Amendment (b) to Amendment 2C in lieu of Lords Amendments 2D and 2E",
+   "ayes": 293,
+   "noes": 159,
+   "url": "https://votes.parliament.uk/votes/commons/division/2324"
+  },
+  {
+   "id": 2323,
+   "date": "2026-04-15",
+   "number": 488,
+   "title": "Children's Wellbeing and Schools Bill: Amendments (a) to (c) in lieu of Lords Amendment 106",
+   "ayes": 248,
+   "noes": 139,
+   "url": "https://votes.parliament.uk/votes/commons/division/2323"
+  },
+  {
+   "id": 2322,
+   "date": "2026-04-15",
+   "number": 487,
+   "title": "Children's Wellbeing and Schools Bill: Amendments (a) to (e) in lieu of Lords Amendment 102",
+   "ayes": 259,
+   "noes": 136,
+   "url": "https://votes.parliament.uk/votes/commons/division/2322"
+  },
+  {
+   "id": 2321,
+   "date": "2026-04-15",
+   "number": 486,
+   "title": "Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 41B",
+   "ayes": 254,
+   "noes": 144,
+   "url": "https://votes.parliament.uk/votes/commons/division/2321"
+  },
+  {
+   "id": 2320,
+   "date": "2026-04-15",
+   "number": 485,
+   "title": "Children's Wellbeing and Schools Bill: Amendments (a) to (f) in lieu of Lords Amendment 38",
+   "ayes": 256,
+   "noes": 150,
+   "url": "https://votes.parliament.uk/votes/commons/division/2320"
+  },
+  {
+   "id": 2319,
+   "date": "2026-04-15",
+   "number": 484,
+   "title": "Pension Schemes Bill: motion to disagree with Lords Amendment 78",
+   "ayes": 277,
+   "noes": 150,
+   "url": "https://votes.parliament.uk/votes/commons/division/2319"
+  },
+  {
+   "id": 2318,
+   "date": "2026-04-15",
+   "number": 483,
+   "title": "Pension Schemes Bill: motion to disagree with Lords Amendment 77",
+   "ayes": 271,
+   "noes": 95,
+   "url": "https://votes.parliament.uk/votes/commons/division/2318"
+  },
+  {
+   "id": 2317,
+   "date": "2026-04-15",
+   "number": 482,
+   "title": "Pension Schemes Bill: motion to disagree with Lords Amendment 43",
+   "ayes": 273,
+   "noes": 159,
+   "url": "https://votes.parliament.uk/votes/commons/division/2317"
+  },
+  {
+   "id": 2316,
+   "date": "2026-04-15",
+   "number": 481,
+   "title": "Pension Schemes Bill: motion to disagree with Lords Amendment 35",
+   "ayes": 275,
+   "noes": 159,
+   "url": "https://votes.parliament.uk/votes/commons/division/2316"
+  },
+  {
+   "id": 2315,
+   "date": "2026-04-15",
+   "number": 480,
+   "title": "Pension Schemes Bill: motion to disagree with Lords Amendment 26",
+   "ayes": 269,
+   "noes": 162,
+   "url": "https://votes.parliament.uk/votes/commons/division/2315"
+  },
+  {
+   "id": 2314,
+   "date": "2026-04-15",
+   "number": 479,
+   "title": "Pension Schemes Bill: motion to disagree with Lords Amendment 15",
+   "ayes": 276,
+   "noes": 155,
+   "url": "https://votes.parliament.uk/votes/commons/division/2314"
+  },
+  {
+   "id": 2313,
+   "date": "2026-04-15",
+   "number": 478,
+   "title": "Pensions Scheme Bill: motion to disagree with Lords Amendment 5",
+   "ayes": 269,
+   "noes": 103,
+   "url": "https://votes.parliament.uk/votes/commons/division/2313"
+  },
+  {
+   "id": 2312,
+   "date": "2026-04-15",
+   "number": 477,
+   "title": "Pension Schemes Bill: motion to disagree with Lords Amendment 1",
+   "ayes": 278,
+   "noes": 158,
+   "url": "https://votes.parliament.uk/votes/commons/division/2312"
+  },
+  {
+   "id": 2311,
+   "date": "2026-04-14",
+   "number": 476,
+   "title": "Crime and Policing Bill: motion to agree with all remaining Lords Amendments ",
+   "ayes": 247,
+   "noes": 21,
+   "url": "https://votes.parliament.uk/votes/commons/division/2311"
+  },
+  {
+   "id": 2310,
+   "date": "2026-04-14",
+   "number": 475,
+   "title": "Crime and Policing Bill: motion to disagree with Lords Amendment 359",
+   "ayes": 277,
+   "noes": 158,
+   "url": "https://votes.parliament.uk/votes/commons/division/2310"
+  },
+  {
+   "id": 2309,
+   "date": "2026-04-14",
+   "number": 474,
+   "title": "Crime and Policing Bill: motion to disagree with Lords Amendment 357",
+   "ayes": 278,
+   "noes": 73,
+   "url": "https://votes.parliament.uk/votes/commons/division/2309"
+  },
+  {
+   "id": 2308,
+   "date": "2026-04-14",
+   "number": 473,
+   "title": "Crime and Policing Bill: motion to disagree with Lords Amendment 342",
+   "ayes": 281,
+   "noes": 70,
+   "url": "https://votes.parliament.uk/votes/commons/division/2308"
+  },
+  {
+   "id": 2306,
+   "date": "2026-04-14",
+   "number": 472,
+   "title": "Crime and Policing Bill: motion to disagree with Lords Amendment 334",
+   "ayes": 356,
+   "noes": 90,
+   "url": "https://votes.parliament.uk/votes/commons/division/2306"
+  },
+  {
+   "id": 2305,
+   "date": "2026-04-14",
+   "number": 471,
+   "title": "Crime and Policing Bill: motion to disagree with Lords Amendment 333",
+   "ayes": 301,
+   "noes": 157,
+   "url": "https://votes.parliament.uk/votes/commons/division/2305"
+  },
+  {
+   "id": 2304,
+   "date": "2026-04-14",
+   "number": 470,
+   "title": "Crime and Policing Bill: motion to disagree with Lords Amendment 311",
+   "ayes": 300,
+   "noes": 101,
+   "url": "https://votes.parliament.uk/votes/commons/division/2304"
+  },
+  {
+   "id": 2303,
+   "date": "2026-04-14",
+   "number": 469,
+   "title": "Crime and Policing Bill: motion to disagree with Lords Amendment 11",
+   "ayes": 291,
+   "noes": 174,
+   "url": "https://votes.parliament.uk/votes/commons/division/2303"
+  },
+  {
+   "id": 2301,
+   "date": "2026-04-14",
+   "number": 468,
+   "title": "Crime and Policing Bill: motion to disagree with Lords Amendment 6",
+   "ayes": 299,
+   "noes": 169,
+   "url": "https://votes.parliament.uk/votes/commons/division/2301"
+  },
+  {
+   "id": 2300,
+   "date": "2026-04-14",
+   "number": 467,
+   "title": "Crime and Policing Bill: motion to disagree with Lords Amendment 2",
+   "ayes": 307,
+   "noes": 176,
+   "url": "https://votes.parliament.uk/votes/commons/division/2300"
+  },
+  {
+   "id": 2298,
+   "date": "2026-03-25",
+   "number": 466,
+   "title": "Victims and Courts Bill: motion to disagree with Lords Amendment 6",
+   "ayes": 290,
+   "noes": 163,
+   "url": "https://votes.parliament.uk/votes/commons/division/2298"
+  },
+  {
+   "id": 2297,
+   "date": "2026-03-25",
+   "number": 465,
+   "title": "Victims and Courts Bill: motion to disagree with Lords Amendment 5",
+   "ayes": 292,
+   "noes": 162,
+   "url": "https://votes.parliament.uk/votes/commons/division/2297"
+  },
+  {
+   "id": 2296,
+   "date": "2026-03-25",
+   "number": 464,
+   "title": "Victims and Courts Bill: motion to disagree with  Lords Amendment 4",
+   "ayes": 300,
+   "noes": 149,
+   "url": "https://votes.parliament.uk/votes/commons/division/2296"
+  },
+  {
+   "id": 2295,
+   "date": "2026-03-25",
+   "number": 463,
+   "title": "Victims and Courts Bill: motion to disagree with Lords Amendment 3",
+   "ayes": 286,
+   "noes": 163,
+   "url": "https://votes.parliament.uk/votes/commons/division/2295"
+  },
+  {
+   "id": 2294,
+   "date": "2026-03-25",
+   "number": 462,
+   "title": "Victims and Courts Bill: motion to disagree with Lords Amendment 2",
+   "ayes": 295,
+   "noes": 162,
+   "url": "https://votes.parliament.uk/votes/commons/division/2294"
+  },
+  {
+   "id": 2293,
+   "date": "2026-03-25",
+   "number": 461,
+   "title": "Victims and Courts Bill: motion to disagree with Lords Amendment 1",
+   "ayes": 291,
+   "noes": 158,
+   "url": "https://votes.parliament.uk/votes/commons/division/2293"
+  },
+  {
+   "id": 2292,
+   "date": "2026-03-24",
+   "number": 460,
+   "title": "Opposition Day: Defence",
+   "ayes": 98,
+   "noes": 306,
+   "url": "https://votes.parliament.uk/votes/commons/division/2292"
+  },
+  {
+   "id": 2291,
+   "date": "2026-03-24",
+   "number": 459,
+   "title": "Opposition Day: Oil and gas",
+   "ayes": 108,
+   "noes": 297,
+   "url": "https://votes.parliament.uk/votes/commons/division/2291"
+  },
+  {
+   "id": 2290,
+   "date": "2026-03-23",
+   "number": 458,
+   "title": "National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 6",
+   "ayes": 278,
+   "noes": 164,
+   "url": "https://votes.parliament.uk/votes/commons/division/2290"
+  },
+  {
+   "id": 2289,
+   "date": "2026-03-23",
+   "number": 457,
+   "title": "National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 5",
+   "ayes": 281,
+   "noes": 167,
+   "url": "https://votes.parliament.uk/votes/commons/division/2289"
+  },
+  {
+   "id": 2288,
+   "date": "2026-03-23",
+   "number": 456,
+   "title": "National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 3",
+   "ayes": 280,
+   "noes": 164,
+   "url": "https://votes.parliament.uk/votes/commons/division/2288"
+  },
+  {
+   "id": 2287,
+   "date": "2026-03-23",
+   "number": 455,
+   "title": "National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 2",
+   "ayes": 279,
+   "noes": 167,
+   "url": "https://votes.parliament.uk/votes/commons/division/2287"
+  },
+  {
+   "id": 2286,
+   "date": "2026-03-23",
+   "number": 454,
+   "title": "National Insurance Contributions (Employer Pensions Contributions) Bill: motion to disagree with Lords Amendment 1",
+   "ayes": 280,
+   "noes": 161,
+   "url": "https://votes.parliament.uk/votes/commons/division/2286"
+  },
+  {
+   "id": 2285,
+   "date": "2026-03-18",
+   "number": 453,
+   "title": "Opposition day: Student loans",
+   "ayes": 88,
+   "noes": 266,
+   "url": "https://votes.parliament.uk/votes/commons/division/2285"
+  },
+  {
+   "id": 2284,
+   "date": "2026-03-18",
+   "number": 452,
+   "title": "Opposition day: Fuel duty",
+   "ayes": 103,
+   "noes": 259,
+   "url": "https://votes.parliament.uk/votes/commons/division/2284"
+  },
+  {
+   "id": 2283,
+   "date": "2026-03-18",
+   "number": 451,
+   "title": "Draft Higher Education (Fee Limits and Fee Limit Condition) (England) (Amendment)  Regulations 2026",
+   "ayes": 277,
+   "noes": 99,
+   "url": "https://votes.parliament.uk/votes/commons/division/2283"
+  },
+  {
+   "id": 2282,
+   "date": "2026-03-18",
+   "number": 450,
+   "title": " Draft Employment Rights Act 2025 (Investigatory Powers) (Consequential Amendments)  Regulations 2026",
+   "ayes": 368,
+   "noes": 107,
+   "url": "https://votes.parliament.uk/votes/commons/division/2282"
+  },
+  {
+   "id": 2281,
+   "date": "2026-03-11",
+   "number": 449,
+   "title": "Finance (No. 2) Bill: Third Reading",
+   "ayes": 292,
+   "noes": 161,
+   "url": "https://votes.parliament.uk/votes/commons/division/2281"
+  },
+  {
+   "id": 2280,
+   "date": "2026-03-11",
+   "number": 448,
+   "title": "Finance (No. 2) Bill Report Stage: Amendment 6",
+   "ayes": 175,
+   "noes": 292,
+   "url": "https://votes.parliament.uk/votes/commons/division/2280"
+  },
+  {
+   "id": 2279,
+   "date": "2026-03-11",
+   "number": 447,
+   "title": "Finance (No. 2) Bill Report Stage: Amendment 5",
+   "ayes": 172,
+   "noes": 283,
+   "url": "https://votes.parliament.uk/votes/commons/division/2279"
+  },
+  {
+   "id": 2278,
+   "date": "2026-03-11",
+   "number": 446,
+   "title": "Finance (No. 2) Bill Report Stage: New Clause 11",
+   "ayes": 174,
+   "noes": 292,
+   "url": "https://votes.parliament.uk/votes/commons/division/2278"
+  },
+  {
+   "id": 2277,
+   "date": "2026-03-10",
+   "number": 445,
+   "title": "Courts and Tribunals Bill: Second Reading",
+   "ayes": 304,
+   "noes": 203,
+   "url": "https://votes.parliament.uk/votes/commons/division/2277"
+  },
+  {
+   "id": 2276,
+   "date": "2026-03-10",
+   "number": 444,
+   "title": "Courts and Tribunals Bill: Reasoned Amendment to Second Reading",
+   "ayes": 203,
+   "noes": 311,
+   "url": "https://votes.parliament.uk/votes/commons/division/2276"
+  },
+  {
+   "id": 2275,
+   "date": "2026-03-09",
+   "number": 443,
+   "title": "Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 106",
+   "ayes": 304,
+   "noes": 177,
+   "url": "https://votes.parliament.uk/votes/commons/division/2275"
+  },
+  {
+   "id": 2274,
+   "date": "2026-03-09",
+   "number": 442,
+   "title": "Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 102",
+   "ayes": 315,
+   "noes": 163,
+   "url": "https://votes.parliament.uk/votes/commons/division/2274"
+  },
+  {
+   "id": 2273,
+   "date": "2026-03-09",
+   "number": 441,
+   "title": "Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 44",
+   "ayes": 315,
+   "noes": 109,
+   "url": "https://votes.parliament.uk/votes/commons/division/2273"
+  },
+  {
+   "id": 2272,
+   "date": "2026-03-09",
+   "number": 440,
+   "title": "Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 41",
+   "ayes": 316,
+   "noes": 171,
+   "url": "https://votes.parliament.uk/votes/commons/division/2272"
+  },
+  {
+   "id": 2271,
+   "date": "2026-03-09",
+   "number": 439,
+   "title": "Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 38",
+   "ayes": 307,
+   "noes": 173,
+   "url": "https://votes.parliament.uk/votes/commons/division/2271"
+  },
+  {
+   "id": 2270,
+   "date": "2026-03-09",
+   "number": 438,
+   "title": "Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 37",
+   "ayes": 321,
+   "noes": 106,
+   "url": "https://votes.parliament.uk/votes/commons/division/2270"
+  },
+  {
+   "id": 2269,
+   "date": "2026-03-09",
+   "number": 437,
+   "title": "Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 17",
+   "ayes": 306,
+   "noes": 182,
+   "url": "https://votes.parliament.uk/votes/commons/division/2269"
+  },
+  {
+   "id": 2268,
+   "date": "2026-03-09",
+   "number": 436,
+   "title": "Children's Wellbeing and Schools Bill: motion to disagree with Lords Amendment 16",
+   "ayes": 309,
+   "noes": 181,
+   "url": "https://votes.parliament.uk/votes/commons/division/2268"
+  },
+  {
+   "id": 2267,
+   "date": "2026-03-02",
+   "number": 435,
+   "title": "Representation of the People Bill: Reasoned Amendment to Second Reading ",
+   "ayes": 105,
+   "noes": 410,
+   "url": "https://votes.parliament.uk/votes/commons/division/2267"
+  },
+  {
+   "id": 2266,
+   "date": "2026-02-24",
+   "number": 434,
+   "title": "Opposition Day: Protections for children from online harms",
+   "ayes": 69,
+   "noes": 279,
+   "url": "https://votes.parliament.uk/votes/commons/division/2266"
+  },
+  {
+   "id": 2265,
+   "date": "2026-02-23",
+   "number": 433,
+   "title": "Universal Credit (Removal of Two Child Limit) Bill: Third Reading",
+   "ayes": 361,
+   "noes": 84,
+   "url": "https://votes.parliament.uk/votes/commons/division/2265"
+  },
+  {
+   "id": 2264,
+   "date": "2026-02-23",
+   "number": 432,
+   "title": "Universal Credit (Removal of Two Child Limit) Bill Committee: New Clause 3",
+   "ayes": 73,
+   "noes": 256,
+   "url": "https://votes.parliament.uk/votes/commons/division/2264"
+  },
+  {
+   "id": 2263,
+   "date": "2026-02-23",
+   "number": 431,
+   "title": "Industry and Exports (Financial Assistance) Bill Committee: New Clause 3",
+   "ayes": 77,
+   "noes": 280,
+   "url": "https://votes.parliament.uk/votes/commons/division/2263"
+  },
+  {
+   "id": 2262,
+   "date": "2026-02-23",
+   "number": 430,
+   "title": "Industry and Exports (Financial Assistance) Bill Committee: New Clause 2",
+   "ayes": 156,
+   "noes": 273,
+   "url": "https://votes.parliament.uk/votes/commons/division/2262"
+  },
+  {
+   "id": 2261,
+   "date": "2026-02-23",
+   "number": 429,
+   "title": "Industry and Exports (Financial Assistance) Bill Committee: Amendment 1",
+   "ayes": 161,
+   "noes": 272,
+   "url": "https://votes.parliament.uk/votes/commons/division/2261"
+  },
+  {
+   "id": 2257,
+   "date": "2026-02-11",
+   "number": 428,
+   "title": "Referendums Relating to Council Tax Increases (Principles) (England) Report 2026-27",
+   "ayes": 279,
+   "noes": 90,
+   "url": "https://votes.parliament.uk/votes/commons/division/2257"
+  },
+  {
+   "id": 2256,
+   "date": "2026-02-11",
+   "number": 427,
+   "title": "Local Government Finance Report (England) 2026-27",
+   "ayes": 277,
+   "noes": 143,
+   "url": "https://votes.parliament.uk/votes/commons/division/2256"
+  },
+  {
+   "id": 2255,
+   "date": "2026-02-11",
+   "number": 426,
+   "title": "Draft Greenhouse Gas Emissions Trading Scheme (Amendment) (Extension to Maritime Activities) Order 2026",
+   "ayes": 362,
+   "noes": 107,
+   "url": "https://votes.parliament.uk/votes/commons/division/2255"
+  },
+  {
+   "id": 2254,
+   "date": "2026-02-04",
+   "number": 425,
+   "title": "Draft Greenhouse Gas Emissions Trading Scheme (Amendment) Order 2026",
+   "ayes": 392,
+   "noes": 116,
+   "url": "https://votes.parliament.uk/votes/commons/division/2254"
+  },
+  {
+   "id": 2253,
+   "date": "2026-02-03",
+   "number": 424,
+   "title": "Universal Credit (Removal of Two Child Limit) Bill: Second Reading",
+   "ayes": 458,
+   "noes": 104,
+   "url": "https://votes.parliament.uk/votes/commons/division/2253"
+  },
+  {
+   "id": 2252,
+   "date": "2026-01-28",
+   "number": 423,
+   "title": "Opposition Day: Youth unemployment",
+   "ayes": 91,
+   "noes": 287,
+   "url": "https://votes.parliament.uk/votes/commons/division/2252"
+  },
+  {
+   "id": 2251,
+   "date": "2026-01-28",
+   "number": 422,
+   "title": "Opposition Day: British Indian Ocean Territory",
+   "ayes": 103,
+   "noes": 284,
+   "url": "https://votes.parliament.uk/votes/commons/division/2251"
+  },
+  {
+   "id": 2250,
+   "date": "2026-01-28",
+   "number": 421,
+   "title": "Draft Medical Devices (Fees Amendment) Regulations 2026",
+   "ayes": 294,
+   "noes": 108,
+   "url": "https://votes.parliament.uk/votes/commons/division/2250"
+  }
+ ]
+}

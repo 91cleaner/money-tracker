@@ -1,0 +1,603 @@
+{
+  "version": 1,
+  "as_of": "2026-10-27",
+  "model": "MONEY TRACKER PUBLIC_EVIDENCE_GRAPH",
+  "caveat": "Source-backed ties only, no inferred illegal trading or deterministic price explanations.",
+  "sources": [
+    {
+      "id": "chips",
+      "name": "Congress.gov · CHIPS 2022",
+      "url": "https://www.congress.gov/bill/117th-congress/house-bill/4346"
+    },
+    {
+      "id": "taiwan2026",
+      "name": "미 상무부 · 2026 미국-대만 투자 협력",
+      "url": "https://www.commerce.gov/news/fact-sheets/2026/01/fact-sheet-restoring-american-semiconductor-manufacturing-leadership"
+    },
+    {
+      "id": "taiwanEPPD",
+      "name": "대만 경제부 · 2026 미대만 경제 번영 대화",
+      "url": "https://www.moea.gov.tw/Mns/English/news/News.aspx?kind=6&menu_id=176&news_id=122068"
+    },
+    {
+      "id": "korea2023",
+      "name": "한국 외교부 · 2023 한미일 공동성명",
+      "url": "https://www.mofa.go.kr/www/brd/m_3973/view.do?page=1&seq=367956"
+    },
+    {
+      "id": "korea2024",
+      "name": "한국 외교부 · 2024 한미일 공동성명",
+      "url": "https://www.mofa.go.kr/www/brd/m_27865/view.do?itm_seq_1=0&itm_seq_2=0&multi_itm_seq=0&seq=5"
+    },
+    {
+      "id": "japanTaiwan",
+      "name": "일본 외무성 · 2026 일본-대만 관계",
+      "url": "https://www.mofa.go.jp/region/asia-paci/taiwan/data.html"
+    },
+    {
+      "id": "japanUS",
+      "name": "일본 외무성 · 2026 미국-일본 관계",
+      "url": "https://www.mofa.go.jp/na/na1/us/page23e_000329.html"
+    },
+    {
+      "id": "japanDiet",
+      "name": "일본 국회도서관 · 회의록 API",
+      "url": "https://kokkai.ndl.go.jp/api.html"
+    },
+    {
+      "id": "koreaBills",
+      "name": "대한민국 국회 · 의안 API",
+      "url": "https://www.data.go.kr/data/15126134/openapi.do"
+    },
+    {
+      "id": "usCongress",
+      "name": "미국 Congress.gov · 의회 API",
+      "url": "https://api.congress.gov/"
+    },
+    {
+      "id": "companyTSMC",
+      "name": "TSMC 투자자관계",
+      "url": "https://investor.tsmc.com/english"
+    },
+    {
+      "id": "companyNVDA",
+      "name": "NVIDIA 투자자관계",
+      "url": "https://investor.nvidia.com/"
+    },
+    {
+      "id": "companySamsung",
+      "name": "삼성전자 투자자관계",
+      "url": "https://www.samsung.com/global/ir/"
+    },
+    {
+      "id": "companyHynix",
+      "name": "SK hynix 공식 투자자관계",
+      "url": "https://news.skhynix.com/"
+    },
+    {
+      "id": "companyIntel",
+      "name": "Intel Investor Relations",
+      "url": "https://www.intc.com/"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "US",
+      "type": "country",
+      "title": "미국 · 정책·시장 허브",
+      "aliases": [
+        "미국",
+        "US",
+        "USA",
+        "워싱턴"
+      ],
+      "summary": "미국 정부·의회의 공식 자료와 상장사 공시를 지리적으로 연결.",
+      "source_id": "usCongress",
+      "location": {
+        "lat": 38.8951,
+        "lng": -77.0364,
+        "label": "미국 · 정책·시장 허브 관련 지역"
+      }
+    },
+    {
+      "id": "TW",
+      "type": "country",
+      "title": "대만 · 첨단 반도체 공급망",
+      "aliases": [
+        "대만",
+        "타이완",
+        "Taiwan",
+        "臺灣"
+      ],
+      "summary": "미국·대만 정부가 발표한 반도체 공급망·경제안보 협력의 지리적 축.",
+      "source_id": "taiwanEPPD",
+      "location": {
+        "lat": 25.033,
+        "lng": 121.5654,
+        "label": "대만 · 첨단 반도체 공급망 관련 지역"
+      }
+    },
+    {
+      "id": "JP",
+      "type": "country",
+      "title": "일본 · 경제안보·제조업·외교",
+      "aliases": [
+        "일본",
+        "Japan",
+        "日本"
+      ],
+      "summary": "일본의 대미 및 대만 관계를 공식 외교 문서와 일본 국회 회의록으로 연결.",
+      "source_id": "japanUS",
+      "location": {
+        "lat": 35.6762,
+        "lng": 139.6503,
+        "label": "일본 · 경제안보·제조업·외교 관련 지역"
+      }
+    },
+    {
+      "id": "KR",
+      "type": "country",
+      "title": "대한민국 · 반도체·한미일 정책",
+      "aliases": [
+        "한국",
+        "Korea",
+        "대한민국",
+        "South Korea"
+      ],
+      "summary": "한국의 국회·기업·한미일 안보 협력 기록과 연결.",
+      "source_id": "korea2023",
+      "location": {
+        "lat": 37.5665,
+        "lng": 126.978,
+        "label": "대한민국 · 반도체·한미일 정책 관련 지역"
+      }
+    },
+    {
+      "id": "BILL_CHIPS_2022",
+      "type": "law",
+      "title": "미국 CHIPS and Science Act (2022)",
+      "aliases": [
+        "미국 반도체법",
+        "CHIPS",
+        "2022"
+      ],
+      "summary": "2022년 제정된 미국 반도체법 원문. 대만·한국·일본 모든 기업의 동일한 수혜를 의미하지 않는다.",
+      "source_id": "chips",
+      "location": {
+        "lat": 38.8899,
+        "lng": -77.0091,
+        "label": "미국 CHIPS and Science Act (2022) 관련 지역"
+      }
+    },
+    {
+      "id": "AGREEMENT_US_TW_2026",
+      "type": "agreement",
+      "title": "2026 미국-대만 반도체 투자 협력",
+      "aliases": [
+        "2026 대만 투자",
+        "반도체 미국 협정"
+      ],
+      "summary": "미 상무부가 2026년 1월 15일 발표한 투자 협력과 관련 집행 기대. 개별 기업 주가와의 인과는 별도 자료 필요.",
+      "source_id": "taiwan2026",
+      "location": {
+        "lat": 38.8951,
+        "lng": -77.0364,
+        "label": "2026 미국-대만 반도체 투자 협력 관련 지역"
+      }
+    },
+    {
+      "id": "EVENT_EPPD_TW_2026",
+      "type": "event",
+      "title": "2026 미·대만 경제번영대화 · AI 공급망",
+      "aliases": [
+        "Pax Silica",
+        "미대만 EPPD"
+      ],
+      "summary": "대만 경제부에 따르면 2026년 1월 27일 경제대화가 열렸으며 AI 공급망·중요광물·드론 등 7개 협력 분야를 논의.",
+      "source_id": "taiwanEPPD",
+      "location": {
+        "lat": 25.033,
+        "lng": 121.5654,
+        "label": "2026 미·대만 경제번영대화 · AI 공급망 관련 지역"
+      }
+    },
+    {
+      "id": "EVENT_TRILATERAL_2023",
+      "type": "event",
+      "title": "2023 캠프데이비드 한미일 정상회의",
+      "aliases": [
+        "캠프데이비드",
+        "한미일"
+      ],
+      "summary": "한미일 3국이 경제안보·기술보호·수출통제 등의 협력을 공동성명으로 발표.",
+      "source_id": "korea2023",
+      "location": {
+        "lat": 39.647,
+        "lng": -77.466,
+        "label": "2023 캠프데이비드 한미일 정상회의 관련 지역"
+      }
+    },
+    {
+      "id": "EVENT_TRILATERAL_2024",
+      "type": "event",
+      "title": "2024 한미일 정상 공동성명",
+      "aliases": [
+        "2024 한미일 공동성명"
+      ],
+      "summary": "한미일 3국이 2024년 정상회담에서 외교·안보 협력 의지를 확인.",
+      "source_id": "korea2024",
+      "location": {
+        "lat": -12.046,
+        "lng": -77.042,
+        "label": "2024 한미일 정상 공동성명 관련 지역"
+      }
+    },
+    {
+      "id": "JAPAN_TAIWAN_2026",
+      "type": "relation",
+      "title": "일본 외무성 · 일본-대만 2026 정책 입장",
+      "aliases": [
+        "일본 대만 정책",
+        "대만 해협",
+        "Japan Taiwan"
+      ],
+      "summary": "일본 외무성이 2026년 6월 일본·대만 관계와 대만해협의 평화·안정을 설명한 공식 자료.",
+      "source_id": "japanTaiwan",
+      "location": {
+        "lat": 35.6762,
+        "lng": 139.6503,
+        "label": "일본 외무성 · 일본-대만 2026 정책 입장 관련 지역"
+      }
+    },
+    {
+      "id": "JAPAN_US_2026",
+      "type": "relation",
+      "title": "일본 외무성 · 미일 동맹 및 교역",
+      "aliases": [
+        "미일 동맹",
+        "일본 미국 투자"
+      ],
+      "summary": "2026년 8월 일본 외무성 공개 자료에 미일 안보와 투자·교역의 주요 지표가 수록됨.",
+      "source_id": "japanUS",
+      "location": {
+        "lat": 35.6762,
+        "lng": 139.6503,
+        "label": "일본 외무성 · 미일 동맹 및 교역 관련 지역"
+      }
+    },
+    {
+      "id": "US_CONGRESS_BILLS",
+      "type": "dataset",
+      "title": "미국 의회 API · 의원·법안·투표 기록",
+      "aliases": [
+        "congress.gov",
+        "미국 법안 API"
+      ],
+      "summary": "입법 고유번호와 의회 세션·입법 단계·후원자를 공식 API로 식별해야 한다.",
+      "source_id": "usCongress",
+      "location": {
+        "lat": 38.8899,
+        "lng": -77.0091,
+        "label": "미국 의회 API · 의원·법안·투표 기록 관련 지역"
+      }
+    },
+    {
+      "id": "JP_DIET_MINUTES",
+      "type": "dataset",
+      "title": "일본 국회 회의록 API · 발언 원문 링크",
+      "aliases": [
+        "日本国会",
+        "議事録",
+        "일본 국회"
+      ],
+      "summary": "국회도서관에서 회의록 날짜·발언자·발언 링크 조회 가능. 완전한 의안·투표 자료와는 구분.",
+      "source_id": "japanDiet",
+      "location": {
+        "lat": 35.677,
+        "lng": 139.745,
+        "label": "일본 국회 회의록 API · 발언 원문 링크 관련 지역"
+      }
+    },
+    {
+      "id": "KR_ASSEMBLY_BILLS",
+      "type": "dataset",
+      "title": "한국 국회 의안정보 통합 API",
+      "aliases": [
+        "국회의안",
+        "한국 법안 API"
+      ],
+      "summary": "의안정보 공공데이터포털 API. 키/승인 및 법안 상태별 구분이 필요.",
+      "source_id": "koreaBills",
+      "location": {
+        "lat": 37.531,
+        "lng": 126.914,
+        "label": "한국 국회 의안정보 통합 API 관련 지역"
+      }
+    },
+    {
+      "id": "COMPANY_TSMC",
+      "type": "company",
+      "title": "TSMC · 대만 파운드리 기업",
+      "aliases": [
+        "TSMC",
+        "台積電",
+        "대만 반도체"
+      ],
+      "summary": "대만 반도체 제조 분야 기업. 개별 고객·매출 노출은 회사 공식 공시로 확인해야 함.",
+      "source_id": "companyTSMC",
+      "location": {
+        "lat": 24.785,
+        "lng": 121.008,
+        "label": "TSMC · 대만 파운드리 기업 관련 지역"
+      }
+    },
+    {
+      "id": "COMPANY_NVIDIA",
+      "type": "company",
+      "title": "NVIDIA · 미국 AI 반도체 기업",
+      "aliases": [
+        "NVIDIA",
+        "엔비디아",
+        "NVDA"
+      ],
+      "summary": "미국 AI 반도체 기업. 파운드리·국가정책 관계는 조사 대상이지만 주가 인과를 증명하지 않음.",
+      "source_id": "companyNVDA",
+      "location": {
+        "lat": 37.3727,
+        "lng": -121.9694,
+        "label": "NVIDIA · 미국 AI 반도체 기업 관련 지역"
+      }
+    },
+    {
+      "id": "COMPANY_SAMSUNG",
+      "type": "company",
+      "title": "삼성전자 · 한국 반도체 기업",
+      "aliases": [
+        "삼성전자",
+        "삼성",
+        "Samsung"
+      ],
+      "summary": "한국 전자·반도체 기업. 지정학·정부정책·설비투자 노출은 회사 사업보고서와 구분해 검증.",
+      "source_id": "companySamsung",
+      "location": {
+        "lat": 37.258,
+        "lng": 127.053,
+        "label": "삼성전자 · 한국 반도체 기업 관련 지역"
+      }
+    },
+    {
+      "id": "COMPANY_HYNIX",
+      "type": "company",
+      "title": "SK하이닉스 · 한국 메모리 기업",
+      "aliases": [
+        "SK하이닉스",
+        "SK hynix",
+        "HBM"
+      ],
+      "summary": "한국 메모리 반도체 기업. HBM 제품·실적은 회사 발표가 기준.",
+      "source_id": "companyHynix",
+      "location": {
+        "lat": 37.487,
+        "lng": 127.042,
+        "label": "SK하이닉스 · 한국 메모리 기업 관련 지역"
+      }
+    },
+    {
+      "id": "COMPANY_INTEL",
+      "type": "company",
+      "title": "Intel · 미국 반도체 설계·제조",
+      "aliases": [
+        "인텔",
+        "Intel",
+        "INTC"
+      ],
+      "summary": "미국 반도체 설계·제조 기업. 정부 지원의 수혜 범위·사업 조건은 NIST 자료를 확인.",
+      "source_id": "companyIntel",
+      "location": {
+        "lat": 37.3875,
+        "lng": -121.963,
+        "label": "Intel · 미국 반도체 설계·제조 관련 지역"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "US",
+      "to": "AGREEMENT_US_TW_2026",
+      "predicate": "SIGNED_AGREEMENT",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "taiwan2026",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "TW",
+      "to": "AGREEMENT_US_TW_2026",
+      "predicate": "SIGNED_AGREEMENT",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "taiwan2026",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "TW",
+      "to": "EVENT_EPPD_TW_2026",
+      "predicate": "PARTICIPATED",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "taiwanEPPD",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "US",
+      "to": "EVENT_EPPD_TW_2026",
+      "predicate": "PARTICIPATED",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "taiwanEPPD",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "US",
+      "to": "BILL_CHIPS_2022",
+      "predicate": "ENACTED",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "chips",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "US",
+      "to": "EVENT_TRILATERAL_2023",
+      "predicate": "HOSTED_TRILATERAL",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "korea2023",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "KR",
+      "to": "EVENT_TRILATERAL_2023",
+      "predicate": "PARTICIPATED",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "korea2023",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "JP",
+      "to": "EVENT_TRILATERAL_2023",
+      "predicate": "PARTICIPATED",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "korea2023",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "US",
+      "to": "EVENT_TRILATERAL_2024",
+      "predicate": "PARTICIPATED",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "korea2024",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "KR",
+      "to": "EVENT_TRILATERAL_2024",
+      "predicate": "PARTICIPATED",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "korea2024",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "JP",
+      "to": "EVENT_TRILATERAL_2024",
+      "predicate": "PARTICIPATED",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "korea2024",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "JP",
+      "to": "JAPAN_TAIWAN_2026",
+      "predicate": "HAS_OFFICIAL_POLICY_RECORD",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "japanTaiwan",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "JP",
+      "to": "JAPAN_US_2026",
+      "predicate": "HAS_OFFICIAL_POLICY_RECORD",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "japanUS",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "US_CONGRESS_BILLS",
+      "to": "BILL_CHIPS_2022",
+      "predicate": "INDEXES",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "usCongress",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "TW",
+      "to": "COMPANY_TSMC",
+      "predicate": "CORPORATE_HEADQUARTERS_REGION",
+      "relation_type": "POLICY_CONTEXT",
+      "source_id": "companyTSMC",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "US",
+      "to": "COMPANY_NVIDIA",
+      "predicate": "CORPORATE_HEADQUARTERS_REGION",
+      "relation_type": "POLICY_CONTEXT",
+      "source_id": "companyNVDA",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "KR",
+      "to": "COMPANY_SAMSUNG",
+      "predicate": "CORPORATE_HEADQUARTERS_REGION",
+      "relation_type": "POLICY_CONTEXT",
+      "source_id": "companySamsung",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "KR",
+      "to": "COMPANY_HYNIX",
+      "predicate": "CORPORATE_HEADQUARTERS_REGION",
+      "relation_type": "POLICY_CONTEXT",
+      "source_id": "companyHynix",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "US",
+      "to": "COMPANY_INTEL",
+      "predicate": "CORPORATE_HEADQUARTERS_REGION",
+      "relation_type": "POLICY_CONTEXT",
+      "source_id": "companyIntel",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "US",
+      "to": "US_CONGRESS_BILLS",
+      "predicate": "HAS_OFFICIAL_BILL_SOURCE",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "usCongress",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "KR",
+      "to": "KR_ASSEMBLY_BILLS",
+      "predicate": "HAS_OFFICIAL_BILL_SOURCE",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "koreaBills",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    },
+    {
+      "from": "JP",
+      "to": "JP_DIET_MINUTES",
+      "predicate": "HAS_OFFICIAL_MINUTES_SOURCE",
+      "relation_type": "VERIFIED_DIRECT",
+      "source_id": "japanDiet",
+      "verified": "source-linked",
+      "not_proof_of_stock_causality": true
+    }
+  ]
+}

@@ -1,0 +1,10490 @@
+{
+ "updated": "2026-10-28 19:22",
+ "as_of": "2025-12-31",
+ "unit": "억원, %",
+ "columns": [
+  "번호",
+  "자산군 내 비중(퍼센트)",
+  "종목명",
+  "지분율(퍼센트)",
+  "평가액(억 원)"
+ ],
+ "source": "국민연금공단_국내주식 투자정보(공공데이터포털)",
+ "source_url": "https://www.data.go.kr/data/3070507/fileData.do",
+ "file_url": "https://api.odcloud.kr/api/3070507/v1/uddi:b32185ed-8e1a-4468-9222-892713bab04a",
+ "via": "api.odcloud.kr",
+ "also": "https://fund.nps.or.kr/oprtprcn/ivsmprcn/getOHED0003M0.do",
+ "count": 1206,
+ "total_value_100m_krw": 2616354,
+ "top20": [
+  {
+   "rank": 1,
+   "company": "삼성전자",
+   "value_100m_krw": 551095.0,
+   "weight_pct": 21.06,
+   "stake_pct": 7.76
+  },
+  {
+   "rank": 2,
+   "company": "SK하이닉스",
+   "value_100m_krw": 374316.0,
+   "weight_pct": 14.31,
+   "stake_pct": 7.9
+  },
+  {
+   "rank": 3,
+   "company": "LG에너지솔루션",
+   "value_100m_krw": 57793.0,
+   "weight_pct": 2.21,
+   "stake_pct": 6.7
+  },
+  {
+   "rank": 4,
+   "company": "삼성바이오로직스",
+   "value_100m_krw": 57673.0,
+   "weight_pct": 2.2,
+   "stake_pct": 7.35
+  },
+  {
+   "rank": 5,
+   "company": "현대차",
+   "value_100m_krw": 47072.0,
+   "weight_pct": 1.8,
+   "stake_pct": 7.75
+  },
+  {
+   "rank": 6,
+   "company": "HD현대중공업",
+   "value_100m_krw": 42571.0,
+   "weight_pct": 1.63,
+   "stake_pct": 7.97
+  },
+  {
+   "rank": 7,
+   "company": "SK스퀘어",
+   "value_100m_krw": 41434.0,
+   "weight_pct": 1.58,
+   "stake_pct": 8.52
+  },
+  {
+   "rank": 8,
+   "company": "KB금융",
+   "value_100m_krw": 41250.0,
+   "weight_pct": 1.58,
+   "stake_pct": 8.67
+  },
+  {
+   "rank": 9,
+   "company": "한화에어로스페이스",
+   "value_100m_krw": 38570.0,
+   "weight_pct": 1.47,
+   "stake_pct": 7.95
+  },
+  {
+   "rank": 10,
+   "company": "두산에너빌리티",
+   "value_100m_krw": 37475.0,
+   "weight_pct": 1.43,
+   "stake_pct": 7.77
+  },
+  {
+   "rank": 11,
+   "company": "NAVER",
+   "value_100m_krw": 35247.0,
+   "weight_pct": 1.35,
+   "stake_pct": 9.27
+  },
+  {
+   "rank": 12,
+   "company": "기아",
+   "value_100m_krw": 34411.0,
+   "weight_pct": 1.32,
+   "stake_pct": 7.24
+  },
+  {
+   "rank": 13,
+   "company": "신한지주",
+   "value_100m_krw": 33709.0,
+   "weight_pct": 1.29,
+   "stake_pct": 9.03
+  },
+  {
+   "rank": 14,
+   "company": "삼성물산",
+   "value_100m_krw": 32800.0,
+   "weight_pct": 1.25,
+   "stake_pct": 8.06
+  },
+  {
+   "rank": 15,
+   "company": "현대모비스",
+   "value_100m_krw": 31065.0,
+   "weight_pct": 1.19,
+   "stake_pct": 9.18
+  },
+  {
+   "rank": 16,
+   "company": "셀트리온",
+   "value_100m_krw": 27852.0,
+   "weight_pct": 1.06,
+   "stake_pct": 6.66
+  },
+  {
+   "rank": 17,
+   "company": "한국전력",
+   "value_100m_krw": 23985.0,
+   "weight_pct": 0.92,
+   "stake_pct": 7.92
+  },
+  {
+   "rank": 18,
+   "company": "하나금융지주",
+   "value_100m_krw": 22698.0,
+   "weight_pct": 0.87,
+   "stake_pct": 8.67
+  },
+  {
+   "rank": 19,
+   "company": "한화오션",
+   "value_100m_krw": 22222.0,
+   "weight_pct": 0.85,
+   "stake_pct": 6.38
+  },
+  {
+   "rank": 20,
+   "company": "삼성생명",
+   "value_100m_krw": 21418.0,
+   "weight_pct": 0.82,
+   "stake_pct": 6.8
+  }
+ ],
+ "stake_5pct_plus": [
+  {
+   "rank": 1,
+   "company": "삼성전자",
+   "value_100m_krw": 551095.0,
+   "weight_pct": 21.06,
+   "stake_pct": 7.76
+  },
+  {
+   "rank": 2,
+   "company": "SK하이닉스",
+   "value_100m_krw": 374316.0,
+   "weight_pct": 14.31,
+   "stake_pct": 7.9
+  },
+  {
+   "rank": 3,
+   "company": "LG에너지솔루션",
+   "value_100m_krw": 57793.0,
+   "weight_pct": 2.21,
+   "stake_pct": 6.7
+  },
+  {
+   "rank": 4,
+   "company": "삼성바이오로직스",
+   "value_100m_krw": 57673.0,
+   "weight_pct": 2.2,
+   "stake_pct": 7.35
+  },
+  {
+   "rank": 5,
+   "company": "현대차",
+   "value_100m_krw": 47072.0,
+   "weight_pct": 1.8,
+   "stake_pct": 7.75
+  },
+  {
+   "rank": 6,
+   "company": "HD현대중공업",
+   "value_100m_krw": 42571.0,
+   "weight_pct": 1.63,
+   "stake_pct": 7.97
+  },
+  {
+   "rank": 7,
+   "company": "SK스퀘어",
+   "value_100m_krw": 41434.0,
+   "weight_pct": 1.58,
+   "stake_pct": 8.52
+  },
+  {
+   "rank": 8,
+   "company": "KB금융",
+   "value_100m_krw": 41250.0,
+   "weight_pct": 1.58,
+   "stake_pct": 8.67
+  },
+  {
+   "rank": 9,
+   "company": "한화에어로스페이스",
+   "value_100m_krw": 38570.0,
+   "weight_pct": 1.47,
+   "stake_pct": 7.95
+  },
+  {
+   "rank": 10,
+   "company": "두산에너빌리티",
+   "value_100m_krw": 37475.0,
+   "weight_pct": 1.43,
+   "stake_pct": 7.77
+  },
+  {
+   "rank": 11,
+   "company": "NAVER",
+   "value_100m_krw": 35247.0,
+   "weight_pct": 1.35,
+   "stake_pct": 9.27
+  },
+  {
+   "rank": 12,
+   "company": "기아",
+   "value_100m_krw": 34411.0,
+   "weight_pct": 1.32,
+   "stake_pct": 7.24
+  },
+  {
+   "rank": 13,
+   "company": "신한지주",
+   "value_100m_krw": 33709.0,
+   "weight_pct": 1.29,
+   "stake_pct": 9.03
+  },
+  {
+   "rank": 14,
+   "company": "삼성물산",
+   "value_100m_krw": 32800.0,
+   "weight_pct": 1.25,
+   "stake_pct": 8.06
+  },
+  {
+   "rank": 15,
+   "company": "현대모비스",
+   "value_100m_krw": 31065.0,
+   "weight_pct": 1.19,
+   "stake_pct": 9.18
+  },
+  {
+   "rank": 16,
+   "company": "셀트리온",
+   "value_100m_krw": 27852.0,
+   "weight_pct": 1.06,
+   "stake_pct": 6.66
+  },
+  {
+   "rank": 17,
+   "company": "한국전력",
+   "value_100m_krw": 23985.0,
+   "weight_pct": 0.92,
+   "stake_pct": 7.92
+  },
+  {
+   "rank": 18,
+   "company": "하나금융지주",
+   "value_100m_krw": 22698.0,
+   "weight_pct": 0.87,
+   "stake_pct": 8.67
+  },
+  {
+   "rank": 19,
+   "company": "한화오션",
+   "value_100m_krw": 22222.0,
+   "weight_pct": 0.85,
+   "stake_pct": 6.38
+  },
+  {
+   "rank": 20,
+   "company": "삼성생명",
+   "value_100m_krw": 21418.0,
+   "weight_pct": 0.82,
+   "stake_pct": 6.8
+  },
+  {
+   "rank": 21,
+   "company": "HD한국조선해양",
+   "value_100m_krw": 21361.0,
+   "weight_pct": 0.82,
+   "stake_pct": 7.42
+  },
+  {
+   "rank": 22,
+   "company": "HD현대일렉트릭",
+   "value_100m_krw": 21298.0,
+   "weight_pct": 0.81,
+   "stake_pct": 7.63
+  },
+  {
+   "rank": 23,
+   "company": "삼성전기",
+   "value_100m_krw": 20917.0,
+   "weight_pct": 0.8,
+   "stake_pct": 10.98
+  },
+  {
+   "rank": 24,
+   "company": "LG화학",
+   "value_100m_krw": 20152.0,
+   "weight_pct": 0.77,
+   "stake_pct": 8.57
+  },
+  {
+   "rank": 25,
+   "company": "POSCO홀딩스",
+   "value_100m_krw": 19662.0,
+   "weight_pct": 0.75,
+   "stake_pct": 7.97
+  },
+  {
+   "rank": 26,
+   "company": "카카오",
+   "value_100m_krw": 17536.0,
+   "weight_pct": 0.67,
+   "stake_pct": 6.6
+  },
+  {
+   "rank": 27,
+   "company": "효성중공업",
+   "value_100m_krw": 17015.0,
+   "weight_pct": 0.65,
+   "stake_pct": 10.25
+  },
+  {
+   "rank": 28,
+   "company": "삼성중공업",
+   "value_100m_krw": 16154.0,
+   "weight_pct": 0.62,
+   "stake_pct": 7.62
+  },
+  {
+   "rank": 29,
+   "company": "현대로템",
+   "value_100m_krw": 16126.0,
+   "weight_pct": 0.62,
+   "stake_pct": 7.86
+  },
+  {
+   "rank": 30,
+   "company": "삼성SDI",
+   "value_100m_krw": 14958.0,
+   "weight_pct": 0.57,
+   "stake_pct": 6.89
+  },
+  {
+   "rank": 31,
+   "company": "삼성화재",
+   "value_100m_krw": 14516.0,
+   "weight_pct": 0.55,
+   "stake_pct": 6.35
+  },
+  {
+   "rank": 32,
+   "company": "고려아연",
+   "value_100m_krw": 14203.0,
+   "weight_pct": 0.54,
+   "stake_pct": 5.78
+  },
+  {
+   "rank": 33,
+   "company": "우리금융지주",
+   "value_100m_krw": 13759.0,
+   "weight_pct": 0.53,
+   "stake_pct": 6.69
+  },
+  {
+   "rank": 34,
+   "company": "SK",
+   "value_100m_krw": 13705.0,
+   "weight_pct": 0.52,
+   "stake_pct": 7.37
+  },
+  {
+   "rank": 35,
+   "company": "현대글로비스",
+   "value_100m_krw": 13300.0,
+   "weight_pct": 0.51,
+   "stake_pct": 9.82
+  },
+  {
+   "rank": 36,
+   "company": "삼성에스디에스",
+   "value_100m_krw": 13054.0,
+   "weight_pct": 0.5,
+   "stake_pct": 9.84
+  },
+  {
+   "rank": 37,
+   "company": "메리츠금융지주",
+   "value_100m_krw": 12957.0,
+   "weight_pct": 0.5,
+   "stake_pct": 6.54
+  },
+  {
+   "rank": 38,
+   "company": "KT&G",
+   "value_100m_krw": 12956.0,
+   "weight_pct": 0.5,
+   "stake_pct": 7.73
+  },
+  {
+   "rank": 39,
+   "company": "LS ELECTRIC",
+   "value_100m_krw": 12936.0,
+   "weight_pct": 0.49,
+   "stake_pct": 9.37
+  },
+  {
+   "rank": 40,
+   "company": "하이브",
+   "value_100m_krw": 12201.0,
+   "weight_pct": 0.47,
+   "stake_pct": 8.69
+  },
+  {
+   "rank": 41,
+   "company": "두산",
+   "value_100m_krw": 12111.0,
+   "weight_pct": 0.46,
+   "stake_pct": 9.58
+  },
+  {
+   "rank": 42,
+   "company": "한국금융지주",
+   "value_100m_krw": 12089.0,
+   "weight_pct": 0.46,
+   "stake_pct": 13.42
+  },
+  {
+   "rank": 43,
+   "company": "삼성에피스홀딩스",
+   "value_100m_krw": 11598.0,
+   "weight_pct": 0.44,
+   "stake_pct": 6.27
+  },
+  {
+   "rank": 44,
+   "company": "미래에셋증권",
+   "value_100m_krw": 10610.0,
+   "weight_pct": 0.41,
+   "stake_pct": 8.01
+  },
+  {
+   "rank": 45,
+   "company": "HMM",
+   "value_100m_krw": 10305.0,
+   "weight_pct": 0.39,
+   "stake_pct": 5.33
+  },
+  {
+   "rank": 46,
+   "company": "HD현대",
+   "value_100m_krw": 10112.0,
+   "weight_pct": 0.39,
+   "stake_pct": 6.79
+  },
+  {
+   "rank": 47,
+   "company": "LG전자",
+   "value_100m_krw": 9647.0,
+   "weight_pct": 0.37,
+   "stake_pct": 6.44
+  },
+  {
+   "rank": 48,
+   "company": "KT",
+   "value_100m_krw": 9397.0,
+   "weight_pct": 0.36,
+   "stake_pct": 7.09
+  },
+  {
+   "rank": 49,
+   "company": "SK이노베이션",
+   "value_100m_krw": 9317.0,
+   "weight_pct": 0.36,
+   "stake_pct": 5.45
+  },
+  {
+   "rank": 50,
+   "company": "한국항공우주",
+   "value_100m_krw": 9280.0,
+   "weight_pct": 0.35,
+   "stake_pct": 8.32
+  },
+  {
+   "rank": 51,
+   "company": "키움증권",
+   "value_100m_krw": 9180.0,
+   "weight_pct": 0.35,
+   "stake_pct": 11.87
+  },
+  {
+   "rank": 52,
+   "company": "기업은행",
+   "value_100m_krw": 9017.0,
+   "weight_pct": 0.34,
+   "stake_pct": 5.4
+  },
+  {
+   "rank": 53,
+   "company": "이수페타시스",
+   "value_100m_krw": 8973.0,
+   "weight_pct": 0.34,
+   "stake_pct": 10.25
+  },
+  {
+   "rank": 54,
+   "company": "삼양식품",
+   "value_100m_krw": 8925.0,
+   "weight_pct": 0.34,
+   "stake_pct": 9.62
+  },
+  {
+   "rank": 55,
+   "company": "삼성증권",
+   "value_100m_krw": 8895.0,
+   "weight_pct": 0.34,
+   "stake_pct": 13.21
+  },
+  {
+   "rank": 56,
+   "company": "포스코퓨처엠",
+   "value_100m_krw": 8824.0,
+   "weight_pct": 0.34,
+   "stake_pct": 5.31
+  },
+  {
+   "rank": 57,
+   "company": "현대건설",
+   "value_100m_krw": 8670.0,
+   "weight_pct": 0.33,
+   "stake_pct": 11.11
+  },
+  {
+   "rank": 58,
+   "company": "LS",
+   "value_100m_krw": 8540.0,
+   "weight_pct": 0.33,
+   "stake_pct": 13.48
+  },
+  {
+   "rank": 59,
+   "company": "LIG넥스원",
+   "value_100m_krw": 8440.0,
+   "weight_pct": 0.32,
+   "stake_pct": 9.11
+  },
+  {
+   "rank": 60,
+   "company": "LG",
+   "value_100m_krw": 8387.0,
+   "weight_pct": 0.32,
+   "stake_pct": 6.74
+  },
+  {
+   "rank": 61,
+   "company": "S-Oil",
+   "value_100m_krw": 7955.0,
+   "weight_pct": 0.3,
+   "stake_pct": 8.51
+  },
+  {
+   "rank": 63,
+   "company": "SK텔레콤",
+   "value_100m_krw": 7674.0,
+   "weight_pct": 0.29,
+   "stake_pct": 6.68
+  },
+  {
+   "rank": 64,
+   "company": "크래프톤",
+   "value_100m_krw": 7344.0,
+   "weight_pct": 0.28,
+   "stake_pct": 6.3
+  },
+  {
+   "rank": 65,
+   "company": "한화시스템",
+   "value_100m_krw": 7282.0,
+   "weight_pct": 0.28,
+   "stake_pct": 7.09
+  },
+  {
+   "rank": 66,
+   "company": "현대오토에버",
+   "value_100m_krw": 7095.0,
+   "weight_pct": 0.27,
+   "stake_pct": 7.79
+  },
+  {
+   "rank": 67,
+   "company": "한미반도체",
+   "value_100m_krw": 6937.0,
+   "weight_pct": 0.27,
+   "stake_pct": 5.71
+  },
+  {
+   "rank": 68,
+   "company": "한미약품",
+   "value_100m_krw": 6923.0,
+   "weight_pct": 0.26,
+   "stake_pct": 11.96
+  },
+  {
+   "rank": 69,
+   "company": "유한양행",
+   "value_100m_krw": 6898.0,
+   "weight_pct": 0.26,
+   "stake_pct": 7.67
+  },
+  {
+   "rank": 70,
+   "company": "에이피알",
+   "value_100m_krw": 6793.0,
+   "weight_pct": 0.26,
+   "stake_pct": 7.86
+  },
+  {
+   "rank": 71,
+   "company": "CJ",
+   "value_100m_krw": 6713.0,
+   "weight_pct": 0.26,
+   "stake_pct": 13.38
+  },
+  {
+   "rank": 72,
+   "company": "DB손해보험",
+   "value_100m_krw": 6707.0,
+   "weight_pct": 0.26,
+   "stake_pct": 7.23
+  },
+  {
+   "rank": 73,
+   "company": "LG이노텍",
+   "value_100m_krw": 6670.0,
+   "weight_pct": 0.25,
+   "stake_pct": 10.4
+  },
+  {
+   "rank": 74,
+   "company": "SK바이오팜",
+   "value_100m_krw": 6645.0,
+   "weight_pct": 0.25,
+   "stake_pct": 6.81
+  },
+  {
+   "rank": 76,
+   "company": "NH투자증권",
+   "value_100m_krw": 6187.0,
+   "weight_pct": 0.24,
+   "stake_pct": 8.23
+  },
+  {
+   "rank": 77,
+   "company": "대한항공",
+   "value_100m_krw": 6045.0,
+   "weight_pct": 0.23,
+   "stake_pct": 7.28
+  },
+  {
+   "rank": 78,
+   "company": "HD현대마린솔루션",
+   "value_100m_krw": 5852.0,
+   "weight_pct": 0.22,
+   "stake_pct": 6.75
+  },
+  {
+   "rank": 79,
+   "company": "포스코인터내셔널",
+   "value_100m_krw": 5773.0,
+   "weight_pct": 0.22,
+   "stake_pct": 6.62
+  },
+  {
+   "rank": 80,
+   "company": "카카오뱅크",
+   "value_100m_krw": 5638.0,
+   "weight_pct": 0.22,
+   "stake_pct": 5.47
+  },
+  {
+   "rank": 81,
+   "company": "한국타이어앤테크놀로지",
+   "value_100m_krw": 5578.0,
+   "weight_pct": 0.21,
+   "stake_pct": 7.72
+  },
+  {
+   "rank": 83,
+   "company": "아모레퍼시픽",
+   "value_100m_krw": 5181.0,
+   "weight_pct": 0.2,
+   "stake_pct": 7.41
+  },
+  {
+   "rank": 84,
+   "company": "현대차2우B",
+   "value_100m_krw": 5109.0,
+   "weight_pct": 0.2,
+   "stake_pct": 6.88
+  },
+  {
+   "rank": 85,
+   "company": "한진칼",
+   "value_100m_krw": 4502.0,
+   "weight_pct": 0.17,
+   "stake_pct": 5.44
+  },
+  {
+   "rank": 86,
+   "company": "코웨이",
+   "value_100m_krw": 4472.0,
+   "weight_pct": 0.17,
+   "stake_pct": 7.16
+  },
+  {
+   "rank": 87,
+   "company": "KCC",
+   "value_100m_krw": 4278.0,
+   "weight_pct": 0.16,
+   "stake_pct": 11.45
+  },
+  {
+   "rank": 88,
+   "company": "LG유플러스",
+   "value_100m_krw": 4270.0,
+   "weight_pct": 0.16,
+   "stake_pct": 6.75
+  },
+  {
+   "rank": 89,
+   "company": "BNK금융지주",
+   "value_100m_krw": 4241.0,
+   "weight_pct": 0.16,
+   "stake_pct": 8.5
+  },
+  {
+   "rank": 90,
+   "company": "GS",
+   "value_100m_krw": 3959.0,
+   "weight_pct": 0.15,
+   "stake_pct": 7.57
+  },
+  {
+   "rank": 91,
+   "company": "두산밥캣",
+   "value_100m_krw": 3891.0,
+   "weight_pct": 0.15,
+   "stake_pct": 7.03
+  },
+  {
+   "rank": 92,
+   "company": "삼성카드",
+   "value_100m_krw": 3843.0,
+   "weight_pct": 0.15,
+   "stake_pct": 5.93
+  },
+  {
+   "rank": 93,
+   "company": "현대제철",
+   "value_100m_krw": 3834.0,
+   "weight_pct": 0.15,
+   "stake_pct": 9.25
+  },
+  {
+   "rank": 94,
+   "company": "리가켐바이오",
+   "value_100m_krw": 3780.0,
+   "weight_pct": 0.14,
+   "stake_pct": 5.94
+  },
+  {
+   "rank": 95,
+   "company": "현대엘리베이터",
+   "value_100m_krw": 3736.0,
+   "weight_pct": 0.14,
+   "stake_pct": 10.82
+  },
+  {
+   "rank": 96,
+   "company": "카카오페이",
+   "value_100m_krw": 3665.0,
+   "weight_pct": 0.14,
+   "stake_pct": 5.52
+  },
+  {
+   "rank": 97,
+   "company": "영원무역",
+   "value_100m_krw": 3647.0,
+   "weight_pct": 0.14,
+   "stake_pct": 10.06
+  },
+  {
+   "rank": 98,
+   "company": "HL만도",
+   "value_100m_krw": 3596.0,
+   "weight_pct": 0.14,
+   "stake_pct": 13.05
+  },
+  {
+   "rank": 99,
+   "company": "삼성E&A",
+   "value_100m_krw": 3552.0,
+   "weight_pct": 0.14,
+   "stake_pct": 7.53
+  },
+  {
+   "rank": 100,
+   "company": "한전기술",
+   "value_100m_krw": 3530.0,
+   "weight_pct": 0.13,
+   "stake_pct": 10.26
+  },
+  {
+   "rank": 101,
+   "company": "오리온",
+   "value_100m_krw": 3457.0,
+   "weight_pct": 0.13,
+   "stake_pct": 8.27
+  },
+  {
+   "rank": 102,
+   "company": "HD현대인프라코어",
+   "value_100m_krw": 3442.0,
+   "weight_pct": 0.13,
+   "stake_pct": 13.21
+  },
+  {
+   "rank": 103,
+   "company": "한솔케미칼",
+   "value_100m_krw": 3397.0,
+   "weight_pct": 0.13,
+   "stake_pct": 13.17
+  },
+  {
+   "rank": 104,
+   "company": "LG씨엔에스",
+   "value_100m_krw": 3368.0,
+   "weight_pct": 0.13,
+   "stake_pct": 5.66
+  },
+  {
+   "rank": 105,
+   "company": "한화",
+   "value_100m_krw": 3306.0,
+   "weight_pct": 0.13,
+   "stake_pct": 5.41
+  },
+  {
+   "rank": 106,
+   "company": "한화엔진",
+   "value_100m_krw": 3299.0,
+   "weight_pct": 0.13,
+   "stake_pct": 9.2
+  },
+  {
+   "rank": 107,
+   "company": "산일전기",
+   "value_100m_krw": 3291.0,
+   "weight_pct": 0.13,
+   "stake_pct": 8.31
+  },
+  {
+   "rank": 108,
+   "company": "신세계",
+   "value_100m_krw": 3208.0,
+   "weight_pct": 0.12,
+   "stake_pct": 13.47
+  },
+  {
+   "rank": 109,
+   "company": "JB금융지주",
+   "value_100m_krw": 3137.0,
+   "weight_pct": 0.12,
+   "stake_pct": 6.44
+  },
+  {
+   "rank": 110,
+   "company": "LG디스플레이",
+   "value_100m_krw": 3115.0,
+   "weight_pct": 0.12,
+   "stake_pct": 5.27
+  },
+  {
+   "rank": 111,
+   "company": "엔씨소프트",
+   "value_100m_krw": 3112.0,
+   "weight_pct": 0.12,
+   "stake_pct": 7.17
+  },
+  {
+   "rank": 112,
+   "company": "금호석유화학",
+   "value_100m_krw": 3061.0,
+   "weight_pct": 0.12,
+   "stake_pct": 9.74
+  },
+  {
+   "rank": 113,
+   "company": "엘앤에프",
+   "value_100m_krw": 2911.0,
+   "weight_pct": 0.11,
+   "stake_pct": 7.61
+  },
+  {
+   "rank": 114,
+   "company": "대덕전자",
+   "value_100m_krw": 2803.0,
+   "weight_pct": 0.11,
+   "stake_pct": 12.04
+  },
+  {
+   "rank": 115,
+   "company": "현대해상",
+   "value_100m_krw": 2738.0,
+   "weight_pct": 0.1,
+   "stake_pct": 9.94
+  },
+  {
+   "rank": 116,
+   "company": "현대백화점",
+   "value_100m_krw": 2699.0,
+   "weight_pct": 0.1,
+   "stake_pct": 13.46
+  },
+  {
+   "rank": 118,
+   "company": "대한전선",
+   "value_100m_krw": 2657.0,
+   "weight_pct": 0.1,
+   "stake_pct": 6.22
+  },
+  {
+   "rank": 119,
+   "company": "OCI홀딩스",
+   "value_100m_krw": 2644.0,
+   "weight_pct": 0.1,
+   "stake_pct": 12.29
+  },
+  {
+   "rank": 120,
+   "company": "한국가스공사",
+   "value_100m_krw": 2643.0,
+   "weight_pct": 0.1,
+   "stake_pct": 7.28
+  },
+  {
+   "rank": 121,
+   "company": "포스코DX",
+   "value_100m_krw": 2620.0,
+   "weight_pct": 0.1,
+   "stake_pct": 5.99
+  },
+  {
+   "rank": 122,
+   "company": "한화솔루션",
+   "value_100m_krw": 2605.0,
+   "weight_pct": 0.1,
+   "stake_pct": 5.65
+  },
+  {
+   "rank": 123,
+   "company": "SKC",
+   "value_100m_krw": 2590.0,
+   "weight_pct": 0.1,
+   "stake_pct": 6.55
+  },
+  {
+   "rank": 124,
+   "company": "풍산",
+   "value_100m_krw": 2518.0,
+   "weight_pct": 0.1,
+   "stake_pct": 8.44
+  },
+  {
+   "rank": 125,
+   "company": "넷마블",
+   "value_100m_krw": 2516.0,
+   "weight_pct": 0.1,
+   "stake_pct": 6.07
+  },
+  {
+   "rank": 127,
+   "company": "HD현대마린엔진",
+   "value_100m_krw": 2427.0,
+   "weight_pct": 0.09,
+   "stake_pct": 8.0
+  },
+  {
+   "rank": 128,
+   "company": "LG생활건강",
+   "value_100m_krw": 2392.0,
+   "weight_pct": 0.09,
+   "stake_pct": 6.05
+  },
+  {
+   "rank": 129,
+   "company": "제일기획",
+   "value_100m_krw": 2351.0,
+   "weight_pct": 0.09,
+   "stake_pct": 9.73
+  },
+  {
+   "rank": 130,
+   "company": "CJ대한통운",
+   "value_100m_krw": 2339.0,
+   "weight_pct": 0.09,
+   "stake_pct": 10.84
+  },
+  {
+   "rank": 131,
+   "company": "HD현대건설기계",
+   "value_100m_krw": 2286.0,
+   "weight_pct": 0.09,
+   "stake_pct": 13.39
+  },
+  {
+   "rank": 132,
+   "company": "CJ제일제당",
+   "value_100m_krw": 2278.0,
+   "weight_pct": 0.09,
+   "stake_pct": 7.28
+  },
+  {
+   "rank": 133,
+   "company": "DB하이텍",
+   "value_100m_krw": 2277.0,
+   "weight_pct": 0.09,
+   "stake_pct": 7.74
+  },
+  {
+   "rank": 134,
+   "company": "F&F",
+   "value_100m_krw": 2247.0,
+   "weight_pct": 0.09,
+   "stake_pct": 8.56
+  },
+  {
+   "rank": 135,
+   "company": "iM금융지주",
+   "value_100m_krw": 2239.0,
+   "weight_pct": 0.09,
+   "stake_pct": 8.88
+  },
+  {
+   "rank": 136,
+   "company": "롯데케미칼",
+   "value_100m_krw": 2236.0,
+   "weight_pct": 0.09,
+   "stake_pct": 7.44
+  },
+  {
+   "rank": 137,
+   "company": "서울보증보험",
+   "value_100m_krw": 2148.0,
+   "weight_pct": 0.08,
+   "stake_pct": 6.18
+  },
+  {
+   "rank": 138,
+   "company": "강원랜드",
+   "value_100m_krw": 2146.0,
+   "weight_pct": 0.08,
+   "stake_pct": 5.29
+  },
+  {
+   "rank": 140,
+   "company": "코스맥스",
+   "value_100m_krw": 2130.0,
+   "weight_pct": 0.08,
+   "stake_pct": 11.51
+  },
+  {
+   "rank": 141,
+   "company": "농심",
+   "value_100m_krw": 2101.0,
+   "weight_pct": 0.08,
+   "stake_pct": 7.99
+  },
+  {
+   "rank": 142,
+   "company": "SK바이오사이언스",
+   "value_100m_krw": 2077.0,
+   "weight_pct": 0.08,
+   "stake_pct": 5.5
+  },
+  {
+   "rank": 143,
+   "company": "더존비즈온",
+   "value_100m_krw": 2068.0,
+   "weight_pct": 0.08,
+   "stake_pct": 7.95
+  },
+  {
+   "rank": 144,
+   "company": "일진전기",
+   "value_100m_krw": 2068.0,
+   "weight_pct": 0.08,
+   "stake_pct": 7.97
+  },
+  {
+   "rank": 145,
+   "company": "대웅제약",
+   "value_100m_krw": 2056.0,
+   "weight_pct": 0.08,
+   "stake_pct": 10.3
+  },
+  {
+   "rank": 146,
+   "company": "한전KPS",
+   "value_100m_krw": 2002.0,
+   "weight_pct": 0.08,
+   "stake_pct": 8.99
+  },
+  {
+   "rank": 147,
+   "company": "현대위아",
+   "value_100m_krw": 1952.0,
+   "weight_pct": 0.07,
+   "stake_pct": 9.48
+  },
+  {
+   "rank": 148,
+   "company": "이마트",
+   "value_100m_krw": 1946.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.67
+  },
+  {
+   "rank": 149,
+   "company": "롯데관광개발",
+   "value_100m_krw": 1920.0,
+   "weight_pct": 0.07,
+   "stake_pct": 10.38
+  },
+  {
+   "rank": 150,
+   "company": "한올바이오파마",
+   "value_100m_krw": 1880.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.22
+  },
+  {
+   "rank": 151,
+   "company": "한화비전",
+   "value_100m_krw": 1832.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.08
+  },
+  {
+   "rank": 152,
+   "company": "롯데지주",
+   "value_100m_krw": 1758.0,
+   "weight_pct": 0.07,
+   "stake_pct": 6.34
+  },
+  {
+   "rank": 153,
+   "company": "에스엘",
+   "value_100m_krw": 1738.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.73
+  },
+  {
+   "rank": 154,
+   "company": "롯데쇼핑",
+   "value_100m_krw": 1709.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.33
+  },
+  {
+   "rank": 155,
+   "company": "에스원",
+   "value_100m_krw": 1701.0,
+   "weight_pct": 0.07,
+   "stake_pct": 6.21
+  },
+  {
+   "rank": 156,
+   "company": "한화생명",
+   "value_100m_krw": 1630.0,
+   "weight_pct": 0.06,
+   "stake_pct": 5.77
+  },
+  {
+   "rank": 158,
+   "company": "미스토홀딩스",
+   "value_100m_krw": 1605.0,
+   "weight_pct": 0.06,
+   "stake_pct": 6.25
+  },
+  {
+   "rank": 159,
+   "company": "한미사이언스",
+   "value_100m_krw": 1555.0,
+   "weight_pct": 0.06,
+   "stake_pct": 6.27
+  },
+  {
+   "rank": 160,
+   "company": "코리안리",
+   "value_100m_krw": 1548.0,
+   "weight_pct": 0.06,
+   "stake_pct": 6.88
+  },
+  {
+   "rank": 161,
+   "company": "BGF리테일",
+   "value_100m_krw": 1538.0,
+   "weight_pct": 0.06,
+   "stake_pct": 8.49
+  },
+  {
+   "rank": 163,
+   "company": "HDC현대산업개발",
+   "value_100m_krw": 1523.0,
+   "weight_pct": 0.06,
+   "stake_pct": 10.55
+  },
+  {
+   "rank": 164,
+   "company": "팬오션",
+   "value_100m_krw": 1511.0,
+   "weight_pct": 0.06,
+   "stake_pct": 7.34
+  },
+  {
+   "rank": 166,
+   "company": "ISC",
+   "value_100m_krw": 1483.0,
+   "weight_pct": 0.06,
+   "stake_pct": 6.3
+  },
+  {
+   "rank": 168,
+   "company": "녹십자",
+   "value_100m_krw": 1450.0,
+   "weight_pct": 0.06,
+   "stake_pct": 7.8
+  },
+  {
+   "rank": 170,
+   "company": "세아베스틸지주",
+   "value_100m_krw": 1407.0,
+   "weight_pct": 0.05,
+   "stake_pct": 7.82
+  },
+  {
+   "rank": 171,
+   "company": "한국카본",
+   "value_100m_krw": 1404.0,
+   "weight_pct": 0.05,
+   "stake_pct": 9.06
+  },
+  {
+   "rank": 172,
+   "company": "아모레퍼시픽홀딩스",
+   "value_100m_krw": 1390.0,
+   "weight_pct": 0.05,
+   "stake_pct": 6.51
+  },
+  {
+   "rank": 173,
+   "company": "GS리테일",
+   "value_100m_krw": 1378.0,
+   "weight_pct": 0.05,
+   "stake_pct": 8.2
+  },
+  {
+   "rank": 174,
+   "company": "씨에스윈드",
+   "value_100m_krw": 1369.0,
+   "weight_pct": 0.05,
+   "stake_pct": 7.8
+  },
+  {
+   "rank": 175,
+   "company": "두산퓨얼셀",
+   "value_100m_krw": 1342.0,
+   "weight_pct": 0.05,
+   "stake_pct": 7.1
+  },
+  {
+   "rank": 176,
+   "company": "효성",
+   "value_100m_krw": 1336.0,
+   "weight_pct": 0.05,
+   "stake_pct": 6.96
+  },
+  {
+   "rank": 179,
+   "company": "에스티팜",
+   "value_100m_krw": 1323.0,
+   "weight_pct": 0.05,
+   "stake_pct": 5.36
+  },
+  {
+   "rank": 181,
+   "company": "한국콜마",
+   "value_100m_krw": 1294.0,
+   "weight_pct": 0.05,
+   "stake_pct": 8.82
+  },
+  {
+   "rank": 182,
+   "company": "DL이앤씨",
+   "value_100m_krw": 1287.0,
+   "weight_pct": 0.05,
+   "stake_pct": 8.08
+  },
+  {
+   "rank": 183,
+   "company": "SNT다이내믹스",
+   "value_100m_krw": 1281.0,
+   "weight_pct": 0.05,
+   "stake_pct": 8.27
+  },
+  {
+   "rank": 184,
+   "company": "달바글로벌",
+   "value_100m_krw": 1272.0,
+   "weight_pct": 0.05,
+   "stake_pct": 6.98
+  },
+  {
+   "rank": 185,
+   "company": "GS건설",
+   "value_100m_krw": 1270.0,
+   "weight_pct": 0.05,
+   "stake_pct": 7.53
+  },
+  {
+   "rank": 188,
+   "company": "한온시스템",
+   "value_100m_krw": 1153.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.73
+  },
+  {
+   "rank": 189,
+   "company": "파라다이스",
+   "value_100m_krw": 1149.0,
+   "weight_pct": 0.04,
+   "stake_pct": 7.52
+  },
+  {
+   "rank": 191,
+   "company": "다우기술",
+   "value_100m_krw": 1137.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.52
+  },
+  {
+   "rank": 193,
+   "company": "호텔신라",
+   "value_100m_krw": 1128.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.44
+  },
+  {
+   "rank": 194,
+   "company": "SK오션플랜트",
+   "value_100m_krw": 1115.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.81
+  },
+  {
+   "rank": 196,
+   "company": "시프트업",
+   "value_100m_krw": 1068.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.1
+  },
+  {
+   "rank": 197,
+   "company": "SK가스",
+   "value_100m_krw": 1057.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.08
+  },
+  {
+   "rank": 198,
+   "company": "LX인터내셔널",
+   "value_100m_krw": 1044.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.29
+  },
+  {
+   "rank": 199,
+   "company": "코오롱인더",
+   "value_100m_krw": 1043.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.45
+  },
+  {
+   "rank": 200,
+   "company": "롯데에너지머티리얼즈",
+   "value_100m_krw": 1015.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.34
+  },
+  {
+   "rank": 202,
+   "company": "SK케미칼",
+   "value_100m_krw": 992.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.75
+  },
+  {
+   "rank": 203,
+   "company": "SK리츠",
+   "value_100m_krw": 980.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.7
+  },
+  {
+   "rank": 204,
+   "company": "대한유화",
+   "value_100m_krw": 977.0,
+   "weight_pct": 0.04,
+   "stake_pct": 10.38
+  },
+  {
+   "rank": 206,
+   "company": "롯데칠성",
+   "value_100m_krw": 965.0,
+   "weight_pct": 0.04,
+   "stake_pct": 7.47
+  },
+  {
+   "rank": 208,
+   "company": "엠앤씨솔루션",
+   "value_100m_krw": 961.0,
+   "weight_pct": 0.04,
+   "stake_pct": 7.35
+  },
+  {
+   "rank": 209,
+   "company": "STX엔진",
+   "value_100m_krw": 954.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.99
+  },
+  {
+   "rank": 210,
+   "company": "롯데정밀화학",
+   "value_100m_krw": 953.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.29
+  },
+  {
+   "rank": 211,
+   "company": "대신증권",
+   "value_100m_krw": 944.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.89
+  },
+  {
+   "rank": 212,
+   "company": "DN오토모티브",
+   "value_100m_krw": 934.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.54
+  },
+  {
+   "rank": 213,
+   "company": "삼성화재우",
+   "value_100m_krw": 923.0,
+   "weight_pct": 0.04,
+   "stake_pct": 7.89
+  },
+  {
+   "rank": 214,
+   "company": "유진테크",
+   "value_100m_krw": 919.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.35
+  },
+  {
+   "rank": 215,
+   "company": "티씨케이",
+   "value_100m_krw": 914.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.51
+  },
+  {
+   "rank": 217,
+   "company": "피에스케이",
+   "value_100m_krw": 883.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.27
+  },
+  {
+   "rank": 220,
+   "company": "대우건설",
+   "value_100m_krw": 867.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.46
+  },
+  {
+   "rank": 221,
+   "company": "코스메카코리아",
+   "value_100m_krw": 859.0,
+   "weight_pct": 0.03,
+   "stake_pct": 12.08
+  },
+  {
+   "rank": 223,
+   "company": "대상",
+   "value_100m_krw": 846.0,
+   "weight_pct": 0.03,
+   "stake_pct": 11.59
+  },
+  {
+   "rank": 224,
+   "company": "SNT모티브",
+   "value_100m_krw": 809.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.83
+  },
+  {
+   "rank": 225,
+   "company": "동아쏘시오홀딩스",
+   "value_100m_krw": 806.0,
+   "weight_pct": 0.03,
+   "stake_pct": 11.24
+  },
+  {
+   "rank": 226,
+   "company": "테스",
+   "value_100m_krw": 804.0,
+   "weight_pct": 0.03,
+   "stake_pct": 9.13
+  },
+  {
+   "rank": 227,
+   "company": "더블유게임즈",
+   "value_100m_krw": 803.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.97
+  },
+  {
+   "rank": 228,
+   "company": "오리온홀딩스",
+   "value_100m_krw": 803.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.2
+  },
+  {
+   "rank": 232,
+   "company": "종근당",
+   "value_100m_krw": 757.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.62
+  },
+  {
+   "rank": 233,
+   "company": "코리아써키트",
+   "value_100m_krw": 755.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.62
+  },
+  {
+   "rank": 234,
+   "company": "롯데웰푸드",
+   "value_100m_krw": 753.0,
+   "weight_pct": 0.03,
+   "stake_pct": 7.06
+  },
+  {
+   "rank": 235,
+   "company": "GKL",
+   "value_100m_krw": 752.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.12
+  },
+  {
+   "rank": 236,
+   "company": "HDC",
+   "value_100m_krw": 734.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.57
+  },
+  {
+   "rank": 239,
+   "company": "와이지엔터테인먼트",
+   "value_100m_krw": 723.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.57
+  },
+  {
+   "rank": 240,
+   "company": "NHN",
+   "value_100m_krw": 722.0,
+   "weight_pct": 0.03,
+   "stake_pct": 7.59
+  },
+  {
+   "rank": 241,
+   "company": "해성디에스",
+   "value_100m_krw": 721.0,
+   "weight_pct": 0.03,
+   "stake_pct": 7.62
+  },
+  {
+   "rank": 243,
+   "company": "한화투자증권",
+   "value_100m_krw": 698.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.93
+  },
+  {
+   "rank": 245,
+   "company": "한일시멘트",
+   "value_100m_krw": 695.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.26
+  },
+  {
+   "rank": 246,
+   "company": "덕산네오룩스",
+   "value_100m_krw": 692.0,
+   "weight_pct": 0.03,
+   "stake_pct": 7.63
+  },
+  {
+   "rank": 247,
+   "company": "DL",
+   "value_100m_krw": 689.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.73
+  },
+  {
+   "rank": 248,
+   "company": "ESR켄달스퀘어리츠",
+   "value_100m_krw": 670.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.38
+  },
+  {
+   "rank": 249,
+   "company": "TKG휴켐스",
+   "value_100m_krw": 665.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.59
+  },
+  {
+   "rank": 250,
+   "company": "하이트진로",
+   "value_100m_krw": 657.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.08
+  },
+  {
+   "rank": 253,
+   "company": "효성티앤씨",
+   "value_100m_krw": 636.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.61
+  },
+  {
+   "rank": 256,
+   "company": "경동나비엔",
+   "value_100m_krw": 611.0,
+   "weight_pct": 0.02,
+   "stake_pct": 7.55
+  },
+  {
+   "rank": 257,
+   "company": "세방전지",
+   "value_100m_krw": 611.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.95
+  },
+  {
+   "rank": 258,
+   "company": "LS에코에너지",
+   "value_100m_krw": 611.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.77
+  },
+  {
+   "rank": 261,
+   "company": "롯데렌탈",
+   "value_100m_krw": 592.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.18
+  },
+  {
+   "rank": 263,
+   "company": "케이씨텍",
+   "value_100m_krw": 573.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.98
+  },
+  {
+   "rank": 264,
+   "company": "한샘",
+   "value_100m_krw": 572.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.27
+  },
+  {
+   "rank": 266,
+   "company": "한국단자",
+   "value_100m_krw": 567.0,
+   "weight_pct": 0.02,
+   "stake_pct": 8.32
+  },
+  {
+   "rank": 268,
+   "company": "RFHIC",
+   "value_100m_krw": 553.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.39
+  },
+  {
+   "rank": 269,
+   "company": "GS피앤엘",
+   "value_100m_krw": 551.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.61
+  },
+  {
+   "rank": 270,
+   "company": "세아제강지주",
+   "value_100m_krw": 551.0,
+   "weight_pct": 0.02,
+   "stake_pct": 10.38
+  },
+  {
+   "rank": 273,
+   "company": "하나투어",
+   "value_100m_krw": 534.0,
+   "weight_pct": 0.02,
+   "stake_pct": 7.07
+  },
+  {
+   "rank": 275,
+   "company": "이노션",
+   "value_100m_krw": 528.0,
+   "weight_pct": 0.02,
+   "stake_pct": 7.16
+  },
+  {
+   "rank": 280,
+   "company": "SK네트웍스",
+   "value_100m_krw": 504.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.04
+  },
+  {
+   "rank": 284,
+   "company": "HS효성첨단소재",
+   "value_100m_krw": 486.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.97
+  },
+  {
+   "rank": 288,
+   "company": "녹십자홀딩스",
+   "value_100m_krw": 474.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.33
+  },
+  {
+   "rank": 295,
+   "company": "빙그레",
+   "value_100m_krw": 446.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.26
+  },
+  {
+   "rank": 296,
+   "company": "LX세미콘",
+   "value_100m_krw": 440.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.5
+  },
+  {
+   "rank": 297,
+   "company": "하나머티리얼즈",
+   "value_100m_krw": 427.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.01
+  },
+  {
+   "rank": 300,
+   "company": "솔루엠",
+   "value_100m_krw": 415.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.23
+  },
+  {
+   "rank": 301,
+   "company": "브이엠",
+   "value_100m_krw": 406.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.51
+  },
+  {
+   "rank": 303,
+   "company": "율촌화학",
+   "value_100m_krw": 392.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.12
+  },
+  {
+   "rank": 305,
+   "company": "태광",
+   "value_100m_krw": 382.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.65
+  },
+  {
+   "rank": 308,
+   "company": "한세실업",
+   "value_100m_krw": 371.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.97
+  },
+  {
+   "rank": 309,
+   "company": "SBS",
+   "value_100m_krw": 371.0,
+   "weight_pct": 0.01,
+   "stake_pct": 10.68
+  },
+  {
+   "rank": 311,
+   "company": "에스티아이",
+   "value_100m_krw": 351.0,
+   "weight_pct": 0.01,
+   "stake_pct": 7.28
+  },
+  {
+   "rank": 314,
+   "company": "비에이치",
+   "value_100m_krw": 345.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.37
+  },
+  {
+   "rank": 316,
+   "company": "HL홀딩스",
+   "value_100m_krw": 341.0,
+   "weight_pct": 0.01,
+   "stake_pct": 8.26
+  },
+  {
+   "rank": 325,
+   "company": "원익머트리얼즈",
+   "value_100m_krw": 308.0,
+   "weight_pct": 0.01,
+   "stake_pct": 7.9
+  },
+  {
+   "rank": 326,
+   "company": "엠로",
+   "value_100m_krw": 305.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.62
+  },
+  {
+   "rank": 330,
+   "company": "덴티움",
+   "value_100m_krw": 296.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.78
+  },
+  {
+   "rank": 332,
+   "company": "비나텍",
+   "value_100m_krw": 293.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.04
+  },
+  {
+   "rank": 337,
+   "company": "동아에스티",
+   "value_100m_krw": 275.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.6
+  },
+  {
+   "rank": 341,
+   "company": "삼천리",
+   "value_100m_krw": 261.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.02
+  },
+  {
+   "rank": 348,
+   "company": "제이에스코퍼레이션",
+   "value_100m_krw": 251.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.75
+  },
+  {
+   "rank": 352,
+   "company": "아모레퍼시픽우",
+   "value_100m_krw": 247.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.36
+  },
+  {
+   "rank": 356,
+   "company": "유니드",
+   "value_100m_krw": 244.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.37
+  },
+  {
+   "rank": 361,
+   "company": "한섬",
+   "value_100m_krw": 227.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.32
+  },
+  {
+   "rank": 365,
+   "company": "진성티이씨",
+   "value_100m_krw": 220.0,
+   "weight_pct": 0.01,
+   "stake_pct": 7.4
+  },
+  {
+   "rank": 372,
+   "company": "하이록코리아",
+   "value_100m_krw": 190.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.25
+  },
+  {
+   "rank": 378,
+   "company": "케이씨",
+   "value_100m_krw": 176.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.22
+  },
+  {
+   "rank": 385,
+   "company": "에스투더블유",
+   "value_100m_krw": 165.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.2
+  },
+  {
+   "rank": 386,
+   "company": "대한광통신",
+   "value_100m_krw": 162.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.51
+  },
+  {
+   "rank": 391,
+   "company": "국도화학",
+   "value_100m_krw": 156.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.16
+  },
+  {
+   "rank": 404,
+   "company": "삼화전기",
+   "value_100m_krw": 141.0,
+   "weight_pct": 0.01,
+   "stake_pct": 7.29
+  },
+  {
+   "rank": 419,
+   "company": "금호석유화학우",
+   "value_100m_krw": 123.0,
+   "weight_pct": 0.0,
+   "stake_pct": 6.65
+  },
+  {
+   "rank": 446,
+   "company": "화승인더",
+   "value_100m_krw": 104.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.18
+  },
+  {
+   "rank": 449,
+   "company": "CJ제일제당 우",
+   "value_100m_krw": 102.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.56
+  },
+  {
+   "rank": 450,
+   "company": "한미글로벌",
+   "value_100m_krw": 102.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.16
+  },
+  {
+   "rank": 455,
+   "company": "RF머트리얼즈",
+   "value_100m_krw": 96.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.0
+  },
+  {
+   "rank": 479,
+   "company": "디와이파워",
+   "value_100m_krw": 82.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.5
+  },
+  {
+   "rank": 501,
+   "company": "유비쿼스",
+   "value_100m_krw": 71.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.0
+  }
+ ],
+ "holdings": [
+  {
+   "rank": 1,
+   "company": "삼성전자",
+   "value_100m_krw": 551095.0,
+   "weight_pct": 21.06,
+   "stake_pct": 7.76
+  },
+  {
+   "rank": 2,
+   "company": "SK하이닉스",
+   "value_100m_krw": 374316.0,
+   "weight_pct": 14.31,
+   "stake_pct": 7.9
+  },
+  {
+   "rank": 3,
+   "company": "LG에너지솔루션",
+   "value_100m_krw": 57793.0,
+   "weight_pct": 2.21,
+   "stake_pct": 6.7
+  },
+  {
+   "rank": 4,
+   "company": "삼성바이오로직스",
+   "value_100m_krw": 57673.0,
+   "weight_pct": 2.2,
+   "stake_pct": 7.35
+  },
+  {
+   "rank": 5,
+   "company": "현대차",
+   "value_100m_krw": 47072.0,
+   "weight_pct": 1.8,
+   "stake_pct": 7.75
+  },
+  {
+   "rank": 6,
+   "company": "HD현대중공업",
+   "value_100m_krw": 42571.0,
+   "weight_pct": 1.63,
+   "stake_pct": 7.97
+  },
+  {
+   "rank": 7,
+   "company": "SK스퀘어",
+   "value_100m_krw": 41434.0,
+   "weight_pct": 1.58,
+   "stake_pct": 8.52
+  },
+  {
+   "rank": 8,
+   "company": "KB금융",
+   "value_100m_krw": 41250.0,
+   "weight_pct": 1.58,
+   "stake_pct": 8.67
+  },
+  {
+   "rank": 9,
+   "company": "한화에어로스페이스",
+   "value_100m_krw": 38570.0,
+   "weight_pct": 1.47,
+   "stake_pct": 7.95
+  },
+  {
+   "rank": 10,
+   "company": "두산에너빌리티",
+   "value_100m_krw": 37475.0,
+   "weight_pct": 1.43,
+   "stake_pct": 7.77
+  },
+  {
+   "rank": 11,
+   "company": "NAVER",
+   "value_100m_krw": 35247.0,
+   "weight_pct": 1.35,
+   "stake_pct": 9.27
+  },
+  {
+   "rank": 12,
+   "company": "기아",
+   "value_100m_krw": 34411.0,
+   "weight_pct": 1.32,
+   "stake_pct": 7.24
+  },
+  {
+   "rank": 13,
+   "company": "신한지주",
+   "value_100m_krw": 33709.0,
+   "weight_pct": 1.29,
+   "stake_pct": 9.03
+  },
+  {
+   "rank": 14,
+   "company": "삼성물산",
+   "value_100m_krw": 32800.0,
+   "weight_pct": 1.25,
+   "stake_pct": 8.06
+  },
+  {
+   "rank": 15,
+   "company": "현대모비스",
+   "value_100m_krw": 31065.0,
+   "weight_pct": 1.19,
+   "stake_pct": 9.18
+  },
+  {
+   "rank": 16,
+   "company": "셀트리온",
+   "value_100m_krw": 27852.0,
+   "weight_pct": 1.06,
+   "stake_pct": 6.66
+  },
+  {
+   "rank": 17,
+   "company": "한국전력",
+   "value_100m_krw": 23985.0,
+   "weight_pct": 0.92,
+   "stake_pct": 7.92
+  },
+  {
+   "rank": 18,
+   "company": "하나금융지주",
+   "value_100m_krw": 22698.0,
+   "weight_pct": 0.87,
+   "stake_pct": 8.67
+  },
+  {
+   "rank": 19,
+   "company": "한화오션",
+   "value_100m_krw": 22222.0,
+   "weight_pct": 0.85,
+   "stake_pct": 6.38
+  },
+  {
+   "rank": 20,
+   "company": "삼성생명",
+   "value_100m_krw": 21418.0,
+   "weight_pct": 0.82,
+   "stake_pct": 6.8
+  },
+  {
+   "rank": 21,
+   "company": "HD한국조선해양",
+   "value_100m_krw": 21361.0,
+   "weight_pct": 0.82,
+   "stake_pct": 7.42
+  },
+  {
+   "rank": 22,
+   "company": "HD현대일렉트릭",
+   "value_100m_krw": 21298.0,
+   "weight_pct": 0.81,
+   "stake_pct": 7.63
+  },
+  {
+   "rank": 23,
+   "company": "삼성전기",
+   "value_100m_krw": 20917.0,
+   "weight_pct": 0.8,
+   "stake_pct": 10.98
+  },
+  {
+   "rank": 24,
+   "company": "LG화학",
+   "value_100m_krw": 20152.0,
+   "weight_pct": 0.77,
+   "stake_pct": 8.57
+  },
+  {
+   "rank": 25,
+   "company": "POSCO홀딩스",
+   "value_100m_krw": 19662.0,
+   "weight_pct": 0.75,
+   "stake_pct": 7.97
+  },
+  {
+   "rank": 26,
+   "company": "카카오",
+   "value_100m_krw": 17536.0,
+   "weight_pct": 0.67,
+   "stake_pct": 6.6
+  },
+  {
+   "rank": 27,
+   "company": "효성중공업",
+   "value_100m_krw": 17015.0,
+   "weight_pct": 0.65,
+   "stake_pct": 10.25
+  },
+  {
+   "rank": 28,
+   "company": "삼성중공업",
+   "value_100m_krw": 16154.0,
+   "weight_pct": 0.62,
+   "stake_pct": 7.62
+  },
+  {
+   "rank": 29,
+   "company": "현대로템",
+   "value_100m_krw": 16126.0,
+   "weight_pct": 0.62,
+   "stake_pct": 7.86
+  },
+  {
+   "rank": 30,
+   "company": "삼성SDI",
+   "value_100m_krw": 14958.0,
+   "weight_pct": 0.57,
+   "stake_pct": 6.89
+  },
+  {
+   "rank": 31,
+   "company": "삼성화재",
+   "value_100m_krw": 14516.0,
+   "weight_pct": 0.55,
+   "stake_pct": 6.35
+  },
+  {
+   "rank": 32,
+   "company": "고려아연",
+   "value_100m_krw": 14203.0,
+   "weight_pct": 0.54,
+   "stake_pct": 5.78
+  },
+  {
+   "rank": 33,
+   "company": "우리금융지주",
+   "value_100m_krw": 13759.0,
+   "weight_pct": 0.53,
+   "stake_pct": 6.69
+  },
+  {
+   "rank": 34,
+   "company": "SK",
+   "value_100m_krw": 13705.0,
+   "weight_pct": 0.52,
+   "stake_pct": 7.37
+  },
+  {
+   "rank": 35,
+   "company": "현대글로비스",
+   "value_100m_krw": 13300.0,
+   "weight_pct": 0.51,
+   "stake_pct": 9.82
+  },
+  {
+   "rank": 36,
+   "company": "삼성에스디에스",
+   "value_100m_krw": 13054.0,
+   "weight_pct": 0.5,
+   "stake_pct": 9.84
+  },
+  {
+   "rank": 37,
+   "company": "메리츠금융지주",
+   "value_100m_krw": 12957.0,
+   "weight_pct": 0.5,
+   "stake_pct": 6.54
+  },
+  {
+   "rank": 38,
+   "company": "KT&G",
+   "value_100m_krw": 12956.0,
+   "weight_pct": 0.5,
+   "stake_pct": 7.73
+  },
+  {
+   "rank": 39,
+   "company": "LS ELECTRIC",
+   "value_100m_krw": 12936.0,
+   "weight_pct": 0.49,
+   "stake_pct": 9.37
+  },
+  {
+   "rank": 40,
+   "company": "하이브",
+   "value_100m_krw": 12201.0,
+   "weight_pct": 0.47,
+   "stake_pct": 8.69
+  },
+  {
+   "rank": 41,
+   "company": "두산",
+   "value_100m_krw": 12111.0,
+   "weight_pct": 0.46,
+   "stake_pct": 9.58
+  },
+  {
+   "rank": 42,
+   "company": "한국금융지주",
+   "value_100m_krw": 12089.0,
+   "weight_pct": 0.46,
+   "stake_pct": 13.42
+  },
+  {
+   "rank": 43,
+   "company": "삼성에피스홀딩스",
+   "value_100m_krw": 11598.0,
+   "weight_pct": 0.44,
+   "stake_pct": 6.27
+  },
+  {
+   "rank": 44,
+   "company": "미래에셋증권",
+   "value_100m_krw": 10610.0,
+   "weight_pct": 0.41,
+   "stake_pct": 8.01
+  },
+  {
+   "rank": 45,
+   "company": "HMM",
+   "value_100m_krw": 10305.0,
+   "weight_pct": 0.39,
+   "stake_pct": 5.33
+  },
+  {
+   "rank": 46,
+   "company": "HD현대",
+   "value_100m_krw": 10112.0,
+   "weight_pct": 0.39,
+   "stake_pct": 6.79
+  },
+  {
+   "rank": 47,
+   "company": "LG전자",
+   "value_100m_krw": 9647.0,
+   "weight_pct": 0.37,
+   "stake_pct": 6.44
+  },
+  {
+   "rank": 48,
+   "company": "KT",
+   "value_100m_krw": 9397.0,
+   "weight_pct": 0.36,
+   "stake_pct": 7.09
+  },
+  {
+   "rank": 49,
+   "company": "SK이노베이션",
+   "value_100m_krw": 9317.0,
+   "weight_pct": 0.36,
+   "stake_pct": 5.45
+  },
+  {
+   "rank": 50,
+   "company": "한국항공우주",
+   "value_100m_krw": 9280.0,
+   "weight_pct": 0.35,
+   "stake_pct": 8.32
+  },
+  {
+   "rank": 51,
+   "company": "키움증권",
+   "value_100m_krw": 9180.0,
+   "weight_pct": 0.35,
+   "stake_pct": 11.87
+  },
+  {
+   "rank": 52,
+   "company": "기업은행",
+   "value_100m_krw": 9017.0,
+   "weight_pct": 0.34,
+   "stake_pct": 5.4
+  },
+  {
+   "rank": 53,
+   "company": "이수페타시스",
+   "value_100m_krw": 8973.0,
+   "weight_pct": 0.34,
+   "stake_pct": 10.25
+  },
+  {
+   "rank": 54,
+   "company": "삼양식품",
+   "value_100m_krw": 8925.0,
+   "weight_pct": 0.34,
+   "stake_pct": 9.62
+  },
+  {
+   "rank": 55,
+   "company": "삼성증권",
+   "value_100m_krw": 8895.0,
+   "weight_pct": 0.34,
+   "stake_pct": 13.21
+  },
+  {
+   "rank": 56,
+   "company": "포스코퓨처엠",
+   "value_100m_krw": 8824.0,
+   "weight_pct": 0.34,
+   "stake_pct": 5.31
+  },
+  {
+   "rank": 57,
+   "company": "현대건설",
+   "value_100m_krw": 8670.0,
+   "weight_pct": 0.33,
+   "stake_pct": 11.11
+  },
+  {
+   "rank": 58,
+   "company": "LS",
+   "value_100m_krw": 8540.0,
+   "weight_pct": 0.33,
+   "stake_pct": 13.48
+  },
+  {
+   "rank": 59,
+   "company": "LIG넥스원",
+   "value_100m_krw": 8440.0,
+   "weight_pct": 0.32,
+   "stake_pct": 9.11
+  },
+  {
+   "rank": 60,
+   "company": "LG",
+   "value_100m_krw": 8387.0,
+   "weight_pct": 0.32,
+   "stake_pct": 6.74
+  },
+  {
+   "rank": 61,
+   "company": "S-Oil",
+   "value_100m_krw": 7955.0,
+   "weight_pct": 0.3,
+   "stake_pct": 8.51
+  },
+  {
+   "rank": 62,
+   "company": "삼성전자우",
+   "value_100m_krw": 7931.0,
+   "weight_pct": 0.3,
+   "stake_pct": 1.09
+  },
+  {
+   "rank": 63,
+   "company": "SK텔레콤",
+   "value_100m_krw": 7674.0,
+   "weight_pct": 0.29,
+   "stake_pct": 6.68
+  },
+  {
+   "rank": 64,
+   "company": "크래프톤",
+   "value_100m_krw": 7344.0,
+   "weight_pct": 0.28,
+   "stake_pct": 6.3
+  },
+  {
+   "rank": 65,
+   "company": "한화시스템",
+   "value_100m_krw": 7282.0,
+   "weight_pct": 0.28,
+   "stake_pct": 7.09
+  },
+  {
+   "rank": 66,
+   "company": "현대오토에버",
+   "value_100m_krw": 7095.0,
+   "weight_pct": 0.27,
+   "stake_pct": 7.79
+  },
+  {
+   "rank": 67,
+   "company": "한미반도체",
+   "value_100m_krw": 6937.0,
+   "weight_pct": 0.27,
+   "stake_pct": 5.71
+  },
+  {
+   "rank": 68,
+   "company": "한미약품",
+   "value_100m_krw": 6923.0,
+   "weight_pct": 0.26,
+   "stake_pct": 11.96
+  },
+  {
+   "rank": 69,
+   "company": "유한양행",
+   "value_100m_krw": 6898.0,
+   "weight_pct": 0.26,
+   "stake_pct": 7.67
+  },
+  {
+   "rank": 70,
+   "company": "에이피알",
+   "value_100m_krw": 6793.0,
+   "weight_pct": 0.26,
+   "stake_pct": 7.86
+  },
+  {
+   "rank": 71,
+   "company": "CJ",
+   "value_100m_krw": 6713.0,
+   "weight_pct": 0.26,
+   "stake_pct": 13.38
+  },
+  {
+   "rank": 72,
+   "company": "DB손해보험",
+   "value_100m_krw": 6707.0,
+   "weight_pct": 0.26,
+   "stake_pct": 7.23
+  },
+  {
+   "rank": 73,
+   "company": "LG이노텍",
+   "value_100m_krw": 6670.0,
+   "weight_pct": 0.25,
+   "stake_pct": 10.4
+  },
+  {
+   "rank": 74,
+   "company": "SK바이오팜",
+   "value_100m_krw": 6645.0,
+   "weight_pct": 0.25,
+   "stake_pct": 6.81
+  },
+  {
+   "rank": 75,
+   "company": "알테오젠",
+   "value_100m_krw": 6438.0,
+   "weight_pct": 0.25,
+   "stake_pct": 2.68
+  },
+  {
+   "rank": 76,
+   "company": "NH투자증권",
+   "value_100m_krw": 6187.0,
+   "weight_pct": 0.24,
+   "stake_pct": 8.23
+  },
+  {
+   "rank": 77,
+   "company": "대한항공",
+   "value_100m_krw": 6045.0,
+   "weight_pct": 0.23,
+   "stake_pct": 7.28
+  },
+  {
+   "rank": 78,
+   "company": "HD현대마린솔루션",
+   "value_100m_krw": 5852.0,
+   "weight_pct": 0.22,
+   "stake_pct": 6.75
+  },
+  {
+   "rank": 79,
+   "company": "포스코인터내셔널",
+   "value_100m_krw": 5773.0,
+   "weight_pct": 0.22,
+   "stake_pct": 6.62
+  },
+  {
+   "rank": 80,
+   "company": "카카오뱅크",
+   "value_100m_krw": 5638.0,
+   "weight_pct": 0.22,
+   "stake_pct": 5.47
+  },
+  {
+   "rank": 81,
+   "company": "한국타이어앤테크놀로지",
+   "value_100m_krw": 5578.0,
+   "weight_pct": 0.21,
+   "stake_pct": 7.72
+  },
+  {
+   "rank": 82,
+   "company": "에이비엘바이오",
+   "value_100m_krw": 5373.0,
+   "weight_pct": 0.21,
+   "stake_pct": 4.87
+  },
+  {
+   "rank": 83,
+   "company": "아모레퍼시픽",
+   "value_100m_krw": 5181.0,
+   "weight_pct": 0.2,
+   "stake_pct": 7.41
+  },
+  {
+   "rank": 84,
+   "company": "현대차2우B",
+   "value_100m_krw": 5109.0,
+   "weight_pct": 0.2,
+   "stake_pct": 6.88
+  },
+  {
+   "rank": 85,
+   "company": "한진칼",
+   "value_100m_krw": 4502.0,
+   "weight_pct": 0.17,
+   "stake_pct": 5.44
+  },
+  {
+   "rank": 86,
+   "company": "코웨이",
+   "value_100m_krw": 4472.0,
+   "weight_pct": 0.17,
+   "stake_pct": 7.16
+  },
+  {
+   "rank": 87,
+   "company": "KCC",
+   "value_100m_krw": 4278.0,
+   "weight_pct": 0.16,
+   "stake_pct": 11.45
+  },
+  {
+   "rank": 88,
+   "company": "LG유플러스",
+   "value_100m_krw": 4270.0,
+   "weight_pct": 0.16,
+   "stake_pct": 6.75
+  },
+  {
+   "rank": 89,
+   "company": "BNK금융지주",
+   "value_100m_krw": 4241.0,
+   "weight_pct": 0.16,
+   "stake_pct": 8.5
+  },
+  {
+   "rank": 90,
+   "company": "GS",
+   "value_100m_krw": 3959.0,
+   "weight_pct": 0.15,
+   "stake_pct": 7.57
+  },
+  {
+   "rank": 91,
+   "company": "두산밥캣",
+   "value_100m_krw": 3891.0,
+   "weight_pct": 0.15,
+   "stake_pct": 7.03
+  },
+  {
+   "rank": 92,
+   "company": "삼성카드",
+   "value_100m_krw": 3843.0,
+   "weight_pct": 0.15,
+   "stake_pct": 5.93
+  },
+  {
+   "rank": 93,
+   "company": "현대제철",
+   "value_100m_krw": 3834.0,
+   "weight_pct": 0.15,
+   "stake_pct": 9.25
+  },
+  {
+   "rank": 94,
+   "company": "리가켐바이오",
+   "value_100m_krw": 3780.0,
+   "weight_pct": 0.14,
+   "stake_pct": 5.94
+  },
+  {
+   "rank": 95,
+   "company": "현대엘리베이터",
+   "value_100m_krw": 3736.0,
+   "weight_pct": 0.14,
+   "stake_pct": 10.82
+  },
+  {
+   "rank": 96,
+   "company": "카카오페이",
+   "value_100m_krw": 3665.0,
+   "weight_pct": 0.14,
+   "stake_pct": 5.52
+  },
+  {
+   "rank": 97,
+   "company": "영원무역",
+   "value_100m_krw": 3647.0,
+   "weight_pct": 0.14,
+   "stake_pct": 10.06
+  },
+  {
+   "rank": 98,
+   "company": "HL만도",
+   "value_100m_krw": 3596.0,
+   "weight_pct": 0.14,
+   "stake_pct": 13.05
+  },
+  {
+   "rank": 99,
+   "company": "삼성E&A",
+   "value_100m_krw": 3552.0,
+   "weight_pct": 0.14,
+   "stake_pct": 7.53
+  },
+  {
+   "rank": 100,
+   "company": "한전기술",
+   "value_100m_krw": 3530.0,
+   "weight_pct": 0.13,
+   "stake_pct": 10.26
+  },
+  {
+   "rank": 101,
+   "company": "오리온",
+   "value_100m_krw": 3457.0,
+   "weight_pct": 0.13,
+   "stake_pct": 8.27
+  },
+  {
+   "rank": 102,
+   "company": "HD현대인프라코어",
+   "value_100m_krw": 3442.0,
+   "weight_pct": 0.13,
+   "stake_pct": 13.21
+  },
+  {
+   "rank": 103,
+   "company": "한솔케미칼",
+   "value_100m_krw": 3397.0,
+   "weight_pct": 0.13,
+   "stake_pct": 13.17
+  },
+  {
+   "rank": 104,
+   "company": "LG씨엔에스",
+   "value_100m_krw": 3368.0,
+   "weight_pct": 0.13,
+   "stake_pct": 5.66
+  },
+  {
+   "rank": 105,
+   "company": "한화",
+   "value_100m_krw": 3306.0,
+   "weight_pct": 0.13,
+   "stake_pct": 5.41
+  },
+  {
+   "rank": 106,
+   "company": "한화엔진",
+   "value_100m_krw": 3299.0,
+   "weight_pct": 0.13,
+   "stake_pct": 9.2
+  },
+  {
+   "rank": 107,
+   "company": "산일전기",
+   "value_100m_krw": 3291.0,
+   "weight_pct": 0.13,
+   "stake_pct": 8.31
+  },
+  {
+   "rank": 108,
+   "company": "신세계",
+   "value_100m_krw": 3208.0,
+   "weight_pct": 0.12,
+   "stake_pct": 13.47
+  },
+  {
+   "rank": 109,
+   "company": "JB금융지주",
+   "value_100m_krw": 3137.0,
+   "weight_pct": 0.12,
+   "stake_pct": 6.44
+  },
+  {
+   "rank": 110,
+   "company": "LG디스플레이",
+   "value_100m_krw": 3115.0,
+   "weight_pct": 0.12,
+   "stake_pct": 5.27
+  },
+  {
+   "rank": 111,
+   "company": "엔씨소프트",
+   "value_100m_krw": 3112.0,
+   "weight_pct": 0.12,
+   "stake_pct": 7.17
+  },
+  {
+   "rank": 112,
+   "company": "금호석유화학",
+   "value_100m_krw": 3061.0,
+   "weight_pct": 0.12,
+   "stake_pct": 9.74
+  },
+  {
+   "rank": 113,
+   "company": "엘앤에프",
+   "value_100m_krw": 2911.0,
+   "weight_pct": 0.11,
+   "stake_pct": 7.61
+  },
+  {
+   "rank": 114,
+   "company": "대덕전자",
+   "value_100m_krw": 2803.0,
+   "weight_pct": 0.11,
+   "stake_pct": 12.04
+  },
+  {
+   "rank": 115,
+   "company": "현대해상",
+   "value_100m_krw": 2738.0,
+   "weight_pct": 0.1,
+   "stake_pct": 9.94
+  },
+  {
+   "rank": 116,
+   "company": "현대백화점",
+   "value_100m_krw": 2699.0,
+   "weight_pct": 0.1,
+   "stake_pct": 13.46
+  },
+  {
+   "rank": 117,
+   "company": "맥쿼리인프라",
+   "value_100m_krw": 2681.0,
+   "weight_pct": 0.1,
+   "stake_pct": 4.98
+  },
+  {
+   "rank": 118,
+   "company": "대한전선",
+   "value_100m_krw": 2657.0,
+   "weight_pct": 0.1,
+   "stake_pct": 6.22
+  },
+  {
+   "rank": 119,
+   "company": "OCI홀딩스",
+   "value_100m_krw": 2644.0,
+   "weight_pct": 0.1,
+   "stake_pct": 12.29
+  },
+  {
+   "rank": 120,
+   "company": "한국가스공사",
+   "value_100m_krw": 2643.0,
+   "weight_pct": 0.1,
+   "stake_pct": 7.28
+  },
+  {
+   "rank": 121,
+   "company": "포스코DX",
+   "value_100m_krw": 2620.0,
+   "weight_pct": 0.1,
+   "stake_pct": 5.99
+  },
+  {
+   "rank": 122,
+   "company": "한화솔루션",
+   "value_100m_krw": 2605.0,
+   "weight_pct": 0.1,
+   "stake_pct": 5.65
+  },
+  {
+   "rank": 123,
+   "company": "SKC",
+   "value_100m_krw": 2590.0,
+   "weight_pct": 0.1,
+   "stake_pct": 6.55
+  },
+  {
+   "rank": 124,
+   "company": "풍산",
+   "value_100m_krw": 2518.0,
+   "weight_pct": 0.1,
+   "stake_pct": 8.44
+  },
+  {
+   "rank": 125,
+   "company": "넷마블",
+   "value_100m_krw": 2516.0,
+   "weight_pct": 0.1,
+   "stake_pct": 6.07
+  },
+  {
+   "rank": 126,
+   "company": "두산로보틱스",
+   "value_100m_krw": 2472.0,
+   "weight_pct": 0.09,
+   "stake_pct": 4.89
+  },
+  {
+   "rank": 127,
+   "company": "HD현대마린엔진",
+   "value_100m_krw": 2427.0,
+   "weight_pct": 0.09,
+   "stake_pct": 8.0
+  },
+  {
+   "rank": 128,
+   "company": "LG생활건강",
+   "value_100m_krw": 2392.0,
+   "weight_pct": 0.09,
+   "stake_pct": 6.05
+  },
+  {
+   "rank": 129,
+   "company": "제일기획",
+   "value_100m_krw": 2351.0,
+   "weight_pct": 0.09,
+   "stake_pct": 9.73
+  },
+  {
+   "rank": 130,
+   "company": "CJ대한통운",
+   "value_100m_krw": 2339.0,
+   "weight_pct": 0.09,
+   "stake_pct": 10.84
+  },
+  {
+   "rank": 131,
+   "company": "HD현대건설기계",
+   "value_100m_krw": 2286.0,
+   "weight_pct": 0.09,
+   "stake_pct": 13.39
+  },
+  {
+   "rank": 132,
+   "company": "CJ제일제당",
+   "value_100m_krw": 2278.0,
+   "weight_pct": 0.09,
+   "stake_pct": 7.28
+  },
+  {
+   "rank": 133,
+   "company": "DB하이텍",
+   "value_100m_krw": 2277.0,
+   "weight_pct": 0.09,
+   "stake_pct": 7.74
+  },
+  {
+   "rank": 134,
+   "company": "F&F",
+   "value_100m_krw": 2247.0,
+   "weight_pct": 0.09,
+   "stake_pct": 8.56
+  },
+  {
+   "rank": 135,
+   "company": "iM금융지주",
+   "value_100m_krw": 2239.0,
+   "weight_pct": 0.09,
+   "stake_pct": 8.88
+  },
+  {
+   "rank": 136,
+   "company": "롯데케미칼",
+   "value_100m_krw": 2236.0,
+   "weight_pct": 0.09,
+   "stake_pct": 7.44
+  },
+  {
+   "rank": 137,
+   "company": "서울보증보험",
+   "value_100m_krw": 2148.0,
+   "weight_pct": 0.08,
+   "stake_pct": 6.18
+  },
+  {
+   "rank": 138,
+   "company": "강원랜드",
+   "value_100m_krw": 2146.0,
+   "weight_pct": 0.08,
+   "stake_pct": 5.29
+  },
+  {
+   "rank": 139,
+   "company": "리노공업",
+   "value_100m_krw": 2131.0,
+   "weight_pct": 0.08,
+   "stake_pct": 4.64
+  },
+  {
+   "rank": 140,
+   "company": "코스맥스",
+   "value_100m_krw": 2130.0,
+   "weight_pct": 0.08,
+   "stake_pct": 11.51
+  },
+  {
+   "rank": 141,
+   "company": "농심",
+   "value_100m_krw": 2101.0,
+   "weight_pct": 0.08,
+   "stake_pct": 7.99
+  },
+  {
+   "rank": 142,
+   "company": "SK바이오사이언스",
+   "value_100m_krw": 2077.0,
+   "weight_pct": 0.08,
+   "stake_pct": 5.5
+  },
+  {
+   "rank": 143,
+   "company": "더존비즈온",
+   "value_100m_krw": 2068.0,
+   "weight_pct": 0.08,
+   "stake_pct": 7.95
+  },
+  {
+   "rank": 144,
+   "company": "일진전기",
+   "value_100m_krw": 2068.0,
+   "weight_pct": 0.08,
+   "stake_pct": 7.97
+  },
+  {
+   "rank": 145,
+   "company": "대웅제약",
+   "value_100m_krw": 2056.0,
+   "weight_pct": 0.08,
+   "stake_pct": 10.3
+  },
+  {
+   "rank": 146,
+   "company": "한전KPS",
+   "value_100m_krw": 2002.0,
+   "weight_pct": 0.08,
+   "stake_pct": 8.99
+  },
+  {
+   "rank": 147,
+   "company": "현대위아",
+   "value_100m_krw": 1952.0,
+   "weight_pct": 0.07,
+   "stake_pct": 9.48
+  },
+  {
+   "rank": 148,
+   "company": "이마트",
+   "value_100m_krw": 1946.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.67
+  },
+  {
+   "rank": 149,
+   "company": "롯데관광개발",
+   "value_100m_krw": 1920.0,
+   "weight_pct": 0.07,
+   "stake_pct": 10.38
+  },
+  {
+   "rank": 150,
+   "company": "한올바이오파마",
+   "value_100m_krw": 1880.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.22
+  },
+  {
+   "rank": 151,
+   "company": "한화비전",
+   "value_100m_krw": 1832.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.08
+  },
+  {
+   "rank": 152,
+   "company": "롯데지주",
+   "value_100m_krw": 1758.0,
+   "weight_pct": 0.07,
+   "stake_pct": 6.34
+  },
+  {
+   "rank": 153,
+   "company": "에스엘",
+   "value_100m_krw": 1738.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.73
+  },
+  {
+   "rank": 154,
+   "company": "롯데쇼핑",
+   "value_100m_krw": 1709.0,
+   "weight_pct": 0.07,
+   "stake_pct": 8.33
+  },
+  {
+   "rank": 155,
+   "company": "에스원",
+   "value_100m_krw": 1701.0,
+   "weight_pct": 0.07,
+   "stake_pct": 6.21
+  },
+  {
+   "rank": 156,
+   "company": "한화생명",
+   "value_100m_krw": 1630.0,
+   "weight_pct": 0.06,
+   "stake_pct": 5.77
+  },
+  {
+   "rank": 157,
+   "company": "원익IPS",
+   "value_100m_krw": 1620.0,
+   "weight_pct": 0.06,
+   "stake_pct": 4.86
+  },
+  {
+   "rank": 158,
+   "company": "미스토홀딩스",
+   "value_100m_krw": 1605.0,
+   "weight_pct": 0.06,
+   "stake_pct": 6.25
+  },
+  {
+   "rank": 159,
+   "company": "한미사이언스",
+   "value_100m_krw": 1555.0,
+   "weight_pct": 0.06,
+   "stake_pct": 6.27
+  },
+  {
+   "rank": 160,
+   "company": "코리안리",
+   "value_100m_krw": 1548.0,
+   "weight_pct": 0.06,
+   "stake_pct": 6.88
+  },
+  {
+   "rank": 161,
+   "company": "BGF리테일",
+   "value_100m_krw": 1538.0,
+   "weight_pct": 0.06,
+   "stake_pct": 8.49
+  },
+  {
+   "rank": 162,
+   "company": "에코프로머티",
+   "value_100m_krw": 1531.0,
+   "weight_pct": 0.06,
+   "stake_pct": 4.16
+  },
+  {
+   "rank": 163,
+   "company": "HDC현대산업개발",
+   "value_100m_krw": 1523.0,
+   "weight_pct": 0.06,
+   "stake_pct": 10.55
+  },
+  {
+   "rank": 164,
+   "company": "팬오션",
+   "value_100m_krw": 1511.0,
+   "weight_pct": 0.06,
+   "stake_pct": 7.34
+  },
+  {
+   "rank": 165,
+   "company": "레인보우로보틱스",
+   "value_100m_krw": 1489.0,
+   "weight_pct": 0.06,
+   "stake_pct": 1.63
+  },
+  {
+   "rank": 166,
+   "company": "ISC",
+   "value_100m_krw": 1483.0,
+   "weight_pct": 0.06,
+   "stake_pct": 6.3
+  },
+  {
+   "rank": 167,
+   "company": "에코프로",
+   "value_100m_krw": 1480.0,
+   "weight_pct": 0.06,
+   "stake_pct": 1.2
+  },
+  {
+   "rank": 168,
+   "company": "녹십자",
+   "value_100m_krw": 1450.0,
+   "weight_pct": 0.06,
+   "stake_pct": 7.8
+  },
+  {
+   "rank": 169,
+   "company": "이오테크닉스",
+   "value_100m_krw": 1419.0,
+   "weight_pct": 0.05,
+   "stake_pct": 4.23
+  },
+  {
+   "rank": 170,
+   "company": "세아베스틸지주",
+   "value_100m_krw": 1407.0,
+   "weight_pct": 0.05,
+   "stake_pct": 7.82
+  },
+  {
+   "rank": 171,
+   "company": "한국카본",
+   "value_100m_krw": 1404.0,
+   "weight_pct": 0.05,
+   "stake_pct": 9.06
+  },
+  {
+   "rank": 172,
+   "company": "아모레퍼시픽홀딩스",
+   "value_100m_krw": 1390.0,
+   "weight_pct": 0.05,
+   "stake_pct": 6.51
+  },
+  {
+   "rank": 173,
+   "company": "GS리테일",
+   "value_100m_krw": 1378.0,
+   "weight_pct": 0.05,
+   "stake_pct": 8.2
+  },
+  {
+   "rank": 174,
+   "company": "씨에스윈드",
+   "value_100m_krw": 1369.0,
+   "weight_pct": 0.05,
+   "stake_pct": 7.8
+  },
+  {
+   "rank": 175,
+   "company": "두산퓨얼셀",
+   "value_100m_krw": 1342.0,
+   "weight_pct": 0.05,
+   "stake_pct": 7.1
+  },
+  {
+   "rank": 176,
+   "company": "효성",
+   "value_100m_krw": 1336.0,
+   "weight_pct": 0.05,
+   "stake_pct": 6.96
+  },
+  {
+   "rank": 177,
+   "company": "파마리서치",
+   "value_100m_krw": 1332.0,
+   "weight_pct": 0.05,
+   "stake_pct": 3.18
+  },
+  {
+   "rank": 178,
+   "company": "에스엠",
+   "value_100m_krw": 1324.0,
+   "weight_pct": 0.05,
+   "stake_pct": 4.28
+  },
+  {
+   "rank": 179,
+   "company": "에스티팜",
+   "value_100m_krw": 1323.0,
+   "weight_pct": 0.05,
+   "stake_pct": 5.36
+  },
+  {
+   "rank": 180,
+   "company": "에코프로비엠",
+   "value_100m_krw": 1304.0,
+   "weight_pct": 0.05,
+   "stake_pct": 0.91
+  },
+  {
+   "rank": 181,
+   "company": "한국콜마",
+   "value_100m_krw": 1294.0,
+   "weight_pct": 0.05,
+   "stake_pct": 8.82
+  },
+  {
+   "rank": 182,
+   "company": "DL이앤씨",
+   "value_100m_krw": 1287.0,
+   "weight_pct": 0.05,
+   "stake_pct": 8.08
+  },
+  {
+   "rank": 183,
+   "company": "SNT다이내믹스",
+   "value_100m_krw": 1281.0,
+   "weight_pct": 0.05,
+   "stake_pct": 8.27
+  },
+  {
+   "rank": 184,
+   "company": "달바글로벌",
+   "value_100m_krw": 1272.0,
+   "weight_pct": 0.05,
+   "stake_pct": 6.98
+  },
+  {
+   "rank": 185,
+   "company": "GS건설",
+   "value_100m_krw": 1270.0,
+   "weight_pct": 0.05,
+   "stake_pct": 7.53
+  },
+  {
+   "rank": 186,
+   "company": "대한조선",
+   "value_100m_krw": 1211.0,
+   "weight_pct": 0.05,
+   "stake_pct": 4.69
+  },
+  {
+   "rank": 187,
+   "company": "JYP Ent.",
+   "value_100m_krw": 1210.0,
+   "weight_pct": 0.05,
+   "stake_pct": 4.69
+  },
+  {
+   "rank": 188,
+   "company": "한온시스템",
+   "value_100m_krw": 1153.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.73
+  },
+  {
+   "rank": 189,
+   "company": "파라다이스",
+   "value_100m_krw": 1149.0,
+   "weight_pct": 0.04,
+   "stake_pct": 7.52
+  },
+  {
+   "rank": 190,
+   "company": "로보티즈",
+   "value_100m_krw": 1144.0,
+   "weight_pct": 0.04,
+   "stake_pct": 3.01
+  },
+  {
+   "rank": 191,
+   "company": "다우기술",
+   "value_100m_krw": 1137.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.52
+  },
+  {
+   "rank": 192,
+   "company": "실리콘투",
+   "value_100m_krw": 1129.0,
+   "weight_pct": 0.04,
+   "stake_pct": 4.77
+  },
+  {
+   "rank": 193,
+   "company": "호텔신라",
+   "value_100m_krw": 1128.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.44
+  },
+  {
+   "rank": 194,
+   "company": "SK오션플랜트",
+   "value_100m_krw": 1115.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.81
+  },
+  {
+   "rank": 195,
+   "company": "보로노이",
+   "value_100m_krw": 1111.0,
+   "weight_pct": 0.04,
+   "stake_pct": 2.78
+  },
+  {
+   "rank": 196,
+   "company": "시프트업",
+   "value_100m_krw": 1068.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.1
+  },
+  {
+   "rank": 197,
+   "company": "SK가스",
+   "value_100m_krw": 1057.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.08
+  },
+  {
+   "rank": 198,
+   "company": "LX인터내셔널",
+   "value_100m_krw": 1044.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.29
+  },
+  {
+   "rank": 199,
+   "company": "코오롱인더",
+   "value_100m_krw": 1043.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.45
+  },
+  {
+   "rank": 200,
+   "company": "롯데에너지머티리얼즈",
+   "value_100m_krw": 1015.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.34
+  },
+  {
+   "rank": 201,
+   "company": "솔브레인",
+   "value_100m_krw": 1001.0,
+   "weight_pct": 0.04,
+   "stake_pct": 4.91
+  },
+  {
+   "rank": 202,
+   "company": "SK케미칼",
+   "value_100m_krw": 992.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.75
+  },
+  {
+   "rank": 203,
+   "company": "SK리츠",
+   "value_100m_krw": 980.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.7
+  },
+  {
+   "rank": 204,
+   "company": "대한유화",
+   "value_100m_krw": 977.0,
+   "weight_pct": 0.04,
+   "stake_pct": 10.38
+  },
+  {
+   "rank": 205,
+   "company": "펩트론",
+   "value_100m_krw": 968.0,
+   "weight_pct": 0.04,
+   "stake_pct": 1.63
+  },
+  {
+   "rank": 206,
+   "company": "롯데칠성",
+   "value_100m_krw": 965.0,
+   "weight_pct": 0.04,
+   "stake_pct": 7.47
+  },
+  {
+   "rank": 207,
+   "company": "SK아이이테크놀로지",
+   "value_100m_krw": 962.0,
+   "weight_pct": 0.04,
+   "stake_pct": 4.7
+  },
+  {
+   "rank": 208,
+   "company": "엠앤씨솔루션",
+   "value_100m_krw": 961.0,
+   "weight_pct": 0.04,
+   "stake_pct": 7.35
+  },
+  {
+   "rank": 209,
+   "company": "STX엔진",
+   "value_100m_krw": 954.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.99
+  },
+  {
+   "rank": 210,
+   "company": "롯데정밀화학",
+   "value_100m_krw": 953.0,
+   "weight_pct": 0.04,
+   "stake_pct": 8.29
+  },
+  {
+   "rank": 211,
+   "company": "대신증권",
+   "value_100m_krw": 944.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.89
+  },
+  {
+   "rank": 212,
+   "company": "DN오토모티브",
+   "value_100m_krw": 934.0,
+   "weight_pct": 0.04,
+   "stake_pct": 6.54
+  },
+  {
+   "rank": 213,
+   "company": "삼성화재우",
+   "value_100m_krw": 923.0,
+   "weight_pct": 0.04,
+   "stake_pct": 7.89
+  },
+  {
+   "rank": 214,
+   "company": "유진테크",
+   "value_100m_krw": 919.0,
+   "weight_pct": 0.04,
+   "stake_pct": 5.35
+  },
+  {
+   "rank": 215,
+   "company": "티씨케이",
+   "value_100m_krw": 914.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.51
+  },
+  {
+   "rank": 216,
+   "company": "동서",
+   "value_100m_krw": 910.0,
+   "weight_pct": 0.03,
+   "stake_pct": 3.4
+  },
+  {
+   "rank": 217,
+   "company": "피에스케이",
+   "value_100m_krw": 883.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.27
+  },
+  {
+   "rank": 218,
+   "company": "이수스페셜티케미컬",
+   "value_100m_krw": 874.0,
+   "weight_pct": 0.03,
+   "stake_pct": 4.89
+  },
+  {
+   "rank": 219,
+   "company": "영원무역홀딩스",
+   "value_100m_krw": 873.0,
+   "weight_pct": 0.03,
+   "stake_pct": 3.38
+  },
+  {
+   "rank": 220,
+   "company": "대우건설",
+   "value_100m_krw": 867.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.46
+  },
+  {
+   "rank": 221,
+   "company": "코스메카코리아",
+   "value_100m_krw": 859.0,
+   "weight_pct": 0.03,
+   "stake_pct": 12.08
+  },
+  {
+   "rank": 222,
+   "company": "올릭스",
+   "value_100m_krw": 851.0,
+   "weight_pct": 0.03,
+   "stake_pct": 3.0
+  },
+  {
+   "rank": 223,
+   "company": "대상",
+   "value_100m_krw": 846.0,
+   "weight_pct": 0.03,
+   "stake_pct": 11.59
+  },
+  {
+   "rank": 224,
+   "company": "SNT모티브",
+   "value_100m_krw": 809.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.83
+  },
+  {
+   "rank": 225,
+   "company": "동아쏘시오홀딩스",
+   "value_100m_krw": 806.0,
+   "weight_pct": 0.03,
+   "stake_pct": 11.24
+  },
+  {
+   "rank": 226,
+   "company": "테스",
+   "value_100m_krw": 804.0,
+   "weight_pct": 0.03,
+   "stake_pct": 9.13
+  },
+  {
+   "rank": 227,
+   "company": "더블유게임즈",
+   "value_100m_krw": 803.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.97
+  },
+  {
+   "rank": 228,
+   "company": "오리온홀딩스",
+   "value_100m_krw": 803.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.2
+  },
+  {
+   "rank": 229,
+   "company": "HLB",
+   "value_100m_krw": 778.0,
+   "weight_pct": 0.03,
+   "stake_pct": 1.16
+  },
+  {
+   "rank": 230,
+   "company": "심텍",
+   "value_100m_krw": 777.0,
+   "weight_pct": 0.03,
+   "stake_pct": 4.22
+  },
+  {
+   "rank": 231,
+   "company": "동원산업",
+   "value_100m_krw": 761.0,
+   "weight_pct": 0.03,
+   "stake_pct": 4.11
+  },
+  {
+   "rank": 232,
+   "company": "종근당",
+   "value_100m_krw": 757.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.62
+  },
+  {
+   "rank": 233,
+   "company": "코리아써키트",
+   "value_100m_krw": 755.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.62
+  },
+  {
+   "rank": 234,
+   "company": "롯데웰푸드",
+   "value_100m_krw": 753.0,
+   "weight_pct": 0.03,
+   "stake_pct": 7.06
+  },
+  {
+   "rank": 235,
+   "company": "GKL",
+   "value_100m_krw": 752.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.12
+  },
+  {
+   "rank": 236,
+   "company": "HDC",
+   "value_100m_krw": 734.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.57
+  },
+  {
+   "rank": 237,
+   "company": "클래시스",
+   "value_100m_krw": 734.0,
+   "weight_pct": 0.03,
+   "stake_pct": 2.06
+  },
+  {
+   "rank": 238,
+   "company": "삼천당제약",
+   "value_100m_krw": 732.0,
+   "weight_pct": 0.03,
+   "stake_pct": 1.34
+  },
+  {
+   "rank": 239,
+   "company": "와이지엔터테인먼트",
+   "value_100m_krw": 723.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.57
+  },
+  {
+   "rank": 240,
+   "company": "NHN",
+   "value_100m_krw": 722.0,
+   "weight_pct": 0.03,
+   "stake_pct": 7.59
+  },
+  {
+   "rank": 241,
+   "company": "해성디에스",
+   "value_100m_krw": 721.0,
+   "weight_pct": 0.03,
+   "stake_pct": 7.62
+  },
+  {
+   "rank": 242,
+   "company": "디앤디파마텍",
+   "value_100m_krw": 699.0,
+   "weight_pct": 0.03,
+   "stake_pct": 1.75
+  },
+  {
+   "rank": 243,
+   "company": "한화투자증권",
+   "value_100m_krw": 698.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.93
+  },
+  {
+   "rank": 244,
+   "company": "금호타이어",
+   "value_100m_krw": 697.0,
+   "weight_pct": 0.03,
+   "stake_pct": 4.14
+  },
+  {
+   "rank": 245,
+   "company": "한일시멘트",
+   "value_100m_krw": 695.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.26
+  },
+  {
+   "rank": 246,
+   "company": "덕산네오룩스",
+   "value_100m_krw": 692.0,
+   "weight_pct": 0.03,
+   "stake_pct": 7.63
+  },
+  {
+   "rank": 247,
+   "company": "DL",
+   "value_100m_krw": 689.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.73
+  },
+  {
+   "rank": 248,
+   "company": "ESR켄달스퀘어리츠",
+   "value_100m_krw": 670.0,
+   "weight_pct": 0.03,
+   "stake_pct": 6.38
+  },
+  {
+   "rank": 249,
+   "company": "TKG휴켐스",
+   "value_100m_krw": 665.0,
+   "weight_pct": 0.03,
+   "stake_pct": 8.59
+  },
+  {
+   "rank": 250,
+   "company": "하이트진로",
+   "value_100m_krw": 657.0,
+   "weight_pct": 0.03,
+   "stake_pct": 5.08
+  },
+  {
+   "rank": 251,
+   "company": "휴젤",
+   "value_100m_krw": 650.0,
+   "weight_pct": 0.02,
+   "stake_pct": 2.29
+  },
+  {
+   "rank": 252,
+   "company": "오스코텍",
+   "value_100m_krw": 636.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.68
+  },
+  {
+   "rank": 253,
+   "company": "효성티앤씨",
+   "value_100m_krw": 636.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.61
+  },
+  {
+   "rank": 254,
+   "company": "HK이노엔",
+   "value_100m_krw": 619.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.43
+  },
+  {
+   "rank": 255,
+   "company": "동진쎄미켐",
+   "value_100m_krw": 616.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.27
+  },
+  {
+   "rank": 256,
+   "company": "경동나비엔",
+   "value_100m_krw": 611.0,
+   "weight_pct": 0.02,
+   "stake_pct": 7.55
+  },
+  {
+   "rank": 257,
+   "company": "세방전지",
+   "value_100m_krw": 611.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.95
+  },
+  {
+   "rank": 258,
+   "company": "LS에코에너지",
+   "value_100m_krw": 611.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.77
+  },
+  {
+   "rank": 259,
+   "company": "한국앤컴퍼니",
+   "value_100m_krw": 604.0,
+   "weight_pct": 0.02,
+   "stake_pct": 2.43
+  },
+  {
+   "rank": 260,
+   "company": "고영",
+   "value_100m_krw": 602.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.83
+  },
+  {
+   "rank": 261,
+   "company": "롯데렌탈",
+   "value_100m_krw": 592.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.18
+  },
+  {
+   "rank": 262,
+   "company": "에스피지",
+   "value_100m_krw": 575.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.19
+  },
+  {
+   "rank": 263,
+   "company": "케이씨텍",
+   "value_100m_krw": 573.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.98
+  },
+  {
+   "rank": 264,
+   "company": "한샘",
+   "value_100m_krw": 572.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.27
+  },
+  {
+   "rank": 265,
+   "company": "하나마이크론",
+   "value_100m_krw": 571.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.34
+  },
+  {
+   "rank": 266,
+   "company": "한국단자",
+   "value_100m_krw": 567.0,
+   "weight_pct": 0.02,
+   "stake_pct": 8.32
+  },
+  {
+   "rank": 267,
+   "company": "코스모신소재",
+   "value_100m_krw": 563.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.0
+  },
+  {
+   "rank": 268,
+   "company": "RFHIC",
+   "value_100m_krw": 553.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.39
+  },
+  {
+   "rank": 269,
+   "company": "GS피앤엘",
+   "value_100m_krw": 551.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.61
+  },
+  {
+   "rank": 270,
+   "company": "세아제강지주",
+   "value_100m_krw": 551.0,
+   "weight_pct": 0.02,
+   "stake_pct": 10.38
+  },
+  {
+   "rank": 271,
+   "company": "테크윙",
+   "value_100m_krw": 545.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.21
+  },
+  {
+   "rank": 272,
+   "company": "가온전선",
+   "value_100m_krw": 537.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.94
+  },
+  {
+   "rank": 273,
+   "company": "하나투어",
+   "value_100m_krw": 534.0,
+   "weight_pct": 0.02,
+   "stake_pct": 7.07
+  },
+  {
+   "rank": 274,
+   "company": "HPSP",
+   "value_100m_krw": 532.0,
+   "weight_pct": 0.02,
+   "stake_pct": 1.9
+  },
+  {
+   "rank": 275,
+   "company": "이노션",
+   "value_100m_krw": 528.0,
+   "weight_pct": 0.02,
+   "stake_pct": 7.16
+  },
+  {
+   "rank": 276,
+   "company": "SK디스커버리",
+   "value_100m_krw": 515.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.86
+  },
+  {
+   "rank": 277,
+   "company": "오뚜기",
+   "value_100m_krw": 514.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.33
+  },
+  {
+   "rank": 278,
+   "company": "현대차우",
+   "value_100m_krw": 510.0,
+   "weight_pct": 0.02,
+   "stake_pct": 1.06
+  },
+  {
+   "rank": 279,
+   "company": "파크시스템스",
+   "value_100m_krw": 507.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.47
+  },
+  {
+   "rank": 280,
+   "company": "SK네트웍스",
+   "value_100m_krw": 504.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.04
+  },
+  {
+   "rank": 281,
+   "company": "현대지에프홀딩스",
+   "value_100m_krw": 503.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.88
+  },
+  {
+   "rank": 282,
+   "company": "신영증권",
+   "value_100m_krw": 490.0,
+   "weight_pct": 0.02,
+   "stake_pct": 2.22
+  },
+  {
+   "rank": 283,
+   "company": "에스디바이오센서",
+   "value_100m_krw": 486.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.49
+  },
+  {
+   "rank": 284,
+   "company": "HS효성첨단소재",
+   "value_100m_krw": 486.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.97
+  },
+  {
+   "rank": 285,
+   "company": "동양생명",
+   "value_100m_krw": 480.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.53
+  },
+  {
+   "rank": 286,
+   "company": "미래에셋생명",
+   "value_100m_krw": 479.0,
+   "weight_pct": 0.02,
+   "stake_pct": 2.89
+  },
+  {
+   "rank": 287,
+   "company": "에스앤에스텍",
+   "value_100m_krw": 475.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.61
+  },
+  {
+   "rank": 288,
+   "company": "녹십자홀딩스",
+   "value_100m_krw": 474.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.33
+  },
+  {
+   "rank": 289,
+   "company": "롯데리츠",
+   "value_100m_krw": 471.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.12
+  },
+  {
+   "rank": 290,
+   "company": "NICE평가정보",
+   "value_100m_krw": 470.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.69
+  },
+  {
+   "rank": 291,
+   "company": "한온시스템(유상)",
+   "value_100m_krw": 459.0,
+   "weight_pct": 0.02,
+   "stake_pct": 0.0
+  },
+  {
+   "rank": 292,
+   "company": "지아이이노베이션",
+   "value_100m_krw": 458.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.07
+  },
+  {
+   "rank": 293,
+   "company": "프로티나",
+   "value_100m_krw": 457.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.78
+  },
+  {
+   "rank": 294,
+   "company": "두산테스나",
+   "value_100m_krw": 447.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.35
+  },
+  {
+   "rank": 295,
+   "company": "빙그레",
+   "value_100m_krw": 446.0,
+   "weight_pct": 0.02,
+   "stake_pct": 6.26
+  },
+  {
+   "rank": 296,
+   "company": "LX세미콘",
+   "value_100m_krw": 440.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.5
+  },
+  {
+   "rank": 297,
+   "company": "하나머티리얼즈",
+   "value_100m_krw": 427.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.01
+  },
+  {
+   "rank": 298,
+   "company": "큐리언트",
+   "value_100m_krw": 423.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.88
+  },
+  {
+   "rank": 299,
+   "company": "대웅",
+   "value_100m_krw": 416.0,
+   "weight_pct": 0.02,
+   "stake_pct": 3.25
+  },
+  {
+   "rank": 300,
+   "company": "솔루엠",
+   "value_100m_krw": 415.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.23
+  },
+  {
+   "rank": 301,
+   "company": "브이엠",
+   "value_100m_krw": 406.0,
+   "weight_pct": 0.02,
+   "stake_pct": 5.51
+  },
+  {
+   "rank": 302,
+   "company": "코미코",
+   "value_100m_krw": 400.0,
+   "weight_pct": 0.02,
+   "stake_pct": 4.33
+  },
+  {
+   "rank": 303,
+   "company": "율촌화학",
+   "value_100m_krw": 392.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.12
+  },
+  {
+   "rank": 304,
+   "company": "미래에셋증권2우B",
+   "value_100m_krw": 391.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.54
+  },
+  {
+   "rank": 305,
+   "company": "태광",
+   "value_100m_krw": 382.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.65
+  },
+  {
+   "rank": 306,
+   "company": "코오롱티슈진",
+   "value_100m_krw": 378.0,
+   "weight_pct": 0.01,
+   "stake_pct": 0.57
+  },
+  {
+   "rank": 307,
+   "company": "씨엠티엑스",
+   "value_100m_krw": 374.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.04
+  },
+  {
+   "rank": 308,
+   "company": "한세실업",
+   "value_100m_krw": 371.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.97
+  },
+  {
+   "rank": 309,
+   "company": "SBS",
+   "value_100m_krw": 371.0,
+   "weight_pct": 0.01,
+   "stake_pct": 10.68
+  },
+  {
+   "rank": 310,
+   "company": "케이카",
+   "value_100m_krw": 362.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.63
+  },
+  {
+   "rank": 311,
+   "company": "에스티아이",
+   "value_100m_krw": 351.0,
+   "weight_pct": 0.01,
+   "stake_pct": 7.28
+  },
+  {
+   "rank": 312,
+   "company": "디어유",
+   "value_100m_krw": 348.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.66
+  },
+  {
+   "rank": 313,
+   "company": "보령",
+   "value_100m_krw": 347.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.49
+  },
+  {
+   "rank": 314,
+   "company": "비에이치",
+   "value_100m_krw": 345.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.37
+  },
+  {
+   "rank": 315,
+   "company": "아이에스동서",
+   "value_100m_krw": 341.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.84
+  },
+  {
+   "rank": 316,
+   "company": "HL홀딩스",
+   "value_100m_krw": 341.0,
+   "weight_pct": 0.01,
+   "stake_pct": 8.26
+  },
+  {
+   "rank": 317,
+   "company": "에스에프에이",
+   "value_100m_krw": 341.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.05
+  },
+  {
+   "rank": 318,
+   "company": "피에스케이홀딩스",
+   "value_100m_krw": 335.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.36
+  },
+  {
+   "rank": 319,
+   "company": "LG화학우",
+   "value_100m_krw": 327.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.56
+  },
+  {
+   "rank": 320,
+   "company": "알지노믹스",
+   "value_100m_krw": 323.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.46
+  },
+  {
+   "rank": 321,
+   "company": "신한알파리츠",
+   "value_100m_krw": 318.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.71
+  },
+  {
+   "rank": 322,
+   "company": "KG모빌리티",
+   "value_100m_krw": 316.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.46
+  },
+  {
+   "rank": 323,
+   "company": "젬백스",
+   "value_100m_krw": 315.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.55
+  },
+  {
+   "rank": 324,
+   "company": "에이치브이엠",
+   "value_100m_krw": 309.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.4
+  },
+  {
+   "rank": 325,
+   "company": "원익머트리얼즈",
+   "value_100m_krw": 308.0,
+   "weight_pct": 0.01,
+   "stake_pct": 7.9
+  },
+  {
+   "rank": 326,
+   "company": "엠로",
+   "value_100m_krw": 305.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.62
+  },
+  {
+   "rank": 327,
+   "company": "영풍",
+   "value_100m_krw": 303.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.34
+  },
+  {
+   "rank": 328,
+   "company": "지역난방공사",
+   "value_100m_krw": 301.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.7
+  },
+  {
+   "rank": 329,
+   "company": "대주전자재료",
+   "value_100m_krw": 297.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.03
+  },
+  {
+   "rank": 330,
+   "company": "덴티움",
+   "value_100m_krw": 296.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.78
+  },
+  {
+   "rank": 331,
+   "company": "넥스틴",
+   "value_100m_krw": 295.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.92
+  },
+  {
+   "rank": 332,
+   "company": "비나텍",
+   "value_100m_krw": 293.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.04
+  },
+  {
+   "rank": 333,
+   "company": "동성화인텍",
+   "value_100m_krw": 291.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.82
+  },
+  {
+   "rank": 334,
+   "company": "성광벤드",
+   "value_100m_krw": 287.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.19
+  },
+  {
+   "rank": 335,
+   "company": "전진건설로봇",
+   "value_100m_krw": 285.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.07
+  },
+  {
+   "rank": 336,
+   "company": "일동제약",
+   "value_100m_krw": 281.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.3
+  },
+  {
+   "rank": 337,
+   "company": "동아에스티",
+   "value_100m_krw": 275.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.6
+  },
+  {
+   "rank": 338,
+   "company": "지투지바이오",
+   "value_100m_krw": 265.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.41
+  },
+  {
+   "rank": 339,
+   "company": "서부T&D",
+   "value_100m_krw": 264.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.08
+  },
+  {
+   "rank": 340,
+   "company": "CJ CGV",
+   "value_100m_krw": 262.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.66
+  },
+  {
+   "rank": 341,
+   "company": "삼천리",
+   "value_100m_krw": 261.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.02
+  },
+  {
+   "rank": 342,
+   "company": "동국제약",
+   "value_100m_krw": 258.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.33
+  },
+  {
+   "rank": 343,
+   "company": "E1",
+   "value_100m_krw": 255.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.46
+  },
+  {
+   "rank": 344,
+   "company": "SK이터닉스",
+   "value_100m_krw": 254.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.64
+  },
+  {
+   "rank": 345,
+   "company": "서진시스템",
+   "value_100m_krw": 254.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.8
+  },
+  {
+   "rank": 346,
+   "company": "케어젠",
+   "value_100m_krw": 252.0,
+   "weight_pct": 0.01,
+   "stake_pct": 0.65
+  },
+  {
+   "rank": 347,
+   "company": "쿠쿠홈시스",
+   "value_100m_krw": 252.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.67
+  },
+  {
+   "rank": 348,
+   "company": "제이에스코퍼레이션",
+   "value_100m_krw": 251.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.75
+  },
+  {
+   "rank": 349,
+   "company": "코오롱",
+   "value_100m_krw": 249.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.95
+  },
+  {
+   "rank": 350,
+   "company": "펄어비스",
+   "value_100m_krw": 249.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.04
+  },
+  {
+   "rank": 351,
+   "company": "쓰리빌리언",
+   "value_100m_krw": 249.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.29
+  },
+  {
+   "rank": 352,
+   "company": "아모레퍼시픽우",
+   "value_100m_krw": 247.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.36
+  },
+  {
+   "rank": 353,
+   "company": "티에스이",
+   "value_100m_krw": 247.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.88
+  },
+  {
+   "rank": 354,
+   "company": "SNT에너지",
+   "value_100m_krw": 247.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.26
+  },
+  {
+   "rank": 355,
+   "company": "쎄트렉아이",
+   "value_100m_krw": 245.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.26
+  },
+  {
+   "rank": 356,
+   "company": "유니드",
+   "value_100m_krw": 244.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.37
+  },
+  {
+   "rank": 357,
+   "company": "HD현대에너지솔루션",
+   "value_100m_krw": 243.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.97
+  },
+  {
+   "rank": 358,
+   "company": "현대홈쇼핑",
+   "value_100m_krw": 234.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.55
+  },
+  {
+   "rank": 359,
+   "company": "HJ중공업",
+   "value_100m_krw": 232.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.22
+  },
+  {
+   "rank": 360,
+   "company": "한화리츠",
+   "value_100m_krw": 229.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.07
+  },
+  {
+   "rank": 361,
+   "company": "한섬",
+   "value_100m_krw": 227.0,
+   "weight_pct": 0.01,
+   "stake_pct": 6.32
+  },
+  {
+   "rank": 362,
+   "company": "LS머트리얼즈",
+   "value_100m_krw": 226.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.74
+  },
+  {
+   "rank": 363,
+   "company": "이엔에프테크놀로지",
+   "value_100m_krw": 225.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.35
+  },
+  {
+   "rank": 364,
+   "company": "동원시스템즈",
+   "value_100m_krw": 224.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.09
+  },
+  {
+   "rank": 365,
+   "company": "진성티이씨",
+   "value_100m_krw": 220.0,
+   "weight_pct": 0.01,
+   "stake_pct": 7.4
+  },
+  {
+   "rank": 366,
+   "company": "KG스틸",
+   "value_100m_krw": 211.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.94
+  },
+  {
+   "rank": 367,
+   "company": "파미셀",
+   "value_100m_krw": 208.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.38
+  },
+  {
+   "rank": 368,
+   "company": "감성코퍼레이션",
+   "value_100m_krw": 206.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.94
+  },
+  {
+   "rank": 369,
+   "company": "비에이치아이",
+   "value_100m_krw": 205.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.27
+  },
+  {
+   "rank": 370,
+   "company": "엘앤씨바이오",
+   "value_100m_krw": 193.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.28
+  },
+  {
+   "rank": 371,
+   "company": "아시아나항공",
+   "value_100m_krw": 193.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.19
+  },
+  {
+   "rank": 372,
+   "company": "하이록코리아",
+   "value_100m_krw": 190.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.25
+  },
+  {
+   "rank": 373,
+   "company": "한글과컴퓨터",
+   "value_100m_krw": 188.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.39
+  },
+  {
+   "rank": 374,
+   "company": "클로봇",
+   "value_100m_krw": 187.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.19
+  },
+  {
+   "rank": 375,
+   "company": "이녹스첨단소재",
+   "value_100m_krw": 180.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.96
+  },
+  {
+   "rank": 376,
+   "company": "동국제강",
+   "value_100m_krw": 179.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.37
+  },
+  {
+   "rank": 377,
+   "company": "원익QnC",
+   "value_100m_krw": 177.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.14
+  },
+  {
+   "rank": 378,
+   "company": "케이씨",
+   "value_100m_krw": 176.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.22
+  },
+  {
+   "rank": 379,
+   "company": "후성",
+   "value_100m_krw": 175.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.17
+  },
+  {
+   "rank": 380,
+   "company": "파인엠텍",
+   "value_100m_krw": 171.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.4
+  },
+  {
+   "rank": 381,
+   "company": "KCC글라스",
+   "value_100m_krw": 171.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.03
+  },
+  {
+   "rank": 382,
+   "company": "세진중공업",
+   "value_100m_krw": 168.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.7
+  },
+  {
+   "rank": 383,
+   "company": "쿠쿠홀딩스",
+   "value_100m_krw": 166.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.61
+  },
+  {
+   "rank": 384,
+   "company": "가온칩스",
+   "value_100m_krw": 166.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.76
+  },
+  {
+   "rank": 385,
+   "company": "에스투더블유",
+   "value_100m_krw": 165.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.2
+  },
+  {
+   "rank": 386,
+   "company": "대한광통신",
+   "value_100m_krw": 162.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.51
+  },
+  {
+   "rank": 387,
+   "company": "스튜디오드래곤",
+   "value_100m_krw": 162.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.26
+  },
+  {
+   "rank": 388,
+   "company": "LG전자우",
+   "value_100m_krw": 161.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.93
+  },
+  {
+   "rank": 389,
+   "company": "인텔리안테크",
+   "value_100m_krw": 159.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.49
+  },
+  {
+   "rank": 390,
+   "company": "현대그린푸드",
+   "value_100m_krw": 158.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.08
+  },
+  {
+   "rank": 391,
+   "company": "국도화학",
+   "value_100m_krw": 156.0,
+   "weight_pct": 0.01,
+   "stake_pct": 5.16
+  },
+  {
+   "rank": 392,
+   "company": "태광산업",
+   "value_100m_krw": 154.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.82
+  },
+  {
+   "rank": 393,
+   "company": "솔루스첨단소재",
+   "value_100m_krw": 154.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.0
+  },
+  {
+   "rank": 394,
+   "company": "넥센타이어",
+   "value_100m_krw": 153.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.08
+  },
+  {
+   "rank": 395,
+   "company": "CJ ENM",
+   "value_100m_krw": 153.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.08
+  },
+  {
+   "rank": 396,
+   "company": "풀무원",
+   "value_100m_krw": 152.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.09
+  },
+  {
+   "rank": 397,
+   "company": "주성엔지니어링",
+   "value_100m_krw": 147.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.12
+  },
+  {
+   "rank": 398,
+   "company": "루닛",
+   "value_100m_krw": 146.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.21
+  },
+  {
+   "rank": 399,
+   "company": "SNT홀딩스",
+   "value_100m_krw": 145.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.64
+  },
+  {
+   "rank": 400,
+   "company": "JW중외제약",
+   "value_100m_krw": 145.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.44
+  },
+  {
+   "rank": 401,
+   "company": "미코",
+   "value_100m_krw": 144.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.23
+  },
+  {
+   "rank": 402,
+   "company": "DI동일",
+   "value_100m_krw": 143.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.7
+  },
+  {
+   "rank": 403,
+   "company": "PI첨단소재",
+   "value_100m_krw": 142.0,
+   "weight_pct": 0.01,
+   "stake_pct": 3.09
+  },
+  {
+   "rank": 404,
+   "company": "삼화전기",
+   "value_100m_krw": 141.0,
+   "weight_pct": 0.01,
+   "stake_pct": 7.29
+  },
+  {
+   "rank": 405,
+   "company": "삼양사",
+   "value_100m_krw": 141.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.88
+  },
+  {
+   "rank": 406,
+   "company": "한화3우B",
+   "value_100m_krw": 138.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.94
+  },
+  {
+   "rank": 407,
+   "company": "메지온",
+   "value_100m_krw": 138.0,
+   "weight_pct": 0.01,
+   "stake_pct": 0.5
+  },
+  {
+   "rank": 408,
+   "company": "삼성전기우",
+   "value_100m_krw": 137.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.07
+  },
+  {
+   "rank": 409,
+   "company": "한화손해보험",
+   "value_100m_krw": 136.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.09
+  },
+  {
+   "rank": 410,
+   "company": "나노신소재",
+   "value_100m_krw": 135.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.21
+  },
+  {
+   "rank": 411,
+   "company": "AP시스템",
+   "value_100m_krw": 132.0,
+   "weight_pct": 0.01,
+   "stake_pct": 4.53
+  },
+  {
+   "rank": 412,
+   "company": "제주반도체",
+   "value_100m_krw": 132.0,
+   "weight_pct": 0.01,
+   "stake_pct": 1.45
+  },
+  {
+   "rank": 413,
+   "company": "CJ4우(전환)",
+   "value_100m_krw": 132.0,
+   "weight_pct": 0.01,
+   "stake_pct": 2.04
+  },
+  {
+   "rank": 414,
+   "company": "OCI",
+   "value_100m_krw": 129.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.41
+  },
+  {
+   "rank": 415,
+   "company": "메디톡스",
+   "value_100m_krw": 127.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.44
+  },
+  {
+   "rank": 416,
+   "company": "대한해운",
+   "value_100m_krw": 127.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.23
+  },
+  {
+   "rank": 417,
+   "company": "셀트리온제약",
+   "value_100m_krw": 124.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 418,
+   "company": "풍산홀딩스",
+   "value_100m_krw": 123.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.28
+  },
+  {
+   "rank": 419,
+   "company": "금호석유화학우",
+   "value_100m_krw": 123.0,
+   "weight_pct": 0.0,
+   "stake_pct": 6.65
+  },
+  {
+   "rank": 420,
+   "company": "레이크머티리얼즈",
+   "value_100m_krw": 122.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.26
+  },
+  {
+   "rank": 421,
+   "company": "에이프릴바이오",
+   "value_100m_krw": 121.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.95
+  },
+  {
+   "rank": 422,
+   "company": "제주항공",
+   "value_100m_krw": 120.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.76
+  },
+  {
+   "rank": 423,
+   "company": "디아이",
+   "value_100m_krw": 120.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.99
+  },
+  {
+   "rank": 424,
+   "company": "삼양홀딩스",
+   "value_100m_krw": 120.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.68
+  },
+  {
+   "rank": 425,
+   "company": "세아제강",
+   "value_100m_krw": 119.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.58
+  },
+  {
+   "rank": 426,
+   "company": "교보증권",
+   "value_100m_krw": 119.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.1
+  },
+  {
+   "rank": 427,
+   "company": "F&F홀딩스",
+   "value_100m_krw": 118.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.61
+  },
+  {
+   "rank": 428,
+   "company": "아이쓰리시스템",
+   "value_100m_krw": 116.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.07
+  },
+  {
+   "rank": 429,
+   "company": "하이젠알앤엠",
+   "value_100m_krw": 114.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.62
+  },
+  {
+   "rank": 430,
+   "company": "LS마린솔루션",
+   "value_100m_krw": 113.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.72
+  },
+  {
+   "rank": 431,
+   "company": "아세아",
+   "value_100m_krw": 112.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.65
+  },
+  {
+   "rank": 432,
+   "company": "넥슨게임즈",
+   "value_100m_krw": 111.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.41
+  },
+  {
+   "rank": 433,
+   "company": "메디포스트",
+   "value_100m_krw": 111.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.55
+  },
+  {
+   "rank": 434,
+   "company": "에이유브랜즈",
+   "value_100m_krw": 108.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.42
+  },
+  {
+   "rank": 435,
+   "company": "엔켐",
+   "value_100m_krw": 107.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.78
+  },
+  {
+   "rank": 436,
+   "company": "코나아이",
+   "value_100m_krw": 107.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.62
+  },
+  {
+   "rank": 437,
+   "company": "바이넥스",
+   "value_100m_krw": 106.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.17
+  },
+  {
+   "rank": 438,
+   "company": "아세아시멘트",
+   "value_100m_krw": 106.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.39
+  },
+  {
+   "rank": 439,
+   "company": "일진하이솔루스",
+   "value_100m_krw": 106.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.18
+  },
+  {
+   "rank": 440,
+   "company": "한중엔시에스",
+   "value_100m_krw": 106.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.48
+  },
+  {
+   "rank": 441,
+   "company": "종근당홀딩스",
+   "value_100m_krw": 106.0,
+   "weight_pct": 0.0,
+   "stake_pct": 4.56
+  },
+  {
+   "rank": 442,
+   "company": "브이티",
+   "value_100m_krw": 105.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.72
+  },
+  {
+   "rank": 443,
+   "company": "LX하우시스",
+   "value_100m_krw": 105.0,
+   "weight_pct": 0.0,
+   "stake_pct": 4.06
+  },
+  {
+   "rank": 444,
+   "company": "자화전자",
+   "value_100m_krw": 104.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.86
+  },
+  {
+   "rank": 445,
+   "company": "코스모화학",
+   "value_100m_krw": 104.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.88
+  },
+  {
+   "rank": 446,
+   "company": "화승인더",
+   "value_100m_krw": 104.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.18
+  },
+  {
+   "rank": 447,
+   "company": "GST",
+   "value_100m_krw": 103.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.94
+  },
+  {
+   "rank": 448,
+   "company": "한국금융지주우",
+   "value_100m_krw": 103.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.39
+  },
+  {
+   "rank": 449,
+   "company": "CJ제일제당 우",
+   "value_100m_krw": 102.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.56
+  },
+  {
+   "rank": 450,
+   "company": "한미글로벌",
+   "value_100m_krw": 102.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.16
+  },
+  {
+   "rank": 451,
+   "company": "신도리코",
+   "value_100m_krw": 101.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.07
+  },
+  {
+   "rank": 452,
+   "company": "화승엔터프라이즈",
+   "value_100m_krw": 98.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.28
+  },
+  {
+   "rank": 453,
+   "company": "LF",
+   "value_100m_krw": 97.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.81
+  },
+  {
+   "rank": 454,
+   "company": "에이디테크놀로지",
+   "value_100m_krw": 97.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.12
+  },
+  {
+   "rank": 455,
+   "company": "RF머트리얼즈",
+   "value_100m_krw": 96.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.0
+  },
+  {
+   "rank": 456,
+   "company": "큐리오시스",
+   "value_100m_krw": 95.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.54
+  },
+  {
+   "rank": 457,
+   "company": "DB증권",
+   "value_100m_krw": 94.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.04
+  },
+  {
+   "rank": 458,
+   "company": "리브스메드",
+   "value_100m_krw": 93.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.73
+  },
+  {
+   "rank": 459,
+   "company": "세방",
+   "value_100m_krw": 93.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.39
+  },
+  {
+   "rank": 460,
+   "company": "카페24",
+   "value_100m_krw": 93.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.27
+  },
+  {
+   "rank": 461,
+   "company": "KB발해인프라",
+   "value_100m_krw": 93.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.75
+  },
+  {
+   "rank": 462,
+   "company": "한국쉘석유",
+   "value_100m_krw": 92.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.58
+  },
+  {
+   "rank": 463,
+   "company": "대양전기공업",
+   "value_100m_krw": 92.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.49
+  },
+  {
+   "rank": 464,
+   "company": "LG생활건강우",
+   "value_100m_krw": 92.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.85
+  },
+  {
+   "rank": 465,
+   "company": "바디텍메드",
+   "value_100m_krw": 90.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.91
+  },
+  {
+   "rank": 466,
+   "company": "인투셀",
+   "value_100m_krw": 89.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.04
+  },
+  {
+   "rank": 467,
+   "company": "제이앤티씨",
+   "value_100m_krw": 89.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.77
+  },
+  {
+   "rank": 468,
+   "company": "한국철강",
+   "value_100m_krw": 89.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.45
+  },
+  {
+   "rank": 469,
+   "company": "현대차3우B",
+   "value_100m_krw": 89.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.86
+  },
+  {
+   "rank": 470,
+   "company": "펌텍코리아",
+   "value_100m_krw": 88.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.37
+  },
+  {
+   "rank": 471,
+   "company": "씨앤씨인터내셔널",
+   "value_100m_krw": 88.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.19
+  },
+  {
+   "rank": 472,
+   "company": "제이에스링크",
+   "value_100m_krw": 88.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.55
+  },
+  {
+   "rank": 473,
+   "company": "대한제강",
+   "value_100m_krw": 87.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.97
+  },
+  {
+   "rank": 474,
+   "company": "화신",
+   "value_100m_krw": 87.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.99
+  },
+  {
+   "rank": 475,
+   "company": "유나이티드제약",
+   "value_100m_krw": 86.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.76
+  },
+  {
+   "rank": 476,
+   "company": "성우하이텍",
+   "value_100m_krw": 86.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.57
+  },
+  {
+   "rank": 477,
+   "company": "마크로젠",
+   "value_100m_krw": 83.0,
+   "weight_pct": 0.0,
+   "stake_pct": 4.56
+  },
+  {
+   "rank": 478,
+   "company": "필옵틱스",
+   "value_100m_krw": 82.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.8
+  },
+  {
+   "rank": 479,
+   "company": "디와이파워",
+   "value_100m_krw": 82.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.5
+  },
+  {
+   "rank": 480,
+   "company": "세경하이테크",
+   "value_100m_krw": 81.0,
+   "weight_pct": 0.0,
+   "stake_pct": 4.38
+  },
+  {
+   "rank": 481,
+   "company": "씨젠",
+   "value_100m_krw": 80.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.64
+  },
+  {
+   "rank": 482,
+   "company": "액트로",
+   "value_100m_krw": 80.0,
+   "weight_pct": 0.0,
+   "stake_pct": 4.91
+  },
+  {
+   "rank": 483,
+   "company": "드림텍",
+   "value_100m_krw": 80.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.64
+  },
+  {
+   "rank": 484,
+   "company": "명신산업",
+   "value_100m_krw": 79.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.68
+  },
+  {
+   "rank": 485,
+   "company": "LX홀딩스",
+   "value_100m_krw": 78.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.28
+  },
+  {
+   "rank": 486,
+   "company": "우진",
+   "value_100m_krw": 77.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.22
+  },
+  {
+   "rank": 487,
+   "company": "신성델타테크",
+   "value_100m_krw": 77.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 488,
+   "company": "티에프이",
+   "value_100m_krw": 76.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.75
+  },
+  {
+   "rank": 489,
+   "company": "유안타증권",
+   "value_100m_krw": 76.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.03
+  },
+  {
+   "rank": 490,
+   "company": "하림지주",
+   "value_100m_krw": 76.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.63
+  },
+  {
+   "rank": 491,
+   "company": "씨메스",
+   "value_100m_krw": 75.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.94
+  },
+  {
+   "rank": 492,
+   "company": "신세계 I&C",
+   "value_100m_krw": 75.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.29
+  },
+  {
+   "rank": 493,
+   "company": "송원산업",
+   "value_100m_krw": 74.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.42
+  },
+  {
+   "rank": 494,
+   "company": "케이엠더블유",
+   "value_100m_krw": 74.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.25
+  },
+  {
+   "rank": 495,
+   "company": "서연이화",
+   "value_100m_krw": 73.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.09
+  },
+  {
+   "rank": 496,
+   "company": "콘텐트리중앙",
+   "value_100m_krw": 73.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.93
+  },
+  {
+   "rank": 497,
+   "company": "한솔제지",
+   "value_100m_krw": 72.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.66
+  },
+  {
+   "rank": 498,
+   "company": "한솔아이원스",
+   "value_100m_krw": 72.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.11
+  },
+  {
+   "rank": 499,
+   "company": "슈프리마",
+   "value_100m_krw": 72.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.53
+  },
+  {
+   "rank": 500,
+   "company": "NHN KCP",
+   "value_100m_krw": 72.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.19
+  },
+  {
+   "rank": 501,
+   "company": "유비쿼스",
+   "value_100m_krw": 71.0,
+   "weight_pct": 0.0,
+   "stake_pct": 5.0
+  },
+  {
+   "rank": 502,
+   "company": "애경케미칼",
+   "value_100m_krw": 71.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.53
+  },
+  {
+   "rank": 503,
+   "company": "SGC에너지",
+   "value_100m_krw": 71.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.24
+  },
+  {
+   "rank": 504,
+   "company": "사피엔반도체",
+   "value_100m_krw": 70.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.23
+  },
+  {
+   "rank": 505,
+   "company": "백산",
+   "value_100m_krw": 69.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.57
+  },
+  {
+   "rank": 506,
+   "company": "SOOP",
+   "value_100m_krw": 68.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.88
+  },
+  {
+   "rank": 507,
+   "company": "명인제약",
+   "value_100m_krw": 68.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.68
+  },
+  {
+   "rank": 508,
+   "company": "신세계인터내셔날",
+   "value_100m_krw": 68.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.75
+  },
+  {
+   "rank": 509,
+   "company": "삼양바이오팜",
+   "value_100m_krw": 67.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.73
+  },
+  {
+   "rank": 510,
+   "company": "삼화콘덴서",
+   "value_100m_krw": 67.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.21
+  },
+  {
+   "rank": 511,
+   "company": "농심홀딩스",
+   "value_100m_krw": 67.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.59
+  },
+  {
+   "rank": 512,
+   "company": "환인제약",
+   "value_100m_krw": 66.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.12
+  },
+  {
+   "rank": 513,
+   "company": "안랩",
+   "value_100m_krw": 65.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.98
+  },
+  {
+   "rank": 514,
+   "company": "토니모리",
+   "value_100m_krw": 65.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.22
+  },
+  {
+   "rank": 515,
+   "company": "유일로보틱스",
+   "value_100m_krw": 65.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.66
+  },
+  {
+   "rank": 516,
+   "company": "원텍",
+   "value_100m_krw": 64.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.92
+  },
+  {
+   "rank": 517,
+   "company": "노루홀딩스",
+   "value_100m_krw": 64.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.28
+  },
+  {
+   "rank": 518,
+   "company": "동양이엔피",
+   "value_100m_krw": 63.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.15
+  },
+  {
+   "rank": 519,
+   "company": "현대코퍼레이션",
+   "value_100m_krw": 63.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.22
+  },
+  {
+   "rank": 520,
+   "company": "한라캐스트",
+   "value_100m_krw": 63.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.89
+  },
+  {
+   "rank": 521,
+   "company": "두산우",
+   "value_100m_krw": 62.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.33
+  },
+  {
+   "rank": 522,
+   "company": "YG PLUS",
+   "value_100m_krw": 62.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.35
+  },
+  {
+   "rank": 523,
+   "company": "네이처셀",
+   "value_100m_krw": 62.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 524,
+   "company": "삼영무역",
+   "value_100m_krw": 61.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.08
+  },
+  {
+   "rank": 525,
+   "company": "대창단조",
+   "value_100m_krw": 61.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.39
+  },
+  {
+   "rank": 526,
+   "company": "토모큐브",
+   "value_100m_krw": 61.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.89
+  },
+  {
+   "rank": 527,
+   "company": "아세아제지",
+   "value_100m_krw": 60.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.86
+  },
+  {
+   "rank": 528,
+   "company": "제주은행",
+   "value_100m_krw": 60.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.41
+  },
+  {
+   "rank": 529,
+   "company": "대상홀딩스",
+   "value_100m_krw": 59.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.67
+  },
+  {
+   "rank": 530,
+   "company": "비츠로셀",
+   "value_100m_krw": 59.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.73
+  },
+  {
+   "rank": 531,
+   "company": "한진",
+   "value_100m_krw": 58.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.94
+  },
+  {
+   "rank": 532,
+   "company": "네오팜",
+   "value_100m_krw": 58.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.97
+  },
+  {
+   "rank": 533,
+   "company": "쏠리드",
+   "value_100m_krw": 57.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.27
+  },
+  {
+   "rank": 534,
+   "company": "티엘비",
+   "value_100m_krw": 57.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.97
+  },
+  {
+   "rank": 535,
+   "company": "스피어",
+   "value_100m_krw": 57.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.83
+  },
+  {
+   "rank": 536,
+   "company": "메가스터디교육",
+   "value_100m_krw": 56.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.29
+  },
+  {
+   "rank": 537,
+   "company": "기가비스",
+   "value_100m_krw": 56.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.41
+  },
+  {
+   "rank": 538,
+   "company": "삼성물산우B",
+   "value_100m_krw": 55.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.6
+  },
+  {
+   "rank": 539,
+   "company": "한일홀딩스",
+   "value_100m_krw": 55.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.09
+  },
+  {
+   "rank": 540,
+   "company": "골프존",
+   "value_100m_krw": 55.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.51
+  },
+  {
+   "rank": 541,
+   "company": "뷰노",
+   "value_100m_krw": 55.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.75
+  },
+  {
+   "rank": 542,
+   "company": "네오위즈",
+   "value_100m_krw": 55.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.03
+  },
+  {
+   "rank": 543,
+   "company": "유진투자증권",
+   "value_100m_krw": 54.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.62
+  },
+  {
+   "rank": 544,
+   "company": "마이크로디지탈",
+   "value_100m_krw": 54.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.69
+  },
+  {
+   "rank": 545,
+   "company": "삼진제약",
+   "value_100m_krw": 54.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.05
+  },
+  {
+   "rank": 546,
+   "company": "씨어스테크놀로지",
+   "value_100m_krw": 54.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.33
+  },
+  {
+   "rank": 547,
+   "company": "에프에스티",
+   "value_100m_krw": 53.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.79
+  },
+  {
+   "rank": 548,
+   "company": "대동",
+   "value_100m_krw": 53.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.08
+  },
+  {
+   "rank": 549,
+   "company": "콜마홀딩스",
+   "value_100m_krw": 53.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.62
+  },
+  {
+   "rank": 550,
+   "company": "대덕",
+   "value_100m_krw": 53.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.49
+  },
+  {
+   "rank": 551,
+   "company": "NICE",
+   "value_100m_krw": 53.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.11
+  },
+  {
+   "rank": 552,
+   "company": "와이엠티",
+   "value_100m_krw": 53.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.54
+  },
+  {
+   "rank": 553,
+   "company": "퓨쳐켐",
+   "value_100m_krw": 52.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.76
+  },
+  {
+   "rank": 554,
+   "company": "일신방직",
+   "value_100m_krw": 52.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.83
+  },
+  {
+   "rank": 555,
+   "company": "TCC스틸",
+   "value_100m_krw": 51.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.41
+  },
+  {
+   "rank": 556,
+   "company": "코람코라이프인프라리츠",
+   "value_100m_krw": 51.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.2
+  },
+  {
+   "rank": 557,
+   "company": "SJG세종",
+   "value_100m_krw": 51.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.81
+  },
+  {
+   "rank": 558,
+   "company": "큐렉소",
+   "value_100m_krw": 50.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.94
+  },
+  {
+   "rank": 559,
+   "company": "링크솔루션",
+   "value_100m_krw": 50.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.48
+  },
+  {
+   "rank": 560,
+   "company": "피엔티",
+   "value_100m_krw": 49.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.55
+  },
+  {
+   "rank": 561,
+   "company": "솔브레인홀딩스",
+   "value_100m_krw": 49.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.63
+  },
+  {
+   "rank": 562,
+   "company": "고려제강",
+   "value_100m_krw": 48.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.83
+  },
+  {
+   "rank": 563,
+   "company": "시노펙스",
+   "value_100m_krw": 48.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.9
+  },
+  {
+   "rank": 564,
+   "company": "효성화학",
+   "value_100m_krw": 47.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.21
+  },
+  {
+   "rank": 565,
+   "company": "삼익THK",
+   "value_100m_krw": 47.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.28
+  },
+  {
+   "rank": 566,
+   "company": "CJ프레시웨이",
+   "value_100m_krw": 47.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.48
+  },
+  {
+   "rank": 567,
+   "company": "우리기술투자",
+   "value_100m_krw": 47.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.76
+  },
+  {
+   "rank": 568,
+   "company": "휴메딕스",
+   "value_100m_krw": 47.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.03
+  },
+  {
+   "rank": 569,
+   "company": "미원에스씨",
+   "value_100m_krw": 47.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.66
+  },
+  {
+   "rank": 570,
+   "company": "스카이라이프",
+   "value_100m_krw": 46.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.94
+  },
+  {
+   "rank": 571,
+   "company": "티이엠씨",
+   "value_100m_krw": 46.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.85
+  },
+  {
+   "rank": 572,
+   "company": "아이마켓코리아",
+   "value_100m_krw": 46.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.76
+  },
+  {
+   "rank": 573,
+   "company": "우신시스템",
+   "value_100m_krw": 46.0,
+   "weight_pct": 0.0,
+   "stake_pct": 4.09
+  },
+  {
+   "rank": 574,
+   "company": "삼양컴텍",
+   "value_100m_krw": 46.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.87
+  },
+  {
+   "rank": 575,
+   "company": "SIMPAC",
+   "value_100m_krw": 45.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.36
+  },
+  {
+   "rank": 576,
+   "company": "피에이치에이",
+   "value_100m_krw": 45.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.83
+  },
+  {
+   "rank": 577,
+   "company": "바이오노트",
+   "value_100m_krw": 45.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.81
+  },
+  {
+   "rank": 578,
+   "company": "진에어",
+   "value_100m_krw": 44.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.23
+  },
+  {
+   "rank": 579,
+   "company": "롯데손해보험",
+   "value_100m_krw": 44.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.82
+  },
+  {
+   "rank": 580,
+   "company": "SPC삼립",
+   "value_100m_krw": 43.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.97
+  },
+  {
+   "rank": 581,
+   "company": "켐트로닉스",
+   "value_100m_krw": 43.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.87
+  },
+  {
+   "rank": 582,
+   "company": "태웅",
+   "value_100m_krw": 43.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.84
+  },
+  {
+   "rank": 583,
+   "company": "디아이씨",
+   "value_100m_krw": 43.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.77
+  },
+  {
+   "rank": 584,
+   "company": "태성",
+   "value_100m_krw": 42.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.31
+  },
+  {
+   "rank": 585,
+   "company": "에코프로에이치엔",
+   "value_100m_krw": 42.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.84
+  },
+  {
+   "rank": 586,
+   "company": "휴온스글로벌",
+   "value_100m_krw": 41.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.64
+  },
+  {
+   "rank": 587,
+   "company": "데브시스터즈",
+   "value_100m_krw": 41.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.13
+  },
+  {
+   "rank": 588,
+   "company": "카카오게임즈",
+   "value_100m_krw": 41.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.31
+  },
+  {
+   "rank": 589,
+   "company": "미원상사",
+   "value_100m_krw": 41.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.57
+  },
+  {
+   "rank": 590,
+   "company": "엠씨넥스",
+   "value_100m_krw": 41.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.81
+  },
+  {
+   "rank": 591,
+   "company": "KT나스미디어",
+   "value_100m_krw": 41.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.71
+  },
+  {
+   "rank": 592,
+   "company": "성일하이텍",
+   "value_100m_krw": 41.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.81
+  },
+  {
+   "rank": 593,
+   "company": "프로텍",
+   "value_100m_krw": 40.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.07
+  },
+  {
+   "rank": 594,
+   "company": "와이씨",
+   "value_100m_krw": 40.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.34
+  },
+  {
+   "rank": 595,
+   "company": "롯데이노베이트",
+   "value_100m_krw": 40.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.36
+  },
+  {
+   "rank": 596,
+   "company": "지엔씨에너지",
+   "value_100m_krw": 40.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.78
+  },
+  {
+   "rank": 597,
+   "company": "티앤엘",
+   "value_100m_krw": 39.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.99
+  },
+  {
+   "rank": 598,
+   "company": "플리토",
+   "value_100m_krw": 39.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.42
+  },
+  {
+   "rank": 599,
+   "company": "애경산업",
+   "value_100m_krw": 39.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.13
+  },
+  {
+   "rank": 600,
+   "company": "남양유업",
+   "value_100m_krw": 39.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.29
+  },
+  {
+   "rank": 601,
+   "company": "한스바이오메드",
+   "value_100m_krw": 39.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.99
+  },
+  {
+   "rank": 602,
+   "company": "한텍",
+   "value_100m_krw": 39.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.13
+  },
+  {
+   "rank": 603,
+   "company": "크라운제과",
+   "value_100m_krw": 38.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.47
+  },
+  {
+   "rank": 604,
+   "company": "네패스",
+   "value_100m_krw": 38.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.06
+  },
+  {
+   "rank": 605,
+   "company": "신대양제지",
+   "value_100m_krw": 38.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 606,
+   "company": "HDC랩스",
+   "value_100m_krw": 38.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.71
+  },
+  {
+   "rank": 607,
+   "company": "위메이드",
+   "value_100m_krw": 37.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 608,
+   "company": "노타",
+   "value_100m_krw": 37.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.38
+  },
+  {
+   "rank": 609,
+   "company": "월덱스",
+   "value_100m_krw": 37.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.04
+  },
+  {
+   "rank": 610,
+   "company": "현대차증권",
+   "value_100m_krw": 36.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.74
+  },
+  {
+   "rank": 611,
+   "company": "한솔홀딩스",
+   "value_100m_krw": 36.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.84
+  },
+  {
+   "rank": 612,
+   "company": "선익시스템",
+   "value_100m_krw": 36.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 613,
+   "company": "나이벡",
+   "value_100m_krw": 36.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.84
+  },
+  {
+   "rank": 614,
+   "company": "INVENI",
+   "value_100m_krw": 36.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.94
+  },
+  {
+   "rank": 615,
+   "company": "KISCO홀딩스",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.0
+  },
+  {
+   "rank": 616,
+   "company": "쏘카",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.94
+  },
+  {
+   "rank": 617,
+   "company": "넥스트바이오메디컬",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 618,
+   "company": "NH올원리츠",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.9
+  },
+  {
+   "rank": 619,
+   "company": "SFA반도체",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.47
+  },
+  {
+   "rank": 620,
+   "company": "유니퀘스트",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.46
+  },
+  {
+   "rank": 621,
+   "company": "글로벌텍스프리",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.11
+  },
+  {
+   "rank": 622,
+   "company": "오가노이드사이언스",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.38
+  },
+  {
+   "rank": 623,
+   "company": "차바이오텍",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.31
+  },
+  {
+   "rank": 624,
+   "company": "한국공항",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.68
+  },
+  {
+   "rank": 625,
+   "company": "한국토지신탁",
+   "value_100m_krw": 35.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.09
+  },
+  {
+   "rank": 626,
+   "company": "DB",
+   "value_100m_krw": 34.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.16
+  },
+  {
+   "rank": 627,
+   "company": "제이알글로벌리츠",
+   "value_100m_krw": 34.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.62
+  },
+  {
+   "rank": 628,
+   "company": "KSS해운",
+   "value_100m_krw": 34.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.64
+  },
+  {
+   "rank": 629,
+   "company": "에치에프알",
+   "value_100m_krw": 34.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.18
+  },
+  {
+   "rank": 630,
+   "company": "인탑스",
+   "value_100m_krw": 34.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.97
+  },
+  {
+   "rank": 631,
+   "company": "현대퓨처넷",
+   "value_100m_krw": 33.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.99
+  },
+  {
+   "rank": 632,
+   "company": "아모텍",
+   "value_100m_krw": 33.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.33
+  },
+  {
+   "rank": 633,
+   "company": "삼아알미늄",
+   "value_100m_krw": 33.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.94
+  },
+  {
+   "rank": 634,
+   "company": "아난티",
+   "value_100m_krw": 33.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 635,
+   "company": "인벤티지랩",
+   "value_100m_krw": 33.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.31
+  },
+  {
+   "rank": 636,
+   "company": "스틱인베스트먼트",
+   "value_100m_krw": 33.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.84
+  },
+  {
+   "rank": 637,
+   "company": "이랜텍",
+   "value_100m_krw": 32.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.41
+  },
+  {
+   "rank": 638,
+   "company": "노루페인트",
+   "value_100m_krw": 32.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.9
+  },
+  {
+   "rank": 639,
+   "company": "지누스",
+   "value_100m_krw": 32.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.11
+  },
+  {
+   "rank": 640,
+   "company": "윈스테크넷",
+   "value_100m_krw": 32.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.29
+  },
+  {
+   "rank": 641,
+   "company": "유진로봇",
+   "value_100m_krw": 31.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.58
+  },
+  {
+   "rank": 642,
+   "company": "성호전자",
+   "value_100m_krw": 31.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 643,
+   "company": "에스에이엠티",
+   "value_100m_krw": 31.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.75
+  },
+  {
+   "rank": 644,
+   "company": "이지바이오",
+   "value_100m_krw": 31.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.63
+  },
+  {
+   "rank": 645,
+   "company": "코리아에프티",
+   "value_100m_krw": 31.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.34
+  },
+  {
+   "rank": 646,
+   "company": "이리츠코크렙",
+   "value_100m_krw": 30.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.05
+  },
+  {
+   "rank": 647,
+   "company": "파두",
+   "value_100m_krw": 30.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.29
+  },
+  {
+   "rank": 648,
+   "company": "포스코엠텍",
+   "value_100m_krw": 30.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 649,
+   "company": "큐로셀",
+   "value_100m_krw": 30.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 650,
+   "company": "세아홀딩스",
+   "value_100m_krw": 30.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.52
+  },
+  {
+   "rank": 651,
+   "company": "아우토크립트",
+   "value_100m_krw": 30.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.66
+  },
+  {
+   "rank": 652,
+   "company": "모토닉",
+   "value_100m_krw": 29.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.01
+  },
+  {
+   "rank": 653,
+   "company": "쎄크",
+   "value_100m_krw": 29.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.08
+  },
+  {
+   "rank": 654,
+   "company": "일진홀딩스",
+   "value_100m_krw": 29.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.88
+  },
+  {
+   "rank": 655,
+   "company": "삼영전자",
+   "value_100m_krw": 29.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.38
+  },
+  {
+   "rank": 656,
+   "company": "신풍제약",
+   "value_100m_krw": 29.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.39
+  },
+  {
+   "rank": 657,
+   "company": "퍼시스",
+   "value_100m_krw": 29.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.54
+  },
+  {
+   "rank": 658,
+   "company": "아모레퍼시픽홀딩스우",
+   "value_100m_krw": 29.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.73
+  },
+  {
+   "rank": 659,
+   "company": "KG케미칼",
+   "value_100m_krw": 29.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.81
+  },
+  {
+   "rank": 660,
+   "company": "와이솔",
+   "value_100m_krw": 29.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.87
+  },
+  {
+   "rank": 661,
+   "company": "BGF",
+   "value_100m_krw": 28.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.76
+  },
+  {
+   "rank": 662,
+   "company": "한국자산신탁",
+   "value_100m_krw": 28.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.95
+  },
+  {
+   "rank": 663,
+   "company": "부국증권",
+   "value_100m_krw": 28.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 664,
+   "company": "오로스테크놀로지",
+   "value_100m_krw": 27.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.15
+  },
+  {
+   "rank": 665,
+   "company": "유니셈",
+   "value_100m_krw": 27.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.92
+  },
+  {
+   "rank": 666,
+   "company": "동국홀딩스",
+   "value_100m_krw": 27.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.12
+  },
+  {
+   "rank": 667,
+   "company": "다우데이타",
+   "value_100m_krw": 26.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 668,
+   "company": "티웨이항공",
+   "value_100m_krw": 26.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.66
+  },
+  {
+   "rank": 669,
+   "company": "HS효성",
+   "value_100m_krw": 26.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.21
+  },
+  {
+   "rank": 670,
+   "company": "무학",
+   "value_100m_krw": 26.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.96
+  },
+  {
+   "rank": 671,
+   "company": "효성ITX",
+   "value_100m_krw": 26.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.73
+  },
+  {
+   "rank": 672,
+   "company": "한솔로지스틱스",
+   "value_100m_krw": 26.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.28
+  },
+  {
+   "rank": 673,
+   "company": "부광약품",
+   "value_100m_krw": 25.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.68
+  },
+  {
+   "rank": 674,
+   "company": "디앤디플랫폼리츠",
+   "value_100m_krw": 25.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.84
+  },
+  {
+   "rank": 675,
+   "company": "아나패스",
+   "value_100m_krw": 25.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.18
+  },
+  {
+   "rank": 676,
+   "company": "사조대림",
+   "value_100m_krw": 25.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.73
+  },
+  {
+   "rank": 677,
+   "company": "광동제약",
+   "value_100m_krw": 25.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.8
+  },
+  {
+   "rank": 678,
+   "company": "남해화학",
+   "value_100m_krw": 25.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.74
+  },
+  {
+   "rank": 679,
+   "company": "서울가스",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.78
+  },
+  {
+   "rank": 680,
+   "company": "한솔테크닉스",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.29
+  },
+  {
+   "rank": 681,
+   "company": "이노스페이스",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.97
+  },
+  {
+   "rank": 682,
+   "company": "큐알티",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.23
+  },
+  {
+   "rank": 683,
+   "company": "대원제약",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.9
+  },
+  {
+   "rank": 684,
+   "company": "TYM",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.92
+  },
+  {
+   "rank": 685,
+   "company": "삼양통상",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.43
+  },
+  {
+   "rank": 686,
+   "company": "신성이엔지",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.73
+  },
+  {
+   "rank": 687,
+   "company": "티에이치엔",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.65
+  },
+  {
+   "rank": 688,
+   "company": "대한약품",
+   "value_100m_krw": 24.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.35
+  },
+  {
+   "rank": 689,
+   "company": "조광피혁",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.54
+  },
+  {
+   "rank": 690,
+   "company": "서흥",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.94
+  },
+  {
+   "rank": 691,
+   "company": "오상헬스케어",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.36
+  },
+  {
+   "rank": 692,
+   "company": "S-Oil우",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.2
+  },
+  {
+   "rank": 693,
+   "company": "휴온스",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 694,
+   "company": "헥토이노베이션",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.1
+  },
+  {
+   "rank": 695,
+   "company": "DS단석",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.72
+  },
+  {
+   "rank": 696,
+   "company": "신한서부티엔디리츠",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.08
+  },
+  {
+   "rank": 697,
+   "company": "천보",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.4
+  },
+  {
+   "rank": 698,
+   "company": "한국정보통신",
+   "value_100m_krw": 23.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.79
+  },
+  {
+   "rank": 699,
+   "company": "NH투자증권우",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.61
+  },
+  {
+   "rank": 700,
+   "company": "에이블씨엔씨",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.82
+  },
+  {
+   "rank": 701,
+   "company": "제룡전기",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.4
+  },
+  {
+   "rank": 702,
+   "company": "LG우",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.11
+  },
+  {
+   "rank": 703,
+   "company": "수산인더스트리",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.74
+  },
+  {
+   "rank": 704,
+   "company": "제우스",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 705,
+   "company": "KPX홀딩스",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.72
+  },
+  {
+   "rank": 706,
+   "company": "원익홀딩스",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 707,
+   "company": "사조산업",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.81
+  },
+  {
+   "rank": 708,
+   "company": "오름테라퓨틱",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.09
+  },
+  {
+   "rank": 709,
+   "company": "휴림로봇",
+   "value_100m_krw": 22.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.24
+  },
+  {
+   "rank": 710,
+   "company": "에코앤드림",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.68
+  },
+  {
+   "rank": 711,
+   "company": "켄코아에어로스페이스",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.91
+  },
+  {
+   "rank": 712,
+   "company": "피엔에이치테크",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 4.43
+  },
+  {
+   "rank": 713,
+   "company": "그래피",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.77
+  },
+  {
+   "rank": 714,
+   "company": "인카금융서비스",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.32
+  },
+  {
+   "rank": 715,
+   "company": "넥센",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.64
+  },
+  {
+   "rank": 716,
+   "company": "뉴로핏",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.8
+  },
+  {
+   "rank": 717,
+   "company": "삼성FN리츠",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 718,
+   "company": "무림P&P",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.31
+  },
+  {
+   "rank": 719,
+   "company": "성신양회",
+   "value_100m_krw": 21.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.88
+  },
+  {
+   "rank": 720,
+   "company": "태경산업",
+   "value_100m_krw": 20.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.39
+  },
+  {
+   "rank": 721,
+   "company": "더본코리아",
+   "value_100m_krw": 20.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.56
+  },
+  {
+   "rank": 722,
+   "company": "대한제당",
+   "value_100m_krw": 20.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.78
+  },
+  {
+   "rank": 723,
+   "company": "신성에스티",
+   "value_100m_krw": 20.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.67
+  },
+  {
+   "rank": 724,
+   "company": "오픈엣지테크놀로지",
+   "value_100m_krw": 20.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.62
+  },
+  {
+   "rank": 725,
+   "company": "티로보틱스",
+   "value_100m_krw": 20.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.45
+  },
+  {
+   "rank": 726,
+   "company": "한전산업",
+   "value_100m_krw": 20.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.58
+  },
+  {
+   "rank": 727,
+   "company": "우리기술",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.32
+  },
+  {
+   "rank": 728,
+   "company": "AJ네트웍스",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.92
+  },
+  {
+   "rank": 729,
+   "company": "삼양패키징",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.94
+  },
+  {
+   "rank": 730,
+   "company": "아스테라시스",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.41
+  },
+  {
+   "rank": 731,
+   "company": "케이엔제이",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.1
+  },
+  {
+   "rank": 732,
+   "company": "DSC인베스트먼트",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.98
+  },
+  {
+   "rank": 733,
+   "company": "로킷헬스케어",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.19
+  },
+  {
+   "rank": 734,
+   "company": "대원전선",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.66
+  },
+  {
+   "rank": 735,
+   "company": "한화갤러리아",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 736,
+   "company": "삼영",
+   "value_100m_krw": 19.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.89
+  },
+  {
+   "rank": 737,
+   "company": "SK증권",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.61
+  },
+  {
+   "rank": 738,
+   "company": "포스코스틸리온",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.77
+  },
+  {
+   "rank": 739,
+   "company": "KPX케미칼",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.9
+  },
+  {
+   "rank": 740,
+   "company": "아이센스",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.41
+  },
+  {
+   "rank": 741,
+   "company": "컴투스",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 742,
+   "company": "광주신세계",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 743,
+   "company": "대원강업",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.75
+  },
+  {
+   "rank": 744,
+   "company": "대성에너지",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.8
+  },
+  {
+   "rank": 745,
+   "company": "영진약품",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 746,
+   "company": "현대바이오",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 747,
+   "company": "태경비케이",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.39
+  },
+  {
+   "rank": 748,
+   "company": "한국화장품제조",
+   "value_100m_krw": 18.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.79
+  },
+  {
+   "rank": 749,
+   "company": "아이티센글로벌",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.25
+  },
+  {
+   "rank": 750,
+   "company": "에이프로젠",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.76
+  },
+  {
+   "rank": 751,
+   "company": "웅진",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.93
+  },
+  {
+   "rank": 752,
+   "company": "도화엔지니어링",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.8
+  },
+  {
+   "rank": 753,
+   "company": "노바렉스",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.65
+  },
+  {
+   "rank": 754,
+   "company": "하이트진로홀딩스",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.75
+  },
+  {
+   "rank": 755,
+   "company": "인선이엔티",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.81
+  },
+  {
+   "rank": 756,
+   "company": "삼현",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.1
+  },
+  {
+   "rank": 757,
+   "company": "잇츠한불",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.69
+  },
+  {
+   "rank": 758,
+   "company": "현대건설우",
+   "value_100m_krw": 17.0,
+   "weight_pct": 0.0,
+   "stake_pct": 2.83
+  },
+  {
+   "rank": 759,
+   "company": "디바이스",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.69
+  },
+  {
+   "rank": 760,
+   "company": "대한제분",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.66
+  },
+  {
+   "rank": 761,
+   "company": "진양홀딩스",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.92
+  },
+  {
+   "rank": 762,
+   "company": "디와이",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.33
+  },
+  {
+   "rank": 763,
+   "company": "대신증권우",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.3
+  },
+  {
+   "rank": 764,
+   "company": "동성케미컬",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.75
+  },
+  {
+   "rank": 765,
+   "company": "크라운해태홀딩스",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.59
+  },
+  {
+   "rank": 766,
+   "company": "한국무브넥스",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.13
+  },
+  {
+   "rank": 767,
+   "company": "휴스틸",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 768,
+   "company": "현대약품",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.58
+  },
+  {
+   "rank": 769,
+   "company": "흥아해운",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.42
+  },
+  {
+   "rank": 770,
+   "company": "네오셈",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.33
+  },
+  {
+   "rank": 771,
+   "company": "제일약품",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.7
+  },
+  {
+   "rank": 772,
+   "company": "아모레퍼시픽홀딩스3우C",
+   "value_100m_krw": 16.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.01
+  },
+  {
+   "rank": 773,
+   "company": "태경케미컬",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.64
+  },
+  {
+   "rank": 774,
+   "company": "코오롱ENP",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 775,
+   "company": "서호전기",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.58
+  },
+  {
+   "rank": 776,
+   "company": "롯데하이마트",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.85
+  },
+  {
+   "rank": 777,
+   "company": "동부건설",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.16
+  },
+  {
+   "rank": 778,
+   "company": "경방",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.58
+  },
+  {
+   "rank": 779,
+   "company": "자이에스앤디",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.87
+  },
+  {
+   "rank": 780,
+   "company": "강남제비스코",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.88
+  },
+  {
+   "rank": 781,
+   "company": "티엠씨",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.4
+  },
+  {
+   "rank": 782,
+   "company": "JW생명과학",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.72
+  },
+  {
+   "rank": 783,
+   "company": "토비스",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.59
+  },
+  {
+   "rank": 784,
+   "company": "삼화페인트",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.69
+  },
+  {
+   "rank": 785,
+   "company": "유진기업",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.52
+  },
+  {
+   "rank": 786,
+   "company": "미래에셋증권우",
+   "value_100m_krw": 15.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.7
+  },
+  {
+   "rank": 787,
+   "company": "샘표식품",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.12
+  },
+  {
+   "rank": 788,
+   "company": "GS글로벌",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.76
+  },
+  {
+   "rank": 789,
+   "company": "샘씨엔에스",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 790,
+   "company": "동화기업",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.33
+  },
+  {
+   "rank": 791,
+   "company": "벽산",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.23
+  },
+  {
+   "rank": 792,
+   "company": "씨아이에스",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.28
+  },
+  {
+   "rank": 793,
+   "company": "삼일제약",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.67
+  },
+  {
+   "rank": 794,
+   "company": "KB스타리츠",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.43
+  },
+  {
+   "rank": 795,
+   "company": "동아지질",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.61
+  },
+  {
+   "rank": 796,
+   "company": "매일유업",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.52
+  },
+  {
+   "rank": 797,
+   "company": "경동도시가스",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.15
+  },
+  {
+   "rank": 798,
+   "company": "대성산업",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.43
+  },
+  {
+   "rank": 799,
+   "company": "폰드그룹",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.43
+  },
+  {
+   "rank": 800,
+   "company": "현대리바트",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.98
+  },
+  {
+   "rank": 801,
+   "company": "코스맥스비티아이",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.05
+  },
+  {
+   "rank": 802,
+   "company": "로보스타",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 803,
+   "company": "금양그린파워",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.0
+  },
+  {
+   "rank": 804,
+   "company": "모두투어",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 805,
+   "company": "우진엔텍",
+   "value_100m_krw": 14.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.72
+  },
+  {
+   "rank": 806,
+   "company": "서연",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.59
+  },
+  {
+   "rank": 807,
+   "company": "HDC현대EP",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.98
+  },
+  {
+   "rank": 808,
+   "company": "케이아이엔엑스",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.23
+  },
+  {
+   "rank": 809,
+   "company": "한세예스24홀딩스",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.8
+  },
+  {
+   "rank": 810,
+   "company": "KCTC",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 811,
+   "company": "동양",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.66
+  },
+  {
+   "rank": 812,
+   "company": "SK이노베이션우",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.51
+  },
+  {
+   "rank": 813,
+   "company": "샘표",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.94
+  },
+  {
+   "rank": 814,
+   "company": "디케이락",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.33
+  },
+  {
+   "rank": 815,
+   "company": "JW홀딩스",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 816,
+   "company": "콜마비앤에이치",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.34
+  },
+  {
+   "rank": 817,
+   "company": "자람테크놀로지",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.56
+  },
+  {
+   "rank": 818,
+   "company": "일성아이에스",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 819,
+   "company": "셀바스AI",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.39
+  },
+  {
+   "rank": 820,
+   "company": "선진",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.55
+  },
+  {
+   "rank": 821,
+   "company": "하나제약",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.63
+  },
+  {
+   "rank": 822,
+   "company": "유수홀딩스",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.83
+  },
+  {
+   "rank": 823,
+   "company": "애니플러스",
+   "value_100m_krw": 13.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 824,
+   "company": "이연제약",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.61
+  },
+  {
+   "rank": 825,
+   "company": "나이스정보통신",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 826,
+   "company": "HS애드",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.85
+  },
+  {
+   "rank": 827,
+   "company": "PKC",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 828,
+   "company": "이지스밸류플러스리츠",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.42
+  },
+  {
+   "rank": 829,
+   "company": "해태제과식품",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.61
+  },
+  {
+   "rank": 830,
+   "company": "싸이맥스",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.74
+  },
+  {
+   "rank": 831,
+   "company": "인터플렉스",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 832,
+   "company": "알루코",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.57
+  },
+  {
+   "rank": 833,
+   "company": "바텍",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.4
+  },
+  {
+   "rank": 834,
+   "company": "금강공업",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.65
+  },
+  {
+   "rank": 835,
+   "company": "솔트룩스",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.34
+  },
+  {
+   "rank": 836,
+   "company": "BYC",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 837,
+   "company": "동국씨엠",
+   "value_100m_krw": 12.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.72
+  },
+  {
+   "rank": 838,
+   "company": "한농화성",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.5
+  },
+  {
+   "rank": 839,
+   "company": "경인양행",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.56
+  },
+  {
+   "rank": 840,
+   "company": "경농",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.62
+  },
+  {
+   "rank": 841,
+   "company": "노머스",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.36
+  },
+  {
+   "rank": 842,
+   "company": "에스엠씨지",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.48
+  },
+  {
+   "rank": 843,
+   "company": "와이씨켐",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.54
+  },
+  {
+   "rank": 844,
+   "company": "태림포장",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.8
+  },
+  {
+   "rank": 845,
+   "company": "교촌에프앤비",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.51
+  },
+  {
+   "rank": 846,
+   "company": "헥토파이낸셜",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.51
+  },
+  {
+   "rank": 847,
+   "company": "피앤에스로보틱스",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.68
+  },
+  {
+   "rank": 848,
+   "company": "흥국화재",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.47
+  },
+  {
+   "rank": 849,
+   "company": "LS네트웍스",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.41
+  },
+  {
+   "rank": 850,
+   "company": "아이씨티케이",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 851,
+   "company": "에이플러스에셋",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.53
+  },
+  {
+   "rank": 852,
+   "company": "LG헬로비전",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.59
+  },
+  {
+   "rank": 853,
+   "company": "일양약품",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.43
+  },
+  {
+   "rank": 854,
+   "company": "조선내화",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.64
+  },
+  {
+   "rank": 855,
+   "company": "CR홀딩스",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.47
+  },
+  {
+   "rank": 856,
+   "company": "동화약품",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.61
+  },
+  {
+   "rank": 857,
+   "company": "한라IMS",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 858,
+   "company": "인터로조",
+   "value_100m_krw": 11.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.58
+  },
+  {
+   "rank": 859,
+   "company": "다날",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.19
+  },
+  {
+   "rank": 860,
+   "company": "한국석유",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.58
+  },
+  {
+   "rank": 861,
+   "company": "이수화학",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.47
+  },
+  {
+   "rank": 862,
+   "company": "넥스틸",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.43
+  },
+  {
+   "rank": 863,
+   "company": "엔젤로보틱스",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.22
+  },
+  {
+   "rank": 864,
+   "company": "웹젠",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.23
+  },
+  {
+   "rank": 865,
+   "company": "신라교역",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.68
+  },
+  {
+   "rank": 866,
+   "company": "미래에셋벤처투자",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 867,
+   "company": "인텍플러스",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.59
+  },
+  {
+   "rank": 868,
+   "company": "서울반도체",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.27
+  },
+  {
+   "rank": 869,
+   "company": "에스앤디",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.5
+  },
+  {
+   "rank": 870,
+   "company": "엘오티베큠",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 871,
+   "company": "미창석유",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 872,
+   "company": "에임드바이오",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.03
+  },
+  {
+   "rank": 873,
+   "company": "화천기계",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.87
+  },
+  {
+   "rank": 874,
+   "company": "네패스아크",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 875,
+   "company": "일진다이아",
+   "value_100m_krw": 10.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.56
+  },
+  {
+   "rank": 876,
+   "company": "유티아이",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.24
+  },
+  {
+   "rank": 877,
+   "company": "대성홀딩스",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.68
+  },
+  {
+   "rank": 878,
+   "company": "한국화장품",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.58
+  },
+  {
+   "rank": 879,
+   "company": "신원",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.54
+  },
+  {
+   "rank": 880,
+   "company": "HS화성",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.75
+  },
+  {
+   "rank": 881,
+   "company": "나우로보틱스",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.33
+  },
+  {
+   "rank": 882,
+   "company": "한양증권",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 883,
+   "company": "진시스템",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 3.12
+  },
+  {
+   "rank": 884,
+   "company": "한신공영",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.75
+  },
+  {
+   "rank": 885,
+   "company": "영풍(배당)",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.0
+  },
+  {
+   "rank": 886,
+   "company": "하이비젼시스템",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 887,
+   "company": "AK홀딩스",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.76
+  },
+  {
+   "rank": 888,
+   "company": "대교",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.54
+  },
+  {
+   "rank": 889,
+   "company": "아이패밀리에스씨",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 890,
+   "company": "에어부산",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.43
+  },
+  {
+   "rank": 891,
+   "company": "SK디앤디",
+   "value_100m_krw": 9.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.36
+  },
+  {
+   "rank": 892,
+   "company": "이구산업",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 893,
+   "company": "DL이앤씨2우(전환)",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.32
+  },
+  {
+   "rank": 894,
+   "company": "덕산테코피아",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.24
+  },
+  {
+   "rank": 895,
+   "company": "이월드",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.41
+  },
+  {
+   "rank": 896,
+   "company": "와이엔텍",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.69
+  },
+  {
+   "rank": 897,
+   "company": "다올투자증권",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.39
+  },
+  {
+   "rank": 898,
+   "company": "남선알미늄",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.5
+  },
+  {
+   "rank": 899,
+   "company": "현대비앤지스틸",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 900,
+   "company": "바이오에프디엔씨",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.59
+  },
+  {
+   "rank": 901,
+   "company": "웅진씽크빅",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.54
+  },
+  {
+   "rank": 902,
+   "company": "아톤",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.53
+  },
+  {
+   "rank": 903,
+   "company": "KBI동양철관",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 904,
+   "company": "삼성출판사",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 905,
+   "company": "딥노이드",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.82
+  },
+  {
+   "rank": 906,
+   "company": "퍼스텍",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.41
+  },
+  {
+   "rank": 907,
+   "company": "한국주철관",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 908,
+   "company": "SK케미칼우",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.29
+  },
+  {
+   "rank": 909,
+   "company": "사조동아원",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 910,
+   "company": "한화솔루션우",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.4
+  },
+  {
+   "rank": 911,
+   "company": "세이브존I&C",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.58
+  },
+  {
+   "rank": 912,
+   "company": "유니테스트",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 913,
+   "company": "삼익악기",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.68
+  },
+  {
+   "rank": 914,
+   "company": "NPC",
+   "value_100m_krw": 8.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.54
+  },
+  {
+   "rank": 915,
+   "company": "상신이디피",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.42
+  },
+  {
+   "rank": 916,
+   "company": "세운메디칼",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.68
+  },
+  {
+   "rank": 917,
+   "company": "유바이오로직스",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 918,
+   "company": "코람코더원리츠",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.2
+  },
+  {
+   "rank": 919,
+   "company": "DI동일(배당)",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.0
+  },
+  {
+   "rank": 920,
+   "company": "계룡건설",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.39
+  },
+  {
+   "rank": 921,
+   "company": "덕산하이메탈",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 922,
+   "company": "에스오에스랩",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.28
+  },
+  {
+   "rank": 923,
+   "company": "금호건설",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.48
+  },
+  {
+   "rank": 924,
+   "company": "종근당바이오",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.62
+  },
+  {
+   "rank": 925,
+   "company": "대원산업",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.24
+  },
+  {
+   "rank": 926,
+   "company": "현대힘스",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.11
+  },
+  {
+   "rank": 927,
+   "company": "DL이앤씨우",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.49
+  },
+  {
+   "rank": 928,
+   "company": "TP",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 929,
+   "company": "신세계푸드",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 930,
+   "company": "한독",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 931,
+   "company": "세아특수강",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.47
+  },
+  {
+   "rank": 932,
+   "company": "신영와코루",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 933,
+   "company": "롯데칠성우",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.09
+  },
+  {
+   "rank": 934,
+   "company": "세명전기",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.5
+  },
+  {
+   "rank": 935,
+   "company": "한양디지텍",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.2
+  },
+  {
+   "rank": 936,
+   "company": "더핑크퐁컴퍼니",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.19
+  },
+  {
+   "rank": 937,
+   "company": "휴비스",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.71
+  },
+  {
+   "rank": 938,
+   "company": "경동인베스트",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.53
+  },
+  {
+   "rank": 939,
+   "company": "디아이티",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.24
+  },
+  {
+   "rank": 940,
+   "company": "LB세미콘",
+   "value_100m_krw": 7.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 941,
+   "company": "코세스",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.18
+  },
+  {
+   "rank": 942,
+   "company": "KEC",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 943,
+   "company": "텔레칩스",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 944,
+   "company": "그린케미칼",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.4
+  },
+  {
+   "rank": 945,
+   "company": "경보제약",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.45
+  },
+  {
+   "rank": 946,
+   "company": "동방",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.5
+  },
+  {
+   "rank": 947,
+   "company": "와이바이오로직스",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 948,
+   "company": "방림",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 949,
+   "company": "GS우",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.7
+  },
+  {
+   "rank": 950,
+   "company": "삼성SDI우",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.23
+  },
+  {
+   "rank": 951,
+   "company": "팜스코",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.67
+  },
+  {
+   "rank": 952,
+   "company": "엘티씨",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.28
+  },
+  {
+   "rank": 953,
+   "company": "테이팩스",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.86
+  },
+  {
+   "rank": 954,
+   "company": "한국수출포장",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 955,
+   "company": "제일파마홀딩스",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 956,
+   "company": "두올",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.54
+  },
+  {
+   "rank": 957,
+   "company": "KTcs",
+   "value_100m_krw": 6.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 958,
+   "company": "코윈테크",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.3
+  },
+  {
+   "rank": 959,
+   "company": "일신석재",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.42
+  },
+  {
+   "rank": 960,
+   "company": "로보로보",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.34
+  },
+  {
+   "rank": 961,
+   "company": "레이언스",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.62
+  },
+  {
+   "rank": 962,
+   "company": "티움바이오",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.31
+  },
+  {
+   "rank": 963,
+   "company": "대영포장",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 964,
+   "company": "나무가",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.21
+  },
+  {
+   "rank": 965,
+   "company": "국보디자인",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.3
+  },
+  {
+   "rank": 966,
+   "company": "에스엠벡셀",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.2
+  },
+  {
+   "rank": 967,
+   "company": "조일알미늄",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.31
+  },
+  {
+   "rank": 968,
+   "company": "아진엑스텍",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.56
+  },
+  {
+   "rank": 969,
+   "company": "호전실업",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.7
+  },
+  {
+   "rank": 970,
+   "company": "계양전기",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.28
+  },
+  {
+   "rank": 971,
+   "company": "모나용평",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.31
+  },
+  {
+   "rank": 972,
+   "company": "제룡산업",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.4
+  },
+  {
+   "rank": 973,
+   "company": "대명에너지",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 974,
+   "company": "디씨엠",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.35
+  },
+  {
+   "rank": 975,
+   "company": "극동유화",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.43
+  },
+  {
+   "rank": 976,
+   "company": "키다리스튜디오",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.39
+  },
+  {
+   "rank": 977,
+   "company": "일동홀딩스",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.32
+  },
+  {
+   "rank": 978,
+   "company": "메가스터디",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 979,
+   "company": "예스티",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.13
+  },
+  {
+   "rank": 980,
+   "company": "황금에스티",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.46
+  },
+  {
+   "rank": 981,
+   "company": "코스텍시스",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.44
+  },
+  {
+   "rank": 982,
+   "company": "코오롱글로벌",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.2
+  },
+  {
+   "rank": 983,
+   "company": "사조씨푸드",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.29
+  },
+  {
+   "rank": 984,
+   "company": "대창",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.4
+  },
+  {
+   "rank": 985,
+   "company": "두산퓨얼셀1우",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 986,
+   "company": "파수",
+   "value_100m_krw": 5.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.87
+  },
+  {
+   "rank": 987,
+   "company": "휴니드",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.41
+  },
+  {
+   "rank": 988,
+   "company": "아시아나IDT",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.35
+  },
+  {
+   "rank": 989,
+   "company": "우주일렉트로",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.13
+  },
+  {
+   "rank": 990,
+   "company": "조선선재",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.36
+  },
+  {
+   "rank": 991,
+   "company": "오로라",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.28
+  },
+  {
+   "rank": 992,
+   "company": "비트플래닛",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.42
+  },
+  {
+   "rank": 993,
+   "company": "덕우전자",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.56
+  },
+  {
+   "rank": 994,
+   "company": "NI스틸",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.43
+  },
+  {
+   "rank": 995,
+   "company": "HL D&I",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.41
+  },
+  {
+   "rank": 996,
+   "company": "인천도시가스",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 997,
+   "company": "에스텍",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 998,
+   "company": "푸른저축은행",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.27
+  },
+  {
+   "rank": 999,
+   "company": "수산세보틱스",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.4
+  },
+  {
+   "rank": 1000,
+   "company": "지투파워",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.27
+  },
+  {
+   "rank": 1001,
+   "company": "한컴위드",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.32
+  },
+  {
+   "rank": 1002,
+   "company": "위메이드맥스",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1003,
+   "company": "삼성제약",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.27
+  },
+  {
+   "rank": 1004,
+   "company": "그리드위즈",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.35
+  },
+  {
+   "rank": 1005,
+   "company": "칩스앤미디어",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.1
+  },
+  {
+   "rank": 1006,
+   "company": "오스테오닉",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.3
+  },
+  {
+   "rank": 1007,
+   "company": "CJ우",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.19
+  },
+  {
+   "rank": 1008,
+   "company": "아이디스",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.19
+  },
+  {
+   "rank": 1009,
+   "company": "DL우",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.92
+  },
+  {
+   "rank": 1010,
+   "company": "에코아이",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.11
+  },
+  {
+   "rank": 1011,
+   "company": "광전자",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.35
+  },
+  {
+   "rank": 1012,
+   "company": "네오위즈홀딩스",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 1013,
+   "company": "신일전자",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.38
+  },
+  {
+   "rank": 1014,
+   "company": "미래에셋글로벌리츠",
+   "value_100m_krw": 4.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.35
+  },
+  {
+   "rank": 1015,
+   "company": "KTis",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.37
+  },
+  {
+   "rank": 1016,
+   "company": "HLB글로벌",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.29
+  },
+  {
+   "rank": 1017,
+   "company": "에이팩트",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.12
+  },
+  {
+   "rank": 1018,
+   "company": "태영건설",
+   "value_100m_krw": 88.0,
+   "weight_pct": 0.0,
+   "stake_pct": 1.69
+  },
+  {
+   "rank": 1019,
+   "company": "바이오니아",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.1
+  },
+  {
+   "rank": 1020,
+   "company": "동인기연",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.39
+  },
+  {
+   "rank": 1021,
+   "company": "파트론",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.09
+  },
+  {
+   "rank": 1022,
+   "company": "현대코퍼레이션홀딩스",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.3
+  },
+  {
+   "rank": 1023,
+   "company": "대신밸류리츠",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.12
+  },
+  {
+   "rank": 1024,
+   "company": "아남전자",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.32
+  },
+  {
+   "rank": 1025,
+   "company": "디엔에프",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.18
+  },
+  {
+   "rank": 1026,
+   "company": "진원생명과학",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.19
+  },
+  {
+   "rank": 1027,
+   "company": "한진중공업홀딩스",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.23
+  },
+  {
+   "rank": 1028,
+   "company": "화천기공",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.4
+  },
+  {
+   "rank": 1029,
+   "company": "미원홀딩스",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.2
+  },
+  {
+   "rank": 1030,
+   "company": "HLB생명과학",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.07
+  },
+  {
+   "rank": 1031,
+   "company": "아바코",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.16
+  },
+  {
+   "rank": 1032,
+   "company": "무림페이퍼",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.38
+  },
+  {
+   "rank": 1033,
+   "company": "뷰웍스",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 1034,
+   "company": "CJ씨푸드",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.3
+  },
+  {
+   "rank": 1035,
+   "company": "모나리자",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.39
+  },
+  {
+   "rank": 1036,
+   "company": "미원화학",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1037,
+   "company": "국제약품",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.33
+  },
+  {
+   "rank": 1038,
+   "company": "아주스틸",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.22
+  },
+  {
+   "rank": 1039,
+   "company": "씨케이솔루션",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.3
+  },
+  {
+   "rank": 1040,
+   "company": "DRB동일",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.28
+  },
+  {
+   "rank": 1041,
+   "company": "삼일씨엔에스",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.36
+  },
+  {
+   "rank": 1042,
+   "company": "대덕전자1우",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.9
+  },
+  {
+   "rank": 1043,
+   "company": "한신기계",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.27
+  },
+  {
+   "rank": 1044,
+   "company": "세원정공",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.23
+  },
+  {
+   "rank": 1045,
+   "company": "네오티스",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.22
+  },
+  {
+   "rank": 1046,
+   "company": "진흥기업",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.24
+  },
+  {
+   "rank": 1047,
+   "company": "HLB테라퓨틱스",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.1
+  },
+  {
+   "rank": 1048,
+   "company": "STX",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.24
+  },
+  {
+   "rank": 1049,
+   "company": "오이솔루션",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 1050,
+   "company": "천일고속",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.05
+  },
+  {
+   "rank": 1051,
+   "company": "지씨셀",
+   "value_100m_krw": 3.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 1052,
+   "company": "미래나노텍",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1053,
+   "company": "화승코퍼레이션",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.23
+  },
+  {
+   "rank": 1054,
+   "company": "대호에이엘",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.2
+  },
+  {
+   "rank": 1055,
+   "company": "삼호개발",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.28
+  },
+  {
+   "rank": 1056,
+   "company": "텔코웨어",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 1057,
+   "company": "서희건설",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 1058,
+   "company": "SG글로벌",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.29
+  },
+  {
+   "rank": 1059,
+   "company": "대신증권2우B",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.12
+  },
+  {
+   "rank": 1060,
+   "company": "한국특강",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 1061,
+   "company": "디오",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.09
+  },
+  {
+   "rank": 1062,
+   "company": "진양산업",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 1063,
+   "company": "퀄리타스반도체",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.11
+  },
+  {
+   "rank": 1064,
+   "company": "유니켐",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.19
+  },
+  {
+   "rank": 1065,
+   "company": "한국내화",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 1066,
+   "company": "대한화섬",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.14
+  },
+  {
+   "rank": 1067,
+   "company": "덕성",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.29
+  },
+  {
+   "rank": 1068,
+   "company": "넥센타이어1우B",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.88
+  },
+  {
+   "rank": 1069,
+   "company": "유니드비티플러스",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.59
+  },
+  {
+   "rank": 1070,
+   "company": "티이엠씨씨엔에스",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.32
+  },
+  {
+   "rank": 1071,
+   "company": "성창기업지주",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.2
+  },
+  {
+   "rank": 1072,
+   "company": "만호제강",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.11
+  },
+  {
+   "rank": 1073,
+   "company": "에이티넘인베스트",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1074,
+   "company": "대구백화점",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.32
+  },
+  {
+   "rank": 1075,
+   "company": "명문제약",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.3
+  },
+  {
+   "rank": 1076,
+   "company": "유화증권",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.12
+  },
+  {
+   "rank": 1077,
+   "company": "디지털대성",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.09
+  },
+  {
+   "rank": 1078,
+   "company": "동원개발",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.07
+  },
+  {
+   "rank": 1079,
+   "company": "솔루스첨단소재1우",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.55
+  },
+  {
+   "rank": 1080,
+   "company": "삼성공조",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1081,
+   "company": "일성건설",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1082,
+   "company": "SK우",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.16
+  },
+  {
+   "rank": 1083,
+   "company": "DKME",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.14
+  },
+  {
+   "rank": 1084,
+   "company": "디와이덕양",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 1085,
+   "company": "기신정기",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.25
+  },
+  {
+   "rank": 1086,
+   "company": "동일고무벨트",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.18
+  },
+  {
+   "rank": 1087,
+   "company": "부산산업",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.2
+  },
+  {
+   "rank": 1088,
+   "company": "에코마케팅",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.05
+  },
+  {
+   "rank": 1089,
+   "company": "금호에이치티",
+   "value_100m_krw": 2.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.13
+  },
+  {
+   "rank": 1090,
+   "company": "KG이니시스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.05
+  },
+  {
+   "rank": 1091,
+   "company": "화승알앤에이",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.24
+  },
+  {
+   "rank": 1092,
+   "company": "대현",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.19
+  },
+  {
+   "rank": 1093,
+   "company": "다스코",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.23
+  },
+  {
+   "rank": 1094,
+   "company": "이노와이어리스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1095,
+   "company": "크리스에프앤씨",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1096,
+   "company": "제이오",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 1097,
+   "company": "코오롱우",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.49
+  },
+  {
+   "rank": 1098,
+   "company": "더블유씨피",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.07
+  },
+  {
+   "rank": 1099,
+   "company": "엘엠에스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.31
+  },
+  {
+   "rank": 1100,
+   "company": "이엠텍",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.1
+  },
+  {
+   "rank": 1101,
+   "company": "엠게임",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.11
+  },
+  {
+   "rank": 1102,
+   "company": "인팩",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1103,
+   "company": "이건산업",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.25
+  },
+  {
+   "rank": 1104,
+   "company": "지엠비코리아",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 1105,
+   "company": "한솔홈데코",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.25
+  },
+  {
+   "rank": 1106,
+   "company": "푸른소나무",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 1107,
+   "company": "코오롱인더우",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.18
+  },
+  {
+   "rank": 1108,
+   "company": "모트렉스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.05
+  },
+  {
+   "rank": 1109,
+   "company": "혜인",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.19
+  },
+  {
+   "rank": 1110,
+   "company": "와이투솔루션",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1111,
+   "company": "엠케이전자",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.07
+  },
+  {
+   "rank": 1112,
+   "company": "남광토건",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1113,
+   "company": "동일산업",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.13
+  },
+  {
+   "rank": 1114,
+   "company": "듀켐바이오",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.04
+  },
+  {
+   "rank": 1115,
+   "company": "케어랩스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.21
+  },
+  {
+   "rank": 1116,
+   "company": "인지컨트롤스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.11
+  },
+  {
+   "rank": 1117,
+   "company": "바이오포트",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.3
+  },
+  {
+   "rank": 1118,
+   "company": "에스켐",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 1119,
+   "company": "문배철강",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.26
+  },
+  {
+   "rank": 1120,
+   "company": "신흥",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1121,
+   "company": "DSR",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 1122,
+   "company": "우성",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.2
+  },
+  {
+   "rank": 1123,
+   "company": "SG세계물산",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.14
+  },
+  {
+   "rank": 1124,
+   "company": "상신브레이크",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 1125,
+   "company": "한국제지",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 1126,
+   "company": "KT밀리의서재",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1127,
+   "company": "보락",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1128,
+   "company": "유니온머티리얼",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.16
+  },
+  {
+   "rank": 1129,
+   "company": "한컴라이프케어",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.11
+  },
+  {
+   "rank": 1130,
+   "company": "유엔젤",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1131,
+   "company": "조비",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1132,
+   "company": "유유제약",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.12
+  },
+  {
+   "rank": 1133,
+   "company": "신송홀딩스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.11
+  },
+  {
+   "rank": 1134,
+   "company": "깨끗한나라",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.12
+  },
+  {
+   "rank": 1135,
+   "company": "윤성에프앤씨",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.04
+  },
+  {
+   "rank": 1136,
+   "company": "보해양조",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.14
+  },
+  {
+   "rank": 1137,
+   "company": "케이사인",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.12
+  },
+  {
+   "rank": 1138,
+   "company": "인터지스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.12
+  },
+  {
+   "rank": 1139,
+   "company": "에이프로젠바이오로직스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1140,
+   "company": "DSR제강",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1141,
+   "company": "삼원강재",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1142,
+   "company": "광명전기",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.14
+  },
+  {
+   "rank": 1143,
+   "company": "다원시스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1144,
+   "company": "창해에탄올",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1145,
+   "company": "CS홀딩스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1146,
+   "company": "씨티알모빌리티",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.13
+  },
+  {
+   "rank": 1147,
+   "company": "동양고속",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.03
+  },
+  {
+   "rank": 1148,
+   "company": "이지스레지던스리츠",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.05
+  },
+  {
+   "rank": 1149,
+   "company": "JTC",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.04
+  },
+  {
+   "rank": 1150,
+   "company": "DYP",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.17
+  },
+  {
+   "rank": 1151,
+   "company": "팜젠사이언스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.08
+  },
+  {
+   "rank": 1152,
+   "company": "포니링크",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.07
+  },
+  {
+   "rank": 1153,
+   "company": "아이티엠반도체",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.03
+  },
+  {
+   "rank": 1154,
+   "company": "디와이피엔에프",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.05
+  },
+  {
+   "rank": 1155,
+   "company": "대상우",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.28
+  },
+  {
+   "rank": 1156,
+   "company": "정상제이엘에스",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.07
+  },
+  {
+   "rank": 1157,
+   "company": "블루산업개발",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1158,
+   "company": "LX하우시스우",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.35
+  },
+  {
+   "rank": 1159,
+   "company": "한국종합기술",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.12
+  },
+  {
+   "rank": 1160,
+   "company": "동남합성",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.05
+  },
+  {
+   "rank": 1161,
+   "company": "부국철강",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.15
+  },
+  {
+   "rank": 1162,
+   "company": "SH에너지화학",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.14
+  },
+  {
+   "rank": 1163,
+   "company": "페이퍼코리아",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.05
+  },
+  {
+   "rank": 1164,
+   "company": "와이지-원",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.03
+  },
+  {
+   "rank": 1165,
+   "company": "잉글우드랩",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.02
+  },
+  {
+   "rank": 1166,
+   "company": "갤럭시아에스엠",
+   "value_100m_krw": 1.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.1
+  },
+  {
+   "rank": 1167,
+   "company": "KH바텍",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.02
+  },
+  {
+   "rank": 1168,
+   "company": "한일철강",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.03
+  },
+  {
+   "rank": 1169,
+   "company": "세미파이브",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1170,
+   "company": "상상인증권",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 1171,
+   "company": "새론오토모티브",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 1172,
+   "company": "영보화학",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.04
+  },
+  {
+   "rank": 1173,
+   "company": "엔케이",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.04
+  },
+  {
+   "rank": 1174,
+   "company": "STX그린로지스",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.09
+  },
+  {
+   "rank": 1175,
+   "company": "SJM",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.07
+  },
+  {
+   "rank": 1176,
+   "company": "인디에프",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 1177,
+   "company": "티웨이홀딩스",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.07
+  },
+  {
+   "rank": 1178,
+   "company": "형지엘리트",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.05
+  },
+  {
+   "rank": 1179,
+   "company": "에스제이그룹",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.03
+  },
+  {
+   "rank": 1180,
+   "company": "클리오",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1181,
+   "company": "현대사료",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.02
+  },
+  {
+   "rank": 1182,
+   "company": "한국기업평가",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1183,
+   "company": "디앤씨미디어",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.02
+  },
+  {
+   "rank": 1184,
+   "company": "사조오양",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.03
+  },
+  {
+   "rank": 1185,
+   "company": "전방",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.04
+  },
+  {
+   "rank": 1186,
+   "company": "KH 필룩스",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.02
+  },
+  {
+   "rank": 1187,
+   "company": "인스코비",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.03
+  },
+  {
+   "rank": 1188,
+   "company": "티와이홀딩스",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1189,
+   "company": "대교우B",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.07
+  },
+  {
+   "rank": 1190,
+   "company": "유니온",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.03
+  },
+  {
+   "rank": 1191,
+   "company": "인바이오젠",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1192,
+   "company": "차AI헬스케어",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1193,
+   "company": "IHQ",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.02
+  },
+  {
+   "rank": 1194,
+   "company": "NH프라임리츠",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1195,
+   "company": "써니전자",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1196,
+   "company": "LX홀딩스1우",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.06
+  },
+  {
+   "rank": 1197,
+   "company": "평화홀딩스",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1198,
+   "company": "동방아그로",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1199,
+   "company": "KZ정밀",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.0
+  },
+  {
+   "rank": 1200,
+   "company": "코퍼스코리아",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1201,
+   "company": "선도전기",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1202,
+   "company": "국보",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.01
+  },
+  {
+   "rank": 1203,
+   "company": "NICE인프라",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.0
+  },
+  {
+   "rank": 1204,
+   "company": "동성제약",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.0
+  },
+  {
+   "rank": 1205,
+   "company": "국일제지",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.0
+  },
+  {
+   "rank": 1206,
+   "company": "MTRON",
+   "value_100m_krw": 0.0,
+   "weight_pct": 0.0,
+   "stake_pct": 0.0
+  }
+ ]
+}

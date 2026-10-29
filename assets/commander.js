@@ -239,7 +239,7 @@
     if (window.MTMemberOpened) collect(window.MTMemberOpened.id, window.MTMemberOpened.name);
     paintDock(); if (!panel.hidden) render();
   });
-  get("data/us/trades.json").then(function (tr) {
+  get("data/us/trades_public.json").then(function (tr) {
     var t = (tr && tr.trades) || [];
     data.trades = t;
     data.latest = t.filter(function (x) { return /^\d{4}-\d{2}-\d{2}$/.test(x.filed || ""); }).sort(function (a, b) { return String(b.filed).localeCompare(String(a.filed)) || String(b.d || "").localeCompare(String(a.d || "")); });

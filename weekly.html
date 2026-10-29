@@ -140,7 +140,7 @@ header.bar input.nm{width:200px;text-transform:none}
   }
   function top(map, n) { return Object.keys(map).sort(function (a, b) { return map[b] - map[a] || a.localeCompare(b); }).slice(0, n); }
 
-  Promise.all([get("data/us/trades.json"), get("data/us/lobbying.json"), get("data/us/federal-awards.json")]).then(function (r) {
+  Promise.all([get("data/us/trades_public.json"), get("data/us/lobbying.json"), get("data/us/federal-awards.json")]).then(function (r) {
     var tr = r[0] || {}, lob = r[1] || {}, aw = r[2] || {}, trades = tr.trades || [];
     var filed = trades.map(function (x) { return x.filed; }).filter(function (d) { return /^\d{4}-\d{2}-\d{2}$/.test(d || ""); }).sort();
     app.replaceChildren();

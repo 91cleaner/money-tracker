@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>정부 지출 · MONEY TRACKER</title>
+<meta property="og:title" content="정부 지출 · 국회의원·정당에 가는 돈"><meta property="og:description" content="국회의원 1명에 드는 돈, 정당 보조금, 국회 국외활동. 공식 공개 자료만.">
+<meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="assets/national.css?v=20261026mobilefold2">
+<link rel="stylesheet" href="assets/refresh.css?v=202610249700">
+<link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><meta name="theme-color" content="#0d1117"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MONEY TRACKER"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>.nbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.nbar .country-switch{display:flex;gap:5px}.nbar .country-switch a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:6px 11px;border:1px solid #4a586b;border-radius:10px;text-decoration:none;color:inherit;font-weight:700;font-size:13px}.nbar .country-switch [aria-current="page"]{background:#22472d;border-color:#499b66}@media(max-width:600px){.nbar{padding:8px!important;gap:5px}.nbar>span{font-size:11px}.nbar .country-switch a{padding:6px 8px;font-size:12px}}.mt-brand{display:inline-flex;align-items:center;gap:7px;color:#f1f6fa!important;text-decoration:none!important}.mt-mark{width:31px;height:31px;display:inline-flex;align-items:center;justify-content:center;border-radius:9px;background:#183c2b;border:1px solid #4aaf77;color:#8ff7b5;font:900 11px system-ui;letter-spacing:-.05em}.mt-brand-name{font-size:12px;letter-spacing:.04em;font-weight:900}.mt-exit{font-size:12px!important;color:#aebac6}@media(max-width:600px){.nbar{display:grid!important;grid-template-columns:1fr auto;gap:7px!important}.nbar .mt-brand{grid-column:1}.nbar .mt-exit{grid-column:2;justify-self:end}.nbar .country-switch{grid-column:1 / -1;justify-content:center}.nbar .country-switch a{flex:1;max-width:170px}.nbar>span{display:none}} 
+@media(max-width:600px){
+ /* The tracker has its own six-tool dock; no site-wide fixed bottom navigation. */
+ body[data-page="national"] .tabbar-bot,
+ body[data-page="national"] .tabbar-top{display:none!important}
+ body[data-page="national"] .nw{padding-top:0!important}
+ body[data-page="national"] #pg{height:calc(100dvh - 122px)!important;min-height:350px!important}
+ body[data-page="national"] #pg .pg-bar{bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;z-index:820!important}
+ body[data-page="national"] #pg .pg-dice{bottom:calc(85px + env(safe-area-inset-bottom,0px))!important}
+ body[data-page="national"] #pg.fileon .pg-dice{opacity:0!important;pointer-events:none!important}
+}
+
+/* Mobile national tracker: one document flow, three non-overlapping map zones. */
+@media(max-width:600px){
+ html,body{overflow-x:hidden!important}
+ body[data-page="national"] .nbar{
+  position:relative!important;top:auto!important;z-index:910!important;
+  box-sizing:border-box!important;width:100%!important;
+  padding:calc(10px + env(safe-area-inset-top,0px)) 12px 12px!important;
+  background:#0b1113!important;border-bottom:1px solid #28523a!important;
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;gap:10px 8px!important;
+ }
+ body[data-page="national"] .nbar .mt-brand{grid-column:1!important;min-width:0!important}
+ body[data-page="national"] .nbar .mt-exit{grid-column:2!important;justify-self:end!important}
+ body[data-page="national"] .nbar .country-switch{
+  grid-column:1/-1!important;width:100%!important;display:grid!important;
+  grid-template-columns:1fr 1fr!important;gap:8px!important;
+ }
+ body[data-page="national"] .nbar .country-switch a{
+  max-width:none!important;width:100%!important;min-height:45px!important;
+  padding:8px!important;text-align:center!important;
+ }
+ body[data-page="national"] .nw{padding-top:0!important}
+ body[data-page="national"] #pg{
+  position:relative!important;margin:0 calc(50% - 50vw)!important;
+  width:100vw!important;height:calc(100svh - 132px)!important;
+  min-height:420px!important;overflow:hidden!important;
+ }
+ body[data-page="national"] #pg .pg-top{top:10px!important;left:10px!important;right:10px!important}
+ body[data-page="national"] #pg .pg-say{top:86px!important}
+ body[data-page="national"] #pg .pg-bar{
+  display:flex!important;position:absolute!important;top:auto!important;
+  bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;
+  left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  z-index:850!important;width:calc(100% - 24px)!important;
+  max-width:430px!important;justify-content:space-between!important;
+ }
+ body[data-page="national"] #pg .pg-bar button{
+  flex:1 1 0!important;min-width:0!important;width:auto!important;
+  height:56px!important;
+ }
+ body[data-page="national"] #pg .pg-dice{
+  top:auto!important;right:12px!important;
+  bottom:calc(90px + env(safe-area-inset-bottom,0px))!important;z-index:760!important;
+ }
+ body[data-page="national"] #pg.fileon .pg-dice{opacity:0!important;pointer-events:none!important}
+ body[data-page="national"] #pg .pg-file.on{
+  position:absolute!important;top:auto!important;left:10px!important;right:10px!important;
+  bottom:calc(91px + env(safe-area-inset-bottom,0px))!important;
+  max-height:min(45%,350px)!important;overflow-y:auto!important;
+  z-index:790!important;
+ }
+ body[data-page="national"] #pg .pg-file.on.min{
+  max-height:52px!important;overflow:hidden!important;
+ }
+ body[data-page="national"] #pg .pg-file:not(.on){pointer-events:none!important}
+ body[data-page="national"] #pg .pg-hint{bottom:165px!important}
+ body[data-page="national"] .tabbar,.tabbar-bot,.tabbar-top{display:none!important}
+}
+</style></head>
+<body data-page="national">
+<header class="nbar"><a class="mt-brand" href="./" aria-label="MONEY TRACKER 홈"><span class="mt-mark">MT</span><span class="mt-brand-name">MONEY TRACKER</span></a><span>갱신 <span id="upd">—</span></span></header>
+<main class="nw">
+  <div id="pg"></div>
+  <h1 style="margin-top:20px">정부 지출 · 자세한 자료</h1>
+  <p class="lede">국회의원과 정당에 가는 돈을 공식 공개 자료로 봐요. 여기 나온 건 <b>데이터상</b> 숫자일 뿐, 잘잘못을 따지는 게 아니에요. 숫자마다 출처를 달았어요.</p>
+  <nav class="jump"><a href="#s1">의원 1명</a><a href="#s2">정당 보조금</a><a href="#s3">국외활동</a><a href="#s4">대북 돈 경로</a></nav>
+  <section id="s1"><h2>의원 1명에 드는 돈</h2><div id="mp"></div></section>
+  <section id="s2"><h2>정당 보조금</h2><div id="pt"></div></section>
+  <section id="s3"><h2>국회의원 국외활동</h2><div id="tr"></div></section>
+  <section id="s3b"><h2>출장 기록에서 눈여겨볼 점</h2><div id="trflag"></div></section>
+  <section id="s4"><h2>대북 돈 경로</h2><div id="nk"></div></section>
+  <p class="foot">자료: 국회사무처 열린국회정보, 중앙선거관리위원회, 신문 보도(숫자마다 출처 표시). 이 페이지에 아직 없는 자료: <span id="miss"></span></p>
+</main>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/mapkit.js?v=202610251700"></script>
+<script src="assets/topmap.js?v=202610250900"></script>
+<script src="assets/national.js?v=202610251225"></script>
+<script src="assets/polgame.js?v=202610281630"></script>
+<script src="assets/fun.js?v=202610251100"></script>
+
+<script src="assets/visits.js?v=202610251055" defer></script>
+<script src="assets/pwa.js?v=202610251330" defer></script>
+
+<script>
+/* Measure the real two-row mobile header instead of guessing its height. */
+(function(){
+ const h=document.querySelector('.nbar');
+ if(!h)return;
+ const measure=()=>{
+  const px=Math.ceil(h.getBoundingClientRect().height);
+  if(px>0)document.documentElement.style.setProperty('--mt-room-header',px+'px');
+ };
+ measure();
+ if(window.ResizeObserver)new ResizeObserver(measure).observe(h);
+ window.addEventListener('resize',measure,{passive:true});
+})();
+</script>
+<style>
+@media(max-width:600px){
+ body[data-page="national"] #pg,
+ body[data-page="national"] #pg.member-selected,
+ body[data-page="national"] #pg.member-selected.member-full{
+ height:calc(100svh - var(--mt-room-header, 145px))!important;
+ min-height:360px!important;
+ }
+}
+</style>
+<style id="mt-single-command-room">
+body[data-page="national"] .nw{max-width:none!important;padding:0!important}
+body[data-page="national"] #pg{height:calc(100dvh - 54px)!important;min-height:350px!important;width:100%!important;margin:0!important}
+body[data-page="national"] .nw>h1,body[data-page="national"] .nw>.lede,body[data-page="national"] .nw>.jump,body[data-page="national"] .nw>section,body[data-page="national"] .nw>.foot{display:none!important}
+.nbar .mt-exit{display:none!important}
+#mtCommand{position:absolute;z-index:780;left:12px;bottom:89px;width:min(450px,calc(100% - 24px));display:flex;gap:6px;background:#06140de8;padding:7px;border:1px solid #34744d;border-radius:10px;box-shadow:0 5px 24px #0008}
+#mtCommand input{min-width:0;flex:1;background:#07180f;color:#e4ffe9;border:1px solid #3a6d4a;border-radius:6px;padding:10px;font:13px system-ui}
+#mtCommand button{background:#185432;color:#d9ffe7;border:1px solid #4a9968;border-radius:6px;padding:9px 12px;cursor:pointer}
+#mtCommandPanel{position:absolute;z-index:785;right:12px;top:75px;width:min(355px,calc(100% - 24px));max-height:50%;overflow:auto;background:#04120cf2;border:1px solid #438c5b;border-radius:10px;padding:14px;color:#d3ffe0;font:13px/1.65 system-ui;box-shadow:0 10px 28px #0009}
+#mtCommandPanel[hidden]{display:none!important}#mtCommandPanel h3{color:#88ffc0;margin:0 0 8px;font-size:15px}#mtCommandPanel button{background:#15482e;border:1px solid #499363;border-radius:6px;color:#dcffe5;padding:7px 10px;cursor:pointer;margin:4px 4px 0 0}
+#mtCommandPanel a{color:#90eab2}
+@media(max-width:600px){body[data-page="national"] #pg{height:calc(100dvh - var(--mt-room-header,65px))!important;min-height:350px!important}#mtCommand{left:8px;right:8px;width:auto;bottom:calc(77px + env(safe-area-inset-bottom,0px))}#mtCommandPanel{top:82px;right:8px;max-height:37%;font-size:12px}}
+</style>
+<script id="mt-single-command-controller">
+(function(){function init(){
+const root=document.getElementById('pg');if(!root)return;
+const form=document.createElement('form');form.id='mtCommand';form.innerHTML='<input aria-label="작전 명령" placeholder="미국, 대만 반도체, 금리, 관세, 세계사 추적" required><button>추적 ↵</button>';root.append(form);
+const panel=document.createElement('section');panel.id='mtCommandPanel';panel.hidden=true;root.append(panel);
+const missions=[
+{re:/대만|반도체|tsmc|엔비디아/i,title:'대만 반도체 공급망',stops:[['대만',23.7,121,'대만의 첨단 반도체 생산 집중도를 확인합니다.'],['미국',39,-98,'미국 기술주와 공급망 노출을 검토합니다.']],symbols:'NVDA · AMD · TSM · SOXX',url:'https://www.congress.gov/bill/117th-congress/house-bill/4346'},
+{re:/금리|연준|은행|물가/i,title:'미국 통화정책',stops:[['미국',39,-98,'금리·채권·성장주에 미치는 경로를 검토합니다.']],symbols:'XLF · QQQ · TLT',url:'https://www.federalreserve.gov/monetarypolicy.htm'},
+{re:/관세|중국|무역/i,title:'미중 무역과 관세',stops:[['중국',35,104,'관세 대상 공급망과 수출 구조를 살펴봅니다.'],['미국',39,-98,'미국 기업의 수입비용과 소비자 가격을 검토합니다.']],symbols:'XLI · XLY · SPY',url:'https://ustr.gov/'},
+{re:/에너지|유가|중동|석유/i,title:'에너지 안보',stops:[['사우디',24,45,'중동 공급과 수송 위험을 검토합니다.'],['미국',39,-98,'미국 에너지·항공업종 영향을 비교합니다.']],symbols:'XLE · XOM · CVX · JETS',url:'https://www.eia.gov/'},
+{re:/한국|국회|의원/i,title:'한국 국회 작전',stops:[['한국',36.4,127.8,'원래 관제실의 의원·법안·기록을 같은 지도에서 확인하세요.']],symbols:'국회 공개기록',url:'https://open.assembly.go.kr/'},
+{re:/세계사|역사|전쟁|방산|법안/i,title:'역사·정책 연계',stops:[['미국',39,-98,'역사적 사건과 법안의 시장 영향을 조사합니다. 사실·가설을 구분해야 합니다.']],symbols:'ITA · LMT · SPY',url:'https://www.congress.gov/'}
+];let current=null,index=0,route=null,pin=null;
+function show(){if(!current)return;const map=window.mtCommandMap;if(!map){panel.hidden=false;panel.textContent='기존 지도 엔진 준비 중입니다.';return}const stop=current.stops[index];if(route){map.removeLayer(route);route=null}if(pin){map.removeLayer(pin);pin=null}map.flyTo([stop[1],stop[2]],Math.max(4,Math.min(5,map.getZoom())),{duration:1.5});pin=L.circleMarker([stop[1],stop[2]],{radius:10,color:'#72ff9b',fillColor:'#1ee27e',fillOpacity:.65}).addTo(map);if(index>0){const prev=current.stops[index-1];route=L.polyline([[prev[1],prev[2]],[stop[1],stop[2]]],{color:'#77ffb5',weight:3,dashArray:'9 9'}).addTo(map)}panel.hidden=false;panel.replaceChildren();const h=document.createElement('h3');h.textContent='◉ '+current.title+' · '+(index+1)+'/'+current.stops.length;panel.append(h);const p=document.createElement('p');p.textContent=stop[0]+' — '+stop[3];panel.append(p);const q=document.createElement('p');q.textContent='조사 대상: '+current.symbols;panel.append(q);const caution=document.createElement('small');caution.textContent='공개자료 기반의 탐색 시나리오이며 실시간 매매 신호가 아닙니다.';panel.append(caution);const row=document.createElement('div');const back=document.createElement('button');back.textContent='← 이전';back.disabled=index===0;back.onclick=()=>{index--;show()};const next=document.createElement('button');next.textContent='다음 지역 →';next.disabled=index===current.stops.length-1;next.onclick=()=>{index++;show()};const close=document.createElement('button');close.textContent='닫기';close.onclick=()=>{panel.hidden=true};row.append(back,next,close);panel.append(row);const a=document.createElement('a');a.href=current.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='공식 자료 확인 ↗';panel.append(a)}
+form.addEventListener('submit',e=>{e.preventDefault();const q=form.querySelector('input').value.trim();current=missions.find(m=>m.re.test(q));index=0;if(current)show();else{panel.hidden=false;panel.textContent='해당 질문은 현재 연결된 작전 범위 밖입니다. 미국·한국·대만·금리·관세·에너지·역사 등을 입력하세요.'}});
+}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
+</script></body>
+</html>

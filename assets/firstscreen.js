@@ -145,7 +145,7 @@
     var sym = plan.symbol, out = { asof: null }, jobs = [];
     function job(key, path) { jobs.push(Promise.resolve(getJson(path)).then(function (d) { out[key] = d || null; }, function () { out[key] = null; })); }
     if (sym && plan.kind !== 'overview') job('pack', 'answers/' + encodeURIComponent(sym) + '.json'); /* every card reads the same as-of date */
-    if (plan.kind === 'why' || plan.kind === 'member' || plan.kind === 'topic') job('trades', 'us/trades.json');
+    if (plan.kind === 'why' || plan.kind === 'member' || plan.kind === 'topic') job('trades', 'us/trades_public.json');
     if (plan.kind === 'money') { job('lob', 'us/lobbying.json'); job('awards', 'us/federal-awards.json'); job('pac', 'us/pac-contributions.json'); }
     return Promise.all(jobs).then(function () { return out; });
   }

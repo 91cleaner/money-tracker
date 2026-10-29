@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#020805">
+<title>MONEY TRACKER · 국가 선택</title>
+<meta name="description" content="대한민국 국회와 미국 관제실(세계 지도)에서 공개 데이터를 추적하세요.">
+<meta property="og:title" content="MONEY TRACKER · 어느 나라를 추적할까요?">
+<meta property="og:description" content="대한민국 국회와 미국 관제실. 국가를 선택하고 추적을 시작하세요.">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<link rel="manifest" href="manifest.webmanifest?v=20261025brand2">
+<link rel="apple-touch-icon" href="assets/icons/radar2-apple.png">
+<style>
+:root{color-scheme:dark;font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#020805;color:#e8fff0}
+body{min-height:100svh;display:flex;justify-content:center;align-items:center;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 36%,#163b27 0%,#07180f 38%,#020805 77%);opacity:.85}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0px,transparent 4px,#9fffba06 5px);opacity:.3}
+main{position:relative;z-index:1;width:min(100%,560px);min-height:100svh;padding:calc(32px + env(safe-area-inset-top,0px)) 20px calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;justify-content:center;gap:26px}
+.brand{display:flex;align-items:center;justify-content:center;gap:10px;color:#ecfff3;font-size:14px;font-weight:900;letter-spacing:.15em}
+.logo{width:40px;height:40px;display:grid;place-items:center;background:#123c25;border:1px solid #4dbe7c;border-radius:12px;color:#a6ffca;box-shadow:0 0 28px #2bfa7a24;letter-spacing:0;font-size:13px}
+.intro{text-align:center}
+.eyebrow{display:flex;align-items:center;justify-content:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:.2em;color:#7ee9a6}
+.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:#5dff9e;box-shadow:0 0 10px #5dff9e}
+h1{font-size:clamp(28px,7vw,38px);letter-spacing:-.055em;margin:15px 0 10px;line-height:1.22}
+.intro p{color:#a1baa9;font-size:14px;line-height:1.7;margin:0}
+.choices{display:grid;gap:14px}
+.country{display:grid;grid-template-columns:66px 1fr 26px;align-items:center;gap:12px;min-height:124px;padding:18px;border-radius:20px;border:1px solid #28523a;text-decoration:none;color:#f0fff4;background:linear-gradient(115deg,#123721,#0a1b12);box-shadow:0 12px 32px #0007;transition:transform .15s,border-color .15s,background .15s}
+.country:active{transform:scale(.985)}
+.country:focus-visible,.country:hover{outline:2px solid #7af4a2;outline-offset:2px;border-color:#79efaa}
+.country.local{background:linear-gradient(115deg,#302515,#171b12);border-color:#65522e}
+.country.local small{color:#d6c9ac}
+.country.local .arrow{color:#f2d38c}
+.country.local .flag{font-size:31px}
+.country.us{background:linear-gradient(115deg,#122b3d,#091c21);border-color:#315369}
+.flag{width:60px;height:60px;display:grid;place-items:center;border-radius:16px;background:#ffffff12;font-size:36px}
+.country strong{display:block;font-size:23px;letter-spacing:-.04em;margin-bottom:5px}
+.country small{display:block;font-size:12px;color:#b1cdb9;line-height:1.5}
+.country.us small{color:#b6cdd8}
+.arrow{font-size:23px;color:#83eaaa}
+.country.us .arrow{color:#9bcef0}
+.secondary{display:flex;align-items:center;justify-content:center;gap:7px;min-height:47px;border-radius:13px;border:1px solid #284634;color:#a8d8ba;text-decoration:none;font-weight:700;font-size:13px;background:#081a10}
+footer{text-align:center;color:#668675;font-size:11px;line-height:1.8}
+@media(min-width:650px){main{min-height:auto;padding:44px 20px}.country{min-height:132px}}
+@media(prefers-reduced-motion:reduce){.country{transition:none}}
+.se-entry{display:flex;flex-direction:column;gap:7px;padding:13px 14px;border-radius:15px;background:#0d2216;border:1px solid #2f7a4c}.se-entry label{color:#ddffe7;font-weight:800;font-size:15px}.se-entry div{display:flex;gap:6px}.se-entry input{flex:1;min-width:0;font:600 16px Pretendard,system-ui,sans-serif;color:#eafff2;background:#06150c;border:1px solid #3d8a5c;border-radius:11px;padding:12px}.se-entry input:focus{outline:none;border-color:#5dff9e;box-shadow:0 0 0 3px #5dff9e26}.se-entry button{flex:none;min-width:60px;border:0;border-radius:11px;background:#5dff9e;color:#02110a;font:800 15px Pretendard,system-ui,sans-serif;cursor:pointer}.se-entry small{color:#8fc9a5;font-size:12px;line-height:1.5}
+.district-entry{display:flex;flex-direction:column;gap:5px;text-align:center;padding:14px;border-radius:15px;background:#193d27;border:1px solid #6acf8b;color:#ddffe7;text-decoration:none;font-size:14px}.district-entry strong{font-size:16px}.district-entry>span:last-child{color:#a7d9b7;font-size:12px}.district-entry:hover,.district-entry:focus-visible{outline:2px solid #91f6b1;outline-offset:2px}
+</style></head><body>
+<main>
+ <div class="brand"><span class="logo">MT</span><span>MONEY TRACKER</span></div>
+ <div class="intro"><div class="eyebrow">지역 고르기</div><h1>어느 곳을<br>살펴보시겠습니까?</h1><p>국가를 고르고 공개 기록을 살펴보세요.</p></div>
+ <form class="se-entry" action="search.html" method="get" role="search"><label for="se-entry-q">🔍 무엇이든 검색</label><div><input id="se-entry-q" name="q" type="search" enterkeyhint="search" placeholder="업체 · 시 · 계약 · 의원 · 법안 · 종목" autocomplete="off" required><button type="submit">검색</button></div><small>계약 9만여 건 · 업체 4만여 곳 · 의원 299명 · 법안 · 국민연금 종목 — 돈의 흐름까지</small></form>
+ <a href="my-region.html" class="district-entry"><span>📍 <strong>내 지역부터 찾아보기</strong></span><span>우리 동네 의원 · 예산 · 계약 알아보기 ›</span></a>
+ <nav class="choices" aria-label="살펴보기 선택">
+  <a class="country kr" href="national.html"><span class="flag" aria-hidden="true">🇰🇷</span><span><strong>대한민국</strong><small>국회의원 · 정당 · 국외활동<br>한국 국회 살펴보기</small></span><span class="arrow" aria-hidden="true">›</span></a>
+  <a class="country us" href="world-intelligence/"><span class="flag" aria-hidden="true">🇺🇸</span><span><strong>🌐 미국 관제실</strong><small>세계 지도 · 공급망 · 로비 · 의원 거래<br>데이터상 연결 따라가기</small></span><span class="arrow" aria-hidden="true">›</span></a>
+ </nav>
+ <a class="secondary" href="cards.html">🛰️ 오늘의 브리핑 · 상황실 카드</a>
+ <a class="secondary" href="intel-lab.html">🔎 의원·법안 실제 데이터 추적 실험실 입장</a>
+ <a class="country local" href="contracts.html"><span class="flag" aria-hidden="true">🏙️</span><span><strong>지역 계약·예산</strong><small>전국 지자체 계약 · 예산 · 입찰<br>우리 동네 예산 살펴보기</small></span><span class="arrow" aria-hidden="true">›</span></a>
+ <section role="status" aria-label="데이터 연결 상태" style="padding:13px 15px;border:1px solid #385344;border-radius:12px;background:#0a1b12;color:#b9d5c4;font-size:12px;line-height:1.8"><strong style="color:#e7fff0">시스템 연결 상태</strong><div>실시간 의원 거래 데이터: <strong>연결 미확인</strong></div><div>생성형 AI 분석: <strong>연결 미확인</strong></div><div>미국 관제실: <strong>공개 자료만 · 투자 신호 아님</strong></div><small>여기 숫자는 공개 자료만 씁니다. 없는 거래는 만들지 않습니다.</small></section>
+ <footer>공개 자료 기반 · 기록은 잘못의 증거가 아닙니다.<br>© MONEY TRACKER</footer>
+</main>
+<script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><script src="assets/mt-engagement.js"></script><script src="assets/fr-bar.js?v=20261029" defer></script></body></html>

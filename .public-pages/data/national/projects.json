@@ -1,0 +1,85 @@
+{
+ "updated": "2026-10-29 06:57",
+ "special_activity": [],
+ "national_projects": [
+  {
+   "id": "kedo_lwr",
+   "title": "경수로(원자력발전소) 짓기 — KEDO 무이자 대출",
+   "status": "팩트체크 완료",
+   "from": {
+    "name": "남북협력기금",
+    "region": "서울"
+   },
+   "to": {
+    "name": "한반도에너지개발기구(KEDO) · 경수로 사업",
+    "region": "해외"
+   },
+   "period": "2000~2006",
+   "kind": "무이자 대출",
+   "amount_krw": 1374400000000,
+   "amount_label": "1조 3,744억원",
+   "interest_tax": {
+    "amount_krw": 1050000000000,
+    "label": "약 1조 500억원",
+    "period": "2012~2026.9",
+    "note": "기금이 대출 재원을 마련하며 진 빚의 이자를 세금으로 냄"
+   },
+   "src": [
+    {
+     "name": "매일경제 2026.10.20",
+     "url": "https://www.mk.co.kr/news/economy/12180428"
+    },
+    {
+     "name": "아시아경제(참고)",
+     "url": "https://www.asiae.co.kr/article/2024101109335819503"
+    }
+   ]
+  },
+  {
+   "id": "nk_loan",
+   "title": "대북 차관(식량·자재·경공업 원자재)",
+   "status": "팩트체크 완료",
+   "from": {
+    "name": "남북협력기금(통일부)",
+    "region": "서울"
+   },
+   "via": {
+    "name": "한국수출입은행(기금 수탁)",
+    "region": "서울 영등포구"
+   },
+   "to": {
+    "name": "북한",
+    "region": "북한"
+   },
+   "period": "2000~2007",
+   "amount_usd": 932900000,
+   "amount_label": "9억 3,290만 달러",
+   "breakdown_usd": {
+    "식량": 720000000,
+    "자재": 132900000,
+    "경공업 원자재": 80000000
+   },
+   "repaid": {
+    "label": "아연괴 240만 달러어치",
+    "amount_usd": 2400000
+   },
+   "overdue": {
+    "amount_krw": 885300000000,
+    "label": "8,853억원",
+    "amount_usd": 620200000,
+    "as_of": "2025-08-31",
+    "basis": "연체원금+이자+지연배상금"
+   },
+   "src": [
+    {
+     "name": "조선일보 2025.10.13",
+     "url": "https://www.chosun.com/politics/assembly/2025/10/13/IMKVCK62LZFV7MFWB6U7VGJTE4/"
+    },
+    {
+     "name": "뉴스스피릿",
+     "url": "https://www.newsspirit.kr/news/articleView.html?idxno=25440"
+    }
+   ]
+  }
+ ]
+}

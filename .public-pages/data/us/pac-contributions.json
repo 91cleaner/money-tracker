@@ -1,0 +1,132 @@
+{
+ "updated": "2026-10-28",
+ "source": "FEC OpenFEC API (committees, committee totals)",
+ "source_url": "https://api.open.fec.gov/developers/",
+ "note": "데이터상 회사명으로 시작하는 기업 연계 PAC(organization_type=C) 1개만 집계. 회사 자금이 아니라 임직원 자발 기부로 운영되는 PAC임. 개별 후보 미표시.",
+ "cycle": 2026,
+ "key": "DEMO_KEY",
+ "rate_limited": false,
+ "companies": {
+  "MSFT": {
+   "query": "MICROSOFT",
+   "committee_id": "C00227546",
+   "committee_name": "MICROSOFT CORPORATION STAKEHOLDERS VOLUNTARY PAC - MSVPAC",
+   "cycle": 2026,
+   "receipts_usd": 1422787.04,
+   "disbursements_usd": 1476848.86,
+   "to_federal_candidates_usd": 1306500.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00227546/?cycle=2026"
+  },
+  "NVDA": {
+   "query": "NVIDIA",
+   "committee_id": "C00960070",
+   "committee_name": "NVIDIA CORPORATION EMPLOYEES FEDERAL POLITICAL ACTION COMMITTEE (NVPAC)",
+   "cycle": 2026,
+   "receipts_usd": 263403.09,
+   "disbursements_usd": 5830.7,
+   "to_federal_candidates_usd": 0.0,
+   "coverage_end": "2026-09-30",
+   "source_url": "https://www.fec.gov/data/committee/C00960070/?cycle=2026"
+  },
+  "AVGO": {
+   "query": "BROADCOM",
+   "committee_id": "C00680504",
+   "committee_name": "BROADCOM INC. POLITICAL ACTION COMMITTEE (BROADCOM PAC)",
+   "cycle": 2026,
+   "receipts_usd": 267500.0,
+   "disbursements_usd": 303164.49,
+   "to_federal_candidates_usd": 302000.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00680504/?cycle=2026"
+  },
+  "BRK.B": {
+   "query": "BERKSHIRE HATHAWAY",
+   "committee_id": "C00324483",
+   "committee_name": "BERKSHIRE HATHAWAY ENERGY COMPANY PAC",
+   "cycle": 2026,
+   "receipts_usd": 568846.23,
+   "disbursements_usd": 501000.23,
+   "to_federal_candidates_usd": 334000.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00324483/?cycle=2026"
+  },
+  "META": {
+   "query": "META PLATFORMS",
+   "committee_id": "C00502906",
+   "committee_name": "META PLATFORMS, INC. PAC",
+   "cycle": 2026,
+   "receipts_usd": 471841.11,
+   "disbursements_usd": 354551.71,
+   "to_federal_candidates_usd": 348500.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00502906/?cycle=2026"
+  },
+  "UNH": {
+   "query": "UNITEDHEALTH",
+   "committee_id": "C00274431",
+   "committee_name": "UNITEDHEALTH GROUP INCORPORATED PAC (UNITEDHEALTH GROUP PAC)",
+   "cycle": 2026,
+   "receipts_usd": 3273446.54,
+   "disbursements_usd": 3160622.79,
+   "to_federal_candidates_usd": 1517500.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00274431/?cycle=2026"
+  },
+  "ABT": {
+   "query": "ABBOTT LABORATORIES",
+   "committee_id": "C00040279",
+   "committee_name": "ABBOTT LABORATORIES EMPLOYEE POLITICAL ACTION COMMITTEE",
+   "cycle": 2026,
+   "receipts_usd": 1767751.84,
+   "disbursements_usd": 1951603.04,
+   "to_federal_candidates_usd": 1307000.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00040279/?cycle=2026"
+  },
+  "DASH": {
+   "query": "DOORDASH",
+   "committee_id": "C00820167",
+   "committee_name": "DOORDASH, INC. POLITICAL ACTION COMMITTEE (DASHPAC)",
+   "cycle": 2026,
+   "receipts_usd": 142500.0,
+   "disbursements_usd": 115500.0,
+   "to_federal_candidates_usd": 115500.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00820167/?cycle=2026"
+  },
+  "AMD": {
+   "query": "ADVANCED MICRO DEVICES",
+   "committee_id": "C00404483",
+   "committee_name": "ADVANCED MICRO DEVICES, INC. PAC",
+   "cycle": 2026,
+   "receipts_usd": 66310.0,
+   "disbursements_usd": 30002.5,
+   "to_federal_candidates_usd": 30000.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00404483/?cycle=2026"
+  },
+  "BSX": {
+   "query": "BOSTON SCIENTIFIC",
+   "committee_id": "C00357863",
+   "committee_name": "BOSTON SCIENTIFIC CORPORATION POLITICAL ACTION COMMITTEE (BSC PAC)",
+   "cycle": 2026,
+   "receipts_usd": 404292.05,
+   "disbursements_usd": 389427.98,
+   "to_federal_candidates_usd": 385000.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00357863/?cycle=2026"
+  },
+  "JNJ": {
+   "query": "JOHNSON & JOHNSON",
+   "committee_id": "C00010983",
+   "committee_name": "JOHNSON & JOHNSON POLITICAL ACTION COMMITTEE",
+   "cycle": 2026,
+   "receipts_usd": 1411261.71,
+   "disbursements_usd": 1457975.0,
+   "to_federal_candidates_usd": 1030500.0,
+   "coverage_end": "2026-10-14",
+   "source_url": "https://www.fec.gov/data/committee/C00010983/?cycle=2026"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "source": "Official Taiwan Legislative Yuan Open Data Service",
+  "term": "11",
+  "retrieved_at": "2026-10-27T14:59:49.632Z",
+  "status": "partial",
+  "errors": [
+    "members: fetch failed",
+    "半導體: fetch failed",
+    "人工智慧: fetch failed",
+    "經濟安全: fetch failed",
+    "供應鏈: fetch failed",
+    "能源: fetch failed",
+    "台美: fetch failed",
+    "國防: fetch failed"
+  ],
+  "records": []
+}

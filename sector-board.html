@@ -146,7 +146,7 @@ header.bar input.nm{width:200px;text-transform:none}
     return "background:rgba(" + c + "," + (0.12 + a * 0.5).toFixed(2) + ")";
   }
 
-  Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades.json"), get("data/us/prices/summary.json")]).then(function (r) {
+  Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades_public.json"), get("data/us/prices/summary.json")]).then(function (r) {
     var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, pr = r[3] || {}, E = si.entities || {};
     var map = ts.tickers || {}, P = pr.t || {}, trades = tr.trades || [];
     var names = {}; Object.keys(E).forEach(function (k) { if (E[k].type === "sector") names[k.slice(7)] = E[k].name; });

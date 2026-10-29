@@ -1,0 +1,356 @@
+{
+ "version": 1,
+ "updated": "2026-10-28",
+ "about": "주가에 참고가 되는 공식 발표 일정. events는 각 기관 공식 페이지에서 확인한 날짜만 넣는다(date = 결정·발표일). recurring은 반복 규칙이라 정확한 날짜는 원문에서 확인. 일정은 기관 사정으로 바뀔 수 있다.",
+ "events": [
+  {
+   "date": "2026-10-28",
+   "start": "2026-10-27",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2026-10-30",
+   "start": "2026-10-29",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/mopo/mpmsche_minu/index.htm",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2026-12-09",
+   "start": "2026-12-08",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28",
+   "note": "경제전망(SEP) 발표"
+  },
+  {
+   "date": "2026-12-17",
+   "start": "2026-12-17",
+   "region": "eu",
+   "kind": "central_bank",
+   "body": "European Central Bank",
+   "title": "유럽중앙은행 통화정책 회의(기자회견)",
+   "source_url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2026-12-18",
+   "start": "2026-12-17",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/mopo/mpmsche_minu/index.htm",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-01-22",
+   "start": "2027-01-21",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/m_ref/mref260731a.pdf",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-01-27",
+   "start": "2027-01-26",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28",
+   "tentative": true
+  },
+  {
+   "date": "2027-02-04",
+   "start": "2027-02-04",
+   "region": "eu",
+   "kind": "central_bank",
+   "body": "European Central Bank",
+   "title": "유럽중앙은행 통화정책 회의(기자회견)",
+   "source_url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-03-17",
+   "start": "2027-03-16",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28",
+   "note": "경제전망(SEP) 발표",
+   "tentative": true
+  },
+  {
+   "date": "2027-03-18",
+   "start": "2027-03-18",
+   "region": "eu",
+   "kind": "central_bank",
+   "body": "European Central Bank",
+   "title": "유럽중앙은행 통화정책 회의(기자회견)",
+   "source_url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-03-18",
+   "start": "2027-03-17",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/m_ref/mref260731a.pdf",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-04-28",
+   "start": "2027-04-27",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/m_ref/mref260731a.pdf",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-04-28",
+   "start": "2027-04-27",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28",
+   "tentative": true
+  },
+  {
+   "date": "2027-04-29",
+   "start": "2027-04-29",
+   "region": "eu",
+   "kind": "central_bank",
+   "body": "European Central Bank",
+   "title": "유럽중앙은행 통화정책 회의(기자회견)",
+   "source_url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-06-09",
+   "start": "2027-06-08",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28",
+   "note": "경제전망(SEP) 발표",
+   "tentative": true
+  },
+  {
+   "date": "2027-06-10",
+   "start": "2027-06-10",
+   "region": "eu",
+   "kind": "central_bank",
+   "body": "European Central Bank",
+   "title": "유럽중앙은행 통화정책 회의(기자회견)",
+   "source_url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-06-11",
+   "start": "2027-06-10",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/m_ref/mref260731a.pdf",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-07-22",
+   "start": "2027-07-22",
+   "region": "eu",
+   "kind": "central_bank",
+   "body": "European Central Bank",
+   "title": "유럽중앙은행 통화정책 회의(기자회견)",
+   "source_url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-07-22",
+   "start": "2027-07-21",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/m_ref/mref260731a.pdf",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-07-28",
+   "start": "2027-07-27",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28",
+   "tentative": true
+  },
+  {
+   "date": "2027-09-09",
+   "start": "2027-09-09",
+   "region": "eu",
+   "kind": "central_bank",
+   "body": "European Central Bank",
+   "title": "유럽중앙은행 통화정책 회의(기자회견)",
+   "source_url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-09-15",
+   "start": "2027-09-14",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28",
+   "note": "경제전망(SEP) 발표",
+   "tentative": true
+  },
+  {
+   "date": "2027-09-22",
+   "start": "2027-09-21",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/m_ref/mref260731a.pdf",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-10-27",
+   "start": "2027-10-26",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28",
+   "tentative": true
+  },
+  {
+   "date": "2027-10-28",
+   "start": "2027-10-28",
+   "region": "eu",
+   "kind": "central_bank",
+   "body": "European Central Bank",
+   "title": "유럽중앙은행 통화정책 회의(기자회견)",
+   "source_url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-10-29",
+   "start": "2027-10-28",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/m_ref/mref260731a.pdf",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-12-08",
+   "start": "2027-12-07",
+   "region": "us",
+   "kind": "central_bank",
+   "body": "Federal Reserve",
+   "title": "미국 FOMC 금리 결정",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "verified_on": "2026-10-28",
+   "note": "경제전망(SEP) 발표",
+   "tentative": true
+  },
+  {
+   "date": "2027-12-16",
+   "start": "2027-12-16",
+   "region": "eu",
+   "kind": "central_bank",
+   "body": "European Central Bank",
+   "title": "유럽중앙은행 통화정책 회의(기자회견)",
+   "source_url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified_on": "2026-10-28"
+  },
+  {
+   "date": "2027-12-17",
+   "start": "2027-12-16",
+   "region": "jp",
+   "kind": "central_bank",
+   "body": "Bank of Japan",
+   "title": "일본은행 금융정책결정회의",
+   "source_url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/m_ref/mref260731a.pdf",
+   "verified_on": "2026-10-28"
+  }
+ ],
+ "recurring": [
+  {
+   "id": "us_jobs",
+   "region": "us",
+   "title": "미국 고용보고서(비농업 고용·실업률)",
+   "rule": "보통 매달 첫째 금요일 전후 (변동 가능)",
+   "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+  },
+  {
+   "id": "us_cpi",
+   "region": "us",
+   "title": "미국 소비자물가(CPI)",
+   "rule": "매달 중순 전후 (변동 가능)",
+   "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+  },
+  {
+   "id": "kr_exports_10d",
+   "region": "kr",
+   "title": "한국 1~10일 수출입 현황",
+   "rule": "매달 11일 전후 (변동 가능)",
+   "source_url": "https://www.customs.go.kr/"
+  },
+  {
+   "id": "kr_exports_month",
+   "region": "kr",
+   "title": "한국 월간 수출입 동향",
+   "rule": "매달 1일 전후 (변동 가능)",
+   "source_url": "https://www.motie.go.kr/"
+  },
+  {
+   "id": "tw_monthly_revenue",
+   "region": "tw",
+   "title": "대만 상장사 월매출(TSMC 등)",
+   "rule": "매달 10일까지 공시 (회사별로 다름)",
+   "source_url": "https://mops.twse.com.tw/"
+  }
+ ],
+ "pending": [
+  {
+   "region": "kr",
+   "body": "한국은행",
+   "title": "한국은행 통화정책방향 결정회의",
+   "why": "2026-10-28 작업 시점에 공식 연간 일정 페이지 내용을 자동으로 읽지 못함. 공식 페이지에서 날짜 확인 후 events에 추가할 것.",
+   "source_url": "https://www.bok.or.kr/portal/singl/crncyPolicyDrcMtg/listYear.do?menuNo=200755"
+  }
+ ]
+}

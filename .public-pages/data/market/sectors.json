@@ -1,0 +1,764 @@
+{
+ "version": 1,
+ "updated": "2026-10-28",
+ "about": "업종마다 그 업종 공개 기록을 볼 때 함께 확인할 수 있는 지표·법안 주제·대표 종목을 연결한 참고표. 예상·추천이 아니며 원인 관계를 단정하지 않는다. 판단은 이용자가 한다.",
+ "about_en": "Reference map linking each sector to public indicators, law topics and representative symbols to check alongside it. Not a forecast or recommendation; no causal claim.",
+ "law_topics_source": "collector/world/topics.py TOPICS id",
+ "markets_source": "data/markets/<id>.json",
+ "factors": [
+  {
+   "id": "us_policy_rate",
+   "label": "미국 기준금리(연방기금 실효금리)",
+   "kind": "rates",
+   "status": "collected",
+   "source": "FRED FEDFUNDS",
+   "source_url": "https://fred.stlouisfed.org/series/FEDFUNDS",
+   "data": {
+    "file": "data/us-macro.json",
+    "series": "FEDFUNDS"
+   }
+  },
+  {
+   "id": "us_10y",
+   "label": "미국 10년 국채 금리",
+   "kind": "rates",
+   "status": "collected",
+   "source": "FRED DGS10 · 시세 ^TNX",
+   "source_url": "https://fred.stlouisfed.org/series/DGS10",
+   "data": {
+    "file": "data/us-macro.json",
+    "series": "DGS10"
+   },
+   "market": "TNX"
+  },
+  {
+   "id": "us_cpi",
+   "label": "미국 소비자물가지수",
+   "kind": "inflation",
+   "status": "collected",
+   "source": "FRED CPIAUCSL",
+   "source_url": "https://fred.stlouisfed.org/series/CPIAUCSL",
+   "data": {
+    "file": "data/us-macro.json",
+    "series": "CPIAUCSL"
+   }
+  },
+  {
+   "id": "us_unemployment",
+   "label": "미국 실업률",
+   "kind": "jobs",
+   "status": "collected",
+   "source": "FRED UNRATE",
+   "source_url": "https://fred.stlouisfed.org/series/UNRATE",
+   "data": {
+    "file": "data/us-macro.json",
+    "series": "UNRATE"
+   }
+  },
+  {
+   "id": "us_industrial",
+   "label": "미국 산업생산지수",
+   "kind": "production",
+   "status": "collected",
+   "source": "FRED INDPRO",
+   "source_url": "https://fred.stlouisfed.org/series/INDPRO",
+   "data": {
+    "file": "data/us-macro.json",
+    "series": "INDPRO"
+   }
+  },
+  {
+   "id": "fx_krw",
+   "label": "원/달러 환율",
+   "kind": "fx",
+   "status": "collected",
+   "source": "data/markets/KRW_X.json",
+   "source_url": "https://finance.yahoo.com/quote/KRW%3DX/",
+   "market": "KRW_X"
+  },
+  {
+   "id": "fx_jpy",
+   "label": "엔/달러 환율",
+   "kind": "fx",
+   "status": "collected",
+   "source": "data/markets/JPY_X.json",
+   "source_url": "https://finance.yahoo.com/quote/JPY%3DX/",
+   "market": "JPY_X"
+  },
+  {
+   "id": "fx_twd",
+   "label": "대만달러/달러 환율",
+   "kind": "fx",
+   "status": "collected",
+   "source": "data/markets/TWD_X.json",
+   "source_url": "https://finance.yahoo.com/quote/TWD%3DX/",
+   "market": "TWD_X"
+  },
+  {
+   "id": "fx_eur",
+   "label": "유로/달러 환율",
+   "kind": "fx",
+   "status": "collected",
+   "source": "data/markets/EURUSD_X.json",
+   "source_url": "https://finance.yahoo.com/quote/EURUSD%3DX/",
+   "market": "EURUSD_X"
+  },
+  {
+   "id": "oil_wti",
+   "label": "WTI 원유 가격",
+   "kind": "commodity",
+   "status": "collected",
+   "source": "data/markets/CL_F.json",
+   "source_url": "https://finance.yahoo.com/quote/CL%3DF/",
+   "market": "CL_F"
+  },
+  {
+   "id": "gold",
+   "label": "금 가격",
+   "kind": "commodity",
+   "status": "collected",
+   "source": "data/markets/GC_F.json",
+   "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
+   "market": "GC_F"
+  },
+  {
+   "id": "bitcoin",
+   "label": "비트코인 가격",
+   "kind": "crypto",
+   "status": "collected",
+   "source": "data/markets/BTC_USD.json",
+   "source_url": "https://finance.yahoo.com/quote/BTC-USD/",
+   "market": "BTC_USD"
+  },
+  {
+   "id": "kr_policy_rate",
+   "label": "한국은행 기준금리",
+   "kind": "rates",
+   "status": "collected",
+   "source": "BIS 중앙은행 정책금리 WS_CBPOL (월간, 매일 확인) · 원 출처 한국은행",
+   "source_url": "https://data.bis.org/topics/CBPOL",
+   "data": {
+    "file": "data/market/factors/policy-rates.json",
+    "series": "KR"
+   }
+  },
+  {
+   "id": "jp_policy_rate",
+   "label": "일본은행 정책금리",
+   "kind": "rates",
+   "status": "collected",
+   "source": "BIS 중앙은행 정책금리 WS_CBPOL (월간, 매일 확인) · 원 출처 일본은행",
+   "source_url": "https://data.bis.org/topics/CBPOL",
+   "data": {
+    "file": "data/market/factors/policy-rates.json",
+    "series": "JP"
+   }
+  },
+  {
+   "id": "ecb_policy_rate",
+   "label": "유럽중앙은행 정책금리",
+   "kind": "rates",
+   "status": "collected",
+   "source": "ECB Data Portal · 예금금리 DFR (매일 자동 수집)",
+   "source_url": "https://data.ecb.europa.eu/",
+   "data": {
+    "file": "data/market/factors/ecb-rates.json",
+    "series": "DFR"
+   }
+  },
+  {
+   "id": "kr_exports",
+   "label": "한국 수출액(월간, 미국 달러, 계절조정)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "FRED XTEXVA01KRM667S (OECD 국제상품무역통계, 월간·달러·계절조정). 1~10일 속보는 관세청",
+   "source_url": "https://fred.stlouisfed.org/series/XTEXVA01KRM667S",
+   "data": {
+    "file": "data/market/factors/fred-extra.json",
+    "series": "XTEXVA01KRM667S"
+   }
+  },
+  {
+   "id": "tw_monthly_revenue",
+   "label": "대만 상장사 월매출(TSMC 등)",
+   "kind": "earnings",
+   "status": "collected",
+   "source": "TWSE OpenAPI t187ap05_L (매일 자동 수집)",
+   "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L",
+   "data": {
+    "file": "data/market/factors/tw-monthly-revenue.json",
+    "company": "2330"
+   }
+  },
+  {
+   "id": "cn_export_controls",
+   "label": "중국 상무부 수출통제 공고",
+   "kind": "policy",
+   "status": "collected",
+   "source": "中华人民共和国商务部 · 政策发布 공고 (매일 자동 수집·누적)",
+   "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html",
+   "data": {
+    "file": "data/market/factors/cn-mofcom-announcements.json",
+    "list": "items"
+   }
+  },
+  {
+   "id": "us_export_controls",
+   "label": "미국 수출통제·Entity List·관세 고시",
+   "kind": "policy",
+   "status": "collected",
+   "source": "Federal Register API · BIS 수출통제·Entity List, USTR 관세 고시 (매일 자동 수집)",
+   "source_url": "https://www.federalregister.gov/developers/documentation/api/v1",
+   "data": {
+    "file": "data/market/factors/us-trade-controls.json",
+    "list": "documents"
+   }
+  },
+  {
+   "id": "us_housing_starts",
+   "label": "미국 주택 착공",
+   "kind": "housing",
+   "status": "collected",
+   "source": "FRED HOUST (매일 자동 수집)",
+   "source_url": "https://fred.stlouisfed.org/series/HOUST",
+   "data": {
+    "file": "data/market/factors/fred-extra.json",
+    "series": "HOUST"
+   }
+  },
+  {
+   "id": "copper",
+   "label": "구리 가격",
+   "kind": "commodity",
+   "status": "collected",
+   "source": "FRED PCOPPUSDM (매일 자동 수집)",
+   "source_url": "https://fred.stlouisfed.org/series/PCOPPUSDM",
+   "data": {
+    "file": "data/market/factors/fred-extra.json",
+    "series": "PCOPPUSDM"
+   }
+  },
+  {
+   "id": "defense_spending",
+   "label": "국가별 국방비",
+   "kind": "policy",
+   "status": "collected",
+   "source": "World Bank API · 군사비(원 출처 SIPRI), 연간",
+   "source_url": "https://data.worldbank.org/indicator/MS.MIL.XPND.CD",
+   "data": {
+    "file": "data/market/factors/country-profiles.json",
+    "list": "_indicators"
+   }
+  },
+  {
+   "id": "drug_approvals",
+   "label": "미국 신약 승인",
+   "kind": "regulation",
+   "status": "collected",
+   "source": "openFDA Drugs@FDA (매일 자동 수집)",
+   "source_url": "https://open.fda.gov/apis/drug/drugsfda/",
+   "data": {
+    "file": "data/market/factors/us-fda-approvals.json",
+    "list": "items"
+   }
+  },
+  {
+   "id": "us_jobs_by_county",
+   "label": "미국 카운티별 업종 고용",
+   "kind": "jobs",
+   "status": "collected",
+   "source": "BLS QCEW open data (분기, 매일 확인)",
+   "source_url": "https://www.bls.gov/cew/additional-resources/open-data/",
+   "data": {
+    "file": "data/market/factors/us-jobs-by-county.json",
+    "list": "_industries"
+   }
+  },
+  {
+   "id": "us_facilities",
+   "label": "미국 공장·시설 위치",
+   "kind": "facilities",
+   "status": "planned",
+   "source": "EPA Facility Registry Service",
+   "source_url": "https://www.epa.gov/frs"
+  },
+  {
+   "id": "cn_policy_rate",
+   "label": "중국인민은행 정책금리",
+   "kind": "rates",
+   "status": "collected",
+   "source": "BIS 중앙은행 정책금리 WS_CBPOL (월간) · 원 출처 중국인민은행",
+   "source_url": "https://data.bis.org/topics/CBPOL",
+   "data": {
+    "file": "data/market/factors/policy-rates.json",
+    "series": "CN"
+   }
+  },
+  {
+   "id": "uk_policy_rate",
+   "label": "영란은행 기준금리",
+   "kind": "rates",
+   "status": "collected",
+   "source": "BIS 중앙은행 정책금리 WS_CBPOL (월간) · 원 출처 영란은행",
+   "source_url": "https://data.bis.org/topics/CBPOL",
+   "data": {
+    "file": "data/market/factors/policy-rates.json",
+    "series": "GB"
+   }
+  },
+  {
+   "id": "country_profiles",
+   "label": "나라 특성(GDP·성장률·인구·수출 비중·물가·국방비)",
+   "kind": "country",
+   "status": "collected",
+   "source": "World Bank Open Data API (연간)",
+   "source_url": "https://data.worldbank.org/",
+   "data": {
+    "file": "data/market/factors/country-profiles.json",
+    "list": "_indicators"
+   }
+  },
+  {
+   "id": "kr_exp_semis",
+   "label": "한국 집적회로 수출(HS 8542, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8542"
+   }
+  },
+  {
+   "id": "kr_exp_cars",
+   "label": "한국 승용차 수출(HS 8703, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8703"
+   }
+  },
+  {
+   "id": "kr_exp_batteries",
+   "label": "한국 축전지 수출(HS 8507, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8507"
+   }
+  },
+  {
+   "id": "kr_exp_ships",
+   "label": "한국 선박 수출(HS 8901, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8901"
+   }
+  },
+  {
+   "id": "kr_exp_oil",
+   "label": "한국 석유제품 수출(HS 2710, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "2710"
+   }
+  },
+  {
+   "id": "kr_exp_telecom",
+   "label": "한국 통신기기 수출(HS 8517, 월간)",
+   "kind": "trade",
+   "status": "collected",
+   "source": "관세청 품목별 수출입실적(공공데이터포털, 매일 확인)",
+   "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EA%B4%80%EC%84%B8%EC%B2%AD%20%ED%92%88%EB%AA%A9%EB%B3%84%20%EC%88%98%EC%B6%9C%EC%9E%85%EC%8B%A4%EC%A0%81",
+   "data": {
+    "file": "data/market/factors/kr-exports-by-item.json",
+    "item": "8517"
+   }
+  }
+ ],
+ "sectors": [
+  {
+   "id": "market",
+   "label": "시장 전체(지수)",
+   "label_en": "Broad market",
+   "factors": [
+    "us_policy_rate",
+    "us_10y",
+    "us_cpi",
+    "us_unemployment",
+    "fx_krw",
+    "fx_jpy",
+    "fx_eur",
+    "kr_policy_rate",
+    "jp_policy_rate",
+    "ecb_policy_rate",
+    "cn_policy_rate",
+    "uk_policy_rate",
+    "country_profiles"
+   ],
+   "law_topics": [
+    "rates",
+    "trade"
+   ],
+   "markets": [
+    "GSPC",
+    "IXIC",
+    "DJI",
+    "KS11",
+    "KQ11",
+    "N225",
+    "TWII",
+    "STOXX50E",
+    "GDAXI",
+    "FCHI"
+   ]
+  },
+  {
+   "id": "semiconductor",
+   "label": "반도체",
+   "label_en": "Semiconductors",
+   "factors": [
+    "kr_exp_semis",
+    "us_10y",
+    "fx_krw",
+    "fx_twd",
+    "fx_jpy",
+    "kr_exports",
+    "tw_monthly_revenue",
+    "us_export_controls",
+    "cn_export_controls",
+    "us_industrial",
+    "us_jobs_by_county"
+   ],
+   "law_topics": [
+    "semiconductor",
+    "trade",
+    "cross_strait",
+    "ai"
+   ],
+   "markets": [
+    "NVDA",
+    "INTC",
+    "MU",
+    "SOXX",
+    "005930_KS",
+    "000660_KS",
+    "2330_TW",
+    "2454_TW",
+    "8035_T",
+    "ASML_AS"
+   ]
+  },
+  {
+   "id": "tech_ai",
+   "label": "IT·소프트웨어·AI",
+   "label_en": "Tech, software & AI",
+   "factors": [
+    "kr_exp_telecom",
+    "us_10y",
+    "us_policy_rate",
+    "fx_krw",
+    "us_export_controls"
+   ],
+   "law_topics": [
+    "ai",
+    "semiconductor"
+   ],
+   "markets": [
+    "AAPL",
+    "MSFT",
+    "GOOGL",
+    "META",
+    "AMZN",
+    "XLK",
+    "035420_KS",
+    "9984_T",
+    "6758_T",
+    "SAP_DE",
+    "2317_TW"
+   ]
+  },
+  {
+   "id": "finance",
+   "label": "금융·은행·보험",
+   "label_en": "Financials",
+   "factors": [
+    "us_policy_rate",
+    "us_10y",
+    "kr_policy_rate",
+    "jp_policy_rate",
+    "ecb_policy_rate",
+    "us_unemployment",
+    "uk_policy_rate"
+   ],
+   "law_topics": [
+    "finance",
+    "rates"
+   ],
+   "markets": [
+    "JPM",
+    "XLF",
+    "105560_KS",
+    "8306_T"
+   ]
+  },
+  {
+   "id": "energy",
+   "label": "에너지·석유·가스",
+   "label_en": "Energy",
+   "factors": [
+    "kr_exp_oil",
+    "oil_wti",
+    "fx_eur",
+    "us_industrial"
+   ],
+   "law_topics": [
+    "energy"
+   ],
+   "markets": [
+    "XOM",
+    "XLE",
+    "TTE_PA",
+    "CL_F"
+   ]
+  },
+  {
+   "id": "clean_energy",
+   "label": "청정에너지·탄소",
+   "label_en": "Clean energy",
+   "factors": [
+    "us_10y",
+    "oil_wti",
+    "copper"
+   ],
+   "law_topics": [
+    "climate",
+    "energy"
+   ],
+   "markets": [
+    "ICLN",
+    "2308_TW"
+   ]
+  },
+  {
+   "id": "battery_ev",
+   "label": "배터리·전기차",
+   "label_en": "Batteries & EVs",
+   "factors": [
+    "kr_exp_batteries",
+    "copper",
+    "fx_krw",
+    "kr_exports",
+    "us_export_controls",
+    "cn_export_controls",
+    "us_jobs_by_county"
+   ],
+   "law_topics": [
+    "battery_ev",
+    "trade",
+    "climate"
+   ],
+   "markets": [
+    "TSLA",
+    "LIT",
+    "373220_KS",
+    "006400_KS"
+   ]
+  },
+  {
+   "id": "auto",
+   "label": "자동차",
+   "label_en": "Autos",
+   "factors": [
+    "kr_exp_cars",
+    "fx_krw",
+    "fx_jpy",
+    "oil_wti",
+    "us_policy_rate",
+    "kr_exports",
+    "us_jobs_by_county"
+   ],
+   "law_topics": [
+    "auto",
+    "trade",
+    "battery_ev"
+   ],
+   "markets": [
+    "005380_KS",
+    "7203_T",
+    "TSLA"
+   ]
+  },
+  {
+   "id": "defense",
+   "label": "방산·항공우주",
+   "label_en": "Defense & aerospace",
+   "factors": [
+    "defense_spending",
+    "fx_krw",
+    "fx_eur",
+    "us_jobs_by_county"
+   ],
+   "law_topics": [
+    "defense"
+   ],
+   "markets": [
+    "LMT",
+    "RTX",
+    "ITA",
+    "RHM_DE",
+    "012450_KS",
+    "7011_T",
+    "329180_KS"
+   ]
+  },
+  {
+   "id": "shipbuilding",
+   "label": "조선·해운",
+   "label_en": "Shipbuilding & shipping",
+   "factors": [
+    "kr_exp_ships",
+    "oil_wti",
+    "fx_krw",
+    "kr_exports"
+   ],
+   "law_topics": [
+    "shipbuilding",
+    "trade",
+    "defense"
+   ],
+   "markets": [
+    "329180_KS"
+   ]
+  },
+  {
+   "id": "health",
+   "label": "헬스케어·제약·바이오",
+   "label_en": "Healthcare & biotech",
+   "factors": [
+    "drug_approvals",
+    "us_10y",
+    "fx_krw",
+    "us_jobs_by_county"
+   ],
+   "law_topics": [
+    "health"
+   ],
+   "markets": [
+    "PFE",
+    "XLV",
+    "NOVO_B_CO",
+    "207940_KS"
+   ]
+  },
+  {
+   "id": "housing",
+   "label": "주택·건설·부동산",
+   "label_en": "Housing & construction",
+   "factors": [
+    "us_10y",
+    "us_policy_rate",
+    "us_housing_starts",
+    "kr_policy_rate"
+   ],
+   "law_topics": [
+    "housing",
+    "rates"
+   ],
+   "markets": [
+    "XHB"
+   ]
+  },
+  {
+   "id": "industrial",
+   "label": "산업재·기계",
+   "label_en": "Industrials",
+   "factors": [
+    "us_industrial",
+    "copper",
+    "fx_eur",
+    "fx_jpy",
+    "us_facilities",
+    "us_jobs_by_county"
+   ],
+   "law_topics": [
+    "trade",
+    "energy"
+   ],
+   "markets": [
+    "XLI",
+    "SIE_DE",
+    "7011_T"
+   ]
+  },
+  {
+   "id": "consumer",
+   "label": "소비재·명품·유통",
+   "label_en": "Consumer & luxury",
+   "factors": [
+    "us_cpi",
+    "us_unemployment",
+    "fx_eur"
+   ],
+   "law_topics": [
+    "trade"
+   ],
+   "markets": [
+    "MC_PA",
+    "AMZN"
+   ]
+  },
+  {
+   "id": "crypto",
+   "label": "가상자산",
+   "label_en": "Crypto assets",
+   "factors": [
+    "bitcoin",
+    "us_policy_rate",
+    "us_10y"
+   ],
+   "law_topics": [
+    "crypto",
+    "finance"
+   ],
+   "markets": [
+    "BTC_USD",
+    "COIN"
+   ]
+  },
+  {
+   "id": "safe_haven",
+   "label": "안전자산(금·채권)",
+   "label_en": "Safe havens",
+   "factors": [
+    "gold",
+    "us_10y",
+    "fx_jpy"
+   ],
+   "law_topics": [
+    "rates",
+    "cross_strait",
+    "defense"
+   ],
+   "markets": [
+    "GC_F",
+    "TNX"
+   ]
+  }
+ ]
+}

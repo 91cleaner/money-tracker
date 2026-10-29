@@ -1,0 +1,15 @@
+{
+ "about": "미리 쓴 종목 해설 구조(자리만). 주요 종목 상위 50개에 대해 하루 1회 워크플로가 data/us/explain/<TICKER>.json 을 만든다. 데이터(data/us/prices 등)에서 계산한 숫자 요약만 담고, 유료 AI API 키는 사용하지 않는다. 아직 생성기는 없고 assets/intent.js 의 숫자 템플릿만 쓴다. 상관관계일 뿐 원인이 아님, 투자 조언 아님.",
+ "file": "data/us/explain/<TICKER>.json",
+ "paid_api_allowed": false,
+ "refresh": "daily, top 50 tickers",
+ "fields": {
+  "symbol": "NVDA",
+  "asOf": "종가 기준일 YYYY-MM-DD",
+  "generated_by": "template | rules (유료 AI 아님)",
+  "summary_ko": ["한 문장씩, 중립·쉬운 말 (최대 5문장)"],
+  "summary_en": ["one neutral plain sentence each (max 5)"],
+  "numbers": {"d1": 0, "w1": 0, "m1": 0, "ytd": 0, "same_period_events": 0, "past_n": 0, "past_avg": 0},
+  "sources": [{"label": "출처 이름", "url": "https://..."}]
+ }
+}

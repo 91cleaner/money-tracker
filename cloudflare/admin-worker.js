@@ -50,6 +50,13 @@ export default {async fetch(request,env){
   // Operator direction 2026-10-27: stop ALL paid AI and market API calls until future approval.
   return json({error:'ai-paused',message:'AI·유료 데이터 조사 중단. 무료 공식자료 색인을 이용하세요.'},503);
  }
+ // Public files the /command map can read (same files as GitHub Pages; no private data).
+ if(path==='/data/us/trades_public.json'||path==='/data/search-index.json'||path==='/data/us/members.json'||/^\/data\/answers\/[A-Za-z0-9_\-\/.]+\.json$/.test(path)&&!path.includes('..')){
+  if(!session||session.login.toLowerCase()!==env.ADMIN_GITHUB_LOGIN.toLowerCase())return redirect('/auth/login');
+  const up=await fetch('https://91cleaner.github.io/money-tracker'+path,{cf:{cacheTtl:300}});
+  if(!up.ok)return json({error:'not-found'},up.status===404?404:502);
+  return new Response(up.body,{headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'private, max-age=300','X-Content-Type-Options':'nosniff'}});
+ }
  if(path==='/evidence.js'||path==='/command/evidence.js'||Object.prototype.hasOwnProperty.call(COMMAND_DATA,path)){
   if(!session||session.login.toLowerCase()!==env.ADMIN_GITHUB_LOGIN.toLowerCase())return redirect('/auth/login');
   const headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'};

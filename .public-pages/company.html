@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MONEY TRACKER — 회사 상세</title>
+<meta name="description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="MONEY TRACKER — 미국 회사 파일"><meta property="og:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
+<meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 회사 파일"><meta name="twitter:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
+<meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
+<script src="assets/i18n.js?v=i18n-20261029b"></script>
+<style>
+:root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,#00000000 0 2px,#00ff6608 3px,#00000000 4px)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:49;background:radial-gradient(ellipse at 50% 30%,#0b3a2200 40%,#000a 100%)}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.mono{font-family:ui-monospace,Menlo,Consolas,"D2Coding",monospace}
+header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#020806f0;border-bottom:1px solid var(--line)}
+header.bar .brand{font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--g)}
+header.bar .crumb{font:12px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.06em}
+header.bar .sp{flex:1}
+header.bar form{display:flex;gap:6px}
+header.bar input{width:120px;background:#04150d;border:1px solid var(--line2);border-radius:6px;color:var(--g2);font:16px ui-monospace,Menlo,monospace;padding:4px 8px;text-transform:uppercase}
+header.bar button{background:#0b2a19;border:1px solid var(--line2);border-radius:6px;color:var(--g);font:700 12px ui-monospace,Menlo,monospace;padding:0 10px;cursor:pointer}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 0 18px rgba(40,255,140,.06) inset;padding:14px 16px;min-width:0}
+.panel h2{margin:0 0 10px;font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--g)}
+.panel h2 .n{color:var(--mut);font-weight:400}
+.span2{grid-column:1/-1}
+.hero{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 18px}
+.hero .tk{font:700 34px/1 ui-monospace,Menlo,monospace;color:var(--g);letter-spacing:.04em;text-shadow:0 0 12px rgba(93,255,158,.35)}
+.hero .nm{font-size:20px;font-weight:700;color:#eafff2}
+.hero .sec{font:12px ui-monospace,Menlo,monospace;color:var(--g2);border:1px solid var(--line2);border-radius:999px;padding:2px 10px}
+.meta{margin-top:8px;color:var(--mut);font-size:12.5px}
+.actions{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--g);background:#0d3b22;color:#eafff2;font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.04em}
+.btn:hover{background:#145531;text-decoration:none}
+.kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:6px}
+.kv div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#03130b}
+.kv div:first-child{grid-column:1/-1;display:flex;align-items:baseline;gap:10px}.kv div:first-child b{font-size:24px}
+.kv b{display:block;font:700 18px ui-monospace,Menlo,monospace;color:#eafff2}
+.kv span{font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+.up{color:var(--up)!important}.down{color:var(--down)!important}
+.empty{color:var(--mut);font:13px ui-monospace,Menlo,monospace;padding:18px 6px;border:1px dashed var(--line);border-radius:8px;text-align:center}
+svg.spark{width:100%;height:120px;display:block}
+.rng{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.rng button{background:#04150d;border:1px solid var(--line2);color:var(--g2);border-radius:6px;padding:4px 12px;min-height:32px;cursor:pointer;font:12px ui-monospace,Menlo,monospace}.rng button[aria-pressed=true]{background:#0d3b22;border-color:var(--g);color:#eafff2;font-weight:700}
+.chartw{position:relative;margin-top:8px}
+.pin{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid #020a06;padding:0;cursor:pointer}
+.pin:focus-visible,.pin[aria-pressed=true]{outline:2px solid #fff;outline-offset:1px}
+.pin.k-t{background:#ffd36b}.pin.k-b{background:#7fd8ff}.pin.k-w{background:#ff9bf0}
+.pinlg{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font:11px ui-monospace,Menlo,monospace;color:var(--mut)}.pinlg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
+.pinbox{margin-top:8px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#03130b;font-size:12.5px}.pinbox .k{font:700 11px ui-monospace,Menlo,monospace;color:var(--g)}.pinbox .s{color:var(--mut);font-size:12px}.pinbox div+div{margin-top:6px}
+.ins{--buy:#5dff9e;--sell:#ff8a8a}
+.ins .big{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 12px}
+.ins .big div{border:2px solid var(--line2);border-radius:12px;padding:12px;background:#03130b;text-align:center}
+.ins .big b{display:block;font:800 40px/1.1 ui-monospace,Menlo,monospace}
+.ins .big span{font-size:16px;font-weight:700}
+.ins .b b,.ins .b span{color:var(--buy)}.ins .s b,.ins .s span{color:var(--sell)}
+.tug{height:22px;border-radius:999px;overflow:hidden;display:flex;border:2px solid var(--line2);background:#1a0c0c}
+.tug i{display:block;height:100%;background:var(--buy);transition:width .6s}.tug u{flex:1;background:var(--sell)}
+.tugl{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin:4px 2px 10px}
+.ins .say{font-size:17px;line-height:1.6;color:#eafff2;margin:6px 0 12px}
+.ins .row{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:center;padding:10px 0;border-bottom:1px solid #12301f;font-size:15px}
+.ins .row .tag{font-weight:800;font-size:15px;border-radius:8px;padding:3px 10px;border:2px solid}
+.ins .row .tag.b{color:var(--buy);border-color:var(--buy)}.ins .row .tag.s{color:var(--sell);border-color:var(--sell)}
+.ins .row .who{font-weight:700;color:#eafff2}.ins .row .sub{grid-column:2/-1;font-size:13px;color:var(--mut)}
+.note{margin:8px 0 0;color:var(--mut);font-size:12px}
+.warnnote{margin:0 0 10px;padding:8px 10px;border-left:3px solid var(--warn);background:#1c1606;color:#f3e3b4;font-size:12.5px;border-radius:0 6px 6px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid #12301f;vertical-align:top}
+th{font:700 11px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.05em;white-space:nowrap}
+td.num,th.num{text-align:right;white-space:nowrap}
+td .pill{font:11px ui-monospace,Menlo,monospace;padding:1px 6px;border-radius:5px;border:1px solid var(--line2);white-space:nowrap}
+.more{margin-top:8px;background:none;border:1px solid var(--line2);color:var(--g2);border-radius:6px;padding:5px 10px;cursor:pointer;font:12px ui-monospace,Menlo,monospace}
+ol.tl{list-style:none;margin:0;padding:0;position:relative}
+ol.tl::before{content:"";position:absolute;left:84px;top:4px;bottom:4px;width:1px;background:var(--line2)}
+ol.tl li{display:grid;grid-template-columns:76px 1fr;gap:16px;padding:8px 0;position:relative}
+ol.tl li::before{content:"";position:absolute;left:81px;top:14px;width:7px;height:7px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g)}
+ol.tl .d{font:12px ui-monospace,Menlo,monospace;color:var(--g2);padding-top:3px}
+ol.tl .k{font:700 11px ui-monospace,Menlo,monospace;color:var(--g);letter-spacing:.06em}
+ol.tl .t{color:#eafff2}
+ol.tl .s{font-size:12px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips a,.chips span{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--line2);border-radius:999px;padding:3px 10px;color:var(--g2)}
+.fl{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.fl li{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:center;border:2px solid var(--line2);border-radius:12px;padding:12px 14px;background:#03130b}
+.fl .st{font:800 18px ui-monospace,Menlo,monospace;color:#04150d;background:var(--g);border-radius:8px;padding:4px 10px;white-space:nowrap}
+.fl .st.k8{background:var(--warn)}
+.fl .big{font-size:18px;font-weight:700;color:#eafff2}
+.fl .sm{grid-column:2;font-size:14px;color:var(--mut)}
+.fl .sm a{font-weight:700}
+.hq{font-size:20px;font-weight:700;color:#eafff2;line-height:1.4}
+.score{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 12px}
+.score div{flex:1 1 140px;border:2px solid var(--line2);border-radius:12px;padding:10px 12px;background:#03130b;text-align:center}
+.score b{display:block;font:800 30px ui-monospace,Menlo,monospace;color:var(--g)}
+.score span{font-size:14px;color:var(--g2)}
+@media(max-width:900px){.fl li{grid-template-columns:1fr}.fl .sm{grid-column:1}}
+footer.foot{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:var(--mut);font-size:12px}
+footer.foot .disc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#03100a}
+footer.foot b{color:var(--warn)}
+footer.foot ul{margin:6px 0 0;padding-left:18px}
+@media(max-width:900px){
+ main{grid-template-columns:minmax(0,1fr);padding:12px 10px 30px;gap:12px}
+ header.bar{padding:8px 10px;flex-wrap:wrap}
+ header.bar .crumb{display:none}
+ header.bar input{width:96px}
+ .hero .tk{font-size:28px}.hero .nm{font-size:17px}
+ .kv{grid-template-columns:repeat(2,minmax(0,1fr))}
+ table.trades thead{display:none}
+ table.trades tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px 0;border-bottom:1px solid #12301f}
+ table.trades td{border:0;padding:0}
+ table.trades td.who{grid-column:1/-1;font-weight:700;color:#eafff2}
+ table.trades td.lbl::before{content:attr(data-l) " ";color:var(--mut);font:11px ui-monospace,Menlo,monospace}
+ ol.tl::before{left:82px}ol.tl li{grid-template-columns:74px 1fr;gap:16px}ol.tl li::before{left:79px}ol.tl .d{font-size:11px;white-space:nowrap}
+ footer.foot{padding:0 10px 30px}
+}
+@media(max-width:480px){
+ html,body{overflow-wrap:anywhere}
+ .panel{overflow-x:auto}
+ ol.tl li{grid-template-columns:74px minmax(0,1fr);gap:12px}
+ .hero .nm{font-size:22px}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <span class="crumb">US COMPANY FILE / 공개 기록 정리</span>
+  <a class="mono" href="weekly.html">주간 순위표</a>
+  <span class="sp"></span>
+  <form id="go" role="search"><input id="goT" aria-label="티커 입력" placeholder="티커" maxlength="10" autocomplete="off"><button>열기</button></form>
+</header>
+<main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
+<footer class="foot"><div class="disc" id="foot"></div></footer>
+<script src="assets/insights-card.js?v=ins-20261028"></script>
+<script src="assets/money-trio.js?v=trio-20261029"></script>
+<script src="assets/share.js?v=share-20261028"></script>
+<script>
+(function () {
+  "use strict";
+  var app = document.getElementById("app"), foot = document.getElementById("foot");
+  var raw = (new URLSearchParams(location.search).get("t") || "").trim().toUpperCase();
+  var T = /^[A-Z][A-Z0-9.\-]{0,9}$/.test(raw) ? raw : "";
+  document.getElementById("go").addEventListener("submit", function (e) {
+    e.preventDefault(); var v = document.getElementById("goT").value.trim().toUpperCase();
+    if (/^[A-Z][A-Z0-9.\-]{0,9}$/.test(v)) location.search = "?t=" + encodeURIComponent(v);
+  });
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function safe(u) { return /^https:\/\/[a-z0-9.-]+(?:[/?#]|$)/i.test(u || "") ? u : null; }
+  function link(text, url) { var u = safe(url); if (!u) return el("span", "", text); var a = el("a", "", text); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; return a; }
+  function get(p) { return fetch(p, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function usd(v) { if (v == null || !isFinite(v)) return "-"; var a = Math.abs(v); return "$" + (a >= 1e9 ? (v / 1e9).toFixed(2) + "B" : a >= 1e6 ? (v / 1e6).toFixed(2) + "M" : a >= 1e3 ? Math.round(v / 1e3).toLocaleString("en-US") + "K" : Math.round(v).toLocaleString("en-US")); }
+  function days(a, b) { var x = Date.parse(a), y = Date.parse(b); return isFinite(x) && isFinite(y) ? Math.round((y - x) / 864e5) : null; }
+  function panel(title, count, span) { var p = el("section", "panel" + (span ? " span2" : "")); var h = el("h2", "", title); if (count != null) h.appendChild(el("span", "n", " · " + count)); p.appendChild(h); return p; }
+
+  // Prices: data/us/prices/<T>.json is optional. Accept {d:[],c:[]}, [{date,close}], {prices|data|history:[...]}, or [[date,close]].
+  function parsePrices(j) {
+    if (!j) return [];
+    var rows = [];
+    if (Array.isArray(j.d) && Array.isArray(j.c)) rows = j.d.map(function (d, i) { return [d, j.c[i]]; });
+    else {
+      var arr = Array.isArray(j) ? j : (j.prices || j.data || j.history || j.series || []);
+      rows = (Array.isArray(arr) ? arr : []).map(function (r) { return Array.isArray(r) ? [r[0], r[1]] : [r.date || r.d || r.t, r.close != null ? r.close : r.c != null ? r.c : r.adj_close != null ? r.adj_close : r.price]; });
+    }
+    return rows.map(function (r) { return { d: String(r[0] || "").slice(0, 10), c: Number(r[1]) }; })
+      .filter(function (r) { return /^\d{4}-\d{2}-\d{2}$/.test(r.d) && isFinite(r.c) && r.c > 0; })
+      .sort(function (a, b) { return a.d < b.d ? -1 : a.d > b.d ? 1 : 0; });
+  }
+  function onOrBefore(rows, iso) { for (var i = rows.length - 1; i >= 0; i--) if (rows[i].d <= iso) return rows[i]; return null; }
+  function shift(iso, n) { var t = new Date(iso + "T00:00:00Z"); t.setUTCDate(t.getUTCDate() - n); return t.toISOString().slice(0, 10); }
+  function shiftMonth(iso) { var t = new Date(iso + "T00:00:00Z"); t.setUTCMonth(t.getUTCMonth() - 1); return t.toISOString().slice(0, 10); }
+  function change(last, base) { return base ? (last.c / base.c - 1) * 100 : null; }
+
+  function nmOf(e) { return window.MTI18N && window.MTI18N.name ? window.MTI18N.name(e) : e.name; }
+  var RANGES = [["1주", 7], ["1달", 31], ["1년", 366], ["전체", 0]];
+  var PINK = { t: ["k-t", "의원 거래 신고(신고일 기준)"], b: ["k-b", "법안"], w: ["k-w", "백악관·관보 조치"] };
+  function priceBlock(rows, meta, pinsAll) {
+    var p = panel("주가 · 종가 기준");
+    if (rows.length < 2) { p.appendChild(el("div", "empty", "주가 데이터 준비 중")); return p; }
+    var last = rows[rows.length - 1], prev = rows[rows.length - 2];
+    var y = last.d.slice(0, 4), ytdBase = onOrBefore(rows, (Number(y) - 1) + "-12-31") || rows.filter(function (r) { return r.d.slice(0, 4) === y; })[0];
+    var items = [["종가 (" + last.d + ")", last.c.toLocaleString("en-US", { maximumFractionDigits: 2 }), null],
+      ["1일", null, change(last, prev)], ["1주", null, change(last, onOrBefore(rows, shift(last.d, 7)))],
+      ["1달", null, change(last, onOrBefore(rows, shiftMonth(last.d)))], ["연초 대비", null, change(last, ytdBase)]];
+    var kv = el("div", "kv");
+    items.forEach(function (it) {
+      var b = el("div"); var v = el("b"); var lab = el("span", "", it[0]);
+      if (it[1] != null) v.textContent = it[1]; else if (it[2] == null) v.textContent = "-";
+      else { v.textContent = (it[2] >= 0 ? "+" : "") + it[2].toFixed(2) + "%"; v.className = it[2] >= 0 ? "up" : "down"; }
+      b.append(v, lab); kv.appendChild(b);
+    });
+    p.appendChild(kv);
+    var rng = el("div", "rng"); rng.setAttribute("role", "group"); rng.setAttribute("aria-label", "차트 기간");
+    var wrap = el("div", "chartw"), pinbox = el("div", "pinbox"), note = el("p", "note"), cur = RANGES[1];
+    pinbox.hidden = true; pinbox.setAttribute("aria-live", "polite");
+    p.appendChild(rng); p.appendChild(wrap);
+    var lg = el("div", "pinlg"); Object.keys(PINK).forEach(function (k) { var s = el("span"), i = el("i"); i.className = PINK[k][0]; i.style.background = { t: "#ffd36b", b: "#7fd8ff", w: "#ff9bf0" }[k]; s.append(i, PINK[k][1]); lg.appendChild(s); });
+    p.appendChild(lg); p.appendChild(pinbox); p.appendChild(note);
+    function draw() {
+      var pts = cur[1] ? rows.filter(function (r) { return r.d >= shift(last.d, cur[1]); }) : rows;
+      if (pts.length < 2) pts = rows.slice(-2);
+      wrap.replaceChildren(); pinbox.hidden = true;
+      var min = Math.min.apply(null, pts.map(function (r) { return r.c; })), max = Math.max.apply(null, pts.map(function (r) { return r.c; }));
+      var W = 600, H = 120;
+      function yv(c) { return max > min ? H - 6 - (c - min) / (max - min) * (H - 12) : H / 2; }
+      function xv(i) { return pts.length > 1 ? i / (pts.length - 1) * W : 0; }
+      var path = pts.map(function (r, i) { return (i ? "L" : "M") + xv(i).toFixed(1) + " " + yv(r.c).toFixed(1); }).join(" ");
+      var ns = "http://www.w3.org/2000/svg", svg = document.createElementNS(ns, "svg"); svg.setAttribute("viewBox", "0 0 " + W + " " + H); svg.setAttribute("preserveAspectRatio", "none"); svg.setAttribute("class", "spark");
+      svg.setAttribute("role", "img"); svg.setAttribute("aria-label", cur[0] + " 종가 추이 " + pts[0].d + " ~ " + last.d);
+      var pa = document.createElementNS(ns, "path"); pa.setAttribute("d", path); pa.setAttribute("fill", "none"); pa.setAttribute("stroke", "#5dff9e"); pa.setAttribute("stroke-width", "1.6"); pa.setAttribute("vector-effect", "non-scaling-stroke");
+      svg.appendChild(pa); wrap.appendChild(svg);
+      // 핀: 같은 거래일·같은 종류는 하나로 묶음. 휴장일 날짜는 다음 거래일에 표시.
+      var groups = {}, inRange = 0;
+      pinsAll.forEach(function (pn) {
+        if (pn.date < pts[0].d || pn.date > last.d) return;
+        var idx = -1; for (var i = 0; i < pts.length; i++) if (pts[i].d >= pn.date) { idx = i; break; }
+        if (idx < 0) return; inRange++;
+        var key = pn.k + idx; (groups[key] = groups[key] || { k: pn.k, i: idx, list: [] }).list.push(pn);
+      });
+      Object.keys(groups).forEach(function (key) {
+        var g = groups[key], b = el("button", "pin " + PINK[g.k][0]); b.type = "button"; b.setAttribute("aria-pressed", "false");
+        b.style.left = (xv(g.i) / W * 100).toFixed(2) + "%"; b.style.top = (yv(pts[g.i].c) / H * 100).toFixed(2) + "%";
+        b.setAttribute("aria-label", PINK[g.k][1] + " " + g.list[0].date + (g.list.length > 1 ? " 외 " + (g.list.length - 1) + "건" : ""));
+        b.title = b.getAttribute("aria-label");
+        b.addEventListener("click", function () {
+          Array.prototype.forEach.call(wrap.querySelectorAll(".pin"), function (x) { x.setAttribute("aria-pressed", "false"); });
+          b.setAttribute("aria-pressed", "true"); pinbox.replaceChildren();
+          g.list.slice(0, 10).forEach(function (pn) {
+            var d = el("div"); d.appendChild(el("div", "k", pn.date + " · " + PINK[pn.k][1]));
+            d.appendChild(el("div", "", pn.title)); var s = el("div", "s"); if (pn.sub) s.appendChild(document.createTextNode(pn.sub + (pn.url ? " · " : "")));
+            if (pn.url) s.appendChild(link("출처 ↗", pn.url)); d.appendChild(s); pinbox.appendChild(d);
+          });
+          if (g.list.length > 10) pinbox.appendChild(el("div", "s", "외 " + (g.list.length - 10) + "건 — 아래 목록 참고"));
+          pinbox.hidden = false;
+        });
+        wrap.appendChild(b);
+      });
+      var mn = Math.min.apply(null, pts.map(function (r) { return r.c; })), mx = max;
+      note.textContent = cur[0] + " 종가 " + pts[0].d + " ~ " + last.d + " · 범위 " + mn.toLocaleString("en-US") + " ~ " + mx.toLocaleString("en-US") + (meta && meta.source ? " · 출처: " + meta.source : "") + " · 핀 " + inRange + "건. 핀은 같은 기간 공개 기록의 날짜일 뿐 주가 변동의 원인을 뜻하지 않습니다. 의원 거래는 신고일 기준이며 실제 거래는 최대 45일 앞설 수 있습니다. 연방 계약은 날짜별 자료가 없어 핀으로 표시하지 않습니다.";
+    }
+    RANGES.forEach(function (rg) {
+      var b = el("button", "", rg[0]); b.type = "button"; b.setAttribute("aria-pressed", rg === cur ? "true" : "false");
+      b.addEventListener("click", function () { cur = rg; Array.prototype.forEach.call(rng.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); draw(); });
+      rng.appendChild(b);
+    });
+    draw();
+    return p;
+  }
+
+  var TY = { P: "구입(P)", S: "처분(S)", E: "교환(E)" };
+  function tradesBlock(rows, members) {
+    var p = panel("의원 거래 신고 (하원 PTR)", rows.length + "건", true);
+    p.appendChild(el("p", "warnnote", "신고 기준입니다. STOCK Act상 의원은 거래 후 최대 45일 안에 신고하므로 거래일과 신고일 사이에 차이가 있을 수 있습니다. 금액은 신고서에 적힌 구간입니다. 공개 기록일 뿐 잘잘못 판단이 아니며, 투자 조언이 아닙니다."));
+    if (!rows.length) { p.appendChild(el("div", "empty", "이 종목의 의원 거래 신고 기록이 없습니다")); return p; }
+    var tbl = el("table", "trades"), th = el("thead"), hr = el("tr");
+    ["신고일", "거래일", "의원", "구분", "금액 구간", "신고까지", "원문"].forEach(function (h, i) { hr.appendChild(el("th", i === 5 ? "num" : "", h)); });
+    th.appendChild(hr); tbl.appendChild(th);
+    var tb = el("tbody"); tbl.appendChild(tb);
+    var shown = 0;
+    function addRows(n) {
+      rows.slice(shown, shown + n).forEach(function (r) {
+        var tr = el("tr"), m = members[r.id];
+        var lag = days(r.d, r.filed);
+        var cells = [
+          ["lbl", "신고일", r.filed || "-"], ["lbl", "거래일", r.d || "-"],
+          ["who", "", (r.who || "-") + (m ? " (" + m.party + "-" + m.state + ")" : "") + " · " + (r.c === "s" ? "상원" : "하원")],
+          ["lbl", "구분", TY[String(r.ty || "").charAt(0)] || r.ty || "-"], ["lbl", "금액", r.amt || "-"],
+          ["lbl num", "신고까지", lag == null ? "-" : lag + "일" + (lag > 45 ? " · 숙제 기한(45일) 넘김" : "")]
+        ];
+        cells.forEach(function (c) { var td = el("td", c[0], c[2]); if (c[1]) td.setAttribute("data-l", c[1]); if (/45일\) 넘김/.test(c[2])) td.classList.add("down"); tr.appendChild(td); });
+        var tdl = el("td", "lbl"); tdl.setAttribute("data-l", "원문"); tdl.appendChild(link("PTR ↗", r.doc)); tr.appendChild(tdl);
+        tb.appendChild(tr);
+      });
+      shown = Math.min(rows.length, shown + n);
+    }
+    addRows(window.matchMedia && window.matchMedia("(max-width: 900px)").matches ? 10 : 25); p.appendChild(tbl);
+    if (rows.length > shown) { var b = el("button", "more", "더 보기 (" + (rows.length - shown) + "건 남음)"); b.type = "button"; b.addEventListener("click", function () { addRows(50); if (shown >= rows.length) b.remove(); else b.textContent = "더 보기 (" + (rows.length - shown) + "건 남음)"; }); p.appendChild(b); }
+    return p;
+  }
+
+  var QEND = { Q1: "03-31", Q2: "06-30", Q3: "09-30", Q4: "12-31" };
+  function timelineBlock(ev, undated, lob, hasAwards) {
+    var p = panel("최근 무슨 일이 있었나 · 날짜순", ev.length + "건", true);
+    p.appendChild(el("p", "note", "같은 기간 있었던 공개 기록을 날짜순으로 나열한 것입니다. 서로의 원인 관계를 뜻하지 않습니다."));
+    if (!ev.length) p.appendChild(el("div", "empty", "날짜가 있는 연결 기록이 아직 없습니다"));
+    else {
+      var ol = el("ol", "tl");
+      ev.forEach(function (e) {
+        var li = el("li"), d = el("div", "d", e.date), body = el("div");
+        body.append(el("div", "k", e.kind), el("div", "t", e.title));
+        if (e.sub || e.url) { var s = el("div", "s"); if (e.sub) s.appendChild(document.createTextNode(e.sub + (e.url ? " · " : ""))); if (e.url) s.appendChild(link("원문 ↗", e.url)); body.appendChild(s); }
+        li.append(d, body); ol.appendChild(li);
+      });
+      p.appendChild(ol);
+    }
+    var sub = el("div"); sub.style.marginTop = "14px";
+    sub.appendChild(el("h2", "", "날짜 없는 연결"));
+    if (!hasAwards) sub.appendChild(el("p", "note", "연방 계약(USAspending): 이 저장소에는 아직 수집된 자료가 없습니다."));
+    if (lob && lob.bills_mentioned && lob.bills_mentioned.length) {
+      sub.appendChild(el("p", "note", "로비 공시 활동 설명에 나온 법안 번호(자동 추출, 회기 미표기 — 원문 확인 필요): " + lob.bills_mentioned.slice(0, 8).map(function (b) { return b[0] + " ×" + b[1]; }).join(", ")));
+    }
+    if (undated.length) {
+      sub.appendChild(el("p", "note", "연관 위원회 — 자체 분류이며 공식 관할이 아닙니다."));
+      var ch = el("div", "chips"); undated.forEach(function (u) { ch.appendChild(link(u.title, u.url)); }); sub.appendChild(ch);
+    }
+    p.appendChild(sub);
+    return p;
+  }
+
+  function insiderBlock(d) {
+    var EN = !!(window.MTI18N && window.MTI18N.isEn);
+    function L(ko, en) { return EN ? en : ko; }
+    var p = panel(L("회사 사람들의 주식 거래", "Company people's stock trades"), null, true); p.className += " ins";
+    if (!d) { p.appendChild(el("div", "empty", L("이 회사는 아직 자료가 없어요. (회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) 모으는 대상 밖이거나 준비 중)", "No data yet for this company (not in the list where we collect records of company insiders trading their own stock (Form 4), or still being prepared)."))); return p; }
+    var t = (d.trades || []).slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+    var buys = t.filter(function (x) { return x.code === "P"; }), sells = t.filter(function (x) { return x.code === "S"; });
+    function val(a) { return a.reduce(function (s, x) { return s + (x.shares || 0) * (x.price || 0); }, 0); }
+    function ppl(a) { var o = {}; a.forEach(function (x) { o[x.who] = 1; }); return Object.keys(o).length; }
+    var days = d.days || 90;
+    if (!t.length) p.appendChild(el("p", "say", L("최근 " + days + "일 동안 시장에서 직접 사거나 판 신고는 없었어요.", "No open-market buy or sell reports in the last " + days + " days.")));
+    else {
+      p.appendChild(el("p", "say", L("최근 " + days + "일, 같은 기간에 임원·이사 등이 주식을 산 신고 " + buys.length + "건, 판 신고 " + sells.length + "건이 있었어요.",
+        "In the last " + days + " days, insiders filed " + buys.length + " buy reports and " + sells.length + " sell reports.")));
+      var big = el("div", "big"), b = el("div", "b"), s2 = el("div", "s");
+      b.appendChild(el("b", "", String(ppl(buys)))); b.appendChild(el("span", "", L("🟢 산 사람", "🟢 People who bought")));
+      s2.appendChild(el("b", "", String(ppl(sells)))); s2.appendChild(el("span", "", L("🔴 판 사람", "🔴 People who sold")));
+      big.appendChild(b); big.appendChild(s2); p.appendChild(big);
+      var vb = val(buys), vs = val(sells), tot = vb + vs;
+      if (tot > 0) {
+        var tug = el("div", "tug"), bar = el("i"); bar.style.width = (vb / tot * 100).toFixed(1) + "%"; tug.appendChild(bar); tug.appendChild(el("u"));
+        tug.setAttribute("role", "img"); tug.setAttribute("aria-label", L("산 금액과 판 금액 비교", "Bought vs sold amount"));
+        p.appendChild(tug);
+        var tl = el("div", "tugl"); tl.appendChild(el("span", "up", L("산 금액 ", "Bought ") + usd(vb))); tl.appendChild(el("span", "down", L("판 금액 ", "Sold ") + usd(vs))); p.appendChild(tl);
+      }
+      t.slice(0, 12).forEach(function (x) {
+        var r = el("div", "row"), buy = x.code === "P";
+        r.appendChild(el("span", "tag " + (buy ? "b" : "s"), buy ? L("샀어요", "Bought") : L("팔았어요", "Sold")));
+        r.appendChild(el("span", "who", (x.who || "-") + (x.role ? " · " + x.role : "")));
+        r.appendChild(el("span", "mono", (x.shares != null ? Math.round(x.shares).toLocaleString("en-US") + L("주", " sh") : "-") + (x.price ? " · $" + x.price.toFixed(2) : "")));
+        var sub = el("div", "sub"); sub.appendChild(document.createTextNode(L("거래일 ", "Traded ") + x.date + L(" · 신고일 ", " · Filed ") + x.filed + (x.plan ? L(" · 미리 예약해둔 판매 (10b5-1)로 표시됨", " · marked as a pre-scheduled sale (10b5-1)") : "") + " "));
+        if (x.url) sub.appendChild(link("↗", x.url));
+        r.appendChild(sub); p.appendChild(r);
+      });
+    }
+    p.appendChild(el("p", "note", L("SEC에 내야 하는 공식 신고(Form 4)를 모았어요. 시장에서 직접 사고판 것만 세고, 스톡옵션·증여 등 " + (d.other_rows || 0) + "건은 뺐어요. 이유는 알 수 없고, 투자 조언이 아니에요.",
+      "Collected from official SEC Form 4 reports. Only open-market buys and sells are counted; " + (d.other_rows || 0) + " option / gift / other rows are left out. Reasons are unknown. Not investment advice.")));
+    return p;
+  }
+
+  // ---- SEC 공시 피드 (10-K / 8-K) + 본사 주소 : data/us/sec-filings.json ----
+  var EN = !!(window.MTI18N && window.MTI18N.isEn);
+  function L(ko, en) { return EN ? en : ko; }
+  var ITEM = {
+    "1.01": ["중요한 계약을 맺었어요", "Signed a major agreement"], "1.02": ["중요한 계약이 끝났어요", "A major agreement ended"],
+    "1.03": ["파산 관련 절차를 알렸어요", "Bankruptcy-related notice"], "2.01": ["회사나 자산 사고팔기를 마쳤어요", "Finished buying or selling a company or assets"],
+    "2.02": ["실적(번 돈 성적표)을 알렸어요", "Reported results (earnings)"], "2.03": ["새 빚(대출) 의무가 생겼어요", "Took on a new debt obligation"],
+    "2.05": ["구조조정 비용을 알렸어요", "Restructuring costs"], "2.06": ["자산 가치를 크게 낮췄어요", "Big write-down of asset value"],
+    "3.01": ["주식 시장 상장 관련 알림", "Stock exchange listing notice"], "3.02": ["주식을 비공개로 팔았어요", "Sold shares privately"],
+    "5.02": ["임원·이사가 바뀌었어요", "Officer or director change"], "5.03": ["회사 규정을 고쳤어요", "Company rules amended"],
+    "5.07": ["주주 투표 결과를 알렸어요", "Shareholder vote results"], "7.01": ["모두에게 공평하게 알리는 공시", "Fair-disclosure announcement"],
+    "8.01": ["그 밖에 알릴 일", "Other events"], "9.01": ["첨부 자료(재무제표 등)", "Attached documents"]
+  };
+  function itemText(c) { var m = ITEM[c]; return m ? L(m[0], m[1]) : L("항목 ", "Item ") + c; }
+  function ago(iso) { var n = days(iso, new Date().toISOString().slice(0, 10)); return n == null ? "" : n <= 0 ? L("오늘", "today") : L(n + "일 전", n + " days ago"); }
+  function addrLines(a) { if (!a) return null; return [a.street1, a.street2, [a.city, a.state].filter(Boolean).join(", ") + (a.zip ? " " + a.zip : "")].filter(function (x) { return x && x.trim(); }).join("\n"); }
+  function filingsBlock(sf, trades) {
+    var p = panel(L("📬 회사가 낸 공시 · 본사 주소", "📬 Filings & headquarters"), null, true);
+    if (!sf) { p.appendChild(el("div", "empty", L("공시 자료를 아직 못 가져왔어요. 조금 뒤에 다시 와 주세요!", "Filing data is not ready yet. Please check back soon!"))); return p; }
+    var k8 = sf.k8 || [], k10 = sf.k10 || [], today = new Date().toISOString().slice(0, 10);
+    var in90 = k8.filter(function (x) { var n = days(x.filed, today); return n != null && n <= 90; }).length;
+    var tr90 = trades.filter(function (x) { var n = days(x.filed, today); return n != null && n >= 0 && n <= 90; }).length;
+    var sc = el("div", "score");
+    [[k10.length, L("📘 연간 보고서(10-K) 스탬프", "📘 Annual reports (10-K)")], [k8.length, L("📣 수시 공시(8-K) 스탬프", "📣 Current reports (8-K)")], [in90, L("🔥 최근 90일 8-K", "🔥 8-Ks in last 90 days")]].forEach(function (c) {
+      var d = el("div"); d.append(el("b", "", String(c[0])), el("span", "", c[1])); sc.appendChild(d);
+    });
+    p.appendChild(sc);
+    p.appendChild(el("p", "note", L("같은 기간에 이런 일이 있었어요: 최근 90일 동안 8-K " + in90 + "장, 의원 거래 신고 " + tr90 + "건. 서로 이어진 일이라는 뜻은 아니에요.", "In the same 90 days: " + in90 + " 8-K filings and " + tr90 + " lawmaker trade reports. This does not mean they are connected.")));
+    var hq = addrLines(sf.hq);
+    var h = el("div"); h.style.margin = "12px 0";
+    h.appendChild(el("h2", "", L("🏢 본사(사업장) 주소", "🏢 Headquarters (business address)")));
+    var ad = el("div", "hq", hq || L("주소가 없어요", "No address on file")); ad.style.whiteSpace = "pre-line"; h.appendChild(ad);
+    h.appendChild(el("p", "note", L("SEC에 낸 사업장 주소 그대로예요. 우편 주소와 다를 수 있어요.", "Business address exactly as filed with the SEC. It may differ from the mailing address.")));
+    p.appendChild(h);
+    function list(title, rows, cls, label, withItems) {
+      var box = el("div"); box.style.marginTop = "14px"; box.appendChild(el("h2", "", title));
+      if (!rows.length) { box.appendChild(el("div", "empty", L("최근 기록이 없어요", "No recent filings"))); p.appendChild(box); return; }
+      var ul = el("ul", "fl");
+      rows.forEach(function (r) {
+        var li = el("li"); li.appendChild(el("span", "st " + cls, r.form));
+        var txt = withItems ? ((r.items || []).slice(0, 3).map(itemText).join(" · ") || L("공시가 올라왔어요", "Filing posted")) : (r.period ? L(r.period + " 끝난 해의 보고서", "Report for year ended " + r.period) : label);
+        li.appendChild(el("span", "big", txt));
+        var sm = el("span", "sm", r.filed + " (" + ago(r.filed) + ") · "); sm.appendChild(link(L("원문 보기 ↗", "Read original ↗"), r.url)); li.appendChild(sm);
+        if (withItems && (r.items || []).length > 3) sm.insertBefore(document.createTextNode(L("외 " + (r.items.length - 3) + "개 · ", "+" + (r.items.length - 3) + " more · ")), sm.firstChild.nextSibling);
+        ul.appendChild(li);
+      });
+      box.appendChild(ul); p.appendChild(box);
+    }
+    list(L("📘 연간 보고서 10-K · 1년에 한 번 내는 큰 보고서", "📘 10-K · the big yearly report"), k10, "", L("연간 보고서", "Annual report"), false);
+    list(L("📣 수시 공시 8-K · 중요한 일이 생기면 바로 내는 알림", "📣 8-K · quick notice when something important happens"), k8, "k8", "", true);
+    var a = el("div", "actions"); var b = link(L("SEC에서 전체 목록 보기 ↗", "All filings on SEC ↗"), sf.source_url); b.className = "btn"; a.appendChild(b); p.appendChild(a);
+    return p;
+  }
+
+  function notFound() {
+    app.replaceChildren();
+    var p = panel("회사를 찾지 못했습니다", null, true);
+    p.appendChild(el("p", "", T ? "저장소 데이터에 '" + T + "' 티커가 없습니다." : "주소 끝에 ?t=티커 를 붙여 주세요. 예: company.html?t=NVDA"));
+    var a = el("div", "actions"); ["NVDA", "AAPL", "MSFT", "LMT"].forEach(function (t) { var b = el("a", "btn", t); b.href = "?t=" + t; a.appendChild(b); }); p.appendChild(a);
+    app.appendChild(p);
+  }
+
+  if (!T) { notFound(); renderFoot({}); return; }
+  document.title = "MONEY TRACKER — " + T + " 회사 상세";
+  Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades_public.json"), get("data/us/lobbying.json"),
+    get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json"), get("data/us/whitehouse.json"), get("data/us/insider-form4.json"), get("data/us/sec-filings.json")])
+  .then(function (r) {
+    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8], wh = r[9] || {}, f4 = r[10] || {}, sfAll = r[11] || {};
+    var ent = (si.entities || {})["company:" + T], sec = (ts.tickers || {})[T];
+    var trades = ((tr.trades) || []).filter(function (x) { return String(x.tk || "").toUpperCase() === T; })
+      .sort(function (a, b) { return String(b.filed || "").localeCompare(String(a.filed || "")) || String(b.d || "").localeCompare(String(a.d || "")); });
+    if (!ent && !sec && !trades.length) { notFound(); renderFoot({ si: si, ts: ts, tr: tr }); return; }
+    var members = {}; ((mem.members) || []).forEach(function (m) { if (m && m.id) members[m.id] = m; });
+    app.replaceChildren();
+    // 0) 핵심 카드 (data/us/insights.json, 있으면 맨 위)
+    if (ins && ins.companies && window.MTInsights) window.MTInsights.render(app, ins.companies[T], ins);
+
+    // 1) identity
+    var secLabel = ent && ent.sector && si.entities["sector:" + ent.sector] ? si.entities["sector:" + ent.sector].name : (sec ? sec.sector : null);
+    var head = panel("COMPANY FILE", null, false), hero = el("div", "hero");
+    hero.appendChild(el("span", "tk", T));
+    hero.appendChild(el("span", "nm", (ent && nmOf(ent)) || (sec && sec.name) || T));
+    if (secLabel) { var secEl = el(ent && ent.sector ? "a" : "span", "sec", secLabel); if (ent && ent.sector) secEl.href = "sector.html?s=" + encodeURIComponent(ent.sector); hero.appendChild(secEl); }
+    head.appendChild(hero);
+    var meta = el("div", "meta");
+    if (sec) {
+      meta.appendChild(document.createTextNode("SEC 등록명 " + sec.name + " · 업종 코드 SIC " + sec.sic + " " + (sec.sic_desc || "") + " · 본사(SEC 주소) " + [sec.hq_city, sec.hq_state_or_country].filter(Boolean).join(", ") + " · "));
+      meta.appendChild(link("SEC 원문 ↗", sec.source_url));
+    } else meta.textContent = "SEC 업종 정보 없음";
+    head.appendChild(meta);
+    var acts = el("div", "actions"), mapBtn = el("a", "btn", "🛰 지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(T); acts.appendChild(mapBtn);
+    if (window.MTShare) {
+      // 공유: insights.json 핵심 1줄 → 없으면 신고 건수 → 없으면 SEC 업종 (모두 원문 링크와 함께)
+      var coName = (ent && nmOf(ent)) || (sec && sec.name) || T, sh = ins && ins.companies ? window.MTShare.pick(ins.companies[T]) : null;
+      if (!sh && trades.length) sh = { line: "하원 PTR 신고 " + trades.length + "건, 가장 최근 신고일 " + (trades[0].filed || "-") + " (신고 기준, 데이터상)", src: /^https:/.test(trades[0].doc || "") ? trades[0].doc : "https://disclosures-clerk.house.gov/FinancialDisclosure", date: trades[0].filed || "" };
+      if (!sh && sec) sh = { line: "SEC 등록 업종 SIC " + sec.sic + " " + (sec.sic_desc || ""), src: sec.source_url, date: "" };
+      sh = sh || {};
+      acts.appendChild(window.MTShare.button({ head: coName + (coName === T ? "" : "(" + T + ")"), line: sh.line, src: sh.src, date: sh.date, url: window.MTShare.url({ t: T }) }));
+      window.MTShare.meta("MONEY TRACKER — " + coName + " (" + T + ") 회사 파일", sh.line || "미국 상장사 공개 기록 정리 · 투자 조언 아님");
+    }
+    head.appendChild(acts);
+    app.appendChild(head);
+    app.appendChild(filingsBlock((sfAll.companies || {})[T], trades));
+    if (window.MTMoneyTrio) { var trioHost = el("div"); trioHost.style.gridColumn = "1 / -1"; app.appendChild(trioHost); window.MTMoneyTrio.render(trioHost, T, { title: "🎮 돈 기록 3종 세트 · " + T }); }
+
+    // 2) prices
+    var pins = [];
+    trades.forEach(function (x) { if (/^\d{4}-\d{2}-\d{2}$/.test(x.filed || "")) { var lg = days(x.d, x.filed); pins.push({ k: "t", date: x.filed, title: (x.who || "-") + " · " + (TY[String(x.ty || "").charAt(0)] || x.ty || "-") + " · " + (x.amt || "-"), sub: "신고 기준" + (x.d ? " · 거래일 " + x.d : "") + (lg != null ? " · 신고까지 " + lg + "일(법정 최대 45일)" : ""), url: x.doc }); } });
+    var rt0 = (routes.routes || {})[T];
+    ((rt0 && rt0.stops) || []).forEach(function (s) { if (/^\d{4}-\d{2}-\d{2}$/.test(s.date || "") && /^https:\/\/www\.congress\.gov\/bill\//.test(s.source_url || "")) pins.push({ k: "b", date: s.date, title: s.title, sub: s.fact, url: s.source_url }); });
+    ((wh.items) || []).forEach(function (w) { if (/^\d{4}-\d{2}-\d{2}$/.test(w.date || "") && ((w.tickers || []).indexOf(T) >= 0 || (w.tickers_product || []).indexOf(T) >= 0)) pins.push({ k: "w", date: w.date, title: (window.MTI18N && window.MTI18N.isEn ? w.t : w.ko || w.t), sub: (w.src || "") + " · 회사·제품명 언급 기준, 영향 단정 아님", url: w.u }); });
+    app.appendChild(priceBlock(parsePrices(pr), pr, pins));
+
+    // 3) trades
+    app.appendChild(tradesBlock(trades, members));
+
+    app.appendChild(insiderBlock((f4.companies || {})[T] ? Object.assign({ days: f4.days }, f4.companies[T]) : null));
+
+    // 4) timeline
+    var ev = [], undated = [], lob = (lb.companies || {})[T], lobUrl = null;
+    ((ent && ent.route) || []).forEach(function (x) {
+      var ref = String(x.ref || "");
+      if (ref.indexOf("lobbying:") === 0) lobUrl = x.source_url;
+      if (ref.indexOf("committee:") === 0) undated.push({ title: x.title.replace(/^연관 위원회/, "위원회"), url: x.source_url });
+    });
+    if (lob && lob.by_quarter) Object.keys(lob.by_quarter).forEach(function (k) {
+      var m = /^(\d{4})-(Q[1-4])$/.exec(k), v = lob.by_quarter[k];
+      if (m && v > 0) ev.push({ date: m[1] + "-" + QEND[m[2]], kind: "로비 공시 (LDA)", title: m[1] + "년 " + m[2].slice(1) + "분기 보고 금액 합계 약 " + usd(v), sub: "데이터상 의뢰인 이름이 회사명으로 시작하는 공시 합산" + (lob.top_issues && lob.top_issues.length ? " · 주요 이슈: " + lob.top_issues.slice(0, 3).map(function (i) { return i[0]; }).join(", ") : ""), url: lobUrl || lb.source_url });
+    });
+    var pc = (pac.companies || {})[T];
+    if (pc && pc.coverage_end) ev.push({ date: pc.coverage_end, kind: "기업 연계 PAC (FEC)", title: pc.cycle + " 선거주기 " + pc.committee_name + " · 연방 후보 위원회 기부 합계 " + usd(pc.to_federal_candidates_usd) + " (~" + pc.coverage_end + ")", sub: "임직원 자발 기부로 운영되는 PAC이며 회사 자금이 아님 · 개별 후보 미표시", url: pc.source_url });
+    var rt = (routes.routes || {})[T];
+    ((rt && rt.stops) || []).forEach(function (s) { if (/^\d{4}-\d{2}-\d{2}$/.test(s.date || "") && !/data\.sec\.gov\/submissions/.test(s.source_url || "")) ev.push({ date: s.date, kind: "공시·규제 기록", title: s.title, sub: s.fact, url: s.source_url }); });
+    if (trades.length) {
+      var byMonth = {}; trades.forEach(function (x) { var mth = String(x.filed || "").slice(0, 7); if (mth) byMonth[mth] = (byMonth[mth] || 0) + 1; });
+      Object.keys(byMonth).forEach(function (mth) { ev.push({ date: mth, kind: "의원 거래 신고", title: "이달 신고 " + byMonth[mth] + "건 (신고일 기준, 위 목록 참고)", sub: null, url: null }); });
+    }
+    ev.sort(function (a, b) { return b.date.localeCompare(a.date); });
+    app.appendChild(timelineBlock(ev, undated, lob, ((si.money_stops || {})["awards:"] || 0) > 0));
+    renderFoot({ f4: f4, si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr, ins: ins });
+    renderFoot({ sf: sfAll, si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr, ins: ins });
+    app.appendChild(timelineBlock(ev, undated, lob, true));
+    renderFoot({ si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr, ins: ins });
+  });
+
+  function renderFoot(s) {
+    foot.replaceChildren();
+    var top = el("div"); top.appendChild(el("b", "", "투자 조언 아님. ")); top.appendChild(document.createTextNode("데이터상 공개 기록을 정리한 화면입니다. 사거나 팔라는 뜻이 아니며 원인 관계를 단정하지 않습니다."));
+    foot.appendChild(top);
+    var ul = el("ul");
+    function li(text, date, url) { var x = el("li"); x.appendChild(document.createTextNode(text + (date ? " · 기준일 " + date : "") + " ")); if (url) x.appendChild(link("↗", url)); ul.appendChild(x); }
+    if (s.ts && s.ts.updated) li("회사·업종: SEC EDGAR (data/us/ticker-sectors.json)", s.ts.updated, "https://www.sec.gov/edgar/search/");
+    if (s.sf && s.sf.updated) li("공시 목록·본사 주소: SEC EDGAR data.sec.gov submissions (data/us/sec-filings.json)", s.sf.updated, "https://www.sec.gov/edgar/search/");
+    if (s.si && s.si.updated) li("연결 색인: data/search-index.json", s.si.updated, null);
+    if (s.tr && s.tr.updated) li("의원 거래: 미국 하원 사무처 재산공개 PTR (data/us/trades.json)", s.tr.updated, "https://disclosures-clerk.house.gov/FinancialDisclosure");
+    if (s.lb && s.lb.updated) li("로비: " + (s.lb.source || "LDA"), s.lb.updated, s.lb.source_url);
+    if (s.pac && s.pac.updated) li("PAC: " + (s.pac.source || "FEC"), s.pac.updated, "https://www.fec.gov/data/");
+    if (s.routes && s.routes.updated) li("공시·규제 경로: data/us/ticker-routes.json", s.routes.updated, null);
+    if (s.ins && s.ins.updated) li("핵심 비교: data/us/insights.json (규칙 계산, 인과 아님)", s.ins.updated, null);
+    if (s.f4 && s.f4.updated) li("내부자 거래: SEC Form 4 (data/us/insider-form4.json)", s.f4.updated, "https://www.sec.gov/edgar/search/");
+    li("주가: " + (s.pr ? (s.pr.source || "data/us/prices/") : "data/us/prices/ 자료 없음(준비 중)"), s.pr && (s.pr.updated || s.pr.as_of), null);
+    foot.appendChild(ul);
+  }
+})();
+</script>
+<script src="assets/glossary.js?v=gl-20261029"></script>
+<script src="assets/commander.js?v=cmdr-20261028b"></script>
+</body>
+</html>

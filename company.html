@@ -416,7 +416,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 
   if (!T) { notFound(); renderFoot({}); return; }
   document.title = "MONEY TRACKER — " + T + " 회사 상세";
-  Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades.json"), get("data/us/lobbying.json"),
+  Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades_public.json"), get("data/us/lobbying.json"),
     get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json"), get("data/us/whitehouse.json"), get("data/us/insider-form4.json"), get("data/us/sec-filings.json")])
   .then(function (r) {
     var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8], wh = r[9] || {}, f4 = r[10] || {}, sfAll = r[11] || {};

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MONEY TRACKER — 노사분규·파업 공시 (Korea labor strike disclosure)</title>
+<meta name="description" content="한국 기업의 파업·노사분규·생산중단 관련 공시와 업종별 분규 통계. Korean strike and labor-dispute filings with plain-English background. 인과·투자 조언 아님.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="MONEY TRACKER — 노사분규·파업 공시 (Korea labor strike disclosure)"><meta property="og:description" content="한국 기업의 파업·노사분규·생산중단 관련 공시와 업종별 분규 통계. Korean strike and labor-dispute filings with plain-English background. 인과·투자 조언 아님.">
+<meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 노사분규·파업 공시 (Korea labor strike disclosure)"><meta name="twitter:description" content="한국 기업의 파업·노사분규·생산중단 관련 공시와 업종별 분규 통계. Korean strike and labor-dispute filings with plain-English background. 인과·투자 조언 아님.">
+<meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
+<style>
+:root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,#00000000 0 2px,#00ff6608 3px,#00000000 4px)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:49;background:radial-gradient(ellipse at 50% 30%,#0b3a2200 40%,#000a 100%)}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.mono{font-family:ui-monospace,Menlo,Consolas,"D2Coding",monospace}
+header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#020806f0;border-bottom:1px solid var(--line)}
+header.bar .brand{font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--g)}
+header.bar .crumb{font:12px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.06em}
+header.bar .sp{flex:1}
+header.bar form{display:flex;gap:6px}
+header.bar input{width:120px;background:#04150d;border:1px solid var(--line2);border-radius:6px;color:var(--g2);font:16px ui-monospace,Menlo,monospace;padding:4px 8px;text-transform:uppercase}
+header.bar button{background:#0b2a19;border:1px solid var(--line2);border-radius:6px;color:var(--g);font:700 12px ui-monospace,Menlo,monospace;padding:0 10px;cursor:pointer}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 0 18px rgba(40,255,140,.06) inset;padding:14px 16px;min-width:0}
+.panel h2{margin:0 0 10px;font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--g)}
+.panel h2 .n{color:var(--mut);font-weight:400}
+.span2{grid-column:1/-1}
+.hero{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 18px}
+.hero .tk{font:700 34px/1 ui-monospace,Menlo,monospace;color:var(--g);letter-spacing:.04em;text-shadow:0 0 12px rgba(93,255,158,.35)}
+.hero .nm{font-size:20px;font-weight:700;color:#eafff2}
+.hero .sec{font:12px ui-monospace,Menlo,monospace;color:var(--g2);border:1px solid var(--line2);border-radius:999px;padding:2px 10px}
+.meta{margin-top:8px;color:var(--mut);font-size:12.5px}
+.actions{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--g);background:#0d3b22;color:#eafff2;font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.04em}
+.btn:hover{background:#145531;text-decoration:none}
+.kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:6px}
+.kv div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#03130b}
+.kv div:first-child{grid-column:1/-1;display:flex;align-items:baseline;gap:10px}.kv div:first-child b{font-size:24px}
+.kv b{display:block;font:700 18px ui-monospace,Menlo,monospace;color:#eafff2}
+.kv span{font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+.up{color:var(--up)!important}.down{color:var(--down)!important}
+.empty{color:var(--mut);font:13px ui-monospace,Menlo,monospace;padding:18px 6px;border:1px dashed var(--line);border-radius:8px;text-align:center}
+svg.spark{width:100%;height:120px;display:block;margin-top:10px}
+.note{margin:8px 0 0;color:var(--mut);font-size:12px}
+.warnnote{margin:0 0 10px;padding:8px 10px;border-left:3px solid var(--warn);background:#1c1606;color:#f3e3b4;font-size:12.5px;border-radius:0 6px 6px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid #12301f;vertical-align:top}
+th{font:700 11px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.05em;white-space:nowrap}
+td.num,th.num{text-align:right;white-space:nowrap}
+td .pill{font:11px ui-monospace,Menlo,monospace;padding:1px 6px;border-radius:5px;border:1px solid var(--line2);white-space:nowrap}
+.more{margin-top:8px;background:none;border:1px solid var(--line2);color:var(--g2);border-radius:6px;padding:5px 10px;cursor:pointer;font:12px ui-monospace,Menlo,monospace}
+ol.tl{list-style:none;margin:0;padding:0;position:relative}
+ol.tl::before{content:"";position:absolute;left:84px;top:4px;bottom:4px;width:1px;background:var(--line2)}
+ol.tl li{display:grid;grid-template-columns:76px 1fr;gap:16px;padding:8px 0;position:relative}
+ol.tl li::before{content:"";position:absolute;left:81px;top:14px;width:7px;height:7px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g)}
+ol.tl .d{font:12px ui-monospace,Menlo,monospace;color:var(--g2);padding-top:3px}
+ol.tl .k{font:700 11px ui-monospace,Menlo,monospace;color:var(--g);letter-spacing:.06em}
+ol.tl .t{color:#eafff2}
+ol.tl .s{font-size:12px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips a,.chips span{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--line2);border-radius:999px;padding:3px 10px;color:var(--g2)}
+footer.foot{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:var(--mut);font-size:12px}
+footer.foot .disc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#03100a}
+footer.foot b{color:var(--warn)}
+footer.foot ul{margin:6px 0 0;padding-left:18px}
+@media(max-width:900px){
+ main{grid-template-columns:minmax(0,1fr);padding:12px 10px 30px;gap:12px}
+ header.bar{padding:8px 10px;flex-wrap:wrap}
+ header.bar .crumb{display:none}
+ header.bar input{width:96px}
+ .hero .tk{font-size:28px}.hero .nm{font-size:17px}
+ .kv{grid-template-columns:repeat(2,minmax(0,1fr))}
+ table.trades thead{display:none}
+ table.trades tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px 0;border-bottom:1px solid #12301f}
+ table.trades td{border:0;padding:0}
+ table.trades td.who{grid-column:1/-1;font-weight:700;color:#eafff2}
+ table.trades td.lbl::before{content:attr(data-l) " ";color:var(--mut);font:11px ui-monospace,Menlo,monospace}
+ ol.tl::before{left:82px}ol.tl li{grid-template-columns:74px 1fr;gap:16px}ol.tl li::before{left:79px}ol.tl .d{font-size:11px;white-space:nowrap}
+ footer.foot{padding:0 10px 30px}
+}
+/* member.html 추가 */
+header.bar input.nm{width:200px;text-transform:none}
+.hero .pt{font:700 13px ui-monospace,Menlo,monospace;border-radius:6px;padding:2px 8px;border:1px solid var(--line2);color:var(--g2)}
+.cm{margin-top:10px}
+.cm h3{margin:0 0 6px;font:700 11px ui-monospace,Menlo,monospace;color:var(--mut);letter-spacing:.08em}
+.bars{display:grid;gap:6px}
+.bars .r{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:12.5px}
+.bars .r .l{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bars .r .b{height:10px;background:#062014;border:1px solid #12301f;border-radius:3px;position:relative;overflow:hidden}
+.bars .r .b i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#1f8a50,#5dff9e)}
+.bars .r .b i.s{background:linear-gradient(90deg,#8a5a1f,#ffb35d)}
+.bars .r .v{font:12px ui-monospace,Menlo,monospace;color:var(--g2);white-space:nowrap}
+.legend{margin-top:8px;font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+.legend i{display:inline-block;width:10px;height:8px;border-radius:2px;margin:0 4px 0 10px;vertical-align:middle}
+.ov{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:#03130b;margin-top:8px}
+.ov b{color:#eafff2}
+.ov .chips{margin-top:6px}
+.filter{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+.filter input,.filter select{background:#04150d;border:1px solid var(--line2);border-radius:6px;color:var(--g2);font:16px ui-monospace,Menlo,monospace;padding:4px 8px;min-width:0}
+.filter input{flex:1 1 160px}
+.pick{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+@media(max-width:900px){
+ header.bar input.nm{width:150px}
+ .bars .r{grid-template-columns:minmax(0,110px) minmax(0,1fr) auto}
+}
+
+.heat{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.cell{display:block;border:1px solid var(--line2);border-radius:8px;padding:10px 12px;color:#eafff2;min-height:96px}
+.cell:hover{text-decoration:none;border-color:var(--g)}
+.cell b{display:block;font-size:13px;margin-bottom:4px}
+.cell .chg{font:700 20px ui-monospace,Menlo,monospace}
+.cell .ev{font:12px ui-monospace,Menlo,monospace;margin-top:4px;color:#d5f7e1}
+.cell .sm{font:11px ui-monospace,Menlo,monospace;color:#b9d8c4;margin-top:2px}
+.cell.na{background:#03130b}
+.key{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+.key i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+ol.tl{list-style:none;margin:0;padding:0}
+ol.tl li{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+ol.tl .d{font:12px ui-monospace,Menlo,monospace;color:var(--g2)}
+ol.tl .k{font:11px ui-monospace,Menlo,monospace;color:var(--mut)}
+ol.tl .s{font-size:12px;color:var(--mut)}
+table.co{width:100%;border-collapse:collapse;font-size:12.5px}
+table.co th,table.co td{padding:5px 6px;border-top:1px solid var(--line);text-align:left}
+table.co .num{text-align:right;font-family:ui-monospace,Menlo,monospace}
+.labor-bg .en{color:#b9d8c4}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <span class="crumb">KOREA LABOR / 공개 기록 정리</span>
+  <a class="mono" href="sector-board.html">업종 히트맵</a>
+  <a class="mono" href="nps.html">국민연금</a>
+</header>
+<main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중… / Loading…</div></section></main>
+<footer class="foot"><div class="disc" id="foot"></div></footer>
+<script src="assets/labor-card.js?v=labor-20261028"></script>
+<script>
+(function () {
+  "use strict";
+  var app = document.getElementById("app"), foot = document.getElementById("foot");
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  var q = (new URLSearchParams(location.search).get("c") || "").trim().slice(0, 40);
+  window.MTLabor.load().then(function (d) {
+    app.replaceChildren();
+    if (!d) { var e = el("section", "panel span2"); e.appendChild(el("div", "empty", "data/kr/labor.json 을 불러오지 못했습니다. / Could not load the data file.")); app.appendChild(e); return; }
+    var tab = el("section", "panel span2"); tab.appendChild(el("h2", "", "KOREA LABOR STRIKE DISCLOSURE · 노사분규·파업 공시"));
+    tab.appendChild(el("p", "warnnote", d.note + " " + d.note_en));
+    var f = el("form", "filter"), inp = el("input"); inp.name = "c"; inp.value = q; inp.placeholder = "회사 이름 / company (예: 삼성전자)"; inp.setAttribute("aria-label", "회사 이름");
+    var go = el("button", "", "보기 / Go"); go.type = "submit"; f.append(inp, go); tab.appendChild(f); app.appendChild(tab);
+    if (q) {
+      window.MTLabor.render(app, d, { name: q, sectorId: undefined, title: q + " · 같은 기간 있었던 일 / Same-period filings" });
+    }
+    var rows = (d.disclosures || []);
+    var all = el("section", "panel span2"); all.appendChild(el("h2", "", "최근 공시 · Recent filings (" + rows.length + ")"));
+    if (!rows.length) all.appendChild(el("p", "note", "아직 수집된 공시가 없습니다. DART_API_KEY 가 있어야 켜집니다(README 참고). / No filings collected yet; needs a DART_API_KEY (see README)."));
+    else {
+      var ol = el("ol", "tl"); rows.slice(0, 50).forEach(function (r) {
+        var ev = window.MTLabor.eventsFor({ disclosures: [r] }, r.corp)[0], li = el("li"), b = el("div");
+        b.append(el("div", "k", r.tracked ? "추적 종목 · tracked" : "기타 · other"), el("div", "t", r.corp + " — " + r.report));
+        var s = el("div", "s"), a = el("a", "", "DART 원문 ↗"); a.href = r.url; a.target = "_blank"; a.rel = "noopener noreferrer"; s.append(document.createTextNode(ev.sub + " · "), a); b.appendChild(s);
+        li.append(el("div", "d", r.date), b); ol.appendChild(li);
+      }); all.appendChild(ol);
+    }
+    app.appendChild(all);
+    var tp = el("section", "panel span2"); tp.appendChild(el("h2", "", "업종별 분규 추이 · Disputes by industry"));
+    window.MTLabor.trend(tp, d, null); app.appendChild(tp);
+    var bg = el("section", "panel span2"); bg.appendChild(el("h2", "", "왜 한국 노조가 중요한가요? · Why Korean unions matter")); window.MTLabor.background(bg); app.appendChild(bg);
+    foot.replaceChildren(); foot.appendChild(el("b", "", "읽기 전 확인 / Read first"));
+    foot.appendChild(document.createTextNode(" 공개 기록을 정리한 것이며 어떤 판단이나 투자 조언 아님. Public records only; not investment advice."));
+    var ul = el("ul"); (d.sources || []).forEach(function (s) {
+      var li = el("li"), a = el("a", "", s.name + " / " + s.name_en); a.href = s.url; a.target = "_blank"; a.rel = "noopener noreferrer";
+      li.append(a, document.createTextNode(" — " + (s.status === "ok" ? "수집 중 · active" : "수집 안 함 · not collected" + (s.reason ? ": " + s.reason : "")))); ul.appendChild(li);
+    }); foot.appendChild(ul);
+  });
+})();
+</script>
+<script src="assets/glossary.js?v=gl-20261029"></script>
+</body>
+</html>

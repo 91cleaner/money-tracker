@@ -1,0 +1,117 @@
+{
+ "version": 1,
+ "about": "assets/intent.js(브라우저 질문 이해기)가 쓰는 한/영 동의어 사전. 외부 호출·AI 없음. 한국어는 띄어쓰기를 무시하고 비교하므로 붙여 써도 됩니다. nicknames(회사 별명)는 scripts/build_search_index.py가 search-index의 aliases로 합칩니다.",
+ "intents": {
+  "why": {
+   "ko": ["왜", "이유", "무슨일", "뭔일", "원인", "어떻게된", "어찌된", "왜이래", "왜그래", "왜저래", "요즘왜", "설명", "궁금", "주가", "주식", "시세", "종가", "변동", "움직임", "등락", "어때", "상황"],
+   "en": ["why", "reason", "reasons", "what happened", "whats going on", "what's going on", "what is going on", "explain", "explanation", "stock", "share price", "price", "moving", "move", "moves", "happening", "going on", "cause"]
+  },
+  "supply": {
+   "ko": ["공급망", "공급사슬", "납품", "협력사", "협력업체", "거래처", "부품사", "밸류체인", "가치사슬", "어디서만들", "생산지", "공장", "파운드리", "위탁생산"],
+   "en": ["supply chain", "supplier", "suppliers", "supply", "vendor", "vendors", "value chain", "foundry", "where made", "manufactured", "factory", "fab"]
+  },
+  "compare": {
+   "ko": ["비교", "대비", "차이", "랑비교", "하고비교", "vs", "와비교", "과비교", "누가더", "어느게", "어느쪽", "둘중"],
+   "en": ["vs", "versus", "compare", "compared", "comparison", "difference", "against", "better than"]
+  },
+  "overview": {
+   "ko": ["개요", "소개", "정보", "요약", "한눈에", "전체", "경로", "투어", "보여줘", "뭐하는", "어떤회사"],
+   "en": ["overview", "about", "summary", "profile", "tour", "show me", "what is", "what does", "info", "tell me about"]
+  }
+ },
+ "direction": {
+  "down": {
+   "ko": ["떨어", "하락", "내려", "빠져", "빠지", "빠졌", "폭락", "급락", "곤두박질", "추락", "하향", "약세", "밀려", "밀리", "마이너스", "파랗", "주저앉"],
+   "en": ["down", "drop", "drops", "dropped", "dropping", "fall", "falls", "fell", "falling", "crash", "crashed", "plunge", "plunged", "tank", "tanked", "slump", "slide", "sink", "sinking", "decline", "declined", "lower", "red", "selloff", "sell-off", "dip", "dips", "tumble", "tumbled"]
+  },
+  "up": {
+   "ko": ["올라", "오르", "올랐", "상승", "급등", "폭등", "치솟", "뛰", "강세", "플러스", "신고가", "랠리", "반등", "상향", "붉", "날아", "껑충"],
+   "en": ["up", "rise", "rises", "rose", "rising", "surge", "surged", "soar", "soared", "jump", "jumped", "rally", "rallied", "rallying", "climb", "climbed", "gain", "gains", "green", "higher", "pop", "popped", "spike", "spiked", "bounce", "rebound", "record high"]
+  }
+ },
+ "periods": {
+  "today": {"days": 1, "key": "d1", "ko": ["오늘", "금일", "하루", "어제", "지금", "방금", "당일", "일일"], "en": ["today", "yesterday", "now", "right now", "1 day", "one day", "a day", "daily", "overnight", "last day", "past day"], "label_ko": "하루", "label_en": "1 day"},
+  "week": {"days": 7, "key": "w1", "ko": ["이번주", "금주", "일주일", "1주", "한주", "지난주", "최근", "요즘", "요새", "근래", "며칠", "주간"], "en": ["this week", "week", "weekly", "past week", "last week", "1 week", "one week", "7 days", "recent", "recently", "lately", "these days", "past few days", "few days"], "label_ko": "최근 1주", "label_en": "past week"},
+  "month": {"days": 30, "key": "m1", "ko": ["이번달", "금월", "한달", "1달", "1개월", "일개월", "지난달", "월간", "30일"], "en": ["this month", "month", "monthly", "past month", "last month", "1 month", "one month", "30 days", "4 weeks"], "label_ko": "최근 1달", "label_en": "past month"},
+  "year": {"days": 365, "key": "ytd", "ko": ["올해", "일년", "1년", "한해", "연초", "연간", "열두달", "12개월"], "en": ["this year", "year", "yearly", "past year", "1 year", "one year", "ytd", "year to date", "12 months", "annual", "since january"], "label_ko": "올해(연초 대비)", "label_en": "year to date"}
+ },
+ "topics": {
+  "tariff": {"ko": ["관세", "상호관세", "무역전쟁", "무역분쟁", "수입세", "보복관세", "관세폭탄", "무역합의", "무역협상"], "en": ["tariff", "tariffs", "tarrif", "tarif", "tarriff", "duty", "duties", "trade war", "trade deal", "trade dispute", "import tax", "reciprocal tariff"], "label_ko": "관세", "label_en": "tariffs", "match": ["tariff", "관세", "trade", "무역", "duty"]},
+  "export_control": {"ko": ["수출통제", "수출규제", "수출금지", "수출제한", "제재", "블랙리스트", "엔티티리스트", "반도체규제", "대중규제", "칩규제", "수출단속", "수출통제단속", "칩단속"], "en": ["export crackdown", "chip crackdown", "export control", "export controls", "export ban", "export restriction", "export restrictions", "export curbs", "sanction", "sanctions", "entity list", "blacklist", "chip ban", "chip curbs", "bis rule"], "label_ko": "수출통제", "label_en": "export controls", "match": ["export", "수출", "entity list", "제재", "sanction", "bis"]},
+  "regulation": {"ko": ["규제", "법안", "입법", "행정명령", "정책", "반독점", "독점", "소송", "과징금", "인허가", "금지법", "청문회"], "en": ["regulation", "regulations", "regulatory", "rule", "rules", "law", "bill", "legislation", "executive order", "policy", "antitrust", "lawsuit", "probe", "investigation", "fine", "hearing", "ban"], "label_ko": "규제·정책", "label_en": "regulation and policy", "match": ["regulat", "규제", "bill", "법", "executive order", "행정명령", "antitrust", "policy", "정책"]},
+  "subsidy": {"ko": ["보조금", "지원금", "반도체법", "칩스법", "칩스액트", "인플레감축법", "세액공제", "세금공제", "정부지원", "투자지원"], "en": ["subsidy", "subsidies", "chips act", "chip act", "ira", "tax credit", "grant", "grants", "incentive", "incentives", "government funding"], "label_ko": "보조금·지원", "label_en": "subsidies and incentives", "match": ["subsid", "보조금", "chips act", "tax credit", "세액", "grant", "incentive"]},
+  "earnings": {"ko": ["실적", "어닝", "어닝쇼크", "어닝서프라이즈", "분기실적", "실적발표", "매출", "영업이익", "가이던스", "컨퍼런스콜", "결산"], "en": ["earnings", "earning", "results", "quarterly results", "revenue", "profit", "guidance", "earnings call", "eps", "10-q", "10-k", "8-k"], "label_ko": "실적 발표", "label_en": "earnings", "match": ["earnings", "실적", "8-k", "10-q", "10-k", "results"]},
+  "china": {"ko": ["중국", "중공", "시진핑", "베이징", "대중", "중국발", "차이나", "화웨이"], "en": ["china", "chinese", "beijing", "xi jinping", "prc", "huawei", "mainland"], "label_ko": "중국 관련", "label_en": "China-related", "country": "cn", "match": ["china", "중국", "chinese", "beijing"]},
+  "labor": {"ko": ["노조", "노동조합", "파업", "단체협상", "노사", "노동자"], "en": ["union", "unions", "strike", "strikes", "labor", "labour", "collective bargaining", "walkout"], "label_ko": "노조·노동", "label_en": "labor and unions", "country": "us", "match": ["union", "strike", "labor", "노조", "파업", "nlrb", "collective"]},
+  "taiwan": {"ko": ["대만", "타이완", "타이페이", "양안", "대만해협"], "en": ["taiwan", "taiwanese", "taipei", "cross-strait", "taiwan strait"], "label_ko": "대만 관련", "label_en": "Taiwan-related", "country": "tw", "match": ["taiwan", "대만", "taipei"]},
+  "japan": {"ko": ["일본", "도쿄", "엔화", "일본발"], "en": ["japan", "japanese", "tokyo", "yen"], "label_ko": "일본 관련", "label_en": "Japan-related", "country": "jp", "match": ["japan", "일본", "tokyo"]},
+  "korea": {"ko": ["한국", "한미", "서울", "코리아"], "en": ["korea", "korean", "seoul", "south korea"], "label_ko": "한국 관련", "label_en": "Korea-related", "country": "kr", "match": ["korea", "한국", "seoul"]},
+  "europe": {"ko": ["유럽", "유럽연합", "브뤼셀", "독일", "프랑스"], "en": ["europe", "european", "eu", "brussels", "germany", "france"], "label_ko": "유럽 관련", "label_en": "Europe-related", "country": "eu", "match": ["europe", "유럽", "eu "]},
+  "ai": {"ko": ["인공지능", "에이아이", "ai칩", "데이터센터", "gpu", "지피유", "가속기"], "en": ["artificial intelligence", "ai chip", "ai chips", "data center", "data centers", "datacenter", "gpu", "gpus", "accelerator"], "label_ko": "AI·데이터센터", "label_en": "AI and data centers", "match": ["ai", "인공지능", "data center", "데이터센터", "gpu"]},
+  "energy": {"ko": ["유가", "원유", "석유", "에너지", "전력", "원전", "원자력"], "en": ["oil", "crude", "energy", "power", "nuclear", "oil price"], "label_ko": "에너지", "label_en": "energy", "match": ["oil", "유가", "energy", "에너지", "nuclear", "원전"]},
+  "rates": {"ko": ["금리", "연준", "기준금리", "인플레이션", "물가", "파월", "fomc", "고용", "cpi"], "en": ["interest rate", "interest rates", "rates", "fed", "federal reserve", "inflation", "powell", "fomc", "jobs report", "cpi"], "label_ko": "금리·물가", "label_en": "rates and inflation", "match": ["rate", "금리", "fed", "연준", "inflation", "물가", "fomc"]}
+ },
+ "stop": {
+  "ko": ["좀", "그래", "이래", "저래", "해줘", "해주세요", "알려줘", "알려줘요", "인가요", "인가", "있어", "있나", "건가", "거야", "때문", "관련", "대한", "에대해", "대해", "뭐야", "뭐지", "혹시", "그냥", "진짜", "너무", "많이", "갑자기", "계속", "그런데", "근데", "하는", "회사", "기업", "종목", "주식", "주가"],
+  "en": ["the", "a", "an", "is", "are", "was", "were", "be", "to", "of", "on", "in", "at", "for", "and", "so", "much", "do", "does", "did", "it", "its", "this", "that", "my", "me", "please", "pls", "can", "you", "tell", "about", "stock", "stocks", "share", "shares", "company", "now", "today", "i", "im", "just", "really", "suddenly", "keeps", "keep", "lot", "how", "what", "with", "has", "have", "been", "get", "getting", "going", "latest", "or", "news", "headline", "headlines", "update", "updates", "report"]
+ },
+ "particles": ["에서", "에게", "한테", "까지", "부터", "처럼", "보다", "라고", "이라", "이랑", "랑", "하고", "과", "와", "은", "는", "이", "가", "을", "를", "의", "에", "도", "만", "로", "으로"],
+ "nicknames": {
+  "NVDA": ["앤비디아", "엔비댜", "엔비디어", "엔비", "젠슨황", "젠슨황 회사", "황 회사", "jensen huang", "jensen", "nvidia", "nvida", "nvdia", "엔디비아", "블랙웰", "blackwell"],
+  "TSLA": ["테슬라", "테스라", "테슬러", "일론머스크 회사", "머스크 회사", "tesla", "tesle", "사이버트럭"],
+  "AAPL": ["애플", "아이폰 회사", "아이폰", "iphone", "apple", "팀쿡 회사", "에이플", "애풀"],
+  "MSFT": ["마이크로소프트", "마소", "마이크로 소프트", "microsoft", "윈도우 회사", "마이크로소프드", "마이크로쏘프트", "사티아 나델라"],
+  "GOOGL": ["구글", "알파벳", "google", "alphabet", "구굴", "유튜브 회사"],
+  "AMZN": ["아마존", "amazon", "아마준", "베조스 회사", "아마존닷컴"],
+  "META": ["메타", "페이스북", "facebook", "meta platforms", "인스타그램 회사", "저커버그 회사", "메타플랫폼"],
+  "AMD": ["에이엠디", "어드밴스드 마이크로 디바이시스", "리사수", "리사 수"],
+  "INTC": ["인텔", "intel", "인탤", "인털"],
+  "TSM": ["tsmc", "티에스엠씨", "대만반도체", "대만 반도체", "taiwan semiconductor", "티에스엠시"],
+  "AVGO": ["브로드컴", "broadcom", "브로드콤"],
+  "QCOM": ["퀄컴", "qualcomm", "퀄콤"],
+  "MU": ["마이크론", "micron", "마이크론 테크놀로지"],
+  "ASML": ["에이에스엠엘", "네덜란드 장비 회사"],
+  "NFLX": ["넷플릭스", "netflix", "넷플렉스", "넷플"],
+  "JPM": ["제이피모건", "jp모건", "제이피 모건", "jpmorgan", "jp morgan"],
+  "BAC": ["뱅크오브아메리카", "뱅오아", "bank of america", "bofa"],
+  "GS": ["골드만삭스", "골드만", "goldman sachs", "goldman"],
+  "XOM": ["엑슨모빌", "엑손모빌", "exxon", "exxonmobil", "exxon mobil"],
+  "CVX": ["쉐브론", "셰브론", "chevron"],
+  "BA": ["보잉", "boeing"],
+  "LMT": ["록히드마틴", "록히드 마틴", "lockheed", "lockheed martin"],
+  "RTX": ["레이시온", "raytheon", "알티엑스"],
+  "PLTR": ["팔란티어", "palantir", "팔란티르"],
+  "COIN": ["코인베이스", "coinbase"],
+  "ORCL": ["오라클", "oracle"],
+  "CRM": ["세일즈포스", "salesforce"],
+  "ADBE": ["어도비", "adobe", "아도비"],
+  "DIS": ["디즈니", "disney", "월트디즈니"],
+  "KO": ["코카콜라", "코카 콜라", "coca cola", "coca-cola", "coke"],
+  "PEP": ["펩시", "pepsi", "펩시코", "pepsico"],
+  "WMT": ["월마트", "walmart"],
+  "COST": ["코스트코", "costco"],
+  "NKE": ["나이키", "nike"],
+  "SBUX": ["스타벅스", "starbucks", "스벅"],
+  "MCD": ["맥도날드", "mcdonalds", "맥날"],
+  "PFE": ["화이자", "pfizer"],
+  "LLY": ["일라이릴리", "릴리", "eli lilly", "lilly"],
+  "UNH": ["유나이티드헬스", "unitedhealth", "united health"],
+  "V": ["비자", "visa", "비자카드"],
+  "MA": ["마스터카드", "mastercard"],
+  "PYPL": ["페이팔", "paypal"],
+  "UBER": ["우버", "uber"],
+  "ABNB": ["에어비앤비", "airbnb", "에어비엔비"],
+  "SMCI": ["슈퍼마이크로", "super micro", "supermicro", "슈마컴"],
+  "ARM": ["암홀딩스", "arm holdings"],
+  "SNOW": ["스노우플레이크", "snowflake"],
+  "F": ["포드", "ford", "포드자동차"],
+  "GM": ["제너럴모터스", "지엠", "general motors"],
+  "MRNA": ["모더나", "moderna"],
+  "RIVN": ["리비안", "rivian"],
+  "LCID": ["루시드", "lucid"],
+  "SOFI": ["소파이"],
+  "HOOD": ["로빈후드", "robinhood"],
+  "SPY": ["에스앤피", "s&p500", "s&p 500", "sp500", "에스앤피500"],
+  "QQQ": ["큐큐큐", "나스닥100", "나스닥 100", "nasdaq 100", "nasdaq100"]
+ }
+}

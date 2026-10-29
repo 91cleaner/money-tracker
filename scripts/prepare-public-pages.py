@@ -43,7 +43,11 @@ for dirname in PUBLIC_DIRS:
         target = OUT / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, target)
-for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js", "data/national/countries-110m.geojson", "search.html", "assets/se.js", "data/search/se/core.json"):
+# Trimmed public trade file built from the private ledger (decision #136: US trades are public).
+sys.path.insert(0, str(ROOT / "scripts"))
+from build_public_trades import build as build_public_trades
+build_public_trades(OUT / "data/us/trades_public.json")
+for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js", "data/national/countries-110m.geojson", "search.html", "assets/se.js", "data/search/se/core.json", "data/us/trades_public.json"):
     if not (OUT / required).exists():
         sys.exit(f"Missing required public file: {required}")
 for forbidden in ("cloudflare/admin-worker.js", "worker/private-api.js", "wrangler.jsonc", "collector/collect.py", ".github/workflows/deploy-pages.yml"):
