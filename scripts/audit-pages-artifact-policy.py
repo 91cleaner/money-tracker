@@ -6,6 +6,7 @@ paths, rather than checking only a short list of known forbidden filenames.
 It cannot protect legacy branch-based Pages deployment or a public repository.
 """
 import argparse
+import re
 from pathlib import Path
 
 PUBLIC_DIRS = {
@@ -32,6 +33,21 @@ SOURCE_NAMES = {
     "package.json", "package-lock.json", "pyproject.toml",
     "requirements.txt", "Dockerfile", "Makefile",
 }
+# New review-only data must not become public merely because it is JSON.
+# Token boundaries avoid blocking unrelated symbols such as "JQA21112".
+REVIEW_ONLY_TOKENS = {
+    "private", "internal", "secret", "secrets", "credential", "credentials",
+    "review", "reviews", "research", "queue", "queues", "candidate",
+    "candidates", "crosscheck", "crosschecks", "extraction", "unverified",
+    "draft", "drafts", "pending",
+}
+
+
+def review_only_data(rel: Path):
+    if rel.parts[0] != "data":
+        return False
+    tokens = set(re.split(r"[^a-z0-9]+", rel.stem.lower()))
+    return bool(tokens & REVIEW_ONLY_TOKENS)
 
 
 def violations(root: Path):
@@ -61,8 +77,8 @@ def violations(root: Path):
             continue
         if path.is_dir():
             continue
-        if name in PRIVATE_DATA_FILES:
-            failures.append(f"{name}: private research dataset")
+        if name in PRIVATE_DATA_FILES or review_only_data(rel):
+            failures.append(f"{name}: private or review-only dataset")
         elif path.suffix.lower() in BLOCKED_SUFFIXES or path.suffix.lower() not in PUBLIC_EXTENSIONS:
             failures.append(f"{name}: non-public file extension")
     return failures
