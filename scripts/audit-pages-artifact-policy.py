@@ -41,7 +41,7 @@ REVIEW_ONLY_TOKENS = {
     "review", "reviews", "research", "queue", "queues", "candidate",
     "candidates", "crosscheck", "crosschecks", "extraction", "unverified",
     "draft", "drafts", "pending",
-    "token", "tokens", "oauth", "jwt", "apikey", "apikeys",
+    "token", "tokens", "oauth", "jwt", "apikey", "apikeys", "key", "keys",
     "password", "passwords", "session", "sessions",
     "backup", "backups", "staging",
 }
