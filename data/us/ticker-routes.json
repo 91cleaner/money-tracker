@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28",
+ "updated": "2026-10-29",
  "caveat": "데이터상 공개 자료 정리임. 투자 신호 아님.",
  "note": "공식 출처(SEC 공시, congress.gov, 미 상무부 공시)만 사용. 확인 안 된 정류장은 넣지 않음.",
  "routes": {
@@ -50,6 +50,87 @@
    ],
    "factcheck": [
     "10-K·8-K 직접 문서 링크로 교체(팩트체크 반영)"
+   ]
+  },
+  "MSFT": {
+   "name": "Microsoft Corp",
+   "aliases": [
+    "MSFT",
+    "마이크로소프트",
+    "Microsoft"
+   ],
+   "stops": [
+    {
+     "region": "미국 워싱턴주 레드먼드",
+     "lat": 47.674,
+     "lon": -122.1215,
+     "title": "MS 본사 위치 확인됨",
+     "fact": "데이터상 SEC 제출 서류의 사업장 주소가 워싱턴주 레드먼드(One Microsoft Way)임.",
+     "source_url": "https://data.sec.gov/submissions/CIK0000789019.json",
+     "date": "2026-10-28"
+    },
+    {
+     "region": "미국 워싱턴 D.C.",
+     "lat": 38.895,
+     "lon": -77.03,
+     "title": "MS 연방 계약 약 11억 달러",
+     "fact": "데이터상 2024-10-01~2026-10-28 USAspending 연방 계약 합계 약 11.0억 달러. 최다 발주 기관은 국방부(약 8.4억 달러).",
+     "source_url": "https://www.usaspending.gov/search/?hash=&keyword=MICROSOFT",
+     "date": "2026-10-28"
+    },
+    {
+     "region": "미국 워싱턴 D.C.(의회)",
+     "lat": 38.8899,
+     "lon": -77.0091,
+     "title": "MS 로비 공시 148건",
+     "fact": "데이터상 2025~2026 MS 로비 공시(LDA) 148건, 보고 금액 합계 약 2,322만 달러.",
+     "source_url": "https://lda.gov/filings/public/filing/search/?client=MICROSOFT",
+     "date": "2026-10-28"
+    }
+   ],
+   "factcheck": [
+    "사이트 수집 데이터(sec-filings, federal-awards, lobbying)에서만 옮김"
+   ]
+  },
+  "META": {
+   "name": "Meta Platforms",
+   "aliases": [
+    "META",
+    "메타",
+    "Meta",
+    "페이스북"
+   ],
+   "stops": [
+    {
+     "region": "미국 캘리포니아 멘로파크",
+     "lat": 37.453,
+     "lon": -122.1817,
+     "title": "메타 본사 위치 확인됨",
+     "fact": "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 멘로파크(1 Meta Way)임.",
+     "source_url": "https://data.sec.gov/submissions/CIK0001326801.json",
+     "date": "2026-10-28"
+    },
+    {
+     "region": "미국 워싱턴 D.C.(의회)",
+     "lat": 38.8899,
+     "lon": -77.0091,
+     "title": "메타 로비 공시 163건",
+     "fact": "데이터상 2025~2026 메타 로비 공시(LDA) 163건, 보고 금액 합계 약 5,794만 달러.",
+     "source_url": "https://lda.gov/filings/public/filing/search/?client=META%20PLATFORMS",
+     "date": "2026-10-28"
+    },
+    {
+     "region": "미국 워싱턴 D.C.",
+     "lat": 38.895,
+     "lon": -77.03,
+     "title": "메타 PAC 후보 기부",
+     "fact": "데이터상 2026 선거주기 META PLATFORMS, INC. PAC의 연방 후보 기부 합계 34.85만 달러(~2026-10-14). 임직원 자발 기부 PAC이며 회사 자금 아님.",
+     "source_url": "https://www.fec.gov/data/committee/C00502906/?cycle=2026",
+     "date": "2026-10-14"
+    }
+   ],
+   "factcheck": [
+    "사이트 수집 데이터(sec-filings, lobbying, pac-contributions)에서만 옮김"
    ]
   }
  }
