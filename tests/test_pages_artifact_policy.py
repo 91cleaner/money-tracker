@@ -52,6 +52,7 @@ class PagesArtifactPolicyTests(unittest.TestCase):
                 SCRIPT.parent / "prepare-public-pages.py",
                 root / "scripts" / "prepare-public-pages.py",
             )
+            shutil.copy2(SCRIPT, root / "scripts" / SCRIPT.name)
             required = (
                 "index.html", "usa-command.html", "national.html",
                 "assets/mt-command-ui.js", "data/national/countries-110m.geojson",
@@ -77,6 +78,40 @@ class PagesArtifactPolicyTests(unittest.TestCase):
             for name in required:
                 self.assertTrue((artifact / name).is_file(), name)
             self.assertEqual(policy.violations(artifact), [])
+
+            # A future unreviewed JSON must stop the *real builder*,
+            # even if the file is not in the exact-name denylist.
+            unreviewed = root / "data/us/committee-review.json"
+            unreviewed.parent.mkdir(parents=True, exist_ok=True)
+            unreviewed.write_text("unverified fixture", encoding="utf-8")
+            rejected = subprocess.run(
+                [sys.executable, str(root / "scripts" / "prepare-public-pages.py")],
+                cwd=root, capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(rejected.returncode, 0)
+            self.assertIn("Pages privacy audit failed", rejected.stderr)
+
+            # A missing auditor is not a reason to silently publish.
+            unreviewed.unlink()
+            (root / "scripts" / SCRIPT.name).unlink()
+            missing_auditor = subprocess.run(
+                [sys.executable, str(root / "scripts" / "prepare-public-pages.py")],
+                cwd=root, capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(missing_auditor.returncode, 0)
+            self.assertIn("Missing Pages privacy auditor", missing_auditor.stderr)
+
+    def test_new_review_only_json_is_blocked_without_an_exact_denylist_entry(self):
+        for name in ("data/us/committee-review.json",
+                     "data/us/filing-candidates.json",
+                     "data/other/secret-draft.json"):
+            with self.subTest(name=name):
+                self.add(name)
+                self.assertTrue(
+                    any("review-only dataset" in error for error in policy.violations(self.root)),
+                    name,
+                )
+                (self.root / name).unlink()
 
     def test_hidden_and_internal_paths_are_blocked(self):
         for name in ("data/.env", "assets/.hidden.js", "data/internal/cache.json",
