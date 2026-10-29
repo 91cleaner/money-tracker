@@ -20,7 +20,9 @@
     l = l && String(l).toLowerCase().slice(0, 2);
     if (l === "en" || l === "ko") { try { root.localStorage.setItem(KEY, l); } catch (e) { } return l; }
     try { l = root.localStorage.getItem(KEY); } catch (e) { l = null; }
-    return l === "en" ? "en" : "ko";
+    if (l === "en" || l === "ko") return l;
+    try { if (/\/world-intelligence\//.test(root.location.pathname)) return "en"; } catch (e) { }
+    return "ko";
   }
   var lang = typeof document !== "undefined" ? pickLang() : "ko";
   var isEn = lang === "en";
@@ -385,6 +387,7 @@
       out = out.replace(/(\d)건/g, function (m, d, i, str) { return /(^|[^\d,.])1$/.test(str.slice(0, i + 1)) ? d + " filing" : d + " filings"; }).replace(/(\d)곳/g, function (m, d, i, str) { return /(^|[^\d,.])1$/.test(str.slice(0, i + 1)) ? d + " company" : d + " companies"; }).replace(/(\d)일(?![가-힣])/g, "$1 days").replace(/(\d)명/g, "$1 members").replace(/(\d)개월/g, "$1 months");
       out = datesEn(out);
     }
+    if (HANGUL.test(out)) out = out.replace(/(\d{4}) 선거주기 /g, "$1 election cycle: ").replace(/의 연방 후보 (?:committee|위원회) 기부 합계/g, " contributions to federal candidate committees total").replace(/임직원 자발 기부 PAC이며 회사 자금 아님\.?/g, "Employee-funded voluntary PAC, not company money.").replace(/최다 발주 기관/g, "Top awarding agency:").replace(/주별 집계 1위/g, "top state:").replace(/수령자 이름 일치 (?:basis|기준)\.?/g, "Matched by recipient name.").replace(/\s?합계\s?/g, " total ").replace(/연방 계약/g, "Federal contracts").replace(/약 /g, "approx. ");
     out = lead + out + trail;
     if (cacheN > 4000) { cache = Object.create(null); cacheN = 0; }
     cache[s] = out; cacheN++;
@@ -393,8 +396,9 @@
   // Korean company name -> English (EN only): first Latin alias of a search-index entity, else the name as is
   function name(ent) {
     var n = ent && ent.name; if (!isEn || !n || !HANGUL.test(n)) return n;
-    var al = (ent.aliases || []).filter(function (a) { return !HANGUL.test(a) && /[A-Za-z]{3}/.test(a.replace(/\.[A-Z]{1,2}$/, "")) && a !== ent.symbol; }).sort(function (a, b) { return b.length - a.length; })[0];
-    return al ? al.replace(/\b([A-Z])([A-Z]+)\b/g, function (m, a, b) { return /^(INC|CORP|CO|LTD|PLC|ETF|ADR|USA|AMD|IBM|TSMC)$/.test(m) ? (m === "INC" || m === "CORP" || m === "LTD" ? a + b.toLowerCase() + "." : m) : a + b.toLowerCase(); }).replace(/\b(Inc|Corp|Ltd)\.?$/, "$1.") : n;
+    var al = (ent.aliases || []).filter(function (a) { return !HANGUL.test(a) && /[A-Za-z]{3}/.test(a.replace(/\.[A-Z]{1,2}$/, "")) && a !== ent.symbol; }).sort(function (a, b) { var ua = /[A-Z]/.test(a) ? 1 : 0, ub = /[A-Z]/.test(b) ? 1 : 0; return ub - ua || b.length - a.length; })[0];
+    if (al && /[A-Z]/.test(al)) al = al.replace(/,?\s+(CORP|INC|LTD|PLC|CO|Corp|Inc|Ltd|Plc)\.?$/, "");
+    return al ? al.replace(/\b([A-Z])([A-Z]+)\b/g, function (m, a, b) { return /^(INC|CORP|CO|LTD|PLC|ETF|ADR|USA|AMD|IBM|TSMC|NVIDIA)$/.test(m) ? (m === "INC" || m === "CORP" || m === "LTD" ? a + b.toLowerCase() + "." : m) : a + b.toLowerCase(); }).replace(/\b(Inc|Corp|Ltd)\.?$/, "$1.") : n;
   }
   // UI string that is not Korean source text (button labels owned by this file)
   var UI = {

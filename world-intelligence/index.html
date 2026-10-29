@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MONEY TRACKER | GLOBAL COMMAND</title>
-<meta name="description" content="미국 의회 법안·의원 거래 신고·회사 공장·다른 나라 정책을 지도 위 경로로 따라가는 관제실. 공개 자료 정리이며 투자 조언 아님.">
+<meta name="description" content="A U.S. control room that follows Congress bills, lawmaker stock-trade filings, company sites and foreign policy as routes on a map. Public records only, not investment advice.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="MONEY TRACKER">
 <meta property="og:title" content="MONEY TRACKER | Who in Congress traded what, and when"><meta property="og:description" content="Congressional stock trades, late filings, bills and contracts traced as live routes on one map. Official public records only. Not investment advice.">
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og-us.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
@@ -170,7 +170,7 @@ if(window.L){try{
 else{$('map').style.display='none';status.textContent='지도 라이브러리 연결 실패 · 개략 지도 표시'}
 function go(name){const p=places[name];if(!p)return;if(map){map.invalidateSize();map.flyTo(p,Math.max(4,map.getZoom()<4?4:Math.min(5,map.getZoom())),{duration:2.2,easeLinearity:.2});if(marker)map.removeLayer(marker);marker=L.circleMarker(p,{radius:9,color:'#005c7c',weight:3,fillColor:'#54d9e6',fillOpacity:.7}).addTo(map)}else{status.textContent=name+' 추적 · 실제 지도 연결 시 위치 이동 가능'}}
 function clearFirst(){const f=$("mtFirst");if(f)f.replaceChildren();const mo=$("moodCard");if(mo){mo.hidden=true;mo.replaceChildren()}const b=$("briefText");if(b)b.hidden=false;$("brief").classList.remove("mtfWide")}
-function show(){if(!mission)return;if(mission.ticker){const t=mission.meta[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length+' · '+t.title;$('briefText').textContent=t.region+' — '+t.fact;$('briefStocks').textContent=(t.date?'기준일 '+t.date+' · ':'')+'출처: '+(t.source_url?'아래 링크':'내부 데이터 분류');$('briefCaveat').textContent=mission.caveat||'데이터상 공개 자료 정리임. 투자 신호 아님.';if(t.source_url)$('source').href=t.source_url;else $('source').removeAttribute('href');$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(t.region);window.mtAfterShow&&window.mtAfterShow();return}const [name,explain]=mission.stops[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length;$('briefText').textContent=name+' — '+explain;$('briefStocks').textContent='미국 종목·ETF 조사 대상: '+mission.stocks;$('briefCaveat').textContent='시연용 가상 탐색 경로입니다. AI·실시간 거래 데이터 미연결. 표시된 관계는 투자 신호나 입증된 인과관계가 아닙니다.';$('source').href=mission.url;$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(name)}
+function show(){if(!mission)return;if(mission.ticker){const t=mission.meta[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length+' · '+t.title;$('briefText').textContent=t.region+' — '+t.fact;$('briefStocks').textContent=(t.date?'기준일 '+t.date+' · ':'')+((window.MTI18N&&window.MTI18N.isEn)?'Source: '+(t.source_url?'link below':'internal data classification'):'출처: '+(t.source_url?'아래 링크':'내부 데이터 분류'));$('briefCaveat').textContent=mission.caveat||'데이터상 공개 자료 정리임. 투자 신호 아님.';if(t.source_url)$('source').href=t.source_url;else $('source').removeAttribute('href');$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(t.region);window.mtAfterShow&&window.mtAfterShow();return}const [name,explain]=mission.stops[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length;$('briefText').textContent=name+' — '+explain;$('briefStocks').textContent='미국 종목·ETF 조사 대상: '+mission.stocks;$('briefCaveat').textContent='시연용 가상 탐색 경로입니다. AI·실시간 거래 데이터 미연결. 표시된 관계는 투자 신호나 입증된 인과관계가 아닙니다.';$('source').href=mission.url;$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(name)}
 function start(c){clearFirst();mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#ff9f0a',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
 $('topics').replaceChildren(...cases.map(c=>{const b=document.createElement('button');b.textContent=c.title;b.onclick=()=>start(c);return b}));
 function showCandidates(q){
@@ -187,7 +187,7 @@ const PART=/(에서는|에서|으로|은|는|이|가|을|를|의|도|에|랑|과
 const ALIAS=[[/구글|알파벳|google|alphabet/i,'company:GOOGL'],[/페이스북|facebook|인스타그램/i,'company:META'],[/^삼성$|삼성 ?주가|samsung/i,'company:005930.KS'],[/하이닉스|hynix/i,'company:000660.KS'],[/넷플릭스|netflix/i,'company:NFLX'],[/디즈니|disney/i,'company:DIS'],[/보잉|boeing/i,'company:BA'],[/버크셔|버핏|berkshire/i,'company:BRK.B'],[/월마트|walmart/i,'company:WMT'],[/코스트코|costco/i,'company:COST'],[/나이키|nike/i,'company:NKE'],[/브로드컴|broadcom/i,'company:AVGO'],[/퀄컴|qualcomm/i,'company:QCOM'],[/일라이 ?릴리|릴리|eli lilly/i,'company:LLY'],[/쿠팡|coupang/i,'company:CPNG'],[/테슬|tesla/i,'company:TSLA'],[/^apple|apple /i,'company:AAPL'],[/nvidia|엔비/i,'company:NVDA'],[/amazon/i,'company:AMZN'],[/lg ?에너지|lg ?엔솔|엔솔/i,'company:373220.KS'],[/유가|기름값|oil/i,'sector:energy'],[/방산|방위산업/,'sector:defense'],[/군사위|국방위/,'committee:rep:Armed Services'],[/금융위원회|금융서비스위/,'committee:rep:Financial Services'],[/에너지.?상무/,'committee:rep:Energy and Commerce']];
 const PRIV=[[/스페이스\s*x|스페이스엑스|spacex|space\s*x/i,'스페이스X','defense'],[/오픈\s*ai|openai|챗gpt|chatgpt/i,'오픈AI','tech_ai'],[/앤트로픽|anthropic/i,'앤트로픽','tech_ai'],[/\bxai\b|엑스에이아이/i,'xAI','tech_ai'],[/스트라이프|stripe/i,'스트라이프','finance'],[/바이트댄스|bytedance|틱톡|tiktok/i,'바이트댄스','tech_ai'],[/데이터브릭스|databricks/i,'데이터브릭스','tech_ai'],[/쉬인|shein/i,'쉬인','consumer']];
 async function loadIdx(){if(!searchIdx){const r=await fetch('../data/search-index.json',{cache:'no-store'});searchIdx=await r.json()}return searchIdx}
-function routeOf(id){const e=searchIdx.entities[id];if(!e||!e.route.length)return null;e.route.forEach(s=>{places[s.region]=[s.lat,s.lon]});return{ticker:id,title:(window.MTI18N&&window.MTI18N.name?window.MTI18N.name(e):e.name)+(e.symbol?' ('+e.symbol+')':'')+' 경로',stops:e.route.map(s=>[s.region,s.fact]),meta:e.route,caveat:'누적 공개 데이터에서 자동 생성한 경로 · AI 미연결 · 투자 신호 아님. 원인 관계를 단정하지 않습니다.',url:e.route[0].source_url,stocks:''}}
+function routeOf(id){const e0=searchIdx.entities[id];if(!e0||!e0.route.length)return null;const e=(window.MTI18N&&window.MTI18N.isEn&&/^company:[A-Z.\-]+$/.test(id)&&!/\.(KS|KQ)$/.test(e0.symbol||''))?Object.assign({},e0,{route:e0.route.filter(s=>!/^factor:kr_/.test(s.ref||'')&&s.region!=='한국')}):e0;if(!e.route.length)return null;e.route.forEach(s=>{places[s.region]=[s.lat,s.lon]});return{ticker:id,title:(window.MTI18N&&window.MTI18N.name?window.MTI18N.name(e):e.name)+(e.symbol?' ('+e.symbol+')':'')+' 경로',stops:e.route.map(s=>[s.region,s.fact]),meta:e.route,caveat:'누적 공개 데이터에서 자동 생성한 경로 · AI 미연결 · 투자 신호 아님. 원인 관계를 단정하지 않습니다.',url:e.route[0].source_url,stocks:''}}
 function bigram(a,b){if(a.length<2||b.length<2)return 0;const g=x=>{const m=new Set();for(let i=0;i<x.length-1;i++)m.add(x.slice(i,i+2));return m};const A=g(a),B=g(b);let c=0;A.forEach(x=>{if(B.has(x))c++});return 2*c/(A.size+B.size)}
 async function tickerRoute(q){try{await loadIdx()}catch(e){return null}
 const E=searchIdx.entities,pri={company:3,member:2,bill:2,topic:2,sector:2,country:1,committee:0};
@@ -738,7 +738,7 @@ rg.oninput=()=>{stopPlay();const v=+rg.value;tl=v>=dates.length?null:v;apply()};
 tp.onclick=()=>{if(tPlay){stopPlay();return}let v=+rg.value;if(v>=dates.length){v=0;rg.value=0;tl=0;paint()}tp.textContent='⏸';tPlay=setInterval(()=>{v++;rg.value=v;tl=v>=dates.length?null:v;paint();if(v>=dates.length)stopPlay()},650)};
 // 타자기: 말풍선 본문. 클릭하면 전부 표시. 기존 해독 효과는 대체
 const bte=$('briefText');
-function type(m){const el=bte;if(!el)return;const ti=($('briefTitle')||{}).textContent||'',mm=ti.match(/ · (\d+)\//),t=m.meta&&m.meta[mm?+mm[1]-1:0],full=t&&t.region?t.region+' — '+t.fact:(el._dc||el.textContent);if(!full)return;
+function type(m){const el=bte;if(!el)return;const ti=($('briefTitle')||{}).textContent||'',mm=ti.match(/ · (\d+)\//),t=m.meta&&m.meta[mm?+mm[1]-1:0],full0=t&&t.region?t.region+' — '+t.fact:(el._dc||el.textContent),full=(window.MTI18N&&window.MTI18N.isEn&&full0)?window.MTI18N.tr(full0):full0;if(!full)return;
  el._tok={};el._mt=null;if(!fx()){el.textContent=full;return}
  const tok={},n=full.length,t0=performance.now(),D=Math.min(600,n*12);el._mt=tok;el._mtDone=()=>{if(el._mt===tok){el._mt=null;el.textContent=full}};
  (function f(now){if(el._mt!==tok)return;const k=Math.min(1,(now-t0)/D);if(k>=1){el._mt=null;el.textContent=full;return}el.textContent=full.slice(0,Math.ceil(n*k))+'▌';requestAnimationFrame(f)})(t0)}
@@ -781,4 +781,56 @@ var mq=matchMedia('(max-width:650px)');function upd(){var on=mq.matches&&!b.hidd
 h.addEventListener('click',function(){document.body.classList.toggle('mt-sheet-min');setTimeout(upd,30)});
 var y0=null;h.addEventListener('touchstart',function(e){y0=e.touches[0].clientY},{passive:true});h.addEventListener('touchend',function(e){if(y0==null)return;var d=e.changedTouches[0].clientY-y0;y0=null;if(Math.abs(d)>25){document.body.classList.toggle('mt-sheet-min',d>0);e.preventDefault();setTimeout(upd,30)}});
 new ResizeObserver(upd).observe(b);new MutationObserver(upd).observe(b,{attributes:true,attributeFilter:['hidden','style']});mq.addEventListener('change',upd);addEventListener('resize',upd);upd()})();</script>
+<style id="mt-declutter-css">
+#opsHud,#mtOpsBar,#status{display:none!important}
+.leaflet-popup.mtTour{display:none!important}
+#mtLegend#mtLegend{top:116px!important;left:10px!important;right:auto!important;bottom:auto!important;translate:none!important;max-width:240px}
+#mtLegend#mtLegend #mtAll{display:none}
+@media(min-width:651px){#mtMission#mtMission{top:116px!important;max-height:100px;overflow:auto}#mtBar#mtBar{left:calc(244px + (100vw - 624px)/2)!important}#mtOneDock#mtOneDock{top:auto!important;bottom:104px!important}}
+@media(min-width:651px) and (max-width:1180px){#mtOneDock#mtOneDock{left:calc(244px + (100vw - 624px)/2)!important;max-width:400px;font-size:11px!important;gap:2px!important}#mtOneDock#mtOneDock *{font-size:11px!important;padding-left:5px!important;padding-right:5px!important}#controls#controls{top:auto!important;bottom:156px!important}#mtc#mtc#mtc{bottom:208px!important}#mtCmdDock#mtCmdDock#mtCmdDock{bottom:256px!important}}
+@media(min-width:651px){
+ #mtc#mtc{left:12px!important;right:auto!important;top:auto!important;bottom:186px!important;width:220px!important;translate:none!important}
+ #mtCmdDock#mtCmdDock{left:12px!important;right:auto!important;top:auto!important;bottom:234px!important;translate:none!important}
+ #brief{max-height:calc(100dvh - 300px)!important}
+}
+#brief.mtStep #mtKey,#brief.mtStep #mtFirst,#brief.mtStep #briefLinks,#brief.mtStep #moodCard,#brief.mtStep #mtTrades,#brief.mtStep #mtPrice,#brief.mtStep #mtRecent,#brief.mtStep #mtKrPol,#brief.mtStep #mtWH,#brief.mtStep #mtCPol,#brief.mtStep #mtTourCard,#brief.mtStep #mtShareP,
+#brief.mtDecl #briefStocks,#brief.mtDecl #briefCaveat,#brief.mtDecl>p:not([id]),
+#brief.mtLast:not(.mtMore) #mtPrice,#brief.mtLast:not(.mtMore) #mtRecent,#brief.mtLast:not(.mtMore) #mtWH,#brief.mtLast:not(.mtMore) #mtTrades,#brief.mtLast:not(.mtMore) #mtKrPol,#brief.mtLast:not(.mtMore) #mtCPol{display:none!important}
+#brief.mtMore #mtTrades,#brief.mtMore #mtPrice,#brief.mtMore #mtRecent,#brief.mtMore #mtWH{overflow-x:hidden!important;max-width:100%}
+#brief table{table-layout:fixed;width:100%}#brief td,#brief th{white-space:normal!important;word-break:break-word}
+#brief{overflow-x:hidden!important}
+#mtStop{margin:6px 0;padding:8px 10px;border:1px solid #ff9f0a66;border-radius:10px;background:#1a0f0266;font:13px/1.55 system-ui,sans-serif;color:#eafff2}
+#mtStop .p{font-weight:700;color:#ff9f0a}#mtStop .t{color:#bfffd6;margin-top:4px}#mtStop ul{margin:4px 0 0;padding-left:16px}#mtStop li{margin:1px 0}
+#mtStop details{margin-top:4px}#mtStop summary,#mtMoreBtn{cursor:pointer;color:#ff9f0a;font-size:12px;background:none;border:0;padding:0}
+#mtSrcLine{font-size:11px;color:#8fa89a;margin:8px 0 0}#mtSrcLine a{color:#ff9f0a}
+#mtNextHint{font-size:11.5px;color:#ffd60a;margin-top:6px}
+@media(max-width:650px){
+ #mtMission#mtMission{top:200px!important;bottom:auto!important}
+ body:not(.mt-briefing) #mtOneDock#mtOneDock{top:auto!important;bottom:98px!important} body:not(.mt-briefing) #controls#controls{top:auto!important;bottom:150px!important}
+ #mtLegend#mtLegend{top:112px!important;left:8px!important;max-width:200px;font-size:10px}#mtLegend#mtLegend small{display:none}
+ #mtCmdDock#mtCmdDock{top:112px!important;bottom:auto!important;right:8px!important;left:auto!important}
+ #mtc#mtc{top:154px!important;bottom:auto!important;right:8px!important;left:auto!important;width:auto!important}
+}
+</style>
+<script id="mt-declutter-js">(()=>{const EN=!!(window.MTI18N&&window.MTI18N.isEn),T=(k,e)=>EN?e:k,$=id=>document.getElementById(id);
+const prev=window.mtAfterShow;window.mtAfterShow=async(...a)=>{const r=prev&&prev(...a);try{await r}catch(e){}decl()};
+let seqd=0;function decl(){const my=++seqd;const br=$('brief'),m=window.mtCur&&window.mtCur();if(!br)return;
+ if(!m||!m.meta){br.classList.remove('mtStep','mtLast','mtDecl','mtMore');['mtStop','mtSrcLine','mtMoreBtn'].forEach(i=>{const e=$(i);e&&e.remove()});return}
+ const ti=($('briefTitle')||{}).textContent||'',mm=ti.match(/ · (\d+)\/(\d+)/),i=mm?+mm[1]-1:0,N=mm?+mm[2]:m.meta.length,t=m.meta[i]||{},last=i===N-1;
+ br.classList.add('mtDecl');br.classList.toggle('mtStep',!last);br.classList.toggle('mtLast',last);br.classList.remove('mtMore');
+ let st=$('mtStop');if(!st){st=document.createElement('div');st.id='mtStop'}const bt=$('briefText');if(bt&&st.previousSibling!==bt)bt.after(st);st.replaceChildren();
+ const pop=document.querySelector('.leaflet-popup.mtTour .leaflet-popup-content');
+ if(pop){const z=pop.querySelector('.tz'),l=pop.querySelector('.tz+div'),l2=pop.querySelector('.tl2');[[z,'p'],[l,'t1'],[l2,'t']].forEach(([e,c])=>{if(e){const d=document.createElement('div');d.className=c;d.textContent=e.textContent;st.append(d)}})}
+ if(t.date&&t.date!=='None'){const d=document.createElement('div');d.className='t';d.textContent=T('기준일 ','As of ')+(window.MTI18N&&EN&&MTI18N.dateEn?MTI18N.dateEn(t.date):t.date);st.append(d)}
+ const tbl=document.querySelector('#mtTrades table');if(!last&&tbl&&/trade/.test((t.kind||'')+(t.ref||''))){const rows=[...tbl.querySelectorAll('tr')].slice(1).map(tr=>[...tr.children].map(td=>td.textContent));
+  const li=r=>{const e=document.createElement('li');e.textContent=`${r[0]} (${r[1]}) · ${r[2]} · ${r[3]} · ${r[4]}`;return e};const ul=document.createElement('ul');rows.slice(0,3).forEach(r=>ul.append(li(r)));st.append(ul);
+  if(rows.length>3){const dt=document.createElement('details'),s=document.createElement('summary');s.textContent=T('더 보기 (+'+(rows.length-3)+')','More (+'+(rows.length-3)+')');const u2=document.createElement('ul');rows.slice(3).forEach(r=>u2.append(li(r)));dt.append(s,u2);st.append(dt)}}
+ if(!last){const h=document.createElement('div');h.id='mtNextHint';h.textContent=T('다음 →','Next stop →')+' '+(i+2)+'/'+N+(m.meta[i+1]&&m.meta[i+1].title?' · '+(EN&&window.MTI18N?MTI18N.tr(m.meta[i+1].title):m.meta[i+1].title):'');st.append(h)}
+ let mb=$('mtMoreBtn');if(last){if(!mb){mb=document.createElement('button');mb.id='mtMoreBtn';mb.type='button';mb.onclick=()=>{br.classList.toggle('mtMore');mb.textContent=br.classList.contains('mtMore')?T('접기','Show less'):T('더 보기 (가격·뉴스·거래)','More (price, news, trades)')}}mb.textContent=T('더 보기 (가격·뉴스·거래)','More (price, news, trades)');const cv=$('briefCaveat');cv&&cv.before(mb)}else if(mb)mb.remove();
+ let sl=$('mtSrcLine');if(!sl){sl=document.createElement('p');sl.id='mtSrcLine'}const cv=$('briefCaveat');cv&&cv.after(sl);sl.replaceChildren();
+ if(t.source_url){const a=document.createElement('a');a.href=t.source_url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=T('출처 ↗','Source ↗');sl.append(a,' · ')}
+ sl.append(T('공개 자료 정리 · 원인 아님 · 투자 조언 아님','Public records · not causal · not investment advice'));
+ setTimeout(()=>{if(my===seqd&&!$('mtStop').textContent.trim())decl()},900)}
+new MutationObserver(()=>{clearTimeout(window._mtdT);window._mtdT=setTimeout(decl,250)}).observe(document.getElementById('briefTitle'),{childList:true,characterData:true,subtree:true});
+})();</script>
 </body></html>
