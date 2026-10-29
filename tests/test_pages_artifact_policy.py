@@ -138,6 +138,8 @@ class PagesArtifactPolicyTests(unittest.TestCase):
             "data/us/backupplans.json",
             "data/us/sessionize-stats.json",
             "data/us/researcher-list.json",
+            "data/answers/KEY.json",  # public template, not a credential
+            "data/us/prices/KEY.json",
         ):
             self.add(name)
         self.assertEqual(policy.violations(self.root), [])
