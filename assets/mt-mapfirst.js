@@ -47,6 +47,19 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
       `<div class="s"><a href="${esc(m.last[0].doc)}" target="_blank" rel="noopener noreferrer">PTR filing ›</a> · ${E ? 'Amounts are reported ranges. Dot is an approximate district location.' : '금액은 신고 구간. 점은 지역구 대략 위치.'}</div>`;
   }
   function lab(k, n) { const K = KIND[k]; if (!en()) return K[1]; let w = n > 1 ? (K[2] || (/s$|\)$/.test(K[0]) ? K[0] : K[0] + 's')) : K[0]; return w.charAt(0).toLowerCase() + w.slice(1); }
+  function declutter() {
+    const ls = [...document.querySelectorAll('.leaflet-marker-icon.mtMFdot .n')]; if (!ls.length) return;
+    ls.forEach(n => { n.style.transform = '' });
+    const hit = (a, b) => a.left < b.right + 2 && b.left < a.right + 2 && a.top < b.bottom + 1 && b.top < a.bottom + 1;
+    const placed = [...document.querySelectorAll('.leaflet-marker-icon.mtMFdot .d')].map(d => d.getBoundingClientRect());
+    ls.forEach(n => {
+      const r = n.getBoundingClientRect(), h = r.height || 15;
+      for (const dy of [0, h, -h, 2 * h, -2 * h, 3 * h, -3 * h]) {
+        const q = { left: r.left, right: r.right, top: r.top + dy, bottom: r.bottom + dy };
+        if (!placed.some(b => hit(q, b)) || dy === -3 * h) { n.style.transform = dy ? `translateY(${dy}px)` : ''; placed.push(q); break; }
+      }
+    });
+  }
   function paint(again) { if (!SUM) return; if (!again) [60, 700].forEach(ms => setTimeout(() => paint(1), ms)); const bt = $('briefText'), ti = $('briefTitle'); if (ti) ti.textContent = SUM[0]; if (bt) { bt._tok = {}; bt._mt = {}; bt._mtDone = null; bt._dc = null; bt.textContent = SUM[1]; bt.style.whiteSpace = 'pre-line' } }
   function clear() { SUM = null; const map = window.moneyTrackerMap; if (layer) map.removeLayer(layer); layer = null; cur = null; if (popup) { map.removeLayer(popup); popup = null } document.body.classList.remove('mt-mapfirst'); }
 
@@ -70,6 +83,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
       const mk = L.marker(x.ll, { icon: L.divIcon({ className: 'mtMFdot', html, iconSize: [0, 0] }), title: x.name, zIndexOffset: 500 });
       mk.on('click', e => { L.DomEvent.stop(e); card(memberCard(x, sym), x.ll) }); mk.addTo(layer); pts.push(x.ll);
     });
+    const fix = () => declutter(); setTimeout(fix, 50); map.on('zoomend moveend', fix); layer.on('remove', () => map.off('zoomend moveend', fix));
     // short summary in the side panel
     const cnt = {}; m.meta.forEach(t => { if (t.lat == null) return; const k = kindOf(t); cnt[k] = (cnt[k] || 0) + 1 });
     const parts = Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k, n]) => `${n} ${lab(k, n)}`);
