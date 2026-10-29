@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-10-29T19:20:00.688Z",
+  "created_at": "2026-10-29T21:30:17.653Z",
   "pipeline": "official-public-no-ai",
   "collectors": {
     "us_federal_register": {
@@ -24,8 +24,8 @@
       ]
     },
     "us_sec": {
-      "status": "not-configured",
-      "count": 0
+      "count": 73,
+      "errors": []
     }
   }
 }
