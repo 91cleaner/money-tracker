@@ -168,6 +168,7 @@ header.bar input.nm{width:200px;text-transform:none}
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
 <script src="assets/insights-card.js?v=ins-20261028"></script>
+<script src="assets/money-trio.js?v=trio-20261029"></script>
 <script src="assets/share.js?v=share-20261028"></script>
 <script>
 (function () {
@@ -339,6 +340,12 @@ header.bar input.nm{width:200px;text-transform:none}
       if (noTk) topP.appendChild(el("p", "note", "티커가 없는 신고(국채·채권·비상장 자산 등) " + n(noTk) + "건은 종목 집계에서 뺐습니다."));
     }
     app.appendChild(topP);
+    // 이 의원이 신고한 종목 상위 3곳의 연방 계약·로비·PAC 기록 (같은 기간 공개 기록, 원인 단정 없음)
+    if (window.MTMoneyTrio && tks.length) {
+      var trioHost = el("div"); trioHost.style.gridColumn = "1 / -1"; app.appendChild(trioHost);
+      trioHost.appendChild(el("h2", "", "🎮 신고한 종목의 돈 기록 · 상위 3곳"));
+      tks.slice(0, 3).forEach(function (tk) { var h = el("div"); h.style.marginBottom = "12px"; trioHost.appendChild(h); window.MTMoneyTrio.render(h, tk, { title: "🎮 " + tk, span: false }); });
+    }
 
     var secP = panel("업종별 · 건수 기준");
     var secs = Object.keys(bySec).sort(function (a, b) { return bySec[b] - bySec[a]; });
