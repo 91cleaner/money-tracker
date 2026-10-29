@@ -113,6 +113,35 @@ class PagesArtifactPolicyTests(unittest.TestCase):
                 )
                 (self.root / name).unlink()
 
+    def test_nested_review_and_credential_paths_are_blocked(self):
+        # A safe-looking filename must not bypass review-only directory checks.
+        for name in (
+            "data/us/research/records.json",
+            "data/us/reviews/clean.json",
+            "data/us/tokens/active.json",
+            "data/us/oauth/session.json",
+            "data/us/backup/latest.json",
+            "data/us/api-keys.json",
+            "data/us/passwords.json",
+        ):
+            with self.subTest(name=name):
+                self.add(name)
+                self.assertTrue(
+                    any("review-only dataset" in issue for issue in policy.violations(self.root)),
+                    name,
+                )
+                (self.root / name).unlink()
+
+    def test_sensitive_token_boundaries_do_not_block_unrelated_names(self):
+        # Whole tokens, not substrings, so public records remain usable.
+        for name in (
+            "data/us/backupplans.json",
+            "data/us/sessionize-stats.json",
+            "data/us/researcher-list.json",
+        ):
+            self.add(name)
+        self.assertEqual(policy.violations(self.root), [])
+
     def test_hidden_and_internal_paths_are_blocked(self):
         for name in ("data/.env", "assets/.hidden.js", "data/internal/cache.json",
                      "data/secrets/keys.json", ".github/workflows/ci.yml"):
