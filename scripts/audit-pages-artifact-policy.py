@@ -24,6 +24,8 @@ PRIVATE_DATA_FILES = {
     "data/us/trades.json",
     "data/us/house-ptr-candidates.json",
     "data/us/ptr-crosschecks.json",
+    "data/us-ptr-research-queue.json",
+    "data/us-ptr-extraction-status.json",
 }
 # Explicitly keep GitHub and deployment/source configuration out of the site.
 SOURCE_NAMES = {
