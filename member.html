@@ -129,6 +129,9 @@ header.bar input.nm{width:200px;text-transform:none}
 .dotp .say b{color:var(--g)}
 .dotp .lg{margin-top:8px;font-size:15px;color:var(--mut)}
 .dotp .lg i{display:inline-block;width:13px;height:13px;border-radius:50%;margin:0 5px 0 12px;vertical-align:-2px}
+.px{grid-column:1/-1;font-size:12.5px;color:var(--g2);line-height:1.5;padding:2px 0 0}
+.px small{color:var(--mut)}
+.px .up{color:#7dffa8}.px .dn{color:#ff8a8a}
 .lag{display:inline-block;font-weight:700;font-size:14px;padding:2px 9px;border-radius:999px;border:1px solid var(--line2);white-space:nowrap}
 .lag.fast{color:#7dffa8}.lag.mid{color:#ffd36b;border-color:#8a6d1f}.lag.slow{color:#ff8a8a;border-color:#8a2f2f}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
@@ -191,6 +194,47 @@ header.bar input.nm{width:200px;text-transform:none}
   function n(v) { return Number(v || 0).toLocaleString("ko-KR"); }
   var EN = !!(window.MTI18N && window.MTI18N.isEn);
   function T(ko, en) { return EN ? en : ko; }
+  // 거래일·신고일·최근 수정종가 비교 (같은 기간만, %만 계산 — 금액 손익은 계산하지 않음)
+  var PXC = {};
+  function priceOn(D, C, d) { // 그날 또는 가장 가까운 이전 거래일 종가
+    var lo = 0, hi = D.length - 1, k = -1;
+    while (lo <= hi) { var m = (lo + hi) >> 1; if (D[m] <= d) { k = m; lo = m + 1; } else hi = m - 1; }
+    return k < 0 || !(C[k] > 0) ? null : { d: D[k], c: C[k] };
+  }
+  function pctTxt(a, b) { var v = (b / a - 1) * 100; return { v: v, t: (v > 0 ? "+" : "") + v.toFixed(1) + "%" }; }
+  function md(d) { return +d.slice(5, 7) + "/" + +d.slice(8, 10); }
+  function priceLine(r, pr) {
+    var D = pr && pr.d, C = pr && pr.c, ty = String(r.ty || "").charAt(0);
+    if (!D || !C || D.length !== C.length || !r.d) return null;
+    var a = priceOn(D, C, r.d); if (!a) return null;
+    var f = r.filed && r.filed > r.d ? priceOn(D, C, r.filed) : null; if (f && f.d <= a.d) f = null;
+    var L = { d: D[D.length - 1], c: C[C.length - 1] };
+    var last = L.d > a.d && (!f || L.d > f.d) ? L : null;
+    if (!f && !last) return null;
+    var noun = ty === "P" ? "산" : ty === "S" ? "판" : "바꾼";
+    function px(x, want, name) {
+      return name + "(" + md(want) + (x.d !== want ? ", " + md(x.d) + " 종가" : "") + ") " + x.c.toFixed(2) + "달러";
+    }
+    var ln = el("div", "px");
+    var segs = [{ x: a, t: px(a, r.d, noun + " 날"), p: null }];
+    if (f) segs.push({ x: f, t: px(f, r.filed, "신고한 날"), p: pctTxt(a.c, f.c) });
+    if (last) segs.push({ x: last, t: "최근(" + md(last.d) + ") " + last.c.toFixed(2) + "달러", p: pctTxt(a.c, last.c) });
+    segs.forEach(function (g, i) {
+      if (i) ln.appendChild(document.createTextNode(" → "));
+      ln.appendChild(document.createTextNode(g.t));
+      if (g.p) { var b = el("b", Math.abs(g.p.v) < 0.05 ? "" : g.p.v > 0 ? "up" : "dn", "(" + g.p.t + ")"); ln.appendChild(b); }
+    });
+    var end = segs[segs.length - 1].p, note = "";
+    if (last) {
+      var v = end.v, t = Math.abs(v) < 1 ? "비슷했음" : v > 0 ? "올랐음" : "내렸음";
+      note = noun + " 뒤에 주가가 " + t;
+    }
+    if (note) ln.appendChild(el("small", "", " · " + note + " (거래일 대비 최근)"));
+    ln.appendChild(el("br"));
+    ln.appendChild(el("small", "", "출처: Massive(구 Polygon) 일별 종가 · 수정종가 기준 · 같은 기간 비교일 뿐 이유를 뜻하지 않아요 · 금액 손익은 계산하지 않아요"));
+    return ln;
+  }
+  function loadPx(tk) { return PXC[tk] || (PXC[tk] = get("data/us/prices/" + encodeURIComponent(tk) + ".json")); }
   function lagInfo(l) { // 며칠 늦게 신고했는지 (신고일 - 거래일)
     if (l == null || l < 0) return null;
     var cls = l <= 14 ? "fast" : l <= 45 ? "mid" : "slow";
@@ -586,6 +630,10 @@ header.bar input.nm{width:200px;text-transform:none}
           });
         var tdl = el("td", "lbl"); tdl.setAttribute("data-l", "원문"); tdl.appendChild(link("PTR ↗", r.doc)); tr.appendChild(tdl);
         tb.appendChild(tr);
+        if (tk && r.d) {
+          var pr = el("tr"), pd = el("td", "px"); pd.colSpan = 7; pr.appendChild(pd); tb.appendChild(pr);
+          loadPx(tk).then(function (j) { var ln = priceLine(r, j); if (ln) pd.appendChild(ln); else pr.remove(); });
+        }
       });
       shown = Math.min(list.length, shown + k);
       if (list.length > shown) { more.textContent = "더 보기 (" + (list.length - shown) + "건 남음)"; if (!more.isConnected) p.appendChild(more); } else more.remove();
