@@ -1,0 +1,38 @@
+name: Collect assistance awards, recalls and trades-before-events
+on:
+  schedule:
+    - cron: '10 19 * * 1'   # weekly collectors (Mon)
+    - cron: '20 23 * * *'   # daily rebuild of trades-before-events after Form 4
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: collect-assistance-recalls
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect USAspending assistance (grants, loans)
+        if: github.event_name != 'schedule' || github.event.schedule == '10 19 * * 1'
+        run: python scripts/collect_assistance.py 250
+        continue-on-error: true
+      - name: Collect recalls (NHTSA, openFDA)
+        if: github.event_name != 'schedule' || github.event.schedule == '10 19 * * 1'
+        run: python scripts/collect_recalls.py 250 3
+        continue-on-error: true
+      - name: Build trades-before-events and search index
+        run: python scripts/build_trades_before_events.py && python scripts/build_search_index.py
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add data/us/assistance-awards.json data/us/recalls.json data/us/trades-before-events.json data/search-index.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: assistance awards, recalls, trades-before-events"
+          for i in 1 2 3; do git pull --rebase -q -X theirs origin main && git push && break; sleep 10; done

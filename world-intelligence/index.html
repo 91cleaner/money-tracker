@@ -380,11 +380,11 @@ Promise.all([j('../data/us/bills.json'),j('../data/market/factors/cn-mofcom-anno
 </style>
 <script id="mt-flows-js">(()=>{const map=window.moneyTrackerMap;if(!map||!window.L)return;
 // 한국 계약 지도(assets/map.js curve)와 같은 방식: 두 점 사이 수직 오프셋 0.28·거리의 2차 곡선 + 선 그리기 애니메이션
-const OR='#ff9f0a',COL={bill:OR,supply:OR,reg:OR,cmte:OR,award:OR,lobby:OR,pac:OR,trade:OR,other:OR},FIRST={bill:1,reg:1};
+const OR='#ff9f0a',COL={bill:OR,supply:OR,reg:OR,cmte:OR,award:OR,lobby:OR,pac:OR,trade:OR,insider:OR,assist:OR,recall:OR,prior:OR,other:OR},FIRST={bill:1,reg:1};
 const RM=matchMedia('(prefers-reduced-motion: reduce)');let orbs=[];
 function orbLoop(t){if(!RM.matches)orbs.forEach(o=>{const n=o.p.length-1,u=((t/o.d+o.ph)%1)*n,i=Math.floor(u),f=u-i,a=o.p[i],b=o.p[Math.min(i+1,n)];o.m.setLatLng([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f])});requestAnimationFrame(orbLoop)}requestAnimationFrame(orbLoop);
-const NAME={bill:'법안',supply:'본사·공장',reg:'규제',cmte:'위원회',award:'연방 계약',lobby:'로비',pac:'후원',trade:'의원 거래',other:'기타 지표'};
-const kind=t=>{const r=t.ref||'',x=(t.title||'')+' '+(t.region||'');if(t.kind==='bill')return'bill';if(t.kind==='supply'||r.startsWith('facility:'))return'supply';if(t.kind==='trade')return'trade';if(t.kind==='award'||r.startsWith('awards:'))return'award';if(t.kind==='lobby'||r.startsWith('lobbying:'))return'lobby';if(t.kind==='pac'||r.startsWith('pac:'))return'pac';if(r.startsWith('trade')||/의원 거래/.test(x))return'trade';if(/위원회|committee/i.test(x))return'cmte';if(/규제|수출통제|상무부|관세|제재|BIS|MOFCOM/i.test(x))return'reg';if(/본사|공장|사업장|HQ|팹/.test(x))return'supply';return'other'};
+const NAME={bill:'법안',supply:'본사·공장',reg:'규제',cmte:'위원회',award:'연방 계약',lobby:'로비',pac:'후원',trade:'의원 거래',insider:'임원 거래',assist:'보조금·대출',recall:'리콜',prior:'발표 전 거래',other:'기타 지표'};
+const kind=t=>{const r=t.ref||'',x=(t.title||'')+' '+(t.region||'');if(['insider','assist','recall','prior'].includes(t.kind))return t.kind;if(t.kind==='bill')return'bill';if(t.kind==='supply'||r.startsWith('facility:'))return'supply';if(t.kind==='trade')return'trade';if(t.kind==='award'||r.startsWith('awards:'))return'award';if(t.kind==='lobby'||r.startsWith('lobbying:'))return'lobby';if(t.kind==='pac'||r.startsWith('pac:'))return'pac';if(r.startsWith('trade')||/의원 거래/.test(x))return'trade';if(/위원회|committee/i.test(x))return'cmte';if(/규제|수출통제|상무부|관세|제재|BIS|MOFCOM/i.test(x))return'reg';if(/본사|공장|사업장|HQ|팹/.test(x))return'supply';return'other'};
 const curve=(a,b)=>{const dx=b[1]-a[1],dy=b[0]-a[0],d=Math.hypot(dx,dy)||1,o=d<6?Math.max(d*.6,.4):Math.min(d*.28,18),c=[(a[0]+b[0])/2+(dx/d)*o,(a[1]+b[1])/2-(dy/d)*o],out=[];for(let i=0;i<=32;i++){const u=i/32,v=1-u;out.push([v*v*a[0]+2*v*u*c[0]+u*u*b[0],v*v*a[1]+2*v*u*c[1]+u*u*b[1]])}return out};
 const g=L.layerGroup().addTo(map);let cur=null,drawn=new Set(),lines=[],dots=[];window.mtFlow={lines:()=>lines,dots:()=>dots};const leg=document.createElement('div');leg.id='mtLegend';leg.hidden=true;document.body.append(leg);
 function setup(m){g.clearLayers();orbs=[];drawn=new Set();lines=[];dots=[];cur=m;const st=m.meta.filter(t=>t.lat!=null);if(st.length<2){leg.hidden=true;return}const hub=[st[0].lat,st[0].lon],used=new Set();
@@ -432,6 +432,10 @@ function line1(t,C,R){const k=t.kind||'',x=(t.title||'')+' '+(t.region||''),n=(S
   if(/^committee:/.test(rf))return['🏛️',E?`A congressional committee tied to this sector shows up (${nm}).`:`이 업종과 이어진 의회 위원회(${nm})가 있어요.`]}
  if(k==='supply'||/본사|공장|공급사|팹/.test(x)){const hq=/본사/.test(x),sp=/공급사/.test(x);return['🏭',E?`${hq?'The headquarters':sp?'A supplier':'A plant'} linked to ${C} is here.`:`${C}의 ${hq?'본사':sp?'공급사':'공장'}가 이곳에 있어요.`]}
  if(k==='lobby')return['📣',E?`${C} filed ${n||'some'} lobbying report${n==1?'':'s'} here.`:`${C}의 로비 공시가 ${n?n+'건 ':''}있었어요.`];
+ if(k==='insider')return['•',E?`Company officers or directors reported trades in ${C} stock on SEC Form 4.`:`${C} 임원·이사가 SEC Form 4로 주식 거래를 신고했어요.`];
+ if(k==='assist')return['•',E?`${C} has federal grant or loan obligations on record.`:`${C}의 연방 보조금·대출 의무액 기록이 있어요.`];
+ if(k==='recall')return['•',E?`Recalls filed under ${C}'s name are on record.`:`${C} 이름으로 접수된 리콜 기록이 있어요.`];
+ if(k==='prior')return['•',E?`Some trades in ${C} stock are dated within 30 days before a filing or announcement. Dates only, not a reason.`:`${C} 주식 거래 중 공시·발표 30일 이내 앞선 날짜의 기록이 있어요. 날짜만 나란히 놓은 것이에요.`];
  if(k==='trade')return['🧾',E?`Lawmakers reported trades in ${C} stock.`:`의원들이 ${C} 주식을 사고팔았다고 신고했어요.`];
  if(k==='bill')return['📜',E?`A bill tied to ${C} is in Congress.`:`${C}와 관련된 법안이 의회에 올라와 있어요.`];
  if(k==='cmte')return['🏛️',E?`A congressional committee tied to ${C} shows up here.`:`${C}와 관련된 의회 위원회 기록이 있어요.`];
@@ -467,8 +471,8 @@ document.getElementById('world')&&document.getElementById('world').addEventListe
 const BANNED=/때문|추천|덕분|탓에|영향으로|because|recommend|due to|thanks to|led to|caused by/i;
 const pc=v=>(v>0?'+':'')+v.toFixed(1)+'%',day=s=>Date.parse(s+'T00:00:00Z'),addD=(s,n)=>new Date(day(s)+n*864e5).toISOString().slice(0,10);
 const josa=s=>{const c=s.charCodeAt(s.length-1);return c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28?'이':'가'};
-const KL={supply:['공장·본사','곳','plant or HQ site'],lobby:['로비 공시','건','lobbying record'],trade:['의원 거래 신고','건','lawmaker trade report'],bill:['법안 기록','건','bill record'],cmte:['의회 위원회 기록','건','committee record'],wh:['대통령 발표·명령 기록','건','presidential record'],reg:['관세·수출 제한 기록','건','tariff or export-control record'],award:['정부 계약 기록','건','government contract record'],pac:['정치 후원 기록','건','political-donation record'],policy:['정책 기록','건','policy record'],rep:['대표 회사','곳','watched company'],factor:['함께 보는 숫자','개','tracked indicator']};
-const SRC={supply:['SEC EDGAR','SEC EDGAR'],lobby:['미 상원 로비 공시(LDA)','US Senate lobbying filings (LDA)'],trade:['하원 거래 신고(PTR)','House trade reports (PTR)'],bill:['Congress.gov','Congress.gov'],cmte:['Congress.gov','Congress.gov'],wh:['백악관 발표','White House releases'],reg:['Federal Register','Federal Register'],award:['USAspending','USAspending'],pac:['FEC 후원 기록','FEC donation records'],policy:['각국 정책 문서','national policy documents']};
+const KL={insider:['임원 거래 기록','건','insider-trade summary'],assist:['보조금·대출 기록','건','grant and loan summary'],recall:['리콜 기록','건','recall summary'],prior:['발표 전 거래 기록','건','trades-before-announcement summary'],supply:['공장·본사','곳','plant or HQ site'],lobby:['로비 공시','건','lobbying record'],trade:['의원 거래 신고','건','lawmaker trade report'],bill:['법안 기록','건','bill record'],cmte:['의회 위원회 기록','건','committee record'],wh:['대통령 발표·명령 기록','건','presidential record'],reg:['관세·수출 제한 기록','건','tariff or export-control record'],award:['정부 계약 기록','건','government contract record'],pac:['정치 후원 기록','건','political-donation record'],policy:['정책 기록','건','policy record'],rep:['대표 회사','곳','watched company'],factor:['함께 보는 숫자','개','tracked indicator']};
+const SRC={insider:['SEC Form 4','SEC Form 4'],assist:['USAspending','USAspending'],recall:['NHTSA·openFDA','NHTSA, openFDA'],prior:['하원 PTR·SEC Form 4','House PTR, SEC Form 4'],supply:['SEC EDGAR','SEC EDGAR'],lobby:['미 상원 로비 공시(LDA)','US Senate lobbying filings (LDA)'],trade:['하원 거래 신고(PTR)','House trade reports (PTR)'],bill:['Congress.gov','Congress.gov'],cmte:['Congress.gov','Congress.gov'],wh:['백악관 발표','White House releases'],reg:['Federal Register','Federal Register'],award:['USAspending','USAspending'],pac:['FEC 후원 기록','FEC donation records'],policy:['각국 정책 문서','national policy documents']};
 function kindOf(s){const r=String(s.ref||'');if(s.kind)return s.kind;if(/^company:/.test(r))return'rep';if(/^factor:/.test(r))return'factor';if(/^committee:/.test(r))return'cmte';return''}
 // 실적 발표(8-K 2.02) 날짜 뒤 약 21거래일(한 달) 종가 변동. 가격 구간 밖이거나 한 달이 안 지난 건 제외.
 function study(px,k8){if(!px||!px.d||!px.c)return{n:0,mean:null};const H=21,seen={},out=[];
@@ -676,7 +680,7 @@ const iso=ms=>new Date(ms).toISOString().slice(0,10);
 const BOX=[[21.5,25.5,119.5,122.5,'🇹🇼'],[33,39,124,131,'🇰🇷'],[30,46,129,146,'🇯🇵'],[1,1.8,103,104.5,'🇸🇬'],[24,50,-125,-66,'🇺🇸'],[18,54,73,135,'🇨🇳']];
 const flag=t=>{for(const b of BOX)if(t.lat>=b[0]&&t.lat<=b[1]&&t.lon>=b[2]&&t.lon<=b[3])return b[4];return'🌏'};
 const AGENCY=[[/상무부|\bBIS\b|Commerce/i,'🛃'],[/USTR|무역대표/i,'⚖️'],[/국방|Pentagon|\bDoD\b/i,'🛡️'],[/\bSEC\b|증권/i,'📊'],[/\bFDA\b|보건/i,'💊'],[/\bDOE\b|에너지부/i,'⚡']];
-function iconOf(t,hub){const r=t.ref||'',x=txt(t),k=t.kind||'';if(hub)return['company','🏢'];
+function iconOf(t,hub){const r=t.ref||'',x=txt(t),k=t.kind||'';if(hub)return['company','🏢'];if(['insider','assist','recall','prior'].includes(k))return['agency','•'];
  if(k==='trade'||r.startsWith('trade'))return['agency','🧾'];if(k==='bill')return['agency','📜'];if(k==='cmte'||k==='wh')return['agency','🏛️'];
  if(k==='reg'||/규제|수출통제|관세|제재/.test(x)){const a=AGENCY.find(a=>a[0].test(x));return['agency',a?a[1]:'🛃']}
  if(k==='policy')return['country',flag(t)];if(k==='lobby')return['company','📣'];if(k==='award')return['company','💵'];if(k==='pac')return['company','🗳️'];if(k==='supply'||/본사|공장|공급사|팹/.test(x))return['company','🏭'];

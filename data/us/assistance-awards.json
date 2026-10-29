@@ -1,0 +1,880 @@
+{
+ "updated": "2026-10-29",
+ "source": "USAspending.gov API v2 (assistance: grants 02-05, loans 07-08)",
+ "source_url": "https://api.usaspending.gov/",
+ "period": [
+  "2024-10-01",
+  "2026-10-29"
+ ],
+ "note": "Obligations, not payments. Exact recipient-name match after removing legal suffixes; subsidiaries under other names are not included. Loans: obligated amount (subsidy cost) shown; face value kept separately.",
+ "checked": 250,
+ "matched": 13,
+ "errors": [],
+ "companies": {
+  "IBM": {
+   "match_key": "INTERNATIONAL BUSINESS MACHINES",
+   "recipient_names": [
+    "INTERNATIONAL BUSINESS MACHINES CORPORATION"
+   ],
+   "uei": [
+    "EDHQH5AXXQZ5",
+    "U5MRJDKCL1D7"
+   ],
+   "grants_usd": 45733422.37,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "80NSSC26M0008",
+     "date": "2025-07-01",
+     "usd": 2000000.0,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "THE PROPOSED COLLABORATIVE AGREEMENT BETWEEN NASA AND IBM FOCUSES ON ADVANCING ARTIFICIAL INTELLIGENCE (AI) AND COMPUTING PARADIGMS IN SUPPO",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC26M0008_080"
+    },
+    {
+     "type": "grant",
+     "id": "DEFE0032703",
+     "date": "2025-01-15",
+     "usd": 19736446.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "INFLATION REDUCTION ACT (IRA): END-TO-END, MULTI-MODAL, HIGH RESOLUTION METHANE INVENTORY QUANTIFICATION (E2E-METHANE-IQ)\n\nTHE OBJECTIVE OF ",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEFE0032703_089"
+    },
+    {
+     "type": "grant",
+     "id": "N000142412759",
+     "date": "2024-10-01",
+     "usd": 200004.0,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "ATOMIC-SCALE MAGNETIC DEVICES",
+     "url": "https://www.usaspending.gov/award/ASST_NON_N000142412759_097"
+    },
+    {
+     "type": "grant",
+     "id": "HT94252310919",
+     "date": "2023-09-01",
+     "usd": 160859.0,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "MULTIMODAL AI-BASED RENAL CANCER PATIENT CARE",
+     "url": "https://www.usaspending.gov/award/ASST_NON_HT94252310919_097"
+    },
+    {
+     "type": "grant",
+     "id": "DEAR0001577",
+     "date": "2022-10-01",
+     "usd": 5129666.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "INTERNATIONAL BUSINESS MACHINES (IBM) CORPORATION - NEW AWARD \nCONTROL NUMBER: 2459-2939\nPROJECT TITLE: SYSTEMS TWO-PHASE COOLING\n\nTHIS COOP",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEAR0001577_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009298",
+     "date": "2021-10-01",
+     "usd": 542247.86,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "UPCYCLING PET VIA THE VOLCAT PROCESS",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009298_089"
+    },
+    {
+     "type": "grant",
+     "id": "W911NF2110002",
+     "date": "2020-11-01",
+     "usd": 4800000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "CRAFT - CHARACTERIZING REALISTIC ARCHITECTURES FOR FAULT-TOLERANCE",
+     "url": "https://www.usaspending.gov/award/ASST_NON_W911NF2110002_097"
+    },
+    {
+     "type": "grant",
+     "id": "DEAR0001210",
+     "date": "2020-04-27",
+     "usd": 1374956.28,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "PROJECT TITLE: MODEL-BASED REINFORCEMENT LEARNING WITH ACTIVE LEARNING FOR EFFICIENT ELECTRICAL POWER CONVERTER DESIGN\n\nTHIS COOPERATIVE AGR",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEAR0001210_089"
+    }
+   ],
+   "n": 10,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_80NSSC26M0008_080"
+  },
+  "ETN": {
+   "match_key": "EATON",
+   "recipient_names": [
+    "EATON CORP",
+    "EATON CORPORATION"
+   ],
+   "uei": [
+    "CX2MM2DAARY6",
+    "E2D1C87H8VZ4",
+    "VDG7YL3YZ635"
+   ],
+   "grants_usd": 22162957.02,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "DEEE0010918",
+     "date": "2023-10-01",
+     "usd": 884100.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "LOW-COST, GRID-INTERACTIVE UNINTERRUPTIBLE POWER SUPPLY FOR BUILDING ENERGY STORAGE",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0010918_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009618",
+     "date": "2022-09-01",
+     "usd": 1750000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THE PROPOSED OBJECTIVES ARE TO DESIGN, SIMULATE, AND OPTIMIZE AN AIR MANAGEMENT SYSTEM\nCOMPOSED OF ROOTS MACHINES AND TO DESIGN AND TEST A S",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009618_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009870",
+     "date": "2022-05-01",
+     "usd": 4906074.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "NEW AWARD TO EATON CORPORATION.  AWARD NUMBER: DE-EE0009870.  PROJECT ENTITLED: ''A SOLID-STATE TECHNOLOGY ENABLED COMPACT, MODULAR DESIGN T",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009870_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009873",
+     "date": "2022-02-01",
+     "usd": 2377904.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "NEW AWARD TO EATON CORPORATION.  AWARD NUMBER: DE-EE0009873.  PROJECT TITLE: SIMULTANEOUS GREENHOUSE GAS AND CRITERIA POLLUTANTS EMISSIONS R",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009873_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009695",
+     "date": "2021-10-01",
+     "usd": 2537809.48,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "NEW AWARD TO EATON CORPORATION.  AWARD NUMBER: DE-EE0009695.  PROJECT TITLED: AUTOMATED LUMINAIRE DESIGN AND LOCAL MANUFACTURING FOR HIGHLY ",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009695_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009135",
+     "date": "2020-10-01",
+     "usd": 4000000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "MEGAWATT-CLASS, HIGH-VOLTAGE SIC POWER ELECTRONICS CONVERTERS FOR ADVANCED MANUFACTURING\nWITH GRID SUPPORT SERVICES",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009135_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009023",
+     "date": "2020-04-01",
+     "usd": 2174642.37,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "RISK-INFORMED HIERARCHICAL CONTROL OF BEHIND-THE-METER DERS WITH AMI DATA INTEGRATION",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009023_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEAR0001111",
+     "date": "2019-09-01",
+     "usd": 3532427.17,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "EATON CORPORATION\nCONTROL NUMBER:  1979-1521\nPROJECT TITLE:  ULTRA-EFFICIENT INTELLIGENT MVDC HYBRID CIRCUIT BREAKER",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEAR0001111_089"
+    }
+   ],
+   "n": 8,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_DEEE0010918_089"
+  },
+  "BA": {
+   "match_key": "BOEING",
+   "recipient_names": [
+    "THE BOEING COMPANY"
+   ],
+   "uei": [
+    "D27FSZD2L2U9",
+    "E466BXU4KJH8",
+    "LAJJQWA1PF31",
+    "MF2LE5RK6L84"
+   ],
+   "grants_usd": 100615999.31,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "W56KGU262A097",
+     "date": "2026-09-21",
+     "usd": 1548355.22,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "TO SUPPORT THE MENTOR PROTEGE PROGRAM.",
+     "url": "https://www.usaspending.gov/award/ASST_NON_W56KGU262A097_097"
+    },
+    {
+     "type": "grant",
+     "id": "69A3352540058",
+     "date": "2025-01-01",
+     "usd": 2595522.75,
+     "loan_face_usd": null,
+     "agency": "Department of Transportation",
+     "desc": "SAF QUALITY INDICATION  SQUID AI ROUTE OPTIMIZATION  AIRO SAFETY OF HIGH VOLATILITY FUELS  SHVF COMPOSITE CONFORMAL CRYOGENIC TANK  C3T",
+     "url": "https://www.usaspending.gov/award/ASST_NON_69A3352540058_069"
+    },
+    {
+     "type": "grant",
+     "id": "DEAR0001861",
+     "date": "2024-03-27",
+     "usd": 1824248.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THE BOEING COMPANY\nNEW ULTIMATE PHASE 2 COOPERATIVE AGREEMENT \nEVELOPMENT OF ULTRA-HIGH PERFORMANCE METALLIC TURBINE BLADES FOR EXTREME ENVI",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEAR0001861_089"
+    },
+    {
+     "type": "grant",
+     "id": "80NSSC23M0244",
+     "date": "2023-09-07",
+     "usd": 10007561.0,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "SINGLE SOURCE: TRANSONIC TRUSS BRACED WING VISION VEHICLE TECHNOLOGY DEVELOPMENT (5 JULY 2023)",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC23M0244_080"
+    },
+    {
+     "type": "grant",
+     "id": "80NSSC23K0378",
+     "date": "2023-01-01",
+     "usd": 315248.0,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "DEFLECTION OF ASTEROIDS BY KINETIC IMPACT: A LABORATORY STUDY",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC23K0378_080"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0010222",
+     "date": "2022-10-01",
+     "usd": 1040304.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "PREVIOUS RESEARCH COMPLETED WITH AL-CE BASED ALLOYS HAS SHOWN PROMISING RESULTS FOR ADDITIVE MANUFACTURING (AM) IN THE FORM OF IMPROVED MECH",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0010222_089"
+    },
+    {
+     "type": "grant",
+     "id": "80NSSC22M0152",
+     "date": "2022-06-01",
+     "usd": 55288250.54,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "1. P1.TPC.IMP: THERMOPLASTICS - INTEGRATED MASTER SCHEDULE & PLAN DEVELOPMENT  2. RESIN INFUSION - INTEGRATED MASTER SCHEDULE & PLAN DEVELOP",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC22M0152_080"
+    },
+    {
+     "type": "grant",
+     "id": "N000142021002",
+     "date": "2020-08-01",
+     "usd": 1450804.8,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "TURBULENCE MODEL VALIDATION THROUGH JOINT EXPERIMENTAL/ COMPUTATIONAL STUDIES OF SEPARATED FLOW OVER A THREE-DIMENSIONAL TAPERED BUMP",
+     "url": "https://www.usaspending.gov/award/ASST_NON_N000142021002_097"
+    }
+   ],
+   "n": 15,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_W56KGU262A097_097"
+  },
+  "ADI": {
+   "match_key": "ANALOG DEVICES",
+   "recipient_names": [
+    "ANALOG DEVICES, INC."
+   ],
+   "uei": [
+    "X6LJRH3LG266"
+   ],
+   "grants_usd": 9979096.83,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "2560IF2414",
+     "date": "2025-02-01",
+     "usd": 9979096.83,
+     "loan_face_usd": null,
+     "agency": "Department of Commerce",
+     "desc": "PURPOSE: ANALOG DEVICES INTENDS TO ACCELERATE THE DEVELOPMENT OF 5NM COMPLEMENTARY METAL-OXIDE-SEMICONDUCTOR RADIO TRANSCEIVER ASIC (APPLICA",
+     "url": "https://www.usaspending.gov/award/ASST_NON_2560IF2414_013"
+    }
+   ],
+   "n": 1,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_2560IF2414_013"
+  },
+  "GE": {
+   "match_key": "GENERAL ELECTRIC",
+   "recipient_names": [
+    "GENERAL ELECTRIC COMPANY"
+   ],
+   "uei": [
+    "E3HYKKLT5ZT1",
+    "J1T1FEN3PWX6",
+    "LGXXE8T6ECL8",
+    "M2FYKG7HP723",
+    "VL6RR3BEMUM9"
+   ],
+   "grants_usd": 140783521.27,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "DEEE0011100",
+     "date": "2024-04-01",
+     "usd": 0.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THE GOAL OF THE PROPOSED PROJECT IS TO DESIGN, MANUFACTURE, AND TEST A COMPOSITE LIQUID HYDROGEN (LH2) TANK WITH A CAPACITY OF 20 KG. THE TA",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0011100_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEAR0001803",
+     "date": "2024-02-16",
+     "usd": 1499848.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "2784-1551 GE RESEARCH \t\nPROJECT TITLE: ENGINE-INFORMED PREDICTION OF AVIATION INDUCED CIRRUS TRAILS-EPIC-TRAILS\nPRE-TRAILS FOA",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEAR0001803_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0010746",
+     "date": "2023-10-01",
+     "usd": 0.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "1) TO DEVELOP AND RUGGEDIZE THE GE’S DEH2 SENSORS FOR INDUSTRIAL H2-SENSING APPLICATIONS TO MEET THE TECHNICAL TARGETS PRESENTED BY THE DOE,",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0010746_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEFE0032170",
+     "date": "2022-10-01",
+     "usd": 6999923.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "NEW AWARD TO GENERAL ELECTRIC COMPANY FOR PROJECT TITLED DEMONSTRATION OF A GAS TURBINE-SCALE ROTATING DETONATION COMBUSTOR INTEGRATED WITH ",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEFE0032170_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0010216",
+     "date": "2022-10-01",
+     "usd": 968825.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THE OBJECTIVE OF THIS PROJECT IS TO DEVELOP A NOVEL PHOTOPOLYMERIZATION ADDITIVE MANUFACTURING PROCESS FOR FABRICATING FIBER REINFORCED SILI",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0010216_089"
+    },
+    {
+     "type": "grant",
+     "id": "FA86502225503",
+     "date": "2022-06-06",
+     "usd": 7967261.0,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "DEFENSE PRODOCUTION ACT TITLE III, ULTRA-HIGH AND HIGH TEMPERATURE COMPOSITES (U/HTC) FOR HYPERSONIC, STRATEGIC MISSILE, AND SPACE LAUNCH SY",
+     "url": "https://www.usaspending.gov/award/ASST_NON_FA86502225503_097"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009804",
+     "date": "2022-06-01",
+     "usd": 2625000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THE ULTRA-HOTSSTAR PROGRAM WILL DEVELOP AND TEST A SIC-BASED SOLAR RECEIVER MODULE, ADVANCING FROM AN INITIAL DESIGN CONCEPT TO A DESIGN VAL",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009804_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009633",
+     "date": "2022-02-01",
+     "usd": 1291762.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "A MODULAR AND FLEXIBLE MULTI-TERMINAL POWER CONVERTER WITH GRID-FORMING CAPABILITY FOR INTEGRATED PV SOLAR AND BATTERY ENERGY STORAGE",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009633_089"
+    }
+   ],
+   "n": 30,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_DEEE0011100_089"
+  },
+  "KR": {
+   "match_key": "KROGER",
+   "recipient_names": [
+    "KROGER CO"
+   ],
+   "uei": [
+    "Q8NMWFC42S98"
+   ],
+   "grants_usd": 3000000.0,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "ATPHP260009",
+     "date": "2026-09-30",
+     "usd": 3000000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Health and Human Services",
+     "desc": "EAT REAL FOOD EVERYWHERE: A NATIONWIDE GROCERY-BASED COOKING DEMONSTRATION INITIATIVE - THE KROGER CO. PROPOSES A 15-WEEK NATIONAL COMMUNITY",
+     "url": "https://www.usaspending.gov/award/ASST_NON_ATPHP260009_075"
+    }
+   ],
+   "n": 1,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_ATPHP260009_075"
+  },
+  "HON": {
+   "match_key": "HONEYWELL INTERNATIONAL",
+   "recipient_names": [
+    "HONEYWELL INTERNATIONAL INC",
+    "HONEYWELL INTERNATIONAL INC."
+   ],
+   "uei": [
+    "EAY4AZ7AFMD8",
+    "HZV7HJMAFC28",
+    "JW6BPB33LTS8",
+    "KBL6XLDCXKG8",
+    "MVKWB3HB5KX5",
+    "ZJ88T7TL9584"
+   ],
+   "grants_usd": 154703348.31,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "69A3352540046",
+     "date": "2025-01-02",
+     "usd": 425354.75,
+     "loan_face_usd": null,
+     "agency": "Department of Transportation",
+     "desc": "PROJECT 1 - SUSTAINABLE ELECTRIFIED AIRCRAFT POWERPROJECT 2 - SUSTAINABLE DUAL-FUEL BUSINESS AIRCRAFT",
+     "url": "https://www.usaspending.gov/award/ASST_NON_69A3352540046_069"
+    },
+    {
+     "type": "grant",
+     "id": "DEMS0000116",
+     "date": "2025-01-01",
+     "usd": 123836497.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "BIPARTISAN INFRASTRUCTURE LAW (BIL): LIFSI: ELECTROLYTE SALT PRODUCTION FACILITY\n\nTHE OBJECTIVE IS TO BUILD A 10KT COMMERCIAL SCALE FACILITY",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEMS0000116_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEMS0000063",
+     "date": "2024-10-01",
+     "usd": 14792351.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "INFLATION REDUCTION ACT (IRA): THE OBJECTIVE OF THE PROJECT IS TO CREATE A HFO-1234YF PRODUCTION CAPACITY OF AT LEAST 1.4 KILO METRIC TONNES",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEMS0000063_089"
+    },
+    {
+     "type": "grant",
+     "id": "W911NF2120229",
+     "date": "2021-09-29",
+     "usd": 4180169.56,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "MINIATURE ATOMIC TIMING UNIT IN SUPPORT OF THE LOW COST CSAC MANUFACTURING TECHNOLOGY PROGRAM.",
+     "url": "https://www.usaspending.gov/award/ASST_NON_W911NF2120229_097"
+    },
+    {
+     "type": "grant",
+     "id": "DEAR0001354",
+     "date": "2021-01-01",
+     "usd": 6830117.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "HONEYWELL INTERNATIONAL, INC.: NEW AWARD\n2238-1534 \t\nASCEND\nPROJECT TITLE: ADVANCED ELECTRIC PROPULSION SYSTEM (AEPS)\n\nAEPS WILL PROVIDE DIR",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEAR0001354_089"
+    },
+    {
+     "type": "grant",
+     "id": "FA86502025505",
+     "date": "2020-05-21",
+     "usd": 2666813.0,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "DEFENSE PRODUCTION ACT (DPA) TITLE III NEXT GENERATION WHEELS PROJECT ** FAADC MIGRATION NOTE - ACTION TYPE:\"1\" TO \"A\", RECORD TYPE:\"2\", BUS",
+     "url": "https://www.usaspending.gov/award/ASST_NON_FA86502025505_097"
+    },
+    {
+     "type": "grant",
+     "id": "W911W61820006",
+     "date": "2018-06-22",
+     "usd": 1572046.0,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "ROTORCRAFT AUTOMATED COMPONENT TRACKING",
+     "url": "https://www.usaspending.gov/award/ASST_NON_W911W61820006_097"
+    },
+    {
+     "type": "grant",
+     "id": "W911NF1720140",
+     "date": "2017-09-25",
+     "usd": 400000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "ROTORCRAFT SITUATIONAL AWARENESS RADAR",
+     "url": "https://www.usaspending.gov/award/ASST_NON_W911NF1720140_097"
+    }
+   ],
+   "n": 8,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_69A3352540046_069"
+  },
+  "LIN": {
+   "match_key": "LINDE",
+   "recipient_names": [
+    "LINDE INC."
+   ],
+   "uei": [
+    "M7MKJAE99XA2"
+   ],
+   "grants_usd": 10952409.32,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "DEEE0011525",
+     "date": "2025-01-01",
+     "usd": 9500000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THE MAIN GOAL OF THIS PROJECT IS TO DEMONSTRATE THAT THIS HEAVY DUTY (HD) HYDROGEN REFUELING STATION (HRS) CONNECTED TO EXISTING AND FUTURE ",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0011525_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEFE0032113",
+     "date": "2021-10-01",
+     "usd": 1452409.32,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "NEW AWARD DE-FE0032113 WITH LINDE, INC. TITLED ENGINEERING STUDY OF SVANTE’S SOLID SORBENT POST-COMBUSTION CO2 CAPTURE TECHNOLOGY AT A LINDE",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEFE0032113_089"
+    }
+   ],
+   "n": 2,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_DEEE0011525_089"
+  },
+  "DE": {
+   "match_key": "DEERE",
+   "recipient_names": [
+    "DEERE & COMPANY"
+   ],
+   "uei": [
+    "CKUTCV8XSP31"
+   ],
+   "grants_usd": 5006732.0,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "DEEE0010598",
+     "date": "2023-10-01",
+     "usd": 2250000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "RUGGEDIZED MOBILE FAST CHARGER FOR OFF-ROAD VEHICLES\n\nTHE OBJECTIVE OF THE PROJECT IS TO DEVELOP AND DEMONSTRATE A 600KW MOBILE FAST CHARGER",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0010598_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009874",
+     "date": "2022-07-15",
+     "usd": 2756732.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "NEW AWARD DE-EE0009874 \nPROJECT TITLED: ARTICULATED DUMP TRUCK (ADT) ELECTRIFICATION -GHG REDUCTIONS AND COMMERCIALIZATION OF\nNEW TECHNOLOGY",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009874_089"
+    }
+   ],
+   "n": 2,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_DEEE0010598_089"
+  },
+  "CMI": {
+   "match_key": "CUMMINS",
+   "recipient_names": [
+    "CUMMINS INC"
+   ],
+   "uei": [
+    "E724ZMNE7E27"
+   ],
+   "grants_usd": 31320938.0,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "DEEE0011176",
+     "date": "2024-08-01",
+     "usd": 2555001.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THE OBJECTIVE OF THE PROJECT IS TO RESEARCH, DEVELOP, AND VALIDATE AN H2-ICE HYDROGEN INTERNAL COMBUSTION ENGINE  OPERATING ON 100% HYDROGEN",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0011176_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0011173",
+     "date": "2024-07-03",
+     "usd": 2850000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THE GOAL OF THE PROJECT IS TO RESEARCH, DEVELOP, AND DEMONSTRATE A VERY-HIGH-POWER POLYPHASE WIRELESS CHARGING SYSTEM SUITABLE FOR CLASS 8 H",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0011173_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0010648",
+     "date": "2023-10-01",
+     "usd": 1250000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "MD-HD ZEV INFRASTRUCTURE PLANNING WITH FOCUS ON I-80 MIDWEST (IN-IL-OH) CORRIDOR\nTHIS PROJECT WILL DEVELOP ZEV INFRASTRUCTURE PLANS FOR THE ",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0010648_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0010605",
+     "date": "2023-10-01",
+     "usd": 5000000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THIS PROJECT WILL DEVELOP ZEV INFRASTRUCTURE PLANS FOR THE MIDWEST I-80 CORRIDOR (IN-OH-IL) AND THE STATE OF INDIANA. FIRST, POLARIS TRANSPO",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0010605_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009876",
+     "date": "2022-02-01",
+     "usd": 4000000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "NEW AWARD TO CUMMINS INC. FOR PROJECT TITLED CUMMINS HIGH EFFICIENCY, ULTRA LOW EMISSIONS HEAVY-DUTY 10 LITER NATURAL GAS ENGINE PROJECT",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009876_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009652",
+     "date": "2021-10-01",
+     "usd": 4998714.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "NEW AWARD DE-EE0009652 TO CUMMINS INC. FOR PROJECT HIGH POWER DENSITY INVERTER",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009652_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEEE0009460",
+     "date": "2021-05-01",
+     "usd": 3750000.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "NEW AWARD DE-EE0009460 WITH CUMMINS, INC. TITLED DYNAMIC SKIP FIRE (REGISTERED TRADEMARK) ON A HEAVY-DUTY NATURAL GAS ENGINE",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0009460_089"
+    },
+    {
+     "type": "grant",
+     "id": "DEFE0031971",
+     "date": "2021-01-01",
+     "usd": 2000825.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "DE-FE0031971: CUMMINS INCORPORATED - PROJECT TITLED, \n''CUMMINS REVERSIBLE SOLID OXIDE FUEL CELL SYSTEM DEVELOPMENT''\n\nNEW AWARD",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEFE0031971_089"
+    }
+   ],
+   "n": 11,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_DEEE0011176_089"
+  },
+  "LMT": {
+   "match_key": "LOCKHEED MARTIN",
+   "recipient_names": [
+    "LOCKHEED MARTIN CORP",
+    "LOCKHEED MARTIN CORPORATION"
+   ],
+   "uei": [
+    "CQWLW9XRQTH5",
+    "G4KDGE4JFFK7",
+    "HDHVQ4EF8A89"
+   ],
+   "grants_usd": 11688250.42,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "80NSSC26K0908",
+     "date": "2025-09-30",
+     "usd": 165321.0,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "TEST AND IMPLEMENT METHODS TO INTEGRATE GIT-BASED REPOSITORIES AND MIGRATE EXISTING SOLARSOFTWARE (SSW) BRANCHES INTO A PUBLIC GITLAB REPOSI",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC26K0908_080"
+    },
+    {
+     "type": "grant",
+     "id": "80NSSC25K7691",
+     "date": "2025-02-14",
+     "usd": 349710.0,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "EXECUTE A BALANCED SCIENCE PROGRAM BASED ON DISCIPLINE-SPECIFIC GUIDANCE FROM THE NATIONAL ACADEMIES OF SCIENCES  ENGINEERING  AND MEDICINE ",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC25K7691_080"
+    },
+    {
+     "type": "grant",
+     "id": "W911NF2520025",
+     "date": "2025-01-28",
+     "usd": 1603653.0,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "REQUIREMENT DESIGNED NANOMATERIAL ARCHITECTURE FOR SENSING, COMMUNICATION, AND MATERIAL",
+     "url": "https://www.usaspending.gov/award/ASST_NON_W911NF2520025_097"
+    },
+    {
+     "type": "grant",
+     "id": "80NSSC24K0175",
+     "date": "2024-01-08",
+     "usd": 1499715.0,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "INVESTIGATING THE ORIGIN OF SOLAR ENERGETIC PARTICLES AND THEIR TRANSPORT IN THE INNER HELIOSPHERE",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC24K0175_080"
+    },
+    {
+     "type": "grant",
+     "id": "80NSSC24K0136",
+     "date": "2023-11-21",
+     "usd": 637450.0,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "20-HSR20_2-0075 ASSESSING OBSERVED AND PHYSICAL INPUTS FOR REALISTIC SOLAR WIND AND CORONAL MASS EJECTION MODELING",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC24K0136_080"
+    },
+    {
+     "type": "grant",
+     "id": "80NSSC24M0027",
+     "date": "2023-06-27",
+     "usd": 61035.0,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "PARTICIPATION IN THE NASA HIGH-RATE COMPOSITES AIRCRAFT MANUFACTURING (HICAM) PROJECT PHASE 1  PERFORMING WORK APPROVED BY NASA AND THE ADVA",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC24M0027_080"
+    },
+    {
+     "type": "grant",
+     "id": "80NSSC23K0408",
+     "date": "2023-05-01",
+     "usd": 549843.0,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "22-HGIO22_2-0033 EXPLORATION OF THE RELATION BETWEEN CORONAL DIMMINGS AND CORONAL MASS EJECTIONS",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC23K0408_080"
+    },
+    {
+     "type": "grant",
+     "id": "80NSSC23K0813",
+     "date": "2023-03-08",
+     "usd": 886146.35,
+     "loan_face_usd": null,
+     "agency": "National Aeronautics and Space Administration",
+     "desc": "SINGLE SOURCE  THE HELIOPHYSICS EVENT KNOWLEDGEBASE BEYOND THE SOLAR DYNAMICS OBSERVATORY",
+     "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC23K0813_080"
+    }
+   ],
+   "n": 14,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_80NSSC26K0908_080"
+  },
+  "COHR": {
+   "match_key": "COHERENT",
+   "recipient_names": [
+    "COHERENT CORP"
+   ],
+   "uei": [
+    "C11QDRWYE9B6"
+   ],
+   "grants_usd": 24392508.0,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "DEEE0011163",
+     "date": "2024-06-01",
+     "usd": 3590446.0,
+     "loan_face_usd": null,
+     "agency": "Department of Energy",
+     "desc": "THE PURPOSE OF THIS PROJECT IS TO DEVELOP BATTERIES USING A NOVEL SULFUR CATHODE TECHNOLOGY. EXPECTED DELIVERABLES INCLUDE DELIVERING 10 CEL",
+     "url": "https://www.usaspending.gov/award/ASST_NON_DEEE0011163_089"
+    },
+    {
+     "type": "grant",
+     "id": "FA86501721727",
+     "date": "2017-04-05",
+     "usd": 20802062.0,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "TAS::57 3600::TAS DEVELOPMENT OF LARGE SILICON CARBIDE (SIC) SUBSTRATES AND HOMOEPITAXIAL PROCESSES",
+     "url": "https://www.usaspending.gov/award/ASST_NON_FA86501721727_097"
+    }
+   ],
+   "n": 2,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_DEEE0011163_089"
+  },
+  "MPC": {
+   "match_key": "MARATHON PETROLEUM",
+   "recipient_names": [
+    "MARATHON PETROLEUM COMPANY LP"
+   ],
+   "uei": [
+    "LEM4ASHMJES5"
+   ],
+   "grants_usd": 35568.0,
+   "loans_usd": 0.0,
+   "awards": [
+    {
+     "type": "grant",
+     "id": "EMW-2021-PU-00295",
+     "date": "2021-09-01",
+     "usd": 35568.0,
+     "loan_face_usd": null,
+     "agency": "Department of Homeland Security",
+     "desc": "PORT SECURITY GRANT PROGRAM",
+     "url": "https://www.usaspending.gov/award/ASST_NON_EMW-2021-PU-00295_070"
+    }
+   ],
+   "n": 1,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_EMW-2021-PU-00295_070"
+  }
+ }
+}
