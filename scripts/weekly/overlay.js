@@ -32,7 +32,7 @@
    <div style="font-size:16px;color:#c9c4b8;margin-top:4px">${esc(a.sub)}</div></div>`;
   const sum = (P, label) => { const s = a.s[P]; return `<div style="font-size:16px;font-weight:800;color:${col(P) === RED ? "#d27a6f" : "#7f9fd0"}">${label}</div>
    <div style="font-size:13px;color:#d8d3c8;margin-top:3px">${s.m} ${s.m === 1 ? "member" : "members"} · ${s.n} ${s.n === 1 ? "trade" : "trades"} · <b style="color:${OR}">${s.b} ${s.b === 1 ? "buy" : "buys"}</b> / ${s.s} ${s.s === 1 ? "sell" : "sells"}</div>
-   <div style="font:12px ui-monospace,Menlo,monospace;color:#9c978c;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Most traded: ${esc(s.top.reduce((o, t) => (o.length && (o.join(", ") + ", " + t).length > 36) ? o : (o.length < 3 ? [...o, t] : o), []).join(", ") || "none")}</div>`; };
+   <div style="font:12px ui-monospace,Menlo,monospace;color:#9c978c;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Most traded: ${esc(s.top.reduce((o, t) => (o.length && (o.join(", ") + ", " + t).length > 26) ? o : (o.length < 3 ? [...o, t] : o), []).join(", ") || "none")}</div>`; };
   html += `<div id="wk-side" style="position:absolute;right:40px;top:150px;width:360px;background:${BG}e6;border:1px solid ${OR}55;border-radius:6px;padding:18px">
    <div style="font:600 12px ui-monospace,Menlo,monospace;letter-spacing:2px;color:#9c978c;margin-bottom:12px">BY PARTY</div>
    ${sum("R", "Republicans")}<div style="height:1px;background:#ffffff1f;margin:14px 0"></div>${sum("D", "Democrats")}
