@@ -1,0 +1,275 @@
+{
+ "start": "2026-10-23",
+ "end": "2026-10-29",
+ "fallback": false,
+ "generated": "2026-10-29",
+ "trades": 35,
+ "members": 4,
+ "summary": {
+  "R": {
+   "m": 3,
+   "n": 33,
+   "b": 1,
+   "s": 32,
+   "top": [
+    "AMZN",
+    "MCD",
+    "COST",
+    "DIS"
+   ]
+  },
+  "D": {
+   "m": 1,
+   "n": 2,
+   "b": 1,
+   "s": 1,
+   "top": [
+    "Black Belt Energ",
+    "Tennessee Energy"
+   ]
+  }
+ },
+ "hidden_members": 0,
+ "problems": [],
+ "rows": [
+  {
+   "name": "Pete Sessions",
+   "party": "R",
+   "district": "TX-17",
+   "trades": [
+    {
+     "a": "DIS",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/28"
+    },
+    {
+     "a": "AMZN",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/27"
+    },
+    {
+     "a": "MCD",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/27"
+    },
+    {
+     "a": "HD",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/22"
+    },
+    {
+     "a": "LOW",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/22"
+    },
+    {
+     "a": "PEP",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/21"
+    },
+    {
+     "a": "SOLS",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/21"
+    },
+    {
+     "a": "IBM",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/20"
+    },
+    {
+     "a": "BRK.B",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/15"
+    },
+    {
+     "a": "CVX",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/14"
+    },
+    {
+     "a": "XOM",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/14"
+    },
+    {
+     "a": "COST",
+     "s": "SELL",
+     "amt": "$100K-$250K",
+     "d": "10/13"
+    },
+    {
+     "a": "PG",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/08"
+    },
+    {
+     "a": "ABT",
+     "s": "SELL",
+     "amt": "$50K-$100K",
+     "d": "10/02"
+    },
+    {
+     "a": "GOOG",
+     "s": "SELL",
+     "amt": "$100K-$250K",
+     "d": "10/02"
+    },
+    {
+     "a": "AMZN",
+     "s": "SELL",
+     "amt": "$100K-$250K",
+     "d": "10/02"
+    },
+    {
+     "a": "AAPL",
+     "s": "SELL",
+     "amt": "$250K-$500K",
+     "d": "10/02"
+    },
+    {
+     "a": "CMG",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/02"
+    },
+    {
+     "a": "COST",
+     "s": "SELL",
+     "amt": "$250K-$500K",
+     "d": "10/02"
+    },
+    {
+     "a": "MA",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/02"
+    },
+    {
+     "a": "MCD",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/02"
+    },
+    {
+     "a": "MSFT",
+     "s": "SELL",
+     "amt": "$250K-$500K",
+     "d": "10/02"
+    },
+    {
+     "a": "SBUX",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/02"
+    },
+    {
+     "a": "TSLA",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/02"
+    },
+    {
+     "a": "TJX",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/02"
+    },
+    {
+     "a": "VZ",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/02"
+    },
+    {
+     "a": "V",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/02"
+    },
+    {
+     "a": "WMT",
+     "s": "SELL",
+     "amt": "$50K-$100K",
+     "d": "10/02"
+    },
+    {
+     "a": "NVDA",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/02"
+    },
+    {
+     "a": "HON",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/01"
+    }
+   ]
+  },
+  {
+   "name": "Max Miller",
+   "party": "R",
+   "district": "OH-7",
+   "trades": [
+    {
+     "a": "AIX Ventures Fun",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/01"
+    },
+    {
+     "a": "Mercato Partners",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "09/30"
+    }
+   ]
+  },
+  {
+   "name": "Suzan DelBene",
+   "party": "D",
+   "district": "WA-1",
+   "trades": [
+    {
+     "a": "Black Belt Energ",
+     "s": "BUY",
+     "amt": "$250K-$500K",
+     "d": "10/14"
+    },
+    {
+     "a": "Tennessee Energy",
+     "s": "SELL",
+     "amt": "$250K-$500K",
+     "d": "10/14"
+    }
+   ]
+  },
+  {
+   "name": "Sheri Biggs",
+   "party": "R",
+   "district": "SC-3",
+   "trades": [
+    {
+     "a": "Oaktree Strategi",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "09/30"
+    }
+   ]
+  }
+ ],
+ "image": "congress-trades-2026-10-29.png"
+}
