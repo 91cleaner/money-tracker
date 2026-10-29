@@ -22,6 +22,16 @@ from flows import Locator  # noqa: E402
 
 INST = "서울특별시 강서구"
 NEEDLE = "신청사"
+# 마곡 통합신청사와 별개인 등촌2동 주민센터 신청사 등은 제외 (팩트체크 2026-10-29)
+EXCLUDE_WORDS = ("등촌", "주민센터", "동 신청사")
+EXCLUDE_NOS = {"R26TA02202994", "R26TA02246221", "R26TA02254581", "R26TA02303858", "R26TA02352951"}
+
+
+def wanted(title, no=None):
+    title = title or ""
+    if NEEDLE not in title or (no and str(no).split("-")[0] in EXCLUDE_NOS):
+        return False
+    return not any(w in title for w in EXCLUDE_WORDS)
 MONTHS = ("2026-07", "2026-08", "2026-09", "2026-10")
 ORIGIN = {"name": "강서구청", "lat": 37.5509, "lng": 126.8495}
 OUT = os.path.join(ROOT, "data", "focus", "gangseo-sincheongsa.json")
@@ -126,7 +136,7 @@ def collect():
         for row in doc.get("rows") or []:
             if not isinstance(row, dict):
                 continue
-            if row.get("inst") != INST or NEEDLE not in (row.get("title") or ""):
+            if row.get("inst") != INST or not wanted(row.get("title"), row.get("no")):
                 continue
             rec = {
                 "no": row.get("no"),
@@ -146,7 +156,7 @@ def collect():
     for mon in MONTHS:
         doc = load(os.path.join(ROOT, "data", "search", "se", "ct-%s.json" % mon))
         for i in range(doc["n"]):
-            if doc["inst"][i] != inst_i or NEEDLE not in (doc["title"][i] or ""):
+            if doc["inst"][i] != inst_i or not wanted(doc["title"][i], doc["no"][i] if "no" in doc else None):
                 continue
             vi = doc["vendor"][i]
             name = sv["name"][vi] if vi >= 0 else (doc["vname"][i] or "")
