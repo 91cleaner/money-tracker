@@ -66,8 +66,15 @@ def short_asset(t):
     a = t.get("asset") or "Asset"
     if "Treasury" in a or "T-Bill" in a or "US Treas" in a:
         return "T-Bill" if "Bill" in a else "T-Note" if "Note" in a else "Treasury"
-    a = a.split(" - ")[0].replace(" LLC", "").replace(" Inc.", "").replace(" Corporation", "")
-    return a[:16].rstrip()
+    a = a.split(" - ")[0].split(" (")[0]
+    for suf in (" LLC", " L.P.", " LP", " Inc.", " Inc", " Corporation", " Corp.", " Co.", " Fund", " Holdings"):
+        a = a.replace(suf, "")
+    out = ""
+    for w in a.split():
+        if len(out) + len(w) + (1 if out else 0) > 18:
+            break
+        out = f"{out} {w}".strip()
+    return (out or a[:18]).rstrip(",;:.-& ")
 
 
 def amt(a):
