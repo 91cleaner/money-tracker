@@ -8,7 +8,11 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / ".public-pages"
 PUBLIC_DIRS = ("assets", "data", "c", "s", "world-intelligence", "3ac9ae3", "9590438", "b387449")
 # Private US trade datasets must never be shipped to public GitHub Pages.
-PRIVATE_DATA_FILES = {"data/us/trades.json", "data/us/house-ptr-candidates.json", "data/us/ptr-crosschecks.json"}
+PRIVATE_DATA_FILES = {
+    "data/us/trades.json", "data/us/house-ptr-candidates.json",
+    "data/us/ptr-crosschecks.json",
+    "data/us-ptr-research-queue.json", "data/us-ptr-extraction-status.json",
+}
 # .geojson: national map country borders (polgame.js), .csv: trip downloads (national.js) — both are fetched by public pages
 PUBLIC_EXTENSIONS = {".html", ".css", ".js", ".json", ".geojson", ".csv", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico", ".webmanifest", ".txt"}
 PUBLIC_ROOT_FILES = {".nojekyll"}
