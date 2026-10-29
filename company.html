@@ -54,6 +54,20 @@ svg.spark{width:100%;height:120px;display:block}
 .pin.k-t{background:#ffd36b}.pin.k-b{background:#7fd8ff}.pin.k-w{background:#ff9bf0}
 .pinlg{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font:11px ui-monospace,Menlo,monospace;color:var(--mut)}.pinlg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
 .pinbox{margin-top:8px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#03130b;font-size:12.5px}.pinbox .k{font:700 11px ui-monospace,Menlo,monospace;color:var(--g)}.pinbox .s{color:var(--mut);font-size:12px}.pinbox div+div{margin-top:6px}
+.ins{--buy:#5dff9e;--sell:#ff8a8a}
+.ins .big{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 12px}
+.ins .big div{border:2px solid var(--line2);border-radius:12px;padding:12px;background:#03130b;text-align:center}
+.ins .big b{display:block;font:800 40px/1.1 ui-monospace,Menlo,monospace}
+.ins .big span{font-size:16px;font-weight:700}
+.ins .b b,.ins .b span{color:var(--buy)}.ins .s b,.ins .s span{color:var(--sell)}
+.tug{height:22px;border-radius:999px;overflow:hidden;display:flex;border:2px solid var(--line2);background:#1a0c0c}
+.tug i{display:block;height:100%;background:var(--buy);transition:width .6s}.tug u{flex:1;background:var(--sell)}
+.tugl{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin:4px 2px 10px}
+.ins .say{font-size:17px;line-height:1.6;color:#eafff2;margin:6px 0 12px}
+.ins .row{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:center;padding:10px 0;border-bottom:1px solid #12301f;font-size:15px}
+.ins .row .tag{font-weight:800;font-size:15px;border-radius:8px;padding:3px 10px;border:2px solid}
+.ins .row .tag.b{color:var(--buy);border-color:var(--buy)}.ins .row .tag.s{color:var(--sell);border-color:var(--sell)}
+.ins .row .who{font-weight:700;color:#eafff2}.ins .row .sub{grid-column:2/-1;font-size:13px;color:var(--mut)}
 .note{margin:8px 0 0;color:var(--mut);font-size:12px}
 .warnnote{margin:0 0 10px;padding:8px 10px;border-left:3px solid var(--warn);background:#1c1606;color:#f3e3b4;font-size:12.5px;border-radius:0 6px 6px 0}
 table{width:100%;border-collapse:collapse;font-size:12.5px}
@@ -284,6 +298,45 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     return p;
   }
 
+  function insiderBlock(d) {
+    var EN = !!(window.MTI18N && window.MTI18N.isEn);
+    function L(ko, en) { return EN ? en : ko; }
+    var p = panel(L("회사 사람들의 주식 거래", "Company people's stock trades"), null, true); p.className += " ins";
+    if (!d) { p.appendChild(el("div", "empty", L("이 회사는 아직 자료가 없어요. (SEC 내부자 신고 Form 4 수집 대상 밖이거나 준비 중)", "No data yet for this company (not in the SEC Form 4 collection yet)."))); return p; }
+    var t = (d.trades || []).slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+    var buys = t.filter(function (x) { return x.code === "P"; }), sells = t.filter(function (x) { return x.code === "S"; });
+    function val(a) { return a.reduce(function (s, x) { return s + (x.shares || 0) * (x.price || 0); }, 0); }
+    function ppl(a) { var o = {}; a.forEach(function (x) { o[x.who] = 1; }); return Object.keys(o).length; }
+    var days = d.days || 90;
+    if (!t.length) p.appendChild(el("p", "say", L("최근 " + days + "일 동안 시장에서 직접 사거나 판 신고는 없었어요.", "No open-market buy or sell reports in the last " + days + " days.")));
+    else {
+      p.appendChild(el("p", "say", L("최근 " + days + "일, 같은 기간에 임원·이사 등이 주식을 산 신고 " + buys.length + "건, 판 신고 " + sells.length + "건이 있었어요.",
+        "In the last " + days + " days, insiders filed " + buys.length + " buy reports and " + sells.length + " sell reports.")));
+      var big = el("div", "big"), b = el("div", "b"), s2 = el("div", "s");
+      b.appendChild(el("b", "", String(ppl(buys)))); b.appendChild(el("span", "", L("🟢 산 사람", "🟢 People who bought")));
+      s2.appendChild(el("b", "", String(ppl(sells)))); s2.appendChild(el("span", "", L("🔴 판 사람", "🔴 People who sold")));
+      big.appendChild(b); big.appendChild(s2); p.appendChild(big);
+      var vb = val(buys), vs = val(sells), tot = vb + vs;
+      if (tot > 0) {
+        var tug = el("div", "tug"), bar = el("i"); bar.style.width = (vb / tot * 100).toFixed(1) + "%"; tug.appendChild(bar); tug.appendChild(el("u"));
+        tug.setAttribute("role", "img"); tug.setAttribute("aria-label", L("산 금액과 판 금액 비교", "Bought vs sold amount"));
+        p.appendChild(tug);
+        var tl = el("div", "tugl"); tl.appendChild(el("span", "up", L("산 금액 ", "Bought ") + usd(vb))); tl.appendChild(el("span", "down", L("판 금액 ", "Sold ") + usd(vs))); p.appendChild(tl);
+      }
+      t.slice(0, 12).forEach(function (x) {
+        var r = el("div", "row"), buy = x.code === "P";
+        r.appendChild(el("span", "tag " + (buy ? "b" : "s"), buy ? L("샀어요", "Bought") : L("팔았어요", "Sold")));
+        r.appendChild(el("span", "who", (x.who || "-") + (x.role ? " · " + x.role : "")));
+        r.appendChild(el("span", "mono", (x.shares != null ? Math.round(x.shares).toLocaleString("en-US") + L("주", " sh") : "-") + (x.price ? " · $" + x.price.toFixed(2) : "")));
+        var sub = el("div", "sub"); sub.appendChild(document.createTextNode(L("거래일 ", "Traded ") + x.date + L(" · 신고일 ", " · Filed ") + x.filed + (x.plan ? L(" · 미리 짠 계획(10b5-1)에 따른 거래로 표시됨", " · marked as a pre-set plan (10b5-1)") : "") + " "));
+        if (x.url) sub.appendChild(link("↗", x.url));
+        r.appendChild(sub); p.appendChild(r);
+      });
+    }
+    p.appendChild(el("p", "note", L("SEC에 내야 하는 공식 신고(Form 4)를 모았어요. 시장에서 직접 사고판 것만 세고, 스톡옵션·증여 등 " + (d.other_rows || 0) + "건은 뺐어요. 이유는 알 수 없고, 투자 조언이 아니에요.",
+      "Collected from official SEC Form 4 reports. Only open-market buys and sells are counted; " + (d.other_rows || 0) + " option / gift / other rows are left out. Reasons are unknown. Not investment advice.")));
+    return p;
+  }
   function notFound() {
     app.replaceChildren();
     var p = panel("회사를 찾지 못했습니다", null, true);
@@ -295,9 +348,9 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   if (!T) { notFound(); renderFoot({}); return; }
   document.title = "MONEY TRACKER — " + T + " 회사 상세";
   Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades.json"), get("data/us/lobbying.json"),
-    get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json"), get("data/us/whitehouse.json")])
+    get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json"), get("data/us/whitehouse.json"), get("data/us/insider-form4.json")])
   .then(function (r) {
-    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8], wh = r[9] || {};
+    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8], wh = r[9] || {}, f4 = r[10] || {};
     var ent = (si.entities || {})["company:" + T], sec = (ts.tickers || {})[T];
     var trades = ((tr.trades) || []).filter(function (x) { return String(x.tk || "").toUpperCase() === T; })
       .sort(function (a, b) { return String(b.filed || "").localeCompare(String(a.filed || "")) || String(b.d || "").localeCompare(String(a.d || "")); });
@@ -344,6 +397,8 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     // 3) trades
     app.appendChild(tradesBlock(trades, members));
 
+    app.appendChild(insiderBlock((f4.companies || {})[T] ? Object.assign({ days: f4.days }, f4.companies[T]) : null));
+
     // 4) timeline
     var ev = [], undated = [], lob = (lb.companies || {})[T], lobUrl = null;
     ((ent && ent.route) || []).forEach(function (x) {
@@ -365,7 +420,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     }
     ev.sort(function (a, b) { return b.date.localeCompare(a.date); });
     app.appendChild(timelineBlock(ev, undated, lob, ((si.money_stops || {})["awards:"] || 0) > 0));
-    renderFoot({ si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr, ins: ins });
+    renderFoot({ f4: f4, si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr, ins: ins });
   });
 
   function renderFoot(s) {
@@ -381,6 +436,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     if (s.pac && s.pac.updated) li("PAC: " + (s.pac.source || "FEC"), s.pac.updated, "https://www.fec.gov/data/");
     if (s.routes && s.routes.updated) li("공시·규제 경로: data/us/ticker-routes.json", s.routes.updated, null);
     if (s.ins && s.ins.updated) li("핵심 비교: data/us/insights.json (규칙 계산, 인과 아님)", s.ins.updated, null);
+    if (s.f4 && s.f4.updated) li("내부자 거래: SEC Form 4 (data/us/insider-form4.json)", s.f4.updated, "https://www.sec.gov/edgar/search/");
     li("주가: " + (s.pr ? (s.pr.source || "data/us/prices/") : "data/us/prices/ 자료 없음(준비 중)"), s.pr && (s.pr.updated || s.pr.as_of), null);
     foot.appendChild(ul);
   }
