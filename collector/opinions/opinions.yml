@@ -1,0 +1,41 @@
+name: 남들 의견 수집 (드롭 파일 + 임원 발언)
+# 주의: 이 파일은 .github/workflows/opinions.yml 로 옮겨야 돌아간다(Claude 앱은 workflows 폴더를 수정할 권한이 없어 여기 둠).
+# 유료 API·X 자격 증명 없음. X 글은 봇이 data/opinions/YYYY-MM-DD.json 으로 올려 둔 것만 읽는다.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/opinions/20??-??-??.json'
+      - 'data/opinions/accounts.json'
+      - 'data/opinions/execs.json'
+      - 'collector/opinions/**'
+  schedule:
+    - cron: '25 21 * * *'
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: {group: opinions, cancel-in-progress: false}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - uses: actions/setup-node@v4
+        with: {node-version: '20'}
+      - name: 테스트
+        run: |
+          python3 tests/test_opinions.py
+          node --test tests/opinions.test.cjs
+      - name: 임원 발언 수집 (실패해도 계속)
+        run: python3 collector/opinions/fetch_exec.py || echo "::warning::임원 발언 수집 건너뜀"
+      - name: 검증 + index.json 만들기
+        run: python3 collector/opinions/build.py
+      - run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data/opinions
+          git diff --cached --quiet && exit 0
+          git commit -m "data: opinions $(date -u +%F)"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push && exit 0; sleep $((i*10)); done; exit 1

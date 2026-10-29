@@ -1,0 +1,8 @@
+{
+  "_readme": "'남들 의견' 계정 목록. 여기만 고치면 됨. role: analyst|trader|influencer|exec. company_ticker 는 exec 만. title 은 exec 직함(기본 CEO). 드롭 파일(data/opinions/YYYY-MM-DD.json)에서 이 목록에 없는 계정·역할이 다른 글은 버림.",
+  "accounts": [
+    {"handle": "jimcramer", "name": "Jim Cramer", "role": "influencer", "tickers": ["NVDA", "AAPL", "MSFT", "AMZN", "GOOGL", "META", "TSLA"]},
+    {"handle": "jensenhuang", "name": "Jensen Huang", "role": "exec", "title": "CEO", "company_ticker": "NVDA", "tickers": ["NVDA"]},
+    {"handle": "elonmusk", "name": "Elon Musk", "role": "exec", "title": "CEO", "company_ticker": "TSLA", "tickers": ["TSLA"]}
+  ]
+}
