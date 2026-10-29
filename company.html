@@ -270,9 +270,9 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
           ["lbl", "신고일", r.filed || "-"], ["lbl", "거래일", r.d || "-"],
           ["who", "", (r.who || "-") + (m ? " (" + m.party + "-" + m.state + ")" : "") + " · " + (r.c === "s" ? "상원" : "하원")],
           ["lbl", "구분", TY[String(r.ty || "").charAt(0)] || r.ty || "-"], ["lbl", "금액", r.amt || "-"],
-          ["lbl num", "신고까지", lag == null ? "-" : lag + "일" + (lag > 45 ? " · 45일 초과" : "")]
+          ["lbl num", "신고까지", lag == null ? "-" : lag + "일" + (lag > 45 ? " · 숙제 기한(45일) 넘김" : "")]
         ];
-        cells.forEach(function (c) { var td = el("td", c[0], c[2]); if (c[1]) td.setAttribute("data-l", c[1]); if (/45일 초과/.test(c[2])) td.classList.add("down"); tr.appendChild(td); });
+        cells.forEach(function (c) { var td = el("td", c[0], c[2]); if (c[1]) td.setAttribute("data-l", c[1]); if (/45일\) 넘김/.test(c[2])) td.classList.add("down"); tr.appendChild(td); });
         var tdl = el("td", "lbl"); tdl.setAttribute("data-l", "원문"); tdl.appendChild(link("PTR ↗", r.doc)); tr.appendChild(tdl);
         tb.appendChild(tr);
       });
@@ -316,7 +316,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var EN = !!(window.MTI18N && window.MTI18N.isEn);
     function L(ko, en) { return EN ? en : ko; }
     var p = panel(L("회사 사람들의 주식 거래", "Company people's stock trades"), null, true); p.className += " ins";
-    if (!d) { p.appendChild(el("div", "empty", L("이 회사는 아직 자료가 없어요. (SEC 내부자 신고 Form 4 수집 대상 밖이거나 준비 중)", "No data yet for this company (not in the SEC Form 4 collection yet)."))); return p; }
+    if (!d) { p.appendChild(el("div", "empty", L("이 회사는 아직 자료가 없어요. (회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) 모으는 대상 밖이거나 준비 중)", "No data yet for this company (not in the list where we collect records of company insiders trading their own stock (Form 4), or still being prepared)."))); return p; }
     var t = (d.trades || []).slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
     var buys = t.filter(function (x) { return x.code === "P"; }), sells = t.filter(function (x) { return x.code === "S"; });
     function val(a) { return a.reduce(function (s, x) { return s + (x.shares || 0) * (x.price || 0); }, 0); }
@@ -342,7 +342,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
         r.appendChild(el("span", "tag " + (buy ? "b" : "s"), buy ? L("샀어요", "Bought") : L("팔았어요", "Sold")));
         r.appendChild(el("span", "who", (x.who || "-") + (x.role ? " · " + x.role : "")));
         r.appendChild(el("span", "mono", (x.shares != null ? Math.round(x.shares).toLocaleString("en-US") + L("주", " sh") : "-") + (x.price ? " · $" + x.price.toFixed(2) : "")));
-        var sub = el("div", "sub"); sub.appendChild(document.createTextNode(L("거래일 ", "Traded ") + x.date + L(" · 신고일 ", " · Filed ") + x.filed + (x.plan ? L(" · 미리 짠 계획(10b5-1)에 따른 거래로 표시됨", " · marked as a pre-set plan (10b5-1)") : "") + " "));
+        var sub = el("div", "sub"); sub.appendChild(document.createTextNode(L("거래일 ", "Traded ") + x.date + L(" · 신고일 ", " · Filed ") + x.filed + (x.plan ? L(" · 미리 예약해둔 판매 (10b5-1)로 표시됨", " · marked as a pre-scheduled sale (10b5-1)") : "") + " "));
         if (x.url) sub.appendChild(link("↗", x.url));
         r.appendChild(sub); p.appendChild(r);
       });
