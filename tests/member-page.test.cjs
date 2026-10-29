@@ -35,3 +35,11 @@ test('links are restricted to https and data is inserted as text', () => {
   assert.match(script, /function safe\(u\) \{ return \/\^https:/);
   assert.doesNotMatch(script, /innerHTML/);
 });
+
+test("congress timeline panel: key-needed state, same-month wording, no causal words", () => {
+  assert.ok(script.includes("data/us/timeline/status.json"));
+  assert.match(script, /needs_key/);
+  assert.match(script, /같은 달에 /);
+  assert.match(script, /Member timeline/);
+  assert.doesNotMatch(html, /때문에|추천/);
+});
