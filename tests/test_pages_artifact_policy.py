@@ -128,6 +128,25 @@ class PagesArtifactPolicyTests(unittest.TestCase):
                 )
                 (self.root / name).unlink()
 
+    def test_camelcase_review_only_paths_are_blocked(self):
+        # Sensitive names often come from JS or vendor exports in camelCase.
+        for name in (
+            "data/us/apiKeys.json",
+            "data/us/secretToken.json",
+            "data/us/privateRecords.json",
+            "data/us/ptrCrosschecks2026.json",
+            "data/us/PendingFilings.json",
+            "data/us/OAuthSessions.json",
+            "data/us/researchQueue/records.json",
+        ):
+            with self.subTest(name=name):
+                item = self.add(name)
+                self.assertTrue(
+                    any("review-only dataset" in issue for issue in policy.violations(self.root)),
+                    name,
+                )
+                item.unlink()
+
     def test_nested_review_and_credential_paths_are_blocked(self):
         # A safe-looking filename must not bypass review-only directory checks.
         for name in (
