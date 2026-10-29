@@ -2,8 +2,8 @@
  "about": "미국 하원의원이 공시한 반도체 종목 거래 건수(공개 PTR 기록). 거래 사실의 기록일 뿐 잘잘못 판단 아님.",
  "source": "U.S. House Clerk financial disclosures · U.S. Senate eFD (STOCK Act periodic transaction reports)",
  "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
- "count": 182,
- "from": "2025-09-23",
+ "count": 175,
+ "from": "2025-09-25",
  "to": "2026-10-09",
  "by_ticker": [
   {
@@ -12,19 +12,19 @@
   },
   {
    "tk": "AVGO",
-   "n": 24
-  },
-  {
-   "tk": "TSM",
-   "n": 21
+   "n": 23
   },
   {
    "tk": "AMD",
    "n": 21
   },
   {
+   "tk": "TSM",
+   "n": 20
+  },
+  {
    "tk": "MU",
-   "n": 12
+   "n": 11
   },
   {
    "tk": "ADI",
@@ -35,16 +35,16 @@
    "n": 9
   },
   {
-   "tk": "QCOM",
+   "tk": "ASML",
    "n": 8
+  },
+  {
+   "tk": "QCOM",
+   "n": 7
   },
   {
    "tk": "LRCX",
-   "n": 8
-  },
-  {
-   "tk": "ASML",
-   "n": 8
+   "n": 7
   },
   {
    "tk": "TXN",
@@ -56,11 +56,11 @@
   },
   {
    "tk": "MRVL",
-   "n": 5
+   "n": 4
   },
   {
    "tk": "KLAC",
-   "n": 3
+   "n": 2
   },
   {
    "tk": "SMCI",
