@@ -22,9 +22,9 @@ jobs:
           const assert = require('node:assert/strict');
           const entry = fs.readFileSync('index.html','utf8');
           const us = fs.readFileSync('usa-command-legacy.html','utf8');
-          assert.match(entry,/href="national\.html"/);
-          assert.match(entry,/href="world-intelligence\/"/);
-          assert.match(entry,/실시간 의원 거래 데이터/);
+          assert.match(entry,/href="korea\.html"/, "Korean entry must remain accessible");
+          assert.match(entry,/href="world-intelligence\/\?lang=en"/, "U.S. command-room entry must remain accessible");
+          assert.match(entry,/Not investment advice/i, "Public entry must disclose its research-only purpose");
           assert.match(us,/AI 분석 OFF · 실시간 시세 OFF/);
           assert.match(us,/id="usQuery"/);
           assert.match(us,/id="usCmd"/);

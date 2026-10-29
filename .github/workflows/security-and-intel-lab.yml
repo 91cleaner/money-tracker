@@ -32,4 +32,6 @@ jobs:
           test ! -e .public-pages/worker/private-api.js
           test ! -e .public-pages/wrangler.jsonc
           test ! -e .public-pages/collector/collect.py
-          grep -q 'href="intel-lab.html"' .public-pages/index.html
+          # US-first landing redirects to world-intelligence; the lab is still a separate page.
+          grep -Fq 'href="world-intelligence/?lang=en"' .public-pages/index.html
+          grep -Fq 'href="korea.html"' .public-pages/index.html
