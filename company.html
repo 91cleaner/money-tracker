@@ -86,6 +86,19 @@ ol.tl .t{color:#eafff2}
 ol.tl .s{font-size:12px;color:var(--mut)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips a,.chips span{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--line2);border-radius:999px;padding:3px 10px;color:var(--g2)}
+.fl{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.fl li{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:center;border:2px solid var(--line2);border-radius:12px;padding:12px 14px;background:#03130b}
+.fl .st{font:800 18px ui-monospace,Menlo,monospace;color:#04150d;background:var(--g);border-radius:8px;padding:4px 10px;white-space:nowrap}
+.fl .st.k8{background:var(--warn)}
+.fl .big{font-size:18px;font-weight:700;color:#eafff2}
+.fl .sm{grid-column:2;font-size:14px;color:var(--mut)}
+.fl .sm a{font-weight:700}
+.hq{font-size:20px;font-weight:700;color:#eafff2;line-height:1.4}
+.score{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 12px}
+.score div{flex:1 1 140px;border:2px solid var(--line2);border-radius:12px;padding:10px 12px;background:#03130b;text-align:center}
+.score b{display:block;font:800 30px ui-monospace,Menlo,monospace;color:var(--g)}
+.score span{font-size:14px;color:var(--g2)}
+@media(max-width:900px){.fl li{grid-template-columns:1fr}.fl .sm{grid-column:1}}
 footer.foot{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:var(--mut);font-size:12px}
 footer.foot .disc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#03100a}
 footer.foot b{color:var(--warn)}
@@ -337,6 +350,61 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       "Collected from official SEC Form 4 reports. Only open-market buys and sells are counted; " + (d.other_rows || 0) + " option / gift / other rows are left out. Reasons are unknown. Not investment advice.")));
     return p;
   }
+
+  // ---- SEC 공시 피드 (10-K / 8-K) + 본사 주소 : data/us/sec-filings.json ----
+  var EN = !!(window.MTI18N && window.MTI18N.isEn);
+  function L(ko, en) { return EN ? en : ko; }
+  var ITEM = {
+    "1.01": ["중요한 계약을 맺었어요", "Signed a major agreement"], "1.02": ["중요한 계약이 끝났어요", "A major agreement ended"],
+    "1.03": ["파산 관련 절차를 알렸어요", "Bankruptcy-related notice"], "2.01": ["회사나 자산 사고팔기를 마쳤어요", "Finished buying or selling a company or assets"],
+    "2.02": ["실적(번 돈 성적표)을 알렸어요", "Reported results (earnings)"], "2.03": ["새 빚(대출) 의무가 생겼어요", "Took on a new debt obligation"],
+    "2.05": ["구조조정 비용을 알렸어요", "Restructuring costs"], "2.06": ["자산 가치를 크게 낮췄어요", "Big write-down of asset value"],
+    "3.01": ["주식 시장 상장 관련 알림", "Stock exchange listing notice"], "3.02": ["주식을 비공개로 팔았어요", "Sold shares privately"],
+    "5.02": ["임원·이사가 바뀌었어요", "Officer or director change"], "5.03": ["회사 규정을 고쳤어요", "Company rules amended"],
+    "5.07": ["주주 투표 결과를 알렸어요", "Shareholder vote results"], "7.01": ["모두에게 공평하게 알리는 공시", "Fair-disclosure announcement"],
+    "8.01": ["그 밖에 알릴 일", "Other events"], "9.01": ["첨부 자료(재무제표 등)", "Attached documents"]
+  };
+  function itemText(c) { var m = ITEM[c]; return m ? L(m[0], m[1]) : L("항목 ", "Item ") + c; }
+  function ago(iso) { var n = days(iso, new Date().toISOString().slice(0, 10)); return n == null ? "" : n <= 0 ? L("오늘", "today") : L(n + "일 전", n + " days ago"); }
+  function addrLines(a) { if (!a) return null; return [a.street1, a.street2, [a.city, a.state].filter(Boolean).join(", ") + (a.zip ? " " + a.zip : "")].filter(function (x) { return x && x.trim(); }).join("\n"); }
+  function filingsBlock(sf, trades) {
+    var p = panel(L("📬 회사가 낸 공시 · 본사 주소", "📬 Filings & headquarters"), null, true);
+    if (!sf) { p.appendChild(el("div", "empty", L("공시 자료를 아직 못 가져왔어요. 조금 뒤에 다시 와 주세요!", "Filing data is not ready yet. Please check back soon!"))); return p; }
+    var k8 = sf.k8 || [], k10 = sf.k10 || [], today = new Date().toISOString().slice(0, 10);
+    var in90 = k8.filter(function (x) { var n = days(x.filed, today); return n != null && n <= 90; }).length;
+    var tr90 = trades.filter(function (x) { var n = days(x.filed, today); return n != null && n >= 0 && n <= 90; }).length;
+    var sc = el("div", "score");
+    [[k10.length, L("📘 연간 보고서(10-K) 스탬프", "📘 Annual reports (10-K)")], [k8.length, L("📣 수시 공시(8-K) 스탬프", "📣 Current reports (8-K)")], [in90, L("🔥 최근 90일 8-K", "🔥 8-Ks in last 90 days")]].forEach(function (c) {
+      var d = el("div"); d.append(el("b", "", String(c[0])), el("span", "", c[1])); sc.appendChild(d);
+    });
+    p.appendChild(sc);
+    p.appendChild(el("p", "note", L("같은 기간에 이런 일이 있었어요: 최근 90일 동안 8-K " + in90 + "장, 의원 거래 신고 " + tr90 + "건. 서로 이어진 일이라는 뜻은 아니에요.", "In the same 90 days: " + in90 + " 8-K filings and " + tr90 + " lawmaker trade reports. This does not mean they are connected.")));
+    var hq = addrLines(sf.hq);
+    var h = el("div"); h.style.margin = "12px 0";
+    h.appendChild(el("h2", "", L("🏢 본사(사업장) 주소", "🏢 Headquarters (business address)")));
+    var ad = el("div", "hq", hq || L("주소가 없어요", "No address on file")); ad.style.whiteSpace = "pre-line"; h.appendChild(ad);
+    h.appendChild(el("p", "note", L("SEC에 낸 사업장 주소 그대로예요. 우편 주소와 다를 수 있어요.", "Business address exactly as filed with the SEC. It may differ from the mailing address.")));
+    p.appendChild(h);
+    function list(title, rows, cls, label, withItems) {
+      var box = el("div"); box.style.marginTop = "14px"; box.appendChild(el("h2", "", title));
+      if (!rows.length) { box.appendChild(el("div", "empty", L("최근 기록이 없어요", "No recent filings"))); p.appendChild(box); return; }
+      var ul = el("ul", "fl");
+      rows.forEach(function (r) {
+        var li = el("li"); li.appendChild(el("span", "st " + cls, r.form));
+        var txt = withItems ? ((r.items || []).slice(0, 3).map(itemText).join(" · ") || L("공시가 올라왔어요", "Filing posted")) : (r.period ? L(r.period + " 끝난 해의 보고서", "Report for year ended " + r.period) : label);
+        li.appendChild(el("span", "big", txt));
+        var sm = el("span", "sm", r.filed + " (" + ago(r.filed) + ") · "); sm.appendChild(link(L("원문 보기 ↗", "Read original ↗"), r.url)); li.appendChild(sm);
+        if (withItems && (r.items || []).length > 3) sm.insertBefore(document.createTextNode(L("외 " + (r.items.length - 3) + "개 · ", "+" + (r.items.length - 3) + " more · ")), sm.firstChild.nextSibling);
+        ul.appendChild(li);
+      });
+      box.appendChild(ul); p.appendChild(box);
+    }
+    list(L("📘 연간 보고서 10-K · 1년에 한 번 내는 큰 보고서", "📘 10-K · the big yearly report"), k10, "", L("연간 보고서", "Annual report"), false);
+    list(L("📣 수시 공시 8-K · 중요한 일이 생기면 바로 내는 알림", "📣 8-K · quick notice when something important happens"), k8, "k8", "", true);
+    var a = el("div", "actions"); var b = link(L("SEC에서 전체 목록 보기 ↗", "All filings on SEC ↗"), sf.source_url); b.className = "btn"; a.appendChild(b); p.appendChild(a);
+    return p;
+  }
+
   function notFound() {
     app.replaceChildren();
     var p = panel("회사를 찾지 못했습니다", null, true);
@@ -351,6 +419,9 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json"), get("data/us/whitehouse.json"), get("data/us/insider-form4.json")])
   .then(function (r) {
     var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8], wh = r[9] || {}, f4 = r[10] || {};
+    get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json"), get("data/us/whitehouse.json"), get("data/us/sec-filings.json")])
+  .then(function (r) {
+    var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, lb = r[3] || {}, pac = r[4] || {}, routes = r[5] || {}, mem = r[6] || {}, pr = r[7], ins = r[8], wh = r[9] || {}, sfAll = r[10] || {};
     var ent = (si.entities || {})["company:" + T], sec = (ts.tickers || {})[T];
     var trades = ((tr.trades) || []).filter(function (x) { return String(x.tk || "").toUpperCase() === T; })
       .sort(function (a, b) { return String(b.filed || "").localeCompare(String(a.filed || "")) || String(b.d || "").localeCompare(String(a.d || "")); });
@@ -385,6 +456,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     }
     head.appendChild(acts);
     app.appendChild(head);
+    app.appendChild(filingsBlock((sfAll.companies || {})[T], trades));
 
     // 2) prices
     var pins = [];
@@ -421,6 +493,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     ev.sort(function (a, b) { return b.date.localeCompare(a.date); });
     app.appendChild(timelineBlock(ev, undated, lob, ((si.money_stops || {})["awards:"] || 0) > 0));
     renderFoot({ f4: f4, si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr, ins: ins });
+    renderFoot({ sf: sfAll, si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr, ins: ins });
   });
 
   function renderFoot(s) {
@@ -430,6 +503,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var ul = el("ul");
     function li(text, date, url) { var x = el("li"); x.appendChild(document.createTextNode(text + (date ? " · 기준일 " + date : "") + " ")); if (url) x.appendChild(link("↗", url)); ul.appendChild(x); }
     if (s.ts && s.ts.updated) li("회사·업종: SEC EDGAR (data/us/ticker-sectors.json)", s.ts.updated, "https://www.sec.gov/edgar/search/");
+    if (s.sf && s.sf.updated) li("공시 목록·본사 주소: SEC EDGAR data.sec.gov submissions (data/us/sec-filings.json)", s.sf.updated, "https://www.sec.gov/edgar/search/");
     if (s.si && s.si.updated) li("연결 색인: data/search-index.json", s.si.updated, null);
     if (s.tr && s.tr.updated) li("의원 거래: 미국 하원 사무처 재산공개 PTR (data/us/trades.json)", s.tr.updated, "https://disclosures-clerk.house.gov/FinancialDisclosure");
     if (s.lb && s.lb.updated) li("로비: " + (s.lb.source || "LDA"), s.lb.updated, s.lb.source_url);
