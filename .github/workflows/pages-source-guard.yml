@@ -3,12 +3,14 @@ on:
   pull_request:
     paths:
       - '.github/workflows/pages-source-guard.yml'
+      - '.github/workflows/deploy-pages.yml'
       - 'scripts/check_pages_source.py'
       - 'tests/test_pages_source_guard.py'
   push:
     branches: [main]
     paths:
       - '.github/workflows/pages-source-guard.yml'
+      - '.github/workflows/deploy-pages.yml'
       - 'scripts/check_pages_source.py'
       - 'tests/test_pages_source_guard.py'
   workflow_dispatch:
