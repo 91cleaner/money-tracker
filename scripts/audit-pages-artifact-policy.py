@@ -21,8 +21,11 @@ PUBLIC_EXTENSIONS = {
 EXCLUDED_PARTS = {"__pycache__", ".git", "private", "internal", "secrets", "credentials", "debug"}
 BLOCKED_NAMES = {".env", "wrangler.jsonc", "wrangler.toml"}
 BLOCKED_SUFFIXES = {".pem", ".key", ".p12", ".sqlite", ".db"}
+# The House PTR disclosure ledger is owner-approved for public display
+# (HANDOFF.md, 2026-10-28; implementation PR #193). It is historical
+# *reported* trades, not a real-time execution feed. Keep the unreviewed
+# candidate/crosscheck and internal research files blocked.
 PRIVATE_DATA_FILES = {
-    "data/us/trades.json",
     "data/us/house-ptr-candidates.json",
     "data/us/ptr-crosschecks.json",
     "data/us-ptr-research-queue.json",
