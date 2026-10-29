@@ -36,6 +36,21 @@ class PagesArtifactPolicyTests(unittest.TestCase):
             self.add(name)
         self.assertEqual(policy.violations(self.root), [])
 
+    def test_owner_approved_public_ptr_ledger_is_allowed(self):
+        # PR #193 publishes the verified public disclosure ledger. The
+        # independent artifact auditor must not block that approved file.
+        self.add("data/us/trades.json")
+        self.assertEqual(policy.violations(self.root), [])
+        # Similar-looking unverified inputs remain private.
+        for name in ("data/us/house-ptr-candidates.json",
+                     "data/us/ptr-crosschecks.json",
+                     "data/us-ptr-research-queue.json"):
+            with self.subTest(name=name):
+                item = self.add(name)
+                self.assertTrue(policy.violations(self.root), name)
+                item.unlink()
+        self.assertEqual(policy.violations(self.root), [])
+
     def test_private_research_datasets_are_blocked(self):
         for name in policy.PRIVATE_DATA_FILES:
             with self.subTest(name=name):
