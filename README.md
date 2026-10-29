@@ -27,6 +27,7 @@ The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional
 - `python scripts/sync_command_worker.py` embeds a compact, source-linked Congress.gov bill snapshot and the current House PTR research candidates into `cloudflare/admin-worker.js`. Every bill remains available; long action descriptions are shortened in the Worker only. The original full data stays in `data/us/bills.json`.
 - `.github/workflows/sync-command.yml` regenerates the Worker when map or evidence data changes. `us-data.yml` also regenerates it after scheduled collection.
 - **Source synchronization is not a Cloudflare deployment.** The Worker still requires a successful Wrangler deployment, and live `/command` functionality must be tested after deployment. GitHub OAuth access is not device-only access.
+- **Blocking release issue (checked 2026-10-30):** The generated Worker exceeded the repository's 1 MiB GitHub Contents API health-check limit (1,051,223 bytes versus 1,048,576 bytes; [#289](https://github.com/91cleaner/money-tracker/issues/289)). A passing Pages build or a successful Worker source-sync commit does **not** mean the authenticated command room was deployed. Re-measure the generated file and verify the live authenticated route before marking it operational.
 - `data/us/ptr-crosschecks.json` records field-level comparison with original House Clerk PDFs. It verifies what a disclosure **reported**, not independently executed trades, ownership, or any connection to legislation.
 
 ## Collection and validation
