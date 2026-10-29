@@ -48,15 +48,35 @@ class LivePagesExposureTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "entry point unavailable"):
             audit_mod.audit(self.BASE, probe=lambda base, path: 404)
 
-    def test_http_405_head_falls_back_to_get(self):
-        calls = []
+    def test_get_detects_file_even_if_head_would_report_404(self):
+        # HEAD 404 is not proof a file is inaccessible via GET.
+        methods = []
         def opener(req, timeout):
-            calls.append(req.get_method())
+            methods.append(req.get_method())
             if req.get_method() == "HEAD":
-                raise HTTPError(req.full_url, 405, "not allowed", {}, None)
-            return FakeResponse(404, req.full_url)
+                raise HTTPError(req.full_url, 404, "missing on HEAD", {}, None)
+            self.assertEqual(req.headers.get("Range"), "bytes=0-0")
+            return FakeResponse(206, req.full_url)
+        self.assertEqual(audit_mod.status_for(self.BASE, "x.json", opener), 206)
+        self.assertEqual(methods, ["GET"])
+
+    def test_get_404_is_a_missing_file(self):
+        def opener(req, timeout):
+            self.assertEqual(req.get_method(), "GET")
+            raise HTTPError(req.full_url, 404, "not found", {}, None)
         self.assertEqual(audit_mod.status_for(self.BASE, "x.json", opener), 404)
-        self.assertEqual(calls, ["HEAD", "GET"])
+
+    def test_exposed_review_queue_is_detected(self):
+        _, exposed, _ = audit_mod.audit(self.BASE, probe=lambda base, path:
+            206 if path == "data/us-ptr-research-queue.json"
+            else 200 if path == "index.html" else 404)
+        self.assertEqual(exposed, ["data/us-ptr-research-queue.json"])
+
+    def test_review_only_ptr_artifacts_are_in_live_blocklist(self):
+        self.assertTrue({
+            "data/us-ptr-research-queue.json",
+            "data/us-ptr-extraction-status.json",
+        }.issubset(set(audit_mod.BLOCKED)))
 
     def test_external_redirect_is_not_a_pass(self):
         def opener(req, timeout):
