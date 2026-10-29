@@ -26,6 +26,7 @@ jobs:
         run: |
           test -f index.html
           test -f usa-command.html
+          test -f world-intelligence/index.html
           test -f national.html
           test -f assets/vendor/leaflet/leaflet.js
           test -f assets/mt-command-ui.js
@@ -35,6 +36,11 @@ jobs:
           node --check assets/mt-intel-lab.js
           test -f intel-lab.html
           grep -q 'href="world-intelligence/' index.html
+          grep -q 'id="map"' world-intelligence/index.html
+          grep -q 'id="candidatePanel"' world-intelligence/index.html
+          grep -q 'AI 분석 미연결' world-intelligence/index.html
+          grep -q '실시간 거래 데이터 미연결' world-intelligence/index.html
+          grep -q "location.replace('world-intelligence/'" usa-command.html
           grep -q '실시간 시세 OFF' usa-command-legacy.html
       - name: Run private API fail-closed tests
         run: node --test worker/private-api.test.mjs
@@ -53,7 +59,7 @@ jobs:
           path: .public-pages
       - id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify published entry and US command
+      - name: Verify published entry, live world map and redirect
         shell: bash
         env:
           SITE_URL: ${{ steps.deployment.outputs.page_url }}
@@ -63,6 +69,9 @@ jobs:
           base = os.environ['SITE_URL'].rstrip('/') + '/'
           checks = {
             '': ['시스템 연결 상태', 'world-intelligence/'],
+            'world-intelligence/': ['id="map"', 'id="ask"', 'id="candidatePanel"', 'AI 분석 미연결', '실시간 거래 데이터 미연결'],
+            'usa-command.html': ['url=world-intelligence/', "location.replace('world-intelligence/'"],
+            'us.html': ['url=world-intelligence/', "location.replace('world-intelligence/'"],
             'usa-command-legacy.html': ['id="usCmd"', '실시간 시세 OFF', 'mt-map-only-controller'],
             'assets/mt-command-ui.js': [],
           }
