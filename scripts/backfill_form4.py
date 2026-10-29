@@ -6,7 +6,7 @@ for tracked issuers (by CIK). SEC_USER_AGENT env required; never printed. Reques
 import csv, io, json, os, sys, time, zipfile, urllib.request, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from us_company_list import ROOT, companies
-UA = os.environ.get("SEC_USER_AGENT", "").strip()
+UA = (os.environ.get("SEC_USER_AGENT", "").strip() or "MoneyTracker research Leecheolhan91@gmail.com")
 LIST = "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
 csv.field_size_limit(10**8)
 def get(u):

@@ -6,7 +6,7 @@ SEC는 초당 10회 제한 + User-Agent 필수 → 초당 약 5회로 느리게 
 import json, os, sys, time, datetime, urllib.request, urllib.error
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "data", "us", "sec-filings.json")
-UA = os.environ.get("SEC_UA", "MoneyTracker Research contact@91cleaner.dev")
+UA = (os.environ.get("SEC_USER_AGENT") or os.environ.get("SEC_UA") or "MoneyTracker research Leecheolhan91@gmail.com")
 K_MAX, E_MAX = 5, 12  # 회사당 보관 개수
 
 

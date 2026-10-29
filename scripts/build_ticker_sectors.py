@@ -4,7 +4,7 @@
 출처: SEC company_tickers.json, data.sec.gov/submissions (공식). 10 req/s 이하로 호출.
 위원회 집계(committee_trade_counts)는 내부 분석용 데이터이며 개별 의원 거래를 화면에 공개하지 않는다(HANDOFF 규칙).
 
-  SEC_UA="MoneyTracker Research contact@example.com" python3 scripts/build_ticker_sectors.py
+  SEC_USER_AGENT="MoneyTracker research Leecheolhan91@gmail.com" python3 scripts/build_ticker_sectors.py
 """
 from __future__ import annotations
 import json, os, re, time, urllib.request
@@ -15,7 +15,7 @@ TRADES = os.path.join(ROOT, "data", "us", "trades.json")
 MEMBERS = os.path.join(ROOT, "data", "us", "members.json")
 OUT = os.path.join(ROOT, "data", "us", "ticker-sectors.json")
 CACHE = "/tmp/mt-sec-submissions-cache.json"
-UA = os.environ.get("SEC_UA", "MoneyTracker Research contact@91cleaner.dev")
+UA = (os.environ.get("SEC_USER_AGENT") or os.environ.get("SEC_UA") or "MoneyTracker research Leecheolhan91@gmail.com")
 
 # SIC 범위 → 섹터 (SEC Division 기준을 앱용으로 단순화)
 SIC_RANGES = [

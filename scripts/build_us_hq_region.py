@@ -25,7 +25,7 @@ HOLD = os.path.join(ROOT, "data", "nps", "holdings_us_2026Q2.json")
 OUT = os.path.join(ROOT, "data", "nps", "us_hq_region.json")
 TICK_OUT = os.path.join(ROOT, "data", "nps", "us_tickers.json")
 CACHE = os.path.join("/tmp", "nps-us-hq-cache.json")
-UA = os.environ.get("SEC_UA", "MoneyTracker Research contact@91cleaner.dev")
+UA = (os.environ.get("SEC_USER_AGENT") or os.environ.get("SEC_UA") or "MoneyTracker research Leecheolhan91@gmail.com")
 
 # USPS 2글자 코드. 이 표에 없는 코드는 미국 주로 보지 않는다.
 USPS = {

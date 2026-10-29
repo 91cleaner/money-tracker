@@ -44,7 +44,7 @@ jobs:
           node --check assets/mt-local-search.js
       - name: Collect official US/Taiwan/Japan records and optional SEC
         env:
-          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT || 'MoneyTracker research Leecheolhan91@gmail.com' }}
         run: node scripts/collect-public-records.mjs
       - name: Rebuild published search index
         run: node scripts/build-local-index.mjs
