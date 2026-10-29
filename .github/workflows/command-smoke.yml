@@ -23,7 +23,7 @@ jobs:
           const entry = fs.readFileSync('index.html','utf8');
           const us = fs.readFileSync('usa-command-legacy.html','utf8');
           assert.match(entry,/href="korea\.html"/, "Korean entry must remain accessible");
-          assert.match(entry,/href="world-intelligence\/"/);
+          assert.match(entry,/href="world-intelligence\/\?lang=en"/, "U.S. command-room entry must remain accessible");
           assert.match(entry,/Not investment advice/i, "Public entry must disclose its research-only purpose");
           assert.match(us,/AI 분석 OFF · 실시간 시세 OFF/);
           assert.match(us,/id="usQuery"/);
