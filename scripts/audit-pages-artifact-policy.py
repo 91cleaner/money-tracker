@@ -34,19 +34,23 @@ SOURCE_NAMES = {
     "requirements.txt", "Dockerfile", "Makefile",
 }
 # New review-only data must not become public merely because it is JSON.
+# Check directory components as well as filenames (e.g. data/us/research/records.json).
 # Token boundaries avoid blocking unrelated symbols such as "JQA21112".
 REVIEW_ONLY_TOKENS = {
     "private", "internal", "secret", "secrets", "credential", "credentials",
     "review", "reviews", "research", "queue", "queues", "candidate",
     "candidates", "crosscheck", "crosschecks", "extraction", "unverified",
     "draft", "drafts", "pending",
+    "token", "tokens", "oauth", "jwt", "apikey", "apikeys",
+    "password", "passwords", "session", "sessions",
+    "backup", "backups", "staging",
 }
 
 
 def review_only_data(rel: Path):
     if rel.parts[0] != "data":
         return False
-    tokens = set(re.split(r"[^a-z0-9]+", rel.stem.lower()))
+    tokens = set(re.split(r"[^a-z0-9]+", rel.as_posix().lower()))
     return bool(tokens & REVIEW_ONLY_TOKENS)
 
 
