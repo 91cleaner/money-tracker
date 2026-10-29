@@ -1,0 +1,18 @@
+{
+ "about": "assets/firstscreen.js(관제실 첫 화면)가 쓰는 사전. 의원·돈 흐름 의도 낱말과 의원 한글 이름. 외부 호출·AI 없음. 띄어쓰기는 무시하고 비교해요.",
+ "member": {
+  "ko": ["의원", "국회의원", "하원의원", "상원의원", "하원", "상원", "정치인"],
+  "en": ["lawmaker", "lawmakers", "congress", "congressman", "congresswoman", "senator", "senators", "representative", "politician", "politicians", "member of congress", "house member"]
+ },
+ "money": {
+  "contract": {"ko": ["정부계약", "연방계약", "계약", "수주", "국방계약", "정부발주"], "en": ["government contract", "government contracts", "federal contract", "federal contracts", "contract", "contracts", "awarded"]},
+  "lobby": {"ko": ["로비", "로비스트", "로비자금", "로비공시"], "en": ["lobby", "lobbying", "lobbyist", "lobbyists"]},
+  "donation": {"ko": ["기부", "후원금", "정치후원", "정치자금", "정치기부", "정치활동위원회"], "en": ["donation", "donations", "donate", "contribution", "contributions", "pac", "campaign money", "political giving"]},
+  "any": {"ko": ["돈흐름", "자금흐름", "돈의흐름", "돈은어디"], "en": ["money flow", "where does the money", "follow the money"]}
+ },
+ "member_ko": {
+  "L000597": ["로렐 리", "로렐리"],
+  "P000197": ["낸시 펠로시", "펠로시"],
+  "K000389": ["로 카나", "로 칸나"]
+ }
+}

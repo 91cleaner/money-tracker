@@ -8,7 +8,7 @@
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <script src="../assets/i18n.js?v=i18n-20261029b"></script>
 <script src="../assets/share.js?v=share-20261028" defer></script>
-<script src="../assets/intent.js" defer></script><script src="../assets/answers.js" defer></script><script src="../assets/mood.js" defer></script>
+<script src="../assets/intent.js" defer></script><script src="../assets/answers.js" defer></script><script src="../assets/firstscreen.js?v=20261029" defer></script><script src="../assets/mood.js" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{color-scheme:dark;--a:#65e6ed;--b:#061421}*{box-sizing:border-box}body{margin:0;background:#07131e;color:#e8f7fc;font:14px system-ui,sans-serif}button,input{font:inherit}button{cursor:pointer;color:#c9eff8;background:#0a2737;border:1px solid #32677b;border-radius:9px;padding:10px}button:hover,button:focus-visible{border-color:var(--a)}button[hidden],[hidden]{display:none!important}
@@ -116,7 +116,23 @@ header{background:#090f12!important;border-bottom:1px solid #1d4435!important}he
 #mtOneDock button:hover,#mtOneDock button:focus-visible{background:#1b4e31;color:#fff}
 #controls{bottom:140px!important}
 @media(max-width:650px){#mtOneDock{bottom:78px;width:calc(100% - 12px);justify-content:space-around}#mtOneDock button{padding:8px 5px;font-size:11px}#controls{bottom:137px!important}#opsHud{display:none!important}}
-</style></head><body>
+</style><style id="mt-first-css">
+#brief.mtfWide{width:min(560px,calc(100vw - 24px))}
+#mtFirst .mtfHead{font-size:15px;font-weight:700;line-height:1.55;color:#e8fbff;margin:2px 0 10px}
+#mtFirst .mtfCards{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+#mtFirst .mtfCard{position:relative;background:#0a2a3a;border:1px solid #2f6b7c;border-radius:8px;padding:9px}
+#mtFirst .mtfCard h3{font-size:12px;margin:0 0 4px;color:#80e9e7}
+#mtFirst .mtfBig{font:700 26px ui-monospace,monospace;color:#7fff9a;line-height:1.1}#mtFirst .mtfSub{font-size:11px;color:#a4c4ce;margin-bottom:5px}
+#mtFirst ul{margin:4px 0 0;padding-left:15px;font-size:12px;line-height:1.5}#mtFirst li{margin:2px 0}
+#mtFirst .mtfTag{position:absolute;top:7px;right:7px;font-size:10px;border:1px dashed #d9b64a;color:#f0d67a;border-radius:9px;padding:0 6px}
+#mtFirst .mtfFlow{margin-top:10px;background:#061a29;border:1px solid #2f6b7c;border-radius:8px;padding:9px}#mtFirst .mtfFlow h3{font-size:12px;color:#80e9e7;margin:0 0 6px}
+#mtFirst .mtfRow{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap}
+#mtFirst .mtfNode{flex:1 1 110px;min-width:96px;text-align:center;background:#0a2a3a;border:1px solid #3b8da0;border-radius:8px;padding:7px 5px}
+#mtFirst .mtfNodeName{font-size:12px;color:#cfeff6}#mtFirst .mtfNodeBig{font:700 20px ui-monospace,monospace;color:#7fff9a}#mtFirst .mtfNodeSub{font-size:10px;color:#a4c4ce;overflow-wrap:anywhere}
+#mtFirst .mtfArrow{display:flex;flex-direction:column;align-items:center;font-size:10px;color:#f0d67a;max-width:90px;text-align:center}#mtFirst .mtfArrow b{font-size:20px}
+#mtFirst .mtfCaveat{display:block;margin-top:8px}#mtFirst .mtfSrc{display:block;font-size:11px}#mtFirst .mtfTour{margin-top:10px}
+</style>
+</head><body>
 <header><strong>◉ MONEY TRACKER</strong><span>GLOBAL INTELLIGENCE / OPERATIONS</span><button id="fullscreen" aria-label="전체화면">⛶</button></header>
 <div id="mapFrame">
 <svg id="fallback" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" aria-label="오프라인 개략 세계지도"><path d="M70 80 190 40 295 92 270 155 225 185 180 250 145 195 80 175Z M205 260 295 250 325 315 290 410 245 465 210 360Z M420 95 525 72 565 110 590 170 555 225 520 200 480 260 445 215Z M505 240 585 235 625 320 600 425 545 465 500 380Z M585 75 810 55 930 125 890 220 790 260 720 215 665 260 590 185Z M810 335 910 325 955 385 925 450 835 440Z"/></svg>
@@ -125,7 +141,7 @@ header{background:#090f12!important;border-bottom:1px solid #1d4435!important}he
 <nav id="controls" aria-label="관제실 조작"><button id="world">🌐 전체지도</button><button id="toggle">☷ 메뉴</button><button id="closeBrief" hidden>✕ 설명 닫기</button></nav>
 <section id="menu" hidden><h3>◉ TRACKING OPTIONS</h3><div id="topics"></div><p style="font-size:11px;color:#9cbac6">주제를 선택하거나 아래 질문창에서 직접 명령하세요.</p></section>
 <section id="candidatePanel" hidden aria-live="polite" aria-label="추적 경로 선택"><h2 id="candidateTitle">추적 경로 선택</h2><p id="candidateHelp"></p><div id="candidateList"></div><small>규칙 기반 경로 선택 · AI 분석 미연결 · 실시간 거래 데이터 미연결</small></section>
-<section id="brief" hidden aria-live="polite"><h2 id="briefTitle"></h2><p id="briefText"></p><p id="briefStocks"></p><div id="moodCard" hidden style="margin:8px 0"></div><small id="briefCaveat"></small><div class="actions"><button id="previous">← 이전</button><button id="mtPlay" type="button" aria-label="자동 재생 멈춤">⏸</button><button id="next">다음 지역 →</button></div><p><a id="source" target="_blank" rel="noopener noreferrer">관련 공식 자료 확인 ↗</a></p></section>
+<section id="brief" hidden aria-live="polite"><h2 id="briefTitle"></h2><p id="briefText"></p><div id="mtFirst"></div><p id="briefStocks"></p><div id="moodCard" hidden style="margin:8px 0"></div><small id="briefCaveat"></small><div class="actions"><button id="previous">← 이전</button><button id="mtPlay" type="button" aria-label="자동 재생 멈춤">⏸</button><button id="next">다음 지역 →</button></div><p><a id="source" target="_blank" rel="noopener noreferrer">관련 공식 자료 확인 ↗</a></p></section>
 <form id="ask"><input id="question" aria-label="추적 질문" placeholder="무엇을 추적할까요? 예: 미국 금리가 주식에 미치는 영향" maxlength="300" required><button type="submit">추적 ↵</button></form>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -153,8 +169,9 @@ if(window.L){try{
 }catch(e){$('map').style.display='none';status.textContent='지도 엔진 오류 · 개략 지도 표시'}}
 else{$('map').style.display='none';status.textContent='지도 라이브러리 연결 실패 · 개략 지도 표시'}
 function go(name){const p=places[name];if(!p)return;if(map){map.invalidateSize();map.flyTo(p,Math.max(4,map.getZoom()<4?4:Math.min(5,map.getZoom())),{duration:2.2,easeLinearity:.2});if(marker)map.removeLayer(marker);marker=L.circleMarker(p,{radius:9,color:'#005c7c',weight:3,fillColor:'#54d9e6',fillOpacity:.7}).addTo(map)}else{status.textContent=name+' 추적 · 실제 지도 연결 시 위치 이동 가능'}}
+function clearFirst(){const f=$("mtFirst");if(f)f.replaceChildren();const b=$("briefText");if(b)b.hidden=false;$("brief").classList.remove("mtfWide")}
 function show(){if(!mission)return;if(mission.ticker){const t=mission.meta[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length+' · '+t.title;$('briefText').textContent=t.region+' — '+t.fact;$('briefStocks').textContent=(t.date?'기준일 '+t.date+' · ':'')+'출처: '+(t.source_url?'아래 링크':'내부 데이터 분류');$('briefCaveat').textContent=mission.caveat||'데이터상 공개 자료 정리임. 투자 신호 아님.';if(t.source_url)$('source').href=t.source_url;else $('source').removeAttribute('href');$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(t.region);window.mtAfterShow&&window.mtAfterShow();return}const [name,explain]=mission.stops[step];$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+mission.title+' · '+(step+1)+'/'+mission.stops.length;$('briefText').textContent=name+' — '+explain;$('briefStocks').textContent='미국 종목·ETF 조사 대상: '+mission.stocks;$('briefCaveat').textContent='시연용 가상 탐색 경로입니다. AI·실시간 거래 데이터 미연결. 표시된 관계는 투자 신호나 입증된 인과관계가 아닙니다.';$('source').href=mission.url;$('previous').disabled=step===0;$('next').disabled=step===mission.stops.length-1;go(name)}
-function start(c){mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#36b6cc',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
+function start(c){clearFirst();mission=c;step=0;$('menu').hidden=true;$('candidatePanel').hidden=true;if(map&&route){map.removeLayer(route);route=null}if(map&&c.stops.length>1){route=L.polyline(c.stops.map(([name])=>places[name]).filter(Boolean),{color:'#36b6cc',weight:2,opacity:.75,dashArray:'6 8',interactive:false}).addTo(map)}show()}
 $('topics').replaceChildren(...cases.map(c=>{const b=document.createElement('button');b.textContent=c.title;b.onclick=()=>start(c);return b}));
 function showCandidates(q){
  const matches=cases.filter(c=>c.re.test(q));
@@ -195,7 +212,25 @@ $('briefTitle').textContent=r.priv?'◉ '+r.priv+' · 비상장 기업':r.pop?'�
 $('briefText').textContent=r.priv?r.priv+'은(는) 증시에 상장되지 않아 주가 데이터가 없습니다. 같은 업종의 상장 기업·업종 경로를 대신 보여드려요.':r.pop?'"'+(r.key||q)+'"와 딱 맞는 항목은 없어요. 많이 찾는 경로를 대신 골라봤어요.':'"'+(r.key||q)+'"와 딱 맞는 항목은 없지만 가까운 항목이 있어요.';
 const box=$('briefStocks');box.replaceChildren();r.sug.forEach(id=>{const e=searchIdx.entities[id];const bt=document.createElement('button');bt.className='mtSug';bt.textContent='▸ '+e.name+(e.symbol?' ('+e.symbol+')':'')+' · '+({company:'기업',sector:'업종',country:'나라',committee:'상임위',member:'의원',bill:'법안',topic:'법안 주제'}[e.type]||'');bt.onclick=()=>start(routeOf(id));box.append(bt)});
 $('briefCaveat').textContent='AI 미연결 · 수집된 데이터만 검색합니다.';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true}
-$('ask').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;if(await mtIntentCard(q))return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}if(tr){start(tr);return}showCandidates(q)});
+$('ask').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;clearFirst();if(await mtFirstCard(q))return;if(await mtIntentCard(q))return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}if(tr){start(tr);return}showCandidates(q)});
+const mtJson={};
+function mtGet(p){return mtJson[p]||(mtJson[p]=fetch('../data/'+p).then(r=>r.ok?r.json():null).catch(()=>null))}
+function mtNames(ix,sym){const ent=ix.entities['company:'+sym]||{},al=(ent.aliases||[]).slice().sort((a,b)=>b.length-a.length),ko=al.filter(x=>/[가-힣]/.test(x))[0]||sym;
+const legal=al.filter(x=>/^[\x00-\x7f]+$/.test(x)&&/\b(corp|corporation|inc|co|ltd|plc|holdings)\b/i.test(x))[0];let en=null;try{en=legal?window.MTI18N.name({name:ent.name,symbol:ent.symbol,aliases:[legal]}):window.MTI18N.name(ent)}catch(e){}
+if(!en||/[가-힣]/.test(en))en=sym;return{ko:ko,en:en}}
+async function mtFirstCard(q){try{const I=window.MTIntent,F=window.MTFirst;if(!I||!F)return false;const ix=await loadIdx();
+if(!window.mtLex)window.mtLex=await fetch('../data/intent-lexicon.json').then(r=>r.json());
+const lex=await mtGet('first-screen-lexicon.json');const mem=await mtGet('us/members.json');
+const plan=F.understand(q,I,I.build(ix,window.mtLex),((mem&&mem.members)||[]).map(m=>({id:m.id,name:m.name})),lex||{});
+if(plan.kind==='overview'||plan.kind==='other'||plan.kind==='none')return false;
+const data=await F.fetchData(plan,mtGet);const en=!!(window.MTI18N&&window.MTI18N.isEn);
+const doc=F.build(plan,data,en?'en':'ko',plan.symbol?mtNames(ix,plan.symbol):null);if(!doc)return false;
+$('candidatePanel').hidden=true;$('brief').hidden=false;$('closeBrief').hidden=false;$('brief').classList.add('mtfWide');
+$('briefTitle').textContent='◉ '+(doc.name?doc.name+' · ':'')+({why:en?'price & same-period facts':'주가와 같은 기간 일',topic:en?'topic records':'주제 기록',member:en?'lawmaker trades':'의원 거래',money:en?'money flow':'돈 흐름'}[doc.kind]);
+$('briefText').hidden=true;$('briefStocks').replaceChildren();
+F.render(doc,$('mtFirst'),plan.symbol?()=>{const r=routeOf('company:'+plan.symbol);if(r)start(r)}:null);
+$('mtFirst').querySelectorAll('.mtfSuggest button').forEach(b=>b.onclick=()=>{$('question').value=b.dataset.q+' '+q.replace(/\s+/g,' ');$('ask').requestSubmit()});
+$('briefCaveat').textContent='';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true;return true}catch(e){return false}}
 async function mtIntentCard(q){try{const I=window.MTIntent,A=window.MTAnswers;if(!I||!A)return false;A.setBase('../data/answers/');const ix=await loadIdx();if(!window.mtLex)window.mtLex=await fetch('../data/intent-lexicon.json').then(r=>r.json());const pl=A.plan(I.parse(q,I.build(ix,window.mtLex)));if(!pl)return false;let a=await A.get(pl.symbol,pl.intent,pl.period);if(!a)return false;
 const en=!!(window.MTI18N&&window.MTI18N.isEn);let L=(en&&a.en&&a.en.length?a.en:a.ko)||[];if(!L.length)return false;
 if(en){const ent=ix.entities['company:'+pl.symbol]||{},legal=(ent.aliases||[]).filter(x=>/^[\x00-\x7f]+$/.test(x)&&/\b(corp|corporation|inc|co|ltd|plc|holdings)\b/i.test(x))[0];
