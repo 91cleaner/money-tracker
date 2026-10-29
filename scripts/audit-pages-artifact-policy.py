@@ -57,9 +57,9 @@ def review_only_data(rel: Path):
     # apiKeys.json, ptrCrosschecks2026.json and privateRecords.json must not
     # bypass the review-only guard simply because they lack hyphens.
     name = rel.as_posix()
-    name = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\\1 \\2", name)
-    name = re.sub(r"([a-z0-9])([A-Z])", r"\\1 \\2", name)
-    name = re.sub(r"([A-Za-z])([0-9])|([0-9])([A-Za-z])", r"\\1\\3 \\2\\4", name)
+    name = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", name)
+    name = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", name)
+    name = re.sub(r"([A-Za-z])([0-9])|([0-9])([A-Za-z])", r"\1\3 \2\4", name)
     tokens = set(re.split(r"[^a-z0-9]+", name.lower()))
     return bool(tokens & REVIEW_ONLY_TOKENS)
 
