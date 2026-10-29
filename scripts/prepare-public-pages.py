@@ -2,6 +2,7 @@
 """Prepare a public-only Pages artifact. No source, workers, or private configuration."""
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,4 +54,12 @@ for required in ("index.html", "usa-command.html", "national.html", "assets/mt-c
 for forbidden in ("cloudflare/admin-worker.js", "worker/private-api.js", "wrangler.jsonc", "collector/collect.py", ".github/workflows/deploy-pages.yml"):
     if (OUT / forbidden).exists():
         sys.exit(f"Private/source file in public artifact: {forbidden}")
+# Fail closed in the actual deployment builder, not only in a separate CI job.
+# A future data JSON with a review-only filename must never be uploaded.
+auditor = ROOT / "scripts" / "audit-pages-artifact-policy.py"
+if not auditor.is_file():
+    sys.exit("Missing Pages privacy auditor; refusing to prepare public artifact")
+result = subprocess.run([sys.executable, str(auditor), str(OUT)], check=False)
+if result.returncode != 0:
+    sys.exit("Pages privacy audit failed; artifact not approved for deployment")
 print(f"Prepared {sum(1 for x in OUT.rglob('*') if x.is_file())} public files in {OUT}")
