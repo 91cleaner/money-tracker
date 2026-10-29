@@ -8,7 +8,7 @@
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <script src="../assets/i18n.js?v=i18n-20261029b"></script>
 <script src="../assets/share.js?v=share-20261028" defer></script>
-<script src="../assets/intent.js" defer></script><script src="../assets/answers.js" defer></script>
+<script src="../assets/intent.js" defer></script><script src="../assets/answers.js" defer></script><script src="../assets/mood.js" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{color-scheme:dark;--a:#65e6ed;--b:#061421}*{box-sizing:border-box}body{margin:0;background:#07131e;color:#e8f7fc;font:14px system-ui,sans-serif}button,input{font:inherit}button{cursor:pointer;color:#c9eff8;background:#0a2737;border:1px solid #32677b;border-radius:9px;padding:10px}button:hover,button:focus-visible{border-color:var(--a)}button[hidden],[hidden]{display:none!important}
@@ -125,7 +125,7 @@ header{background:#090f12!important;border-bottom:1px solid #1d4435!important}he
 <nav id="controls" aria-label="관제실 조작"><button id="world">🌐 전체지도</button><button id="toggle">☷ 메뉴</button><button id="closeBrief" hidden>✕ 설명 닫기</button></nav>
 <section id="menu" hidden><h3>◉ TRACKING OPTIONS</h3><div id="topics"></div><p style="font-size:11px;color:#9cbac6">주제를 선택하거나 아래 질문창에서 직접 명령하세요.</p></section>
 <section id="candidatePanel" hidden aria-live="polite" aria-label="추적 경로 선택"><h2 id="candidateTitle">추적 경로 선택</h2><p id="candidateHelp"></p><div id="candidateList"></div><small>규칙 기반 경로 선택 · AI 분석 미연결 · 실시간 거래 데이터 미연결</small></section>
-<section id="brief" hidden aria-live="polite"><h2 id="briefTitle"></h2><p id="briefText"></p><p id="briefStocks"></p><small id="briefCaveat"></small><div class="actions"><button id="previous">← 이전</button><button id="mtPlay" type="button" aria-label="자동 재생 멈춤">⏸</button><button id="next">다음 지역 →</button></div><p><a id="source" target="_blank" rel="noopener noreferrer">관련 공식 자료 확인 ↗</a></p></section>
+<section id="brief" hidden aria-live="polite"><h2 id="briefTitle"></h2><p id="briefText"></p><p id="briefStocks"></p><div id="moodCard" hidden style="margin:8px 0"></div><small id="briefCaveat"></small><div class="actions"><button id="previous">← 이전</button><button id="mtPlay" type="button" aria-label="자동 재생 멈춤">⏸</button><button id="next">다음 지역 →</button></div><p><a id="source" target="_blank" rel="noopener noreferrer">관련 공식 자료 확인 ↗</a></p></section>
 <form id="ask"><input id="question" aria-label="추적 질문" placeholder="무엇을 추적할까요? 예: 미국 금리가 주식에 미치는 영향" maxlength="300" required><button type="submit">추적 ↵</button></form>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -203,6 +203,7 @@ let nm=legal?window.MTI18N.name({name:ent.name,symbol:ent.symbol,aliases:[legal]
 $('candidatePanel').hidden=true;$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+(a.name||pl.symbol)+' ('+pl.symbol+') · '+(en?'recent price, explained':'최근 주가 설명');$('briefText').textContent=L.join(' ');
 const box=$('briefStocks');box.replaceChildren();(a.src||[]).forEach(u=>{if(!/^https:/.test(u))return;const l=document.createElement('a');l.href=u;l.target='_blank';l.rel='noopener noreferrer';l.textContent=(en?'Source ↗ ':'출처 ↗ ')+new URL(u).hostname;l.style.cssText='display:block;color:#5dff9e';box.append(l)});
 const go=document.createElement('button');go.className='mtSug';go.textContent=en?'▶ See the full route':'▶ 전체 경로 보기';go.onclick=()=>{const r=routeOf('company:'+pl.symbol);if(r)start(r)};box.append(go);
+{const mc=$('moodCard');mc.hidden=true;if(window.MTMood)A.load(pl.symbol).then(d=>{const pr=d&&d.periods&&d.periods[pl.period];return window.MTMood.load('../',pl.symbol,{asof:d&&d.asof,drop:pr&&typeof pr.ret==='number'?pr.ret:undefined,events:a.events})}).then(c=>{if(c){window.MTMood.render(mc,c,en);mc.hidden=false}}).catch(()=>{})}
 $('briefCaveat').textContent=en?'Correlation only, not a cause. Not investment advice.':'상관관계일 뿐 원인이 아닙니다. 데이터상 같은 기간 기록이며 투자 조언이 아닙니다.';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true;return true}catch(e){return false}}
 $('previous').onclick=()=>{if(mission&&step>0){step--;show()}};
 $('next').onclick=()=>{if(mission&&step<mission.stops.length-1){step++;show()}};
