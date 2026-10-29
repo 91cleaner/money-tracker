@@ -168,7 +168,7 @@
     found.forEach(function (f) { if (!seenSym[f.sym]) { seenSym[f.sym] = 1; res.companies.push(f.sym); } });
 
     // 2) lexicon terms (longest first)
-    var intentHits = { why: 0, supply: 0, compare: 0, overview: 0 }, dirHits = { down: 0, up: 0 }, periodHits = {}, topicHits = {};
+    var intentHits = { why: 0, supply: 0, compare: 0, overview: 0 }, dirHits = { down: 0, up: 0 }, periodHits = {}, periodSolid = {}, topicHits = {};
     m.terms.forEach(function (t) {
       var hits = claim(t, t.latin);
       if (!hits.length) return;
@@ -176,7 +176,11 @@
       res.matched.push(t.raw);
       if (t.kind === "intent") intentHits[t.id]++;
       else if (t.kind === "dir") dirHits[t.id]++;
-      else if (t.kind === "period") periodHits[t.id] = (periodHits[t.id] || 0) + (GENERIC_WEEK.indexOf(t.raw) >= 0 ? 0.5 : 1);
+      else if (t.kind === "period") {
+        var generic = GENERIC_WEEK.indexOf(t.raw) >= 0;
+        periodHits[t.id] = (periodHits[t.id] || 0) + (generic ? 0.5 : 1);
+        if (!generic) periodSolid[t.id] = 1;
+      }
       else if (t.kind === "topic") topicHits[t.id] = (topicHits[t.id] || 0) + 1;
     });
     // typo tolerance for latin lexicon words (tarrif -> tariff, crahs -> crash)
@@ -198,7 +202,7 @@
           res.matched.push(best.raw + "~" + w);
           if (best.kind === "intent") intentHits[best.id]++;
           else if (best.kind === "dir") dirHits[best.id]++;
-          else if (best.kind === "period") periodHits[best.id] = (periodHits[best.id] || 0) + 1;
+          else if (best.kind === "period") { periodHits[best.id] = (periodHits[best.id] || 0) + 1; periodSolid[best.id] = 1; }
           else if (best.kind === "topic") topicHits[best.id] = (topicHits[best.id] || 0) + 1;
           return;
         }
@@ -271,6 +275,7 @@
       res.periodExplicit = true;
     }
     var pid = pids[0] || "week", pd = (m.lex.periods || {})[pid] || {};
+    res.periodGeneric = !pids.length || !periodSolid[pid]; // only "요즘/recent" style words (or none): the caller may pick its own default length
     res.period = { id: pid, days: pd.days || 7, key: pd.key || "w1", label_ko: pd.label_ko || pid, label_en: pd.label_en || pid };
     return res;
   }

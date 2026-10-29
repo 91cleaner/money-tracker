@@ -224,7 +224,7 @@ const A = require('../assets/answers.js');
 const htmlWI = read('world-intelligence/index.html');
 
 test('world-intelligence loads intent.js and answers.js', () => {
-  assert.match(htmlWI, /<script src="\.\.\/assets\/intent\.js"/);
+  assert.match(htmlWI, /<script src="\.\.\/assets\/intent\.js[^"]*"/);
   assert.match(htmlWI, /<script src="\.\.\/assets\/answers\.js"/);
 });
 
@@ -241,10 +241,10 @@ test('plan(): name only -> null (tour kept); why/topic -> answer card', () => {
   assert.equal(A.plan(P('블라블라 왜 떨어져')), null);
 });
 
-test('handler: card first, EN uses a.en, caveats kept', () => {
+test('handler: first screen (assets/firstscreen.js) comes first, caveats kept, tour button follows', () => {
   assert.ok(htmlWI.includes('if(await mtIntentCard(q))return;const tr=await tickerRoute'));
-  assert.ok(htmlWI.includes('en&&a.en&&a.en.length?a.en:a.ko'));
+  assert.ok(htmlWI.includes('F.render(M,document'));
   assert.ok(htmlWI.includes('데이터상 같은 기간 기록이며 투자 조언이 아닙니다'));
   assert.ok(htmlWI.includes('Correlation only, not a cause. Not investment advice.'));
-  assert.ok(htmlWI.includes('전체 경로 보기'));
+  assert.ok(read('assets/firstscreen.js').includes('전체 경로 투어'));
 });
