@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "description": "비슷한 과거 찾기용 사건 목록. 날짜와 공식 출처만 담음. 가격·전망·원인 설명은 담지 않음.",
+  "caveat": "공개 기록 정리일 뿐 투자 조언이 아니며 원인을 뜻하지 않습니다.",
+  "date_check": "date_check가 official-source-confirmed가 아니면 아직 공식 문서로 날짜를 대조하지 못한 항목임. 대조 후 값을 바꿀 것.",
+  "events": [
+    {
+      "id": "2018-sec232-steel-aluminum",
+      "kind": "tariff",
+      "date": "2018-03-08",
+      "title": { "ko": "철강·알루미늄 수입 관세 포고 (232조)", "en": "Section 232 steel and aluminum import tariff proclamations" },
+      "source": "https://www.federalregister.gov/documents/2018/03/15/2018-05478/adjusting-imports-of-steel-into-the-united-states",
+      "source_name": "Federal Register (Proclamation 9705)",
+      "date_check": "pending-official-source-check"
+    },
+    {
+      "id": "2018-sec301-china-first",
+      "kind": "tariff",
+      "date": "2018-07-06",
+      "title": { "ko": "대중국 301조 관세 1차 발효", "en": "Section 301 China tariffs, first tranche takes effect" },
+      "source": "https://ustr.gov/issue-areas/enforcement/section-301-investigations/tariff-actions",
+      "source_name": "USTR Section 301 tariff actions",
+      "date_check": "pending-official-source-check"
+    },
+    {
+      "id": "2020-covid-selloff",
+      "kind": "market_selloff",
+      "date": "2020-03-23",
+      "start_date": "2020-02-19",
+      "title": { "ko": "코로나 급락 (2020-02-19~03-23)", "en": "COVID selloff (2020-02-19 to 03-23)" },
+      "source": "https://fred.stlouisfed.org/series/SP500",
+      "source_name": "FRED S&P 500 (S&P Dow Jones Indices)",
+      "date_check": "pending-official-source-check"
+    },
+    {
+      "id": "2022-bis-semiconductor-controls",
+      "kind": "export_control",
+      "date": "2022-10-07",
+      "title": { "ko": "반도체 수출 통제 (BIS)", "en": "BIS advanced computing and semiconductor export controls" },
+      "source": "https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor-manufacturing",
+      "source_name": "Federal Register (BIS interim final rule)",
+      "date_check": "pending-official-source-check"
+    }
+  ]
+}
