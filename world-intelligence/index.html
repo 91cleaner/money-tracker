@@ -472,7 +472,7 @@ async function show(m,my,alive){const E=!!(window.MTI18N&&window.MTI18N.isEn),R=
  const lat=S.map(s=>s.kind==='bill'&&s.date).filter(Boolean)[0];
  const out=build({en:E,kind:R,today,stops:S,m1,m1label,priced:m1!=null,study:R==='company'?study(px,K8(us[0])):null,packs:pk,earn,latest:lat});
  hide();const br=document.getElementById('briefCaveat');if(!br)return;
- const box=document.createElement('section');box.id='mtTourCard';box.setAttribute('aria-label',out.T.h);
+ const box=document.createElement('section');box.id='mtTourCard';box.setAttribute('data-mt-declass','');box.setAttribute('aria-label',out.T.h);
  const add=(t,tag,cls)=>{const e=document.createElement(tag);e.textContent=t;if(cls)e.className=cls;box.append(e);return e};
  add(out.T.h,'h4');add(out.T.a,'h5');add(out.recap,'p');add(out.T.b,'h5');add(out.pattern,'p');add(out.T.c,'h5');
  const ul=document.createElement('ul');out.watch.forEach(w=>{const li=document.createElement('li');li.textContent=w;ul.append(li)});box.append(ul);
