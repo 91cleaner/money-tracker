@@ -31,8 +31,8 @@
    <div style="font-size:38px;font-weight:800;margin-top:4px">This week in Congress trades</div>
    <div style="font-size:16px;color:#c9c4b8;margin-top:4px">${esc(a.sub)}</div></div>`;
   const sum = (P, label) => { const s = a.s[P]; return `<div style="font-size:16px;font-weight:800;color:${col(P) === RED ? "#d27a6f" : "#7f9fd0"}">${label}</div>
-   <div style="font-size:13px;color:#d8d3c8;margin-top:3px">${s.m} members · ${s.n} trades · <b style="color:${OR}">${s.b} buys</b> / ${s.s} sells</div>
-   <div style="font:12px ui-monospace,Menlo,monospace;color:#9c978c;margin-top:2px">Most traded: ${esc(s.top.join(", ") || "none")}</div>`; };
+   <div style="font-size:13px;color:#d8d3c8;margin-top:3px">${s.m} ${s.m === 1 ? "member" : "members"} · ${s.n} ${s.n === 1 ? "trade" : "trades"} · <b style="color:${OR}">${s.b} ${s.b === 1 ? "buy" : "buys"}</b> / ${s.s} ${s.s === 1 ? "sell" : "sells"}</div>
+   <div style="font:12px ui-monospace,Menlo,monospace;color:#9c978c;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Most traded: ${esc(s.top.reduce((o, t) => (o.length && (o.join(", ") + ", " + t).length > 26) ? o : (o.length < 3 ? [...o, t] : o), []).join(", ") || "none")}</div>`; };
   html += `<div id="wk-side" style="position:absolute;right:40px;top:150px;width:360px;background:${BG}e6;border:1px solid ${OR}55;border-radius:6px;padding:18px">
    <div style="font:600 12px ui-monospace,Menlo,monospace;letter-spacing:2px;color:#9c978c;margin-bottom:12px">BY PARTY</div>
    ${sum("R", "Republicans")}<div style="height:1px;background:#ffffff1f;margin:14px 0"></div>${sum("D", "Democrats")}
@@ -51,12 +51,21 @@
     const d = document.createElementNS(NS, "circle"); d.setAttribute("cx", x.x); d.setAttribute("cy", x.y); d.setAttribute("r", 7); d.setAttribute("fill", col(x.p)); d.setAttribute("stroke", BG); d.setAttribute("stroke-width", 2); svg.appendChild(d);
   }
   for (const x of pts) {
-    const lines = x.lines.length > 3 ? [...x.lines.slice(0, 2), null] : x.lines;
+    const mono = "font:12px ui-monospace,Menlo,monospace;color:#d8d3c8;margin-top:2px";
+    let body;
+    if (x.lines.length > 3) {
+      const nb = x.lines.filter(l => l.s === "BUY").length, ns = x.lines.filter(l => l.s === "SELL").length;
+      const cnt = {}; x.lines.forEach(l => cnt[l.a] = (cnt[l.a] || 0) + 1);
+      const top = Object.entries(cnt).sort((p, q) => q[1] - p[1]).slice(0, 3).map(e => e[0]).join(", ");
+      const ds = x.lines.map(l => l.d).sort();
+      body = `<div style="${mono}">${x.lines.length} trades · <b style="color:${OR}">${nb} ${nb === 1 ? "buy" : "buys"}</b> / <b style="color:${OR}">${ns} ${ns === 1 ? "sell" : "sells"}</b></div>` +
+        `<div style="${mono}">Top: ${esc(top)}</div><div style="${mono};color:#9c978c">Trade dates ${esc(ds[0])} - ${esc(ds[ds.length - 1])}</div>`;
+    } else {
+      body = x.lines.map(l => `<div style="${mono}">${esc(l.a)} <b style="color:${OR}">${l.s}</b> ${esc(l.amt)} · ${esc(l.d)}</div>`).join("");
+    }
     const card = document.createElement("div");
     card.style.cssText = `position:absolute;left:0;top:0;white-space:nowrap;background:${BG}e8;border:1px solid #ffffff22;border-left:3px solid ${col(x.p)};padding:6px 10px;border-radius:4px`;
-    card.innerHTML = `<div style="font-size:14px;font-weight:700"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${col(x.p)};margin-right:6px"></span>${esc(x.name)} <span style="color:#9c978c;font-weight:400;font-size:12px">${x.p} · ${esc(x.dist)}</span></div>` +
-      lines.map(l => l ? `<div style="font:12px ui-monospace,Menlo,monospace;color:#d8d3c8;margin-top:2px">${esc(l.a)} <b style="color:${OR}">${l.s}</b> ${esc(l.amt)} · ${esc(l.d)}</div>`
-        : `<div style="font:12px ui-monospace,Menlo,monospace;color:#9c978c;margin-top:2px">+${x.lines.length - 2} more trades</div>`).join("");
+    card.innerHTML = `<div style="font-size:14px;font-weight:700"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${col(x.p)};margin-right:6px"></span>${esc(x.name)} <span style="color:#9c978c;font-weight:400;font-size:12px">${x.p} · ${esc(x.dist)}</span></div>` + body;
     W.appendChild(card);
     const cw = card.offsetWidth, ch = card.offsetHeight;
     let best = null;
