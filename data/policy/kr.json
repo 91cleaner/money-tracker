@@ -6,6 +6,52 @@
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
 {
+"id": "msit:e9ca613b98db",
+"kind": "press",
+"t": "한국에서 함께 그린 원자력의 내일, 국제원자력기구 원자력 장관회의 폐막",
+"d": "2026-10-29",
+"dept": "원자력연구협력팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187905",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"energy"
+]
+},
+{
+"id": "msit:59a4351aef9f",
+"kind": "press",
+"t": "구혁채 과기정통부 제1차관, 원자력학회 참석 및 경주지역 연구현장 방문",
+"d": "2026-10-29",
+"dept": "원자력연구개발과, 연구인프라혁신과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187899",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"energy"
+]
+},
+{
+"id": "msit:5ba4c9b9944b",
+"kind": "press",
+"t": "과기정통부, 국내 물리적 인공지능 산업 육성 가속화를 위한 전문가 소통 추진",
+"d": "2026-10-29",
+"dept": "디바이스AX혁신팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187900",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "msit:a82f5b9c08c9",
+"kind": "press",
+"t": "과기정통부와 한국전자통신연구원, 세계 자율주행 레벨 국제표준 개정 주도",
+"d": "2026-10-29",
+"dept": "디바이스AX혁신팀, 정보통신방송기술정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187901",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
 "id": "msit:f0d42dd001ee",
 "kind": "press",
 "t": "AI로 이룬 공공혁신, 국민이 누리는 변화 「2026 공공기관 AI 혁신 성과대회」 개최",
@@ -956,6 +1002,30 @@
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_92404B8682AA448C91FE3E01162648&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
+},
+{
+"id": "msit:133234a72a56",
+"kind": "press",
+"t": "인공지능으로 이룬 공공혁신, 국민이 누리는 변화 「2026 공공기관 인공지능 혁신 성과대회」 개최",
+"d": "2026-10-28",
+"dept": "디지털사회기획과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187898",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "msit:4fe1533782d7",
+"kind": "press",
+"t": "과학수도 대전에 한국형 혁신 인공지능･소프트웨어  인재양성 거점 ‘이노베이션아카데미’ 개소",
+"d": "2026-10-28",
+"dept": "소프트웨어기반조성팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187897",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
 },
 {
 "id": "PRC_FA78A322CFED4F9B9B0A1FC04B040C",
@@ -6033,80 +6103,6 @@
 "cmte": "재정경제기획위원회",
 "res": null,
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2B6C0A9B2Z3A1I7G4H0F5F7E4F1A8&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_A2B6I0J7I1G3G1E4F5N5O3M6K7L2J4",
-"no": "2221732",
-"t": "농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안",
-"d": "2026-10-01",
-"by": "박지원의원 등 10인",
-"cmte": "농림축산식품해양수산위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2B6I0J7I1G3G1E4F5N5O3M6K7L2J4&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_329C6915644046438A33F967BBEDB9",
-"no": "2221731",
-"t": "학교폭력예방 및 대책에 관한 법률 일부개정법률안",
-"d": "2026-10-01",
-"by": "고민정의원 등 10인",
-"cmte": "교육위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_329C6915644046438A33F967BBEDB9&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_0506C48B90EE4DB284492F02B8D0CA",
-"no": "2221730",
-"t": "세무사법 일부개정법률안",
-"d": "2026-10-01",
-"by": "윤후덕의원 등 11인",
-"cmte": "재정경제기획위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_0506C48B90EE4DB284492F02B8D0CA&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_77C3153D95FE40F5A4050F6C0A58F7",
-"no": "2221729",
-"t": "여신전문금융업법 일부개정법률안",
-"d": "2026-10-01",
-"by": "강준현의원 등 13인",
-"cmte": "정무위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_77C3153D95FE40F5A4050F6C0A58F7&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": [
-"finance"
-]
-},
-{
-"id": "PRC_S2T6I0H9H1F0G1E6F1N8L2M3K6L2J6",
-"no": "2221728",
-"t": "고위공직자범죄수사처 설치 및 운영에 관한 법률 일부개정법률안",
-"d": "2026-10-01",
-"by": "박주민의원 등 10인",
-"cmte": "법제사법위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2T6I0H9H1F0G1E6F1N8L2M3K6L2J6&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_931530ED8E4043978F70EFB59DBFF3",
-"no": "2221727",
-"t": "전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안",
-"d": "2026-10-01",
-"by": "윤후덕의원 등 14인",
-"cmte": "정무위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_931530ED8E4043978F70EFB59DBFF3&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
 }
