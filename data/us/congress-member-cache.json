@@ -1,4 +1,44 @@
 {
+"A000148": {
+"district": 4,
+"first": "Jake",
+"last": "Auchincloss",
+"name": "Jake Auchincloss",
+"party": "D",
+"state": "MA"
+},
+"A000372": {
+"district": 12,
+"first": "Rick",
+"last": "Allen",
+"name": "Rick W. Allen",
+"party": "R",
+"state": "GA"
+},
+"A000379": {
+"district": 4,
+"first": "Mark",
+"last": "Alford",
+"name": "Mark Alford",
+"party": "R",
+"state": "MO"
+},
+"B000668": {
+"district": 2,
+"first": "Cliff",
+"last": "Bentz",
+"name": "Cliff Bentz",
+"party": "R",
+"state": "OR"
+},
+"B001291": {
+"district": 36,
+"first": "Brian",
+"last": "Babin",
+"name": "Brian Babin",
+"party": "R",
+"state": "TX"
+},
 "B001325": {
 "district": 3,
 "first": "Sheri",
@@ -6,6 +46,62 @@
 "name": "Sheri Biggs",
 "party": "R",
 "state": "SC"
+},
+"B001327": {
+"district": 8,
+"first": "Robert",
+"last": "Bresnahan",
+"name": "Robert P. Bresnahan, Jr.",
+"party": "R",
+"state": "PA"
+},
+"C001055": {
+"district": 1,
+"first": "Ed",
+"last": "Case",
+"name": "Ed Case",
+"party": "D",
+"state": "HI"
+},
+"C001068": {
+"district": 9,
+"first": "Steve",
+"last": "Cohen",
+"name": "Steve Cohen",
+"party": "D",
+"state": "TN"
+},
+"C001120": {
+"district": 2,
+"first": "Dan",
+"last": "Crenshaw",
+"name": "Dan Crenshaw",
+"party": "R",
+"state": "TX"
+},
+"C001123": {
+"district": 31,
+"first": "Gilbert",
+"last": "Cisneros",
+"name": "Gilbert Ray Cisneros, Jr.",
+"party": "D",
+"state": "CA"
+},
+"D000032": {
+"district": 19,
+"first": "Byron",
+"last": "Donalds",
+"name": "Byron Donalds",
+"party": "R",
+"state": "FL"
+},
+"D000399": {
+"district": 37,
+"first": "Lloyd",
+"last": "Doggett",
+"name": "Lloyd Doggett",
+"party": "D",
+"state": "TX"
 },
 "D000617": {
 "district": 1,
@@ -15,6 +111,38 @@
 "party": "D",
 "state": "WA"
 },
+"D000624": {
+"district": 6,
+"first": "Debbie",
+"last": "Dingell",
+"name": "Debbie Dingell",
+"party": "D",
+"state": "MI"
+},
+"D000626": {
+"district": 8,
+"first": "Warren",
+"last": "Davidson",
+"name": "Warren Davidson",
+"party": "R",
+"state": "OH"
+},
+"D000628": {
+"district": 2,
+"first": "Neal",
+"last": "Dunn",
+"name": "Neal P. Dunn",
+"party": "R",
+"state": "FL"
+},
+"E000296": {
+"district": 3,
+"first": "Dwight",
+"last": "Evans",
+"name": "Dwight Evans",
+"party": "D",
+"state": "PA"
+},
 "F000110": {
 "district": 6,
 "first": "Cleo",
@@ -22,6 +150,70 @@
 "name": "Cleo Fields",
 "party": "D",
 "state": "LA"
+},
+"F000450": {
+"district": 5,
+"first": "Virginia",
+"last": "Foxx",
+"name": "Virginia Foxx",
+"party": "R",
+"state": "NC"
+},
+"F000468": {
+"district": 7,
+"first": "Lizzie",
+"last": "Fletcher",
+"name": "Lizzie Fletcher",
+"party": "D",
+"state": "TX"
+},
+"F000472": {
+"district": 18,
+"first": "Scott",
+"last": "Franklin",
+"name": "Scott Franklin",
+"party": "R",
+"state": "FL"
+},
+"F000483": {
+"district": 30,
+"first": "Laura",
+"last": "Friedman",
+"name": "Laura Friedman",
+"party": "D",
+"state": "CA"
+},
+"F000485": {
+"district": 14,
+"first": "Clay",
+"last": "Fuller",
+"name": "Clay Fuller",
+"party": "R",
+"state": "GA"
+},
+"G000583": {
+"district": 5,
+"first": "Josh",
+"last": "Gottheimer",
+"name": "Josh Gottheimer",
+"party": "D",
+"state": "NJ"
+},
+"G000591": {
+"district": 3,
+"first": "Michael",
+"last": "Guest",
+"name": "Michael Guest",
+"party": "R",
+"state": "MS"
+},
+"G000603": {
+"district": 26,
+"first": "Brandon",
+"last": "Gill",
+"name": "Brandon Gill",
+"party": "R",
+"state": "TX"
 },
 "H001047": {
 "district": 4,
@@ -31,6 +223,22 @@
 "party": "D",
 "state": "CT"
 },
+"H001072": {
+"district": 2,
+"first": "J.",
+"last": "Hill",
+"name": "J. French Hill",
+"party": "R",
+"state": "AR"
+},
+"H001082": {
+"district": 1,
+"first": "Kevin",
+"last": "Hern",
+"name": "Kevin Hern",
+"party": "R",
+"state": "OK"
+},
 "I000056": {
 "district": 48,
 "first": "Darrell",
@@ -38,6 +246,22 @@
 "name": "Darrell Issa",
 "party": "R",
 "state": "CA"
+},
+"J000305": {
+"district": 51,
+"first": "Sara",
+"last": "Jacobs",
+"name": "Sara Jacobs",
+"party": "D",
+"state": "CA"
+},
+"J000307": {
+"district": 10,
+"first": "John",
+"last": "James",
+"name": "John James",
+"party": "R",
+"state": "MI"
 },
 "J000309": {
 "district": 1,
@@ -47,12 +271,108 @@
 "party": "D",
 "state": "IL"
 },
+"J000310": {
+"district": 32,
+"first": "Julie",
+"last": "Johnson",
+"name": "Julie Johnson",
+"party": "D",
+"state": "TX"
+},
+"K000376": {
+"district": 16,
+"first": "Mike",
+"last": "Kelly",
+"name": "Mike Kelly",
+"party": "R",
+"state": "PA"
+},
+"K000398": {
+"district": 7,
+"first": "Thomas",
+"last": "Kean",
+"name": "Thomas H. Kean, Jr.",
+"party": "R",
+"state": "NJ"
+},
+"L000560": {
+"district": 2,
+"first": "Rick",
+"last": "Larsen",
+"name": "Rick Larsen",
+"party": "D",
+"state": "WA"
+},
+"L000566": {
+"district": 5,
+"first": "Robert",
+"last": "Latta",
+"name": "Robert E. Latta",
+"party": "R",
+"state": "OH"
+},
+"L000590": {
+"district": 3,
+"first": "Susie",
+"last": "Lee",
+"name": "Susie Lee",
+"party": "D",
+"state": "NV"
+},
+"L000595": {
+"district": 5,
+"first": "Julia",
+"last": "Letlow",
+"name": "Julia Letlow",
+"party": "R",
+"state": "LA"
+},
 "L000597": {
 "district": 15,
 "first": "Laurel",
 "last": "Lee",
 "name": "Laurel M. Lee",
 "party": "R",
+"state": "FL"
+},
+"L000607": {
+"district": 16,
+"first": "Sam",
+"last": "Liccardo",
+"name": "Sam T. Liccardo",
+"party": "D",
+"state": "CA"
+},
+"M001136": {
+"district": 9,
+"first": "Lisa",
+"last": "McClain",
+"name": "Lisa C. McClain",
+"party": "R",
+"state": "MI"
+},
+"M001204": {
+"district": 9,
+"first": "Daniel",
+"last": "Meuser",
+"name": "Daniel Meuser",
+"party": "R",
+"state": "PA"
+},
+"M001208": {
+"district": 6,
+"first": "Lucy",
+"last": "McBath",
+"name": "Lucy McBath",
+"party": "D",
+"state": "GA"
+},
+"M001217": {
+"district": 23,
+"first": "Jared",
+"last": "Moskowitz",
+"name": "Jared Moskowitz",
+"party": "D",
 "state": "FL"
 },
 "M001222": {
@@ -63,6 +383,94 @@
 "party": "R",
 "state": "OH"
 },
+"M001227": {
+"district": 4,
+"first": "Jennifer",
+"last": "McClellan",
+"name": "Jennifer L. McClellan",
+"party": "D",
+"state": "VA"
+},
+"M001232": {
+"district": 6,
+"first": "April",
+"last": "McClain Delaney",
+"name": "April McClain Delaney",
+"party": "D",
+"state": "MD"
+},
+"M001234": {
+"district": 3,
+"first": "Kelly",
+"last": "Morrison",
+"name": "Kelly Morrison",
+"party": "D",
+"state": "MN"
+},
+"M001236": {
+"district": 14,
+"first": "Tim",
+"last": "Moore",
+"name": "Tim Moore",
+"party": "R",
+"state": "NC"
+},
+"M001239": {
+"district": 5,
+"first": "John",
+"last": "McGuire",
+"name": "John J. McGuire III",
+"party": "R",
+"state": "VA"
+},
+"M001245": {
+"district": 18,
+"first": "Christian",
+"last": "Menefee",
+"name": "Christian D. Menefee",
+"party": "D",
+"state": "TX"
+},
+"N000189": {
+"district": 4,
+"first": "Dan",
+"last": "Newhouse",
+"name": "Dan Newhouse",
+"party": "R",
+"state": "WA"
+},
+"P000048": {
+"district": 11,
+"first": "August",
+"last": "Pfluger",
+"name": "August Pfluger",
+"party": "R",
+"state": "TX"
+},
+"P000197": {
+"district": 11,
+"first": "Nancy",
+"last": "Pelosi",
+"name": "Nancy Pelosi",
+"party": "D",
+"state": "CA"
+},
+"R000603": {
+"district": 7,
+"first": "David",
+"last": "Rouzer",
+"name": "David Rouzer",
+"party": "R",
+"state": "NC"
+},
+"R000614": {
+"district": 21,
+"first": "Chip",
+"last": "Roy",
+"name": "Chip Roy",
+"party": "R",
+"state": "TX"
+},
 "R000619": {
 "district": 6,
 "first": "Michael",
@@ -71,11 +479,123 @@
 "party": "R",
 "state": "OH"
 },
+"S000168": {
+"district": 27,
+"first": "Maria",
+"last": "Salazar",
+"name": "Maria Elvira Salazar",
+"party": "R",
+"state": "FL"
+},
 "S000250": {
 "district": 17,
 "first": "Pete",
 "last": "Sessions",
 "name": "Pete Sessions",
+"party": "R",
+"state": "TX"
+},
+"S001185": {
+"district": 7,
+"first": "Terri",
+"last": "Sewell",
+"name": "Terri A. Sewell",
+"party": "D",
+"state": "AL"
+},
+"S001189": {
+"district": 8,
+"first": "Austin",
+"last": "Scott",
+"name": "Austin Scott",
+"party": "R",
+"state": "GA"
+},
+"S001199": {
+"district": 11,
+"first": "Lloyd",
+"last": "Smucker",
+"name": "Lloyd Smucker",
+"party": "R",
+"state": "PA"
+},
+"S001201": {
+"district": 3,
+"first": "Thomas",
+"last": "Suozzi",
+"name": "Thomas R. Suozzi",
+"party": "D",
+"state": "NY"
+},
+"S001211": {
+"district": 4,
+"first": "Greg",
+"last": "Stanton",
+"name": "Greg Stanton",
+"party": "D",
+"state": "AZ"
+},
+"S001214": {
+"district": 17,
+"first": "W.",
+"last": "Steube",
+"name": "W. Gregory Steube",
+"party": "R",
+"state": "FL"
+},
+"T000480": {
+"district": 4,
+"first": "William",
+"last": "Timmons",
+"name": "William R. Timmons IV",
+"party": "R",
+"state": "SC"
+},
+"T000488": {
+"district": 13,
+"first": "Shri",
+"last": "Thanedar",
+"name": "Shri Thanedar",
+"party": "D",
+"state": "MI"
+},
+"T000490": {
+"district": 2,
+"first": "David",
+"last": "Taylor",
+"name": "David J. Taylor",
+"party": "R",
+"state": "OH"
+},
+"V000139": {
+"district": 7,
+"first": "Matt",
+"last": "Van Epps",
+"name": "Matt Van Epps",
+"party": "R",
+"state": "TN"
+},
+"W000798": {
+"district": 5,
+"first": "Tim",
+"last": "Walberg",
+"name": "Tim Walberg",
+"party": "R",
+"state": "MI"
+},
+"W000804": {
+"district": 1,
+"first": "Robert",
+"last": "Wittman",
+"name": "Robert J. Wittman",
+"party": "R",
+"state": "VA"
+},
+"W000816": {
+"district": 25,
+"first": "Roger",
+"last": "Williams",
+"name": "Roger Williams",
 "party": "R",
 "state": "TX"
 },
