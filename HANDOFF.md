@@ -71,3 +71,8 @@
 4. **배포 한 가지로 정리**(위 "배포가 두 가지" 참고).
 5. 공유 그림 카드, 일본 국회, 도메인·개인정보처리방침 — 미착수.
 6. AI 검색(유료 모델)은 일시 중지 상태(`server/worker.mjs` 503). 통합 검색은 AI 없이 저장 데이터로 동작.
+
+## 남들 의견 층 (#268)
+- 검색 답 아래 "남들 의견" 상자(`assets/opinions.js`). 우리 데이터와 점선 상자로 분리, "의견이에요, 사실 확인 아님" 표시.
+- 계정 목록 `data/opinions/accounts.json`, 임원 발언 대상 `data/opinions/execs.json`. X 글은 봇이 `data/opinions/YYYY-MM-DD.json`(배열)로 올리면 `collector/opinions/build.py`가 검증(스키마·추적 종목만·중복 id 제거·금지어)해서 `data/opinions/index.json`으로 합침. SEC 8-K EX-99·IR RSS 는 `fetch_exec.py` -> `data/opinions/auto/`.
+- 워크플로 초안은 `collector/opinions/opinions.yml` (권한 때문에 `.github/workflows/`로 사람이 옮겨야 함). 테스트: `tests/test_opinions.py`, `tests/opinions.test.cjs`.
