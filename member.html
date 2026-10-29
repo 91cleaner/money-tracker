@@ -195,7 +195,7 @@ header.bar input.nm{width:200px;text-transform:none}
     if (l == null || l < 0) return null;
     var cls = l <= 14 ? "fast" : l <= 45 ? "mid" : "slow";
     var txt = l === 0 ? T("같은 날 신고", "Reported same day") : T(l + "일 늦게 신고", "Reported " + l + (l === 1 ? " day" : " days") + " later");
-    if (l > 45) txt += T(" (45일 넘음)", " (over 45)");
+    if (l > 45) txt += T(" (숙제 제출 기한 45일 넘음)", " (past the 45-day homework due date)");
     return { cls: cls, txt: txt };
   }
   var TY = { P: "구입(P)", S: "처분(S)", E: "교환(E)" };
@@ -301,7 +301,7 @@ header.bar input.nm{width:200px;text-transform:none}
     var kv = el("div", "kv");
     [[n(rows.length) + "건", "전체 신고 (" + (rows.length ? rows[rows.length - 1].filed + " ~ " + rows[0].filed : "기록 없음") + ")"],
      [n(cnt.P), "구입(P)"], [n(cnt.S), "처분(S)"], [n(cnt.E), "교환(E)"],
-     [lags.length ? lags[Math.floor(lags.length / 2)] + "일" : "-", "신고까지 중앙값"], [n(late), "45일 넘겨 신고"], [rows[0] ? rows[0].filed : "-", "가장 최근 신고일"]]
+     [lags.length ? lags[Math.floor(lags.length / 2)] + "일" : "-", "신고까지 중앙값"], [n(late), "주식 숙제 늦게 낸 것 (45일 넘김)"], [rows[0] ? rows[0].filed : "-", "가장 최근 신고일"]]
       .forEach(function (it, i) { var b = el("div"), v = el("b", i === 5 && late ? "down" : "", it[0]); b.append(v, el("span", "", it[1])); kv.appendChild(b); });
     sum.appendChild(kv);
     sum.appendChild(el("p", "note", "금액은 신고서의 구간이라 합계를 내지 않고 건수로만 셉니다. 거래일과 신고일이 모두 있는 " + n(lags.length) + "건 기준."));
@@ -400,7 +400,7 @@ header.bar input.nm{width:200px;text-transform:none}
       bd.appendChild(el("span", "", T("🕒 보통 " + lags[Math.floor(lags.length / 2)] + "일 늦게 신고", "🕒 Usually reported " + lags[Math.floor(lags.length / 2)] + " days later")));
       bd.appendChild(el("span", "", T("🐢 가장 늦은 신고 " + lags[lags.length - 1] + "일", "🐢 Slowest report: " + lags[lags.length - 1] + " days")));
     }
-    bd.appendChild(el("span", "", T("🚨 45일 넘긴 신고 " + late + "건", "🚨 Over 45 days: " + late)));
+    bd.appendChild(el("span", "", T("🚨 주식 숙제 늦게 낸 것 " + late + "건 (45일 넘김)", "🚨 Stock homework turned in late: " + late + " (past 45 days)")));
     p.appendChild(bd);
     p.appendChild(el("p", "note", T("점 하나 = 신고된 거래 하나예요. 점을 눌러 보세요! 공개 기록일 뿐이고, 사고팔라는 뜻이 아니에요.", "One dot = one reported trade. Tap a dot! This is a public record only, not advice to buy or sell.")));
     if (!tks.length) { p.appendChild(el("div", "empty", T("티커가 있는 거래가 없어서 차트를 못 그려요", "No trades with a ticker, so no chart"))); return p; }
