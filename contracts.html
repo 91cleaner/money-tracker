@@ -2,6 +2,16 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<script>
+(function () {
+  try {
+    var p = new URLSearchParams(location.search);
+    if (p.get('inst') === '서울특별시 강서구' && p.get('q') === '신청사') {
+      location.replace('gangseo.html' + location.search + location.hash);
+    }
+  } catch (e) {}
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MONEY TRACKER</title>
 <meta property="og:type" content="website"><meta property="og:site_name" content="MONEY TRACKER">

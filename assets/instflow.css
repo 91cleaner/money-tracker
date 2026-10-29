@@ -1,0 +1,166 @@
+/* 발주기관 한 곳의 계약이 어느 시·군·구로 갔는지. 지도 위에 카드를 올리지 않는다. */
+html, body { height: 100%; }
+body.if-body {
+  margin: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #070b10;
+  color: #e8edf2;
+  font-family: Pretendard, system-ui, -apple-system, sans-serif;
+}
+.if-body .head { flex: none; padding: 12px 16px 8px; }
+.if-body h1 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.if-body .tot {
+  margin: 2px 0 0;
+  color: #ffb020;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.if-body .sub, .if-body .note, .if-body .src {
+  margin: 3px 0 0;
+  color: #9aa6b2;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.if-body .note { color: #c4b08a; }
+.if-body .stage { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.if-body #map { flex: 1; min-height: 0; background: #0c1218; }
+.if-body .maplg {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 8px 12px 0;
+  padding: 6px 10px;
+  font: 500 12px/1.35 Pretendard, system-ui, sans-serif;
+  color: #c5d0da;
+  background: #0b0f13;
+  border: 1px solid #1f2933;
+  border-radius: 8px;
+}
+.if-body .maplg i { display: inline-block; flex: none; }
+.if-body .maplg .lg-dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid #fff; box-sizing: border-box; }
+.if-body .maplg .lg-ln { width: 18px; height: 3px; border-radius: 2px; }
+.if-body .maplg .lg-w { display: inline-flex; align-items: center; gap: 2px; }
+.if-body .maplg .lg-w i { width: 12px; border-radius: 2px; }
+.if-body .maplg .lg-w i:first-child { height: 2px; }
+.if-body .maplg .lg-w i:last-child { height: 6px; }
+.if-body .regs {
+  flex: none;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 8px 12px 4px;
+  scrollbar-width: thin;
+}
+.if-body .regs button {
+  flex: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 36px;
+  margin: 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #2a3541;
+  background: #121920;
+  color: #e8edf2;
+  font: 600 12px/1.2 Pretendard, system-ui, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.if-body .regs button b { color: #ffb020; font-weight: 800; }
+.if-body .regs button:hover, .if-body .regs button:focus-visible { border-color: #ffb020; outline: none; }
+.if-body .src { flex: none; padding: 2px 16px 10px; }
+.if-body .leaflet-container { background: #0c1218; font-family: inherit; }
+.if-body .leaflet-bottom.leaflet-left {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 6px;
+  padding: 0 0 8px 8px;
+}
+.if-body .leaflet-bottom.leaflet-left .leaflet-control { margin: 0 !important; float: none; clear: none; }
+.if-body .leaflet-bar { border: 0; box-shadow: none; }
+.if-body .leaflet-bar a {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  background: #11171de6;
+  color: #e8eef5;
+  border: 1px solid #2a3540;
+}
+.if-body .leaflet-bar a:hover, .if-body .leaflet-bar a:focus { background: #1b2633; color: #fff; }
+.if-body .map-home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid #2a3540;
+  background: #11171de6;
+  color: #e8eef5;
+  font: 700 13px/1 Pretendard, system-ui, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.if-body .map-home.is-home { opacity: .55; }
+.if-body .map-home:hover, .if-body .map-home:focus-visible { border-color: #ffb020; color: #fff; }
+.if-body .leaflet-control-attribution {
+  max-width: min(46vw, 280px);
+  font-size: 10px;
+  line-height: 1.3;
+  background: rgba(7, 11, 16, .72);
+  color: #9aa6b2;
+}
+.if-body .leaflet-tooltip.if-lab {
+  background: rgba(8, 12, 16, .9);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .45);
+  color: #f4f8fc;
+  padding: 2px 6px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.if-body .leaflet-tooltip.if-lab::before { display: none; }
+.if-body .if-lab .nm { display: block; font-weight: 800; font-size: 12px; line-height: 1.25; }
+.if-body .if-lab .am { display: block; color: #ffb020; font-weight: 800; font-size: 12px; line-height: 1.2; }
+.if-body .if-lab.org .nm { color: #ffd60a; font-size: 13px; }
+@media (max-width: 420px) {
+  .if-body .head { padding: 10px 12px 6px; }
+  .if-body h1 { font-size: 18px; }
+  .if-body .tot { font-size: 24px; }
+  .if-body .sub, .if-body .note, .if-body .src { font-size: 12px; }
+  .if-body .src { padding: 2px 12px 8px; }
+  .if-body .if-lab .nm, .if-body .if-lab .am { font-size: 11px; }
+  .if-body .maplg { margin: 6px 8px 0; font-size: 12px; }
+  .if-body .regs { padding: 6px 8px 2px; }
+}
+@media (min-width: 1100px) {
+  .if-body .head { padding: 16px 28px 8px; }
+  .if-body h1 { font-size: 30px; }
+  .if-body .tot { font-size: 40px; }
+  .if-body .sub, .if-body .note { font-size: 15px; }
+  .if-body .maplg { margin: 10px 28px 0; }
+  .if-body .regs { padding: 8px 28px 4px; }
+  .if-body .src { padding: 2px 28px 12px; }
+}
