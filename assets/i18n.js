@@ -202,6 +202,7 @@
     [/요즘 값은 (.+?)이에요\((.+?)\)\. 같이 보는 숫자일 뿐, 서로 원인이라는 뜻은 아니에요\./, "Latest value: $1 ($2). Shown side by side only; it does not mean one causes the other."],
     [/이 사이트가 직접 묶은 거라 공식 담당 위원회는 아닐 수 있어요\. (상원|하원) 위원 (\d+)명이 있어요\./, function (m, h, n) { return "Grouped by this site; may not be the official committee of jurisdiction. " + (h === "상원" ? "Senate" : "House") + " members: " + n + "."; }],
     [/^(.+?) 분야와 같이 보는 숫자예요\. 출처: (.+?)\. 원인이라는 뜻은 아니에요\./, "An indicator viewed alongside the $1 sector. Source: $2. Not a cause."],
+    [/요즘 값은 (.+?)이에요\(/, "Latest value: $1 ("],
     [/본사 위치\(SEC 주소\)/, "HQ location (SEC address)"], [/^본사 /, "HQ "],
     [/데이터상 (.+?) 업종과 함께 보는 지표로 연결됨\. 출처: /, "Data shows this is linked as an indicator watched with the $1 sector. Source: "],
     [/ · 시세 /, " · quote "], [/ \(월간, 매일 확인\) · 원 출처 한국은행/, " (monthly, checked daily) · original source Bank of Korea"],
