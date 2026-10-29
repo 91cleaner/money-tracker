@@ -587,6 +587,7 @@ let q=0;new MutationObserver(()=>{if(!q){q=1;requestAnimationFrame(()=>{q=0;sync
 #mtc .nc{font-size:10px;color:#8fb0bb;line-height:1.4}
 #mtc .row{display:flex;gap:6px}
 #mtc .act{flex:1;color:var(--c2);border-color:#7a6a14}
+#mtc .nc+.act{display:block;width:100%;margin:4px 0;white-space:normal}#mtc .nc+.act[hidden]{display:none}
 #mtc .act[aria-pressed="true"]{background:#3d3508;color:#fff3b0}
 #mtc .pins{display:flex;gap:5px;flex-wrap:wrap}
 #mtc .pins button{max-width:100%;min-height:32px;padding:0 8px;background:#0a2737;color:#c9eff8;border:1px solid #3c6677;border-radius:14px;font:inherit;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -653,11 +654,11 @@ const PER=[[7,T('1주','1 week')],[30,T('1달','1 month')],[90,T('3달','3 month
 const swd=document.createElement('div');swd.className='sw';const sb=LAYERS.map(l=>{const b=mkBtn(l[1]);b.setAttribute('role','switch');b.setAttribute('aria-checked','false');b.onclick=()=>{if(sel.has(l[0]))sel.delete(l[0]);else sel.add(l[0]);b.setAttribute('aria-checked',String(sel.has(l[0])));apply()};return b});swd.append(...sb);
 const tlw=document.createElement('div');tlw.className='tl';const tp=mkBtn('▶');tp.setAttribute('aria-label',T('날짜순 재생','Play by date'));const rg=document.createElement('input');rg.type='range';rg.min=0;rg.max=0;rg.value=0;rg.setAttribute('aria-label',T('날짜 슬라이더','Date slider'));const tlv=document.createElement('div');tlv.className='tlv';tlw.append(tp,rg);
 const nums=document.createElement('div');nums.className='nums';const n1=document.createElement('span');n1.className='num';const n2=document.createElement('span');n2.className='num';n2.hidden=true;nums.append(n1,n2);
-const nc=document.createElement('div');nc.className='nc';
+const nc=document.createElement('div');nc.className='nc';const rb=document.createElement('button');rb.type='button';rb.className='act';rb.hidden=true;rb.textContent=T('다시 시도','Retry');rb.onclick=()=>{const m=cur(),k=m&&tk(m);if(k)PX.retry(k)};
 const pinB=mkBtn(T('📌 이 대상 감시','📌 Watch this'),'act');pinB.setAttribute('aria-pressed','false');const fxB=mkBtn(T('✨ 효과','✨ Effects'),'act');fxB.setAttribute('aria-pressed',String(!fxOff));
 const row=document.createElement('div');row.className='row';row.append(pinB,fxB);const pinsEl=document.createElement('div');pinsEl.className='pins';
 const note=document.createElement('div');note.className='nt';note.textContent=T('공개 자료를 걸러 보는 도구예요. 선과 숫자는 나란히 놓은 것일 뿐 원인을 뜻하지 않아요. Esc = 효과 건너뛰기.','A tool for filtering public records. Lines and numbers are shown side by side and do not imply cause. Esc = skip effects.');
-bd.append(sec(T('기간 (다시 누르면 해제)','Period (tap again to clear)'),seg),sec(T('겹쳐 볼 층 (켜면 그 층만 표시)','Layers (on = show only those)'),swd),sec(T('날짜순 다시 보기','Replay by date'),tlw),tlv,nums,nc,row,sec(T('감시 중','Watching'),pinsEl),note);
+bd.append(sec(T('기간 (다시 누르면 해제)','Period (tap again to clear)'),seg),sec(T('겹쳐 볼 층 (켜면 그 층만 표시)','Layers (on = show only those)'),swd),sec(T('날짜순 다시 보기','Replay by date'),tlw),tlv,nums,nc,rb,row,sec(T('감시 중','Watching'),pinsEl),note);
 box.append(hd,bd);document.body.append(box);
 const badge=document.createElement('div');badge.id='mtWatch';badge.hidden=true;badge.textContent=T('감시 중','WATCHING');const bt=$('briefTitle');if(bt&&bt.parentNode)bt.after(badge);
 hd.onclick=()=>{const o=box.dataset.open==='1'?'0':'1';box.dataset.open=o;hd.setAttribute('aria-expanded',String(o==='1'));document.body.classList.toggle('mtc-open',o==='1')};
@@ -671,11 +672,32 @@ function stopPlay(){clearInterval(tPlay);tPlay=0;tp.textContent='▶'}
 function build(m){ig.clearLayers();mk=[];vis=[];m.meta.forEach((t,i)=>{if(t.lat==null)return;const [c,e]=iconOf(t,i===0);mk[i]=L.marker([t.lat,t.lon],{icon:L.divIcon({className:'mtIc '+c+(i===0?' hub':''),html:'<b aria-hidden="true">'+e+'</b>',iconSize:i?[24,24]:[30,30]}),interactive:false,keyboard:false,zIndexOffset:i===0?500:0}).addTo(ig)});
  dates=[...new Set(m.meta.map(dms).filter(Boolean))].sort((a,b)=>a-b);tl=null;rg.max=dates.length;rg.value=dates.length;rg.disabled=tp.disabled=dates.length<2;stopPlay()}
 const tk=m=>m&&/^company:/.test(m.ticker||'')?m.ticker.slice(8):'';
-const fmt=v=>v==null?'':(v>0?'+':'')+v.toFixed(1)+'%',M3={};
-// 3달 등락: 종목별 일별 종가 파일에서 계산. 기록이 90일에 못 미치면 null(준비 중 안내)
-function load3(k){if(!k||k in M3)return;M3[k]=undefined;fetch('../data/us/prices/'+encodeURIComponent(k)+'.json').then(r=>r.ok?r.json():null).then(j=>{const d=j&&j.d,c=j&&j.c;let v=null;if(Array.isArray(d)&&Array.isArray(c)&&d.length>1){const e=d.length-1,t=Date.parse(d[e])-90*864e5;if(Date.parse(d[0])<=t){let i=e;while(i>0&&Date.parse(d[i])>t)i--;if(c[i]&&c[e])v=(c[e]/c[i]-1)*100}}M3[k]=v}).catch(()=>{M3[k]=null}).then(()=>{if(period===90)apply()})}
-function pct(m){const k=tk(m),x=P&&P.t&&P.t[k];if(!x)return'';if(period===90){load3(k);return fmt(M3[k])}return fmt(period===7?x.w1:period===30?x.m1:null)}
-const soon=m=>period===90&&!!tk(m)&&M3[tk(m)]===null
+/*PX-START*/
+const fmt=v=>v==null?'':(v>0?'+':'')+v.toFixed(1)+'%';
+// 3달 등락: 종목별 일별 종가 파일(summary와 무관)에서 계산. 상태: loading/ready/unavailable/error. 실패는 캐시하지 않고 다시 시도할 수 있다.
+function mkPx(fetchFn,onChange){const S={};
+ const calc3=j=>{const d=j&&j.d,c=j&&j.c;if(!Array.isArray(d)||!Array.isArray(c)||d.length!==c.length)return{st:'error'};
+  if(d.length<2)return{st:'unavailable',why:'short'};
+  const e=d.length-1,te=Date.parse(d[e]),t0=Date.parse(d[0]);if(!isFinite(te)||!isFinite(t0))return{st:'error'};
+  const t=te-90*864e5;if(t0>t)return{st:'unavailable',why:'short'};
+  let i=e;while(i>0&&Date.parse(d[i])>t)i--;
+  if(!(c[i]>0&&c[e]>0))return{st:'error'};
+  return{st:'ready',v:(c[e]/c[i]-1)*100,from:String(d[i]).slice(0,10),to:String(d[e]).slice(0,10),asof:String(j.as_of||d[e]).slice(0,10)}};
+ function load(k,force){if(!k)return;const s=S[k];if(s&&(s.st==='loading'||s.st==='ready'||(s.st==='unavailable'&&s.why==='short')))return;if(s&&!force)return;
+  const mine=S[k]={st:'loading'};
+  Promise.resolve().then(()=>fetchFn('../data/us/prices/'+encodeURIComponent(k)+'.json')).then(r=>{
+   if(r.status===404||!r.ok)return r.status===404?{st:'unavailable',why:'missing'}:{st:'error'};
+   return r.json().then(calc3,()=>({st:'error'}))}).catch(()=>({st:'error'})).then(v=>{if(S[k]===mine){S[k]=v;onChange&&onChange()}})}
+ return{get(k){if(!k)return null;if(!S[k])load(k);return S[k]},retry(k){load(k,true);onChange&&onChange()},calc3}}
+/*PX-END*/
+const PX=mkPx((u)=>fetch(u),()=>{if(period===90)apply()});
+// 경로 기간(calc와 같은 기준: 경로 최신 사건일 기준 N일)과 주가 기간을 따로 구해, 실제로 일치할 때만 same=true
+function priceInfo(m){const k=tk(m);if(!k||!period)return null;const R=ref(m),rf=R?iso(R-period*864e5):'',rt=R?iso(R):'';
+ let o;
+ if(period===90){const s=PX.get(k);if(!s)return null;o=Object.assign({k,rf,rt},s);if(s.st==='ready')o.px=fmt(s.v)}
+ else{const x=P&&P.t&&P.t[k];if(!x)return{k,st:'nosummary',rf,rt};const v=period===7?x.w1:x.m1;if(v==null)return{k,st:'nosummary',rf,rt};
+  o={k,st:'ready',px:fmt(v),from:period===30?(x.from||''):'',to:P.date||'',asof:P.date||'',rf,rt}}
+ o.same=o.st==='ready'&&!!o.from&&!!o.to&&o.from===rf&&o.to===rt;return o}
 function stampN(el,v){if(el.textContent===v)return;el.textContent=v;if(!fx())return;el.classList.remove('land');void el.offsetWidth;el.classList.add('land')}
 const apply=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(paint)};
 function pinsPaint(){pinsEl.replaceChildren(...pins.map(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.n;b.title=T(p.n+' 경로 열기','Open route: '+p.n);b.onclick=()=>window.mtApi.loadIdx().then(()=>{const r=window.mtApi.routeOf(p.t);if(r)window.mtApi.start(r)}).catch(()=>{});return b}));if(!pins.length){const s=document.createElement('span');s.className='nt';s.textContent=T('아직 없어요. 경로를 연 뒤 📌를 눌러 보세요.','None yet. Open a route, then tap 📌.');pinsEl.append(s)}hdI.textContent=pins.length?T('감시 ','Watching ')+pins.length:''}
@@ -684,8 +706,16 @@ function paint(){const m=cur();pinsPaint();if(!m||!m.meta){n1.textContent='—';
  m.meta.forEach((t,i)=>{const on=V[i];if(i){tot++;if(on)n++}[L_[i]&&L_[i].getElement&&L_[i].getElement(),D[i]&&D[i].getElement&&D[i].getElement(),mk[i]&&mk[i].getElement&&mk[i].getElement()].forEach(x=>{if(x)x.style.display=on?'':'none'});
   if(on&&vis[i]===false&&tl!=null&&i){drawLine(i);pulse(t)}vis[i]=on});
  tlv.textContent=tl==null?(dates.length>1?T('전체 ','All ')+iso(dates[0])+' ~ '+iso(dates[dates.length-1]):T('날짜가 있는 기록이 적어요','Few dated records')):tl===0?T('처음 상태 (날짜 있는 기록 숨김)','Start (dated records hidden)'):EN?'up to '+iso(dates[tl-1]):'~ '+iso(dates[tl-1])+' 까지';
- stampN(n1,EN?String(n):n+'건');const px=pct(m);n2.hidden=!px;if(px)stampN(n2,px);
- nc.textContent=T('보이는 공개 기록 '+n+' / '+tot+'건','Public records shown: '+n+' / '+tot)+(px?T(' · 같은 기간 주가 '+px+' (나란히 본 것, 원인 아님)',' · price change over the same period '+px+' (side by side, not a cause)'):soon(m)?' · '+T('3달 주가는 준비 중','3-month prices coming soon'):period&&period<90&&tk(m)?T(' · 이 기간의 주가 수치는 없어요',' · No price figure for this period'):'');
+ stampN(n1,EN?String(n):n+'건');const pi=priceInfo(m),px=pi&&pi.st==='ready'?pi.px:'';n2.hidden=!px;if(px)stampN(n2,px);
+ const rng=(a,b)=>(a||'?')+' ~ '+(b||'?');let ptx='';rb.hidden=true;
+ if(pi){if(pi.st==='ready'){ptx=pi.same?T(' · 같은 기간 주가 '+px+' ('+rng(pi.from,pi.to)+', 나란히 본 것, 원인 아님)',' · price change over the same period '+px+' ('+rng(pi.from,pi.to)+', side by side, not a cause)')
+   :T(' · 주가 '+px+' (주가 기간 '+rng(pi.from,pi.to)+' / 경로 기간 '+rng(pi.rf,pi.rt)+' — 기간이 달라 같은 기간으로 보지 마세요, 원인 아님)',' · price change '+px+' (price window '+rng(pi.from,pi.to)+' / route window '+rng(pi.rf,pi.rt)+' — different windows, not the same period, not a cause)');
+   if(pi.asof)ptx+=T(' · 가격 기준일 '+pi.asof,' · prices as of '+pi.asof)}
+  else if(pi.st==='loading')ptx=' · '+T('3달 주가 불러오는 중','Loading 3-month prices');
+  else if(pi.st==='unavailable'){ptx=' · '+(pi.why==='short'?T('3달 주가: 가격 기록이 90일에 못 미쳐 계산하지 않아요','3-month prices: fewer than 90 days of history, not computed'):T('3달 주가 파일이 아직 없어요','No 3-month price file yet'));if(pi.why!=='short')rb.hidden=false}
+  else if(pi.st==='error'){ptx=' · '+T('3달 주가를 불러오지 못했어요','Could not load 3-month prices');rb.hidden=false}
+  else ptx=' · '+T('이 기간의 주가 수치는 없어요','No price figure for this period')}
+ nc.textContent=T('보이는 공개 기록 '+n+' / '+tot+'건','Public records shown: '+n+' / '+tot)+ptx;
  const pinned=pins.some(p=>p.t===m.ticker);pinB.setAttribute('aria-pressed',String(pinned));pinB.textContent=pinned?T('📌 감시 해제','📌 Stop watching'):T('📌 이 대상 감시','📌 Watch this');badge.hidden=!pinned}
 pinB.onclick=()=>{const m=cur();if(!m)return;const i=pins.findIndex(p=>p.t===m.ticker);if(i>=0)pins.splice(i,1);else pins.push({t:m.ticker,n:String(m.title).replace(/\s*(경로|route)$/i,'')});ST.set('mt-watch',pins);paint()};
 fxB.onclick=()=>{fxOff=!fxOff;ST.set('mt-fx-off',fxOff);document.body.classList.toggle('mtc-nofx',fxOff);fxB.setAttribute('aria-pressed',String(!fxOff))};
