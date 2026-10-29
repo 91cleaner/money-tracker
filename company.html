@@ -110,6 +110,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 <main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
 <script src="assets/insights-card.js?v=ins-20261028"></script>
+<script src="assets/money-trio.js?v=trio-20261029"></script>
 <script src="assets/share.js?v=share-20261028"></script>
 <script>
 (function () {
@@ -332,6 +333,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     }
     head.appendChild(acts);
     app.appendChild(head);
+    if (window.MTMoneyTrio) { var trioHost = el("div"); trioHost.style.gridColumn = "1 / -1"; app.appendChild(trioHost); window.MTMoneyTrio.render(trioHost, T, { title: "🎮 돈 기록 3종 세트 · " + T }); }
 
     // 2) prices
     var pins = [];
@@ -364,7 +366,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       Object.keys(byMonth).forEach(function (mth) { ev.push({ date: mth, kind: "의원 거래 신고", title: "이달 신고 " + byMonth[mth] + "건 (신고일 기준, 위 목록 참고)", sub: null, url: null }); });
     }
     ev.sort(function (a, b) { return b.date.localeCompare(a.date); });
-    app.appendChild(timelineBlock(ev, undated, lob, ((si.money_stops || {})["awards:"] || 0) > 0));
+    app.appendChild(timelineBlock(ev, undated, lob, true));
     renderFoot({ si: si, ts: ts, tr: tr, lb: lb, pac: pac, routes: routes, pr: pr, ins: ins });
   });
 
