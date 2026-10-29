@@ -25,7 +25,7 @@ def safe(path):
     if path.is_symlink():
         return False
     rel = path.relative_to(ROOT)
-    if rel.as_posix() in PRIVATE_DATA_FILES:
+    if rel.as_posix() in PRIVATE_DATA_FILES or rel.as_posix().startswith("data/us/history/"):
         return False
     if any(part.lower() in EXCLUDED_PARTS or part.lower().startswith(".") for part in rel.parts):
         return rel.as_posix() in PUBLIC_ROOT_FILES

@@ -20,7 +20,7 @@ forbidden = (
     "data/us/trades.json", "data/us/house-ptr-candidates.json",
     "data/us/ptr-crosschecks.json",
 )
-exposed = [name for name in forbidden if (root / name).exists()]
+exposed = [name for name in forbidden if (root / name).exists()] + (["data/us/history/"] if (root / "data/us/history").exists() else [])
 if exposed:
     sys.exit("Unexpected files in public artifact: " + ", ".join(exposed))
 import json
