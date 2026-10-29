@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>오늘의 브리핑 · 상황실 카드 | Money Tracker</title>
+<meta name="description" content="공개 자료로 매일 만드는 상황실 브리핑 카드. 같은 기간 ≠ 원인. 투자 조언 아님.">
+<style>
+*{box-sizing:border-box;margin:0}
+body{background:#05080c;color:#d8e6f0;font:15px/1.6 Pretendard,system-ui,-apple-system,'Noto Sans KR',sans-serif;min-height:100vh}
+a{color:#7fd6ff}
+.top{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #1b2b38;background:#080d13;position:sticky;top:0;z-index:5}
+.top .nav{display:flex;gap:14px;flex-wrap:wrap;font-weight:800;font-size:14px}
+.top a{text-decoration:none}
+.lang{display:flex;border:1px solid #2c4256;border-radius:8px;overflow:hidden}
+.lang button{background:#0c141c;color:#8fb0c8;border:0;padding:6px 12px;font:800 13px ui-monospace,monospace;cursor:pointer}
+.lang button[aria-pressed=true]{background:#ffd23f;color:#111}
+main{max-width:1240px;margin:0 auto;padding:18px 14px 60px}
+h1{font:900 clamp(26px,5vw,40px)/1.15 'Courier New',ui-monospace,monospace;letter-spacing:-.03em;margin:6px 0 4px}
+h2{font:900 clamp(20px,3.6vw,26px)/1.2 'Courier New',ui-monospace,monospace;margin:34px 0 4px;color:#ffd23f}
+.lead{color:#8fa6b8;font-size:14px;margin-bottom:16px}
+.item{margin:0 0 30px}
+.stage{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:10px;border:1px solid #243645}
+.stage .scaler{position:absolute;left:0;top:0;transform-origin:0 0}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.bar button,.bar a{background:#0e1a25;color:#e8f4ff;border:1px solid #33516a;border-radius:10px;padding:10px 14px;font:800 14px system-ui,sans-serif;cursor:pointer;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.bar button.p{background:#ffd23f;color:#111;border-color:#ffd23f}
+.bar button:focus-visible,.bar a:focus-visible{outline:3px solid #7fd6ff}
+.empty{padding:26px;border:1px dashed #33516a;border-radius:12px;color:#8fa6b8}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#ffd23f;color:#111;font-weight:800;padding:10px 16px;border-radius:10px;display:none;z-index:9}
+footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-size:12.5px}
+
+/* ---- card (fixed 1200x675 so the PNG is always the same size) ---- */
+.card{width:1200px;height:675px;position:relative;overflow:hidden;color:#e6f1fa;background:#070c12;font-family:'Courier New',ui-monospace,'Noto Color Emoji',monospace;
+ background-image:linear-gradient(#0f2a3a33 1px,transparent 1px),linear-gradient(90deg,#0f2a3a33 1px,transparent 1px),radial-gradient(circle at 80% 0,#14344a 0,#070c12 60%);background-size:40px 40px,40px 40px,100% 100%}
+.card .stripe{height:22px;background:repeating-linear-gradient(-45deg,#ffd23f 0 24px,#111 24px 48px)}
+.card .in{padding:26px 48px 0;position:relative}
+.card .badge{display:inline-block;background:#ffd23f;color:#111;font-weight:900;font-size:26px;padding:4px 16px;border-radius:6px;letter-spacing:.04em}
+.card .meta{position:absolute;right:48px;top:30px;font-size:24px;color:#7fd6ff;font-weight:700}
+.card .stamp{position:absolute;right:60px;top:78px;border:5px solid #ff3b5c;color:#ff3b5c;font-weight:900;font-size:34px;padding:2px 14px;transform:rotate(-8deg);letter-spacing:.1em;opacity:.9}
+.card .title{font-weight:900;font-size:50px;line-height:1.12;margin:14px 0 4px;letter-spacing:-.04em;max-width:900px}
+.card .sub{font-size:24px;color:#9fc0d6;margin-bottom:16px;max-width:930px}
+.card .row{display:flex;align-items:center;gap:16px;background:#0d1a26;border:3px solid #2a475c;border-left:12px solid #7fd6ff;border-radius:8px;padding:10px 22px;margin-bottom:12px;font-size:36px;font-weight:800}
+.card .row .mk{width:48px}
+.card .row .lb{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .row .vl{padding:0 16px;border-radius:8px;background:#e6f1fa;color:#111;font-weight:900}
+.card .row.red{border-left-color:#ff3b5c}.card .row.red .vl{background:#ff3b5c;color:#fff}
+.card .row.amber{border-left-color:#ff9f1c}.card .row.amber .vl{background:#ff9f1c;color:#111}
+.card .row.yellow{border-left-color:#ffe14d}.card .row.yellow .vl{background:#ffe14d;color:#111}
+.card .row.green{border-left-color:#14e08a}.card .row.green .vl{background:#14e08a;color:#062}
+.card .note{position:absolute;left:48px;right:48px;bottom:62px;font-size:22px;color:#ffd23f}
+.card .foot{position:absolute;left:48px;right:48px;bottom:16px;display:flex;justify-content:space-between;font-size:20px;color:#8fb0c8}
+.card .vs{display:flex;gap:30px;margin-top:10px}
+.card .pn{flex:1;border:5px solid #000;box-shadow:8px 8px 0 #000;border-radius:18px;padding:18px 24px;height:330px;overflow:hidden}
+.card .pn.now{background:#ff3b5c;color:#fff}.card .pn.then{background:#14e08a;color:#111}
+.card .pn .tg{display:inline-block;background:#111;color:#fff;font-weight:900;font-size:24px;padding:2px 14px;border-radius:999px}
+.card .pn .pt{font-weight:900;font-size:32px;line-height:1.15;margin-top:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .pn .pd{font-size:22px;opacity:.85;margin-top:6px}
+.card .pn .mv{font-weight:900;font-size:56px;margin-top:8px;white-space:nowrap}
+.card .big{font-weight:900;font-size:88px;line-height:1.05;color:#ff9f1c;margin:6px 0 10px;letter-spacing:-.04em;white-space:nowrap}
+.card .big small{display:block;font-size:34px;color:#e6f1fa;letter-spacing:0;margin-top:2px}
+.card.live .title::after{content:"▌";color:#ffd23f;animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.card.live .title::after{animation:none}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="nav"><a href="index.html" data-t="home">홈</a><a href="world-intelligence/" data-t="room">미국 관제실</a><a href="us.html" data-t="us">미국</a></div>
+  <div class="lang" role="group" aria-label="Language"><button type="button" data-l="ko" aria-pressed="true">KO</button><button type="button" data-l="en" aria-pressed="false">EN</button></div>
+</div>
+<main>
+  <h1 data-t="h1">🛰️ 오늘의 브리핑</h1>
+  <p class="lead" id="lead"></p>
+  <section id="today"></section>
+  <section id="fixed"></section>
+</main>
+<footer id="foot"></footer>
+<div id="toast" role="status"></div>
+<script>
+(function () {
+  var SITE = 'https://91cleaner.github.io/money-tracker/cards.html';
+  var T = {
+    ko: { home: '홈', room: '미국 관제실', us: '미국', h1: '🛰️ 오늘의 브리핑', title: '오늘의 브리핑 · 상황실 카드 | Money Tracker',
+      lead: '공개 자료에서 매일 뽑은 눈에 띄는 기록이에요. 같은 기간 일어난 일의 기록일 뿐 이유를 말하지 않아요.',
+      today: '🔥 오늘의 브리핑 TOP', fixed: '🗂️ 상황실 카드', fixedLead: '매일 새로 만드는 고정 카드 4종이에요.',
+      share: 'X로 공유 (PNG 저장)', png: 'PNG 저장', src: '출처 열기', none: '오늘 보여줄 데이터가 아직 없어요.',
+      ok: 'PNG를 저장했어요', fail: 'PNG를 만들지 못했어요', asof: '기준',
+      foot: '공개 자료 기반 · 같은 기간 ≠ 원인 · 투자 조언이 아니에요 · 기록은 잘못의 증거가 아니에요.' },
+    en: { home: 'Home', room: 'US Situation Room', us: 'US', h1: "🛰️ Today's Briefing", title: "Today's Briefing · Situation Room Cards | Money Tracker",
+      lead: 'Notable records picked daily from public data. They show what happened in the same period, never why.',
+      today: "🔥 Today's top briefings", fixed: '🗂️ Situation room cards', fixedLead: 'Four standing cards, rebuilt daily.',
+      share: 'Share on X (saves PNG)', png: 'Save PNG', src: 'Open source', none: 'No data to show yet today.',
+      ok: 'PNG saved', fail: 'Could not make the PNG', asof: 'as of',
+      foot: 'Public data only · Same period ≠ cause · Not investment advice · A record is not proof of wrongdoing.' }
+  };
+  var q = new URLSearchParams(location.search).get('lang');
+  var stored = null;
+  try { stored = localStorage.getItem('mt-lang'); } catch (e) {}
+  var lang = (q === 'en' || q === 'ko') ? q : (stored === 'en' || stored === 'ko') ? stored : (/^ko/i.test(navigator.language || '') ? 'ko' : 'en');
+  var data = null;
+
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function pick(o, k) { return o[k + '_' + lang] != null ? o[k + '_' + lang] : o[k + '_en']; }
+  function safeUrl(u) { return /^https:\/\//.test(u || '') ? u : null; }
+  function toast(m) { var t = document.getElementById('toast'); t.textContent = m; t.style.display = 'block'; setTimeout(function () { t.style.display = 'none'; }, 2200); }
+
+  function buildCard(c, live) {
+    var root = el('div', 'card' + (live ? ' live' : ''));
+    root.appendChild(el('div', 'stripe'));
+    var inn = el('div', 'in');
+    inn.appendChild(el('span', 'badge', pick(c, 'badge')));
+    inn.appendChild(el('div', 'meta', 'BRIEFING ' + c.date));
+    inn.appendChild(el('div', 'stamp', c.stamp_en ? pick(c, 'stamp') : 'CLASSIFIED'));
+    inn.appendChild(el('div', 'title', pick(c, 'title')));
+    if (c.layout === 'versus') {
+      var vs = el('div', 'vs');
+      [['now', c.now], ['then', c.then]].forEach(function (p) {
+        var pn = el('div', 'pn ' + p[0]);
+        pn.appendChild(el('span', 'tg', pick(p[1], 'tag')));
+        pn.appendChild(el('div', 'pt', p[1].title));
+        pn.appendChild(el('div', 'pd', p[1].date + (p[1].period ? ' · ' + p[1].period : '')));
+        if (p[1].moves) {
+          p[1].moves.slice(0, 2).forEach(function (m) {
+            pn.appendChild(el('div', 'mv', m.sym + ' ' + (m.pct > 0 ? '+' : '') + m.pct.toFixed(1) + '% ' + (m.pct > 0 ? '📈' : '📉')));
+          });
+        }
+        vs.appendChild(pn);
+      });
+      inn.appendChild(vs);
+    } else {
+      inn.appendChild(el('div', 'sub', pick(c, 'sub')));
+      if (c.layout === 'big') {
+        var b = el('div', 'big', c.big.value);
+        b.appendChild(el('small', null, '≈ ' + pick(c.big, 'short')));
+        inn.appendChild(b);
+      }
+      (c.rows || []).forEach(function (r) {
+        var row = el('div', 'row ' + (r.tone || ''));
+        if (r.mark) row.appendChild(el('span', 'mk', r.mark));
+        row.appendChild(el('span', 'lb', r.label != null ? r.label : pick(r, 'label')));
+        row.appendChild(el('span', 'vl', pick(r, 'value')));
+        inn.appendChild(row);
+      });
+    }
+    root.appendChild(inn);
+    root.appendChild(el('div', 'note', pick(c, 'note')));
+    var f = el('div', 'foot');
+    f.appendChild(el('span', null, '91cleaner.github.io/money-tracker'));
+    f.appendChild(el('span', null, pick(c, 'source')));
+    root.appendChild(f);
+    return root;
+  }
+
+  function loadScript(src) {
+    return new Promise(function (ok, no) { var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+  }
+  function capture(c) {
+    var p = window.html2canvas ? Promise.resolve() : loadScript('assets/vendor/html2canvas.min.js');
+    return p.then(function () {
+      var host = el('div'); host.style.cssText = 'position:fixed;left:-10000px;top:0;width:1200px;height:675px';
+      var node = buildCard(c, false); host.appendChild(node); document.body.appendChild(host);
+      return html2canvas(node, { scale: 1, width: 1200, height: 675, backgroundColor: '#070c12', useCORS: false, logging: false })
+        .then(function (cv) { document.body.removeChild(host); return cv; }, function (e) { document.body.removeChild(host); throw e; });
+    });
+  }
+  function download(c) {
+    return capture(c).then(function (cv) {
+      var a = document.createElement('a'); a.download = 'money-tracker-' + c.id + '-' + c.date + '.png'; a.href = cv.toDataURL('image/png');
+      document.body.appendChild(a); a.click(); a.remove(); toast(T[lang].ok);
+    }).catch(function () { toast(T[lang].fail); });
+  }
+  function shareX(c) {
+    var u = 'https://x.com/intent/post?text=' + encodeURIComponent(pick(c, 'share')) + '&url=' + encodeURIComponent(SITE);
+    window.open(u, '_blank', 'noopener');   // open first: browsers block popups after async work
+    return download(c);
+  }
+
+  function item(c) {
+    var w = el('div', 'item');
+    var stage = el('div', 'stage'); var sc = el('div', 'scaler'); sc.appendChild(buildCard(c, true)); stage.appendChild(sc); w.appendChild(stage);
+    function fit() { sc.style.transform = 'scale(' + (stage.clientWidth / 1200) + ')'; }
+    fit(); new ResizeObserver(fit).observe(stage);
+    var bar = el('div', 'bar');
+    var b1 = el('button', 'p', T[lang].share); b1.type = 'button'; b1.onclick = function () { shareX(c); };
+    var b2 = el('button', null, T[lang].png); b2.type = 'button'; b2.onclick = function () { download(c); };
+    bar.appendChild(b1); bar.appendChild(b2);
+    var su = safeUrl(c.source_url);
+    if (su) { var a = el('a', null, T[lang].src); a.href = su; a.target = '_blank'; a.rel = 'noopener noreferrer'; bar.appendChild(a); }
+    w.appendChild(bar);
+    return w;
+  }
+
+  function section(host, title, lead, list) {
+    host.textContent = '';
+    host.appendChild(el('h2', null, title));
+    if (lead) host.appendChild(el('p', 'lead', lead));
+    if (!list.length) { host.appendChild(el('div', 'empty', T[lang].none)); return; }
+    list.forEach(function (c) { host.appendChild(item(c)); });
+  }
+
+  function render() {
+    var t = T[lang];
+    document.documentElement.lang = lang; document.title = t.title;
+    document.querySelectorAll('[data-t]').forEach(function (n) { n.textContent = t[n.dataset.t]; });
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.l === lang)); });
+    document.getElementById('lead').textContent = t.lead + (data ? ' (' + t.asof + ' ' + data.date + ')' : '');
+    document.getElementById('foot').textContent = t.foot;
+    var top = (data && data.top) || [];
+    var ids = {}; top.forEach(function (c) { ids[c.id] = 1; });
+    var fixed = data ? Object.keys(data.cards || {}).map(function (k) { return data.cards[k]; }).filter(function (c) { return !ids[c.id]; }) : [];
+    section(document.getElementById('today'), t.today, '', top);
+    document.getElementById('fixed').style.display = fixed.length ? '' : 'none';
+    if (fixed.length) section(document.getElementById('fixed'), t.fixed, t.fixedLead, fixed);
+  }
+
+  document.querySelectorAll('.lang button').forEach(function (b) {
+    b.onclick = function () { lang = b.dataset.l; try { localStorage.setItem('mt-lang', lang); } catch (e) {} render(); };
+  });
+  render();
+  fetch('data/briefing/today.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (j) { data = j; render(); }).catch(function () { render(); });
+})();
+</script>
+</body>
+</html>
