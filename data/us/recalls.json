@@ -1,0 +1,1265 @@
+{
+ "updated": "2026-10-29",
+ "since": "2023-10-29",
+ "source": "NHTSA Recalls API, openFDA enforcement reports (drug, device, food)",
+ "source_url": "https://api.nhtsa.gov/ , https://open.fda.gov/apis/",
+ "note": "Strict manufacturer / recalling-firm name match; recalls filed under subsidiaries or other names are not included. Date = NHTSA report received date or FDA report date. Facts only, not investment advice.",
+ "checked": 250,
+ "matched": 17,
+ "errors": [],
+ "companies": {
+  "PG": {
+   "match_key": "PROCTER & GAMBLE",
+   "n": 20,
+   "by_source": {
+    "openFDA food": 1,
+    "openFDA drug": 19
+   },
+   "latest": "2024-02-28",
+   "items": [
+    {
+     "src": "openFDA food",
+     "id": "F-0907-2024",
+     "date": "2024-02-28",
+     "what": "Meta Psyllium Fiber Capsules packaged as 100 count or 160 count PET bottles - 12 bottles p",
+     "class": "Class II",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0907-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0248-2024",
+     "date": "2024-01-24",
+     "what": "Secret OUTLAST Dry Spray, (Aluminum chlorohydrate 23.5%), Antiperspirant, Protecting Powde",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0248-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0249-2024",
+     "date": "2024-01-24",
+     "what": "Old Spice Pure Sport 2021 Gift Set, Contains: Old Spice Pure Sport Body Wash 18 Fl Oz (532",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0249-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0242-2024",
+     "date": "2024-01-24",
+     "what": "Secret, powder fresh, Aluminum chlorohydrate 24%, Anti-Perspirant/Deodorant, Topical spray",
+     "class": "Class I",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0242-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0247-2024",
+     "date": "2024-01-24",
+     "what": "Secret, OUTLAST, Dry Spray, (Aluminum chlorohydrate 23.5%), Antiperspirant, Completely Cle",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0247-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0252-2024",
+     "date": "2024-01-24",
+     "what": "Old Spice, SWEAT DEFENSE  ULTIMATE CAPTAIN, Aluminum Chlorohydrate 23.5%, Anti-Perspirant,",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0252-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0251-2024",
+     "date": "2024-01-24",
+     "what": "Old Spice, SWEAT DEFENSE PURE SPORT PLUS, (Aluminum Chlorohydrate 23.5%), Anti-Perspirant,",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0251-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0253-2024",
+     "date": "2024-01-24",
+     "what": "Secret, powder fresh, (Aluminum chlorohydrate 24%), Anti-Perspirant/Deodorant, Topical spr",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0253-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0244-2024",
+     "date": "2024-01-24",
+     "what": "Secret, Dry Spray, Aluminum chlorohydrate 23.5%, Antiperspirant, Lavender, Topical spray c",
+     "class": "Class I",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0244-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0238-2024",
+     "date": "2024-01-24",
+     "what": "Old Spice, PURE SPORT, (Aluminum Chlorohydrate 23.5%),  Anti-Perspirant & Deodorant Spray,",
+     "class": "Class I",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0238-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0239-2024",
+     "date": "2024-01-24",
+     "what": "Old Spice, SWEAT DEFENSE, STRONGER SWAGGER, Dry Spray, 48 Hour, (Aluminum Chlorohydrate 23",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0239-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0246-2024",
+     "date": "2024-01-24",
+     "what": "Secret, Dry Spray, Aluminum chlorohydrate 23.5%, Antiperspirant, Rose, Topical spray can N",
+     "class": "Class I",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0246-2024%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0907-2024%22"
+  },
+  "ABT": {
+   "match_key": "ABBOTT LABORATORIES",
+   "n": 15,
+   "by_source": {
+    "openFDA device": 14,
+    "openFDA food": 1
+   },
+   "latest": "2025-12-24",
+   "items": [
+    {
+     "src": "openFDA device",
+     "id": "Z-0961-2026",
+     "date": "2025-12-24",
+     "what": "Alinity ci-series System Control Module (SCM), REF: 03R70-01, 03R70-20",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0961-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0489-2026",
+     "date": "2025-11-19",
+     "what": "Brand Name: Alinity hq Analyzer  Product Name: Alinity hq Analyzer  Model/Catalog Number: ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0489-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1652-2025",
+     "date": "2025-04-30",
+     "what": "Brand Name: CELL-DYN Ruby  Product Name: CELL-DYN Ruby  Model/Catalog Number: 08H67-01  So",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1652-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1654-2025",
+     "date": "2025-04-30",
+     "what": "Brand Name: CELL-DYN Ruby  Product Name: CELL-DYN Ruby  Model/Catalog Number: 08H67-10  So",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1654-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1655-2025",
+     "date": "2025-04-30",
+     "what": "Brand Name: CELL-DYN Ruby  Product Name: CELL-DYN Ruby  Model/Catalog Number: 08H67-13  So",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1655-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1656-2025",
+     "date": "2025-04-30",
+     "what": "Brand Name: CELL-DYN Ruby  Product Name: CELL-DYN Ruby  Model/Catalog Number: 04U42-84  So",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1656-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1653-2025",
+     "date": "2025-04-30",
+     "what": "Brand Name: CELL-DYN Ruby  Product Name: CELL-DYN Ruby  Model/Catalog Number: 08H67-03  So",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1653-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2681-2024",
+     "date": "2024-08-28",
+     "what": "Alinity hq Analyzer, REF: 09P68-01",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2681-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1476-2024",
+     "date": "2024-04-10",
+     "what": "ARCHITECT STAT Myoglobin Reagent Kit, LN 2K43-25 and 2K43-20.",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1476-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0680-2024",
+     "date": "2024-01-17",
+     "what": "Alinity i Processing Module REF 03R65-01      The Alinity i Processing Module is a fully a",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0680-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0681-2024",
+     "date": "2024-01-17",
+     "what": "Alinity c Processing Module REF 03R67-01      The Alinity c Processing Module is a fully a",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0681-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0682-2024",
+     "date": "2024-01-17",
+     "what": "ARCHITECT c4000 Processing Module  REF:  02P24-01  02P24-02  02P24-40  01R24-56  01R25-56 ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0682-2024%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0961-2026%22"
+  },
+  "BSX": {
+   "match_key": "BOSTON SCIENTIFIC",
+   "n": 93,
+   "by_source": {
+    "openFDA device": 93
+   },
+   "latest": "2026-09-09",
+   "items": [
+    {
+     "src": "openFDA device",
+     "id": "Z-3081-2026",
+     "date": "2026-09-09",
+     "what": "LUX-Dx, LUX-Dx II, LUX-Dx II+ Insertable Cardiac Monitor System, SERVER SW LAT CLARITY DS ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-3081-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2961-2026",
+     "date": "2026-08-26",
+     "what": "OverStitch Suture Cinch, 1pk. Endoscopic tissue approximation device.",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2961-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2840-2026",
+     "date": "2026-08-12",
+     "what": "Radial Jaw 4 Jumbo Biopsy Forceps with the following descriptions and UPN:      Radial Jaw",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2840-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2839-2026",
+     "date": "2026-08-12",
+     "what": "Radial Jaw 4 Large Capacity Biopsy Forceps with the following descriptions and UPN:    1. ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2839-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2755-2026",
+     "date": "2026-07-29",
+     "what": "FARADRIVE STEERABLE SHEATH CLEAR, used to facilitate access to the vasculature and into th",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2755-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2753-2026",
+     "date": "2026-07-29",
+     "what": "FARASTAR Ablation Generator EU, Pulsed Field Ablation Generator, Product ID 61M401; Percut",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2753-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2750-2026",
+     "date": "2026-07-29",
+     "what": "FARASTAR Ablation Generator EU, Pulsed Field Ablation Generator, Product ID 61M401; Percut",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2750-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2751-2026",
+     "date": "2026-07-29",
+     "what": "FARASTAR Pulsed Field Ablation Generator, Product ID M004PFCE61M401; Percutaneous Cardiac ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2751-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2725-2026",
+     "date": "2026-07-22",
+     "what": "Rapid Refill Continuous Injection System, UPN M00566001",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2725-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2629-2026",
+     "date": "2026-07-08",
+     "what": "CRE Pro Wireguided 12-15mm 240cm",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2629-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2628-2026",
+     "date": "2026-07-08",
+     "what": "CRE Pro Wireguided 10-12mm 240cm",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2628-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2580-2026",
+     "date": "2026-07-01",
+     "what": "Intera Oncology INTERA 3000 Hepatic Artery Infusion Pump, AP-0300H, implantable drug deliv",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2580-2026%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-3081-2026%22"
+  },
+  "LLY": {
+   "match_key": "ELI LILLY",
+   "n": 1,
+   "by_source": {
+    "openFDA drug": 1
+   },
+   "latest": "2024-04-24",
+   "items": [
+    {
+     "src": "openFDA drug",
+     "id": "D-0445-2024",
+     "date": "2024-04-24",
+     "what": "Sterile Diluent, HUMALOG U-100 (insulin lispro injection), HUMULIN R U-100 REGULAR (insuli",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0445-2024%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0445-2024%22"
+  },
+  "WMT": {
+   "match_key": "WALMART",
+   "n": 4,
+   "by_source": {
+    "openFDA food": 4
+   },
+   "latest": "2025-06-11",
+   "items": [
+    {
+     "src": "openFDA food",
+     "id": "H-0003-2025",
+     "date": "2025-06-11",
+     "what": "Fresh cut cucumber slices, Marketside, packaged in clear plastic circular container with c",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0003-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0270-2025",
+     "date": "2024-12-18",
+     "what": "Marketside Fresh Cut Cucumber Slices.  In clear deli plastic container with lid.  Weights ",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0270-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0032-2025",
+     "date": "2024-10-23",
+     "what": "Great Value Diced Peaches, Mandarin Segments, & Cherry Mixed Fruits Variety Pack, 4 oz, 12",
+     "class": "Class III",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0032-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0033-2025",
+     "date": "2024-10-23",
+     "what": "Great Value Cherry Mixed Fruit, 4 oz, 4 Count and 12 count plastic cups sealed with clear ",
+     "class": "Class III",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0033-2025%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0003-2025%22"
+  },
+  "STE": {
+   "match_key": "STERIS",
+   "n": 26,
+   "by_source": {
+    "openFDA device": 26
+   },
+   "latest": "2026-10-21",
+   "items": [
+    {
+     "src": "openFDA device",
+     "id": "Z-0154-2027",
+     "date": "2026-10-21",
+     "what": "RAPICIDE PA Part A High-Level Disinfectant, Model/Catalog Number: ML020115",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0154-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0156-2027",
+     "date": "2026-10-21",
+     "what": "RAPICIDE PA Part A High-Level Disinfectant, Model/Catalog Number: ML020117",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0156-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0155-2027",
+     "date": "2026-10-21",
+     "what": "RAPICIDE PA Part A High-Level Disinfectant, Model/Catalog Number: ML020116",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0155-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0074-2027",
+     "date": "2026-10-14",
+     "what": "VERIFY Biological Steam Test Pack  Model/Catalog Number: S3065",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0074-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0070-2027",
+     "date": "2026-10-14",
+     "what": "VERIFY Biological/Integrator Challenge Pack    Model/Catalog Number: LCB006",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0070-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0073-2027",
+     "date": "2026-10-14",
+     "what": "VERIFY Dual Species Self-Contained Biological Indicator  Model/Catalog Number: S3061",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0073-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0072-2027",
+     "date": "2026-10-14",
+     "what": "VERIFY Dual Species Self-Contained Biological Indicator    Model/Catalog Number: S3060",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0072-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0071-2027",
+     "date": "2026-10-14",
+     "what": "VERIFY Biological/Integrator Challenge Pack    Model/Catalog Number: LCB007",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0071-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0118-2027",
+     "date": "2026-10-14",
+     "what": "HexaVue Focus Integration System, a single, all-in-one system that handles operating room ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0118-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0075-2027",
+     "date": "2026-10-14",
+     "what": "VERIFY Biological Steam Test Pack  Model/Catalog Number: S3069",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0075-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2449-2026",
+     "date": "2026-06-24",
+     "what": "HarmonyAIR A-Series Surgical Lighting System",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2449-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2448-2026",
+     "date": "2026-06-24",
+     "what": "HarmonyAIR A-Series Surgical Lighting System",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2448-2026%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0154-2027%22"
+  },
+  "PEP": {
+   "match_key": "PEPSICO",
+   "n": 4,
+   "by_source": {
+    "openFDA food": 4
+   },
+   "latest": "2026-10-14",
+   "items": [
+    {
+     "src": "openFDA food",
+     "id": "H-0009-2027",
+     "date": "2026-10-14",
+     "what": "28 oz. Gatorade Lemon Lime, Gatorade Lemon Lime Zero, Gatorade Orange, and Gatorade Orange",
+     "class": "Class II",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0009-2027%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "H-0010-2026",
+     "date": "2025-10-08",
+     "what": "Lipton Green Tea Citrus. 16.9 ounce PET Bottle. sold as 12pk. Outer case label reads as , ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0010-2026%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-1203-2024",
+     "date": "2024-05-01",
+     "what": "12 oz Aluminum cans of root beer packaged 12 cans per carton. 2/12pks per case",
+     "class": "Class III",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-1203-2024%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-1120-2024",
+     "date": "2024-04-17",
+     "what": "Schweppes ZERO SUGAR GINGER ALE CAFFIENE FREE 7.5 FL OZ (221 mL) PRODUCED UNDER THE AUTHOR",
+     "class": "Class II",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-1120-2024%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0009-2027%22"
+  },
+  "TSLA": {
+   "match_key": "TESLA",
+   "n": 21,
+   "by_source": {
+    "NHTSA": 21
+   },
+   "latest": "2026-08-05",
+   "items": [
+    {
+     "src": "NHTSA",
+     "id": "26V507000",
+     "date": "2026-08-05",
+     "what": "EXTERIOR LIGHTING:HEADLIGHTS",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=26V507000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "26V445000",
+     "date": "2026-07-08",
+     "what": "STRUCTURE:BODY:BUMPERS",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=26V445000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "26V315000",
+     "date": "2026-05-19",
+     "what": "EQUIPMENT:OTHER:LABELS",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=26V315000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "26V283000",
+     "date": "2026-05-05",
+     "what": "BACK OVER PREVENTION:SOFTWARE",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=26V283000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "26V255000",
+     "date": "2026-04-22",
+     "what": "WHEELS:LUGS/NUTS/BOLTS/STUDS",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=26V255000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "25V735000",
+     "date": "2025-10-28",
+     "what": "EXTERIOR LIGHTING",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V735000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "25V699000",
+     "date": "2025-10-15",
+     "what": "EXTERIOR LIGHTING",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V699000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "25V170000",
+     "date": "2025-03-19",
+     "what": "STRUCTURE:BODY",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V170000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "25V092000",
+     "date": "2025-02-15",
+     "what": "STEERING:ELECTRIC POWER ASSIST SYSTEM",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V092000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "25V002000",
+     "date": "2025-01-07",
+     "what": "BACK OVER PREVENTION:SOFTWARE",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V002000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "24V935000",
+     "date": "2024-12-17",
+     "what": "TIRES:PRESSURE MONITORING AND REGULATING SYSTEMS",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=24V935000"
+    },
+    {
+     "src": "NHTSA",
+     "id": "24V832000",
+     "date": "2024-11-05",
+     "what": "ELECTRICAL SYSTEM:PROPULSION SYSTEM:INVERTER",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=24V832000"
+    }
+   ],
+   "source_url": "https://www.nhtsa.gov/recalls?nhtsaId=26V507000"
+  },
+  "AMGN": {
+   "match_key": "AMGEN",
+   "n": 7,
+   "by_source": {
+    "openFDA drug": 7
+   },
+   "latest": "2026-07-01",
+   "items": [
+    {
+     "src": "openFDA drug",
+     "id": "D-0615-2026",
+     "date": "2026-07-01",
+     "what": "Corlanor (ivabradine) tablets, 7.5mg, 60-count bottles, Rx Only, Amgen Inc., Thousand Oaks",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0615-2026%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0612-2026",
+     "date": "2026-07-01",
+     "what": "Corlanor (ivabradine) tablets, 5 mg, packaged in a) 14 tablets bottles (NDC 55513-800-99),",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0612-2026%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0614-2026",
+     "date": "2026-07-01",
+     "what": "Sensipar (cinacalcet) Tablets, 60mg, 30-count bottles, Rx Only, Distributed by: Amge, One ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0614-2026%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0616-2026",
+     "date": "2026-07-01",
+     "what": "Sensipar (cinacalcet) Tablets, 90mg, 30-count bottles, Rx Only, Distributed by: Amge, One ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0616-2026%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0613-2026",
+     "date": "2026-07-01",
+     "what": "Sensipar (cinacalcet) Tablets, 30mg, 30-count bottles, Rx Only, Distributed by: Amge, One ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0613-2026%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0285-2025",
+     "date": "2025-03-26",
+     "what": "Neupogen (filgrastim) For Injection, 300mcg/1 mL, 1 mL Single Dose Vials, Rx Only, For Sub",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0285-2025%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0286-2025",
+     "date": "2025-03-26",
+     "what": "Neupogen (filgrastim) For Injection, 480 mcg/1.6 mL (300 mcg/1 mL), 1.6 mL single Dose Via",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0286-2025%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0615-2026%22"
+  },
+  "KR": {
+   "match_key": "KROGER",
+   "n": 9,
+   "by_source": {
+    "openFDA food": 9
+   },
+   "latest": "2025-10-29",
+   "items": [
+    {
+     "src": "openFDA food",
+     "id": "H-0094-2026",
+     "date": "2025-10-29",
+     "what": "Basil Pesto Bowtie Pasta Salad, packaged in plastic containers with various weights, with ",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0094-2026%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "H-0095-2026",
+     "date": "2025-10-29",
+     "what": "Smoked Mozzarella Penne Salad, packaged in plastic containers with various weights, with U",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0095-2026%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0389-2025",
+     "date": "2025-01-22",
+     "what": "BOAR'S HEAD HUMMUS VEG PLATTER SM, 2.5 lb., packaged in a plastic container with a plastic",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0389-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0387-2025",
+     "date": "2025-01-22",
+     "what": "DELI FRESH VEGETABLE TRAY MED, 4 lb., packaged in a plastic container with a plastic lid, ",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0387-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0390-2025",
+     "date": "2025-01-22",
+     "what": "BOAR'S HEAD HUMMUS VEG PLATTER MED, 5 lb., packaged in a plastic container with a plastic ",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0390-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0388-2025",
+     "date": "2025-01-22",
+     "what": "SMALL VEGGIE PLATTER, 32 oz., packaged in a plastic container with a plastic lid, UPC 4157",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0388-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0131-2025",
+     "date": "2024-11-20",
+     "what": "Home Chef Asian Style Chicken Stir Fry, Net Wt. 13 oz, packaged in a plastic tray with cle",
+     "class": "Class II",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0131-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0130-2025",
+     "date": "2024-11-20",
+     "what": "Home Chef Chicken Street Taco, Net Wt. 9.93 oz, packaged in a plastic tray with clear plas",
+     "class": "Class II",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0130-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0300-2024",
+     "date": "2023-11-01",
+     "what": "Kroger Collard Greens packaged in plastic 16oz bag - 8 bags per case",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0300-2024%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0094-2026%22"
+  },
+  "MCK": {
+   "match_key": "MCKESSON",
+   "n": 4,
+   "by_source": {
+    "openFDA drug": 4
+   },
+   "latest": "2026-07-08",
+   "items": [
+    {
+     "src": "openFDA drug",
+     "id": "D-0714-2026",
+     "date": "2026-07-08",
+     "what": "Gemcitabine Injection, 1 g per 26.3 mL (38 mg/mL), 26.3 mL Single-Dose Vial, For Intraveno",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0714-2026%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0353-2026",
+     "date": "2026-02-18",
+     "what": "UDENYCA, pegfilgrastim-cbqv injection, 6 mg/0.6mL Single Dose Prefilled Syringe, Rx only, ",
+     "class": "Class I",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0353-2026%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0213-2025",
+     "date": "2025-02-05",
+     "what": "Inflectra (infliximab-dyyb), For injection, 100mg per vial, packaged in 10 mL single-dose ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0213-2025%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0347-2024",
+     "date": "2024-02-28",
+     "what": "CABTREO (clindamycin phosphate, adapalene and benzoyl peroxide) Topical Gel 1.2%/0.15%/3.1",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0347-2024%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0714-2026%22"
+  },
+  "ABBV": {
+   "match_key": "ABBVIE",
+   "n": 4,
+   "by_source": {
+    "openFDA drug": 4
+   },
+   "latest": "2026-06-03",
+   "items": [
+    {
+     "src": "openFDA drug",
+     "id": "D-0551-2026",
+     "date": "2026-06-03",
+     "what": "PRED MILD, prednisolone acetate ophthalmic suspension, USP, 0.12%, 10 mL, Sterile, Rx only",
+     "class": "Class III",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0551-2026%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0664-2024",
+     "date": "2024-10-02",
+     "what": "Refresh P.M., (Mineral Oil 42.5%, White Petrolatum 57.3%) Lubricant Eye Ointment, Net wt, ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0664-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0665-2024",
+     "date": "2024-10-02",
+     "what": "Refresh LACRI-LUBE, (42.5% Mineral Oil, 57.3% White Petrolatum) Lubricant Eye Ointment, Ne",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0665-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0088-2024",
+     "date": "2023-11-15",
+     "what": "Synthroid, Levothyroxine Sodium Tablets, USP 125mcg (0.125mg), 100-count bottle, Rx Only A",
+     "class": "Class III",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0088-2024%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0551-2026%22"
+  },
+  "MRK": {
+   "match_key": "MERCK",
+   "n": 1,
+   "by_source": {
+    "openFDA drug": 1
+   },
+   "latest": "2025-08-20",
+   "items": [
+    {
+     "src": "openFDA drug",
+     "id": "D-0584-2025",
+     "date": "2025-08-20",
+     "what": "Belsomra (suvorexant) tablets, 10mg, 30 Tablets in 3 Blister Cards per Carton, Each Bliste",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0584-2025%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0584-2025%22"
+  },
+  "SYK": {
+   "match_key": "STRYKER",
+   "n": 51,
+   "by_source": {
+    "openFDA device": 51
+   },
+   "latest": "2026-08-12",
+   "items": [
+    {
+     "src": "openFDA device",
+     "id": "Z-2864-2026",
+     "date": "2026-08-12",
+     "what": "STRYKER AHTO DUAL SPIKE TUBE SET PACKAGING, Catalog Number 0250070640",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2864-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2862-2026",
+     "date": "2026-08-12",
+     "what": "STRYKER AHTO TUBE SET PACKAGING, Catalog Number 0250070600",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2862-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2282-2026",
+     "date": "2026-06-10",
+     "what": "Neptune Smart Docking Station (120V), Catalog Number 0770-100-000, part of the Neptune Was",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2282-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2166-2026",
+     "date": "2026-05-20",
+     "what": "Thermedx FluidSmart Urology Tube Set REF LL0006  UDI-DI code: 00860936000365    The FluidS",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2166-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0601-2026",
+     "date": "2025-12-03",
+     "what": "NICO BrainPath;  Product Number/Product Name    NN-8024  BrainPath Shephard's Hook - Green",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0601-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0599-2026",
+     "date": "2025-12-03",
+     "what": "NICO Myriad Handpiece    Product Number/Product Name:    NN-8000  15x10 MHP;  NN-8001  15x",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0599-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2171-2025",
+     "date": "2025-07-30",
+     "what": "Stryker, StrykeFlow REF: 0250070520 / 2, Disposable Suction/Irrigator with Disposable Tip",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2171-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1472-2025",
+     "date": "2025-04-09",
+     "what": "Otopore Cylinder outer ear wound dressing, Firm Catalog Number 5400-020-000 and Forte Cata",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1472-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1476-2025",
+     "date": "2025-04-09",
+     "what": "Nasopore FD fragmentable nasal dressing, Catalog Numbers 5400-020-108 and 5400-020-108ITL",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1476-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1475-2025",
+     "date": "2025-04-09",
+     "what": "Otopore Square outer ear wound dressing, Firm Catalog Number 5400-020-100 and Forte Catalo",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1475-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1477-2025",
+     "date": "2025-04-09",
+     "what": "Hemopore 8cm nasal/sinus temporary wound dressing, Catalog Numbers 5400-020-208 and 5400-0",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1477-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1482-2025",
+     "date": "2025-04-09",
+     "what": "Hemopore 2PK nasal/sinus temporary wound dressing, Catalog Number 5400-222-208S",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1482-2025%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2864-2026%22"
+  },
+  "MDT": {
+   "match_key": "MEDTRONIC",
+   "n": 21,
+   "by_source": {
+    "openFDA device": 21
+   },
+   "latest": "2026-05-06",
+   "items": [
+    {
+     "src": "openFDA device",
+     "id": "Z-1948-2026",
+     "date": "2026-05-06",
+     "what": "Medtronic Sphere-9 Catheter, Model Number AFR-00001; catheter, percutaneous, cardiac ablat",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1948-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2168-2025",
+     "date": "2025-07-30",
+     "what": "Medtronic CareLink SmartSync Patient Connector, Model Number 24967 with the following soft",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2168-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2169-2025",
+     "date": "2025-07-30",
+     "what": "Medtronic CareLink SmartSync Device Manager, Model Number 24967A with the following softwa",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2169-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2127-2025",
+     "date": "2025-07-23",
+     "what": "Medtronic SmartLink Software loaded on SmartSync Patient Connector, Model Number 24967 wit",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2127-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1924-2025",
+     "date": "2025-06-18",
+     "what": "Azure S DR MRI SureScan, Product number W3DR01",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1924-2025%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-3152-2024",
+     "date": "2024-09-25",
+     "what": "2090 Programmers with serial number prefixes PKK0 and PKK1:    a)\t2090, Product Descriptio",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-3152-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2197-2024",
+     "date": "2024-07-03",
+     "what": "EVERA MRI S VR SureScan, Model Number DVMC3D4, Implantable Cardioverter Defibrillator",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2197-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2206-2024",
+     "date": "2024-07-03",
+     "what": "COBALT DR MRI SureScan, Model Number DDPB3D1, Implantable Cardioverter Defibrillator",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2206-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2190-2024",
+     "date": "2024-07-03",
+     "what": "COBALT HF QUAD CRT-D MRI SureScan, Model Number DTPB2QQ, Implantable Cardioverter Defibril",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2190-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2209-2024",
+     "date": "2024-07-03",
+     "what": "Cobalt XT DR MRI SureScan, Model Number DDPA2D1, Implantable Cardioverter Defibrillator",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2209-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2210-2024",
+     "date": "2024-07-03",
+     "what": "COBALT XT VR MRI SureScan, Model Number DVPA2D1, Implantable Cardioverter Defibrillator",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2210-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2205-2024",
+     "date": "2024-07-03",
+     "what": "MIRRO MRI VR SureScan, Model Number DVME3D4, Implantable Cardioverter Defibrillator",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2205-2024%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1948-2026%22"
+  },
+  "PFE": {
+   "match_key": "PFIZER",
+   "n": 16,
+   "by_source": {
+    "openFDA drug": 16
+   },
+   "latest": "2026-09-23",
+   "items": [
+    {
+     "src": "openFDA drug",
+     "id": "D-0853-2026",
+     "date": "2026-09-23",
+     "what": "Dopamine HCl Inj., USP, 200 mg/5 mL (40 mg/mL), 5 mL Single-dose, 25 vials per tray, Rx on",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0853-2026%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0590-2025",
+     "date": "2025-08-27",
+     "what": "Vial Label: Epinephrine Injection, USP, 1mg/10mL (0.1 mg/mL), Rx only, Distributed by Hosp",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0590-2025%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0591-2025",
+     "date": "2025-08-27",
+     "what": "Vial Label: 8.4% Sodium Bicarbonate Injection, USP, 50mEq/50 mL (1 mEq/mL), Rx only, Hospi",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0591-2025%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0575-2025",
+     "date": "2025-08-20",
+     "what": "Levoxyl (levothyroxine sodium tablets, USP), 50 mcg, 100-count bottle, Rx only, Distribute",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0575-2025%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0544-2025",
+     "date": "2025-08-06",
+     "what": "Bicillin L-A (penicllin G benzathine injectable suspension), 1,200,000 units per 2 mL, 2 m",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0544-2025%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0545-2025",
+     "date": "2025-08-06",
+     "what": "Bicillin L-A (penicillin G benzathine injectable suspension), 2,400,000 units per 4 mL, 4m",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0545-2025%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0489-2025",
+     "date": "2025-07-02",
+     "what": "DOBUTamine Injection, USP, 250 mg/20 mL (12.5 mg/mL), 20 mL per Single-dose Vial, carton o",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0489-2025%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0565-2024",
+     "date": "2024-07-03",
+     "what": "Labetalol Hydrochloride Injection, USP, 20 mg/4 mL (5 mg/mL), 4 mL Single-dose Carpuject, ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0565-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0564-2024",
+     "date": "2024-07-03",
+     "what": "Buprenorphine Hydrochloride Injection, 0.3 mg base/mL, 1 mL Single-dose Carpuject, Sterile",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0564-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0261-2024",
+     "date": "2024-01-31",
+     "what": "Bleomycin for Injection, USP, 15 units per vial, 1 single dose glass fliptop vial, Rx Only",
+     "class": "Class I",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0261-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0233-2024",
+     "date": "2024-01-24",
+     "what": "4.2% Sodium Bicarbonate Injection, USP 5 mEq/10 mL (0.5 mEq/mL), Glass ABBOJECT Unit of Us",
+     "class": "Class I",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0233-2024%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0234-2024",
+     "date": "2024-01-24",
+     "what": "8.4 % Sodium Bicarbonate Injection, USP 50 mEq/50 mL (1 mEq/mL), Lifeshield, Glass ABBOJEC",
+     "class": "Class I",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0234-2024%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0853-2026%22"
+  },
+  "SFM": {
+   "match_key": "SPROUTS FARMERS MARKET",
+   "n": 3,
+   "by_source": {
+    "openFDA food": 3
+   },
+   "latest": "2025-10-29",
+   "items": [
+    {
+     "src": "openFDA food",
+     "id": "H-0088-2026",
+     "date": "2025-10-29",
+     "what": "Sprouts Smoked Mozzarella Pasta Salad, RTE Pasta Salad, Refrigerated, 5 day shelf life, pa",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0088-2026%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0356-2025",
+     "date": "2025-01-08",
+     "what": "Sprout Gyro Family Kit, net wt. 1.750 lb (794 g), food, perishable, plastic tray, 28oz, U ",
+     "class": "Class I",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0356-2025%22"
+    },
+    {
+     "src": "openFDA food",
+     "id": "F-0096-2025",
+     "date": "2024-11-06",
+     "what": "Sprouts Chicken Street Taco, 6 taco, perishable item kept under refrigeration, packaged in",
+     "class": "Class II",
+     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0096-2025%22"
+    }
+   ],
+   "source_url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0088-2026%22"
+  }
+ }
+}

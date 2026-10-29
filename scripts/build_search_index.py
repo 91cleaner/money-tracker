@@ -140,6 +140,41 @@ KO_MEM = {"Gilbert Cisneros": "길버트 시스네로스", "Lisa McClain": "리�
     "Kevin Hern": "케빈 헌", "Josh Gottheimer": "조시 고트하이머", "Maria Elvira Salazar": "마리아 엘비라 살라자르", "Jared Moskowitz": "재러드 모스코위츠",
     "Marjorie Taylor Greene": "마조리 테일러 그린", "Byron Donalds": "바이런 도널즈", "Ro Khanna": "로 칸나", "Dan Crenshaw": "댄 크렌쇼", "Scott H. Peters": "스콧 피터스",
     "Rob Bresnahan": "롭 브레스너핸", "Nancy Pelosi": "낸시 펠로시"}
+def new_layer_stops(ent):
+    """SEC Form 4 임원 거래 · USAspending 보조금/대출 · 리콜 · 발표 전 30일 거래 정류장 (data/us 수집 파일 값만)."""
+    F4, AS, RC, PB = opt("data", "us", "insider-form4.json"), opt("data", "us", "assistance-awards.json"), opt("data", "us", "recalls.json"), opt("data", "us", "trades-before-events.json")
+    dc, n = CENT["dc"], 0
+    for key, e in ent.items():
+        if not key.startswith("company:") or not e.get("route") or e["route"][0].get("lat") is None: continue
+        tk, h, nm, add = key[8:], e["route"][0], e.get("name") or key[8:], []
+        f = (F4.get("companies") or {}).get(tk)
+        tr = [t for t in (f or {}).get("trades", []) if t.get("code") in ("P", "S") and t.get("url")]
+        if tr:
+            t = tr[0]; p = sum(x["code"] == "P" for x in tr)
+            add.append({"region": f"{tk} · 임원 거래", "lat": h["lat"] + 0.04, "lon": h["lon"] + 0.04, "title": "SEC 임원 거래(Form 4)", "kind": "insider", "ref": "insider:" + tk,
+                "fact": f"데이터상 {F4.get('since')}~{F4.get('updated')} SEC Form 4 공개시장 매수 {p}건, 매도 {len(tr)-p}건(임원·이사 신고). 최근 거래일 {t['date']}: {t['who']}({t.get('role') or 'insider'}) {'매수' if t['code']=='P' else '매도'} {t['shares']:,.0f}주, 주당 ${t['price']:,.2f}. 거래 이유는 공시에 없음.",
+                "source_url": t["url"], "date": t.get("filed") or t["date"]})
+        a = (AS.get("companies") or {}).get(tk)
+        if a and a.get("awards"):
+            x = a["awards"][0]; pr = AS.get("period", ["", ""])
+            add.append({"region": f"{tk} · 연방 보조금·대출", "lat": dc[2] + 0.06, "lon": dc[3] + 0.02, "title": "연방 보조금·대출(USAspending)", "kind": "assist", "ref": "assist:" + tk,
+                "fact": f"데이터상 {pr[0]}~{pr[1]} 연방 보조금 의무액 ${a['grants_usd']:,.0f}, 대출 의무액 ${a['loans_usd']:,.0f}({a['n']}건, 수령자 이름 정확 일치, 계약 제외). 최근 {x['date']} {x.get('agency') or '-'}.",
+                "source_url": x["url"], "date": x["date"]})
+        r = (RC.get("companies") or {}).get(tk)
+        if r and r.get("items"):
+            x = r["items"][0]; bs = r.get("by_source", {}); nh = bs.get("NHTSA", 0)
+            add.append({"region": f"{tk} · 리콜", "lat": dc[2] - 0.06, "lon": dc[3] + 0.06, "title": "리콜(NHTSA·openFDA)", "kind": "recall", "ref": "recall:" + tk,
+                "fact": f"데이터상 {RC.get('since')} 이후 리콜 {r['n']}건(NHTSA {nh}건, openFDA {r['n']-nh}건), 제조사·회수업체 이름 정확 일치. 최근 {x['date']} {x['id']}.",
+                "source_url": x["url"], "date": x["date"]})
+        b = (PB.get("companies") or {}).get(tk)
+        if b and b.get("matches"):
+            m = b["matches"][0]
+            add.append({"region": f"{tk} · 발표 전 거래", "lat": dc[2] + 0.02, "lon": dc[3] + 0.09, "title": "발표 전 30일 거래", "kind": "prior", "ref": "prior:" + tk,
+                "fact": f"데이터상 공시·발표 30일 이내 앞선 거래 {b['n']}건(의원 {b['n_ptr']}건, 임원 {b['n_form4']}건). 최근 예: {m['who']} {m['side']} {m['amount']}, 거래일 {m['trade_date']}, 이벤트 {m['event_date']} {m['event']}({m['days_before']}일 전). 날짜를 나란히 놓은 것이며 사전 인지나 인과를 뜻하지 않음.",
+                "source_url": m["trade_url"], "date": m["event_date"], "links": [{"label": "event", "url": m["event_url"]}]})
+        e["route"] += add; n += len(add)
+    return n
+
 def trade_parts(ent, mem_by_id):
     T = opt("data", "us", "trades.json").get("trades", [])
     T = [t for t in T if t.get("tk") and t.get("doc")]
@@ -487,6 +522,7 @@ def main():
     print("trades", nt, "members", nm)
     print("bills", bill_parts(ent, mem_by_id))
     print("facility stops", facility_stops(ent))
+    print("new layer stops", new_layer_stops(ent))
     print("kr policy", kr_policy(ent)); print("wh topics", wh_topics(ent)); print("intl policy", intl_policy(ent)); print("kr company stops", kr_company_routes(ent))
     res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR 신고 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
