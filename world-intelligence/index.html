@@ -380,7 +380,13 @@ const BOX=[['tw',21.5,25.5,119.5,122.5,'🇹🇼','대만','Taiwan'],['kr',33,39
 const place=t=>{for(const b of BOX)if(t.lat>=b[1]&&t.lat<=b[2]&&t.lon>=b[3]&&t.lon<=b[4])return{f:b[5],n:en()?b[7]:b[6]};return{f:'🌏',n:en()?'Overseas':'해외'}};
 const TK=[[/TSMC|Taiwan Semiconductor|대만 ?(반도체|TSMC)/i,'TSM'],[/Micron|마이크론/i,'MU'],[/NVIDIA|엔비디아/i,'NVDA']];
 const pc=v=>(v>0?'+':'')+v.toFixed(1)+'%';
-function line1(t,C){const k=t.kind||'',x=(t.title||'')+' '+(t.region||''),n=(String(t.fact||'').match(/(\d+)\s*건/)||[])[1],E=en();
+function line1(t,C,R){const k=t.kind||'',x=(t.title||'')+' '+(t.region||''),n=(String(t.fact||'').match(/(\d+)\s*건/)||[])[1],E=en(),rf=String(t.ref||''),nm=String(t.title||'').replace(/^(대표 종목|함께 볼 지표|연관 위원회\([^)]*\)): ?/,'').replace(/\s*\([^)]*\)\s*$/,'');
+ if(R==='bill'){if(k==='bill')return['📜',E?`Bill ${C} sits in Congress. Its latest status is on record.`:`${C} 법안이 의회에 올라와 있어요. 최근 상태가 기록돼 있어요.`];
+  if(k==='cmte')return['🧑‍⚖️',E?`This is the home district of the lawmaker who introduced the bill.`:`이 법안을 대표 발의한 의원의 지역구예요.`];
+  if(k==='lobby'){const c=(String(t.fact||'').match(/언급 (\d+)회/)||[])[1];return['📣',E?`${nm} lobbying filings mention this bill${c?' '+c+' times':''}.`:`${nm}의 로비 공시에 이 법안이 ${c?c+'회 ':''}언급돼 있어요.`]}}
+ if(R==='sector'){if(/^company:/.test(rf))return['🏢',E?`${nm} is one of the companies watched in this sector.`:`${nm}은(는) 이 업종에서 지켜보는 대표 회사예요.`];
+  if(/^factor:/.test(rf))return['📊',E?`A number tracked alongside this sector sits here (${nm}).`:`이 업종과 같이 보는 숫자(${nm})가 여기 있어요.`];
+  if(/^committee:/.test(rf))return['🏛️',E?`A congressional committee tied to this sector shows up (${nm}).`:`이 업종과 이어진 의회 위원회(${nm})가 있어요.`]}
  if(k==='supply'||/본사|공장|공급사|팹/.test(x)){const hq=/본사/.test(x),sp=/공급사/.test(x);return['🏭',E?`${hq?'The headquarters':sp?'A supplier':'A plant'} linked to ${C} is here.`:`${C}의 ${hq?'본사':sp?'공급사':'공장'}가 이곳에 있어요.`]}
  if(k==='lobby')return['📣',E?`${C} filed ${n||'some'} lobbying report${n==1?'':'s'} here.`:`${C}의 로비 공시가 ${n?n+'건 ':''}있었어요.`];
  if(k==='trade')return['🧾',E?`Lawmakers reported trades in ${C} stock.`:`의원들이 ${C} 주식을 사고팔았다고 신고했어요.`];
@@ -396,16 +402,83 @@ function line2(t,tk){const x=P&&P.t&&P.t[tk];if(!x||x.m1==null)return'';const lo
  const s=(t.region||'')+' '+(t.fact||''),f=TK.find(r=>r[0].test(s)),k=f&&P.t[f[1]]&&P.t[f[1]].m1!=null?f[1]:tk,y=P.t[k],w=lo&&hi?` (${lo}~${hi})`:'';
  return en()?`In the same period${w}, ${k} stock moved ${pc(y.m1)}. Just a side-by-side, not a reason.`:`같은 기간${w} ${k} 주가는 ${pc(y.m1)} 움직였어요. 나란히 놓고 본 것일 뿐 이유는 아니에요.`}
 function clear(){seq++;if(pop){map.removeLayer(pop);pop=null}}
-const prev=window.mtAfterShow;window.mtAfterShow=async()=>{prev&&prev();const my=++seq,m=window.mtCur&&window.mtCur();if(pop){map.removeLayer(pop);pop=null}if(!m||!/^company:/.test(m.ticker||''))return;
+const prev=window.mtAfterShow;window.mtAfterShow=async()=>{prev&&prev();const my=++seq,m=window.mtCur&&window.mtCur();if(pop){map.removeLayer(pop);pop=null}window.MTTourCard&&window.MTTourCard.hide();const R=m&&(String(m.ticker||'').match(/^(company|bill|sector):/)||[])[1];if(!R)return;
  const ti=(document.getElementById('briefTitle')||{}).textContent||'',mm=ti.match(/ · (\d+)\/(\d+)/),i=mm?+mm[1]-1:0,N=mm?+mm[2]:m.meta.length,t=m.meta[i];if(!t||t.lat==null)return;
  if(P===null)P=await fetch('../data/us/prices/summary.json').then(r=>r.ok?r.json():{}).catch(()=>({}));if(my!==seq)return;
- const tk=m.ticker.slice(8),C=m.title.replace(/\s*\((.+?)\)\s*(경로|route)?\s*$/i,'').replace(/\s*(경로|route)$/i,'')||tk,pl=place(t),[ic,l1]=line1(t,C),l2=line2(t,tk);
+ const id=m.ticker.slice(R.length+1),rf=String(t.ref||'').match(/^(?:company|lobbying):([^:]+)$/),tk=R==='company'?id:rf?rf[1]:'',C=R==='bill'?id:m.title.replace(/\s*\((.+?)\)\s*(경로|route)?\s*$/i,'').replace(/\s*(경로|route)$/i,'')||tk,pl=place(t),[ic,l1]=line1(t,C,R),l2=tk?line2(t,tk):'';
  const box=document.createElement('div'),dots=document.createElement('div');dots.className='td';dots.textContent=Array.from({length:Math.min(N,12)},(_,j)=>j===Math.min(i,11)?'●':'○').join('');
  const a=document.createElement('div');a.className='tz';a.textContent=`${pl.f} ${pl.n}`;const b=document.createElement('div');b.textContent=`${ic} ${l1}`;box.append(dots,a,b);
  if(l2){const c=document.createElement('div');c.className='tl2';c.textContent='⏱ '+l2;box.append(c)}
- if(i===N-1){const g=document.createElement('div');g.className='tg';g.textContent=en()?'Lines on the map link public records. They do not show cause.':'지도 위 선은 공개 자료를 이은 것이고, 원인을 뜻하지 않아요.';box.append(g)}
- pop=L.popup({className:'mtTour pop',closeButton:false,autoClose:false,closeOnClick:false,autoPan:false,offset:[0,-4],maxWidth:260}).setLatLng([t.lat,t.lon]).setContent(box).addTo(map)};
+ if(i===N-1){const g=document.createElement('div');g.className='tg';g.textContent=(en()?'Lines on the map link public records. They do not show cause.':'지도 위 선은 공개 자료를 이은 것이고, 원인을 뜻하지 않아요.')+(window.MTTourCard?(en()?' Summary card is in the briefing panel.':' 요약 카드는 브리핑 패널에 있어요.'):'');box.append(g)}
+ pop=L.popup({className:'mtTour pop',closeButton:false,autoClose:false,closeOnClick:false,autoPan:false,offset:[0,-4],maxWidth:260}).setLatLng([t.lat,t.lon]).setContent(box).addTo(map);
+ if(i===N-1&&window.MTTourCard)window.MTTourCard.show(m,my,()=>my===seq)};
 document.getElementById('world')&&document.getElementById('world').addEventListener('click',clear);document.getElementById('closeBrief')&&document.getElementById('closeBrief').addEventListener('click',clear);})();</script>
+<style id="mt-tour-summary-css">
+#mtTourCard{margin:8px 0;padding:10px 11px;background:#041420;border:1px solid #68c7d0;border-radius:12px;color:#eafff2;font:13px/1.6 system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;box-sizing:border-box;max-width:100%;overflow-wrap:anywhere}
+#mtTourCard h4{margin:0 0 6px;font-size:14px;color:#ffd60a}#mtTourCard h5{margin:8px 0 2px;font-size:12px;color:#68c7d0;letter-spacing:.5px}
+#mtTourCard p,#mtTourCard li{margin:2px 0}#mtTourCard ul{margin:0;padding-left:16px}#mtTourCard .ts{font-size:10.5px;color:#8fa89a}
+@media (max-width:600px){#mtTourCard{font-size:12.5px;padding:9px}}
+</style>
+<script id="mt-tour-summary-js">(()=>{
+// 투어 마지막 요약 카드: 저장된 데이터만으로 규칙·템플릿 문장을 만든다. AI API 미사용. 원인 단정·"때문에"·"추천" 금지, 추정치는 "추정" 표기.
+const BANNED=/때문|추천|덕분|탓에|영향으로|because|recommend|due to|thanks to|led to|caused by/i;
+const pc=v=>(v>0?'+':'')+v.toFixed(1)+'%',day=s=>Date.parse(s+'T00:00:00Z'),addD=(s,n)=>new Date(day(s)+n*864e5).toISOString().slice(0,10);
+const josa=s=>{const c=s.charCodeAt(s.length-1);return c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28?'이':'가'};
+const KL={supply:['공장·본사','곳','plant or HQ site'],lobby:['로비 공시','건','lobbying record'],trade:['의원 거래 신고','건','lawmaker trade report'],bill:['법안 기록','건','bill record'],cmte:['의회 위원회 기록','건','committee record'],wh:['대통령 발표·명령 기록','건','presidential record'],reg:['관세·수출 제한 기록','건','tariff or export-control record'],award:['정부 계약 기록','건','government contract record'],pac:['정치 후원 기록','건','political-donation record'],policy:['정책 기록','건','policy record'],rep:['대표 회사','곳','watched company'],factor:['함께 보는 숫자','개','tracked indicator']};
+const SRC={supply:['SEC EDGAR','SEC EDGAR'],lobby:['미 상원 로비 공시(LDA)','US Senate lobbying filings (LDA)'],trade:['하원 거래 신고(PTR)','House trade reports (PTR)'],bill:['Congress.gov','Congress.gov'],cmte:['Congress.gov','Congress.gov'],wh:['백악관 발표','White House releases'],reg:['Federal Register','Federal Register'],award:['USAspending','USAspending'],pac:['FEC 후원 기록','FEC donation records'],policy:['각국 정책 문서','national policy documents']};
+function kindOf(s){const r=String(s.ref||'');if(s.kind)return s.kind;if(/^company:/.test(r))return'rep';if(/^factor:/.test(r))return'factor';if(/^committee:/.test(r))return'cmte';return''}
+// 실적 발표(8-K 2.02) 날짜 뒤 약 21거래일(한 달) 종가 변동. 가격 구간 밖이거나 한 달이 안 지난 건 제외.
+function study(px,k8){if(!px||!px.d||!px.c)return{n:0,mean:null};const H=21,seen={},out=[];
+ for(const x of k8||[]){if(!(x.items||[]).includes('2.02')||seen[x.filed])continue;seen[x.filed]=1;let i=-1;for(let j=0;j<px.d.length;j++){if(px.d[j]<=x.filed)i=j;else break}
+  if(i<0||i+H>=px.c.length)continue;const a=px.c[i],b=px.c[i+H];if(a>0&&b>0)out.push((b/a-1)*100)}
+ return{n:out.length,mean:out.length?out.reduce((s,v)=>s+v,0)/out.length:null}}
+function nextEarn(k8,today){const ds=[...new Set((k8||[]).filter(x=>(x.items||[]).includes('2.02')).map(x=>x.filed))].sort().reverse();if(!ds.length)return null;
+ const gaps=[];for(let i=0;i<Math.min(ds.length-1,4);i++)gaps.push(Math.round((day(ds[i])-day(ds[i+1]))/864e5));gaps.sort((a,b)=>a-b);let g=gaps.length?gaps[gaps.length>>1]:91;if(g<60||g>130)g=91;
+ let n=addD(ds[0],g),k=0;while(n<=today&&k++<8)n=addD(n,g);return{last:ds[0],next:n}}
+function build(c){const E=!!c.en,S=c.stops||[],R=c.kind,today=c.today,cnt={},ord=[];
+ S.forEach(s=>{const k=kindOf(s);if(!KL[k])return;if(!cnt[k]){cnt[k]=0;ord.push(k)}cnt[k]++});
+ const parts=ord.map(k=>E?`${cnt[k]} ${KL[k][2]}${cnt[k]==1?'':'s'}`:`${KL[k][0]} ${cnt[k]}${KL[k][1]}`);
+ const same=c.m1!=null?(E?` In the same period ${c.m1label}'s stock moved ${pc(c.m1)}. That is a side-by-side, not a reason.`:` 같은 기간 ${c.m1label} 주가는 ${pc(c.m1)} 움직였어요. 나란히 놓고 본 것일 뿐 이유는 아니에요.`):'';
+ const recap=E?`This route has ${S.length} stop${S.length==1?'':'s'}.${parts.length?` In the same period the data shows ${parts.join(', ')}.`:''}${same}`
+  :`이번 경로는 ${S.length}곳이에요.${parts.length?` 같은 기간 ${parts.join(', ')}${josa(parts[parts.length-1])} 있었어요.`:''}${same}`;
+ // 과거 패턴: 우리 종가·공시 기록으로 직접 계산(한 달) → 부족하면 #202 답변 묶음(7일)
+ let pat,own=c.study||{n:0},pk=c.packs||[],pn=pk.reduce((s,p)=>s+p.n,0);
+ if(own.n>=3)pat=E?`Last time something similar came out (${own.n} times), the stock moved ${pc(own.mean)} on average a month later (estimate). That says nothing about why.`:`지난번 비슷한 발표(${own.n}회) 때는 한 달 뒤 주가가 평균 ${pc(own.mean)} 움직였어요(추정). 이유를 말하는 건 아니에요.`;
+ else if(pn>=3){const mean=pk.reduce((s,p)=>s+p.mean*p.n,0)/pn;pat=E?`Last time something similar came out (${pn} times), related stocks moved ${pc(mean)} on average over the next 7 days (estimate). That says nothing about why.`:`지난번 비슷한 발표(${pn}회) 때는 관련 종목 주가가 7일 뒤 평균 ${pc(mean)} 움직였어요(추정). 이유를 말하는 건 아니에요.`}
+ else{const n=Math.max(own.n,pn);pat=E?`There are too few similar past cases${n?` (${n})`:''} to describe a pattern yet.`:`비슷한 사례가 아직 적어서${n?`(${n}회)`:''} 패턴을 말하기 어려워요.`}
+ // 다음에 볼 것: 데이터에 있는 날짜만. 실적 발표 날짜는 지난 간격으로 어림한 추정값.
+ const watch=[];(c.earn||[]).forEach(x=>watch.push(E?`${x.name}: the last earnings-type filing was ${x.last}; the next one may come around ${x.next} (estimate from past gaps).`:`${x.name}: 마지막 실적 공시는 ${x.last}였고, 다음은 ${x.next} 무렵으로 보여요(지난 간격으로 어림한 추정).`));
+ if(R==='bill'&&c.latest)watch.push(E?`The latest recorded step is dated ${c.latest}. No next date is stored yet.`:`기록된 가장 최근 단계는 ${c.latest}이에요. 다음 일정은 아직 저장돼 있지 않아요.`);
+ if(!watch.length)watch.push(E?'No upcoming dates are stored for this route yet. This card updates when new filings arrive.':'앞으로 잡힌 일정은 아직 저장돼 있지 않아요. 새 공시가 올라오면 이 카드도 바뀌어요.');
+ const sn=[...new Set(ord.filter(k=>SRC[k]).map(k=>SRC[k][E?1:0]))];if(c.priced)sn.push(E?'Massive daily closes':'Massive 일별 종가');if(c.earn&&c.earn.length||own.n)sn.push('SEC EDGAR');
+ const src=[...new Set(sn)];
+ const sources=E?`Sources: ${src.join(', ')||'stored public records'}.`:`출처: ${src.join(', ')||'저장된 공개 자료'}.`;
+ const disclaimer=E?'Public records placed side by side by fixed templates, no AI. It does not give reasons and is not financial advice.':'공개 자료를 정해진 문장 틀로 나란히 놓은 것이고 AI는 쓰지 않았어요. 이유를 말해 주지 않고 투자 조언도 아니에요.';
+ const T=E?{h:'🕵️ Situation-room summary',a:'📌 At a glance',b:'🔙 Last time',c:'👀 Watch next'}:{h:'🕵️ 상황실 요약 카드',a:'📌 한눈에',b:'🔙 지난번엔',c:'👀 다음에 볼 것'};
+ return{T,recap,pattern:pat,watch,sources,disclaimer,lines:[T.h,T.a,recap,T.b,pat,T.c].concat(watch,[sources,disclaimer])}}
+function hide(){const e=document.getElementById('mtTourCard');e&&e.remove()}
+const J=u=>fetch(u).then(r=>r.ok?r.json():null).catch(()=>null);
+async function show(m,my,alive){const E=!!(window.MTI18N&&window.MTI18N.isEn),R=m.ticker.split(':')[0],S=m.meta||[],today=new Date().toISOString().slice(0,10);
+ const sym=s=>{const r=String(s.ref||'').match(/^(?:company|lobbying):([^:]+)$/);return r?r[1]:''};
+ const rel=R==='company'?[m.ticker.slice(8)]:[...new Set(S.map(sym).filter(Boolean))].slice(0,4);
+ const isUS=x=>!/[.^]/.test(x);const us=rel.filter(isUS);
+ const [P,F,px,packs]=await Promise.all([J('../data/us/prices/summary.json'),us.length?J('../data/us/sec-filings.json'):null,R==='company'&&us.length?J('../data/us/prices/'+us[0]+'.json'):null,Promise.all(rel.map(x=>J('../data/answers/'+x+'.json')))]);
+ if(!alive())return;
+ const fc=F&&F.companies||{},K8=x=>fc[x]&&fc[x].k8||[];
+ const ms=us.map(x=>P&&P.t&&P.t[x]&&P.t[x].m1).filter(v=>v!=null).sort((a,b)=>a-b);
+ const m1=ms.length?ms[ms.length>>1]:null,m1label=R==='company'?rel[0]:(E?'the related stocks (median)':'관련 종목 중앙값');
+ const pk=packs.map(a=>a&&a.answers&&a.answers.why&&a.answers.why['1m']&&a.answers.why['1m'].reaction).filter(r=>r&&r.n&&r.mean!=null);
+ const earn=us.slice(0,2).map(x=>{const e=nextEarn(K8(x),today);return e&&Object.assign({name:x},e)}).filter(Boolean);
+ const lat=S.map(s=>s.kind==='bill'&&s.date).filter(Boolean)[0];
+ const out=build({en:E,kind:R,today,stops:S,m1,m1label,priced:m1!=null,study:R==='company'?study(px,K8(us[0])):null,packs:pk,earn,latest:lat});
+ hide();const br=document.getElementById('briefCaveat');if(!br)return;
+ const box=document.createElement('section');box.id='mtTourCard';box.setAttribute('aria-label',out.T.h);
+ const add=(t,tag,cls)=>{const e=document.createElement(tag);e.textContent=t;if(cls)e.className=cls;box.append(e);return e};
+ add(out.T.h,'h4');add(out.T.a,'h5');add(out.recap,'p');add(out.T.b,'h5');add(out.pattern,'p');add(out.T.c,'h5');
+ const ul=document.createElement('ul');out.watch.forEach(w=>{const li=document.createElement('li');li.textContent=w;ul.append(li)});box.append(ul);
+ add(out.sources,'p','ts');add(out.disclaimer,'p','ts');br.before(box)}
+window.MTTourSummary={build,study,nextEarn,BANNED};window.MTTourCard={show,hide};
+document.getElementById('closeBrief')&&document.getElementById('closeBrief').addEventListener('click',hide);})();</script>
 <style id="mt-trades-css">#mtTrades{margin:6px 0;font:11px/1.5 ui-monospace,Menlo,monospace;color:#bfffd6;max-height:150px;overflow:auto}#mtTrades table{border-collapse:collapse;width:100%}#mtTrades td,#mtTrades th{padding:1px 4px;border-bottom:1px solid rgba(93,255,158,.15);text-align:left;white-space:nowrap}#mtTrades a{color:#5dff9e}</style>
 <script id="mt-trades-js">(()=>{const prev=window.mtAfterShow;window.mtAfterShow=async()=>{prev&&prev();const box=document.getElementById('mtTrades')||Object.assign(document.createElement('div'),{id:'mtTrades'});if(!box.parentNode)document.getElementById('briefCaveat').before(box);box.replaceChildren();
 const m=window.mtCur&&window.mtCur();if(!m||!window.mtApi)return;const idx=await window.mtApi.loadIdx();const e=idx.entities[m.ticker];if(!e||!e.trades||!e.trades.length)return;
