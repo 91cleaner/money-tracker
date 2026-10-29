@@ -9,7 +9,7 @@ SITE_GATE = False
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / ".public-pages"
-PUBLIC_DIRS = ("assets", "data", "c", "s", "world-intelligence", "3ac9ae3", "9590438", "b387449")
+PUBLIC_DIRS = ("assets", "data", "c", "s", "world-intelligence", "3ac9ae3", "9590438", "b387449", "weekly")
 # Private US trade datasets must never be shipped to public GitHub Pages.
 PRIVATE_DATA_FILES = {"data/us/trades.json", "data/us/house-ptr-candidates.json", "data/us/ptr-crosschecks.json"}
 # .geojson: national map country borders (polgame.js), .csv: trip downloads (national.js) — both are fetched by public pages

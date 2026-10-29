@@ -1,0 +1,184 @@
+{
+ "start": "2026-10-16",
+ "end": "2026-10-22",
+ "fallback": true,
+ "generated": "2026-10-29",
+ "trades": 16,
+ "members": 7,
+ "summary": {
+  "R": {
+   "m": 4,
+   "n": 7,
+   "b": 3,
+   "s": 4,
+   "top": [
+    "T-Note",
+    "T-Bill",
+    "GOOG",
+    "WSBC"
+   ]
+  },
+  "D": {
+   "m": 3,
+   "n": 9,
+   "b": 6,
+   "s": 3,
+   "top": [
+    "TSM",
+    "NVDA",
+    "DDOG",
+    "EL"
+   ]
+  }
+ },
+ "hidden_members": 0,
+ "problems": [],
+ "rows": [
+  {
+   "name": "Jonathan Jackson",
+   "party": "D",
+   "district": "IL-1",
+   "trades": [
+    {
+     "a": "DDOG",
+     "s": "BUY",
+     "amt": "$50K-$100K",
+     "d": "09/28"
+    },
+    {
+     "a": "EL",
+     "s": "BUY",
+     "amt": "$50K-$100K",
+     "d": "09/28"
+    },
+    {
+     "a": "GH",
+     "s": "BUY",
+     "amt": "$15K-$50K",
+     "d": "09/28"
+    },
+    {
+     "a": "VSAT",
+     "s": "SELL",
+     "amt": "$50K-$100K",
+     "d": "09/28"
+    },
+    {
+     "a": "WMT",
+     "s": "SELL",
+     "amt": "$50K-$100K",
+     "d": "09/28"
+    },
+    {
+     "a": "TYG",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "09/04"
+    }
+   ]
+  },
+  {
+   "name": "Michael Rulli",
+   "party": "R",
+   "district": "OH-6",
+   "trades": [
+    {
+     "a": "GOOG",
+     "s": "SELL",
+     "amt": "$50K-$100K",
+     "d": "10/16"
+    },
+    {
+     "a": "WSBC",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/16"
+    }
+   ]
+  },
+  {
+   "name": "Darrell Issa",
+   "party": "R",
+   "district": "CA-48",
+   "trades": [
+    {
+     "a": "T-Note",
+     "s": "SELL",
+     "amt": "$5M-$25M",
+     "d": "10/14"
+    },
+    {
+     "a": "T-Note",
+     "s": "BUY",
+     "amt": "$5M-$25M",
+     "d": "10/08"
+    }
+   ]
+  },
+  {
+   "name": "Cleo Fields",
+   "party": "D",
+   "district": "LA-6",
+   "trades": [
+    {
+     "a": "TSM",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "10/09"
+    },
+    {
+     "a": "NVDA",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "10/01"
+    }
+   ]
+  },
+  {
+   "name": "Laurel Lee",
+   "party": "R",
+   "district": "FL-15",
+   "trades": [
+    {
+     "a": "NOKBF",
+     "s": "BUY",
+     "amt": "$15K-$50K",
+     "d": "09/18"
+    },
+    {
+     "a": "BAC",
+     "s": "SELL",
+     "amt": "$50K-$100K",
+     "d": "08/24"
+    }
+   ]
+  },
+  {
+   "name": "Rudy Yakym",
+   "party": "R",
+   "district": "IN-2",
+   "trades": [
+    {
+     "a": "T-Bill",
+     "s": "BUY",
+     "amt": "$15K-$50K",
+     "d": "10/20"
+    }
+   ]
+  },
+  {
+   "name": "James Himes",
+   "party": "D",
+   "district": "CT-4",
+   "trades": [
+    {
+     "a": "So Fine Foods",
+     "s": "BUY",
+     "amt": "$50K-$100K",
+     "d": "09/29"
+    }
+   ]
+  }
+ ],
+ "image": "congress-trades-2026-10-22.png"
+}

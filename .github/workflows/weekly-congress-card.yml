@@ -1,0 +1,37 @@
+name: Weekly Congress trades card
+on:
+  workflow_dispatch:
+    inputs:
+      date: {description: "Card date (YYYY-MM-DD, default today UTC)", required: false}
+  schedule:
+    - cron: "30 1 * * 5"   # Friday 10:30 KST
+permissions: {contents: write, actions: write}
+concurrency: {group: us, cancel-in-progress: false}
+jobs:
+  card:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install pyyaml requests pdfplumber playwright && python -m playwright install --with-deps chromium
+      - name: Pull newest House PTR filings
+        run: python collector/us/trades.py
+        continue-on-error: true
+        timeout-minutes: 20
+        env: {TRADES_BUDGET_MIN: "15"}
+      - name: Render card
+        run: python scripts/weekly/congress_trades_card.py
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY || vars.CONGRESS_API_KEY }}
+          WEEKLY_DATE: ${{ inputs.date }}
+      - name: Commit and deploy
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          git config user.name "money-tracker-bot"; git config user.email "actions@users.noreply.github.com"
+          git add weekly data/us/trades.json data/us/congress-member-cache.json
+          git diff --cached --quiet && exit 0
+          git commit -m "weekly: Congress trades card $(date -u +%F)"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
+          gh workflow run deploy-pages.yml --ref main

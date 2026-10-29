@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>This week in Congress trades | MONEY TRACKER</title>
+<meta name="description" content="Weekly card of House members' newly reported stock trades, split by party. Public records, not investment advice.">
+<meta property="og:title" content="This week in Congress trades"><meta property="og:image" content="https://91cleaner.github.io/money-tracker/weekly/latest.png">
+<meta property="og:image:width" content="1600"><meta property="og:image:height" content="900"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/weekly/latest.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+<style>
+html,body{margin:0;background:#0b120d;color:#f2efe9;font:15px/1.5 Inter,"Helvetica Neue",Arial,sans-serif}
+main{max-width:1640px;margin:0 auto;padding:20px}
+a{color:#ff9f1c}img{width:100%;height:auto;border:1px solid #ff9f1c55;border-radius:6px;display:block}
+h1{font-size:22px;margin:0 0 6px}.m{color:#b8b3a8;font-size:13px}
+table{border-collapse:collapse;width:100%;margin-top:18px;font-size:13px}td,th{padding:5px 8px;border-bottom:1px solid #ffffff1a;text-align:left;white-space:nowrap}
+th{color:#9c978c;font-weight:600}.R{color:#d27a6f}.D{color:#7f9fd0}b{color:#ff9f1c}
+</style></head><body><main>
+<h1>This week in Congress trades</h1>
+<p class="m" id="win">Loading...</p>
+<a href="latest.png"><img src="latest.png" alt="Map of House members' newly reported trades, split by party"></a>
+<table><thead><tr><th>Member</th><th>Party</th><th>District</th><th>Asset</th><th>Type</th><th>Amount range</th><th>Trade date</th></tr></thead><tbody id="rows"></tbody></table>
+<p class="m">Source: U.S. House Clerk periodic transaction reports (PTR). Party and district: Congress.gov. Map dots are approximate district locations. Public records, not investment advice. <a href="../world-intelligence/?lang=en">Open the control room</a></p>
+</main>
+<script>
+fetch('latest.json',{cache:'no-cache'}).then(r=>r.json()).then(m=>{
+  const e=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  document.getElementById('win').textContent=`Filings from ${m.start} to ${m.end}${m.fallback?' (latest 7 days with filings)':''} · ${m.trades} trades · ${m.members} members · image: ${m.image}`;
+  document.getElementById('rows').innerHTML=m.rows.flatMap(r=>r.trades.map(t=>`<tr><td>${e(r.name)}</td><td class="${r.party}">${r.party}</td><td>${e(r.district)}</td><td>${e(t.a)}</td><td><b>${t.s}</b></td><td>${e(t.amt)}</td><td>${e(t.d)}</td></tr>`)).join('');
+}).catch(()=>{document.getElementById('win').textContent='Weekly data not available yet.'});
+</script>
+</body></html>
