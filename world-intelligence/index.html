@@ -763,4 +763,22 @@ paint()})();</script>
 <script src="../assets/fr-bar.js?v=20261029" defer></script>
 <script src="../assets/mt-econ-strip.js?v=econ-20261029" defer></script>
 <script src="../assets/commander.js?v=cmdr-20261028" defer></script>
+<style id="mt-brief-sheet">@media(max-width:650px){
+#brief{top:auto!important;left:0!important;right:0!important;bottom:72px!important;width:auto!important;max-height:min(40dvh,330px)!important;border-radius:14px 14px 0 0!important;padding:0 10px 10px!important;overflow:auto!important;z-index:2900!important;overscroll-behavior:contain}
+#mtSheetHandle{position:sticky;top:0;display:flex;justify-content:center;align-items:center;height:28px;margin:0 -10px 4px;background-color:rgba(2,12,6,.97);border:0;width:calc(100% + 20px);cursor:pointer;touch-action:none;z-index:2}
+#mtSheetHandle i{width:44px;height:5px;border-radius:3px;background:#2bff88;opacity:.8}
+body.mt-sheet-min #brief{max-height:34px!important;overflow:hidden!important}
+body.mt-sheet #mtOneDock,body.mt-sheet #mtTicker,body.mt-sheet #mtMission{display:none!important}
+body.mt-sheet #mtBar{top:auto!important;bottom:calc(76px + var(--mtSheetH,0px))!important;translate:none!important}
+body.mt-sheet #controls,body.mt-sheet #menu{top:auto!important;bottom:calc(126px + var(--mtSheetH,0px))!important;translate:none!important}
+body.mt-sheet #mtLegend{top:auto!important;right:auto!important;left:8px!important;bottom:calc(172px + var(--mtSheetH,0px))!important;max-width:58vw;translate:none!important}
+body.mt-sheet #mtc:not([data-open="1"]){top:auto!important;left:auto!important;right:8px!important;bottom:calc(172px + var(--mtSheetH,0px))!important;translate:none!important}
+body.mt-sheet #mtCmdDock{top:auto!important;bottom:calc(218px + var(--mtSheetH,0px))!important;translate:none!important}
+body.mt-sheet #mapFrame{bottom:calc(72px + var(--mtSheetH,0px))!important}}
+@media(min-width:651px){#mtSheetHandle{display:none}}</style>
+<script id="mt-brief-sheet-js">(function(){var b=document.getElementById('brief');if(!b)return;var h=document.createElement('button');h.id='mtSheetHandle';h.type='button';h.setAttribute('aria-label','정보 패널 접기/펼치기');h.innerHTML='<i></i>';b.insertBefore(h,b.firstChild);
+var mq=matchMedia('(max-width:650px)');function upd(){var on=mq.matches&&!b.hidden&&getComputedStyle(b).display!='none';document.body.classList.toggle('mt-sheet',on);var v=on?Math.round(b.getBoundingClientRect().height)+'px':'0px';if(v!==upd.v){upd.v=v;document.documentElement.style.setProperty('--mtSheetH',v);setTimeout(function(){try{if(typeof map!=='undefined'&&map.invalidateSize)map.invalidateSize({pan:false})}catch(e){}},60)}}
+h.addEventListener('click',function(){document.body.classList.toggle('mt-sheet-min');setTimeout(upd,30)});
+var y0=null;h.addEventListener('touchstart',function(e){y0=e.touches[0].clientY},{passive:true});h.addEventListener('touchend',function(e){if(y0==null)return;var d=e.changedTouches[0].clientY-y0;y0=null;if(Math.abs(d)>25){document.body.classList.toggle('mt-sheet-min',d>0);e.preventDefault();setTimeout(upd,30)}});
+new ResizeObserver(upd).observe(b);new MutationObserver(upd).observe(b,{attributes:true,attributeFilter:['hidden','style']});mq.addEventListener('change',upd);addEventListener('resize',upd);upd()})();</script>
 </body></html>
