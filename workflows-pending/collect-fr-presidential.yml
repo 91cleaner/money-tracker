@@ -1,0 +1,26 @@
+# 실장이 .github/workflows/ 로 옮겨 주세요. (Claude 앱은 workflows 폴더를 못 고침)
+name: Collect presidential documents (Federal Register)
+on:
+  schedule:
+    - cron: '30 0,12 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: data-push
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/collect_whitehouse.py   # Federal Register API, 키 없음
+      - run: python3 scripts/build_fr_feed.py        # data/fr/presidential.json
+      - run: python3 scripts/build_search_index.py && python3 scripts/build_insights.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/us/whitehouse.json data/fr data/search-index.json data/us/insights.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: presidential documents $(date -u +%F)"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push && exit 0; sleep $((i*7)); done; exit 1
