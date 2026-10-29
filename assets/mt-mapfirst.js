@@ -33,8 +33,8 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     popup = L.popup({ className: 'mtTour mtMF', closeButton: true, autoPan: true, autoPanPadding: [40, 90], maxWidth: 250, offset: [0, -6] }).setLatLng(ll).setContent(html).openOn(map);
   }
   function stopCard(t) {
-    const E = en(), k = kindOf(t), f = String(t.fact || ''), short = f.length > 150 ? f.slice(0, f.lastIndexOf(' ', 147) > 60 ? f.lastIndexOf(' ', 147) : 147) + '...' : f;
-    return `<div class="k">${esc(KIND[k][E ? 0 : 1])}</div><div class="h">${esc(t.title || t.region)}</div><div>${esc(t.region)}${t.date ? ' · ' + esc(String(t.date).slice(0, 10)) : ''}</div>` +
+    const E = en(), k = kindOf(t), T = s => (E && window.MTI18N && window.MTI18N.tr ? window.MTI18N.tr(String(s || '')) : String(s || '')), f = T(t.fact), short = f.length > 150 ? f.slice(0, f.lastIndexOf(' ', 147) > 60 ? f.lastIndexOf(' ', 147) : 147) + '...' : f;
+    return `<div class="k">${esc(KIND[k][E ? 0 : 1])}</div><div class="h">${esc(T(t.title || t.region))}</div><div>${esc(T(t.region))}${t.date ? ' · ' + esc(String(t.date).slice(0, 10)) : ''}</div>` +
       (short ? `<div class="s" style="color:#bfffd6;font-size:11.5px">${esc(short)}</div>` : '') +
       (t.source_url ? `<div class="s"><a href="${esc(t.source_url)}" target="_blank" rel="noopener noreferrer">${E ? 'Official record' : '원문 기록'} ›</a></div>` : '');
   }
