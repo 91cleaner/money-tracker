@@ -2,11 +2,14 @@
 
 A public-source intelligence prototype connecting world history, legislation, macroeconomic data, and U.S. congressional financial disclosures on a **flat world map**.
 
-## Entry points
-- `index.html` — country selection
-- `world-intelligence/index.html` — flat world-map command center and guided country exploration
-- `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research
-- `us.html` — U.S. command entry
+## Entry points (verified against `main`, 2026-10-30)
+- `index.html` — **English U.S.-first redirect** to `world-intelligence/?lang=en`; existing query parameters and the URL fragment are preserved. It is **not** the country-selection screen.
+- `korea.html` — Korean-language country-selection page, with links to the Korean national view and the U.S. command room.
+- `world-intelligence/index.html` — flat world-map command center and guided country exploration.
+- `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research.
+- `us.html` — U.S. command entry.
+
+**Connection status:** Public House PTR disclosures are delayed reports, not live executions. **Live executed-trade feed: NOT CONNECTED. Generative AI analysis: NOT CONNECTED.** The interactive map and scripted data lookups must not be described as live trading intelligence or a connected AI search engine. A successful GitHub Actions test is not evidence that the public Pages deployment or authenticated Cloudflare Worker is working.
 
 ## Verified data and caveats
 - `data/us/bills.json` — U.S. congressional legislation summary from Congress.gov. The **Congress.gov API requires a key** for its collection workflow; this is separate from the map.
@@ -37,7 +40,7 @@ The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional
 - `.github/workflows/world-intelligence-health.yml` — static map and data integrity checks.
 - `python scripts/check_world_intelligence.py` — local read-only health check. With Node.js installed, also checks inline JavaScript syntax.
 
-**Important:** GitHub Pages is public. `noindex`, hidden links, or client-side controls are not authentication and do not restrict access to specific devices. Proper device-only access requires an authenticated gateway or private hosting.
+**Important:** The GitHub repository and GitHub Pages site are currently **public**, despite the intended private-development workflow. `noindex`, hidden links, or client-side controls are not authentication and do not restrict access to specific devices. Do not place secrets, unpublished research, or private datasets in the repository or Pages artifacts. Proper device-only access requires an authenticated gateway or private hosting; the Cloudflare OAuth session described above does not make GitHub Pages private.
 
 ## Principles
 1. Cite original official public sources and distinguish source dates, event dates, transaction dates, and ingestion times.
