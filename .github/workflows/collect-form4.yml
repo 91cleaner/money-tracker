@@ -20,7 +20,7 @@ jobs:
           python-version: '3.12'
       - name: Collect
         env:
-          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT || 'MoneyTracker Research contact@91cleaner.dev' }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT || 'MoneyTracker research Leecheolhan91@gmail.com' }}
         run: python scripts/collect_form4.py 150 90
       - name: Commit
         run: |

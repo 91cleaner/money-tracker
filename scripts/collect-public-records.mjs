@@ -161,7 +161,7 @@ async function taiwanLegislature(){
  return {count:records.length,errors};
 }
 async function usSec(){
- const ua=String(process.env.SEC_USER_AGENT||"").trim();
+ const ua=(String(process.env.SEC_USER_AGENT||"").trim()||"MoneyTracker research Leecheolhan91@gmail.com");
  if(!ua||!ua.includes("@")){
   console.log("SEC SKIPPED — SEC_USER_AGENT is not configured (set a real public contact, not invented)");
   return {status:"not-configured",count:0};

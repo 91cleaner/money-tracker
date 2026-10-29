@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from us_company_list import ROOT, companies
 OUT = os.path.join(ROOT, "data", "us", "insider-form4.json")
-UA = os.environ.get("SEC_USER_AGENT", "").strip()
+UA = (os.environ.get("SEC_USER_AGENT", "").strip() or "MoneyTracker research Leecheolhan91@gmail.com")
 GAP = 0.2  # SEC 한도 초당 10회 이하
 
 

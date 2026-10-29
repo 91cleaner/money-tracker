@@ -5,7 +5,7 @@ from datetime import datetime, timezone, timedelta
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, "data", "nps"); os.makedirs(OUT, exist_ok=True)
 CIK = "1608046"
-UA = os.environ.get("SEC_UA", "MoneyTracker Research contact@91cleaner.dev")  # SEC 규칙: 이름+연락처
+UA = (os.environ.get("SEC_USER_AGENT") or os.environ.get("SEC_UA") or "MoneyTracker research Leecheolhan91@gmail.com")  # SEC 규칙: 이름+연락처
 FX = {"2026-03-31": (1530.1, "https://www.yna.co.kr/view/AKR20260331148100002"),
       "2026-06-30": (1549.4, "https://www.yna.co.kr/view/AKR20260630138800002"),
       "2026-09-30": (1352.8, "https://www.mt.co.kr/economy/2026/09/30/2026093015352291632")}  # 분기 말 서울 15:30 종가
