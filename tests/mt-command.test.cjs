@@ -46,7 +46,7 @@ test("unconnected stock disclosures are clearly flagged",()=>{
 });
 test("single map entry and UI script references are present",()=>{
  const html=fs.readFileSync(path.join(__dirname,"../usa-command-legacy.html"),"utf8");
- const index=fs.readFileSync(path.join(__dirname,"../index.html"),"utf8");
+ const index=fs.readFileSync(path.join(__dirname,"../korea.html"),"utf8");
  assert.match(html,/mt-intel-data\.js/);
  assert.match(html,/mt-command-ui\.js/);
  assert.doesNotMatch(html,/function pick\(k\)/);
