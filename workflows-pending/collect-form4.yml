@@ -1,0 +1,32 @@
+# 실장이 .github/workflows/ 로 옮겨 주세요. 필요한 시크릿: SEC_USER_AGENT ("이름 이메일" 형식, SEC 요구사항)
+name: Collect SEC Form 4 insider trades
+on:
+  schedule:
+    - cron: '40 21 * * 1-5'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: collect-form4
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: python scripts/collect_form4.py 150 90
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add data/us/insider-form4.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: Collect SEC Form 4 insider trades"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push && break; sleep 10; done
