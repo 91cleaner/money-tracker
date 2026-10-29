@@ -1,1 +1,1 @@
-{"status":"needs_key","congress":119,"ko":"Congress.gov 무료 키가 아직 없어요. 키를 넣으면 법안·표결 타임라인이 채워져요.","en":"A free Congress.gov API key is needed. Once it is added, the bill and vote timeline will fill in.","signup":"https://api.congress.gov/sign-up/"}
+{"status":"ok","congress":119,"updated":"2026-10-29","house_votes":152,"notes":["상원 표결은 Congress.gov API에 아직 없어 넣지 못했어요.","Senate roll-call votes are not in the Congress.gov API yet, so they are not included."],"source":"Congress.gov API (Library of Congress)"}
