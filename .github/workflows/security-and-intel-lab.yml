@@ -20,6 +20,8 @@ jobs:
           node --check assets/mt-engagement.js
       - name: Test private API rejection
         run: node --test worker/private-api.test.mjs
+      - name: Check company page and month-end close-date regression
+        run: node --test tests/company-page.test.cjs
       - name: Validate contract privacy and data regression tests
         run: python3 -m unittest discover -s tests
       - name: Build and validate public artifact
