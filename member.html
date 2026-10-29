@@ -115,6 +115,27 @@ header.bar input.nm{width:200px;text-transform:none}
  ol.tl li{grid-template-columns:74px minmax(0,1fr);gap:12px}
  .hero .nm{font-size:22px}
 }
+
+/* 타임라인 (게임형) */
+.tlx .big{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:6px 0 12px}
+.tlx .big div{border:2px solid var(--line2);border-radius:12px;padding:12px 8px;text-align:center;background:#03130b}
+.tlx .big b{display:block;font:800 30px/1.1 ui-monospace,Menlo,monospace;color:var(--g)}
+.tlx .big span{font-size:14px;color:var(--txt)}
+.tlx .badges{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.tlx .badges span{font-size:15px;font-weight:700;border-radius:999px;padding:6px 14px;border:2px solid var(--g);background:#0d3b22;color:#eafff2}
+.tlx .badges span.off{border-color:var(--line);background:none;color:var(--mut);font-weight:400}
+.tlx .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.tlx .tabs button{min-height:44px;padding:0 16px;font:700 16px system-ui,sans-serif;border-radius:10px;border:2px solid var(--line2);background:#04150d;color:var(--g2);cursor:pointer}
+.tlx .tabs button[aria-pressed=true]{background:#145531;border-color:var(--g);color:#fff}
+.tlx .mo{margin:14px 0 4px;font-size:18px;font-weight:800;color:var(--g)}
+.tlx .mo small{display:block;font-size:14px;font-weight:400;color:var(--mut)}
+.tlx .ev{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;padding:8px 0;border-bottom:1px solid #12301f;font-size:16px}
+.tlx .ev .ic{font-size:24px;line-height:1.2}
+.tlx .ev .t{color:#eafff2;font-weight:700}
+.tlx .ev .s{font-size:14px;color:var(--mut)}
+.tlx .keybox{border:2px dashed var(--warn);border-radius:12px;padding:14px;background:#1c1606;color:#f3e3b4;font-size:16px}
+.tlx .keybox b{display:block;font-size:20px;margin-bottom:4px}
+@media(max-width:600px){.tlx .big{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 
 </head>
@@ -242,6 +263,7 @@ header.bar input.nm{width:200px;text-transform:none}
     }
     head.appendChild(acts);
     app.appendChild(head);
+    app.appendChild(timelinePanel(id, rows));
 
     // 2) 요약 숫자
     var cnt = { P: 0, S: 0, E: 0 }, lags = [], late = 0;
@@ -332,6 +354,92 @@ header.bar input.nm{width:200px;text-transform:none}
     app.appendChild(tradesBlock(rows, E, m && m.chamber, !(tr.trades || []).some(function (x) { return x.c === "s"; })));
   }
 
+  var EN = !!(window.MTI18N && window.MTI18N.isEn);
+  function T(ko, en) { return EN ? en : ko; }
+  var VOTE = { Y: ["👍", "찬성", "Yes"], N: ["👎", "반대", "No"], P: ["✋", "기권(Present)", "Present"], X: ["💤", "불참", "Not voting"] };
+  // 의원 타임라인: data/us/timeline/<ID>.json (Congress.gov API, 수집 스크립트 scripts/collect_congress_timeline.py) + 이 페이지의 거래 신고
+  function timelinePanel(id, rows) {
+    var p = panel(T("🎮 의원 타임라인", "🎮 Member timeline"), null, true); p.classList.add("tlx");
+    p.appendChild(el("p", "note", T("공개된 날짜와 사실만 늘어놓았어요. 같은 달에 있었던 일을 나란히 보여 줄 뿐, 서로 이어진다는 뜻은 아니에요.", "Only public dates and facts, in order. Things from the same month are shown side by side; that does not mean they are linked.")));
+    var box = el("div"); p.appendChild(box);
+    box.appendChild(el("div", "empty", T("불러오는 중…", "Loading…")));
+    Promise.all([get("data/us/timeline/status.json"), get("data/us/timeline/" + encodeURIComponent(id) + ".json")]).then(function (r) {
+      var st = r[0] || {}, f = r[1] || {}, ev = (f.events || []).slice();
+      box.replaceChildren();
+      if (st.status !== "ok") {
+        var kb = el("div", "keybox"); kb.appendChild(el("b", "", T("🔑 열쇠가 필요해요", "🔑 A key is needed")));
+        kb.appendChild(document.createTextNode(st.status === "needs_key" ? (EN ? st.en : st.ko) || "" : T("법안·표결 자료를 아직 모으지 못했어요.", "Bill and vote data has not been collected yet.")));
+        if (st.signup && safe(st.signup)) { kb.appendChild(document.createTextNode(" ")); kb.appendChild(link(T("무료 키 받기 ↗", "Get a free key ↗"), st.signup)); }
+        box.appendChild(kb);
+      }
+      rows.forEach(function (x) { if (x.filed) ev.push({ d: x.filed, k: "trade", t: String(x.asset || x.tk || "").slice(0, 100), ty: String(x.ty || "").charAt(0), u: x.doc }); });
+      ev = ev.filter(function (e) { return /^\d{4}-\d{2}-\d{2}/.test(e.d || ""); });
+      ev.sort(function (a, b) { return String(b.d).localeCompare(String(a.d)); });
+      if (!ev.length) { box.appendChild(el("div", "empty", T("보여 줄 기록이 아직 없어요", "No records to show yet"))); return; }
+      var nBill = 0, nPass = 0, nLaw = 0, nVote = 0, nCast = 0;
+      ev.forEach(function (e) { if (e.k === "intro") nBill++; else if (e.k === "pass") nPass++; else if (e.k === "law") nLaw++; else if (e.k === "vote") { nVote++; if (e.v !== "X") nCast++; } });
+      if (st.status === "ok") {
+        var big = el("div", "big");
+        [[nBill, T("📜 발의한 법안", "📜 Bills sponsored")], [nLaw, T("🏛 법이 된 법안", "🏛 Became law")], [nVote, T("🗳 하원 표결 기록", "🗳 House votes")], [nVote ? Math.round(nCast / nVote * 100) + "%" : "-", T("🙋 표결에 참여한 비율", "🙋 Votes taken part in")]]
+          .forEach(function (c) { var d = el("div"); d.append(el("b", "", String(c[0])), el("span", "", c[1])); big.appendChild(d); });
+        box.appendChild(big);
+        var bd = el("div", "badges");
+        [[nBill >= 1, T("🌱 법안 발의 시작", "🌱 First bill")], [nBill >= 10, T("📚 법안 10개 발의", "📚 10 bills")], [nLaw >= 1, T("🏛 법이 된 법안 있음", "🏛 Has a bill that became law")], [nVote >= 50, T("🗳 표결 50번 기록", "🗳 50 votes logged")], [nVote >= 20 && nCast / nVote >= 0.95, T("🙋 표결 참여 95% 이상", "🙋 95%+ of votes taken part in")]]
+          .forEach(function (b) { bd.appendChild(el("span", b[0] ? "" : "off", b[1])); });
+        box.appendChild(bd);
+      }
+      var tabs = el("div", "tabs"), list = el("div"), more = el("button", "more"), cur = "all", shown = 0, view = ev;
+      more.type = "button";
+      [["all", T("전체", "All")], ["bill", T("📜 법안", "📜 Bills")], ["vote", T("🗳 표결", "🗳 Votes")], ["trade", T("💼 거래 신고", "💼 Trade filings")]].forEach(function (t) {
+        var b = el("button", "", t[1]); b.type = "button"; b.setAttribute("aria-pressed", t[0] === "all" ? "true" : "false");
+        b.addEventListener("click", function () { cur = t[0]; Array.prototype.forEach.call(tabs.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); draw(); });
+        tabs.appendChild(b);
+      });
+      function describe(e) {
+        var ic, head, sub = [];
+        if (e.k === "intro") { ic = "📜"; head = T("법안을 냈어요", "Introduced a bill"); }
+        else if (e.k === "pass") { ic = "📈"; head = T("법안이 한쪽 의회를 통과했어요", "Bill passed one chamber"); }
+        else if (e.k === "law") { ic = "🏛"; head = T("법안이 법이 됐어요", "Bill became law"); }
+        else if (e.k === "vote") { var v = VOTE[e.v] || VOTE.X; ic = v[0]; head = T("하원 표결: ", "House vote: ") + (EN ? v[2] : v[1]); }
+        else { ic = "💼"; var ty = { P: T("구입", "Buy"), S: T("처분", "Sale"), E: T("교환", "Exchange") }[e.ty]; head = T("주식 거래 신고(PTR)", "Stock trade filing (PTR)") + (ty ? " · " + ty : ""); }
+        if (e.t) sub.push(e.no && e.k !== "vote" ? e.no + " · " + e.t : e.t);
+        if (e.k === "vote") { if (e.q) sub.push(e.q); if (e.r) sub.push(e.r); }
+        return [ic, head, sub];
+      }
+      function sameMonth(ds) {
+        var c = { b: 0, v: 0, t: 0 }; ev.forEach(function (e) { if (String(e.d).slice(0, 7) !== ds) return; if (e.k === "vote") c.v++; else if (e.k === "trade") c.t++; else c.b++; });
+        var bits = []; if (c.b) bits.push(T("법안 " + c.b + "건", c.b + " bill event" + (c.b > 1 ? "s" : ""))); if (c.v) bits.push(T("표결 " + c.v + "번", c.v + " vote" + (c.v > 1 ? "s" : ""))); if (c.t) bits.push(T("거래 신고 " + c.t + "건", c.t + " trade filing" + (c.t > 1 ? "s" : "")));
+        return T("같은 달에 ", "In the same month: ") + bits.join(" · ") + T("이 있었어요", "");
+      }
+      function addRows(k) {
+        var lastMo = shown ? String(view[shown - 1].d).slice(0, 7) : "";
+        view.slice(shown, shown + k).forEach(function (e) {
+          var mo = String(e.d).slice(0, 7);
+          if (mo !== lastMo) { lastMo = mo; var h = el("div", "mo", mo.slice(0, 4) + T("년 ", "-") + mo.slice(5) + T("월", "")); h.appendChild(el("small", "", sameMonth(mo))); list.appendChild(h); }
+          var d = describe(e), row = el("div", "ev"), b = el("div");
+          row.appendChild(el("div", "ic", d[0]));
+          b.appendChild(el("div", "t", d[1] + " · " + String(e.d).slice(0, 10)));
+          d[2].forEach(function (x) { b.appendChild(el("div", "s", x)); });
+          if (safe(e.u)) { var lk = el("div", "s"); lk.appendChild(link(T("원문 ↗", "Source ↗"), e.u)); b.appendChild(lk); }
+          row.appendChild(b); list.appendChild(row);
+        });
+        shown = Math.min(view.length, shown + k);
+        if (view.length > shown) { more.textContent = T("더 보기 (" + (view.length - shown) + "개 남음)", "Show more (" + (view.length - shown) + " left)"); if (!more.isConnected) box.appendChild(more); } else more.remove();
+      }
+      function draw() {
+        view = ev.filter(function (e) { return cur === "all" || (cur === "vote" ? e.k === "vote" : cur === "trade" ? e.k === "trade" : e.k !== "vote" && e.k !== "trade"); });
+        list.replaceChildren(); shown = 0;
+        if (!view.length) { list.appendChild(el("div", "empty", T("이 칸에는 기록이 없어요", "Nothing here"))); more.remove(); return; }
+        addRows(30);
+      }
+      more.addEventListener("click", function () { addRows(50); });
+      box.append(tabs, list); draw();
+      if (st.status === "ok" && st.notes) box.appendChild(el("p", "note", EN ? st.notes[1] : st.notes[0]));
+      box.appendChild(el("p", "note", T("거래 신고는 신고한 날 기준이라 실제 거래일보다 늦을 수 있어요. 투자 조언이 아니에요.", "Trade filings are listed by filing date, which can be later than the trade itself. Not investment advice.")));
+    });
+    return p;
+  }
+
   function tradesBlock(rows, E, chamber, houseOnly) {
     var p = panel("거래 신고 목록 (PTR)", rows.length + "건", true);
     p.appendChild(el("p", "warnnote", "신고 기준입니다. STOCK Act상 의원은 거래 후 최대 45일 안에 신고하므로 거래일과 신고일 사이에 차이가 있을 수 있고, 최근 거래는 아직 신고되지 않았을 수 있습니다. 금액은 신고서에 적힌 구간입니다. 공개 기록일 뿐 잘잘못 판단이 아니며, 투자 조언이 아닙니다."));
@@ -389,6 +497,7 @@ header.bar input.nm{width:200px;text-transform:none}
     function li(text, date, url) { var x = el("li"); x.appendChild(document.createTextNode(text + (date ? " · 기준일 " + date : "") + " ")); if (url) x.appendChild(link("↗", url)); ul.appendChild(x); }
     li("의원 거래: 미국 하원 사무처 재산공개 PTR (data/us/trades.json)", tr && tr.updated, "https://disclosures-clerk.house.gov/FinancialDisclosure");
     li("의원 명부·정당·위원회: @unitedstates/congress-legislators, CC0 (data/us/members.json)", null, "https://github.com/unitedstates/congress-legislators");
+    li("법안·하원 표결 타임라인: Congress.gov API, Library of Congress (data/us/timeline/)", null, "https://www.congress.gov/");
     li("종목·업종·위원회 연결: data/search-index.json (자체 분류, 공식 관할 아님)", si && si.updated, null);
     foot.appendChild(ul);
   }
