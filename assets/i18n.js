@@ -327,7 +327,10 @@
     ["실제 지리 기반 세계지도 · 자유 탐색", "World map based on real geography · free exploration"], ["세계지도 · 자유 탐색", "World map · free exploration"], ["수동 탐색 · 자유롭게 지도를 이동하세요", "Manual exploration · pan the map freely"],
     ["지도 서버 연결 확인 중 · 대체 지도 표시", "Checking map server connection · showing fallback map"], ["지도 타일 지연 · 개략 지도 표시 (연결 복구 시 자동 전환)", "Map tiles delayed · showing rough map (switches automatically when connection recovers)"],
     ["지도 엔진 오류 · 개략 지도 표시", "Map engine error · showing rough map"], ["지도 라이브러리 연결 실패 · 개략 지도 표시", "Map library failed to load · showing rough map"],
-    ["Alphabet Inc.", "Alphabet Inc."],
+    ["Alphabet Inc.", "Alphabet Inc."], ["Massive(구 Polygon)", "Massive (formerly Polygon)"],
+    ["미 정부가 H20 칩을 중국 등(홍콩·마카오, D:5 국가 포함)으로 수출할 때 허가가 필요하다고", "The US government notified the company that a license is required to export H20 chips to China and others (incl. Hong Kong, Macau and D:5 countries) on"],
+    ["통보했다고 8-K로 공시함(제출 ", "as disclosed in an 8-K (filed "], ["10-K에서 자체 공장 없이 TSMC·삼성전자 등 파운드리에 칩 생산을 맡긴다고 밝힘.", "The 10-K says it has no fabs of its own and outsources chip production to foundries such as TSMC and Samsung Electronics."],
+    ["CHIPS and Science Act(H.R.4346, 117대 의회)가 법으로 제정됨. 업계 전반 대상 법률임.", "The CHIPS and Science Act (H.R.4346, 117th Congress) was enacted into law. It applies to the industry as a whole."],
     // indicators, names and places in route data (NVDA etc.)
     ["대만달러/달러 환율", "TWD/USD exchange rate"], ["엔/달러 환율", "JPY/USD exchange rate"], ["위안/달러 환율", "CNY/USD exchange rate"], ["달러 환율", "USD exchange rate"], ["국채 금리", "Treasury yield"], ["미 의회 법안", "U.S. Congress bills"],
     ["업종 코드", "industry code"], ["SEC 등록명", "SEC registered name"], ["SEC 등록 업종", "SEC-registered industry"], ["본사(SEC 주소)", "HQ (SEC address)"], ["(좌표는 대략 위치)", "(coordinates are approximate)"], ["원문: ", "Source text: "],
