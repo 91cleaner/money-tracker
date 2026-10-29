@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>세금추적단</title>
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="우리 시는 얼마나 계약했을까? · 세금추적단"><meta property="og:description" content="전국 85개 시의 공개 계약을 지도로. 어디에 얼마를, 어느 업체에. 출처 나라장터.">
+<meta property="og:url" content="https://91cleaner.github.io/money-tracker/city.html"><meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="assets/style.css?v=202610249300">
+<link rel="stylesheet" href="assets/sec.css?v=202610249700">
+<link rel="stylesheet" href="assets/theme.css?v=202610281630">
+<link rel="stylesheet" href="assets/refresh.css?v=202610281630">
+<script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="세금추적단"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body data-page="city">
+<header class="stickybar"><a class="back" href="./">‹ 홈</a><span class="upd">갱신 <span id="updated">—</span></span></header>
+<main class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow" id="range">&nbsp;</p>
+    <h1 id="title">불러오는 중</h1>
+    <p class="lede" id="lede"></p>
+    <button class="sharebtn big" id="share-city" type="button">공유하기</button>
+  </header>
+
+  <button type="button" class="mappeek" id="mappeek" hidden aria-label="돈이 어디로 갔나 지도 열기"></button>
+
+  <div class="chips" id="cats" role="group" aria-label="분야 고르기"></div>
+
+  <section class="stats">
+    <div class="stat"><span class="v" id="k-total">—</span><span class="k">계약 금액 · 여러 해 계약은 올해 낸 몫</span><span class="s" id="k-count">—</span></div>
+    <div class="stat"><span class="v" id="k-out">—</span><span class="k">다른 지역 업체로 간 비율</span><span class="s" id="k-local-s">—</span></div>
+    <div class="stat"><span class="v" id="k-alerts">—</span><span class="k">눈여겨볼 점</span><span class="s">위법을 뜻하지 않음 · <a href="#alerts">무슨 뜻?</a></span></div>
+  </section>
+  <p class="bignote" id="bignote" hidden></p>
+  <p class="tracklinks">이 시의 더 보기 목록: <a href="spend.html#sole">경쟁 없는 계약</a> <a href="spend.html#fest">축제·행사</a> <a href="spend.html#subsidy">보조금</a> <a href="spend.html#cost">비용 비교</a></p>
+
+  <section class="sec" id="alerts">
+    <h2>눈여겨볼 점</h2>
+    <p class="sub">공개된 숫자에서 눈에 띄는 패턴을 자동으로 모은 것입니다. 위법이나 비리를 뜻하지 않으며, 정상적인 이유가 있을 수 있습니다. 출처 원문과 기관 설명을 함께 확인하세요.</p>
+    <details class="explain" open>
+      <summary>이 표시들은 무슨 뜻인가요?</summary>
+      <ul>
+        <li><b>같은 날 나눠진 계약</b>: 같은 업체와 같은 이름의 계약을 같은 날 여러 건으로 맺은 경우입니다. 금액이 나뉘면 경쟁 입찰 없이 계약할 수 있는 기준 아래로 내려갈 수 있어서 감사에서 자주 살펴보는 모양입니다.</li>
+        <li><b>한도 바로 밑 계약</b>: 기관이 미리 어림한 금액이 2천만원 이하면 업체 한 곳의 견적만 받고 계약할 수 있어요(공고 없이 바로 맺은 수의계약). 이 2천만원이 한도예요. 그 기준 바로 아래 금액인 경우예요.</li>
+        <li><b>같은 업체 반복</b>: 최근 90일 동안 같은 업체가 5번 이상 계약한 경우입니다.</li>
+        <li><b>1억 이상</b>: 큰 돈이 들어간 계약입니다. 문제가 있다는 뜻이 아니라 눈여겨볼 만하다는 뜻입니다.</li>
+      </ul>
+    </details>
+    <div class="alerts" id="alerts-list"></div>
+  </section>
+
+  <section class="sec mapsec" id="map">
+    <h2>돈이 어디로 갔나</h2>
+    <p class="sub">파란 점은 우리 시 업체가 받은 돈이에요. 주황 선은 다른 지역 업체로 간 돈이에요.</p>
+    <div class="mapgrid"><div class="map" aria-live="polite"></div><div class="flowpanel"></div></div>
+  </section>
+
+  <section class="sec">
+    <h2>어느 지역 업체가 가져갔나</h2>
+    <div class="split" id="share">
+      <div class="splitbar"><i id="share-in"></i></div>
+      <div class="legend"><span><b class="dot in"></b>우리 시 업체 <b id="share-in-t">—</b></span><span><b class="dot out"></b>다른 지역 업체 <b id="share-out-t">—</b></span></div>
+    </div>
+    <div class="bars" id="regions"></div>
+    <p class="sub">업체 주소는 나라장터 업체정보에서 시·군·구까지만 가져옵니다. 주소가 확인된 계약만 셉니다. <b>우리 시 업체</b>는 같은 시(특별·광역시는 그 시 전체)에 있는 업체입니다. 여러 업체가 함께 맡은 계약(공동도급)은 나눈 비율이 확인된 것만 그 비율대로 나누고, 나머지는 대표 업체 기준입니다. 2026년 7월 전남광주통합특별시 출범 뒤에도 광주 5개 구는 '광주', 전남 시·군은 '전남'으로 묶어 셉니다.</p>
+  </section>
+
+  <section class="sec">
+    <h2>돈을 가장 많이 받은 업체</h2>
+    <p class="sub">업체 이름 아래는 소재지(시·군·구)</p>
+    <div class="bars" id="vendors"></div>
+    <details class="morebox"><summary>더 보기 · 계약을 가장 많이 맺은 기관</summary>
+      <p class="sub">시청, 구청, 사업소 등 계약한 기관</p>
+      <div class="bars" id="insts"></div>
+    </details>
+  </section>
+
+
+
+  <section class="sec" id="contracts">
+    <h2>계약 목록</h2>
+    <details class="all" open>
+      <summary><span>계약 전체 보기</span><span class="sub" id="all-n"></span></summary>
+      <input class="search" id="cq" type="search" placeholder="계약명·업체·기관·지역 검색" aria-label="계약 검색">
+      <p class="sub">제목을 누르면 정렬, 계약명을 누르면 나라장터 원문으로 갑니다.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr>
+            <th><button data-k="date">처음 계약일</button></th>
+            <th class="hide-narrow"><button data-k="inst">기관</button></th>
+            <th><button data-k="title">계약명</button></th>
+            <th><button data-k="vendor">업체</button></th>
+            <th class="hide-narrow"><button data-k="vregion">업체 소재지</button></th>
+            <th class="num"><button data-k="amount">금액</button></th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    <span><small class="unof">개인이 만든 비공식 사이트</small> · 정부·지자체와 관계없음 · 출처 나라장터</span>
+    <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있습니다.</span>
+    <span>기관·업체 해명은 받는 대로 해당 항목 아래에 싣습니다. <a href="./#principles">사이트 원칙 보기</a></span>
+  </footer>
+</main>
+<script src="assets/period.js?v=202610281630"></script>
+<script src="assets/mask.js?v=202610246200"></script>
+<script src="assets/region.js?v=202610246200"></script>
+<script src="assets/app.js?v=202610281630"></script><script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/mapkit.js?v=202610251700"></script>
+<script src="assets/map.js?v=202610281630"></script>
+<script src="assets/bid.js?v=202610252300" defer></script>
+<script src="assets/tabs.js?v=202610251100"></script>
+<script src="assets/fun.js?v=202610251100"></script>
+
+<script src="assets/fx.js?v=202610281630"></script><script src="assets/nav.js?v=202610281630"></script>
+<script src="assets/visits.js?v=202610281630" defer></script>
+<script src="assets/pwa.js?v=202610251330" defer></script>
+</body></html>

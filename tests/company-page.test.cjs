@@ -12,7 +12,7 @@ const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]
 test('inline script parses', () => { assert.doesNotThrow(() => new vm.Script(script, { filename: 'company.inline.js' })); });
 
 test('reads only repository data files named in the spec', () => {
-  for (const f of ['data/search-index.json', 'data/us/ticker-sectors.json', 'data/us/trades.json', 'data/us/lobbying.json', 'data/us/pac-contributions.json', 'data/us/ticker-routes.json', 'data/us/members.json']) {
+  for (const f of ['data/search-index.json', 'data/us/ticker-sectors.json', 'data/us/trades_public.json', 'data/us/lobbying.json', 'data/us/pac-contributions.json', 'data/us/ticker-routes.json', 'data/us/members.json']) {
     assert.ok(script.includes('"' + f + '"'), f);
     assert.ok(fs.existsSync(path.join(root, f)), f + ' exists');
   }

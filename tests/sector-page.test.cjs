@@ -19,7 +19,7 @@ test('forbidden advice words are absent (sector, company and member pages)', () 
 });
 
 test('uses only repository data; optional files hide their section when missing', () => {
-  for (const f of ['data/search-index.json', 'data/us/ticker-sectors.json', 'data/us/trades.json', 'data/us/prices/summary.json', 'data/us/federal-awards.json', 'data/us/lobbying.json', 'data/us/facilities.json', 'data/us/ticker-routes.json']) {
+  for (const f of ['data/search-index.json', 'data/us/ticker-sectors.json', 'data/us/trades_public.json', 'data/us/prices/summary.json', 'data/us/federal-awards.json', 'data/us/lobbying.json', 'data/us/facilities.json', 'data/us/ticker-routes.json']) {
     assert.ok(script.includes('"' + f + '"'), f);
     assert.ok(fs.existsSync(path.join(root, f)), f + ' exists');
   }

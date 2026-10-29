@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "status": "awaiting_verified_records",
+  "source": "Official House and Senate financial disclosure portals",
+  "source_urls": [
+    "https://disclosures-clerk.house.gov/FinancialDisclosure",
+    "https://efdsearch.senate.gov/search/"
+  ],
+  "records": [],
+  "warning": "No verified transaction records ingested. Never interpret an empty dataset as zero trades."
+}

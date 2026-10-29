@@ -12,7 +12,7 @@ const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]
 test('inline script parses', () => { assert.doesNotThrow(() => new vm.Script(script, { filename: 'weekly.inline.js' })); });
 
 test('reads repository data files that exist', () => {
-  for (const f of ['data/us/trades.json', 'data/us/lobbying.json', 'data/us/federal-awards.json']) {
+  for (const f of ['data/us/trades_public.json', 'data/us/lobbying.json', 'data/us/federal-awards.json']) {
     assert.ok(script.includes('"' + f + '"'), f);
     assert.ok(fs.existsSync(path.join(root, f)), f + ' exists');
   }
@@ -34,7 +34,7 @@ test('data inserted as text, links relative', () => {
 });
 
 test('window is 7 days ending at the newest filing date and the newest week has data', () => {
-  const tr = JSON.parse(fs.readFileSync(path.join(root, 'data/us/trades.json'), 'utf8')).trades;
+  const tr = JSON.parse(fs.readFileSync(path.join(root, 'data/us/trades_public.json'), 'utf8')).trades;
   const filed = tr.map(x => x.filed).filter(Boolean).sort();
   const end = filed[filed.length - 1];
   const start = new Date(Date.parse(end + 'T00:00:00Z') - 6 * 864e5).toISOString().slice(0, 10);

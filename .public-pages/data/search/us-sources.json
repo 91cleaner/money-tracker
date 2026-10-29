@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "country": "us",
+  "updated": "2026-10-27",
+  "description": "Public official source directory. Do not interpret source links as verified current facts.",
+  "items": [
+    {
+      "id": "us-congress-api",
+      "type": "dataset",
+      "title": "미국 의회 법안·의원·공동발의·위원회 공개 API",
+      "aliases": [
+        "미국 의회",
+        "법안",
+        "Congress",
+        "미국 국회"
+      ],
+      "summary": "의회 도서관 제공 Congress.gov API. 법안·의원·법안 조치와 위원회 관계를 구분해 제공하며 API 키가 필요함.",
+      "source": "Library of Congress",
+      "url": "https://api.congress.gov/",
+      "source_date": "2026-10-27",
+      "country": "us",
+      "location": {
+        "lat": 38.8899,
+        "lng": -77.0091,
+        "label": "US 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "us-house-disclosures",
+      "type": "dataset",
+      "title": "미국 하원 공개 의원 재산·증권거래 신고",
+      "aliases": [
+        "하원",
+        "의원 거래",
+        "PTR",
+        "펠로시",
+        "주식 공시"
+      ],
+      "summary": "거래일·신고일·신고금액 구간을 구별해야 한다. 법안과의 시간상 근접성이 부정행위의 증거는 아니다.",
+      "source": "U.S. House Clerk",
+      "url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+      "source_date": null,
+      "country": "us",
+      "location": {
+        "lat": 38.8899,
+        "lng": -77.0091,
+        "label": "US 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "us-chips",
+      "type": "law",
+      "title": "미국 반도체 CHIPS and Science Act",
+      "aliases": [
+        "반도체법",
+        "CHIPS",
+        "칩스법",
+        "대만 반도체",
+        "엔비디아 미국 법안"
+      ],
+      "summary": "2022년 제정된 반도체·과학 지원법. 법안 원문·발의자·위원회·지원 기업과 연결해 조사한다.",
+      "source": "Congress.gov",
+      "url": "https://www.congress.gov/bill/117th-congress/house-bill/4346",
+      "source_date": "2022-08-09",
+      "country": "us",
+      "location": {
+        "lat": 38.8899,
+        "lng": -77.0091,
+        "label": "US 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "us-taiwan-trade-2026",
+      "type": "agreement",
+      "title": "미 상무부 미국·대만 반도체·기술 투자 협력 발표",
+      "aliases": [
+        "대만",
+        "대미투자",
+        "미국 대만 무역",
+        "반도체 협정"
+      ],
+      "summary": "2026년 1월 15일 미 상무부는 미국·대만 무역·투자 협력을 발표. 발표된 투자 약속과 실제 집행/개별 기업 실적을 구분.",
+      "source": "U.S. Department of Commerce",
+      "url": "https://www.commerce.gov/news/fact-sheets/2026/01/fact-sheet-restoring-american-semiconductor-manufacturing-leadership",
+      "source_date": "2026-01-15",
+      "country": "us",
+      "location": {
+        "lat": 38.8951,
+        "lng": -77.0364,
+        "label": "US 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "us-sec-edgar",
+      "type": "dataset",
+      "title": "SEC EDGAR 미국 기업 공시 API",
+      "aliases": [
+        "10-K",
+        "10-Q",
+        "8-K",
+        "공시",
+        "SEC",
+        "기업 실적"
+      ],
+      "summary": "미국 증권거래위원회 무료 기업제출 이력·재무 데이터. 원문 재배포 조건과 자동 호출 제한 준수.",
+      "source": "SEC",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+      "source_date": null,
+      "country": "us",
+      "location": {
+        "lat": 38.894,
+        "lng": -77.028,
+        "label": "US 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "us-fed-fred",
+      "type": "dataset",
+      "title": "FRED·ALFRED 경제지표와 과거 수정판",
+      "aliases": [
+        "FRED",
+        "ALFRED",
+        "국채금리",
+        "인플레이션",
+        "미국 거시경제"
+      ],
+      "summary": "경제 시계열의 발표일과 관측일이 다르며 수정될 수 있다. 증시 인과관계의 확정 증거는 아니다.",
+      "source": "Federal Reserve Bank of St. Louis",
+      "url": "https://fred.stlouisfed.org/docs/api/fred/",
+      "source_date": null,
+      "country": "us",
+      "location": {
+        "lat": 38.895,
+        "lng": -77.04,
+        "label": "US 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    }
+  ]
+}

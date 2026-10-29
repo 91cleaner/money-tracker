@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "description": "Curated historical milestones, not live event intelligence or predictive signals",
+  "events": [
+    {
+      "date": "1868-01-03",
+      "country": "일본",
+      "title": "메이지 유신",
+      "category": "history",
+      "context": "메이지 정부 수립을 통해 일본의 근대화 정책이 본격화된 시기",
+      "source": "https://www.britannica.com/event/Meiji-Restoration",
+      "links": [
+        "한국",
+        "중국"
+      ]
+    },
+    {
+      "date": "1895-04-17",
+      "country": "대만",
+      "title": "시모노세키 조약",
+      "category": "history",
+      "context": "청일전쟁 이후 대만의 통치권이 일본으로 넘어간 조약",
+      "source": "https://www.britannica.com/event/Treaty-of-Shimonoseki",
+      "links": [
+        "중국",
+        "일본"
+      ]
+    },
+    {
+      "date": "1913-12-23",
+      "country": "미국",
+      "title": "연방준비제도법",
+      "category": "law",
+      "context": "미국 중앙은행 체계의 법적 기반 마련",
+      "source": "https://www.federalreserve.gov/aboutthefed/fract.htm",
+      "links": [
+        "한국",
+        "일본"
+      ]
+    },
+    {
+      "date": "1945-08-15",
+      "country": "한국",
+      "title": "일본의 항복과 한국의 해방",
+      "category": "history",
+      "context": "제2차 세계대전 종전과 동아시아 질서 재편",
+      "source": "https://www.britannica.com/place/Korea/Division-of-Korea",
+      "links": [
+        "일본",
+        "미국"
+      ]
+    },
+    {
+      "date": "1949-10-01",
+      "country": "중국",
+      "title": "중화인민공화국 수립",
+      "category": "history",
+      "context": "중국 대륙의 정치체제 변화와 냉전 질서",
+      "source": "https://www.britannica.com/place/China/Establishment-of-the-Peoples-Republic",
+      "links": [
+        "대만",
+        "미국"
+      ]
+    },
+    {
+      "date": "1950-06-25",
+      "country": "한국",
+      "title": "한국전쟁 발발",
+      "category": "history",
+      "context": "동아시아 안보 질서에 장기적 영향을 준 전쟁",
+      "source": "https://history.state.gov/milestones/1945-1952/korean-war-2",
+      "links": [
+        "미국",
+        "중국",
+        "일본"
+      ]
+    },
+    {
+      "date": "1971-10-25",
+      "country": "대만",
+      "title": "유엔 중국 대표권 결의 2758",
+      "category": "diplomacy",
+      "context": "유엔 총회에서 중국 대표권에 관한 결의가 채택됨",
+      "source": "https://digitallibrary.un.org/record/192054",
+      "links": [
+        "중국",
+        "미국"
+      ]
+    },
+    {
+      "date": "1978-12-18",
+      "country": "중국",
+      "title": "개혁개방 정책 전환",
+      "category": "economy",
+      "context": "중국 공산당 제11기 3중전회를 계기로 경제개혁 노선 강화",
+      "source": "https://www.britannica.com/place/China/Economic-policy-changes",
+      "links": [
+        "미국",
+        "대만"
+      ]
+    },
+    {
+      "date": "1987-07-15",
+      "country": "대만",
+      "title": "계엄 해제",
+      "category": "history",
+      "context": "대만에서 장기간 시행된 계엄이 해제됨",
+      "source": "https://www.britannica.com/place/Taiwan/History",
+      "links": [
+        "중국",
+        "미국"
+      ]
+    },
+    {
+      "date": "1995-01-01",
+      "country": "미국",
+      "title": "세계무역기구 출범",
+      "category": "economy",
+      "context": "WTO 출범과 세계 교역 규범 확대",
+      "source": "https://www.wto.org/english/thewto_e/whatis_e/tif_e/fact1_e.htm",
+      "links": [
+        "중국",
+        "한국",
+        "일본"
+      ]
+    },
+    {
+      "date": "2001-12-11",
+      "country": "중국",
+      "title": "중국 WTO 가입",
+      "category": "economy",
+      "context": "중국의 세계 무역 체계 편입 확대",
+      "source": "https://www.wto.org/english/thewto_e/countries_e/china_e.htm",
+      "links": [
+        "미국",
+        "한국",
+        "대만"
+      ]
+    },
+    {
+      "date": "2011-03-11",
+      "country": "일본",
+      "title": "동일본 대지진",
+      "category": "history",
+      "context": "대규모 지진·쓰나미와 후쿠시마 원전 사고로 산업·에너지 정책에 영향",
+      "source": "https://www.britannica.com/event/Japan-earthquake-and-tsunami-of-2011",
+      "links": [
+        "미국",
+        "한국"
+      ]
+    },
+    {
+      "date": "2022-08-09",
+      "country": "미국",
+      "title": "CHIPS and Science Act 서명",
+      "category": "law",
+      "context": "미국 내 반도체 제조·연구개발 지원을 위한 법률",
+      "source": "https://www.congress.gov/bill/117th-congress/house-bill/4346",
+      "links": [
+        "대만",
+        "한국",
+        "일본"
+      ]
+    }
+  ]
+}

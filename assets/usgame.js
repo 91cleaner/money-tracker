@@ -102,7 +102,7 @@
     };
   })();
 
-  const [mem, tr, bl] = await Promise.all([j('members.json'), j('trades.json'), j('bills.json')]);
+  const [mem, tr, bl] = await Promise.all([j('members.json'), j('trades_public.json'), j('bills.json')]);
   if (!mem) { type('Could not load data. Please try again shortly.'); return; }
   const people = mem.members || [];
   const trades = ((tr && tr.trades) || []).filter((t) => t.d);

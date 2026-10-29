@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "country": "tw",
+  "updated": "2026-10-27",
+  "description": "Public official source directory. Do not interpret source links as verified current facts.",
+  "items": [
+    {
+      "id": "tw-legislature",
+      "type": "dataset",
+      "title": "대만 입법원 · 입법 및 법안 공개 자료",
+      "aliases": [
+        "대만 의회",
+        "입법원",
+        "立法院",
+        "Legislative Yuan",
+        "법안"
+      ],
+      "summary": "대만 입법원 공식 홈페이지와 법안·입법 기록을 조사하는 시작점. 접근 가능한 API/자료마다 사용조건 확인 필요.",
+      "source": "Legislative Yuan Taiwan",
+      "url": "https://www.ly.gov.tw/",
+      "source_date": null,
+      "country": "tw",
+      "location": {
+        "lat": 25.0478,
+        "lng": 121.5209,
+        "label": "TW 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "tw-moea-2026-eppd",
+      "type": "agreement",
+      "title": "대만 경제부 · 2026 미·대만 경제 번영 대화",
+      "aliases": [
+        "대만 미국",
+        "Pax Silica",
+        "반도체 공급망",
+        "경제 안보",
+        "희토류",
+        "AI 공급망"
+      ],
+      "summary": "2026년 1월 27일 경제협력대화에서 AI 공급망·중요광물·무인기 등 7개 협력 분야를 논의했다고 대만 경제부가 발표.",
+      "source": "Taiwan Ministry of Economic Affairs",
+      "url": "https://www.moea.gov.tw/Mns/English/news/News.aspx?kind=6&menu_id=176&news_id=122068",
+      "source_date": "2026-03-10",
+      "country": "tw",
+      "location": {
+        "lat": 25.033,
+        "lng": 121.5654,
+        "label": "TW 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "tw-us-deal",
+      "type": "agreement",
+      "title": "2026 미국·대만 반도체 투자 협력 발표",
+      "aliases": [
+        "대만 투자",
+        "미국 반도체",
+        "미국 대만 무역 협상"
+      ],
+      "summary": "미 상무부 발표의 투자 계획과 실제 건설·보조금 지급은 서로 다른 단계다.",
+      "source": "U.S. Department of Commerce",
+      "url": "https://www.commerce.gov/news/fact-sheets/2026/01/fact-sheet-restoring-american-semiconductor-manufacturing-leadership",
+      "source_date": "2026-01-15",
+      "country": "tw",
+      "location": {
+        "lat": 25.033,
+        "lng": 121.5654,
+        "label": "TW 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "tw-supplychain-tsmc",
+      "type": "company",
+      "title": "TSMC · 대만-미국 반도체 제조 투자",
+      "aliases": [
+        "TSMC",
+        "신주",
+        "台積電",
+        "파운드리",
+        "반도체 공급망"
+      ],
+      "summary": "기업·정부 문서의 투자 계획과 실제 생산능력·고객 계약·수익 변화를 분리해서 조사한다.",
+      "source": "TSMC Investor Relations",
+      "url": "https://investor.tsmc.com/english",
+      "source_date": null,
+      "country": "tw",
+      "location": {
+        "lat": 24.785,
+        "lng": 121.008,
+        "label": "TW 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "tw-crossstrait",
+      "type": "history",
+      "title": "대만해협 정책·외교 기록의 연결",
+      "aliases": [
+        "대만해협",
+        "양안관계",
+        "중국 대만",
+        "지정학",
+        "Taiwan Strait"
+      ],
+      "summary": "대만해협의 외교·안보 자료는 발표자와 작성 시점을 함께 저장한다. 지정학 뉴스와 특정 주가를 단정적으로 연결하지 않는다.",
+      "source": "Taiwan Ministry of Foreign Affairs",
+      "url": "https://en.mofa.gov.tw/",
+      "source_date": null,
+      "country": "tw",
+      "location": {
+        "lat": 25.033,
+        "lng": 121.5654,
+        "label": "TW 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    },
+    {
+      "id": "tw-centralbank",
+      "type": "dataset",
+      "title": "대만 중앙은행 경제·금융 통계",
+      "aliases": [
+        "대만 금리",
+        "대만 중앙은행",
+        "신타이완달러",
+        "환율"
+      ],
+      "summary": "중앙은행 통화정책과 경제통계의 공식 자료 출처. 기업별 실적과는 별도로 분석해야 한다.",
+      "source": "Central Bank of the Republic of China (Taiwan)",
+      "url": "https://www.cbc.gov.tw/en/",
+      "source_date": null,
+      "country": "tw",
+      "location": {
+        "lat": 25.032,
+        "lng": 121.523,
+        "label": "TW 공식 자료 관련 위치 (실시간 인물 위치 아님)"
+      },
+      "route": null,
+      "verification": "source-directory",
+      "auto_refresh": false
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+ "updated": "2026-10-29 06:57",
+ "allowance": [
+  {
+   "year": 2026,
+   "item": "국회의원 수당·경비 연간 지급기준(1인)",
+   "amount": 160925680,
+   "parts": {
+    "일반수당": 87931200,
+    "관리업무수당": 7913760,
+    "정액급식비": 1920000,
+    "정근수당": 7327600,
+    "명절휴가비": 8793120,
+    "입법활동비": 37632000,
+    "특별활동비": 9408000
+   },
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/OSYG8K000904Y012564",
+   "src_note": "국회사무처 '2026년 국회의원 수당 등 지급기준'",
+   "status": "팩트체크 전"
+  },
+  {
+   "year": 2025,
+   "item": "국회의원 수당·경비 연간 지급기준(1인)",
+   "amount": null,
+   "parts": {
+    "일반수당": 84958800,
+    "관리업무수당": 7646280,
+    "정근수당": 7079900,
+    "명절휴가비": 8495880,
+    "입법활동비": 37632000,
+    "특별활동비": 9408000
+   },
+   "src": "https://news.tf.co.kr/read/ptoday/2291395.htm",
+   "src_note": "보도 인용(원문 지급기준표 확인 필요)",
+   "status": "팩트체크 전"
+  }
+ ],
+ "office_support": [
+  {
+   "year": 2026,
+   "item": "입법 및 정책개발비",
+   "amount": 25343330,
+   "unit": "연/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "공무수행 출장비",
+   "amount": 9663270,
+   "unit": "연 평균/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "정책자료 발송료",
+   "amount": 7554300,
+   "unit": "연 평균/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "사무실 소모품",
+   "amount": 6192000,
+   "unit": "연/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "업무추진비",
+   "amount": 3483840,
+   "unit": "연/의원실(API는 '월'로 표기 — 단위 불일치, 확인 필요)",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "공공요금",
+   "amount": 950000,
+   "unit": "월/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  },
+  {
+   "year": 2026,
+   "item": "비서실 운영비",
+   "amount": 180000,
+   "unit": "월/의원실",
+   "src": "https://open.assembly.go.kr/portal/data/service/selectServicePage.do/O1OS9V000880XH10851"
+  }
+ ]
+}

@@ -147,7 +147,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     ["독일", 47.2, 55.1, 5.8, 15.1], ["미국", 24, 50, -125, -66]];
   function country(lat, lon) { for (var i = 0; i < BOX.length; i++) { var b = BOX[i]; if (lat >= b[1] && lat <= b[2] && lon >= b[3] && lon <= b[4]) return b[0]; } return "기타(분류 불가)"; }
 
-  Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades.json"), get("data/us/prices/summary.json"),
+  Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades_public.json"), get("data/us/prices/summary.json"),
     get("data/us/federal-awards.json"), get("data/us/lobbying.json"), get("data/us/facilities.json"), get("data/us/ticker-routes.json"), get("data/us/insights.json")])
   .then(function (r) {
     var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, px = r[3] || {}, aw = r[4] || {}, lb = r[5] || {}, fac = r[6] || {}, routes = r[7] || {}, ins = r[8];

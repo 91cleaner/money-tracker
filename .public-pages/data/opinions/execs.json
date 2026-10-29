@@ -1,0 +1,8 @@
+{
+  "_readme": "SEC 8-K(Item 2.02/7.01, EX-99) · 회사 IR 보도자료 RSS 에서 임원 발언을 가져올 회사 목록. cik 는 10자리 숫자 문자열. ir_rss 는 선택(https 주소).",
+  "companies": [
+    {"ticker": "NVDA", "cik": "0001045810", "exec_name": "Jensen Huang", "title": "CEO", "ir_rss": ""},
+    {"ticker": "AAPL", "cik": "0000320193", "exec_name": "Tim Cook", "title": "CEO", "ir_rss": ""},
+    {"ticker": "MSFT", "cik": "0000789019", "exec_name": "Satya Nadella", "title": "CEO", "ir_rss": ""}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-10-29T05:58:05.386744+00:00",
+  "macro_run": "success",
+  "house_run": "success",
+  "files_present": {
+    "us-macro.json": true,
+    "us-house-filings.json": true,
+    "us-events.json": true
+  },
+  "file_health": {
+    "us-macro.json": {
+      "status": "present",
+      "records": 5
+    },
+    "us-house-filings.json": {
+      "status": "present",
+      "records": 4775
+    },
+    "us-events.json": {
+      "status": "present",
+      "records": 5
+    }
+  },
+  "warning": "A successful collector step or existing file does not prove nonempty, fresh or verified data."
+}

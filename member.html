@@ -247,7 +247,7 @@ header.bar input.nm{width:200px;text-transform:none}
   var CH = { rep: "하원", sen: "상원" };
 
   var INS = null; // data/us/insights.json (optional), used by render()
-  Promise.all([get("data/us/trades.json"), get("data/search-index.json"), get("data/us/members.json"), get("data/us/insights.json")]).then(function (r) {
+  Promise.all([get("data/us/trades_public.json"), get("data/search-index.json"), get("data/us/members.json"), get("data/us/insights.json")]).then(function (r) {
     var tr = r[0] || {}, si = r[1] || {}, mem = r[2] || {}; INS = r[3];
     var E = si.entities || {}, trades = tr.trades || [];
     var M = {}; (mem.members || []).forEach(function (m) { if (m && m.id) M[m.id] = m; });

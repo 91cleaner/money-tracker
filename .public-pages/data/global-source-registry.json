@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "description": "Official source registry; not ingested filings or transactions. Never present registry rows as live data.",
+  "generated_at": "2026-10-27",
+  "countries": [
+    "US",
+    "KR",
+    "TW",
+    "JP"
+  ],
+  "sources": [
+    {
+      "country": "US",
+      "id": "house_ptr",
+      "name": "US House Clerk financial disclosures",
+      "url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+      "kind": "legislator_transactions",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "US",
+      "id": "senate_ptr",
+      "name": "US Senate eFD financial disclosures",
+      "url": "https://efdsearch.senate.gov/search/home/",
+      "kind": "legislator_transactions",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "US",
+      "id": "sec_edgar",
+      "name": "SEC EDGAR company filings",
+      "url": "https://www.sec.gov/edgar/search/",
+      "kind": "company_filings",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "US",
+      "id": "congress_gov",
+      "name": "Congress.gov legislation",
+      "url": "https://www.congress.gov/",
+      "kind": "legislation",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "KR",
+      "id": "opendart",
+      "name": "FSS OpenDART",
+      "url": "https://engopendart.fss.or.kr/intro/main.do",
+      "kind": "company_filings",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "KR",
+      "id": "assembly",
+      "name": "National Assembly Bill Information",
+      "url": "https://likms.assembly.go.kr/bill/main.do",
+      "kind": "legislation",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "TW",
+      "id": "mops",
+      "name": "TWSE MOPS",
+      "url": "https://mops.twse.com.tw/",
+      "kind": "company_filings",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "TW",
+      "id": "twse",
+      "name": "Taiwan Stock Exchange",
+      "url": "https://www.twse.com.tw/en/",
+      "kind": "market_reference",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "JP",
+      "id": "edinet",
+      "name": "Japan FSA EDINET",
+      "url": "https://disclosure2.edinet-fsa.go.jp/",
+      "kind": "company_filings",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "JP",
+      "id": "tdnet",
+      "name": "JPX Timely Disclosure",
+      "url": "https://www.jpx.co.jp/english/listing/disclosure/index.html",
+      "kind": "company_disclosures",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    },
+    {
+      "country": "JP",
+      "id": "diet",
+      "name": "National Diet of Japan",
+      "url": "https://www.shugiin.go.jp/internet/index.nsf/html/index_e.htm",
+      "kind": "legislation",
+      "authority": "official",
+      "ingestion": "index_only",
+      "record_count": 0,
+      "last_ingested_at": null
+    }
+  ]
+}
