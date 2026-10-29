@@ -34,6 +34,12 @@ class LivePagesExposureTests(unittest.TestCase):
         self.assertEqual(len(result), len(audit_mod.BLOCKED))
         self.assertEqual((exposed, unknown), ([], []))
 
+    def test_ranged_homepage_206_is_available(self):
+        result, exposed, unknown = audit_mod.audit(
+            self.BASE, probe=lambda base, path: 206 if path == "index.html" else 404)
+        self.assertEqual(len(result), len(audit_mod.BLOCKED))
+        self.assertEqual((exposed, unknown), ([], []))
+
     def test_exposed_candidate_json_fails(self):
         _, exposed, _ = audit_mod.audit(self.BASE, probe=lambda base, path:
             200 if path in ("index.html", "data/us/house-ptr-candidates.json") else 404)
