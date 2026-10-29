@@ -129,6 +129,7 @@
     [/SEC 등록 업종 SIC (\S+) (.*)/, "SEC-registered industry SIC $1 $2"],
     [/주식 거래 신고\(PTR\) (\d+)건\(구입 (\d+)·처분 (\d+)\), 가장 최근 신고일 (\S+) \(신고 기준, 데이터상\)/, "Stock trade filings (PTR): $1 (buys $2 · sales $3); most recent filing date $4 (based on filings; data shows)"],
     [/최근 (\d+)일 의원 거래 신고 (\d+)건\(구입 (\d+)·처분 (\d+)\), 소속 회사 (\d+)곳 \(신고 기준, 데이터상\)/, "Member trade filings, last $1 days: $2 (buys $3 · sales $4); $5 companies in the sector (based on filings; data shows)"],
+    [/^(\d+)일 · (\d+)일 초과$/, "$1 days · over $2 days"],
     [/(\d+)일 · 숙제 기한\(45일\) 넘김/, "$1 days · past the homework due date (45 days)"],
     [/^(\d+)일$/, "$1 days"],
     [/더 보기 \((\d+)건 남음\)/, "Show more ($1 left)"], [/더 보기 \((\d+)곳 남음\)/, "Show more ($1 left)"],
