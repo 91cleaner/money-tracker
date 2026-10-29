@@ -9,8 +9,9 @@ from datetime import date, datetime, timedelta, timezone
 from html import unescape
 from urllib.parse import urljoin
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import build as B
+import importlib.util as _iu
+_sp = _iu.spec_from_file_location("opinions_build", os.path.join(os.path.dirname(os.path.abspath(__file__)), "build.py"))
+B = _iu.module_from_spec(_sp); _sp.loader.exec_module(B)
 
 UA = {"User-Agent": "money-tracker research bot (github.com/91cleaner/money-tracker)", "Accept-Encoding": "identity"}
 ITEMS = ("2.02", "7.01")

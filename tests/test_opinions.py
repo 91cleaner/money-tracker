@@ -3,9 +3,11 @@ import json, os, shutil, sys, tempfile, unittest
 from datetime import date
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "collector", "opinions"))
-import build as B
-import fetch_exec as F
+import importlib.util as _iu
+_sp = _iu.spec_from_file_location("opinions_build", os.path.join(HERE, "..", "collector", "opinions", "build.py"))
+B = _iu.module_from_spec(_sp); _sp.loader.exec_module(B)
+_sf = _iu.spec_from_file_location("opinions_fetch_exec", os.path.join(HERE, "..", "collector", "opinions", "fetch_exec.py"))
+F = _iu.module_from_spec(_sf); _sf.loader.exec_module(F)
 
 TODAY = date(2026, 10, 29)
 
