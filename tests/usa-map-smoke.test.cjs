@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const read = name => fs.readFileSync(path.join(root, name), 'utf8');
 const usa = read('usa-command-legacy.html');
-const index = read('index.html');
+const index = read('korea.html');
 const command = read('assets/mt-command-ui.js');
 
 test('US command inline JavaScript parses', () => {
