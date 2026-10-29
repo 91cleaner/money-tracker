@@ -4,6 +4,10 @@
   "ko": ["의원", "국회의원", "하원의원", "상원의원", "하원", "상원", "정치인"],
   "en": ["lawmaker", "lawmakers", "congress", "congressman", "congresswoman", "senator", "senators", "representative", "politician", "politicians", "member of congress", "house member"]
  },
+ "side": {
+  "sell": {"ko": ["팔았", "팔고", "팔아", "팔렸", "매도", "처분", "던졌"], "en": ["sold", "sell", "sells", "selling", "sale", "sales", "dumped"]},
+  "buy": {"ko": ["샀", "사들", "매수", "매입", "구매", "사모았"], "en": ["bought", "buy", "buys", "buying", "purchase", "purchased", "purchases"]}
+ },
  "money": {
   "contract": {"ko": ["정부계약", "연방계약", "계약", "수주", "국방계약", "정부발주"], "en": ["government contract", "government contracts", "federal contract", "federal contracts", "contract", "contracts", "awarded"]},
   "lobby": {"ko": ["로비", "로비스트", "로비자금", "로비공시"], "en": ["lobby", "lobbying", "lobbyist", "lobbyists"]},

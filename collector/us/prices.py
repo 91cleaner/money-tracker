@@ -7,12 +7,14 @@
 """
 import json
 import os
+import sys
 import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 
 ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
 TR = os.path.join(ROOT, "data", "us", "trades.json")
+PX = os.path.join(ROOT, "data", "us", "prices")  # 종목별 종가 파일 {d:[날짜], c:[종가]} (scripts/collect_prices.py)
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36"}
 BUDGET = float(os.environ.get("PRICES_BUDGET_MIN", "12")) * 60
 T0 = time.time()
@@ -66,9 +68,53 @@ def at(s, day):
     return None
 
 
+def r_from_file(px, day):
+    """종가 파일 px={d:[...],c:[...]} 기준 r: 거래일(휴장이면 다음 거래일) 종가 -> 파일의 마지막 종가, % 소수 1자리.
+    거래일이 파일 범위 밖이면 None(계산 불가). 위 yahoo 계산(r = s[-1]/at(day) - 1)과 같은 식이다."""
+    ds, cs = (px or {}).get("d") or [], (px or {}).get("c") or []
+    if not ds or len(ds) != len(cs) or day < ds[0] or day > ds[-1]:
+        return None
+    i = next(k for k, x in enumerate(ds) if x >= day)
+    if not cs[i]:
+        return None
+    return round(cs[i], 2), round((cs[-1] / cs[i] - 1) * 100, 1)
+
+
+def reprice_from_files(T, px_dir=PX):
+    """trades 의 p0/r(/rspy)을 data/us/prices/<TICKER>.json 에서 다시 계산해 화면(가격 파일)과 같은 값으로 맞춘다.
+    파일이 없거나 거래일이 파일 범위 밖인 거래는 그대로 둔다. 바꾼 거래 수를 돌려준다."""
+    cache, n = {}, 0
+
+    def get(tk):
+        if tk not in cache:
+            f = os.path.join(px_dir, tk.replace("/", "_") + ".json")
+            cache[tk] = json.load(open(f, encoding="utf-8")) if os.path.exists(f) else None
+        return cache[tk]
+    for t in T:
+        tk, day = t.get("tk"), t.get("d")
+        if not tk or not day or t.get("r") is None:
+            continue
+        got = r_from_file(get(tk), day)
+        if not got:
+            continue
+        p0, r = got
+        if t.get("r") != r or t.get("p0") != p0:
+            n += 1
+        t["p0"], t["r"] = p0, r
+        spy = r_from_file(get("SPY"), day)
+        if spy:
+            t["rspy"] = spy[1]
+    return n
+
+
 def main():
     d = json.load(open(TR, encoding="utf-8"))
     T = d.get("trades", [])
+    if "--reapply" in sys.argv:  # 네트워크 없이 가격 파일 기준으로만 r 다시 계산
+        n = reprice_from_files(T)
+        json.dump(d, open(TR, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+        print(f"prices: 가격 파일 기준으로 r 다시 계산, 바뀐 거래 {n}")
+        return
     tks = sorted({t["tk"] for t in T if t.get("tk") and t.get("d") and (t.get("at") in (None, "ST", "OP", "EF"))})
     start = min(datetime.fromisoformat(t["d"]).date() for t in T if t.get("d"))
     spy = series("SPY", start)
@@ -99,6 +145,7 @@ def main():
         t["r"] = round((s[-1][1] / a[1] - 1) * 100, 1)
         t["rspy"] = round((last_spy / b[1] - 1) * 100, 1)
         n += 1
+    reprice_from_files(T)  # 화면이 쓰는 종가 파일과 같은 방식·같은 값으로 맞춤
     d["prices"] = {"as_of": last_d, "source": "Yahoo Finance daily close (fallback Stooq); S&P 500 = SPY",
                    "note": "r = % move of the stock from the trade date close to the latest close; rspy = S&P 500 over the same days. Not actual profit: filings show no share counts or prices.",
                    "tickers": len(px), "missing": miss[:200]}
