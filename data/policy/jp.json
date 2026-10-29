@@ -1,10 +1,50 @@
 {
-"updated": "2026-10-28",
+"updated": "2026-10-29",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "egov:240000133",
+"kind": "pubcomment",
+"t": "個人情報の保護に関する法律についてのガイドライン（通則編）の一部を改正する告示（案）等に関する意見募集について",
+"d": "2026-10-29",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=240000133&Mode=0",
+"dept": "個人情報保護委員会",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
+},
+{
+"id": "egov:315000150",
+"kind": "pubcomment",
+"t": "出入国管理及び難民認定法施行規則の一部を改正する省令案に係る意見公募手続の実施について",
+"d": "2026-10-29",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=315000150&Mode=0",
+"dept": "出入国在留管理庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
+},
+{
+"id": "egov:198026202",
+"kind": "pubcomment",
+"t": "原子炉等規制法等における許認可制度等及び国内保障措置制度の見直しの概要案に対する意見募集について",
+"d": "2026-10-29",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=198026202&Mode=0",
+"dept": null,
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
+},
+{
+"id": "egov:155261212",
+"kind": "pubcomment",
+"t": "「空港運用業務指針」の一部改正案に関する意見募集について",
+"d": "2026-10-29",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155261212&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
+},
 {
 "id": "egov:145210788",
 "kind": "pubcomment",
@@ -16,6 +56,38 @@
 "tags": [
 "tech_ai"
 ]
+},
+{
+"id": "egov:595320047",
+"kind": "pubcomment",
+"t": "工業用水道事業法施行令の一部を改正する政令案に関するパブリックコメントの募集について",
+"d": "2026-10-28",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320047&Mode=0",
+"dept": "経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
+},
+{
+"id": "egov:495260234",
+"kind": "pubcomment",
+"t": "医薬品、医療機器等の品質、有効性及び安全性の確保等に関する法律施行規則の一部を改正する省令案に関する御意見の募集について",
+"d": "2026-10-28",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260234&Mode=0",
+"dept": null,
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+]
+},
+{
+"id": "egov:595320045",
+"kind": "pubcomment",
+"t": "「計量法施行令の一部を改正する政令案」に対する意見公募について",
+"d": "2026-10-28",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320045&Mode=0",
+"dept": "経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
 },
 {
 "id": "egov:155261239",
