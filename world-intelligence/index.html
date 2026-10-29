@@ -573,8 +573,8 @@ let q=0;new MutationObserver(()=>{if(!q){q=1;requestAnimationFrame(()=>{q=0;sync
 #mtc .sw{display:grid;grid-template-columns:1fr 1fr;gap:4px}
 #mtc .sw button{display:flex;align-items:center;gap:6px;text-align:left;justify-content:flex-start}
 #mtc .sw button:before{content:"";flex:none;width:22px;height:12px;border-radius:7px;background:#23404d;border:1px solid #4d7686;background-image:radial-gradient(circle,#9fc5d1 0 4px,transparent 4.5px);background-repeat:no-repeat;background-position:2px center}
-#mtc .sw button[aria-checked="true"]{border-color:var(--c2);color:#fff3b0}
-#mtc .sw button[aria-checked="true"]:before{background-color:#6b5a08;background-image:radial-gradient(circle,var(--c2) 0 4px,transparent 4.5px);background-position:calc(100% - 2px) center}
+#mtc .sw button[aria-pressed="true"]{background:#14505e;border-color:var(--c1);color:#fff}
+#mtc .sw button[aria-pressed="true"]:before{background-color:#6b5a08;background-image:radial-gradient(circle,var(--c2) 0 4px,transparent 4.5px);background-position:calc(100% - 2px) center}
 #mtc .tl{display:flex;align-items:center;gap:8px}
 #mtc .tl button{flex:none;width:36px;min-height:36px;padding:0;background:#0a2737;color:#c9eff8;border:1px solid #3c6677;border-radius:5px;font:inherit}
 #mtc input[type=range]{flex:1;min-width:0;height:36px;accent-color:var(--c1);margin:0}
@@ -650,7 +650,7 @@ const mkBtn=(t,cls)=>{const b=document.createElement('button');b.type='button';b
 const sec=(label,node)=>{const d=document.createElement('div'),l=document.createElement('div');l.className='lb';l.textContent=label;d.append(l,node);return d};
 const seg=document.createElement('div');seg.className='seg';seg.setAttribute('role','group');seg.setAttribute('aria-label',T('기간','Period'));
 const PER=[[7,T('1주','1 week')],[30,T('1달','1 month')],[90,T('3달','3 months')]],pb=PER.map(([d,n])=>{const b=mkBtn(n);b.setAttribute('aria-pressed','false');b.onclick=()=>{period=period===d?null:d;pb.forEach((x,i)=>x.setAttribute('aria-pressed',String(PER[i][0]===period)));apply()};return b});seg.append(...pb);
-const swd=document.createElement('div');swd.className='sw';const sb=LAYERS.map(l=>{const b=mkBtn(l[1]);b.setAttribute('role','switch');b.setAttribute('aria-checked','false');b.onclick=()=>{if(sel.has(l[0]))sel.delete(l[0]);else sel.add(l[0]);b.setAttribute('aria-checked',String(sel.has(l[0])));apply()};return b});swd.append(...sb);
+const swd=document.createElement('div');swd.className='sw';const sb=LAYERS.map(l=>{const b=mkBtn(l[1]);b.setAttribute('aria-pressed','false');b.onclick=()=>{if(sel.has(l[0]))sel.delete(l[0]);else sel.add(l[0]);b.setAttribute('aria-pressed',String(sel.has(l[0])));apply()};return b});swd.append(...sb);
 const tlw=document.createElement('div');tlw.className='tl';const tp=mkBtn('▶');tp.setAttribute('aria-label',T('날짜순 재생','Play by date'));const rg=document.createElement('input');rg.type='range';rg.min=0;rg.max=0;rg.value=0;rg.setAttribute('aria-label',T('날짜 슬라이더','Date slider'));const tlv=document.createElement('div');tlv.className='tlv';tlw.append(tp,rg);
 const nums=document.createElement('div');nums.className='nums';const n1=document.createElement('span');n1.className='num';const n2=document.createElement('span');n2.className='num';n2.hidden=true;nums.append(n1,n2);
 const nc=document.createElement('div');nc.className='nc';
@@ -706,7 +706,7 @@ function radar(){if(!fx())return;const fr=$('mapFrame');if(!fr)return;let s=$('m
 // 경로 열림/이동 훅(맨 마지막에 감싼다)
 const prev=window.mtAfterShow;window.mtAfterShow=()=>{prev&&prev();const m=cur();
  if(!m||!m.meta){paint();return}
- if(m!==lastM){lastM=m;period=null;sel.clear();pb.forEach(b=>b.setAttribute('aria-pressed','false'));sb.forEach(b=>b.setAttribute('aria-checked','false'));build(m);paint();if(Date.now()-scan<8000){scan=0;setTimeout(radar,60)}}else paint();
+ if(m!==lastM){lastM=m;period=null;sel.clear();pb.forEach(b=>b.setAttribute('aria-pressed','false'));sb.forEach(b=>b.setAttribute('aria-pressed','false'));build(m);paint();if(Date.now()-scan<8000){scan=0;setTimeout(radar,60)}}else paint();
  type(m);
  const ti=($('briefTitle')||{}).textContent||'',mm=ti.match(/ · (\d+)\//),t=m.meta[mm?+mm[1]-1:0];if(t&&t.lat!=null){let d=0;const go=()=>{if(d++)return;pulse(t)};map.once('moveend',go);setTimeout(go,2400)}};
 fetch('../data/us/prices/summary.json').then(r=>r.ok?r.json():null).then(j=>{P=j;paint()}).catch(()=>{});
