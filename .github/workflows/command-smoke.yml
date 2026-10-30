@@ -24,7 +24,7 @@ jobs:
           const us = fs.readFileSync('usa-command-legacy.html','utf8');
           assert.match(entry,/href="national\.html"/);
           assert.match(entry,/href="world-intelligence\/"/);
-          assert.match(entry,/실시간 의원 거래 데이터/);
+          assert.match(entry,/대한민국/);
           assert.match(us,/AI 분석 OFF · 실시간 시세 OFF/);
           assert.match(us,/id="usQuery"/);
           assert.match(us,/id="usCmd"/);
