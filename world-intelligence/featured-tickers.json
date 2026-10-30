@@ -1,15 +1,252 @@
 {
-  "note": "Editable list for TRACKING OPTIONS. Order = display order. q = text sent to the search box.",
-  "groups": [
-    {"en": "Featured", "ko": "주요", "items": [
-      {"sym": "GOOGL", "q": "GOOGL"}, {"sym": "AMZN", "q": "AMZN"}, {"sym": "INTC", "q": "INTC"}, {"sym": "MSFT", "q": "MSFT"}, {"sym": "TSLA", "q": "TSLA"}]},
-    {"en": "Popular US", "ko": "미국 인기", "items": [
-      {"sym": "NVDA", "q": "NVDA"}, {"sym": "AAPL", "q": "AAPL"}, {"sym": "PLTR", "q": "PLTR"}]},
-    {"en": "Popular Korea", "ko": "한국 인기", "items": [
-      {"sym": "005930.KS", "label": "Samsung Elec", "ko": "삼성전자", "q": "삼성전자"},
-      {"sym": "000660.KS", "label": "SK hynix", "ko": "SK하이닉스", "q": "SK하이닉스"},
-      {"sym": "005380.KS", "label": "Hyundai Motor", "ko": "현대차", "q": "현대차"},
-      {"sym": "035420.KS", "label": "NAVER", "ko": "네이버", "q": "네이버"},
-      {"sym": "035720.KS", "label": "Kakao", "ko": "카카오", "q": "카카오"}]}
-  ]
+ "note": "Editable list for TRACKING OPTIONS. Order = display order. q = text sent to the search box.",
+ "sources": {
+  "sp500": "SPDR S&P 500 ETF (SPY) daily holdings file, State Street Global Advisors, as of Oct 28, 2026: top 30 companies by index weight (GOOG class C merged into GOOGL).",
+  "kospi": "KOSPI market cap, Financial Services Commission stock price open data (data.go.kr), close of Oct 28, 2026: top 10 companies (Samsung Electronics preferred shares merged into common)."
+ },
+ "groups": [
+  {
+   "en": "Our posts",
+   "ko": "우리 글 종목",
+   "items": [
+    {
+     "sym": "GOOGL",
+     "q": "GOOGL"
+    },
+    {
+     "sym": "AMZN",
+     "q": "AMZN"
+    },
+    {
+     "sym": "INTC",
+     "q": "INTC"
+    },
+    {
+     "sym": "MSFT",
+     "q": "MSFT"
+    },
+    {
+     "sym": "TSLA",
+     "q": "TSLA"
+    },
+    {
+     "sym": "SPCX",
+     "q": "SPCX",
+     "label": "SpaceX"
+    },
+    {
+     "sym": "NVDA",
+     "q": "NVDA"
+    },
+    {
+     "sym": "MU",
+     "q": "MU"
+    }
+   ]
+  },
+  {
+   "en": "S&P 500 top 30 (SPY weight, Oct 28, 2026)",
+   "ko": "S&P 500 상위 30 (SPY 비중, 2026-10-28)",
+   "items": [
+    {
+     "sym": "NVDA",
+     "q": "NVDA"
+    },
+    {
+     "sym": "AAPL",
+     "q": "AAPL"
+    },
+    {
+     "sym": "MSFT",
+     "q": "MSFT"
+    },
+    {
+     "sym": "AMZN",
+     "q": "AMZN"
+    },
+    {
+     "sym": "GOOGL",
+     "q": "GOOGL"
+    },
+    {
+     "sym": "AVGO",
+     "q": "AVGO"
+    },
+    {
+     "sym": "META",
+     "q": "META"
+    },
+    {
+     "sym": "TSLA",
+     "q": "TSLA"
+    },
+    {
+     "sym": "MU",
+     "q": "MU"
+    },
+    {
+     "sym": "LLY",
+     "q": "LLY"
+    },
+    {
+     "sym": "BRK.B",
+     "q": "BRK.B"
+    },
+    {
+     "sym": "AMD",
+     "q": "AMD"
+    },
+    {
+     "sym": "JPM",
+     "q": "JPM"
+    },
+    {
+     "sym": "XOM",
+     "q": "XOM"
+    },
+    {
+     "sym": "V",
+     "q": "V"
+    },
+    {
+     "sym": "JNJ",
+     "q": "JNJ"
+    },
+    {
+     "sym": "WMT",
+     "q": "WMT"
+    },
+    {
+     "sym": "ABBV",
+     "q": "ABBV"
+    },
+    {
+     "sym": "MA",
+     "q": "MA"
+    },
+    {
+     "sym": "INTC",
+     "q": "INTC"
+    },
+    {
+     "sym": "CVX",
+     "q": "CVX"
+    },
+    {
+     "sym": "PLTR",
+     "q": "PLTR"
+    },
+    {
+     "sym": "COST",
+     "q": "COST"
+    },
+    {
+     "sym": "CSCO",
+     "q": "CSCO"
+    },
+    {
+     "sym": "PG",
+     "q": "PG"
+    },
+    {
+     "sym": "UNH",
+     "q": "UNH"
+    },
+    {
+     "sym": "KO",
+     "q": "KO"
+    },
+    {
+     "sym": "MRK",
+     "q": "MRK"
+    },
+    {
+     "sym": "BAC",
+     "q": "BAC"
+    },
+    {
+     "sym": "AMAT",
+     "q": "AMAT"
+    }
+   ]
+  },
+  {
+   "en": "KOSPI top 10 (market cap, Oct 28, 2026)",
+   "ko": "코스피 시총 상위 10 (2026-10-28)",
+   "items": [
+    {
+     "sym": "005930.KS",
+     "q": "삼성전자",
+     "label": "Samsung Electronics",
+     "ko": "삼성전자"
+    },
+    {
+     "sym": "000660.KS",
+     "q": "SK하이닉스",
+     "label": "SK hynix",
+     "ko": "SK하이닉스"
+    },
+    {
+     "sym": "402340.KS",
+     "q": "SK스퀘어",
+     "label": "SK Square",
+     "ko": "SK스퀘어"
+    },
+    {
+     "sym": "009150.KS",
+     "q": "삼성전기",
+     "label": "Samsung Electro-Mechanics",
+     "ko": "삼성전기"
+    },
+    {
+     "sym": "373220.KS",
+     "q": "LG에너지솔루션",
+     "label": "LG Energy Solution",
+     "ko": "LG에너지솔루션"
+    },
+    {
+     "sym": "207940.KS",
+     "q": "삼성바이오로직스",
+     "label": "Samsung Biologics",
+     "ko": "삼성바이오로직스"
+    },
+    {
+     "sym": "005380.KS",
+     "q": "현대차",
+     "label": "Hyundai Motor",
+     "ko": "현대차"
+    },
+    {
+     "sym": "032830.KS",
+     "q": "삼성생명",
+     "label": "Samsung Life",
+     "ko": "삼성생명"
+    },
+    {
+     "sym": "105560.KS",
+     "q": "KB금융",
+     "label": "KB Financial",
+     "ko": "KB금융"
+    },
+    {
+     "sym": "028260.KS",
+     "q": "삼성물산",
+     "label": "Samsung C&T",
+     "ko": "삼성물산"
+    },
+    {
+     "sym": "035420.KS",
+     "q": "네이버",
+     "label": "NAVER",
+     "ko": "네이버"
+    },
+    {
+     "sym": "035720.KS",
+     "q": "카카오",
+     "label": "Kakao",
+     "ko": "카카오"
+    }
+   ]
+  }
+ ]
 }
