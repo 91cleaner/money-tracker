@@ -98,6 +98,10 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
   const getFR = () => FR || (FR = fetch('../data/fr/presidential.json').then(r => r.ok ? r.json() : null).catch(() => null));
   const inUS = ll => ll[0] > 18 && ll[0] < 72 && ll[1] > -170 && ll[1] < -60;
   function grpOf(t) { const rf = String(t.ref || '').split(':')[0]; if (rf === 'uswh') return 'wh'; if (/^(cnpol|jppol|twpol|eupol)$/.test(rf)) return 'cty'; if (rf === 'krbill') return 'bill'; const k = kindOf(t); if (k === 'insider') return 'ins'; if (k === 'bill') return 'bill'; if (k === 'trade' || k === 'cmte') return 'law'; if (k === 'supply') return 'hq'; if (!inUS([t.lat, t.lon])) return 'cty'; return 'fil'; }
+  // Insiders tab count = rows the tab list shows (US Form 4 rows from ticker-extra.json, Korean DART rows from kr-insiders.json).
+  const INS = {}; const insLoad = u => fetch(u, { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { const t = (j && j.tickers) || {}; for (const s in t) { const r = (t[s].f4 && t[s].f4.rows) || t[s].rows; if (Array.isArray(r)) INS[s] = Math.max(INS[s] || 0, r.length); } }).catch(() => {});
+  const insReady = Promise.all([insLoad('./ticker-extra.json'), insLoad('./kr-insiders.json')]);
+  const insN = sym => INS[sym] || 0;
   function reg(g, mk, html, ll, lab) { (G[g] = G[g] || []).push({ mk, html, ll, lab }); }
   const TABS = [['all', 'All', '전체'], ['hq', 'Company', '회사'], ['law', 'Lawmakers', '의원'], ['ins', 'Insiders', '임원'], ['bill', 'Bills', '법안'], ['cty', 'Countries', '나라'], ['wh', 'White House', '백악관'], ['fil', 'Filings', '공시·기록']];
   function whCard(sym, list) {
@@ -123,7 +127,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
       if (e && e.k8 && o && !G.k8) { G.k8 = 1; e.k8.forEach(f => reg('fil', null, () => k8Card(sym, f), o.ll, '8-K · ' + f.d + (f.items.length ? ' · Item ' + f.items.join(', ') : ''))); }
       if (e && e.bills && !G.bl) { G.bl = 1; const cap = [38.8899, -77.0091]; e.bills.forEach(b => reg('bill', null, () => billCard(sym, b), cap, b.no + ' · ' + b.n.slice(0, 70) + ' · ' + b.d)); }
       TL = e && e.tl ? e : null; }
-    const my = cur, d = await getFR(); if (cur !== my || !layer) return;
+    const my = cur, d = await getFR(); await insReady; if (cur !== my || !layer) return;
     const wl = d && d.items ? d.items.filter(x => (x.moves || []).some(m => m.sym === sym)).sort((a, b) => String(b.date).localeCompare(String(a.date))) : [];
     if (wl.length && !G.wh) { const ll = [38.8977, -77.0365]; const mk = L.marker(ll, { icon: L.divIcon({ className: '', html: '<div class="mtMFstop" style="background:#e8e8e8"></div>', iconSize: [0, 0] }), title: 'White House', zIndexOffset: 550 });
       mk.on('click', e => { L.DomEvent.stop(e); card(whCard(sym, wl), ll) }); mk.addTo(layer); reg('wh', mk, () => whCard(sym, wl), ll); }
@@ -135,7 +139,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
       tl.append((E2 ? 'Timeline: ' : '타임라인: ') + (E2 ? 'trade ' : '거래 '), a(t.trade_url, t.trade_date), ` (${t.src}, ${t.who}, ${t.side})` + ' · ' + (E2 ? (t.event_kind === '8-K' ? '8-K filed ' : 'policy dated ') : (t.event_kind === '8-K' ? '8-K 제출 ' : '정책 일자 ')), a(t.event_url, t.event_date), ' · ' + (E2 ? `${t.days_before} days apart` : `${t.days_before}일 차이`)); }
     const E = en(), same = bar.dataset.sym === sym && bar.children.length === TABS.length; bar.dataset.sym = sym;
     // Update labels in place when the same ticker re-renders, so a click in progress is not lost to a rebuilt button.
-    TABS.forEach(([k, e, ko], i) => { const n = k === 'all' ? null : (G[k] || []).length; let b = same ? bar.children[i] : null;
+    TABS.forEach(([k, e, ko], i) => { const n = k === 'all' ? null : k === 'ins' ? Math.max((G[k] || []).length, insN(sym)) : (G[k] || []).length; let b = same ? bar.children[i] : null;
       if (!b) { b = document.createElement('button'); b.type = 'button'; b.dataset.k = k; b.onclick = ev => { ev.stopPropagation(); pick(k) }; if (i === 0) bar.replaceChildren(); bar.append(b); }
       const tx = (E ? e : ko) + (n == null ? '' : ' ' + n); if (b.textContent !== tx) b.textContent = tx; b.classList.toggle('empty', n === 0) });
     const on = same && bar.querySelector('button.on'); pick(on ? on.dataset.k : 'all', true);
