@@ -208,8 +208,12 @@
         lst.append(b); }); }
   }
   // Opening screen: 3 large cards with the latest notable filings; other controls stay behind Menu.
-  (async () => {
-    const qs = new URLSearchParams(location.search); if (qs.get('q') || qs.get('rec') || sessionStorage.getItem('mtOpenSeen')) return;
+  // Hidden by default; visitors turn it on from the menu (localStorage mt.recentCards = '1').
+  const recentOn = () => { try { return localStorage.getItem('mt.recentCards') === '1'; } catch (e) { return false; } };
+  window.mtOpenHide = () => { const o = $('mtOpen'); if (o) o.remove(); document.body.classList.remove('mtOpenOn'); };
+  window.mtOpenShow = async (force) => {
+    if (!recentOn() || $('mtOpen')) return;
+    const qs = new URLSearchParams(location.search); if (!force && (qs.get('q') || qs.get('rec') || sessionStorage.getItem('mtOpenSeen'))) return;
     const d = await getTT(); if (!d || !d.tickers) return; const E = en(), all = [];
     Object.entries(d.tickers).forEach(([k, v]) => v.forEach(r => all.push([k, r])));
     all.sort((a, b) => String(b[1].f).localeCompare(String(a[1].f)) || ((b[1].tags || []).length - (a[1].tags || []).length));
@@ -227,7 +231,8 @@
     o.querySelector('#mtOpenMenu').onclick = () => { close(); const mb = [...document.querySelectorAll('button')].find(x => /^\W*(Menu|메뉴)\s*$/.test(x.textContent.trim()) && x.id !== 'mtOpenMenu'); if (mb) mb.click(); };
     document.body.classList.add('mtOpenOn'); document.body.append(o);
     addEventListener('keydown', e => { if (e.key === 'Escape') close(); }, { once: true });
-  })();
+  };
+  window.mtOpenShow();
   let busy = false;
   async function render() {
     const s = cur(), hub = $('mtHub'); if (!s || !hub) { if (PB.lay) { PB.lay.clearLayers(); } pbStop(); { const ov = $('mtPBov'); if (ov) ov.remove(); } S.sym = null; S.rows = null; const b = $('mtPlus'); if (b) b.remove(); return; }
