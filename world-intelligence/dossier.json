@@ -308,6 +308,12 @@
     "credit": "Virginia Office of the Governor",
     "license": "CC BY 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:David_A._Ricks_2025.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/lly-hq.jpg",
+    "credit": "Momoneymoproblemz",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Eli_Lilly_Corporate_Center,_Indianapolis,_Indiana,_USA.jpg"
    }
   },
   "BRK.B": {
@@ -449,7 +455,13 @@
     -73.715
    ],
    "ceo": "Michael Miebach",
-   "ceoTitle": "CEO"
+   "ceoTitle": "CEO",
+   "ceoImg": {
+    "src": "img/dossier/ma-ceo.jpg",
+    "credit": "Drew Gurian",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Michael_Miebach.jpg"
+   }
   },
   "CVX": {
    "hq": "Houston, TX",
@@ -509,6 +521,12 @@
     "credit": "Warren LeMay from Cincinnati, OH, United States",
     "license": "CC0",
     "page": "https://commons.wikimedia.org/wiki/File:Procter_and_Gamble_World_Headquarters,_Cincinnati,_OH_(32278862657).jpg"
+   },
+   "ceoImg": {
+    "src": "img/dossier/pg-ceo.jpg",
+    "credit": "T6784",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Shailesh_Jejurikar.jpg"
    }
   },
   "UNH": {
