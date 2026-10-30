@@ -4,6 +4,7 @@
 import datetime as dt, hashlib, html, json, os, re, sys, time, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UA = {"User-Agent": "money-tracker (github.com/91cleaner/money-tracker) public-data collector"}
+UA_BROWSER = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36 money-tracker-public-data"}
 TAGS = {  # 다국어 제목 키워드 → 섹터
     "semiconductor": r"半導体|semiconductor|\bchips?\b|晶片|芯片|積體電路|集成电路",
     "battery_ev": r"蓄電池|電池|battery|batteries|電動車|电动汽车|新能源汽车|lithium|リチウム|锂",
@@ -17,8 +18,8 @@ TAGS = {  # 다국어 제목 키워드 → 섹터
     "trade": r"関税|輸出|輸入|貿易|外為|tariff|anti-dumping|export|import|trade|关税|出口|进口|貿易|關稅|輸出|管制",
     "finance": r"金融|銀行|bank|financial|securities|証券|证券", "crypto": r"暗号資産|crypto|数字货币|虛擬資產",
     "industrial": r"鉄鋼|steel|aluminium|aluminum|钢|鋼|稀土|rare earth|critical raw|重要鉱物|关键矿产"}
-def get(u, t=40):
-    with urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=t) as r: return r.read()
+def get(u, t=40, h=None):
+    with urllib.request.urlopen(urllib.request.Request(u, headers=h or UA), timeout=t) as r: return r.read()
 def tags(t): return [k for k, rx in TAGS.items() if re.search(rx, t, re.I)]
 def hid(*a): return hashlib.sha1("|".join(a).encode()).hexdigest()[:12]
 def T(x): return html.unescape(re.sub(r"<[^>]+>", "", x or "")).strip()
@@ -33,11 +34,11 @@ def jp():
         out.append({"id": "egov:" + (re.search(r"id=(\d+)", u) or [0, hid(t)])[1], "kind": "pubcomment", "t": t, "d": "-".join(d.groups()) if d else None, "u": u, "dept": dept.group(1) if dept else None,
                     "src": "e-Gov パブリックコメント(意見募集)", "tags": tags(t + " " + (cat.group(1) if cat else ""))})
     try:
-        b = get("https://www.kantei.go.jp/index-jnews.rdf").decode("utf-8", "replace")
+        b = get("https://www.kantei.go.jp/index-jnews.rdf", h=UA_BROWSER).decode("utf-8", "replace")
         for it in re.findall(r"<item>(.*?)</item>", b, re.S):
             t = T(re.search(r"<title>(.*?)</title>", it, re.S).group(1)); u = T(re.search(r"<link>(.*?)</link>", it, re.S).group(1))
-            pd = re.search(r"<pubDate>\w+, (\d+ \w+ \d{4})", it); d = dt.datetime.strptime(pd.group(1), "%d %b %Y").date().isoformat() if pd else None
-            out.append({"id": "kantei:" + hid(u), "kind": "news", "t": t, "d": d, "u": u, "dept": "首相官邸", "src": "首相官邸 新着情報", "tags": tags(t)})
+            pd = re.search(r"<pubDate>(?:\w+, )?(\d+ \w+ \d{4})", it); cg = re.search(r"<category>首相官邸 ([^<]+)</category>", it); d = dt.datetime.strptime(pd.group(1), "%d %b %Y").date().isoformat() if pd else None
+            out.append({"id": "kantei:" + hid(u), "kind": "news", "t": t, "d": d, "u": u, "dept": "首相官邸", "src": "首相官邸 新着情報", "cat": cg.group(1).strip() if cg else None, "tags": tags(t)})
     except Exception as e: print("kantei fail", type(e).__name__)
     return out, {"source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS", "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml"}
 def jpx():
@@ -130,7 +131,9 @@ def main():
     if cc == "jp":
         try: jpx()
         except Exception as e: print("jpx fail", type(e).__name__)
+    import policy_labels
     L = sorted(seen.values(), key=lambda x: x.get("d") or "", reverse=True)[:800]
+    policy_labels.apply(cc, L)
     json.dump({"updated": dt.date.today().isoformat(), "country": cc, **meta, "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.", "items": L}, open(p, "w"), ensure_ascii=False, indent=0)
     print(cc, "fetched", len(items), "new", len(L) - n0, "total", len(L))
     if not L: sys.exit(1)

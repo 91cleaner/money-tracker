@@ -342,7 +342,7 @@ def intl_policy(ent):
         if not I: continue
         def stops(L):
             return [{"region": f"{nm} · {place}(대략 위치)", "lat": la + 0.01 * (i % 3 - 1), "lon": lo + 0.01 * (i // 3 - 1), "title": b.get("dept") or b["src"], "kind": "policy", "ref": f"{cc}pol:" + b["id"],
-                     "fact": b["t"] + " · " + b["src"] + " (제목 키워드 기준, 영향 단정 아님)", "source_url": b["u"], "date": b.get("d")} for i, b in enumerate(L[:8])]
+                     "fact": (b.get("lk") or b["t"]) + " · 원래 제목은 원문 링크에서 볼 수 있어요 (발표 종류로만 적었어요, 영향 단정 아님)", "fact_en": (b.get("le") or b["t"]), "source_url": b["u"], "date": b.get("d")} for i, b in enumerate(L[:8])]
         ent[f"topic:{cc}-policy"] = {"type": "topic", "name": f"{title}(최신순)", "aliases": al, "route": stops(I)}; n += 1
         for k, lab in LAB.items():
             L = [b for b in I if k in b.get("tags", [])]
@@ -400,7 +400,7 @@ def kr_company_routes(ent):
             cn_, _t, place, la, lo, _a = CP[cc]
             pl = sorted([b for b in (opt("data", "policy", cc + ".json").get("items") or []) if set(sids) & set(b.get("tags", [])) and b.get("u")], key=lambda b: b.get("d") or "", reverse=True)[:1]
             for b in pl:
-                add.append(stop(f"{cn_} · {place}", la, lo, f"{cn_} 정부 발표", f"{cn_} 정부가 {b.get('d')}에 {lab} 분야로 보이는 글을 올렸어요: {b['t']} (원문 언어 그대로예요. 제목 말만 보고 묶었어요.)", b["u"], b.get("d"), f"{cc}pol:" + b["id"]))
+                add.append(stop(f"{cn_} · {place}", la, lo, f"{cn_} 정부 발표", f"{cn_} 정부가 {b.get('d')}에 {lab} 분야로 보이는 글을 올렸어요: {b.get('lk') or '정부 발표'} (원래 제목은 원문 링크에서 볼 수 있어요. 제목 말만 보고 묶었어요.)", b["u"], b.get("d"), f"{cc}pol:" + b["id"]))
         add = [x for x in add if x.get("source_url")]
         e["route"] = add + [x for x in e["route"] if x.get("source_url")]
         n += len(add)
