@@ -12,7 +12,7 @@
   const css = document.createElement('style'); css.textContent = `
 .mtTag{display:inline-block;margin:1px 3px 1px 0;padding:0 4px;border:1px solid #ffd60a;border-radius:3px;font:600 10px ui-monospace,monospace;color:#ffd60a}.mtFlag .d{box-shadow:0 0 0 3px #ffd60a!important}#mtPlus .row.flag{border-color:#ffd60a}.mtLate{display:inline-block;margin-left:4px;padding:0 4px;border-radius:3px;font:700 10px ui-monospace,monospace;background:#1d3a2c;color:#d8f5e3}.mtLate.o{background:#ff9f0a;color:#111}.mtLate.r{background:#ff453a;color:#fff}
 #mtPlus{margin:6px 0 8px;font:13px/1.45 system-ui,sans-serif;color:#d8f5e3}#mtPlus h4{margin:8px 0 3px;font:700 11px ui-monospace,monospace;letter-spacing:.06em;color:#68c7d0;text-transform:uppercase}
-#mtPlus .row{display:flex;gap:6px;align-items:center;justify-content:space-between;padding:4px 6px;border:1px solid #24493b;border-radius:4px;margin:2px 0;background:#0b1d16;cursor:pointer}#mtPlus .row:hover{border-color:#5dff9e}
+#mtPlus .row{width:100%;text-align:left;color:inherit;font:inherit;display:flex;gap:6px;align-items:center;justify-content:space-between;padding:4px 6px;border:1px solid #24493b;border-radius:4px;margin:2px 0;background:#0b1d16;cursor:pointer}#mtPlus .row:hover{border-color:#5dff9e}
 #mtPlus .pp{display:inline-block;width:16px;text-align:center;border-radius:3px;font:700 10px ui-monospace,monospace;color:#111;margin-right:4px}#mtPlus small{color:#8fa89a}.mtRich .leaflet-popup-content{max-height:52vh;overflow:auto}.mtMF .mtEnr{max-height:34vh;overflow:auto}.mtSave{margin:3px 0 0;padding:2px 8px;border:1px solid #5dff9e;border-radius:3px;background:#0b1d16;color:#5dff9e;font:600 11px ui-monospace,monospace;cursor:pointer}`;
   document.head.append(css);
   const S = { sym: null, rows: null }; window.mtTickerPlus = S;
@@ -100,14 +100,14 @@
   SECTIONS.push(rows => { // Latest filers top 5
     const E = en(), seen = new Set(), top = rows.filter(r => !seen.has(r.who) && seen.add(r.who)).slice(0, 5); if (!top.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Latest filers' : '최근 신고 의원'}</h4>`;
-    top.forEach(r => { const b = document.createElement('div'); b.className = 'row' + (r.tags ? ' flag' : ''); b.innerHTML = `<span><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)}</span><small>${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}<br>${tagChips(r)}</small>`;
+    top.forEach(r => { const b = document.createElement('button'); b.type = 'button'; b.className = 'row' + (r.tags ? ' flag' : ''); b.innerHTML = `<span><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)}</span><small>${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}<br>${tagChips(r)}</small>`;
       b.onclick = () => S.openMember(r); b.querySelector('small').append(saveBtn(r)); box.append(b); });
     return box;
   });
   SECTIONS.push(rows => { // Flagged trades
     const E = en(), fl = rows.filter(r => r.tags).slice(0, 6); if (!fl.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Flagged trades' : '표시된 거래'} <small>(${fl.length}/${rows.filter(r => r.tags).length})</small></h4>`;
-    fl.forEach(r => { const b = document.createElement('div'); b.className = 'row flag'; b.style.display = 'block'; b.innerHTML = `<div><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)} · ${r.ty === 'P' ? (E ? 'buy' : '매수') : r.ty === 'S' ? (E ? 'sell' : '매도') : esc(r.ty)} · ${esc(md(r.d))}</div><div style="font-size:11.5px;color:#ffd60a">${r.tags.map(g => esc(tagText(g))).join('<br>')}</div>`;
+    fl.forEach(r => { const b = document.createElement('button'); b.type = 'button'; b.className = 'row flag'; b.style.display = 'block'; b.innerHTML = `<div><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)} · ${r.ty === 'P' ? (E ? 'buy' : '매수') : r.ty === 'S' ? (E ? 'sell' : '매도') : esc(r.ty)} · ${esc(md(r.d))}</div><div style="font-size:11.5px;color:#ffd60a">${r.tags.map(g => esc(tagText(g))).join('<br>')}</div>`;
       b.onclick = () => S.openMember(r); b.append(saveBtn(r)); box.append(b); });
     const n = document.createElement('small'); n.textContent = E ? 'Tags are date checks on public filings; they do not show a reason.' : '표시는 공개 신고 날짜 비교일 뿐 이유를 뜻하지 않아요.'; box.append(n);
     return box;
@@ -116,7 +116,7 @@
     const E = en(), g = {}; rows.forEach(r => { const k = r.id || r.who; (g[k] = g[k] || { r, n: 0, a: new Set() }).n++; if (r.amt) g[k].a.add(r.amt); });
     const top = Object.values(g).sort((a, b) => b.n - a.n || String(b.r.f).localeCompare(String(a.r.f))).slice(0, 8); if (!top.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Member ranking (trades in this ticker)' : '의원 순위(이 종목 거래 수)'}</h4>`;
-    top.forEach((o, i) => { const b = document.createElement('div'); b.className = 'row'; b.style.display = 'block';
+    top.forEach((o, i) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'row'; b.style.display = 'block';
       b.innerHTML = `<div style="display:flex;justify-content:space-between"><span>${i + 1}. <span class="pp" style="background:${party(o.r.p)}">${esc(o.r.p || '?')}</span>${esc(o.r.who)}</span><b>${o.n}</b></div><small>${[...o.a].map(esc).join(' · ')}</small>`;
       b.onclick = () => S.openMember(o.r); box.append(b); });
     const n = document.createElement('small'); n.textContent = E ? 'Counts of disclosed trades; amounts are reported ranges.' : '신고 거래 건수, 금액은 신고 구간.'; box.append(n); return box;
@@ -149,6 +149,24 @@
       const map = window.moneyTrackerMap; if (map && PB.i < 0) map.setView([38, -96], 4); PB.t = setInterval(() => { if (PB.i >= PB.ev.length - 1 || S.sym !== sym) return pbStop(); pbShow(PB.i + 1); }, 700); };
     return box;
   });
+  // Ticker sub-tabs: the extras panel shows only on All / Lawmakers; Insiders and White House tabs get full lists.
+  const tabNow = () => { const b = document.querySelector('#mtHub button.on'); return b ? b.dataset.k : 'all'; };
+  const money2 = n => '$' + Math.round(n).toLocaleString('en-US');
+  async function tabFill() {
+    const k = tabNow(), box = $('mtPlus'), lst = $('mtHubList'); if (box) box.style.display = (k === 'all' || k === 'law') ? '' : 'none';
+    if (!lst || !S.sym || (k !== 'ins' && k !== 'wh') || (lst.dataset.tp === k + S.sym && lst.querySelector('.mtTP'))) return; lst.dataset.tp = k + S.sym; const E = en();
+    if (k === 'ins') { const x = await getTX(), e = x && x.tickers && x.tickers[S.sym], rows = (e && e.f4 && e.f4.rows) || [];
+      lst.replaceChildren(); if (!rows.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'No open-market Form 4 buys or sells in the last 90 days for this ticker (US-listed only; option exercises and tax withholding are not counted).' : '최근 90일 이 종목의 공개시장 Form 4 매수·매도가 없어요(미국 상장사만, 옵션 행사·세금 상계 제외).'; lst.append(w); return; }
+      const t = document.createElement('div'); t.className = 'mtTP'; t.style.cssText = 'font:11.5px/1.4 ui-monospace,monospace;color:#d8f5e3';
+      t.innerHTML = `<div style="color:#68c7d0;margin:2px 0">${rows.length} ${E ? 'Form 4 rows, newest first' : 'Form 4 거래, 최신순'}</div>` + rows.map(i => `<div style="border:1px solid #24493b;border-radius:4px;padding:3px 5px;margin:2px 0"><b>${esc(i.who)}</b> · ${esc(i.role || '')}<br>${esc(md(i.date))} · <b style="color:${i.code === 'P' ? '#5dff9e' : '#ff8a80'}">${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')}</b> ${Number(i.shares).toLocaleString('en-US')} @ $${Number(i.price).toFixed(2)} = ${money2(i.shares * i.price)}${i.plan ? ' · 10b5-1' : ''} ${lnk(i.url, 'Form 4')}</div>`).join('');
+      lst.append(t); }
+    if (k === 'wh') { const fr = await getJ('../data/fr/presidential.json'), it = ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === S.sym) || (z.tickers || []).includes(S.sym)).sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      lst.replaceChildren(); if (!it.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'No White House or Federal Register item names this company in the collected records.' : '수집된 백악관·연방관보 기록 중 이 회사를 언급한 항목이 없어요.'; lst.append(w); return; }
+      it.slice(0, 20).forEach(z => { const b = document.createElement('button'); b.type = 'button'; b.className = 'mtTP'; const ll = [38.8977, -77.0365], syms = [...new Set((z.moves || []).map(m => m.sym).concat(z.tickers || []))];
+        b.innerHTML = `${esc(md(String(z.date).slice(0, 10)))} · ${esc(String(z.title || '').slice(0, 110))}`;
+        b.onclick = ev => { ev.stopPropagation(); popup(`<div class="k">${E ? 'White House / Federal Register' : '백악관 / 연방관보'}</div><div class="h">${esc(z.title)}</div><div>${esc(md(String(z.date).slice(0, 10)))}${z.type_en ? ' · ' + esc(E ? z.type_en : z.type) : ''}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(syms.join(', '))}</b></div><div class="s">${lnk(z.url, E ? 'Federal Register / official record' : '연방관보 원문')}</div>`, ll); };
+        lst.append(b); }); }
+  }
   let busy = false;
   async function render() {
     const s = cur(), hub = $('mtHub'); if (!s || !hub) { if (PB.lay) { PB.lay.clearLayers(); } pbStop(); { const ov = $('mtPBov'); if (ov) ov.remove(); } S.sym = null; S.rows = null; const b = $('mtPlus'); if (b) b.remove(); return; }
@@ -159,7 +177,7 @@
     SECTIONS.forEach(f => { try { const el = f(rows, s); if (el) box.append(el); } catch (e) { } });
     decorateDots();
   }
-  const kick = () => { if (busy) return; busy = true; requestAnimationFrame(() => { busy = false; render(); decorateCard(); const c = document.querySelector('.leaflet-popup.mtMF:not(.mtRich) .leaflet-popup-content'); if (c && S.sym) enrich(c); }); };
+  let lastK = 0; const kick = () => { if (busy) return; busy = true; const w = Math.max(0, 200 - (Date.now() - lastK)); setTimeout(() => requestAnimationFrame(() => { busy = false; lastK = Date.now(); tabFill(); render(); decorateCard(); const c = document.querySelector('.leaflet-popup.mtMF:not(.mtRich) .leaflet-popup-content'); if (c && S.sym) enrich(c); }), w); };
   S.refresh = () => { const b = $('mtPlus'); if (b) b.remove(); S.sym = null; kick(); };
   new MutationObserver(kick).observe(document.body, { childList: true, subtree: true });
 })();

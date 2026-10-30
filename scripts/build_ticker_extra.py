@@ -60,7 +60,7 @@ def main():
         f = f4.get(s)
         if f is not None:
             o["f4"] = {"filings": f.get("filings", 0), "trades": len(f.get("trades", [])), "url": f.get("source_url"),
-                       "rows": [{k2: x.get(k2) for k2 in ("date", "filed", "code", "shares", "price", "who", "role", "plan", "url")} for x in sorted(f.get("trades", []), key=lambda x: x.get("date") or "", reverse=True)[:12]]}
+                       "rows": [{k2: x.get(k2) for k2 in ("date", "filed", "code", "shares", "price", "who", "role", "plan", "url")} for x in sorted(f.get("trades", []), key=lambda x: x.get("date") or "", reverse=True)[:40]]}
         if o:
             out[s] = o
     # Lawmaker trades per featured ticker with disclosure lag (trades.json: d = transaction date, filed = report filed date).
