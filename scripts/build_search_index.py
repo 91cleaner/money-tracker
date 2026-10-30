@@ -315,7 +315,7 @@ def wh_topics(ent):
         for i, b in enumerate(L[:10]):
             r, la, lo = LL.get("presdoc" if b["kind"] == "presdoc" else b["type"], LL["presdoc"])
             out.append({"region": r, "lat": la + 0.004 * (i % 3 - 1), "lon": lo + 0.004 * (i // 3 - 1), "title": (b.get("grp") or "") + " · " + b["type"] + (f" EO {b['eo']}" if b.get("eo") else "") + (f" 포고문 {b['procl']}" if b.get("procl") else ""), "kind": "wh", "ref": "wh:" + b["id"],
-                        "fact": b["t"] + " · " + b["ko"] + (" · 서명 " + b["sign"] if b.get("sign") else "") + (" · " + (b.get("tickers_product_label") or "") + " " + ",".join(b["tickers_product"]) if b.get("tickers_product") else "") + " · " + b["src"], "source_url": b["u"], "date": b.get("date")})
+                        "fact_en": b["t"] + (" · signed " + b["sign"] if b.get("sign") else ""), "fact": ("미국 " + b["type"] + (f" 제{b['eo']}호" if b.get("eo") else (f" 제{b['procl']}호" if b.get("procl") else "")) if b["kind"] == "presdoc" else "미국 " + b["type"] + " 관보 문서") + " · 원래 제목은 원문 링크에서 볼 수 있어요" + (" · 서명 " + b["sign"] if b.get("sign") else "") + (" · " + (b.get("tickers_product_label") or "") + " " + ",".join(b["tickers_product"]) if b.get("tickers_product") else "") + " · 미국 연방 관보", "source_url": b["u"], "date": b.get("date")})
         return out
     P = [b for b in I if b["kind"] == "presdoc"]
     def T(key, name, al, L):

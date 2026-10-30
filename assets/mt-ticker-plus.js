@@ -130,7 +130,7 @@
     (S.rows || []).forEach(r => r.ll && ev.push({ d: r.d, k: E ? 'Trade' : '의원 거래', c: party(r.p), ll: r.ll, t: `${r.who} · ${side(r.ty)} ${r.amt || ''}`, r }));
     if (hq) ((e.f4 && e.f4.rows) || []).forEach(i => ev.push({ d: i.date, k: E ? 'Form 4' : 'Form 4(임원 주식 거래 신고)', c: '#c08cff', ll: hq, t: `${i.who} · ${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')} ${Number(i.shares).toLocaleString('en-US')}${E ? ' shares' : '주'}` }));
     (e.bills || []).forEach(b => ev.push({ d: b.d, k: E ? 'Bill' : '법안', c: '#ffd60a', ll: [38.8899, -77.0091], t: `${b.no} · ${String(b.n).slice(0, 60)}` }));
-    ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === sym)).forEach(z => ev.push({ d: String(z.date).slice(0, 10), k: E ? 'White House' : '백악관', c: '#e8e8e8', ll: [38.8977, -77.0365], t: String(z.title || '').slice(0, 70) }));
+    ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === sym)).forEach(z => ev.push({ d: String(z.date).slice(0, 10), k: E ? 'White House' : '백악관', c: '#e8e8e8', ll: [38.8977, -77.0365], t: E ? String(z.title || '').slice(0, 70) : ('미국 ' + (z.type || '대통령 문서') + (z.eo?' 제'+z.eo+'호':z.procl?' 제'+z.procl+'호':'')) }));
     if (hq) (e.k8 || []).forEach(f => ev.push({ d: f.d, k: E ? '8-K (big-news filing)' : '8-K(큰 소식 공시)', c: '#68c7d0', ll: hq, t: f.items && f.items.length ? (E ? 'Item ' : '항목 ') + f.items.join(', ') : '8-K' }));
     return ev.filter(v => v.d).sort((a, b) => a.d.localeCompare(b.d));
   }
@@ -203,8 +203,8 @@
     if (k === 'wh') { const fr = await getJ('../data/fr/presidential.json'), it = ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === S.sym) || (z.tickers || []).includes(S.sym)).sort((a, b) => String(b.date).localeCompare(String(a.date)));
       lst.replaceChildren(); if (!it.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'We have no White House action that names this company yet.' : '아직 이 회사를 언급한 백악관 발표는 없어요.'; lst.append(w); return; }
       it.slice(0, 20).forEach(z => { const b = document.createElement('button'); b.type = 'button'; b.className = 'mtTP'; const ll = [38.8977, -77.0365], syms = [...new Set((z.moves || []).map(m => m.sym).concat(z.tickers || []))];
-        b.innerHTML = `${esc(md(String(z.date).slice(0, 10)))} · ${esc(String(z.title || '').slice(0, 110))}`;
-        b.onclick = ev => { ev.stopPropagation(); popup(`<div class="k">${E ? 'White House / Federal Register' : '백악관 / 연방관보'}</div><div class="h">${esc(z.title)}</div><div>${esc(md(String(z.date).slice(0, 10)))}${z.type_en ? ' · ' + esc(E ? z.type_en : z.type) : ''}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(syms.join(', '))}</b></div><div class="s">${lnk(z.url, E ? 'Read the official document' : '공식 원문 보기')}</div>`, ll); };
+        b.innerHTML = `${esc(md(String(z.date).slice(0, 10)))} · ${esc(E ? String(z.title || '').slice(0, 110) : '미국 ' + (z.type || '대통령 문서') + (z.eo?' 제'+z.eo+'호':z.procl?' 제'+z.procl+'호':''))}`;
+        b.onclick = ev => { ev.stopPropagation(); popup(`<div class="k">${E ? 'White House / Federal Register' : '백악관 / 연방관보'}</div><div class="h">${esc(E ? z.title : '미국 ' + (z.type || '대통령 문서') + (z.eo?' 제'+z.eo+'호':z.procl?' 제'+z.procl+'호':''))}</div><div>${esc(md(String(z.date).slice(0, 10)))}${z.type_en ? ' · ' + esc(E ? z.type_en : z.type) : ''}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(syms.join(', '))}</b></div><div class="s">${lnk(z.url, E ? 'Read the official document' : '원래 제목 보기(공식 원문)')}</div>`, ll); };
         lst.append(b); }); }
   }
   // Opening screen: 3 large cards with the latest notable filings; other controls stay behind Menu.
