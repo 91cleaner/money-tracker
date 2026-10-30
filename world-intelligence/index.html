@@ -135,12 +135,12 @@ header{background:#090f12!important;border-bottom:1px solid #1d4435!important}he
 </style>
 
 </head><body>
-<header><strong>◉ MONEY TRACKER</strong><span>GLOBAL INTELLIGENCE / OPERATIONS</span><button id="fullscreen" aria-label="전체화면">⛶</button></header>
+<header><strong>◉ MONEY TRACKER</strong><span id="mtSub">GLOBAL INTELLIGENCE / OPERATIONS</span><script>if(!(window.MTI18N&&window.MTI18N.isEn))document.getElementById("mtSub").textContent="세계 정보 관제실";else document.addEventListener("DOMContentLoaded",function(){var k=document.getElementById("mtKoLink");if(k){k.textContent="Korean site";k.title="Go to the Korean site"}var w=document.getElementById("world");if(w)w.title="Clear the brief, lines and search; back to the world map"})</script><button id="fullscreen" aria-label="전체화면">⛶</button></header>
 <div id="mapFrame">
 <svg id="fallback" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" aria-label="오프라인 개략 세계지도"><path d="M70 80 190 40 295 92 270 155 225 185 180 250 145 195 80 175Z M205 260 295 250 325 315 290 410 245 465 210 360Z M420 95 525 72 565 110 590 170 555 225 520 200 480 260 445 215Z M505 240 585 235 625 320 600 425 545 465 500 380Z M585 75 810 55 930 125 890 220 790 260 720 215 665 260 590 185Z M810 335 910 325 955 385 925 450 835 440Z"/></svg>
 <div id="map" aria-label="실제 좌표 기반 세계지도"></div></div>
 <div id="status">세계지도 준비 중 · 지도를 직접 이동할 수 있습니다</div>
-<nav id="controls" aria-label="관제실 조작"><button id="world" title="Clear the brief, lines and search; back to the world map">↺ 처음으로</button><button id="toggle">☷ 메뉴</button><button id="closeBrief" hidden>✕ 설명 닫기</button><a id="mtKoLink" href="../korea.html" lang="ko" hreflang="ko" title="Korean pages" style="align-self:center;padding:6px 8px;font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#9fc9ae;background:#04150dd9;border:1px solid #235e44;border-radius:3px;text-decoration:none;white-space:nowrap">Korean</a></nav>
+<nav id="controls" aria-label="관제실 조작"><button id="world" title="설명·선·검색을 지우고 세계지도로 돌아가기">↺ 처음으로</button><button id="toggle">☷ 메뉴</button><button id="closeBrief" hidden>✕ 설명 닫기</button><a id="mtKoLink" href="../korea.html" lang="ko" hreflang="ko" title="한국 사이트로" style="align-self:center;padding:6px 8px;font:600 11px ui-monospace,Menlo,Consolas,monospace;color:#9fc9ae;background:#04150dd9;border:1px solid #235e44;border-radius:3px;text-decoration:none;white-space:nowrap">한국 사이트</a></nav>
 <section id="menu" hidden><h3>◉ TRACKING OPTIONS</h3><div id="topics"></div><p id="menuHelp" style="font-size:11px;color:#9cbac6">주제를 선택하거나 아래 질문창에서 직접 명령하세요.</p></section>
 <section id="candidatePanel" hidden aria-live="polite" aria-label="추적 경로 선택"><h2 id="candidateTitle">추적 경로 선택</h2><p id="candidateHelp"></p><div id="candidateList"></div><small>규칙 기반 경로 선택 · AI 분석 미연결 · 실시간 거래 데이터 미연결</small></section>
 <section id="brief" hidden aria-live="polite"><h2 id="briefTitle"></h2><p id="briefText"></p><div id="mtFirst"></div><p id="briefStocks"></p><div id="moodCard" hidden style="margin:8px 0"></div><small id="briefCaveat"></small><div class="actions"><button id="previous">← 이전</button><button id="mtPlay" type="button" aria-label="자동 재생 멈춤">⏸</button><button id="next">다음 지역 →</button></div><p><a id="source" target="_blank" rel="noopener noreferrer">관련 공식 자료 확인 ↗</a></p></section>
@@ -283,7 +283,7 @@ world?.addEventListener('click',()=>setTimeout(sync,90));document.getElementById
 </script><script id="mt-living-map-controller">
 (function(){function init(){
 const frame=document.getElementById('mapFrame');if(!frame)return;
-const radar=document.createElement('div');radar.id='mtRadar';radar.setAttribute('aria-hidden','true');radar.innerHTML='<div id="mtRadarLabel">GEOINT // LIVE VIEWPORT</div>';frame.append(radar);
+const radar=document.createElement('div');radar.id='mtRadar';radar.setAttribute('aria-hidden','true');radar.innerHTML='<div id="mtRadarLabel">'+(window.MTI18N&&window.MTI18N.isEn?'GEOINT // LIVE VIEWPORT':'지도 실시간 화면')+'</div>';frame.append(radar);
 const banner=document.createElement('div');banner.id='mtTargetBanner';document.body.append(banner);
 const coords={'미국':[39,-98],'중국':[35,104],'대만':[23.7,121],'한국':[36.4,127.8],'일본':[36,138],'사우디':[24,45]};
 let last=null,route=null,pulse=null,tracked=null;
