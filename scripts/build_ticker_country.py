@@ -15,6 +15,8 @@ def main():
     syms = {k: v.get("symbol") or k.split(":", 1)[1] for k, v in ents.items() if v.get("type") == "company"}
     cik = {r["ticker"].upper(): r["cik_str"] for r in get("https://www.sec.gov/files/company_tickers.json").values()}
     out = {}
+    # Read from the filing itself when EDGAR country codes miss it. TSM 20-F 2025 cover: "No. 8, Li-Hsin Road 6, Hsinchu Science Park, Hsinchu, Taiwan"
+    OVERRIDE = {"company:TSM": {"cc": "tw", "how": "SEC 20-F 2025 cover address (Hsinchu, Taiwan) https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm"}}
     for k, s in syms.items():
         s2 = s.upper().replace(".", "-")
         if s2 in cik:
@@ -30,6 +32,7 @@ def main():
             time.sleep(0.12)
         elif "." in s and SUF.get(s.rsplit(".", 1)[1]):
             out[k] = {"cc": SUF[s.rsplit(".", 1)[1]], "how": "exchange suffix ." + s.rsplit(".", 1)[1]}
+    out.update(OVERRIDE)
     p = os.path.join(ROOT, "data", "policy", "ticker-country.json")
     json.dump({"updated": dt.date.today().isoformat(), "v": 2, "source": "SEC EDGAR submissions API (business address) + exchange suffix", "map": out}, open(p, "w"), ensure_ascii=False, indent=0)
     print(len(out), "non-US mapped")

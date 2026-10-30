@@ -13,7 +13,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=410080069&Mode=0",
 "dept": "国税庁",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 국세청(세금 담당 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "National Tax Agency: public comment request on a draft rule"
 },
 {
 "id": "egov:495260219",
@@ -25,7 +27,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "health"
-]
+],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
 },
 {
 "id": "egov:185001514",
@@ -35,7 +39,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=185001514&Mode=0",
 "dept": "文部科学省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 문부과학성(교육·과학 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Education, Culture, Sports, Science and Technology: public comment request on a draft rule"
 },
 {
 "id": "egov:145210787",
@@ -47,7 +53,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "tech_ai"
-]
+],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
 },
 {
 "id": "egov:410080068",
@@ -57,7 +65,87 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=410080068&Mode=0",
 "dept": "国税庁",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 국세청(세금 담당 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "National Tax Agency: public comment request on a draft rule"
+},
+{
+"id": "kantei:2d15124703b5",
+"kind": "news",
+"t": "高市総理はモンゴル国のニャムオソル・オチラル首相と電話会談を行いました",
+"d": "2026-10-30",
+"u": "https://www.kantei.go.jp/jp/105/actions/202610/29tel_kaidan.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:c6bc7dd4ef08",
+"kind": "news",
+"t": "閣議の概要について",
+"d": "2026-10-30",
+"u": "https://www.kantei.go.jp/jp/tyoukanpress/202610/30_a.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "長官会見",
+"tags": [],
+"lk": "일본 관방장관(정부 대변인) 기자회견",
+"le": "Japan Chief Cabinet Secretary press conference"
+},
+{
+"id": "kantei:089499b17632",
+"kind": "news",
+"t": "高市総理は広島市の松井一實（かずみ）市長及び長崎市の鈴木史朗市長による表敬を受けました",
+"d": "2026-10-30",
+"u": "https://www.kantei.go.jp/jp/105/actions/202610/30hyoukei.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:b9ec5fa95a10",
+"kind": "news",
+"t": "高市総理は中東情勢を踏まえた「緊急的激変緩和措置」の今後の対応についての会見を行いました",
+"d": "2026-10-30",
+"u": "https://www.kantei.go.jp/jp/105/statement/2026/1029kaiken.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理会見",
+"tags": [],
+"lk": "일본 총리 기자회견",
+"le": "Japanese PM's press conference"
+},
+{
+"id": "kantei:eaddcb9af63c",
+"kind": "news",
+"t": "高市総理は令和８年第１５回経済財政諮問会議を開催しました",
+"d": "2026-10-30",
+"u": "https://www.kantei.go.jp/jp/105/actions/202610/29keizai.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:71a07098bdbf",
+"kind": "news",
+"t": "高市総理は全国中小企業団体中央会創立７０周年記念祝賀会に出席しました",
+"d": "2026-10-30",
+"u": "https://www.kantei.go.jp/jp/105/actions/202610/29chuokai.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
 },
 {
 "id": "egov:240000133",
@@ -67,7 +155,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=240000133&Mode=0",
 "dept": "個人情報保護委員会",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 개인정보보호위원회의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Personal Information Protection Commission: public comment request on a draft rule"
 },
 {
 "id": "egov:315000150",
@@ -77,7 +167,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=315000150&Mode=0",
 "dept": "出入国在留管理庁",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 출입국재류관리청(출입국 담당 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Immigration Services Agency: public comment request on a draft rule"
 },
 {
 "id": "egov:198026202",
@@ -87,7 +179,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=198026202&Mode=0",
 "dept": null,
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
 },
 {
 "id": "egov:155261212",
@@ -97,7 +191,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155261212&Mode=0",
 "dept": "国土交通省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
 },
 {
 "id": "egov:195260074",
@@ -107,7 +203,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260074&Mode=0",
 "dept": "環境省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
 },
 {
 "id": "egov:300090077",
@@ -119,7 +217,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "tech_ai"
-]
+],
+"lk": "일본 법무성(법 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Justice: public comment request on a draft rule"
 },
 {
 "id": "egov:670000139",
@@ -131,7 +231,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "shipbuilding"
-]
+],
+"lk": "일본 해상보안청(바다 경비 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japan Coast Guard: public comment request on a draft rule"
 },
 {
 "id": "egov:620340016",
@@ -143,7 +245,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "energy"
-]
+],
+"lk": "일본 자원에너지청(에너지 담당 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Agency for Natural Resources and Energy: public comment request on a draft rule"
 },
 {
 "id": "egov:145210788",
@@ -155,7 +259,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "tech_ai"
-]
+],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
 },
 {
 "id": "egov:595320047",
@@ -165,7 +271,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320047&Mode=0",
 "dept": "経済産業省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
 },
 {
 "id": "egov:495260234",
@@ -177,7 +285,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "health"
-]
+],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
 },
 {
 "id": "egov:595320045",
@@ -187,7 +297,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320045&Mode=0",
 "dept": "経済産業省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
 },
 {
 "id": "egov:155261239",
@@ -197,7 +309,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155261239&Mode=0",
 "dept": "国土交通省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
 },
 {
 "id": "egov:195260073",
@@ -207,7 +321,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260073&Mode=0",
 "dept": "環境省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
 },
 {
 "id": "egov:550004435",
@@ -217,7 +333,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=550004435&Mode=0",
 "dept": "農林水産省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 농림수산성(농업·수산 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Agriculture, Forestry and Fisheries: public comment request on a draft rule"
 },
 {
 "id": "egov:595320115",
@@ -227,7 +345,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320115&Mode=0",
 "dept": "経済産業省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
 },
 {
 "id": "egov:155261240",
@@ -237,7 +357,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155261240&Mode=0",
 "dept": "国土交通省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
 },
 {
 "id": "egov:495260225",
@@ -247,7 +369,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260225&Mode=0",
 "dept": "厚生労働省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
 },
 {
 "id": "egov:145210792",
@@ -257,7 +381,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210792&Mode=0",
 "dept": "総務省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
 },
 {
 "id": "egov:495260211",
@@ -269,7 +395,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "health"
-]
+],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
 },
 {
 "id": "egov:195260071",
@@ -281,7 +409,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "health"
-]
+],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
 },
 {
 "id": "egov:550004430",
@@ -293,7 +423,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "health"
-]
+],
+"lk": "일본 농림수산성(농업·수산 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Agriculture, Forestry and Fisheries: public comment request on a draft rule"
 },
 {
 "id": "egov:550004431",
@@ -305,7 +437,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "health"
-]
+],
+"lk": "일본 농림수산성(농업·수산 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Agriculture, Forestry and Fisheries: public comment request on a draft rule"
 },
 {
 "id": "egov:550004432",
@@ -317,7 +451,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "health"
-]
+],
+"lk": "일본 농림수산성(농업·수산 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Agriculture, Forestry and Fisheries: public comment request on a draft rule"
 },
 {
 "id": "egov:550004433",
@@ -327,7 +463,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=550004433&Mode=0",
 "dept": "水産庁",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 수산청(수산 담당 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Fisheries Agency: public comment request on a draft rule"
 },
 {
 "id": "egov:495260238",
@@ -337,7 +475,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260238&Mode=0",
 "dept": "厚生労働省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
 },
 {
 "id": "egov:595320044",
@@ -349,7 +489,9 @@
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": [
 "trade"
-]
+],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
 },
 {
 "id": "egov:495260237",
@@ -359,7 +501,9 @@
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260237&Mode=0",
 "dept": "厚生労働省",
 "src": "e-Gov パブリックコメント(意見募集)",
-"tags": []
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
 },
 {
 "id": "kantei:11675352249b",
@@ -369,7 +513,9 @@
 "u": "https://www.kantei.go.jp/jp/105/actions/202610/27getsurei.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:876a647c66f4",
@@ -379,7 +525,9 @@
 "u": "https://www.kantei.go.jp/jp/105/actions/202610/27bangladesh.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:12728258c66c",
@@ -389,7 +537,9 @@
 "u": "https://www.kantei.go.jp/jp/105/actions/202610/27seijo60anniversary.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:64b723bef18a",
@@ -399,7 +549,9 @@
 "u": "https://www.kantei.go.jp/jp/tyoukanpress/202610/27_a.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:40e0a497a975",
@@ -409,7 +561,9 @@
 "u": "https://www.kantei.go.jp/jp/105/discourse/20261027message.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:a4fb9d3db92d",
@@ -419,7 +573,9 @@
 "u": "https://www.kantei.go.jp/jp/105/discourse/20261026message2.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:fd4005969d43",
@@ -429,7 +585,9 @@
 "u": "https://www.kantei.go.jp/jp/105/discourse/20261026message1.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:11244d015c73",
@@ -441,7 +599,9 @@
 "src": "首相官邸 新着情報",
 "tags": [
 "tech_ai"
-]
+],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:7a5731109947",
@@ -451,7 +611,9 @@
 "u": "https://www.kantei.go.jp/jp/105/discourse/20261026message.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:1e2a10b575f4",
@@ -461,7 +623,9 @@
 "u": "https://www.kantei.go.jp/jp/105/statement/2026/1026kaiken.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:3a3167015afd",
@@ -471,7 +635,9 @@
 "u": "https://www.kantei.go.jp/jp/105/discourse/20261026danwa.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:9f03da1c517e",
@@ -481,7 +647,9 @@
 "u": "https://www.kantei.go.jp/jp/105/actions/202610/26sei_yotou.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:62244b245e07",
@@ -493,7 +661,9 @@
 "src": "首相官邸 新着情報",
 "tags": [
 "tech_ai"
-]
+],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:1ef7f1d1b860",
@@ -503,7 +673,9 @@
 "u": "https://www.kantei.go.jp/jp/105/discourse/20261024message.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:c9cd6108b847",
@@ -513,7 +685,9 @@
 "u": "https://www.kantei.go.jp/jp/105/actions/202610/23micronesia.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:1c97ff26f541",
@@ -523,7 +697,9 @@
 "u": "https://www.kantei.go.jp/jp/105/statement/2026/1023kaiken.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:f8c5b0daabf6",
@@ -533,7 +709,9 @@
 "u": "https://www.kantei.go.jp/jp/105/actions/202610/23hyoukei.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:5e8b6181248b",
@@ -545,7 +723,9 @@
 "src": "首相官邸 新着情報",
 "tags": [
 "tech_ai"
-]
+],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:097e6a4b1677",
@@ -555,7 +735,9 @@
 "u": "https://www.kantei.go.jp/jp/tyoukanpress/202610/23_a.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:5a75597b203f",
@@ -565,7 +747,9 @@
 "u": "https://www.kantei.go.jp/jp/pages/20261022choukan_aidigital.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:805092240dba",
@@ -575,7 +759,9 @@
 "u": "https://www.kantei.go.jp/jp/105/discourse/20261021message.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:c772ccc18d32",
@@ -585,7 +771,9 @@
 "u": "https://www.kantei.go.jp/jp/105/statement/2026/1021kaiken.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:83361d52c48a",
@@ -595,7 +783,9 @@
 "u": "https://www.kantei.go.jp/jp/105/actions/202610/20kunitochihou.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:41499f891802",
@@ -605,7 +795,9 @@
 "u": "https://www.kantei.go.jp/jp/tyoukanpress/202610/20_p.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:a7f7951d9828",
@@ -615,7 +807,9 @@
 "u": "https://www.kantei.go.jp/jp/105/actions/202610/20hyoukei.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
-"tags": []
+"tags": [],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:a830b0664237",
@@ -627,7 +821,9 @@
 "src": "首相官邸 新着情報",
 "tags": [
 "energy"
-]
+],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 },
 {
 "id": "kantei:326d641a8db7",
@@ -639,67 +835,9 @@
 "src": "首相官邸 新着情報",
 "tags": [
 "energy"
-]
-},
-{
-"id": "kantei:2d15124703b5",
-"kind": "news",
-"t": "高市総理はモンゴル国のニャムオソル・オチラル首相と電話会談を行いました",
-"d": null,
-"u": "https://www.kantei.go.jp/jp/105/actions/202610/29tel_kaidan.html",
-"dept": "首相官邸",
-"src": "首相官邸 新着情報",
-"tags": []
-},
-{
-"id": "kantei:c6bc7dd4ef08",
-"kind": "news",
-"t": "閣議の概要について",
-"d": null,
-"u": "https://www.kantei.go.jp/jp/tyoukanpress/202610/30_a.html",
-"dept": "首相官邸",
-"src": "首相官邸 新着情報",
-"tags": []
-},
-{
-"id": "kantei:089499b17632",
-"kind": "news",
-"t": "高市総理は広島市の松井一實（かずみ）市長及び長崎市の鈴木史朗市長による表敬を受けました",
-"d": null,
-"u": "https://www.kantei.go.jp/jp/105/actions/202610/30hyoukei.html",
-"dept": "首相官邸",
-"src": "首相官邸 新着情報",
-"tags": []
-},
-{
-"id": "kantei:b9ec5fa95a10",
-"kind": "news",
-"t": "高市総理は中東情勢を踏まえた「緊急的激変緩和措置」の今後の対応についての会見を行いました",
-"d": null,
-"u": "https://www.kantei.go.jp/jp/105/statement/2026/1029kaiken.html",
-"dept": "首相官邸",
-"src": "首相官邸 新着情報",
-"tags": []
-},
-{
-"id": "kantei:eaddcb9af63c",
-"kind": "news",
-"t": "高市総理は令和８年第１５回経済財政諮問会議を開催しました",
-"d": null,
-"u": "https://www.kantei.go.jp/jp/105/actions/202610/29keizai.html",
-"dept": "首相官邸",
-"src": "首相官邸 新着情報",
-"tags": []
-},
-{
-"id": "kantei:71a07098bdbf",
-"kind": "news",
-"t": "高市総理は全国中小企業団体中央会創立７０周年記念祝賀会に出席しました",
-"d": null,
-"u": "https://www.kantei.go.jp/jp/105/actions/202610/29chuokai.html",
-"dept": "首相官邸",
-"src": "首相官邸 新着情報",
-"tags": []
+],
+"lk": "일본 총리 관저 새 소식",
+"le": "News from the Japanese PM's office"
 }
 ]
 }
