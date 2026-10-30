@@ -77,7 +77,7 @@
       `<div class="r" style="margin-top:4px"><b>${E ? 'Bills this lawmaker wrote and introduced (newest first, from Congress.gov)' : '이 의원이 직접 내놓은 법안 (최신순, Congress.gov 자료)'}</b></div>` +
       (bills.length ? bills.map(b => `<div class="s">${lnk(b.u, b.no)} ${esc(String(b.n).slice(0, 80))} · ${esc(md(b.d))}</div>`).join('') : `<div class="s">${E ? 'None collected.' : '수집된 법안 없음.'}</div>`) +
       `<div class="r" style="margin-top:4px"><b>${E ? 'Trades in the stocks we follow' : '우리가 보는 종목의 거래'}</b> (${mine.length})</div>` +
-      mine.slice(0, 6).map(([k, r]) => `<div class="s" style="color:#d8f5e3"><b>${esc(k)}</b> ${side(r.ty)} · ${esc(r.amt)} · ${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)} ${lnk(r.doc, 'PTR')}</div>${pcLine(r)}`).join('') +
+      mine.slice(0, 6).map(([k, r]) => `<div class="s" style="color:#d8f5e3"><b>${esc(k)}</b> ${side(r.ty)} · ${esc(r.amt)} · ${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)} ${lnk(r.doc, E ? 'PTR' : 'PTR(의원 거래 신고)')}</div>${pcLine(r)}`).join('') +
       `<div class="s"><a href="${esc(deep(S.sym || '', id))}">${E ? 'Link to this member card' : '이 의원 카드 링크'} ›</a></div><div class="s">${E ? 'Lawmakers only report a money range. The price change compares the closing price on the first and last day shown. It does not tell you why.' : '의원은 금액 범위만 신고해요. 주가 변화는 표시된 첫날과 마지막 날의 마감 가격을 비교한 거예요. 이유를 알려 주지는 않아요.'}</div>`;
   }
   function popup(html, ll) { const map = window.moneyTrackerMap, L = window.L; if (!map || !L) return;
@@ -101,14 +101,14 @@
     const E = en(), seen = new Set(), top = rows.filter(r => !seen.has(r.who) && seen.add(r.who)).slice(0, 5); if (!top.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Latest filers' : '최근 신고 의원'}</h4>`;
     top.forEach(r => { const b = document.createElement('button'); b.type = 'button'; b.className = 'row' + (r.tags ? ' flag' : ''); b.innerHTML = `<span><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)}</span><small>${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}<br>${tagChips(r)}</small>`;
-      b.onclick = () => S.openMember(r); b.querySelector('small').append(saveBtn(r)); box.append(b); });
+      b.onclick = () => openM(r); b.querySelector('small').append(saveBtn(r)); box.append(b); });
     return box;
   });
   SECTIONS.push(rows => { // Flagged trades
     const E = en(), fl = rows.filter(r => r.tags).slice(0, 6); if (!fl.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Flagged trades' : '표시된 거래'} <small>(${fl.length}/${rows.filter(r => r.tags).length})</small></h4>`;
     fl.forEach(r => { const b = document.createElement('button'); b.type = 'button'; b.className = 'row flag'; b.style.display = 'block'; b.innerHTML = `<div><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)} · ${r.ty === 'P' ? (E ? 'buy' : '매수') : r.ty === 'S' ? (E ? 'sell' : '매도') : esc(r.ty)} · ${esc(md(r.d))}</div><div style="font-size:11.5px;color:#ffd60a">${r.tags.map(g => esc(tagText(g))).join('<br>')}</div>`;
-      b.onclick = () => S.openMember(r); b.append(saveBtn(r)); box.append(b); });
+      b.onclick = () => openM(r); b.append(saveBtn(r)); box.append(b); });
     const n = document.createElement('small'); n.textContent = E ? 'These tags only compare dates in public reports. They do not tell you why.' : '이 표시는 공개 신고의 날짜만 비교한 거예요. 이유를 알려 주지는 않아요.'; box.append(n);
     return box;
   });
@@ -118,18 +118,20 @@
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Which lawmakers traded this stock the most' : '이 종목을 가장 많이 거래한 의원'}</h4>`;
     top.forEach((o, i) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'row'; b.style.display = 'block';
       b.innerHTML = `<div style="display:flex;justify-content:space-between"><span>${i + 1}. <span class="pp" style="background:${party(o.r.p)}">${esc(o.r.p || '?')}</span>${esc(o.r.who)}</span><b>${o.n}</b></div><small>${[...o.a].map(esc).join(' · ')}</small>`;
-      b.onclick = () => S.openMember(o.r); box.append(b); });
+      b.onclick = () => openM(o.r); box.append(b); });
     const n = document.createElement('small'); n.textContent = E ? 'Number of trades each lawmaker reported. Amounts are money ranges.' : '의원마다 신고한 거래 수예요. 금액은 범위로만 나와요.'; box.append(n); return box;
   });
   // Playback: lights up trades, Form 4s, bills, White House items and 8-Ks on the map in date order.
   const PB = { t: null, i: 0, ev: [], lay: null };
+  // clicking a member while playback runs: pause playback, then open that member's card
+  function openM(r) { if (PB.t) { pbStop(); const ov = $('mtPBov'); if (ov) ov.remove(); } return S.openMember(r); }
   async function events(sym) {
     const [x, ds, fr] = await Promise.all([getTX(), getJ('./dossier.json'), getJ('../data/fr/presidential.json')]), e = (x && x.tickers && x.tickers[sym]) || {}, hq = ds && ds.tickers && ds.tickers[sym] && ds.tickers[sym].ll, E = en(), ev = [];
-    (S.rows || []).forEach(r => r.ll && ev.push({ d: r.d, k: 'trade', c: party(r.p), ll: r.ll, t: `${r.who} · ${side(r.ty)} ${r.amt || ''}`, r }));
-    if (hq) ((e.f4 && e.f4.rows) || []).forEach(i => ev.push({ d: i.date, k: 'Form 4', c: '#c08cff', ll: hq, t: `${i.who} · ${i.code === 'P' ? 'Buy' : 'Sell'} ${Number(i.shares).toLocaleString('en-US')}` }));
+    (S.rows || []).forEach(r => r.ll && ev.push({ d: r.d, k: E ? 'Trade' : '의원 거래', c: party(r.p), ll: r.ll, t: `${r.who} · ${side(r.ty)} ${r.amt || ''}`, r }));
+    if (hq) ((e.f4 && e.f4.rows) || []).forEach(i => ev.push({ d: i.date, k: E ? 'Form 4' : 'Form 4(임원 주식 거래 신고)', c: '#c08cff', ll: hq, t: `${i.who} · ${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')} ${Number(i.shares).toLocaleString('en-US')}${E ? ' shares' : '주'}` }));
     (e.bills || []).forEach(b => ev.push({ d: b.d, k: E ? 'Bill' : '법안', c: '#ffd60a', ll: [38.8899, -77.0091], t: `${b.no} · ${String(b.n).slice(0, 60)}` }));
     ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === sym)).forEach(z => ev.push({ d: String(z.date).slice(0, 10), k: E ? 'White House' : '백악관', c: '#e8e8e8', ll: [38.8977, -77.0365], t: String(z.title || '').slice(0, 70) }));
-    if (hq) (e.k8 || []).forEach(f => ev.push({ d: f.d, k: '8-K (big-news filing)', c: '#68c7d0', ll: hq, t: f.items && f.items.length ? 'Item ' + f.items.join(', ') : '8-K' }));
+    if (hq) (e.k8 || []).forEach(f => ev.push({ d: f.d, k: E ? '8-K (big-news filing)' : '8-K(큰 소식 공시)', c: '#68c7d0', ll: hq, t: f.items && f.items.length ? (E ? 'Item ' : '항목 ') + f.items.join(', ') : '8-K' }));
     return ev.filter(v => v.d).sort((a, b) => a.d.localeCompare(b.d));
   }
   function pbShow(i) { const map = window.moneyTrackerMap, L = window.L; if (!map || !L || !PB.ev.length) return; PB.i = i;
@@ -160,7 +162,7 @@
     const paint = () => { const p = box.querySelector('#mtTp').value, t = box.querySelector('#mtTs').value, o = box.querySelector('#mtTo').value;
       const r = rows.filter(x => (!p || x.p === p) && (!t || x.ty === t)).sort((a, b) => o === 'late' ? b.late - a.late : o === 'amt' ? amtLo(b.amt) - amtLo(a.amt) : String(b.f).localeCompare(String(a.f)));
       const tb = box.querySelector('.mtTbl'); tb.innerHTML = `<table style="width:100%;border-collapse:collapse;font:11px ui-monospace,monospace"><tr style="color:#68c7d0;text-align:left"><th>${E ? 'Member' : '의원'}</th><th>${E ? 'Side' : '구분'}</th><th>${E ? 'Amount' : '금액'}</th><th>${E ? 'Traded' : '거래'}</th><th>${E ? 'Gap' : '지연'}</th></tr>` + r.map((x, i) => `<tr data-i="${i}" style="cursor:pointer;border-top:1px solid #24493b${x.tags ? ';color:#ffd60a' : ''}"><td><span class="pp" style="background:${party(x.p)}">${esc(x.p || '?')}</span>${esc(x.who)}</td><td>${side(x.ty)}</td><td>${esc(String(x.amt || '').replace(/\$|,000/g, m => m === '$' ? '$' : 'k'))}</td><td>${esc(x.d)}</td><td>${lateTag(x)}</td></tr>`).join('') + '</table>';
-      tb.querySelectorAll('tr[data-i]').forEach(tr => tr.onclick = () => S.openMember(r[+tr.dataset.i])); };
+      tb.querySelectorAll('tr[data-i]').forEach(tr => tr.onclick = () => openM(r[+tr.dataset.i])); };
     box.querySelectorAll('select').forEach(x => x.onchange = paint); paint();
     box.querySelector('.mtCopy').onclick = e => { e.stopPropagation(); navigator.clipboard && navigator.clipboard.writeText(deep(sym)); e.target.textContent = E ? 'Copied' : '복사됨'; };
     return box;
