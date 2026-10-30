@@ -59,11 +59,11 @@
 
 ## 추가 발견: 질문을 바꿔도 이전 종목의 보조 카드가 뒤늦게 붙을 수 있음
 
-현행 \`world-intelligence/index.html\`의 \`mtIntentCard(q)\`는 본문을 표시한 **뒤** 다음 작업을 \`await\`하지 않고 시작한다.
+현행 `world-intelligence/index.html`의 `mtIntentCard(q)`는 본문을 표시한 **뒤** 다음 작업을 `await`하지 않고 시작한다.
 
-- \`A.load(pl.symbol).then(... MTMood.load(...)).then(c => MTMood.render(mc,c,en); mc.hidden=false)\`: 이전 질문 A의 분위기 카드가 B 검색 뒤에 공유 \`#moodCard\`에 다시 그려질 수 있다.
-- \`MTOpinions.render(box,pl.symbol,...).catch(()=>{})\`: \`assets/opinions.js\`의 \`render()\`가 \`index.json\` 로딩 후 **전달받은 공유 \`#briefStocks\`에 직접 append**한다. 질문 B가 \`replaceChildren()\`로 비운 후에도 A의 의견 상자가 늦게 추가될 수 있다.
-- \`assets/opinions.js\`의 \`load(base)\`는 \`null\`로 끝난 실패 Promise를 캐시해 네트워크 복구 뒤에도 재시도하지 않는다. \`assets/answers.js\`의 \`load(sym)\`도 같은 실패 캐시 패턴이지만 별도 기간 정확성 PR #215/#227과 충돌하지 않도록 여기서는 **검토 범위만** 명시한다.
+- `A.load(pl.symbol).then(... MTMood.load(...)).then(c => MTMood.render(mc,c,en); mc.hidden=false)`: 이전 질문 A의 분위기 카드가 B 검색 뒤에 공유 `#moodCard`에 다시 그려질 수 있다.
+- `MTOpinions.render(box,pl.symbol,...).catch(()=>{})`: `assets/opinions.js`의 `render()`가 `index.json` 로딩 후 **전달받은 공유 `#briefStocks`에 직접 append**한다. 질문 B가 `replaceChildren()`로 비운 후에도 A의 의견 상자가 늦게 추가될 수 있다.
+- `assets/opinions.js`의 `load(base)`는 `null`로 끝난 실패 Promise를 캐시해 네트워크 복구 뒤에도 재시도하지 않는다. `assets/answers.js`의 `load(sym)`도 같은 실패 캐시 패턴이지만 별도 기간 정확성 PR #215/#227과 충돌하지 않도록 여기서는 **검토 범위만** 명시한다.
 
 **위험:** B 종목의 설명 아래 A 종목의 분위기/의견이 섞이면 단순 UX 오류가 아니라 **기업·기간의 근거 오귀속**이다. 본문 submit 경합만 고쳐도 이 분리된 Promise는 남는다.
 
@@ -71,7 +71,52 @@
 
 8. A 종목 의견 요청을 지연한 상태에서 B 종목 검색 완료 → A의 의견이 B 패널에 **추가되지 않음**. A/B 반대 순서와 3연속 검색도 확인.
 9. A 종목 분위기 데이터 지연 → B 종목 검색/세계지도 초기화/브리핑 닫기 → A의 분위기 카드가 **다시 나타나지 않음**.
-10. 보조 카드가 표시될 때마다 \`requestId\`뿐 아니라 **종목·기간·패널 상태**가 현재 검색과 일치하는지 검사. \`MTOpinions.render()\`처럼 내부 비동기 DOM 변경을 하는 함수에는 \`isCurrent()\` 콜백 또는 요청별 독립 컨테이너를 전달하고, 검증 후에만 현재 패널에 붙인다. \`AbortController\`만으로는 이미 완료된 Promise의 DOM 변경을 막을 수 없다.
+10. 보조 카드가 표시될 때마다 `requestId`뿐 아니라 **종목·기간·패널 상태**가 현재 검색과 일치하는지 검사. `MTOpinions.render()`처럼 내부 비동기 DOM 변경을 하는 함수에는 `isCurrent()` 콜백 또는 요청별 독립 컨테이너를 전달하고, 검증 후에만 현재 패널에 붙인다. `AbortController`만으로는 이미 완료된 Promise의 DOM 변경을 막을 수 없다.
 11. 의견/분위기 JSON 500·오프라인 뒤 재검색 성공과, 실제 기록 0건의 표시를 분리한다. 실패 캐시를 무효화하되 정상 동시 요청은 공유한다.
 
-**검증 근거:** \`world-intelligence/index.html\`의 \`mtIntentCard\`와 \`assets/opinions.js\`의 \`render/load\` 실제 코드를 재조회했다. Node 22 최소 비동기 모형에서 빠른 B 표시 후 늦은 A가 최종 화면을 덮는 순서 재현. **실제 브라우저/서비스 테스트와 코드 수정은 미수행**. 클로드(UI)·실장(데이터)에게 전달할 수정 계약이며, 이 문서만으로 해결 처리 금지.
+**검증 근거:** `world-intelligence/index.html`의 `mtIntentCard`와 `assets/opinions.js`의 `render/load` 실제 코드를 재조회했다. Node 22 최소 비동기 모형에서 빠른 B 표시 후 늦은 A가 최종 화면을 덮는 순서 재현. **실제 브라우저/서비스 테스트와 코드 수정은 미수행**. 클로드(UI)·실장(데이터)에게 전달할 수정 계약이며, 이 문서만으로 해결 처리 금지.
+
+## 실행 가능한 최소 수정 예시 (2026-10-31 05:57 KST 재검토)
+
+최신 `main` `11e6ca0d`에서 `world-intelligence/index.html`의 검색 핸들러와 `mtGet`이 여전히 위 취약 패턴을 사용함을 확인했다. **아래는 UI 담당자가 통합할 코드 예시이며 실제 제품 코드는 이 PR에서 수정하지 않았다.**
+
+### 1. 캐시 실패는 재시도, 성공 중복 요청은 공유
+
+```js
+const mtJson = Object.create(null);
+function mtGet(p) {
+  if (mtJson[p]) return mtJson[p];
+  const pending = fetch('../data/' + p).then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  });
+  const shared = pending.catch(err => {
+    if (mtJson[p] === shared) delete mtJson[p];
+    throw err;
+  });
+  mtJson[p] = shared;
+  return shared;
+}
+```
+
+**주의:** 기존 `mtGet()`은 실패를 `null`로 변환했지만 이 예시는 오류를 throw한다. 따라서 `mtFirstCard`, `mtIntentCard`, `F.fetchData` 등의 호출부를 함께 수정해 '불러오기 실패'를 명시적으로 표시해야 한다. `catch`에서 무조건 `false`를 반환해 일반 검색으로 넘어가면 장애가 '검색 결과 없음'으로 다시 은폐된다. HTTP 200이더라도 스키마가 잘못되면 별도 검증 후 오류 처리한다.
+
+### 2. 질문 및 화면 닫기마다 검색 세대 무효화
+
+```js
+let searchEpoch = 0;
+const nextSearch = () => ++searchEpoch;
+const current = token => token === searchEpoch;
+// submit 시작 시 const token = nextSearch();
+// 모든 await 직후 if (!current(token)) return;
+// mtFirstCard/mtIntentCard 내부 DOM 변경 직전에도 current(token) 검사.
+// closeBrief/world 클릭 시 nextSearch()로 이전 비동기 작업 무효화.
+```
+
+**보조 카드 안전 패턴:** `MTOpinions.render()`는 내부 `load()` 완료 후 인자로 받은 컨테이너에 직접 append한다. 공유 `#briefStocks`를 넘기지 말고 `document.createElement('div')`로 만든 **분리된 임시 컨테이너**에 렌더한 뒤, Promise 완료 시 `current(token)`·종목·기간·패널 표시 상태를 모두 확인하고 현재 패널에 옮긴다. `MTMood.load().then(render)`에도 같은 검사를 적용한다. `MTFirst.show()` 등 비동기 내부 렌더도 별도 확인이 필요하다.
+
+### 3. Node.js 22 결정론적 보조 검증
+
+로컬 독립 모형에서 `node`로 검증: 실패한 동시 요청 2개가 fetch **1회**만 호출 → 캐시 제거 → 네트워크 복구 후 재요청으로 fetch **총 2회** → 느린 A/빠른 B 순서에서 최종 화면 B만 남음. **4개 주장 모두 모형 테스트이며 실제 제품 CI·브라우저 E2E 통과를 의미하지 않는다.**
+
+**수정 완료 게이트:** 클로드가 화면 코드·회귀 테스트를 별도 PR로 제출하고, Actions 성공 + 375×667/844×390 실기기/브라우저 + 실제 배포 URL 재시도까지 확인해야 #394를 닫는다. Cloudflare Preview 빌드 성공 여부도 GitHub Pages 성공과 별개로 기록한다.
