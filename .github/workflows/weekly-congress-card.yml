@@ -25,6 +25,27 @@ jobs:
         # Missing member metadata must fail instead of silently dropping records.
         timeout-minutes: 10
         env: {CONGRESS_API_KEY: "${{ secrets.CONGRESS_API_KEY || vars.CONGRESS_API_KEY }}"}
+      - name: Verify House Clerk index before publishing
+        # Collector logs source failures and can exit 0 even when the House index is unavailable.
+        # Require a current-year House Clerk index read before a new card can be published.
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          payload = json.loads(Path('data/us/trades.json').read_text(encoding='utf-8'))
+          logs = payload.get('log', [])
+          year = datetime.now(timezone.utc).year
+          if not isinstance(logs, list) or not any(
+              re.fullmatch(rf'house {year}: PTR \d+', str(entry)) for entry in logs
+          ):
+              raise SystemExit('::error::Current-year House Clerk PTR index not verified; weekly card not published')
+          if any('house: 시간 상한' in str(entry) for entry in logs):
+              raise SystemExit('::error::House PTR collection hit time budget; weekly card not published')
+          print(f'PASS: House Clerk {year} PTR index verified')
+          PY
       - name: Render card
         run: python scripts/weekly/congress_trades_card.py
         env:
