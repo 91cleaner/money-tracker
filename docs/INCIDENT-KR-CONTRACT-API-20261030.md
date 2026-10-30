@@ -4,7 +4,7 @@
 **Severity:** P1 — scheduled contract ingestion blocked; not proof that existing published data was deleted.  
 **Issue:** [#368](https://github.com/91cleaner/money-tracker/issues/368)  
 **Evidence:** [failed Actions run 41044760130](https://github.com/91cleaner/money-tracker/actions/runs/41044760130)  
-**Owner:** data ingestion / 실장 (per [AI-ROLES](../AI-ROLES.md)). This document does **not** change collector code or claim a production fix.
+**Owner:** data ingestion / 실장 (per [AI-ROLES](AI-ROLES.md)). This document does **not** change collector code or claim a production fix.
 
 ## Verified observations
 
