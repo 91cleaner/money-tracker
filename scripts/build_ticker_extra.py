@@ -59,7 +59,8 @@ def main():
                 o["bills"] = [{"no": b["no"], "n": b["n"], "d": b["d"], "sp": b["sp"], "tr": b["sp"] in traders.get(s, set()), "u": b["u"], "a": b.get("a", ""), "ad": b.get("ad", "")} for b in hit[:5]]
         f = f4.get(s)
         if f is not None:
-            o["f4"] = {"filings": f.get("filings", 0), "trades": len(f.get("trades", [])), "url": f.get("source_url")}
+            o["f4"] = {"filings": f.get("filings", 0), "trades": len(f.get("trades", [])), "url": f.get("source_url"),
+                       "rows": [{k2: x.get(k2) for k2 in ("date", "filed", "code", "shares", "price", "who", "role", "plan", "url")} for x in sorted(f.get("trades", []), key=lambda x: x.get("date") or "", reverse=True)[:12]]}
         if o:
             out[s] = o
     # Lawmaker trades per featured ticker with disclosure lag (trades.json: d = transaction date, filed = report filed date).
@@ -81,6 +82,21 @@ def main():
         m = mm.get(t.get("id")) or {}
         tt.setdefault(k, []).append({"who": t.get("who"), "id": t.get("id"), "p": (m.get("party") or "")[:1], "ch": t.get("c"), "d": d, "f": f,
                                      "ty": t.get("ty"), "amt": t.get("amt"), "doc": t.get("doc"), "late": (D(f) - D(d)).days, "ll": m.get("ll")})
+    # Closing prices (data/us/prices/YYYY-MM-DD.json): close on the trade date (or next trading day) and the latest close.
+    import glob
+    PX = {}
+    for fp in sorted(glob.glob(os.path.join(ROOT, "data", "us", "prices", "*.json"))):
+        try:
+            PX[os.path.basename(fp)[:10]] = json.load(open(fp, encoding="utf-8")).get("c", {})
+        except Exception:
+            pass
+    pdays = sorted(PX)
+    for k, v in tt.items():
+        last = next((d for d in reversed(pdays) if k in PX[d]), None)
+        for r in v:
+            d0 = next((d for d in pdays if d >= r["d"] and k in PX[d]), None)
+            if d0 and last and d0 < last:
+                r["pc"] = [d0, PX[d0][k], last, PX[last][k]]
     # Unusual-trade tags (facts only): first in this ticker for the member, near a matched bill action, filed after 45 days, within 30 days before an 8-K.
     first_any = {}
     for t in tr:

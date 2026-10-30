@@ -13,7 +13,7 @@
 .mtTag{display:inline-block;margin:1px 3px 1px 0;padding:0 4px;border:1px solid #ffd60a;border-radius:3px;font:600 10px ui-monospace,monospace;color:#ffd60a}.mtFlag .d{box-shadow:0 0 0 3px #ffd60a!important}#mtPlus .row.flag{border-color:#ffd60a}.mtLate{display:inline-block;margin-left:4px;padding:0 4px;border-radius:3px;font:700 10px ui-monospace,monospace;background:#1d3a2c;color:#d8f5e3}.mtLate.o{background:#ff9f0a;color:#111}.mtLate.r{background:#ff453a;color:#fff}
 #mtPlus{margin:6px 0 8px;font:13px/1.45 system-ui,sans-serif;color:#d8f5e3}#mtPlus h4{margin:8px 0 3px;font:700 11px ui-monospace,monospace;letter-spacing:.06em;color:#68c7d0;text-transform:uppercase}
 #mtPlus .row{display:flex;gap:6px;align-items:center;justify-content:space-between;padding:4px 6px;border:1px solid #24493b;border-radius:4px;margin:2px 0;background:#0b1d16;cursor:pointer}#mtPlus .row:hover{border-color:#5dff9e}
-#mtPlus .pp{display:inline-block;width:16px;text-align:center;border-radius:3px;font:700 10px ui-monospace,monospace;color:#111;margin-right:4px}#mtPlus small{color:#8fa89a}.mtSave{margin:3px 0 0;padding:2px 8px;border:1px solid #5dff9e;border-radius:3px;background:#0b1d16;color:#5dff9e;font:600 11px ui-monospace,monospace;cursor:pointer}`;
+#mtPlus .pp{display:inline-block;width:16px;text-align:center;border-radius:3px;font:700 10px ui-monospace,monospace;color:#111;margin-right:4px}#mtPlus small{color:#8fa89a}.mtRich .leaflet-popup-content{max-height:52vh;overflow:auto}.mtMF .mtEnr{max-height:34vh;overflow:auto}.mtSave{margin:3px 0 0;padding:2px 8px;border:1px solid #5dff9e;border-radius:3px;background:#0b1d16;color:#5dff9e;font:600 11px ui-monospace,monospace;cursor:pointer}`;
   document.head.append(css);
   const S = { sym: null, rows: null }; window.mtTickerPlus = S;
   // Latest trade per member (rows are sorted by filed date, newest first).
@@ -57,21 +57,69 @@
   }
   S.saveCard = saveCard;
   const saveBtn = r => { const b = document.createElement('button'); b.className = 'mtSave'; b.textContent = en() ? 'Save card' : '카드 저장'; b.onclick = e => { e.stopPropagation(); saveCard(r, S.sym); }; return b; };
+  // Detail cards: every list item flies the map and opens a card. Facts from collected public records only.
+  const J = {}; const getJ = u => J[u] || (J[u] = fetch(u).then(r => r.ok ? r.json() : null).catch(() => null));
+  let TX = null; const getTX = () => TX || (TX = fetch('./ticker-extra.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null));
+  const pct = (a, b) => ((b - a) / a * 100).toFixed(1);
+  const lnk = (u, t) => u ? `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(t)} ›</a>` : '';
+  const side = ty => { const E = en(); return ty === 'P' ? (E ? 'Buy' : '매수') : ty === 'S' ? (E ? 'Sell' : '매도') : ty === 'E' ? (E ? 'Exchange' : '교환') : esc(ty); };
+  function pcLine(r) { const E = en(); if (!r.pc) return ''; const [d0, c0, d1, c1] = r.pc, v = pct(c0, c1);
+    return `<div class="s">${E ? 'Close' : '종가'} ${esc(md(d0))} $${c0} → ${esc(md(d1))} $${c1}: <b>${v > 0 ? '+' : ''}${v}%</b> <small>(${E ? 'window' : '기간'} ${esc(d0)}–${esc(d1)})</small></div>`; }
+  async function memberHTML(id, who) {
+    const E = en(), [mm, tt, bl] = await Promise.all([getJ('../data/us/members.json'), getTT(), id ? getJ(`../data/us/bills/${id}.json`) : null]);
+    const m = ((mm && mm.members) || []).find(x => x.id === id) || {};
+    const pn = m.party === 'R' ? (E ? 'Republican' : '공화당') : m.party === 'D' ? (E ? 'Democrat' : '민주당') : (m.party || '');
+    const dist = m.chamber === 'sen' ? `${m.state || ''} ${E ? 'Senator' : '상원'}` : `${m.state || ''}${m.district != null ? '-' + m.district : ''} ${E ? 'Representative' : '하원'}`;
+    const mine = []; Object.entries((tt && tt.tickers) || {}).forEach(([k, v]) => v.forEach(r => { if ((id && r.id === id) || (!id && r.who === who)) mine.push([k, r]); }));
+    mine.sort((a, b) => b[1].d.localeCompare(a[1].d));
+    const bills = (Array.isArray(bl) ? bl : []).slice().sort((a, b) => String(b.d).localeCompare(String(a.d))).slice(0, 5);
+    return `<div class="k">${E ? 'Member' : '의원'} · ${esc(S.sym || '')}</div><div class="h">${esc(m.name || who)}</div><div>${esc(pn)} · ${esc(dist)}</div>` +
+      `<div class="r" style="margin-top:4px"><b>${E ? 'Bills sponsored (Congress.gov, recent first)' : '대표 발의 법안(Congress.gov, 최신순)'}</b></div>` +
+      (bills.length ? bills.map(b => `<div class="s">${lnk(b.u, b.no)} ${esc(String(b.n).slice(0, 80))} · ${esc(md(b.d))}</div>`).join('') : `<div class="s">${E ? 'None collected.' : '수집된 법안 없음.'}</div>`) +
+      `<div class="r" style="margin-top:4px"><b>${E ? 'Trades in tracked tickers' : '추적 종목 거래'}</b> (${mine.length})</div>` +
+      mine.slice(0, 6).map(([k, r]) => `<div class="s" style="color:#d8f5e3"><b>${esc(k)}</b> ${side(r.ty)} · ${esc(r.amt)} · ${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)} ${lnk(r.doc, 'PTR')}</div>${pcLine(r)}`).join('') +
+      `<div class="s">${E ? 'Amounts are reported ranges. Price change is close to close over the stated window; it does not show a reason.' : '금액은 신고 구간. 가격 변화는 표시된 기간의 종가 비교이며 이유를 뜻하지 않아요.'}</div>`;
+  }
+  function popup(html, ll) { const map = window.moneyTrackerMap, L = window.L; if (!map || !L) return;
+    const go = () => L.popup({ className: 'mtTour mtMF mtRich', closeButton: true, autoPan: true, autoPanPadding: [40, 90], maxWidth: 320, offset: [0, -6] }).setLatLng(ll || map.getCenter()).setContent(html).openOn(map);
+    if (ll) { map.flyTo(ll, Math.max(map.getZoom(), 5), { duration: .9 }); setTimeout(go, 950); } else go(); }
+  S.openMember = async (r) => { popup(await memberHTML(r.id, r.who), r.ll); };
+  async function enrich(c) {
+    const k = c.querySelector('.k'); if (!k || c.dataset.mtRich) return; c.dataset.mtRich = 1; const t = k.textContent, E = en(), add = h => c.insertAdjacentHTML('beforeend', `<div class="mtEnr" style="border-top:1px solid #24493b;margin-top:5px;padding-top:4px">${h}</div>`);
+    if (/PTR/.test(t)) { const h = c.querySelector('.h'), r = S.rows && S.rows.find(x => x.who === (h && h.textContent.trim())); if (r) { const d = document.createElement('div'); d.innerHTML = await memberHTML(r.id, r.who); d.querySelector('.k').remove(); d.querySelector('.h').remove(); add(d.innerHTML); } return; }
+    const x = await getTX(), e = x && x.tickers && S.sym && x.tickers[S.sym]; if (!e) return;
+    if (/Form 4/.test(t) && e.f4 && e.f4.rows) add(`<div class="r"><b>${E ? 'Form 4 open-market rows' : 'Form 4 공개시장 거래'}</b></div>` + e.f4.rows.slice(0, 6).map(i => `<div class="s" style="color:#d8f5e3">${esc(i.who)} (${esc(i.role || '')}) · ${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')} ${Number(i.shares).toLocaleString('en-US')} @ $${Number(i.price).toFixed(2)} · ${esc(md(i.date))}${i.plan ? ' · 10b5-1' : ''} ${lnk(i.url, E ? 'Filing' : '원문')}</div>`).join(''));
+    else if (/US bill/.test(t) || /미국 법안/.test(t)) { const no = (c.querySelector('.h') || {}).textContent || '', bno = no.split(' · ')[0], b = (e.bills || []).find(z => z.no === bno) || {};
+      const linked = Object.entries(x.tickers).filter(([, v]) => (v.bills || []).some(z => z.no === bno)).map(([s2]) => s2);
+      const seen = new Set(), who = (S.rows || []).filter(r => !seen.has(r.who) && seen.add(r.who));
+      add(`<div class="s">${E ? 'Status' : '상태'}: ${esc(b.a || (E ? 'Introduced' : '발의'))}${b.ad ? ' · ' + esc(md(b.ad)) : ''} · ${E ? 'introduced' : '발의일'} ${esc(md(b.d))}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(linked.join(', '))}</b></div><div class="s">${E ? `Members who traded ${S.sym}` : `${S.sym} 거래 의원`}: ${who.slice(0, 8).map(r => `${esc(r.who)} (${esc(r.p)}, ${esc(md(r.d))})`).join(', ') || '-'}</div>`); }
+    else if (/White House/.test(t) || /백악관/.test(t)) { const fr = await getJ('../data/fr/presidential.json'), it = ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === S.sym)), syms = [...new Set(it.flatMap(z => (z.moves || []).map(m => m.sym)))];
+      add(`<div class="s">${E ? 'Linked tickers in these records' : '이 기록의 연결 종목'}: <b>${esc(syms.join(', '))}</b></div>`); }
+  }
   const SECTIONS = []; S.sections = SECTIONS;
   SECTIONS.push(rows => { // Latest filers top 5
     const E = en(), seen = new Set(), top = rows.filter(r => !seen.has(r.who) && seen.add(r.who)).slice(0, 5); if (!top.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Latest filers' : '최근 신고 의원'}</h4>`;
     top.forEach(r => { const b = document.createElement('div'); b.className = 'row' + (r.tags ? ' flag' : ''); b.innerHTML = `<span><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)}</span><small>${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}<br>${tagChips(r)}</small>`;
-      b.onclick = () => { const m = window.moneyTrackerMap; if (m && r.ll) m.flyTo(r.ll, Math.max(m.getZoom(), 5), { duration: .9 }); }; b.querySelector('small').append(saveBtn(r)); box.append(b); });
+      b.onclick = () => S.openMember(r); b.querySelector('small').append(saveBtn(r)); box.append(b); });
     return box;
   });
   SECTIONS.push(rows => { // Flagged trades
     const E = en(), fl = rows.filter(r => r.tags).slice(0, 6); if (!fl.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Flagged trades' : '표시된 거래'} <small>(${fl.length}/${rows.filter(r => r.tags).length})</small></h4>`;
     fl.forEach(r => { const b = document.createElement('div'); b.className = 'row flag'; b.style.display = 'block'; b.innerHTML = `<div><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)} · ${r.ty === 'P' ? (E ? 'buy' : '매수') : r.ty === 'S' ? (E ? 'sell' : '매도') : esc(r.ty)} · ${esc(md(r.d))}</div><div style="font-size:11.5px;color:#ffd60a">${r.tags.map(g => esc(tagText(g))).join('<br>')}</div>`;
-      b.onclick = () => { const m = window.moneyTrackerMap; if (m && r.ll) m.flyTo(r.ll, Math.max(m.getZoom(), 5), { duration: .9 }); }; b.append(saveBtn(r)); box.append(b); });
+      b.onclick = () => S.openMember(r); b.append(saveBtn(r)); box.append(b); });
     const n = document.createElement('small'); n.textContent = E ? 'Tags are date checks on public filings; they do not show a reason.' : '표시는 공개 신고 날짜 비교일 뿐 이유를 뜻하지 않아요.'; box.append(n);
     return box;
+  });
+  SECTIONS.push(rows => { // Member ranking: most trades in this ticker
+    const E = en(), g = {}; rows.forEach(r => { const k = r.id || r.who; (g[k] = g[k] || { r, n: 0, a: new Set() }).n++; if (r.amt) g[k].a.add(r.amt); });
+    const top = Object.values(g).sort((a, b) => b.n - a.n || String(b.r.f).localeCompare(String(a.r.f))).slice(0, 8); if (!top.length) return null;
+    const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Member ranking (trades in this ticker)' : '의원 순위(이 종목 거래 수)'}</h4>`;
+    top.forEach((o, i) => { const b = document.createElement('div'); b.className = 'row'; b.style.display = 'block';
+      b.innerHTML = `<div style="display:flex;justify-content:space-between"><span>${i + 1}. <span class="pp" style="background:${party(o.r.p)}">${esc(o.r.p || '?')}</span>${esc(o.r.who)}</span><b>${o.n}</b></div><small>${[...o.a].map(esc).join(' · ')}</small>`;
+      b.onclick = () => S.openMember(o.r); box.append(b); });
+    const n = document.createElement('small'); n.textContent = E ? 'Counts of disclosed trades; amounts are reported ranges.' : '신고 거래 건수, 금액은 신고 구간.'; box.append(n); return box;
   });
   let busy = false;
   async function render() {
@@ -83,7 +131,7 @@
     SECTIONS.forEach(f => { try { const el = f(rows, s); if (el) box.append(el); } catch (e) { } });
     decorateDots();
   }
-  const kick = () => { if (busy) return; busy = true; requestAnimationFrame(() => { busy = false; render(); decorateCard(); }); };
+  const kick = () => { if (busy) return; busy = true; requestAnimationFrame(() => { busy = false; render(); decorateCard(); const c = document.querySelector('.leaflet-popup.mtMF:not(.mtRich) .leaflet-popup-content'); if (c && S.sym) enrich(c); }); };
   S.refresh = () => { const b = $('mtPlus'); if (b) b.remove(); S.sym = null; kick(); };
   new MutationObserver(kick).observe(document.body, { childList: true, subtree: true });
 })();
