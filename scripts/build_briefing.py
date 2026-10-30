@@ -218,7 +218,7 @@ def build_latemove(today):
         rows=rows,
         note_ko="같은 기간 비교일 뿐 이유를 말하지 않아요. 금액은 구간이라 손익은 계산하지 않아요. 투자 조언 아님.",
         note_en="Same-period comparison only, not a reason. Amounts are ranges, so no profit is computed. Not investment advice.",
-        source_ko="출처: 하원 PTR · 일별 수정종가 기준", source_en="Source: House PTRs · daily adjusted closes",
+        source_ko="출처: 하원 PTR(의원 주식 거래 신고) · 일별 수정종가 기준", source_en="Source: House PTRs · daily adjusted closes",
         source_url="https://disclosures-clerk.house.gov/FinancialDisclosure",
         **share("45일 넘겨 신고된 거래 중 %s %s: 거래일 대비 %+.1f%%" % (w[3]["who"], w[3]["tk"], w[2]),
                 "Filed past 45 days: %s %s, %+.1f%% since the trade date" % (w[3]["who"], w[3]["tk"], w[2])))
@@ -462,7 +462,7 @@ def build_filings(today):
         sub_en="Some of the notices companies file right after big events (8-K) · companies we track",
         rows=rows,
         note_ko="낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.", note_en="Filing list as submitted. No interpretation. Not investment advice.",
-        source_ko="출처: 미 증권위원회(SEC) 8-K 신고서", source_en="Source: SEC 8-K notices (EDGAR)",
+        source_ko="출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서", source_en="Source: SEC 8-K notices (EDGAR)",
         source_url="https://www.sec.gov/edgar/search/",
         **share("%s 회사들이 낸 '큰 소식' 신고서 %d건" % (latest, len(found)),
                 "%d 'big news' notices companies filed on %s" % (len(found), latest)))

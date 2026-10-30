@@ -65,7 +65,7 @@
     "1년": "1Y", "주간 순위표": "Weekly ranking", "공시": "Filings", "대략 위치": "Approx. location", "관보 조치": "Federal Register actions", "포고문": "Proclamation", "행정명령": "Executive Order", "대통령 조치": "Presidential action", "대통령 메모": "Presidential memorandum", "대통령 공고": "Presidential notice", "대통령 결정": "Presidential determination",
     "상무부 BIS(산업안보국)": "Commerce BIS (Bureau of Industry and Security)", "USTR(무역대표부)": "USTR (Trade Representative)", "재무부 OFAC(해외자산통제국)": "Treasury OFAC (Office of Foreign Assets Control)",
     "전체": "All", "미정": "TBD", "대표 발의": "Sponsor", "회부 위원회": "Referred committee",
-    "MONEY TRACKER — 회사 상세": "MONEY TRACKER — Company file", "MONEY TRACKER — 미국 회사 파일": "MONEY TRACKER — US Company File",
+    "미국주식추적단 — 회사 상세": "US Stock Trackers — Company file", "미국주식추적단 — 미국 회사 파일": "US Stock Trackers — US Company File",
     "아래 링크": "Link below", "내부 데이터 분류": "Internal data classification", "유형(신고대로)": "Type (as filed)", "당-주": "Party-State", "법안 상세 페이지 ›": "Bill detail page ›", "수정종가": "Adjusted close", "기준": "Basis",
     // NVDA hand-written route stops (data/us/ticker-routes.json)
     "본사 위치 확인됨": "HQ location confirmed", "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 산타클라라임.": "Data shows the business address in SEC filings is Santa Clara, California.",
@@ -289,12 +289,12 @@
     ["백악관·관보 조치", "White House / Federal Register actions"], ["관보 조치", "Federal Register actions"], ["의원 거래 신고(신고일 기준)", "Member trade filings (by filing date)"], ["(Filed 기준)", "(by filing date)"], ["신고일 기준", "by filing date"], ["(신고일 기준)", "(by filing date)"], ["차트 기간", "Chart period"],
     ["주간 순위표", "Weekly ranking"],
     // page chrome
-    ["MONEY TRACKER — 미국 회사 파일", "MONEY TRACKER — US Company File"], ["MONEY TRACKER — 회사 상세", "MONEY TRACKER — Company file"],
+    ["미국주식추적단 — 미국 회사 파일", "US Stock Trackers — US Company File"], ["미국주식추적단 — 회사 상세", "US Stock Trackers — Company file"],
     ["미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.", "Public records by US listed company: member trade filings, lobbying disclosures, PAC, filing links. Organized from the data; not investment advice."],
     ["미국 의회 법안·의원 거래 신고·회사 공장·다른 나라 정책을 지도 위 경로로 따라가는 관제실. 공개 자료 정리이며 투자 조언 아님.", "A control room that follows US congressional bills, member trade filings, company plants and other countries' policies as routes on a map. Based on public filings; not investment advice."],
-    ["MONEY TRACKER | 세계 관제실", "MONEY TRACKER | Global Command Room"], ["세금추적단", "Money Tracker"],
+    ["미국주식추적단 | 세계 관제실", "US Stock Trackers | Global Command Room"], ["세금추적단", "Money Tracker"], ["미국주식추적단", "US Stock Trackers"],
     ["공개 기록 정리", "Public records, organized"], ["공개 자료 불러오는 중…", "Loading public data…"], ["미국 의원 공개 기록 정리 · 신고 기준 · 투자 조언 아님", "US member public records · based on filings · not investment advice"], ["미국 상장사 공개 기록 정리 · 투자 조언 아님", "US listed-company public records · not investment advice"],
-    ["MONEY TRACKER 관제실 — ", "MONEY TRACKER Command Room — "],
+    ["미국주식추적단 관제실 — ", "US Stock Trackers Command Room — "],
     ["티커 입력", "Enter ticker"], ["의원 이름 입력", "Enter member name"], ["의원 이름", "Member name"], ["업종 선택", "Select sector"],
     ["주가 · 종가 기준", "Price · closing basis"], ["주가 데이터 준비 중", "Price data coming soon"],
     ["의원 거래 신고 (하원 PTR)", "Member trade filings (House PTR)"], ["이 종목의 의원 거래 신고 기록이 없습니다", "No member trade filings for this ticker"],
@@ -397,6 +397,7 @@
   }
   function toEn(s) {
     if (typeof s !== "string" || !(HANGUL.test(s) || /\d{4}-\d{2}/.test(s))) return s;
+    s = s.replace(/PTR\(의원 주식 거래 신고\)/g, "PTR").replace(/8-K\(회사 중요 사건 공시\)/g, "8-K");
     if (cache[s] != null) return cache[s];
     var lead = /^\s*/.exec(s)[0], trail = /\s*$/.exec(s)[0], core = s.slice(lead.length, s.length - trail.length), out;
     var dot = /\s*[·•]\s*$/.exec(core), bare = dot ? core.slice(0, dot.index) : core; // "fact ·" : text node followed by a source link

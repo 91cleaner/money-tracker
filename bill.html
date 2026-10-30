@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MONEY TRACKER — 법안 상세</title>
+<title>미국주식추적단 — 법안 상세</title>
 <meta name="description" content="미국 의회 법안 하나가 발의 의원 → 로비 공시 회사 → 해외 사업장 → 다른 나라 정책으로 어떻게 이어지는지 공개 기록으로 정리. 데이터상 정리이며 투자 조언 아님.">
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--link:#7fd8ff}
@@ -54,7 +54,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 </head>
 <body>
 <header class="bar">
-  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <a class="brand" href="./">◉ 미국주식추적단</a>
   <span class="crumb">US BILL FILE / 공개 기록 정리</span>
   <span class="sp"></span>
   <a href="world-intelligence/">관제실 ›</a>
@@ -131,7 +131,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     Object.keys(recent).forEach(function (k) { arr(recent[k]).forEach(function (b) { if (!rec && b && !SES && b.no === NUM) rec = b; }); });
     var title = ent.name.replace(NUM + " ", "");
     var url = status.source_url || (rec && rec.u);
-    document.title = NUM + " — MONEY TRACKER 법안 상세";
+    document.title = NUM + " — 미국주식추적단 법안 상세";
 
     app.replaceChildren();
     var hero = panel("법안", null, true); hero.className += " hero";
@@ -233,5 +233,5 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   });
 })();
 </script>
-</body>
+<script src="assets/mt-visits.js" defer></script></body>
 </html>

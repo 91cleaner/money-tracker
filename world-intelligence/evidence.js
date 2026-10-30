@@ -1,4 +1,4 @@
-/* MONEY TRACKER — evidence overlay for public, locally archived datasets.
+/* 미국주식추적단 — evidence overlay for public, locally archived datasets.
    Never convert machine-extracted House PTR rows into verified trades. */
 (()=>{
 'use strict';

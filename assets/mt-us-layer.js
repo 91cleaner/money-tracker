@@ -36,7 +36,7 @@
         var rows = r.t.slice(0, 6).map(function (t) {
           return '<li><b>$' + esc(t.tk) + '</b> ' + (t.ty === 'P' ? (en() ? 'buy' : '매수') : t.ty === 'S' || t.ty === 'S (partial)' ? (en() ? 'sale' : '매도') : esc(t.ty)) + ' ' + esc(t.amt) + ' · ' + esc(t.d) + ' <a href="' + esc(t.doc) + '" target="_blank" rel="noopener">PTR ↗</a></li>';
         }).join('');
-        mk.bindPopup('<div class="mtUsPop"><b>' + esc(m.name) + '</b> (' + esc(m.party) + '-' + esc(m.state) + (m.district ? '-' + esc(m.district) : '') + ')<ul>' + rows + '</ul><a href="../member.html?n=' + encodeURIComponent(r.t[0].who) + (en() ? '&lang=en' : '') + '">' + (en() ? 'Member card →' : '의원 카드 →') + '</a><small>' + (en() ? 'Recent House PTR filings. Trade date to filing can lag up to 45 days. Not investment advice.' : '최근 하원 PTR 신고. 거래일→신고일 최대 45일 차이. 투자 조언 아님.') + '</small></div>');
+        mk.bindPopup('<div class="mtUsPop"><b>' + esc(m.name) + '</b> (' + esc(m.party) + '-' + esc(m.state) + (m.district ? '-' + esc(m.district) : '') + ')<ul>' + rows + '</ul><a href="../member.html?n=' + encodeURIComponent(r.t[0].who) + (en() ? '&lang=en' : '') + '">' + (en() ? 'Member card →' : '의원 카드 →') + '</a><small>' + (en() ? 'Recent House PTR filings. Trade date to filing can lag up to 45 days. Not investment advice.' : '최근 하원 PTR(의원 주식 거래 신고). 거래일→신고일 최대 45일 차이. 투자 조언 아님.') + '</small></div>');
         mk.addTo(layer);
       });
     });

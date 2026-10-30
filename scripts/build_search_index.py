@@ -2,9 +2,9 @@
 """누적 데이터 → data/search-index.json (검색 개체 + 자동 생성 경로).
 
 입력: data/market/company-links.json, data/market/sectors.json, data/us/members.json(위원회 이름만),
-      data/us/ticker-sectors.json(있으면), data/us/trades.json(하원 PTR 신고 거래).
+      data/us/ticker-sectors.json(있으면), data/us/trades.json(하원 PTR(의원 주식 거래 신고) 거래).
 경로의 사실·출처는 모두 입력 데이터에서 가져온다. 손으로 쓴 사실 없음.
-미국 하원 의원 주식 거래(data/us/trades.json, PTR 신고 기준)는 2026-10-28 결정으로 공개. AI 미연결.
+미국 하원 의원 주식 거래(data/us/trades.json, PTR(의원 주식 거래 신고) 기준)는 2026-10-28 결정으로 공개. AI 미연결.
   python3 scripts/build_search_index.py
 """
 import json, os, re
@@ -195,7 +195,7 @@ def trade_parts(ent, mem_by_id):
         if not e: continue
         e["trades"] = rows[:5]; e["trade_n"] = len(rows)
         e["route"].append({"region": f"{dc[0]} · 의원 거래", "lat": dc[2] - 0.05, "lon": dc[3] - 0.05, "title": "의원 주식 거래(하원 PTR)", "kind": "trade", "ref": "trade:" + tk,
-            "fact": f"데이터상 하원 PTR 신고 {len(rows)}건, 최근 신고일 {rows[0]['fd']}. 신고 기준이며 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
+            "fact": f"데이터상 하원 PTR(의원 주식 거래 신고) {len(rows)}건, 최근 신고일 {rows[0]['fd']}. 신고 기준이며 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
             "source_url": rows[0]["doc"], "date": rows[0]["fd"]})
     n = 0
     for who, ts in by_who.items():
@@ -216,7 +216,7 @@ def trade_parts(ent, mem_by_id):
         al = [who, last] + ([KO_MEM[who], KO_MEM[who].split()[-1]] if who in KO_MEM else [])
         ent["member:" + (ts[0].get("id") or who)] = {"type": "member", "name": who + (f" ({m.get('party')}-{m.get('state')})" if m else ""), "aliases": al, "route": r, "trade_n": len(ts)}
         n += 1
-    json.dump({"updated": T[0].get("filed") if T else None, "note": "하원 PTR 신고 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.", "trades": [dict(tk=t["tk"], who=t["who"], ty=t["ty"], amt=t.get("amt"), d=t.get("d"), fd=t.get("filed"), doc=t["doc"]) for t in T[:20]]}, open(os.path.join(ROOT, "data", "us", "trades-recent.json"), "w"), ensure_ascii=False, indent=0)
+    json.dump({"updated": T[0].get("filed") if T else None, "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.", "trades": [dict(tk=t["tk"], who=t["who"], ty=t["ty"], amt=t.get("amt"), d=t.get("d"), fd=t.get("filed"), doc=t["doc"]) for t in T[:20]]}, open(os.path.join(ROOT, "data", "us", "trades-recent.json"), "w"), ensure_ascii=False, indent=0)
     return len(T), n
 
 LANDMARK = [  # 제정 법률(공식 congress.gov 페이지)
@@ -529,7 +529,7 @@ def main():
     print("facility stops", facility_stops(ent))
     print("new layer stops", new_layer_stops(ent))
     print("kr policy", kr_policy(ent)); print("wh topics", wh_topics(ent)); print("intl policy", intl_policy(ent)); print("kr company stops", kr_company_routes(ent))
-    res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR 신고 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
+    res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR(의원 주식 거래 신고) 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
            "with_route": sum(1 for e in ent.values() if e["route"]), "money_stops": {k: sum(1 for e in ent.values() for x in e["route"] if (x.get("ref") or "").startswith(k)) for k in ("awards:", "lobbying:", "pac:")}, "entities": ent}
     json.dump(res, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))

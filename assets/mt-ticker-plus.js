@@ -38,7 +38,7 @@
     if (g.t === 'first') return E ? `This lawmaker\'s first trade in this stock that we have on record (since ${rg})` : `우리 기록(${rg}부터)에서 이 의원이 이 종목을 처음 거래했어요`;
     if (g.t === 'bill') return E ? `Within 30 days of a related bill action (${g.no}, ${md(g.bd)}, ${Math.abs(g.n)} days ${g.n >= 0 ? 'after' : 'before'} the trade)` : `관련 법안 일정 30일 이내 (${g.no}, ${g.bd}, 거래 ${Math.abs(g.n)}일 ${g.n >= 0 ? '후' : '전'})`;
     if (g.t === 'late') return E ? 'Filed after 45 days' : '45일 지나 신고';
-    if (g.t === '8k') return E ? `Within 30 days before an 8-K (filed ${md(g.kd)}, ${g.n} days later)` : `8-K 제출 30일 이내 전 거래 (${g.kd}, ${g.n}일 뒤)`;
+    if (g.t === '8k') return E ? `Within 30 days before an 8-K (filed ${md(g.kd)}, ${g.n} days later)` : `8-K(회사 중요 사건 공시) 제출 30일 이내 전 거래 (${g.kd}, ${g.n}일 뒤)`;
     return ''; }
   const tagShort = g => { const E = en(); return { first: E ? 'First trade' : '첫 거래', bill: E ? 'Bill near trade' : '법안과 가까움', late: E ? 'Reported late' : '늦게 신고', '8k': E ? 'Big news within 30 days' : '30일 안 큰 소식' }[g.t] || ''; };
   const tagChips = r => (r.tags || []).map(g => `<span class="mtTag" title="${esc(tagText(g))}">${esc(tagShort(g))}</span>`).join('');

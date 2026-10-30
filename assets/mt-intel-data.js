@@ -1,4 +1,4 @@
-/* MONEY TRACKER curated evidence paths. Verified historical records, NOT a live feed. */
+/* 미국주식추적단 curated evidence paths. Verified historical records, NOT a live feed. */
 (function(root,factory){
   var api=factory();
   if(typeof module==="object"&&module.exports){module.exports=api;}

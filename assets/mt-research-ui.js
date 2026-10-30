@@ -314,7 +314,7 @@ function render(query){
  if(typeof api.beginQuestion==="function")api.beginQuestion();
  var result=engine.analyze(query);panel.hidden=false;panel.classList.remove("mt-expanded");while(panel.firstChild)panel.removeChild(panel.firstChild);
  if(window.MTQuickPin){try{api.map.removeLayer(window.MTQuickPin)}catch(e){}window.MTQuickPin=null;}
- var head=add(panel,"div","mt-r-head");add(head,"span","mt-r-kicker","MONEY TRACKER / INTELLIGENCE BRIEF");
+ var head=add(panel,"div","mt-r-head");add(head,"span","mt-r-kicker","미국주식추적단 / INTELLIGENCE BRIEF");
  button(head,"✕ 닫기",close,"mt-r-x");
  add(panel,"h2","",result.title);
  add(panel,"div","mt-r-ticker",result.ticker+" · "+result.topicGroup);

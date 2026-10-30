@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>This week in Congress trades | MONEY TRACKER</title>
+<title>This week in Congress trades | 미국주식추적단</title>
 <meta name="description" content="Weekly card of House members' newly reported stock trades, split by party. Public records, not investment advice.">
 <meta property="og:title" content="This week in Congress trades"><meta property="og:image" content="https://91cleaner.github.io/money-tracker/weekly/latest.png">
 <meta property="og:image:width" content="1600"><meta property="og:image:height" content="900"><meta name="twitter:card" content="summary_large_image">
@@ -28,4 +28,4 @@ fetch('latest.json',{cache:'no-cache'}).then(r=>r.json()).then(m=>{
   document.getElementById('rows').innerHTML=m.rows.flatMap(r=>r.trades.map(t=>`<tr><td>${e(r.name)}</td><td class="${r.party}">${r.party}</td><td>${e(r.district)}</td><td>${e(t.a)}</td><td><b>${t.s}</b></td><td>${e(t.amt)}</td><td>${e(t.d)}</td></tr>`)).join('');
 }).catch(()=>{document.getElementById('win').textContent='Weekly data not available yet.'});
 </script>
-</body></html>
+<script src="../assets/mt-visits.js" defer></script></body></html>

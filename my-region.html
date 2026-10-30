@@ -14,4 +14,4 @@
 <div class="footer">MONEY TRACKER · 공개 자료 기반 · 비공식 서비스</div></main>
 <script>
 (function(){const input=document.getElementById('area'),results=document.getElementById('results');const search=q=>'https://www.google.com/search?q='+encodeURIComponent(q);function go(){const area=input.value.trim().replace(/\s+/g,' ');if(area.length<2){input.focus();input.setCustomValidity('시·도와 시·군·구를 입력해주세요.');input.reportValidity();return}input.setCustomValidity('');document.getElementById('area-title').textContent='📍 '+area;document.getElementById('rep').href=search('site:assembly.go.kr '+area+' 국회의원 지역구');document.getElementById('council').href=search(area+' 지방의회 의원 명단 공식');document.getElementById('budget').href=search(area+' 예산서 결산서 지방재정 공식');results.classList.add('on');results.scrollIntoView({behavior:'smooth',block:'start'});}document.getElementById('go').addEventListener('click',go);input.addEventListener('keydown',e=>{if(e.key==='Enter')go()});input.addEventListener('input',()=>input.setCustomValidity(''));})();
-</script></body></html>
+</script><script src="assets/mt-visits.js" defer></script></body></html>

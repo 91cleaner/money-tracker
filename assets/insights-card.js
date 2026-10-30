@@ -1,4 +1,4 @@
-/* MONEY TRACKER — 핵심 카드. Renders data/us/insights.json entries (summary + lines{kind,text,src,date}) at the top of
+/* 미국주식추적단 — 핵심 카드. Renders data/us/insights.json entries (summary + lines{kind,text,src,date}) at the top of
    company / member pages. Text is shown exactly as stored (rule-computed comparisons), with each line's source link and
    date. Nothing is added or reworded. Not investment advice; no causal claim. */
 (function () {

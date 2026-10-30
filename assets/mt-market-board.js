@@ -1,4 +1,4 @@
-/* MONEY TRACKER — 상황판 (market situation board). Shows collected public data only: upcoming official dates,
+/* 미국주식추적단 — 상황판 (market situation board). Shows collected public data only: upcoming official dates,
    policy rates, Taiwan monthly revenue, latest US/China trade-control notices, sector → factor links.
    No forecast, no recommendation. Every number links to its source. Self-contained: does not touch other modules. */
 (function () {

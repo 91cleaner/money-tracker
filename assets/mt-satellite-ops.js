@@ -1,4 +1,4 @@
-/* MONEY TRACKER — 위성 작전 모드 (satellite ops). A game-like guided flight over real satellite imagery on the
+/* 미국주식추적단 — 위성 작전 모드 (satellite ops). A game-like guided flight over real satellite imagery on the
    existing control-room map: autopilot with briefing captions (optional Korean voice), manual control, and a clean
    recording mode for promo videos. Facts shown come from collected public data files and official links only.
    No forecast, no recommendation. Self-contained: uses window.MTCommand.map and touches no other module. */
@@ -85,7 +85,7 @@
       },
       src: ["미국 하원 재산공개(PTR)", "https://disclosures-clerk.house.gov/FinancialDisclosure"] },
     { id: "outro", label: "MISSION COMPLETE · 사슬 추적 완료", at: [30, 10], zoom: 2.5,
-      text: function () { return "법 → 공장 → 일자리 → 매출 → 수출 → 의원 거래. 이 사슬은 모두 공개 기록으로 이어져 있습니다. 판단은 당신이 하세요. — MONEY TRACKER"; } }
+      text: function () { return "법 → 공장 → 일자리 → 매출 → 수출 → 의원 거래. 이 사슬은 모두 공개 기록으로 이어져 있습니다. 판단은 당신이 하세요. — 미국주식추적단"; } }
   ];
 
   var S = { on: false, i: -1, auto: true, voice: false, rec: false, data: null, timer: 0, typing: 0, serial: 0, t0: 0, manual: false };

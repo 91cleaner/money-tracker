@@ -1,4 +1,4 @@
-/* MONEY TRACKER — "X에 공유" button.
+/* 미국주식추적단 — "X에 공유" button.
    Builds a post for https://x.com/intent/post?text= from what the page already shows:
    one key line (data/us/insights.json summary, or the page's own counts) + its official source link + date + this page's link.
    Text stays within X's 280-weight limit (Korean = 2, each URL = 23). Neutral wording only; the line text comes from
@@ -139,7 +139,7 @@
       bar.appendChild(bx);
     }
     if (bx) { bx.href = a.href; bx.title = a.title; }
-    meta("MONEY TRACKER 관제실 — " + head, p.line);
+    meta("미국주식추적단 관제실 — " + head, p.line);
   }
   // Watch the briefing title instead of wrapping mtAfterShow: demo routes and "no data" panels never call it.
   function hookMap() {

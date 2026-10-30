@@ -1,4 +1,4 @@
-/* MONEY TRACKER — 용어 툴팁. Adds a small "?" button after headings / table heads / labels that mention a public-record term
+/* 미국주식추적단 — 용어 툴팁. Adds a small "?" button after headings / table heads / labels that mention a public-record term
    (PTR, 13F, 로비(LDA), 의무액, PAC, 노사분규·파업 공시). Click (or Enter/Space) opens a plain-Korean explanation; Esc / outside click closes.
    Explicit use: <span data-term="PTR">PTR</span>. No network, no storage, no innerHTML. Explanations describe the record only. */
 (function () {

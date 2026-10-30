@@ -1,4 +1,4 @@
-/* MONEY TRACKER — 대장 모드 (commander mode). Shared script for company / member / sector pages and world-intelligence.
+/* 미국주식추적단 — 대장 모드 (commander mode). Shared script for company / member / sector pages and world-intelligence.
    The visitor is the control-room commander: star companies, members and sectors; get three daily tracking missions
    generated from real filings; rank up by opening cards; see new House PTR filings since the last visit;
    collect member cards into an 의원 도감 (progress vs. data/us/members.json).
@@ -170,7 +170,7 @@
     });
     panel.appendChild(tabs);
     if (tab === "missions") renderMissions(); else if (tab === "watch") renderWatch(); else if (tab === "dex") renderDex(); else renderFeed();
-    panel.appendChild(el("p", "note", "브라우저에만 저장(로그인 없음). 하원 PTR 신고 기준이며 거래일→신고일 최대 45일 차이가 있을 수 있습니다. 공개 기록일 뿐 잘잘못 판단이 아니며 투자 조언 아님."));
+    panel.appendChild(el("p", "note", "브라우저에만 저장(로그인 없음). 하원 PTR(의원 주식 거래 신고) 기준이며 거래일→신고일 최대 45일 차이가 있을 수 있습니다. 공개 기록일 뿐 잘잘못 판단이 아니며 투자 조언 아님."));
   }
   function renderMissions() {
     ensureMissions();
@@ -220,7 +220,7 @@
       top.appendChild(document.createTextNode(" · " + (TY[String(x.ty || "").charAt(0)] || x.ty || "") + " · " + (x.amt || "")));
       li.appendChild(top);
       var m = el("div", "m", "신고 " + (x.filed || "-") + " · 거래 " + (x.d || "-") + (isNew ? " · 지난 방문 이후 새 신고" : "") + " · ");
-      var u = safe(x.doc); if (u) { var c = el("a", "", "PTR 원문 ↗"); c.href = u; c.target = "_blank"; c.rel = "noopener noreferrer"; m.appendChild(c); }
+      var u = safe(x.doc); if (u) { var c = el("a", "", "PTR(의원 주식 거래 신고) 원문 ↗"); c.href = u; c.target = "_blank"; c.rel = "noopener noreferrer"; m.appendChild(c); }
       li.appendChild(m); ul.appendChild(li);
     });
     panel.appendChild(ul);
