@@ -1,11 +1,11 @@
 {
- "updated": "2026-10-29",
+ "updated": "2026-10-30",
  "source": "USAspending.gov API v2 spending_by_category (contracts A-D)",
  "basis": "obligations",
  "source_url": "https://api.usaspending.gov/",
  "period": [
   "2024-10-01",
-  "2026-10-29"
+  "2026-10-30"
  ],
  "note": "Amounts are obligations (obligated dollars) in the period, for recipients whose name exactly matches the company (plus listed subsidiaries/former names), each queried by its exact USAspending recipient_id. Total, agency and state values share the same filter and period. Other subsidiaries may be missing; check the source. 금액은 기간 내 의무액 기준.",
  "checked": 250,
@@ -23,7 +23,7 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": false,
-   "total_usd": 1095709232.24,
+   "total_usd": 1096059232.24,
    "top_agencies": [
     {
      "name": "Department of Defense",
@@ -48,7 +48,7 @@
     {
      "name": "Social Security Administration",
      "code": "SSA",
-     "usd": 27095453.45
+     "usd": 27445453.45
     }
    ],
    "top_states": [
@@ -65,7 +65,7 @@
     {
      "code": "MD",
      "name": "Maryland",
-     "usd": 162538290.74
+     "usd": 162888290.74
     },
     {
      "code": "VA",
@@ -155,7 +155,7 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": false,
-   "total_usd": 2582487709.67,
+   "total_usd": 2583554840.5,
    "top_agencies": [
     {
      "name": "Department of Defense",
@@ -192,7 +192,7 @@
     {
      "code": "DC",
      "name": "District Of Columbia",
-     "usd": 783092152.7
+     "usd": 784159283.53
     },
     {
      "code": "NY",
@@ -257,12 +257,12 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": false,
-   "total_usd": 307664424.64,
+   "total_usd": 307691024.64,
    "top_agencies": [
     {
      "name": "Department of Veterans Affairs",
      "code": "VA",
-     "usd": 222412626.49
+     "usd": 222439226.49
     },
     {
      "name": "Department of Health and Human Services",
@@ -294,7 +294,7 @@
     {
      "code": "CA",
      "name": "California",
-     "usd": 19394725.35
+     "usd": 19421325.35
     },
     {
      "code": "MA",
@@ -568,7 +568,7 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": false,
-   "total_usd": 117912926.67,
+   "total_usd": 117922661.71,
    "top_agencies": [
     {
      "name": "Department of Defense",
@@ -600,7 +600,7 @@
     {
      "code": "NC",
      "name": "North Carolina",
-     "usd": 30075209.64
+     "usd": 30084944.68
     },
     {
      "code": "CA",
@@ -706,12 +706,12 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": false,
-   "total_usd": 82142392.77,
+   "total_usd": 82500206.78,
    "top_agencies": [
     {
      "name": "Department of Veterans Affairs",
      "code": "VA",
-     "usd": 57293205.6
+     "usd": 57651019.61
     },
     {
      "name": "Department of Defense",
@@ -1629,12 +1629,12 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": false,
-   "total_usd": 2194542652.83,
+   "total_usd": 2198265420.71,
    "top_agencies": [
     {
      "name": "Department of Defense",
      "code": "DOD",
-     "usd": 1921898256.45
+     "usd": 1921901587.33
     },
     {
      "name": "General Services Administration",
@@ -1644,7 +1644,7 @@
     {
      "name": "Department of Transportation",
      "code": "DOT",
-     "usd": 74431495.57
+     "usd": 78150932.57
     },
     {
      "name": "Department of Homeland Security",
@@ -1661,7 +1661,7 @@
     {
      "code": "AZ",
      "name": "Arizona",
-     "usd": 1303615928.04
+     "usd": 1303619258.92
     },
     {
      "code": "FL",
@@ -1850,7 +1850,7 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": false,
-   "total_usd": 25354043090.74,
+   "total_usd": 25355276286.35,
    "top_agencies": [
     {
      "name": "Department of Veterans Affairs",
@@ -1860,7 +1860,7 @@
     {
      "name": "Department of Justice",
      "code": "DOJ",
-     "usd": 423340831.64
+     "usd": 424574027.25
     },
     {
      "name": "Department of Health and Human Services",
@@ -1882,7 +1882,7 @@
     {
      "code": "TX",
      "name": "Texas",
-     "usd": 25157077909.69
+     "usd": 25158155601.33
     },
     {
      "code": "OK",
@@ -2451,12 +2451,12 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": true,
-   "total_usd": 20083704504.13,
+   "total_usd": 20083596195.53,
    "top_agencies": [
     {
      "name": "Department of Defense",
      "code": "DOD",
-     "usd": 12680333917.72
+     "usd": 12680335187.72
     },
     {
      "name": "General Services Administration",
@@ -2476,7 +2476,7 @@
     {
      "name": "Department of State",
      "code": "DOS",
-     "usd": 794031789.48
+     "usd": 793922210.88
     }
    ],
    "top_states": [
@@ -2488,7 +2488,7 @@
     {
      "code": "MI",
      "name": "Michigan",
-     "usd": 3373243969.22
+     "usd": 3373245239.22
     },
     {
      "code": "MD",
@@ -2520,12 +2520,12 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": false,
-   "total_usd": 31036153.74,
+   "total_usd": 31038153.74,
    "top_agencies": [
     {
      "name": "Department of Veterans Affairs",
      "code": "VA",
-     "usd": 24363030.68
+     "usd": 24365030.68
     },
     {
      "name": "Department of Defense",
@@ -2542,7 +2542,7 @@
     {
      "code": "MN",
      "name": "Minnesota",
-     "usd": 19392505.38
+     "usd": 19394505.38
     },
     {
      "code": "TX",
@@ -2649,7 +2649,7 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": false,
-   "total_usd": 375525464.6,
+   "total_usd": 375478678.63,
    "top_agencies": [
     {
      "name": "Department of Defense",
@@ -2659,7 +2659,7 @@
     {
      "name": "Department of Veterans Affairs",
      "code": "VA",
-     "usd": 157514440.21
+     "usd": 157518159.72
     },
     {
      "name": "Department of the Treasury",
@@ -2681,12 +2681,12 @@
     {
      "code": "KY",
      "name": "Kentucky",
-     "usd": 209312896.69
+     "usd": 209313371.97
     },
     {
      "code": "IL",
      "name": "Illinois",
-     "usd": 33118071.9
+     "usd": 33125571.9
     },
     {
      "code": "FL",
@@ -3026,12 +3026,12 @@
    ],
    "basis": "obligations",
    "includes_subsidiaries": true,
-   "total_usd": 120693775198.97,
+   "total_usd": 120692272211.97,
    "top_agencies": [
     {
      "name": "Department of Defense",
      "code": "DOD",
-     "usd": 119206179999.73
+     "usd": 119204677012.73
     },
     {
      "name": "National Aeronautics and Space Administration",
