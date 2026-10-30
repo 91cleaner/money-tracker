@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-30T05:58:59.314764+00:00",
+  "checked_at": "2026-10-30T07:46:45.218590+00:00",
   "datasets": {
     "congress_bills": {
       "path": "data/us/bills.json",
@@ -18,22 +18,22 @@
     "house_ptr_candidates": {
       "path": "data/us/house-ptr-candidates.json",
       "status": "present",
-      "records": 154,
+      "records": 185,
       "data_kind": "machine_parsed_candidates_require_review",
-      "source_updated": "2026-10-30T05:58:59.238374+00:00"
+      "source_updated": "2026-10-30T07:46:45.156616+00:00"
     },
     "house_filings": {
       "path": "data/us-house-filings.json",
       "status": "present",
       "records": 4781,
-      "source_updated": "2026-10-30T05:58:53.868331+00:00"
+      "source_updated": "2026-10-30T07:46:39.012949+00:00"
     },
     "us_macro": {
       "path": "data/us-macro.json",
       "status": "present",
       "records": 1825,
       "series": 5,
-      "source_updated": "2026-10-30T05:58:53.085393+00:00"
+      "source_updated": "2026-10-30T07:46:38.219431+00:00"
     },
     "historical_events": {
       "path": "data/us-events.json",
@@ -45,7 +45,7 @@
       "path": "data/index.json",
       "status": "present",
       "records": 85,
-      "source_updated": "2026-10-30T14:04:06.600751+09:00"
+      "source_updated": "2026-10-30T16:20:51.423510+09:00"
     }
   },
   "limitations": [
