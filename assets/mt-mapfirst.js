@@ -37,9 +37,16 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
 @media (prefers-reduced-motion:reduce){.mtMFdot .d,.mtMFdot .n,.mtMFstop{animation:none}}`;
   document.head.append(css);
 
+  // Short landscape phones: keep cards clear of the tour bar, the side brief and the bottom controls.
+  const lsPad = br => { const m = document.getElementById('map'), mt = m ? m.getBoundingClientRect().top : 0, vis = id => { const e = document.getElementById(id); if (!e) return null; const r = e.getBoundingClientRect(); return r.width && getComputedStyle(e).display !== 'none' ? r : null; };
+    if (!br) { const b = vis('mtBar'); return [8, b ? Math.max(8, b.bottom - mt + 6) : 8]; }
+    const f = vis('brief'), c = vis('controls'); return [f ? innerWidth - f.left + 8 : 8, c ? innerHeight - c.top + 6 : 40]; };
   function card(html, ll) {
     const map = window.moneyTrackerMap; if (popup) map.removeLayer(popup);
-    popup = L.popup({ className: 'mtTour mtMF', closeButton: true, autoPan: true, autoPanPadding: [40, 90], maxWidth: 290, offset: [0, -6] }).setLatLng(ll).setContent(html).openOn(map);
+    const sh = innerWidth > innerHeight && innerHeight < 500;
+    popup = L.popup({ className: 'mtTour mtMF', closeButton: true, autoPan: true, autoPanPadding: [40, 90], autoPanPaddingTopLeft: sh ? lsPad(0) : null, autoPanPaddingBottomRight: sh ? lsPad(1) : null, maxWidth: 290, offset: [0, -6] }).setLatLng(ll).setContent(html).openOn(map);
+    if (sh) { document.body.classList.add('mt-lscard'); popup.on('remove', () => document.body.classList.remove('mt-lscard')); }
+    const p = popup, re = () => { if (p === popup && p._map) p.setLatLng(ll); }; setTimeout(re, 700); const el = p.getElement(); if (el) el.querySelectorAll('img').forEach(i => i.addEventListener('load', re, { once: true }));
   }
   function stopCard(t) {
     const E = en(), k = kindOf(t), T = s => (E && window.MTI18N && window.MTI18N.tr ? window.MTI18N.tr(String(s || '')) : String(s || '')), f = (E && t.fact_en) ? String(t.fact_en) : T(t.fact), short = f.length > 150 ? f.slice(0, f.lastIndexOf(' ', 147) > 60 ? f.lastIndexOf(' ', 147) : 147) + '...' : f;

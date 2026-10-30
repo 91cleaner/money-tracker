@@ -148,7 +148,7 @@
     const E = en(), box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Playback' : '재생'}</h4><div style="display:flex;gap:6px;align-items:center"><button id="mtPBbtn" class="mtSave" style="margin:0">${E ? 'Play' : '재생'}</button><input id="mtPBsl" type="range" min="0" max="0" value="0" style="flex:1"></div><div id="mtPBcap" style="font:12px ui-monospace,monospace;color:#d8f5e3;min-height:16px"></div><small>${E ? 'Lawmaker trades, insider trades (Form 4), bills, White House actions and big-news filings (8-K) lined up by date.' : '의원 거래, 임원 거래(Form 4), 법안, 백악관 발표, 큰 소식 공시(8-K)를 날짜 순서대로 보여줘요.'}</small>`;
     events(sym).then(ev => { if (S.sym !== sym) return; PB.ev = ev; const sl = box.querySelector('#mtPBsl'); sl.max = Math.max(0, ev.length - 1); sl.oninput = () => { pbStop(); pbShow(+sl.value); }; });
     box.querySelector('#mtPBbtn').onclick = e => { e.stopPropagation(); if (PB.t) return pbStop(); if (!PB.ev.length) return; if (PB.i >= PB.ev.length - 1) PB.i = -1; e.target.textContent = en() ? 'Pause' : '일시정지';
-      const map = window.moneyTrackerMap; if (map && PB.i < 0) map.setView([38, -96], 4); PB.t = setInterval(() => { if (PB.i >= PB.ev.length - 1 || S.sym !== sym) return pbStop(); pbShow(PB.i + 1); }, 700); };
+      const map = window.moneyTrackerMap; if (map && innerWidth > innerHeight && innerHeight < 500) map.closePopup(); if (map && PB.i < 0) map.setView([38, -96], 4); PB.t = setInterval(() => { if (PB.i >= PB.ev.length - 1 || S.sym !== sym) return pbStop(); pbShow(PB.i + 1); }, 700); };
     return box;
   });
   // Trade table: filter by party and buy/sell, sort by filing date, filing delay or amount.
