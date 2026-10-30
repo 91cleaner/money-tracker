@@ -171,6 +171,10 @@ def api_error_of(body):
             got[tag] = m.group(1).strip()
     if got:
         return " ".join(f"{k}={v}" for k, v in got.items())
+    if re.search(r"<html", body[:500], re.I):
+        t = re.search(r"<title[^>]*>(.*?)</title>", body, re.S | re.I)
+        txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"(?is)<(script|style)[^>]*>.*?</\1>", " ", body))).strip()
+        return "HTML 응답(포털 안내 화면): 제목=" + (t.group(1).strip() if t else "-") + " | 본문=" + txt[:300]
     return "JSON이 아닌 응답: " + body[:200].replace("\n", " ")
 
 
@@ -187,6 +191,10 @@ def get_json(url, params, tries=3, timeout=60):
                 time.sleep(3 * (i + 1))
             continue
         err = api_error_of(body)
+        if err and err.startswith("HTML 응답") and i + 1 < tries:  # 포털 점검·과부하 화면은 잠시 뒤 다시
+            last = err
+            time.sleep(20 * (i + 1))
+            continue
         if err:
             hint = " (인증키가 틀렸거나 아직 활성화되지 않았을 수 있습니다. 공공데이터포털에서 '디코딩' 키를 넣었는지, 활용신청이 승인됐는지 확인하세요.)" \
                 if any(w in err for w in ("SERVICE_KEY", "KEY_IS_NOT", "Code=30", "인증")) else ""
