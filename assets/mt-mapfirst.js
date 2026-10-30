@@ -17,6 +17,7 @@
   const css = document.createElement('style');
   css.textContent = `
 #mtHub{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 8px}#mtHub button{font:600 11px ui-monospace,monospace;padding:3px 7px;border:1px solid #2f6b55;border-radius:4px;background:#0b1d16;color:#bfeccf;cursor:pointer}#mtHub button.on{background:#1f5a3f;color:#fff;border-color:#5bda91}#mtHub button:disabled{opacity:.35;cursor:default}
+body.mt-solo #mtLegend{display:none!important}
 body.mt-mapfirst #briefStocks,body.mt-mapfirst #briefLinks,body.mt-mapfirst #mtTrades,body.mt-mapfirst #mtPrice,body.mt-mapfirst #mtRecent,body.mt-mapfirst #mtTourCard,body.mt-mapfirst #mtStop{display:none!important}
 body.mt-mapfirst .leaflet-popup.mtTour:not(.mtMF){display:none!important}
 html body .leaflet-popup.mtTour.mtMF{display:block!important}
@@ -90,7 +91,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     });
   }
   function paint(again) { if (!SUM) return; if (!again) [60, 700].forEach(ms => setTimeout(() => paint(1), ms)); const bt = $('briefText'), ti = $('briefTitle'); if (ti) ti.textContent = SUM[0]; if (bt) { bt._tok = {}; bt._mt = {}; bt._mtDone = null; bt._dc = null; bt.textContent = SUM[1]; bt.style.whiteSpace = 'pre-line' } }
-  function clear() { SUM = null; G = {}; const hb = $('mtHub'); if (hb) hb.remove(); const st = $('mtToday'); if (st) st.remove(); const map = window.moneyTrackerMap; if (layer) map.removeLayer(layer); layer = null; cur = null; if (popup) { map.removeLayer(popup); popup = null } document.body.classList.remove('mt-mapfirst'); }
+  function clear() { unisolate(); SUM = null; G = {}; const hb = $('mtHub'); if (hb) hb.remove(); const st = $('mtToday'); if (st) st.remove(); const map = window.moneyTrackerMap; if (layer) map.removeLayer(layer); layer = null; cur = null; if (popup) { map.removeLayer(popup); popup = null } document.body.classList.remove('mt-mapfirst'); }
 
   // Ticker hub: sub-tabs inside one ticker view; each tab shows only that kind of linked record on the map.
   let G = {}, FR = null;
@@ -139,10 +140,17 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     else map.flyTo(arr[0].ll, Math.max(map.getZoom(), 4), { duration: 1 });
     setTimeout(() => card(arr[0].html(), arr[0].ll), 1100); setTimeout(declutter, 1200);
   }
+  // Clean ticker view: hide other layers' lines, dots and labels while a ticker is open (restored on clear).
+  let hid = [], onAdd = null;
+  const ours = l => (layer && layer.hasLayer(l)) || (tlayer && tlayer.hasLayer(l)) || l === layer || l === tlayer || l === popup;
+  const skip = l => l instanceof L.TileLayer || l instanceof L.Popup || l instanceof L.Tooltip || l instanceof L.LayerGroup;
+  function hideOne(l) { if (ours(l) || skip(l)) return; const el = l.getElement && l.getElement(); if (el && el.style.display !== 'none') { el.style.display = 'none'; hid.push(el); } }
+  function isolate() { const map = window.moneyTrackerMap; if (window.mtUsLayer) window.mtUsLayer.hide(); map.eachLayer(hideOne); if (!onAdd) { onAdd = e => setTimeout(() => { if (onAdd) hideOne(e.layer) }, 0); map.on('layeradd', onAdd); } document.body.classList.add('mt-solo'); }
+  function unisolate() { const map = window.moneyTrackerMap; if (onAdd && map) map.off('layeradd', onAdd); onAdd = null; hid.forEach(el => el.style.display = ''); hid = []; document.body.classList.remove('mt-solo'); }
   async function setup(m) {
     const map = window.moneyTrackerMap, E = en(); clear(); cur = m; document.body.classList.add('mt-mapfirst');
     map.fire('click'); // pause the auto tour; cards open on click instead
-    layer = L.layerGroup().addTo(map);
+    layer = L.layerGroup().addTo(map); isolate();
     const pts = [];
     m.meta.forEach((t, i) => {
       if (t.lat == null) return; pts.push([t.lat, t.lon]);

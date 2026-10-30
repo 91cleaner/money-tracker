@@ -410,11 +410,12 @@
     return out;
   }
   // Korean company name -> English (EN only): first Latin alias of a search-index entity, else the name as is
+  var EN_NAMES = { AAPL: "Apple", GOOGL: "Alphabet (Google)", GOOG: "Alphabet (Google)", AMZN: "Amazon", INTC: "Intel", MSFT: "Microsoft", TSLA: "Tesla", NVDA: "NVIDIA", PLTR: "Palantir", META: "Meta", "005930.KS": "Samsung Electronics", "000660.KS": "SK hynix", "005380.KS": "Hyundai Motor", "035420.KS": "NAVER", "035720.KS": "Kakao" };
   function name(ent) {
-    var n = ent && ent.name; if (!isEn || !n || !HANGUL.test(n)) return n;
+    var n = ent && ent.name; if (isEn && ent && ent.symbol && EN_NAMES[ent.symbol]) return EN_NAMES[ent.symbol]; if (!isEn || !n || !HANGUL.test(n)) return n;
     var al = (ent.aliases || []).filter(function (a) { return !HANGUL.test(a) && /[A-Za-z]{3}/.test(a.replace(/\.[A-Z]{1,2}$/, "")) && a !== ent.symbol; }).sort(function (a, b) { var ua = /[A-Z]/.test(a) ? 1 : 0, ub = /[A-Z]/.test(b) ? 1 : 0; return ub - ua || b.length - a.length; })[0];
     if (al && /[A-Z]/.test(al)) al = al.replace(/,?\s+(CORP|INC|LTD|PLC|CO|Corp|Inc|Ltd|Plc)\.?$/, "");
-    return al ? al.replace(/\b([A-Z])([A-Z]+)\b/g, function (m, a, b) { return /^(INC|CORP|CO|LTD|PLC|ETF|ADR|USA|AMD|IBM|TSMC|NVIDIA)$/.test(m) ? (m === "INC" || m === "CORP" || m === "LTD" ? a + b.toLowerCase() + "." : m) : a + b.toLowerCase(); }).replace(/\b(Inc|Corp|Ltd)\.?$/, "$1.") : n;
+    return al ? al.replace(/\b([A-Z])([A-Z]+)\b/g, function (m, a, b) { return /^(INC|CORP|CO|LTD|PLC|ETF|ADR|USA|AMD|IBM|TSMC|NVIDIA)$/.test(m) ? (m === "INC" || m === "CORP" || m === "LTD" ? a + b.toLowerCase() + "." : m) : a + b.toLowerCase(); }).replace(/\b(Inc|Corp|Ltd)\.?$/, "$1.").replace(/^[a-z][a-z .&-]*$/, function (w) { return w.replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); }); }) : n;
   }
   // UI string that is not Korean source text (button labels owned by this file)
   var UI = {
