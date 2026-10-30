@@ -1,16 +1,16 @@
 {
- "start": "2026-10-23",
- "end": "2026-10-29",
+ "start": "2026-10-24",
+ "end": "2026-10-30",
  "fallback": false,
- "generated": "2026-10-29",
- "trades": 35,
- "members": 4,
+ "generated": "2026-10-30",
+ "trades": 38,
+ "members": 5,
  "summary": {
   "R": {
-   "m": 3,
-   "n": 33,
+   "m": 4,
+   "n": 36,
    "b": 1,
-   "s": 32,
+   "s": 35,
    "top": [
     "AMZN",
     "MCD",
@@ -220,6 +220,31 @@
    ]
   },
   {
+   "name": "Kevin Hern",
+   "party": "R",
+   "district": "OK-1",
+   "trades": [
+    {
+     "a": "ASML",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/23"
+    },
+    {
+     "a": "STX",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/23"
+    },
+    {
+     "a": "TXN",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/14"
+    }
+   ]
+  },
+  {
    "name": "Max Miller",
    "party": "R",
    "district": "OH-7",
@@ -271,5 +296,5 @@
    ]
   }
  ],
- "image": "congress-trades-2026-10-29.png"
+ "image": "congress-trades-2026-10-30.png"
 }
