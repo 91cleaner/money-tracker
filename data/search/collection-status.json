@@ -1,9 +1,9 @@
 {
-  "created_at": "2026-10-29T21:30:17.653Z",
+  "created_at": "2026-10-30T16:09:42.824Z",
   "pipeline": "official-public-no-ai",
   "collectors": {
     "us_federal_register": {
-      "count": 91,
+      "count": 97,
       "errors": []
     },
     "japan_diet": {
@@ -24,7 +24,7 @@
       ]
     },
     "us_sec": {
-      "count": 73,
+      "count": 74,
       "errors": []
     }
   }

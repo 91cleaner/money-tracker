@@ -1,10 +1,21 @@
 {
   "version": 1,
   "source": "SEC public submissions, User-Agent provided by operator",
-  "retrieved_at": "2026-10-29T21:30:59.097Z",
+  "retrieved_at": "2026-10-30T16:10:24.155Z",
   "status": "ok",
   "errors": [],
   "filings": [
+    {
+      "cik": "50863",
+      "symbol": "INTC",
+      "company": "Intel",
+      "accession": "0000050863-26-000191",
+      "form": "10-Q",
+      "filed": "2026-10-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+      "source": "SEC EDGAR",
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
+    },
     {
       "cik": "50863",
       "symbol": "INTC",
@@ -14,7 +25,7 @@
       "filed": "2026-10-29",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/intc-20261029.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "789019",
@@ -25,7 +36,7 @@
       "filed": "2026-10-28",
       "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-20261028.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.265Z"
+      "retrieved_at": "2026-10-30T16:10:23.266Z"
     },
     {
       "cik": "789019",
@@ -36,7 +47,7 @@
       "filed": "2026-10-28",
       "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.265Z"
+      "retrieved_at": "2026-10-30T16:10:23.266Z"
     },
     {
       "cik": "789019",
@@ -47,7 +58,7 @@
       "filed": "2026-10-28",
       "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436149/msft-20261028.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.265Z"
+      "retrieved_at": "2026-10-30T16:10:23.266Z"
     },
     {
       "cik": "1181412",
@@ -58,7 +69,7 @@
       "filed": "2026-10-26",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000110465926118614/tm2628247d1_8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1318605",
@@ -69,7 +80,7 @@
       "filed": "2026-10-22",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066775/tsla-20260930.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1181412",
@@ -80,7 +91,7 @@
       "filed": "2026-10-22",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1318605",
@@ -91,7 +102,7 @@
       "filed": "2026-10-21",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/tsla-20261021.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1181412",
@@ -102,7 +113,7 @@
       "filed": "2026-10-20",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066482/spcx-20261020.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1318605",
@@ -113,7 +124,7 @@
       "filed": "2026-10-02",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026064366/tsla-20261002.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1318605",
@@ -124,7 +135,7 @@
       "filed": "2026-09-29",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026063820/tsla-20260929.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "2488",
@@ -135,7 +146,7 @@
       "filed": "2026-09-28",
       "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000182/amd-20260926.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.475Z"
+      "retrieved_at": "2026-10-30T16:10:23.491Z"
     },
     {
       "cik": "1045810",
@@ -146,7 +157,7 @@
       "filed": "2026-09-03",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "789019",
@@ -157,7 +168,7 @@
       "filed": "2026-09-02",
       "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526380280/d291965d8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.265Z"
+      "retrieved_at": "2026-10-30T16:10:23.266Z"
     },
     {
       "cik": "1045810",
@@ -168,7 +179,7 @@
       "filed": "2026-08-26",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/nvda-20260826.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "1045810",
@@ -179,7 +190,7 @@
       "filed": "2026-08-26",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "2488",
@@ -190,7 +201,7 @@
       "filed": "2026-08-19",
       "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000163/amd-20260817.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.475Z"
+      "retrieved_at": "2026-10-30T16:10:23.491Z"
     },
     {
       "cik": "1045810",
@@ -201,7 +212,7 @@
       "filed": "2026-08-17",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "2488",
@@ -212,7 +223,7 @@
       "filed": "2026-08-17",
       "url": "https://www.sec.gov/Archives/edgar/data/2488/000119312526354029/d142696d8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.475Z"
+      "retrieved_at": "2026-10-30T16:10:23.491Z"
     },
     {
       "cik": "1181412",
@@ -223,7 +234,7 @@
       "filed": "2026-08-14",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026056945/spcx-20260814.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "50863",
@@ -234,7 +245,7 @@
       "filed": "2026-08-12",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000119312526346806/d117670d8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "2488",
@@ -245,7 +256,7 @@
       "filed": "2026-08-05",
       "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.475Z"
+      "retrieved_at": "2026-10-30T16:10:23.491Z"
     },
     {
       "cik": "2488",
@@ -256,7 +267,7 @@
       "filed": "2026-08-04",
       "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000121/amd-20260804.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.475Z"
+      "retrieved_at": "2026-10-30T16:10:23.491Z"
     },
     {
       "cik": "1181412",
@@ -267,7 +278,7 @@
       "filed": "2026-08-04",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/spcx-20260804.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1181412",
@@ -278,7 +289,7 @@
       "filed": "2026-08-04",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "320193",
@@ -289,7 +300,7 @@
       "filed": "2026-07-31",
       "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.048Z"
+      "retrieved_at": "2026-10-30T16:10:23.037Z"
     },
     {
       "cik": "320193",
@@ -300,7 +311,7 @@
       "filed": "2026-07-30",
       "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000018/aapl-20260730.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.048Z"
+      "retrieved_at": "2026-10-30T16:10:23.037Z"
     },
     {
       "cik": "789019",
@@ -311,7 +322,7 @@
       "filed": "2026-07-29",
       "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-20260729.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.265Z"
+      "retrieved_at": "2026-10-30T16:10:23.266Z"
     },
     {
       "cik": "789019",
@@ -322,7 +333,7 @@
       "filed": "2026-07-29",
       "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.265Z"
+      "retrieved_at": "2026-10-30T16:10:23.266Z"
     },
     {
       "cik": "50863",
@@ -333,7 +344,7 @@
       "filed": "2026-07-24",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "50863",
@@ -344,7 +355,7 @@
       "filed": "2026-07-23",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/intc-20260723.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "1318605",
@@ -355,7 +366,7 @@
       "filed": "2026-07-23",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/tsla-20260630.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1318605",
@@ -366,7 +377,7 @@
       "filed": "2026-07-22",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049213/tsla-20260722.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1045810",
@@ -377,7 +388,7 @@
       "filed": "2026-07-02",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/nvda-20260628.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "1318605",
@@ -388,7 +399,7 @@
       "filed": "2026-07-02",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026046717/tsla-20260702.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "2488",
@@ -399,7 +410,7 @@
       "filed": "2026-07-01",
       "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000115/amd-20260626.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.475Z"
+      "retrieved_at": "2026-10-30T16:10:23.491Z"
     },
     {
       "cik": "1045810",
@@ -410,7 +421,7 @@
       "filed": "2026-06-30",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/nvda-20260624.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "1181412",
@@ -421,7 +432,7 @@
       "filed": "2026-06-26",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026045763/spcx-closing8xkjune2026.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1181412",
@@ -432,7 +443,7 @@
       "filed": "2026-06-23",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026044955/spcx-pricing8xk.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1181412",
@@ -443,7 +454,7 @@
       "filed": "2026-06-22",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026044489/spcx8-kxlaunchseniornotes.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1045810",
@@ -454,7 +465,7 @@
       "filed": "2026-06-18",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/d48176d8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "1181412",
@@ -465,7 +476,7 @@
       "filed": "2026-06-17",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026043865/spaceexplorationtechnologi.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1181412",
@@ -476,7 +487,7 @@
       "filed": "2026-06-16",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026043411/spaceexplorationtechnologi.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1181412",
@@ -487,7 +498,7 @@
       "filed": "2026-06-15",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026043288/spaceexplorationtechnologi.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "1045810",
@@ -498,7 +509,7 @@
       "filed": "2026-05-20",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/nvda-20260520.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "1045810",
@@ -509,7 +520,7 @@
       "filed": "2026-05-20",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "1181412",
@@ -520,7 +531,7 @@
       "filed": "2026-05-20",
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.896Z"
+      "retrieved_at": "2026-10-30T16:10:23.954Z"
     },
     {
       "cik": "50863",
@@ -531,7 +542,7 @@
       "filed": "2026-05-15",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000118/intc-20260513.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "2488",
@@ -542,7 +553,7 @@
       "filed": "2026-05-15",
       "url": "https://www.sec.gov/Archives/edgar/data/2488/000119312526226746/d118163d8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.475Z"
+      "retrieved_at": "2026-10-30T16:10:23.491Z"
     },
     {
       "cik": "1045810",
@@ -553,7 +564,7 @@
       "filed": "2026-05-08",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/nvda-20260507.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "320193",
@@ -564,7 +575,7 @@
       "filed": "2026-05-01",
       "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.048Z"
+      "retrieved_at": "2026-10-30T16:10:23.037Z"
     },
     {
       "cik": "320193",
@@ -575,7 +586,7 @@
       "filed": "2026-04-30",
       "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000011/aapl-20260430.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.048Z"
+      "retrieved_at": "2026-10-30T16:10:23.037Z"
     },
     {
       "cik": "50863",
@@ -586,7 +597,7 @@
       "filed": "2026-04-30",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000119312526197845/d143782d8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "1045810",
@@ -597,7 +608,7 @@
       "filed": "2026-04-27",
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000026/nvda-20260424.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.623Z"
+      "retrieved_at": "2026-10-30T16:10:22.595Z"
     },
     {
       "cik": "50863",
@@ -608,7 +619,7 @@
       "filed": "2026-04-24",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000079/intc-20260328.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "50863",
@@ -619,7 +630,7 @@
       "filed": "2026-04-24",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000083/intc-20260424.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "50863",
@@ -630,7 +641,7 @@
       "filed": "2026-04-23",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000077/intc-20260423.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "1318605",
@@ -641,7 +652,7 @@
       "filed": "2026-04-23",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/tsla-20260331.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1318605",
@@ -652,7 +663,7 @@
       "filed": "2026-04-22",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026551/tsla-20260422.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "320193",
@@ -663,7 +674,7 @@
       "filed": "2026-04-20",
       "url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126015711/ef20071035_8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.048Z"
+      "retrieved_at": "2026-10-30T16:10:23.037Z"
     },
     {
       "cik": "50863",
@@ -674,7 +685,7 @@
       "filed": "2026-04-08",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000072/intc-20260408.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "50863",
@@ -685,7 +696,7 @@
       "filed": "2026-04-03",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000069/intc-20260330.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "1318605",
@@ -696,7 +707,7 @@
       "filed": "2026-04-02",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026022956/tsla-20260402.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "50863",
@@ -707,7 +718,7 @@
       "filed": "2026-03-03",
       "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000044/intc-20260227.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.686Z"
+      "retrieved_at": "2026-10-30T16:10:23.726Z"
     },
     {
       "cik": "320193",
@@ -718,7 +729,7 @@
       "filed": "2026-02-24",
       "url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126006577/ef20060722_8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.048Z"
+      "retrieved_at": "2026-10-30T16:10:23.037Z"
     },
     {
       "cik": "320193",
@@ -729,7 +740,7 @@
       "filed": "2026-01-30",
       "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000006/aapl-20251227.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.048Z"
+      "retrieved_at": "2026-10-30T16:10:23.037Z"
     },
     {
       "cik": "320193",
@@ -740,7 +751,7 @@
       "filed": "2026-01-29",
       "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000005/aapl-20260129.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:58.048Z"
+      "retrieved_at": "2026-10-30T16:10:23.037Z"
     },
     {
       "cik": "1318605",
@@ -751,7 +762,7 @@
       "filed": "2026-01-29",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1318605",
@@ -762,7 +773,7 @@
       "filed": "2026-01-28",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003837/tsla-20260128.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1318605",
@@ -773,7 +784,7 @@
       "filed": "2026-01-02",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026000016/tsla-20260102.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1318605",
@@ -784,7 +795,7 @@
       "filed": "2025-11-07",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000110465925108507/tm2530590d1_8k.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1318605",
@@ -795,7 +806,7 @@
       "filed": "2025-10-23",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025045968/tsla-20250930.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     },
     {
       "cik": "1318605",
@@ -806,7 +817,7 @@
       "filed": "2025-10-22",
       "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025045861/tsla-20251022.htm",
       "source": "SEC EDGAR",
-      "retrieved_at": "2026-10-29T21:30:57.834Z"
+      "retrieved_at": "2026-10-30T16:10:22.817Z"
     }
   ]
 }
