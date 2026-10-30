@@ -1,101 +1,38 @@
 {
- "date": "2026-10-29",
- "generated_at": "2026-10-29T08:31Z",
+ "date": "2026-10-30",
+ "generated_at": "2026-10-30T00:46Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
   {
-   "id": "movers",
-   "kind": "movers",
-   "icon": "🚨",
-   "score": 100.0,
-   "layout": "list",
-   "date": "2026-10-27",
-   "badge_ko": "큰 움직임",
-   "badge_en": "BIG MOVERS",
-   "title_ko": "어제 가장 크게 움직인 회사들",
-   "title_en": "Companies that moved most at the last close",
-   "sub_ko": "2026-10-26 → 2026-10-27 마감 가격 비교 (우리가 지켜보는 회사 중)",
-   "sub_en": "Closing price 2026-10-26 → 2026-10-27 (among companies we track)",
-   "rows": [
-    {
-     "label_ko": "PENTAIR plc",
-     "label_en": "PENTAIR plc",
-     "value_ko": "+12.8%",
-     "value_en": "+12.8%",
-     "tone": "green",
-     "mark": "📈"
-    },
-    {
-     "label_ko": "Celestica Inc",
-     "label_en": "Celestica Inc",
-     "value_ko": "+12.1%",
-     "value_en": "+12.1%",
-     "tone": "green",
-     "mark": "📈"
-    },
-    {
-     "label_ko": "Voyager Technologies, Inc.",
-     "label_en": "Voyager Technologies, Inc.",
-     "value_ko": "+11.4%",
-     "value_en": "+11.4%",
-     "tone": "green",
-     "mark": "📈"
-    },
-    {
-     "label_ko": "BigBear.ai Holdings, Inc.",
-     "label_en": "BigBear.ai Holdings, Inc.",
-     "value_ko": "+10.8%",
-     "value_en": "+10.8%",
-     "tone": "green",
-     "mark": "📈"
-    },
-    {
-     "label_ko": "Credo Technology Group Holding Ltd",
-     "label_en": "Credo Technology Group Holding Ltd",
-     "value_ko": "+10.8%",
-     "value_en": "+10.8%",
-     "tone": "green",
-     "mark": "📈"
-    }
-   ],
-   "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
-   "note_en": "Shows what moved, not why. Not investment advice.",
-   "source_ko": "출처: 일별 마감 가격 기록",
-   "source_en": "Source: daily closing prices",
-   "source_url": "https://91cleaner.github.io/money-tracker/us.html",
-   "share_ko": "2026-10-27 마감 기준 가장 크게 움직인 회사: PENTAIR plc +12.8% · 머니트래커",
-   "share_en": "Biggest mover at the 2026-10-27 close: PENTAIR plc +12.8% · Money Tracker"
-  },
-  {
    "id": "insider",
    "kind": "insider",
    "icon": "👀",
-   "score": 98.5,
+   "score": 100.0,
    "layout": "list",
-   "date": "2026-10-28",
+   "date": "2026-10-29",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식 TOP5 💸",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 💸",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-28까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-28",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-29까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-29",
    "rows": [
+    {
+     "label_ko": "Berkshire Hathaway Inc · 큰 주주",
+     "label_en": "Berkshire Hathaway Inc · 10% owner",
+     "value_ko": "~$69.0M",
+     "value_en": "~$69.0M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
     {
      "label_ko": "Goldman Sachs Group Inc · 이사",
      "label_en": "Goldman Sachs Group Inc · director",
      "value_ko": "~$10.9M",
      "value_en": "~$10.9M",
-     "tone": "red",
-     "url": "https://www.sec.gov/Archives/edgar/data/886982/000169370926000011/0001693709-26-000011-index.htm"
-    },
-    {
-     "label_ko": "Arista Networks, Inc. · 이사",
-     "label_en": "Arista Networks, Inc. · director",
-     "value_ko": "~$7.8M",
-     "value_en": "~$7.8M",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000248/0001596532-26-000248-index.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/886982/000169370926000011/0001693709-26-000011-index.htm"
     },
     {
      "label_ko": "Lam Research Corp · 최고경영자(CEO)",
@@ -127,8 +64,71 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $36.8M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $36.8M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $98.0M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $98.0M on record · Money Tracker"
+  },
+  {
+   "id": "movers",
+   "kind": "movers",
+   "icon": "🚨",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-10-28",
+   "badge_ko": "큰 움직임",
+   "badge_en": "BIG MOVERS",
+   "title_ko": "어제 가장 크게 움직인 회사들",
+   "title_en": "Companies that moved most at the last close",
+   "sub_ko": "2026-10-27 → 2026-10-28 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-10-27 → 2026-10-28 (among companies we track)",
+   "rows": [
+    {
+     "label_ko": "F5, Inc.",
+     "label_en": "F5, Inc.",
+     "value_ko": "-20.4%",
+     "value_en": "-20.4%",
+     "tone": "red",
+     "mark": "📉"
+    },
+    {
+     "label_ko": "Icon Plc",
+     "label_en": "Icon Plc",
+     "value_ko": "+17.0%",
+     "value_en": "+17.0%",
+     "tone": "green",
+     "mark": "📈"
+    },
+    {
+     "label_ko": "Vertiv Holdings Co",
+     "label_en": "Vertiv Holdings Co",
+     "value_ko": "+16.5%",
+     "value_en": "+16.5%",
+     "tone": "green",
+     "mark": "📈"
+    },
+    {
+     "label_ko": "LPL Financial Holdings Inc.",
+     "label_en": "LPL Financial Holdings Inc.",
+     "value_ko": "-15.2%",
+     "value_en": "-15.2%",
+     "tone": "red",
+     "mark": "📉"
+    },
+    {
+     "label_ko": "Costar Group, Inc.",
+     "label_en": "Costar Group, Inc.",
+     "value_ko": "-14.0%",
+     "value_en": "-14.0%",
+     "tone": "red",
+     "mark": "📉"
+    }
+   ],
+   "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
+   "note_en": "Shows what moved, not why. Not investment advice.",
+   "source_ko": "출처: 일별 마감 가격 기록",
+   "source_en": "Source: daily closing prices",
+   "source_url": "https://91cleaner.github.io/money-tracker/us.html",
+   "share_ko": "2026-10-28 마감 기준 가장 크게 움직인 회사: F5, Inc. -20.4% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-10-28 close: F5, Inc. -20.4% · Money Tracker"
   },
   {
    "id": "filings",
@@ -136,53 +136,53 @@
    "icon": "📂",
    "score": 80.0,
    "layout": "list",
-   "date": "2026-10-28",
+   "date": "2026-10-29",
    "badge_ko": "새 공시",
    "badge_en": "NEW FILINGS",
-   "title_ko": "2026-10-28 회사들이 낸 '큰 소식' 신고서 10건",
-   "title_en": "10 'big news' notices companies filed on 2026-10-28",
+   "title_ko": "2026-10-29 회사들이 낸 '큰 소식' 신고서 16건",
+   "title_en": "16 'big news' notices companies filed on 2026-10-29",
    "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
    "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
    "rows": [
     {
-     "label_ko": "Arcutis Biotherapeutics, Inc.",
-     "label_en": "Arcutis Biotherapeutics, Inc.",
+     "label_ko": "Church & Dwight Co Inc",
+     "label_en": "Church & Dwight Co Inc",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1787306/000162828026067752/arqt-20261023.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526437814/d178220d8k.htm"
     },
     {
-     "label_ko": "HF Sinclair Corp",
-     "label_en": "HF Sinclair Corp",
+     "label_ko": "Clorox Co",
+     "label_en": "Clorox Co",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1915657/000191565726000071/dino-20261028.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/21076/000120677426000586/clx4708451-8k.htm"
     },
     {
-     "label_ko": "GE HealthCare Technologies Inc.",
-     "label_en": "GE HealthCare Technologies Inc.",
+     "label_ko": "General Motors Co",
+     "label_en": "General Motors Co",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000058/gehc-20261022.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1467858/000119312526437768/d128847d8k.htm"
     },
     {
-     "label_ko": "ManpowerGroup Inc.",
-     "label_en": "ManpowerGroup Inc.",
+     "label_ko": "Harley-Davidson, Inc.",
+     "label_en": "Harley-Davidson, Inc.",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/871763/000119312526435727/man-20261028.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/793952/000079395226000065/hog-20261028.htm"
     },
     {
-     "label_ko": "T-Mobile US, Inc.",
-     "label_en": "T-Mobile US, Inc.",
+     "label_ko": "Hormel Foods Corp",
+     "label_en": "Hormel Foods Corp",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1283699/000119312526435233/d130644d8k.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/48465/000004846526000060/hrl-20261023.htm"
     }
    ],
    "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
@@ -190,13 +190,13 @@
    "source_ko": "출처: 미 증권위원회(SEC) 8-K 신고서",
    "source_en": "Source: SEC 8-K notices (EDGAR)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "2026-10-28 회사들이 낸 '큰 소식' 신고서 10건 · 머니트래커",
-   "share_en": "10 'big news' notices companies filed on 2026-10-28 · Money Tracker"
+   "share_ko": "2026-10-29 회사들이 낸 '큰 소식' 신고서 16건 · 머니트래커",
+   "share_en": "16 'big news' notices companies filed on 2026-10-29 · Money Tracker"
   },
   {
    "id": "president-adjusting-imports-of-robotics-industrial",
    "kind": "president",
-   "icon": "🏛️",
+   "icon": "",
    "score": 55.0,
    "layout": "versus",
    "date": "2026-10-28",
@@ -205,8 +205,8 @@
    "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
    "title_en": "Last similar move: what happened in the same period?",
    "now": {
-    "tag_ko": "지금 🏛️",
-    "tag_en": "NOW 🏛️",
+    "tag_ko": "지금",
+    "tag_en": "NOW",
     "title": "Adjusting Imports Of Robotics, Industrial Machinery, And Their Parts And Components Into The United States",
     "date": "2026-10-28",
     "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
@@ -250,7 +250,7 @@
   {
    "id": "president-2026-22052",
    "kind": "president",
-   "icon": "⚖️",
+   "icon": "",
    "score": 55.0,
    "layout": "versus",
    "date": "2026-10-28",
@@ -259,8 +259,8 @@
    "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
    "title_en": "Last similar move: what happened in the same period?",
    "now": {
-    "tag_ko": "지금 🏛️",
-    "tag_en": "NOW 🏛️",
+    "tag_ko": "지금",
+    "tag_en": "NOW",
     "title": "Presidential Determination Pursuant to Section 303 of the Defense Production Act of 1950, as Amended, on Domestic Petroleum Production, Refining, and Logistics Capacity",
     "date": "2026-10-28",
     "plain_ko": "대통령이 서명한 공식 문서",
@@ -357,7 +357,7 @@
    "id": "latemove",
    "kind": "latemove",
    "icon": "🕰️",
-   "score": 14.4,
+   "score": 14.3,
    "layout": "list",
    "date": "2026-10-16",
    "badge_ko": "늦은 신고 + 큰 변동",
@@ -370,8 +370,8 @@
     {
      "mark": "🕰️",
      "label": "Lee BAC",
-     "value_ko": "53일 · 판 뒤 -18.7%",
-     "value_en": "53d · -18.7% since sale",
+     "value_ko": "53일 · 판 뒤 -18.4%",
+     "value_en": "53d · -18.4% since sale",
      "tone": "red",
      "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035490.pdf"
     }
@@ -381,13 +381,13 @@
    "source_ko": "출처: 하원 PTR · 일별 수정종가 기준",
    "source_en": "Source: House PTRs · daily adjusted closes",
    "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "45일 넘겨 신고된 거래 중 Laurel Lee BAC: 거래일 대비 -18.7% · 머니트래커",
-   "share_en": "Filed past 45 days: Laurel Lee BAC, -18.7% since the trade date · Money Tracker"
+   "share_ko": "45일 넘겨 신고된 거래 중 Laurel Lee BAC: 거래일 대비 -18.4% · 머니트래커",
+   "share_en": "Filed past 45 days: Laurel Lee BAC, -18.4% since the trade date · Money Tracker"
   },
   "president": {
    "id": "president-adjusting-imports-of-robotics-industrial",
    "kind": "president",
-   "icon": "🏛️",
+   "icon": "",
    "score": 55.0,
    "layout": "versus",
    "date": "2026-10-28",
@@ -396,8 +396,8 @@
    "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
    "title_en": "Last similar move: what happened in the same period?",
    "now": {
-    "tag_ko": "지금 🏛️",
-    "tag_en": "NOW 🏛️",
+    "tag_ko": "지금",
+    "tag_en": "NOW",
     "title": "Adjusting Imports Of Robotics, Industrial Machinery, And Their Parts And Components Into The United States",
     "date": "2026-10-28",
     "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
@@ -442,31 +442,31 @@
    "id": "insider",
    "kind": "insider",
    "icon": "👀",
-   "score": 98.5,
+   "score": 100.0,
    "layout": "list",
-   "date": "2026-10-28",
+   "date": "2026-10-29",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식 TOP5 💸",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 💸",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-28까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-28",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-29까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-29",
    "rows": [
+    {
+     "label_ko": "Berkshire Hathaway Inc · 큰 주주",
+     "label_en": "Berkshire Hathaway Inc · 10% owner",
+     "value_ko": "~$69.0M",
+     "value_en": "~$69.0M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
     {
      "label_ko": "Goldman Sachs Group Inc · 이사",
      "label_en": "Goldman Sachs Group Inc · director",
      "value_ko": "~$10.9M",
      "value_en": "~$10.9M",
-     "tone": "red",
-     "url": "https://www.sec.gov/Archives/edgar/data/886982/000169370926000011/0001693709-26-000011-index.htm"
-    },
-    {
-     "label_ko": "Arista Networks, Inc. · 이사",
-     "label_en": "Arista Networks, Inc. · director",
-     "value_ko": "~$7.8M",
-     "value_en": "~$7.8M",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000248/0001596532-26-000248-index.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/886982/000169370926000011/0001693709-26-000011-index.htm"
     },
     {
      "label_ko": "Lam Research Corp · 최고경영자(CEO)",
@@ -498,14 +498,14 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $36.8M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $36.8M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $98.0M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $98.0M on record · Money Tracker"
   },
   "debt": {
    "id": "debt",
    "kind": "debt",
    "icon": "🧾",
-   "score": 30.0,
+   "score": 25.5,
    "layout": "big",
    "date": "2026-10-27",
    "badge_ko": "국가 채무",
