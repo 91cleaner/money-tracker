@@ -13,7 +13,7 @@
 .mtTag{display:inline-block;margin:1px 3px 1px 0;padding:0 4px;border:1px solid #ffd60a;border-radius:3px;font:600 10px ui-monospace,monospace;color:#ffd60a}.mtFlag .d{box-shadow:0 0 0 3px #ffd60a!important}#mtPlus .row.flag{border-color:#ffd60a}.mtLate{display:inline-block;margin-left:4px;padding:0 4px;border-radius:3px;font:700 10px ui-monospace,monospace;background:#1d3a2c;color:#d8f5e3}.mtLate.o{background:#ff9f0a;color:#111}.mtLate.r{background:#ff453a;color:#fff}
 #mtPlus{margin:6px 0 8px;font:13px/1.45 system-ui,sans-serif;color:#d8f5e3}#mtPlus h4{margin:8px 0 3px;font:700 11px ui-monospace,monospace;letter-spacing:.06em;color:#68c7d0;text-transform:uppercase}
 #mtPlus .row{display:flex;gap:6px;align-items:center;justify-content:space-between;padding:4px 6px;border:1px solid #24493b;border-radius:4px;margin:2px 0;background:#0b1d16;cursor:pointer}#mtPlus .row:hover{border-color:#5dff9e}
-#mtPlus .pp{display:inline-block;width:16px;text-align:center;border-radius:3px;font:700 10px ui-monospace,monospace;color:#111;margin-right:4px}#mtPlus small{color:#8fa89a}`;
+#mtPlus .pp{display:inline-block;width:16px;text-align:center;border-radius:3px;font:700 10px ui-monospace,monospace;color:#111;margin-right:4px}#mtPlus small{color:#8fa89a}.mtSave{margin:3px 0 0;padding:2px 8px;border:1px solid #5dff9e;border-radius:3px;background:#0b1d16;color:#5dff9e;font:600 11px ui-monospace,monospace;cursor:pointer}`;
   document.head.append(css);
   const S = { sym: null, rows: null }; window.mtTickerPlus = S;
   // Latest trade per member (rows are sorted by filed date, newest first).
@@ -31,7 +31,7 @@
     const mine = S.rows.filter(r => r.who === h.textContent.trim()); if (!mine.length) return; const E = en();
     const d = document.createElement('div'); d.className = 'mtLateLine r'; d.style.cssText = 'margin-top:4px;font:12px ui-monospace,monospace';
     d.innerHTML = mine.slice(0, 3).map(r => `${E ? 'Traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}` + (r.tags ? '<div style="font:11px/1.4 system-ui,sans-serif;color:#ffd60a">' + r.tags.map(g => esc(tagText(g))).join('<br>') + '</div>' : '')).join('<br>'); if (mine.some(r => r.tags)) c.parentNode.style.outline = '2px solid #ffd60a';
-    k.parentNode.insertBefore(d, k.nextSibling.nextSibling || null);
+    d.append(document.createElement('br'), saveBtn(mine[0])); k.parentNode.insertBefore(d, k.nextSibling.nextSibling || null);
   }
   // Unusual-trade tags (computed in build_ticker_extra.py; dates only, no causal wording).
   function tagText(g) { const E = en(), rg = S.range ? md(S.range[0]) : '';
@@ -42,19 +42,34 @@
     return ''; }
   const tagShort = g => { const E = en(); return { first: E ? 'First in data' : '첫 거래', bill: E ? 'Bill within 30d' : '법안 30일', late: E ? 'Filed >45d' : '45일 초과', '8k': E ? '8-K within 30d' : '8-K 30일' }[g.t] || ''; };
   const tagChips = r => (r.tags || []).map(g => `<span class="mtTag" title="${esc(tagText(g))}">${esc(tagShort(g))}</span>`).join('');
+  // Share card: PNG rendered in the browser with canvas. No server.
+  function saveCard(r, sym) {
+    const E = en(), W = 1200, H = 630, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+    x.fillStyle = '#06130e'; x.fillRect(0, 0, W, H); x.strokeStyle = '#5dff9e'; x.lineWidth = 4; x.strokeRect(14, 14, W - 28, H - 28);
+    x.fillStyle = '#5dff9e'; x.font = '700 92px ui-monospace,monospace'; x.fillText(sym, 60, 140);
+    x.fillStyle = party(r.p); x.fillRect(60, 180, 44, 44); x.fillStyle = '#111'; x.font = '700 30px ui-monospace,monospace'; x.fillText(r.p || '?', 71, 213);
+    x.fillStyle = '#ffffff'; x.font = '700 46px system-ui,sans-serif'; x.fillText(r.who, 124, 218);
+    const ln = [[E ? 'Trade date' : '거래일', md(r.d)], [E ? 'Filing date' : '신고일', md(r.f)], [E ? 'Days apart' : '간격', r.late + (E ? ' days' : '일')], [E ? 'Type / amount' : '구분 / 금액', (r.ty === 'P' ? (E ? 'Buy' : '매수') : r.ty === 'S' ? (E ? 'Sell' : '매도') : r.ty) + ' · ' + (r.amt || '')], [E ? 'Source' : '출처', ((r.ch === 'S' ? 'Senate' : 'House') + ' PTR' + (r.doc ? ' · ' + String(r.doc).split('/').pop() : ''))]];
+    x.font = '32px system-ui,sans-serif'; ln.forEach((l, i) => { x.fillStyle = '#8fa89a'; x.fillText(l[0], 60, 300 + i * 52); x.fillStyle = l[0] === ln[2][0] ? (r.late > 45 ? '#ff453a' : r.late > 30 ? '#ff9f0a' : '#d8f5e3') : '#d8f5e3'; x.fillText(String(l[1]).slice(0, 60), 360, 300 + i * 52); });
+    x.fillStyle = '#68c7d0'; x.font = '24px ui-monospace,monospace'; x.fillText('https://91cleaner.github.io/money-tracker/world-intelligence/?lang=en&q=' + sym, 60, 590);
+    c.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `${sym}-${r.who.replace(/\W+/g, '_')}-${r.d}.png`; document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); }, 'image/png');
+    return c;
+  }
+  S.saveCard = saveCard;
+  const saveBtn = r => { const b = document.createElement('button'); b.className = 'mtSave'; b.textContent = en() ? 'Save card' : '카드 저장'; b.onclick = e => { e.stopPropagation(); saveCard(r, S.sym); }; return b; };
   const SECTIONS = []; S.sections = SECTIONS;
   SECTIONS.push(rows => { // Latest filers top 5
     const E = en(), seen = new Set(), top = rows.filter(r => !seen.has(r.who) && seen.add(r.who)).slice(0, 5); if (!top.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Latest filers' : '최근 신고 의원'}</h4>`;
     top.forEach(r => { const b = document.createElement('div'); b.className = 'row' + (r.tags ? ' flag' : ''); b.innerHTML = `<span><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)}</span><small>${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}<br>${tagChips(r)}</small>`;
-      b.onclick = () => { const m = window.moneyTrackerMap; if (m && r.ll) m.flyTo(r.ll, Math.max(m.getZoom(), 5), { duration: .9 }); }; box.append(b); });
+      b.onclick = () => { const m = window.moneyTrackerMap; if (m && r.ll) m.flyTo(r.ll, Math.max(m.getZoom(), 5), { duration: .9 }); }; b.querySelector('small').append(saveBtn(r)); box.append(b); });
     return box;
   });
   SECTIONS.push(rows => { // Flagged trades
     const E = en(), fl = rows.filter(r => r.tags).slice(0, 6); if (!fl.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Flagged trades' : '표시된 거래'} <small>(${fl.length}/${rows.filter(r => r.tags).length})</small></h4>`;
     fl.forEach(r => { const b = document.createElement('div'); b.className = 'row flag'; b.style.display = 'block'; b.innerHTML = `<div><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)} · ${r.ty === 'P' ? (E ? 'buy' : '매수') : r.ty === 'S' ? (E ? 'sell' : '매도') : esc(r.ty)} · ${esc(md(r.d))}</div><div style="font-size:11.5px;color:#ffd60a">${r.tags.map(g => esc(tagText(g))).join('<br>')}</div>`;
-      b.onclick = () => { const m = window.moneyTrackerMap; if (m && r.ll) m.flyTo(r.ll, Math.max(m.getZoom(), 5), { duration: .9 }); }; box.append(b); });
+      b.onclick = () => { const m = window.moneyTrackerMap; if (m && r.ll) m.flyTo(r.ll, Math.max(m.getZoom(), 5), { duration: .9 }); }; b.append(saveBtn(r)); box.append(b); });
     const n = document.createElement('small'); n.textContent = E ? 'Tags are date checks on public filings; they do not show a reason.' : '표시는 공개 신고 날짜 비교일 뿐 이유를 뜻하지 않아요.'; box.append(n);
     return box;
   });
