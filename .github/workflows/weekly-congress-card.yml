@@ -18,11 +18,11 @@ jobs:
       - run: pip install pyyaml requests pdfplumber playwright && python -m playwright install --with-deps chromium
       - name: Pull newest House PTR filings
         run: python collector/us/trades.py
-        continue-on-error: true
+        # A failed refresh must not publish an old snapshot as a new weekly card.
         timeout-minutes: 20
         env: {TRADES_BUDGET_MIN: "15"}
       - run: python scripts/weekly/build_ticker_members.py
-        continue-on-error: true
+        # Missing member metadata must fail instead of silently dropping records.
         timeout-minutes: 10
         env: {CONGRESS_API_KEY: "${{ secrets.CONGRESS_API_KEY || vars.CONGRESS_API_KEY }}"}
       - name: Render card
@@ -32,10 +32,24 @@ jobs:
           WEEKLY_DATE: ${{ inputs.date }}
       - name: Commit and deploy
         env: {GH_TOKEN: "${{ github.token }}"}
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name "money-tracker-bot"; git config user.email "actions@users.noreply.github.com"
           git add weekly data/us/trades.json data/us/congress-member-cache.json data/us/ticker-members.json
           git diff --cached --quiet && exit 0
           git commit -m "weekly: Congress trades card $(date -u +%F)"
-          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
+          pushed=false
+          for i in 1 2 3; do
+            if git pull --rebase && git push; then
+              pushed=true
+              break
+            fi
+            if [ "$i" -lt 3 ]; then sleep 5; fi
+          done
+          if [ "$pushed" != true ]; then
+            echo "::error::Weekly card push failed after 3 attempts; deployment not requested."
+            exit 1
+          fi
+          # GITHUB_TOKEN pushes do not trigger push workflows; dispatch only after a verified push.
           gh workflow run deploy-pages.yml --ref main
