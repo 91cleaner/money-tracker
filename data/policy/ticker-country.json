@@ -1,0 +1,226 @@
+{
+"updated": "2026-10-30",
+"source": "SEC EDGAR submissions API (business address) + exchange suffix",
+"map": {
+"company:000660.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:005380.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:005930.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:006400.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:009150.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:012450.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:028260.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:032830.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:035420.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:035720.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:105560.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:207940.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:2308.TW": {
+"cc": "tw",
+"how": "exchange suffix .TW"
+},
+"company:2317.TW": {
+"cc": "tw",
+"how": "exchange suffix .TW"
+},
+"company:2330.TW": {
+"cc": "tw",
+"how": "exchange suffix .TW"
+},
+"company:2454.TW": {
+"cc": "tw",
+"how": "exchange suffix .TW"
+},
+"company:329180.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:373220.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:402340.KS": {
+"cc": "kr",
+"how": "exchange suffix .KS"
+},
+"company:6758.T": {
+"cc": "jp",
+"how": "exchange suffix .T"
+},
+"company:7011.T": {
+"cc": "jp",
+"how": "exchange suffix .T"
+},
+"company:7203.T": {
+"cc": "jp",
+"how": "exchange suffix .T"
+},
+"company:8035.T": {
+"cc": "jp",
+"how": "exchange suffix .T"
+},
+"company:8306.T": {
+"cc": "jp",
+"how": "exchange suffix .T"
+},
+"company:9984.T": {
+"cc": "jp",
+"how": "exchange suffix .T"
+},
+"company:ASML.AS": {
+"cc": "eu",
+"how": "exchange suffix .AS"
+},
+"company:MC.PA": {
+"cc": "eu",
+"how": "exchange suffix .PA"
+},
+"company:NOVO-B.CO": {
+"cc": "eu",
+"how": "exchange suffix .CO"
+},
+"company:RHM.DE": {
+"cc": "eu",
+"how": "exchange suffix .DE"
+},
+"company:SAP.DE": {
+"cc": "eu",
+"how": "exchange suffix .DE"
+},
+"company:SIE.DE": {
+"cc": "eu",
+"how": "exchange suffix .DE"
+},
+"company:TTE.PA": {
+"cc": "eu",
+"how": "exchange suffix .PA"
+},
+"company:ACN": {
+"cc": "eu",
+"how": "SEC EDGAR business address L2"
+},
+"company:ALKS": {
+"cc": "eu",
+"how": "SEC EDGAR business address L2"
+},
+"company:ASML": {
+"cc": "eu",
+"how": "SEC EDGAR business address P7"
+},
+"company:CRDO": {
+"cc": "eu",
+"how": "SEC EDGAR business address E9"
+},
+"company:CRH": {
+"cc": "eu",
+"how": "SEC EDGAR business address L2"
+},
+"company:ETN": {
+"cc": "eu",
+"how": "SEC EDGAR business address L2"
+},
+"company:ICLR": {
+"cc": "eu",
+"how": "SEC EDGAR business address L2"
+},
+"company:IFNNY": {
+"cc": "eu",
+"how": "SEC EDGAR business address 2M"
+},
+"company:ING": {
+"cc": "eu",
+"how": "SEC EDGAR business address P7"
+},
+"company:JCI": {
+"cc": "eu",
+"how": "SEC EDGAR business address L2"
+},
+"company:JD": {
+"cc": "cn",
+"how": "SEC EDGAR business address F4"
+},
+"company:MBFJF": {
+"cc": "jp",
+"how": "SEC EDGAR business address M0"
+},
+"company:NOK": {
+"cc": "eu",
+"how": "SEC EDGAR business address H9"
+},
+"company:NOKBF": {
+"cc": "eu",
+"how": "SEC EDGAR business address H9"
+},
+"company:NVO": {
+"cc": "eu",
+"how": "SEC EDGAR business address G7"
+},
+"company:RACE": {
+"cc": "eu",
+"how": "SEC EDGAR business address L6"
+},
+"company:SAN": {
+"cc": "eu",
+"how": "SEC EDGAR business address U3"
+},
+"company:SAP": {
+"cc": "eu",
+"how": "SEC EDGAR business address 2M"
+},
+"company:SFTBF": {
+"cc": "jp",
+"how": "SEC EDGAR business address M0"
+},
+"company:SMEGF": {
+"cc": "eu",
+"how": "SEC EDGAR business address 2M"
+},
+"company:STE": {
+"cc": "eu",
+"how": "SEC EDGAR business address L2"
+},
+"company:TM": {
+"cc": "jp",
+"how": "SEC EDGAR business address M0"
+},
+"company:TT": {
+"cc": "eu",
+"how": "SEC EDGAR business address L2"
+}
+}
+}
