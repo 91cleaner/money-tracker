@@ -18,7 +18,7 @@
   const S = { sym: null, rows: null }; window.mtTickerPlus = S;
   // Latest trade per member (rows are sorted by filed date, newest first).
   const perWho = rows => { const o = {}; rows.forEach(r => { if (!o[r.who]) o[r.who] = r; }); return o; };
-  function lateTag(r) { const E = en(); return `<span class="mtLate ${lc(r.late)}" title="${E ? 'Days from trade to disclosure; STOCK Act deadline 45 days' : '거래일부터 신고일까지 일수, STOCK Act 기한 45일'}">+${r.late}${E ? 'd' : '일'}</span>`; }
+  function lateTag(r) { const E = en(); return `<span class="mtLate ${lc(r.late)}" title="${E ? 'Days between the trade and the report. The law (STOCK Act) gives lawmakers 45 days.' : '거래한 날부터 신고한 날까지 걸린 날짜예요. 법(STOCK Act)은 45일 안에 신고하라고 해요.'}">+${r.late}${E ? 'd' : '일'}</span>`; }
   function decorateDots() {
     if (!S.rows) return; const W = perWho(S.rows);
     document.querySelectorAll('.leaflet-marker-pane .leaflet-marker-icon[title]').forEach(el => {
@@ -35,12 +35,12 @@
   }
   // Unusual-trade tags (computed in build_ticker_extra.py; dates only, no causal wording).
   function tagText(g) { const E = en(), rg = S.range ? md(S.range[0]) : '';
-    if (g.t === 'first') return E ? `First trade in this ticker by this member in our data (since ${rg})` : `우리 자료(${rg}~)에서 이 의원의 이 종목 첫 거래`;
+    if (g.t === 'first') return E ? `This lawmaker\'s first trade in this stock that we have on record (since ${rg})` : `우리 기록(${rg}부터)에서 이 의원이 이 종목을 처음 거래했어요`;
     if (g.t === 'bill') return E ? `Within 30 days of a related bill action (${g.no}, ${md(g.bd)}, ${Math.abs(g.n)} days ${g.n >= 0 ? 'after' : 'before'} the trade)` : `관련 법안 일정 30일 이내 (${g.no}, ${g.bd}, 거래 ${Math.abs(g.n)}일 ${g.n >= 0 ? '후' : '전'})`;
     if (g.t === 'late') return E ? 'Filed after 45 days' : '45일 지나 신고';
     if (g.t === '8k') return E ? `Within 30 days before an 8-K (filed ${md(g.kd)}, ${g.n} days later)` : `8-K 제출 30일 이내 전 거래 (${g.kd}, ${g.n}일 뒤)`;
     return ''; }
-  const tagShort = g => { const E = en(); return { first: E ? 'First in data' : '첫 거래', bill: E ? 'Bill within 30d' : '법안 30일', late: E ? 'Filed >45d' : '45일 초과', '8k': E ? '8-K within 30d' : '8-K 30일' }[g.t] || ''; };
+  const tagShort = g => { const E = en(); return { first: E ? 'First trade' : '첫 거래', bill: E ? 'Bill near trade' : '법안과 가까움', late: E ? 'Reported late' : '늦게 신고', '8k': E ? 'Big news within 30 days' : '30일 안 큰 소식' }[g.t] || ''; };
   const tagChips = r => (r.tags || []).map(g => `<span class="mtTag" title="${esc(tagText(g))}">${esc(tagShort(g))}</span>`).join('');
   // Share card: PNG rendered in the browser with canvas. No server.
   function saveCard(r, sym) {
@@ -74,11 +74,11 @@
     mine.sort((a, b) => b[1].d.localeCompare(a[1].d));
     const bills = (Array.isArray(bl) ? bl : []).slice().sort((a, b) => String(b.d).localeCompare(String(a.d))).slice(0, 5);
     return `<div class="k">${E ? 'Member' : '의원'} · ${esc(S.sym || '')}</div><div class="h">${esc(m.name || who)}</div><div>${esc(pn)} · ${esc(dist)}</div>` +
-      `<div class="r" style="margin-top:4px"><b>${E ? 'Bills sponsored (Congress.gov, recent first)' : '대표 발의 법안(Congress.gov, 최신순)'}</b></div>` +
+      `<div class="r" style="margin-top:4px"><b>${E ? 'Bills this lawmaker wrote and introduced (newest first, from Congress.gov)' : '이 의원이 직접 내놓은 법안 (최신순, Congress.gov 자료)'}</b></div>` +
       (bills.length ? bills.map(b => `<div class="s">${lnk(b.u, b.no)} ${esc(String(b.n).slice(0, 80))} · ${esc(md(b.d))}</div>`).join('') : `<div class="s">${E ? 'None collected.' : '수집된 법안 없음.'}</div>`) +
-      `<div class="r" style="margin-top:4px"><b>${E ? 'Trades in tracked tickers' : '추적 종목 거래'}</b> (${mine.length})</div>` +
+      `<div class="r" style="margin-top:4px"><b>${E ? 'Trades in the stocks we follow' : '우리가 보는 종목의 거래'}</b> (${mine.length})</div>` +
       mine.slice(0, 6).map(([k, r]) => `<div class="s" style="color:#d8f5e3"><b>${esc(k)}</b> ${side(r.ty)} · ${esc(r.amt)} · ${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)} ${lnk(r.doc, 'PTR')}</div>${pcLine(r)}`).join('') +
-      `<div class="s"><a href="${esc(deep(S.sym || '', id))}">${E ? 'Link to this member card' : '이 의원 카드 링크'} ›</a></div><div class="s">${E ? 'Amounts are reported ranges. Price change is close to close over the stated window; it does not show a reason.' : '금액은 신고 구간. 가격 변화는 표시된 기간의 종가 비교이며 이유를 뜻하지 않아요.'}</div>`;
+      `<div class="s"><a href="${esc(deep(S.sym || '', id))}">${E ? 'Link to this member card' : '이 의원 카드 링크'} ›</a></div><div class="s">${E ? 'Lawmakers only report a money range. The price change compares the closing price on the first and last day shown. It does not tell you why.' : '의원은 금액 범위만 신고해요. 주가 변화는 표시된 첫날과 마지막 날의 마감 가격을 비교한 거예요. 이유를 알려 주지는 않아요.'}</div>`;
   }
   function popup(html, ll) { const map = window.moneyTrackerMap, L = window.L; if (!map || !L) return;
     const go = () => L.popup({ className: 'mtTour mtMF mtRich', closeButton: true, autoPan: true, autoPanPadding: [40, 90], maxWidth: 320, offset: [0, -6] }).setLatLng(ll || map.getCenter()).setContent(html).openOn(map);
@@ -88,13 +88,13 @@
     const k = c.querySelector('.k'); if (!k || c.dataset.mtRich) return; c.dataset.mtRich = 1; const t = k.textContent, E = en(), add = h => c.insertAdjacentHTML('beforeend', `<div class="mtEnr" style="border-top:1px solid #24493b;margin-top:5px;padding-top:4px">${h}</div>`);
     if (/PTR/.test(t)) { const h = c.querySelector('.h'), r = S.rows && S.rows.find(x => x.who === (h && h.textContent.trim())); if (r) { const d = document.createElement('div'); d.innerHTML = await memberHTML(r.id, r.who); d.querySelector('.k').remove(); d.querySelector('.h').remove(); add(d.innerHTML); } return; }
     const x = await getTX(), e = x && x.tickers && S.sym && x.tickers[S.sym]; if (!e) return;
-    if (/Form 4/.test(t) && e.f4 && e.f4.rows) add(`<div class="r"><b>${E ? 'Form 4 open-market rows' : 'Form 4 공개시장 거래'}</b></div>` + e.f4.rows.slice(0, 6).map(i => `<div class="s" style="color:#d8f5e3">${esc(i.who)} (${esc(i.role || '')}) · ${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')} ${Number(i.shares).toLocaleString('en-US')} @ $${Number(i.price).toFixed(2)} · ${esc(md(i.date))}${i.plan ? ' · 10b5-1' : ''} ${lnk(i.url, E ? 'Filing' : '원문')}</div>`).join(''));
+    if (/Form 4/.test(t) && e.f4 && e.f4.rows) add(`<div class="r"><b>${E ? 'Form 4 open-market rows' : 'Form 4 공개시장 거래'}</b></div>` + e.f4.rows.slice(0, 6).map(i => `<div class="s" style="color:#d8f5e3">${esc(i.who)} (${esc(i.role || '')}) · ${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')} ${Number(i.shares).toLocaleString('en-US')} @ $${Number(i.price).toFixed(2)} · ${esc(md(i.date))}${i.plan ? (E ? ' · 10b5-1 (sale planned in advance)' : ' · 10b5-1 (미리 계획한 매도)') : ''} ${lnk(i.url, E ? 'Filing' : '원문')}</div>`).join(''));
     else if (/US bill/.test(t) || /미국 법안/.test(t)) { const no = (c.querySelector('.h') || {}).textContent || '', bno = no.split(' · ')[0], b = (e.bills || []).find(z => z.no === bno) || {};
       const linked = Object.entries(x.tickers).filter(([, v]) => (v.bills || []).some(z => z.no === bno)).map(([s2]) => s2);
       const seen = new Set(), who = (S.rows || []).filter(r => !seen.has(r.who) && seen.add(r.who));
       add(`<div class="s">${E ? 'Status' : '상태'}: ${esc(b.a || (E ? 'Introduced' : '발의'))}${b.ad ? ' · ' + esc(md(b.ad)) : ''} · ${E ? 'introduced' : '발의일'} ${esc(md(b.d))}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(linked.join(', '))}</b></div><div class="s">${E ? `Members who traded ${S.sym}` : `${S.sym} 거래 의원`}: ${who.slice(0, 8).map(r => `${esc(r.who)} (${esc(r.p)}, ${esc(md(r.d))})`).join(', ') || '-'}</div>`); }
     else if (/White House/.test(t) || /백악관/.test(t)) { const fr = await getJ('../data/fr/presidential.json'), it = ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === S.sym)), syms = [...new Set(it.flatMap(z => (z.moves || []).map(m => m.sym)))];
-      add(`<div class="s">${E ? 'Linked tickers in these records' : '이 기록의 연결 종목'}: <b>${esc(syms.join(', '))}</b></div>`); }
+      add(`<div class="s">${E ? 'Stocks named in these records' : '이 기록에 나온 종목'}: <b>${esc(syms.join(', '))}</b></div>`); }
   }
   const SECTIONS = []; S.sections = SECTIONS;
   SECTIONS.push(rows => { // Latest filers top 5
@@ -109,17 +109,17 @@
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Flagged trades' : '표시된 거래'} <small>(${fl.length}/${rows.filter(r => r.tags).length})</small></h4>`;
     fl.forEach(r => { const b = document.createElement('button'); b.type = 'button'; b.className = 'row flag'; b.style.display = 'block'; b.innerHTML = `<div><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)} · ${r.ty === 'P' ? (E ? 'buy' : '매수') : r.ty === 'S' ? (E ? 'sell' : '매도') : esc(r.ty)} · ${esc(md(r.d))}</div><div style="font-size:11.5px;color:#ffd60a">${r.tags.map(g => esc(tagText(g))).join('<br>')}</div>`;
       b.onclick = () => S.openMember(r); b.append(saveBtn(r)); box.append(b); });
-    const n = document.createElement('small'); n.textContent = E ? 'Tags are date checks on public filings; they do not show a reason.' : '표시는 공개 신고 날짜 비교일 뿐 이유를 뜻하지 않아요.'; box.append(n);
+    const n = document.createElement('small'); n.textContent = E ? 'These tags only compare dates in public reports. They do not tell you why.' : '이 표시는 공개 신고의 날짜만 비교한 거예요. 이유를 알려 주지는 않아요.'; box.append(n);
     return box;
   });
   SECTIONS.push(rows => { // Member ranking: most trades in this ticker
     const E = en(), g = {}; rows.forEach(r => { const k = r.id || r.who; (g[k] = g[k] || { r, n: 0, a: new Set() }).n++; if (r.amt) g[k].a.add(r.amt); });
     const top = Object.values(g).sort((a, b) => b.n - a.n || String(b.r.f).localeCompare(String(a.r.f))).slice(0, 8); if (!top.length) return null;
-    const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Member ranking (trades in this ticker)' : '의원 순위(이 종목 거래 수)'}</h4>`;
+    const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Which lawmakers traded this stock the most' : '이 종목을 가장 많이 거래한 의원'}</h4>`;
     top.forEach((o, i) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'row'; b.style.display = 'block';
       b.innerHTML = `<div style="display:flex;justify-content:space-between"><span>${i + 1}. <span class="pp" style="background:${party(o.r.p)}">${esc(o.r.p || '?')}</span>${esc(o.r.who)}</span><b>${o.n}</b></div><small>${[...o.a].map(esc).join(' · ')}</small>`;
       b.onclick = () => S.openMember(o.r); box.append(b); });
-    const n = document.createElement('small'); n.textContent = E ? 'Counts of disclosed trades; amounts are reported ranges.' : '신고 거래 건수, 금액은 신고 구간.'; box.append(n); return box;
+    const n = document.createElement('small'); n.textContent = E ? 'Number of trades each lawmaker reported. Amounts are money ranges.' : '의원마다 신고한 거래 수예요. 금액은 범위로만 나와요.'; box.append(n); return box;
   });
   // Playback: lights up trades, Form 4s, bills, White House items and 8-Ks on the map in date order.
   const PB = { t: null, i: 0, ev: [], lay: null };
@@ -129,7 +129,7 @@
     if (hq) ((e.f4 && e.f4.rows) || []).forEach(i => ev.push({ d: i.date, k: 'Form 4', c: '#c08cff', ll: hq, t: `${i.who} · ${i.code === 'P' ? 'Buy' : 'Sell'} ${Number(i.shares).toLocaleString('en-US')}` }));
     (e.bills || []).forEach(b => ev.push({ d: b.d, k: E ? 'Bill' : '법안', c: '#ffd60a', ll: [38.8899, -77.0091], t: `${b.no} · ${String(b.n).slice(0, 60)}` }));
     ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === sym)).forEach(z => ev.push({ d: String(z.date).slice(0, 10), k: E ? 'White House' : '백악관', c: '#e8e8e8', ll: [38.8977, -77.0365], t: String(z.title || '').slice(0, 70) }));
-    if (hq) (e.k8 || []).forEach(f => ev.push({ d: f.d, k: '8-K', c: '#68c7d0', ll: hq, t: f.items && f.items.length ? 'Item ' + f.items.join(', ') : '8-K' }));
+    if (hq) (e.k8 || []).forEach(f => ev.push({ d: f.d, k: '8-K (big-news filing)', c: '#68c7d0', ll: hq, t: f.items && f.items.length ? 'Item ' + f.items.join(', ') : '8-K' }));
     return ev.filter(v => v.d).sort((a, b) => a.d.localeCompare(b.d));
   }
   function pbShow(i) { const map = window.moneyTrackerMap, L = window.L; if (!map || !L || !PB.ev.length) return; PB.i = i;
@@ -143,7 +143,7 @@
   function pbStop() { clearInterval(PB.t); PB.t = null; const ov = $('mtPBov'); if (ov && PB.i >= PB.ev.length - 1) setTimeout(() => ov.remove(), 3000); const b = $('mtPBbtn'); if (b) b.textContent = en() ? 'Play' : '재생'; }
   S.playback = PB;
   SECTIONS.unshift((rows, sym) => {
-    const E = en(), box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Playback' : '재생'}</h4><div style="display:flex;gap:6px;align-items:center"><button id="mtPBbtn" class="mtSave" style="margin:0">${E ? 'Play' : '재생'}</button><input id="mtPBsl" type="range" min="0" max="0" value="0" style="flex:1"></div><div id="mtPBcap" style="font:12px ui-monospace,monospace;color:#d8f5e3;min-height:16px"></div><small>${E ? 'Trades, Form 4s, bills, White House items and 8-Ks in date order. Dates only.' : '거래, Form 4, 법안, 백악관, 8-K를 날짜순으로 표시. 날짜만 보여줘요.'}</small>`;
+    const E = en(), box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Playback' : '재생'}</h4><div style="display:flex;gap:6px;align-items:center"><button id="mtPBbtn" class="mtSave" style="margin:0">${E ? 'Play' : '재생'}</button><input id="mtPBsl" type="range" min="0" max="0" value="0" style="flex:1"></div><div id="mtPBcap" style="font:12px ui-monospace,monospace;color:#d8f5e3;min-height:16px"></div><small>${E ? 'Lawmaker trades, insider trades (Form 4), bills, White House actions and big-news filings (8-K) lined up by date.' : '의원 거래, 임원 거래(Form 4), 법안, 백악관 발표, 큰 소식 공시(8-K)를 날짜 순서대로 보여줘요.'}</small>`;
     events(sym).then(ev => { if (S.sym !== sym) return; PB.ev = ev; const sl = box.querySelector('#mtPBsl'); sl.max = Math.max(0, ev.length - 1); sl.oninput = () => { pbStop(); pbShow(+sl.value); }; });
     box.querySelector('#mtPBbtn').onclick = e => { e.stopPropagation(); if (PB.t) return pbStop(); if (!PB.ev.length) return; if (PB.i >= PB.ev.length - 1) PB.i = -1; e.target.textContent = en() ? 'Pause' : '일시정지';
       const map = window.moneyTrackerMap; if (map && PB.i < 0) map.setView([38, -96], 4); PB.t = setInterval(() => { if (PB.i >= PB.ev.length - 1 || S.sym !== sym) return pbStop(); pbShow(PB.i + 1); }, 700); };
@@ -174,8 +174,8 @@
       if (m && m.c && m.c.length > 1) { const L = m.c.length, c = m.c[L - 1], p = m.c[L - 2], y = m.c.slice(-250), ch = ((c - p) / p * 100).toFixed(2);
         out.push(`<div><b style="font-size:16px">${esc(m.name || sym)}</b> ${E ? 'close' : '종가'} <b>${Math.round(c).toLocaleString('en-US')} KRW</b> (${ch > 0 ? '+' : ''}${ch}% ${E ? 'vs prior close' : '전일 대비'}) · ${esc(md(m.d[L - 1]))}</div><div style="color:#8fa89a">${E ? '1-year range' : '1년 범위'} ${Math.round(Math.min(...y)).toLocaleString('en-US')} – ${Math.round(Math.max(...y)).toLocaleString('en-US')} KRW · ${esc(m.source || '')}</div>`); }
       const h = n && (n.holdings || []).find(x => m && x.company === m.name);
-      if (h) out.push(`<div style="margin-top:4px">${E ? 'NPS (National Pension Service)' : '국민연금'}: ${E ? 'stake' : '지분율'} <b>${h.stake_pct}%</b> · ${E ? 'value' : '평가액'} <b>${E ? (h.value_100m_krw / 1e4).toFixed(1) + 'T KRW' : Math.round(h.value_100m_krw).toLocaleString('en-US') + '억원'}</b> · ${E ? 'weight in domestic stocks' : '국내주식 내 비중'} ${h.weight_pct}% · ${E ? 'rank' : '순위'} ${h.rank} · ${E ? 'as of' : '기준'} ${esc(h.as_of)} ${lnk(h.source_url || n.board_url, E ? 'NPS disclosure' : '국민연금 공시')}</div>`);
-      else out.push(`<div style="color:#8fa89a">${E ? 'Not in the collected NPS domestic holdings list.' : '수집된 국민연금 국내주식 목록에 없어요.'}</div>`);
+      if (h) out.push(`<div style="margin-top:4px">${E ? 'NPS (National Pension Service)' : '국민연금'}: ${E ? 'stake' : '지분율'} <b>${h.stake_pct}%</b> · ${E ? 'value' : '평가액'} <b>${E ? (h.value_100m_krw / 1e4).toFixed(1) + 'T KRW' : Math.round(h.value_100m_krw).toLocaleString('en-US') + '억원'}</b> · ${E ? 'share of its Korean stock money' : '국민연금 국내 주식 돈 중 비중'} ${h.weight_pct}% · ${E ? 'rank' : '순위'} ${h.rank} · ${E ? 'as of' : '기준'} ${esc(h.as_of)} ${lnk(h.source_url || n.board_url, E ? 'NPS disclosure' : '국민연금 공시')}</div>`);
+      else out.push(`<div style="color:#8fa89a">${E ? 'This stock is not on the National Pension Service\'s list of Korean stocks it owns.' : '국민연금이 가진 국내 주식 목록에 이 종목은 없어요.'}</div>`);
       el.innerHTML = out.join('');
     });
     return box;
@@ -187,20 +187,20 @@
     const k = tabNow(), box = $('mtPlus'), lst = $('mtHubList'); if (box) box.style.display = (k === 'all' || k === 'law') ? '' : 'none';
     if (!lst || !S.sym || (k !== 'ins' && k !== 'wh') || (lst.dataset.tp === k + S.sym && lst.querySelector('.mtTP'))) return; lst.dataset.tp = k + S.sym; const E = en();
     if (k === 'ins' && /\.KS$/.test(S.sym)) { const x = await getJ('./kr-insiders.json'), rows = (x && x.tickers && x.tickers[S.sym] && x.tickers[S.sym].rows) || [];
-      lst.replaceChildren(); if (!rows.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'No DART insider or major-shareholder ownership reports in the last 180 days for this ticker.' : '최근 180일 이 종목의 DART 임원·주요주주 소유상황보고가 없어요.'; lst.append(w); return; }
+      lst.replaceChildren(); if (!rows.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'No boss or big owner of this company reported a share change on DART in the last 180 days.' : '최근 180일 동안 이 회사 임원이나 큰 주주가 DART에 주식 변동을 알린 기록이 없어요.'; lst.append(w); return; }
       const t = document.createElement('div'); t.className = 'mtTP'; t.style.cssText = 'font:11.5px/1.4 ui-monospace,monospace;color:#d8f5e3';
-      t.innerHTML = `<div style="color:#68c7d0;margin:2px 0">${rows.length} ${E ? 'DART insider ownership reports, newest first' : 'DART 임원·주요주주 소유보고, 최신순'}</div>` + rows.map(i => `<div style="border:1px solid #24493b;border-radius:4px;padding:3px 5px;margin:2px 0"><b>${esc(i.who)}</b> · ${esc(i.role || '')}<br>${esc(md(i.date))} · <b style="color:${i.chg > 0 ? '#5dff9e' : i.chg < 0 ? '#ff8a80' : '#d8f5e3'}">${i.chg > 0 ? (E ? 'Increase' : '증가') : i.chg < 0 ? (E ? 'Decrease' : '감소') : (E ? 'No change' : '변동 없음')}</b> ${(i.chg > 0 ? '+' : '') + Number(i.chg).toLocaleString('en-US')} ${E ? 'sh' : '주'}${i.held != null ? ' · ' + (E ? 'held ' : '보유 ') + Number(i.held).toLocaleString('en-US') : ''}${i.rate ? ' (' + esc(i.rate) + '%)' : ''} ${lnk(i.url, 'DART')}</div>`).join('');
+      t.innerHTML = `<div style="color:#68c7d0;margin:2px 0">${rows.length} ${E ? 'DART reports, newest first (DART = Korea\'s official filing site; bosses and big owners must report when their share count changes)' : 'DART 보고, 최신순 (DART = 한국 공식 공시 사이트. 회사 임원과 큰 주주는 가진 주식 수가 바뀌면 여기에 꼭 알려야 해요)'}</div>` + rows.map(i => `<div style="border:1px solid #24493b;border-radius:4px;padding:3px 5px;margin:2px 0"><b>${esc(i.who)}</b> · ${esc(i.role || '')}<br>${esc(md(i.date))} · <b style="color:${i.chg > 0 ? '#5dff9e' : i.chg < 0 ? '#ff8a80' : '#d8f5e3'}">${i.chg > 0 ? (E ? 'Increase' : '증가') : i.chg < 0 ? (E ? 'Decrease' : '감소') : (E ? 'No change' : '변동 없음')}</b> ${(i.chg > 0 ? '+' : '') + Number(i.chg).toLocaleString('en-US')} ${E ? 'sh' : '주'}${i.held != null ? ' · ' + (E ? 'held ' : '보유 ') + Number(i.held).toLocaleString('en-US') : ''}${i.rate ? ' (' + esc(i.rate) + '%)' : ''} ${lnk(i.url, 'DART')}</div>`).join('');
       lst.append(t); return; }
     if (k === 'ins') { const x = await getTX(), e = x && x.tickers && x.tickers[S.sym], rows = (e && e.f4 && e.f4.rows) || [];
-      lst.replaceChildren(); if (!rows.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'No open-market Form 4 buys or sells in the last 90 days for this ticker (US-listed only; option exercises and tax withholding are not counted).' : '최근 90일 이 종목의 공개시장 Form 4 매수·매도가 없어요(미국 상장사만, 옵션 행사·세금 상계 제외).'; lst.append(w); return; }
+      lst.replaceChildren(); if (!rows.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'No company insider bought or sold this stock on the market in the last 90 days. (Form 4 = the report insiders file. US companies only. Stock given as pay is not counted.)' : '최근 90일 동안 이 회사 임원이 시장에서 이 주식을 사거나 판 기록이 없어요. (Form 4 = 임원이 내는 신고서. 미국 회사만 해당. 월급처럼 받은 주식은 빼고 셌어요.)'; lst.append(w); return; }
       const t = document.createElement('div'); t.className = 'mtTP'; t.style.cssText = 'font:11.5px/1.4 ui-monospace,monospace;color:#d8f5e3';
-      t.innerHTML = `<div style="color:#68c7d0;margin:2px 0">${rows.length} ${E ? 'Form 4 rows, newest first' : 'Form 4 거래, 최신순'}</div>` + rows.map(i => `<div style="border:1px solid #24493b;border-radius:4px;padding:3px 5px;margin:2px 0"><b>${esc(i.who)}</b> · ${esc(i.role || '')}<br>${esc(md(i.date))} · <b style="color:${i.code === 'P' ? '#5dff9e' : '#ff8a80'}">${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')}</b> ${Number(i.shares).toLocaleString('en-US')} @ $${Number(i.price).toFixed(2)} = ${money2(i.shares * i.price)}${i.plan ? ' · 10b5-1' : ''} ${lnk(i.url, 'Form 4')}</div>`).join('');
+      t.innerHTML = `<div style="color:#68c7d0;margin:2px 0">${rows.length} ${E ? 'Form 4 trades, newest first (Form 4 = a report company insiders file when they buy or sell their own company\'s stock)' : 'Form 4 거래, 최신순 (Form 4 = 회사 임원이 자기 회사 주식을 사고팔 때 내는 신고서)'}</div>` + rows.map(i => `<div style="border:1px solid #24493b;border-radius:4px;padding:3px 5px;margin:2px 0"><b>${esc(i.who)}</b> · ${esc(i.role || '')}<br>${esc(md(i.date))} · <b style="color:${i.code === 'P' ? '#5dff9e' : '#ff8a80'}">${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')}</b> ${Number(i.shares).toLocaleString('en-US')} @ $${Number(i.price).toFixed(2)} = ${money2(i.shares * i.price)}${i.plan ? (E ? ' · 10b5-1 (sale planned in advance)' : ' · 10b5-1 (미리 계획한 매도)') : ''} ${lnk(i.url, 'Form 4')}</div>`).join('');
       lst.append(t); }
     if (k === 'wh') { const fr = await getJ('../data/fr/presidential.json'), it = ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === S.sym) || (z.tickers || []).includes(S.sym)).sort((a, b) => String(b.date).localeCompare(String(a.date)));
-      lst.replaceChildren(); if (!it.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'No White House or Federal Register item names this company in the collected records.' : '수집된 백악관·연방관보 기록 중 이 회사를 언급한 항목이 없어요.'; lst.append(w); return; }
+      lst.replaceChildren(); if (!it.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'We have no White House action that names this company yet.' : '아직 이 회사를 언급한 백악관 발표는 없어요.'; lst.append(w); return; }
       it.slice(0, 20).forEach(z => { const b = document.createElement('button'); b.type = 'button'; b.className = 'mtTP'; const ll = [38.8977, -77.0365], syms = [...new Set((z.moves || []).map(m => m.sym).concat(z.tickers || []))];
         b.innerHTML = `${esc(md(String(z.date).slice(0, 10)))} · ${esc(String(z.title || '').slice(0, 110))}`;
-        b.onclick = ev => { ev.stopPropagation(); popup(`<div class="k">${E ? 'White House / Federal Register' : '백악관 / 연방관보'}</div><div class="h">${esc(z.title)}</div><div>${esc(md(String(z.date).slice(0, 10)))}${z.type_en ? ' · ' + esc(E ? z.type_en : z.type) : ''}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(syms.join(', '))}</b></div><div class="s">${lnk(z.url, E ? 'Federal Register / official record' : '연방관보 원문')}</div>`, ll); };
+        b.onclick = ev => { ev.stopPropagation(); popup(`<div class="k">${E ? 'White House / Federal Register' : '백악관 / 연방관보'}</div><div class="h">${esc(z.title)}</div><div>${esc(md(String(z.date).slice(0, 10)))}${z.type_en ? ' · ' + esc(E ? z.type_en : z.type) : ''}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(syms.join(', '))}</b></div><div class="s">${lnk(z.url, E ? 'Read the official document' : '공식 원문 보기')}</div>`, ll); };
         lst.append(b); }); }
   }
   // Opening screen: 3 large cards with the latest notable filings; other controls stay behind Menu.

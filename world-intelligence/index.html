@@ -435,7 +435,7 @@ function line1(t,C,R){const k=t.kind||'',x=(t.title||'')+' '+(t.region||''),n=(S
   if(/^committee:/.test(rf))return['🏛️',E?`A congressional committee tied to this sector shows up (${nm}).`:`이 업종과 이어진 의회 위원회(${nm})가 있어요.`]}
  if(k==='supply'||/본사|공장|공급사|팹/.test(x)){const hq=/본사/.test(x),sp=/공급사/.test(x);return['🏭',E?`${hq?'The headquarters':sp?'A supplier':'A plant'} linked to ${C} is here.`:`${C}의 ${hq?'본사':sp?'공급사':'공장'}가 이곳에 있어요.`]}
  if(k==='lobby')return['📣',E?`${C} filed ${n||'some'} lobbying report${n==1?'':'s'} here.`:`${C}의 로비 공시가 ${n?n+'건 ':''}있었어요.`];
- if(k==='insider')return['•',E?`Company officers or directors reported trades in ${C} stock on SEC Form 4.`:`${C} 임원·이사가 SEC Form 4로 주식 거래를 신고했어요.`];
+ if(k==='insider')return['•',E?`Bosses at ${C} reported buying or selling their own company\'s stock. (Form 4 = the report they must file.)`:`${C} 임원이 자기 회사 주식을 사고팔았다고 신고했어요. (Form 4 = 이때 내는 신고서)`];
  if(k==='assist')return['•',E?`${C} has federal grant or loan obligations on record.`:`${C}의 연방 보조금·대출 의무액 기록이 있어요.`];
  if(k==='recall')return['•',E?`Recalls filed under ${C}'s name are on record.`:`${C} 이름으로 접수된 리콜 기록이 있어요.`];
  if(k==='prior')return['•',E?`Some trades in ${C} stock are dated within 30 days before a filing or announcement. Dates only, not a reason.`:`${C} 주식 거래 중 공시·발표 30일 이내 앞선 날짜의 기록이 있어요. 날짜만 나란히 놓은 것이에요.`];
