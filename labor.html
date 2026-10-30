@@ -129,6 +129,7 @@ table.co th,table.co td{padding:5px 6px;border-top:1px solid var(--line);text-al
 table.co .num{text-align:right;font-family:ui-monospace,Menlo,monospace}
 .labor-bg .en{color:#b9d8c4}
 </style>
+<link rel="stylesheet" href="assets/tap.css?v=tap-1">
 </head>
 <body>
 <header class="bar">
@@ -148,17 +149,18 @@ table.co .num{text-align:right;font-family:ui-monospace,Menlo,monospace}
   var q = (new URLSearchParams(location.search).get("c") || "").trim().slice(0, 40);
   window.MTLabor.load().then(function (d) {
     app.replaceChildren();
-    if (!d) { var e = el("section", "panel span2"); e.appendChild(el("div", "empty", "data/kr/labor.json 을 불러오지 못했습니다. / Could not load the data file.")); app.appendChild(e); return; }
+    if (!d) { var e = el("section", "panel span2"); e.appendChild(el("div", "empty", "data/kr/labor.json 을 불러오지 못했어요.")); app.appendChild(e); return; }
     var tab = el("section", "panel span2"); tab.appendChild(el("h2", "", "회사 파업 소식(노사분규·파업 공시)"));
     tab.appendChild(el("p", "warnnote", d.note));
+    tab.appendChild(el("p", "note", "낱말 풀이: 공시 = 회사가 꼭 알려야 하는 일을 DART(금융감독원 전자공시 사이트)에 올린 글이에요. 주권매매거래정지 = 그 회사 주식을 잠시 사고팔 수 없게 막는 거예요. 주요사항보고서 = 회사에 큰일이 생겼을 때 내는 보고서예요."));
     var f = el("form", "filter"), inp = el("input"); inp.name = "c"; inp.value = q; inp.placeholder = "회사 이름 (예: 삼성전자)"; inp.setAttribute("aria-label", "회사 이름");
     var go = el("button", "", "보기"); go.type = "submit"; f.append(inp, go); tab.appendChild(f); app.appendChild(tab);
     if (q) {
-      window.MTLabor.render(app, d, { name: q, sectorId: undefined, title: q + " · 같은 기간 있었던 일 / Same-period filings" });
+      window.MTLabor.render(app, d, { name: q, sectorId: undefined, title: q + " · 같은 기간 있었던 일" });
     }
     var rows = (d.disclosures || []);
     var all = el("section", "panel span2"); all.appendChild(el("h2", "", "최근 공시 (" + rows.length + ")"));
-    if (!rows.length) all.appendChild(el("p", "note", "아직 수집된 공시가 없습니다. DART_API_KEY 가 있어야 켜집니다(README 참고). / No filings collected yet; needs a DART_API_KEY (see README)."));
+    if (!rows.length) all.appendChild(el("p", "note", "아직 수집된 공시가 없어요. DART_API_KEY 가 있어야 켜져요(README 참고). / No filings collected yet; needs a DART_API_KEY (see README)."));
     else {
       var ol = el("ol", "tl"); rows.slice(0, 50).forEach(function (r) {
         var ev = window.MTLabor.eventsFor({ disclosures: [r] }, r.corp)[0], li = el("li"), b = el("div");

@@ -40,6 +40,7 @@
 @media(max-width:767px){.country-entry,.country-entry>div,.stickybar,.country-switch{max-width:100%;min-width:0;box-sizing:border-box}.country-switch a{min-width:0}}
 </style>
 <link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="세금추적단"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="assets/tap.css?v=tap-1">
 </head>
 <body data-page="home">
 <header class="stickybar"><a class="brand" href="./">세금추적단</a><nav class="country-switch" aria-label="국가 선택"><a href="national.html">한국</a><a href="us.html?lang=ko">미국</a></nav></header>
@@ -79,7 +80,7 @@
   <section class="sec" id="receipts">
     <p class="fixp">최근 7일 고정 · 기간 슬라이더와 무관</p>
     <h2>이번 주 영수증</h2>
-    <p class="sub">최근 7일 계약 중 금액이 큰 순서입니다. 머리글을 누르면 정렬이 바뀝니다. 모든 줄은 나라장터 원본으로 연결됩니다.</p>
+    <p class="sub">최근 7일 계약 중 금액이 큰 순서예요. 머리글을 누르면 정렬이 바뀌어요. 모든 줄은 나라장터 원본으로 연결돼요.</p>
     <div class="rcpt-wrap"><table class="rcpt" id="rcpt"><thead><tr><th class="rc-no">#</th><th>정렬 <button type="button" data-k="amount" aria-pressed="true">금액 ↓</button> <button type="button" data-k="date">날짜</button></th></tr></thead><tbody></tbody></table></div>
     <button class="more" type="button" id="rcpt-more" hidden>더 보기</button>
     <details class="morebox" id="lucky"><summary>아무 계약이나 하나 뽑아 보기</summary>
@@ -91,7 +92,7 @@
 
   <section class="sec home-alerts" hidden>
     <h2>이번 주 눈에 띄는 패턴</h2>
-    <p class="sub">자동으로 찾은 <b>눈여겨볼 점</b>입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있습니다. <span id="nat-alerts-n"></span></p>
+    <p class="sub">자동으로 찾은 <b>눈여겨볼 점</b>입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있어요. <span id="nat-alerts-n"></span></p>
     <div class="alerts" id="nat-alerts-list"></div>
   </section>
 
@@ -109,25 +110,25 @@
   </section>
   <section class="sec" id="ranksec" hidden>
     <h2>전국 업체 순위</h2>
-    <p class="sub">85개 시의 계약을 가장 많이 받은 업체입니다. 많이 받았다고 문제가 있다는 뜻은 아닙니다. <span class="rank-period"></span></p>
+    <p class="sub">85개 시의 계약을 가장 많이 받은 업체예요. 많이 받았다고 문제가 있다는 뜻은 아니에요. <span class="rank-period"></span></p>
     <div class="rank" id="rank-list"></div>
     <a class="gobtn" href="rank.html">100위까지 보기</a>
   </section>
 
   <section class="sec" id="about" hidden>
     <h2>원칙</h2>
-    <p class="sub">공개된 공식 자료만 쓰고, 모든 항목에 출처를 답니다. 단정 대신 "눈여겨볼 점"이라고만 씁니다.</p>
+    <p class="sub">공개된 공식 자료만 쓰고, 모든 항목에 출처를 답니다. 단정 대신 "눈여겨볼 점"이라고만 써요.</p>
     <details class="morebox"><summary>더 보기 · 어떻게 만드나요?</summary>
     <ol class="steps">
       <li><b>모으고</b><span>조달청 나라장터에 공개된 시·구청 계약을 매시간 모읍니다.</span></li>
-      <li><b>살피고</b><span>쪼개진 계약, 같은 업체 반복 같은 숫자 패턴을 자동으로 찾습니다.</span></li>
-      <li><b>보여줍니다</b><span>모든 항목에 출처를 달고, 해명이 오면 그대로 싣습니다.</span></li>
+      <li><b>살피고</b><span>쪼개진 계약, 같은 업체 반복 같은 숫자 패턴을 자동으로 찾아요.</span></li>
+      <li><b>보여 줘요</b><span>모든 항목에 출처를 달고, 해명이 오면 그대로 실어요.</span></li>
     </ol>
     <ul class="principles">
       <li>정부·지자체가 이미 공개한 데이터만 쓰고, 모든 항목에 출처를 답니다.</li>
-      <li>"사기", "횡령" 같은 단정 대신 "눈여겨볼 점"이라고만 씁니다. 정상적인 이유가 있을 수 있습니다.</li>
-      <li>개인 이름은 다루지 않습니다. 업체명과 계약 정보만 보여주고, 업체 주소는 시·군·구까지만 표시합니다.</li>
-      <li>기관이나 업체가 해명을 보내면 해당 항목 바로 아래에 그대로 싣습니다.</li>
+      <li>"사기", "횡령" 같은 단정 대신 "눈여겨볼 점"이라고만 써요. 정상적인 이유가 있을 수 있어요.</li>
+      <li>개인 이름은 다루지 않아요. 업체명과 계약 정보만 보여주고, 업체 주소는 시·군·구까지만 표시합니다.</li>
+      <li>기관이나 업체가 해명을 보내면 해당 항목 바로 아래에 그대로 실어요.</li>
     </ul>
     </details>
     <p class="sub">해명·정정 요청: <a id="contact" href="https://github.com/91cleaner/money-tracker/issues/new" target="_blank" rel="noopener">GitHub에 남기기 ↗</a> · <a href="principles.html">원칙 보기</a></p>
@@ -145,8 +146,8 @@
   </section>
 
   <footer>
-    <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있습니다.</span>
-    <span><small class="unof">개인이 만든 비공식 사이트</small>입니다. 정부·지자체와 관계없습니다 · 출처 나라장터</span>
+    <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있어요.</span>
+    <span><small class="unof">개인이 만든 비공식 사이트</small>입니다. 정부·지자체와 관계없어요 · 출처 나라장터</span>
     <span>만든 사람: @청소부</span>
   </footer>
 </main>

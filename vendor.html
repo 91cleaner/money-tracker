@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="assets/refresh.css?v=202610249700">
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="세금추적단"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="assets/tap.css?v=tap-1">
 </head>
 <body data-page="vendor">
 <header class="stickybar"><a class="back" href="javascript:history.length>1?history.back():location.href='rank.html'">‹ 뒤로</a><a class="back" href="rank.html">순위</a></header>
@@ -40,18 +41,18 @@
     <h2>더 오래된 계약 (모으는 중)</h2>
     <p class="note" id="v-past-note">최근 계약보다 오래된 계약을 매일 조금씩 모으고 있어요.</p>
     <div class="cards" id="v-past"></div>
-    <p class="src">출처: 조달청 나라장터 계약정보서비스(공공데이터포털 15129427). 계약마다 확인된 가장 최근 차수 기준입니다. 대표자 이름 등 개인 정보는 싣지 않습니다.</p>
+    <p class="src">출처: 조달청 나라장터 계약정보서비스(공공데이터포털 15129427). 계약마다 확인된 가장 최근 차수 기준이에요. 대표자 이름 등 개인 정보는 싣지 않아요.</p>
   </section>
   <section class="sec" id="v-corp-sec">
     <h2>업체 정보</h2>
     <div class="facts" id="v-corp"></div>
     <div class="inds" id="v-inds"></div>
-    <p class="note" id="v-hist-note">과거 계약 이력: 이 페이지의 계약은 위 수집 기간 안의 85개 시 계약만입니다. 공개 API(공공데이터개방표준 계약정보, 나라장터 계약정보서비스)는 날짜·계약번호·기관·계약명으로만 찾을 수 있고 업체(사업자번호·업체명)로 찾는 기능이 없어(외자 계약 제외), 업체별 과거 이력은 날짜를 하루씩 거슬러 올라가며 모으고 있습니다(위 「과거 계약 이력」).</p>
-    <p class="src" id="v-corp-src">출처: 조달청 나라장터 사용자정보 서비스(업체 기본정보·업종정보), 공공데이터포털. 대표자 이름 등 개인 정보는 싣지 않습니다.</p>
+    <p class="note" id="v-hist-note">과거 계약 이력: 이 페이지의 계약은 위 수집 기간 안의 85개 시 계약만이에요. 공개 API(공공데이터개방표준 계약정보, 나라장터 계약정보서비스)는 날짜·계약번호·기관·계약명으로만 찾을 수 있고 업체(사업자번호·업체명)로 찾는 기능이 없어(외자 계약 제외), 업체별 과거 이력은 날짜를 하루씩 거슬러 올라가며 모으고 있어요(위 「과거 계약 이력」).</p>
+    <p class="src" id="v-corp-src">출처: 조달청 나라장터 사용자정보 서비스(업체 기본정보·업종정보), 공공데이터포털. 대표자 이름 등 개인 정보는 싣지 않아요.</p>
   </section>
   <section class="sec">
     <h2>분야별</h2>
-    <p class="sub">누르면 아래 계약 목록이 그 분야만 보입니다.</p>
+    <p class="sub">누르면 아래 계약 목록이 그 분야만 보예요.</p>
     <div class="cats" id="v-cats"></div>
   </section>
   <section class="sec">
@@ -66,13 +67,13 @@
   </section>
   <section class="sec">
     <h2>데이터상 이상 징후 <small class="dv-ez">(눈여겨볼 만한 점)</small></h2>
-    <p class="sub">이 업체가 들어간 자동 패턴입니다. 위법이나 비리를 뜻하지 않으며, 정상적인 이유가 있을 수 있습니다.</p>
+    <p class="sub">이 업체가 들어간 자동 패턴이에요. 위법이나 비리를 뜻하지 않으며, 정상적인 이유가 있을 수 있어요.</p>
     <div class="alerts" id="v-alerts"></div>
   </section>
   <footer>
     <span><small class="unof">개인이 만든 비공식 사이트</small> · 정부·지자체와 관계없음 · 출처 나라장터</span>
-    <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있습니다.</span>
-    <span>업체 이름은 나라장터에 공개된 그대로 쓰되, 사람 이름처럼 보이면 '개인사업자'로 가립니다. 소재지는 사업자 등록 주소의 시·군·구까지만 씁니다. <a href="./#principles">사이트 원칙 보기</a></span>
+    <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있어요.</span>
+    <span>업체 이름은 나라장터에 공개된 그대로 쓰되, 사람 이름처럼 보이면 '개인사업자'로 가립니다. 소재지는 사업자 등록 주소의 시·군·구까지만 써요. <a href="./#principles">사이트 원칙 보기</a></span>
   </footer>
 </main>
 <script src="assets/period.js?v=202610247400"></script>
