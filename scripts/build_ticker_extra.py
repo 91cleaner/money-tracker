@@ -62,6 +62,33 @@ def main():
             o["f4"] = {"filings": f.get("filings", 0), "trades": len(f.get("trades", [])), "url": f.get("source_url")}
         if o:
             out[s] = o
+    # Lawmaker trades per featured ticker with disclosure lag (trades.json: d = transaction date, filed = report filed date).
+    from datetime import date
+    D = lambda x: date.fromisoformat(x)
+    mm = {m["id"]: m for m in J("data", "us", "members.json")["members"]}
+    tr = J("data", "us", "trades.json")["trades"]
+    ALIAS = {"GOOG": "GOOGL"}
+    rng = [None, None]
+    tt = {}
+    for t in tr:
+        k = ALIAS.get(t.get("tk"), t.get("tk"))
+        d, f = t.get("d") or "", t.get("filed") or ""
+        if not (re.match(r"\d{4}-\d{2}-\d{2}$", d) and re.match(r"\d{4}-\d{2}-\d{2}$", f)) or d > f:
+            continue
+        rng[0] = min(rng[0] or d, d); rng[1] = max(rng[1] or d, d)
+        if k not in out and k not in syms:
+            continue
+        m = mm.get(t.get("id")) or {}
+        tt.setdefault(k, []).append({"who": t.get("who"), "id": t.get("id"), "p": (m.get("party") or "")[:1], "ch": t.get("c"), "d": d, "f": f,
+                                     "ty": t.get("ty"), "amt": t.get("amt"), "doc": t.get("doc"), "late": (D(f) - D(d)).days, "ll": m.get("ll")})
+    for k, v in tt.items():
+        v.sort(key=lambda r: (r["f"], r["d"]), reverse=True)
+        out.setdefault(k, {})["trades"] = v
+    tdoc = {"note": "House and Senate periodic transaction reports. late = days from transaction date to report filed date; the STOCK Act deadline is 45 days.",
+            "range": rng, "tickers": {k: v["trades"] for k, v in out.items() if v.get("trades")}}
+    json.dump(tdoc, open(os.path.join(ROOT, "world-intelligence", "ticker-trades.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    for v in out.values():
+        v.pop("trades", None)
     doc = {"note": "Built from SEC EDGAR 8-K lists, House/Senate PTRs and Form 4 already collected in data/us. Timeline = dates only; it does not show a reason.",
            "updated": J("data", "us", "trades-before-events.json").get("updated"), "tickers": out}
     p = os.path.join(ROOT, "world-intelligence", "ticker-extra.json")
