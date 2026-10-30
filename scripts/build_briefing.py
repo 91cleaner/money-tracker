@@ -133,7 +133,7 @@ def build_late(today):
     if len(rows) < 3:
         return None
     latest = max(t["fd"] for _, t in rows)
-    medals = ["🥇", "🥈", "🥉"]
+    medals = ["1.", "2.", "3."]
     out = []
     for i, (days, t) in enumerate(rows):
         out.append({
@@ -145,17 +145,17 @@ def build_late(today):
         })
     top = rows[0][0]
     return card(
-        "late", "late", "🕰️", min(100, top * 1.6) * fresh(latest, today),
+        "late", "late", "●", min(100, top * 1.6) * fresh(latest, today),
         layout="list", date=latest, badge_ko="늦은 신고 클럽", badge_en="LATE CLUB",
         title_ko="미국 국회의원 주식 숙제 늦게 낸 사람들", title_en="US lawmakers who handed in their stock homework late",
-        sub_ko="주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 💀",
-        sub_en="Stock-homework deadline (45 days) · We get a call if rent is 1 day late 💀",
+        sub_ko="주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+        sub_en="Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
         rows=out,
         note_ko="기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.", note_en="A record, not proof of wrongdoing. Not investment advice.",
         source_ko="출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일", source_en="Source: House Clerk stock-trade reports (PTR) · trade → filing",
         source_url="https://disclosures-clerk.house.gov/FinancialDisclosure",
-        **share('미국 국회의원 주식 숙제 늦게 낸 1위: %s 의원 %d일 / 우리는 월세 하루만 늦어도 연락 오는데 💀' % (rows[0][1]["who"], top),
-                "US lawmaker stock homework, latest hand-in #1: Rep. %s, %d days / we get a call if rent is 1 day late 💀" % (rows[0][1]["who"], top)))
+        **share('미국 국회의원 주식 숙제 늦게 낸 1위: %s 의원 %d일 / 우리는 월세 하루만 늦어도 연락 오는데 ' % (rows[0][1]["who"], top),
+                "US lawmaker stock homework, latest hand-in #1: Rep. %s, %d days / we get a call if rent is 1 day late " % (rows[0][1]["who"], top)))
 
 
 # ------------------------------------------------- late filing + price move
@@ -203,14 +203,14 @@ def build_latemove(today):
     for _, lag, pct, t, a, last in found:
         verb = "산" if t["ty"][0] == "P" else "판"
         rows.append({
-            "mark": "🕰️", "label": "%s %s" % (t["who"].split()[-1], t["tk"]),
+            "mark": "●", "label": "%s %s" % (t["who"].split()[-1], t["tk"]),
             "value_ko": "%d일 · %s 뒤 %+.1f%%" % (lag, verb, pct),
             "value_en": "%dd · %+.1f%% since %s" % (lag, pct, "buy" if verb == "산" else "sale"),
             "tone": "red" if pct < 0 else "green", "url": t.get("doc"),
         })
     w = found[0]
     return card(
-        "latemove", "latemove", "🕰️", min(100, 40 + abs(w[2]) + w[1] / 4) * fresh(latest, today),
+        "latemove", "latemove", "●", min(100, 40 + abs(w[2]) + w[1] / 4) * fresh(latest, today),
         layout="list", date=latest, badge_ko="늦은 신고 + 큰 변동", badge_en="LATE + BIG MOVE",
         title_ko="45일 넘게 걸린 신고, 그 사이 주가는?", title_en="Filed after 45 days: what did the price do meanwhile?",
         sub_ko="하원 신고 중 45일 초과 · 거래일 종가 대비 최근 종가 변동(수정종가)",
@@ -284,7 +284,7 @@ def build_president(today, n_now=2):
             now={"tag_ko": "지금", "tag_en": "NOW", "title": now["title"], "title_ko": title_ko(now), "date": now["date"],
                  "plain_ko": plain(now)[0], "plain_en": plain(now)[1],
                  "type_en": now.get("type_en"), "type_ko": now.get("type"), "url": now.get("url")},
-            then={"tag_ko": "지난번 📅", "tag_en": "LAST TIME 📅", "title": then["title"], "title_ko": title_ko(then), "date": then["date"],
+            then={"tag_ko": "지난번 ", "tag_en": "LAST TIME ", "title": then["title"], "title_ko": title_ko(then), "date": then["date"],
                   "plain_ko": plain(then)[0], "plain_en": plain(then)[1],
                   "moves": [move_row(m) for m in then["moves"][:3]],
                   "period": "%s → %s" % (then["moves"][0]["from"], then["moves"][0]["to"]),
@@ -332,9 +332,9 @@ def build_insider(today):
     any_plan = any(a["plan"] for _, a in ranked)
     total = sum(a["v"] for _, a in ranked)
     return card(
-        "insider", "insider", "👀", min(100, math.log10(max(ranked[0][1]["v"], 10)) * 14) * fresh(latest, today),
+        "insider", "insider", "●", min(100, math.log10(max(ranked[0][1]["v"], 10)) * 14) * fresh(latest, today),
         layout="list", date=latest, badge_ko="내부자 워치", badge_en="INSIDER WATCH",
-        title_ko="회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개", title_en="Company bigwigs' own-stock sales this week: top 5 💸",
+        title_ko="회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개", title_en="Company bigwigs' own-stock sales this week: top 5 ",
         sub_ko="회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · %s까지 7일" % latest,
         sub_en="Record of company insiders selling their own stock (Form 4) · 7 days to %s" % latest,
         rows=rows,
@@ -374,7 +374,7 @@ def build_debt(today):
         rows.append({"label_ko": "1초마다 늘어난 빚 (최근 30일 평균)", "label_en": "Added every second (30-day avg)",
                      "value_ko": "+$%s" % format(round(per_sec), ","), "value_en": "+$%s" % format(round(per_sec), ","), "tone": "amber"})
     return card(
-        "debt", "debt", "🧾", 30 * fresh(latest["date"], today),
+        "debt", "debt", "●", 30 * fresh(latest["date"], today),
         layout="big", date=latest["date"], badge_ko="국가 채무", badge_en="NATIONAL DEBT",
         title_ko="미국 정부가 지금까지 진 빚 (총 채무)", title_en="How much the US government owes (total public debt)",
         big={"value": "$" + format(round(v), ","), "short_ko": "$%.2f조" % (v / 1e12), "short_en": tn},
@@ -406,9 +406,9 @@ def build_movers(today):
     if len(mv) < 3:
         return None
     rows = [{"label_ko": co_ko(s), "label_en": co_en(s), "value_ko": "%+.1f%%" % p, "value_en": "%+.1f%%" % p,
-             "tone": "green" if p > 0 else "red", "mark": "📈" if p > 0 else "📉"} for s, p in mv]
+             "tone": "green" if p > 0 else "red", "mark": "▲" if p > 0 else "▼"} for s, p in mv]
     return card(
-        "movers", "movers", "🚨", min(100, abs(mv[0][1]) * 10) * fresh(b["date"], today),
+        "movers", "movers", "●", min(100, abs(mv[0][1]) * 10) * fresh(b["date"], today),
         layout="list", date=b["date"], badge_ko="큰 움직임", badge_en="BIG MOVERS",
         title_ko="어제 가장 크게 움직인 회사들", title_en="Companies that moved most at the last close",
         sub_ko="%s → %s 마감 가격 비교 (우리가 지켜보는 회사 중)" % (a["date"], b["date"]),
@@ -460,7 +460,7 @@ def build_filings(today):
     rows = [{"label_ko": co_ko(tk), "label_en": co_en(tk), "value_ko": w[1], "value_en": w[2], "tone": "white", "url": f.get("url")}
             for w, tk, f in found[:5]]
     return card(
-        "filings", "filings", "📂", (40 + 4 * min(10, len(found))) * fresh(latest, today),
+        "filings", "filings", "●", (40 + 4 * min(10, len(found))) * fresh(latest, today),
         layout="list", date=latest, badge_ko="새 공시", badge_en="NEW FILINGS",
         title_ko="%s 회사들이 낸 '큰 소식' 신고서 %d건" % (latest, len(found)), title_en="%d 'big news' notices companies filed on %s" % (len(found), latest),
         sub_ko="큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",

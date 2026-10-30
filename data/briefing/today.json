@@ -7,14 +7,14 @@
   {
    "id": "insider",
    "kind": "insider",
-   "icon": "👀",
+   "icon": "●",
    "score": 100.0,
    "layout": "list",
    "date": "2026-10-29",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
-   "title_en": "Company bigwigs' own-stock sales this week: top 5 💸",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
    "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-29까지 7일",
    "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-29",
    "rows": [
@@ -70,7 +70,7 @@
   {
    "id": "movers",
    "kind": "movers",
-   "icon": "🚨",
+   "icon": "●",
    "score": 100.0,
    "layout": "list",
    "date": "2026-10-28",
@@ -87,7 +87,7 @@
      "value_ko": "-20.4%",
      "value_en": "-20.4%",
      "tone": "red",
-     "mark": "📉"
+     "mark": "▼"
     },
     {
      "label_ko": "Icon Plc",
@@ -95,7 +95,7 @@
      "value_ko": "+17.0%",
      "value_en": "+17.0%",
      "tone": "green",
-     "mark": "📈"
+     "mark": "▲"
     },
     {
      "label_ko": "Vertiv Holdings Co",
@@ -103,7 +103,7 @@
      "value_ko": "+16.5%",
      "value_en": "+16.5%",
      "tone": "green",
-     "mark": "📈"
+     "mark": "▲"
     },
     {
      "label_ko": "LPL Financial Holdings Inc.",
@@ -111,7 +111,7 @@
      "value_ko": "-15.2%",
      "value_en": "-15.2%",
      "tone": "red",
-     "mark": "📉"
+     "mark": "▼"
     },
     {
      "label_ko": "Costar Group, Inc.",
@@ -119,7 +119,7 @@
      "value_ko": "-14.0%",
      "value_en": "-14.0%",
      "tone": "red",
-     "mark": "📉"
+     "mark": "▼"
     }
    ],
    "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
@@ -133,7 +133,7 @@
   {
    "id": "filings",
    "kind": "filings",
-   "icon": "📂",
+   "icon": "●",
    "score": 80.0,
    "layout": "list",
    "date": "2026-10-29",
@@ -217,8 +217,8 @@
     "url": "https://www.federalregister.gov/documents/2026/10/30/2026-22292/further-modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset"
    },
    "then": {
-    "tag_ko": "지난번 📅",
-    "tag_en": "LAST TIME 📅",
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
     "title": "Modifying the Scope of Products of Canada Subject to the Additional Duties Imposed To Offset Canadian Discrimination Against the Commerce of the United States With Respect to Motor Vehicles",
     "title_ko": "미국 포고문 제11065호 · 원래 제목은 원문에서 볼 수 있어요",
     "date": "2026-09-14",
@@ -268,8 +268,8 @@
     "url": "https://www.whitehouse.gov/presidential-actions/2026/10/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united-states/"
    },
    "then": {
-    "tag_ko": "지난번 📅",
-    "tag_en": "LAST TIME 📅",
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
     "title": "Adjusting Imports of Polysilicon and Its Derivatives Into the United States",
     "title_ko": "미국 포고문 제11052호 · 원래 제목은 원문에서 볼 수 있어요",
     "date": "2026-08-11",
@@ -305,7 +305,7 @@
   "late": {
    "id": "late",
    "kind": "late",
-   "icon": "🕰️",
+   "icon": "●",
    "score": 34.0,
    "layout": "list",
    "date": "2026-10-27",
@@ -313,11 +313,11 @@
    "badge_en": "LATE CLUB",
    "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
    "title_en": "US lawmakers who handed in their stock homework late",
-   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 💀",
-   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late 💀",
+   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
    "rows": [
     {
-     "mark": "🥇",
+     "mark": "1.",
      "label_ko": "Pete Sessions 의원 · Abbott Laboratories",
      "label_en": "Rep. Pete Sessions · Abbott Laboratories",
      "value_ko": "25일 걸림",
@@ -326,7 +326,7 @@
      "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
     },
     {
-     "mark": "🥈",
+     "mark": "2.",
      "label_ko": "Pete Sessions 의원 · Alphabet Inc.",
      "label_en": "Rep. Pete Sessions · Alphabet Inc.",
      "value_ko": "25일 걸림",
@@ -335,7 +335,7 @@
      "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
     },
     {
-     "mark": "🥉",
+     "mark": "3.",
      "label_ko": "Pete Sessions 의원 · 아마존",
      "label_en": "Rep. Pete Sessions · Amazon Com Inc",
      "value_ko": "25일 걸림",
@@ -349,13 +349,13 @@
    "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
    "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
    "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Pete Sessions 의원 25일 / 우리는 월세 하루만 늦어도 연락 오는데 💀 · 머니트래커",
-   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Pete Sessions, 25 days / we get a call if rent is 1 day late 💀 · Money Tracker"
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Pete Sessions 의원 25일 / 우리는 월세 하루만 늦어도 연락 오는데 · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Pete Sessions, 25 days / we get a call if rent is 1 day late · Money Tracker"
   },
   "latemove": {
    "id": "latemove",
    "kind": "latemove",
-   "icon": "🕰️",
+   "icon": "●",
    "score": 14.3,
    "layout": "list",
    "date": "2026-10-16",
@@ -367,7 +367,7 @@
    "sub_en": "House filings past 45 days · latest close vs trade-date close (adjusted)",
    "rows": [
     {
-     "mark": "🕰️",
+     "mark": "●",
      "label": "Lee BAC",
      "value_ko": "53일 · 판 뒤 -18.4%",
      "value_en": "53d · -18.4% since sale",
@@ -407,8 +407,8 @@
     "url": "https://www.federalregister.gov/documents/2026/10/30/2026-22292/further-modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset"
    },
    "then": {
-    "tag_ko": "지난번 📅",
-    "tag_en": "LAST TIME 📅",
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
     "title": "Modifying the Scope of Products of Canada Subject to the Additional Duties Imposed To Offset Canadian Discrimination Against the Commerce of the United States With Respect to Motor Vehicles",
     "title_ko": "미국 포고문 제11065호 · 원래 제목은 원문에서 볼 수 있어요",
     "date": "2026-09-14",
@@ -437,14 +437,14 @@
   "insider": {
    "id": "insider",
    "kind": "insider",
-   "icon": "👀",
+   "icon": "●",
    "score": 100.0,
    "layout": "list",
    "date": "2026-10-29",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
-   "title_en": "Company bigwigs' own-stock sales this week: top 5 💸",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
    "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-29까지 7일",
    "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-29",
    "rows": [
@@ -500,7 +500,7 @@
   "debt": {
    "id": "debt",
    "kind": "debt",
-   "icon": "🧾",
+   "icon": "●",
    "score": 30.0,
    "layout": "big",
    "date": "2026-10-28",

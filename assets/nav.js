@@ -32,7 +32,7 @@
     return false;
   };
   const moreLinks = [
-    ['search.html', '🔍 통합 검색 (업체·계약·의원·법안·종목)'],
+    ['search.html', '통합 검색 (업체·계약·의원·법안·종목)'],
     ['rank.html', '순위'],
     ['spend.html', '추적'],
     ['bid.html', '우리 동네 입찰'],

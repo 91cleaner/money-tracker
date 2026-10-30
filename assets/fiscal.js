@@ -10,7 +10,7 @@
     return usd(n);
   }
   fetch('data/us-fiscal.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
-    var h = '<p class="eyebrow">🇺🇸 ' + t('미국 정부 돈 계기판', 'US government money meter') + '</p>';
+    var h = '<p class="eyebrow">● ' + t('미국 정부 돈 계기판', 'US government money meter') + '</p>';
     if (d.debt) {
       var a = d.debt.latest, b = d.debt.year_ago,
         days = Math.max(1, (new Date(a.date) - new Date(b.date)) / 864e5),

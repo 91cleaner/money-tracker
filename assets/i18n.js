@@ -55,6 +55,7 @@
 
   // ---------- exact strings (a whole text node / attribute) ----------
   var EXACT = {
+    "의원 이름 입력": "Enter member name", "의원 이름": "Member name", "업종 히트맵": "Sector heatmap", "언어 선택": "Language",
     "한눈에 보기": "At a glance", "주가 기록(종가)": "Closing price record", "국회에 올라온 법안": "Bill filed in the National Assembly", "대만 정부 발표": "Taiwan government announcement", "중국 정부 발표": "Chinese government announcement", "일본 정부 발표": "Japanese government announcement",
     "의원": "Member", "종목": "Asset", "구분": "Type", "신고일": "Filed", "거래일": "Traded", "금액": "Amount", "금액 구간": "Amount range", "신고까지": "Lag", "원문": "Source",
     "티커": "Ticker", "회사": "Company", "종가": "Close", "1일": "1D", "1주": "1W", "1달": "1M", "최근 흐름": "Trend", "열기": "Open", "연초 대비": "YTD",
@@ -186,7 +187,7 @@
     [/최근 30일 신고가 많은 종목 중 (\S+) 회사 카드 열람 \(신고 (\d+)건\)/, "Open the company card for $1, one of the most-filed tickers in the last 30 days ($2 filings)"],
     [/업종 '(.+)' 살펴보기/, "Explore the sector '$1'"], [/종목 (\S+) 회사 카드 열람/, "Open the company card for $1"],
     [/조사한 카드 (\d+)개 · 다음 '(.+)'까지 (\d+)개/, "$1 cards opened · $3 more to '$2'"], [/조사한 카드 (\d+)개 · 최고 계급/, "$1 cards opened · top rank"],
-    [/🔥 연속 임무 완료 (\d+)일/, "🔥 $1-day mission streak"],
+    [/ 연속 임무 완료 (\d+)일/, "$1-day mission streak"],
     [/(\d+) \/ (\d+) 완료 · 매일 실제 신고 자료로 새로 정해짐 \((\S+)\)/, "$1 / $2 done · refreshed daily from real filings ($3)"],
     [/^(회사|의원|업종) (?!거래|주식|상세|파일|선택|미분류)(\S.*)$/, function (m, k, v) { return { "회사": "Company ", "의원": "Member ", "업종": "Sector " }[k] + v; }],
     [/지난 확인 이후 새 신고 (\d+)건/, "$1 new filings since last check"], [/ · 기준 신고일 /, " · baseline filing date "], [/ · 추적 시작 /, " · tracking since "],

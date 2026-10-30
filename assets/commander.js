@@ -83,7 +83,7 @@
   function paintDock() {
     if (starBtn) { var on = !!(st.stars[key(page.type, page.id)]); starBtn.textContent = on ? "★ 추적 중" : "☆ 추적"; starBtn.className = on ? "on" : ""; starBtn.setAttribute("aria-pressed", String(on)); starBtn.setAttribute("aria-label", on ? "추적 목록에서 빼기" : "추적 목록에 넣기"); }
     var r = rankOf(openedCount()), nNew = newCount();
-    mainBtn.replaceChildren(document.createTextNode("◉ " + r.name + (st.streak.n ? " · 🔥" + st.streak.n : "")));
+    mainBtn.replaceChildren(document.createTextNode("◉ " + r.name + (st.streak.n ? " · " + st.streak.n : "")));
     if (nNew) mainBtn.appendChild(el("span", "badge", String(nNew)));
   }
 
@@ -162,7 +162,7 @@
     panel.appendChild(el("h3", "", "관제실 대장 기록"));
     var rk = el("div", "rank"); rk.append(el("b", "", r.name), el("span", "", "조사한 카드 " + n + "개" + (r.next ? " · 다음 '" + r.next[1] + "'까지 " + (r.next[0] - n) + "개" : " · 최고 계급"))); panel.appendChild(rk);
     var bar = el("div", "bar"), bi = el("i"); bi.style.width = (r.next ? Math.min(100, (n - r.at) / (r.next[0] - r.at) * 100) : 100).toFixed(0) + "%"; bar.appendChild(bi); panel.appendChild(bar);
-    if (st.streak.n) panel.appendChild(el("p", "fire", "🔥 연속 임무 완료 " + st.streak.n + "일"));
+    if (st.streak.n) panel.appendChild(el("p", "fire", "연속 임무 완료 " + st.streak.n + "일"));
     var tabs = el("div", "tabs"); tabs.setAttribute("role", "tablist");
     [["missions", "추적 임무"], ["watch", "추적 목록"], ["feed", "새 신고"], ["dex", "의원 도감"]].forEach(function (t) {
       var b = el("button", "", t[1]); b.type = "button"; b.setAttribute("role", "tab"); b.setAttribute("aria-selected", String(tab === t[0]));

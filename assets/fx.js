@@ -13,7 +13,7 @@ const f=t=>{const p=Math.min(1,(t-t0)/900),v=Math.round(n*(1-Math.pow(1-p,3)));e
 const scan=()=>document.querySelectorAll('.alert .a,.stats b').forEach(cu);
 new MutationObserver(()=>{clearTimeout(scan.t);scan.t=setTimeout(scan,120)}).observe(document.body,{childList:true,subtree:true});setTimeout(scan,300);
 document.addEventListener('click',e=>{const a=e.target.closest('abbr[title]');document.querySelectorAll('.tipbox').forEach(x=>x.remove());if(!a)return;e.preventDefault();const b=document.createElement('div');b.className='tipbox';b.textContent=a.title;document.body.appendChild(b);setTimeout(()=>b.remove(),6000);});
-if(rm)return;const S=['₩','💵','🪙','₩','💸'];
+if(rm)return;const S=['₩','$','¢','₩','$'];
 addEventListener('pointerdown',e=>{for(let i=0;i<6;i++){const s=document.createElement('span');s.className='mburst';s.textContent=S[i%S.length];
 const a=Math.random()*Math.PI*2,r=30+Math.random()*30;s.style.left=e.clientX-8+'px';s.style.top=e.clientY-10+'px';
 s.style.setProperty('--dx',Math.cos(a)*r+'px');s.style.setProperty('--dy',Math.sin(a)*r-20+'px');s.style.setProperty('--r',(Math.random()*60-30)+'deg');

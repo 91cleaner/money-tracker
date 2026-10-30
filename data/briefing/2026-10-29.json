@@ -7,7 +7,7 @@
   {
    "id": "movers",
    "kind": "movers",
-   "icon": "🚨",
+   "icon": "●",
    "score": 100.0,
    "layout": "list",
    "date": "2026-10-27",
@@ -24,7 +24,7 @@
      "value_ko": "+12.8%",
      "value_en": "+12.8%",
      "tone": "green",
-     "mark": "📈"
+     "mark": "▲"
     },
     {
      "label_ko": "Celestica Inc",
@@ -32,7 +32,7 @@
      "value_ko": "+12.1%",
      "value_en": "+12.1%",
      "tone": "green",
-     "mark": "📈"
+     "mark": "▲"
     },
     {
      "label_ko": "Voyager Technologies, Inc.",
@@ -40,7 +40,7 @@
      "value_ko": "+11.4%",
      "value_en": "+11.4%",
      "tone": "green",
-     "mark": "📈"
+     "mark": "▲"
     },
     {
      "label_ko": "BigBear.ai Holdings, Inc.",
@@ -48,7 +48,7 @@
      "value_ko": "+10.8%",
      "value_en": "+10.8%",
      "tone": "green",
-     "mark": "📈"
+     "mark": "▲"
     },
     {
      "label_ko": "Credo Technology Group Holding Ltd",
@@ -56,7 +56,7 @@
      "value_ko": "+10.8%",
      "value_en": "+10.8%",
      "tone": "green",
-     "mark": "📈"
+     "mark": "▲"
     }
    ],
    "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
@@ -70,14 +70,14 @@
   {
    "id": "insider",
    "kind": "insider",
-   "icon": "👀",
+   "icon": "●",
    "score": 98.5,
    "layout": "list",
    "date": "2026-10-28",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
-   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식 TOP5 💸",
-   "title_en": "Company bigwigs' own-stock sales this week: top 5 💸",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식 TOP5 ",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
    "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-28까지 7일",
    "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-28",
    "rows": [
@@ -133,7 +133,7 @@
   {
    "id": "filings",
    "kind": "filings",
-   "icon": "📂",
+   "icon": "●",
    "score": 80.0,
    "layout": "list",
    "date": "2026-10-28",
@@ -196,7 +196,7 @@
   {
    "id": "president-adjusting-imports-of-robotics-industrial",
    "kind": "president",
-   "icon": "🏛️",
+   "icon": "●",
    "score": 55.0,
    "layout": "versus",
    "date": "2026-10-28",
@@ -205,8 +205,8 @@
    "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
    "title_en": "Last similar move: what happened in the same period?",
    "now": {
-    "tag_ko": "지금 🏛️",
-    "tag_en": "NOW 🏛️",
+    "tag_ko": "지금 ",
+    "tag_en": "NOW ",
     "title": "Adjusting Imports Of Robotics, Industrial Machinery, And Their Parts And Components Into The United States",
     "date": "2026-10-28",
     "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
@@ -216,8 +216,8 @@
     "url": "https://www.whitehouse.gov/presidential-actions/2026/10/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united-states/"
    },
    "then": {
-    "tag_ko": "지난번 📅",
-    "tag_en": "LAST TIME 📅",
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
     "title": "Adjusting Imports of Polysilicon and Its Derivatives Into the United States",
     "date": "2026-08-11",
     "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
@@ -250,7 +250,7 @@
   {
    "id": "president-2026-22052",
    "kind": "president",
-   "icon": "⚖️",
+   "icon": "●",
    "score": 55.0,
    "layout": "versus",
    "date": "2026-10-28",
@@ -259,8 +259,8 @@
    "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
    "title_en": "Last similar move: what happened in the same period?",
    "now": {
-    "tag_ko": "지금 🏛️",
-    "tag_en": "NOW 🏛️",
+    "tag_ko": "지금 ",
+    "tag_en": "NOW ",
     "title": "Presidential Determination Pursuant to Section 303 of the Defense Production Act of 1950, as Amended, on Domestic Petroleum Production, Refining, and Logistics Capacity",
     "date": "2026-10-28",
     "plain_ko": "대통령이 서명한 공식 문서",
@@ -270,8 +270,8 @@
     "url": "https://www.federalregister.gov/documents/2026/10/28/2026-22052/presidential-determination-pursuant-to-section-303-of-the-defense-production-act-of-1950-as-amended"
    },
    "then": {
-    "tag_ko": "지난번 📅",
-    "tag_en": "LAST TIME 📅",
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
     "title": "Presidential Determination on the Proposed Agreement for Cooperation Between the Government of the United States of America and the Government of the Kingdom of Saudi Arabia Concerning Peaceful Uses of Nuclear Energy",
     "date": "2026-07-28",
     "plain_ko": "대통령이 서명한 공식 문서",
@@ -306,7 +306,7 @@
   "late": {
    "id": "late",
    "kind": "late",
-   "icon": "🕰️",
+   "icon": "●",
    "score": 17.0,
    "layout": "list",
    "date": "2026-10-19",
@@ -314,11 +314,11 @@
    "badge_en": "LATE CLUB",
    "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
    "title_en": "US lawmakers who handed in their stock homework late",
-   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 💀",
-   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late 💀",
+   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
    "rows": [
     {
-     "mark": "🥇",
+     "mark": "1.",
      "label_ko": "Laurel Lee 의원 · Bank Of America Corp",
      "label_en": "Rep. Laurel Lee · Bank Of America Corp",
      "value_ko": "53일 걸림",
@@ -327,7 +327,7 @@
      "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035490.pdf"
     },
     {
-     "mark": "🥈",
+     "mark": "2.",
      "label_ko": "Jonathan Jackson 의원 · Tortoise Energy Infrastructure Corp",
      "label_en": "Rep. Jonathan Jackson · Tortoise Energy Infrastructure Corp",
      "value_ko": "45일 걸림",
@@ -336,7 +336,7 @@
      "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035551.pdf"
     },
     {
-     "mark": "🥉",
+     "mark": "3.",
      "label_ko": "Daniel Meuser 의원 · 엔비디아",
      "label_en": "Rep. Daniel Meuser · Nvidia Corp",
      "value_ko": "44일 걸림",
@@ -350,13 +350,13 @@
    "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
    "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
    "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Laurel Lee 의원 53일 / 우리는 월세 하루만 늦어도 연락 오는데 💀 · 머니트래커",
-   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Laurel Lee, 53 days / we get a call if rent is 1 day late 💀 · Money Tracker"
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Laurel Lee 의원 53일 / 우리는 월세 하루만 늦어도 연락 오는데 · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Laurel Lee, 53 days / we get a call if rent is 1 day late · Money Tracker"
   },
   "latemove": {
    "id": "latemove",
    "kind": "latemove",
-   "icon": "🕰️",
+   "icon": "●",
    "score": 14.4,
    "layout": "list",
    "date": "2026-10-16",
@@ -368,7 +368,7 @@
    "sub_en": "House filings past 45 days · latest close vs trade-date close (adjusted)",
    "rows": [
     {
-     "mark": "🕰️",
+     "mark": "●",
      "label": "Lee BAC",
      "value_ko": "53일 · 판 뒤 -18.7%",
      "value_en": "53d · -18.7% since sale",
@@ -387,7 +387,7 @@
   "president": {
    "id": "president-adjusting-imports-of-robotics-industrial",
    "kind": "president",
-   "icon": "🏛️",
+   "icon": "●",
    "score": 55.0,
    "layout": "versus",
    "date": "2026-10-28",
@@ -396,8 +396,8 @@
    "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
    "title_en": "Last similar move: what happened in the same period?",
    "now": {
-    "tag_ko": "지금 🏛️",
-    "tag_en": "NOW 🏛️",
+    "tag_ko": "지금 ",
+    "tag_en": "NOW ",
     "title": "Adjusting Imports Of Robotics, Industrial Machinery, And Their Parts And Components Into The United States",
     "date": "2026-10-28",
     "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
@@ -407,8 +407,8 @@
     "url": "https://www.whitehouse.gov/presidential-actions/2026/10/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united-states/"
    },
    "then": {
-    "tag_ko": "지난번 📅",
-    "tag_en": "LAST TIME 📅",
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
     "title": "Adjusting Imports of Polysilicon and Its Derivatives Into the United States",
     "date": "2026-08-11",
     "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
@@ -441,14 +441,14 @@
   "insider": {
    "id": "insider",
    "kind": "insider",
-   "icon": "👀",
+   "icon": "●",
    "score": 98.5,
    "layout": "list",
    "date": "2026-10-28",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
-   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식 TOP5 💸",
-   "title_en": "Company bigwigs' own-stock sales this week: top 5 💸",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식 TOP5 ",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
    "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-28까지 7일",
    "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-28",
    "rows": [
@@ -504,7 +504,7 @@
   "debt": {
    "id": "debt",
    "kind": "debt",
-   "icon": "🧾",
+   "icon": "●",
    "score": 30.0,
    "layout": "big",
    "date": "2026-10-27",

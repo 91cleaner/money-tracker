@@ -141,7 +141,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     hero.appendChild(el("div", "meta", status.fact || "상태 기록 없음"));
     var acts = el("div");
     var b1 = link("Congress.gov 원문 ↗", url); if (b1.tagName === "A") { b1.className = "btn"; acts.appendChild(b1); }
-    var b2 = local("🗺️ 관제실에서 보기", "world-intelligence/?q=" + encodeURIComponent(NUM)); b2.className = "btn"; acts.appendChild(b2);
+    var b2 = local("관제실에서 보기", "world-intelligence/?q=" + encodeURIComponent(NUM)); b2.className = "btn"; acts.appendChild(b2);
     hero.appendChild(acts);
     app.appendChild(hero);
 
