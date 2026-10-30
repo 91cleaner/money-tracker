@@ -1,0 +1,16 @@
+/* Phone landscape (short screens): keep the control room panels from overlapping or running off screen. */
+@media (orientation:landscape) and (max-height:500px){
+html body #mtBar#mtBar#mtBar{top:54px!important;left:8px!important;right:auto!important;bottom:auto!important;transform:none!important;translate:none!important;max-width:calc(58vw - 16px)!important;flex-wrap:nowrap!important;overflow-x:auto!important;padding:3px!important}
+html body #mtOneDock#mtOneDock#mtOneDock{top:104px!important;left:8px!important;right:auto!important;bottom:auto!important;transform:none!important;translate:none!important;max-width:calc(58vw - 16px)!important;flex-wrap:nowrap!important;overflow-x:auto!important;white-space:nowrap!important}
+html body #controls#controls#controls{top:auto!important;bottom:34px!important;left:8px!important;right:auto!important;transform:none!important;translate:none!important;max-width:calc(58vw - 16px)!important;flex-wrap:nowrap!important;overflow-x:auto!important;white-space:nowrap!important}
+html body #controls>*,html body #mtBar>*,html body #mtOneDock>*{flex:0 0 auto!important}
+html body #brief#brief#brief{top:54px!important;bottom:34px!important;right:8px!important;left:auto!important;width:min(360px,40vw)!important;max-height:none!important;overflow:auto!important;transform:none!important;translate:none!important}
+html body #mtTicker#mtTicker#mtTicker{top:auto!important;bottom:0!important}
+html body .leaflet-popup-content{max-height:calc(100vh - 210px)!important;overflow:auto!important}
+html body #mtPBov#mtPBov#mtPBov{top:auto!important;bottom:80px!important;left:8px!important;transform:none!important;max-width:50vw!important;font-size:13px!important}
+}
+@media (orientation:landscape) and (max-height:500px){
+html body.mt-lscard #mtOneDock#mtOneDock#mtOneDock{display:none!important}
+html body .leaflet-popup.mtMF .leaflet-popup-content{max-height:calc(100vh - 260px)!important}
+html body #menu#menu#menu{top:54px!important;bottom:80px!important;left:8px!important;right:auto!important;max-height:none!important;height:auto!important;overflow:auto!important;transform:none!important;translate:none!important;max-width:calc(58vw - 16px)!important}
+}
