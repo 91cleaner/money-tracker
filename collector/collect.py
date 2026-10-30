@@ -780,6 +780,9 @@ def main():
         if all(("timed out" in f or "시간 초과" in f or f == "budget") for f in FAILS):
             print("::warning::나라장터 서버가 응답하지 않아 이번 회차는 건너뜀(기존 자료 유지, 다음 실행에서 이어서)", flush=True)
             return
+        if all("시스템 점검" in f or "시스템점검" in f for f in FAILS):
+            print("::warning::나라장터가 시스템 점검 중이라 이번 회차는 건너뜀(기존 자료 유지, 점검이 끝나면 다음 실행에서 이어서). 안내: " + FAILS[0][:300], flush=True)
+            return
         sys.exit("모든 요청이 실패했습니다. 첫 오류: " + FAILS[0])
 
 
