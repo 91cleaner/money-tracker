@@ -5,7 +5,7 @@ commands so a failed push can never request a Pages deployment.
 """
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import subprocess
 import tempfile
@@ -97,17 +97,28 @@ class WeeklyWorkflowGuardTests(unittest.TestCase):
 
     def test_house_source_check_rejects_stale_or_partial_refresh(self):
         year = datetime.now(timezone.utc).year
+        fresh = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+        stale = (datetime.now(timezone.utc) - timedelta(hours=2)).strftime("%Y-%m-%d %H:%M UTC")
+        complete = [f"house {year}: PTR 123", f"house {year}: 새 보고서 0"]
         cases = [
-            ("verified", [f"house {year}: PTR 123", f"house {year}: 새 보고서 0"], True),
-            ("source_403", [f"house {year} zip 403"], False),
-            ("time_budget", [f"house {year}: PTR 123", "house: 시간 상한"], False),
-            ("missing_log", [], False),
+            ("verified", complete, fresh, True),
+            ("source_403", [f"house {year} zip 403"], fresh, False),
+            ("pdf_parse_error", complete + ["house 200123: PDFSyntaxError"], fresh, False),
+            ("previous_year_failed", complete + [f"house {year-1} 실패: Timeout"], fresh, False),
+            ("time_budget", complete + ["house: 시간 상한"], fresh, False),
+            ("missing_log", [], fresh, False),
+            ("missing_completion", [f"house {year}: PTR 123"], fresh, False),
+            ("stale_snapshot", complete, stale, False),
+            ("missing_timestamp", complete, None, False),
         ]
-        for name, logs, should_pass in cases:
+        for name, logs, updated, should_pass in cases:
             with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
                 root = Path(tmp) / "data" / "us"
                 root.mkdir(parents=True)
-                (root / "trades.json").write_text(json.dumps({"log": logs}), encoding="utf-8")
+                payload = {"log": logs}
+                if updated is not None:
+                    payload["updated"] = updated
+                (root / "trades.json").write_text(json.dumps(payload), encoding="utf-8")
                 result = subprocess.run(
                     ["bash", "-c", house_source_check_script()], cwd=tmp,
                     text=True, capture_output=True, timeout=10,
