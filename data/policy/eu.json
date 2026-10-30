@@ -6,6 +6,48 @@
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
 {
+"id": "ec:IP/26/2303",
+"kind": "press",
+"t": "Commission disburses almost €6.5 billion to France, Austria and Luxembourg under NextGenerationEU",
+"d": "2026-10-30",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2303",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2285",
+"kind": "press",
+"t": "Europeans overwhelmingly support stronger EU civil protection cooperation based on solidarity, new Eurobarometer shows",
+"d": "2026-10-30",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2285",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2287",
+"kind": "press",
+"t": "EU announces establishment and composition of PreparEU Advisory Group on European Disaster Preparedness",
+"d": "2026-10-30",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2287",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:IP/26/2294",
 "kind": "press",
 "t": "Commission greenlights Czechia's seventh and final payment request for €951 million under NextGenerationEU",
@@ -18,6 +60,127 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026R2393",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2393 of 29 October 2026 imposing a definitive anti-dumping duty and definitively collecting the provisional duty imposed on imports of PET Spunbond originating in People’s Republic of China",
+"d": "2026-10-29",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2393",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2449",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2449 of 29 October 2026 on an assistance measure under the European Peace Facility to support the Armed Forces of Mauritania",
+"d": "2026-10-29",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2449",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2458",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2458 of 29 October 2026 on the financial contributions to be paid by the parties to the European Development Fund to finance that fund, setting out the ceiling for 2028, the annual amount for 2027, the amount of the first instalment for 2027 and an indicative, non-binding forecast for the expected annual amounts of contributions for the years 2029 and 2030",
+"d": "2026-10-29",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2458",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"finance"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2391",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2391 of 29 October 2026 making imports of certain cellulose ethers originating in the People’s Republic of China and the Republic of Korea subject to registration with a view to allowing the levy of anti-dumping duties on the imports subject to registration",
+"d": "2026-10-29",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2391",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2396",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2396 of 29 October 2026 making imports of certain steel wire ropes and cables originating in the Republic of India, the Kingdom of Thailand and the Republic of Türkiye subject to registration with a view to allowing the levy of anti-dumping duties on the imports subject to registration",
+"d": "2026-10-29",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2396",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade",
+"industrial"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2407",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2407 of 29 October 2026 appointing the chairperson, members, alternates and observers of the Network Management Board and the members and alternates of the European Aviation Crisis Coordination Cell for 2027 and 2028",
+"d": "2026-10-29",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2407",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2410",
+"kind": "decision",
+"t": "Commission Decision (EU) 2026/2410 of 29 October 2026 on renewing the mandate of the European Coordinator for the Central and South-East European energy interconnectivity designated by the Decision (EU) 2025/2204",
+"d": "2026-10-29",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2410",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"energy"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:IP/26/2274",
@@ -979,6 +1142,37 @@
 "focus_ko": [],
 "lk": "EU 결정(정해진 대상에 적용되는 법)",
 "le": "EU decision"
+},
+{
+"id": "celex:32026D2472",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2472 of 21 October 2026 on the position to be taken on behalf of the European Union in the written procedure by the Participants to the Arrangement on Officially Supported Export Credits concerning a Common Line derogating from the rules on minimum premium rates in relation to an energy project in Egypt",
+"d": "2026-10-21",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2472",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"energy",
+"trade"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026L2450",
+"kind": "directive",
+"t": "Directive (EU) 2026/2450 of the European Parliament and of the Council of 21 October 2026 amending Directive 2004/37/EC on the protection of workers from the risks related to exposure to carcinogens, mutagens or reprotoxic substances at work (Text with EEA relevance)",
+"d": "2026-10-21",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026L2450",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 지침(회원국이 따라서 자기 법을 만들어야 해요)",
+"le": "EU directive"
 },
 {
 "id": "ec:STATEMENT/26/2221",
@@ -2340,6 +2534,20 @@
 "t": "Commission Implementing Decision (EU) 2026/2253 of 12 October 2026 laying down rules for the application of Directive (EU) 2016/797 of the European Parliament and of the Council as regards a request from Poland not to apply the requirement to install GSM-R in a tunnel set out in Commission Regulation (EU) No 1303/2014 (notified under document C(2026) 7077)",
 "d": "2026-10-12",
 "u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2253",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2471",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2471 of 12 October 2026 on the position to be taken on behalf of the European Union within the Joint Committee established by the Agreement between the European Community, of the one part, and the Government of Denmark and the Home Government of the Faroe Islands, of the other part, concerning the amendment of the provisions to implement the Protocol on veterinary matter",
+"d": "2026-10-12",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2471",
 "dept": "EU 관보(Official Journal)",
 "src": "EUR-Lex/Publications Office SPARQL",
 "tags": [],
@@ -5506,6 +5714,22 @@
 "focus_ko": [],
 "lk": "EU 결정(정해진 대상에 적용되는 법)",
 "le": "EU decision"
+},
+{
+"id": "celex:32026R2163",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2163 of 17 September 2026 amending Annex I to Council Regulation (EEC) No 2658/87 on the tariff and statistical nomenclature and on the Common Customs Tariff",
+"d": "2026-09-17",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2163",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
 },
 {
 "id": "celex:32026R2202",
