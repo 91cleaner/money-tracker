@@ -402,7 +402,7 @@ function bootFun() {
       range.addEventListener('input', draw);
       draw();
     };
-    fetch('data/nps.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).then((data) => {
+    fetch('data/nps/fund_totals.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).then((data) => {
       if (npsModel(data)) { paint(data); return null; }
       return fetch('data/nps/fund_totals.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null));
     }).then((data) => {
