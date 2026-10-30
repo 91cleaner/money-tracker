@@ -1,0 +1,32 @@
+"""Company HQ country for the card's country-policy box.
+Source: SEC EDGAR company_tickers.json + submissions API (addresses.business.stateOrCountry, official, free).
+Exchange suffix (.KS/.T/.TW/.DE/.PA/.AS/.CO) used only for tickers not in SEC data."""
+import json, os, time, urllib.request, datetime as dt
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+UA = {"User-Agent": "money-tracker public-data bot 91cleaner@users.noreply.github.com"}
+EDGAR = {"M0": "jp", "F5": "tw", "F4": "cn", "K3": "cn", "M5": "kr",
+         "P7": "eu", "2M": "eu", "I0": "eu", "L2": "eu", "C9": "eu", "G7": "eu", "V7": "eu", "H9": "eu",
+         "L6": "eu", "U3": "eu", "N4": "eu", "C4": "eu", "S1": "eu", "K7": "eu", "H0": "eu", "E9": "eu"}
+SUF = {"KS": "kr", "KQ": "kr", "T": "jp", "TW": "tw", "DE": "eu", "PA": "eu", "AS": "eu", "CO": "eu"}
+def get(u):
+    return json.load(urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=30))
+def main():
+    ents = json.load(open(os.path.join(ROOT, "data", "search-index.json")))["entities"]
+    syms = {k: v.get("symbol") or k.split(":", 1)[1] for k, v in ents.items() if v.get("type") == "company"}
+    cik = {r["ticker"].upper(): r["cik_str"] for r in get("https://www.sec.gov/files/company_tickers.json").values()}
+    out = {}
+    for k, s in syms.items():
+        s2 = s.upper().replace(".", "-")
+        if s2 in cik:
+            try:
+                a = get(f"https://data.sec.gov/submissions/CIK{cik[s2]:010d}.json")["addresses"]["business"]
+                cc = EDGAR.get(a.get("stateOrCountry") or "")
+                if cc: out[k] = {"cc": cc, "how": "SEC EDGAR business address " + a["stateOrCountry"]}
+            except Exception as e: print(s, type(e).__name__)
+            time.sleep(0.12)
+        elif "." in s and SUF.get(s.rsplit(".", 1)[1]):
+            out[k] = {"cc": SUF[s.rsplit(".", 1)[1]], "how": "exchange suffix ." + s.rsplit(".", 1)[1]}
+    p = os.path.join(ROOT, "data", "policy", "ticker-country.json")
+    json.dump({"updated": dt.date.today().isoformat(), "source": "SEC EDGAR submissions API (business address) + exchange suffix", "map": out}, open(p, "w"), ensure_ascii=False, indent=0)
+    print(len(out), "non-US mapped")
+if __name__ == "__main__": main()
