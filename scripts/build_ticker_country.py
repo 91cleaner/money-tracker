@@ -19,14 +19,18 @@ def main():
         s2 = s.upper().replace(".", "-")
         if s2 in cik:
             try:
-                a = get(f"https://data.sec.gov/submissions/CIK{cik[s2]:010d}.json")["addresses"]["business"]
-                cc = EDGAR.get(a.get("stateOrCountry") or "")
-                if cc: out[k] = {"cc": cc, "how": "SEC EDGAR business address " + a["stateOrCountry"]}
+                sub0 = get(f"https://data.sec.gov/submissions/CIK{cik[s2]:010d}.json"); a = sub0["addresses"]["business"]
+                codes = [a.get("stateOrCountry") or ""]
+                sub = sub0
+                codes += [sub.get("stateOfIncorporation") or "", ((sub.get("addresses") or {}).get("mailing") or {}).get("stateOrCountry") or ""]
+                cc = next((EDGAR[c] for c in codes if c in EDGAR), None)
+                if cc: out[k] = {"cc": cc, "how": "SEC EDGAR address/incorporation " + "/".join(c for c in codes if c)}
+                elif sub.get("category", "").lower().find("foreign") >= 0 or any(c and not c.isalpha() for c in codes): print("unmapped", s, codes)
             except Exception as e: print(s, type(e).__name__)
             time.sleep(0.12)
         elif "." in s and SUF.get(s.rsplit(".", 1)[1]):
             out[k] = {"cc": SUF[s.rsplit(".", 1)[1]], "how": "exchange suffix ." + s.rsplit(".", 1)[1]}
     p = os.path.join(ROOT, "data", "policy", "ticker-country.json")
-    json.dump({"updated": dt.date.today().isoformat(), "source": "SEC EDGAR submissions API (business address) + exchange suffix", "map": out}, open(p, "w"), ensure_ascii=False, indent=0)
+    json.dump({"updated": dt.date.today().isoformat(), "v": 2, "source": "SEC EDGAR submissions API (business address) + exchange suffix", "map": out}, open(p, "w"), ensure_ascii=False, indent=0)
     print(len(out), "non-US mapped")
 if __name__ == "__main__": main()

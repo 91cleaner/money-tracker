@@ -14,7 +14,7 @@ jobs:
           for cc in $(python3 -c "import sys;sys.path.insert(0,'scripts');import collect_policy_intl as c;print(' '.join(c.SRC))"); do python3 scripts/collect_policy_intl.py $cc || echo "$cc failed"; done
       - name: ticker HQ country (SEC EDGAR, weekly)
         env: {SEC_USER_AGENT: "${{ secrets.SEC_USER_AGENT }}"}
-        run: python3 -c "import json,datetime as d,sys;sys.exit(0 if (d.date.today()-d.date.fromisoformat(json.load(open('data/policy/ticker-country.json'))['updated'])).days>=7 else 1)" 2>/dev/null && python3 scripts/build_ticker_country.py || { [ -f data/policy/ticker-country.json ] || python3 scripts/build_ticker_country.py || echo "country map failed"; }
+        run: python3 -c "import json,datetime as d,sys;sys.exit(0 if (d.date.today()-d.date.fromisoformat(json.load(open('data/policy/ticker-country.json'))['updated'])).days>=7 or json.load(open('data/policy/ticker-country.json')).get('v')!=2 else 1)" 2>/dev/null && python3 scripts/build_ticker_country.py || { [ -f data/policy/ticker-country.json ] || python3 scripts/build_ticker_country.py || echo "country map failed"; }
       - run: python3 scripts/build_search_index.py && python3 scripts/build_insights.py
       - run: |
           git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
