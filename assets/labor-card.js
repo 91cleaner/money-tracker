@@ -5,7 +5,7 @@
   "use strict";
   if (window.MTLabor) return;
   var KIND = { strike: ["노조·파업 관련 공시", "Union / strike-related filing"], halt: ["생산·조업 중단 관련 공시", "Production-halt filing"], suspend: ["영업정지 관련 공시", "Business-suspension filing (not necessarily labor-related)"] };
-  var BG_KO = "한국은 대기업·제조업에 산별·기업별 노동조합이 많아, 임금·단체협약 협상이 틀어져 파업이 나면 공장 가동이 멈추거나 납기가 늦어질 수 있습니다. 그래서 투자 정보 사이트들이 노사 공시를 함께 봅니다. 여기서는 공시 제목에 파업·노사분규·생산중단·영업정지가 들어간 것만 모았고, 공시가 있다고 실제 파업이 있었다거나 주가가 움직였다는 뜻은 아닙니다.";
+  var BG_KO = "한국은 대기업·제조업에 산별·기업별 노동조합이 많아, 임금·단체협약 협상이 틀어져 파업이 나면 공장 가동이 멈추거나 납기가 늦어질 수 있어요. 그래서 투자 정보 사이트들이 노사 공시를 함께 봐요. 여기서는 공시 제목에 파업·노사분규·생산중단·영업정지가 들어간 것만 모았고, 공시가 있다고 실제 파업이 있었다거나 주가가 움직였다는 뜻은 아니에요.";
   var BG_EN = "Korea labor strike disclosure: many large Korean manufacturers have company or industry unions. When wage or collective-bargaining talks break down, a strike can pause factory output or delay deliveries, which is why investors read labor-related filings alongside prices. This page only lists filings whose titles contain strike, labor-dispute, production-halt or business-suspension terms. A filing does not mean a strike happened or that the share price moved because of it. Not investment advice.";
   var NOTE = (window.MTI18N && window.MTI18N.isEn) ? "Public records only, no causal claim, not investment advice." : "공개 기록일 뿐 원인 관계가 아니며 투자 조언 아님.";
 
@@ -66,7 +66,7 @@
     var ev = opts.name ? eventsFor(data, opts.name) : [];
     if (opts.name) {
       if (ev.length) listPanel(p, ev.slice(0, opts.limit || 10), opts);
-      else p.appendChild(el("p", "note", ((window.MTI18N && window.MTI18N.isEn) ? "No labor-related filings found for this stock in the collected period." : "수집된 기간에 이 종목의 노사 관련 공시가 없습니다. 수집이 꺼져 있거나 키가 없을 수도 있습니다.")));
+      else p.appendChild(el("p", "note", ((window.MTI18N && window.MTI18N.isEn) ? "No labor-related filings found for this stock in the collected period." : "수집된 기간에 이 종목의 노사 관련 공시가 없어요. 수집이 꺼져 있거나 키가 없을 수도 있어요.")));
     }
     if (opts.sectorId !== undefined) trend(p, data, opts.sectorId || null);
     background(p);
