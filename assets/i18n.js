@@ -21,9 +21,21 @@
     if (l === "en" || l === "ko") { try { root.localStorage.setItem(KEY, l); } catch (e) { } return l; }
     try { l = root.localStorage.getItem(KEY); } catch (e) { l = null; }
     if (l === "en" || l === "ko") return l;
-    try { if (/\/world-intelligence\//.test(root.location.pathname)) return "en"; } catch (e) { }
     return "ko";
   }
+
+  // Korean plain wording for Congress.gov latest-action text (falls back to the original English).
+  function koAct(a) { a = String(a || ""); var m;
+    if ((m = a.match(/^Referred to the House Committee on (.+?)\.?$/))) return "하원 " + m[1] + " 위원회로 넘어갔어요(심사 단계)";
+    if ((m = a.match(/^(?:Read twice and )?[Rr]eferred to the Committee on (.+?)\.?$/))) return "상원 " + m[1] + " 위원회로 넘어갔어요(심사 단계)";
+    if (/^Introduced in House/.test(a)) return "하원에 제출됐어요";
+    if (/^Introduced in Senate/.test(a)) return "상원에 제출됐어요";
+    if (/Became Public Law/.test(a)) return "법이 됐어요";
+    if (/^Passed House|^On passage Passed/.test(a)) return "하원을 통과했어요";
+    if (/^Passed Senate/.test(a)) return "상원을 통과했어요";
+    if (/Submitted in the Senate/.test(a)) return "상원에 제출됐어요";
+    if (/agreed to/i.test(a)) return "통과됐어요";
+    return a ? "의회 기록 원문: " + a : a; }
   var lang = typeof document !== "undefined" ? pickLang() : "ko";
   var isEn = lang === "en";
 
@@ -392,6 +404,8 @@
     else if (dot && EXACT[bare] != null) out = EXACT[bare] + core.slice(dot.index);
     else {
       out = core;
+      // keep quoted Korean originals (bill titles etc.) untouched
+      var keep = []; out = out.replace(/'[^']*[가-힣][^']*'|"[^"]*[가-힣][^"]*"/g, function (m) { keep.push(m.slice(1, -1)); return m[0] + "\u0001" + (keep.length - 1) + "\u0001" + m[0]; });
       for (var i = 0; i < RULES.length; i++) {
         var r = RULES[i]; if (!r[0].test(out)) continue;
         out = out.replace(new RegExp(r[0].source, r[0].flags.replace("g", "") + "g"), r[1]);
@@ -402,6 +416,8 @@
       // leftover count suffixes (numbers followed by Korean units)
       out = out.replace(/(\d)건/g, function (m, d, i, str) { return /(^|[^\d,.])1$/.test(str.slice(0, i + 1)) ? d + " filing" : d + " filings"; }).replace(/(\d)곳/g, function (m, d, i, str) { return /(^|[^\d,.])1$/.test(str.slice(0, i + 1)) ? d + " company" : d + " companies"; }).replace(/(\d)일(?![가-힣])/g, "$1 days").replace(/(\d)명/g, "$1 members").replace(/(\d)개월/g, "$1 months");
       out = datesEn(out);
+      out = out.replace(/^US 회사 (.+)의 거래처$/, "Supplier of US company $1").replace(/엔비디아/g, "NVIDIA").replace(/테슬라/g, "Tesla").replace(/삼성전자/g, "Samsung Electronics").replace(/([가-힣])Member 등 (\d+)인/g, "$1 and $2 others").replace(/([가-힣])Member/g, "$1");
+      out = out.replace(/\u0001(\d+)\u0001/g, function (m, i) { return keep[+i]; });
     }
     if (HANGUL.test(out)) out = out.replace(/(\d{4}) 선거주기 /g, "$1 election cycle: ").replace(/의 연방 후보 (?:committee|위원회) 기부 합계/g, " contributions to federal candidate committees total").replace(/임직원 자발 기부 PAC이며 회사 자금 아님\.?/g, "Employee-funded voluntary PAC, not company money.").replace(/최다 발주 기관/g, "Top awarding agency:").replace(/주별 집계 1위/g, "top state:").replace(/수령자 이름 일치 (?:basis|기준)\.?/g, "Matched by recipient name.").replace(/\s?합계\s?/g, " total ").replace(/연방 계약/g, "Federal contracts").replace(/약 /g, "approx. ");
     out = lead + out + trail;
@@ -426,6 +442,7 @@
   var api = { lang: lang, name: name, isEn: isEn, tr: tr, toEn: toEn, date: date, dateEn: dateEn, usd: usd, krw: krw, money: money, koUsd: koUsd,
     set: function (l) { setLang(l); }, url: function (l) { return withLang(root.location ? root.location.href : "", l); } };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
+  api.koAct = koAct;
   root.MTI18N = api;
   if (typeof document === "undefined") return;
 
