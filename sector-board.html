@@ -124,7 +124,7 @@ header.bar input.nm{width:200px;text-transform:none}
 <body>
 <header class="bar">
   <a class="brand" href="./">◉ 미국주식추적단</a>
-  <span class="crumb">SECTOR HEATMAP / 공개 기록 정리</span>
+  <span class="crumb">업종 히트맵 / 공개 기록 정리</span>
   <a class="mono" href="sector.html">업종 파일</a>
   <a class="mono" href="weekly.html">주간 순위표</a>
 </header>
@@ -188,10 +188,10 @@ header.bar input.nm{width:200px;text-transform:none}
     app.appendChild(p);
 
     if (window.MTLabor) window.MTLabor.load().then(function (ld) {
-      var lp = el("section", "panel span2"); lp.appendChild(el("h2", "", "한국 업종별 노사분규 추이 · Korea labor disputes by industry"));
-      lp.appendChild(el("p", "note", "고용노동부 월별 통계입니다. 위 미국 의원 거래·종가 칸과 별개의 자료이며 서로 연결하지 않았습니다. / Separate Korean data, not linked to the US figures above."));
+      var lp = el("section", "panel span2"); lp.appendChild(el("h2", "", "한국 업종별 노사분규 추이"));
+      lp.appendChild(el("p", "note", "고용노동부 월별 통계입니다. 위 미국 의원 거래·종가 칸과 별개의 자료이며 서로 연결하지 않았습니다."));
       window.MTLabor.trend(lp, ld, null);
-      lp.appendChild(el("p", "note", "자세히: ")); var la = el("a", "", "노사분규·파업 공시 Korea labor strike disclosure"); la.href = "labor.html"; lp.lastChild.appendChild(la);
+      lp.appendChild(el("p", "note", "자세히: ")); var la = el("a", "", "노사분규·파업 공시"); la.href = "labor.html"; lp.lastChild.appendChild(la);
       app.appendChild(lp);
     });
     foot.replaceChildren(); foot.appendChild(el("b", "", "읽기 전 확인"));

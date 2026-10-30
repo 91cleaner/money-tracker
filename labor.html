@@ -137,7 +137,7 @@ table.co .num{text-align:right;font-family:ui-monospace,Menlo,monospace}
   <a class="mono" href="sector-board.html">업종 히트맵</a>
   <a class="mono" href="nps.html">국민연금</a>
 </header>
-<main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중… / Loading…</div></section></main>
+<main id="app" aria-live="polite"><section class="panel span2"><div class="empty">공개 자료 불러오는 중…</div></section></main>
 <footer class="foot"><div class="disc" id="foot"></div></footer>
 <script src="assets/labor-card.js?v=labor-20261028"></script>
 <script>
@@ -152,7 +152,7 @@ table.co .num{text-align:right;font-family:ui-monospace,Menlo,monospace}
     var tab = el("section", "panel span2"); tab.appendChild(el("h2", "", "회사 파업 소식(노사분규·파업 공시)"));
     tab.appendChild(el("p", "warnnote", d.note));
     var f = el("form", "filter"), inp = el("input"); inp.name = "c"; inp.value = q; inp.placeholder = "회사 이름 (예: 삼성전자)"; inp.setAttribute("aria-label", "회사 이름");
-    var go = el("button", "", "보기 / Go"); go.type = "submit"; f.append(inp, go); tab.appendChild(f); app.appendChild(tab);
+    var go = el("button", "", "보기"); go.type = "submit"; f.append(inp, go); tab.appendChild(f); app.appendChild(tab);
     if (q) {
       window.MTLabor.render(app, d, { name: q, sectorId: undefined, title: q + " · 같은 기간 있었던 일 / Same-period filings" });
     }
