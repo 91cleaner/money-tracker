@@ -5,7 +5,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/culture.css?v=202610302350">
+<link rel="stylesheet" href="assets/culture.css?v=202610302400">
 </head><body>
 <header class="cm-top"><a href="index.html" class="cm-home">세금추적단</a><h1>축제 예산 · 영화 지원금 지도</h1></header>
 <div id="map" aria-label="축제와 영화 지원금 지도"></div>
@@ -13,6 +13,7 @@
  <p class="cm-warn"><b>미확인</b> 모든 숫자는 아직 팩트체크 중이에요.</p>
  <label class="cm-ly"><input type="checkbox" data-l="fest" checked><i style="background:#f59e0b"></i>축제 계획예산 <span id="n-fest"></span></label>
  <select id="year" aria-label="연도"><option value="2026">2026년</option><option value="2024">2024년</option></select>
+ <label class="cm-ly"><input type="checkbox" data-l="flow" checked><i style="background:#f97316;border-radius:2px;height:5px"></i>국비 흐름 선 <span id="n-flow"></span></label>
  <label class="cm-ly"><input type="checkbox" data-l="fee" checked><i style="background:#e11d48"></i>출연료 사례 '보도됨' <span id="n-fee"></span></label>
  <label class="cm-ly"><input type="checkbox" data-l="film" checked><i style="background:#2563eb"></i>영진위 지원결정액 <span id="n-film"></span></label>
  <button id="reset" type="button">처음으로</button>
@@ -21,7 +22,7 @@
   <li><b>영진위</b>: 영화진흥위원회. 한국 영화를 돕는 공공기관이에요.</li>
   <li><b>지원결정액</b>: 주기로 정한 돈이에요. 실제로 준 돈과 다를 수 있어요.</li>
   <li><b>보도됨</b>: 신문·방송 기사에 나온 숫자예요. 공식 통계가 아니에요.</li>
-  <li>원 넓이는 금액에 비례해요.</li>
+  <li>원 넓이는 금액에 비례해요.</li><li><b>국비 흐름 선</b>: 나라(정부) 돈인 국비가 어느 지역 축제로 가는지 보여 줘요. 선이 굵을수록 금액이 커요. 같은 시군구 축제는 한 선으로 합쳤어요.</li><li><b>지방비</b>: 시도와 시군구가 내는 돈이에요. 자료에서 시도비와 시군구비가 나뉘어 있지 않아서 선으로 그리지 않고, 축제 점을 누르면 보여요.</li>
   <li>점 위치는 시군구 중심점이에요. 정확한 장소가 아니에요. 광역 축제는 시도 중심점에 있어요.</li>
   <li>개인은 '개인'으로만 적어요.</li>
   <li><b>단위의심</b>: 숫자 단위가 잘못 들어간 것 같은 자료예요. 2024년 10건(예: 청룡문화제 30,000백만원, 원산도·효자도 붕장어 축제 20,000백만원)과 2026년 1건(안성맞춤 남사당 바우덕이축제 21,826백만원)은 지도와 합계에서 뺐어요.</li><li>영화 최대 지원액: 30억원 <b>미확인</b> (2026 추경 중예산 한국영화 제작지원 2건)</li><li>예산이 0이거나 비어 있는 축제는 점을 찍지 않았어요. 장성군·장흥군 축제는 군 중심점을 따로 찾아 넣었어요.</li><li>영진위 지원 98건 중 회사 위치를 못 찾은 28건은 지도에 없어요.</li>
@@ -29,5 +30,5 @@
  <p class="cm-src">출처: 문화체육관광부 지역축제 개최계획, 영화진흥위원회 심사결과 공지, 남도일보·KBS강릉 보도</p>
 </aside>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/culture.js?v=202610302350"></script>
+<script src="assets/culture.js?v=202610302400"></script>
 <script src="assets/mt-visits.js" defer></script></body></html>
