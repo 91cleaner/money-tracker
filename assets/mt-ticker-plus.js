@@ -121,9 +121,37 @@
       b.onclick = () => S.openMember(o.r); box.append(b); });
     const n = document.createElement('small'); n.textContent = E ? 'Counts of disclosed trades; amounts are reported ranges.' : '신고 거래 건수, 금액은 신고 구간.'; box.append(n); return box;
   });
+  // Playback: lights up trades, Form 4s, bills, White House items and 8-Ks on the map in date order.
+  const PB = { t: null, i: 0, ev: [], lay: null };
+  async function events(sym) {
+    const [x, ds, fr] = await Promise.all([getTX(), getJ('./dossier.json'), getJ('../data/fr/presidential.json')]), e = (x && x.tickers && x.tickers[sym]) || {}, hq = ds && ds.tickers && ds.tickers[sym] && ds.tickers[sym].ll, E = en(), ev = [];
+    (S.rows || []).forEach(r => r.ll && ev.push({ d: r.d, k: 'trade', c: party(r.p), ll: r.ll, t: `${r.who} · ${side(r.ty)} ${r.amt || ''}`, r }));
+    if (hq) ((e.f4 && e.f4.rows) || []).forEach(i => ev.push({ d: i.date, k: 'Form 4', c: '#c08cff', ll: hq, t: `${i.who} · ${i.code === 'P' ? 'Buy' : 'Sell'} ${Number(i.shares).toLocaleString('en-US')}` }));
+    (e.bills || []).forEach(b => ev.push({ d: b.d, k: E ? 'Bill' : '법안', c: '#ffd60a', ll: [38.8899, -77.0091], t: `${b.no} · ${String(b.n).slice(0, 60)}` }));
+    ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === sym)).forEach(z => ev.push({ d: String(z.date).slice(0, 10), k: E ? 'White House' : '백악관', c: '#e8e8e8', ll: [38.8977, -77.0365], t: String(z.title || '').slice(0, 70) }));
+    if (hq) (e.k8 || []).forEach(f => ev.push({ d: f.d, k: '8-K', c: '#68c7d0', ll: hq, t: f.items && f.items.length ? 'Item ' + f.items.join(', ') : '8-K' }));
+    return ev.filter(v => v.d).sort((a, b) => a.d.localeCompare(b.d));
+  }
+  function pbShow(i) { const map = window.moneyTrackerMap, L = window.L; if (!map || !L || !PB.ev.length) return; PB.i = i;
+    if (!PB.lay) PB.lay = L.layerGroup().addTo(map); PB.lay.clearLayers();
+    PB.ev.slice(Math.max(0, i - 24), i + 1).forEach((v, j, a) => { const on = j === a.length - 1, z = on ? 40 : 16; L.marker(v.ll, { interactive: false, zIndexOffset: on ? 2000 : 1500, icon: L.divIcon({ className: '', iconSize: [0, 0], html: `<div style="width:${z}px;height:${z}px;margin:${-z / 2}px 0 0 ${-z / 2}px;border-radius:50%;background:${v.c};opacity:${on ? .85 : .45};border:${on ? 3 : 1}px solid #fff;box-shadow:0 0 ${on ? 18 : 4}px ${v.c}"></div>` }) }).addTo(PB.lay); });
+    setTimeout(() => PB.lay && PB.lay.eachLayer(l => { const el = l.getElement && l.getElement(); if (el) el.style.display = ''; }), 40);
+    const v = PB.ev[i], cap = $('mtPBcap'), sl = $('mtPBsl'); if (sl) sl.value = i;
+    if (cap) cap.innerHTML = `<b>${esc(md(v.d))}</b> · <span style="color:${v.c}">${esc(v.k)}</span> · ${esc(v.t)} <small>(${i + 1}/${PB.ev.length})</small>`;
+    let ov = $('mtPBov'); if (!ov) { ov = document.createElement('div'); ov.id = 'mtPBov'; ov.style.cssText = 'position:fixed;left:50%;top:84px;transform:translateX(-50%);z-index:1200;padding:8px 14px;background:rgba(6,19,14,.92);border:1px solid #5dff9e;border-radius:6px;font:600 16px ui-monospace,monospace;color:#d8f5e3;pointer-events:none;max-width:70vw'; document.body.append(ov); } ov.innerHTML = cap ? cap.innerHTML : '';
+    if (!map.getBounds().pad(-.15).contains(v.ll)) map.panTo(v.ll, { animate: true, duration: .6 }); }
+  function pbStop() { clearInterval(PB.t); PB.t = null; const ov = $('mtPBov'); if (ov && PB.i >= PB.ev.length - 1) setTimeout(() => ov.remove(), 3000); const b = $('mtPBbtn'); if (b) b.textContent = en() ? 'Play' : '재생'; }
+  S.playback = PB;
+  SECTIONS.unshift((rows, sym) => {
+    const E = en(), box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Playback' : '재생'}</h4><div style="display:flex;gap:6px;align-items:center"><button id="mtPBbtn" class="mtSave" style="margin:0">${E ? 'Play' : '재생'}</button><input id="mtPBsl" type="range" min="0" max="0" value="0" style="flex:1"></div><div id="mtPBcap" style="font:12px ui-monospace,monospace;color:#d8f5e3;min-height:16px"></div><small>${E ? 'Trades, Form 4s, bills, White House items and 8-Ks in date order. Dates only.' : '거래, Form 4, 법안, 백악관, 8-K를 날짜순으로 표시. 날짜만 보여줘요.'}</small>`;
+    events(sym).then(ev => { if (S.sym !== sym) return; PB.ev = ev; const sl = box.querySelector('#mtPBsl'); sl.max = Math.max(0, ev.length - 1); sl.oninput = () => { pbStop(); pbShow(+sl.value); }; });
+    box.querySelector('#mtPBbtn').onclick = e => { e.stopPropagation(); if (PB.t) return pbStop(); if (!PB.ev.length) return; if (PB.i >= PB.ev.length - 1) PB.i = -1; e.target.textContent = en() ? 'Pause' : '일시정지';
+      const map = window.moneyTrackerMap; if (map && PB.i < 0) map.setView([38, -96], 4); PB.t = setInterval(() => { if (PB.i >= PB.ev.length - 1 || S.sym !== sym) return pbStop(); pbShow(PB.i + 1); }, 700); };
+    return box;
+  });
   let busy = false;
   async function render() {
-    const s = cur(), hub = $('mtHub'); if (!s || !hub) { S.sym = null; S.rows = null; const b = $('mtPlus'); if (b) b.remove(); return; }
+    const s = cur(), hub = $('mtHub'); if (!s || !hub) { if (PB.lay) { PB.lay.clearLayers(); } pbStop(); { const ov = $('mtPBov'); if (ov) ov.remove(); } S.sym = null; S.rows = null; const b = $('mtPlus'); if (b) b.remove(); return; }
     const d = await getTT(); const rows = (d && d.tickers && d.tickers[s]) || []; S.range = d && d.range;
     let box = $('mtPlus'); const anchor = $('mtHubList') || hub;
     if (box && S.sym === s && box.previousSibling === anchor) { decorateDots(); return; }
