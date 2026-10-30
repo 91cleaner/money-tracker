@@ -77,7 +77,7 @@
       `<div class="r" style="margin-top:4px"><b>${E ? 'Bills this lawmaker wrote and introduced (newest first, from Congress.gov)' : '이 의원이 직접 내놓은 법안 (최신순, Congress.gov 자료)'}</b></div>` +
       (bills.length ? bills.map(b => `<div class="s">${lnk(b.u, b.no)} ${esc(String(b.n).slice(0, 80))} · ${esc(md(b.d))}</div>`).join('') : `<div class="s">${E ? 'None collected.' : '수집된 법안 없음.'}</div>`) +
       `<div class="r" style="margin-top:4px"><b>${E ? 'Trades in the stocks we follow' : '우리가 보는 종목의 거래'}</b> (${mine.length})</div>` +
-      mine.slice(0, 6).map(([k, r]) => `<div class="s" style="color:#d8f5e3"><b>${esc(k)}</b> ${side(r.ty)} · ${esc(r.amt)} · ${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)} ${lnk(r.doc, E ? 'PTR' : 'PTR(의원 거래 신고)')}</div>${pcLine(r)}`).join('') +
+      mine.slice(0, 6).map(([k, r]) => `<div class="s" style="color:#d8f5e3"><b>${esc(k)}</b> ${side(r.ty)} · ${esc(r.amt)} · ${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)} ${lnk(r.doc, E ? 'PTR' : 'PTR(의원 주식 거래 신고)')}</div>${pcLine(r)}`).join('') +
       `<div class="s"><a href="${esc(deep(S.sym || '', id))}">${E ? 'Link to this member card' : '이 의원 카드 링크'} ›</a></div><div class="s">${E ? 'Lawmakers only report a money range. The price change compares the closing price on the first and last day shown. It does not tell you why.' : '의원은 금액 범위만 신고해요. 주가 변화는 표시된 첫날과 마지막 날의 마감 가격을 비교한 거예요. 이유를 알려 주지는 않아요.'}</div>`;
   }
   function popup(html, ll) { const map = window.moneyTrackerMap, L = window.L; if (!map || !L) return;

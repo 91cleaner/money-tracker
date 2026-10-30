@@ -194,7 +194,7 @@ def trade_parts(ent, mem_by_id):
         e = ent.get("company:" + tk)
         if not e: continue
         e["trades"] = rows[:5]; e["trade_n"] = len(rows)
-        e["route"].append({"region": f"{dc[0]} · 의원 거래", "lat": dc[2] - 0.05, "lon": dc[3] - 0.05, "title": "의원 주식 거래(하원 PTR)", "kind": "trade", "ref": "trade:" + tk,
+        e["route"].append({"region": f"{dc[0]} · 의원 거래", "lat": dc[2] - 0.05, "lon": dc[3] - 0.05, "title": "하원 PTR(의원 주식 거래 신고)", "kind": "trade", "ref": "trade:" + tk,
             "fact": f"데이터상 하원 PTR(의원 주식 거래 신고) {len(rows)}건, 최근 신고일 {rows[0]['fd']}. 신고 기준이며 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
             "source_url": rows[0]["doc"], "date": rows[0]["fd"]})
     n = 0
