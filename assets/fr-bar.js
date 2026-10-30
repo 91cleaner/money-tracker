@@ -18,7 +18,8 @@
     const hint = el("span", "flex:none;font-size:13px;color:#9effc0", T.more);
     bar.append(badge, line, hint);
     let i = 0; const show = () => { const b = L[i % L.length]; line.textContent = (b.date || "") + " · " + (EN ? b.type_en : b.type) + " — " + (EN ? b.easy_en : b.easy_ko); i++; };
-    show(); setInterval(show, 6000);
+    let hov = false; bar.addEventListener("mouseenter", () => (hov = true)); bar.addEventListener("mouseleave", () => (hov = false));
+    show(); setInterval(() => { if (!hov && !document.hidden) show(); }, 20000);
     const card = el("div", "position:fixed;inset:0;z-index:1600;background:rgba(0,0,0,.72);display:none;overflow:auto;padding:16px");
     const box = el("div", "max-width:560px;margin:0 auto;background:#04170b;color:#eafff2;border:2px solid #2bff88;border-radius:14px;padding:16px;font:16px/1.6 system-ui,sans-serif");
     const head = el("div", "display:flex;justify-content:space-between;align-items:center;margin-bottom:8px");

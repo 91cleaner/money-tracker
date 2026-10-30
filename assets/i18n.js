@@ -328,7 +328,7 @@
     [" · 신고 ", " · Filed "], [" · 거래 ", " · Traded "],
     // world command room
     ["오프라인 개략 세계지도", "Offline rough world map"], ["실제 좌표 기반 세계지도", "World map based on real coordinates"], ["세계지도 준비 중 · 지도를 직접 이동할 수 있습니다", "World map loading · you can pan the map yourself"], ["관제실 조작", "Command room controls"], ["경로 조작", "Route controls"],
-    ["🌐 전체지도", "🌐 Full map"], ["☷ 메뉴", "☷ Menu"], ["✕ 설명 닫기", "✕ Close brief"], ["주제를 선택하거나 아래 질문창에서 직접 명령하세요.", "Pick a topic or type a command in the box below."], ["추적 경로 선택", "Choose a route"],
+    ["↺ 처음으로", "↺ Reset map"], ["모든 정류장", "All stops"], ["도구", "Tools"], ["도구 닫기", "Hide tools"], ["☷ 메뉴", "☷ Menu"], ["✕ 설명 닫기", "✕ Close brief"], ["주제를 선택하거나 아래 질문창에서 직접 명령하세요.", "Pick a topic or type a command in the box below."], ["추적 경로 선택", "Choose a route"],
     ["규칙 기반 경로 선택 · AI 분석 미연결 · 실시간 거래 데이터 미연결", "Rule-based route selection · no AI analysis · no live trade data"], ["← 이전", "← Prev"], ["다음 지역 →", "Next stop →"], ["다음 →", "Next →"], ["자동 재생 멈춤", "Pause autoplay"], ["자동 재생", "Autoplay"],
     ["관련 공식 자료 확인 ↗", "Official source ↗"], ["추적 질문", "Ask"], ["무엇을 추적할까요? 예: 미국 금리가 주식에 미치는 영향", "What should we track? e.g. How US interest rates affect stocks"], ["추적 ↵", "Track ↵"], ["전체화면", "Fullscreen"], ["전체 보기", "Show all"],
     ["통합 관제실 도구", "Command room tools"], ["◎ 전체", "◎ All"], ["◉ 미국", "◉ US"], ["◉ 한국", "◉ Korea"], ["⌁ 세계사", "⌁ World history"], ["▤ 법안", "▤ Bills"], ["⌕ 추적", "⌕ Track"],

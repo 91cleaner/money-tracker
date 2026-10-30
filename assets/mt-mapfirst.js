@@ -130,13 +130,15 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     let bar = $('mtHub'); if (!bar) { bar = document.createElement('div'); bar.id = 'mtHub'; }
     let lst = $('mtHubList'); if (!lst) { lst = document.createElement('div'); lst.id = 'mtHubList'; }
     let tl = $('mtTL'); if (!tl) { tl = document.createElement('div'); tl.id = 'mtTL'; }
-    const ti = $('briefTitle'); if (ti && ti.parentNode && bar.parentNode !== ti.parentNode) ti.after(bar); bar.after(tl); tl.after(lst); lst.replaceChildren();
+    const ti = $('briefTitle'); if (ti && ti.parentNode && bar.parentNode !== ti.parentNode) ti.after(bar); bar.after(tl); tl.after(lst);
     tl.replaceChildren(); if (TL) { const t = TL.tl, E2 = en(), a = (h, x) => { const z = document.createElement('a'); z.href = h; z.target = '_blank'; z.rel = 'noopener noreferrer'; z.textContent = x; return z };
       tl.append((E2 ? 'Timeline: ' : '타임라인: ') + (E2 ? 'trade ' : '거래 '), a(t.trade_url, t.trade_date), ` (${t.src}, ${t.who}, ${t.side})` + ' · ' + (E2 ? (t.event_kind === '8-K' ? '8-K filed ' : 'policy dated ') : (t.event_kind === '8-K' ? '8-K 제출 ' : '정책 일자 ')), a(t.event_url, t.event_date), ' · ' + (E2 ? `${t.days_before} days apart` : `${t.days_before}일 차이`)); }
-    const E = en(); bar.replaceChildren();
-    TABS.forEach(([k, e, ko]) => { const n = k === 'all' ? null : (G[k] || []).length; const b = document.createElement('button'); b.type = 'button'; b.dataset.k = k;
-      b.textContent = (E ? e : ko) + (n == null ? '' : ' ' + n); b.classList.toggle('empty', n === 0); b.onclick = ev => { ev.stopPropagation(); pick(k) }; bar.append(b) });
-    pick('all', true);
+    const E = en(), same = bar.dataset.sym === sym && bar.children.length === TABS.length; bar.dataset.sym = sym;
+    // Update labels in place when the same ticker re-renders, so a click in progress is not lost to a rebuilt button.
+    TABS.forEach(([k, e, ko], i) => { const n = k === 'all' ? null : (G[k] || []).length; let b = same ? bar.children[i] : null;
+      if (!b) { b = document.createElement('button'); b.type = 'button'; b.dataset.k = k; b.onclick = ev => { ev.stopPropagation(); pick(k) }; if (i === 0) bar.replaceChildren(); bar.append(b); }
+      const tx = (E ? e : ko) + (n == null ? '' : ' ' + n); if (b.textContent !== tx) b.textContent = tx; b.classList.toggle('empty', n === 0) });
+    const on = same && bar.querySelector('button.on'); pick(on ? on.dataset.k : 'all', true);
   }
   let TX = null, TL = null; const getTX = () => TX || (TX = fetch('./ticker-extra.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null));
   const k8Card = (sym, f) => `<div class="k">${esc(sym)} · SEC 8-K</div><div class="h">${en() ? 'Filed' : '제출'} ${esc(f.d)}</div>${f.items.length ? `<div class="r">Item ${esc(f.items.join(', '))}</div>` : ''}<div class="s"><a href="${esc(f.url)}" target="_blank" rel="noopener noreferrer">${en() ? 'Official record' : '원문 기록'} ›</a></div>`;
@@ -148,7 +150,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     const lines = layer ? layer.getLayers().filter(l => l instanceof L.Polyline) : [];
     Object.entries(G).forEach(([g, arr]) => Array.isArray(arr) && arr.forEach(o => { if (!o.mk) return; const vis = k === 'all' || g === k; if (vis && !layer.hasLayer(o.mk)) o.mk.addTo(layer); if (!vis && layer.hasLayer(o.mk)) layer.removeLayer(o.mk); }));
     lines.forEach(l => { const el = l.getElement && l.getElement(); if (el) el.style.display = (k === 'all' || k === 'law') ? '' : 'none' });
-    const lst = $('mtHubList'); if (!lst) return; lst.replaceChildren(); if (quiet || k === 'all') return; const arr = G[k] || [], E = en();
+    const lst = $('mtHubList'); if (!lst) return; if (quiet && k !== 'all' && lst.childElementCount) return; lst.replaceChildren(); if (k === 'all') return; const arr = G[k] || [], E = en();
     if (!arr.length) { const r = document.createElement('div'); r.className = 'why'; r.textContent = (EMPTY[k] || EMPTY.fil)[E ? 0 : 1]; lst.append(r); return; }
     arr.forEach(o => { const b = document.createElement('button'); b.type = 'button'; b.textContent = o.lab || labOf(o.html()); b.onclick = ev => { ev.stopPropagation(); map.flyTo(o.ll, Math.max(map.getZoom(), 5), { duration: .9 }); setTimeout(() => card(o.html(), o.ll), 950); setTimeout(declutter, 1100); }; lst.append(b); });
   }

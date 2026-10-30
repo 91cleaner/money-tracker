@@ -33,11 +33,13 @@
   function text(o) {
     o = o || {};
     var url = (/^https?:\/\/\S+$/.test(o.url || "") ? o.url : "") || location.href.split("#")[0], src = https(o.src), head = String(o.head || "").trim();
+    if (I18N && I18N.isEn && url && !/[?&]lang=en\b/.test(url)) url += (url.indexOf("?") < 0 ? "?" : "&") + "lang=en";
     var EN = I18N && I18N.isEn;
     var tail = EN ? (src ? "\nSource: " + src : "") + (o.date ? (src ? " (as of " : "\nAs of ") + I18N.dateEn(o.date) + (src ? ")" : "") : "") + "\n" + url
       : (src ? "\n출처: " + src : "") + (o.date ? (src ? " (" : "\n") + o.date + " 기준" + (src ? ")" : "") : "") + "\n" + url;
     var fixed = weight(tail.replace(src, "").replace(url, "")) + URLW * (src ? 2 : 1);
     if (EN) head = head.replace(/ (의원|업종)$/, "");
+    if (EN && /[\uac00-\ud7a3]/.test(head) && I18N.name) { var hm = head.match(/^(.*?)\s*\(([A-Z0-9.]{1,12})\)\s*$/); if (hm) { var nn = I18N.name({ name: hm[1], symbol: hm[2], aliases: [] }); if (nn && !/[\uac00-\ud7a3]/.test(nn)) head = nn + " (" + hm[2] + ")"; } }
     head = tr(head);
     var body = tr(String(o.line || "").trim());
     var first = head && body ? head + " · " + body : (head || body);
