@@ -3,7 +3,7 @@ Source: SEC EDGAR company_tickers.json + submissions API (addresses.business.sta
 Exchange suffix (.KS/.T/.TW/.DE/.PA/.AS/.CO) used only for tickers not in SEC data."""
 import json, os, time, urllib.request, datetime as dt
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-UA = {"User-Agent": "money-tracker public-data bot 91cleaner@users.noreply.github.com"}
+UA = {"User-Agent": os.environ.get("SEC_USER_AGENT") or os.environ.get("SEC_UA") or "MoneyTracker research Leecheolhan91@gmail.com"}
 EDGAR = {"M0": "jp", "F5": "tw", "F4": "cn", "K3": "cn", "M5": "kr",
          "P7": "eu", "2M": "eu", "I0": "eu", "L2": "eu", "C9": "eu", "G7": "eu", "V7": "eu", "H9": "eu",
          "L6": "eu", "U3": "eu", "N4": "eu", "C4": "eu", "S1": "eu", "K7": "eu", "H0": "eu", "E9": "eu"}
