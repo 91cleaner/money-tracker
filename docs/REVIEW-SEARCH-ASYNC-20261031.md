@@ -55,3 +55,23 @@
 5. **브라우저·배포:** 375×667, 844×390 화면에서 입력·재시도·닫기 접근성을 확인하고 실제 Pages/Worker URL의 콘솔 및 네트워크 로그를 남긴다.
 
 **완료 판정:** 위 테스트를 실행하고 실제 코드 수정·PR CI·배포 검증 증거가 있어야 함. 이 문서 PR만으로 P1 해결이나 배포 완료를 주장하지 않는다.
+
+
+## 추가 발견: 질문을 바꿔도 이전 종목의 보조 카드가 뒤늦게 붙을 수 있음
+
+현행 \`world-intelligence/index.html\`의 \`mtIntentCard(q)\`는 본문을 표시한 **뒤** 다음 작업을 \`await\`하지 않고 시작한다.
+
+- \`A.load(pl.symbol).then(... MTMood.load(...)).then(c => MTMood.render(mc,c,en); mc.hidden=false)\`: 이전 질문 A의 분위기 카드가 B 검색 뒤에 공유 \`#moodCard\`에 다시 그려질 수 있다.
+- \`MTOpinions.render(box,pl.symbol,...).catch(()=>{})\`: \`assets/opinions.js\`의 \`render()\`가 \`index.json\` 로딩 후 **전달받은 공유 \`#briefStocks\`에 직접 append**한다. 질문 B가 \`replaceChildren()\`로 비운 후에도 A의 의견 상자가 늦게 추가될 수 있다.
+- \`assets/opinions.js\`의 \`load(base)\`는 \`null\`로 끝난 실패 Promise를 캐시해 네트워크 복구 뒤에도 재시도하지 않는다. \`assets/answers.js\`의 \`load(sym)\`도 같은 실패 캐시 패턴이지만 별도 기간 정확성 PR #215/#227과 충돌하지 않도록 여기서는 **검토 범위만** 명시한다.
+
+**위험:** B 종목의 설명 아래 A 종목의 분위기/의견이 섞이면 단순 UX 오류가 아니라 **기업·기간의 근거 오귀속**이다. 본문 submit 경합만 고쳐도 이 분리된 Promise는 남는다.
+
+### 추가 회귀 수락 조건
+
+8. A 종목 의견 요청을 지연한 상태에서 B 종목 검색 완료 → A의 의견이 B 패널에 **추가되지 않음**. A/B 반대 순서와 3연속 검색도 확인.
+9. A 종목 분위기 데이터 지연 → B 종목 검색/세계지도 초기화/브리핑 닫기 → A의 분위기 카드가 **다시 나타나지 않음**.
+10. 보조 카드가 표시될 때마다 \`requestId\`뿐 아니라 **종목·기간·패널 상태**가 현재 검색과 일치하는지 검사. \`MTOpinions.render()\`처럼 내부 비동기 DOM 변경을 하는 함수에는 \`isCurrent()\` 콜백 또는 요청별 독립 컨테이너를 전달하고, 검증 후에만 현재 패널에 붙인다. \`AbortController\`만으로는 이미 완료된 Promise의 DOM 변경을 막을 수 없다.
+11. 의견/분위기 JSON 500·오프라인 뒤 재검색 성공과, 실제 기록 0건의 표시를 분리한다. 실패 캐시를 무효화하되 정상 동시 요청은 공유한다.
+
+**검증 근거:** \`world-intelligence/index.html\`의 \`mtIntentCard\`와 \`assets/opinions.js\`의 \`render/load\` 실제 코드를 재조회했다. Node 22 최소 비동기 모형에서 빠른 B 표시 후 늦은 A가 최종 화면을 덮는 순서 재현. **실제 브라우저/서비스 테스트와 코드 수정은 미수행**. 클로드(UI)·실장(데이터)에게 전달할 수정 계약이며, 이 문서만으로 해결 처리 금지.
