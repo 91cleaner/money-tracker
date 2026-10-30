@@ -285,7 +285,7 @@ def fetch_submissions(ciks, cache):
     for n, cik in enumerate(ciks, 1):
         if cik in cache["sub"]:
             continue
-        url = f"https://data.sec.gov/submissions/CIK{str(cik).zfill(10)}.json"
+        url = f"https://www.sec.gov/search-filings/edgar-application-programming-interfacesCIK{str(cik).zfill(10)}.json"
         try:
             sub = json.loads(_get(url))
         except urllib.error.HTTPError as e:
@@ -584,7 +584,7 @@ def build():
         "source": "SEC EDGAR 13F-HR 보유 금액과, 각 회사 제출 서류의 사업장 주소",
         "sources": [
             {"role": "보유 금액", "name": "SEC EDGAR 13F-HR", "url": hold["filing_url"]},
-            {"role": "본사 주소", "name": "SEC EDGAR 회사 사업장 주소", "url": "https://data.sec.gov/submissions/"},
+            {"role": "본사 주소", "name": "SEC EDGAR 회사 사업장 주소", "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"},
             {"role": "티커", "name": "OpenFIGI CUSIP·CINS", "url": "https://www.openfigi.com/"},
             {"role": "미국 주 위치", "name": "미국 주 경계의 중심", "url": "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json"},
             {"role": "나라 위치", "name": "나라 중심 좌표", "url": "https://raw.githubusercontent.com/google/dspl/master/samples/google/canonical/countries.csv"},
