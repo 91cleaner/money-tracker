@@ -63,6 +63,11 @@ SYMBOLS = [
     ("329180.KS", "HD현대중공업", "kr", "KRW", ["shipbuilding", "defense"]),
     ("105560.KS", "KB금융", "kr", "KRW", ["finance"]),
     ("207940.KS", "삼성바이오로직스", "kr", "KRW", ["health"]),
+    ("402340.KS", "SK스퀘어", "kr", "KRW", ["semiconductor", "finance"]),
+    ("009150.KS", "삼성전기", "kr", "KRW", ["semiconductor", "tech"]),
+    ("032830.KS", "삼성생명", "kr", "KRW", ["finance"]),
+    ("028260.KS", "삼성물산", "kr", "KRW", ["industrial"]),
+    ("035720.KS", "카카오", "kr", "KRW", ["tech", "ai"]),
     # 일본
     ("^N225", "닛케이 225", "jp", "JPY", ["market"]),
     ("7203.T", "도요타", "jp", "JPY", ["auto", "ev", "trade"]),

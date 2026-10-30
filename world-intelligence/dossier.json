@@ -1,5 +1,5 @@
 {
- "note": "HQ city and CEO checked Oct 30, 2026. Images: Wikimedia Commons, free licenses, stored locally.",
+ "note": "HQ city and CEO checked Oct 30, 2026 against company filings and IR pages (SEC EDGAR, DART/KIND, company governance pages). Images: Wikimedia Commons, free licenses, stored locally; skipped where no free image exists.",
  "tickers": {
   "GOOGL": {
    "hq": "Mountain View, CA",
@@ -193,14 +193,8 @@
     37.4633,
     127.0425
    ],
-   "ceo": "Chung Eui-sun",
-   "ceoTitle": "Executive Chair and CEO",
-   "ceoImg": {
-    "src": "img/dossier/005380-ceo.jpg",
-    "credit": "The White House",
-    "license": "Public domain",
-    "page": "https://commons.wikimedia.org/wiki/File:Chung_Eui-sun_(2025)_cropped_1.jpg"
-   },
+   "ceo": "José Muñoz",
+   "ceoTitle": "President and CEO (Chair: Chung Eui-sun)",
    "hqImg": {
     "src": "img/dossier/005380-hq.jpg",
     "credit": "HappyMidnight",
@@ -227,6 +221,396 @@
     "credit": "Maskkwon",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:NAVER_Green_Factory.jpg"
+   }
+  },
+  "SPCX": {
+   "hq": "Starbase, TX",
+   "ll": [
+    25.9972,
+    -97.156
+   ],
+   "ceo": "Elon Musk",
+   "ceoTitle": "CEO",
+   "ceoImg": {
+    "src": "img/dossier/spcx-ceo.jpg",
+    "credit": "Gage Skidmore",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Elon_Musk_(54816836217)_(cropped_2)_(b).jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/spcx-hq.jpg",
+    "credit": "Alexander Hatley from Spring, Texas, USA",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:USA_-_Texas_-_Boca_Chica_-_Starbase_(51287071315).jpg"
+   }
+  },
+  "MU": {
+   "hq": "Boise, ID",
+   "ll": [
+    43.528,
+    -116.145
+   ],
+   "ceo": "Sanjay Mehrotra",
+   "ceoTitle": "Chairman, President and CEO",
+   "ceoImg": {
+    "src": "img/dossier/mu-ceo.jpg",
+    "credit": "SanDisk Corporation",
+    "license": "Attribution",
+    "page": "https://commons.wikimedia.org/wiki/File:Sanjay_Mehrotra.png"
+   }
+  },
+  "AVGO": {
+   "hq": "Palo Alto, CA",
+   "ll": [
+    37.4125,
+    -122.145
+   ],
+   "ceo": "Hock Tan",
+   "ceoTitle": "President and CEO",
+   "ceoImg": {
+    "src": "img/dossier/avgo-ceo.jpg",
+    "credit": "Greg Bezat, d/b/a Bezat Video Group",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Hock_Tan_2022.png"
+   }
+  },
+  "META": {
+   "hq": "Menlo Park, CA",
+   "ll": [
+    37.4848,
+    -122.1484
+   ],
+   "ceo": "Mark Zuckerberg",
+   "ceoTitle": "Founder, Chairman and CEO",
+   "ceoImg": {
+    "src": "img/dossier/meta-ceo.jpg",
+    "credit": "Anthony Quintano from Westminster, United States",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mark_Zuckerberg_F8_2019_Keynote_(32830578717)_(cropped).jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/meta-hq.jpg",
+    "credit": "LPS.1",
+    "license": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Meta_Platforms_Headquarters_Menlo_Park_California.jpg"
+   }
+  },
+  "LLY": {
+   "hq": "Indianapolis, IN",
+   "ll": [
+    39.757,
+    -86.152
+   ],
+   "ceo": "David A. Ricks",
+   "ceoTitle": "Chair and CEO",
+   "ceoImg": {
+    "src": "img/dossier/lly-ceo.jpg",
+    "credit": "Virginia Office of the Governor",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:David_A._Ricks_2025.jpg"
+   }
+  },
+  "BRK.B": {
+   "hq": "Omaha, NE",
+   "ll": [
+    41.2611,
+    -95.933
+   ],
+   "ceo": "Greg Abel",
+   "ceoTitle": "President and CEO",
+   "ceoImg": {
+    "src": "img/dossier/brk-ceo.jpg",
+    "credit": "Tankforwin",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Greg_Abel.jpg"
+   }
+  },
+  "AMD": {
+   "hq": "Santa Clara, CA",
+   "ll": [
+    37.383,
+    -121.97
+   ],
+   "ceo": "Lisa Su",
+   "ceoTitle": "Chair and CEO",
+   "ceoImg": {
+    "src": "img/dossier/amd-ceo.jpg",
+    "credit": "Fuzheado",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:SXSW-2024-alih-OB7A0861-Lisa_Su.jpg"
+   }
+  },
+  "JPM": {
+   "hq": "New York, NY",
+   "ll": [
+    40.7557,
+    -73.9753
+   ],
+   "ceo": "Jamie Dimon",
+   "ceoTitle": "Chairman and CEO",
+   "ceoImg": {
+    "src": "img/dossier/jpm-ceo.jpg",
+    "credit": "Steve Jurvetson",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Jamie_Dimon,_CEO_of_JPMorgan_Chase.jpg"
+   }
+  },
+  "XOM": {
+   "hq": "Spring, TX",
+   "ll": [
+    30.087,
+    -95.429
+   ],
+   "ceo": "Darren Woods",
+   "ceoTitle": "Chairman and CEO",
+   "ceoImg": {
+    "src": "img/dossier/xom-ceo.jpg",
+    "credit": "World Economic Forum",
+    "license": "CC BY 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Darren_Woods_(born_c._1965)_at_WEF_Special_Meeting_on_Global_Collaboration,_Growth_and_Energy_for_Development,_2024.png"
+   }
+  },
+  "V": {
+   "hq": "San Francisco, CA",
+   "ll": [
+    37.768,
+    -122.388
+   ],
+   "ceo": "Ryan McInerney",
+   "ceoTitle": "CEO"
+  },
+  "JNJ": {
+   "hq": "New Brunswick, NJ",
+   "ll": [
+    40.493,
+    -74.442
+   ],
+   "ceo": "Joaquin Duato",
+   "ceoTitle": "Chairman and CEO",
+   "ceoImg": {
+    "src": "img/dossier/jnj-ceo.jpg",
+    "credit": "Stephanie Diani",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:JnJ_Duato_cropped.jpg"
+   }
+  },
+  "WMT": {
+   "hq": "Bentonville, AR",
+   "ll": [
+    36.364,
+    -94.217
+   ],
+   "ceo": "John Furner",
+   "ceoTitle": "President and CEO (since Feb 1, 2026)",
+   "ceoImg": {
+    "src": "img/dossier/wmt-ceo.jpg",
+    "credit": "Chris Garrison",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:John_Furner_headshot_2019.jpg"
+   }
+  },
+  "ABBV": {
+   "hq": "North Chicago, IL",
+   "ll": [
+    42.325,
+    -87.85
+   ],
+   "ceo": "Robert A. Michael",
+   "ceoTitle": "Chairman and CEO"
+  },
+  "MA": {
+   "hq": "Purchase, NY",
+   "ll": [
+    41.04,
+    -73.715
+   ],
+   "ceo": "Michael Miebach",
+   "ceoTitle": "CEO"
+  },
+  "CVX": {
+   "hq": "Houston, TX",
+   "ll": [
+    29.76,
+    -95.37
+   ],
+   "ceo": "Mike Wirth",
+   "ceoTitle": "Chairman and CEO"
+  },
+  "COST": {
+   "hq": "Issaquah, WA",
+   "ll": [
+    47.549,
+    -122.056
+   ],
+   "ceo": "Ron Vachris",
+   "ceoTitle": "President and CEO"
+  },
+  "CSCO": {
+   "hq": "San Jose, CA",
+   "ll": [
+    37.409,
+    -121.953
+   ],
+   "ceo": "Chuck Robbins",
+   "ceoTitle": "Chair and CEO",
+   "ceoImg": {
+    "src": "img/dossier/csco-ceo.jpg",
+    "credit": "Chairman of the Joint Chiefs of Staff from Washington D.C, United States",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_H._Robbins.jpg"
+   }
+  },
+  "PG": {
+   "hq": "Cincinnati, OH",
+   "ll": [
+    39.103,
+    -84.509
+   ],
+   "ceo": "Shailesh Jejurikar",
+   "ceoTitle": "President and CEO (since Jan 1, 2026)"
+  },
+  "UNH": {
+   "hq": "Eden Prairie, MN",
+   "ll": [
+    44.855,
+    -93.46
+   ],
+   "ceo": "Stephen J. Hemsley",
+   "ceoTitle": "Chairman and CEO"
+  },
+  "KO": {
+   "hq": "Atlanta, GA",
+   "ll": [
+    33.771,
+    -84.397
+   ],
+   "ceo": "Henrique Braun",
+   "ceoTitle": "CEO (since Mar 31, 2026)"
+  },
+  "MRK": {
+   "hq": "Rahway, NJ",
+   "ll": [
+    40.608,
+    -74.277
+   ],
+   "ceo": "Robert M. Davis",
+   "ceoTitle": "Chairman and CEO"
+  },
+  "BAC": {
+   "hq": "Charlotte, NC",
+   "ll": [
+    35.227,
+    -80.843
+   ],
+   "ceo": "Brian Moynihan",
+   "ceoTitle": "Chairman and CEO",
+   "ceoImg": {
+    "src": "img/dossier/bac-ceo.jpg",
+    "credit": "Benjamin Applebaum",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Brian_Moynihan,_official_portrait,_Homeland_Security_Council.jpg"
+   }
+  },
+  "AMAT": {
+   "hq": "Santa Clara, CA",
+   "ll": [
+    37.388,
+    -121.98
+   ],
+   "ceo": "Gary Dickerson",
+   "ceoTitle": "President and CEO"
+  },
+  "402340.KS": {
+   "hq": "Seoul, Korea",
+   "ll": [
+    37.566,
+    126.985
+   ],
+   "ceo": "Kim Jung-kyu",
+   "ceoTitle": "CEO"
+  },
+  "009150.KS": {
+   "hq": "Suwon, Korea",
+   "ll": [
+    37.254,
+    127.053
+   ],
+   "ceo": "Chang Duck-hyun",
+   "ceoTitle": "CEO and President"
+  },
+  "373220.KS": {
+   "hq": "Seoul, Korea",
+   "ll": [
+    37.526,
+    126.9285
+   ],
+   "ceo": "Kim Dong-myung",
+   "ceoTitle": "CEO"
+  },
+  "207940.KS": {
+   "hq": "Incheon, Korea",
+   "ll": [
+    37.389,
+    126.641
+   ],
+   "ceo": "John Rim",
+   "ceoTitle": "CEO and President"
+  },
+  "032830.KS": {
+   "hq": "Seoul, Korea",
+   "ll": [
+    37.492,
+    127.028
+   ],
+   "ceo": "Hong Won-hak",
+   "ceoTitle": "CEO and President"
+  },
+  "105560.KS": {
+   "hq": "Seoul, Korea",
+   "ll": [
+    37.522,
+    126.9245
+   ],
+   "ceo": "Yang Jong-hee",
+   "ceoTitle": "Chairman and CEO"
+  },
+  "028260.KS": {
+   "hq": "Seoul, Korea",
+   "ll": [
+    37.553,
+    127.169
+   ],
+   "ceo": "Oh Se-chul, Lee Jae-eon, Song Kyu-jong",
+   "ceoTitle": "Co-CEOs"
+  },
+  "035720.KS": {
+   "hq": "Jeju, Korea",
+   "ll": [
+    33.4505,
+    126.57
+   ],
+   "ceo": "Chung Shin-a",
+   "ceoTitle": "CEO"
+  },
+  "GOOG": {
+   "hq": "Mountain View, CA",
+   "ll": [
+    37.422,
+    -122.084
+   ],
+   "ceo": "Sundar Pichai",
+   "ceoTitle": "CEO",
+   "ceoImg": {
+    "src": "img/dossier/googl-ceo.jpg",
+    "credit": "Photographer: Lukasz Kobus (European Commission)",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Sundar_Pichai_-_2023_(cropped).jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/googl-hq.jpg",
+    "credit": "Grendelkhan",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Googleplex_with_Pride_colors_2015.gk.jpg"
    }
   }
  }

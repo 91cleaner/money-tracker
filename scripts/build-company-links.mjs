@@ -17,7 +17,7 @@ const NAMES = {
   COIN: ["Coinbase"], ASML_AS: ["ASML"], NOVO_B_CO: ["Novo Nordisk", "NOVO"], SAP_DE: ["SAP SE"], SIE_DE: ["Siemens"], RHM_DE: ["Rheinmetall"],
   MC_PA: ["LVMH"], TTE_PA: ["TotalEnergies"], "005930_KS": ["Samsung Electronics", "Samsung"], "000660_KS": ["SK hynix", "SK Hynix"],
   "005380_KS": ["Hyundai Motor"], "373220_KS": ["LG Energy Solution"], "006400_KS": ["Samsung SDI"], "207940_KS": ["Samsung Biologics"],
-  "012450_KS": ["Hanwha Aerospace"], "329180_KS": ["HD Hyundai Heavy"], "035420_KS": ["NAVER"], "105560_KS": ["KB Financial"],
+  "012450_KS": ["Hanwha Aerospace"], "329180_KS": ["HD Hyundai Heavy"], "035420_KS": ["NAVER"], "105560_KS": ["KB Financial"], "402340_KS": ["SK Square"], "009150_KS": ["Samsung Electro-Mechanics"], "032830_KS": ["Samsung Life"], "028260_KS": ["Samsung C&T"], "035720_KS": ["Kakao"],
   "2330_TW": ["Taiwan Semiconductor", "TSMC"], "2454_TW": ["MediaTek"], "2317_TW": ["Hon Hai", "Foxconn"], "2308_TW": ["Delta Electronics"],
   "7203_T": ["Toyota"], "6758_T": ["Sony"], "8035_T": ["Tokyo Electron"], "7011_T": ["Mitsubishi Heavy"], "8306_T": ["Mitsubishi UFJ"], "9984_T": ["SoftBank"],
 };
