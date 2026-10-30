@@ -13,4 +13,7 @@ html body #mtPBov#mtPBov#mtPBov{top:auto!important;bottom:80px!important;left:8p
 html body.mt-lscard #mtOneDock#mtOneDock#mtOneDock{display:none!important}
 html body .leaflet-popup.mtMF .leaflet-popup-content{max-height:calc(100vh - 260px)!important}
 html body #menu#menu#menu{top:54px!important;bottom:80px!important;left:8px!important;right:auto!important;max-height:none!important;height:auto!important;overflow:auto!important;transform:none!important;translate:none!important;max-width:calc(58vw - 16px)!important}
+  html body #controls#controls#controls{gap:4px!important}
+  html body #controls#controls#controls>button{padding:6px 7px!important;font-size:12px!important}
+  html body #mtKoLink#mtKoLink#mtKoLink{padding:6px 5px!important}
 }
