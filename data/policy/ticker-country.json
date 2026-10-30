@@ -1,5 +1,6 @@
 {
 "updated": "2026-10-30",
+"v": 2,
 "source": "SEC EDGAR submissions API (business address) + exchange suffix",
 "map": {
 "company:000660.KS": {
@@ -132,95 +133,195 @@
 },
 "company:ACN": {
 "cc": "eu",
-"how": "SEC EDGAR business address L2"
+"how": "SEC EDGAR address/incorporation L2/L2/L2"
 },
 "company:ALKS": {
 "cc": "eu",
-"how": "SEC EDGAR business address L2"
+"how": "SEC EDGAR address/incorporation L2/L2"
+},
+"company:ALLE": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation L2/IN"
 },
 "company:ASML": {
 "cc": "eu",
-"how": "SEC EDGAR business address P7"
+"how": "SEC EDGAR address/incorporation P7/P7"
+},
+"company:BABA": {
+"cc": "cn",
+"how": "SEC EDGAR address/incorporation K3"
+},
+"company:BABAF": {
+"cc": "cn",
+"how": "SEC EDGAR address/incorporation K3"
+},
+"company:BUD": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation C9"
 },
 "company:CRDO": {
 "cc": "eu",
-"how": "SEC EDGAR business address E9"
+"how": "SEC EDGAR address/incorporation E9/E9/E9"
 },
 "company:CRH": {
 "cc": "eu",
-"how": "SEC EDGAR business address L2"
+"how": "SEC EDGAR address/incorporation L2/L2/L2"
 },
 "company:ETN": {
 "cc": "eu",
-"how": "SEC EDGAR business address L2"
+"how": "SEC EDGAR address/incorporation L2/L2"
+},
+"company:FN": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation E9/CA"
+},
+"company:HDB": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation K7"
 },
 "company:ICLR": {
 "cc": "eu",
-"how": "SEC EDGAR business address L2"
+"how": "SEC EDGAR address/incorporation L2/L2"
 },
 "company:IFNNY": {
 "cc": "eu",
-"how": "SEC EDGAR business address 2M"
+"how": "SEC EDGAR address/incorporation 2M/DE/2M"
 },
 "company:ING": {
 "cc": "eu",
-"how": "SEC EDGAR business address P7"
+"how": "SEC EDGAR address/incorporation P7/P7/P7"
 },
 "company:JCI": {
 "cc": "eu",
-"how": "SEC EDGAR business address L2"
+"how": "SEC EDGAR address/incorporation L2/L2/WI"
 },
 "company:JD": {
 "cc": "cn",
-"how": "SEC EDGAR business address F4"
+"how": "SEC EDGAR address/incorporation F4/E9/F4"
+},
+"company:LIN": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation X0/L2/X0"
+},
+"company:LYB": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation TX/P7"
 },
 "company:MBFJF": {
 "cc": "jp",
-"how": "SEC EDGAR business address M0"
+"how": "SEC EDGAR address/incorporation M0/NY"
+},
+"company:MICC": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation P7"
 },
 "company:NOK": {
 "cc": "eu",
-"how": "SEC EDGAR business address H9"
+"how": "SEC EDGAR address/incorporation H9/H9/H9"
 },
 "company:NOKBF": {
 "cc": "eu",
-"how": "SEC EDGAR business address H9"
+"how": "SEC EDGAR address/incorporation H9/H9/H9"
+},
+"company:NTES": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation E9"
 },
 "company:NVO": {
 "cc": "eu",
-"how": "SEC EDGAR business address G7"
+"how": "SEC EDGAR address/incorporation G7/G7"
+},
+"company:NVT": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation L2/MN"
+},
+"company:NXPI": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation P7"
+},
+"company:PDD": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation E9"
+},
+"company:PNR": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation X0/L2/MN"
 },
 "company:RACE": {
 "cc": "eu",
-"how": "SEC EDGAR business address L6"
+"how": "SEC EDGAR address/incorporation L6/P7/L6"
 },
 "company:SAN": {
 "cc": "eu",
-"how": "SEC EDGAR business address U3"
+"how": "SEC EDGAR address/incorporation U3/U3/U3"
 },
 "company:SAP": {
 "cc": "eu",
-"how": "SEC EDGAR business address 2M"
+"how": "SEC EDGAR address/incorporation 2M/2M/2M"
+},
+"company:SE": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation U0/E9/U0"
+},
+"company:SFGYY": {
+"cc": "jp",
+"how": "SEC EDGAR address/incorporation NY/M0/NY"
 },
 "company:SFTBF": {
 "cc": "jp",
-"how": "SEC EDGAR business address M0"
+"how": "SEC EDGAR address/incorporation M0/M0"
+},
+"company:SKHY": {
+"cc": "kr",
+"how": "SEC EDGAR address/incorporation M5"
 },
 "company:SMEGF": {
 "cc": "eu",
-"how": "SEC EDGAR business address 2M"
+"how": "SEC EDGAR address/incorporation 2M/2M/NY"
+},
+"company:SN": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation MA/E9/MA"
+},
+"company:SNEJF": {
+"cc": "jp",
+"how": "SEC EDGAR address/incorporation M0"
+},
+"company:SONY": {
+"cc": "jp",
+"how": "SEC EDGAR address/incorporation M0"
+},
+"company:SPOT": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation N4"
 },
 "company:STE": {
 "cc": "eu",
-"how": "SEC EDGAR business address L2"
+"how": "SEC EDGAR address/incorporation L2/L2/L2"
+},
+"company:SW": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation L2"
+},
+"company:TCOM": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation U0/E9/U0"
 },
 "company:TM": {
 "cc": "jp",
-"how": "SEC EDGAR business address M0"
+"how": "SEC EDGAR address/incorporation M0/M0/M0"
 },
 "company:TT": {
 "cc": "eu",
-"how": "SEC EDGAR business address L2"
+"how": "SEC EDGAR address/incorporation L2/L2/NC"
+},
+"company:WTW": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation X0/L2/X0"
+},
+"company:XIACF": {
+"cc": "eu",
+"how": "SEC EDGAR address/incorporation NY/E9/NY"
 }
 }
 }
