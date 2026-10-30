@@ -1,0 +1,33 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>축제 예산·영화 지원금 지도 | 세금추적단</title>
+<meta name="description" content="지역 축제 계획예산, 보도된 축제 출연료, 2026 영화진흥위원회 지원결정액을 지도로 봐요. 모든 숫자는 미확인(팩트체크 중).">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="assets/culture.css?v=202610302330">
+</head><body>
+<header class="cm-top"><a href="index.html" class="cm-home">세금추적단</a><h1>축제 예산 · 영화 지원금 지도</h1></header>
+<div id="map" aria-label="축제와 영화 지원금 지도"></div>
+<aside class="cm-panel" id="panel">
+ <p class="cm-warn"><b>미확인</b> 모든 숫자는 아직 팩트체크 중이에요.</p>
+ <label class="cm-ly"><input type="checkbox" data-l="fest" checked><i style="background:#f59e0b"></i>축제 계획예산 <span id="n-fest"></span></label>
+ <select id="year" aria-label="연도"><option value="2026">2026년</option><option value="2024">2024년</option></select>
+ <label class="cm-ly"><input type="checkbox" data-l="fee" checked><i style="background:#e11d48"></i>출연료 사례 '보도됨' <span id="n-fee"></span></label>
+ <label class="cm-ly"><input type="checkbox" data-l="film" checked><i style="background:#2563eb"></i>영진위 지원결정액 <span id="n-film"></span></label>
+ <button id="reset" type="button">처음으로</button>
+ <details class="cm-help"><summary>용어와 주의할 점</summary><ul>
+  <li><b>계획예산</b>: 축제 전에 쓰겠다고 세운 돈이에요. 실제로 쓴 돈(결산)과 다를 수 있어요.</li>
+  <li><b>영진위</b>: 영화진흥위원회. 한국 영화를 돕는 공공기관이에요.</li>
+  <li><b>지원결정액</b>: 주기로 정한 돈이에요. 실제로 준 돈과 다를 수 있어요.</li>
+  <li><b>보도됨</b>: 신문·방송 기사에 나온 숫자예요. 공식 통계가 아니에요.</li>
+  <li>원 넓이는 금액에 비례해요.</li>
+  <li>점 위치는 시군구 중심점이에요. 정확한 장소가 아니에요. 광역 축제는 시도 중심점에 있어요.</li>
+  <li>개인은 '개인'으로만 적어요.</li>
+  <li>2024년 자료 중 단위가 이상한 8건은 지도에서 뺐어요.</li>
+ </ul></details>
+ <p class="cm-src">출처: 문화체육관광부 지역축제 개최계획, 영화진흥위원회 심사결과 공지, 남도일보·KBS강릉 보도</p>
+</aside>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/culture.js?v=202610302330"></script>
+<script src="assets/mt-visits.js" defer></script></body></html>
