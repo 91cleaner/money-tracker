@@ -306,11 +306,12 @@ document.getElementById('closeBrief')?.addEventListener('click',()=>banner.class
 </script><script src="./evidence.js" defer></script><script id="mt-one-room-controller">
 (function(){function init(){
 const dock=document.createElement('nav');dock.id='mtOneDock';dock.setAttribute('aria-label','통합 관제실 도구');
-const actions=[['◎ 전체','world'],['◉ 미국','us'],['◉ 한국','kr'],['⌁ 세계사','history'],['▤ 법안','law'],['⌕ 추적','track']];
+const actions=[['◎ 전체','world'],['◉ 미국','us'],['◉ 한국','kr'],['⌁ 세계사','history'],['▤ 법안','law'],['⌕ 추적','track'],['🏛️ 정당별 돈','party']];
 actions.forEach(([name,key])=>{const b=document.createElement('button');b.type='button';b.textContent=name;b.onclick=()=>{
 const map=window.moneyTrackerMap;
 if(key==='world'){document.getElementById('world')?.click();return}
 if(key==='us'||key==='kr'){if(map){map.invalidateSize();map.flyTo(key==='us'?[39,-98]:[36.4,127.8],5,{duration:1.4})}return}
+if(key==='party'){location.href='../party-money.html';return}
 if(key==='track'){document.getElementById('question')?.focus();return}
 const input=document.getElementById('question');if(input){input.value=key==='history'?'세계사와 미국 시장의 관계':'미국 법안이 주식시장에 미치는 영향';input.focus()}
 };dock.append(b)});
@@ -770,7 +771,7 @@ paint()})();</script>
 <script src="../assets/fr-bar.js?v=20261030b" defer></script>
 <script src="../assets/mt-econ-strip.js?v=econ-20261029" defer></script>
 <script src="../assets/commander.js?v=cmdr-20261028" defer></script>
-<script src="../assets/mt-us-layer.js?v=us-20261030" defer></script><script src="../assets/mt-mapfirst.js?v=mf-20261030x" defer></script><script src="../assets/mt-ticker-plus.js?v=tp-9" defer></script>
+<script src="../assets/mt-us-layer.js?v=us-20261030" defer></script><script src="../assets/mt-mapfirst.js?v=mf-20261030x" defer></script><script src="../assets/mt-ticker-plus.js?v=tp-10" defer></script>
 <style id="mt-brief-sheet">@media(max-width:650px){
 #brief{top:auto!important;left:0!important;right:0!important;bottom:72px!important;width:auto!important;max-height:min(40dvh,330px)!important;border-radius:14px 14px 0 0!important;padding:0 10px 10px!important;overflow:auto!important;z-index:2900!important;overscroll-behavior:contain}
 #mtSheetHandle{position:sticky;top:0;display:flex;justify-content:center;align-items:center;height:28px;margin:0 -10px 4px;background-color:rgba(2,12,6,.97);border:0;width:calc(100% + 20px);cursor:pointer;touch-action:none;z-index:2}
