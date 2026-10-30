@@ -1,4 +1,4 @@
-/* MONEY TRACKER — 한국 노사분규·파업 공시 카드 (Korea labor strike disclosures).
+/* 세금추적단 — 한국 노사분규·파업 공시 카드 (Korea labor strike disclosures).
    data/kr/labor.json 을 읽어 (1) 종목의 "같은 기간 있었던 일" 줄 (2) 업종별 분규 추이 (3) 영문 배경 설명을 그린다.
    저장된 글자만 textContent 로 넣고, 링크는 https 만 허용한다. 인과·투자 조언 없음. */
 (function () {

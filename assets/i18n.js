@@ -292,7 +292,7 @@
     ["미국주식추적단 — 미국 회사 파일", "US Stock Trackers — US Company File"], ["미국주식추적단 — 회사 상세", "US Stock Trackers — Company file"],
     ["미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.", "Public records by US listed company: member trade filings, lobbying disclosures, PAC, filing links. Organized from the data; not investment advice."],
     ["미국 의회 법안·의원 거래 신고·회사 공장·다른 나라 정책을 지도 위 경로로 따라가는 관제실. 공개 자료 정리이며 투자 조언 아님.", "A control room that follows US congressional bills, member trade filings, company plants and other countries' policies as routes on a map. Based on public filings; not investment advice."],
-    ["미국주식추적단 | 세계 관제실", "US Stock Trackers | Global Command Room"], ["세금추적단", "Money Tracker"], ["미국주식추적단", "US Stock Trackers"],
+    ["미국주식추적단 | 세계 관제실", "US Stock Trackers | Global Command Room"], ["세금추적단", "Tax Trackers"], ["미국주식추적단", "US Stock Trackers"],
     ["공개 기록 정리", "Public records, organized"], ["공개 자료 불러오는 중…", "Loading public data…"], ["미국 의원 공개 기록 정리 · 신고 기준 · 투자 조언 아님", "US member public records · based on filings · not investment advice"], ["미국 상장사 공개 기록 정리 · 투자 조언 아님", "US listed-company public records · not investment advice"],
     ["미국주식추적단 관제실 — ", "US Stock Trackers Command Room — "],
     ["티커 입력", "Enter ticker"], ["의원 이름 입력", "Enter member name"], ["의원 이름", "Member name"], ["업종 선택", "Select sector"],

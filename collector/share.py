@@ -87,6 +87,7 @@ PAGE = """<!doctype html>
 <meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{img}">
 <link rel="canonical" href="{target}">
 <meta http-equiv="refresh" content="0; url=../city.html?c={slug}">
+<script src="../assets/mt-visits.js" data-share="1"></script>
 <script>location.replace('../city.html?c={slug}' + location.hash);</script>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head><body style="font-family:sans-serif;padding:40px">
