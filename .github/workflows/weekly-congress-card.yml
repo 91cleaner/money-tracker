@@ -36,15 +36,33 @@ jobs:
           from pathlib import Path
 
           payload = json.loads(Path('data/us/trades.json').read_text(encoding='utf-8'))
+          now = datetime.now(timezone.utc)
+          # The collector can exit successfully after partial source/PDF failures.
+          # An old trades.json with valid-looking logs must not pass this gate.
+          try:
+              refreshed = datetime.strptime(payload['updated'], '%Y-%m-%d %H:%M UTC').replace(tzinfo=timezone.utc)
+          except (KeyError, TypeError, ValueError):
+              raise SystemExit('::error::House PTR refresh timestamp missing or invalid')
+          age = (now - refreshed).total_seconds()
+          if not 0 <= age <= 3600:
+              raise SystemExit('::error::House PTR snapshot was not refreshed in this run')
           logs = payload.get('log', [])
-          year = datetime.now(timezone.utc).year
-          if not isinstance(logs, list) or not any(
-              re.fullmatch(rf'house {year}: PTR \d+', str(entry)) for entry in logs
-          ):
-              raise SystemExit('::error::Current-year House Clerk PTR index not verified; weekly card not published')
-          if any('house: 시간 상한' in str(entry) for entry in logs):
-              raise SystemExit('::error::House PTR collection hit time budget; weekly card not published')
-          print(f'PASS: House Clerk {year} PTR index verified')
+          year = now.year
+          if not isinstance(logs, list) or not all(isinstance(entry, str) for entry in logs):
+              raise SystemExit('::error::House PTR collection log missing or malformed')
+          if not any(re.fullmatch(rf'house {year}: PTR \d+', entry) for entry in logs):
+              raise SystemExit('::error::Current-year House Clerk PTR index not verified')
+          if not any(re.fullmatch(rf'house {year}: 새 보고서 \d+', entry) for entry in logs):
+              raise SystemExit('::error::Current-year House PTR scan did not complete')
+          # Only these two House log forms indicate a normal scan. Any other
+          # 'house ' line signals a failed ZIP, PDF or parsing operation.
+          if any(entry.startswith('house ') and not re.fullmatch(
+              r'house \d{4}: (?:PTR \d+|새 보고서 \d+)', entry
+          ) for entry in logs):
+              raise SystemExit('::error::House PTR source or PDF failed; card not published')
+          if any('house: 시간 상한' in entry for entry in logs):
+              raise SystemExit('::error::House PTR collection hit time budget; card not published')
+          print(f'PASS: fresh House Clerk {year} PTR index and completed scan verified')
           PY
       - name: Render card
         run: python scripts/weekly/congress_trades_card.py
