@@ -37,14 +37,14 @@ function placeLabels(){L2.clearLayers();var used=[],z=map.getZoom(),max=z<=7?(in
   var sz=map.getSize();if(R[0]<0||R[1]<0||R[2]>sz.x||R[3]>sz.y)return;
   if(used.some(function(u){return !(R[2]<u[0]||R[0]>u[2]||R[3]<u[1]||R[1]>u[3])}))return;used.push(R);cnt++;
   L.marker(b.ll,{icon:L.divIcon({className:'cm-lbl'+(b.k=='film'?' f':''),html:'<span>'+b.t+'</span>',iconSize:[0,0]}),interactive:false,keyboard:false}).addTo(L2)})}
-fetch('data/culture/culture_stats.json?v=202610310840').then(function(r){return r.json()}).then(function(S){
+fetch('data/culture/culture_stats.json?v=202610310845').then(function(r){return r.json()}).then(function(S){
  var u='<span class="u">미확인</span>',F=S.fest,FL=S.film;
- document.getElementById('sum').innerHTML='<h2>2026 축제 계획예산 합계</h2><div class="big">'+eok(F.w)+'원'+u+'</div><small>축제 '+F.n.toLocaleString()+'건 · 국비 '+eok(F.g)+' · 지방비 '+eok(F.l)+' · 기타 '+eok(F.e)+'</small><small>팩트체크 끝난 숫자는 1,237건 · 5,853억원이에요. 새로 센 숫자는 아직 확인 전이라 미확인이에요.</small><hr><h2>2026 영진위 지원결정액 합계</h2><div class="big">'+(FL.w/1e8).toFixed(1)+'억원'+u+'</div><small>'+FL.n+'건 (팩트체크 끝난 건 70건)</small>';
+ document.getElementById('sum').innerHTML='<h2>2026 축제 계획예산 합계</h2><div class="big">'+eok(F.w)+'원</div><small>축제 '+F.n.toLocaleString()+'건'+u+' · 국비 '+eok(F.g)+' · 지방비 '+eok(F.l)+' · 기타 '+eok(F.e)+u+'</small><small>합계 금액은 팩트체크 끝난 숫자(585,311백만원)와 같아요. 건수(팩트체크: 1,237건)와 국비·지방비·기타 나눔은 아직 미확인이에요.</small><small>안성 바우덕이축제(21,826백만원)는 단위가 잘못된 것 같아 합계·표·순위에서 뺐어요. 지도에는 회색 점으로만 보여요.</small><hr><h2>2026 영진위 지원결정액 합계</h2><div class="big">'+(FL.w/1e8).toFixed(1)+'억원'+u+'</div><small>'+FL.n+'건 (팩트체크 끝난 건 70건)</small>';
  var t=function(head,rows){return '<table><tr>'+head.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr>'+rows.join('')+'</table>'},td=function(a){return '<tr>'+a.map(function(x,i){return '<td'+(i&&typeof x!='string'||/억|건$/.test(x)?' class="n"':'')+'>'+x+'</td>'}).join('')+'</tr>'};
  document.getElementById('statsBody').innerHTML='<p>모든 숫자는 2026년 계획·결정 금액이에요. 아직 팩트체크 전이라 전부 <span class="u">미확인</span>이에요. 개인은 이름 없이 \'개인\'으로만 적어요.</p>'+
  '<h2>시도별 축제 예산 합계</h2>'+t(['순위','시도','축제 수','예산','국비'],S.sido.map(function(a,i){return td([i+1,a[0],a[1]+'건',eok(a[2]),eok(a[3])])}))+
  '<h2>시군구별 축제 예산 순위</h2>'+t(['순위','시군구','축제 수','예산'],S.sgg.map(function(a,i){return td([i+1,esc(a[0]),a[1]+'건',eok(a[2])])}))+
- '<h2>예산이 큰 축제 TOP 20</h2>'+t(['순위','축제','지역','예산'],S.topfest.map(function(a,i){return td([i+1,esc(a[0])+(a[0].indexOf('바우덕이')>=0?' <span class="u">단위 확인 필요</span>':''),esc(a[1]),eok(a[2])])}))+
+ '<h2>예산이 큰 축제 TOP 20</h2>'+t(['순위','축제','지역','예산'],S.topfest.map(function(a,i){return td([i+1,esc(a[0]),esc(a[1]),eok(a[2])])}))+
  '<h2>영진위 지원을 많이 받은 곳</h2>'+t(['순위','받은 곳','건수','지원결정액'],S.co.map(function(a,i){return td([i+1,esc(a[0])+(a[0]=='개인'?' (여러 명 합계)':''),a[1]+'건',(a[2]/1e8).toFixed(1).replace(/\.0$/,'')+'억'])}))+
  '<p>출처: 문화체육관광부 2026년 지역축제 개최계획, 영화진흥위원회 심사결과 공지</p>';
  S.sggpt.forEach(function(a){if(a[0].indexOf('안성')>=0)return;LB.push({k:'fest',ll:[a[1],a[2]],v:a[3],t:eok(a[3])})});
