@@ -41,11 +41,17 @@ def write_series(D):
         for tk, v in x["c"].items(): S.setdefault(tk, ([], []))[0].append(x["date"]); S[tk][1].append(v)
     for tk, (d, c) in S.items():
         if not tk.replace("-", "").isalnum(): continue
-        json.dump({"source": "Massive(구 Polygon) grouped daily, 수정종가(adjusted) 기준", "as_of": D[-1]["date"], "d": d, "c": c},
+        json.dump({"source": SRC, "as_of": D[-1]["date"], "d": d, "c": c},
                   open(os.path.join(OUT, tk + ".json"), "w"), separators=(",", ":"))
     return len(S)
+SRC = "Massive(구 Polygon) · 민간 데이터 회사, 공식 자료 아님 · 수정종가"  # 미국 가격 출처: 민간 회사라 공식 자료가 아님을 그대로 밝힌다
 # 같은 티커를 다른 회사가 다시 쓴 경우: 이 날짜 전 가격은 다른 증권이라 버린다(출처: 발행사 공식 발표).
 REUSE = {"SPCX": ("2026-06-12", "SpaceX Nasdaq 첫 거래일(ir.spacex.com 2026-06-11 발표). 그 전 SPCX는 다른 ETF(2026-04-07에 SPCK로 변경, spcketf.com)")}
+# 이 날짜 뒤 가격은 다른 증권이라 버린다(출처: SEC 공시).
+ENDED = {"SATS": ("2026-06-23", "EchoStar는 2026-06 티커를 ECHO로 바꿈(SEC 8-K 2026-06-25 표지). 2026-10-20부터 SATS는 Strive, Inc.의 우선주(SEC 8-K 2026-10-20)")}
+# 공식 자료로 이유를 확인한 끊김. 분할이 아니라 조정할 비율이 없어 변화율은 계속 숨기고 이유만 밝힌다.
+BR_WHY = {("CTVA", "2026-10-01"): ("spinoff", "Corteva가 종자 사업을 Vylor Inc.(VYLR)로 떼어 내 주주에게 나눠 줌, 2026-10-01 완료(SEC 8-K 2026-10-01)",
+                                  "https://www.sec.gov/Archives/edgar/data/1755672/000119312526409895/d116808d8k.htm")}
 GAP_DAYS, JUMP = 5, 2.0  # 5거래일 넘게 끊기거나 하루에 2배/절반 넘게 바뀌면 그 앞뒤를 잇는 변화율은 확인 전까지 숨긴다
 def load_days():
     files = sorted(f for f in os.listdir(OUT) if re.fullmatch(r"\d{4}-\d{2}-\d{2}\.json", f))
@@ -53,6 +59,8 @@ def load_days():
     for x in D:
         for tk, (start, _) in REUSE.items():
             if x["date"] < start: x["c"].pop(tk, None)
+        for tk, (end, _) in ENDED.items():
+            if x["date"] > end: x["c"].pop(tk, None)
     return D
 def breaks(D, tk):
     """tk 가격을 이어 볼 수 없는 날짜들(끊김 뒤 재개일, 급변일)과 이유."""
@@ -83,8 +91,8 @@ def summarize():
         if tk in REUSE or (first and y0 and first > y0[-1]["date"]):  # 올해 새로 상장: 연초 대비 대신 첫 거래일 종가 대비
             f0 = next(x for x in D if tk in x["c"])
             out[tk]["ls"] = {"d": f0["date"], "c0": f0["c"][tk], "pct": round((c / f0["c"][tk] - 1) * 100, 2) if not any(b > f0["date"] for b, _ in br) else None}
-        if br: out[tk]["br"] = [{"d": b, "why": w} for b, w in br]
-    json.dump({"date": last["date"], "days": len(D), "source": "Massive(구 Polygon) grouped daily, 수정종가(adjusted) 기준",
+        if br: out[tk]["br"] = [dict({"d": b, "why": w}, **({"ok": BR_WHY[(tk, b)][0], "note": BR_WHY[(tk, b)][1], "url": BR_WHY[(tk, b)][2]} if (tk, b) in BR_WHY else {})) for b, w in br]
+    json.dump({"date": last["date"], "days": len(D), "source": SRC, "m1": "최근 21거래일", "ended": {k: v[1] for k, v in ENDED.items()},
                "note": "종가 기준 일별 데이터. 투자 조언 아님.", "t": out}, open(os.path.join(OUT, "summary.json"), "w"), separators=(",", ":"))
     print("summary", last["date"], len(out), "days", len(D))
 EXTRA = ["BRK.B"]  # 점(.) 들어간 미국 종목: grouped daily에 안 잡혀서 종목별 range로 따로 받음
@@ -98,7 +106,7 @@ def extra_series(start="2025-12-15"):
         R = j.get("results") or []
         if not R: print(tk, "no results"); continue
         d = [dt.datetime.utcfromtimestamp(x["t"] / 1000).strftime("%Y-%m-%d") for x in R]
-        json.dump({"source": "Massive(구 Polygon) daily aggregates, 수정종가(adjusted) 기준", "as_of": d[-1], "d": d, "c": [x["c"] for x in R]},
+        json.dump({"source": SRC, "as_of": d[-1], "d": d, "c": [x["c"] for x in R]},
                   open(os.path.join(OUT, tk + ".json"), "w"), separators=(",", ":"))
         print(tk, len(d), d[-1]); time.sleep(13)
 if __name__ == "__main__":
