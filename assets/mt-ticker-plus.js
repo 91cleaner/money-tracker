@@ -183,6 +183,27 @@
         b.onclick = ev => { ev.stopPropagation(); popup(`<div class="k">${E ? 'White House / Federal Register' : '백악관 / 연방관보'}</div><div class="h">${esc(z.title)}</div><div>${esc(md(String(z.date).slice(0, 10)))}${z.type_en ? ' · ' + esc(E ? z.type_en : z.type) : ''}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(syms.join(', '))}</b></div><div class="s">${lnk(z.url, E ? 'Federal Register / official record' : '연방관보 원문')}</div>`, ll); };
         lst.append(b); }); }
   }
+  // Opening screen: 3 large cards with the latest notable filings; other controls stay behind Menu.
+  (async () => {
+    const qs = new URLSearchParams(location.search); if (qs.get('q') || qs.get('rec') || sessionStorage.getItem('mtOpenSeen')) return;
+    const d = await getTT(); if (!d || !d.tickers) return; const E = en(), all = [];
+    Object.entries(d.tickers).forEach(([k, v]) => v.forEach(r => all.push([k, r])));
+    all.sort((a, b) => String(b[1].f).localeCompare(String(a[1].f)) || ((b[1].tags || []).length - (a[1].tags || []).length));
+    const pick = [], seen = new Set(), sw = new Set(); for (const [k, r] of all) { if (seen.has(k) || sw.has(r.who) || !r.tags) continue; seen.add(k); sw.add(r.who); pick.push([k, r]); if (pick.length === 3) break; }
+    if (!pick.length) return;
+    const st = document.createElement('style'); st.textContent = `body.mtOpenOn #controls,body.mtOpenOn #topics,body.mtOpenOn #mtTicker,body.mtOpenOn #brief,body.mtOpenOn #mtOneDock{visibility:hidden}#mtOpen{position:fixed;inset:auto 0 90px 0;z-index:1500;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none}#mtOpen .cs{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;pointer-events:auto}#mtOpen .oc{width:300px;text-align:left;padding:14px 16px;background:rgba(6,19,14,.94);border:1px solid #5dff9e;border-radius:8px;color:#d8f5e3;font:14px/1.45 system-ui,sans-serif;cursor:pointer}#mtOpen .oc:hover{border-color:#ffd60a}#mtOpen .oc b.s{display:block;font:700 34px ui-monospace,monospace;color:#5dff9e}#mtOpen .bar{pointer-events:auto;display:flex;gap:8px}#mtOpen h3{margin:0;font:700 12px ui-monospace,monospace;letter-spacing:.08em;color:#68c7d0;background:rgba(6,19,14,.9);padding:3px 8px;border-radius:4px}`;
+    document.head.append(st);
+    const o = document.createElement('div'); o.id = 'mtOpen'; o.innerHTML = `<h3>${E ? 'LATEST NOTABLE FILINGS' : '최근 눈에 띄는 신고'}</h3><div class="cs"></div><div class="bar"><button class="mtSave" id="mtOpenMenu" style="font-size:13px;padding:5px 14px">${E ? 'Menu' : '메뉴'}</button></div>`;
+    pick.forEach(([k, r]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'oc';
+      b.innerHTML = `<b class="s">${esc(k)}</b><span class="pp" style="display:inline-block;padding:0 4px;border-radius:3px;font:700 11px ui-monospace,monospace;color:#111;background:${party(r.p)}">${esc(r.p || '?')}</span> <b>${esc(r.who)}</b> · ${side(r.ty)}<br>${E ? 'Traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}<br>${(r.tags || []).map(g => `<span class="mtTag">${esc(tagShort(g))}</span>`).join('')}`;
+      b.onclick = () => { sessionStorage.setItem('mtOpenSeen', 1); location.search = `?lang=${E ? 'en' : 'ko'}&q=${encodeURIComponent(k)}${r.id ? '&m=' + encodeURIComponent(r.id) : ''}`; };
+      b.onmouseenter = () => { const m = window.moneyTrackerMap; if (m && r.ll) m.flyTo(r.ll, 5, { duration: .8 }); };
+      o.querySelector('.cs').append(b); });
+    const close = () => { o.remove(); document.body.classList.remove('mtOpenOn'); sessionStorage.setItem('mtOpenSeen', 1); };
+    o.querySelector('#mtOpenMenu').onclick = () => { close(); const mb = [...document.querySelectorAll('button')].find(x => /^\W*(Menu|메뉴)\s*$/.test(x.textContent.trim()) && x.id !== 'mtOpenMenu'); if (mb) mb.click(); };
+    document.body.classList.add('mtOpenOn'); document.body.append(o);
+    addEventListener('keydown', e => { if (e.key === 'Escape') close(); }, { once: true });
+  })();
   let busy = false;
   async function render() {
     const s = cur(), hub = $('mtHub'); if (!s || !hub) { if (PB.lay) { PB.lay.clearLayers(); } pbStop(); { const ov = $('mtPBov'); if (ov) ov.remove(); } S.sym = null; S.rows = null; const b = $('mtPlus'); if (b) b.remove(); return; }
