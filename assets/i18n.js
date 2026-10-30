@@ -397,7 +397,7 @@
   }
   function toEn(s) {
     if (typeof s !== "string" || !(HANGUL.test(s) || /\d{4}-\d{2}/.test(s))) return s;
-    s = s.replace(/PTR\(의원 주식 거래 신고\)/g, "PTR").replace(/8-K\(회사 중요 사건 공시\)/g, "8-K");
+    s = s.replace(/PTR\(의원 주식 거래 신고\) 원문/g, "PTR 원문").replace(/PTR\(의원 주식 거래 신고\)·/g, "PTR·").replace(/PTR\(의원 주식 거래 신고\)/g, "PTR 신고").replace(/8-K\(회사 중요 사건 공시\)/g, "8-K");
     if (cache[s] != null) return cache[s];
     var lead = /^\s*/.exec(s)[0], trail = /\s*$/.exec(s)[0], core = s.slice(lead.length, s.length - trail.length), out;
     var dot = /\s*[·•]\s*$/.exec(core), bare = dot ? core.slice(0, dot.index) : core; // "fact ·" : text node followed by a source link
