@@ -69,9 +69,9 @@ test('pattern: honest when fewer than 3 past cases, estimate label otherwise', (
   const enFew = T.build({ en: true, kind: 'company', today: '2026-10-29', stops: stops.company });
   assert.match(enFew.pattern, /too few similar past cases/);
   const ok = T.build({ en: false, kind: 'company', today: '2026-10-29', stops: stops.company, study: { n: 4, mean: -1.234 } });
-  assert.match(ok.pattern, /지난번 비슷한 발표\(4회\) 때는 한 달 뒤 주가가 평균 -1\.2% 움직였어요\(추정\)/);
+  assert.match(ok.pattern, /과거 비슷한 발표 4번 때 한 달 뒤 주가는 평균 -1\.2% 움직였어요\. 지난 기록일 뿐/);
   const pk = T.build({ en: false, kind: 'sector', today: '2026-10-29', stops: stops.sector, packs: [{ n: 2, mean: 1 }, { n: 4, mean: 4 }] });
-  assert.match(pk.pattern, /\(6회\).*\(추정\)/);
+  assert.match(pk.pattern, /발표 6번 때.*지난 기록일 뿐/);
 });
 
 test('recap uses 같은 기간 form; works for bill and sector routes', () => {
@@ -83,7 +83,8 @@ test('recap uses 같은 기간 form; works for bill and sector routes', () => {
   const b = T.build({ en: false, kind: 'bill', today: '2026-10-29', stops: stops.bill, latest: '2026-07-27' });
   assert.ok(b.watch.some(w => w.includes('2026-07-27')));
   const e = T.build({ en: true, kind: 'company', today: '2026-10-29', stops: stops.company, earn });
-  assert.match(e.watch[0], /estimate/);
+  assert.match(e.watch[0], /last earnings report .* was filed \d{4}-\d{2}-\d{2}\.$/); // past dates only, no guessed next date
+  assert.doesNotMatch(e.watch[0], /estimate|may come/);
   assert.match(e.recap, /In the same period/);
 });
 

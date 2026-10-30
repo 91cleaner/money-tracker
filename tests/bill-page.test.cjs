@@ -63,7 +63,7 @@ test('white house alert bar: real item shape, two labelled groups, safe when emp
   assert.ok(Array.isArray(wh.items));
   for (const k of ['date', 't', 'type', 'u', 'sectors']) assert.ok(k in wh.items[0], k);
   assert.match(room, /grpP:'백악관·대통령 조치',grpA:'관련 부처 관보 문서'/);
-  assert.match(room, /🏛️/);
+  assert.doesNotMatch(room, /🏛️/); // no emoji in the UI
   assert.match(room, /Array\.isArray\(w&&w\.items\)/);
   assert.match(room, /if\(!P\.length&&!A\.length\)return/);
 });
