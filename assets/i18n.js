@@ -207,6 +207,7 @@
     [/(\d+)년 제(\d+)호/, "No. $2, $1"],
     // route facts / titles from data/search-index.json
     [/자체 분류, 공식 관할 아님\. 데이터상 (상원|하원) 위원 (\d+)명\(members\.json\)\./, function (m, c, n) { return "Own classification, not official jurisdiction. Data shows " + n + " " + (c === "상원" ? "Senate" : "House") + " members (members.json)."; }],
+    [/연관 위원회\((상원|하원)\): (.+?)(?=$|\s·\s|\n)/, function (m, c, w) { var C = {"군사위원회": "Armed Services", "은행·주택·도시 위원회": "Banking, Housing, and Urban Affairs", "상무·과학·교통 위원회": "Commerce, Science, and Transportation", "에너지·천연자원 위원회": "Energy and Natural Resources", "환경·공공사업 위원회": "Environment and Public Works", "보건·교육·노동·연금 위원회": "Health, Education, Labor, and Pensions", "에너지·상무 위원회": "Energy and Commerce", "금융서비스 위원회": "Financial Services", "미중 전략 경쟁 특별위원회": "House Select the Strategic Competition Between the United States and the Chinese Communist Party", "교통·인프라 위원회": "Transportation and Infrastructure"}; w = w.trim(); return "Related committee (" + (c === "상원" ? "Senate" : "House") + "): " + (C[w] || w); }],
     [/연관 위원회\((상원|하원)\): /, function (m, c) { return "Related committee (" + (c === "상원" ? "Senate" : "House") + "): "; }],
     [/데이터상 하원 PTR 신고 (\d+)건, 최근 신고일 (\S+?)\. 신고 기준이며 거래일→신고일 최대 (\d+)일 차이 가능\. 투자 조언 아님\./, "Data shows $1 House PTR filings, most recent filed $2. Based on filings; disclosed (PTR), up to $3-day lag. Not investment advice."],
     [/데이터상 (.+?) 의원 (\S+) 거래 신고 (\d+)건\. 최근: (구입|처분|교환)\((.)\) (.+?), 거래일 (\S+), 신고일 (\S+)\. 신고 기준, 투자 조언 아님\./,

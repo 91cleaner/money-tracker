@@ -40,7 +40,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
   // Short landscape phones: keep cards clear of the tour bar, the side brief and the bottom controls.
   const lsPad = br => { const m = document.getElementById('map'), mt = m ? m.getBoundingClientRect().top : 0, vis = id => { const e = document.getElementById(id); if (!e) return null; const r = e.getBoundingClientRect(); return r.width && getComputedStyle(e).display !== 'none' ? r : null; };
     if (!br) { const b = vis('mtBar'); return [8, b ? Math.max(8, b.bottom - mt + 6) : 8]; }
-    const f = vis('brief'), c = vis('controls'); return [f ? innerWidth - f.left + 8 : 8, c ? innerHeight - c.top + 6 : 40]; };
+    const f = vis('brief'), c = vis('controls'); return [f ? innerWidth - f.left + 8 : 8, c ? innerHeight - c.top + 16 : 40]; };
   function card(html, ll) {
     const map = window.moneyTrackerMap; if (popup) map.removeLayer(popup);
     const sh = innerWidth > innerHeight && innerHeight < 500;
@@ -104,7 +104,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
   let G = {}, FR = null;
   const getFR = () => FR || (FR = fetch('../data/fr/presidential.json').then(r => r.ok ? r.json() : null).catch(() => null));
   const inUS = ll => ll[0] > 18 && ll[0] < 72 && ll[1] > -170 && ll[1] < -60;
-  function grpOf(t) { const rf = String(t.ref || '').split(':')[0]; if (rf === 'uswh') return 'wh'; if (/^(cnpol|jppol|twpol|eupol)$/.test(rf)) return 'cty'; if (rf === 'krbill') return 'bill'; const k = kindOf(t); if (k === 'insider') return 'ins'; if (k === 'bill') return 'bill'; if (k === 'trade' || k === 'cmte') return 'law'; if (k === 'supply') return 'hq'; if (!inUS([t.lat, t.lon])) return 'cty'; return 'fil'; }
+  function grpOf(t) { const rf = String(t.ref || '').split(':')[0]; if (rf === 'uswh') return 'wh'; if (/^(cnpol|jppol|twpol|eupol)$/.test(rf)) return 'cty'; if (rf === 'krbill') return 'bill'; if (rf === 'factor') return 'fil'; const k = kindOf(t); if (k === 'insider') return 'ins'; if (k === 'bill') return 'bill'; if (k === 'trade' || k === 'cmte') return 'law'; if (k === 'supply') return 'hq'; if (!inUS([t.lat, t.lon])) return 'cty'; return 'fil'; }
   // Insiders tab count = rows the tab list shows (US Form 4 rows from ticker-extra.json, Korean DART rows from kr-insiders.json).
   const INS = {}; const insLoad = u => fetch(u, { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { const t = (j && j.tickers) || {}; for (const s in t) { const r = (t[s].f4 && t[s].f4.rows) || t[s].rows; if (Array.isArray(r)) INS[s] = Math.max(INS[s] || 0, r.length); } }).catch(() => {});
   const insReady = Promise.all([insLoad('./ticker-extra.json'), insLoad('./kr-insiders.json')]);
@@ -129,7 +129,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
   function dossierCard(sym, o) {
     const E = en(), im = (x, alt, w, h) => x ? `<figure style="margin:0;flex:0 0 ${w}px"><img src="${esc(x.src)}" alt="${esc(alt)}" style="width:${w}px;height:${h}px;object-fit:cover;border:1px solid #2f6b55;border-radius:3px;display:block"><figcaption style="font-size:8.5px;line-height:1.25;color:#7f978a;margin-top:2px">${E ? 'Photo: ' + esc(x.credit) + ' · Wikimedia Commons · ' : '사진: ' + esc(x.creditKo || x.credit) + ' · 위키미디어 공용 · '}<a href="${esc(x.page)}" target="_blank" rel="noopener noreferrer">${esc(E ? x.license : koLic(x.license))}</a></figcaption></figure>` : '';
     return `<div class="k">${esc(sym)} · ${E ? 'Dossier' : '기업 요약'}</div><div style="display:flex;gap:8px;margin:4px 0">${im(o.ceoImg, o.ceo, 96, 120)}${im(o.hqImg, 'HQ', 150, 120)}</div>` +
-      `<div class="r">${E ? 'HQ' : '본사'}: <b>${esc(o.hq)}</b></div><div class="r">${esc(E ? o.ceoTitle : koTitle(o.ceoTitle))}: <b>${esc(o.ceo)}</b></div><div class="s">${E ? 'Photos come from Wikimedia Commons (free to use). Boss names checked Oct 30, 2026.' : '사진은 위키미디어 공용(무료 사진)에서 가져왔어요. 대표 이름은 2026년 10월 30일에 확인했어요.'}</div>`;
+      `<div class="r">${E ? 'HQ' : '본사'}: <b>${esc(E ? o.hq : (o.hqKo || o.hq))}</b></div><div class="r">${esc(E ? o.ceoTitle : koTitle(o.ceoTitle))}: <b>${esc(E ? o.ceo : (o.ceoKo || o.ceo))}</b></div><div class="s">${E ? 'Photos come from Wikimedia Commons (free to use). Boss names checked Oct 30, 2026.' : '사진은 위키미디어 공용(무료 사진)에서 가져왔어요. 대표 이름은 2026년 10월 30일에 확인했어요.'}</div>`;
   }
   async function hub(sym) {
     { const my0 = cur, dd = await getDS(); const o = dd && dd.tickers && dd.tickers[sym];

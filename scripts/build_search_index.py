@@ -37,6 +37,11 @@ CITY_LL = {  # SEC 사업장 주소 도시 → 좌표(공개 지명 좌표 근�
  "MENLO PARK,CA": (37.453, -122.1817), "BETHESDA,MD": (38.9847, -77.0947), "SUNNYVALE,CA": (37.3688, -122.0363),
  "LONDON,X0": (51.5074, -0.1278), "TORONTO,A6": (43.6532, -79.3832), "DUBLIN,L2": (53.3498, -6.2603),
 }
+# 위원회 이름 한국어 표기(한국어 화면에 영어가 섞이지 않게). 영어 화면은 assets/i18n.js가 되돌린다.
+CMTE_KO = {"Armed Services": "군사위원회", "Banking, Housing, and Urban Affairs": "은행·주택·도시 위원회", "Commerce, Science, and Transportation": "상무·과학·교통 위원회", "Energy and Natural Resources": "에너지·천연자원 위원회", "Environment and Public Works": "환경·공공사업 위원회", "Health, Education, Labor, and Pensions": "보건·교육·노동·연금 위원회", "Energy and Commerce": "에너지·상무 위원회", "Financial Services": "금융서비스 위원회", "House Select the Strategic Competition Between the United States and the Chinese Communist Party": "미중 전략 경쟁 특별위원회", "Transportation and Infrastructure": "교통·인프라 위원회"}
+# 영어 이름만 있는 종목의 한국어 이름
+KO_NAME = {"SPCX": "스페이스X"}
+
 def hq_ll(t, st_ll):
     k = (t.get("hq_city") or "").upper() + "," + (t.get("hq_state_or_country") or "")
     if k in CITY_LL: return list(CITY_LL[k]), "도시 좌표"
@@ -440,7 +445,7 @@ def main():
             for ch in ("sen", "rep"):
                 if (ch, n) in cm:
                     d = CENT["dc"]
-                    out.append(stop(f"{d[0]} {CH[ch]}", d[2], d[3], f"연관 위원회({CH[ch]}): {n}", f"이 사이트가 직접 묶은 거라 공식 담당 위원회는 아닐 수 있어요. {CH[ch]} 위원 {cm[(ch, n)]}명이 있어요.",
+                    out.append(stop(f"{d[0]} {CH[ch]}", d[2], d[3], f"연관 위원회({CH[ch]}): {CMTE_KO.get(n, n)}", f"이 사이트가 직접 묶은 거라 공식 담당 위원회는 아닐 수 있어요. {CH[ch]} 위원 {cm[(ch, n)]}명이 있어요.",
                                     "https://www.congress.gov/committees", None, f"committee:{ch}:{n}"))
         return out[:2]
     def factor_stops(sid, limit=3):
@@ -517,6 +522,9 @@ def main():
     for e in ent.values():
         e["route"] = [x for x in e["route"] if x and x.get("lat") is not None]
         e["aliases"] = sorted({a for a in e["aliases"] if a})
+    for tk, nm in KO_NAME.items():
+        e = ent.get("company:" + tk)
+        if e: e["name"] = nm
     # 질문 이해기(assets/intent.js)용 회사 별명·오타 변형: data/intent-lexicon.json nicknames → aliases
     nick = (opt("data", "intent-lexicon.json") or {}).get("nicknames", {})
     for tk, names in nick.items():
