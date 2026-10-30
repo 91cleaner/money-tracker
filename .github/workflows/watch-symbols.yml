@@ -1,0 +1,25 @@
+name: Watch ticker changes (SEC 8-K covers)
+on:
+  schedule:
+    - cron: '0 23 * * 1-5'   # 가격 수집(22:30 UTC) 뒤
+  workflow_dispatch:
+    inputs:
+      days: {description: '8-K lookback days', default: '45'}
+permissions:
+  contents: write
+concurrency: {group: watch-symbols, cancel-in-progress: false}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python3 scripts/watch_symbol_changes.py "${{ github.event.inputs.days || '45' }}"
+      - run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data/us/symbol-watch.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: ticker-change watch $(date -u +%F)"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push && exit 0; sleep $((i*10)); done; exit 1

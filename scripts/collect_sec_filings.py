@@ -43,6 +43,9 @@ def main():
     except Exception:
         pass
     res, fail = {}, 0
+    only = [x for x in os.environ.get("ONLY", "").split(",") if x]  # ONLY=SATS: 그 종목만 다시 받고 나머지는 그대로
+    if only:
+        order, res = [t for t in only if t in ts], dict(old)
     for tk in order:
         cik = ts[tk].get("cik")
         if not cik:

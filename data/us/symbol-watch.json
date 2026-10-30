@@ -1,0 +1,12 @@
+{
+ "updated": "2026-10-30",
+ "source": "SEC EDGAR company_tickers.json + data.sec.gov submissions + 8-K 표지(Trading Symbol)",
+ "note": "자동으로 찾은 '확인 필요' 목록. 공시를 사람이 읽고 확인하기 전까지 화면 숫자는 바꾸지 않음.",
+ "days": 45,
+ "checked": 795,
+ "covers_read": 552,
+ "confirmed": [
+  "SATS"
+ ],
+ "flags": []
+}
