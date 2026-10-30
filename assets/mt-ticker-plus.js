@@ -78,7 +78,7 @@
       (bills.length ? bills.map(b => `<div class="s">${lnk(b.u, b.no)} ${esc(String(b.n).slice(0, 80))} · ${esc(md(b.d))}</div>`).join('') : `<div class="s">${E ? 'None collected.' : '수집된 법안 없음.'}</div>`) +
       `<div class="r" style="margin-top:4px"><b>${E ? 'Trades in tracked tickers' : '추적 종목 거래'}</b> (${mine.length})</div>` +
       mine.slice(0, 6).map(([k, r]) => `<div class="s" style="color:#d8f5e3"><b>${esc(k)}</b> ${side(r.ty)} · ${esc(r.amt)} · ${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)} ${lnk(r.doc, 'PTR')}</div>${pcLine(r)}`).join('') +
-      `<div class="s">${E ? 'Amounts are reported ranges. Price change is close to close over the stated window; it does not show a reason.' : '금액은 신고 구간. 가격 변화는 표시된 기간의 종가 비교이며 이유를 뜻하지 않아요.'}</div>`;
+      `<div class="s"><a href="${esc(deep(S.sym || '', id))}">${E ? 'Link to this member card' : '이 의원 카드 링크'} ›</a></div><div class="s">${E ? 'Amounts are reported ranges. Price change is close to close over the stated window; it does not show a reason.' : '금액은 신고 구간. 가격 변화는 표시된 기간의 종가 비교이며 이유를 뜻하지 않아요.'}</div>`;
   }
   function popup(html, ll) { const map = window.moneyTrackerMap, L = window.L; if (!map || !L) return;
     const go = () => L.popup({ className: 'mtTour mtMF mtRich', closeButton: true, autoPan: true, autoPanPadding: [40, 90], maxWidth: 320, offset: [0, -6] }).setLatLng(ll || map.getCenter()).setContent(html).openOn(map);
@@ -149,6 +149,22 @@
       const map = window.moneyTrackerMap; if (map && PB.i < 0) map.setView([38, -96], 4); PB.t = setInterval(() => { if (PB.i >= PB.ev.length - 1 || S.sym !== sym) return pbStop(); pbShow(PB.i + 1); }, 700); };
     return box;
   });
+  // Trade table: filter by party and buy/sell, sort by filing date, filing delay or amount.
+  const amtLo = a => { const m = String(a || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : 0; };
+  const deep = (sym, id) => `${location.origin}${location.pathname}?lang=${en() ? 'en' : 'ko'}&q=${encodeURIComponent(sym)}${id ? '&m=' + encodeURIComponent(id) : ''}`;
+  S.deep = deep;
+  SECTIONS.push((rows, sym) => {
+    if (!rows.length) return null; const E = en(), box = document.createElement('div');
+    const sel = (id, o) => `<select id="${id}" style="background:#0b1d16;color:#d8f5e3;border:1px solid #24493b;font:11px ui-monospace,monospace">${o.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>`;
+    box.innerHTML = `<h4>${E ? 'All trades' : '전체 거래'} <small>(${rows.length})</small></h4><div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:3px">${sel('mtTp', [['', E ? 'Any party' : '정당 전체'], ['D', 'D'], ['R', 'R']])}${sel('mtTs', [['', E ? 'Buy + sell' : '매수+매도'], ['P', E ? 'Buy' : '매수'], ['S', E ? 'Sell' : '매도']])}${sel('mtTo', [['f', E ? 'Sort: filed' : '정렬: 신고일'], ['late', E ? 'Sort: filing delay' : '정렬: 신고 지연'], ['amt', E ? 'Sort: amount' : '정렬: 금액']])}<button class="mtSave mtCopy" style="margin:0">${E ? 'Copy ticker link' : '종목 링크 복사'}</button></div><div class="mtTbl" style="max-height:30vh;overflow:auto"></div>`;
+    const paint = () => { const p = box.querySelector('#mtTp').value, t = box.querySelector('#mtTs').value, o = box.querySelector('#mtTo').value;
+      const r = rows.filter(x => (!p || x.p === p) && (!t || x.ty === t)).sort((a, b) => o === 'late' ? b.late - a.late : o === 'amt' ? amtLo(b.amt) - amtLo(a.amt) : String(b.f).localeCompare(String(a.f)));
+      const tb = box.querySelector('.mtTbl'); tb.innerHTML = `<table style="width:100%;border-collapse:collapse;font:11px ui-monospace,monospace"><tr style="color:#68c7d0;text-align:left"><th>${E ? 'Member' : '의원'}</th><th>${E ? 'Side' : '구분'}</th><th>${E ? 'Amount' : '금액'}</th><th>${E ? 'Traded' : '거래'}</th><th>${E ? 'Gap' : '지연'}</th></tr>` + r.map((x, i) => `<tr data-i="${i}" style="cursor:pointer;border-top:1px solid #24493b${x.tags ? ';color:#ffd60a' : ''}"><td><span class="pp" style="background:${party(x.p)}">${esc(x.p || '?')}</span>${esc(x.who)}</td><td>${side(x.ty)}</td><td>${esc(String(x.amt || '').replace(/\$|,000/g, m => m === '$' ? '$' : 'k'))}</td><td>${esc(x.d)}</td><td>${lateTag(x)}</td></tr>`).join('') + '</table>';
+      tb.querySelectorAll('tr[data-i]').forEach(tr => tr.onclick = () => S.openMember(r[+tr.dataset.i])); };
+    box.querySelectorAll('select').forEach(x => x.onchange = paint); paint();
+    box.querySelector('.mtCopy').onclick = e => { e.stopPropagation(); navigator.clipboard && navigator.clipboard.writeText(deep(sym)); e.target.textContent = E ? 'Copied' : '복사됨'; };
+    return box;
+  });
   // Ticker sub-tabs: the extras panel shows only on All / Lawmakers; Insiders and White House tabs get full lists.
   const tabNow = () => { const b = document.querySelector('#mtHub button.on'); return b ? b.dataset.k : 'all'; };
   const money2 = n => '$' + Math.round(n).toLocaleString('en-US');
@@ -176,6 +192,7 @@
     S.sym = s; S.rows = rows; if (!box) { box = document.createElement('div'); box.id = 'mtPlus'; } anchor.after(box); box.replaceChildren();
     SECTIONS.forEach(f => { try { const el = f(rows, s); if (el) box.append(el); } catch (e) { } });
     decorateDots();
+    const mid = new URLSearchParams(location.search).get('m'); if (mid && !S.mDone) { const r = rows.find(x => x.id === mid); if (r) { S.mDone = 1; setTimeout(() => S.openMember(r), 4500); } }
   }
   let lastK = 0; const kick = () => { if (busy) return; busy = true; const w = Math.max(0, 200 - (Date.now() - lastK)); setTimeout(() => requestAnimationFrame(() => { busy = false; lastK = Date.now(); tabFill(); render(); decorateCard(); const c = document.querySelector('.leaflet-popup.mtMF:not(.mtRich) .leaflet-popup-content'); if (c && S.sym) enrich(c); }), w); };
   S.refresh = () => { const b = $('mtPlus'); if (b) b.remove(); S.sym = null; kick(); };
