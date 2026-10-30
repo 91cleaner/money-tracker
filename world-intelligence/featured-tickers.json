@@ -1,0 +1,15 @@
+{
+  "note": "Editable list for TRACKING OPTIONS. Order = display order. q = text sent to the search box.",
+  "groups": [
+    {"en": "Featured", "ko": "주요", "items": [
+      {"sym": "GOOGL", "q": "GOOGL"}, {"sym": "AMZN", "q": "AMZN"}, {"sym": "INTC", "q": "INTC"}, {"sym": "MSFT", "q": "MSFT"}, {"sym": "TSLA", "q": "TSLA"}]},
+    {"en": "Popular US", "ko": "미국 인기", "items": [
+      {"sym": "NVDA", "q": "NVDA"}, {"sym": "AAPL", "q": "AAPL"}, {"sym": "PLTR", "q": "PLTR"}]},
+    {"en": "Popular Korea", "ko": "한국 인기", "items": [
+      {"sym": "005930.KS", "label": "Samsung Elec", "ko": "삼성전자", "q": "삼성전자"},
+      {"sym": "000660.KS", "label": "SK hynix", "ko": "SK하이닉스", "q": "SK하이닉스"},
+      {"sym": "005380.KS", "label": "Hyundai Motor", "ko": "현대차", "q": "현대차"},
+      {"sym": "035420.KS", "label": "NAVER", "ko": "네이버", "q": "네이버"},
+      {"sym": "035720.KS", "label": "Kakao", "ko": "카카오", "q": "카카오"}]}
+  ]
+}

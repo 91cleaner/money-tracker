@@ -16,6 +16,7 @@
   const getTM = () => TM || (TM = fetch('../data/us/ticker-members.json').then(r => r.ok ? r.json() : null).catch(() => null));
   const css = document.createElement('style');
   css.textContent = `
+#mtHub{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 8px}#mtHub button{font:600 11px ui-monospace,monospace;padding:3px 7px;border:1px solid #2f6b55;border-radius:4px;background:#0b1d16;color:#bfeccf;cursor:pointer}#mtHub button.on{background:#1f5a3f;color:#fff;border-color:#5bda91}#mtHub button:disabled{opacity:.35;cursor:default}
 body.mt-mapfirst #briefStocks,body.mt-mapfirst #briefLinks,body.mt-mapfirst #mtTrades,body.mt-mapfirst #mtPrice,body.mt-mapfirst #mtRecent,body.mt-mapfirst #mtTourCard,body.mt-mapfirst #mtStop{display:none!important}
 body.mt-mapfirst .leaflet-popup.mtTour:not(.mtMF){display:none!important}
 html body .leaflet-popup.mtTour.mtMF{display:block!important}
@@ -89,8 +90,55 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     });
   }
   function paint(again) { if (!SUM) return; if (!again) [60, 700].forEach(ms => setTimeout(() => paint(1), ms)); const bt = $('briefText'), ti = $('briefTitle'); if (ti) ti.textContent = SUM[0]; if (bt) { bt._tok = {}; bt._mt = {}; bt._mtDone = null; bt._dc = null; bt.textContent = SUM[1]; bt.style.whiteSpace = 'pre-line' } }
-  function clear() { SUM = null; const st = $('mtToday'); if (st) st.remove(); const map = window.moneyTrackerMap; if (layer) map.removeLayer(layer); layer = null; cur = null; if (popup) { map.removeLayer(popup); popup = null } document.body.classList.remove('mt-mapfirst'); }
+  function clear() { SUM = null; G = {}; const hb = $('mtHub'); if (hb) hb.remove(); const st = $('mtToday'); if (st) st.remove(); const map = window.moneyTrackerMap; if (layer) map.removeLayer(layer); layer = null; cur = null; if (popup) { map.removeLayer(popup); popup = null } document.body.classList.remove('mt-mapfirst'); }
 
+  // Ticker hub: sub-tabs inside one ticker view; each tab shows only that kind of linked record on the map.
+  let G = {}, FR = null;
+  const getFR = () => FR || (FR = fetch('../data/fr/presidential.json').then(r => r.ok ? r.json() : null).catch(() => null));
+  const inUS = ll => ll[0] > 18 && ll[0] < 72 && ll[1] > -170 && ll[1] < -60;
+  function grpOf(t) { const rf = String(t.ref || '').split(':')[0]; if (rf === 'uswh') return 'wh'; if (/^(cnpol|jppol|twpol|eupol)$/.test(rf)) return 'cty'; if (rf === 'krbill') return 'bill'; const k = kindOf(t); if (k === 'insider') return 'ins'; if (k === 'bill' || k === 'cmte') return 'bill'; if (k === 'trade') return 'law'; if (!inUS([t.lat, t.lon])) return 'cty'; return 'fil'; }
+  function reg(g, mk, html, ll) { (G[g] = G[g] || []).push({ mk, html, ll }); }
+  const TABS = [['all', 'All', '전체'], ['hq', 'HQ', '본사'], ['law', 'Lawmakers', '의원'], ['ins', 'Insiders', '임원'], ['bill', 'Bills', '법안'], ['cty', 'Countries', '나라'], ['wh', 'White House', '백악관'], ['fil', 'Filings', '공시']];
+  function whCard(sym, list) {
+    const E = en();
+    return `<div class="k">${esc(sym)} · ${E ? 'White House / Federal Register' : '백악관 / 연방관보'}</div>` + list.slice(0, 3).map(x => {
+      const mv = (x.moves || []).find(m => m.sym === sym);
+      return `<div class="h" style="font-size:12px">${esc(E ? x.type_en : x.type)} · ${esc(x.date)}</div><div class="s" style="color:#bfffd6">${esc(String(E ? (x.easy_en || x.title) : (x.easy_ko || x.title)).slice(0, 130))}</div>` +
+        (mv ? `<div class="r">${esc(sym)} ${esc(mv.from)} → ${esc(mv.to)}: <b>${mv.pct > 0 ? '+' : ''}${mv.pct}%</b></div>` : '') + (x.url ? `<div class="s"><a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${E ? 'Official record' : '원문 기록'} ›</a></div>` : '');
+    }).join('') + `<div class="s">${E ? 'Same-period price change only; it does not show a reason.' : '같은 기간 가격 변화일 뿐 이유를 뜻하지 않아요.'}</div>`;
+  }
+  let DS = null; const getDS = () => DS || (DS = fetch('./dossier.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null));
+  function dossierCard(sym, o) {
+    const E = en(), im = (x, alt, w, h) => x ? `<figure style="margin:0;flex:0 0 ${w}px"><img src="${esc(x.src)}" alt="${esc(alt)}" style="width:${w}px;height:${h}px;object-fit:cover;border:1px solid #2f6b55;border-radius:3px;display:block"><figcaption style="font-size:8.5px;line-height:1.25;color:#7f978a;margin-top:2px">${esc(x.credit)}, <a href="${esc(x.page)}" target="_blank" rel="noopener noreferrer">${esc(x.license)}</a></figcaption></figure>` : '';
+    return `<div class="k">${esc(sym)} · ${E ? 'Dossier' : '기업 요약'}</div><div style="display:flex;gap:8px;margin:4px 0">${im(o.ceoImg, o.ceo, 64, 80)}${im(o.hqImg, 'HQ', 120, 80)}</div>` +
+      `<div class="r">${E ? 'HQ' : '본사'}: <b>${esc(o.hq)}</b></div><div class="r">${esc(o.ceoTitle)}: <b>${esc(o.ceo)}</b></div><div class="s">${E ? 'Images: Wikimedia Commons. Leadership as of Oct 30, 2026.' : '사진: 위키미디어 공용. 경영진은 2026-10-30 기준.'}</div>`;
+  }
+  async function hub(sym) {
+    { const my0 = cur, dd = await getDS(); const o = dd && dd.tickers && dd.tickers[sym];
+      if (o && cur === my0 && layer && !G.hq) { const mk = L.marker(o.ll, { icon: L.divIcon({ className: '', html: '<div class="mtMFstop" style="width:18px;height:18px;margin:-9px 0 0 -9px;background:#ffd60a"></div>', iconSize: [0, 0] }), title: o.hq, zIndexOffset: 700 });
+        mk.on('click', e => { L.DomEvent.stop(e); card(dossierCard(sym, o), o.ll) }); mk.addTo(layer); reg('hq', mk, () => dossierCard(sym, o), o.ll);
+        const map = window.moneyTrackerMap; setTimeout(() => { if (cur !== my0) return; map.flyTo(o.ll, 6, { duration: 1.2 }); setTimeout(() => { if (cur === my0) card(dossierCard(sym, o), o.ll) }, 1300) }, 2800); } }
+    const my = cur, d = await getFR(); if (cur !== my || !layer) return;
+    const wl = d && d.items ? d.items.filter(x => (x.moves || []).some(m => m.sym === sym)).sort((a, b) => String(b.date).localeCompare(String(a.date))) : [];
+    if (wl.length && !G.wh) { const ll = [38.8977, -77.0365]; const mk = L.marker(ll, { icon: L.divIcon({ className: '', html: '<div class="mtMFstop" style="background:#e8e8e8"></div>', iconSize: [0, 0] }), title: 'White House', zIndexOffset: 550 });
+      mk.on('click', e => { L.DomEvent.stop(e); card(whCard(sym, wl), ll) }); mk.addTo(layer); reg('wh', mk, () => whCard(sym, wl), ll); }
+    let bar = $('mtHub'); if (!bar) { bar = document.createElement('div'); bar.id = 'mtHub'; }
+    const ti = $('briefTitle'); if (ti && ti.parentNode && bar.parentNode !== ti.parentNode) ti.after(bar);
+    const E = en(); bar.replaceChildren();
+    TABS.forEach(([k, e, ko]) => { const n = k === 'all' ? null : (G[k] || []).length; const b = document.createElement('button'); b.type = 'button'; b.dataset.k = k;
+      b.textContent = (E ? e : ko) + (n == null ? '' : ' ' + n); b.disabled = n === 0; b.onclick = ev => { ev.stopPropagation(); pick(k) }; bar.append(b) });
+    pick('all', true);
+  }
+  function pick(k, quiet) {
+    const map = window.moneyTrackerMap, bar = $('mtHub'); if (bar) [...bar.children].forEach(b => b.classList.toggle('on', b.dataset.k === k));
+    const lines = layer ? layer.getLayers().filter(l => l instanceof L.Polyline) : [];
+    Object.entries(G).forEach(([g, arr]) => arr.forEach(o => { const vis = k === 'all' || g === k; if (vis && !layer.hasLayer(o.mk)) o.mk.addTo(layer); if (!vis && layer.hasLayer(o.mk)) layer.removeLayer(o.mk); }));
+    lines.forEach(l => { const el = l.getElement && l.getElement(); if (el) el.style.display = (k === 'all' || k === 'law') ? '' : 'none' });
+    if (quiet || k === 'all') return; const arr = G[k] || []; if (!arr.length) return;
+    if (arr.length > 1) map.flyToBounds(L.latLngBounds(arr.map(o => o.ll)).pad(.25), { duration: 1, maxZoom: 5, paddingTopLeft: [40, 120], paddingBottomRight: [innerWidth > 900 ? 420 : 20, 120] });
+    else map.flyTo(arr[0].ll, Math.max(map.getZoom(), 4), { duration: 1 });
+    setTimeout(() => card(arr[0].html(), arr[0].ll), 1100); setTimeout(declutter, 1200);
+  }
   async function setup(m) {
     const map = window.moneyTrackerMap, E = en(); clear(); cur = m; document.body.classList.add('mt-mapfirst');
     map.fire('click'); // pause the auto tour; cards open on click instead
@@ -99,7 +147,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     m.meta.forEach((t, i) => {
       if (t.lat == null) return; pts.push([t.lat, t.lon]);
       const mk = L.marker([t.lat, t.lon], { icon: L.divIcon({ className: '', html: `<div class="mtMFstop" style="animation-delay:${Math.min(i, 12) * 90}ms"></div>`, iconSize: [0, 0] }), keyboard: true, title: t.title || t.region });
-      mk.on('click', e => { L.DomEvent.stop(e); card(stopCard(t), [t.lat, t.lon]) }); mk.addTo(layer);
+      mk.on('click', e => { L.DomEvent.stop(e); card(stopCard(t), [t.lat, t.lon]) }); mk.addTo(layer); reg(grpOf(t), mk, () => stopCard(t), [t.lat, t.lon]);
     });
     const sym = /^company:/.test(m.ticker) ? m.ticker.slice(8).toUpperCase() : '';
     let tm = null;
@@ -110,15 +158,15 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
       const [k, t] = tdd, by = {};
       t.trades.forEach(r => { (by[r.who] = by[r.who] || { who: r.who, p: r.p, dist: r.dist, ll: r.ll, rows: [] }).rows.push(r) });
       const hm = L.marker(t.hq, { icon: L.divIcon({ className: '', html: '<div class="mtMFstop" style="width:18px;height:18px;margin:-9px 0 0 -9px"></div>', iconSize: [0, 0] }), title: t.name + ' 8-K', zIndexOffset: 600 });
-      hm.on('click', e => { L.DomEvent.stop(e); card(todayCard(k, t), t.hq) }); hm.addTo(layer); pts.push(t.hq);
+      hm.on('click', e => { L.DomEvent.stop(e); card(todayCard(k, t), t.hq) }); hm.addTo(layer); reg('fil', hm, () => todayCard(k, t), t.hq); pts.push(t.hq);
       Object.values(by).forEach((x, j) => {
         const c = x.p === 'R' ? RED : BLU, delay = 300 + j * 260, sides = [...new Set(x.rows.map(r => r.side))].join('/');
         L.polyline([x.ll, t.hq], { color: OR, weight: 2, opacity: .85, dashArray: '6 5', interactive: false }).addTo(layer);
         const html = `<div class="mtMFdot"><div class="d" style="background:${c};animation-delay:${delay}ms"></div><div class="n" style="animation-delay:${delay + 120}ms"><span class="b" style="background:${c}">${x.p}</span><span class="b" style="background:${OR};color:#111">${sides}</span>${esc(x.who.split(' ').slice(-1)[0])} · ${x.rows.length} ${x.rows.length === 1 ? 'trade' : 'trades'}</div></div>`;
         const mk = L.marker(x.ll, { icon: L.divIcon({ className: 'mtMFdot', html, iconSize: [0, 0] }), title: x.who, zIndexOffset: 500 });
-        mk.on('click', e => { L.DomEvent.stop(e); card(todayMemberCard(x, k, t), x.ll) }); mk.addTo(layer); pts.push(x.ll);
+        mk.on('click', e => { L.DomEvent.stop(e); card(todayMemberCard(x, k, t), x.ll) }); mk.addTo(layer); pts.push(x.ll); reg('law', mk, () => todayMemberCard(x, k, t), x.ll);
       });
-      strip(k, t);
+      strip(k, t); hub(sym);
       const n = t.trades.length;
       SUM = ['◉ ' + t.name + ' (' + k + ')', [`${md(t.move.date)} close ${money(t.move.close)}, ${t.move.pct.toFixed(2)}% vs ${md(t.move.prevDate)}.`, `${t.filing.form} ${t.filing.item}, filed ${t.filing.filed}.`, n ? `${n} House PTR trade${n === 1 ? '' : 's'} in the 30 days before the ${t.filing.form}. Orange lines join each lawmaker to the company HQ.` : `No House PTR trades found in the 30 days before the ${t.filing.form}.`, 'Click or tap a dot for a short card.'].join('\n')]; paint();
       if (!n) setTimeout(() => card(todayCard(k, t), t.hq), 1500);
@@ -130,7 +178,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
       const c = x.p === 'R' ? RED : BLU, delay = 300 + j * 260;
       const html = `<div class="mtMFdot"><div class="d" style="background:${c};animation-delay:${delay}ms"></div><div class="n" style="animation-delay:${delay + 120}ms"><span class="b" style="background:${c}">${x.p}</span>${esc(x.name.split(' ').slice(-1)[0])}</div></div>`;
       const mk = L.marker(x.ll, { icon: L.divIcon({ className: 'mtMFdot', html, iconSize: [0, 0] }), title: x.name, zIndexOffset: 500 });
-      mk.on('click', e => { L.DomEvent.stop(e); card(memberCard(x, sym), x.ll) }); mk.addTo(layer); pts.push(x.ll);
+      mk.on('click', e => { L.DomEvent.stop(e); card(memberCard(x, sym), x.ll) }); mk.addTo(layer); pts.push(x.ll); reg('law', mk, () => memberCard(x, sym), x.ll);
     });
     const fix = () => declutter(); setTimeout(fix, 50); map.on('zoomend moveend', fix); layer.on('remove', () => map.off('zoomend moveend', fix));
     // short summary in the side panel
@@ -145,7 +193,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
         : `최근 12개월 ${sym} 거래를 신고한 하원의원 ${tm.total}명. 가장 최근 ${shown.length}명을 지도에 표시${more > 0 ? `, ${more}명은 생략` : ''}.`);
     }
     lines.push(E ? 'Click or tap a dot for a short card.' : '지도 위 점을 누르면 짧은 카드가 열려요.');
-    SUM = ['◉ ' + name, lines.join('\n')]; paint();
+    SUM = ['◉ ' + name, lines.join('\n')]; paint(); if (sym) hub(sym);
     if (pts.length) map.flyToBounds(L.latLngBounds(pts).pad(.2), { duration: 1.2, maxZoom: 5, paddingTopLeft: [40, 80], paddingBottomRight: [innerWidth > 900 ? 420 : 20, 120] });
   }
   function hook() {
@@ -154,13 +202,59 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
       const r = prev && prev.apply(this, arguments);
       const m = window.mtCur && window.mtCur();
       if (!m || !/^company:/.test(m.ticker || '')) { if (cur) clear(); return r; }
-      if (m !== cur) setup(m);
+      if (m !== cur) { tclear(); setup(m); }
       else { const ti = $('briefTitle'), mm = ti && ti.textContent.match(/ · (\d+)\//), t = mm && m.meta[+mm[1] - 1]; if (t && t.lat != null) card(stopCard(t), [t.lat, t.lon]); paint(); }
       return r;
     };
     $('closeBrief') && $('closeBrief').addEventListener('click', clear);
     $('world') && $('world').addEventListener('click', clear);
   }
+  // Topic buttons (TRACKING OPTIONS): show lawmakers who traded the topic's tickers as party dots with short cards.
+  const TOPICS = [
+    ['Semiconductor supply chain', '반도체 공급망', 'NVDA TSM INTC AMD MU AVGO QCOM ASML AMAT'],
+    ['US interest rates and the stock market', '미국 금리와 주식시장', 'JPM BAC GS WFC MS SCHW'],
+    ['Energy and geopolitics', '에너지와 지정학', 'XOM CVX COP OXY SLB'],
+    ['Trade and tariffs', '무역과 관세', 'AAPL CAT DE F GM NKE WMT'],
+    ['US defense', '미국 국방·방산', 'LMT RTX NOC GD BA LHX']];
+  let tlayer = null;
+  function tclear() { const map = window.moneyTrackerMap; if (tlayer && map) map.removeLayer(tlayer); tlayer = null; const st = $('mtTopic'); if (st) st.remove(); }
+  function topicCard(x) {
+    const E = en(), pn = x.p === 'R' ? (E ? 'Republican' : '공화당') : (E ? 'Democrat' : '민주당');
+    const rows = x.rows.slice(0, 5).map(r => `<div class="r"><b>${esc(r.sym)}</b> ${esc(r.l.s)} ${esc(r.l.amt)} · ${esc(r.l.d)}</div>`).join('');
+    const more = x.rows.length > 5 ? `<div class="s">${E ? `${x.rows.length - 5} more tickers` : `외 ${x.rows.length - 5}개 종목`}</div>` : '';
+    return `<div class="k">${E ? 'Topic' : '주제'} · House PTR</div><div class="h">${esc(x.name)}</div><div>${pn} · ${esc(x.dist)}</div>${rows}${more}` +
+      `<div class="s"><a href="${esc(x.rows[0].l.doc)}" target="_blank" rel="noopener noreferrer">PTR filing ›</a> · ${E ? 'Latest reported trade per ticker. Amounts are reported ranges. Dot is an approximate district location.' : '종목별 최근 신고 거래. 금액은 신고 구간. 점은 지역구 대략 위치.'}</div>`;
+  }
+  async function topic(i) {
+    const T = TOPICS[i]; if (!T) return; const map = window.moneyTrackerMap, E = en();
+    clear(); tclear(); if (window.mtUsLayer) window.mtUsLayer.hide(); const my = tlayer = L.layerGroup().addTo(map);
+    const d = await getTM(); if (tlayer !== my) return;
+    const syms = T[2].split(' '), by = {}, seen = [];
+    syms.forEach(sym => { const t = d && d.tickers && d.tickers[sym]; if (!t) return; seen.push(sym); t.members.forEach(m => {
+      const x = by[m.name] = by[m.name] || { name: m.name, p: m.p, dist: m.dist, ll: m.ll, rows: [] };
+      x.rows.push({ sym, l: m.last[0] }); }) });
+    const list = Object.values(by); list.forEach(x => x.rows.sort((a, b) => String(b.l.d).localeCompare(String(a.l.d))));
+    const pts = [];
+    list.forEach((x, j) => {
+      if (!x.ll) return; const c = x.p === 'R' ? RED : BLU, delay = 200 + Math.min(j, 20) * 90;
+      const html = `<div class="mtMFdot"><div class="d" style="background:${c};animation-delay:${delay}ms"></div><div class="n" style="animation-delay:${delay + 120}ms"><span class="b" style="background:${c}">${x.p}</span>${esc(x.name.split(' ').slice(-1)[0])} · ${esc(x.rows.slice(0, 3).map(r => r.sym).join(' '))}</div></div>`;
+      const mk = L.marker(x.ll, { icon: L.divIcon({ className: 'mtMFdot', html, iconSize: [0, 0] }), title: x.name, zIndexOffset: 500 });
+      mk.on('click', e => { L.DomEvent.stop(e); card(topicCard(x), x.ll) }); mk.addTo(my); pts.push(x.ll);
+    });
+    const fix = () => declutter(); setTimeout(fix, 80); map.on('zoomend moveend', fix); my.on('remove', () => map.off('zoomend moveend', fix));
+    let el = document.createElement('div'); el.id = 'mtTopic'; el.setAttribute('style', 'position:fixed;left:50%;top:84px;transform:translateX(-50%);z-index:1200;max-width:min(760px,90vw);background:rgba(8,14,11,.92);border:1px solid rgba(104,199,208,.5);border-radius:6px;padding:7px 12px;font:600 12.5px/1.45 system-ui,-apple-system,sans-serif;color:#f2efe9');
+    el.textContent = (E ? T[0] : T[1]) + ' · ' + seen.join(' ') + ' — ' + (E ? `${list.length} House member${list.length === 1 ? '' : 's'} reported trades in these tickers in the last 12 months. Click a dot for a short card.` : `최근 12개월 이 종목들을 거래 신고한 하원의원 ${list.length}명. 점을 누르면 짧은 카드가 열려요.`);
+    document.body.append(el);
+    setTimeout(() => map.fire('click'), 350);
+    if (pts.length) setTimeout(() => map.flyToBounds(L.latLngBounds(pts).pad(.15), { duration: 1.2, maxZoom: 5, paddingTopLeft: [40, 120], paddingBottomRight: [innerWidth > 900 ? 420 : 20, 120] }), 400);
+  }
+  window.mtTopicLayer = { show: topic, clear: tclear, topics: TOPICS };
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('#topics button');
+    if (b) { const i = [...b.parentNode.querySelectorAll('button')].indexOf(b); setTimeout(() => topic(i), 300); return; }
+    if (e.target.closest && e.target.closest('#world,#closeBrief,#ask button')) tclear();
+  }, true);
+  document.addEventListener('submit', e => { if (e.target && e.target.id === 'ask') tclear(); }, true);
   // Deep link: ?ticker=AMZN opens straight to that ticker's map view.
   const tk = new URLSearchParams(location.search).get('ticker');
   if (tk && /^[A-Za-z.]{1,6}$/.test(tk) && !new URLSearchParams(location.search).get('q')) {
