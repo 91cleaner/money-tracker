@@ -18,4 +18,4 @@ jobs:
           git add data/policy data/jp data/search-index.json data/us/insights.json
           git diff --cached --quiet && exit 0
           git commit -m "data: intl policy $(date -u +%F)"
-          for i in 1 2 3 4 5; do git pull --rebase -q && git push && exit 0; sleep $((i*7)); done; exit 1
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -q && git push && exit 0; sleep $((i*7)); done; exit 1
