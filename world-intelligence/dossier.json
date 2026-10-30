@@ -1,0 +1,233 @@
+{
+ "note": "HQ city and CEO checked Oct 30, 2026. Images: Wikimedia Commons, free licenses, stored locally.",
+ "tickers": {
+  "GOOGL": {
+   "hq": "Mountain View, CA",
+   "ll": [
+    37.422,
+    -122.084
+   ],
+   "ceo": "Sundar Pichai",
+   "ceoTitle": "CEO",
+   "ceoImg": {
+    "src": "img/dossier/googl-ceo.jpg",
+    "credit": "Photographer: Lukasz Kobus (European Commission)",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Sundar_Pichai_-_2023_(cropped).jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/googl-hq.jpg",
+    "credit": "Grendelkhan",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Googleplex_with_Pride_colors_2015.gk.jpg"
+   }
+  },
+  "AMZN": {
+   "hq": "Seattle, WA",
+   "ll": [
+    47.6156,
+    -122.3393
+   ],
+   "ceo": "Andy Jassy",
+   "ceoTitle": "President and CEO",
+   "ceoImg": {
+    "src": "img/dossier/amzn-ceo.jpg",
+    "credit": "Lisi Mezistrano Wolf",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Andy_Jassy.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/amzn-hq.jpg",
+    "credit": "Andy Li",
+    "license": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Amazon_Spheres_2018.jpg"
+   }
+  },
+  "INTC": {
+   "hq": "Santa Clara, CA",
+   "ll": [
+    37.3875,
+    -121.9637
+   ],
+   "ceo": "Lip-Bu Tan",
+   "ceoTitle": "CEO",
+   "ceoImg": {
+    "src": "img/dossier/intc-ceo.jpg",
+    "credit": "United States Department of Commerce",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Intel_CEO_Lip-Bu_Tan_(2025)_(cropped).jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/intc-hq.jpg",
+    "credit": "Intel Free Press",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Robert_Noyce_Building_in_Santa_Clara.jpg"
+   }
+  },
+  "MSFT": {
+   "hq": "Redmond, WA",
+   "ll": [
+    47.6423,
+    -122.1368
+   ],
+   "ceo": "Satya Nadella",
+   "ceoTitle": "Chairman and CEO",
+   "ceoImg": {
+    "src": "img/dossier/msft-ceo.jpg",
+    "credit": "Brian Smale and Microsoft",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:MS-Exec-Nadella-Satya-2017-08-31-22_(cropped).jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/msft-hq.jpg",
+    "credit": "Jiaqian AirplaneFan",
+    "license": "CC BY 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Building_92_of_Microsoft_Redmond_Campus_-_panoramio.jpg"
+   }
+  },
+  "TSLA": {
+   "hq": "Austin, TX",
+   "ll": [
+    30.2222,
+    -97.6167
+   ],
+   "ceo": "Elon Musk",
+   "ceoTitle": "CEO",
+   "ceoImg": {
+    "src": "img/dossier/tsla-ceo.jpg",
+    "credit": "U.S. Air Force / Trevor Cokley",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Elon_Musk_Colorado_2022_(cropped2).jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/tsla-hq.jpg",
+    "credit": "Larry D. Moore",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Gigafactory_Texas_Building_1_June_2022.jpg"
+   }
+  },
+  "NVDA": {
+   "hq": "Santa Clara, CA",
+   "ll": [
+    37.3707,
+    -121.9638
+   ],
+   "ceo": "Jensen Huang",
+   "ceoTitle": "Founder and CEO",
+   "ceoImg": {
+    "src": "img/dossier/nvda-ceo.jpg",
+    "credit": "Anderseidesvik",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Jensen_huang_stanford_2026-04-30_008.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/nvda-hq.jpg",
+    "credit": "Coolcaesar",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:NVIDIA_Headquarters.jpg"
+   }
+  },
+  "AAPL": {
+   "hq": "Cupertino, CA",
+   "ll": [
+    37.3349,
+    -122.009
+   ],
+   "ceo": "John Ternus",
+   "ceoTitle": "CEO (since Sep 1, 2026)",
+   "ceoImg": {
+    "src": "img/dossier/aapl-ceo.jpg",
+    "credit": "Tessa Bury",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:John_Ternus_at_the_Apple_50th_Anniversary_Kickoff_(cropped).jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/aapl-hq.jpg",
+    "credit": "InvadingInvader",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Apple_Park_2022.jpg"
+   }
+  },
+  "PLTR": {
+   "hq": "Aventura, FL",
+   "ll": [
+    25.9565,
+    -80.1392
+   ],
+   "ceo": "Alex Karp",
+   "ceoTitle": "CEO",
+   "ceoImg": {
+    "src": "img/dossier/pltr-ceo.jpg",
+    "credit": "UK Government",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Alex_Karp_attends_AI_Summit_(53302457013)_4-5_ratio.jpg"
+   }
+  },
+  "005930.KS": {
+   "hq": "Suwon, Korea",
+   "ll": [
+    37.2581,
+    127.0532
+   ],
+   "ceo": "Jun Young-hyun, Roh Tae-moon",
+   "ceoTitle": "Co-CEOs",
+   "hqImg": {
+    "src": "img/dossier/005930-hq.jpg",
+    "credit": "hyolee2",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Samsung_Electronics_Suwon.JPG"
+   }
+  },
+  "000660.KS": {
+   "hq": "Icheon, Korea",
+   "ll": [
+    37.2072,
+    127.4834
+   ],
+   "ceo": "Kwak Noh-jung",
+   "ceoTitle": "CEO"
+  },
+  "005380.KS": {
+   "hq": "Seoul, Korea",
+   "ll": [
+    37.4633,
+    127.0425
+   ],
+   "ceo": "Chung Eui-sun",
+   "ceoTitle": "Executive Chair and CEO",
+   "ceoImg": {
+    "src": "img/dossier/005380-ceo.jpg",
+    "credit": "The White House",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Chung_Eui-sun_(2025)_cropped_1.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/005380-hq.jpg",
+    "credit": "HappyMidnight",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:HyundaiMotorsCompany_KiaMotorsCompany.jpg"
+   }
+  },
+  "035420.KS": {
+   "hq": "Seongnam, Korea",
+   "ll": [
+    37.3595,
+    127.1052
+   ],
+   "ceo": "Choi Soo-yeon",
+   "ceoTitle": "CEO",
+   "ceoImg": {
+    "src": "img/dossier/035420-ceo.jpg",
+    "credit": "Department for Science, Innovation &amp; Technology",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Choi_Soo-yeon_CEO_of_Naver_in_2024_(cropped).jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/035420-hq.jpg",
+    "credit": "Maskkwon",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:NAVER_Green_Factory.jpg"
+   }
+  }
+ }
+}
