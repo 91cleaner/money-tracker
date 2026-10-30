@@ -1,49 +1,49 @@
 {
-  "checked_at": "2026-10-29T05:58:10.453495+00:00",
+  "checked_at": "2026-10-30T05:58:59.238374+00:00",
   "attempted": 8,
-  "rows": 18,
+  "rows": 52,
   "filings": [
     {
-      "filing_id": "2026-20035434",
-      "status": "parsed_needs_review",
-      "rows": 6
-    },
-    {
-      "filing_id": "2026-20035480",
-      "status": "parsed_needs_review",
-      "rows": 1
-    },
-    {
-      "filing_id": "2026-20035471",
-      "status": "parsed_needs_review",
-      "rows": 1
-    },
-    {
-      "filing_id": "2026-20035450",
-      "status": "parsed_needs_review",
-      "rows": 4
-    },
-    {
-      "filing_id": "2026-20035420",
-      "status": "parsed_needs_review",
-      "rows": 1
-    },
-    {
-      "filing_id": "2026-20035455",
-      "status": "parsed_needs_review",
-      "rows": 3
-    },
-    {
-      "filing_id": "2026-20035432",
-      "status": "parsed_needs_review",
-      "rows": 2
-    },
-    {
-      "filing_id": "2026-20035400",
+      "filing_id": "2026-20035445",
       "status": "no_verified_rows",
       "rows": 0
+    },
+    {
+      "filing_id": "2026-20035444",
+      "status": "no_verified_rows",
+      "rows": 0
+    },
+    {
+      "filing_id": "2026-20035431",
+      "status": "parsed_needs_review",
+      "rows": 1
+    },
+    {
+      "filing_id": "2026-9116331",
+      "status": "no_verified_rows",
+      "rows": 0
+    },
+    {
+      "filing_id": "2026-20035390",
+      "status": "parsed_needs_review",
+      "rows": 22
+    },
+    {
+      "filing_id": "2026-20035411",
+      "status": "parsed_needs_review",
+      "rows": 5
+    },
+    {
+      "filing_id": "2026-20035410",
+      "status": "no_verified_rows",
+      "rows": 0
+    },
+    {
+      "filing_id": "2026-20035408",
+      "status": "parsed_needs_review",
+      "rows": 24
     }
   ],
-  "last_attempted_filing_id": "2026-20035400",
+  "last_attempted_filing_id": "2026-20035408",
   "warning": "Digital text only. All extracted trades require source review. No OCR, no guessed rows."
 }
