@@ -63,7 +63,22 @@ def summarize():
     json.dump({"date": last["date"], "days": len(D), "source": "Massive(구 Polygon) grouped daily, 수정종가(adjusted) 기준",
                "note": "종가 기준 일별 데이터. 투자 조언 아님.", "t": out}, open(os.path.join(OUT, "summary.json"), "w"), separators=(",", ":"))
     print("summary", last["date"], len(out), "days", len(D))
+EXTRA = ["BRK.B"]  # 점(.) 들어간 미국 종목: grouped daily에 안 잡혀서 종목별 range로 따로 받음
+def extra_series(start="2025-12-15"):
+    for tk in EXTRA:
+        u = f"https://api.massive.com/v2/aggs/ticker/{tk}/range/1/day/{start}/{dt.date.today()}?adjusted=true&sort=asc&limit=50000"
+        req = urllib.request.Request(u, headers={"Authorization": "Bearer " + KEY, "User-Agent": "MoneyTracker"})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r: j = json.load(r)
+        except Exception as e: print(tk, type(e).__name__); continue
+        R = j.get("results") or []
+        if not R: print(tk, "no results"); continue
+        d = [dt.datetime.utcfromtimestamp(x["t"] / 1000).strftime("%Y-%m-%d") for x in R]
+        json.dump({"source": "Massive(구 Polygon) daily aggregates, 수정종가(adjusted) 기준", "as_of": d[-1], "d": d, "c": [x["c"] for x in R]},
+                  open(os.path.join(OUT, tk + ".json"), "w"), separators=(",", ":"))
+        print(tk, len(d), d[-1]); time.sleep(13)
 if __name__ == "__main__":
+    if "--extra" in sys.argv: extra_series(); sys.exit(0)
     if "--series" in sys.argv: print("series", write_series(load_days())); sys.exit(0)  # 키 없이 시계열만 재생성
     if not KEY: sys.exit("POLYGON_API_KEY 없음")
-    collect(int(sys.argv[1]) if len(sys.argv) > 1 else 7); summarize()
+    collect(int(sys.argv[1]) if len(sys.argv) > 1 else 7); summarize(); time.sleep(13); extra_series()
