@@ -422,6 +422,12 @@
     "credit": "Stephanie Diani",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:JnJ_Duato_cropped.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/jnj-hq.jpg",
+    "credit": "Daderot",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Johnson_%26_Johnson_HQ_-_IMG_2615.JPG"
    }
   },
   "WMT": {
@@ -461,6 +467,13 @@
     "credit": "Drew Gurian",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Michael_Miebach.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/ma-hq.jpg",
+    "credit": "USGS",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:2000PurchaseSt-USGS.jpg",
+    "creditKo": "미국 지질조사국"
    }
   },
   "CVX": {
@@ -611,7 +624,13 @@
     126.985
    ],
    "ceo": "Kim Jung-kyu",
-   "ceoTitle": "CEO"
+   "ceoTitle": "CEO",
+   "hqImg": {
+    "src": "img/dossier/402340-hq.jpg",
+    "credit": "星組背番号10",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:SK_Telecom_head_office.JPG"
+   }
   },
   "009150.KS": {
    "hq": "Suwon, Korea",
@@ -629,7 +648,13 @@
     126.9285
    ],
    "ceo": "Kim Dong-myung",
-   "ceoTitle": "CEO"
+   "ceoTitle": "CEO",
+   "hqImg": {
+    "src": "img/dossier/373220-hq.jpg",
+    "credit": "kallerna",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Yeouido_12.jpg"
+   }
   },
   "207940.KS": {
    "hq": "Incheon, Korea",
