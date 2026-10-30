@@ -36,7 +36,9 @@ def jp():
     try:
         b = get("https://www.kantei.go.jp/index-jnews.rdf", h=UA_BROWSER).decode("utf-8", "replace")
         for it in re.findall(r"<item>(.*?)</item>", b, re.S):
-            t = T(re.search(r"<title>(.*?)</title>", it, re.S).group(1)); u = T(re.search(r"<link>(.*?)</link>", it, re.S).group(1))
+            tm, lm = re.search(r"<title>(.*?)</title>", it, re.S), re.search(r"<link>(.*?)</link>", it, re.S)
+            if not tm or not lm or not lm.group(1).strip(): continue  # some items have an empty <link/>: skip (no source to show)
+            t = T(tm.group(1)); u = T(lm.group(1))
             pd = re.search(r"<pubDate>(?:\w+, )?(\d+ \w+ \d{4})", it); cg = re.search(r"<category>首相官邸 ([^<]+)</category>", it); d = dt.datetime.strptime(pd.group(1), "%d %b %Y").date().isoformat() if pd else None
             out.append({"id": "kantei:" + hid(u), "kind": "news", "t": t, "d": d, "u": u, "dept": "首相官邸", "src": "首相官邸 新着情報", "cat": cg.group(1).strip() if cg else None, "tags": tags(t)})
     except Exception as e: print("kantei fail", type(e).__name__)
