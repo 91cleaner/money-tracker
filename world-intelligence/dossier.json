@@ -338,6 +338,12 @@
     "credit": "Fuzheado",
     "license": "CC BY 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:SXSW-2024-alih-OB7A0861-Lisa_Su.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/amd-hq.jpg",
+    "credit": "Coolcaesar",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:2485_Augustine_Drive_headquarters_in_Santa_Clara,_California.jpg"
    }
   },
   "JPM": {
@@ -353,6 +359,12 @@
     "credit": "Steve Jurvetson",
     "license": "CC BY 2.0",
     "page": "https://commons.wikimedia.org/wiki/File:Jamie_Dimon,_CEO_of_JPMorgan_Chase.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/jpm-hq.jpg",
+    "credit": "Kidfly182",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:270_Park_Avenue_September_2024.jpg"
    }
   },
   "XOM": {
@@ -377,7 +389,19 @@
     -122.388
    ],
    "ceo": "Ryan McInerney",
-   "ceoTitle": "CEO"
+   "ceoTitle": "CEO",
+   "hqImg": {
+    "src": "img/dossier/v-hq.jpg",
+    "credit": "Missvain",
+    "license": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Visa_headquarters_-_August_2025_-_Sarah_Stierch.jpg"
+   },
+   "ceoImg": {
+    "src": "img/dossier/v-ceo.jpg",
+    "credit": "Daniel Torok",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Ryan_McInerney_July_18,_2025.jpg"
+   }
   },
   "JNJ": {
    "hq": "New Brunswick, NJ",
@@ -443,7 +467,13 @@
     -122.056
    ],
    "ceo": "Ron Vachris",
-   "ceoTitle": "President and CEO"
+   "ceoTitle": "President and CEO",
+   "hqImg": {
+    "src": "img/dossier/cost-hq.jpg",
+    "credit": "Coolcaesar",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Costcoheadquarters.jpg"
+   }
   },
   "CSCO": {
    "hq": "San Jose, CA",
@@ -458,6 +488,12 @@
     "credit": "Chairman of the Joint Chiefs of Staff from Washington D.C, United States",
     "license": "CC BY 2.0",
     "page": "https://commons.wikimedia.org/wiki/File:Charles_H._Robbins.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/csco-hq.jpg",
+    "credit": "Travis Wise",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Cisco_Systems_Headquarters_(Building_10),_Cisco_San_Jose_Main_Campus.jpg"
    }
   },
   "PG": {
@@ -467,7 +503,13 @@
     -84.509
    ],
    "ceo": "Shailesh Jejurikar",
-   "ceoTitle": "President and CEO (since Jan 1, 2026)"
+   "ceoTitle": "President and CEO (since Jan 1, 2026)",
+   "hqImg": {
+    "src": "img/dossier/pg-hq.jpg",
+    "credit": "Warren LeMay from Cincinnati, OH, United States",
+    "license": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Procter_and_Gamble_World_Headquarters,_Cincinnati,_OH_(32278862657).jpg"
+   }
   },
   "UNH": {
    "hq": "Eden Prairie, MN",
@@ -476,7 +518,13 @@
     -93.46
    ],
    "ceo": "Stephen J. Hemsley",
-   "ceoTitle": "Chairman and CEO"
+   "ceoTitle": "Chairman and CEO",
+   "ceoImg": {
+    "src": "img/dossier/unh-ceo.jpg",
+    "credit": "Ways and Means Committee of the United States Congress",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Stephen_Hemsley.jpg"
+   }
   },
   "KO": {
    "hq": "Atlanta, GA",
@@ -485,7 +533,13 @@
     -84.397
    ],
    "ceo": "Henrique Braun",
-   "ceoTitle": "CEO (since Mar 31, 2026)"
+   "ceoTitle": "CEO (since Mar 31, 2026)",
+   "hqImg": {
+    "src": "img/dossier/ko-hq.jpg",
+    "credit": "JJonahJackalope",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Coca-Cola_World_Headquarters.jpg"
+   }
   },
   "MRK": {
    "hq": "Rahway, NJ",
@@ -509,6 +563,12 @@
     "credit": "Benjamin Applebaum",
     "license": "Public domain",
     "page": "https://commons.wikimedia.org/wiki/File:Brian_Moynihan,_official_portrait,_Homeland_Security_Council.jpg"
+   },
+   "hqImg": {
+    "src": "img/dossier/bac-hq.jpg",
+    "credit": "No machine-readable author provided. Nopira assumed (based o",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Bank_of_America_Corporate_Center.jpg"
    }
   },
   "AMAT": {
@@ -518,7 +578,13 @@
     -121.98
    ],
    "ceo": "Gary Dickerson",
-   "ceoTitle": "President and CEO"
+   "ceoTitle": "President and CEO",
+   "hqImg": {
+    "src": "img/dossier/amat-hq.jpg",
+    "credit": "Olaf2",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Sitz_von_Applied_Materials_in_Santa_Clara.jpg"
+   }
   },
   "402340.KS": {
    "hq": "Seoul, Korea",
