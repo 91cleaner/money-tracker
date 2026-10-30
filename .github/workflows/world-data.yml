@@ -35,6 +35,8 @@ jobs:
       - name: 세계 주가 역사
         if: github.event_name != 'push'
         run: python collector/world/markets.py
+        env:
+          FSC_STOCK_KEY: ${{ secrets.FSC_STOCK_KEY }}
         continue-on-error: true
         timeout-minutes: 15
       - name: 세계 법안

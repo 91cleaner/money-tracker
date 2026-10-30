@@ -2,7 +2,8 @@
 
 한국·미국·일본·대만·유럽의 대표 지수, 주요 종목, 업종 ETF, 환율·원자재·금리를 일별 종가로 쌓는다.
 - 처음(파일 없음): 10년 치. 이후: 최근 40일만 받아 겹치는 날은 새 값으로, 없던 날은 추가(과거 기록은 지우지 않음).
-- 출처: Yahoo Finance chart API(키 없음). 실패하면 Stooq CSV(지원하는 심볼만). 둘 다 실패하면 이전 파일 유지 + ::warning::.
+- 출처: 한국 종목(.KS)은 FSC_STOCK_KEY(공공데이터포털 금융위원회_주식시세정보 승인 키)가 있으면 금융위원회 공식 데이터를 먼저 쓴다.
+  키가 없거나 실패하면 Yahoo Finance chart API(키 없음, 공식 아님, 임시 대체 출처). 실패하면 Stooq CSV(지원하는 심볼만). 둘 다 실패하면 이전 파일 유지 + ::warning::.
 - 실시간 시세가 아니라 '하루 마감 종가 기록'이다. 투자 신호가 아니다.
 """
 import json
@@ -148,9 +149,44 @@ def stooq(sym, rng):
     return out or None
 
 
+FSC_KEY = os.environ.get("FSC_STOCK_KEY", "").strip()
+FSC_URL = "https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo"
+
+
+def fsc(sym, rng):
+    # 금융위원회_주식시세정보(data.go.kr 15094808). 하루 1회 갱신, 영업일 하루 뒤 오후 1시 이후 반영.
+    if not FSC_KEY or not sym.endswith(".KS"):
+        return None
+    days = 3650 if rng == "10y" else 100
+    begin = datetime.fromtimestamp(time.time() - days * 86400, timezone.utc).strftime("%Y%m%d")
+    out, page = {}, 1
+    while page < 40:
+        q = urllib.parse.urlencode({"serviceKey": FSC_KEY, "resultType": "json", "numOfRows": 1000, "pageNo": page,
+                                    "likeSrtnCd": sym.split(".")[0], "beginBasDt": begin})
+        with urllib.request.urlopen(urllib.request.Request(FSC_URL + "?" + q, headers=UA), timeout=30) as r:
+            body = ((json.loads(r.read().decode("utf-8")).get("response") or {}).get("body") or {})
+        items = ((body.get("items") or {}).get("item")) or []
+        if isinstance(items, dict):
+            items = [items]
+        for it in items:
+            if it.get("srtnCd") == sym.split(".")[0] and it.get("clpr"):
+                b = str(it["basDt"]); out[b[:4] + "-" + b[4:6] + "-" + b[6:]] = float(it["clpr"])
+        if page * 1000 >= int(body.get("totalCount") or 0):
+            break
+        page += 1
+        time.sleep(0.3)
+    return out or None
+
+
+SRC_NOTE = {"fsc": "출처: 금융위원회_주식시세정보(공공데이터포털, 공공누리 제4유형).",
+            "yahoo": "출처: Yahoo Finance(공식 아님, 임시 대체 출처).", "stooq": "출처: Stooq(공식 아님, 대체 출처)."}
+
+
 def fetch(sym, rng):
     errs = []
-    for name, f in (("yahoo", yahoo), ("stooq", stooq)):
+    for name, f in (("fsc", fsc), ("yahoo", yahoo), ("stooq", stooq)):
+        if name == "fsc" and (not FSC_KEY or not sym.endswith(".KS")):
+            continue
         try:
             s = f(sym, rng)
             if s:
@@ -194,7 +230,7 @@ def main():
         doc = {
             "symbol": sym, "name": name, "region": region, "currency": cur, "tags": tags,
             "source": (src or (prev or {}).get("source") or "yahoo"), "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ") if new else (prev or {}).get("updated"),
-            "note": "일별 마감 종가 기록(실시간 아님). 출처: Yahoo Finance(대체: Stooq).",
+            "note": "일별 마감 종가 기록(실시간 아님). " + SRC_NOTE.get(src or (prev or {}).get("source") or "yahoo", ""),
             "d": days, "c": [merged[x] for x in days],
         }
         tmp = path + ".tmp"
@@ -206,7 +242,7 @@ def main():
         summary.append({"symbol": sym, "name": name, "region": region, "currency": cur, "tags": tags, "file": fname(sym),
                         "first": days[0], "last": days[-1], "n": len(days), "close": c[-1],
                         "d1": pct(c[-1], back(1)), "m1": pct(c[-1], back(21)), "y1": pct(c[-1], back(252))})
-    json.dump({"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), "source": "Yahoo Finance chart API (fallback Stooq)",
+    json.dump({"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), "source": ("FSC stock price API for .KS when FSC_STOCK_KEY is set; " if FSC_KEY else "") + "Yahoo Finance chart API (not official, fallback Stooq)",
                "note": "일별 마감 종가. d1/m1/y1 = 1일·약 1달(21거래일)·약 1년(252거래일) 변화율(%).", "series": summary},
               open(os.path.join(OUT, "index.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     print("markets: %d/%d series, +%d days, failed %d" % (len(summary), len(SYMBOLS), added, len(failed)))
