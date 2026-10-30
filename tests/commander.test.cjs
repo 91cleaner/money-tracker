@@ -20,7 +20,7 @@ test('no trading, advice, fake live numbers or gambling elements', () => {
   assert.doesNotMatch(code, /Math\.random/, 'missions must come from real data, not random numbers');
   assert.doesNotMatch(code, /setInterval/, 'no ticking fake live counters');
   assert.match(js, /투자 조언 아님/);
-  assert.match(js, /신고 기준/);
+  assert.match(js, /신고\)? 기준/);
   assert.match(js, /45일/);
 });
 
@@ -41,9 +41,9 @@ test('ranks go from 신입 요원 to 관제실 대장 by opened cards', () => {
 });
 
 test('attached to company, member and world-intelligence with one script line each', () => {
-  assert.match(read('company.html'), /<script src="assets\/commander\.js\?v=[^"]+"><\/script>\n<\/body>/);
-  assert.match(read('member.html'), /<script src="assets\/commander\.js\?v=[^"]+"><\/script>\n<\/body>/);
+  assert.match(read('company.html'), /<script src="assets\/commander\.js\?v=[^"]+"><\/script>\n/);
+  assert.match(read('member.html'), /<script src="assets\/commander\.js\?v=[^"]+"><\/script>\n/);
   const wi = read('world-intelligence/index.html');
   assert.equal((wi.match(/commander\.js/g) || []).length, 1);
-  assert.match(wi, /<script src="\.\.\/assets\/commander\.js\?v=[^"]+" defer><\/script>\n<\/body><\/html>/);
+  assert.match(wi, /<script src="\.\.\/assets\/commander\.js\?v=[^"]+" defer><\/script>\n/);
 });

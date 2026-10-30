@@ -245,7 +245,7 @@
     [/미국 (\d+)년 국채 ?금리/, "US $1-year Treasury yield"],
     // NVDA hand-written route stops (data/us/ticker-routes.json), indicator note, lobbying / PAC lines (data/search-index.json)
     [/^(.+?)\((H\.R\.\d+|S\.\d+), (\d+)대 의회\)가 법으로 제정됨\. 업계 전반 대상 법률임\.$/, function (m, t, b, c) { var o = c % 100 > 10 && c % 100 < 14 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" }[c % 10] || "th"); return "The " + t + " (" + b + ", " + c + o + " Congress) was enacted into law. It applies to the industry as a whole."; }],
-    [/관세청이 품목 코드\(HS (\d+)자리\)로 센 숫자라서, 산업부가 발표하는 '(.+?)' 전체 수출과 범위가 달라요\./, "Counted by the Korea Customs Service by product code (HS $1-digit), so its scope differs from total '$2' exports published by the Ministry of Trade, Industry and Energy."],
+    [/관세청이 품목 코드\(HS (\d+)자리\)로 센 숫자라서, 산업부가 발표하는 (.+?) 전체 수출과 범위가 달라요\./, function (m, d, w) { return "Counted by the Korea Customs Service by product code (HS " + d + "-digit), so its scope differs from total '" + ({ "반도체": "semiconductor", "자동차": "car", "이차전지": "battery" }[w] || w) + "' exports published by the Ministry of Trade, Industry and Energy."; }],
     [/데이터상 (\S+) 로비 공시 (\d+)건, 보고 금액 합계 약 ([\d,.]+(?:억|만)? ?달러)\./, "Data shows $2 lobbying disclosure filings for $1, reported total approx. $3."],
     [/주요 이슈: /, "Top issues: "], [/수집 법안과 번호 일치: (.+?)\(회기 확인 필요\)\./, "Bill numbers matching collected bills: $1 (session needs checking)."],
     [/데이터상 (\d{4}) 선거주기 (.+?)의 연방 후보 위원회 기부 합계 ([\d,.]+(?:억|만)? ?달러)\(~(\S+?)\)\. 임직원 자발 기부 PAC이며 회사 자금 아님\./, "Data shows the $1 election cycle: $2 contributed a total of $3 to federal candidate committees (through $4). A PAC funded by voluntary employee contributions, not company funds."],
@@ -398,7 +398,7 @@
   }
   function toEn(s) {
     if (typeof s !== "string" || !(HANGUL.test(s) || /\d{4}-\d{2}/.test(s))) return s;
-    s = s.replace(/PTR\(의원 주식 거래 신고\) 원문/g, "PTR 원문").replace(/PTR\(의원 주식 거래 신고\)·/g, "PTR·").replace(/PTR\(의원 주식 거래 신고\)/g, "PTR 신고").replace(/8-K\(회사 중요 사건 공시\)/g, "8-K");
+    s = s.replace(/PTR\(의원 주식 거래 신고\) 원문/g, "PTR 원문").replace(/PTR\(의원 주식 거래 신고\)·/g, "PTR·").replace(/PTR\(의원 주식 거래 신고\)/g, "PTR 신고").replace(/8-K\(회사 중요 사건 공시\)/g, "8-K").replace(/산업부가 발표하는 '([^']+)' 전체 수출/g, "산업부가 발표하는 $1 전체 수출");
     if (cache[s] != null) return cache[s];
     var lead = /^\s*/.exec(s)[0], trail = /\s*$/.exec(s)[0], core = s.slice(lead.length, s.length - trail.length), out;
     var dot = /\s*[·•]\s*$/.exec(core), bare = dot ? core.slice(0, dot.index) : core; // "fact ·" : text node followed by a source link
