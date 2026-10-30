@@ -173,8 +173,8 @@ def new_layer_stops(ent):
         r = (RC.get("companies") or {}).get(tk)
         if r and r.get("items"):
             x = r["items"][0]; bs = r.get("by_source", {}); nh = bs.get("NHTSA", 0)
-            add.append({"region": f"{tk} · 리콜", "lat": dc[2] - 0.06, "lon": dc[3] + 0.06, "title": "리콜(NHTSA·openFDA)", "kind": "recall", "ref": "recall:" + tk,
-                "fact": f"데이터상 {RC.get('since')} 이후 리콜 {r['n']}건(NHTSA {nh}건, openFDA {r['n']-nh}건), 제조사·회수업체 이름 정확 일치. 최근 {x['date']} {x['id']}.",
+            add.append({"region": f"{tk} · 리콜", "lat": dc[2] - 0.06, "lon": dc[3] + 0.06, "title": "리콜(NHTSA·FDA)", "kind": "recall", "ref": "recall:" + tk,
+                "fact": f"데이터상 {RC.get('since')} 이후 리콜 {r['n']}건(NHTSA {nh}건, FDA {r['n']-nh}건), 제조사·회수업체 이름 정확 일치. 최근 {x['date']} {x['id']}.",
                 "source_url": x["url"], "date": x["date"]})
         b = (PB.get("companies") or {}).get(tk)
         if b and b.get("matches"):
