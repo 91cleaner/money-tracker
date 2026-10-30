@@ -18,7 +18,7 @@
     FORM4: { name: "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4)", body: "회사 임원이나 큰 주주가 자기 회사 주식을 사거나 팔면, 2영업일 안에 미국 증권위원회(SEC)에 내는 기록이에요. 누가 언제 얼마나 거래했는지가 적혀 있어요. 기록이 있다는 사실만 보여 주고, 앞으로 주가가 어떻게 될지는 알려 주지 않아요." },
     PLAN: { name: "미리 예약해둔 판매 (10b5-1)", body: "회사 높은 사람이 미리 날짜와 조건을 정해 두고, 그대로 자동으로 사고파는 계획이에요. 이 계획에 따른 거래는 거래 기록에 따로 표시돼요. 표시가 있다는 사실만 보여 줘요." },
     BILL: { name: "법안 (한 줄 설명)", body: "새로 만들거나 고치려고 국회에 올린 법의 초안이에요. 이 사이트는 법안 이름 옆에 '무슨 내용인지'를 한 줄로 쉽게 적어요. 정확한 내용은 원문 링크에서 확인하세요." },
-    LABOR: { name: "노사분규·파업 공시 (Korea labor strike disclosure)", body: "한국 기업이 금융감독원 전자공시(DART)나 거래소에 낸 공시 중 제목에 파업·노사분규·생산중단·영업정지가 들어간 것입니다. 공시가 있다고 실제 파업이 일어났다는 뜻은 아닙니다. In English: filings on Korea's DART system whose titles mention a strike, labor dispute, production halt or business suspension. Korean company or industry unions can pause factory output when pay talks break down, so investors read them next to prices; a filing alone does not mean a strike or a price effect." }
+    LABOR: { name: "회사 파업 소식(노사분규·파업 공시)", body: "한국 기업이 금융감독원 전자공시(DART)나 거래소에 낸 공시 중 제목에 파업·노사분규·생산중단·영업정지가 들어간 것입니다. 공시가 있다고 실제 파업이 일어났다는 뜻은 아닙니다." }
   };
 
   // English wording for ?lang=en (same terms, plain words; no Korean left on screen)

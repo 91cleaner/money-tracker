@@ -436,7 +436,7 @@
   }
   // UI string that is not Korean source text (button labels owned by this file)
   var UI = {
-    ko: { aria: "English로 전환", title: "Switch to English" },
+    ko: { aria: "영어로 보기", title: "영어로 보기" },
     en: { aria: "Switch to Korean", title: "Switch to Korean" }
   };
 

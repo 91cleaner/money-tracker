@@ -234,6 +234,11 @@ PLAIN = {
 }
 
 
+def title_ko(it):
+    n = it.get("eo") or it.get("procl")
+    return "미국 " + (it.get("type") or "대통령 문서") + (" 제%s호" % n if n else "") + " · 원래 제목은 원문에서 볼 수 있어요"
+
+
 def plain(it):
     for t in it.get("topics") or []:
         if t in PLAIN:
@@ -276,10 +281,10 @@ def build_president(today, n_now=2):
             layout="versus", date=now["date"],
             badge_ko="대통령 조치", badge_en="PRESIDENTIAL ACTION",
             title_ko="지난번 비슷한 조치 때 같은 기간엔?", title_en="Last similar move: what happened in the same period?",
-            now={"tag_ko": "지금", "tag_en": "NOW", "title": now["title"], "date": now["date"],
+            now={"tag_ko": "지금", "tag_en": "NOW", "title": now["title"], "title_ko": title_ko(now), "date": now["date"],
                  "plain_ko": plain(now)[0], "plain_en": plain(now)[1],
                  "type_en": now.get("type_en"), "type_ko": now.get("type"), "url": now.get("url")},
-            then={"tag_ko": "지난번 📅", "tag_en": "LAST TIME 📅", "title": then["title"], "date": then["date"],
+            then={"tag_ko": "지난번 📅", "tag_en": "LAST TIME 📅", "title": then["title"], "title_ko": title_ko(then), "date": then["date"],
                   "plain_ko": plain(then)[0], "plain_en": plain(then)[1],
                   "moves": [move_row(m) for m in then["moves"][:3]],
                   "period": "%s → %s" % (then["moves"][0]["from"], then["moves"][0]["to"]),
@@ -329,7 +334,7 @@ def build_insider(today):
     return card(
         "insider", "insider", "👀", min(100, math.log10(max(ranked[0][1]["v"], 10)) * 14) * fresh(latest, today),
         layout="list", date=latest, badge_ko="내부자 워치", badge_en="INSIDER WATCH",
-        title_ko="회사 높은 사람들이 이번 주 판 자기 회사 주식 TOP5 💸", title_en="Company bigwigs' own-stock sales this week: top 5 💸",
+        title_ko="회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개", title_en="Company bigwigs' own-stock sales this week: top 5 💸",
         sub_ko="회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · %s까지 7일" % latest,
         sub_en="Record of company insiders selling their own stock (Form 4) · 7 days to %s" % latest,
         rows=rows,

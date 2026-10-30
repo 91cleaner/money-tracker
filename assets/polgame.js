@@ -117,7 +117,7 @@
 `;
   document.head.append(css);
   root.innerHTML = `<div class="pg-map" aria-label="국회의원 지도"></div><div class="pg-scan"></div>
-  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl">국회 돈 살펴보기 <button type="button" class="snd" aria-label="소리 켜기·끄기"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="m" d="m16 9.5 5 5m0-5-5 5" style="display:none"/></svg></button></div></div>
+  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>실시간 <span class="mono clk"></span></div><div class="ttl">국회 돈 살펴보기 <button type="button" class="snd" aria-label="소리 켜기·끄기"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="m" d="m16 9.5 5 5m0-5-5 5" style="display:none"/></svg></button></div></div>
   <div class="pg-box ctr"><div class="n mono">0원</div><div class="l">오늘 의원 <span class="nmem">300</span>명 의원 월급 누적(지급 기준)</div></div></div>
   <div class="pg-say mono"></div>
   <div class="pg-file" role="dialog" aria-label="기록 파일"></div>
@@ -219,7 +219,7 @@
 
   // ── 시계·카운터 ──
   const clk = $('.clk'), ctr = $('.ctr .n');
-  const tick = () => { const k = new Date(Date.now() + 9 * 3600e3); clk.textContent = k.toISOString().slice(11, 19) + ' KST'; const sec = k.getUTCHours() * 3600 + k.getUTCMinutes() * 60 + k.getUTCSeconds() + k.getUTCMilliseconds() / 1000; ctr.textContent = won(per * people.length / (365 * 86400) * sec); };
+  const tick = () => { const k = new Date(Date.now() + 9 * 3600e3); clk.textContent = k.toISOString().slice(11, 19) + ' 한국 시간'; const sec = k.getUTCHours() * 3600 + k.getUTCMinutes() * 60 + k.getUTCSeconds() + k.getUTCMilliseconds() / 1000; ctr.textContent = won(per * people.length / (365 * 86400) * sec); };
   tick(); setInterval(tick, RM ? 1000 : 100);
 
   // ── 지도 ──
@@ -244,7 +244,7 @@
     const on = o > 0.6; if (on !== satOn) { satOn = on; root.classList.toggle('sat', on); }
   };
   map.on('zoom zoomend', satFade);
-  { const sb = document.createElement('div'); sb.className = 'satb'; sb.innerHTML = '<i></i>SAT · 위성 영상'; root.append(sb); }
+  { const sb = document.createElement('div'); sb.className = 'satb'; sb.innerHTML = '<i></i>위성 영상'; root.append(sb); }
   const KR = L.latLngBounds([[33.0, 125.3], [38.7, 129.7]]);
   const fitKR = (anim) => map.fitBounds(KR, { padding: [70, 20], paddingBottomRight: [20, 90], animate: !!anim && !RM });
   fitKR(false);

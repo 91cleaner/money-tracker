@@ -19,7 +19,7 @@ test('card script parses, text only, https links only, no network except labor.j
 });
 
 test('neutral Korean + English background, no advice or forbidden words', () => {
-  assert.match(js, /Korea labor strike disclosure/);
+  assert.match(js, /Korea labor strike disclosures/); assert.match(js, /회사 파업 소식/);
   assert.match(js, /not investment advice/i);
   assert.match(js, /투자 조언 아님/);
   assert.match(js, /원인 관계가 아니며/);
@@ -51,7 +51,7 @@ test('page, sector pages and glossary are wired', () => {
   assert.match(page, /회사 파업 소식 모아 보기/);
   for (const f of ['sector.html', 'sector-board.html']) assert.match(read(f), /assets\/labor-card\.js/, f);
   const g = read('assets/glossary.js');
-  assert.match(g, /LABOR:/); assert.match(g, /In English/);
+  assert.match(g, /LABOR:/); assert.match(g, /Labor strike filings \(Korea\)/);
   assert.doesNotThrow(() => new vm.Script(page.match(/<script>([\s\S]*?)<\/script>/)[1]));
 });
 
