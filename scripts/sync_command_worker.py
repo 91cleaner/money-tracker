@@ -58,14 +58,16 @@ def build():
                 recent[member] = []
                 for item in items:
                     action = str(item.get("a", ""))
-                    if len(action) > 60:
-                        action = action[:59] + "…"
-                    recent[member].append({
+                    if len(action) > 40:
+                        action = action[:39] + "…"
+                    row = {
                         "n": item.get("n"), "no": item.get("no"),
                         "d": item.get("d"), "a": action,
                         "law": item.get("law"), "pass": item.get("pass"),
                         "u": item.get("u"),
-                    })
+                    }
+                    # Leave out empty fields (null/false/"") to stay under the 1 MiB limit; readers treat missing as empty.
+                    recent[member].append({k: v for k, v in row.items() if v not in (None, False, "")})
             payload = {
                 "updated": payload.get("updated"),
                 "congress": payload.get("congress"),

@@ -1,4 +1,4 @@
-/* MONEY TRACKER — 미국 경제 띠 (US economy strip). 관제실 맨 위에 물가·일자리·금리를 크게 보여 준다.
+/* 미국주식추적단 — 미국 경제 띠 (US economy strip). 관제실 맨 위에 물가·일자리·금리를 크게 보여 준다.
    data/us-econ.json(BLS·FRED·Treasury 공식 자료)만 읽는다. 저장된 글자는 textContent 로만 넣는다.
    해석은 "같은 기간 ~이 있었어요" 형태의 사실만. 원인 단정·투자 조언 없음. 한국어/영어는 MTI18N.isEn 을 따른다. */
 (function () {

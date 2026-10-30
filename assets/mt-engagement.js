@@ -5,6 +5,6 @@ document.addEventListener('click',event=>{
  const a=event.target.closest?.('a[href]');if(!a)return;
  let pathname;try{pathname=new URL(a.href,location.href).pathname.split('/').pop()}catch{return}
  const key=allowed[pathname];if(!key)return;
- try{window.goatcounter?.count?.({path:'/events/'+key,title:'MONEY TRACKER / '+key,event:true})}catch{}
+ try{window.goatcounter?.count?.({path:'/events/'+key,title:'미국주식추적단 / '+key,event:true})}catch{}
 });
 })();

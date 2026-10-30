@@ -1,4 +1,4 @@
-/* MONEY TRACKER: no-cost, no-model search over versioned public evidence.
+/* 미국주식추적단: no-cost, no-model search over versioned public evidence.
  * All searching occurs inside the browser after loading a published static index.
  * This is NOT a realtime market quote or AI interpretation engine.
  */

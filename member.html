@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MONEY TRACKER — 의원 상세</title>
+<title>미국주식추적단 — 의원 상세</title>
 <meta name="description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
-<meta property="og:title" content="MONEY TRACKER — 미국 의원 파일"><meta property="og:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
+<meta property="og:title" content="US Stock Trackers — 미국 의원 파일"><meta property="og:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 의원 파일"><meta name="twitter:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="US Stock Trackers — 미국 의원 파일"><meta name="twitter:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <script src="assets/i18n.js?v=i18n-20261030d"></script>
 <style>
@@ -162,7 +162,7 @@ header.bar input.nm{width:200px;text-transform:none}
 </head>
 <body>
 <header class="bar">
-  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <a class="brand" href="./">◉ 미국주식추적단</a>
   <span class="crumb">US MEMBER FILE / 공개 기록 정리</span>
   <a class="mono" href="weekly.html">주간 순위표</a>
   <span class="sp"></span>
@@ -297,7 +297,7 @@ header.bar input.nm{width:200px;text-transform:none}
     var ent = E["member:" + id];
     var name = (m && m.name) || (rows[0] && rows[0].who) || id;
     var mapName = (ent && ent.aliases && ent.aliases[0]) || name;
-    document.title = "MONEY TRACKER — " + name + " 의원 상세";
+    document.title = "미국주식추적단 — " + name + " 의원 상세";
     app.replaceChildren();
     // 0) 핵심 카드: insights.json에 의원 항목(members[ID] 또는 members[이름])이 있을 때만 맨 위에 표시
     if (INS && INS.members && window.MTInsights) window.MTInsights.render(app, INS.members[id] || INS.members[name], INS);
@@ -331,7 +331,7 @@ header.bar input.nm{width:200px;text-transform:none}
       }
       sh = sh || {};
       acts.appendChild(window.MTShare.button({ head: name + " 의원", line: sh.line, src: sh.src, date: sh.date, url: window.MTShare.url({ n: Q || name }) }));
-      window.MTShare.meta("MONEY TRACKER — " + name + " 의원 파일", sh.line || "미국 의원 공개 기록 정리 · 신고 기준 · 투자 조언 아님");
+      window.MTShare.meta("미국주식추적단 — " + name + " 의원 파일", sh.line || "미국 의원 공개 기록 정리 · 신고 기준 · 투자 조언 아님");
     }
     head.appendChild(acts);
     app.appendChild(head);
@@ -667,5 +667,5 @@ header.bar input.nm{width:200px;text-transform:none}
 </script>
 <script src="assets/glossary.js?v=gl-20261029"></script>
 <script src="assets/commander.js?v=cmdr-20261028b"></script>
-</body>
+<script src="assets/mt-visits.js" defer></script></body>
 </html>
