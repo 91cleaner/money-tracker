@@ -48,7 +48,7 @@ test('labor.json shape, sources with recorded reasons, https links', () => {
 
 test('page, sector pages and glossary are wired', () => {
   assert.match(page, /assets\/labor-card\.js/);
-  assert.match(page, /Korea labor strike disclosure/);
+  assert.match(page, /회사 파업 소식 모아 보기/);
   for (const f of ['sector.html', 'sector-board.html']) assert.match(read(f), /assets\/labor-card\.js/, f);
   const g = read('assets/glossary.js');
   assert.match(g, /LABOR:/); assert.match(g, /In English/);
