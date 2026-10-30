@@ -133,7 +133,7 @@ table.co .num{text-align:right;font-family:ui-monospace,Menlo,monospace}
 <body>
 <header class="bar">
   <a class="brand" href="./">◉ 세금추적단</a>
-  <span class="crumb">KOREA LABOR / 공개 기록 정리</span>
+  <span class="crumb">한국 회사 파업 소식 / 공개 기록 정리</span>
   <a class="mono" href="sector-board.html">업종 히트맵</a>
   <a class="mono" href="nps.html">국민연금</a>
 </header>
@@ -149,33 +149,33 @@ table.co .num{text-align:right;font-family:ui-monospace,Menlo,monospace}
   window.MTLabor.load().then(function (d) {
     app.replaceChildren();
     if (!d) { var e = el("section", "panel span2"); e.appendChild(el("div", "empty", "data/kr/labor.json 을 불러오지 못했습니다. / Could not load the data file.")); app.appendChild(e); return; }
-    var tab = el("section", "panel span2"); tab.appendChild(el("h2", "", "KOREA LABOR STRIKE DISCLOSURE · 노사분규·파업 공시"));
-    tab.appendChild(el("p", "warnnote", d.note + " " + d.note_en));
-    var f = el("form", "filter"), inp = el("input"); inp.name = "c"; inp.value = q; inp.placeholder = "회사 이름 / company (예: 삼성전자)"; inp.setAttribute("aria-label", "회사 이름");
+    var tab = el("section", "panel span2"); tab.appendChild(el("h2", "", "회사 파업 소식(노사분규·파업 공시)"));
+    tab.appendChild(el("p", "warnnote", d.note));
+    var f = el("form", "filter"), inp = el("input"); inp.name = "c"; inp.value = q; inp.placeholder = "회사 이름 (예: 삼성전자)"; inp.setAttribute("aria-label", "회사 이름");
     var go = el("button", "", "보기 / Go"); go.type = "submit"; f.append(inp, go); tab.appendChild(f); app.appendChild(tab);
     if (q) {
       window.MTLabor.render(app, d, { name: q, sectorId: undefined, title: q + " · 같은 기간 있었던 일 / Same-period filings" });
     }
     var rows = (d.disclosures || []);
-    var all = el("section", "panel span2"); all.appendChild(el("h2", "", "최근 공시 · Recent filings (" + rows.length + ")"));
+    var all = el("section", "panel span2"); all.appendChild(el("h2", "", "최근 공시 (" + rows.length + ")"));
     if (!rows.length) all.appendChild(el("p", "note", "아직 수집된 공시가 없습니다. DART_API_KEY 가 있어야 켜집니다(README 참고). / No filings collected yet; needs a DART_API_KEY (see README)."));
     else {
       var ol = el("ol", "tl"); rows.slice(0, 50).forEach(function (r) {
         var ev = window.MTLabor.eventsFor({ disclosures: [r] }, r.corp)[0], li = el("li"), b = el("div");
-        b.append(el("div", "k", r.tracked ? "추적 종목 · tracked" : "기타 · other"), el("div", "t", r.corp + " — " + r.report));
+        b.append(el("div", "k", r.tracked ? "추적 종목" : "기타"), el("div", "t", r.corp + " — " + r.report));
         var s = el("div", "s"), a = el("a", "", "DART 원문 ↗"); a.href = r.url; a.target = "_blank"; a.rel = "noopener noreferrer"; s.append(document.createTextNode(ev.sub + " · "), a); b.appendChild(s);
         li.append(el("div", "d", r.date), b); ol.appendChild(li);
       }); all.appendChild(ol);
     }
     app.appendChild(all);
-    var tp = el("section", "panel span2"); tp.appendChild(el("h2", "", "업종별 분규 추이 · Disputes by industry"));
+    var tp = el("section", "panel span2"); tp.appendChild(el("h2", "", "업종별 분규 추이"));
     window.MTLabor.trend(tp, d, null); app.appendChild(tp);
-    var bg = el("section", "panel span2"); bg.appendChild(el("h2", "", "왜 한국 노조가 중요한가요? · Why Korean unions matter")); window.MTLabor.background(bg); app.appendChild(bg);
-    foot.replaceChildren(); foot.appendChild(el("b", "", "읽기 전 확인 / Read first"));
-    foot.appendChild(document.createTextNode(" 공개 기록을 정리한 것이며 어떤 판단이나 투자 조언 아님. Public records only; not investment advice."));
+    var bg = el("section", "panel span2"); bg.appendChild(el("h2", "", "왜 한국 노조가 중요한가요?")); window.MTLabor.background(bg); app.appendChild(bg);
+    foot.replaceChildren(); foot.appendChild(el("b", "", "읽기 전 확인"));
+    foot.appendChild(document.createTextNode(" 공개 기록을 정리한 것이에요. 어떤 판단이나 투자 조언도 아니에요."));
     var ul = el("ul"); (d.sources || []).forEach(function (s) {
-      var li = el("li"), a = el("a", "", s.name + " / " + s.name_en); a.href = s.url; a.target = "_blank"; a.rel = "noopener noreferrer";
-      li.append(a, document.createTextNode(" — " + (s.status === "ok" ? "수집 중 · active" : "수집 안 함 · not collected" + (s.reason ? ": " + s.reason : "")))); ul.appendChild(li);
+      var li = el("li"), a = el("a", "", s.name); a.href = s.url; a.target = "_blank"; a.rel = "noopener noreferrer";
+      li.append(a, document.createTextNode(" — " + (s.status === "ok" ? "모으는 중" : "모으지 않음" + (s.reason ? ": " + s.reason : "")))); ul.appendChild(li);
     }); foot.appendChild(ul);
   });
 })();

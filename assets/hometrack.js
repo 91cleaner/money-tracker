@@ -19,7 +19,7 @@ background:radial-gradient(120% 140% at 0% 0%,#0f3a22 0%,#06140c 55%,#040b07 100
 <circle cx="29" cy="29" r="27" fill="#03100a" stroke="#1f6a3f"/><circle cx="29" cy="29" r="18" fill="none" stroke="#1f6a3f" stroke-dasharray="2 3"/><circle cx="29" cy="29" r="9" fill="none" stroke="#1f6a3f"/>
 <g class="sw"><path d="M29 29 L29 2 A27 27 0 0 1 52.4 15.5 Z" fill="url(#htkG)"/><line x1="29" y1="29" x2="52.4" y2="15.5" stroke="#5dff9e" stroke-width="1.4"/></g>
 <circle class="bl" cx="41" cy="20" r="2.4" fill="#ffb020"/><circle class="bl b2" cx="19" cy="38" r="2" fill="#ffb020"/><circle cx="29" cy="29" r="2" fill="#5dff9e"/></svg>
-<span class="t"><span class="k"><i></i>🇰🇷 국회 살펴보기 · LIVE</span><span class="n">0<small>원</small></span><span class="s">오늘 의원 <b class="m">299</b>명에게 쌓이는 의원 월급 · 출장·법 만들기·찬반 추적</span></span><span class="go">입장</span>`;
+<span class="t"><span class="k"><i></i>🇰🇷 국회 살펴보기 · 실시간</span><span class="n">0<small>원</small></span><span class="s">오늘 의원 <b class="m">299</b>명에게 쌓이는 의원 월급 · 출장·법 만들기·찬반 추적</span></span><span class="go">입장</span>`;
   let per = 160925680, n = 299;
   const won = (v) => { v = Math.floor(v); const e = Math.floor(v / 1e8), m = Math.floor((v % 1e8) / 1e4); return (e ? e.toLocaleString() + '억 ' : '') + m.toLocaleString() + '만'; };
   const num = a.querySelector('.n');
