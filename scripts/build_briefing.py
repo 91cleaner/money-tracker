@@ -271,12 +271,12 @@ def build_president(today, n_now=2):
         mv_ko = ", ".join("%s %+.1f%%" % (co_ko(m["sym"]), m["pct"]) for m in then["moves"][:2])
         mv_en = ", ".join("%s %+.1f%%" % (co_en(m["sym"]), m["pct"]) for m in then["moves"][:2])
         out.append(card(
-            "president-" + now["id"].split(":")[-1][:40], "president", now.get("icon") or "🏛️",
+            "president-" + now["id"].split(":")[-1][:40], "president", "",
             base * fresh(now["date"], today),
             layout="versus", date=now["date"],
             badge_ko="대통령 조치", badge_en="PRESIDENTIAL ACTION",
             title_ko="지난번 비슷한 조치 때 같은 기간엔?", title_en="Last similar move: what happened in the same period?",
-            now={"tag_ko": "지금 🏛️", "tag_en": "NOW 🏛️", "title": now["title"], "date": now["date"],
+            now={"tag_ko": "지금", "tag_en": "NOW", "title": now["title"], "date": now["date"],
                  "plain_ko": plain(now)[0], "plain_en": plain(now)[1],
                  "type_en": now.get("type_en"), "type_ko": now.get("type"), "url": now.get("url")},
             then={"tag_ko": "지난번 📅", "tag_en": "LAST TIME 📅", "title": then["title"], "date": then["date"],

@@ -8,7 +8,6 @@ import datetime as dt, json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "data", "us", "whitehouse.json"); OUT = os.path.join(ROOT, "data", "fr", "presidential.json")
 TYPE_EN = {"행정명령": "Executive order", "포고문": "Proclamation", "대통령 메모": "Presidential memorandum", "대통령 결정": "Presidential determination", "대통령 공고": "Presidential notice", "대통령 조치": "Presidential action"}
-TYPE_ICON = {"행정명령": "📜", "포고문": "📣", "대통령 메모": "📝", "대통령 결정": "⚖️", "대통령 공고": "🔔", "대통령 조치": "🏛️"}
 TOP = {"tariff": ("관세", "tariffs"), "import_232": ("수입 제한", "import limits"), "export_control": ("수출 통제", "export controls"), "sanctions": ("제재", "sanctions")}
 SEC = {"semiconductor": ("반도체", "chips"), "tech_ai": ("AI·기술", "AI & tech"), "energy": ("에너지", "energy"), "clean_energy": ("청정에너지", "clean energy"), "battery_ev": ("배터리·광물", "batteries & minerals"),
        "auto": ("자동차", "cars"), "health": ("제약·헬스", "health & drugs"), "defense": ("국방", "defense"), "shipbuilding": ("조선·해운", "shipping"), "industrial": ("철강·산업", "steel & industry"),
@@ -49,8 +48,7 @@ def main():
     for it in items[:120]:
         day = it.get("sign") or it.get("date") or ""; mv = [m for m in (move(s, day) for s in ((it.get("tickers") or [])[:3] or SS.get((it.get("sectors") or [""])[0], []))) if m]
         ko, en, mk, mke = sentences(it, mv)
-        out.append({"id": it["id"], "date": it.get("date"), "sign": it.get("sign"), "type": it["type"], "type_en": TYPE_EN.get(it["type"], "Presidential document"), "icon": TYPE_ICON.get(it["type"], "🏛️"),
-                    "eo": it.get("eo"), "procl": it.get("procl"), "title": it["t"], "easy_ko": ko, "easy_en": en, "sectors": it.get("sectors") or [], "topics": it.get("topics") or [], "countries": it.get("countries") or [],
+        out.append({"id": it["id"], "date": it.get("date"), "sign": it.get("sign"), "type": it["type"], "type_en": TYPE_EN.get(it["type"], "Presidential document"), "eo": it.get("eo"), "procl": it.get("procl"), "title": it["t"], "easy_ko": ko, "easy_en": en, "sectors": it.get("sectors") or [], "topics": it.get("topics") or [], "countries": it.get("countries") or [],
                     "tickers": it.get("tickers") or [], "same_period_ko": mk, "same_period_en": mke, "moves": mv, "url": it["u"]})
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     json.dump({"updated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), "source": "Federal Register API (federalregister.gov, 키 불필요)", "source_url": "https://www.federalregister.gov/developers/documentation/api/v1",
