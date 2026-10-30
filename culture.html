@@ -5,12 +5,14 @@
 <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<link rel="stylesheet" href="assets/culture.css?v=202610310010">
+<link rel="stylesheet" href="assets/culture.css?v=202610310840">
 <link rel="stylesheet" href="assets/tap.css?v=tap-1">
 </head><body>
-<header class="cm-top"><a href="index.html" class="cm-home">세금추적단</a><a href="national.html?cult=flow,fest,film,unit" class="cm-home">큰 지도에서 보기 ›</a><h1>축제 예산 · 영화 지원금 지도</h1></header>
+<header class="cm-top"><a href="korea.html" class="cm-home">세금추적단</a><h1>축제 예산 · 영화 지원금 지도</h1></header>
 <div id="map" aria-label="축제와 영화 지원금 지도"></div>
 <aside class="cm-panel" id="panel">
+ <div class="cm-sum" id="sum"></div>
+ <button id="openStats" type="button">합계표 · 순위 보기</button>
  <p class="cm-warn">숫자는 팩트체크를 마쳤어요. 단, 기사 속 출연료와 단위 확인이 필요한 자료는 <b>미확인</b>이에요.</p>
  <label class="cm-ly"><input type="checkbox" data-l="fest" checked><i style="background:#f59e0b"></i>축제 계획예산 <span id="n-fest"></span></label>
  <select id="year" aria-label="연도"><option value="2026">2026년</option><option value="2024">2024년</option></select>
@@ -31,6 +33,7 @@
  </ul></details>
  <p class="cm-src">출처: 문화체육관광부 지역축제 개최계획, 영화진흥위원회 심사결과 공지, 남도일보·KBS강릉 보도</p>
 </aside>
+<section id="stats" class="cm-stats" hidden><div class="cm-stats-in"><button id="closeStats" type="button">지도로 돌아가기 ✕</button><div id="statsBody"></div></div></section>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/culture.js?v=202610310010"></script>
+<script src="assets/culture.js?v=202610310840"></script>
 <script src="assets/mt-visits.js" defer></script></body></html>
