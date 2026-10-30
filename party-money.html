@@ -89,7 +89,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{border-bottom:1px
       const top = Math.max(1, ...pts.map((p) => p[5] || 0));
       pts.forEach((p) => {
         L.circleMarker([p[0], p[1]], {radius: 2 + 8 * Math.sqrt((p[5] || 0) / top), color: '#ffd166', weight: 0.5, fillColor: '#ffd166', fillOpacity: 0.55, renderer: RND})
-          .bindPopup('<b>' + esc(p[2]) + '</b> (' + esc(p[3]) + ')<br>' + esc(p[4]) + '<br>' + won(p[5]) + ' · ' + (p[6] || 1) + '건 <span class="u">미확인</span><br>의원: ' + esc((p[9] || []).join(', ')) + (p[7] ? '<br>위치는 근사치예요.' : '') + (p[8] ? '<br>글자 오류 가능(OCR).' : '') + '<br><small>출처: 오마이뉴스·경향·뉴스타파</small>')
+          .bindPopup('<b>' + esc(p[2] || '(이름 없음)') + '</b> (' + esc(p[3]) + ')<br>' + esc(p[4]) + '<br>' + won(p[5]) + ' · ' + (p[6] || 1) + '건 <span class="u">미확인</span><br>의원: ' + esc((p[9] || []).join(', ')) + (p[7] ? '<br>위치는 근사치예요.' : '') + (p[8] ? '<br>글자 오류 가능(OCR).' : '') + '<br><small>출처: 오마이뉴스·경향·뉴스타파</small>')
           .addTo(layer);
         bounds.extend([p[0], p[1]]);
       });
