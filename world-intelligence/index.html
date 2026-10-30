@@ -427,25 +427,25 @@ const place=t=>{for(const b of BOX)if(t.lat>=b[1]&&t.lat<=b[2]&&t.lon>=b[3]&&t.l
 const TK=[[/TSMC|Taiwan Semiconductor|대만 ?(반도체|TSMC)/i,'TSM'],[/Micron|마이크론/i,'MU'],[/NVIDIA|엔비디아/i,'NVDA']];
 const pc=v=>(v>0?'+':'')+v.toFixed(1)+'%';
 function line1(t,C,R){const k=t.kind||'',x=(t.title||'')+' '+(t.region||''),n=(String(t.fact||'').match(/(\d+)\s*건/)||[])[1],E=en(),rf=String(t.ref||''),nm=String(t.title||'').replace(/^(대표 종목|함께 볼 지표|연관 위원회\([^)]*\)): ?/,'').replace(/\s*\([^)]*\)\s*$/,'');
- if(R==='bill'){if(k==='bill')return['📜',E?`Bill ${C} sits in Congress. Its latest status is on record.`:`${C} 법안이 의회에 올라와 있어요. 최근 상태가 기록돼 있어요.`];
-  if(k==='cmte')return['🧑‍⚖️',E?`This is the home district of the lawmaker who introduced the bill.`:`이 법안을 대표 발의한 의원의 지역구예요.`];
+ if(R==='bill'){if(k==='bill')return['📜',E?`Bill ${C} is in Congress (a bill = a proposed law). Its latest step is saved.`:`${C} 법안(법을 만들자는 제안)이 의회에 있어요. 가장 최근 단계가 기록돼 있어요.`];
+  if(k==='cmte')return['🧑‍⚖️',E?`This is the home area (district) of the lawmaker who proposed the bill.`:`이 법안을 처음 내놓은 의원의 지역구(뽑힌 지역)예요.`];
   if(k==='lobby'){const c=(String(t.fact||'').match(/언급 (\d+)회/)||[])[1];return['📣',E?`${nm} lobbying filings mention this bill${c?' '+c+' times':''}.`:`${nm}의 로비 공시에 이 법안이 ${c?c+'회 ':''}언급돼 있어요.`]}}
- if(R==='sector'){if(/^company:/.test(rf))return['🏢',E?`${nm} is one of the companies watched in this sector.`:`${nm}은(는) 이 업종에서 지켜보는 대표 회사예요.`];
-  if(/^factor:/.test(rf))return['📊',E?`A number tracked alongside this sector sits here (${nm}).`:`이 업종과 같이 보는 숫자(${nm})가 여기 있어요.`];
-  if(/^committee:/.test(rf))return['🏛️',E?`A congressional committee tied to this sector shows up (${nm}).`:`이 업종과 이어진 의회 위원회(${nm})가 있어요.`]}
+ if(R==='sector'){if(/^company:/.test(rf))return['',E?`${nm} is one of the companies watched in this sector.`:`${nm}은(는) 이 업종에서 지켜보는 대표 회사예요.`];
+  if(/^factor:/.test(rf))return['📊',E?`A number we watch along with this industry is here (${nm}).`:`이 업종과 함께 보는 숫자(${nm})가 여기 있어요.`];
+  if(/^committee:/.test(rf))return['🏛️',E?`A group of lawmakers that oversees this industry shows up (${nm}).`:`이 업종을 맡은 의원 모임(위원회, ${nm})이 있어요.`]}
  if(k==='supply'||/본사|공장|공급사|팹/.test(x)){const hq=/본사/.test(x),sp=/공급사/.test(x);return['🏭',E?`${hq?'The headquarters':sp?'A supplier':'A plant'} linked to ${C} is here.`:`${C}의 ${hq?'본사':sp?'공급사':'공장'}가 이곳에 있어요.`]}
  if(k==='lobby')return['📣',E?`${C} filed ${n||'some'} lobbying report${n==1?'':'s'} here.`:`${C}의 로비 공시가 ${n?n+'건 ':''}있었어요.`];
  if(k==='insider')return['•',E?`Bosses at ${C} reported buying or selling their own company\'s stock. (Form 4 = the report they must file.)`:`${C} 임원이 자기 회사 주식을 사고팔았다고 신고했어요. (Form 4 = 이때 내는 신고서)`];
- if(k==='assist')return['•',E?`${C} has federal grant or loan obligations on record.`:`${C}의 연방 보조금·대출 의무액 기록이 있어요.`];
+ if(k==='assist')return['•',E?`${C} got money promised by the US government as a grant or loan.`:`${C}가 미국 정부에서 보조금이나 대출을 약속받은 기록이 있어요.`];
  if(k==='recall')return['•',E?`Recalls filed under ${C}'s name are on record.`:`${C} 이름으로 접수된 리콜 기록이 있어요.`];
- if(k==='prior')return['•',E?`Some trades in ${C} stock are dated within 30 days before a filing or announcement. Dates only, not a reason.`:`${C} 주식 거래 중 공시·발표 30일 이내 앞선 날짜의 기록이 있어요. 날짜만 나란히 놓은 것이에요.`];
+ if(k==='prior')return['•',E?`Some trades in ${C} stock happened within 30 days before a company report or announcement. We only compare dates. It does not tell you why.`:`${C} 주식 거래 중 회사 발표 30일 전 안에 있었던 거래가 있어요. 날짜만 비교한 거라 이유는 알 수 없어요.`];
  if(k==='trade')return['🧾',E?`Lawmakers reported trades in ${C} stock.`:`의원들이 ${C} 주식을 사고팔았다고 신고했어요.`];
  if(k==='bill')return['📜',E?`A bill tied to ${C} is in Congress.`:`${C}와 관련된 법안이 의회에 올라와 있어요.`];
- if(k==='cmte')return['🏛️',E?`A congressional committee tied to ${C} shows up here.`:`${C}와 관련된 의회 위원회 기록이 있어요.`];
+ if(k==='cmte')return['🏛️',E?`A group of lawmakers that oversees ${C}'s area (a committee) shows up here.`:`${C} 분야를 맡은 의원 모임(위원회) 기록이 있어요.`];
  if(k==='wh')return['🇺🇸',E?`The US president issued an order or announcement on this topic.`:`미국 대통령이 이 주제로 발표하거나 명령한 기록이 있어요.`];
- if(k==='reg')return['🛃',E?`There are tariff or export-control records here.`:`관세나 수출 제한과 관련된 기록이 있어요.`];
- if(k==='award')return['💵',E?`${C} has US government contract records.`:`${C}의 미국 정부 계약 기록이 있어요.`];
- if(k==='pac')return['🗳️',E?`There are political-donation records tied to ${C}.`:`${C}와 관련된 정치 후원 기록이 있어요.`];
+ if(k==='reg')return['🛃',E?`There are records about tariffs (taxes on imports) or limits on exports here.`:`관세(수입품에 붙는 세금)나 수출 제한 기록이 있어요.`];
+ if(k==='award')return['💵',E?`${C} has jobs paid for by the US government (contracts).`:`${C}가 미국 정부 일을 맡은 계약 기록이 있어요.`];
+ if(k==='pac')return['🗳️',E?`There are records of political donations linked to ${C}.`:`${C}와 관련된 정치 후원 기록이 있어요.`];
  if(k==='policy')return['📑',E?`This country has policy records on the topic.`:`이 나라의 관련 정책 기록이 있어요.`];
  return['📍',E?`Public records mention this place for ${C}.`:`공개 자료에 ${C}와 관련된 이 지역 기록이 있어요.`]}
 function line2(t,tk){const x=P&&P.t&&P.t[tk];if(!x||x.m1==null)return'';const lo=x.from||'',hi=P.date||'',d=t.date&&String(t.date).slice(0,10);if(d&&lo&&(d<lo||d>hi))return'';
@@ -493,18 +493,18 @@ function build(c){const E=!!c.en,S=c.stops||[],R=c.kind,today=c.today,cnt={},ord
   :`이번 경로는 ${S.length}곳이에요.${parts.length?` 같은 기간 ${parts.join(', ')}${josa(parts[parts.length-1])} 있었어요.`:''}${same}`;
  // 과거 패턴: 우리 종가·공시 기록으로 직접 계산(한 달) → 부족하면 #202 답변 묶음(7일)
  let pat,own=c.study||{n:0},pk=c.packs||[],pn=pk.reduce((s,p)=>s+p.n,0);
- if(own.n>=3)pat=E?`Last time something similar came out (${own.n} times), the stock moved ${pc(own.mean)} on average a month later (estimate). That says nothing about why.`:`지난번 비슷한 발표(${own.n}회) 때는 한 달 뒤 주가가 평균 ${pc(own.mean)} 움직였어요(추정). 이유를 말하는 건 아니에요.`;
- else if(pn>=3){const mean=pk.reduce((s,p)=>s+p.mean*p.n,0)/pn;pat=E?`Last time something similar came out (${pn} times), related stocks moved ${pc(mean)} on average over the next 7 days (estimate). That says nothing about why.`:`지난번 비슷한 발표(${pn}회) 때는 관련 종목 주가가 7일 뒤 평균 ${pc(mean)} 움직였어요(추정). 이유를 말하는 건 아니에요.`}
+ if(own.n>=3)pat=E?`In ${own.n} past similar announcements, the stock moved ${pc(own.mean)} on average a month later. That is a past record only. It does not say why or what happens next.`:`과거 비슷한 발표 ${own.n}번 때 한 달 뒤 주가는 평균 ${pc(own.mean)} 움직였어요. 지난 기록일 뿐, 이유나 앞으로를 말하지 않아요.`;
+ else if(pn>=3){const mean=pk.reduce((s,p)=>s+p.mean*p.n,0)/pn;pat=E?`In ${pn} past similar announcements, related stocks moved ${pc(mean)} on average over the next 7 days. That is a past record only. It does not say why or what happens next.`:`과거 비슷한 발표 ${pn}번 때 관련 종목 주가는 7일 뒤 평균 ${pc(mean)} 움직였어요. 지난 기록일 뿐, 이유나 앞으로를 말하지 않아요.`}
  else{const n=Math.max(own.n,pn);pat=E?`There are too few similar past cases${n?` (${n})`:''} to describe a pattern yet.`:`비슷한 사례가 아직 적어서${n?`(${n}회)`:''} 패턴을 말하기 어려워요.`}
  // 다음에 볼 것: 데이터에 있는 날짜만. 실적 발표 날짜는 지난 간격으로 어림한 추정값.
- const watch=[];(c.earn||[]).forEach(x=>watch.push(E?`${x.name}: the last earnings-type filing was ${x.last}; the next one may come around ${x.next} (estimate from past gaps).`:`${x.name}: 마지막 실적 공시는 ${x.last}였고, 다음은 ${x.next} 무렵으로 보여요(지난 간격으로 어림한 추정).`));
+ const watch=[];(c.earn||[]).forEach(x=>watch.push(E?`${x.name}: the last earnings report (how much money the company made) was filed ${x.last}.`:`${x.name}: 마지막 실적 공시(회사가 번 돈 보고)는 ${x.last}에 나왔어요.`));
  if(R==='bill'&&c.latest)watch.push(E?`The latest recorded step is dated ${c.latest}. No next date is stored yet.`:`기록된 가장 최근 단계는 ${c.latest}이에요. 다음 일정은 아직 저장돼 있지 않아요.`);
- if(!watch.length)watch.push(E?'No upcoming dates are stored for this route yet. This card updates when new filings arrive.':'앞으로 잡힌 일정은 아직 저장돼 있지 않아요. 새 공시가 올라오면 이 카드도 바뀌어요.');
- const sn=[...new Set(ord.filter(k=>SRC[k]).map(k=>SRC[k][E?1:0]))];if(c.priced)sn.push(E?'Massive daily closes':'Massive 일별 종가');if(c.earn&&c.earn.length||own.n)sn.push('SEC EDGAR');
+ if(!watch.length)watch.push(E?'We have no future dates saved for this yet. This card changes when new reports come in.':'앞으로 잡힌 일정은 아직 저장돼 있지 않아요. 새 공시가 올라오면 이 카드도 바뀌어요.');
+ const sn=[...new Set(ord.filter(k=>SRC[k]).map(k=>SRC[k][E?1:0]))];if(c.priced)sn.push(E?'Daily closing prices (Massive)':'하루 마감 가격 (Massive)');if(c.earn&&c.earn.length||own.n)sn.push('SEC EDGAR');
  const src=[...new Set(sn)];
  const sources=E?`Sources: ${src.join(', ')||'stored public records'}.`:`출처: ${src.join(', ')||'저장된 공개 자료'}.`;
- const disclaimer=E?'Public records placed side by side by fixed templates, no AI. It does not give reasons and is not financial advice.':'공개 자료를 정해진 문장 틀로 나란히 놓은 것이고 AI는 쓰지 않았어요. 이유를 말해 주지 않고 투자 조언도 아니에요.';
- const T=E?{h:'🕵️ Situation-room summary',a:'📌 At a glance',b:'🔙 Last time',c:'👀 Watch next'}:{h:'🕵️ 상황실 요약 카드',a:'📌 한눈에',b:'🔙 지난번엔',c:'👀 다음에 볼 것'};
+ const disclaimer=E?'Public records put next to each other with simple fixed sentences. No AI wrote this. It does not say why, and it is not money advice.':'공개 기록을 정해진 쉬운 문장으로 나란히 놓은 거예요. AI가 쓴 글이 아니에요. 이유를 말하지 않고, 투자 조언도 아니에요.';
+ const T=E?{h:'Summary card',a:'At a glance',b:'Last time',c:'Watch next'}:{h:'상황 요약 카드',a:'한눈에 보기',b:'지난번에는',c:'다음에 볼 것'};
  return{T,recap,pattern:pat,watch,sources,disclaimer,lines:[T.h,T.a,recap,T.b,pat,T.c].concat(watch,[sources,disclaimer])}}
 function hide(){const e=document.getElementById('mtTourCard');e&&e.remove()}
 const J=u=>fetch(u).then(r=>r.ok?r.json():null).catch(()=>null);
@@ -569,7 +569,7 @@ const EN=!!(window.MTI18N&&window.MTI18N.isEn);
 const SEC={tech_ai:['AI·기술','AI & tech'],energy:['에너지','energy'],defense:['국방','defense'],health:['제약·헬스','health & drug'],semiconductor:['반도체','chip'],industrial:['철강·산업','steel & industrial'],consumer:['소비재·농식품','consumer & food'],shipbuilding:['조선·해운','shipbuilding & shipping'],auto:['자동차','car'],clean_energy:['청정에너지','clean-energy'],finance:['금융','finance'],battery_ev:['배터리·광물','battery & mineral'],housing:['주택','housing'],crypto:['가상자산','crypto']};
 const CTY={cn:['중국','China'],ru:['러시아','Russia'],ir:['이란','Iran'],ve:['베네수엘라','Venezuela'],ca:['캐나다','Canada'],br:['브라질','Brazil'],gb:['영국','UK'],kr:['한국','Korea'],in:['인도','India'],ua:['우크라이나','Ukraine'],mo:['마카오','Macao'],tw:['대만','Taiwan'],mx:['멕시코','Mexico'],jp:['일본','Japan'],sa:['사우디','Saudi Arabia'],vn:['베트남','Vietnam'],eu:['EU','EU'],ch:['스위스','Switzerland'],il:['이스라엘','Israel'],de:['독일','Germany']};
 const DOC={'포고문':['대통령 발표','Presidential proclamation'],'행정명령':['대통령 명령','Executive order'],'대통령 메모':['대통령 메모','Presidential memo'],'대통령 공고':['대통령 공고','Presidential notice'],'대통령 결정':['대통령 결정','Presidential decision'],'대통령 조치':['대통령 발표','Presidential action']};
-const T={more:['더 보기 (+{n})','Show more (+{n})'],less:['접기','Show less'],orig:['원문 보기','See original'],go:['원문 ↗','Source ↗'],disc:['공개 자료를 모아 보여줄 뿐, 투자 조언은 아니에요','Just public records put together. Not investment advice.'],hdr:['🏛️ 미국 대통령·정부 발표','🏛️ US president & government news'],srcT:['출처: Federal Register(관보)·whitehouse.gov','Source: Federal Register · whitehouse.gov'],prod:['제품명 예시 언급 기업','company named as a product example']};
+const T={more:['더 보기 (+{n})','Show more (+{n})'],less:['접기','Show less'],orig:['원문 보기','See original'],go:['원문 ↗','Source ↗'],disc:['공개 자료를 모아 보여줄 뿐, 투자 조언은 아니에요','Just public records put together. Not investment advice.'],hdr:['미국 대통령·정부 발표','US president & government news'],srcT:['출처: Federal Register(관보)·whitehouse.gov','Source: Federal Register · whitehouse.gov'],prod:['제품명 예시 언급 기업','company named as a product example']};
 const L=k=>T[k][EN?1:0];const pick=(m,ks,n)=>(ks||[]).map(k=>m[k]&&m[k][EN?1:0]).filter(Boolean).slice(0,n);
 const plain=b=>{const ty=b.type||'',tp=b.topics||[],S=pick(SEC,b.sectors,2).join(EN?' & ':'·'),C=pick(CTY,b.countries,2).join(EN?' & ':'·');
 if(/OFAC/.test(ty))return EN?'⛔ The US Treasury updated its sanctions list or rules'+(C?' ('+C+')':'')+'.':'⛔ 미국 재무부(제재 담당)가 '+(C?C+' 관련 ':'')+'제재 명단·규칙을 손봤어요';
@@ -588,7 +588,7 @@ const hit=b=>(tk&&((b.tickers||[]).includes(tk)||(b.tickers_product||[]).include
 box.append(mk(L('hdr'),'#5dff9e'));const extra=[];R.forEach((b,i)=>{const n=item(b,tk);if(i>=3){n.hidden=true;extra.push(n)}box.append(n)});
 if(extra.length){const btn=document.createElement('button');btn.type='button';btn.style.cssText='margin:4px 0;padding:3px 10px;background:none;border:1px solid #5dff9e;border-radius:12px;color:#5dff9e;font:inherit;cursor:pointer';const set=o=>{btn.textContent=o?L('less'):L('more').replace('{n}',extra.length);btn.dataset.open=o?'1':''};set(false);btn.onclick=()=>{const o=!btn.dataset.open;extra.forEach(n=>n.hidden=!o);set(o)};box.append(btn)}
 box.append(mk(L('disc'),'#8fa89a'))};
-const tick=async()=>{const w=await ld(),all=Array.isArray(w&&w.items)?w.items.filter(b=>b&&b.t&&b.u&&/^https:\/\//.test(b.u)):[];const P=all.filter(b=>b.kind==='presdoc').slice(0,4),A=all.filter(b=>b.kind!=='presdoc').slice(0,3);if(!P.length&&!A.length)return;let n=0;const put=()=>{const run=document.querySelector('#mtTicker .run');if(!run){if(++n<40)setTimeout(put,500);return}if(run.querySelector('[data-wh]'))return;const add=(b,grp,color)=>{const s=document.createElement('span');s.className='it';s.dataset.wh='1';s.title=grp+(EN?'':' · '+b.ko)+' · '+(b.type||'')+' · '+(b.src||'Federal Register')+(EN?' · Not investment advice':' · 투자 조언 아님');const i=document.createElement('i');i.textContent='['+(b.date||'-')+' '+(grp===S.grpP?'🏛️ '+S.grpP:S.grpA)+' · '+(b.type||'')+'] ';i.style.color=color;s.append(i,document.createTextNode(String(b.t).slice(0,110)));s.onclick=()=>window.open(b.u,'_blank','noopener');run.prepend(s)};A.slice().reverse().forEach(b=>add(b,S.grpA,'#8fd3ff'));P.slice().reverse().forEach(b=>add(b,S.grpP,'#ffd60a'))};put()};
+const tick=async()=>{const w=await ld(),all=Array.isArray(w&&w.items)?w.items.filter(b=>b&&b.t&&b.u&&/^https:\/\//.test(b.u)):[];const P=all.filter(b=>b.kind==='presdoc').slice(0,4),A=all.filter(b=>b.kind!=='presdoc').slice(0,3);if(!P.length&&!A.length)return;let n=0;const put=()=>{const run=document.querySelector('#mtTicker .run');if(!run){if(++n<40)setTimeout(put,500);return}if(run.querySelector('[data-wh]'))return;const add=(b,grp,color)=>{const s=document.createElement('span');s.className='it';s.dataset.wh='1';s.title=grp+(EN?'':' · '+b.ko)+' · '+(b.type||'')+' · '+(b.src||'Federal Register')+(EN?' · Not investment advice':' · 투자 조언 아님');const i=document.createElement('i');i.textContent='['+(b.date||'-')+' '+(grp===S.grpP?S.grpP:S.grpA)+' · '+(b.type||'')+'] ';i.style.color=color;s.append(i,document.createTextNode(String(b.t).slice(0,110)));s.onclick=()=>window.open(b.u,'_blank','noopener');run.prepend(s)};A.slice().reverse().forEach(b=>add(b,S.grpA,'#8fd3ff'));P.slice().reverse().forEach(b=>add(b,S.grpP,'#ffd60a'))};put()};
 window.addEventListener('load',()=>setTimeout(tick,1200))})();</script>
 <script id="mt-cpol-js">(()=>{const S={head:'최근 이 나라의 관련 정책·발표',sub:' · 공식 발표(제목 키워드 기준, 영향 단정 아님)',none:'수집 기간 내 업종 키워드에 맞는 발표 없음',open:' 원문 ↗',foot:' · 같은 기간 데이터상 · 투자 조언 아님'};window.mtCPolStrings=S;
 const BOX={jp:(a,o)=>a>=30&&a<=46&&o>=129.5&&o<=146&&!(a>=33&&a<=39&&o<=131),tw:(a,o)=>a>=21.8&&a<=25.4&&o>=119.5&&o<=122.2,cn:(a,o)=>a>=18&&a<=54&&o>=73&&o<=135&&!(a>=33&&a<=39&&o>=124&&o<=131)&&!(a>=21.8&&a<=25.4&&o>=119.5&&o<=122.2)&&!(o>=129.5&&a>=30),eu:(a,o)=>a>=35&&a<=71&&o>=-11&&o<=31},C={};
@@ -683,7 +683,7 @@ const iso=ms=>new Date(ms).toISOString().slice(0,10);
 const BOX=[[21.5,25.5,119.5,122.5,'🇹🇼'],[33,39,124,131,'🇰🇷'],[30,46,129,146,'🇯🇵'],[1,1.8,103,104.5,'🇸🇬'],[24,50,-125,-66,'🇺🇸'],[18,54,73,135,'🇨🇳']];
 const flag=t=>{for(const b of BOX)if(t.lat>=b[0]&&t.lat<=b[1]&&t.lon>=b[2]&&t.lon<=b[3])return b[4];return'🌏'};
 const AGENCY=[[/상무부|\bBIS\b|Commerce/i,'🛃'],[/USTR|무역대표/i,'⚖️'],[/국방|Pentagon|\bDoD\b/i,'🛡️'],[/\bSEC\b|증권/i,'📊'],[/\bFDA\b|보건/i,'💊'],[/\bDOE\b|에너지부/i,'⚡']];
-function iconOf(t,hub){const r=t.ref||'',x=txt(t),k=t.kind||'';if(hub)return['company','🏢'];if(['insider','assist','recall','prior'].includes(k))return['agency','•'];
+function iconOf(t,hub){const r=t.ref||'',x=txt(t),k=t.kind||'';if(hub)return['company',''];if(['insider','assist','recall','prior'].includes(k))return['agency','•'];
  if(k==='trade'||r.startsWith('trade'))return['agency','🧾'];if(k==='bill')return['agency','📜'];if(k==='cmte'||k==='wh')return['agency','🏛️'];
  if(k==='reg'||/규제|수출통제|관세|제재/.test(x)){const a=AGENCY.find(a=>a[0].test(x));return['agency',a?a[1]:'🛃']}
  if(k==='policy')return['country',flag(t)];if(k==='lobby')return['company','📣'];if(k==='award')return['company','💵'];if(k==='pac')return['company','🗳️'];if(k==='supply'||/본사|공장|공급사|팹/.test(x))return['company','🏭'];
@@ -706,8 +706,8 @@ const nums=document.createElement('div');nums.className='nums';const n1=document
 const nc=document.createElement('div');nc.className='nc';
 const pinB=mkBtn(T('📌 이 대상 감시','📌 Watch this'),'act');pinB.setAttribute('aria-pressed','false');const fxB=mkBtn(T('✨ 효과','✨ Effects'),'act');fxB.setAttribute('aria-pressed',String(!fxOff));
 const row=document.createElement('div');row.className='row';row.append(pinB,fxB);const pinsEl=document.createElement('div');pinsEl.className='pins';
-const note=document.createElement('div');note.className='nt';note.textContent=T('공개 자료를 걸러 보는 도구예요. 선과 숫자는 나란히 놓은 것일 뿐 원인을 뜻하지 않아요. Esc = 효과 건너뛰기.','A tool for filtering public records. Lines and numbers are shown side by side and do not imply cause. Esc = skip effects.');
-bd.append(sec(T('기간 (다시 누르면 해제)','Period (tap again to clear)'),seg),sec(T('겹쳐 볼 층 (켜면 그 층만 표시)','Layers (on = show only those)'),swd),sec(T('날짜순 다시 보기','Replay by date'),tlw),tlv,nums,nc,row,sec(T('감시 중','Watching'),pinsEl),note);
+const note=document.createElement('div');note.className='nt';note.textContent=T('공개 기록을 골라 보는 도구예요. 선과 숫자는 나란히 보여 줄 뿐, 이유를 알려 주지는 않아요. Esc 키 = 화면 효과 건너뛰기.','A tool to sort through public records. Lines and numbers just sit side by side. They do not tell you why. Esc key = skip the animation.');
+bd.append(sec(T('기간 (다시 누르면 해제)','Period (tap again to clear)'),seg),sec(T('겹쳐 볼 층 (켜면 그것만 보여요)','Layers (turn one on to see only that)'),swd),sec(T('날짜순 다시 보기','Replay by date'),tlw),tlv,nums,nc,row,sec(T('감시 중','Watching'),pinsEl),note);
 box.append(hd,bd);document.body.append(box);
 const badge=document.createElement('div');badge.id='mtWatch';badge.hidden=true;badge.textContent=T('감시 중','WATCHING');const bt=$('briefTitle');if(bt&&bt.parentNode)bt.after(badge);
 hd.onclick=()=>{const o=box.dataset.open==='1'?'0':'1';box.dataset.open=o;hd.setAttribute('aria-expanded',String(o==='1'));document.body.classList.toggle('mtc-open',o==='1')};
@@ -728,16 +728,16 @@ function pct(m){const k=tk(m),x=P&&P.t&&P.t[k];if(!x)return'';if(period===90){lo
 const soon=m=>period===90&&!!tk(m)&&M3[tk(m)]===null
 function stampN(el,v){if(el.textContent===v)return;el.textContent=v;if(!fx())return;el.classList.remove('land');void el.offsetWidth;el.classList.add('land')}
 const apply=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(paint)};
-function pinsPaint(){pinsEl.replaceChildren(...pins.map(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.n;b.title=T(p.n+' 경로 열기','Open route: '+p.n);b.onclick=()=>window.mtApi.loadIdx().then(()=>{const r=window.mtApi.routeOf(p.t);if(r)window.mtApi.start(r)}).catch(()=>{});return b}));if(!pins.length){const s=document.createElement('span');s.className='nt';s.textContent=T('아직 없어요. 경로를 연 뒤 📌를 눌러 보세요.','None yet. Open a route, then tap 📌.');pinsEl.append(s)}hdI.textContent=pins.length?T('감시 ','Watching ')+pins.length:''}
+function pinsPaint(){pinsEl.replaceChildren(...pins.map(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.n;b.title=T(p.n+' 경로 열기','Open route: '+p.n);b.onclick=()=>window.mtApi.loadIdx().then(()=>{const r=window.mtApi.routeOf(p.t);if(r)window.mtApi.start(r)}).catch(()=>{});return b}));if(!pins.length){const s=document.createElement('span');s.className='nt';s.textContent=T('아직 없어요. 종목을 연 뒤 "이 대상 감시"를 눌러 보세요.','None yet. Open a stock, then tap "Watch this".');pinsEl.append(s)}hdI.textContent=pins.length?T('감시 ','Watching ')+pins.length:''}
 function paint(){const m=cur();pinsPaint();if(!m||!m.meta){const z=document.getElementById('mtcEmpty');if(z)z.style.display='none';n1.textContent='—';n2.hidden=true;nc.textContent=T('경로를 열면 여기서 걸러 볼 수 있어요.','Open a route to filter it here.');tlv.textContent='';pinB.setAttribute('aria-pressed','false');badge.hidden=true;return}
  const V=calc(m),F=window.mtFlow,L_=F?F.lines():[],D=F?F.dots():[];let n=0,tot=0;
  m.meta.forEach((t,i)=>{const on=V[i];if(i){tot++;if(on)n++}[L_[i]&&L_[i].getElement&&L_[i].getElement(),D[i]&&D[i].getElement&&D[i].getElement(),mk[i]&&mk[i].getElement&&mk[i].getElement()].forEach(x=>{if(x)x.style.display=on?'':'none'});
   if(on&&vis[i]===false&&tl!=null&&i){drawLine(i);pulse(t)}vis[i]=on});
- tlv.textContent=tl==null?(dates.length>1?T('전체 ','All ')+iso(dates[0])+' ~ '+iso(dates[dates.length-1]):T('날짜가 있는 기록이 적어요','Few dated records')):tl===0?T('처음 상태 (날짜 있는 기록 숨김)','Start (dated records hidden)'):EN?'up to '+iso(dates[tl-1]):'~ '+iso(dates[tl-1])+' 까지';
+ tlv.textContent=tl==null?(dates.length>1?T('전체 ','All ')+iso(dates[0])+' ~ '+iso(dates[dates.length-1]):T('날짜가 있는 기록이 적어요','Few dated records')):tl===0?T('처음 화면 (날짜 있는 기록은 숨김)','Start (records with dates hidden)'):EN?'up to '+iso(dates[tl-1]):'~ '+iso(dates[tl-1])+' 까지';
  {let z=document.getElementById('mtcEmpty');if(!z){z=document.createElement('div');z.id='mtcEmpty';z.setAttribute('role','status');z.style.cssText='position:fixed;left:50%;top:45%;transform:translate(-50%,-50%);z-index:900;background:rgba(10,14,20,.88);color:#e8eef5;border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:10px 16px;font-size:14px;pointer-events:none;max-width:90vw;text-align:center';document.body.append(z)}const e=sel.size>0&&tot>0&&n===0;z.hidden=!e;z.style.display=e?'':'none';if(e)z.textContent=T('이 회사엔 아직 해당 기록이 없어요','No records of this kind for this company yet.')}
  stampN(n1,EN?String(n):n+'건');const px=pct(m);n2.hidden=!px;if(px)stampN(n2,px);
- nc.textContent=T('보이는 공개 기록 '+n+' / '+tot+'건','Public records shown: '+n+' / '+tot)+(px?T(' · 같은 기간 주가 '+px+' (나란히 본 것, 원인 아님)',' · price change over the same period '+px+' (side by side, not a cause)'):soon(m)?' · '+T('3달 주가는 준비 중','3-month prices coming soon'):period&&period<90&&tk(m)?T(' · 이 기간의 주가 수치는 없어요',' · No price figure for this period'):'');
- const pinned=pins.some(p=>p.t===m.ticker);pinB.setAttribute('aria-pressed',String(pinned));pinB.textContent=pinned?T('📌 감시 해제','📌 Stop watching'):T('📌 이 대상 감시','📌 Watch this');badge.hidden=!pinned}
+ nc.textContent=T('보이는 공개 기록 '+n+' / '+tot+'건','Public records shown: '+n+' / '+tot)+(px?T(' · 같은 기간 주가 '+px+' (나란히 본 것, 원인 아님)',' · price change over the same period '+px+' (side by side, not a cause)'):soon(m)?' · '+T('3달 주가는 준비 중','3-month prices coming soon'):period&&period<90&&tk(m)?T(' · 이 기간의 주가 수치는 없어요',' · No price number for this time'):'');
+ const pinned=pins.some(p=>p.t===m.ticker);pinB.setAttribute('aria-pressed',String(pinned));pinB.textContent=pinned?T('감시 해제','Stop watching'):T('이 대상 감시','Watch this');badge.hidden=!pinned}
 pinB.onclick=()=>{const m=cur();if(!m)return;const i=pins.findIndex(p=>p.t===m.ticker);if(i>=0)pins.splice(i,1);else pins.push({t:m.ticker,n:String(m.title).replace(/\s*(경로|route)$/i,'')});ST.set('mt-watch',pins);paint()};
 fxB.onclick=()=>{fxOff=!fxOff;ST.set('mt-fx-off',fxOff);document.body.classList.toggle('mtc-nofx',fxOff);fxB.setAttribute('aria-pressed',String(!fxOff))};
 // 타임라인 재생(0.65초마다 한 날짜씩)
@@ -837,7 +837,7 @@ let seqd=0;function decl(){const my=++seqd;const br=$('brief'),m=window.mtCur&&w
  let mb=$('mtMoreBtn');if(last){if(!mb){mb=document.createElement('button');mb.id='mtMoreBtn';mb.type='button';mb.onclick=()=>{br.classList.toggle('mtMore');mb.textContent=br.classList.contains('mtMore')?T('접기','Show less'):T('더 보기 (가격·뉴스·거래)','More (price, news, trades)')}}mb.textContent=T('더 보기 (가격·뉴스·거래)','More (price, news, trades)');const cv=$('briefCaveat');cv&&cv.before(mb)}else if(mb)mb.remove();
  let sl=$('mtSrcLine');if(!sl){sl=document.createElement('p');sl.id='mtSrcLine'}const cv=$('briefCaveat');cv&&cv.after(sl);sl.replaceChildren();
  if(t.source_url){const a=document.createElement('a');a.href=t.source_url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=T('출처 ↗','Source ↗');sl.append(a,' · ')}
- sl.append(T('공개 자료 정리 · 원인 아님 · 투자 조언 아님','Public records · not causal · not investment advice'));
+ sl.append(T('공개 기록 모음 · 이유를 말하지 않아요 · 투자 조언 아님','Public records · does not tell you why · not investment advice'));
  setTimeout(()=>{if(my===seqd&&!$('mtStop').textContent.trim())decl()},900)}
 new MutationObserver(()=>{clearTimeout(window._mtdT);window._mtdT=setTimeout(decl,250)}).observe(document.getElementById('briefTitle'),{childList:true,characterData:true,subtree:true});
 })();</script>
