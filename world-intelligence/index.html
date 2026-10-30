@@ -367,7 +367,7 @@ Promise.all([j('../data/us/bills.json'),j('../data/market/factors/cn-mofcom-anno
  if(!items.length)return;items.sort((a,b)=>String(b.d).localeCompare(String(a.d)));const list=items.slice(0,14);
  const bar=document.createElement('div');bar.id='mtTicker';const lab=document.createElement('span');lab.className='lab';lab.textContent='● 수집 기록';const run=document.createElement('span');run.className='run';
  list.forEach(it=>{const s=document.createElement('span');s.className='it';const i=document.createElement('i');i.textContent='['+it.d+'] ';s.append(i,document.createTextNode(it.t));s.onclick=()=>{if(it.u)window.open(it.u,'_blank','noopener')};run.append(s)});bar.append(lab,run);document.body.append(bar);
- let k=0;setInterval(()=>{const m=window.moneyTrackerMap;if(!m)return;const it=list[k++%list.length];const c=L.circleMarker(it.ll,{radius:10,color:'#7dffa8',weight:2,fill:false,className:'mtPulse',interactive:false}).addTo(m);setTimeout(()=>m.removeLayer(c),3300)},3500)});
+ let k=0;setInterval(()=>{const m=window.moneyTrackerMap;if(!m||document.hidden||(window.mtTickerPlus&&window.mtTickerPlus.sym))return;const it=list[k++%list.length];const c=L.circleMarker(it.ll,{radius:10,color:'#7dffa8',weight:2,fill:false,className:'mtPulse',interactive:false}).addTo(m);setTimeout(()=>m.removeLayer(c),3300)},3500)});
 })();
 </script>
 <style id="mt-flows">
@@ -770,7 +770,7 @@ paint()})();</script>
 <script src="../assets/fr-bar.js?v=20261030b" defer></script>
 <script src="../assets/mt-econ-strip.js?v=econ-20261029" defer></script>
 <script src="../assets/commander.js?v=cmdr-20261028" defer></script>
-<script src="../assets/mt-us-layer.js?v=us-20261030" defer></script><script src="../assets/mt-mapfirst.js?v=mf-20261030x" defer></script><script src="../assets/mt-ticker-plus.js?v=tp-5" defer></script>
+<script src="../assets/mt-us-layer.js?v=us-20261030" defer></script><script src="../assets/mt-mapfirst.js?v=mf-20261030x" defer></script><script src="../assets/mt-ticker-plus.js?v=tp-6" defer></script>
 <style id="mt-brief-sheet">@media(max-width:650px){
 #brief{top:auto!important;left:0!important;right:0!important;bottom:72px!important;width:auto!important;max-height:min(40dvh,330px)!important;border-radius:14px 14px 0 0!important;padding:0 10px 10px!important;overflow:auto!important;z-index:2900!important;overscroll-behavior:contain}
 #mtSheetHandle{position:sticky;top:0;display:flex;justify-content:center;align-items:center;height:28px;margin:0 -10px 4px;background-color:rgba(2,12,6,.97);border:0;width:calc(100% + 20px);cursor:pointer;touch-action:none;z-index:2}
