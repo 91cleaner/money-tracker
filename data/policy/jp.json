@@ -1,10 +1,64 @@
 {
-"updated": "2026-10-29",
+"updated": "2026-10-30",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "egov:410080069",
+"kind": "pubcomment",
+"t": "「法人税基本通達の制定について」（法令解釈通達）ほか１件の一部改正（案）に対する意見公募手続の実施について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=410080069&Mode=0",
+"dept": "国税庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
+},
+{
+"id": "egov:495260219",
+"kind": "pubcomment",
+"t": "医薬部外品原料規格2021を改正する件（案）に関する御意見の募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260219&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+]
+},
+{
+"id": "egov:185001514",
+"kind": "pubcomment",
+"t": "ヒトゲノム編集胚等の取扱いの規制に関する法律等の制定に伴う関係指針の一部改正等に関するパブリック・コメント（意見公募手続）の実施について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=185001514&Mode=0",
+"dept": "文部科学省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
+},
+{
+"id": "egov:145210787",
+"kind": "pubcomment",
+"t": "ブロードバンドに関するユニバーサルサービス制度に基づく交付金の額及び交付方法の認可並びに負担金の額及び徴収方法の認可に対する意見募集",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210787&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "egov:410080068",
+"kind": "pubcomment",
+"t": "「酒類の地理的表示としてジャパニーズウイスキー（蒸留酒）を指定する件(案）」に対する意見募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=410080068&Mode=0",
+"dept": "国税庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
+},
 {
 "id": "egov:240000133",
 "kind": "pubcomment",
@@ -44,6 +98,52 @@
 "dept": "国土交通省",
 "src": "e-Gov パブリックコメント(意見募集)",
 "tags": []
+},
+{
+"id": "egov:195260074",
+"kind": "pubcomment",
+"t": "「廃棄物の処理及び清掃に関する法律施行令の一部を改正する政令案」に対する御意見の募集（パブリック・コメント）について",
+"d": "2026-10-29",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260074&Mode=0",
+"dept": "環境省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": []
+},
+{
+"id": "egov:300090077",
+"kind": "pubcomment",
+"t": "「情報通信技術の進展等に対応するための刑事訴訟法等の一部を改正する法律の施行に伴う関係政令の整備及び経過措置に関する政令案」について（意見募集）",
+"d": "2026-10-29",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=300090077&Mode=0",
+"dept": "法務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "egov:670000139",
+"kind": "pubcomment",
+"t": "港則法施行規則の危険物の種類を定める告示の一部を改正する告示案に関するパブリックコメントの募集について",
+"d": "2026-10-29",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=670000139&Mode=0",
+"dept": "海上保安庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"shipbuilding"
+]
+},
+{
+"id": "egov:620340016",
+"kind": "pubcomment",
+"t": "液化石油ガスの保安の確保及び取引の適正化に関する法律施行規則（平成９年通商産業省令第１１号）の運用及び解釈の基準について（案）等に対する意見公募",
+"d": "2026-10-29",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=620340016&Mode=0",
+"dept": "資源エネルギー庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"energy"
+]
 },
 {
 "id": "egov:145210788",
@@ -547,6 +647,56 @@
 "t": "高市総理はモンゴル国のニャムオソル・オチラル首相と電話会談を行いました",
 "d": null,
 "u": "https://www.kantei.go.jp/jp/105/actions/202610/29tel_kaidan.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"tags": []
+},
+{
+"id": "kantei:c6bc7dd4ef08",
+"kind": "news",
+"t": "閣議の概要について",
+"d": null,
+"u": "https://www.kantei.go.jp/jp/tyoukanpress/202610/30_a.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"tags": []
+},
+{
+"id": "kantei:089499b17632",
+"kind": "news",
+"t": "高市総理は広島市の松井一實（かずみ）市長及び長崎市の鈴木史朗市長による表敬を受けました",
+"d": null,
+"u": "https://www.kantei.go.jp/jp/105/actions/202610/30hyoukei.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"tags": []
+},
+{
+"id": "kantei:b9ec5fa95a10",
+"kind": "news",
+"t": "高市総理は中東情勢を踏まえた「緊急的激変緩和措置」の今後の対応についての会見を行いました",
+"d": null,
+"u": "https://www.kantei.go.jp/jp/105/statement/2026/1029kaiken.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"tags": []
+},
+{
+"id": "kantei:eaddcb9af63c",
+"kind": "news",
+"t": "高市総理は令和８年第１５回経済財政諮問会議を開催しました",
+"d": null,
+"u": "https://www.kantei.go.jp/jp/105/actions/202610/29keizai.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"tags": []
+},
+{
+"id": "kantei:71a07098bdbf",
+"kind": "news",
+"t": "高市総理は全国中小企業団体中央会創立７０周年記念祝賀会に出席しました",
+"d": null,
+"u": "https://www.kantei.go.jp/jp/105/actions/202610/29chuokai.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
 "tags": []

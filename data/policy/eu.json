@@ -1,10 +1,22 @@
 {
-"updated": "2026-10-29",
+"updated": "2026-10-30",
 "country": "eu",
 "source": "EUR-Lex/Publications Office SPARQL(규칙·결정·지침) + European Commission Press corner",
 "source_url": "https://op.europa.eu/en/web/webtools/linked-data-and-sparql",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "ec:IP/26/2294",
+"kind": "press",
+"t": "Commission greenlights Czechia's seventh and final payment request for €951 million under NextGenerationEU",
+"d": "2026-10-29",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2294",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": []
+},
 {
 "id": "ec:IP/26/2274",
 "kind": "press",
