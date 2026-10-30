@@ -44,9 +44,24 @@ def write_series(D):
         json.dump({"source": "Massive(구 Polygon) grouped daily, 수정종가(adjusted) 기준", "as_of": D[-1]["date"], "d": d, "c": c},
                   open(os.path.join(OUT, tk + ".json"), "w"), separators=(",", ":"))
     return len(S)
+# 같은 티커를 다른 회사가 다시 쓴 경우: 이 날짜 전 가격은 다른 증권이라 버린다(출처: 발행사 공식 발표).
+REUSE = {"SPCX": ("2026-06-12", "SpaceX Nasdaq 첫 거래일(ir.spacex.com 2026-06-11 발표). 그 전 SPCX는 다른 ETF(2026-04-07에 SPCK로 변경, spcketf.com)")}
+GAP_DAYS, JUMP = 5, 2.0  # 5거래일 넘게 끊기거나 하루에 2배/절반 넘게 바뀌면 그 앞뒤를 잇는 변화율은 확인 전까지 숨긴다
 def load_days():
     files = sorted(f for f in os.listdir(OUT) if re.fullmatch(r"\d{4}-\d{2}-\d{2}\.json", f))
-    return [json.load(open(os.path.join(OUT, f))) for f in files]
+    D = [json.load(open(os.path.join(OUT, f))) for f in files]
+    for x in D:
+        for tk, (start, _) in REUSE.items():
+            if x["date"] < start: x["c"].pop(tk, None)
+    return D
+def breaks(D, tk):
+    """tk 가격을 이어 볼 수 없는 날짜들(끊김 뒤 재개일, 급변일)과 이유."""
+    pts = [(i, x["date"], x["c"][tk]) for i, x in enumerate(D) if tk in x["c"]]
+    out = []
+    for (i0, d0, c0), (i1, d1, c1) in zip(pts, pts[1:]):
+        if i1 - i0 > GAP_DAYS: out.append((d1, "gap"))
+        elif c0 and (c1 / c0 >= JUMP or c1 / c0 <= 1 / JUMP): out.append((d1, "jump"))
+    return out, (pts[0][1] if pts else None)
 def summarize():
     D = load_days()
     if not D: return
@@ -56,10 +71,19 @@ def summarize():
         return D[-1 - k]["c"].get(tk) if len(D) > k else None
     y0 = [x for x in D if x["date"][:4] < last["date"][:4]]
     for tk, c in last["c"].items():
-        def ch(p): return round((c / p - 1) * 100, 2) if p else None
+        br, first = breaks(D, tk)
+        def ok(base):  # base 날짜부터 오늘까지 끊김·급변이 없고, 그 종목 첫 기록 이후여야 계산
+            return base is not None and first is not None and base >= first and not any(base < b <= last["date"] for b, _ in br)
+        def ch(p, base=None): return round((c / p - 1) * 100, 2) if p and ok(base) else None
         sp = [(x["date"], x["c"][tk]) for x in D[-22:] if tk in x["c"]]
-        out[tk] = {"c": c, "d1": ch(at(tk, 1)), "w1": ch(at(tk, 5)), "m1": ch(at(tk, 21)),
-                   "ytd": ch(y0[-1]["c"].get(tk)) if y0 else None, "sp": [v for _, v in sp], "from": sp[0][0] if sp else None}
+        bd = lambda k: D[-1 - k]["date"] if len(D) > k else None
+        sp = [(d, v) for d, v in sp if ok(d) or d == last["date"]]
+        out[tk] = {"c": c, "d1": ch(at(tk, 1), bd(1)), "w1": ch(at(tk, 5), bd(5)), "m1": ch(at(tk, 21), bd(21)),
+                   "ytd": ch(y0[-1]["c"].get(tk), y0[-1]["date"]) if y0 else None, "sp": [v for _, v in sp], "from": sp[0][0] if sp else None}
+        if tk in REUSE or (first and y0 and first > y0[-1]["date"]):  # 올해 새로 상장: 연초 대비 대신 첫 거래일 종가 대비
+            f0 = next(x for x in D if tk in x["c"])
+            out[tk]["ls"] = {"d": f0["date"], "c0": f0["c"][tk], "pct": round((c / f0["c"][tk] - 1) * 100, 2) if not any(b > f0["date"] for b, _ in br) else None}
+        if br: out[tk]["br"] = [{"d": b, "why": w} for b, w in br]
     json.dump({"date": last["date"], "days": len(D), "source": "Massive(구 Polygon) grouped daily, 수정종가(adjusted) 기준",
                "note": "종가 기준 일별 데이터. 투자 조언 아님.", "t": out}, open(os.path.join(OUT, "summary.json"), "w"), separators=(",", ":"))
     print("summary", last["date"], len(out), "days", len(D))
@@ -79,6 +103,7 @@ def extra_series(start="2025-12-15"):
         print(tk, len(d), d[-1]); time.sleep(13)
 if __name__ == "__main__":
     if "--extra" in sys.argv: extra_series(); sys.exit(0)
+    if "--summary" in sys.argv: summarize(); sys.exit(0)  # 키 없이 저장된 일별 파일로 요약·시계열 재계산
     if "--series" in sys.argv: print("series", write_series(load_days())); sys.exit(0)  # 키 없이 시계열만 재생성
     if not KEY: sys.exit("POLYGON_API_KEY 없음")
     collect(int(sys.argv[1]) if len(sys.argv) > 1 else 7); summarize(); time.sleep(13); extra_series()
