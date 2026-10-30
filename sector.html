@@ -179,7 +179,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var st = el("div", "stats");
     [[cos.length + "곳", "소속 회사"], [recent.length + "건", "최근 " + WINDOW + "일 의원 거래 신고"], [nP + " / " + nS, "구입(P) / 처분(S) 신고"], [ref || "-", "거래 신고 기준일"]].forEach(function (x) { var d = el("div"); d.append(el("b", "", x[0]), el("span", "", x[1])); st.appendChild(d); });
     head.appendChild(st);
-    var acts = el("div", "actions"); var mb = el("a", "btn", "🛰 지도에서 보기"); mb.href = "world-intelligence/?q=" + encodeURIComponent(sec.name); acts.appendChild(mb);
+    var acts = el("div", "actions"); var mb = el("a", "btn", "지도에서 보기"); mb.href = "world-intelligence/?q=" + encodeURIComponent(sec.name); acts.appendChild(mb);
     if (window.MTShare) {
       // 공유: insights.json 업종 항목 → 없으면 최근 90일 신고 건수 (하원 공시 원문 페이지)
       var sh = ins && ins.sectors ? window.MTShare.pick(ins.sectors[S]) : null;

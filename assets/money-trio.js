@@ -36,7 +36,7 @@
       (a.top_agencies || []).slice(0, 3).forEach(function (g) { al.push(g.name + " " + usd(g.usd)); });
       al.unshift(t("기간 " + aw.period[0] + " ~ " + aw.period[1], "Period " + aw.period[0] + " – " + aw.period[1]));
     }
-    var c1 = card("🏛️", t("정부 계약 의무액 (USAspending)", "Federal contract obligations (USAspending)"), a ? usd(a.total_usd) : null, al, a && a.source_url, "USAspending");
+    var c1 = card("●", t("정부 계약 의무액 (USAspending)", "Federal contract obligations (USAspending)"), a ? usd(a.total_usd) : null, al, a && a.source_url, "USAspending");
     if (a && a.top_agencies && a.top_agencies[0] && a.total_usd > 0) { var b = el("div", "bar"), i = el("i"); i.style.width = Math.min(100, a.top_agencies[0].usd / a.total_usd * 100).toFixed(0) + "%"; b.appendChild(i); c1.insertBefore(b, c1.lastChild); }
     var ll = [];
     if (l) {
@@ -45,13 +45,13 @@
       if (last) ll.push(t("가장 최근 분기 " + last + ": " + usd(l.by_quarter[last]) + " 보고됨", "Latest quarter " + last + ": " + usd(l.by_quarter[last]) + " reported"));
       if (l.top_issues && l.top_issues.length) ll.push(t("자주 나온 주제: ", "Common topics: ") + l.top_issues.slice(0, 3).map(function (x) { return x[0]; }).join(", "));
     }
-    var c2 = card("📣", t("로비 보고 (LDA)", "Lobbying reports (LDA)"), l ? usd(l.total_usd) : null, ll, l && l.source_url, "LDA");
+    var c2 = card("●", t("로비 보고 (LDA)", "Lobbying reports (LDA)"), l ? usd(l.total_usd) : null, ll, l && l.source_url, "LDA");
     var pl = [];
     if (p) {
       pl.push(t("후보 위원회에 낸 돈 " + usd(p.to_federal_candidates_usd), "Given to candidate committees " + usd(p.to_federal_candidates_usd)));
       pl.push(t("임직원이 자발적으로 모은 돈이고 회사 돈이 아니에요", "Raised voluntarily from employees, not company funds"));
     }
-    var c3 = card("🗳️", t("기업 연계 PAC (FEC)", "Company-linked PAC (FEC)"), p ? usd(p.receipts_usd) : null, pl, p && p.source_url, "FEC");
+    var c3 = card("●", t("기업 연계 PAC (FEC)", "Company-linked PAC (FEC)"), p ? usd(p.receipts_usd) : null, pl, p && p.source_url, "FEC");
     wrap.append(c1, c2, c3);
     return wrap;
   }
@@ -62,7 +62,7 @@
     return Promise.all([get("data/us/federal-awards.json"), get("data/us/lobbying.json"), get("data/us/pac-contributions.json")]).then(function (r) {
       if (!document.getElementById("mt3css")) { var s = el("style", "", CSS); s.id = "mt3css"; document.head.appendChild(s); }
       var p = el("section", "panel" + (opts.span === false ? "" : " span2"));
-      p.appendChild(el("h2", "", opts.title || t("🎮 돈 기록 3종 세트", "🎮 Money records trio")));
+      p.appendChild(el("h2", "", opts.title || t("돈 기록 3종 세트", "Money records trio")));
       p.appendChild(el("p", "note", t("같은 기간 이런 공개 기록이 있었어요. 서로 원인이라는 뜻은 아니고, 투자 조언도 아니에요.", "These public records exist for the same period. They do not mean one caused another, and this is not investment advice.")));
       p.appendChild(build(tk, r[0], r[1], r[2]));
       p.appendChild(el("p", "note", t("회사 이름이 비슷한 기록만 합쳤어요(자회사 누락·동명 법인 섞임 가능). 원문 링크로 확인하세요.", "Only records with matching company names are summed (subsidiaries may be missed). Check the source link.")));

@@ -15,10 +15,10 @@
 .visits .vx{display:block;margin-top:6px;padding-top:6px;border-top:1px solid #2a3040;color:#ffd27a;text-decoration:none;font-size:13px}.visits .vx b{color:#ffb020}.visits .vx:hover{text-decoration:underline}
 footer .visits{margin:8px 0 0;background:transparent;border:0;padding:0;font-size:12.5px;color:#9aa6b2}footer .visits .vn b{font-size:13px}`;
   document.head.append(css);
-  const THANKS = '여러분의 관심으로 세금이 절약될 수 있습니다. 감사합니다 🙏';
+  const THANKS = '여러분의 관심으로 세금이 절약될 수 있습니다. 감사합니다 ';
   const box = document.createElement('div'); box.className = 'visits';
   const X = 'https://x.com/KORROOFTOPARODY/creator-subscriptions/subscribe';
-  box.innerHTML = `<span class="vn" hidden></span><span class="vt">${THANKS}</span><a class="vx" href="${X}" target="_blank" rel="noopener">☕ 이 사이트는 <b>@청소부</b> 혼자 만들어요 · <b>월 1달러 X 구독</b>으로 응원하기 ›</a>`;
+  box.innerHTML = `<span class="vn" hidden></span><span class="vt">${THANKS}</span><a class="vx" href="${X}" target="_blank" rel="noopener">이 사이트는 <b>@청소부</b> 혼자 만들어요 · <b>월 1달러 X 구독</b>으로 응원하기 ›</a>`;
   const place = () => {
     if (page === 'home') {
       const top = document.getElementById('mytop'), main = document.querySelector('main');
@@ -37,7 +37,7 @@ footer .visits{margin:8px 0 0;background:transparent;border:0;padding:0;font-siz
   const get = (q) => fetch(GC + '/counter/TOTAL.json' + q, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   const show = (today, total) => {
     const vn = box.querySelector('.vn'); if (!today && !total) return;
-    vn.innerHTML = '👀 ' + [today ? `오늘 <b>${today.toLocaleString('ko-KR')}</b>명` : '', total ? `지금까지 <b>${total.toLocaleString('ko-KR')}</b>명` : ''].filter(Boolean).join(' · ');
+    vn.innerHTML = '● ' + [today ? `오늘 <b>${today.toLocaleString('ko-KR')}</b>명` : '', total ? `지금까지 <b>${total.toLocaleString('ko-KR')}</b>명` : ''].filter(Boolean).join(' · ');
     vn.hidden = false;
   };
   let cached = null;

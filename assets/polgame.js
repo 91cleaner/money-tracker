@@ -145,7 +145,7 @@
   let typer = 0;
   const type = (t) => { clearInterval(typer); if (RM) { say.textContent = '> ' + t; return; } let i = 0; say.textContent = '> '; typer = setInterval(() => { say.textContent = '> ' + t.slice(0, ++i) + (i < t.length ? '▌' : ''); if (i >= t.length) clearInterval(typer); }, 22); };
 
-  // ── 소리(Web Audio로 직접 만든 효과음, 파일 없음). 처음 누를 때부터 켜지고, 🔊 버튼으로 끌 수 있다 ──
+  // ── 소리(Web Audio로 직접 만든 효과음, 파일 없음). 처음 누를 때부터 켜지고, 버튼으로 끌 수 있다 ──
   const SFX = (() => {
     let ac = null, muted = false;
     try { muted = localStorage.getItem('mt.pg.mute') === '1'; } catch (e) { /* 무시 */ }
@@ -726,7 +726,7 @@
       stopRadar(); gFx.clearLayers();
       const fl = people.filter((m) => FOL[m.id]);
       file.innerHTML = fileHead('찾기') + `<input class="q" type="search" placeholder="이름·동네·정당 (예: 분당, 동작구)" aria-label="의원 찾기" autocomplete="off">
-        <button type="button" class="allb gps" style="margin:0 0 6px">📍 내 위치로 우리 동네 의원 찾기</button><div class="res"></div>
+        <button type="button" class="allb gps" style="margin:0 0 6px">내 위치로 우리 동네 의원 찾기</button><div class="res"></div>
         ${fl.length ? `<div class="ph2">★ 팔로우</div>` + fl.map((m) => row(m)).join('') : ''}`;
       file.classList.add('on'); bindX();
       const q = file.querySelector('.q'), res = file.querySelector('.res');
@@ -740,7 +740,7 @@
           if (!loc.length) { bt.textContent = '위치 자료가 없어요'; return; }
           const best = Math.min(...loc.map((m) => d2(pos[m.id])));
           const near = loc.filter((m) => d2(pos[m.id]) <= best + 0.0004).slice(0, 8);
-          bt.textContent = '📍 내 근처 지역구 의원 (대략)';
+          bt.textContent = '내 근처 지역구 의원 (대략)';
           res.innerHTML = near.map((m) => row(m, statOf(m).n ? '✈ ' + statOf(m).n : '')).join('') + '<div class="fine">위치는 이 기기 안에서만 쓰고 저장하지 않아요. 지역구 중심과의 거리로 고른 대략값이라, 갑·을이 나뉜 곳은 여러 명이 나와요.</div>';
           bindRows(); if (near.length === 1) open(near[0]); else { reticle(LL[near[0].id]); map.flyTo(LL[near[0].id], 9, { duration: RM ? 0 : 0.9 }); }
           SFX.lock(); type(`우리 동네 의원 ${near.length}명 포착`);

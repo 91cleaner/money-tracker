@@ -327,8 +327,8 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       p.appendChild(el("p", "say", L("최근 " + days + "일, 같은 기간에 임원·이사 등이 주식을 산 신고 " + buys.length + "건, 판 신고 " + sells.length + "건이 있었어요.",
         "In the last " + days + " days, insiders filed " + buys.length + " buy reports and " + sells.length + " sell reports.")));
       var big = el("div", "big"), b = el("div", "b"), s2 = el("div", "s");
-      b.appendChild(el("b", "", String(ppl(buys)))); b.appendChild(el("span", "", L("🟢 산 사람", "🟢 People who bought")));
-      s2.appendChild(el("b", "", String(ppl(sells)))); s2.appendChild(el("span", "", L("🔴 판 사람", "🔴 People who sold")));
+      b.appendChild(el("b", "", String(ppl(buys)))); b.appendChild(el("span", "", L("산 사람", "People who bought")));
+      s2.appendChild(el("b", "", String(ppl(sells)))); s2.appendChild(el("span", "", L("판 사람", "People who sold")));
       big.appendChild(b); big.appendChild(s2); p.appendChild(big);
       var vb = val(buys), vs = val(sells), tot = vb + vs;
       if (tot > 0) {
@@ -369,20 +369,20 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   function ago(iso) { var n = days(iso, new Date().toISOString().slice(0, 10)); return n == null ? "" : n <= 0 ? L("오늘", "today") : L(n + "일 전", n + " days ago"); }
   function addrLines(a) { if (!a) return null; return [a.street1, a.street2, [a.city, a.state].filter(Boolean).join(", ") + (a.zip ? " " + a.zip : "")].filter(function (x) { return x && x.trim(); }).join("\n"); }
   function filingsBlock(sf, trades) {
-    var p = panel(L("📬 회사가 낸 공시 · 본사 주소", "📬 Filings & headquarters"), null, true);
+    var p = panel(L("회사가 낸 공시 · 본사 주소", "Filings & headquarters"), null, true);
     if (!sf) { p.appendChild(el("div", "empty", L("공시 자료를 아직 못 가져왔어요. 조금 뒤에 다시 와 주세요!", "Filing data is not ready yet. Please check back soon!"))); return p; }
     var k8 = sf.k8 || [], k10 = sf.k10 || [], today = new Date().toISOString().slice(0, 10);
     var in90 = k8.filter(function (x) { var n = days(x.filed, today); return n != null && n <= 90; }).length;
     var tr90 = trades.filter(function (x) { var n = days(x.filed, today); return n != null && n >= 0 && n <= 90; }).length;
     var sc = el("div", "score");
-    [[k10.length, L("📘 연간 보고서(10-K) 스탬프", "📘 Annual reports (10-K)")], [k8.length, L("📣 수시 공시(8-K) 스탬프", "📣 Current reports (8-K)")], [in90, L("🔥 최근 90일 8-K", "🔥 8-Ks in last 90 days")]].forEach(function (c) {
+    [[k10.length, L("연간 보고서(10-K) 스탬프", "Annual reports (10-K)")], [k8.length, L("수시 공시(8-K) 스탬프", "Current reports (8-K)")], [in90, L("최근 90일 8-K", "8-Ks in last 90 days")]].forEach(function (c) {
       var d = el("div"); d.append(el("b", "", String(c[0])), el("span", "", c[1])); sc.appendChild(d);
     });
     p.appendChild(sc);
     p.appendChild(el("p", "note", L("같은 기간에 이런 일이 있었어요: 최근 90일 동안 8-K " + in90 + "장, 의원 거래 신고 " + tr90 + "건. 서로 이어진 일이라는 뜻은 아니에요.", "In the same 90 days: " + in90 + " 8-K filings and " + tr90 + " lawmaker trade reports. This does not mean they are connected.")));
     var hq = addrLines(sf.hq);
     var h = el("div"); h.style.margin = "12px 0";
-    h.appendChild(el("h2", "", L("🏢 본사(사업장) 주소", "🏢 Headquarters (business address)")));
+    h.appendChild(el("h2", "", L("본사(사업장) 주소", "Headquarters (business address)")));
     var ad = el("div", "hq", hq || L("주소가 없어요", "No address on file")); ad.style.whiteSpace = "pre-line"; h.appendChild(ad);
     h.appendChild(el("p", "note", L("SEC에 낸 사업장 주소 그대로예요. 우편 주소와 다를 수 있어요.", "Business address exactly as filed with the SEC. It may differ from the mailing address.")));
     p.appendChild(h);
@@ -400,8 +400,8 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       });
       box.appendChild(ul); p.appendChild(box);
     }
-    list(L("📘 연간 보고서 10-K · 1년에 한 번 내는 큰 보고서", "📘 10-K · the big yearly report"), k10, "", L("연간 보고서", "Annual report"), false);
-    list(L("📣 수시 공시 8-K · 중요한 일이 생기면 바로 내는 알림", "📣 8-K · quick notice when something important happens"), k8, "k8", "", true);
+    list(L("연간 보고서 10-K · 1년에 한 번 내는 큰 보고서", "10-K · the big yearly report"), k10, "", L("연간 보고서", "Annual report"), false);
+    list(L("수시 공시 8-K · 중요한 일이 생기면 바로 내는 알림", "8-K · quick notice when something important happens"), k8, "k8", "", true);
     var a = el("div", "actions"); var b = link(L("SEC에서 전체 목록 보기 ↗", "All filings on SEC ↗"), sf.source_url); b.className = "btn"; a.appendChild(b); p.appendChild(a);
     return p;
   }
@@ -442,7 +442,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       meta.appendChild(link("SEC 원문 ↗", sec.source_url));
     } else meta.textContent = "SEC 업종 정보 없음";
     head.appendChild(meta);
-    var acts = el("div", "actions"), mapBtn = el("a", "btn", "🛰 지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(T); acts.appendChild(mapBtn);
+    var acts = el("div", "actions"), mapBtn = el("a", "btn", "지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(T); acts.appendChild(mapBtn);
     if (window.MTShare) {
       // 공유: insights.json 핵심 1줄 → 없으면 신고 건수 → 없으면 SEC 업종 (모두 원문 링크와 함께)
       var coName = (ent && nmOf(ent)) || (sec && sec.name) || T, sh = ins && ins.companies ? window.MTShare.pick(ins.companies[T]) : null;
@@ -455,7 +455,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     head.appendChild(acts);
     app.appendChild(head);
     app.appendChild(filingsBlock((sfAll.companies || {})[T], trades));
-    if (window.MTMoneyTrio) { var trioHost = el("div"); trioHost.style.gridColumn = "1 / -1"; app.appendChild(trioHost); window.MTMoneyTrio.render(trioHost, T, { title: "🎮 돈 기록 3종 세트 · " + T }); }
+    if (window.MTMoneyTrio) { var trioHost = el("div"); trioHost.style.gridColumn = "1 / -1"; app.appendChild(trioHost); window.MTMoneyTrio.render(trioHost, T, { title: "돈 기록 3종 세트 · " + T }); }
 
     // 2) prices
     var pins = [];
