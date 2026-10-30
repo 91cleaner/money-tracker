@@ -56,7 +56,7 @@ def main():
             hit = [b for b in allb.values() if rx.search(b["n"]) and not NOISE.search(b["n"])]
             hit.sort(key=lambda b: (b["sp"] in traders.get(s, set()), b["d"]), reverse=True)
             if hit:
-                o["bills"] = [{"no": b["no"], "n": b["n"], "d": b["d"], "sp": b["sp"], "tr": b["sp"] in traders.get(s, set()), "u": b["u"], "a": b.get("a", "")} for b in hit[:5]]
+                o["bills"] = [{"no": b["no"], "n": b["n"], "d": b["d"], "sp": b["sp"], "tr": b["sp"] in traders.get(s, set()), "u": b["u"], "a": b.get("a", ""), "ad": b.get("ad", "")} for b in hit[:5]]
         f = f4.get(s)
         if f is not None:
             o["f4"] = {"filings": f.get("filings", 0), "trades": len(f.get("trades", [])), "url": f.get("source_url")}
@@ -81,11 +81,39 @@ def main():
         m = mm.get(t.get("id")) or {}
         tt.setdefault(k, []).append({"who": t.get("who"), "id": t.get("id"), "p": (m.get("party") or "")[:1], "ch": t.get("c"), "d": d, "f": f,
                                      "ty": t.get("ty"), "amt": t.get("amt"), "doc": t.get("doc"), "late": (D(f) - D(d)).days, "ll": m.get("ll")})
+    # Unusual-trade tags (facts only): first in this ticker for the member, near a matched bill action, filed after 45 days, within 30 days before an 8-K.
+    first_any = {}
+    for t in tr:
+        d = t.get("d") or ""
+        if re.match(r"\d{4}-\d{2}-\d{2}$", d) and d <= (t.get("filed") or ""):
+            first_any[t.get("who")] = min(first_any.get(t.get("who"), d), d)
     for k, v in tt.items():
+        k8 = sorted(x["filed"] for x in (sec.get(k) or {}).get("k8", []))
+        bl = (out.get(k) or {}).get("bills") or []
+        firsts = {}
+        for r in sorted(v, key=lambda r: r["d"]):
+            firsts.setdefault(r["who"], r["d"])
+        for r in v:
+            tg = []
+            if firsts[r["who"]] == r["d"] and (D(r["d"]) - D(first_any.get(r["who"], r["d"]))).days >= 90:
+                tg.append({"t": "first"})
+            for b in bl:
+                for bd in {b.get("d"), b.get("ad")} - {None, ""}:
+                    if abs((D(bd) - D(r["d"])).days) <= 30:
+                        tg.append({"t": "bill", "no": b["no"], "bd": bd, "n": (D(bd) - D(r["d"])).days}); break
+                if tg and tg[-1]["t"] == "bill":
+                    break
+            if r["late"] > 45:
+                tg.append({"t": "late"})
+            nx = next((x for x in k8 if r["d"] < x and (D(x) - D(r["d"])).days <= 30), None)
+            if nx:
+                tg.append({"t": "8k", "kd": nx, "n": (D(nx) - D(r["d"])).days})
+            if tg:
+                r["tags"] = tg
         v.sort(key=lambda r: (r["f"], r["d"]), reverse=True)
         out.setdefault(k, {})["trades"] = v
     tdoc = {"note": "House and Senate periodic transaction reports. late = days from transaction date to report filed date; the STOCK Act deadline is 45 days.",
-            "range": rng, "tickers": {k: v["trades"] for k, v in out.items() if v.get("trades")}}
+            "range": rng, "tags_note": "first = first trade in this ticker by this member in our data range, member already reporting other trades 90+ days earlier; bill = within 30 days of the introduction or latest action date of a title-keyword-matched bill; late = filed more than 45 days after the trade; 8k = an 8-K was filed within 30 days after the trade.", "tickers": {k: v["trades"] for k, v in out.items() if v.get("trades")}}
     json.dump(tdoc, open(os.path.join(ROOT, "world-intelligence", "ticker-trades.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     for v in out.values():
         v.pop("trades", None)

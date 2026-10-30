@@ -10,7 +10,7 @@
   const lc = n => n > 45 ? 'r' : n > 30 ? 'o' : '';
   const party = p => p === 'R' ? '#ff5c5c' : p === 'D' ? '#5ca8ff' : '#bbb';
   const css = document.createElement('style'); css.textContent = `
-.mtLate{display:inline-block;margin-left:4px;padding:0 4px;border-radius:3px;font:700 10px ui-monospace,monospace;background:#1d3a2c;color:#d8f5e3}.mtLate.o{background:#ff9f0a;color:#111}.mtLate.r{background:#ff453a;color:#fff}
+.mtTag{display:inline-block;margin:1px 3px 1px 0;padding:0 4px;border:1px solid #ffd60a;border-radius:3px;font:600 10px ui-monospace,monospace;color:#ffd60a}.mtFlag .d{box-shadow:0 0 0 3px #ffd60a!important}#mtPlus .row.flag{border-color:#ffd60a}.mtLate{display:inline-block;margin-left:4px;padding:0 4px;border-radius:3px;font:700 10px ui-monospace,monospace;background:#1d3a2c;color:#d8f5e3}.mtLate.o{background:#ff9f0a;color:#111}.mtLate.r{background:#ff453a;color:#fff}
 #mtPlus{margin:6px 0 8px;font:13px/1.45 system-ui,sans-serif;color:#d8f5e3}#mtPlus h4{margin:8px 0 3px;font:700 11px ui-monospace,monospace;letter-spacing:.06em;color:#68c7d0;text-transform:uppercase}
 #mtPlus .row{display:flex;gap:6px;align-items:center;justify-content:space-between;padding:4px 6px;border:1px solid #24493b;border-radius:4px;margin:2px 0;background:#0b1d16;cursor:pointer}#mtPlus .row:hover{border-color:#5dff9e}
 #mtPlus .pp{display:inline-block;width:16px;text-align:center;border-radius:3px;font:700 10px ui-monospace,monospace;color:#111;margin-right:4px}#mtPlus small{color:#8fa89a}`;
@@ -22,7 +22,7 @@
   function decorateDots() {
     if (!S.rows) return; const W = perWho(S.rows);
     document.querySelectorAll('.leaflet-marker-pane .leaflet-marker-icon[title]').forEach(el => {
-      const r = W[el.getAttribute('title')]; const n = el.querySelector('.n'); if (!r || !n || n.querySelector('.mtLate')) return; n.insertAdjacentHTML('beforeend', lateTag(r));
+      const r = W[el.getAttribute('title')]; const n = el.querySelector('.n'); if (!r || !n || n.querySelector('.mtLate')) return; n.insertAdjacentHTML('beforeend', lateTag(r)); if (S.rows.some(x => x.who === r.who && x.tags)) { el.classList.add('mtFlag'); const t = (S.rows.find(x => x.who === r.who && x.tags).tags[0]); n.insertAdjacentHTML('beforeend', `<span class="mtTag">${esc(tagShort(t))}</span>`); }
     });
   }
   function decorateCard() {
@@ -30,15 +30,32 @@
     const k = c.querySelector('.k'), h = c.querySelector('.h'); if (!k || !h || !/PTR/.test(k.textContent)) return;
     const mine = S.rows.filter(r => r.who === h.textContent.trim()); if (!mine.length) return; const E = en();
     const d = document.createElement('div'); d.className = 'mtLateLine r'; d.style.cssText = 'margin-top:4px;font:12px ui-monospace,monospace';
-    d.innerHTML = mine.slice(0, 3).map(r => `${E ? 'Traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}`).join('<br>');
+    d.innerHTML = mine.slice(0, 3).map(r => `${E ? 'Traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}` + (r.tags ? '<div style="font:11px/1.4 system-ui,sans-serif;color:#ffd60a">' + r.tags.map(g => esc(tagText(g))).join('<br>') + '</div>' : '')).join('<br>'); if (mine.some(r => r.tags)) c.parentNode.style.outline = '2px solid #ffd60a';
     k.parentNode.insertBefore(d, k.nextSibling.nextSibling || null);
   }
+  // Unusual-trade tags (computed in build_ticker_extra.py; dates only, no causal wording).
+  function tagText(g) { const E = en(), rg = S.range ? md(S.range[0]) : '';
+    if (g.t === 'first') return E ? `First trade in this ticker by this member in our data (since ${rg})` : `우리 자료(${rg}~)에서 이 의원의 이 종목 첫 거래`;
+    if (g.t === 'bill') return E ? `Within 30 days of a related bill action (${g.no}, ${md(g.bd)}, ${Math.abs(g.n)} days ${g.n >= 0 ? 'after' : 'before'} the trade)` : `관련 법안 일정 30일 이내 (${g.no}, ${g.bd}, 거래 ${Math.abs(g.n)}일 ${g.n >= 0 ? '후' : '전'})`;
+    if (g.t === 'late') return E ? 'Filed after 45 days' : '45일 지나 신고';
+    if (g.t === '8k') return E ? `Within 30 days before an 8-K (filed ${md(g.kd)}, ${g.n} days later)` : `8-K 제출 30일 이내 전 거래 (${g.kd}, ${g.n}일 뒤)`;
+    return ''; }
+  const tagShort = g => { const E = en(); return { first: E ? 'First in data' : '첫 거래', bill: E ? 'Bill within 30d' : '법안 30일', late: E ? 'Filed >45d' : '45일 초과', '8k': E ? '8-K within 30d' : '8-K 30일' }[g.t] || ''; };
+  const tagChips = r => (r.tags || []).map(g => `<span class="mtTag" title="${esc(tagText(g))}">${esc(tagShort(g))}</span>`).join('');
   const SECTIONS = []; S.sections = SECTIONS;
   SECTIONS.push(rows => { // Latest filers top 5
     const E = en(), seen = new Set(), top = rows.filter(r => !seen.has(r.who) && seen.add(r.who)).slice(0, 5); if (!top.length) return null;
     const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Latest filers' : '최근 신고 의원'}</h4>`;
-    top.forEach(r => { const b = document.createElement('div'); b.className = 'row'; b.innerHTML = `<span><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)}</span><small>${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}</small>`;
+    top.forEach(r => { const b = document.createElement('div'); b.className = 'row' + (r.tags ? ' flag' : ''); b.innerHTML = `<span><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)}</span><small>${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}<br>${tagChips(r)}</small>`;
       b.onclick = () => { const m = window.moneyTrackerMap; if (m && r.ll) m.flyTo(r.ll, Math.max(m.getZoom(), 5), { duration: .9 }); }; box.append(b); });
+    return box;
+  });
+  SECTIONS.push(rows => { // Flagged trades
+    const E = en(), fl = rows.filter(r => r.tags).slice(0, 6); if (!fl.length) return null;
+    const box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Flagged trades' : '표시된 거래'} <small>(${fl.length}/${rows.filter(r => r.tags).length})</small></h4>`;
+    fl.forEach(r => { const b = document.createElement('div'); b.className = 'row flag'; b.style.display = 'block'; b.innerHTML = `<div><span class="pp" style="background:${party(r.p)}">${esc(r.p || '?')}</span>${esc(r.who)} · ${r.ty === 'P' ? (E ? 'buy' : '매수') : r.ty === 'S' ? (E ? 'sell' : '매도') : esc(r.ty)} · ${esc(md(r.d))}</div><div style="font-size:11.5px;color:#ffd60a">${r.tags.map(g => esc(tagText(g))).join('<br>')}</div>`;
+      b.onclick = () => { const m = window.moneyTrackerMap; if (m && r.ll) m.flyTo(r.ll, Math.max(m.getZoom(), 5), { duration: .9 }); }; box.append(b); });
+    const n = document.createElement('small'); n.textContent = E ? 'Tags are date checks on public filings; they do not show a reason.' : '표시는 공개 신고 날짜 비교일 뿐 이유를 뜻하지 않아요.'; box.append(n);
     return box;
   });
   let busy = false;
