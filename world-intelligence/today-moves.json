@@ -1,0 +1,40 @@
+{
+  "updated": "2026-10-30",
+  "note": "Closes are regular-session closes. Oct 28 close from Polygon.io daily bars; Oct 29 close from the exchange regular-session close (Polygon daily bar for Oct 29 not yet published on our plan). Trades are those reported in the 30 days before each 8-K. House PTR amounts are reported ranges. Dots are approximate district locations.",
+  "tickers": {
+    "GOOGL": {
+      "name": "Alphabet", "also": ["GOOG"], "hq": [37.3861, -122.0839], "hqName": "Mountain View, CA",
+      "move": {"date": "2026-10-29", "prevDate": "2026-10-28", "prev": 324.89, "close": 283.82, "pct": -12.64, "extra": "GOOG (Class C): $321.89 to $282.32, -12.29%"},
+      "filing": {"form": "8-K", "item": "Item 2.02 (results of operations)", "filed": "2026-10-28 4:01 PM ET, after the close", "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/goog-20261028.htm"},
+      "window": ["2026-09-28", "2026-10-28"],
+      "trades": [
+        {"who": "Pete Sessions", "p": "R", "dist": "TX-17", "ll": [31.257, -96.031], "side": "SELL", "sym": "GOOG", "amt": "$100,001 - $250,000", "d": "2026-10-02", "owner": "Spouse (Trust One)", "days": 26, "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"},
+        {"who": "Michael Rulli", "p": "R", "dist": "OH-6", "ll": [40.251, -81.104], "side": "SELL", "sym": "GOOG", "amt": "$50,001 - $100,000", "d": "2026-10-16", "owner": "Own Roth IRA", "days": 12, "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035671.pdf"}
+      ],
+      "insiders": [
+        {"who": "Frances Arnold", "role": "Director", "side": "SELL", "sym": "GOOG", "shares": 83, "price": 340.45, "d": "2026-09-30", "doc": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526412669/xslF345X06/ownership.xml"}
+      ]
+    },
+    "AMZN": {
+      "name": "Amazon", "hq": [47.6062, -122.3321], "hqName": "Seattle, WA",
+      "move": {"date": "2026-10-29", "prevDate": "2026-10-28", "prev": 254.60, "close": 243.79, "pct": -4.25},
+      "filing": {"form": "8-K", "item": "Item 2.02 (results of operations)", "filed": "2026-10-29 4:05 PM ET, after the close", "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20261029.htm"},
+      "window": ["2026-09-29", "2026-10-29"],
+      "trades": [
+        {"who": "Pete Sessions", "p": "R", "dist": "TX-17", "ll": [31.257, -96.031], "side": "SELL", "sym": "AMZN", "amt": "$100,001 - $250,000", "d": "2026-10-02", "owner": "Spouse (Trust One)", "days": 27, "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"},
+        {"who": "Pete Sessions", "p": "R", "dist": "TX-17", "ll": [31.257, -96.031], "side": "SELL", "sym": "AMZN", "amt": "$15,001 - $50,000", "d": "2026-10-27", "owner": "Owner field blank", "days": 2, "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"}
+      ],
+      "insiders": [
+        {"who": "Douglas Herrington", "role": "CEO Worldwide Amazon Stores", "side": "SELL", "sym": "AMZN", "shares": 1000, "price": 251.50, "d": "2026-10-01", "doc": "https://www.sec.gov/Archives/edgar/data/1018724/000193600626000026/xslF345X06/wk-form4_1791230893.xml"}
+      ]
+    },
+    "INTC": {
+      "name": "Intel", "hq": [37.3541, -121.9552], "hqName": "Santa Clara, CA",
+      "move": {"date": "2026-10-29", "prevDate": "2026-10-28", "prev": 95.53, "close": 92.07, "pct": -3.62},
+      "filing": {"form": "8-K", "item": "Item 2.02 (results of operations)", "filed": "2026-10-29 4:08 PM ET, after the close", "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/intc-20261029.htm"},
+      "window": ["2026-09-29", "2026-10-29"],
+      "trades": [],
+      "insiders": []
+    }
+  }
+}

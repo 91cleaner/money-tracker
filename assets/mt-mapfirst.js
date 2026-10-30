@@ -8,7 +8,11 @@
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const KIND = { supply: ['Plant or HQ', '공장·본사', 'Plants or HQs'], lobby: ['Lobbying filing', '로비 공시'], award: ['Federal contract', '연방 계약'], insider: ['Insider trades (Form 4)', '임원 거래(Form 4)'], recall: ['Recall record', '리콜 기록'], assist: ['Grant or loan', '보조금·대출'], bill: ['Bill', '법안'], cmte: ['Committee', '위원회'], trade: ['Lawmaker trades', '의원 거래'], pac: ['Political donations', '정치 후원'], reg: ['Trade rule', '무역 규제'], prior: ['Trades before a filing', '발표 전 거래'], wh: ['White House', '백악관'], other: ['Public record', '공개 기록'] };
   const kindOf = t => { const r = String(t.ref || ''); if (t.kind && KIND[t.kind]) return t.kind; if (r.startsWith('facility:')) return 'supply'; if (r.startsWith('awards:')) return 'award'; if (r.startsWith('lobbying:')) return 'lobby'; if (r.startsWith('pac:')) return 'pac'; if (r.startsWith('committee:')) return 'cmte'; if (r.startsWith('trade')) return 'trade'; return 'other'; };
-  let TM = null, layer = null, cur = null, popup = null, SUM = null;
+  let TM = null, TD = null, layer = null, cur = null, popup = null, SUM = null;
+  const getTD = () => TD || (TD = fetch('./today-moves.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null));
+  const tdFor = (d, sym) => { if (!d || !d.tickers || !sym) return null; if (d.tickers[sym]) return [sym, d.tickers[sym]]; for (const [k, v] of Object.entries(d.tickers)) if ((v.also || []).includes(sym)) return [k, v]; return null; };
+  const money = n => '$' + Number(n).toFixed(2);
+  const md = d => { const [y, m, dd] = String(d).split('-'); return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m - 1] + ' ' + (+dd); };
   const getTM = () => TM || (TM = fetch('../data/us/ticker-members.json').then(r => r.ok ? r.json() : null).catch(() => null));
   const css = document.createElement('style');
   css.textContent = `
@@ -25,6 +29,9 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
 .leaflet-popup.mtMF .leaflet-popup-content{width:min(240px,70vw)!important;margin:9px 11px;font:12.5px/1.5 system-ui,-apple-system,sans-serif}
 .mtMF .k{font:600 10px/1.4 ui-monospace,monospace;letter-spacing:1px;color:#68c7d0;text-transform:uppercase}.mtMF .h{font-weight:700;color:#ffd60a;margin:2px 0}
 .mtMF .r{font:12px ui-monospace,monospace;color:#d8f5e3}.mtMF .r b{color:${OR}}.mtMF .s{font-size:10.5px;color:#8fa89a;margin-top:4px}.mtMF a{color:#9effc0}
+#mtToday{position:fixed;left:50%;top:64px;transform:translateX(-50%);z-index:1200;max-width:min(860px,94vw);background:rgba(8,14,11,.92);border:1px solid rgba(255,159,10,.55);border-radius:6px;padding:8px 14px;font:600 13px/1.45 system-ui,-apple-system,sans-serif;color:#f2efe9;box-shadow:0 6px 24px rgba(0,0,0,.5);animation:mtMFfade .5s ease-out both;pointer-events:auto}
+#mtToday .t{font:700 15px ui-monospace,monospace;color:#ffd60a;margin-right:8px}#mtToday .dn{color:#ff6b5e}#mtToday .up{color:#5fd38a}#mtToday .m{color:#8fa89a;font-weight:500;font-size:11.5px}#mtToday a{color:#9effc0}
+.mtMFdot.dim{opacity:.35}
 @media (prefers-reduced-motion:reduce){.mtMFdot .d,.mtMFdot .n,.mtMFstop{animation:none}}`;
   document.head.append(css);
 
@@ -46,6 +53,27 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     return `<div class="k">${esc(sym)} · House PTR</div><div class="h">${esc(m.name)}</div><div>${pn} · ${esc(m.dist)}</div>${rows}` +
       `<div class="s"><a href="${esc(m.last[0].doc)}" target="_blank" rel="noopener noreferrer">PTR filing ›</a> · ${E ? 'Amounts are reported ranges. Dot is an approximate district location.' : '금액은 신고 구간. 점은 지역구 대략 위치.'}</div>`;
   }
+  function todayCard(k, t) {
+    const mv = t.move, f = t.filing;
+    const ins = (t.insiders || []).map(i => `<div class="r"><b>${i.side}</b> ${esc(i.who)} (${esc(i.role)}) ${i.shares.toLocaleString('en-US')} ${esc(i.sym)} @ ${money(i.price)} · ${esc(i.d)} <a href="${esc(i.doc)}" target="_blank" rel="noopener noreferrer">Form 4 ›</a></div>`).join('');
+    return `<div class="k">${esc(k)} · ${esc(t.hqName)}</div><div class="h">${esc(t.name)} ${esc(f.form)}</div><div>${esc(f.item)}, filed ${esc(f.filed)}</div>` +
+      `<div class="r">${md(mv.date)} close <b>${money(mv.close)}</b> (${mv.pct > 0 ? '+' : ''}${mv.pct.toFixed(2)}% vs ${money(mv.prev)})</div>` +
+      (mv.extra ? `<div class="s">${esc(mv.extra)}</div>` : '') +
+      `<div class="s">Form 4 open-market trades, ${md(t.window[0])} to ${md(t.window[1])}:</div>${ins || '<div class="r">None found</div>'}` +
+      `<div class="s"><a href="${esc(f.url)}" target="_blank" rel="noopener noreferrer">8-K filing ›</a></div>`;
+  }
+  function todayMemberCard(x, k, t) {
+    const pn = x.p === 'R' ? 'Republican' : 'Democrat';
+    return `<div class="k">${esc(k)} · House PTR</div><div class="h">${esc(x.who)}</div><div>${pn} · ${esc(x.dist)}</div>` +
+      x.rows.map(r => `<div class="r"><b>${r.side}</b> ${esc(r.sym)} ${esc(r.amt)} · ${esc(r.d)}</div><div class="s">${esc(r.owner)} · ${r.days} days before the ${esc(t.filing.form)}</div>`).join('') +
+      `<div class="s"><a href="${esc(x.rows[0].doc)}" target="_blank" rel="noopener noreferrer">PTR filing ›</a> · Amounts are reported ranges. Dot is an approximate district location.</div>`;
+  }
+  function strip(k, t) {
+    let el = $('mtToday'); if (!el) { el = document.createElement('div'); el.id = 'mtToday'; document.body.append(el); }
+    const mv = t.move, n = t.trades.length, ni = (t.insiders || []).length;
+    el.innerHTML = `<span class="t">${esc(k)}</span>${md(mv.date)} close ${money(mv.close)} <span class="${mv.pct < 0 ? 'dn' : 'up'}">${mv.pct > 0 ? '+' : ''}${mv.pct.toFixed(2)}%</span> · ${esc(t.filing.form)} ${esc(t.filing.item.split(' (')[0])} filed ${md(t.filing.filed.slice(0, 10))}` +
+      `<br><span class="m">30 days before the ${esc(t.filing.form)}: ${n} House PTR trade${n === 1 ? '' : 's'}, ${ni} Form 4 open-market trade${ni === 1 ? '' : 's'}. Public records. <a href="${esc(t.filing.url)}" target="_blank" rel="noopener noreferrer">8-K ›</a></span>`;
+  }
   function lab(k, n) { const K = KIND[k]; if (!en()) return K[1]; let w = n > 1 ? (K[2] || (/s$|\)$/.test(K[0]) ? K[0] : K[0] + 's')) : K[0]; return w.charAt(0).toLowerCase() + w.slice(1); }
   function declutter() {
     const ls = [...document.querySelectorAll('.leaflet-marker-icon.mtMFdot .n')]; if (!ls.length) return;
@@ -61,7 +89,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     });
   }
   function paint(again) { if (!SUM) return; if (!again) [60, 700].forEach(ms => setTimeout(() => paint(1), ms)); const bt = $('briefText'), ti = $('briefTitle'); if (ti) ti.textContent = SUM[0]; if (bt) { bt._tok = {}; bt._mt = {}; bt._mtDone = null; bt._dc = null; bt.textContent = SUM[1]; bt.style.whiteSpace = 'pre-line' } }
-  function clear() { SUM = null; const map = window.moneyTrackerMap; if (layer) map.removeLayer(layer); layer = null; cur = null; if (popup) { map.removeLayer(popup); popup = null } document.body.classList.remove('mt-mapfirst'); }
+  function clear() { SUM = null; const st = $('mtToday'); if (st) st.remove(); const map = window.moneyTrackerMap; if (layer) map.removeLayer(layer); layer = null; cur = null; if (popup) { map.removeLayer(popup); popup = null } document.body.classList.remove('mt-mapfirst'); }
 
   async function setup(m) {
     const map = window.moneyTrackerMap, E = en(); clear(); cur = m; document.body.classList.add('mt-mapfirst');
@@ -76,7 +104,28 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     const sym = /^company:/.test(m.ticker) ? m.ticker.slice(8).toUpperCase() : '';
     let tm = null;
     if (sym) { const d = await getTM(); if (cur !== m) return; tm = d && d.tickers && d.tickers[sym]; }
-    const shown = tm ? tm.members : [];
+    let shown = tm ? tm.members : [];
+    const tdd = sym && en() ? tdFor(await getTD(), sym) : null; if (cur !== m) return;
+    if (tdd) {
+      const [k, t] = tdd, by = {};
+      t.trades.forEach(r => { (by[r.who] = by[r.who] || { who: r.who, p: r.p, dist: r.dist, ll: r.ll, rows: [] }).rows.push(r) });
+      const hm = L.marker(t.hq, { icon: L.divIcon({ className: '', html: '<div class="mtMFstop" style="width:18px;height:18px;margin:-9px 0 0 -9px"></div>', iconSize: [0, 0] }), title: t.name + ' 8-K', zIndexOffset: 600 });
+      hm.on('click', e => { L.DomEvent.stop(e); card(todayCard(k, t), t.hq) }); hm.addTo(layer); pts.push(t.hq);
+      Object.values(by).forEach((x, j) => {
+        const c = x.p === 'R' ? RED : BLU, delay = 300 + j * 260, sides = [...new Set(x.rows.map(r => r.side))].join('/');
+        L.polyline([x.ll, t.hq], { color: OR, weight: 2, opacity: .85, dashArray: '6 5', interactive: false }).addTo(layer);
+        const html = `<div class="mtMFdot"><div class="d" style="background:${c};animation-delay:${delay}ms"></div><div class="n" style="animation-delay:${delay + 120}ms"><span class="b" style="background:${c}">${x.p}</span><span class="b" style="background:${OR};color:#111">${sides}</span>${esc(x.who.split(' ').slice(-1)[0])} · ${x.rows.length} ${x.rows.length === 1 ? 'trade' : 'trades'}</div></div>`;
+        const mk = L.marker(x.ll, { icon: L.divIcon({ className: 'mtMFdot', html, iconSize: [0, 0] }), title: x.who, zIndexOffset: 500 });
+        mk.on('click', e => { L.DomEvent.stop(e); card(todayMemberCard(x, k, t), x.ll) }); mk.addTo(layer); pts.push(x.ll);
+      });
+      strip(k, t);
+      const n = t.trades.length;
+      SUM = ['◉ ' + t.name + ' (' + k + ')', [`${md(t.move.date)} close ${money(t.move.close)}, ${t.move.pct.toFixed(2)}% vs ${md(t.move.prevDate)}.`, `${t.filing.form} ${t.filing.item}, filed ${t.filing.filed}.`, n ? `${n} House PTR trade${n === 1 ? '' : 's'} in the 30 days before the ${t.filing.form}. Orange lines join each lawmaker to the company HQ.` : `No House PTR trades found in the 30 days before the ${t.filing.form}.`, 'Click or tap a dot for a short card.'].join('\n')]; paint();
+      if (!n) setTimeout(() => card(todayCard(k, t), t.hq), 1500);
+      const b = L.latLngBounds(pts.length > 1 ? pts : [t.hq, [t.hq[0] + 4, t.hq[1] + 6], [t.hq[0] - 4, t.hq[1] - 2]]).pad(.25);
+      map.flyToBounds(b, { duration: 1.2, maxZoom: 5, paddingTopLeft: [40, 140], paddingBottomRight: [innerWidth > 900 ? 420 : 20, 120] });
+      return;
+    }
     shown.forEach((x, j) => {
       const c = x.p === 'R' ? RED : BLU, delay = 300 + j * 260;
       const html = `<div class="mtMFdot"><div class="d" style="background:${c};animation-delay:${delay}ms"></div><div class="n" style="animation-delay:${delay + 120}ms"><span class="b" style="background:${c}">${x.p}</span>${esc(x.name.split(' ').slice(-1)[0])}</div></div>`;
@@ -111,6 +160,12 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     };
     $('closeBrief') && $('closeBrief').addEventListener('click', clear);
     $('world') && $('world').addEventListener('click', clear);
+  }
+  // Deep link: ?ticker=AMZN opens straight to that ticker's map view.
+  const tk = new URLSearchParams(location.search).get('ticker');
+  if (tk && /^[A-Za-z.]{1,6}$/.test(tk) && !new URLSearchParams(location.search).get('q')) {
+    let n = 0; const go = () => { const i = $('question'), f = $('ask'); if (!window.mtApi || !i || !f || !window.moneyTrackerMap) { if (++n < 60) setTimeout(go, 200); return } i.value = tk.toUpperCase(); f.requestSubmit() };
+    addEventListener('load', () => setTimeout(go, 600));
   }
   const wait = () => (window.moneyTrackerMap && window.L && $('brief')) ? hook() : setTimeout(wait, 150);
   if (document.readyState === 'complete') wait(); else addEventListener('load', wait);
