@@ -13,21 +13,21 @@
     if (!L.length || document.getElementById("mtFrBar")) return;
     const bar = el("div", "position:sticky;top:0;z-index:1500;display:flex;align-items:center;gap:10px;min-height:44px;padding:6px 12px;background:#06210f;color:#eafff2;border-bottom:2px solid #2bff88;font:700 16px/1.4 system-ui,sans-serif;cursor:pointer;overflow:hidden");
     bar.id = "mtFrBar"; bar.setAttribute("role", "button"); bar.tabIndex = 0;
-    const badge = el("span", "flex:none;background:#2bff88;color:#04170b;border-radius:999px;padding:2px 10px;font-size:15px", "🏛️ " + T.bar);
+    const badge = el("span", "flex:none;background:#2bff88;color:#04170b;border-radius:999px;padding:2px 10px;font-size:15px", T.bar);
     const line = el("span", "flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis");
     const hint = el("span", "flex:none;font-size:13px;color:#9effc0", T.more);
     bar.append(badge, line, hint);
-    let i = 0; const show = () => { const b = L[i % L.length]; line.textContent = b.icon + " " + (b.date || "") + " · " + (EN ? b.type_en : b.type) + " — " + (EN ? b.easy_en : b.easy_ko); i++; };
+    let i = 0; const show = () => { const b = L[i % L.length]; line.textContent = (b.date || "") + " · " + (EN ? b.type_en : b.type) + " — " + (EN ? b.easy_en : b.easy_ko); i++; };
     show(); setInterval(show, 6000);
     const card = el("div", "position:fixed;inset:0;z-index:1600;background:rgba(0,0,0,.72);display:none;overflow:auto;padding:16px");
     const box = el("div", "max-width:560px;margin:0 auto;background:#04170b;color:#eafff2;border:2px solid #2bff88;border-radius:14px;padding:16px;font:16px/1.6 system-ui,sans-serif");
     const head = el("div", "display:flex;justify-content:space-between;align-items:center;margin-bottom:8px");
-    head.append(el("b", "font-size:20px", "🏛️ " + T.bar));
+    head.append(el("b", "font-size:20px", T.bar));
     const x = el("button", "min-height:44px;padding:0 16px;background:#2bff88;color:#04170b;border:0;border-radius:8px;font:700 16px system-ui", T.close); x.onclick = () => (card.style.display = "none"); head.append(x);
     box.append(head);
     L.forEach(b => {
       const c = el("div", "border-top:1px solid #1d5b36;padding:12px 0");
-      c.append(el("div", "font-size:13px;color:#9effc0", b.icon + " " + (b.date || "") + " · " + (EN ? b.type_en : b.type) + (b.eo ? " · EO " + b.eo : "")));
+      c.append(el("div", "font-size:13px;color:#9effc0", (b.date || "") + " · " + (EN ? b.type_en : b.type) + (b.eo ? " · EO " + b.eo : "")));
       c.append(el("div", "font-size:18px;font-weight:700;margin:4px 0", EN ? b.easy_en : b.easy_ko));
       const tg = (b.sectors || []).map(s => SEC[s] && SEC[s][+EN]).filter(Boolean);
       if (tg.length || (b.tickers || []).length) c.append(el("div", "font-size:14px", T.tags + ": " + tg.concat(b.tickers || []).join(" · ")));
