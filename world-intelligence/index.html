@@ -311,7 +311,7 @@ actions.forEach(([name,key])=>{const b=document.createElement('button');b.type='
 const map=window.moneyTrackerMap;
 if(key==='world'){document.getElementById('world')?.click();return}
 if(key==='us'||key==='kr'){if(map){map.invalidateSize();map.flyTo(key==='us'?[39,-98]:[36.4,127.8],5,{duration:1.4})}return}
-if(key==='track'){document.getElementById('question')?.focus();return}
+if(key==='track'){const m=document.getElementById('menu'),t=document.getElementById('toggle');if(m&&m.hidden&&t)t.click();else if(m)m.hidden=false;return}
 const input=document.getElementById('question');if(input){input.value=key==='history'?'세계사와 미국 시장의 관계':'미국 법안이 주식시장에 미치는 영향';input.focus()}
 };dock.append(b)});
 document.body.append(dock);
@@ -848,7 +848,7 @@ new MutationObserver(()=>{clearTimeout(window._mtdT);window._mtdT=setTimeout(dec
 #mtc[data-open="1"] .mtcX{display:block}#mtEcon .ico{display:none}#mtc[data-open="1"]{z-index:2300!important}body:has(#menu:not([hidden])) #mtMission{display:none!important}#mtTk .g,#menu>.g{font:600 10px ui-monospace,monospace;letter-spacing:.08em;color:#7fb39a;text-transform:uppercase;margin:6px 0 2px}#mtTk button{margin:2px;font-size:11.5px;padding:4px 7px}#mtTk button:disabled{opacity:.4}#topics button{font-size:11px;padding:3px 6px}#mtc[data-open="1"] .hd{padding-right:44px}#mtc{position:fixed}
 </style>
 <style id="mt-clean">#ask{display:none!important}#mtRecentTg{display:flex;align-items:center;gap:8px;margin:4px 0 6px;font:600 12px system-ui,sans-serif;color:#d8f5e3;cursor:pointer}#mtRecentTg input{width:16px;height:16px;accent-color:#5dff9e}</style>
-<style id="mt-clean-default">html.mtClean #world,html.mtClean #mtToolsBtn,html.mtClean #mtKoLink,html.mtClean #closeBrief,html.mtClean #mtOneDock,html.mtClean #mtTicker,html.mtClean #mtEcon,html.mtClean #mtFrBar,html.mtClean #mtMission,html.mtClean #mtc{display:none!important}</style>
+<style id="mt-clean-default">html.mtClean #world,html.mtClean #mtToolsBtn,html.mtClean #mtKoLink,html.mtClean #closeBrief,html.mtClean #mtOneDock,html.mtClean #mtTicker,html.mtClean #mtEcon,html.mtClean #mtFrBar,html.mtClean #mtMission,html.mtClean #mtc{display:none!important}html.mtClean body{margin-top:0!important}</style>
 <script id="mt-clean-default-js">(()=>{const $=id=>document.getElementById(id),qs=new URLSearchParams(location.search);if(qs.get('q')||qs.get('rec')||qs.get('m'))return;const b=document.documentElement;b.classList.add('mtClean');
 const off=()=>{b.classList.remove('mtClean');mo.disconnect()};const chk=()=>{const m=$('menu'),br=$('brief'),cp=$('candidatePanel');if((m&&!m.hidden)||(br&&!br.hidden)||(cp&&!cp.hidden)||$('mtOpen'))off()};const mo=new MutationObserver(chk);mo.observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:['hidden'],childList:true});chk()})();</script>
 <script id="mt-recent-toggle-js">(()=>{const EN=!!(window.MTI18N&&window.MTI18N.isEn),$=id=>document.getElementById(id);const menu=$('menu');if(!menu)return;
