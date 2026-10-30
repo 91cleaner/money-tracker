@@ -165,6 +165,21 @@
     box.querySelector('.mtCopy').onclick = e => { e.stopPropagation(); navigator.clipboard && navigator.clipboard.writeText(deep(sym)); e.target.textContent = E ? 'Copied' : '복사됨'; };
     return box;
   });
+  // Korean listings: stock close and National Pension Service (NPS) holding first.
+  SECTIONS.unshift((rows, sym) => {
+    if (!/\.(KS|KQ)$/.test(sym)) return null; const E = en(), box = document.createElement('div');
+    box.innerHTML = `<h4>${E ? 'Stock and NPS holding' : '주가와 국민연금 보유'}</h4><div class="mtKR" style="font:12.5px/1.5 ui-monospace,monospace">...</div>`;
+    Promise.all([getJ(`../data/markets/${sym.replace('.', '_')}.json`), getJ('../data/nps/kr_holdings.json')]).then(([m, n]) => {
+      const el = box.querySelector('.mtKR'), out = [];
+      if (m && m.c && m.c.length > 1) { const L = m.c.length, c = m.c[L - 1], p = m.c[L - 2], y = m.c.slice(-250), ch = ((c - p) / p * 100).toFixed(2);
+        out.push(`<div><b style="font-size:16px">${esc(m.name || sym)}</b> ${E ? 'close' : '종가'} <b>${Math.round(c).toLocaleString('en-US')} KRW</b> (${ch > 0 ? '+' : ''}${ch}% ${E ? 'vs prior close' : '전일 대비'}) · ${esc(md(m.d[L - 1]))}</div><div style="color:#8fa89a">${E ? '1-year range' : '1년 범위'} ${Math.round(Math.min(...y)).toLocaleString('en-US')} – ${Math.round(Math.max(...y)).toLocaleString('en-US')} KRW · ${esc(m.source || '')}</div>`); }
+      const h = n && (n.holdings || []).find(x => m && x.company === m.name);
+      if (h) out.push(`<div style="margin-top:4px">${E ? 'NPS (National Pension Service)' : '국민연금'}: ${E ? 'stake' : '지분율'} <b>${h.stake_pct}%</b> · ${E ? 'value' : '평가액'} <b>${E ? (h.value_100m_krw / 1e4).toFixed(1) + 'T KRW' : Math.round(h.value_100m_krw).toLocaleString('en-US') + '억원'}</b> · ${E ? 'weight in domestic stocks' : '국내주식 내 비중'} ${h.weight_pct}% · ${E ? 'rank' : '순위'} ${h.rank} · ${E ? 'as of' : '기준'} ${esc(h.as_of)} ${lnk(h.source_url || n.board_url, E ? 'NPS disclosure' : '국민연금 공시')}</div>`);
+      else out.push(`<div style="color:#8fa89a">${E ? 'Not in the collected NPS domestic holdings list.' : '수집된 국민연금 국내주식 목록에 없어요.'}</div>`);
+      el.innerHTML = out.join('');
+    });
+    return box;
+  });
   // Ticker sub-tabs: the extras panel shows only on All / Lawmakers; Insiders and White House tabs get full lists.
   const tabNow = () => { const b = document.querySelector('#mtHub button.on'); return b ? b.dataset.k : 'all'; };
   const money2 = n => '$' + Math.round(n).toLocaleString('en-US');
