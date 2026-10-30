@@ -1,7 +1,7 @@
 (function(){
 var C={fest:'#f59e0b',fee:'#e11d48',film:'#2563eb'},HOME=[[33.0,125.0],[38.7,130.0]];
-var map=L.map('map',{zoomControl:true,preferCanvas:true});
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap'}).addTo(map);
+var map=L.map('map',{zoomControl:true,preferCanvas:true});map.attributionControl.setPrefix(false);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'지도: &copy; OpenStreetMap 기여자'}).addTo(map);
 function home(){map.fitBounds(HOME,innerWidth<600?{paddingBottomRight:[0,innerHeight*.4]}:{paddingBottomRight:[320,0]})}home();
 document.getElementById('reset').onclick=function(){map.closePopup();home()};
 function won(w){if(!w)return '0원';if(w>=1e8){var e=w/1e8;return (e>=10?Math.round(e).toLocaleString():e.toFixed(1).replace(/\.0$/,''))+'억원'}return Math.round(w/1e4).toLocaleString()+'만원'}
@@ -22,13 +22,13 @@ function drawFest(){drawFlow();G.fest.clearLayers();var y=+document.getElementBy
   dot(x[0],x[1],w,C.fest,4000,'<b>'+esc(x[3])+'</b><br>'+esc(x[4])+(x[5]&&x[5]!='-'?' '+esc(x[5]):'')+' · '+y+'년<br>계획예산: '+won(w)+'<br>국비 '+won((x[7]||0)*1e6)+' · 지방비 '+won((x[8]||0)*1e6)+src('https://www.mcst.go.kr/site/s_culture/festival/festivalList.jsp','문화체육관광부 '+y+'년 지역축제 개최계획')).addTo(G.fest)});
  (D.sus||[]).forEach(function(x){if(x[1].indexOf('바우덕이')<0||x[0]!==y)return;L.circleMarker([37.0078,127.28],{radius:9,color:'#fff',weight:1,fillColor:'#9ca3af',fillOpacity:.9}).bindTooltip('단위 확인 필요',{permanent:true,direction:'right',className:'cm-tip'}).bindPopup('<div class="cm-pop"><b>'+esc(x[1])+'</b><br>경기 안성시 · '+y+'년<br>원자료 값: '+x[2].toLocaleString()+'백만원'+U+'<br><small>단위 확인 필요: 숫자 단위가 잘못 들어갔을 수 있어서 합계에서 뺐어요.</small>'+src('https://www.mcst.go.kr/site/s_culture/festival/festivalList.jsp','문화체육관광부 '+y+'년 지역축제 개최계획')+'</div>',{maxWidth:300}).addTo(G.fest)});
  document.getElementById('n-fest').textContent=n+'곳'}
-fetch('data/culture/culture_map.json?v=202610302410').then(function(r){return r.json()}).then(function(d){D=d;drawFest();
- d.fee.forEach(function(x){dot(x[0],x[1],x[5],C.fee,4000,'<b>'+esc(x[3])+'</b><br>'+esc(x[4])+(x[2]?' · '+x[2]+'년':'')+'<br>기사 속 출연료: '+esc(x[6])+U+'<br><small>보도됨 · 공식 통계 아님'+(x[8]?'<br>'+esc(x[8]):'')+'</small>'+src(x[7],'기사 보기')).addTo(G.fee)});
+fetch('data/culture/culture_map.json?v=202610310010').then(function(r){return r.json()}).then(function(d){D=d;drawFest();
+ d.fee.forEach(function(x){dot(x[0],x[1],x[5],C.fee,4000,'<b>'+esc(x[3])+'</b><br>'+esc(x[4])+(x[2]?' · '+x[2]+'년':'')+'<br>기사 속 출연료: '+esc(x[6])+U+'<br><small>기사에 나온 숫자예요. 공식 통계가 아니에요.'+(x[8]?'<br>'+esc(x[8]):'')+'</small>'+src(x[7],'기사 보기')).addTo(G.fee)});
  d.film.sort(function(a,b){return b[5]-a[5]}).forEach(function(x){dot(x[0]+(Math.random()-.5)*.02,x[1]+(Math.random()-.5)*.02,x[5],C.film,4000,'<b>'+esc(x[4])+'</b><br>받은 곳: '+esc(x[3])+'<br>'+esc(x[2])+'<br>지원결정액: '+won(x[5])+'<br><small>회사 주소 시군구('+esc(x[6])+') 중심점</small>'+src(x[7],'영화진흥위원회 심사결과 공지')).addTo(G.film)});
  document.getElementById('n-fee').textContent=d.fee.length+'건';document.getElementById('n-film').textContent=d.film.length+'건';
  Object.keys(G).forEach(function(k){G[k].addTo(map)});
 });
-window.__cm=function(k){var l=G[k||'film'].getLayers();if(l[0])l[0].openPopup();return l.length};
+window.__cmOn=function(k){return map.hasLayer(G[k])};window.__cm=function(k){var l=G[k||'film'].getLayers();if(l[0])l[0].openPopup();return l.length};
 document.getElementById('year').onchange=drawFest;
 [].forEach.call(document.querySelectorAll('[data-l]'),function(c){c.onchange=function(){var g=G[c.dataset.l];c.checked?g.addTo(map):map.removeLayer(g)}});
 })();
