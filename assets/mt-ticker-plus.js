@@ -49,9 +49,9 @@
     x.fillStyle = '#5dff9e'; x.font = '700 92px ui-monospace,monospace'; x.fillText(sym, 60, 140);
     x.fillStyle = party(r.p); x.fillRect(60, 180, 44, 44); x.fillStyle = '#111'; x.font = '700 30px ui-monospace,monospace'; x.fillText(r.p || '?', 71, 213);
     x.fillStyle = '#ffffff'; x.font = '700 46px system-ui,sans-serif'; x.fillText(r.who, 124, 218);
-    const ln = [[E ? 'Trade date' : '거래일', md(r.d)], [E ? 'Filing date' : '신고일', md(r.f)], [E ? 'Days apart' : '간격', r.late + (E ? ' days' : '일')], [E ? 'Type / amount' : '구분 / 금액', (r.ty === 'P' ? (E ? 'Buy' : '매수') : r.ty === 'S' ? (E ? 'Sell' : '매도') : r.ty) + ' · ' + (r.amt || '')], [E ? 'Source' : '출처', ((r.ch === 'S' ? 'Senate' : 'House') + ' PTR' + (r.doc ? ' · ' + String(r.doc).split('/').pop() : ''))]];
+    const ln = [[E ? 'Trade date' : '거래일', md(r.d)], [E ? 'Filing date' : '신고일', md(r.f)], [E ? 'Days apart' : '간격', r.late + (E ? ' days' : '일')], [E ? 'Type / amount' : '구분 / 금액', (r.ty === 'P' ? (E ? 'Buy' : '매수') : r.ty === 'S' ? (E ? 'Sell' : '매도') : r.ty) + ' · ' + (r.amt || '')], [E ? 'Source' : '출처', ((E ? (r.ch === 'S' ? 'Senate' : 'House') + ' PTR' : (r.ch === 'S' ? '미국 상원' : '미국 하원') + ' 거래 신고서') + (r.doc ? ' · ' + String(r.doc).split('/').pop() : ''))]];
     x.font = '32px system-ui,sans-serif'; ln.forEach((l, i) => { x.fillStyle = '#8fa89a'; x.fillText(l[0], 60, 300 + i * 52); x.fillStyle = l[0] === ln[2][0] ? (r.late > 45 ? '#ff453a' : r.late > 30 ? '#ff9f0a' : '#d8f5e3') : '#d8f5e3'; x.fillText(String(l[1]).slice(0, 60), 360, 300 + i * 52); });
-    x.fillStyle = '#68c7d0'; x.font = '24px ui-monospace,monospace'; x.fillText('https://91cleaner.github.io/money-tracker/world-intelligence/?lang=en&q=' + sym, 60, 590);
+    x.fillStyle = '#68c7d0'; x.font = '24px ui-monospace,monospace'; x.fillText('https://91cleaner.github.io/money-tracker/world-intelligence/?lang=' + (E ? 'en' : 'ko') + '&q=' + sym, 60, 590);
     c.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `${sym}-${r.who.replace(/\W+/g, '_')}-${r.d}.png`; document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); }, 'image/png');
     return c;
   }
