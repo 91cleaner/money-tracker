@@ -3,7 +3,9 @@
 These tests run without GitHub credentials or external APIs; they simulate git/gh
 commands so a failed push can never request a Pages deployment.
 """
+import json
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 import subprocess
 import tempfile
@@ -19,6 +21,12 @@ def commit_script():
     source = WORKFLOW.read_text(encoding="utf-8")
     section = source.split("      - name: Commit and deploy\n", 1)[1]
     return textwrap.dedent(section.split("        run: |\n", 1)[1])
+
+
+def house_source_check_script():
+    source = WORKFLOW.read_text(encoding="utf-8")
+    section = source.split("      - name: Verify House Clerk index before publishing\n", 1)[1]
+    return textwrap.dedent(section.split("        run: |\n", 1)[1].split("      - name: Render card\n", 1)[0])
 
 
 class WeeklyWorkflowGuardTests(unittest.TestCase):
@@ -85,6 +93,29 @@ class WeeklyWorkflowGuardTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(count, 0)
         self.assertNotIn("gh workflow run", calls)
+
+
+    def test_house_source_check_rejects_stale_or_partial_refresh(self):
+        year = datetime.now(timezone.utc).year
+        cases = [
+            ("verified", [f"house {year}: PTR 123", f"house {year}: 새 보고서 0"], True),
+            ("source_403", [f"house {year} zip 403"], False),
+            ("time_budget", [f"house {year}: PTR 123", "house: 시간 상한"], False),
+            ("missing_log", [], False),
+        ]
+        for name, logs, should_pass in cases:
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp) / "data" / "us"
+                root.mkdir(parents=True)
+                (root / "trades.json").write_text(json.dumps({"log": logs}), encoding="utf-8")
+                result = subprocess.run(
+                    ["bash", "-c", house_source_check_script()], cwd=tmp,
+                    text=True, capture_output=True, timeout=10,
+                )
+                self.assertEqual(
+                    result.returncode == 0, should_pass,
+                    f"{name}: {result.stdout} {result.stderr}",
+                )
 
 
 if __name__ == "__main__":
