@@ -112,3 +112,22 @@ After the approved CI/deployment change, inspect **Settings → Pages → Source
 - **Source-date nuance:** The Federal Register refresh includes records dated **2026-11-02** while retrieved on **2026-10-31 UTC**. A future publication date can be legitimate prepublication metadata; do not silently label such an item as already published on Nov 1. Keep `date` and `retrieved_at` separate and show scheduled/future status where relevant. This is a source-label review requirement, **not** a claim that the official records are fabricated.
 
 **This section changes only release documentation. No workflow, UI, data, collector, privacy control, or live deployment has been fixed or verified by this PR.** Owner approval required before merge. Generative AI analysis: **NOT CONNECTED**. Live executed-trade feed: **NOT CONNECTED**.
+
+
+## P1: full public trade summary is not chronology-checked (2026-11-01 03:55 KST)
+
+**New distinct release gap (static source audit; not a claim that any particular row is wrong):**
+
+- `scripts/build_public_trades.py` builds `.public-pages/data/us/trades_public.json` from `data/us/trades.json` by copying an approved field-name subset, but does **not** verify reported transaction date, filing date or official filing URL.
+- In [PR #412](https://github.com/91cleaner/money-tracker/pull/412), `public_ptr_guard.invalid_rows()` checks chronology and the official House Clerk PDF URL for **`trades-recent.json` only**. Its separate `validate_public_trades()` checks field names, types and unsafe text for **`trades_public.json`**, but does **not** check `d <= fd/filed <= updated` or filing URL provenance. Both `prepare-public-pages.py` and `check-pages-artifact.py` use those different validators. Thus passing the proposed recent-snapshot guard would **not** certify the full public summary's dates or official sources.
+- This matters to the actual product: `assets/firstscreen.js` fetches `us/trades_public.json` for the `why`/`member`/`topic` research screens. Incorrect or unsupported rows could appear in a lawmaker-to-company card even if the separate 20-row recent layer is clean. **Do not conflate these two datasets.**
+
+**Data/CI owner acceptance (before merging #412 or changing the #193 publication contract):**
+
+1. Define and test the full-summary row contract for `d`, `fd`, `filed`, `doc`, `updated`, and optional return fields. Require unambiguous ISO calendar dates and `transaction <= filing <= snapshot` when those dates are present. Reject contradictions between `fd` and `filed`; treat genuinely missing dates as **unverified**, never silently as verified.
+2. Check source-host, HTTPS, PDF/path shape and applicable reporting jurisdiction. A House-only URL regex must **not** accidentally reject valid Senate disclosures; classify House/Senate/unknown sources explicitly, and require an independently reviewed official-source policy for each. A valid-looking URL is **not** evidence of an actual executed trade.
+3. On the generated **public copy**, quarantine unsupported rows with a visible count/status or block publication; preserve the collector-owned source ledger for official-PDF reconciliation. A clean `trades-recent.json` must not bypass the full-summary guard.
+4. Add isolated negative tests for reversed dates, future filing dates, inconsistent `fd` vs `filed`, spoofed/redirected source URLs, missing filing provenance, unexpected nested fields, valid House and Senate examples, and an all-invalid snapshot. Assert both builder and artifact-check paths fail closed or quarantine with explicit disclosures.
+5. Run these on the **combined merged SHA** and check the live `data/us/trades_public.json` response and actual `member`/`why` card behavior. Record CI, artifact SHA and deployment URLs. Do not report the guard fixed while #412 remains unmerged or these tests are absent.
+
+**Verification boundary:** read-only comparison of current `main` `scripts/build_public_trades.py`, `assets/firstscreen.js` and PR #412's `scripts/public_ptr_guard.py`, `scripts/prepare-public-pages.py`, `scripts/check-pages-artifact.py`. No full-ledger row audit, original-PDF reconciliation, Python regression run, UI fix or production deployment was performed. This is a documentation-only release blocker review under `docs/AI-ROLES.md`; Claude/UI and data/collector files remain untouched. **AI analysis: NOT CONNECTED. Live executed-trade feed: NOT CONNECTED.**
