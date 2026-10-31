@@ -16,24 +16,73 @@
   document.addEventListener('click', (e) => { const a = e.target.closest && e.target.closest('.leaflet-popup a[href], #mtNow a[href]'); if (a) { fixHref(a); e.stopPropagation(); } }, true);
 
   const css = document.createElement('style');
-  css.textContent = `
+  css.textContent = `:root{--mtSW:min(400px,44vw)}
+
 #mtBar button.mtPrime{background:#5dff9e!important;color:#02110a!important;border-color:#5dff9e!important;font-weight:800!important;opacity:1!important;padding-left:16px!important;padding-right:16px!important;border-radius:999px!important}
 #mtNow{margin:0 0 10px;padding:10px 12px;border:1px solid #2f7a4c;border-left:3px solid #5dff9e;border-radius:10px;background:#04140b;color:#e8fff0;font-size:14px;line-height:1.5}
 #mtNow .k{font-size:11px;letter-spacing:.08em;color:#7ee9a6}#mtNow .h{font-weight:800;font-size:15px;margin:2px 0}
 #mtNow a{color:#7dffb0;font-weight:700;display:inline-block;padding:6px 0;min-height:32px}
 #mtNow img{max-width:46%;height:auto;border-radius:6px}#mtNow figure{margin:0}
 #mtNow .mtNum{display:inline-block}
-@media(min-width:900px){
- #mtSide{position:fixed;right:0;top:var(--mtSideTop,106px);height:var(--mtSideH,calc(100dvh - 106px));bottom:auto;width:400px;z-index:1450;display:flex;flex-direction:column;gap:8px;padding:10px;background:#020a06;border-left:1px solid #2bff8855;overflow:hidden}
- #mapFrame{right:400px!important;width:auto!important}
- #mtTicker{right:400px!important;width:auto!important}
+@media(min-width:900px), (orientation:landscape) and (min-width:640px){
+ #mtSide{position:fixed;right:0;top:var(--mtSideTop,106px);height:var(--mtSideH,calc(100dvh - 106px));bottom:auto;width:var(--mtSW);z-index:1450;display:flex;flex-direction:column;gap:8px;padding:10px;background:#020a06;border-left:1px solid #2bff8855;overflow:hidden}
+ #mapFrame{right:var(--mtSW)!important;width:auto!important}
+ #mtTicker{right:var(--mtSW)!important;width:auto!important}
  #mtSide>#brief{position:static!important;inset:auto!important;width:auto!important;max-height:none!important;flex:1 1 auto;min-height:0;overflow:auto!important;margin:0!important;transform:none!important}
  #mtSide>#mtBar,#mtSide>#controls,#mtSide>#mtOneDock{position:static!important;inset:auto!important;transform:none!important;translate:none!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:auto!important;max-width:none!important;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-start;margin:0!important}
  #mtSide>#mtOneDock{display:flex!important}
-}`;
+}
+@media(max-width:650px){
+ html body #brief{max-height:50dvh!important}
+ html body.mt-sheet #map .leaflet-popup.leaflet-popup{display:none!important}
+ body.mt-sheet-min #mtSheetX{display:none!important}
+ #mtSheetX{position:sticky;top:0;float:right;z-index:3;width:44px;height:44px;margin:-28px -6px 0 0;border-radius:50%;border:1px solid #5dff9e;background:#02110a;color:#5dff9e;font:800 20px/1 system-ui,sans-serif;display:flex;align-items:center;justify-content:center}
+ #brief.mtDrag{transition:none!important}
+}
+@media(min-width:651px){#mtSheetX{display:none}}`;
   document.head.append(css);
+  // Phone sheet: big close button and drag down to close.
+  const sheetX = () => {
+    const b = $('brief'); if (!b || $('mtSheetX')) return;
+    const x = document.createElement('button'); x.id = 'mtSheetX'; x.type = 'button'; x.setAttribute('aria-label', EN ? 'Close' : '닫기'); x.textContent = '\u2715';
+    const close = () => { b.style.transform = ''; b.scrollTop = 0; document.body.classList.add('mt-sheet-min'); dispatchEvent(new Event('resize')); };
+    x.addEventListener('click', (e) => { e.stopPropagation(); close(); });
+    const hd = $('mtSheetHandle'); hd ? hd.after(x) : b.prepend(x);
+    let y0 = null, d = 0;
+    b.addEventListener('touchstart', (e) => { y0 = (b.scrollTop <= 0 && !e.target.closest('a,button:not(#mtSheetHandle)')) ? e.touches[0].clientY : null; d = 0; }, { passive: true });
+    b.addEventListener('touchmove', (e) => { if (y0 == null) return; d = e.touches[0].clientY - y0; if (d > 0) { b.classList.add('mtDrag'); b.style.transform = 'translateY(' + d + 'px)'; } }, { passive: true });
+    b.addEventListener('touchend', () => { if (y0 == null) return; y0 = null; b.classList.remove('mtDrag'); if (d > 70) close(); else b.style.transform = ''; }, { passive: true });
+  };
 
-  const mq = matchMedia('(min-width:900px)');
+  // Phone held upright: ask to turn it sideways (cannot be forced on iOS). A small button keeps the upright view.
+  const rotMq = matchMedia('(orientation:portrait) and (max-width:650px)');
+  const rot = () => {
+    let o = $('mtRotate'); const skip = sessionStorage.getItem('mtPortraitOk') === '1';
+    if (!rotMq.matches || skip) { if (o) o.hidden = true; return; }
+    if (!o) {
+      o = document.createElement('div'); o.id = 'mtRotate'; o.setAttribute('role', 'dialog');
+      o.innerHTML = '<svg viewBox="0 0 120 120" width="150" height="150" aria-hidden="true"><g fill="none" stroke="#5dff9e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><g class="ph"><rect x="42" y="20" width="36" height="64" rx="7"/><line x1="56" y1="76" x2="64" y2="76"/></g><path d="M22 92 A44 44 0 0 0 92 104"/><path d="M84 96 L92 104 L82 110"/></g></svg>'
+        + '<p class="t">' + (EN ? 'Please turn your phone sideways' : '휴대폰을 옆으로 돌려 주세요') + '</p>'
+        + '<p class="s">' + (EN ? 'The map and side panel fit better that way.' : '가로로 돌리면 지도와 옆 칸이 함께 보여요.') + '</p>'
+        + '<button type="button">' + (EN ? 'Keep upright view' : '세로로 그냥 보기') + '</button>';
+      o.querySelector('button').addEventListener('click', () => { sessionStorage.setItem('mtPortraitOk', '1'); o.hidden = true; });
+      document.body.append(o);
+    }
+    o.hidden = false;
+  };
+  const rcss = document.createElement('style');
+  rcss.textContent = `#mtRotate{position:fixed;inset:0;z-index:99999;background:#020a06f2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;color:#e8fff0;font-family:system-ui,sans-serif}
+#mtRotate[hidden]{display:none!important}
+#mtRotate .ph{transform-origin:60px 52px;animation:mtRot 2.4s ease-in-out infinite}
+@keyframes mtRot{0%,25%{transform:rotate(0)}55%,100%{transform:rotate(90deg)}}
+#mtRotate .t{font-size:24px;font-weight:800;margin:8px 0 0;color:#5dff9e}
+#mtRotate .s{font-size:15px;margin:0;opacity:.85}
+#mtRotate button{margin-top:22px;padding:10px 16px;border-radius:999px;border:1px solid #2f7a4c;background:transparent;color:#bfe9cf;font-size:13px}`;
+  document.head.append(rcss);
+  rot(); rotMq.addEventListener('change', rot); addEventListener('resize', rot);
+  sheetX(); addEventListener('load', sheetX); setTimeout(sheetX, 1500);
+
+  const mq = matchMedia('(min-width:900px), (orientation:landscape) and (min-width:640px)');
   let side = null, ph = {};
   const IDS = ['brief', 'mtBar', 'controls', 'mtOneDock'];
   const map = () => window.moneyTrackerMap;
@@ -56,7 +105,7 @@
     let box = $('mtNow');
     if (!pop) { if (box) box.remove(); return; }
     if (!box) { box = document.createElement('div'); box.id = 'mtNow'; box.setAttribute('aria-live', 'polite'); }
-    if (br.firstChild !== box) br.prepend(box);
+    { const anc = $('mtSheetX') && $('mtSheetX').parentNode === br ? $('mtSheetX') : null; if (anc ? anc.nextSibling !== box : br.firstChild !== box) anc ? anc.after(box) : br.prepend(box); }
     const src = pop.querySelector('.leaflet-popup-content');
     const c = src.cloneNode(true); c.querySelectorAll('[id]').forEach((e) => e.removeAttribute('id')); c.querySelectorAll('button, .leaflet-popup-close-button').forEach((e) => e.remove());
     fixAll(c); box.replaceChildren(...c.childNodes);
@@ -95,7 +144,7 @@
 :is(#mtToday,#mtTodayWho) .tdI button{margin-left:4px;padding:2px 8px;border-radius:999px;border:1px solid #2f7a4c;background:#0f2418;color:#bfffd6;font:700 12px Pretendard,system-ui,sans-serif;cursor:pointer}
 #mtToday details summary{cursor:pointer;color:#9fd8b4;font-size:13px;padding:6px 0}
 #mtToday.home{display:block!important;height:auto!important;min-height:0!important;max-height:52dvh!important;overflow:auto!important;position:fixed!important;left:8px!important;right:8px!important;top:auto!important;bottom:8px!important;width:auto!important;transform:none!important;z-index:1500;max-height:52dvh;overflow:auto;padding:12px;border-radius:20px;background:#050c08f2;border:1px solid #1e3a2a;box-shadow:0 -8px 30px #000a}
-@media(min-width:900px){#mtToday.home{position:static!important;flex:1 1 auto;max-height:none!important;max-height:none;box-shadow:none;border:0;background:none;padding:0}
+@media(min-width:900px), (orientation:landscape) and (min-width:640px){#mtToday.home{position:static!important;flex:1 1 auto;max-height:none!important;max-height:none;box-shadow:none;border:0;background:none;padding:0}
  #mtSide{background:#000!important}
  #mtSide>#controls button,#mtSide>#mtOneDock *,#mtSide>#mtBar button{opacity:.78}
 }
@@ -117,7 +166,7 @@
     if (!s) {
       const side = $('mtSide'); box.className = 'home';
       if ($('mtTabs')) { const tp = $('tbPanel'); if (tp && box.parentNode !== tp && document.querySelector('#mtTabBar button[data-t=today][aria-selected=true]')) tp.replaceChildren(box); } else
-      if (side && getComputedStyle(side).display !== 'none' && matchMedia('(min-width:900px)').matches) { if (box.parentNode !== side) side.prepend(box); } else if (box.parentNode !== document.body) document.body.append(box);
+      if (side && getComputedStyle(side).display !== 'none' && matchMedia('(min-width:900px), (orientation:landscape) and (min-width:640px)').matches) { if (box.parentNode !== side) side.prepend(box); } else if (box.parentNode !== document.body) document.body.append(box);
       const first = data.cards.flatMap((c) => c.items).find((i) => i.tk && !/,/.test(i.tk));
       box.innerHTML = `<div class="tdHd"><b>오늘의 기록</b><span>${esc(data.date)}</span></div>` +
         (first ? `<a class="tdGo" href="?lang=ko&ticker=${encodeURIComponent(first.tk)}">${esc(first.tk)} 기록부터 보기</a>` : '') +
@@ -127,10 +176,10 @@
       const br = $('brief'); if (!br) return;
       if (!hit.length) { box.remove(); return; }
       box.className = 'tk';
-      const nowBox = $('mtNow'); if (!matchMedia('(min-width:900px)').matches) { if (br.lastChild !== box) br.append(box); } else if (nowBox) { if (nowBox.nextSibling !== box) nowBox.after(box); } else if (br.firstChild !== box) br.prepend(box);
+      const nowBox = $('mtNow'); if (!matchMedia('(min-width:900px), (orientation:landscape) and (min-width:640px)').matches) { if (br.lastChild !== box) br.append(box); } else if (nowBox) { if (nowBox.nextSibling !== box) nowBox.after(box); } else { const anc = $('mtSheetX') && $('mtSheetX').parentNode === br ? $('mtSheetX') : null; if (anc ? anc.nextSibling !== box : br.firstChild !== box) anc ? anc.after(box) : br.prepend(box); }
       box.innerHTML = `<div class="tdHd"><b>오늘 이 종목 기록</b><span>${esc(data.date)}</span></div>` + hit.map(([c, it]) => card(c, it)).join('');
     }
   }
   window.__tdR=()=>render();window.__tdWho=(txt)=>{if(!data)return '';const hit=data.cards.map((c)=>[c,c.items.filter((i)=>{if(!i.who)return false;const w=i.who.replace(/[.,]/g,'').split(/\s+/);return txt.includes(w[0])&&txt.includes(w[w.length-1])})]).filter((x)=>x[1].length);return hit.length?`<div id="mtToday" class="tk" style="margin-top:8px"><div class="tdHd"><b>오늘 이 의원 기록</b><span>${esc(data.date)}</span></div>${hit.map(([c,it])=>card(c,it)).join('')}</div>`:''};document.addEventListener('click', (e) => { const b = e.target.closest && e.target.closest('#mtToday button[data-tk]'); if (b) location.search = '?lang=ko&ticker=' + encodeURIComponent(b.dataset.tk); });
-  fetch('../data/us/daily/index.json', { cache: 'no-cache' }).then((r) => r.json()).then((ix) => fetch(`../data/us/daily/${ix.latest}.json`, { cache: 'no-cache' })).then((r) => r.json()).then((d) => { data = d; render(); setInterval(() => { const b = $('mtToday'); if (sym() && (!b || !b.isConnected || (!matchMedia('(min-width:900px)').matches && b.parentNode && b.parentNode.lastChild !== b))) render(); }, 1500); setTimeout(render, 2500); }).catch(() => {});
+  fetch('../data/us/daily/index.json', { cache: 'no-cache' }).then((r) => r.json()).then((ix) => fetch(`../data/us/daily/${ix.latest}.json`, { cache: 'no-cache' })).then((r) => r.json()).then((d) => { data = d; render(); setInterval(() => { const b = $('mtToday'); if (sym() && (!b || !b.isConnected || (!matchMedia('(min-width:900px), (orientation:landscape) and (min-width:640px)').matches && b.parentNode && b.parentNode.lastChild !== b))) render(); }, 1500); setTimeout(render, 2500); }).catch(() => {});
 })();
