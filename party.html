@@ -2,6 +2,7 @@
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>세금추적단 · 정당 돈 지도</title>
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="assets/national.css?v=20261026mobilefold2">
 <style>
 html,body{margin:0;overflow-x:hidden;background:#07130d;color:#e3f5ea;font:15px/1.6 system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
 header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #1d4430}
@@ -12,7 +13,7 @@ h1{font-size:22px;margin:8px 0 2px}p{margin:4px 0}.s{color:#9fc7ae;font-size:13p
 .chips button{min-height:40px;padding:6px 12px;border-radius:999px;border:1px solid #2d6e4b;background:#0c1f16;color:#e3f5ea;font:inherit;cursor:pointer}
 .chips button[aria-pressed=true]{background:#ffb84d;color:#111;border-color:#ffb84d;font-weight:700}
 .wrap{display:grid;grid-template-columns:1fr;gap:10px}@media(min-width:900px){.wrap{grid-template-columns:1.4fr 1fr}}
-#map{height:60vh;min-height:320px;border-radius:10px;border:1px solid #1d4430;background:#0a1b12}
+#map{height:60vh;min-height:320px;border-radius:10px;border:1px solid #1d4430;background:#0b0f14}
 .box{background:#0a1b12;border:1px solid #1d4430;border-radius:10px;padding:10px 12px}
 .tot{font-size:26px;font-weight:800;color:#ffd166}
 table{width:100%;border-collapse:collapse;font-size:14px}td{border-bottom:1px solid #1d4430;padding:6px 4px}td:last-child{text-align:right;white-space:nowrap}
@@ -24,14 +25,14 @@ tr.on td{background:#2a2108}
 <header><b>정당 돈 지도</b><a href="national.html">‹ 의원 화면으로</a></header>
 <main>
 <h1>정당이 받은 나랏돈</h1>
-<p>2024년에 중앙선거관리위원회가 정당에 준 보조금이에요. 선 하나가 한 번 준 돈이에요. 선을 누르면 금액이 나와요.</p>
+<p>한반도 지도에서 2024년에 중앙선거관리위원회가 정당에 준 보조금이에요. 빛 점이 돈이 가는 길을 따라 움직여요. 선 하나가 한 번 준 돈이에요. 선을 누르면 금액이 나와요.</p>
 <p class="s">이 숫자는 공개 기록일 뿐이에요. 잘잘못을 따지는 게 아니에요.</p>
 <div class="chips" id="chips" role="group" aria-label="정당 고르기"></div>
 <div class="wrap"><div id="map" role="region" aria-label="보조금 흐름 지도"></div>
 <div class="box" id="side"></div></div>
-<p class="s">자료: 중앙선거관리위원회 2024년 정당 회계보고, 정치자금 공개 자료. 지도: © OpenStreetMap 기여자</p>
+<p class="s">자료: 중앙선거관리위원회 2024년 정당 회계보고, 정치자금 공개 자료. 지도: Esri, HERE, Garmin, © OpenStreetMap 기여자</p>
 </main>
-<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/vendor/leaflet/leaflet.js"></script><script src="assets/leaflet-ko.js"></script><script src="assets/mapkit.js?v=202610251700"></script>
 <script>
 (async()=>{
 const won=n=>n==null?'—':n.toLocaleString('ko-KR')+'원';
@@ -41,9 +42,12 @@ const KR={'1/4분기':'1~3월 경상보조금','2/4분기':'4~6월 경상보조�
 const name=t=>KR[t]||t;
 const IDX=await (await fetch('data/party/index.json')).json();
 const P=IDX.parties.filter(p=>p.subsidy&&p.subsidy.length);
-const map=L.map('map',{zoomControl:true,attributionControl:true}).setView([37.48,126.96],11);
-map.attributionControl.setPrefix(false);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap 기여자'}).addTo(map);
+const KOREA=L.latLngBounds([[33.1,125.0],[38.65,129.6]]);
+const map=L.map('map',{zoomControl:true,attributionControl:true,minZoom:5,maxZoom:14,zoomSnap:0.25,maxBounds:[[30.5,121],[41,134]]});
+map.fitBounds(KOREA,{animate:false});map.attributionControl.setPrefix(false);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:14,maxNativeZoom:12,attribution:'지도: Esri, HERE, Garmin, © OpenStreetMap 기여자'}).addTo(map);
+const FX=window.mtFX?mtFX(map,map.getContainer()):null;let first=true;
+const home=L.control({position:'topright'});home.onAdd=()=>{const b=L.DomUtil.create('button','');b.type='button';b.textContent='한반도 전체 보기';b.style.cssText='min-height:40px;padding:6px 10px;border-radius:8px;border:1px solid #6b5a20;background:#0a1b12;color:#ffd166;font:inherit;cursor:pointer';L.DomEvent.disableClickPropagation(b);b.onclick=()=>map.flyToBounds(KOREA,{duration:.8});return b};home.addTo(map);
 let grp=L.layerGroup().addTo(map),cur=null,lines=[];
 const arc=(a,b,k)=>{const pts=[],mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=b[0]-a[0],dy=b[1]-a[1],c=[mx-dy*k,my+dx*k];for(let t=0;t<=1.0001;t+=.05)pts.push([(1-t)*(1-t)*a[0]+2*(1-t)*t*c[0]+t*t*b[0],(1-t)*(1-t)*a[1]+2*(1-t)*t*c[1]+t*t*b[1]]);return pts};
 function show(i){
@@ -56,7 +60,8 @@ function show(i){
   ln.on('click',()=>mark(k));ln.on('mouseover',()=>ln.setStyle({color:'#fff'}));ln.on('mouseout',()=>ln.setStyle({color:'#ffb84d'}));lines.push(ln);});
  if(sub[0]){L.circleMarker(sub[0].line[0],{radius:8,color:'#7fd1ff',fillOpacity:1}).bindTooltip('중앙선거관리위원회',{permanent:true,direction:'bottom'}).addTo(grp);
   L.circleMarker(sub[0].line[1],{radius:8,color:'#ffd166',fillOpacity:1}).bindTooltip(esc(cur.name),{permanent:true,direction:'top'}).addTo(grp);
-  map.fitBounds(L.latLngBounds(sub.flatMap(s=>s.line)).pad(.6));}
+  const bb=L.latLngBounds(sub.flatMap(s=>s.line)).pad(.6);if(first){first=false;setTimeout(()=>map.flyToBounds(bb,{duration:1.4}),900)}else map.flyToBounds(bb,{duration:.8});}
+ const mx=Math.max(...sub.map(s=>s.krw));if(FX)FX.set(lines.map((ln,k)=>({pts:ln.getLatLngs().map(p=>[p.lat,p.lng]),w:ln.options.weight,col:'#ffd166',n:window.mtFxN?mtFxN(sub[k].krw,mx):3,d:k*.1})));
  const x=cur.subsidy_extra;let extra='';
  if(x&&x.total_pdf){extra=`<p style="margin-top:10px">회계보고에 적힌 합계: <b>${won(x.total_pdf)}</b>${x.unverified?' <span class="u">미확인</span>':''}</p>`+
   (x.with&&x.with.length?`<p class="s">이 합계에는 함께 선거를 치른 정당 몫(${x.with.map(w=>esc(w[0])+' '+won(w[1])).join(', ')})이 들어 있어요.</p>`:'')+`<p class="s">출처: ${esc(x.pdf)}</p>`;}

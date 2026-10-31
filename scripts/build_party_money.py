@@ -13,7 +13,7 @@ mask_csv = Path(sys.argv[2] if len(sys.argv) > 2 else '/workspace/agent-tools/in
 MASK = {(r['party_as_of_registration'], int(r['row'])) for r in csv.DictReader(open(mask_csv))} if mask_csv.exists() else set()
 masked = 0
 # 팩트체크 비서 확인값(2026-10-30). 지급 당시 정당명 기준. 위성정당 몫은 회계보고 PDF 합계에 포함.
-EXTRA = {'국민의힘': {'with': [['국민의미래', 2804433130]], 'total_pdf': 41152151070, 'pdf': '2024 회계보고 PDF'},
+EXTRA = {'국민의힘': {'with': [['국민의미래', 2804433130]], 'total_pdf': 41152151070, 'pdf': '2024 회계보고 PDF 648쪽'},
          '더불어민주당': {'with': [['더불어민주연합', 2827091700]], 'total_pdf': 43810007470, 'pdf': '2024 회계보고 PDF 647쪽'},
          '개혁신당': {'with': [], 'total_pdf': 3491858180, 'pdf': '2024 회계보고 PDF 650쪽', 'unverified': True}}
 mp = json.load(open(src / 'map_by_party.json'))
