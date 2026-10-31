@@ -77,6 +77,49 @@ def invalid_rows(payload):
     return bad
 
 
+# The older Pages artifact check verified only public field *names*.
+# A permitted field containing a nested object could still expose private data.
+PUBLIC_TRADE_FIELDS = {
+    "id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed",
+    "amt", "doc", "r", "rspy", "party", "state",
+}
+
+
+def validate_public_trades(payload):
+    """Fail closed if the public trade summary contains hidden nested metadata."""
+    import math
+
+    if not isinstance(payload, dict):
+        raise ValueError("public trades must be an object")
+    extra = set(payload) - {"updated", "source", "note", "trades"}
+    if extra:
+        raise ValueError(f"non-public top-level fields: {sorted(extra)}")
+    for key in ("updated", "source", "note"):
+        value = payload.get(key)
+        if value is not None and (
+            not isinstance(value, str) or len(value) > 2000
+            or re.search(r"[<>\x00-\x1f\x7f]", value)
+        ):
+            raise ValueError(f"unsafe public metadata: {key}")
+    rows = payload.get("trades")
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("public trades must contain a nonempty list")
+    for i, row in enumerate(rows):
+        if not isinstance(row, dict):
+            raise ValueError(f"public trade row {i} is not an object")
+        extra = set(row) - PUBLIC_TRADE_FIELDS
+        if extra:
+            raise ValueError(f"non-public trade row {i} fields: {sorted(extra)}")
+        for key, value in row.items():
+            if isinstance(value, bool) or not isinstance(value, (str, int, float)):
+                raise ValueError(f"unsafe public trade row {i} field: {key}")
+            if isinstance(value, str):
+                if len(value) > 2000 or re.search(r"[<>\x00-\x1f\x7f]", value):
+                    raise ValueError(f"unsafe public trade row {i} field: {key}")
+            elif not math.isfinite(value):
+                raise ValueError(f"non-finite public trade row {i} field: {key}")
+
+
 def sanitize_file(path):
     """Quarantine invalid rows in the PUBLIC COPY; refuse to publish all-invalid data."""
     path = Path(path)
