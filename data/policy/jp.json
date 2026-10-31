@@ -1,10 +1,35 @@
 {
-"updated": "2026-10-30",
+"updated": "2026-10-31",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "egov:145210794",
+"kind": "pubcomment",
+"t": "行政書士法施行規則の一部を改正する省令（案）に対する意見募集",
+"d": "2026-10-31",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210794&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
+},
+{
+"id": "kantei:24b048240eeb",
+"kind": "news",
+"t": "高市総理は第８回地域未来戦略に関する関係副大臣等会議・地域未来戦略に関する総理報告に出席しました",
+"d": "2026-10-31",
+"u": "https://www.kantei.go.jp/jp/105/actions/202610/30chiikimirai.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
 {
 "id": "egov:410080069",
 "kind": "pubcomment",
@@ -146,6 +171,116 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:155260725",
+"kind": "pubcomment",
+"t": "「基礎ぐいを有する建築物の転倒に対する検証・改修指針（案）」に関する意見募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155260725&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
+{
+"id": "egov:495260246",
+"kind": "pubcomment",
+"t": "医薬品、医療機器等の品質、有効性及び安全性の確保等に関する法律施行規則第二百十六条の二第一項の規定に基づき厚生労働大臣が指定する医薬品及び期間の一部を改正する件（案）に関する御意見の募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260246&Mode=0",
+"dept": null,
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "egov:550004440",
+"kind": "pubcomment",
+"t": "トド管理基本方針の一部改正案についての意見・情報の募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=550004440&Mode=0",
+"dept": "水産庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 수산청(수산 담당 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Fisheries Agency: public comment request on a draft rule"
+},
+{
+"id": "egov:495260239",
+"kind": "pubcomment",
+"t": "ヒトゲノム編集胚等の取扱いの規制に関する法律施行令（案）に関する御意見の募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260239&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:495260240",
+"kind": "pubcomment",
+"t": "ヒトゲノム編集胚等の取扱いの規制に関する法律施行規則（案）に関する御意見の募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260240&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:495260241",
+"kind": "pubcomment",
+"t": "ヒトゲノム編集胚等の取扱いに関する指針（案）に関する御意見の募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260241&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:155260729",
+"kind": "pubcomment",
+"t": "畜舎等の建築等及び利用の特例に関する法律施行規則の一部を改正する省令案に関する意見募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155260729&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
+{
+"id": "egov:595320118",
+"kind": "pubcomment",
+"t": "経済産業省関係産業競争力強化法施行規則の一部を改正する省令（案）に対する意見募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320118&Mode=0",
+"dept": "​経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "egov:595320119",
+"kind": "pubcomment",
+"t": "経済産業省関係産業競争力強化法施行規則第二十九条第二項の規定に基づき認証紛争解決事業者が手続実施者に確認を求める事項の一部を改正する告示（案）に対する意見募集について",
+"d": "2026-10-30",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320119&Mode=0",
+"dept": "経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
 },
 {
 "id": "egov:240000133",
