@@ -31,7 +31,7 @@
     const mine = S.rows.filter(r => r.who === h.textContent.trim()); if (!mine.length) return; const E = en();
     const d = document.createElement('div'); d.className = 'mtLateLine r'; d.style.cssText = 'margin-top:4px;font:12px ui-monospace,monospace';
     d.innerHTML = mine.slice(0, 3).map(r => `${E ? 'Traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}` + (r.tags ? '<div style="font:11px/1.4 system-ui,sans-serif;color:#ffd60a">' + r.tags.map(g => esc(tagText(g))).join('<br>') + '</div>' : '')).join('<br>'); if (mine.some(r => r.tags)) c.parentNode.style.outline = '2px solid #ffd60a';
-    d.append(document.createElement('br'), saveBtn(mine[0])); k.parentNode.insertBefore(d, k.nextSibling.nextSibling || null);
+    d.append(document.createElement('br'), saveBtn(mine[0])); const fd = document.createElement('details'); fd.className = 'mtMore'; const nt = (mine[0].tags || []).length; fd.innerHTML = `<summary>${E ? 'Filing dates' : '신고 날짜'} ${lateTag(mine[0])}${nt ? ` <span class="mtCnt">${E ? 'flags ' : '표시 '}${nt}</span>` : ''}</summary>`; fd.append(d); const ref = c.querySelector('.mtNum'); if (ref) ref.after(fd); else k.parentNode.insertBefore(fd, k.nextSibling.nextSibling || null);
   }
   // Unusual-trade tags (computed in build_ticker_extra.py; dates only, no causal wording).
   function tagText(g) { const E = en(), rg = S.range ? md(S.range[0]) : '';
@@ -87,7 +87,7 @@
   S.openMember = async (r) => { popup(await memberHTML(r.id, r.who), r.ll); };
   async function enrich(c) {
     const k = c.querySelector('.k'); if (!k || c.dataset.mtRich) return; c.dataset.mtRich = 1; const t = k.textContent, E = en(), add = h => c.insertAdjacentHTML('beforeend', `<div class="mtEnr" style="border-top:1px solid #24493b;margin-top:5px;padding-top:4px">${h}</div>`);
-    if (/PTR/.test(t)) { const h = c.querySelector('.h'), r = S.rows && S.rows.find(x => x.who === (h && h.textContent.trim())); if (r) { const d = document.createElement('div'); d.innerHTML = await memberHTML(r.id, r.who); d.querySelector('.k').remove(); d.querySelector('.h').remove(); add(d.innerHTML); } return; }
+    if (/PTR/.test(t)) { const h = c.querySelector('.h'), r = S.rows && S.rows.find(x => x.who === (h && h.textContent.trim())); if (r) { const d = document.createElement('div'); d.innerHTML = await memberHTML(r.id, r.who); d.querySelector('.k').remove(); d.querySelector('.h').remove(); const pd = d.querySelector(':scope > div'); if (pd && !pd.className) pd.remove(); add(`<details class="mtMore"><summary>${E ? 'Bills and other trades' : '법안 · 다른 종목 거래'}</summary>${d.innerHTML}</details>`); } return; }
     const x = await getTX(), e = x && x.tickers && S.sym && x.tickers[S.sym]; if (!e) return;
     if (/Form 4/.test(t) && e.f4 && e.f4.rows) add(`<div class="r"><b>${E ? 'Form 4 open-market rows' : 'Form 4 공개시장 거래'}</b></div>` + e.f4.rows.slice(0, 6).map(i => `<div class="s" style="color:#d8f5e3">${esc(i.who)} (${esc(i.role || '')}) · ${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')} ${Number(i.shares).toLocaleString('en-US')} @ $${Number(i.price).toFixed(2)} · ${esc(md(i.date))}${i.plan ? (E ? ' · 10b5-1 (sale planned in advance)' : ' · 10b5-1 (미리 계획한 매도)') : ''} ${lnk(i.url, E ? 'Filing' : '원문')}</div>`).join(''));
     else if (/US bill/.test(t) || /미국 법안/.test(t)) { const no = (c.querySelector('.h') || {}).textContent || '', bno = no.split(' · ')[0], b = (e.bills || []).find(z => z.no === bno) || {};

@@ -56,11 +56,13 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
   }
   function memberCard(m, sym) {
     const E = en(), pn = m.p === 'R' ? (E ? 'Republican' : '공화당') : (E ? 'Democrat' : '민주당');
-    const rows = m.n > 2
-      ? `<div class="r">${m.n} ${E ? 'trades' : '건'} · <b>${m.b} ${m.b === 1 ? 'buy' : 'buys'}</b> / <b>${m.s} ${m.s === 1 ? 'sell' : 'sells'}</b></div><div class="r">${E ? 'Latest' : '최근'}: <b>${m.last[0].s}</b> ${esc(m.last[0].amt)} · ${esc(m.last[0].d)}</div>`
-      : m.last.map(l => `<div class="r"><b>${l.s}</b> ${esc(l.amt)} · ${esc(l.d)}</div>`).join('');
-    return `<div class="k">${esc(sym)} · House PTR</div><div class="h">${esc(m.name)}</div><div>${pn} · ${esc(m.dist)}</div>${rows}` +
-      `<div class="s"><a href="${esc(m.last[0].doc)}" target="_blank" rel="noopener noreferrer">PTR filing ›</a> · ${E ? 'Lawmakers only report a money range, not the exact amount. The dot shows roughly where their home district is.' : '의원은 정확한 금액 대신 금액 범위만 신고해요. 점은 그 의원 지역구의 대략적인 위치예요.'}</div>`;
+    const sd = x => /^B/i.test(x) ? (E ? 'Buy' : '매수') : /^S/i.test(x) ? (E ? 'Sell' : '매도') : esc(x);
+    const box = (k, v) => `<span>${k}<b>${v}</b></span>`, l0 = m.last[0];
+    const nums = m.n > 2 ? box(E ? 'Trades' : '거래', m.n + (E ? '' : '건')) + box(E ? 'Buys' : '매수', m.b + (E ? '' : '건')) + box(E ? 'Sells' : '매도', m.s + (E ? '' : '건'))
+      : box(E ? 'Latest' : '최근 거래', sd(l0.s)) + box(E ? 'Amount' : '금액 범위', esc(l0.amt));
+    const rows = m.last.map(l => `<div class="s">${sd(l.s)} · ${esc(l.amt)} · ${esc(l.d)}</div>`).join('');
+    return `<div class="k">${esc(sym)} · ${E ? 'House PTR' : '의원 거래 신고(PTR)'}</div><div class="h">${esc(m.name)}</div><div>${pn} · ${esc(m.dist)}</div><div class="mtNum">${nums}</div>` +
+      `<details class="mtMore"><summary>${E ? 'More' : '자세히 보기'}</summary>${rows}<div class="s"><a href="${esc(l0.doc)}" target="_blank" rel="noopener noreferrer">${E ? 'PTR filing' : '신고서 원문'} ›</a></div><div class="s">${E ? 'Lawmakers only report a money range, not the exact amount. The dot shows roughly where their home district is.' : '의원은 정확한 금액 대신 금액 범위만 신고해요. 점은 그 의원 지역구의 대략적인 위치예요.'}</div></details>`;
   }
   function todayCard(k, t) {
     const mv = t.move, f = t.filing;
@@ -128,8 +130,8 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
   const koLic = l => ({'Public domain':'퍼블릭 도메인(자유 이용)','CC0':'퍼블릭 도메인 기증(자유 이용)','Attribution':'저작자 표시'})[l] || String(l || '').replace(/^CC BY-SA (\d\.\d)$/, '저작자 표시-동일조건 변경 허락 $1').replace(/^CC BY (\d\.\d)$/, '저작자 표시 $1');
   function dossierCard(sym, o) {
     const E = en(), im = (x, alt, w, h) => x ? `<figure style="margin:0;flex:0 0 ${w}px"><img src="${esc(x.src)}" alt="${esc(alt)}" style="width:${w}px;height:${h}px;object-fit:cover;border:1px solid #2f6b55;border-radius:3px;display:block"><figcaption style="font-size:8.5px;line-height:1.25;color:#7f978a;margin-top:2px">${E ? 'Photo: ' + esc(x.credit) + ' · Wikimedia Commons · ' : '사진: ' + esc(x.creditKo || x.credit) + ' · 위키미디어 공용 · '}<a href="${esc(x.page)}" target="_blank" rel="noopener noreferrer">${esc(E ? x.license : koLic(x.license))}</a></figcaption></figure>` : `<div style="flex:0 0 ${w}px;width:${w}px;height:${h}px;box-sizing:border-box;border:1px dashed #2f6b55;border-radius:3px;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px;font-size:9.5px;line-height:1.3;color:#7f978a">${E ? (alt === 'HQ' ? 'No free HQ photo found' : 'No free photo found') : (alt === 'HQ' ? '무료 본사 사진을 찾지 못했어요' : '무료 사진을 찾지 못했어요')}</div>`;
-    return `<div class="k">${esc(sym)} · ${E ? 'Dossier' : '기업 요약'}</div><div style="display:flex;gap:8px;margin:4px 0">${im(o.ceoImg, o.ceo, 96, 120)}${im(o.hqImg, 'HQ', 150, 120)}</div>` +
-      `<div class="r">${E ? 'HQ' : '본사'}: <b>${esc(E ? o.hq : (o.hqKo || o.hq))}</b></div><div class="r">${esc(E ? o.ceoTitle : koTitle(o.ceoTitle))}: <b>${esc(E ? o.ceo : (o.ceoKo || o.ceo))}</b></div><div class="s">${(o.ceoImg || o.hqImg) ? (E ? 'Photos come from Wikimedia Commons (free to use). ' : '사진은 위키미디어 공용(무료 사진)에서 가져왔어요. ') : ''}${E ? 'Boss names checked Oct 30, 2026.' : '대표 이름은 2026년 10월 30일에 확인했어요.'}</div>`;
+    return `<div class="k">${esc(sym)} · ${E ? 'Dossier' : '기업 요약'}</div>` +
+      `<div class="r">${E ? 'HQ' : '본사'}: <b>${esc(E ? o.hq : (o.hqKo || o.hq))}</b></div><div class="r">${esc(E ? o.ceoTitle : koTitle(o.ceoTitle))}: <b>${esc(E ? o.ceo : (o.ceoKo || o.ceo))}</b></div><div style="display:flex;gap:8px;margin:4px 0">${im(o.ceoImg, o.ceo, 96, 120)}${im(o.hqImg, 'HQ', 150, 120)}</div><div class="s">${(o.ceoImg || o.hqImg) ? (E ? 'Photos come from Wikimedia Commons (free to use). ' : '사진은 위키미디어 공용(무료 사진)에서 가져왔어요. ') : ''}${E ? 'Boss names checked Oct 30, 2026.' : '대표 이름은 2026년 10월 30일에 확인했어요.'}</div>`;
   }
   async function hub(sym) {
     { const my0 = cur, dd = await getDS(); const o = dd && dd.tickers && dd.tickers[sym];
