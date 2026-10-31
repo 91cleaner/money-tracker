@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "scripts"))
-from public_ptr_guard import invalid_rows, sanitize_file
+from public_ptr_guard import invalid_rows, sanitize_file, validate_public_trades
 
 PDF = "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035710.pdf"
 
@@ -145,6 +145,42 @@ class PublicPtrGuardTests(unittest.TestCase):
             with self.subTest(note=note), self.assertRaises(ValueError):
                 invalid_rows({"updated": "2026-10-28", "note": note, "trades": [record()]})
 
+
+
+    def test_public_trade_summary_rejects_nested_and_markup_values(self):
+        # The old artifact check only compared key names; these payloads
+        # would have passed despite exposing private data under allowed keys.
+        valid = {"updated": "2026-10-28", "source": "Official filing",
+                 "note": "Delayed public disclosure",
+                 "trades": [{"id": "A000001", "who": "Example Member",
+                             "tk": "ABC", "r": 1.5, "rspy": -0.4}]}
+        validate_public_trades(valid)
+        bad_rows = [
+            {"who": {"private_email": "secret@example.test"}},
+            {"asset": ["private", "metadata"]},
+            {"who": "<img src=x onerror=alert(1)>"},
+            {"tk": "ABC\nprivate"},
+            {"r": float("nan")},
+            {"rspy": float("inf")},
+            {"party": True},
+        ]
+        for bad in bad_rows:
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                payload = {**valid, "trades": [{**valid["trades"][0], **bad}]}
+                validate_public_trades(payload)
+
+    def test_public_trade_summary_rejects_unsafe_structure(self):
+        valid_row = {"who": "Example Member", "tk": "ABC"}
+        for payload in (
+            [],
+            {"updated": "2026-10-28", "trades": []},
+            {"updated": "2026-10-28", "trades": [None]},
+            {"updated": "2026-10-28", "trades": [valid_row], "private": "secret"},
+            {"updated": {"private": "secret"}, "trades": [valid_row]},
+            {"updated": "2026-10-28", "note": "<script>x</script>", "trades": [valid_row]},
+        ):
+            with self.subTest(payload=payload), self.assertRaises(ValueError):
+                validate_public_trades(payload)
 
 
 if __name__ == "__main__":
