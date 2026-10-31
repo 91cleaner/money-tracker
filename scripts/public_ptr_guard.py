@@ -15,8 +15,10 @@ OFFICIAL_PDF = re.compile(
 
 
 def _date(value):
-    if not isinstance(value, str):
-        raise ValueError("missing ISO date")
+    # date.fromisoformat also accepts compact (YYYYMMDD) and ISO week dates;
+    # public PTR JSON requires one unambiguous calendar-date representation.
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        raise ValueError("date must be YYYY-MM-DD")
     return dt.date.fromisoformat(value)
 
 
