@@ -1,6 +1,6 @@
 {
- "date": "2026-10-30",
- "generated_at": "2026-10-30T08:47Z",
+ "date": "2026-10-31",
+ "generated_at": "2026-10-31T08:27Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -10,13 +10,13 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-10-29",
+   "date": "2026-10-30",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-29까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-29",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-30까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-30",
    "rows": [
     {
      "label_ko": "Berkshire Hathaway Inc · 큰 주주",
@@ -25,6 +25,14 @@
      "value_en": "~$69.0M",
      "tone": "red",
      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
+    {
+     "label_ko": "Datadog, Inc. · 이사",
+     "label_en": "Datadog, Inc. · director",
+     "value_ko": "~$12.1M",
+     "value_en": "~$12.1M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000326/0001561550-26-000326-index.htm"
     },
     {
      "label_ko": "Goldman Sachs Group Inc · 이사",
@@ -49,14 +57,6 @@
      "value_en": "~$5.7M",
      "tone": "white",
      "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000263/0000080424-26-000263-index.htm"
-    },
-    {
-     "label_ko": "Robinhood Markets, Inc. · 이사",
-     "label_en": "Robinhood Markets, Inc. · director",
-     "value_ko": "~$5.2M",
-     "value_en": "~$5.2M",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1783879/000187091426000029/0001870914-26-000029-index.htm"
     }
    ],
    "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
@@ -64,8 +64,8 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $98.0M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $98.0M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $104.8M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $104.8M on record · Money Tracker"
   },
   {
    "id": "movers",
@@ -73,53 +73,53 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-10-28",
+   "date": "2026-10-29",
    "badge_ko": "큰 움직임",
    "badge_en": "BIG MOVERS",
    "title_ko": "어제 가장 크게 움직인 회사들",
    "title_en": "Companies that moved most at the last close",
-   "sub_ko": "2026-10-27 → 2026-10-28 마감 가격 비교 (우리가 지켜보는 회사 중)",
-   "sub_en": "Closing price 2026-10-27 → 2026-10-28 (among companies we track)",
+   "sub_ko": "2026-10-28 → 2026-10-29 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-10-28 → 2026-10-29 (among companies we track)",
    "rows": [
     {
-     "label_ko": "F5, Inc.",
-     "label_en": "F5, Inc.",
-     "value_ko": "-20.4%",
-     "value_en": "-20.4%",
+     "label_ko": "ServiceNow, Inc.",
+     "label_en": "ServiceNow, Inc.",
+     "value_ko": "-26.9%",
+     "value_en": "-26.9%",
      "tone": "red",
      "mark": "▼"
     },
     {
-     "label_ko": "Icon Plc",
-     "label_en": "Icon Plc",
-     "value_ko": "+17.0%",
-     "value_en": "+17.0%",
+     "label_ko": "Sprouts Farmers Market, Inc.",
+     "label_en": "Sprouts Farmers Market, Inc.",
+     "value_ko": "-22.6%",
+     "value_en": "-22.6%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Fortinet, Inc.",
+     "label_en": "Fortinet, Inc.",
+     "value_ko": "-20.1%",
+     "value_en": "-20.1%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Alkami Technology, Inc.",
+     "label_en": "Alkami Technology, Inc.",
+     "value_ko": "-18.3%",
+     "value_en": "-18.3%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "FTAI Aviation Ltd.",
+     "label_en": "FTAI Aviation Ltd.",
+     "value_ko": "+17.3%",
+     "value_en": "+17.3%",
      "tone": "green",
      "mark": "▲"
-    },
-    {
-     "label_ko": "Vertiv Holdings Co",
-     "label_en": "Vertiv Holdings Co",
-     "value_ko": "+16.5%",
-     "value_en": "+16.5%",
-     "tone": "green",
-     "mark": "▲"
-    },
-    {
-     "label_ko": "LPL Financial Holdings Inc.",
-     "label_en": "LPL Financial Holdings Inc.",
-     "value_ko": "-15.2%",
-     "value_en": "-15.2%",
-     "tone": "red",
-     "mark": "▼"
-    },
-    {
-     "label_ko": "Costar Group, Inc.",
-     "label_en": "Costar Group, Inc.",
-     "value_ko": "-14.0%",
-     "value_en": "-14.0%",
-     "tone": "red",
-     "mark": "▼"
     }
    ],
    "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
@@ -127,71 +127,8 @@
    "source_ko": "출처: 일별 마감 가격 기록",
    "source_en": "Source: daily closing prices",
    "source_url": "https://91cleaner.github.io/money-tracker/us.html",
-   "share_ko": "2026-10-28 마감 기준 가장 크게 움직인 회사: F5, Inc. -20.4% · 머니트래커",
-   "share_en": "Biggest mover at the 2026-10-28 close: F5, Inc. -20.4% · Money Tracker"
-  },
-  {
-   "id": "filings",
-   "kind": "filings",
-   "icon": "●",
-   "score": 80.0,
-   "layout": "list",
-   "date": "2026-10-29",
-   "badge_ko": "새 공시",
-   "badge_en": "NEW FILINGS",
-   "title_ko": "2026-10-29 회사들이 낸 '큰 소식' 신고서 16건",
-   "title_en": "16 'big news' notices companies filed on 2026-10-29",
-   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
-   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
-   "rows": [
-    {
-     "label_ko": "Church & Dwight Co Inc",
-     "label_en": "Church & Dwight Co Inc",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526437814/d178220d8k.htm"
-    },
-    {
-     "label_ko": "Clorox Co",
-     "label_en": "Clorox Co",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/21076/000120677426000586/clx4708451-8k.htm"
-    },
-    {
-     "label_ko": "General Motors Co",
-     "label_en": "General Motors Co",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1467858/000119312526437768/d128847d8k.htm"
-    },
-    {
-     "label_ko": "Harley-Davidson, Inc.",
-     "label_en": "Harley-Davidson, Inc.",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/793952/000079395226000065/hog-20261028.htm"
-    },
-    {
-     "label_ko": "Hormel Foods Corp",
-     "label_en": "Hormel Foods Corp",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/48465/000004846526000060/hrl-20261023.htm"
-    }
-   ],
-   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
-   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
-   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
-   "source_en": "Source: SEC 8-K notices (EDGAR)",
-   "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "2026-10-29 회사들이 낸 '큰 소식' 신고서 16건 · 머니트래커",
-   "share_en": "16 'big news' notices companies filed on 2026-10-29 · Money Tracker"
+   "share_ko": "2026-10-29 마감 기준 가장 크게 움직인 회사: ServiceNow, Inc. -26.9% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-10-29 close: ServiceNow, Inc. -26.9% · Money Tracker"
   },
   {
    "id": "president-2026-22292",
@@ -245,10 +182,73 @@
    "share_en": "Last similar move, same period: Tesla, Inc. -3.1% (not a cause) · Money Tracker"
   },
   {
+   "id": "filings",
+   "kind": "filings",
+   "icon": "●",
+   "score": 60.0,
+   "layout": "list",
+   "date": "2026-10-30",
+   "badge_ko": "새 공시",
+   "badge_en": "NEW FILINGS",
+   "title_ko": "2026-10-30 회사들이 낸 '큰 소식' 신고서 5건",
+   "title_en": "5 'big news' notices companies filed on 2026-10-30",
+   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
+   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
+   "rows": [
+    {
+     "label_ko": "Thermo Fisher Scientific Inc.",
+     "label_en": "Thermo Fisher Scientific Inc.",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/97745/000009774526000181/tmo-20261027.htm"
+    },
+    {
+     "label_ko": "Utz Brands, Inc.",
+     "label_en": "Utz Brands, Inc.",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1739566/000119312526441801/d237502d8k.htm"
+    },
+    {
+     "label_ko": "Azenta, Inc.",
+     "label_en": "Azenta, Inc.",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/933974/000162828026068443/azta-20261028.htm"
+    },
+    {
+     "label_ko": "Norwegian Cruise Line Holdings Ltd.",
+     "label_en": "Norwegian Cruise Line Holdings Ltd.",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1513761/000110465926120680/tm2628552d1_8k.htm"
+    },
+    {
+     "label_ko": "Public Storage",
+     "label_en": "Public Storage",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1393311/000119312526441763/d90432d8k.htm"
+    }
+   ],
+   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
+   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
+   "source_en": "Source: SEC 8-K notices (EDGAR)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "2026-10-30 회사들이 낸 '큰 소식' 신고서 5건 · 머니트래커",
+   "share_en": "5 'big news' notices companies filed on 2026-10-30 · Money Tracker"
+  },
+  {
    "id": "president-adjusting-imports-of-robotics-industrial",
    "kind": "president",
    "icon": "",
-   "score": 55.0,
+   "score": 46.8,
    "layout": "versus",
    "date": "2026-10-28",
    "badge_ko": "대통령 조치",
@@ -306,7 +306,7 @@
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 34.0,
+   "score": 28.0,
    "layout": "list",
    "date": "2026-10-27",
    "badge_ko": "늦은 신고 클럽",
@@ -351,37 +351,6 @@
    "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
    "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Pete Sessions 의원 25일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
    "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Pete Sessions, 25 days / we get a call if rent is 1 day late  · Money Tracker"
-  },
-  "latemove": {
-   "id": "latemove",
-   "kind": "latemove",
-   "icon": "●",
-   "score": 14.3,
-   "layout": "list",
-   "date": "2026-10-16",
-   "badge_ko": "늦은 신고 + 큰 변동",
-   "badge_en": "LATE + BIG MOVE",
-   "title_ko": "45일 넘게 걸린 신고, 그 사이 주가는?",
-   "title_en": "Filed after 45 days: what did the price do meanwhile?",
-   "sub_ko": "하원 신고 중 45일 초과 · 거래일 종가 대비 최근 종가 변동(수정종가)",
-   "sub_en": "House filings past 45 days · latest close vs trade-date close (adjusted)",
-   "rows": [
-    {
-     "mark": "●",
-     "label": "Lee BAC",
-     "value_ko": "53일 · 판 뒤 -18.4%",
-     "value_en": "53d · -18.4% since sale",
-     "tone": "red",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035490.pdf"
-    }
-   ],
-   "note_ko": "같은 기간 비교일 뿐 이유를 말하지 않아요. 금액은 구간이라 손익은 계산하지 않아요. 투자 조언 아님.",
-   "note_en": "Same-period comparison only, not a reason. Amounts are ranges, so no profit is computed. Not investment advice.",
-   "source_ko": "출처: 하원 PTR(의원 주식 거래 신고) · 일별 수정종가 기준",
-   "source_en": "Source: House PTRs · daily adjusted closes",
-   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "45일 넘겨 신고된 거래 중 Laurel Lee BAC: 거래일 대비 -18.4% · 머니트래커",
-   "share_en": "Filed past 45 days: Laurel Lee BAC, -18.4% since the trade date · Money Tracker"
   },
   "president": {
    "id": "president-2026-22292",
@@ -440,13 +409,13 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-10-29",
+   "date": "2026-10-30",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-29까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-29",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-30까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-30",
    "rows": [
     {
      "label_ko": "Berkshire Hathaway Inc · 큰 주주",
@@ -455,6 +424,14 @@
      "value_en": "~$69.0M",
      "tone": "red",
      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
+    {
+     "label_ko": "Datadog, Inc. · 이사",
+     "label_en": "Datadog, Inc. · director",
+     "value_ko": "~$12.1M",
+     "value_en": "~$12.1M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000326/0001561550-26-000326-index.htm"
     },
     {
      "label_ko": "Goldman Sachs Group Inc · 이사",
@@ -479,14 +456,6 @@
      "value_en": "~$5.7M",
      "tone": "white",
      "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000263/0000080424-26-000263-index.htm"
-    },
-    {
-     "label_ko": "Robinhood Markets, Inc. · 이사",
-     "label_en": "Robinhood Markets, Inc. · director",
-     "value_ko": "~$5.2M",
-     "value_en": "~$5.2M",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1783879/000187091426000029/0001870914-26-000029-index.htm"
     }
    ],
    "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
@@ -494,8 +463,8 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $98.0M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $98.0M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $104.8M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $104.8M on record · Money Tracker"
   },
   "debt": {
    "id": "debt",
@@ -503,18 +472,18 @@
    "icon": "●",
    "score": 30.0,
    "layout": "big",
-   "date": "2026-10-28",
+   "date": "2026-10-29",
    "badge_ko": "국가 채무",
    "badge_en": "NATIONAL DEBT",
    "title_ko": "미국 정부가 지금까지 진 빚 (총 채무)",
    "title_en": "How much the US government owes (total public debt)",
    "big": {
-    "value": "$40,551,054,852,362",
-    "short_ko": "$40.55조",
-    "short_en": "$40.55 trillion"
+    "value": "$40,593,637,262,883",
+    "short_ko": "$40.59조",
+    "short_en": "$40.59 trillion"
    },
-   "sub_ko": "2026-10-28 기준",
-   "sub_en": "As of 2026-10-28",
+   "sub_ko": "2026-10-29 기준",
+   "sub_en": "As of 2026-10-29",
    "rows": [
     {
      "label_ko": "1년 전 같은 날엔",
@@ -526,15 +495,15 @@
     {
      "label_ko": "1년 사이 불어난 빚",
      "label_en": "Debt added in one year",
-     "value_ko": "+$2.47조",
-     "value_en": "+$2.47 T",
+     "value_ko": "+$2.52조",
+     "value_en": "+$2.52 T",
      "tone": "red"
     },
     {
      "label_ko": "1초마다 늘어난 빚 (최근 30일 평균)",
      "label_en": "Added every second (30-day avg)",
-     "value_ko": "+$173,175",
-     "value_en": "+$173,175",
+     "value_ko": "+$191,621",
+     "value_en": "+$191,621",
      "tone": "amber"
     }
    ],
@@ -543,8 +512,8 @@
    "source_ko": "출처: 미 재무부 재정 데이터 (FiscalData)",
    "source_en": "Source: U.S. Treasury FiscalData",
    "source_url": "https://fiscaldata.treasury.gov/",
-   "share_ko": "미국 정부가 지금까지 진 빚 $40.55조 (2026-10-28 기준) · 머니트래커",
-   "share_en": "How much the US government owes: $40.55 trillion (as of 2026-10-28) · Money Tracker"
+   "share_ko": "미국 정부가 지금까지 진 빚 $40.59조 (2026-10-29 기준) · 머니트래커",
+   "share_en": "How much the US government owes: $40.59 trillion (as of 2026-10-29) · Money Tracker"
   }
  }
 }
