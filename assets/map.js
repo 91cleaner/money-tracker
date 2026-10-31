@@ -69,6 +69,7 @@ function satView(box, geo, cities, onPick) {
   tiles.on('tileload', () => { ok = true; box.classList.remove('loading'); });
   tiles.on('tileerror', () => { if (++errs >= 4 && !ok && !failed) { failed = true; view.onfail && view.onfail(); } });
   tiles.addTo(map);
+  if (window.mtKoreaExtras) mtKoreaExtras(map);
   setTimeout(() => { if (!ok && !failed) { failed = true; view.onfail && view.onfail(); } }, 8000);
 
   const maxT = cities[0] ? cities[0].total : 1;
