@@ -79,5 +79,37 @@ class PublicPtrGuardTests(unittest.TestCase):
                 invalid_rows(data)
 
 
+    def test_nonpublic_fields_cannot_reach_public_snapshot(self):
+        # A collector change must not silently publish private metadata just
+        # because its trade dates and official PDF URL look legitimate.
+        valid = record()
+        unsafe = record(email="private@example.test", internal_review="pending")
+        data = {"updated": "2026-10-28", "trades": [valid, unsafe]}
+        self.assertEqual([i for i, _ in invalid_rows(data)], [1])
+        with tempfile.TemporaryDirectory() as td:
+            path = pathlib.Path(td) / "trades-recent.json"
+            path.write_text(json.dumps(data))
+            self.assertEqual(sanitize_file(path), (1, 1))
+            public = json.loads(path.read_text())
+            self.assertEqual(public["trades"], [valid])
+            self.assertNotIn("private@example.test", path.read_text())
+            self.assertEqual(invalid_rows(public), [])
+
+    def test_unexpected_top_level_fields_fail_closed(self):
+        valid = {"updated": "2026-10-28", "trades": [record()]}
+        for extra in ({"api_key": "secret"}, {"note": {"internal": "secret"}}):
+            with self.subTest(extra=extra):
+                data = {**valid, **extra}
+                with self.assertRaisesRegex(ValueError, "Non-public|note must be text"):
+                    invalid_rows(data)
+                with tempfile.TemporaryDirectory() as td:
+                    path = pathlib.Path(td) / "trades-recent.json"
+                    original = json.dumps(data)
+                    path.write_text(original)
+                    with self.assertRaises(ValueError):
+                        sanitize_file(path)
+                    self.assertEqual(path.read_text(), original)
+
+
 if __name__ == "__main__":
     unittest.main()
