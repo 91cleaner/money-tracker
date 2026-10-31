@@ -49,3 +49,56 @@ Weekly dashboard should report provider-sourced visitors, country-entry clickthr
 - **Data owner action:** Inventory the 83,960-file output by top-level folder, extension, and total bytes; review every `data/**` path for public redistribution rights, identifiers, sensitive attributes and provenance; move any proprietary dataset outside this public GitHub repository **before** claiming privacy. Record the reviewed public manifest in a versioned release artifact, not in client JavaScript.
 - **CI owner acceptance:** Replace broad `data/` publication with an explicit reviewed allowlist or generated allowlist manifest. Add a negative fixture `data/should-never-publish.json` and require build failure or exclusion; test an unexpected nested JSON/CSV, symlink, private filename and newly introduced data directory. Compare actual uploaded artifact paths against the approved manifest on the **merged main SHA**, then verify anonymous production URLs. Keep the source ledger unchanged.
 - **Independent blockers:** The stale entry grep should be resolved via #403, the PTR field/date checks via #412, and the full-ledger-versus-summary contract conflict with #193/#228 via owner decision. None of those PRs, nor this documentation change, certifies that all 83,960 files are safe. **Generative AI: NOT CONNECTED. Real-time executed trades: NOT CONNECTED.**
+
+
+## Executable public-artifact manifest audit (2026-10-31 22:56 KST)
+
+This is an **operator-run, fail-closed release procedure**, not a CI implementation or proof that the previously observed 83,960 files are safe. It complements [issue #116](https://github.com/91cleaner/money-tracker/issues/116) and the data-owner allowlist work. Run against the **combined, owner-approved merge commit**, not an isolated PR. The GitHub repository remains **public** even if Pages filtering succeeds.
+
+1. On a trusted Linux runner, build and inspect the **actual** Pages artifact, never the repository root.
+2. Generate a deterministic path/size/SHA-256 manifest for **every** file. Store it in a protected review location, not in public Pages or committed `data/`.
+3. Require the data owner's independently approved manifest. **No baseline, extra file, changed hash, or symlink = block release.** Matching hashes do not replace provenance, privacy or redistribution-rights review.
+
+```bash
+set -euo pipefail
+python3 scripts/prepare-public-pages.py
+python3 scripts/check-pages-artifact.py
+python3 - <<'PY'
+from pathlib import Path
+import hashlib
+
+root = Path('.public-pages')
+if not root.is_dir():
+    raise SystemExit('BLOCK: missing public artifact')
+rows = []
+data_count = 0
+for path in root.rglob('*'):
+    if path.is_symlink():
+        raise SystemExit('BLOCK: symlink in public artifact')
+    if not path.is_file():
+        continue
+    rel = path.relative_to(root).as_posix()
+    data_count += rel.startswith('data/')
+    digest = hashlib.sha256()
+    with path.open('rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    rows.append((rel, path.stat().st_size, digest.hexdigest()))
+rows.sort()
+manifest = Path('/tmp/mt-pages-manifest.tsv')
+manifest.write_text(
+    ''.join(f'{name}\t{size}\t{sha}\n' for name, size, sha in rows),
+    encoding='utf-8',
+)
+print(f'files={len(rows)} data_files={data_count} manifest={manifest}')
+PY
+# Set APPROVED_MANIFEST to the protected, independently reviewed baseline.
+: "${APPROVED_MANIFEST:?BLOCK: approved manifest is required}"
+test -f "$APPROVED_MANIFEST" || { echo 'BLOCK: approved manifest missing'; exit 1; }
+cmp -s "$APPROVED_MANIFEST" /tmp/mt-pages-manifest.tsv ||
+  { echo 'BLOCK: Pages manifest changed; review before release'; exit 1; }
+```
+
+After the approved CI/deployment change, inspect **Settings → Pages → Source** and compare the merged SHA's uploaded artifact with the **live** site using PR #403's `check-pages-entry.py --site-url ... --expected-dir .public-pages` (only once that PR is merged). Check anonymous direct URLs for `data/us/trades.json`, `data/us/house-ptr-candidates.json`, `data/us/ptr-crosschecks.json`, and server files; unexpected HTTP 200 blocks release. A five-file smoke test is **not** a full JSON/CSV confidentiality audit. Do not silently resolve the #193/#412/#228 publication-contract conflict. Record manifest hash, reviewer approval, merged SHA, CI/deploy URLs and anonymous URL responses.
+
+**Generative AI analysis: NOT CONNECTED. Live executed-trade feed: NOT CONNECTED.**
