@@ -24,7 +24,7 @@
 #mtNow img{max-width:46%;height:auto;border-radius:6px}#mtNow figure{margin:0}
 #mtNow .mtNum{display:inline-block}
 @media(min-width:900px){
- #mtSide{position:fixed;right:0;top:var(--mtSideTop,106px);bottom:0;width:400px;z-index:1450;display:flex;flex-direction:column;gap:8px;padding:10px;background:#020a06;border-left:1px solid #2bff8855;overflow:hidden}
+ #mtSide{position:fixed;right:0;top:var(--mtSideTop,106px);height:var(--mtSideH,calc(100dvh - 106px));bottom:auto;width:400px;z-index:1450;display:flex;flex-direction:column;gap:8px;padding:10px;background:#020a06;border-left:1px solid #2bff8855;overflow:hidden}
  #mapFrame{right:400px!important;width:auto!important}
  #mtTicker{right:400px!important;width:auto!important}
  #mtSide>#brief{position:static!important;inset:auto!important;width:auto!important;max-height:none!important;flex:1 1 auto;min-height:0;overflow:auto!important;margin:0!important;transform:none!important}
@@ -70,6 +70,7 @@
     const bt = $('briefTitle'); if (bt) new MutationObserver(later).observe(bt, { childList: true, characterData: true, subtree: true });
     layout(); later(); setTimeout(layout, 3000);
   };
+  setInterval(() => { const mf = $('mapFrame'); if (side && mf && mq.matches) { const m = mf.getBoundingClientRect().top, sr = side.getBoundingClientRect(), cur = parseFloat(side.style.getPropertyValue('--mtSideTop')) || 0, t = Math.round(cur + m - sr.top), h = Math.round(innerHeight - m); if (Math.abs(m - sr.top) > 1) side.style.setProperty('--mtSideTop', t + 'px'); if (Math.abs(sr.height - h) > 1) side.style.setProperty('--mtSideH', h + 'px'); } }, 700);
   mq.addEventListener('change', layout); addEventListener('resize', () => setTimeout(resize, 100));
   if (document.readyState === 'complete') boot(); else addEventListener('load', boot);
 })();
@@ -115,6 +116,7 @@
     let box = $('mtToday'); if (!box) { box = document.createElement('section'); box.id = 'mtToday'; box.setAttribute('aria-label', '오늘의 기록'); }
     if (!s) {
       const side = $('mtSide'); box.className = 'home';
+      if ($('mtTabs')) { const tp = $('tbPanel'); if (tp && box.parentNode !== tp && document.querySelector('#mtTabBar button[data-t=today][aria-selected=true]')) tp.replaceChildren(box); } else
       if (side && getComputedStyle(side).display !== 'none' && matchMedia('(min-width:900px)').matches) { if (box.parentNode !== side) side.prepend(box); } else if (box.parentNode !== document.body) document.body.append(box);
       const first = data.cards.flatMap((c) => c.items).find((i) => i.tk && !/,/.test(i.tk));
       box.innerHTML = `<div class="tdHd"><b>오늘의 기록</b><span>${esc(data.date)}</span></div>` +
