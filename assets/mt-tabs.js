@@ -5,7 +5,7 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const tk = new URLSearchParams(location.search).get('ticker');
-  const wide = () => matchMedia('(min-width:900px)').matches;
+  const wide = () => matchMedia('(min-width:900px), (orientation:landscape) and (min-width:640px)').matches;
   if (tk) return; // ticker pages keep their own stop panel
   const money = (v) => v >= 1e9 ? `$${(v / 1e9).toFixed(1)}B` : v >= 1e6 ? `$${(v / 1e6).toFixed(1)}M` : `$${Math.round(v).toLocaleString('en-US')}`;
   const SIDE = { P: '매수', S: '매도', 'S (partial)': '일부 매도', E: '교환' };
@@ -29,14 +29,14 @@
 #mtTabBar{display:flex;gap:4px;padding:6px;border-radius:18px;background:#07110b;border:1px solid #1e3a2a;margin-top:8px}
 #mtTabBar button{flex:1;min-width:0;padding:9px 2px;border:0;border-radius:12px;background:none;color:#9fc7ad;font:700 13px Pretendard,system-ui,sans-serif;cursor:pointer}
 #mtTabBar button[aria-selected=true]{background:#5dff9e;color:#02110a}
-@media(max-width:899px){
- #mtTabs{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:1500;max-height:62dvh;padding:10px;border-radius:22px;background:#030906f2;border:1px solid #1e3a2a;box-shadow:0 -8px 30px #000a}
+@media(max-width:899px) and (orientation:portrait), (max-width:639px){
+ #mtTabs{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:1500;max-height:50dvh;padding:10px;border-radius:22px;background:#030906f2;border:1px solid #1e3a2a;box-shadow:0 -8px 30px #000a}
  #mtTabs .tbHero b{font-size:28px}
- #controls{bottom:calc(62dvh + 18px)!important}
+ #controls{bottom:calc(50dvh + 18px)!important}
 }
 #tbPanel #mtToday.home{position:static!important;inset:auto!important;max-height:none!important;border:0!important;background:none!important;padding:0!important;box-shadow:none!important}
 #tbPanel #mtToday .tdHd{display:none}
-@media(min-width:900px){#mtSide>#mtTabs{flex:1 1 auto;min-height:0}}`;
+@media(min-width:900px), (orientation:landscape) and (min-width:640px){#mtSide>#mtTabs{flex:1 1 auto;min-height:0}}`;
   document.head.append(css);
   const J = (u) => fetch(u, { cache: 'no-cache' }).then((r) => r.json()).catch(() => null);
   const root = document.createElement('section'); root.id = 'mtTabs'; root.setAttribute('aria-label', '미국 기록 보기');
