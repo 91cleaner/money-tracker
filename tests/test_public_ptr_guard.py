@@ -49,6 +49,22 @@ class PublicPtrGuardTests(unittest.TestCase):
         errors = invalid_rows({"updated": "2026-10-28", "trades": [record()] + bad})
         self.assertEqual([i for i, _ in errors], [1, 2, 3, 4])
 
+    def test_noncanonical_iso_dates_cannot_be_published(self):
+        # Python date.fromisoformat accepts compact and ISO-week dates, but
+        # both violate the public JSON calendar-date contract.
+        for bad_date in ("20261020", "2026-W43-2", "2026-10-2"):
+            with self.subTest(transaction_date=bad_date):
+                payload = {"updated": "2026-10-28",
+                           "trades": [record(), record(d=bad_date)]}
+                self.assertEqual([i for i, _ in invalid_rows(payload)], [1])
+            with self.subTest(snapshot_date=bad_date):
+                with self.assertRaisesRegex(ValueError, "YYYY-MM-DD"):
+                    invalid_rows({"updated": bad_date, "trades": [record()]})
+            with self.subTest(filing_date=bad_date):
+                payload = {"updated": "2026-10-28",
+                           "trades": [record(), record(fd=bad_date)]}
+                self.assertEqual([i for i, _ in invalid_rows(payload)], [1])
+
     def test_all_invalid_or_missing_snapshot_fails_closed(self):
         with tempfile.TemporaryDirectory() as td:
             path = pathlib.Path(td) / "trades-recent.json"
