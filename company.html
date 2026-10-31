@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MONEY TRACKER — 회사 상세</title>
+<title>미국주식추적단 — 회사 상세</title>
 <meta name="description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
-<meta property="og:title" content="MONEY TRACKER — 미국 회사 파일"><meta property="og:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
+<meta property="og:title" content="US Stock Trackers — 미국 회사 파일"><meta property="og:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 회사 파일"><meta name="twitter:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="US Stock Trackers — 미국 회사 파일"><meta name="twitter:description" content="미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
-<script src="assets/i18n.js?v=i18n-20261030a"></script>
+<script src="assets/i18n.js?v=i18n-20261030j"></script>
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
 *{box-sizing:border-box}
@@ -128,7 +128,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 </head>
 <body>
 <header class="bar">
-  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <a class="brand" href="./">◉ 미국주식추적단</a>
   <span class="crumb">US COMPANY FILE / 공개 기록 정리</span>
   <a class="mono" href="weekly.html">주간 순위표</a>
   <span class="sp"></span>
@@ -173,8 +173,10 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   }
   function onOrBefore(rows, iso) { for (var i = rows.length - 1; i >= 0; i--) if (rows[i].d <= iso) return rows[i]; return null; }
   function shift(iso, n) { var t = new Date(iso + "T00:00:00Z"); t.setUTCDate(t.getUTCDate() - n); return t.toISOString().slice(0, 10); }
-  function shiftMonth(iso) { var t = new Date(iso + "T00:00:00Z"); t.setUTCMonth(t.getUTCMonth() - 1); return t.toISOString().slice(0, 10); }
-  function change(last, base) { return base ? (last.c / base.c - 1) * 100 : null; }
+  function change(last, base, rows) { if (!base) return null;
+    // 끊김(10일 넘게 기록 없음)이나 하루 2배·절반 넘는 급변이 사이에 있으면 다른 증권이 섞였을 수 있어 계산하지 않는다
+    if (rows) { var a = rows.indexOf(base), b = rows.indexOf(last); for (var i = a + 1; i <= b; i++) { var r0 = rows[i - 1], r1 = rows[i], gap = (Date.parse(r1.d) - Date.parse(r0.d)) / 864e5, q = r1.c / r0.c; if (gap > 10 || q >= 2 || q <= 0.5) return null; } }
+    return (last.c / base.c - 1) * 100; }
 
   function nmOf(e) { return window.MTI18N && window.MTI18N.name ? window.MTI18N.name(e) : e.name; }
   var RANGES = [["1주", 7], ["1달", 31], ["1년", 366], ["전체", 0]];
@@ -183,10 +185,10 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var p = panel("주가 · 종가 기준");
     if (rows.length < 2) { p.appendChild(el("div", "empty", "주가 데이터 준비 중")); return p; }
     var last = rows[rows.length - 1], prev = rows[rows.length - 2];
-    var y = last.d.slice(0, 4), ytdBase = onOrBefore(rows, (Number(y) - 1) + "-12-31") || rows.filter(function (r) { return r.d.slice(0, 4) === y; })[0];
+    var y = last.d.slice(0, 4), ytdBase = onOrBefore(rows, (Number(y) - 1) + "-12-31");
     var items = [["종가 (" + last.d + ")", last.c.toLocaleString("en-US", { maximumFractionDigits: 2 }), null],
-      ["1일", null, change(last, prev)], ["1주", null, change(last, onOrBefore(rows, shift(last.d, 7)))],
-      ["1달", null, change(last, onOrBefore(rows, shiftMonth(last.d)))], ["연초 대비", null, change(last, ytdBase)]];
+      ["1일", null, change(last, prev, rows)], ["1주", null, change(last, onOrBefore(rows, shift(last.d, 7)), rows)],
+      ["최근 21거래일", null, change(last, rows.length > 21 ? rows[rows.length - 22] : null, rows)], ["연초 대비", null, change(last, ytdBase, rows)]];
     var kv = el("div", "kv");
     items.forEach(function (it) {
       var b = el("div"); var v = el("b"); var lab = el("span", "", it[0]);
@@ -195,6 +197,8 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       b.append(v, lab); kv.appendChild(b);
     });
     p.appendChild(kv);
+    if (!ytdBase) p.appendChild(el("p", "note", "이 종목의 기록은 " + rows[0].d + "부터라서 연초 대비는 계산하지 않아요."));
+    if (meta && meta.rn) { var rn = el("p", "note"); rn.id = "tickerChange"; rn.append(L(meta.rn.ko, meta.rn.en) + " ", link(L("SEC 공시 원문 ↗", "SEC filing ↗"), meta.rn.url)); p.appendChild(rn); }
     var rng = el("div", "rng"); rng.setAttribute("role", "group"); rng.setAttribute("aria-label", "차트 기간");
     var wrap = el("div", "chartw"), pinbox = el("div", "pinbox"), note = el("p", "note"), cur = RANGES[1];
     pinbox.hidden = true; pinbox.setAttribute("aria-live", "polite");
@@ -327,8 +331,8 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       p.appendChild(el("p", "say", L("최근 " + days + "일, 같은 기간에 임원·이사 등이 주식을 산 신고 " + buys.length + "건, 판 신고 " + sells.length + "건이 있었어요.",
         "In the last " + days + " days, insiders filed " + buys.length + " buy reports and " + sells.length + " sell reports.")));
       var big = el("div", "big"), b = el("div", "b"), s2 = el("div", "s");
-      b.appendChild(el("b", "", String(ppl(buys)))); b.appendChild(el("span", "", L("🟢 산 사람", "🟢 People who bought")));
-      s2.appendChild(el("b", "", String(ppl(sells)))); s2.appendChild(el("span", "", L("🔴 판 사람", "🔴 People who sold")));
+      b.appendChild(el("b", "", String(ppl(buys)))); b.appendChild(el("span", "", L("산 사람", "People who bought")));
+      s2.appendChild(el("b", "", String(ppl(sells)))); s2.appendChild(el("span", "", L("판 사람", "People who sold")));
       big.appendChild(b); big.appendChild(s2); p.appendChild(big);
       var vb = val(buys), vs = val(sells), tot = vb + vs;
       if (tot > 0) {
@@ -369,20 +373,20 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   function ago(iso) { var n = days(iso, new Date().toISOString().slice(0, 10)); return n == null ? "" : n <= 0 ? L("오늘", "today") : L(n + "일 전", n + " days ago"); }
   function addrLines(a) { if (!a) return null; return [a.street1, a.street2, [a.city, a.state].filter(Boolean).join(", ") + (a.zip ? " " + a.zip : "")].filter(function (x) { return x && x.trim(); }).join("\n"); }
   function filingsBlock(sf, trades) {
-    var p = panel(L("📬 회사가 낸 공시 · 본사 주소", "📬 Filings & headquarters"), null, true);
+    var p = panel(L("회사가 낸 공시 · 본사 주소", "Filings & headquarters"), null, true);
     if (!sf) { p.appendChild(el("div", "empty", L("공시 자료를 아직 못 가져왔어요. 조금 뒤에 다시 와 주세요!", "Filing data is not ready yet. Please check back soon!"))); return p; }
     var k8 = sf.k8 || [], k10 = sf.k10 || [], today = new Date().toISOString().slice(0, 10);
     var in90 = k8.filter(function (x) { var n = days(x.filed, today); return n != null && n <= 90; }).length;
     var tr90 = trades.filter(function (x) { var n = days(x.filed, today); return n != null && n >= 0 && n <= 90; }).length;
     var sc = el("div", "score");
-    [[k10.length, L("📘 연간 보고서(10-K) 스탬프", "📘 Annual reports (10-K)")], [k8.length, L("📣 수시 공시(8-K) 스탬프", "📣 Current reports (8-K)")], [in90, L("🔥 최근 90일 8-K", "🔥 8-Ks in last 90 days")]].forEach(function (c) {
+    [[k10.length, L("연간 보고서(10-K) 스탬프", "Annual reports (10-K)")], [k8.length, L("수시 공시(8-K) 스탬프", "Current reports (8-K)")], [in90, L("최근 90일 8-K", "8-Ks in last 90 days")]].forEach(function (c) {
       var d = el("div"); d.append(el("b", "", String(c[0])), el("span", "", c[1])); sc.appendChild(d);
     });
     p.appendChild(sc);
     p.appendChild(el("p", "note", L("같은 기간에 이런 일이 있었어요: 최근 90일 동안 8-K " + in90 + "장, 의원 거래 신고 " + tr90 + "건. 서로 이어진 일이라는 뜻은 아니에요.", "In the same 90 days: " + in90 + " 8-K filings and " + tr90 + " lawmaker trade reports. This does not mean they are connected.")));
     var hq = addrLines(sf.hq);
     var h = el("div"); h.style.margin = "12px 0";
-    h.appendChild(el("h2", "", L("🏢 본사(사업장) 주소", "🏢 Headquarters (business address)")));
+    h.appendChild(el("h2", "", L("본사(사업장) 주소", "Headquarters (business address)")));
     var ad = el("div", "hq", hq || L("주소가 없어요", "No address on file")); ad.style.whiteSpace = "pre-line"; h.appendChild(ad);
     h.appendChild(el("p", "note", L("SEC에 낸 사업장 주소 그대로예요. 우편 주소와 다를 수 있어요.", "Business address exactly as filed with the SEC. It may differ from the mailing address.")));
     p.appendChild(h);
@@ -400,8 +404,8 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       });
       box.appendChild(ul); p.appendChild(box);
     }
-    list(L("📘 연간 보고서 10-K · 1년에 한 번 내는 큰 보고서", "📘 10-K · the big yearly report"), k10, "", L("연간 보고서", "Annual report"), false);
-    list(L("📣 수시 공시 8-K · 중요한 일이 생기면 바로 내는 알림", "📣 8-K · quick notice when something important happens"), k8, "k8", "", true);
+    list(L("연간 보고서 10-K · 1년에 한 번 내는 큰 보고서", "10-K · the big yearly report"), k10, "", L("연간 보고서", "Annual report"), false);
+    list(L("수시 공시 8-K · 중요한 일이 생기면 바로 내는 알림", "8-K · quick notice when something important happens"), k8, "k8", "", true);
     var a = el("div", "actions"); var b = link(L("SEC에서 전체 목록 보기 ↗", "All filings on SEC ↗"), sf.source_url); b.className = "btn"; a.appendChild(b); p.appendChild(a);
     return p;
   }
@@ -415,7 +419,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
   }
 
   if (!T) { notFound(); renderFoot({}); return; }
-  document.title = "MONEY TRACKER — " + T + " 회사 상세";
+  document.title = "미국주식추적단 — " + T + " 회사 상세";
   Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades_public.json"), get("data/us/lobbying.json"),
     get("data/us/pac-contributions.json"), get("data/us/ticker-routes.json"), get("data/us/members.json"), get("data/us/prices/" + encodeURIComponent(T) + ".json"), get("data/us/insights.json"), get("data/us/whitehouse.json"), get("data/us/insider-form4.json"), get("data/us/sec-filings.json")])
   .then(function (r) {
@@ -442,7 +446,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       meta.appendChild(link("SEC 원문 ↗", sec.source_url));
     } else meta.textContent = "SEC 업종 정보 없음";
     head.appendChild(meta);
-    var acts = el("div", "actions"), mapBtn = el("a", "btn", "🛰 지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(T); acts.appendChild(mapBtn);
+    var acts = el("div", "actions"), mapBtn = el("a", "btn", "지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(T); acts.appendChild(mapBtn);
     if (window.MTShare) {
       // 공유: insights.json 핵심 1줄 → 없으면 신고 건수 → 없으면 SEC 업종 (모두 원문 링크와 함께)
       var coName = (ent && nmOf(ent)) || (sec && sec.name) || T, sh = ins && ins.companies ? window.MTShare.pick(ins.companies[T]) : null;
@@ -450,12 +454,12 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       if (!sh && sec) sh = { line: "SEC 등록 업종 SIC " + sec.sic + " " + (sec.sic_desc || ""), src: sec.source_url, date: "" };
       sh = sh || {};
       acts.appendChild(window.MTShare.button({ head: coName + (coName === T ? "" : "(" + T + ")"), line: sh.line, src: sh.src, date: sh.date, url: window.MTShare.url({ t: T }) }));
-      window.MTShare.meta("MONEY TRACKER — " + coName + " (" + T + ") 회사 파일", sh.line || "미국 상장사 공개 기록 정리 · 투자 조언 아님");
+      window.MTShare.meta("미국주식추적단 — " + coName + " (" + T + ") 회사 파일", sh.line || "미국 상장사 공개 기록 정리 · 투자 조언 아님");
     }
     head.appendChild(acts);
     app.appendChild(head);
     app.appendChild(filingsBlock((sfAll.companies || {})[T], trades));
-    if (window.MTMoneyTrio) { var trioHost = el("div"); trioHost.style.gridColumn = "1 / -1"; app.appendChild(trioHost); window.MTMoneyTrio.render(trioHost, T, { title: "🎮 돈 기록 3종 세트 · " + T }); }
+    if (window.MTMoneyTrio) { var trioHost = el("div"); trioHost.style.gridColumn = "1 / -1"; app.appendChild(trioHost); window.MTMoneyTrio.render(trioHost, T, { title: ((window.MTI18N && window.MTI18N.isEn) ? "Money records trio · " : "돈 기록 3종 세트 · ") + T }); }
 
     // 2) prices
     var pins = [];
@@ -519,5 +523,5 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 </script>
 <script src="assets/glossary.js?v=gl-20261029"></script>
 <script src="assets/commander.js?v=cmdr-20261028b"></script>
-</body>
+<script src="assets/mt-visits.js" defer></script></body>
 </html>

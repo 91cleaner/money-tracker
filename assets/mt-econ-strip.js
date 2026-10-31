@@ -1,4 +1,4 @@
-/* MONEY TRACKER — 미국 경제 띠 (US economy strip). 관제실 맨 위에 물가·일자리·금리를 크게 보여 준다.
+/* 미국주식추적단 — 미국 경제 띠 (US economy strip). 관제실 맨 위에 물가·일자리·금리를 크게 보여 준다.
    data/us-econ.json(BLS·FRED·Treasury 공식 자료)만 읽는다. 저장된 글자는 textContent 로만 넣는다.
    해석은 "같은 기간 ~이 있었어요" 형태의 사실만. 원인 단정·투자 조언 없음. 한국어/영어는 MTI18N.isEn 을 따른다. */
 (function () {
@@ -7,19 +7,19 @@
   var EN = !!(isBrowser && window.MTI18N && window.MTI18N.isEn);
 
   var DEF = {
-    cpi: { ico: "🛒", ko: "물가", en: "Prices", sub_ko: "1년 전보다", sub_en: "vs a year ago",
+    cpi: { ico: "●", ko: "물가", en: "Prices", sub_ko: "1년 전보다", sub_en: "vs a year ago",
       what_ko: "물가는 장바구니 물건값이 1년 전보다 얼마나 달라졌는지 보여 줘요. (미국 소비자물가, CPI)",
       what_en: "Prices show how much a basket of everyday goods changed versus a year ago (US CPI)." },
-    unrate: { ico: "💼", ko: "일자리", en: "Jobs", sub_ko: "일 못 구한 사람 비율", sub_en: "unemployment rate",
+    unrate: { ico: "●", ko: "일자리", en: "Jobs", sub_ko: "일 못 구한 사람 비율", sub_en: "unemployment rate",
       what_ko: "일자리 칸은 일할 사람 100명 중 일을 구하지 못한 사람이 몇 명인지 보여 줘요. (실업률)",
       what_en: "Out of every 100 people who want to work, how many do not have a job (unemployment rate)." },
-    y10: { ico: "🏦", ko: "10년 금리", en: "10-yr rate", sub_ko: "미국 국채 10년", sub_en: "10-year Treasury",
+    y10: { ico: "●", ko: "10년 금리", en: "10-yr rate", sub_ko: "미국 국채 10년", sub_en: "10-year Treasury",
       what_ko: "금리는 돈을 빌려 줄 때 붙는 값이에요. 10년 금리는 미국 정부에 10년 동안 돈을 빌려 줄 때의 이자예요.",
       what_en: "A rate is the price of borrowing money. The 10-year rate is what the US government pays to borrow for 10 years." },
-    y2: { ico: "⏱️", ko: "2년 금리", en: "2-yr rate", sub_ko: "미국 국채 2년", sub_en: "2-year Treasury",
+    y2: { ico: "●", ko: "2년 금리", en: "2-yr rate", sub_ko: "미국 국채 2년", sub_en: "2-year Treasury",
       what_ko: "2년 금리는 미국 정부에 2년 동안 돈을 빌려 줄 때의 이자예요.",
       what_en: "The 2-year rate is what the US government pays to borrow for 2 years." },
-    fedfunds: { ico: "🏛️", ko: "기준금리(실효)", en: "Fed funds", sub_ko: "은행끼리 하루 빌릴 때", sub_en: "overnight bank rate",
+    fedfunds: { ico: "●", ko: "기준금리(실효)", en: "Fed funds", sub_ko: "은행끼리 하루 빌릴 때", sub_en: "overnight bank rate",
       what_ko: "은행끼리 하루 동안 돈을 빌릴 때의 이자예요. 미국 중앙은행(연준)이 정하는 금리 근처에서 움직여요.",
       what_en: "The rate banks charge each other for overnight loans, which tracks the Federal Reserve's target." }
   };
@@ -93,7 +93,7 @@
   close.addEventListener("click", function () { document.documentElement.classList.add("mt-econ-off"); pop.hidden = true; });
   open.addEventListener("click", function () { document.documentElement.classList.remove("mt-econ-off"); });
 
-  function showDex(total) { var n = seen().length; dex.textContent = "🏅 " + n + "/" + total + (EN ? " today" : " 오늘 본 칸"); }
+  function showDex(total) { var n = seen().length; dex.textContent = "● " + n + "/" + total + (EN ? " today" : " 오늘 본 칸"); }
 
   function showPop(k, it, items, chip, total) {
     var d = DEF[k], open_ = chips.querySelector("[aria-expanded=true]");

@@ -1,0 +1,8 @@
+/* 휴대폰(손가락 터치)에서 누르는 곳을 넉넉하게: 보이는 모양은 그대로 두고 눌리는 범위만 넓힘 */
+@media (pointer:coarse){
+  a:not(.leaflet-container a):not(.leaflet-control-attribution a){padding-block:10px;margin-block:-10px}
+  button:not(.leaflet-container button){min-height:40px;min-width:40px}
+  select{min-height:40px}
+  input[type=range]{min-height:40px}
+}
+#fc-debt{font-size:clamp(22px,7.2vw,46px);white-space:nowrap;font-variant-numeric:tabular-nums}

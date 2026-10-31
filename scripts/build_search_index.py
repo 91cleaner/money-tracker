@@ -2,9 +2,9 @@
 """누적 데이터 → data/search-index.json (검색 개체 + 자동 생성 경로).
 
 입력: data/market/company-links.json, data/market/sectors.json, data/us/members.json(위원회 이름만),
-      data/us/ticker-sectors.json(있으면), data/us/trades.json(하원 PTR 신고 거래).
+      data/us/ticker-sectors.json(있으면), data/us/trades.json(하원 PTR(의원 주식 거래 신고) 거래).
 경로의 사실·출처는 모두 입력 데이터에서 가져온다. 손으로 쓴 사실 없음.
-미국 하원 의원 주식 거래(data/us/trades.json, PTR 신고 기준)는 2026-10-28 결정으로 공개. AI 미연결.
+미국 하원 의원 주식 거래(data/us/trades.json, PTR(의원 주식 거래 신고) 기준)는 2026-10-28 결정으로 공개. AI 미연결.
   python3 scripts/build_search_index.py
 """
 import json, os, re
@@ -37,6 +37,11 @@ CITY_LL = {  # SEC 사업장 주소 도시 → 좌표(공개 지명 좌표 근�
  "MENLO PARK,CA": (37.453, -122.1817), "BETHESDA,MD": (38.9847, -77.0947), "SUNNYVALE,CA": (37.3688, -122.0363),
  "LONDON,X0": (51.5074, -0.1278), "TORONTO,A6": (43.6532, -79.3832), "DUBLIN,L2": (53.3498, -6.2603),
 }
+# 위원회 이름 한국어 표기(한국어 화면에 영어가 섞이지 않게). 영어 화면은 assets/i18n.js가 되돌린다.
+CMTE_KO = {"Armed Services": "군사위원회", "Banking, Housing, and Urban Affairs": "은행·주택·도시 위원회", "Commerce, Science, and Transportation": "상무·과학·교통 위원회", "Energy and Natural Resources": "에너지·천연자원 위원회", "Environment and Public Works": "환경·공공사업 위원회", "Health, Education, Labor, and Pensions": "보건·교육·노동·연금 위원회", "Energy and Commerce": "에너지·상무 위원회", "Financial Services": "금융서비스 위원회", "House Select the Strategic Competition Between the United States and the Chinese Communist Party": "미중 전략 경쟁 특별위원회", "Transportation and Infrastructure": "교통·인프라 위원회"}
+# 영어 이름만 있는 종목의 한국어 이름
+KO_NAME = {"SPCX": "스페이스X"}
+
 def hq_ll(t, st_ll):
     k = (t.get("hq_city") or "").upper() + "," + (t.get("hq_state_or_country") or "")
     if k in CITY_LL: return list(CITY_LL[k]), "도시 좌표"
@@ -168,8 +173,8 @@ def new_layer_stops(ent):
         r = (RC.get("companies") or {}).get(tk)
         if r and r.get("items"):
             x = r["items"][0]; bs = r.get("by_source", {}); nh = bs.get("NHTSA", 0)
-            add.append({"region": f"{tk} · 리콜", "lat": dc[2] - 0.06, "lon": dc[3] + 0.06, "title": "리콜(NHTSA·openFDA)", "kind": "recall", "ref": "recall:" + tk,
-                "fact": f"데이터상 {RC.get('since')} 이후 리콜 {r['n']}건(NHTSA {nh}건, openFDA {r['n']-nh}건), 제조사·회수업체 이름 정확 일치. 최근 {x['date']} {x['id']}.",
+            add.append({"region": f"{tk} · 리콜", "lat": dc[2] - 0.06, "lon": dc[3] + 0.06, "title": "리콜(NHTSA·FDA)", "kind": "recall", "ref": "recall:" + tk,
+                "fact": f"데이터상 {RC.get('since')} 이후 리콜 {r['n']}건(NHTSA {nh}건, FDA {r['n']-nh}건), 제조사·회수업체 이름 정확 일치. 최근 {x['date']} {x['id']}.",
                 "source_url": x["url"], "date": x["date"]})
         b = (PB.get("companies") or {}).get(tk)
         if b and b.get("matches"):
@@ -194,8 +199,8 @@ def trade_parts(ent, mem_by_id):
         e = ent.get("company:" + tk)
         if not e: continue
         e["trades"] = rows[:5]; e["trade_n"] = len(rows)
-        e["route"].append({"region": f"{dc[0]} · 의원 거래", "lat": dc[2] - 0.05, "lon": dc[3] - 0.05, "title": "의원 주식 거래(하원 PTR)", "kind": "trade", "ref": "trade:" + tk,
-            "fact": f"데이터상 하원 PTR 신고 {len(rows)}건, 최근 신고일 {rows[0]['fd']}. 신고 기준이며 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
+        e["route"].append({"region": f"{dc[0]} · 의원 거래", "lat": dc[2] - 0.05, "lon": dc[3] - 0.05, "title": "하원 PTR(의원 주식 거래 신고)", "kind": "trade", "ref": "trade:" + tk,
+            "fact": f"데이터상 하원 PTR(의원 주식 거래 신고) {len(rows)}건, 최근 신고일 {rows[0]['fd']}. 신고 기준이며 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
             "source_url": rows[0]["doc"], "date": rows[0]["fd"]})
     n = 0
     for who, ts in by_who.items():
@@ -216,7 +221,7 @@ def trade_parts(ent, mem_by_id):
         al = [who, last] + ([KO_MEM[who], KO_MEM[who].split()[-1]] if who in KO_MEM else [])
         ent["member:" + (ts[0].get("id") or who)] = {"type": "member", "name": who + (f" ({m.get('party')}-{m.get('state')})" if m else ""), "aliases": al, "route": r, "trade_n": len(ts)}
         n += 1
-    json.dump({"updated": T[0].get("filed") if T else None, "note": "하원 PTR 신고 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.", "trades": [dict(tk=t["tk"], who=t["who"], ty=t["ty"], amt=t.get("amt"), d=t.get("d"), fd=t.get("filed"), doc=t["doc"]) for t in T[:20]]}, open(os.path.join(ROOT, "data", "us", "trades-recent.json"), "w"), ensure_ascii=False, indent=0)
+    json.dump({"updated": T[0].get("filed") if T else None, "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.", "trades": [dict(tk=t["tk"], who=t["who"], ty=t["ty"], amt=t.get("amt"), d=t.get("d"), fd=t.get("filed"), doc=t["doc"]) for t in T[:20]]}, open(os.path.join(ROOT, "data", "us", "trades-recent.json"), "w"), ensure_ascii=False, indent=0)
     return len(T), n
 
 LANDMARK = [  # 제정 법률(공식 congress.gov 페이지)
@@ -315,7 +320,7 @@ def wh_topics(ent):
         for i, b in enumerate(L[:10]):
             r, la, lo = LL.get("presdoc" if b["kind"] == "presdoc" else b["type"], LL["presdoc"])
             out.append({"region": r, "lat": la + 0.004 * (i % 3 - 1), "lon": lo + 0.004 * (i // 3 - 1), "title": (b.get("grp") or "") + " · " + b["type"] + (f" EO {b['eo']}" if b.get("eo") else "") + (f" 포고문 {b['procl']}" if b.get("procl") else ""), "kind": "wh", "ref": "wh:" + b["id"],
-                        "fact": b["t"] + " · " + b["ko"] + (" · 서명 " + b["sign"] if b.get("sign") else "") + (" · " + (b.get("tickers_product_label") or "") + " " + ",".join(b["tickers_product"]) if b.get("tickers_product") else "") + " · " + b["src"], "source_url": b["u"], "date": b.get("date")})
+                        "fact_en": b["t"] + (" · signed " + b["sign"] if b.get("sign") else ""), "fact": ("미국 " + b["type"] + (f" 제{b['eo']}호" if b.get("eo") else (f" 제{b['procl']}호" if b.get("procl") else "")) if b["kind"] == "presdoc" else "미국 " + b["type"] + " 관보 문서") + " · 원래 제목은 원문 링크에서 볼 수 있어요" + (" · 서명 " + b["sign"] if b.get("sign") else "") + (" · " + (b.get("tickers_product_label") or "") + " " + ",".join(b["tickers_product"]) if b.get("tickers_product") else "") + " · 미국 연방 관보", "source_url": b["u"], "date": b.get("date")})
         return out
     P = [b for b in I if b["kind"] == "presdoc"]
     def T(key, name, al, L):
@@ -342,7 +347,7 @@ def intl_policy(ent):
         if not I: continue
         def stops(L):
             return [{"region": f"{nm} · {place}(대략 위치)", "lat": la + 0.01 * (i % 3 - 1), "lon": lo + 0.01 * (i // 3 - 1), "title": b.get("dept") or b["src"], "kind": "policy", "ref": f"{cc}pol:" + b["id"],
-                     "fact": b["t"] + " · " + b["src"] + " (제목 키워드 기준, 영향 단정 아님)", "source_url": b["u"], "date": b.get("d")} for i, b in enumerate(L[:8])]
+                     "fact": (b.get("lk") or b["t"]) + " · 원래 제목은 원문 링크에서 볼 수 있어요 (발표 종류로만 적었어요, 영향 단정 아님)", "fact_en": (b.get("le") or b["t"]), "source_url": b["u"], "date": b.get("d")} for i, b in enumerate(L[:8])]
         ent[f"topic:{cc}-policy"] = {"type": "topic", "name": f"{title}(최신순)", "aliases": al, "route": stops(I)}; n += 1
         for k, lab in LAB.items():
             L = [b for b in I if k in b.get("tags", [])]
@@ -400,7 +405,7 @@ def kr_company_routes(ent):
             cn_, _t, place, la, lo, _a = CP[cc]
             pl = sorted([b for b in (opt("data", "policy", cc + ".json").get("items") or []) if set(sids) & set(b.get("tags", [])) and b.get("u")], key=lambda b: b.get("d") or "", reverse=True)[:1]
             for b in pl:
-                add.append(stop(f"{cn_} · {place}", la, lo, f"{cn_} 정부 발표", f"{cn_} 정부가 {b.get('d')}에 {lab} 분야로 보이는 글을 올렸어요: {b['t']} (원문 언어 그대로예요. 제목 말만 보고 묶었어요.)", b["u"], b.get("d"), f"{cc}pol:" + b["id"]))
+                add.append(stop(f"{cn_} · {place}", la, lo, f"{cn_} 정부 발표", f"{cn_} 정부가 {b.get('d')}에 {lab} 분야로 보이는 글을 올렸어요: {b.get('lk') or '정부 발표'} (원래 제목은 원문 링크에서 볼 수 있어요. 제목 말만 보고 묶었어요.)", b["u"], b.get("d"), f"{cc}pol:" + b["id"]))
         add = [x for x in add if x.get("source_url")]
         e["route"] = add + [x for x in e["route"] if x.get("source_url")]
         n += len(add)
@@ -440,7 +445,7 @@ def main():
             for ch in ("sen", "rep"):
                 if (ch, n) in cm:
                     d = CENT["dc"]
-                    out.append(stop(f"{d[0]} {CH[ch]}", d[2], d[3], f"연관 위원회({CH[ch]}): {n}", f"이 사이트가 직접 묶은 거라 공식 담당 위원회는 아닐 수 있어요. {CH[ch]} 위원 {cm[(ch, n)]}명이 있어요.",
+                    out.append(stop(f"{d[0]} {CH[ch]}", d[2], d[3], f"연관 위원회({CH[ch]}): {CMTE_KO.get(n, n)}", f"이 사이트가 직접 묶은 거라 공식 담당 위원회는 아닐 수 있어요. {CH[ch]} 위원 {cm[(ch, n)]}명이 있어요.",
                                     "https://www.congress.gov/committees", None, f"committee:{ch}:{n}"))
         return out[:2]
     def factor_stops(sid, limit=3):
@@ -517,6 +522,9 @@ def main():
     for e in ent.values():
         e["route"] = [x for x in e["route"] if x and x.get("lat") is not None]
         e["aliases"] = sorted({a for a in e["aliases"] if a})
+    for tk, nm in KO_NAME.items():
+        e = ent.get("company:" + tk)
+        if e: e["name"] = nm
     # 질문 이해기(assets/intent.js)용 회사 별명·오타 변형: data/intent-lexicon.json nicknames → aliases
     nick = (opt("data", "intent-lexicon.json") or {}).get("nicknames", {})
     for tk, names in nick.items():
@@ -529,7 +537,7 @@ def main():
     print("facility stops", facility_stops(ent))
     print("new layer stops", new_layer_stops(ent))
     print("kr policy", kr_policy(ent)); print("wh topics", wh_topics(ent)); print("intl policy", intl_policy(ent)); print("kr company stops", kr_company_routes(ent))
-    res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR 신고 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
+    res = {"updated": sec.get("updated"), "about": "누적 공개 데이터에서 자동 생성한 검색 색인·경로. AI 미연결. 투자 신호 아님. 의원 거래는 PTR(의원 주식 거래 신고) 기준(거래일→신고일 최대 45일 차이 가능), 투자 조언 아님.",
            "counts": {t: sum(1 for e in ent.values() if e["type"] == t) for t in ("company", "sector", "committee", "country")},
            "with_route": sum(1 for e in ent.values() if e["route"]), "money_stops": {k: sum(1 for e in ent.values() for x in e["route"] if (x.get("ref") or "").startswith(k)) for k in ("awards:", "lobbying:", "pac:")}, "entities": ent}
     json.dump(res, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))

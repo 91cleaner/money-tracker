@@ -14,16 +14,16 @@ LOAD('data/sec_sole.json').then(d=>{
   $('s-upd').textContent=d.updated.slice(5,16).replace('T',' ')+' KST';
   // 카운터
   let t0=performance.now();const tick=t=>{const p=Math.min(1,(t-t0)/1200);$('c-sum').textContent=W(d.sum*p);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);
-  const md=x=>`${+x.slice(5,7)}월 ${+x.slice(8,10)}일`,per=`${md(d.period[0])}~${md(d.period[1])}`;document.querySelectorAll('.sole-per').forEach(e=>e.textContent=`⏱ ${per} 기준 · 기간 슬라이더와 무관`);
+  const md=x=>`${+x.slice(5,7)}월 ${+x.slice(8,10)}일`,per=`${md(d.period[0])}~${md(d.period[1])}`;document.querySelectorAll('.sole-per').forEach(e=>e.textContent=`${per} 기준 · 기간 슬라이더와 무관`);
   $('c-meta').textContent=`${per} · 85개 시 · ${d.n.toLocaleString()}건 · 같은 기간 새 계약 ${d.n_all.toLocaleString()}건 중 ${Math.round(d.n/d.n_all*100)}% (건수 기준) · ${SRC}`;
   // 터미널 피드
   const lines=['> 85개 시 계약 스캔 중…',`> 공고 없이 바로 맺은 수의계약 ${d.n.toLocaleString()}건 확인`,...d.flags.slice(0,5).map((f,i)=>`> [#${String(i+1).padStart(3,'0')}] ${f.cname} · ${f.n}건 묶음 ${W(f.sum)} 발견`),`> 데이터상 이상 징후 ${d.flag_n}건 · 기관 설명 확인 전`,'> TRACKING… █'];
   let i=0;const feed=$('feed');feed.textContent='';const step=()=>{if(i<lines.length){feed.textContent+=lines[i++]+'\n';setTimeout(step,450)}};step();
   // 오늘의 추적 대상
   if(d.flags.length){const f=d.flags[new Date().getDate()%Math.min(d.flags.length,7)];
-    $('spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(f.inst)}</b> → <b>${E(f.vendor)}</b><br>30일 안에 ${f.n}건 · 합계 ${W(f.sum)}<p class="src">${SRC}</p></div>`}
+    $('spot').innerHTML=`<div class="spot"><p class="eyebrow">오늘의 데이터 이상 징후</p><b>${E(f.inst)}</b> → <b>${E(f.vendor)}</b><br>30일 안에 ${f.n}건 · 합계 ${W(f.sum)}<p class="src">${SRC}</p></div>`}
   // 추적 파일
-  $('cases').innerHTML=d.flags.map((f,i)=>(i===8?`<details class="more-cases"><summary>묶음 ${d.flags.length-8}개 더 보기</summary>`:'')+`<div class="case" id="case-${i+1}"><span class="stamp">데이터상 이상 징후</span><div class="no">🔍 더 보기 목록 #${String(i+1).padStart(3,'0')}</div>
+  $('cases').innerHTML=d.flags.map((f,i)=>(i===8?`<details class="more-cases"><summary>묶음 ${d.flags.length-8}개 더 보기</summary>`:'')+`<div class="case" id="case-${i+1}"><span class="stamp">데이터상 이상 징후</span><div class="no">더 보기 목록 #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(f.cname)} · ${f.n}건, 공고 없이 바로 맺은 수의계약 묶음</h3>
    <div class="trail"><b>${E(f.inst)}</b><i></i><b>${E(f.vendor)}</b>${f.vregion?`<small>(${E(f.vregion.split(' ').slice(0,2).join(' '))})</small>`:''}</div>
    <div class="amt">${W(f.sum)}</div><small>${f.from} ~ ${f.to} · 같은 업체 여러 건 합계 2천만원 초과</small>
@@ -32,7 +32,7 @@ LOAD('data/sec_sole.json').then(d=>{
   // 비율
   $('share').innerHTML=d.share.slice(0,10).map(s=>{const p=Math.round(s.sn/s.n*100);return `<div class="row"><b>${E(s.name)}</b> 새 계약 ${s.n}건 중 공고 없이 바로 맺은 수의계약 ${s.sn}건 (${p}%)<div class="bar"><b style="width:${p}%"></b></div></div>`}).join('')+`<p class="src">나라장터 공개 계약 기준(작은 금액·급한 일은 경쟁 없이 계약해도 법에서 허용) · ${SRC}</p>`;
   // 비용 비교 + 추정
-  $('comp').innerHTML=(d.comp||[]).map((c,i)=>`<div class="rcp"><div class="no">🧾 영수증 #${String(i+1).padStart(3,'0')} · '${E(c.kw)}' 계약</div>
+  $('comp').innerHTML=(d.comp||[]).map((c,i)=>`<div class="rcp"><div class="no">영수증 #${String(i+1).padStart(3,'0')} · '${E(c.kw)}' 계약</div>
    <div class="l"><span>${E(c.city)} 중간 가격 (${c.cn}건)${c.small?' <span class="tag">건수가 적음</span>':''}</span><b>${W(c.cmed)}</b></div>
    <div class="l"><span>전국 중간 가격 (${c.cities}개 시, ${c.n}건)</span><b>${W(c.med)}</b></div>
    <div class="l"><span>전국 중간 가격보다 얼마나 비싼가 <abbr title="중간 가격(중앙값) = 비슷한 계약을 금액순으로 줄 세웠을 때 딱 가운데 값. +100%면 가운데 값의 2배라는 뜻이에요.">ⓘ</abbr></span><b style="color:#e11d48">+${c.pct}%</b></div>
@@ -56,8 +56,8 @@ LOAD('data/sec_fest.json').then(f=>{
   const top=f.top[0]||{cname:'',nm:'',cost:0};const L=['> 지방재정365 행사 비용 스캔…',`> ${f.year}년 행사 ${f.n_all}건 확인`,`> 최대: ${top.cname} '${top.nm}' ${W(top.cost)}`,...(f.zero&&f.zero.length?[`> 고비용 상위 중 사업수익 0원 ${f.zero.length}건 (무료 행사일 수 있음)`]:[]),'> 데이터상 이상 징후 분류 완료 · 기관 설명 확인 전','> TRACKING… █'];
   let i=0;const fd=$('f-feed');fd.textContent='';const st=()=>{if(i<L.length){fd.textContent+=L[i++]+'\n';setTimeout(st,450)}};st();
   const sp=f.top[new Date().getDate()%Math.max(1,Math.min(5,f.top.length))];
-  if(sp)$('f-spot').innerHTML=`<div class="spot"><p class="eyebrow">🎯 오늘의 데이터 이상 징후</p><b>${E(sp.cname)} · ${E(sp.nm)}</b><br>총비용 ${W(sp.cost)} · 사업수익 ${sp.rev==null?'기록 없음':W(sp.rev)} · ${sp.days||'?'}일<p class="src">${LSRC(f.year)}</p></div>`;
-  const card=(r,i,tag)=>`<div class="case"><span class="stamp">${r.rev==null?'수익 기록 없음':r.rev>0?'수익 있음':'데이터상 이상 징후'}</span><div class="no">🔍 ${tag} #${String(i+1).padStart(3,'0')}</div>
+  if(sp)$('f-spot').innerHTML=`<div class="spot"><p class="eyebrow">오늘의 데이터 이상 징후</p><b>${E(sp.cname)} · ${E(sp.nm)}</b><br>총비용 ${W(sp.cost)} · 사업수익 ${sp.rev==null?'기록 없음':W(sp.rev)} · ${sp.days||'?'}일<p class="src">${LSRC(f.year)}</p></div>`;
+  const card=(r,i,tag)=>`<div class="case"><span class="stamp">${r.rev==null?'수익 기록 없음':r.rev>0?'수익 있음':'데이터상 이상 징후'}</span><div class="no">${tag} #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(r.cname)} · ${E(r.nm)}</h3><div class="amt">${W(r.cost)}</div>
    <small>${ymd(r.from)} ~ ${ymd(r.to)} · ${r.days||'?'}일${r.perday?` · 하루 ${W(r.perday)}`:''} · 주최 ${E(r.gov)}</small>
    <div class="rcp"><div class="l"><span>사업수익(입장료 등)</span><b>${r.rev==null?'기록 없음':W(r.rev)}</b></div><div class="l"><span>세금으로 낸 돈(순원가)</span><b>${W(r.net)}</b></div>
@@ -68,7 +68,7 @@ LOAD('data/sec_fest.json').then(f=>{
   $('f-day').innerHTML=f.perday.slice(0,6).map(r=>`<div class="row"><b>${E(r.cname)}</b> ${E(r.nm)} · ${r.days}일 · 하루 ${W(r.perday)} <small>(전국 중간 비용 하루 ${W(f.med_perday)})</small></div>`).join('')+`<p class="src">${LSRC(f.year)}</p>`;
   const mx=Math.max(1,...f.ratio.map(r=>r.rt));
   $('f-ratio').innerHTML=f.ratio.slice(0,10).map(r=>`<div class="row"><b>${E(r.cname)}</b> <small>(${r.y||''}년${r.scope==='본청'?' · 본청 예산만, 구청 제외':''})</small> 예산 ${W(r.budget)} 중 행사·축제 ${W(r.fest)} (${r.rt}%)<div class="bar"><b style="width:${r.rt/mx*100}%"></b></div></div>`).join('')+`<p class="src">${LSRC()} 행사·축제경비편성내역 · ${f.ratio[0]?.y||''}년 일반회계 당초예산 · 위 행사 비용(${f.cost_year||f.year}년)와 연도가 달라 직접 비교하지 마세요</p>`;
-  $('f-hall').innerHTML=f.halls.slice(0,6).map((h,i)=>`<div class="rcp"><div class="no">🧾 청사 영수증 #${String(i+1).padStart(3,'0')} · ${E(h.ty)}</div><b>${E(h.cname)} · ${E(h.nm)}</b> <small>(${h.y})</small>
+  $('f-hall').innerHTML=f.halls.slice(0,6).map((h,i)=>`<div class="rcp"><div class="no">청사 영수증 #${String(i+1).padStart(3,'0')} · ${E(h.ty)}</div><b>${E(h.cname)} · ${E(h.nm)}</b> <small>(${h.y})</small>
    <div class="l"><span>총사업비</span><b>${W(h.amt)}</b></div><div class="l"><span>㎡당 사업비</span><b>${W(h.puar)}</b></div>
    <div class="l"><span>같은 종류 전국 중간 가격 (${h.tyn}건)</span><b>${W(h.tymed)}</b></div><div class="l"><span>전국 중간 가격보다 얼마나 비싼가 <abbr title="중간 가격(중앙값) = 비슷한 계약을 금액순으로 줄 세웠을 때 딱 가운데 값. +100%면 가운데 값의 2배라는 뜻이에요.">ⓘ</abbr></span><b style="color:#e11d48">+${h.pct}%</b></div>
    ${h.area?`<div class="l"><span>전국 중간 가격으로 샀다면 아낄 수 있었던 돈 <span class="tag">추정</span></span><span class="save">${W(Math.max(0,h.amt-h.area*h.tymed))}</span></div>
@@ -81,7 +81,7 @@ LOAD('data/sec_subsidy.json').then(s=>{
   $('s-sum').textContent=W(s.plan);
   $('s-meta').textContent=`올해(${s.year}년) 처음 세운 예산 · ${s.n}곳 · 한도에서 빠지는 돈 합계 ${W(s.outsum)}`;
   const top=s.rows.slice(0,25),ov=s.rows.map((o,i)=>[o,i]).slice(25).filter(([o])=>o.rt>100);
-  const C=(o,i)=>{const mx=Math.max(...o.hist.map(h=>h[1]||0))||1;return `<div class="case"><span class="stamp">${o.rt>100?'한도 초과':'한도 안'}</span><div class="no">🔍 보조금 파일 #${String(i+1).padStart(3,'0')}</div>
+  const C=(o,i)=>{const mx=Math.max(...o.hist.map(h=>h[1]||0))||1;return `<div class="case"><span class="stamp">${o.rt>100?'한도 초과':'한도 안'}</span><div class="no">보조금 파일 #${String(i+1).padStart(3,'0')}</div>
    <h3>${E(o.cname)} <small>(${E(o.gov)})</small></h3>
    <div class="rcp"><div class="l"><span>법으로 정한 한도</span><b>${W(o.limit)}</b></div><div class="l"><span>예산에 넣은 돈</span><b>${W(o.plan)}</b></div><div class="l"><span>한도에서 빠지는 돈</span><b>${W(o.out||0)}</b></div><div class="l"><span>한도 중 예산에 넣은 비율</span><b${o.rt>100?' style="color:#e11d48"':''}>${o.rt}%${o.rt>100?' · 한도 초과':''}</b></div></div>
    <div class="mini">${o.hist.map(h=>`<i title="${h[0]}" style="height:${(h[1]||0)/mx*100}%"></i>`).join('')}</div><small>${o.hist.map(h=>h[0]).join(' · ')} 예산 변화</small>

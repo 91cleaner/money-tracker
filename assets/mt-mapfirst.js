@@ -37,12 +37,19 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
 @media (prefers-reduced-motion:reduce){.mtMFdot .d,.mtMFdot .n,.mtMFstop{animation:none}}`;
   document.head.append(css);
 
+  // Short landscape phones: keep cards clear of the tour bar, the side brief and the bottom controls.
+  const lsPad = br => { const m = document.getElementById('map'), mt = m ? m.getBoundingClientRect().top : 0, vis = id => { const e = document.getElementById(id); if (!e) return null; const r = e.getBoundingClientRect(); return r.width && getComputedStyle(e).display !== 'none' ? r : null; };
+    if (!br) { const b = vis('mtBar'); return [8, b ? Math.max(8, b.bottom - mt + 6) : 8]; }
+    const f = vis('brief'), c = vis('controls'); return [f ? innerWidth - f.left + 8 : 8, c ? innerHeight - c.top + 16 : 40]; };
   function card(html, ll) {
     const map = window.moneyTrackerMap; if (popup) map.removeLayer(popup);
-    popup = L.popup({ className: 'mtTour mtMF', closeButton: true, autoPan: true, autoPanPadding: [40, 90], maxWidth: 290, offset: [0, -6] }).setLatLng(ll).setContent(html).openOn(map);
+    const sh = innerWidth > innerHeight && innerHeight < 500;
+    popup = L.popup({ className: 'mtTour mtMF', closeButton: true, autoPan: true, autoPanPadding: [40, 90], autoPanPaddingTopLeft: sh ? lsPad(0) : null, autoPanPaddingBottomRight: sh ? lsPad(1) : null, maxWidth: 290, offset: [0, -6] }).setLatLng(ll).setContent(html).openOn(map);
+    if (sh) { document.body.classList.add('mt-lscard'); popup.on('remove', () => document.body.classList.remove('mt-lscard')); }
+    const p = popup, fit = () => { const ce = p.getElement() && p.getElement().querySelector('.leaflet-popup-content'), m = document.getElementById('map'); if (!sh || !ce || !m) return; const av = m.clientHeight - lsPad(0)[1] - lsPad(1)[1] - 34; ce.style.setProperty('max-height', Math.max(120, av) + 'px', 'important'); ce.style.overflowY = 'auto'; }, lift = () => { const w = p.getElement(), c = document.getElementById('controls'); if (!sh || !w || !c || !p._map) return; const pb = w.getBoundingClientRect().bottom, ct = c.getBoundingClientRect().top, d = pb - (ct - 14); if (d > 0) map.panBy([0, -d], { animate: false }); }, re = () => { if (p === popup && p._map) { fit(); p.update(); lift(); } }; fit(); p.update(); setTimeout(lift, 350); setTimeout(re, 700); const el = p.getElement(); if (el) el.querySelectorAll('img').forEach(i => i.addEventListener('load', re, { once: true }));
   }
   function stopCard(t) {
-    const E = en(), k = kindOf(t), T = s => (E && window.MTI18N && window.MTI18N.tr ? window.MTI18N.tr(String(s || '')) : String(s || '')), f = T(t.fact), short = f.length > 150 ? f.slice(0, f.lastIndexOf(' ', 147) > 60 ? f.lastIndexOf(' ', 147) : 147) + '...' : f;
+    const E = en(), k = kindOf(t), T = s => (E && window.MTI18N && window.MTI18N.tr ? window.MTI18N.tr(String(s || '')) : String(s || '')), f = (E && t.fact_en) ? String(t.fact_en) : T(t.fact), short = f.length > 150 ? f.slice(0, f.lastIndexOf(' ', 147) > 60 ? f.lastIndexOf(' ', 147) : 147) + '...' : f;
     return `<div class="k">${esc(KIND[k][E ? 0 : 1])}</div><div class="h">${esc(T(t.title || t.region))}</div><div>${esc(T(t.region))}${t.date ? ' · ' + esc(String(t.date).slice(0, 10)) : ''}</div>` +
       (short ? `<div class="s" style="color:#bfffd6;font-size:11.5px">${esc(short)}</div>` : '') +
       (t.source_url ? `<div class="s"><a href="${esc(t.source_url)}" target="_blank" rel="noopener noreferrer">${E ? 'Official record' : '원문 기록'} ›</a></div>` : '');
@@ -97,7 +104,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
   let G = {}, FR = null;
   const getFR = () => FR || (FR = fetch('../data/fr/presidential.json').then(r => r.ok ? r.json() : null).catch(() => null));
   const inUS = ll => ll[0] > 18 && ll[0] < 72 && ll[1] > -170 && ll[1] < -60;
-  function grpOf(t) { const rf = String(t.ref || '').split(':')[0]; if (rf === 'uswh') return 'wh'; if (/^(cnpol|jppol|twpol|eupol)$/.test(rf)) return 'cty'; if (rf === 'krbill') return 'bill'; const k = kindOf(t); if (k === 'insider') return 'ins'; if (k === 'bill') return 'bill'; if (k === 'trade' || k === 'cmte') return 'law'; if (k === 'supply') return 'hq'; if (!inUS([t.lat, t.lon])) return 'cty'; return 'fil'; }
+  function grpOf(t) { const rf = String(t.ref || '').split(':')[0]; if (rf === 'uswh') return 'wh'; if (/^(cnpol|jppol|twpol|eupol)$/.test(rf)) return 'cty'; if (rf === 'krbill') return 'bill'; if (rf === 'factor') return 'fil'; const k = kindOf(t); if (k === 'insider') return 'ins'; if (k === 'bill') return 'bill'; if (k === 'trade' || k === 'cmte') return 'law'; if (k === 'supply') return 'hq'; if (!inUS([t.lat, t.lon])) return 'cty'; return 'fil'; }
   // Insiders tab count = rows the tab list shows (US Form 4 rows from ticker-extra.json, Korean DART rows from kr-insiders.json).
   const INS = {}; const insLoad = u => fetch(u, { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { const t = (j && j.tickers) || {}; for (const s in t) { const r = (t[s].f4 && t[s].f4.rows) || t[s].rows; if (Array.isArray(r)) INS[s] = Math.max(INS[s] || 0, r.length); } }).catch(() => {});
   const insReady = Promise.all([insLoad('./ticker-extra.json'), insLoad('./kr-insiders.json')]);
@@ -118,10 +125,11 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     const MO = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 };
     const ex = extra.replace(/^since (\w{3}) (\d+), (\d{4})$/, (_, a, d, y) => `${y}년 ${MO[a]}월 ${d}일부터`).replace(/^Chair: (.*)$/, '회장: $1');
     return (B[base] || base) + (ex ? ' (' + ex + ')' : ''); };
+  const koLic = l => ({'Public domain':'퍼블릭 도메인(자유 이용)','CC0':'퍼블릭 도메인 기증(자유 이용)','Attribution':'저작자 표시'})[l] || String(l || '').replace(/^CC BY-SA (\d\.\d)$/, '저작자 표시-동일조건 변경 허락 $1').replace(/^CC BY (\d\.\d)$/, '저작자 표시 $1');
   function dossierCard(sym, o) {
-    const E = en(), im = (x, alt, w, h) => x ? `<figure style="margin:0;flex:0 0 ${w}px"><img src="${esc(x.src)}" alt="${esc(alt)}" style="width:${w}px;height:${h}px;object-fit:cover;border:1px solid #2f6b55;border-radius:3px;display:block"><figcaption style="font-size:8.5px;line-height:1.25;color:#7f978a;margin-top:2px">${esc(x.credit)}, <a href="${esc(x.page)}" target="_blank" rel="noopener noreferrer">${esc(en() ? x.license : ({'Public domain':'퍼블릭 도메인(자유 이용)'})[x.license] || x.license)}</a></figcaption></figure>` : '';
+    const E = en(), im = (x, alt, w, h) => x ? `<figure style="margin:0;flex:0 0 ${w}px"><img src="${esc(x.src)}" alt="${esc(alt)}" style="width:${w}px;height:${h}px;object-fit:cover;border:1px solid #2f6b55;border-radius:3px;display:block"><figcaption style="font-size:8.5px;line-height:1.25;color:#7f978a;margin-top:2px">${E ? 'Photo: ' + esc(x.credit) + ' · Wikimedia Commons · ' : '사진: ' + esc(x.creditKo || x.credit) + ' · 위키미디어 공용 · '}<a href="${esc(x.page)}" target="_blank" rel="noopener noreferrer">${esc(E ? x.license : koLic(x.license))}</a></figcaption></figure>` : `<div style="flex:0 0 ${w}px;width:${w}px;height:${h}px;box-sizing:border-box;border:1px dashed #2f6b55;border-radius:3px;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px;font-size:9.5px;line-height:1.3;color:#7f978a">${E ? (alt === 'HQ' ? 'No free HQ photo found' : 'No free photo found') : (alt === 'HQ' ? '무료 본사 사진을 찾지 못했어요' : '무료 사진을 찾지 못했어요')}</div>`;
     return `<div class="k">${esc(sym)} · ${E ? 'Dossier' : '기업 요약'}</div><div style="display:flex;gap:8px;margin:4px 0">${im(o.ceoImg, o.ceo, 96, 120)}${im(o.hqImg, 'HQ', 150, 120)}</div>` +
-      `<div class="r">${E ? 'HQ' : '본사'}: <b>${esc(o.hq)}</b></div><div class="r">${esc(E ? o.ceoTitle : koTitle(o.ceoTitle))}: <b>${esc(o.ceo)}</b></div><div class="s">${E ? 'Photos come from Wikimedia Commons (free to use). Boss names checked Oct 30, 2026.' : '사진은 위키미디어 공용(무료 사진)에서 가져왔어요. 대표 이름은 2026년 10월 30일에 확인했어요.'}</div>`;
+      `<div class="r">${E ? 'HQ' : '본사'}: <b>${esc(E ? o.hq : (o.hqKo || o.hq))}</b></div><div class="r">${esc(E ? o.ceoTitle : koTitle(o.ceoTitle))}: <b>${esc(E ? o.ceo : (o.ceoKo || o.ceo))}</b></div><div class="s">${(o.ceoImg || o.hqImg) ? (E ? 'Photos come from Wikimedia Commons (free to use). ' : '사진은 위키미디어 공용(무료 사진)에서 가져왔어요. ') : ''}${E ? 'Boss names checked Oct 30, 2026.' : '대표 이름은 2026년 10월 30일에 확인했어요.'}</div>`;
   }
   async function hub(sym) {
     { const my0 = cur, dd = await getDS(); const o = dd && dd.tickers && dd.tickers[sym];
@@ -141,7 +149,7 @@ html body .leaflet-popup.mtTour.mtMF{display:block!important}
     let tl = $('mtTL'); if (!tl) { tl = document.createElement('div'); tl.id = 'mtTL'; }
     const ti = $('briefTitle'); if (ti && ti.parentNode && bar.parentNode !== ti.parentNode) ti.after(bar); bar.after(tl); tl.after(lst);
     tl.replaceChildren(); if (TL) { const t = TL.tl, E2 = en(), a = (h, x) => { const z = document.createElement('a'); z.href = h; z.target = '_blank'; z.rel = 'noopener noreferrer'; z.textContent = x; return z };
-      tl.append((E2 ? 'Timeline: ' : '타임라인: ') + (E2 ? 'trade ' : '거래 '), a(t.trade_url, t.trade_date), (E2 ? ` (${t.src}, ${t.who}, ${t.side})` : ` (${({'House PTR':'하원 PTR(의원 거래 신고)','SEC Form 4':'Form 4(임원 주식 거래 신고)'})[t.src] || t.src}, ${t.who}, ${({sell:'매도',buy:'매수'})[t.side] || t.side})`) + ' · ' + (E2 ? (t.event_kind === '8-K' ? '8-K filed ' : 'policy dated ') : (t.event_kind === '8-K' ? '8-K 제출 ' : '정책 일자 ')), a(t.event_url, t.event_date), ' · ' + (E2 ? `${t.days_before} days apart` : `${t.days_before}일 차이`)); }
+      tl.append((E2 ? 'Timeline: ' : '타임라인: ') + (E2 ? 'trade ' : '거래 '), a(t.trade_url, t.trade_date), (E2 ? ` (${t.src}, ${t.who}, ${t.side})` : ` (${({'House PTR':'하원 PTR(의원 거래 신고)','SEC Form 4':'Form 4(임원 주식 거래 신고)'})[t.src] || t.src}, ${t.who}, ${({sell:'매도',buy:'매수'})[t.side] || t.side})`) + ' · ' + (E2 ? (t.event_kind === '8-K' ? '8-K filed ' : 'policy dated ') : (t.event_kind === '8-K' ? '8-K(회사 중요 사건 공시) 제출 ' : '정책 일자 ')), a(t.event_url, t.event_date), ' · ' + (E2 ? `${t.days_before} days apart` : `${t.days_before}일 차이`)); }
     const E = en(), same = bar.dataset.sym === sym && bar.children.length === TABS.length; bar.dataset.sym = sym;
     // Update labels in place when the same ticker re-renders, so a click in progress is not lost to a rebuilt button.
     TABS.forEach(([k, e, ko], i) => { const n = k === 'all' ? null : k === 'ins' ? Math.max((G[k] || []).length, insN(sym)) : (G[k] || []).length; let b = same ? bar.children[i] : null;

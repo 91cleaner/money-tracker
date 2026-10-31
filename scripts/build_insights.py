@@ -41,7 +41,7 @@ for tk, (a, b, y1, y0, qs) in lbs.items():
     p, lab = peers(tot, tk); r, n = rank(p, tk); ch = (a / b - 1) * 100 if b else None; qq = "·".join(sorted(qs))
     t = f"로비 보고 금액(외부 로비회사 수입+자체 지출 합산, 분기별 최신 수정보고 반영) {y1} {qq} {won(a)}" + (f", 전년 같은 분기 대비 {ch:+.0f}%" if ch is not None else "") + f", {lab} {n}곳 중 {r}위(공시 기준, 데이터상)."
     add(tk, "lobby", t, LB["companies"][tk]["source_url"], LB.get("updated"), f"로비 금액 전년 같은 분기 대비 {ch:+.0f}%" if ch is not None and abs(ch) >= 50 and a >= 1e5 else None)
-# 3) 의원 PTR 신고 최근 90일 vs 직전 90일
+# 3) 의원 PTR(의원 주식 거래 신고) 최근 90일 vs 직전 90일
 T = [t for t in TR.get("trades", []) if t.get("tk") and t.get("filed")]
 end = max((t["filed"] for t in T), default=None)
 if end:
@@ -52,8 +52,8 @@ if end:
         cur = [t for t in L if t["filed"] > a0]; prv = [t for t in L if b0 < t["filed"] <= a0]
         if not cur and not prv: continue
         P = sum(t["ty"].startswith("P") for t in cur); S = sum(t["ty"].startswith("S") for t in cur); m = len({t["id"] for t in cur})
-        txt = f"하원 PTR 신고 최근 90일({a0}~{end}) {len(cur)}건(구입 {P}·처분 {S}, 의원 {m}명), 직전 90일 {len(prv)}건. 신고 기준, 거래일→신고일 최대 45일 차이 가능."
-        add(tk, "trade", txt, "https://disclosures-clerk.house.gov/FinancialDisclosure", end, f"의원 PTR 신고 최근 90일 {len(cur)}건(직전 {len(prv)}건)" if len(cur) >= 5 and len(cur) >= 2 * max(1, len(prv)) else None)
+        txt = f"하원 PTR(의원 주식 거래 신고) 최근 90일({a0}~{end}) {len(cur)}건(구입 {P}·처분 {S}, 의원 {m}명), 직전 90일 {len(prv)}건. 신고 기준, 거래일→신고일 최대 45일 차이 가능."
+        add(tk, "trade", txt, "https://disclosures-clerk.house.gov/FinancialDisclosure", end, f"의원 PTR(의원 주식 거래 신고) 최근 90일 {len(cur)}건(직전 {len(prv)}건)" if len(cur) >= 5 and len(cur) >= 2 * max(1, len(prv)) else None)
 # 4) 가격: 1개월 변화 vs 같은 섹터 중앙값
 pt = PR.get("t") or {}
 for tk, x in pt.items():

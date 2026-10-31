@@ -50,7 +50,7 @@ test('page strings: tables, counts, titles', () => {
   const t = api.toEn;
   assert.equal(t('12일 · 45일 초과'), '12 days · over 45 days');
   assert.equal(t('1건 · P1/S0'), '1 filing · P1/S0');
-  assert.equal(t('MONEY TRACKER — NVDA 회사 상세'), 'MONEY TRACKER — NVDA · Company file');
+  assert.equal(t('미국주식추적단 — NVDA 회사 상세'), 'US Stock Trackers — NVDA · Company file');
   assert.equal(t('구입(P)'), 'Purchase (P)');
   assert.equal(t('반도체'), 'Semiconductors');
   assert.equal(t('Alphabet Inc. (GOOG)'), 'Alphabet Inc. (GOOG)', 'US source text is left as published');

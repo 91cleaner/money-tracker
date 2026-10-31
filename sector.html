@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MONEY TRACKER — 업종 상세</title>
+<title>미국주식추적단 — 업종 상세</title>
 <meta name="description" content="업종별 공개 기록: 소속 회사 종가, 의원 거래 신고, 연방 계약·로비 합계, 공시 사업장. 데이터상 정리이며 투자 조언 아님.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
-<meta property="og:title" content="MONEY TRACKER — 미국 업종 파일"><meta property="og:description" content="업종별 공개 기록: 소속 회사 종가, 의원 거래 신고, 연방 계약·로비 합계, 공시 사업장. 데이터상 정리이며 투자 조언 아님.">
+<meta property="og:title" content="US Stock Trackers — 미국 업종 파일"><meta property="og:description" content="업종별 공개 기록: 소속 회사 종가, 의원 거래 신고, 연방 계약·로비 합계, 공시 사업장. 데이터상 정리이며 투자 조언 아님.">
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 업종 파일"><meta name="twitter:description" content="업종별 공개 기록: 소속 회사 종가, 의원 거래 신고, 연방 계약·로비 합계, 공시 사업장. 데이터상 정리이며 투자 조언 아님.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="US Stock Trackers — 미국 업종 파일"><meta name="twitter:description" content="업종별 공개 기록: 소속 회사 종가, 의원 거래 신고, 연방 계약·로비 합계, 공시 사업장. 데이터상 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <script src="assets/i18n.js?v=i18n-20261030a"></script>
 <style>
@@ -93,7 +93,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 </head>
 <body>
 <header class="bar">
-  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <a class="brand" href="./">◉ 미국주식추적단</a>
   <span class="crumb">US SECTOR FILE / 공개 기록 정리</span>
   <a class="mono" href="weekly.html">주간 순위표</a>
   <a class="mono" href="sector-board.html">업종 히트맵</a>
@@ -159,7 +159,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var sec = sectors.filter(function (s) { return s.id === S; })[0];
     app.replaceChildren();
     if (!sec) { landing(sectors, members); renderFoot({ si: si }); return; }
-    document.title = "MONEY TRACKER — " + sec.name + " 업종 상세";
+    document.title = "미국주식추적단 — " + sec.name + " 업종 상세";
 
     var cos = (members[S] || []).slice(), tks = {}; cos.forEach(function (c) { if (c.symbol) tks[String(c.symbol).toUpperCase()] = c; });
     var P = px.t || {};
@@ -179,13 +179,13 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
     var st = el("div", "stats");
     [[cos.length + "곳", "소속 회사"], [recent.length + "건", "최근 " + WINDOW + "일 의원 거래 신고"], [nP + " / " + nS, "구입(P) / 처분(S) 신고"], [ref || "-", "거래 신고 기준일"]].forEach(function (x) { var d = el("div"); d.append(el("b", "", x[0]), el("span", "", x[1])); st.appendChild(d); });
     head.appendChild(st);
-    var acts = el("div", "actions"); var mb = el("a", "btn", "🛰 지도에서 보기"); mb.href = "world-intelligence/?q=" + encodeURIComponent(sec.name); acts.appendChild(mb);
+    var acts = el("div", "actions"); var mb = el("a", "btn", "지도에서 보기"); mb.href = "world-intelligence/?q=" + encodeURIComponent(sec.name); acts.appendChild(mb);
     if (window.MTShare) {
       // 공유: insights.json 업종 항목 → 없으면 최근 90일 신고 건수 (하원 공시 원문 페이지)
       var sh = ins && ins.sectors ? window.MTShare.pick(ins.sectors[S]) : null;
       if (!sh) sh = { line: "최근 " + WINDOW + "일 의원 거래 신고 " + recent.length + "건(구입 " + nP + "·처분 " + nS + "), 소속 회사 " + cos.length + "곳 (신고 기준, 데이터상)", src: "https://disclosures-clerk.house.gov/FinancialDisclosure", date: ref };
       acts.appendChild(window.MTShare.button({ head: sec.name + " 업종", line: sh.line, src: sh.src, date: sh.date, url: window.MTShare.url({ s: S }) }));
-      window.MTShare.meta("MONEY TRACKER — " + sec.name + " 업종 파일", sh.line);
+      window.MTShare.meta("미국주식추적단 — " + sec.name + " 업종 파일", sh.line);
     }
     head.appendChild(acts);
     app.appendChild(head);
@@ -289,7 +289,7 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
       tlp.appendChild(ol);
     }
     app.appendChild(tlp);
-    if (window.MTLabor) window.MTLabor.load().then(function (ld) { if (ld) window.MTLabor.render(app, ld, { sectorId: S, title: "한국 업종 노사분규 추이 · Korea labor disputes (same industry)" }); });
+    if (window.MTLabor) window.MTLabor.load().then(function (ld) { if (ld) window.MTLabor.render(app, ld, { sectorId: S, title: (window.MTI18N && window.MTI18N.isEn) ? "Korea labor disputes (same industry)" : "한국 업종 노사분규 추이" }); });
     renderFoot({ si: si, ts: ts, tr: tr, px: px, aw: aw, lb: lb, fac: fac, routes: routes, ins: insList.length ? ins : null });
   });
 
@@ -321,5 +321,5 @@ footer.foot ul{margin:6px 0 0;padding-left:18px}
 </script>
 <script src="assets/glossary.js?v=gl-20261029"></script>
 <script src="assets/commander.js?v=cmdr-20261028b"></script>
-</body>
+<script src="assets/mt-visits.js" defer></script></body>
 </html>

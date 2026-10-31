@@ -221,8 +221,8 @@ def main():
             status["moel_stats"].update(status="error", reason=mask(e)[:200])
             print(f"::warning::moel_stats 실패: {mask(e)[:200]}", file=sys.stderr)
     else:
-        status["moel_stats"]["reason"] = "LABOR_STATS_URL(공공데이터포털 활용신청 후 받은 주소) 또는 DATA_GO_KR_KEY 없음"
-    status["nlrc"]["reason"] = "키 없이 받을 수 있는 공개 API·정기 파일을 확인하지 못해 수집하지 않음. 원문 사이트 링크만 제공."
+        status["moel_stats"]["reason"] = "공공데이터포털에서 사용 허락을 아직 받지 않아서 모으지 않아요"
+    status["nlrc"]["reason"] = "누구나 받을 수 있는 정기 자료를 찾지 못해서 모으지 않아요. 원래 사이트 링크만 보여 드려요."
     out = {
         "updated": datetime.now(KST).isoformat(timespec="seconds"),
         "note": "공시 제목에 해당 단어가 들어 있는 것만 모은 목록입니다. 공시가 있다고 실제 파업이 일어났다거나 주가에 영향이 있다는 뜻은 아닙니다. 투자 조언 아님.",

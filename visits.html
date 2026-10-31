@@ -1,0 +1,13 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>방문자 수</title>
+<style>body{font:16px/1.6 system-ui,sans-serif;background:#04170b;color:#eafff2;max-width:560px;margin:0 auto;padding:16px}table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #1d5b36;padding:6px;text-align:right}td:first-child,th:first-child{text-align:left}a{color:#5dff9e}</style><link rel="stylesheet" href="assets/tap.css?v=tap-1">
+</head><body>
+<h1 id="h">하루 방문자 수</h1><p id="p">한국 시간 기준이에요. 같은 브라우저는 하루에 한 번만 세요. 쿠키나 개인 정보는 쓰지 않아요.</p>
+<table><thead><tr><th id="c1">날짜</th><th id="c2">방문자</th><th id="c3">페이지 열람</th></tr></thead><tbody id="b"></tbody></table>
+<p id="s">출처: Abacus 무료 숫자 세기 서비스</p>
+<script>
+(function(){var EN=/[?&]lang=en/.test(location.search);if(EN){document.documentElement.lang="en";document.title="Visitors";h.textContent="Daily visitors";p.textContent="Korea time. Each browser is counted once a day. No cookies or personal data.";c1.textContent="Date";c2.textContent="Visitors";c3.textContent="Page views";s.textContent="Source: Abacus free counting service";}
+var G="https://abacus.jasoncameron.dev/get/91cleaner-money-tracker/",now=Date.now()+9*3600e3,rows=[];
+for(var i=0;i<14;i++){var d=new Date(now-i*864e5).toISOString().slice(0,10);rows.push(d)}
+var n=function(k){return fetch(G+k).then(function(r){return r.ok?r.json():{value:0}}).then(function(j){return j.value>0?j.value:0}).catch(function(){return "-"})};
+rows.reduce(function(pr,d){return pr.then(function(){var k=d.replace(/-/g,"");return Promise.all([n("v-"+k),n("pv-"+k)]).then(function(v){var tr=document.createElement("tr");[d,v[0],v[1]].forEach(function(x){var td=document.createElement("td");td.textContent=x;tr.append(td)});b.append(tr)})})},Promise.resolve());})();
+</script></body></html>

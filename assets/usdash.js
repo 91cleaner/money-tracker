@@ -87,11 +87,11 @@
         hx += `<div class="cols"><div class="card"><h3>Beat the market · <span style="color:${PC.D}">Democrats</span></h3>${divBars(beat(sel('D')).slice(0, 8))}</div><div class="card"><h3>Beat the market · <span style="color:${PC.R}">Republicans</span></h3>${divBars(beat(sel('R')).slice(0, 8))}</div></div>`;
       } else {
         const L = sel(P3), B = beat(L);
-        hx += `<div class="card hero"><h3>🏆 Who beat the market?</h3><p class="dn">For members with 5+ disclosed buys: how much the stocks they bought moved after the trade date, minus the S&amp;P 500 over the same days. As of ${esc(PX.as_of)}.</p>${divBars(B.slice(0, 10))}${B.length > 10 ? `<details><summary>Show the bottom 10</summary>${divBars(B.slice(-10).reverse())}</details>` : ''}</div>`;
+        hx += `<div class="card hero"><h3>Who beat the market?</h3><p class="dn">For members with 5+ disclosed buys: how much the stocks they bought moved after the trade date, minus the S&amp;P 500 over the same days. As of ${esc(PX.as_of)}.</p>${divBars(B.slice(0, 10))}${B.length > 10 ? `<details><summary>Show the bottom 10</summary>${divBars(B.slice(-10).reverse())}</details>` : ''}</div>`;
         const best = L.filter((t) => t.ty === 'P' && edge(t) != null).sort((a, b) => edge(b) - edge(a)).slice(0, 10);
         const drop = L.filter((t) => t.ty === 'S' && t.r != null).sort((a, b) => a.r - b.r).slice(0, 10);
-        hx += `<div class="cols"><div class="card"><h3>🎯 Best-timed buys</h3><p class="dn">Biggest moves since the purchase date.</p><div class="tw"><table><thead><tr><th>Member</th><th>Ticker</th><th>Bought</th><th>Since</th><th>S&amp;P</th></tr></thead><tbody>${best.map((t) => tradeRow(t, pct(t.r))).join('')}</tbody></table></div></div>
-          <div class="card"><h3>📉 Sold right before a drop</h3><p class="dn">The stock fell the most after they sold.</p><div class="tw"><table><thead><tr><th>Member</th><th>Ticker</th><th>Sold</th><th>After</th><th>S&amp;P</th></tr></thead><tbody>${drop.map((t) => tradeRow(t, pct(t.r))).join('')}</tbody></table></div></div></div>`;
+        hx += `<div class="cols"><div class="card"><h3>Best-timed buys</h3><p class="dn">Biggest moves since the purchase date.</p><div class="tw"><table><thead><tr><th>Member</th><th>Ticker</th><th>Bought</th><th>Since</th><th>S&amp;P</th></tr></thead><tbody>${best.map((t) => tradeRow(t, pct(t.r))).join('')}</tbody></table></div></div>
+          <div class="card"><h3>▼Sold right before a drop</h3><p class="dn">The stock fell the most after they sold.</p><div class="tw"><table><thead><tr><th>Member</th><th>Ticker</th><th>Sold</th><th>After</th><th>S&amp;P</th></tr></thead><tbody>${drop.map((t) => tradeRow(t, pct(t.r))).join('')}</tbody></table></div></div></div>`;
       }
       hx += `<p class="dn">These are stock price moves, not actual profits — filings show amount ranges, not share counts or prices. Members with few trades can look lucky.</p>`;
     }

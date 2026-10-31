@@ -1,8 +1,8 @@
-/* MONEY TRACKER public research lab. Only uses verified public records; no private scoring. */
+/* 미국주식추적단 public research lab. Only uses verified public records; no private scoring. */
 (()=>{'use strict';
 const $=id=>document.getElementById(id), state={members:[],selected:null,bills:[],map:null,markers:[]};
 const events=new Set(['member_selected','bill_opened','source_opened','mission_started','trace_completed']);
-function track(event){if(!events.has(event))return;try{if(window.goatcounter?.count)window.goatcounter.count({path:'/events/'+event,title:'MONEY TRACKER / '+event,event:true});}catch{}}
+function track(event){if(!events.has(event))return;try{if(window.goatcounter?.count)window.goatcounter.count({path:'/events/'+event,title:'미국주식추적단 / '+event,event:true});}catch{}}
 const text=(node,value)=>{node.textContent=String(value??'');return node};
 function element(tag,cls,value){const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)text(e,value);return e}
 function source(parent,url,label){if(!/^https:\/\/[\w.-]+(?:\/|$)/i.test(url||''))return;const a=element('a','source',label+' ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.addEventListener('click',()=>track('source_opened'));parent.append(a)}

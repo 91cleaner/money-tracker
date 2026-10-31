@@ -33,6 +33,7 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
 .note{background:#0f141b;border-radius:10px;padding:10px 12px;font-size:13px;color:#b8c3cf;margin:10px 0;line-height:1.5}
 </style>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0d1117"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="세금추적단"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="assets/tap.css?v=tap-1">
 </head>
 <body data-page="bid">
 <header class="nbar"><a href="./">‹ 세금추적단</a><span>갱신 <span id="upd"></span></span></header>
@@ -41,7 +42,7 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
   <p class="sub" id="lead">나라장터에서 85개 시가 맺은 계약으로 정리했어요. 입찰 준비하시는 분들이 보기 쉽게, 분야별로 얼마나 공개 경쟁으로 나오는지, 큰 계약은 몇 곳이 들어와 몇 %에 낙찰됐는지, 최근 경쟁입찰은 어디서 누가 땄는지 모았어요.</p>
   <div class="kpi" id="kpi"></div>
 
-  <section id="open"><h2>📢 지금 열린 입찰</h2>
+  <section id="open"><h2>지금 열린 입찰</h2>
     <p class="sub">85개 시 기관이 낸 입찰공고 중 아직 마감 안 된 것이에요. 마감이 가까운 순서예요. 하루 두 번(아침·저녁) 새로 받아요.</p>
     <div class="flt"><select id="oCity" aria-label="시"></select><select id="oCat" aria-label="분야"></select><input id="oQ" type="search" placeholder="공고명·기관 검색" aria-label="공고 검색"></div>
     <div id="openL"><p class="sub">불러오는 중…</p></div><button type="button" class="more" id="openM" hidden>더 보기</button>
@@ -56,7 +57,7 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
   </section>
 
   <section id="cat"><h2>분야별로 보면</h2>
-    <p class="sub">공고를 거친 계약 = 경쟁입찰 + 공고를 내고 견적을 받은 수의계약. 참가 업체·낙찰률은 10억원 이상 계약 중 확인된 것의 가운데 값(중앙값)이에요.</p>
+    <p class="sub">공고를 거친 계약 = 경쟁입찰 + 공고를 내고 견적을 받은 수의계약. 참가 업체·낙찰률은 10억원 이상 계약 중 확인된 것의 가운데 값(중앙값)이에요.<br>낱말 풀이: 경쟁입찰 = 여러 업체가 가격을 써 내고 겨뤄서 한 곳이 따내는 방식이에요. 수의계약 = 겨루지 않고 한 업체와 바로 맺는 계약이에요. 낙찰률 = 미리 정해 둔 예상 가격에 비해 실제 계약 금액이 몇 %인지예요.</p>
     <div class="tbl-wrap"><table class="tbl" id="catT"></table></div>
   </section>
 
@@ -77,8 +78,8 @@ section{background:#151b23;border:1px solid #222b36;border-radius:16px;padding:1
   <footer><span class="fun-foot"><a href="principles.html">중립성 원칙 + 정정 요청</a></span></footer>
 </main>
 <script src="assets/bidpage.js?v=202610251125"></script>
-<script src="assets/nav.js?v=202610281630"></script>
+<script src="assets/nav.js?v=202610310900"></script>
 <script src="assets/visits.js?v=202610251055" defer></script>
 <script src="assets/pwa.js?v=202610251330" defer></script>
-</body>
+<script src="assets/mt-visits.js" defer></script></body>
 </html>

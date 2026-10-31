@@ -1,4 +1,4 @@
-/* MONEY TRACKER — 질문 이해기 (question understander). Runs only in the browser (or node for tests): no network, no storage, no AI.
+/* 미국주식추적단 — 질문 이해기 (question understander). Runs only in the browser (or node for tests): no network, no storage, no AI.
    A typed question -> company + intent (overview / why / topic / compare / supply) + period (today / week / month / year) + topics.
    Rules come from data/intent-lexicon.json (KO/EN synonyms, nicknames) and data/search-index.json (company names/aliases).
    Spaces, particles and small typos are tolerated (edit distance; Korean is compared by jamo). If no company can be told,

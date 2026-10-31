@@ -45,7 +45,7 @@
     const paintR = () => {
       const it = items[k]; if (!it) { rcpt.hidden = true; return; }
       const p = it.pick;
-      rcpt.innerHTML = `<div class="tr-h">🧾 ${k === 0 ? '오늘의 영수증' : '지난 영수증'} <span class="tr-nav"><button type="button" data-d="1" aria-label="전날 영수증" ${k >= items.length - 1 ? 'disabled' : ''}>‹</button>${md(it.date)}<button type="button" data-d="-1" aria-label="다음 영수증" ${k === 0 ? 'disabled' : ''}>›</button></span></div>
+      rcpt.innerHTML = `<div class="tr-h">${k === 0 ? '오늘의 영수증' : '지난 영수증'} <span class="tr-nav"><button type="button" data-d="1" aria-label="전날 영수증" ${k >= items.length - 1 ? 'disabled' : ''}>‹</button>${md(it.date)}<button type="button" data-d="-1" aria-label="다음 영수증" ${k === 0 ? 'disabled' : ''}>›</button></span></div>
         <div class="tr-a">${esc(won(p.amount))}<small>${esc(p.cname)}</small></div>
         <div class="tr-t">${esc(mask(p.title))}</div>
         <div class="tr-s">${esc(mask(p.vendor || ''))}${p.vregion ? ' · ' + esc(String(p.vregion).split(' ').slice(0, 2).join(' ')) : ''} · ${p.ann === false ? '공고 없이 계약' : p.ann ? '미리 알림' : esc(p.method || '')} · 그날 85개 시 계약 ${Number(it.n).toLocaleString('ko-KR')}건 중 가장 큰 금액</div>
@@ -68,12 +68,12 @@
     const paintMy = () => {
       const my = store.get(); const c = my && byS[my.slug];
       if (!c) {
-        myRow.innerHTML = `📍 <span class="sp">우리 시를 정해 두면 다음부터 열자마자 보여요</span><button type="button" class="go" data-a="pick">우리 시 고르기</button>`;
+        myRow.innerHTML = `● <span class="sp">우리 시를 정해 두면 다음부터 열자마자 보여요</span><button type="button" class="go" data-a="pick">우리 시 고르기</button>`;
       } else {
         const fresh = lastSeen ? newSince(c.slug, lastSeen.seen) : 0;
         const na = lastSeen ? Math.max(0, (c.alerts || 0) - (lastSeen.alerts || 0)) : 0;
         const news = lastSeen && lastSeen.seen && lastSeen.seen < ((daily && daily.last) || '') ? `<span class="nw">지난번 뒤 새 계약 ${fresh.toLocaleString('ko-KR')}건${na ? ` · 새 이상 징후 ${na}건` : ''}</span>` : `<span>오늘 새 계약 ${Number(c.today || 0).toLocaleString('ko-KR')}건</span>`;
-        myRow.innerHTML = `📍 <b>${esc(c.short || c.name)}</b><span class="sp">${news}</span><button type="button" class="go" data-a="go">우리 시 보기</button><button type="button" data-a="pick">바꾸기</button>`;
+        myRow.innerHTML = `● <b>${esc(c.short || c.name)}</b><span class="sp">${news}</span><button type="button" class="go" data-a="go">우리 시 보기</button><button type="button" data-a="pick">바꾸기</button>`;
       }
       myRow.querySelectorAll('button').forEach((b) => b.onclick = () => { const m = store.get(); if (b.dataset.a === 'go' && m) goCity(m.slug); else choose(m && m.slug); });
     };
@@ -88,7 +88,7 @@
     // 우리 시가 없고 지도에서 시를 고르면 바로 '우리 시로 정하기'를 권한다
     addEventListener('dv:go', (e) => {
       const s = e.detail && e.detail.c; if (!s || store.get() || !byS[s]) return;
-      myRow.innerHTML = `📍 <span class="sp">방금 본 <b>${esc(byS[s].short || byS[s].name)}</b>${josa(byS[s].short || byS[s].name)} 우리 시로 정할까요?</span><button type="button" class="go" data-a="set">우리 시로 정하기</button>`;
+      myRow.innerHTML = `● <span class="sp">방금 본 <b>${esc(byS[s].short || byS[s].name)}</b>${josa(byS[s].short || byS[s].name)} 우리 시로 정할까요?</span><button type="button" class="go" data-a="set">우리 시로 정하기</button>`;
       myRow.querySelector('button').onclick = () => { save(s); lastSeen = store.get(); paintMy(); };
     });
   });

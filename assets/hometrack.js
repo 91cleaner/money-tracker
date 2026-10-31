@@ -19,7 +19,7 @@ background:radial-gradient(120% 140% at 0% 0%,#0f3a22 0%,#06140c 55%,#040b07 100
 <circle cx="29" cy="29" r="27" fill="#03100a" stroke="#1f6a3f"/><circle cx="29" cy="29" r="18" fill="none" stroke="#1f6a3f" stroke-dasharray="2 3"/><circle cx="29" cy="29" r="9" fill="none" stroke="#1f6a3f"/>
 <g class="sw"><path d="M29 29 L29 2 A27 27 0 0 1 52.4 15.5 Z" fill="url(#htkG)"/><line x1="29" y1="29" x2="52.4" y2="15.5" stroke="#5dff9e" stroke-width="1.4"/></g>
 <circle class="bl" cx="41" cy="20" r="2.4" fill="#ffb020"/><circle class="bl b2" cx="19" cy="38" r="2" fill="#ffb020"/><circle cx="29" cy="29" r="2" fill="#5dff9e"/></svg>
-<span class="t"><span class="k"><i></i>🇰🇷 국회 살펴보기 · LIVE</span><span class="n">0<small>원</small></span><span class="s">오늘 의원 <b class="m">299</b>명에게 쌓이는 의원 월급 · 출장·법 만들기·찬반 추적</span></span><span class="go">입장</span>`;
+<span class="t"><span class="k"><i></i>국회 살펴보기 · 실시간</span><span class="n">0<small>원</small></span><span class="s">오늘 의원 <b class="m">299</b>명에게 쌓이는 의원 월급 · 출장·법 만들기·찬반 추적</span></span><span class="go">입장</span>`;
   let per = 160925680, n = 299;
   const won = (v) => { v = Math.floor(v); const e = Math.floor(v / 1e8), m = Math.floor((v % 1e8) / 1e4); return (e ? e.toLocaleString() + '억 ' : '') + m.toLocaleString() + '만'; };
   const num = a.querySelector('.n');
@@ -28,10 +28,10 @@ background:radial-gradient(120% 140% at 0% 0%,#0f3a22 0%,#06140c 55%,#040b07 100
   const place = () => { const t = document.getElementById('mytop'); if (!t) return false; t.before(wrap); return true; }; // 홈 맨 위: 처음 들어와도 의원 추적부터
   // 미국 입구: 영어 의회 추적기는 2026-10-26부터 비공개, 지금 us.html은 미국 관제실 미리보기(개발 중)
   const us = document.createElement('a'); us.className = 'htk htk-us'; us.href = 'us.html';
-  us.innerHTML = '<span class="fl">🇺🇸</span><span class="t"><span class="k">미국 (준비 중)</span><b class="u1">미국 살펴보기</b><span class="s">개발 중 · 지도에서 사건·법안·기업 추적</span></span><span class="go">입장</span>';
+  us.innerHTML = '<span class="fl">●</span><span class="t"><span class="k">미국 (준비 중)</span><b class="u1">미국 살펴보기</b><span class="s">개발 중 · 지도에서 사건·법안·기업 추적</span></span><span class="go">입장</span>';
   // 통합 검색 입구 (search.html, 저장된 공개 기록으로 흐름 추적)
   const se = document.createElement('form'); se.className = 'htk-se'; se.action = 'search.html'; se.method = 'get'; se.setAttribute('role', 'search');
-  se.innerHTML = '<input name="q" type="search" enterkeyhint="search" required autocomplete="off" placeholder="🔍 무엇이든 검색 · 업체 · 시 · 계약 · 의원 · 법안 · 종목" aria-label="통합 검색"><button type="submit">검색</button>';
+  se.innerHTML = '<input name="q" type="search" enterkeyhint="search" required autocomplete="off" placeholder="무엇이든 검색 · 업체 · 시 · 계약 · 의원 · 법안 · 종목" aria-label="통합 검색"><button type="submit">검색</button>';
   const wrap = document.createElement('div'); wrap.className = 'htk-wrap'; wrap.append(se, a, us);
   const park = () => {
     if (!matchMedia('(max-width:767px)').matches) return false;

@@ -406,7 +406,7 @@
       const paint = () => {
         drawDots(PSEL ? (m) => m.party === PSEL : null);
         file.innerHTML = fileHead('Party') + `<div class="ds">Tap a party to show only its members on the map.</div>` + P.filter((p) => st[p].seats).map((p) => `<div class="pb li" data-p="${p}" style="display:block${PSEL && PSEL !== p ? ';opacity:.45' : ''}"><div class="h"><span><span style="color:${pc(p)}">●</span> ${PN[p]}s <span style="color:#8fc9a5;font-size:11.5px">${st[p].seats} seats · ${st[p].sen} senators</span></span><b>${st[p].n} trades</b></div><div class="tkb"><i style="width:${(st[p].n / mx) * 100}%;background:${pc(p)}"></i></div><div class="ds" style="margin-top:3px">${st[p].who} members traded · ${st[p].b} buys · ${st[p].s} sells · est. ${fmt(st[p].v)}${st[p].top.length ? ' · top buys ' + st[p].top.join(', ') : ''}</div></div>`).join('') +
-          `<div class="act"><a href="#usdash" class="p" style="text-decoration:none">📊 Compare D vs R charts</a></div>` + SRC;
+          `<div class="act"><a href="#usdash" class="p" style="text-decoration:none">Compare D vs R charts</a></div>` + SRC;
         file.classList.add('on'); bindX();
         file.querySelectorAll('[data-p]').forEach((el) => (el.onclick = () => { PSEL = PSEL === el.dataset.p ? null : el.dataset.p; SFX.click(); paint(); type(PSEL ? `${PN[PSEL]}s: ${st[PSEL].seats} members on the map` : 'All parties'); }));
       };
@@ -490,7 +490,7 @@
     },
     find() {
       stopRadar(); gFx.clearLayers();
-      file.innerHTML = fileHead('Find') + `<input class="q" type="search" placeholder="Name, state, or ticker (e.g. Pelosi, TX, NVDA)" aria-label="Search" autocomplete="off"><button type="button" class="allb gps" style="margin:0 0 6px">📍 Find my representatives (near me)</button><div class="res"></div>`;
+      file.innerHTML = fileHead('Find') + `<input class="q" type="search" placeholder="Name, state, or ticker (e.g. Pelosi, TX, NVDA)" aria-label="Search" autocomplete="off"><button type="button" class="allb gps" style="margin:0 0 6px">Find my representatives (near me)</button><div class="res"></div>`;
       file.classList.add('on'); bindX();
       const q = file.querySelector('.q'), res = file.querySelector('.res');
       const paint = () => {
@@ -509,7 +509,7 @@
           const me = [p.coords.latitude, p.coords.longitude]; const d2 = (a) => (a[0] - me[0]) ** 2 + ((a[1] - me[1]) * 0.8) ** 2;
           const reps = people.filter((m) => m.chamber === 'rep' && m.ll_office).sort((a, b) => d2(a.ll) - d2(b.ll)).slice(0, 3);
           const st = reps[0] ? reps[0].state : null; const sens = people.filter((m) => m.chamber === 'sen' && m.state === st);
-          bt.textContent = '📍 Near you (approximate)';
+          bt.textContent = 'Near you (approximate)';
           res.innerHTML = '<div class="ph2">Senators</div>' + sens.map((m) => row(m)).join('') + '<div class="ph2">Nearest House offices</div>' + reps.map((m) => row(m)).join('') + '<div class="fine">Your location stays on this device. House members are matched by nearest district office, so it is approximate.</div>';
           bindRows(); if (reps[0]) { reticle(LL[reps[0].id]); map.flyTo(LL[reps[0].id], 7, { duration: RM ? 0 : 0.9 }); }
           SFX.lock(); type(`Your delegation: ${sens.length} senators · nearest reps`);
@@ -564,7 +564,7 @@
 
   // Mobile: three clear views, with the map kept independent of long reports.
   const mobileTabs=document.querySelector('.mt-mobile-tabs')||document.createElement('nav');
-  if(!mobileTabs.isConnected){mobileTabs.className='mt-mobile-tabs';mobileTabs.setAttribute('aria-label','Mobile sections');mobileTabs.innerHTML='<button type="button" data-mtab="map" aria-pressed="true">🗺️ <span>지도</span></button><button type="button" data-mtab="trades" aria-pressed="false">📋 <span>거래</span></button><button type="button" data-mtab="dashboard" aria-pressed="false">📊 <span>대시보드</span></button>';root.after(mobileTabs);}
+  if(!mobileTabs.isConnected){mobileTabs.className='mt-mobile-tabs';mobileTabs.setAttribute('aria-label','Mobile sections');mobileTabs.innerHTML='<button type="button" data-mtab="map" aria-pressed="true">● <span>지도</span></button><button type="button" data-mtab="trades" aria-pressed="false">● <span>거래</span></button><button type="button" data-mtab="dashboard" aria-pressed="false">● <span>대시보드</span></button>';root.after(mobileTabs);}
   const mobileTrades=document.getElementById('mt-mobile-trades')||document.createElement('section');mobileTrades.id='mt-mobile-trades';mobileTrades.setAttribute('aria-label','Congress member transactions');if(!mobileTrades.isConnected)mobileTabs.after(mobileTrades);
   let mobileTradeReady=false;
   const sortedTrades=trades.filter(t=>t.id&&byId[t.id]).sort((a,b)=>(b.d||'').localeCompare(a.d||''));

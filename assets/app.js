@@ -479,7 +479,7 @@ async function cityPage() {
     if (window.moneyPeek) window.moneyPeek(peek, slug);
   }
   let d;
-  try { d = await getJSON('data/city/' + slug + '.json'); } catch (e) {
+  try { if (!slug) throw 0; d = await getJSON('data/city/' + slug + '.json'); } catch (e) {
     if (peek) peek.hidden = true;
     $('#title').textContent = '없는 지역입니다';
     $('#lede').replaceChildren('주소가 바뀌었거나 아직 추적하지 않는 곳이에요. ', Object.assign(el('a', '', '홈으로 가기 ›'), {href: './'}));

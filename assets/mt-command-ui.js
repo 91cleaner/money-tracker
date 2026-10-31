@@ -1,4 +1,4 @@
-/* MONEY TRACKER command UI — source-backed exploration; no fabricated live data. */
+/* 미국주식추적단 command UI — source-backed exploration; no fabricated live data. */
 (function(){
 "use strict";
 var root=document.getElementById("pg"),form=document.getElementById("usCmd"),query=document.getElementById("usQuery"),file=document.getElementById("usFile");

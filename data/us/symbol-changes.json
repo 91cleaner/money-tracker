@@ -1,0 +1,10 @@
+{"about": "티커가 바뀌거나 다른 회사가 같은 티커를 다시 쓴 경우. 사람이 SEC 공시로 확인한 것만 confirmed에 넣는다.",
+ "confirmed": {
+  "SATS": {"old_cik": 1415404, "old_name": "EchoStar CORP", "last_day": "2026-06-23", "now": "ECHO", "now_from": "2026-06-24",
+           "reused_by": {"cik": 1920406, "name": "Strive, Inc.", "what": "Series A preferred stock", "from": "2026-10-20"},
+           "src": ["https://www.sec.gov/Archives/edgar/data/1415404/000141540426000027/sats-20260617x8k.htm",
+                   "https://www.sec.gov/Archives/edgar/data/1415404/000141540426000030/sats-20260623x8k.htm",
+                   "https://www.sec.gov/Archives/edgar/data/1920406/000095010326015849/dp255260_8k.htm"],
+           "ko": "EchoStar는 2026-06-23까지 SATS로 거래됐고, 2026-06-24부터 ECHO로 거래돼요(SEC 8-K 표지: 2026-06-17은 SATS, 2026-06-25는 ECHO). 2026-10-20부터 SATS는 다른 회사 Strive, Inc.의 우선주(배당을 먼저 받는 특별한 주식)예요(SEC 8-K 2026-10-20). 그래서 이 페이지의 가격은 EchoStar의 SATS 기록에 ECHO 기록을 이어 붙였어요.",
+           "en": "EchoStar traded as SATS until 2026-06-23 and as ECHO from 2026-06-24 (SEC 8-K covers: SATS on 2026-06-17, ECHO on 2026-06-25). Since 2026-10-20, SATS is the preferred stock (a special kind of share) of a different company, Strive, Inc. (SEC 8-K 2026-10-20). So the prices on this page join EchoStar's SATS record with its ECHO record."}
+ }}

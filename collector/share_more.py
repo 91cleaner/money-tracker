@@ -74,6 +74,7 @@ PAGE = """<!doctype html>
 <meta name="robots" content="noindex">
 <link rel="canonical" href="{target}">
 <meta http-equiv="refresh" content="0; url={rel}">
+<script src="../../assets/mt-visits.js" data-share="1"></script>
 <script>location.replace({rel_js} + location.hash);</script>
 </head><body style="font-family:sans-serif;padding:40px">
 <p><a href="{rel}">{title} 보러 가기</a></p>

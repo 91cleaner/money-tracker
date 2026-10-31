@@ -162,7 +162,7 @@
     const head = d5items.slice(0, 8), more = d5items.slice(8, 60);
     const lastDay = d5items[0].date, sameDay = d5items.filter((x) => x.date === lastDay);
     const up = sameDay.filter((x) => x.delta > 0).length, dn = sameDay.filter((x) => x.delta < 0).length;
-    box.innerHTML = `<h2>📣 국민연금 지분 변동</h2>
+    box.innerHTML = `<h2>국민연금 지분 변동</h2>
       <p class="sub">${esc(mdS(lastDay))} 공시 ${sameDay.length}건${up || dn ? ` · 늘림 ${up} · 줄임 ${dn}` : ''}. 국민연금이 5% 넘게 가진 회사의 지분이 바뀌면 금융감독원에 보고해요.</p>
       <div class="d5">${head.map(row).join('')}</div>
       ${more.length ? `<details class="nps-all"><summary>지난 보고 ${more.length}건 더 보기</summary><div class="d5">${more.map(row).join('')}</div></details>` : ''}
@@ -244,7 +244,7 @@
         text = `국민연금은 ${r.name} 주식을 ${won(r.value)}어치 갖고 있어요. 국내 주식 중 ${r.rank}위${r.stake ? `, 지분 ${r.stake}%` : ''}.`;
         const dx = d5items.find((x) => (r.code && x.code === r.code) || x.corp === r.name);
         if (dx) {
-          body += `<div class="l">📣 최근 공시(${esc(mdS(dx.date))}): 지분 ${dx.prev != null ? esc(pp(dx.prev)) + '% → ' : ''}<b>${esc(pp(dx.stake))}%</b>${dx.delta ? ` <span class="${dx.delta > 0 ? 'up' : 'dn'}">${dx.delta > 0 ? '▲' : '▼'}${esc(pp(Math.abs(dx.delta)))}%p</span>` : ''} · <a href="${esc(dx.url)}" target="_blank" rel="noopener">원문</a></div>`;
+          body += `<div class="l">최근 공시(${esc(mdS(dx.date))}): 지분 ${dx.prev != null ? esc(pp(dx.prev)) + '% → ' : ''}<b>${esc(pp(dx.stake))}%</b>${dx.delta ? ` <span class="${dx.delta > 0 ? 'up' : 'dn'}">${dx.delta > 0 ? '▲' : '▼'}${esc(pp(Math.abs(dx.delta)))}%p</span>` : ''} · <a href="${esc(dx.url)}" target="_blank" rel="noopener">원문</a></div>`;
           text += `\n최근 공시(${mdS(dx.date)}): 지분 ${d5line(dx)}`;
         }
       } else if (r.kind === 'us') {

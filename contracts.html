@@ -13,9 +13,9 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MONEY TRACKER</title>
-<meta property="og:type" content="website"><meta property="og:site_name" content="MONEY TRACKER">
-<meta property="og:title" content="우리 시는 얼마나 계약했을까? · MONEY TRACKER"><meta property="og:description" content="전국 85개 시의 공개 계약을 지도로. 어디에 얼마를, 어느 업체에. 출처 나라장터.">
+<title>세금추적단</title>
+<meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
+<meta property="og:title" content="우리 시는 얼마나 계약했을까? · 세금추적단"><meta property="og:description" content="전국 85개 시의 공개 계약을 지도로. 어디에 얼마를, 어느 업체에. 출처 나라장터.">
 <meta property="og:url" content="https://91cleaner.github.io/money-tracker/"><meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
 <meta name="description" content="전국 85개 시의 공개 계약을 모아 어디와 얼마나 계약했는지, 눈여겨볼 점은 없는지 쉽게 보여줍니다.">
@@ -39,11 +39,12 @@
 .country-switch{display:flex;gap:6px;align-items:center}.country-switch a,.country-entry a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:8px 12px;border-radius:10px;border:1px solid #536174;color:inherit;text-decoration:none;font-size:13px;font-weight:700}.country-entry{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1100px;margin:10px auto;padding:12px 16px;border:1px solid #354455;border-radius:14px;background:#111b26;color:#fff}.country-entry>div{display:flex;gap:8px;flex-wrap:wrap}.country-entry a{background:#203245;color:#fff}@media(max-width:600px){.stickybar{display:flex;justify-content:space-between;gap:8px}.stickybar .brand{font-size:14px}.country-switch a{font-size:12px;padding:6px 8px}.country-entry{margin:8px 10px}.country-entry>div{width:100%}.country-entry a{flex:1 1 0;min-width:0;padding:12px 6px;font-size:13px}}
 @media(max-width:767px){.country-entry,.country-entry>div,.stickybar,.country-switch{max-width:100%;min-width:0;box-sizing:border-box}.country-switch a{min-width:0}}
 </style>
-<link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MONEY TRACKER"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest?v=20261025brand2"><link rel="apple-touch-icon" href="assets/icons/radar2-apple.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="세금추적단"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="assets/tap.css?v=tap-1">
 </head>
 <body data-page="home">
-<header class="stickybar"><a class="brand" href="./">MONEY TRACKER</a><nav class="country-switch" aria-label="국가 선택"><a href="national.html">🇰🇷 한국</a><a href="us.html?lang=ko">🇺🇸 미국</a></nav></header>
-<section class="country-entry" aria-label="국가별 추적 선택"><strong>어느 나라를 추적할까요?</strong><div><a href="national.html">🇰🇷 한국 국회 추적</a><a href="us.html?lang=ko">🇺🇸 미국 의회 추적</a></div></section>
+<header class="stickybar"><a class="brand" href="./">세금추적단</a><nav class="country-switch" aria-label="국가 선택"><a href="national.html">한국</a><a href="us.html?lang=ko">미국</a></nav></header>
+<section class="country-entry" aria-label="국가별 추적 선택"><strong>어느 나라를 추적할까요?</strong><div><a href="national.html">한국 국회 추적</a><a href="us.html?lang=ko">미국 의회 추적</a></div></section>
 <main class="wrap">
   <div id="dive"></div>
   <section class="sec gm" id="game" aria-label="어디가 더 많게? 게임"></section>
@@ -77,9 +78,9 @@
 
 
   <section class="sec" id="receipts">
-    <p class="fixp">⏱ 최근 7일 고정 · 기간 슬라이더와 무관</p>
+    <p class="fixp">최근 7일 고정 · 기간 슬라이더와 무관</p>
     <h2>이번 주 영수증</h2>
-    <p class="sub">최근 7일 계약 중 금액이 큰 순서입니다. 머리글을 누르면 정렬이 바뀝니다. 모든 줄은 나라장터 원본으로 연결됩니다.</p>
+    <p class="sub">최근 7일 계약 중 금액이 큰 순서예요. 머리글을 누르면 정렬이 바뀌어요. 모든 줄은 나라장터 원본으로 연결돼요.</p>
     <div class="rcpt-wrap"><table class="rcpt" id="rcpt"><thead><tr><th class="rc-no">#</th><th>정렬 <button type="button" data-k="amount" aria-pressed="true">금액 ↓</button> <button type="button" data-k="date">날짜</button></th></tr></thead><tbody></tbody></table></div>
     <button class="more" type="button" id="rcpt-more" hidden>더 보기</button>
     <details class="morebox" id="lucky"><summary>아무 계약이나 하나 뽑아 보기</summary>
@@ -91,14 +92,14 @@
 
   <section class="sec home-alerts" hidden>
     <h2>이번 주 눈에 띄는 패턴</h2>
-    <p class="sub">자동으로 찾은 <b>눈여겨볼 점</b>입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있습니다. <span id="nat-alerts-n"></span></p>
+    <p class="sub">자동으로 찾은 <b>눈여겨볼 점</b>입니다. <b>위법을 뜻하지 않으며</b>, 정상적인 이유가 있을 수 있어요. <span id="nat-alerts-n"></span></p>
     <div class="alerts" id="nat-alerts-list"></div>
   </section>
 
   <section class="sec" id="trackteaser" hidden>
-    <p class="fixp">⏱ 최근 30일 기준 · 기간 슬라이더와 무관</p>
+    <p class="fixp">최근 30일 기준 · 기간 슬라이더와 무관</p>
     <a href="spend.html#sole" style="display:block;text-decoration:none;color:#fff;background:#0b0b0b;border-radius:16px;padding:16px">
-      <span style="font-size:13px;opacity:.7">🔍 세금 더 보기 목록</span><br>
+      <span style="font-size:13px;opacity:.7">세금 더 보기 목록</span><br>
       <b style="font-size:28px" id="tt-sum">경쟁 없이 나간 돈</b><br>
       <span style="display:block;color:#9aa6b2;font-size:13px;margin-top:4px" id="tt-line">경쟁 없는 계약 · 비용 비교 · 축제 · 보조금</span>
       <span style="display:block;margin-top:10px;font-weight:700">더 보기 목록 열기 ›</span>
@@ -109,25 +110,25 @@
   </section>
   <section class="sec" id="ranksec" hidden>
     <h2>전국 업체 순위</h2>
-    <p class="sub">85개 시의 계약을 가장 많이 받은 업체입니다. 많이 받았다고 문제가 있다는 뜻은 아닙니다. <span class="rank-period"></span></p>
+    <p class="sub">85개 시의 계약을 가장 많이 받은 업체예요. 많이 받았다고 문제가 있다는 뜻은 아니에요. <span class="rank-period"></span></p>
     <div class="rank" id="rank-list"></div>
     <a class="gobtn" href="rank.html">100위까지 보기</a>
   </section>
 
   <section class="sec" id="about" hidden>
     <h2>원칙</h2>
-    <p class="sub">공개된 공식 자료만 쓰고, 모든 항목에 출처를 답니다. 단정 대신 "눈여겨볼 점"이라고만 씁니다.</p>
+    <p class="sub">공개된 공식 자료만 쓰고, 모든 항목에 출처를 답니다. 단정 대신 "눈여겨볼 점"이라고만 써요.</p>
     <details class="morebox"><summary>더 보기 · 어떻게 만드나요?</summary>
     <ol class="steps">
       <li><b>모으고</b><span>조달청 나라장터에 공개된 시·구청 계약을 매시간 모읍니다.</span></li>
-      <li><b>살피고</b><span>쪼개진 계약, 같은 업체 반복 같은 숫자 패턴을 자동으로 찾습니다.</span></li>
-      <li><b>보여줍니다</b><span>모든 항목에 출처를 달고, 해명이 오면 그대로 싣습니다.</span></li>
+      <li><b>살피고</b><span>쪼개진 계약, 같은 업체 반복 같은 숫자 패턴을 자동으로 찾아요.</span></li>
+      <li><b>보여 줘요</b><span>모든 항목에 출처를 달고, 해명이 오면 그대로 실어요.</span></li>
     </ol>
     <ul class="principles">
       <li>정부·지자체가 이미 공개한 데이터만 쓰고, 모든 항목에 출처를 답니다.</li>
-      <li>"사기", "횡령" 같은 단정 대신 "눈여겨볼 점"이라고만 씁니다. 정상적인 이유가 있을 수 있습니다.</li>
-      <li>개인 이름은 다루지 않습니다. 업체명과 계약 정보만 보여주고, 업체 주소는 시·군·구까지만 표시합니다.</li>
-      <li>기관이나 업체가 해명을 보내면 해당 항목 바로 아래에 그대로 싣습니다.</li>
+      <li>"사기", "횡령" 같은 단정 대신 "눈여겨볼 점"이라고만 써요. 정상적인 이유가 있을 수 있어요.</li>
+      <li>개인 이름은 다루지 않아요. 업체명과 계약 정보만 보여주고, 업체 주소는 시·군·구까지만 표시합니다.</li>
+      <li>기관이나 업체가 해명을 보내면 해당 항목 바로 아래에 그대로 실어요.</li>
     </ul>
     </details>
     <p class="sub">해명·정정 요청: <a id="contact" href="https://github.com/91cleaner/money-tracker/issues/new" target="_blank" rel="noopener">GitHub에 남기기 ↗</a> · <a href="principles.html">원칙 보기</a></p>
@@ -145,16 +146,16 @@
   </section>
 
   <footer>
-    <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있습니다.</span>
-    <span><small class="unof">개인이 만든 비공식 사이트</small>입니다. 정부·지자체와 관계없습니다 · 출처 나라장터</span>
+    <span>자료: 조달청 나라장터 공개 계약정보(공공데이터포털). 나라장터를 거치지 않은 계약은 빠질 수 있어요.</span>
+    <span><small class="unof">개인이 만든 비공식 사이트</small>입니다. 정부·지자체와 관계없어요 · 출처 나라장터</span>
     <span>만든 사람: @청소부</span>
   </footer>
 </main>
 <script src="assets/period.js?v=202610281630"></script>
 <script src="assets/mask.js?v=202610246200"></script>
 <script src="assets/region.js?v=202610246200"></script>
-<script src="assets/app.js?v=202610281630"></script>
-<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/app.js?v=202610302300"></script>
+<script src="assets/vendor/leaflet/leaflet.js"></script><script src="assets/leaflet-ko.js"></script>
 <script src="assets/mapkit.js?v=202610251700"></script>
 <script src="assets/dive.js?v=202610281630"></script>
 <script src="assets/replay.js?v=202610251010" defer></script>
@@ -166,9 +167,9 @@
 <script src="assets/addr.js?v=202610246200"></script>
 <script src="assets/play.js?v=202610247200"></script>
 <script src="assets/tabs.js?v=202610251100"></script>
-<script src="assets/fun.js?v=202610251100"></script>
+<script src="assets/fun.js?v=202610302300"></script>
 
 <script src="assets/fx.js?v=202610281630"></script><script src="assets/visits.js?v=202610281630" defer></script>
-<script src="assets/nav.js?v=202610281630"></script>
+<script src="assets/nav.js?v=202610310900"></script>
 <script src="assets/pwa.js?v=202610281630" defer></script>
-<script src="assets/gg-flow.js?v=202610300930" defer></script></body></html>
+<script src="assets/gg-flow.js?v=202610300930" defer></script><script src="assets/mt-visits.js" defer></script></body></html>

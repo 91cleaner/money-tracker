@@ -1,4 +1,4 @@
-/* MONEY TRACKER 관제실: 세계 법안·주가 흐름.
+/* 미국주식추적단 관제실: 세계 법안·주가 흐름.
  * 저장된 기록(data/world: 한국·미국·일본·대만·유럽 법안, data/markets: 일별 종가)만 쓴다. AI·실시간 시세 없음.
  * "왜 이런 흐름인가"는 같은 시기에 일어난 일을 날짜·숫자·원문으로 나란히 보여 주는 것이며, 법안이 주가를 움직였다는 증명이 아니다.
  */
@@ -6,7 +6,7 @@
   'use strict';
   var BASE = 'data/world/', MK = 'data/markets/';
   var CCS = ['us', 'kr', 'jp', 'tw', 'eu'];
-  var FLAG = { us: '🇺🇸', kr: '🇰🇷', jp: '🇯🇵', tw: '🇹🇼', eu: '🇪🇺' };
+  var FLAG = { us: '●', kr: '●', jp: '●', tw: '●', eu: '●' };
   var cache = {};
   function getJSON(u) {
     if (!cache[u]) cache[u] = fetch(u, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
@@ -136,7 +136,7 @@
     var order = CCS.slice().sort(function (a, b) { return last12[b] - last12[a]; });
 
     var head = add(box, 'div', 'mt-w-head');
-    add(head, 'b', '', '🌐 세계 법안·주가 흐름 · ' + topic.label);
+    add(head, 'b', '', '세계 법안·주가 흐름 · ' + topic.label);
     add(head, 'span', 'mt-w-why', '묶은 낱말: ' + (R.topics[0].why.filter(function (w, i, a) { return a.indexOf(w) === i; }).slice(0, 4).join(', ') || topic.label));
 
     // 지역별 법안
@@ -262,7 +262,7 @@
   function renderTitles(box, T, q, R, ctx) {
     var toks = norm(q).split(/\s+/).map(function (t) { return t.replace(/[?!.,]+$/, ''); }).filter(function (t) { return t.length >= 2 && !(T.region_words && CCS.some(function (cc) { return (T.region_words[cc] || []).indexOf(t) >= 0; })); });
     var head = add(box, 'div', 'mt-w-head');
-    add(head, 'b', '', '🌐 5개 지역 법안 제목에서 찾기');
+    add(head, 'b', '', '5개 지역 법안 제목에서 찾기');
     var status = add(box, 'p', 'mt-w-src', '한국·미국·일본·대만·유럽 법안 제목을 불러오는 중…');
     if (!toks.length) { status.textContent = '찾을 낱말이 없어요.'; return Promise.resolve({ text: '', steps: [] }); }
     var focus = R.regions.length ? R.regions : CCS;
@@ -307,14 +307,14 @@
     traceBtns = [];
     box.textContent = '';
     var mini = ctx.mini;
-    if (mini) mini.textContent = '🌐 세계 법안·주가 흐름 확인 중…';
+    if (mini) mini.textContent = '세계 법안·주가 흐름 확인 중…';
     getJSON(BASE + 'topics.json').then(function (T) {
       var R = resolve(query, T);
       var done = function (res) {
         if (!mini) return;
-        mini.textContent = res && res.text ? '🌐 ' + res.text : '🌐 관련 법안 흐름 없음';
+        mini.textContent = res && res.text ? '● ' + res.text : '관련 법안 흐름 없음';
         if (ctx.actions && res && res.text && !ctx.actions.querySelector('.mt-w-quick')) {
-          var b = el('button', 'mt-w-quick', '🌐 흐름 보기'); b.type = 'button';
+          var b = el('button', 'mt-w-quick', '흐름 보기'); b.type = 'button';
           b.addEventListener('click', function () { if (ctx.expand) ctx.expand(); box.scrollIntoView({ block: 'start' }); });
           ctx.actions.insertBefore(b, ctx.actions.firstChild);
           if (res.steps && res.steps.length) {
@@ -330,7 +330,7 @@
       }
       return renderTitles(box, T, query, R, ctx).then(done);
     }).catch(function () {
-      if (mini) mini.textContent = '🌐 세계 법안·주가 자료를 불러오지 못했어요';
+      if (mini) mini.textContent = '세계 법안·주가 자료를 불러오지 못했어요';
     });
   }
 

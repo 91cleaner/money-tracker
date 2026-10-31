@@ -20,7 +20,8 @@
     "credit": "Grendelkhan",
     "license": "CC BY-SA 3.0",
     "page": "https://commons.wikimedia.org/wiki/File:Googleplex_with_Pride_colors_2015.gk.jpg"
-   }
+   },
+   "hqKo": "마운틴뷰, 캘리포니아"
   },
   "AMZN": {
    "hq": "Seattle, WA",
@@ -41,7 +42,8 @@
     "credit": "Andy Li",
     "license": "CC0",
     "page": "https://commons.wikimedia.org/wiki/File:Amazon_Spheres_2018.jpg"
-   }
+   },
+   "hqKo": "시애틀, 워싱턴주"
   },
   "INTC": {
    "hq": "Santa Clara, CA",
@@ -62,7 +64,8 @@
     "credit": "Intel Free Press",
     "license": "CC BY 2.0",
     "page": "https://commons.wikimedia.org/wiki/File:Robert_Noyce_Building_in_Santa_Clara.jpg"
-   }
+   },
+   "hqKo": "샌타클래라, 캘리포니아"
   },
   "MSFT": {
    "hq": "Redmond, WA",
@@ -83,7 +86,8 @@
     "credit": "Jiaqian AirplaneFan",
     "license": "CC BY 3.0",
     "page": "https://commons.wikimedia.org/wiki/File:Building_92_of_Microsoft_Redmond_Campus_-_panoramio.jpg"
-   }
+   },
+   "hqKo": "레드먼드, 워싱턴주"
   },
   "TSLA": {
    "hq": "Austin, TX",
@@ -104,7 +108,8 @@
     "credit": "Larry D. Moore",
     "license": "CC BY 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Gigafactory_Texas_Building_1_June_2022.jpg"
-   }
+   },
+   "hqKo": "오스틴, 텍사스"
   },
   "NVDA": {
    "hq": "Santa Clara, CA",
@@ -125,7 +130,8 @@
     "credit": "Coolcaesar",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:NVIDIA_Headquarters.jpg"
-   }
+   },
+   "hqKo": "샌타클래라, 캘리포니아"
   },
   "AAPL": {
    "hq": "Cupertino, CA",
@@ -146,7 +152,8 @@
     "credit": "InvadingInvader",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Apple_Park_2022.jpg"
-   }
+   },
+   "hqKo": "쿠퍼티노, 캘리포니아"
   },
   "PLTR": {
    "hq": "Aventura, FL",
@@ -161,7 +168,8 @@
     "credit": "UK Government",
     "license": "CC BY 2.0",
     "page": "https://commons.wikimedia.org/wiki/File:Alex_Karp_attends_AI_Summit_(53302457013)_4-5_ratio.jpg"
-   }
+   },
+   "hqKo": "아벤투라, 플로리다"
   },
   "005930.KS": {
    "hq": "Suwon, Korea",
@@ -176,7 +184,9 @@
     "credit": "hyolee2",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Samsung_Electronics_Suwon.JPG"
-   }
+   },
+   "ceoKo": "전영현, 노태문",
+   "hqKo": "경기 수원"
   },
   "000660.KS": {
    "hq": "Icheon, Korea",
@@ -185,7 +195,9 @@
     127.4834
    ],
    "ceo": "Kwak Noh-jung",
-   "ceoTitle": "CEO"
+   "ceoTitle": "CEO",
+   "ceoKo": "곽노정",
+   "hqKo": "경기 이천"
   },
   "005380.KS": {
    "hq": "Seoul, Korea",
@@ -193,14 +205,16 @@
     37.4633,
     127.0425
    ],
-   "ceo": "José Muñoz",
-   "ceoTitle": "President and CEO (Chair: Chung Eui-sun)",
+   "ceo": "Euisun Chung, José Muñoz, Yeong Il Choi",
+   "ceoTitle": "Co-CEOs",
    "hqImg": {
     "src": "img/dossier/005380-hq.jpg",
     "credit": "HappyMidnight",
     "license": "CC BY-SA 3.0",
     "page": "https://commons.wikimedia.org/wiki/File:HyundaiMotorsCompany_KiaMotorsCompany.jpg"
-   }
+   },
+   "ceoKo": "정의선, 호세 무뇨스, 최영일",
+   "hqKo": "서울"
   },
   "035420.KS": {
    "hq": "Seongnam, Korea",
@@ -221,7 +235,9 @@
     "credit": "Maskkwon",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:NAVER_Green_Factory.jpg"
-   }
+   },
+   "ceoKo": "최수연",
+   "hqKo": "경기 성남"
   },
   "SPCX": {
    "hq": "Starbase, TX",
@@ -242,7 +258,8 @@
     "credit": "Alexander Hatley from Spring, Texas, USA",
     "license": "CC BY 2.0",
     "page": "https://commons.wikimedia.org/wiki/File:USA_-_Texas_-_Boca_Chica_-_Starbase_(51287071315).jpg"
-   }
+   },
+   "hqKo": "스타베이스, 텍사스"
   },
   "MU": {
    "hq": "Boise, ID",
@@ -257,7 +274,8 @@
     "credit": "SanDisk Corporation",
     "license": "Attribution",
     "page": "https://commons.wikimedia.org/wiki/File:Sanjay_Mehrotra.png"
-   }
+   },
+   "hqKo": "보이시, 아이다호"
   },
   "AVGO": {
    "hq": "Palo Alto, CA",
@@ -272,7 +290,8 @@
     "credit": "Greg Bezat, d/b/a Bezat Video Group",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Hock_Tan_2022.png"
-   }
+   },
+   "hqKo": "팰로앨토, 캘리포니아"
   },
   "META": {
    "hq": "Menlo Park, CA",
@@ -293,7 +312,8 @@
     "credit": "LPS.1",
     "license": "CC0",
     "page": "https://commons.wikimedia.org/wiki/File:Meta_Platforms_Headquarters_Menlo_Park_California.jpg"
-   }
+   },
+   "hqKo": "멘로파크, 캘리포니아"
   },
   "LLY": {
    "hq": "Indianapolis, IN",
@@ -314,7 +334,8 @@
     "credit": "Momoneymoproblemz",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Eli_Lilly_Corporate_Center,_Indianapolis,_Indiana,_USA.jpg"
-   }
+   },
+   "hqKo": "인디애나폴리스, 인디애나"
   },
   "BRK.B": {
    "hq": "Omaha, NE",
@@ -329,7 +350,14 @@
     "credit": "Tankforwin",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Greg_Abel.jpg"
-   }
+   },
+   "hqImg": {
+    "src": "img/dossier/brk-hq.jpg",
+    "credit": "shannonpatrick17",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:KiewitPlaza.jpg"
+   },
+   "hqKo": "오마하, 네브래스카"
   },
   "AMD": {
    "hq": "Santa Clara, CA",
@@ -350,7 +378,8 @@
     "credit": "Coolcaesar",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:2485_Augustine_Drive_headquarters_in_Santa_Clara,_California.jpg"
-   }
+   },
+   "hqKo": "샌타클래라, 캘리포니아"
   },
   "JPM": {
    "hq": "New York, NY",
@@ -371,7 +400,8 @@
     "credit": "Kidfly182",
     "license": "CC BY 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:270_Park_Avenue_September_2024.jpg"
-   }
+   },
+   "hqKo": "뉴욕, 뉴욕주"
   },
   "XOM": {
    "hq": "Spring, TX",
@@ -386,7 +416,8 @@
     "credit": "World Economic Forum",
     "license": "CC BY 3.0",
     "page": "https://commons.wikimedia.org/wiki/File:Darren_Woods_(born_c._1965)_at_WEF_Special_Meeting_on_Global_Collaboration,_Growth_and_Energy_for_Development,_2024.png"
-   }
+   },
+   "hqKo": "스프링, 텍사스"
   },
   "V": {
    "hq": "San Francisco, CA",
@@ -407,7 +438,8 @@
     "credit": "Daniel Torok",
     "license": "Public domain",
     "page": "https://commons.wikimedia.org/wiki/File:Ryan_McInerney_July_18,_2025.jpg"
-   }
+   },
+   "hqKo": "샌프란시스코, 캘리포니아"
   },
   "JNJ": {
    "hq": "New Brunswick, NJ",
@@ -422,7 +454,14 @@
     "credit": "Stephanie Diani",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:JnJ_Duato_cropped.jpg"
-   }
+   },
+   "hqImg": {
+    "src": "img/dossier/jnj-hq.jpg",
+    "credit": "Daderot",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Johnson_%26_Johnson_HQ_-_IMG_2615.JPG"
+   },
+   "hqKo": "뉴브런즈윅, 뉴저지"
   },
   "WMT": {
    "hq": "Bentonville, AR",
@@ -437,7 +476,8 @@
     "credit": "Chris Garrison",
     "license": "CC BY 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:John_Furner_headshot_2019.jpg"
-   }
+   },
+   "hqKo": "벤턴빌, 아칸소"
   },
   "ABBV": {
    "hq": "North Chicago, IL",
@@ -446,7 +486,14 @@
     -87.85
    ],
    "ceo": "Robert A. Michael",
-   "ceoTitle": "Chairman and CEO"
+   "ceoTitle": "Chairman and CEO",
+   "hqKo": "노스시카고, 일리노이",
+   "hqImg": {
+    "src": "img/dossier/abbv-hq.jpg",
+    "credit": "LittleT889",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:AbbVie.jpg"
+   }
   },
   "MA": {
    "hq": "Purchase, NY",
@@ -461,7 +508,15 @@
     "credit": "Drew Gurian",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Michael_Miebach.jpg"
-   }
+   },
+   "hqImg": {
+    "src": "img/dossier/ma-hq.jpg",
+    "credit": "USGS",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:2000PurchaseSt-USGS.jpg",
+    "creditKo": "미국 지질조사국"
+   },
+   "hqKo": "퍼체이스, 뉴욕주"
   },
   "CVX": {
    "hq": "Houston, TX",
@@ -470,7 +525,14 @@
     -95.37
    ],
    "ceo": "Mike Wirth",
-   "ceoTitle": "Chairman and CEO"
+   "ceoTitle": "Chairman and CEO",
+   "hqImg": {
+    "src": "img/dossier/cvx-hq.jpg",
+    "credit": "Dewliter",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:1400SmithDowntown.jpg"
+   },
+   "hqKo": "휴스턴, 텍사스"
   },
   "COST": {
    "hq": "Issaquah, WA",
@@ -485,7 +547,8 @@
     "credit": "Coolcaesar",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Costcoheadquarters.jpg"
-   }
+   },
+   "hqKo": "이사콰, 워싱턴주"
   },
   "CSCO": {
    "hq": "San Jose, CA",
@@ -506,7 +569,8 @@
     "credit": "Travis Wise",
     "license": "CC BY 2.0",
     "page": "https://commons.wikimedia.org/wiki/File:Cisco_Systems_Headquarters_(Building_10),_Cisco_San_Jose_Main_Campus.jpg"
-   }
+   },
+   "hqKo": "새너제이, 캘리포니아"
   },
   "PG": {
    "hq": "Cincinnati, OH",
@@ -527,7 +591,8 @@
     "credit": "T6784",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Shailesh_Jejurikar.jpg"
-   }
+   },
+   "hqKo": "신시내티, 오하이오"
   },
   "UNH": {
    "hq": "Eden Prairie, MN",
@@ -542,7 +607,8 @@
     "credit": "Ways and Means Committee of the United States Congress",
     "license": "Public domain",
     "page": "https://commons.wikimedia.org/wiki/File:Stephen_Hemsley.jpg"
-   }
+   },
+   "hqKo": "이든프레리, 미네소타"
   },
   "KO": {
    "hq": "Atlanta, GA",
@@ -557,7 +623,8 @@
     "credit": "JJonahJackalope",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Coca-Cola_World_Headquarters.jpg"
-   }
+   },
+   "hqKo": "애틀랜타, 조지아"
   },
   "MRK": {
    "hq": "Rahway, NJ",
@@ -566,7 +633,8 @@
     -74.277
    ],
    "ceo": "Robert M. Davis",
-   "ceoTitle": "Chairman and CEO"
+   "ceoTitle": "Chairman and CEO",
+   "hqKo": "라웨이, 뉴저지"
   },
   "BAC": {
    "hq": "Charlotte, NC",
@@ -587,7 +655,8 @@
     "credit": "No machine-readable author provided. Nopira assumed (based o",
     "license": "Public domain",
     "page": "https://commons.wikimedia.org/wiki/File:Bank_of_America_Corporate_Center.jpg"
-   }
+   },
+   "hqKo": "샬럿, 노스캐롤라이나"
   },
   "AMAT": {
    "hq": "Santa Clara, CA",
@@ -602,7 +671,8 @@
     "credit": "Olaf2",
     "license": "CC BY-SA 4.0",
     "page": "https://commons.wikimedia.org/wiki/File:Sitz_von_Applied_Materials_in_Santa_Clara.jpg"
-   }
+   },
+   "hqKo": "샌타클래라, 캘리포니아"
   },
   "402340.KS": {
    "hq": "Seoul, Korea",
@@ -611,7 +681,15 @@
     126.985
    ],
    "ceo": "Kim Jung-kyu",
-   "ceoTitle": "CEO"
+   "ceoTitle": "CEO",
+   "hqImg": {
+    "src": "img/dossier/402340-hq.jpg",
+    "credit": "星組背番号10",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:SK_Telecom_head_office.JPG"
+   },
+   "ceoKo": "김정규",
+   "hqKo": "서울"
   },
   "009150.KS": {
    "hq": "Suwon, Korea",
@@ -620,7 +698,9 @@
     127.053
    ],
    "ceo": "Chang Duck-hyun",
-   "ceoTitle": "CEO and President"
+   "ceoTitle": "CEO and President",
+   "ceoKo": "장덕현",
+   "hqKo": "경기 수원"
   },
   "373220.KS": {
    "hq": "Seoul, Korea",
@@ -629,7 +709,15 @@
     126.9285
    ],
    "ceo": "Kim Dong-myung",
-   "ceoTitle": "CEO"
+   "ceoTitle": "CEO",
+   "hqImg": {
+    "src": "img/dossier/373220-hq.jpg",
+    "credit": "kallerna",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Yeouido_12.jpg"
+   },
+   "ceoKo": "김동명",
+   "hqKo": "서울"
   },
   "207940.KS": {
    "hq": "Incheon, Korea",
@@ -638,7 +726,9 @@
     126.641
    ],
    "ceo": "John Rim",
-   "ceoTitle": "CEO and President"
+   "ceoTitle": "CEO and President",
+   "ceoKo": "존 림",
+   "hqKo": "인천"
   },
   "032830.KS": {
    "hq": "Seoul, Korea",
@@ -647,7 +737,9 @@
     127.028
    ],
    "ceo": "Hong Won-hak",
-   "ceoTitle": "CEO and President"
+   "ceoTitle": "CEO and President",
+   "ceoKo": "홍원학",
+   "hqKo": "서울"
   },
   "105560.KS": {
    "hq": "Seoul, Korea",
@@ -656,7 +748,9 @@
     126.9245
    ],
    "ceo": "Yang Jong-hee",
-   "ceoTitle": "Chairman and CEO"
+   "ceoTitle": "Chairman and CEO",
+   "ceoKo": "양종희",
+   "hqKo": "서울"
   },
   "028260.KS": {
    "hq": "Seoul, Korea",
@@ -665,7 +759,9 @@
     127.169
    ],
    "ceo": "Oh Se-chul, Lee Jae-eon, Song Kyu-jong",
-   "ceoTitle": "Co-CEOs"
+   "ceoTitle": "Co-CEOs",
+   "ceoKo": "오세철, 이재언, 송규종",
+   "hqKo": "서울"
   },
   "035720.KS": {
    "hq": "Jeju, Korea",
@@ -674,7 +770,9 @@
     126.57
    ],
    "ceo": "Chung Shin-a",
-   "ceoTitle": "CEO"
+   "ceoTitle": "CEO",
+   "ceoKo": "정신아",
+   "hqKo": "제주"
   },
   "GOOG": {
    "hq": "Mountain View, CA",
@@ -695,7 +793,8 @@
     "credit": "Grendelkhan",
     "license": "CC BY-SA 3.0",
     "page": "https://commons.wikimedia.org/wiki/File:Googleplex_with_Pride_colors_2015.gk.jpg"
-   }
+   },
+   "hqKo": "마운틴뷰, 캘리포니아"
   }
  }
 }

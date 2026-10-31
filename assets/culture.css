@@ -1,0 +1,31 @@
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Pretendard,system-ui,sans-serif;background:#f8fafc;color:#0f172a}
+.cm-top{position:absolute;z-index:1000;top:0;left:0;right:0;display:flex;gap:12px;align-items:center;padding:10px 16px;background:rgba(255,255,255,.95);border-bottom:1px solid #e2e8f0}
+.cm-top h1{font-size:20px;margin:0}.cm-home{font-weight:700;color:#475569;text-decoration:none;font-size:14px}
+#map{position:absolute;top:52px;left:0;right:0;bottom:0}
+.cm-panel{position:absolute;z-index:1000;top:66px;right:14px;width:310px;background:#fff;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.15);padding:14px 16px;font-size:16px;max-height:calc(100% - 80px);overflow:auto}
+.cm-warn{background:#fef3c7;border-radius:8px;padding:6px 10px;margin:0 0 10px;font-size:14px}
+.cm-ly{display:flex;align-items:center;gap:8px;padding:7px 0;font-weight:600;cursor:pointer}
+.cm-ly input{width:20px;height:20px}.cm-ly i{width:14px;height:14px;border-radius:50%;display:inline-block}.cm-ly span{margin-left:auto;font-weight:400;color:#64748b;font-size:13px}
+#year{margin:0 0 4px 28px;font-size:15px;padding:3px 6px}
+#reset{width:100%;margin:10px 0;padding:10px;font-size:16px;font-weight:700;border:0;border-radius:10px;background:#0f172a;color:#fff;cursor:pointer}
+.cm-help{font-size:14px}.cm-help ul{padding-left:18px;margin:6px 0}.cm-help li{margin:4px 0}
+.cm-src{font-size:12px;color:#64748b;margin:8px 0 0}
+.cm-pop{font-size:15px;line-height:1.5}.cm-pop b{font-size:16px}.cm-pop .u{color:#b45309;font-weight:700}
+@media(max-width:600px){.cm-top h1{font-size:16px}.cm-panel{top:auto;bottom:10px;left:10px;right:10px;width:auto;max-height:38%;font-size:15px}}
+.cm-tip{background:#6b7280;color:#fff;border:0;font-weight:700;font-size:13px}
+
+.cm-home{display:inline-flex;align-items:center;min-height:40px;padding:0 4px}
+.cm-ly{min-height:40px}#year{min-height:40px;font-size:16px}.cm-help summary{min-height:40px;display:flex;align-items:center;cursor:pointer;font-weight:600}
+.leaflet-touch .leaflet-bar a{width:40px;height:40px;line-height:40px}
+@media(max-height:500px) and (min-width:601px){.cm-top{padding:4px 12px}.cm-top h1{font-size:16px}#map{top:48px}
+ .cm-panel{top:56px;width:280px;padding:8px 12px;font-size:15px;max-height:calc(100% - 64px)}.cm-warn{font-size:13px;margin-bottom:4px}
+ .cm-ly{padding:0}#reset{margin:6px 0;padding:8px}}
+
+.cm-sum{background:#0f172a;color:#fff;border-radius:12px;padding:10px 12px;margin:0 0 10px}.cm-sum h2{font-size:14px;margin:0 0 4px;color:#cbd5e1}.cm-sum .big{font-size:24px;font-weight:800;line-height:1.2}.cm-sum small{display:block;font-size:13px;color:#e2e8f0}.cm-sum .u,.cm-stats .u{display:inline-block;background:#fef3c7;color:#92400e;border-radius:6px;padding:0 5px;font-size:12px;font-weight:700;margin-left:4px}.cm-sum hr{border:0;border-top:1px solid #334155;margin:8px 0}
+#openStats,#closeStats{width:100%;padding:10px;font-size:16px;font-weight:700;border:2px solid #0f172a;border-radius:10px;background:#fff;cursor:pointer;margin:0 0 6px;min-height:40px}
+.cm-stats{position:fixed;inset:0;z-index:2000;background:#f8fafc;overflow:auto}.cm-stats-in{max-width:900px;margin:0 auto;padding:16px}.cm-stats h2{font-size:20px;margin:22px 0 8px}.cm-stats table{width:100%;border-collapse:collapse;font-size:15px;background:#fff}.cm-stats th,.cm-stats td{border-bottom:1px solid #e2e8f0;padding:7px 6px;text-align:left}.cm-stats td.n{text-align:right;white-space:nowrap}.cm-stats p{font-size:14px;color:#475569}
+.cm-lbl{background:none;border:0}.cm-lbl span{display:inline-block;transform:translate(-50%,-50%);background:rgba(15,23,42,.85);color:#fff;font:700 12px Pretendard,sans-serif;padding:1px 5px;border-radius:6px;white-space:nowrap;pointer-events:none}.cm-lbl.f span{background:rgba(29,78,216,.9)}
+@media(max-width:600px){.cm-sum .big{font-size:20px}.cm-panel{max-height:45%}}
+
+.cm-exit{margin-left:auto;display:inline-flex;align-items:center;min-height:40px;padding:0 12px;border:1px solid #cbd5e1;border-radius:10px;color:#0f172a;text-decoration:none;font-weight:800;font-size:14px;white-space:nowrap}
+@media(max-width:600px){.cm-top{gap:8px;padding:6px 10px}.cm-top h1{font-size:14px}}

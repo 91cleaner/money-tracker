@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MONEY TRACKER — 의원 상세</title>
+<title>미국주식추적단 — 의원 상세</title>
 <meta name="description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
-<meta property="og:title" content="MONEY TRACKER — 미국 의원 파일"><meta property="og:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
+<meta property="og:title" content="US Stock Trackers — 미국 의원 파일"><meta property="og:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 미국 의원 파일"><meta name="twitter:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="US Stock Trackers — 미국 의원 파일"><meta name="twitter:description" content="미국 의원별 공개 기록: 정당·주·위원회, 주식 거래 신고(PTR) 목록과 종목·업종 요약. 신고 기준 데이터 정리이며 투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
-<script src="assets/i18n.js?v=i18n-20261030d"></script>
+<script src="assets/i18n.js?v=i18n-20261030j"></script>
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
 *{box-sizing:border-box}
@@ -162,7 +162,7 @@ header.bar input.nm{width:200px;text-transform:none}
 </head>
 <body>
 <header class="bar">
-  <a class="brand" href="./">◉ MONEY TRACKER</a>
+  <a class="brand" href="./">◉ 미국주식추적단</a>
   <span class="crumb">US MEMBER FILE / 공개 기록 정리</span>
   <a class="mono" href="weekly.html">주간 순위표</a>
   <span class="sp"></span>
@@ -297,7 +297,7 @@ header.bar input.nm{width:200px;text-transform:none}
     var ent = E["member:" + id];
     var name = (m && m.name) || (rows[0] && rows[0].who) || id;
     var mapName = (ent && ent.aliases && ent.aliases[0]) || name;
-    document.title = "MONEY TRACKER — " + name + " 의원 상세";
+    document.title = "미국주식추적단 — " + name + " 의원 상세";
     app.replaceChildren();
     // 0) 핵심 카드: insights.json에 의원 항목(members[ID] 또는 members[이름])이 있을 때만 맨 위에 표시
     if (INS && INS.members && window.MTInsights) window.MTInsights.render(app, INS.members[id] || INS.members[name], INS);
@@ -321,7 +321,7 @@ header.bar input.nm{width:200px;text-transform:none}
     if (cms.length) { var ch = el("div", "chips"); cms.forEach(function (c) { ch.appendChild(el("span", "", c)); }); cm.appendChild(ch); }
     else cm.appendChild(el("p", "note", "데이터에 위원회 정보가 없습니다."));
     head.appendChild(cm);
-    var acts = el("div", "actions"), mapBtn = el("a", "btn", "🛰 지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(mapName); acts.appendChild(mapBtn);
+    var acts = el("div", "actions"), mapBtn = el("a", "btn", "지도에서 보기"); mapBtn.href = "world-intelligence/?q=" + encodeURIComponent(mapName); acts.appendChild(mapBtn);
     if (window.MTShare) {
       // 공유: insights.json 의원 항목 → 없으면 이 페이지의 신고 건수 (원문 PTR 링크)
       var sh = INS && INS.members ? window.MTShare.pick(INS.members[id] || INS.members[name]) : null;
@@ -331,7 +331,7 @@ header.bar input.nm{width:200px;text-transform:none}
       }
       sh = sh || {};
       acts.appendChild(window.MTShare.button({ head: name + " 의원", line: sh.line, src: sh.src, date: sh.date, url: window.MTShare.url({ n: Q || name }) }));
-      window.MTShare.meta("MONEY TRACKER — " + name + " 의원 파일", sh.line || "미국 의원 공개 기록 정리 · 신고 기준 · 투자 조언 아님");
+      window.MTShare.meta("미국주식추적단 — " + name + " 의원 파일", sh.line || "미국 의원 공개 기록 정리 · 신고 기준 · 투자 조언 아님");
     }
     head.appendChild(acts);
     app.appendChild(head);
@@ -441,10 +441,10 @@ header.bar input.nm{width:200px;text-transform:none}
     p.classList.add("dotp");
     var bd = el("div", "badges");
     if (lags.length) {
-      bd.appendChild(el("span", "", T("🕒 보통 " + lags[Math.floor(lags.length / 2)] + "일 늦게 신고", "🕒 Usually reported " + lags[Math.floor(lags.length / 2)] + " days later")));
-      bd.appendChild(el("span", "", T("🐢 가장 늦은 신고 " + lags[lags.length - 1] + "일", "🐢 Slowest report: " + lags[lags.length - 1] + " days")));
+      bd.appendChild(el("span", "", T("보통 " + lags[Math.floor(lags.length / 2)] + "일 늦게 신고", "Usually reported " + lags[Math.floor(lags.length / 2)] + " days later")));
+      bd.appendChild(el("span", "", T("가장 늦은 신고 " + lags[lags.length - 1] + "일", "Slowest report: " + lags[lags.length - 1] + " days")));
     }
-    bd.appendChild(el("span", "", T("🚨 주식 숙제 늦게 낸 것 " + late + "건 (45일 넘김)", "🚨 Stock homework turned in late: " + late + " (past 45 days)")));
+    bd.appendChild(el("span", "", T("주식 숙제 늦게 낸 것 " + late + "건 (45일 넘김)", "Stock homework turned in late: " + late + " (past 45 days)")));
     p.appendChild(bd);
     p.appendChild(el("p", "note", T("점 하나 = 신고된 거래 하나예요. 점을 눌러 보세요! 공개 기록일 뿐이고, 사고팔라는 뜻이 아니에요.", "One dot = one reported trade. Tap a dot! This is a public record only, not advice to buy or sell.")));
     if (!tks.length) { p.appendChild(el("div", "empty", T("티커가 있는 거래가 없어서 차트를 못 그려요", "No trades with a ticker, so no chart"))); return p; }
@@ -510,7 +510,7 @@ header.bar input.nm{width:200px;text-transform:none}
     return p;
   }
 
-  var VOTE = { Y: ["👍", "찬성", "Yes"], N: ["👎", "반대", "No"], P: ["✋", "기권(Present)", "Present"], X: ["💤", "불참", "Not voting"] };
+  var VOTE = { Y: ["○", "찬성", "Yes"], N: ["×", "반대", "No"], P: ["✋", "기권(Present)", "Present"], X: ["●", "불참", "Not voting"] };
   // 의원 타임라인: data/us/timeline/<ID>.json (Congress.gov API, 수집 스크립트 scripts/collect_congress_timeline.py) + 이 페이지의 거래 신고
   function timelinePanel(id, rows) {
     var p = panel(T("의원 타임라인", "Member timeline"), null, true); p.classList.add("tlx");
@@ -521,7 +521,7 @@ header.bar input.nm{width:200px;text-transform:none}
       var st = r[0] || {}, f = r[1] || {}, ev = (f.events || []).slice();
       box.replaceChildren();
       if (st.status !== "ok") {
-        var kb = el("div", "keybox"); kb.appendChild(el("b", "", T("🔑 열쇠가 필요해요", "🔑 A key is needed")));
+        var kb = el("div", "keybox"); kb.appendChild(el("b", "", T("열쇠가 필요해요", "A key is needed")));
         kb.appendChild(document.createTextNode(st.status === "needs_key" ? (EN ? st.en : st.ko) || "" : T("법안·표결 자료를 아직 모으지 못했어요.", "Bill and vote data has not been collected yet.")));
         if (st.signup && safe(st.signup)) { kb.appendChild(document.createTextNode(" ")); kb.appendChild(link(T("무료 키 받기 ↗", "Get a free key ↗"), st.signup)); }
         box.appendChild(kb);
@@ -534,28 +534,28 @@ header.bar input.nm{width:200px;text-transform:none}
       ev.forEach(function (e) { if (e.k === "intro") nBill++; else if (e.k === "pass") nPass++; else if (e.k === "law") nLaw++; else if (e.k === "vote") { nVote++; if (e.v !== "X") nCast++; } });
       if (st.status === "ok") {
         var big = el("div", "big");
-        [[nBill, T("📜 발의한 법안", "📜 Bills sponsored")], [nLaw, T("🏛 법이 된 법안", "🏛 Became law")], [nVote, T("🗳 하원 표결 기록", "🗳 House votes")], [nVote ? Math.round(nCast / nVote * 100) + "%" : "-", T("🙋 표결에 참여한 비율", "🙋 Votes taken part in")]]
+        [[nBill, T("발의한 법안", "Bills sponsored")], [nLaw, T("법이 된 법안", "Became law")], [nVote, T("하원 표결 기록", "House votes")], [nVote ? Math.round(nCast / nVote * 100) + "%" : "-", T("표결에 참여한 비율", "Votes taken part in")]]
           .forEach(function (c) { var d = el("div"); d.append(el("b", "", String(c[0])), el("span", "", c[1])); big.appendChild(d); });
         box.appendChild(big);
         var bd = el("div", "badges");
-        [[nBill >= 1, T("🌱 법안 발의 시작", "🌱 First bill")], [nBill >= 10, T("📚 법안 10개 발의", "📚 10 bills")], [nLaw >= 1, T("🏛 법이 된 법안 있음", "🏛 Has a bill that became law")], [nVote >= 50, T("🗳 표결 50번 기록", "🗳 50 votes logged")], [nVote >= 20 && nCast / nVote >= 0.95, T("🙋 표결 참여 95% 이상", "🙋 95%+ of votes taken part in")]]
+        [[nBill >= 1, T("법안 발의 시작", "First bill")], [nBill >= 10, T("법안 10개 발의", "10 bills")], [nLaw >= 1, T("법이 된 법안 있음", "Has a bill that became law")], [nVote >= 50, T("표결 50번 기록", "50 votes logged")], [nVote >= 20 && nCast / nVote >= 0.95, T("표결 참여 95% 이상", "95%+ of votes taken part in")]]
           .forEach(function (b) { bd.appendChild(el("span", b[0] ? "" : "off", b[1])); });
         box.appendChild(bd);
       }
       var tabs = el("div", "tabs"), list = el("div"), more = el("button", "more"), cur = "all", shown = 0, view = ev;
       more.type = "button";
-      [["all", T("전체", "All")], ["bill", T("📜 법안", "📜 Bills")], ["vote", T("🗳 표결", "🗳 Votes")], ["trade", T("💼 거래 신고", "💼 Trade filings")]].forEach(function (t) {
+      [["all", T("전체", "All")], ["bill", T("법안", "Bills")], ["vote", T("표결", "Votes")], ["trade", T("거래 신고", "Trade filings")]].forEach(function (t) {
         var b = el("button", "", t[1]); b.type = "button"; b.setAttribute("aria-pressed", t[0] === "all" ? "true" : "false");
         b.addEventListener("click", function () { cur = t[0]; Array.prototype.forEach.call(tabs.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); draw(); });
         tabs.appendChild(b);
       });
       function describe(e) {
         var ic, head, sub = [];
-        if (e.k === "intro") { ic = "📜"; head = T("법안을 냈어요", "Introduced a bill"); }
-        else if (e.k === "pass") { ic = "📈"; head = T("법안이 한쪽 의회를 통과했어요", "Bill passed one chamber"); }
-        else if (e.k === "law") { ic = "🏛"; head = T("법안이 법이 됐어요", "Bill became law"); }
+        if (e.k === "intro") { ic = "●"; head = T("법안을 냈어요", "Introduced a bill"); }
+        else if (e.k === "pass") { ic = "▲"; head = T("법안이 한쪽 의회를 통과했어요", "Bill passed one chamber"); }
+        else if (e.k === "law") { ic = "●"; head = T("법안이 법이 됐어요", "Bill became law"); }
         else if (e.k === "vote") { var v = VOTE[e.v] || VOTE.X; ic = v[0]; head = T("하원 표결: ", "House vote: ") + (EN ? v[2] : v[1]); }
-        else { ic = "💼"; var ty = { P: T("구입", "Buy"), S: T("처분", "Sale"), E: T("교환", "Exchange") }[e.ty]; head = T("주식 거래 신고(PTR)", "Stock trade filing (PTR)") + (ty ? " · " + ty : ""); }
+        else { ic = "●"; var ty = { P: T("구입", "Buy"), S: T("처분", "Sale"), E: T("교환", "Exchange") }[e.ty]; head = T("주식 거래 신고(PTR)", "Stock trade filing (PTR)") + (ty ? " · " + ty : ""); }
         if (e.t) sub.push(e.no && e.k !== "vote" ? e.no + " · " + e.t : e.t);
         if (e.k === "vote") { if (e.q) sub.push(e.q); if (e.r) sub.push(e.r); }
         return [ic, head, sub];
@@ -667,5 +667,5 @@ header.bar input.nm{width:200px;text-transform:none}
 </script>
 <script src="assets/glossary.js?v=gl-20261029"></script>
 <script src="assets/commander.js?v=cmdr-20261028b"></script>
-</body>
+<script src="assets/mt-visits.js" defer></script></body>
 </html>

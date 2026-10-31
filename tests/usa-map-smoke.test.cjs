@@ -66,7 +66,7 @@ test('public preview labels disconnected AI, real-time prices and signals honest
 test('country selection remains intentional, without a redirect into the US map', () => {
   assert.match(index, /href="national\.html"/);
   assert.match(index, /href="world-intelligence\/"/);
-  assert.match(index, /시스템 연결 상태/);
+  assert.match(index, /<strong>대한민국<\/strong>/);
   assert.doesNotMatch(index, /location\.replace\('usa-command\.html'/);
 });
 

@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MONEY TRACKER — 업종 히트맵</title>
+<title>미국주식추적단 — 업종 히트맵</title>
 <meta name="description" content="업종별 최근 7일 의원 거래 신고 수와 같은 기간 종가 변화(중앙값). 데이터상 같은 기간의 숫자이며 인과·투자 조언 아님.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="세금추적단">
-<meta property="og:title" content="MONEY TRACKER — 업종 히트맵"><meta property="og:description" content="업종별 최근 7일 의원 거래 신고 수와 같은 기간 종가 변화(중앙값). 데이터상 같은 기간의 숫자이며 인과·투자 조언 아님.">
+<meta property="og:title" content="US Stock Trackers — 업종 히트맵"><meta property="og:description" content="업종별 최근 7일 의원 거래 신고 수와 같은 기간 종가 변화(중앙값). 데이터상 같은 기간의 숫자이며 인과·투자 조언 아님.">
 <meta property="og:image" content="https://91cleaner.github.io/money-tracker/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MONEY TRACKER — 업종 히트맵"><meta name="twitter:description" content="업종별 최근 7일 의원 거래 신고 수와 같은 기간 종가 변화(중앙값). 데이터상 같은 기간의 숫자이며 인과·투자 조언 아님.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="US Stock Trackers — 업종 히트맵"><meta name="twitter:description" content="업종별 최근 7일 의원 거래 신고 수와 같은 기간 종가 변화(중앙값). 데이터상 같은 기간의 숫자이며 인과·투자 조언 아님.">
 <meta name="twitter:image" content="https://91cleaner.github.io/money-tracker/assets/og.png">
 <style>
 :root{color-scheme:dark;--bg:#020a06;--panel:rgba(3,16,9,.92);--line:#1f5a37;--line2:#2f8a55;--g:#5dff9e;--g2:#9dffbf;--txt:#d5f7e1;--mut:#7fa58f;--warn:#ffd36b;--up:#7dffa8;--down:#ff8a8a;--link:#7fd8ff}
@@ -123,8 +123,8 @@ header.bar input.nm{width:200px;text-transform:none}
 </head>
 <body>
 <header class="bar">
-  <a class="brand" href="./">◉ MONEY TRACKER</a>
-  <span class="crumb">SECTOR HEATMAP / 공개 기록 정리</span>
+  <a class="brand" href="./">◉ 미국주식추적단</a>
+  <span class="crumb">업종 히트맵 / 공개 기록 정리</span>
   <a class="mono" href="sector.html">업종 파일</a>
   <a class="mono" href="weekly.html">주간 순위표</a>
 </header>
@@ -149,7 +149,7 @@ header.bar input.nm{width:200px;text-transform:none}
   Promise.all([get("data/search-index.json"), get("data/us/ticker-sectors.json"), get("data/us/trades_public.json"), get("data/us/prices/summary.json")]).then(function (r) {
     var si = r[0] || {}, ts = r[1] || {}, tr = r[2] || {}, pr = r[3] || {}, E = si.entities || {};
     var map = ts.tickers || {}, P = pr.t || {}, trades = tr.trades || [];
-    var names = {}; Object.keys(E).forEach(function (k) { if (E[k].type === "sector") names[k.slice(7)] = E[k].name; });
+    var names = {aerospace_defense:"항공·방위",agriculture:"농업",communications:"통신",construction:"건설",consumer_discretionary:"생활 소비(필수 아님)",consumer_staples:"생활 필수품",energy:"에너지",financials:"금융",healthcare:"의료·건강",industrials:"산업재",materials:"소재",mining:"광업",real_estate:"부동산",services:"서비스",technology:"기술",transportation:"운송",utilities:"전기·가스·수도"}; Object.keys(E).forEach(function (k) { if (E[k].type === "sector" && !names[k.slice(7)]) names[k.slice(7)] = E[k].name; });
     var filed = trades.map(function (x) { return x.filed; }).filter(function (d) { return /^\d{4}-\d{2}-\d{2}$/.test(d || ""); }).sort();
     app.replaceChildren();
     if (!filed.length) { var e = el("section", "panel span2"); e.appendChild(el("div", "empty", "신고 자료가 없습니다.")); app.appendChild(e); return; }
@@ -163,7 +163,7 @@ header.bar input.nm{width:200px;text-transform:none}
     });
     var rows = Object.keys(S).map(function (id) { var o = S[id]; o.med = median(o.w); return o; }).sort(function (a, b) { return b.ev - a.ev || a.id.localeCompare(b.id); });
 
-    var head = el("section", "panel span2"); head.appendChild(el("h2", "", "SECTOR HEATMAP"));
+    var head = el("section", "panel span2"); head.appendChild(el("h2", "", "업종 히트맵"));
     head.appendChild(el("p", "", "이벤트: 신고일 " + start + " ~ " + end + " 의원 거래 신고(PTR) 건수 · 가격: 업종 내 종목들의 최근 1주 종가 변화 중앙값" + (pr.date ? " (" + pr.date + " 기준)" : "")));
     head.appendChild(el("p", "warnnote", "데이터상 같은 기간에 나란히 놓은 숫자일 뿐 한쪽이 다른 쪽의 원인이라는 뜻이 아닙니다. 하원 PTR 신고 기준이며 거래일→신고일 최대 45일 차이가 있을 수 있습니다. 투자 조언 아님."));
     app.appendChild(head);
@@ -188,10 +188,10 @@ header.bar input.nm{width:200px;text-transform:none}
     app.appendChild(p);
 
     if (window.MTLabor) window.MTLabor.load().then(function (ld) {
-      var lp = el("section", "panel span2"); lp.appendChild(el("h2", "", "한국 업종별 노사분규 추이 · Korea labor disputes by industry"));
-      lp.appendChild(el("p", "note", "고용노동부 월별 통계입니다. 위 미국 의원 거래·종가 칸과 별개의 자료이며 서로 연결하지 않았습니다. / Separate Korean data, not linked to the US figures above."));
+      var lp = el("section", "panel span2"); lp.appendChild(el("h2", "", "한국 업종별 노사분규 추이"));
+      lp.appendChild(el("p", "note", "고용노동부 월별 통계입니다. 위 미국 의원 거래·종가 칸과 별개의 자료이며 서로 연결하지 않았습니다."));
       window.MTLabor.trend(lp, ld, null);
-      lp.appendChild(el("p", "note", "자세히: ")); var la = el("a", "", "노사분규·파업 공시 Korea labor strike disclosure"); la.href = "labor.html"; lp.lastChild.appendChild(la);
+      lp.appendChild(el("p", "note", "자세히: ")); var la = el("a", "", "노사분규·파업 공시"); la.href = "labor.html"; lp.lastChild.appendChild(la);
       app.appendChild(lp);
     });
     foot.replaceChildren(); foot.appendChild(el("b", "", "읽기 전 확인"));
@@ -202,5 +202,5 @@ header.bar input.nm{width:200px;text-transform:none}
   });
 })();
 </script>
-</body>
+<script src="assets/mt-visits.js" defer></script></body>
 </html>

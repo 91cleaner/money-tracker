@@ -1,4 +1,4 @@
-/* MONEY TRACKER evidence-first question engine (offline analyst, NOT connected to generative AI).
+/* 미국주식추적단 evidence-first question engine (offline analyst, NOT connected to generative AI).
  * It can ALWAYS provide an evidence-based investigation path, but never invents current prices.
  */
 (function(root,factory){

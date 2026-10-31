@@ -70,6 +70,7 @@ def get(url):
             time.sleep(1.5 * (i + 1))
     return None
 
+SYM = json.load(open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "us", "symbol-changes.json")))["confirmed"]
 def main():
     trades = json.load(open(TRADES))["trades"]
     counts = Counter(t["tk"] for t in trades if t.get("tk"))
@@ -82,6 +83,7 @@ def main():
     out, missing = {}, []
     for tk in sorted(counts):
         cik = cik_by.get(tk.upper()) or cik_by.get(tk.upper().replace(".", "-"))
+        if tk in SYM: cik = SYM[tk]["old_cik"]  # 의원 거래 당시 이 티커를 쓰던 회사(SEC 8-K 표지로 확인, data/us/symbol-changes.json)
         if not cik:
             missing.append(tk); continue
         key = str(cik)

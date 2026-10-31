@@ -1,4 +1,4 @@
-/* MONEY TRACKER: automated public news evidence discovery for an operator's question.
+/* 미국주식추적단: automated public news evidence discovery for an operator's question.
  * GDELT DOC 2.0 publishes cross-origin JSON: https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/
  * Public news headlines and timestamps are leads, not verified causal claims.
  * No model, quote API or proprietary market-data access is implied.

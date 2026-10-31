@@ -24,4 +24,4 @@ jobs:
           git add data/policy data/us/insights.json data/search-index.json data/us/trades-recent.json
           git diff --cached --quiet && exit 0
           git commit -m "data: KR policy $(date -u +%F)"
-          for i in 1 2 3 4 5; do git pull --rebase -q && git push && exit 0; sleep $((i*10)); done; exit 1
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -q && git push && exit 0; sleep $((i*10)); done; exit 1

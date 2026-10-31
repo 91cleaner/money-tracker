@@ -55,9 +55,10 @@
 
   // ---------- exact strings (a whole text node / attribute) ----------
   var EXACT = {
+    "의원 이름 입력": "Enter member name", "의원 이름": "Member name", "업종 히트맵": "Sector heatmap", "언어 선택": "Language",
     "한눈에 보기": "At a glance", "주가 기록(종가)": "Closing price record", "국회에 올라온 법안": "Bill filed in the National Assembly", "대만 정부 발표": "Taiwan government announcement", "중국 정부 발표": "Chinese government announcement", "일본 정부 발표": "Japanese government announcement",
     "의원": "Member", "종목": "Asset", "구분": "Type", "신고일": "Filed", "거래일": "Traded", "금액": "Amount", "금액 구간": "Amount range", "신고까지": "Lag", "원문": "Source",
-    "티커": "Ticker", "회사": "Company", "종가": "Close", "1일": "1D", "1주": "1W", "1달": "1M", "최근 흐름": "Trend", "열기": "Open", "연초 대비": "YTD",
+    "티커": "Ticker", "회사": "Company", "종가": "Close", "1일": "1D", "1주": "1W", "1달": "1M", "최근 21거래일": "Past 21 trading days", "최근 흐름": "Trend", "열기": "Open", "연초 대비": "YTD",
     "구입": "Buy", "처분": "Sale", "교환": "Exchange", "구입(P)": "Purchase (P)", "처분(S)": "Sale (S)", "교환(E)": "Exchange (E)",
     "법안": "Bills", "규제": "Regulation", "위원회": "Committee", "연방 계약": "Federal contracts", "로비": "Lobbying", "후원": "PAC", "의원 거래": "Member trades", "임원 거래": "Insider trades", "보조금·대출": "Grants & loans", "리콜": "Recalls", "발표 전 거래": "Trades before announcements", "본사·공장": "HQ & plants", "기타 지표": "Other indicators",
     "하원": "House", "상원": "Senate", "민주당": "Democratic", "공화당": "Republican", "무소속": "Independent",
@@ -65,7 +66,7 @@
     "1년": "1Y", "주간 순위표": "Weekly ranking", "공시": "Filings", "대략 위치": "Approx. location", "관보 조치": "Federal Register actions", "포고문": "Proclamation", "행정명령": "Executive Order", "대통령 조치": "Presidential action", "대통령 메모": "Presidential memorandum", "대통령 공고": "Presidential notice", "대통령 결정": "Presidential determination",
     "상무부 BIS(산업안보국)": "Commerce BIS (Bureau of Industry and Security)", "USTR(무역대표부)": "USTR (Trade Representative)", "재무부 OFAC(해외자산통제국)": "Treasury OFAC (Office of Foreign Assets Control)",
     "전체": "All", "미정": "TBD", "대표 발의": "Sponsor", "회부 위원회": "Referred committee",
-    "MONEY TRACKER — 회사 상세": "MONEY TRACKER — Company file", "MONEY TRACKER — 미국 회사 파일": "MONEY TRACKER — US Company File",
+    "미국주식추적단 — 회사 상세": "US Stock Trackers — Company file", "미국주식추적단 — 미국 회사 파일": "US Stock Trackers — US Company File",
     "아래 링크": "Link below", "내부 데이터 분류": "Internal data classification", "유형(신고대로)": "Type (as filed)", "당-주": "Party-State", "법안 상세 페이지 ›": "Bill detail page ›", "수정종가": "Adjusted close", "기준": "Basis",
     // NVDA hand-written route stops (data/us/ticker-routes.json)
     "본사 위치 확인됨": "HQ location confirmed", "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 산타클라라임.": "Data shows the business address in SEC filings is Santa Clara, California.",
@@ -118,6 +119,7 @@
     [/종가 기준 (\d+)개월 ([+-]?[\d.]+%), 같은 업종\((.+?)\) (\d+)곳 중앙값 ([+-]?[\d.]+%), 연초 대비 ([+-]?[\d.]+%)\. 인과 아님\./,
       "Closing-price basis: $1-month $2; median of $4 companies in the same sector ($3): $5; YTD $6. Not causal."],
     [/종가 기준 (\d+)개월 ([+-]?[\d.]+%), 같은 업종\((.+?)\) (\d+)곳 중앙값 ([+-]?[\d.]+%)\. 인과 아님\./, "Closing-price basis: $1-month $2; median of $4 companies in the same sector ($3): $5. Not causal."],
+    [/이 종목의 기록은 (\S+)부터라서 연초 대비는 계산하지 않아요\./, "This stock's record starts on $1, so year-to-date is not calculated."],
     [/종가 기준 (\d+)개월 ([+-]?[\d.]+%), 연초 대비 ([+-]?[\d.]+%)\. 인과 아님\./, "Closing-price basis: $1-month $2; YTD $3. Not causal."],
     [new RegExp("(한국 국회 발의 법률안|EU 정부 발표|일본 정부 발표|대만 정부 발표|중국 정부 발표) " + D + "~" + D + " (\\d+)건 중 (.+?) 관련 (\\d+)건(?:, (.+?) 관련 (\\d+)건)?(?:, 과기정통부 보도자료 (\\d+)건 중 (.+?) 관련 (\\d+)건)?\\(제목 키워드 기준, 영향 단정 아님\\)\\."),
       function (m, src, d1, d2, tot, k1, n1, k2, n2, mt, mk, mn) {
@@ -186,7 +188,7 @@
     [/최근 30일 신고가 많은 종목 중 (\S+) 회사 카드 열람 \(신고 (\d+)건\)/, "Open the company card for $1, one of the most-filed tickers in the last 30 days ($2 filings)"],
     [/업종 '(.+)' 살펴보기/, "Explore the sector '$1'"], [/종목 (\S+) 회사 카드 열람/, "Open the company card for $1"],
     [/조사한 카드 (\d+)개 · 다음 '(.+)'까지 (\d+)개/, "$1 cards opened · $3 more to '$2'"], [/조사한 카드 (\d+)개 · 최고 계급/, "$1 cards opened · top rank"],
-    [/🔥 연속 임무 완료 (\d+)일/, "🔥 $1-day mission streak"],
+    [/ 연속 임무 완료 (\d+)일/, "$1-day mission streak"],
     [/(\d+) \/ (\d+) 완료 · 매일 실제 신고 자료로 새로 정해짐 \((\S+)\)/, "$1 / $2 done · refreshed daily from real filings ($3)"],
     [/^(회사|의원|업종) (?!거래|주식|상세|파일|선택|미분류)(\S.*)$/, function (m, k, v) { return { "회사": "Company ", "의원": "Member ", "업종": "Sector " }[k] + v; }],
     [/지난 확인 이후 새 신고 (\d+)건/, "$1 new filings since last check"], [/ · 기준 신고일 /, " · baseline filing date "], [/ · 추적 시작 /, " · tracking since "],
@@ -206,7 +208,8 @@
     [/(\d+)년 제(\d+)호/, "No. $2, $1"],
     // route facts / titles from data/search-index.json
     [/자체 분류, 공식 관할 아님\. 데이터상 (상원|하원) 위원 (\d+)명\(members\.json\)\./, function (m, c, n) { return "Own classification, not official jurisdiction. Data shows " + n + " " + (c === "상원" ? "Senate" : "House") + " members (members.json)."; }],
-    [/연관 위원회\((상원|하원)\): /, function (m, c) { return "Related committee (" + (c === "상원" ? "Senate" : "House") + "): "; }],
+    [/(?:연관 )?위원회\((상원|하원)\): (.+?)(?=$|\s·\s|\n)/, function (m, c, w) { var C = {"군사위원회": "Armed Services", "은행·주택·도시 위원회": "Banking, Housing, and Urban Affairs", "상무·과학·교통 위원회": "Commerce, Science, and Transportation", "에너지·천연자원 위원회": "Energy and Natural Resources", "환경·공공사업 위원회": "Environment and Public Works", "보건·교육·노동·연금 위원회": "Health, Education, Labor, and Pensions", "에너지·상무 위원회": "Energy and Commerce", "금융서비스 위원회": "Financial Services", "미중 전략 경쟁 특별위원회": "House Select Committee on the Strategic Competition Between the United States and the Chinese Communist Party", "교통·인프라 위원회": "Transportation and Infrastructure"}; w = w.trim(); return "Related committee (" + (c === "상원" ? "Senate" : "House") + "): " + (C[w] || w); }],
+    [/(?:연관 )?위원회\((상원|하원)\): /, function (m, c) { return "Related committee (" + (c === "상원" ? "Senate" : "House") + "): "; }],
     [/데이터상 하원 PTR 신고 (\d+)건, 최근 신고일 (\S+?)\. 신고 기준이며 거래일→신고일 최대 (\d+)일 차이 가능\. 투자 조언 아님\./, "Data shows $1 House PTR filings, most recent filed $2. Based on filings; disclosed (PTR), up to $3-day lag. Not investment advice."],
     [/데이터상 (.+?) 의원 (\S+) 거래 신고 (\d+)건\. 최근: (구입|처분|교환)\((.)\) (.+?), 거래일 (\S+), 신고일 (\S+)\. 신고 기준, 투자 조언 아님\./,
       function (m, who, tk, n, ty, c, amt, td, fd) { return "Data shows " + n + " trade filings by " + who + " for " + tk + ". Latest: " + { "구입": "Purchase", "처분": "Sale", "교환": "Exchange" }[ty] + " (" + c + ") " + amt + ", traded " + td + ", filed " + fd + ". Based on filings; not investment advice."; }],
@@ -223,7 +226,7 @@
       function (m, a, b, p, q, d, w, r, sd, sh, pr) { return "Data shows " + p + " open-market buys and " + q + " sells on SEC Form 4 (officers and directors), " + a + "~" + b + ". Latest trade date " + d + ": " + w + " (" + r + ") " + (sd === "매수" ? "bought" : "sold") + " " + sh + " shares at " + pr + " per share. Filings do not give a reason."; }],
     [/데이터상 (\S+)~(\S+) 연방 보조금 의무액 (\$[\d,.-]+), 대출 의무액 (\$[\d,.-]+)\((\d+)건, 수령자 이름 정확 일치, 계약 제외\)\. 최근 (\S+) (.+?)\./,
       function (m, a, b, g, l, n, d, ag) { return "Data shows federal grant obligations of " + g + " and loan obligations of " + l + " (" + n + " awards, exact recipient-name match, contracts excluded), " + a + "~" + b + ". Latest: " + d + ", " + ag + "."; }],
-    [/데이터상 (\S+) 이후 리콜 (\d+)건\(NHTSA (\d+)건, openFDA (\d+)건\), 제조사·회수업체 이름 정확 일치\. 최근 (\S+) (\S+)\./,
+    [/데이터상 (\S+) 이후 리콜 (\d+)건\(NHTSA (\d+)건, (?:open)?FDA (\d+)건\), 제조사·회수업체 이름 정확 일치\. 최근 (\S+) (\S+)\./,
       function (m, a, n, x, y, d, id) { return "Data shows " + n + " recalls since " + a + " (NHTSA " + x + ", openFDA " + y + "), exact manufacturer or recalling-firm name match. Latest: " + d + ", " + id + "."; }],
     [/데이터상 공시·발표 30일 이내 앞선 거래 (\d+)건\(의원 (\d+)건, 임원 (\d+)건\)\. 최근 예: (.+?), 거래일 (\S+), 이벤트 (\S+) (.+?)\((\d+)일 전\)\. 날짜를 나란히 놓은 것이며 사전 인지나 인과를 뜻하지 않음\./,
       function (m, n, a, b, w, td, ed, ev, k) { return "Data shows " + n + " trades dated within 30 days before a filing or announcement (" + a + " by House members, " + b + " by insiders). Latest example: " + w + ", trade date " + td + "; event " + ed + " " + ev + " (" + k + " days later). Dates are placed side by side only; this does not show prior knowledge or cause."; }],
@@ -244,7 +247,7 @@
     [/미국 (\d+)년 국채 ?금리/, "US $1-year Treasury yield"],
     // NVDA hand-written route stops (data/us/ticker-routes.json), indicator note, lobbying / PAC lines (data/search-index.json)
     [/^(.+?)\((H\.R\.\d+|S\.\d+), (\d+)대 의회\)가 법으로 제정됨\. 업계 전반 대상 법률임\.$/, function (m, t, b, c) { var o = c % 100 > 10 && c % 100 < 14 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" }[c % 10] || "th"); return "The " + t + " (" + b + ", " + c + o + " Congress) was enacted into law. It applies to the industry as a whole."; }],
-    [/관세청이 품목 코드\(HS (\d+)자리\)로 센 숫자라서, 산업부가 발표하는 '(.+?)' 전체 수출과 범위가 달라요\./, "Counted by the Korea Customs Service by product code (HS $1-digit), so its scope differs from total '$2' exports published by the Ministry of Trade, Industry and Energy."],
+    [/관세청이 품목 코드\(HS (\d+)자리\)로 센 숫자라서, 산업부가 발표하는 (.+?) 전체 수출과 범위가 달라요\./, function (m, d, w) { return "Counted by the Korea Customs Service by product code (HS " + d + "-digit), so its scope differs from total '" + ({ "반도체": "semiconductor", "자동차": "car", "이차전지": "battery" }[w] || w) + "' exports published by the Ministry of Trade, Industry and Energy."; }],
     [/데이터상 (\S+) 로비 공시 (\d+)건, 보고 금액 합계 약 ([\d,.]+(?:억|만)? ?달러)\./, "Data shows $2 lobbying disclosure filings for $1, reported total approx. $3."],
     [/주요 이슈: /, "Top issues: "], [/수집 법안과 번호 일치: (.+?)\(회기 확인 필요\)\./, "Bill numbers matching collected bills: $1 (session needs checking)."],
     [/데이터상 (\d{4}) 선거주기 (.+?)의 연방 후보 위원회 기부 합계 ([\d,.]+(?:억|만)? ?달러)\(~(\S+?)\)\. 임직원 자발 기부 PAC이며 회사 자금 아님\./, "Data shows the $1 election cycle: $2 contributed a total of $3 to federal candidate committees (through $4). A PAC funded by voluntary employee contributions, not company funds."],
@@ -282,19 +285,19 @@
     ["신고 기준입니다.", "Based on filings."], ["투자 조언 아님. ", "Not investment advice. "], ["투자 조언이 아닙니다", "not investment advice"], ["투자 조언 아님", "Not investment advice"], ["투자 신호 아님", "not an investment signal"], ["인과 아님", "not causal"],
     // route labels / indicators / White House block (world command room)
     ["함께 볼 지표: ", "Indicator to watch: "], ["유로/달러 환율", "EUR/USD exchange rate"], ["원/달러 환율", "KRW/USD exchange rate"], ["미국 산업생산지수", "US industrial production index"], ["미국 소비자물가지수", "US consumer price index"], ["한국은행 기준금리", "Bank of Korea base rate"], ["미국 기준금리(연방기금 실효금리)", "US policy rate (effective federal funds rate)"],
-    ["의원 주식 거래(하원 PTR)", "Member stock trades (House PTR)"], ["의원 주식 거래", "Member stock trades"], ["로비 공시(LDA)", "Lobbying disclosure (LDA)"], ["로비 공시에 번호 언급", "Number mentioned in lobbying disclosures"], ["로비 공시", "Lobbying disclosure"], ["연계 PAC 후원", "Linked PAC contributions"], ["연방 계약", "Federal contracts"], ["SEC 임원 거래(Form 4)", "SEC insider trades (Form 4)"], ["연방 보조금·대출(USAspending)", "Federal grants and loans (USAspending)"], ["리콜(NHTSA·openFDA)", "Recalls (NHTSA, openFDA)"], ["발표 전 30일 거래", "Trades within 30 days before an announcement"], ["연방 보조금·대출", "Federal grants and loans"], ["발표 전 거래", "Trades before announcements"], ["임원 거래", "Insider trades"], ["리콜", "Recalls"],
+    ["의원 주식 거래(하원 PTR)", "Member stock trades (House PTR)"], ["하원 PTR 신고", "Member stock trades (House PTR)"], ["의원 주식 거래", "Member stock trades"], ["로비 공시(LDA)", "Lobbying disclosure (LDA)"], ["로비 공시에 번호 언급", "Number mentioned in lobbying disclosures"], ["로비 공시", "Lobbying disclosure"], ["연계 PAC 후원", "Linked PAC contributions"], ["연방 계약", "Federal contracts"], ["SEC 임원 거래(Form 4)", "SEC insider trades (Form 4)"], ["연방 보조금·대출(USAspending)", "Federal grants and loans (USAspending)"], ["리콜(NHTSA·openFDA)", "Recalls (NHTSA, openFDA)"], ["리콜(NHTSA·FDA)", "Recalls (NHTSA, openFDA)"], ["발표 전 30일 거래", "Trades within 30 days before an announcement"], ["연방 보조금·대출", "Federal grants and loans"], ["발표 전 거래", "Trades before announcements"], ["임원 거래", "Insider trades"], ["리콜", "Recalls"],
     ["공장(공시)", "Plant (filed)"], ["공급사(공시)", "Supplier (filed)"], ["대략 위치", "approx. location"], ["whitehouse.gov(관보 게재 전)", "whitehouse.gov (not yet in Federal Register)"], ["(관보 게재 전)", " (not yet in Federal Register)"], ["의원 도감", "Member roster"], ["Member 도감", "Member roster"], ["도감", "roster"], ["정보 패널 접기/펼치기", "Collapse/expand info panel"], ["조사한 카드 ", "Cards investigated: "], ["최고 계급", "top rank"], ["관보(", "Federal Register ("], ["관보", "Federal Register"], ["본사 위치", "HQ location"], ["현재 상태", "current status"], ["법안 제목에 언급", "Mentioned in bill title"],
     ["상무부 BIS(산업안보국)", "Commerce BIS (Bureau of Industry and Security)"], ["USTR(무역대표부)", "USTR (Trade Representative)"], ["재무부 OFAC(해외자산통제국)", "Treasury OFAC (Office of Foreign Assets Control)"], ["산업안보국", "Bureau of Industry and Security"],
     ["포고문", "Proclamation"], ["행정명령", "Executive Order"], ["대통령 조치", "Presidential action"], ["대통령 메모", "Presidential memorandum"], ["대통령 공고", "Presidential notice"], ["대통령 결정", "Presidential determination"],
     ["백악관·관보 조치", "White House / Federal Register actions"], ["관보 조치", "Federal Register actions"], ["의원 거래 신고(신고일 기준)", "Member trade filings (by filing date)"], ["(Filed 기준)", "(by filing date)"], ["신고일 기준", "by filing date"], ["(신고일 기준)", "(by filing date)"], ["차트 기간", "Chart period"],
     ["주간 순위표", "Weekly ranking"],
     // page chrome
-    ["MONEY TRACKER — 미국 회사 파일", "MONEY TRACKER — US Company File"], ["MONEY TRACKER — 회사 상세", "MONEY TRACKER — Company file"],
+    ["미국주식추적단 — 미국 회사 파일", "US Stock Trackers — US Company File"], ["미국주식추적단 — 회사 상세", "US Stock Trackers — Company file"],
     ["미국 상장사별 공개 기록: 의원 거래 신고, 로비 공시, PAC, 공시 연결. 데이터상 정리이며 투자 조언 아님.", "Public records by US listed company: member trade filings, lobbying disclosures, PAC, filing links. Organized from the data; not investment advice."],
     ["미국 의회 법안·의원 거래 신고·회사 공장·다른 나라 정책을 지도 위 경로로 따라가는 관제실. 공개 자료 정리이며 투자 조언 아님.", "A control room that follows US congressional bills, member trade filings, company plants and other countries' policies as routes on a map. Based on public filings; not investment advice."],
-    ["MONEY TRACKER | 세계 관제실", "MONEY TRACKER | Global Command Room"], ["세금추적단", "Money Tracker"],
+    ["미국주식추적단 | 세계 관제실", "US Stock Trackers | Global Command Room"], ["세금추적단", "Tax Trackers"], ["미국주식추적단", "US Stock Trackers"],
     ["공개 기록 정리", "Public records, organized"], ["공개 자료 불러오는 중…", "Loading public data…"], ["미국 의원 공개 기록 정리 · 신고 기준 · 투자 조언 아님", "US member public records · based on filings · not investment advice"], ["미국 상장사 공개 기록 정리 · 투자 조언 아님", "US listed-company public records · not investment advice"],
-    ["MONEY TRACKER 관제실 — ", "MONEY TRACKER Command Room — "],
+    ["미국주식추적단 관제실 — ", "US Stock Trackers Command Room — "],
     ["티커 입력", "Enter ticker"], ["의원 이름 입력", "Enter member name"], ["의원 이름", "Member name"], ["업종 선택", "Select sector"],
     ["주가 · 종가 기준", "Price · closing basis"], ["주가 데이터 준비 중", "Price data coming soon"],
     ["의원 거래 신고 (하원 PTR)", "Member trade filings (House PTR)"], ["이 종목의 의원 거래 신고 기록이 없습니다", "No member trade filings for this ticker"],
@@ -340,14 +343,14 @@
     [" · 신고 ", " · Filed "], [" · 거래 ", " · Traded "],
     // world command room
     ["오프라인 개략 세계지도", "Offline rough world map"], ["실제 좌표 기반 세계지도", "World map based on real coordinates"], ["세계지도 준비 중 · 지도를 직접 이동할 수 있습니다", "World map loading · you can pan the map yourself"], ["관제실 조작", "Command room controls"], ["경로 조작", "Route controls"],
-    ["↺ 처음으로", "↺ Reset map"], ["모든 정류장", "All stops"], ["도구", "Tools"], ["도구 닫기", "Hide tools"], ["☷ 메뉴", "☷ Menu"], ["✕ 설명 닫기", "✕ Close brief"], ["주제를 선택하거나 아래 질문창에서 직접 명령하세요.", "Pick a topic or type a command in the box below."], ["추적 경로 선택", "Choose a route"],
+    ["↺ 처음으로", "↺ Reset map"], ["모든 정류장", "All stops"], ["도구", "Tools"], ["도구 닫기", "Hide tools"], ["☷ 메뉴", "☷ Menu"], ["◉ 추적 메뉴", "◉ TRACKING OPTIONS"], ["✕ 설명 닫기", "✕ Close brief"], ["주제를 선택하거나 아래 질문창에서 직접 명령하세요.", "Pick a topic or type a command in the box below."], ["추적 경로 선택", "Choose a route"],
     ["규칙 기반 경로 선택 · AI 분석 미연결 · 실시간 거래 데이터 미연결", "Rule-based route selection · no AI analysis · no live trade data"], ["← 이전", "← Prev"], ["다음 지역 →", "Next stop →"], ["다음 →", "Next →"], ["자동 재생 멈춤", "Pause autoplay"], ["자동 재생", "Autoplay"],
     ["관련 공식 자료 확인 ↗", "Official source ↗"], ["추적 질문", "Ask"], ["무엇을 추적할까요? 예: 미국 금리가 주식에 미치는 영향", "What should we track? e.g. How US interest rates affect stocks"], ["추적 ↵", "Track ↵"], ["전체화면", "Fullscreen"], ["전체 보기", "Show all"],
     ["통합 관제실 도구", "Command room tools"], ["◎ 전체", "◎ All"], ["◉ 미국", "◉ US"], ["◉ 한국", "◉ Korea"], ["⌁ 세계사", "⌁ World history"], ["▤ 법안", "▤ Bills"], ["⌕ 추적", "⌕ Track"],
     ["세계사와 미국 시장의 관계", "World history and the US market"], ["미국 법안이 주식시장에 미치는 영향", "How US bills affect the stock market"], ["◉ GLOBAL COMMAND · 미국 / 한국 / 세계 / 법안 · 하나의 지도", "◉ GLOBAL COMMAND · US / Korea / World / Bills · one map"],
     ["◉ 오늘의 임무 · ", "◉ Today's mission · "], ["대상: ", "Target: "], ["데이터 기반 자동 선택 · 투자 신호 아님", "Auto-selected from data · not an investment signal"], ["▶ 추적 시작", "▶ Start tracking"], [" (신고 기준)", " (based on filings)"],
     ["중국 상무부 공고 ", "China MOFCOM notices "], ["지표 갱신 · ", "Indicators updated · "], ["● 수집 기록", "● Collected records"], ["본사·공장", "HQ & plants"], ["선 = 공개 자료상 연결, 인과 아님", "Line = link in public data, not causal"], ["관련 법안: ", "Related bills: "],
-    ["가격 · ", "Price · "], [" 종가 ", " close "], [" · 1일 ", " · 1D "], [" · 1주 ", " · 1W "], [" · 1개월 ", " · 1M "], [" · 연초 대비 ", " · YTD "], ["최근 종가 추이", "Recent closing trend"], ["의원 거래 신고: ", "Member trade filings: "],
+    ["가격 · ", "Price · "], [" 종가 ", " close "], [" · 1일 ", " · 1D "], [" · 1주 ", " · 1W "], [" · 1개월 ", " · 1M "], [" · 최근 21거래일 ", " · past 21 trading days "], ["출처: Massive(구 Polygon) · 민간 데이터 회사, 공식 자료 아님 · 종가 기준, ", "Source: Massive (formerly Polygon) · private data company, not official · closing basis, "], [" · 연초 대비 ", " · YTD "], ["최근 종가 추이", "Recent closing trend"], ["의원 거래 신고: ", "Member trade filings: "],
     ["같은 기간 데이터상 있었던 일 (", "What the data shows for the same period ("], [", 인과 아님)", ", not causal)"], [" · 연결된 기록 없음", " · no linked records"], ["출처: Massive(구 Polygon) 종가 기준, ", "Source: Massive (formerly Polygon), closing basis, "],
     ["최근 무슨 일이 있었나 · 데이터상 날짜순(인과 아님)", "What happened recently · by date per the data (not causal)"], [" 출처 ↗", " Source ↗"], [" · 기준 ", " · as of "], ["핵심 · ", "Key · "], ["요약 3줄 (데이터상, 인과 아님)", "3-line summary (data shows; not causal)"],
     ["눈에 띄는 점 (기준 충족 시만 표시)", "Notable points (shown only when criteria are met)"], ["규칙 기반 계산 · AI 미연결 · 투자 조언 아님", "Rule-based calculation · no AI · Not investment advice"],
@@ -366,7 +369,7 @@
     ["실제 지리 기반 세계지도 · 자유 탐색", "World map based on real geography · free exploration"], ["세계지도 · 자유 탐색", "World map · free exploration"], ["수동 탐색 · 자유롭게 지도를 이동하세요", "Manual exploration · pan the map freely"],
     ["지도 서버 연결 확인 중 · 대체 지도 표시", "Checking map server connection · showing fallback map"], ["지도 타일 지연 · 개략 지도 표시 (연결 복구 시 자동 전환)", "Map tiles delayed · showing rough map (switches automatically when connection recovers)"],
     ["지도 엔진 오류 · 개략 지도 표시", "Map engine error · showing rough map"], ["지도 라이브러리 연결 실패 · 개략 지도 표시", "Map library failed to load · showing rough map"],
-    ["Alphabet Inc.", "Alphabet Inc."], ["Massive(구 Polygon)", "Massive (formerly Polygon)"],
+    ["Alphabet Inc.", "Alphabet Inc."], ["Massive(구 Polygon) · 민간 데이터 회사, 공식 자료 아님 · 수정종가", "Massive (formerly Polygon) · private data company, not official · adjusted close"], ["Massive(구 Polygon)", "Massive (formerly Polygon)"],
     ["미 정부가 H20 칩을 중국 등(홍콩·마카오, D:5 국가 포함)으로 수출할 때 허가가 필요하다고", "The US government notified the company that a license is required to export H20 chips to China and others (incl. Hong Kong, Macau and D:5 countries) on"],
     ["통보했다고 8-K로 공시함(제출 ", "as disclosed in an 8-K (filed "], ["10-K에서 자체 공장 없이 TSMC·삼성전자 등 파운드리에 칩 생산을 맡긴다고 밝힘.", "The 10-K says it has no fabs of its own and outsources chip production to foundries such as TSMC and Samsung Electronics."],
     ["CHIPS and Science Act(H.R.4346, 117대 의회)가 법으로 제정됨. 업계 전반 대상 법률임.", "The CHIPS and Science Act (H.R.4346, 117th Congress) was enacted into law. It applies to the industry as a whole."],
@@ -397,6 +400,7 @@
   }
   function toEn(s) {
     if (typeof s !== "string" || !(HANGUL.test(s) || /\d{4}-\d{2}/.test(s))) return s;
+    s = s.replace(/PTR\(의원 주식 거래 신고\) 원문/g, "PTR 원문").replace(/PTR\(의원 주식 거래 신고\)·/g, "PTR·").replace(/PTR\(의원 주식 거래 신고\)/g, "PTR 신고").replace(/8-K\(회사 중요 사건 공시\)/g, "8-K").replace(/산업부가 발표하는 '([^']+)' 전체 수출/g, "산업부가 발표하는 $1 전체 수출");
     if (cache[s] != null) return cache[s];
     var lead = /^\s*/.exec(s)[0], trail = /\s*$/.exec(s)[0], core = s.slice(lead.length, s.length - trail.length), out;
     var dot = /\s*[·•]\s*$/.exec(core), bare = dot ? core.slice(0, dot.index) : core; // "fact ·" : text node followed by a source link
@@ -435,7 +439,7 @@
   }
   // UI string that is not Korean source text (button labels owned by this file)
   var UI = {
-    ko: { aria: "English로 전환", title: "Switch to English" },
+    ko: { aria: "영어로 보기", title: "영어로 보기" },
     en: { aria: "Switch to Korean", title: "Switch to Korean" }
   };
 

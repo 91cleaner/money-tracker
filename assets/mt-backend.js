@@ -1,4 +1,4 @@
-/* MONEY TRACKER backend bridge.
+/* 미국주식추적단 backend bridge.
  * The public GitHub Pages build has NO authenticated AI backend yet.
  * This bridge enables real server-side AI and quotes only when a protected
  * same-origin Worker/Pages deployment has been configured.

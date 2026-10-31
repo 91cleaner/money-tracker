@@ -117,7 +117,7 @@
 `;
   document.head.append(css);
   root.innerHTML = `<div class="pg-map" aria-label="국회의원 지도"></div><div class="pg-scan"></div>
-  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>LIVE <span class="mono clk"></span></div><div class="ttl">국회 돈 살펴보기 <button type="button" class="snd" aria-label="소리 켜기·끄기"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="m" d="m16 9.5 5 5m0-5-5 5" style="display:none"/></svg></button></div></div>
+  <div class="pg-top"><div class="pg-box"><div class="live"><i></i>실시간 <span class="mono clk"></span></div><div class="ttl">국회 돈 살펴보기 <button type="button" class="snd" aria-label="소리 켜기·끄기"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="m" d="m16 9.5 5 5m0-5-5 5" style="display:none"/></svg></button></div></div>
   <div class="pg-box ctr"><div class="n mono">0원</div><div class="l">오늘 의원 <span class="nmem">300</span>명 의원 월급 누적(지급 기준)</div></div></div>
   <div class="pg-say mono"></div>
   <div class="pg-file" role="dialog" aria-label="기록 파일"></div>
@@ -145,7 +145,7 @@
   let typer = 0;
   const type = (t) => { clearInterval(typer); if (RM) { say.textContent = '> ' + t; return; } let i = 0; say.textContent = '> '; typer = setInterval(() => { say.textContent = '> ' + t.slice(0, ++i) + (i < t.length ? '▌' : ''); if (i >= t.length) clearInterval(typer); }, 22); };
 
-  // ── 소리(Web Audio로 직접 만든 효과음, 파일 없음). 처음 누를 때부터 켜지고, 🔊 버튼으로 끌 수 있다 ──
+  // ── 소리(Web Audio로 직접 만든 효과음, 파일 없음). 처음 누를 때부터 켜지고, 버튼으로 끌 수 있다 ──
   const SFX = (() => {
     let ac = null, muted = false;
     try { muted = localStorage.getItem('mt.pg.mute') === '1'; } catch (e) { /* 무시 */ }
@@ -219,7 +219,7 @@
 
   // ── 시계·카운터 ──
   const clk = $('.clk'), ctr = $('.ctr .n');
-  const tick = () => { const k = new Date(Date.now() + 9 * 3600e3); clk.textContent = k.toISOString().slice(11, 19) + ' KST'; const sec = k.getUTCHours() * 3600 + k.getUTCMinutes() * 60 + k.getUTCSeconds() + k.getUTCMilliseconds() / 1000; ctr.textContent = won(per * people.length / (365 * 86400) * sec); };
+  const tick = () => { const k = new Date(Date.now() + 9 * 3600e3); clk.textContent = k.toISOString().slice(11, 19) + ' 한국 시간'; const sec = k.getUTCHours() * 3600 + k.getUTCMinutes() * 60 + k.getUTCSeconds() + k.getUTCMilliseconds() / 1000; ctr.textContent = won(per * people.length / (365 * 86400) * sec); };
   tick(); setInterval(tick, RM ? 1000 : 100);
 
   // ── 지도 ──
@@ -244,7 +244,7 @@
     const on = o > 0.6; if (on !== satOn) { satOn = on; root.classList.toggle('sat', on); }
   };
   map.on('zoom zoomend', satFade);
-  { const sb = document.createElement('div'); sb.className = 'satb'; sb.innerHTML = '<i></i>SAT · 위성 영상'; root.append(sb); }
+  { const sb = document.createElement('div'); sb.className = 'satb'; sb.innerHTML = '<i></i>위성 영상'; root.append(sb); }
   const KR = L.latLngBounds([[33.0, 125.3], [38.7, 129.7]]);
   const fitKR = (anim) => map.fitBounds(KR, { padding: [70, 20], paddingBottomRight: [20, 90], animate: !!anim && !RM });
   fitKR(false);
@@ -726,7 +726,7 @@
       stopRadar(); gFx.clearLayers();
       const fl = people.filter((m) => FOL[m.id]);
       file.innerHTML = fileHead('찾기') + `<input class="q" type="search" placeholder="이름·동네·정당 (예: 분당, 동작구)" aria-label="의원 찾기" autocomplete="off">
-        <button type="button" class="allb gps" style="margin:0 0 6px">📍 내 위치로 우리 동네 의원 찾기</button><div class="res"></div>
+        <button type="button" class="allb gps" style="margin:0 0 6px">내 위치로 우리 동네 의원 찾기</button><div class="res"></div>
         ${fl.length ? `<div class="ph2">★ 팔로우</div>` + fl.map((m) => row(m)).join('') : ''}`;
       file.classList.add('on'); bindX();
       const q = file.querySelector('.q'), res = file.querySelector('.res');
@@ -740,7 +740,7 @@
           if (!loc.length) { bt.textContent = '위치 자료가 없어요'; return; }
           const best = Math.min(...loc.map((m) => d2(pos[m.id])));
           const near = loc.filter((m) => d2(pos[m.id]) <= best + 0.0004).slice(0, 8);
-          bt.textContent = '📍 내 근처 지역구 의원 (대략)';
+          bt.textContent = '내 근처 지역구 의원 (대략)';
           res.innerHTML = near.map((m) => row(m, statOf(m).n ? '✈ ' + statOf(m).n : '')).join('') + '<div class="fine">위치는 이 기기 안에서만 쓰고 저장하지 않아요. 지역구 중심과의 거리로 고른 대략값이라, 갑·을이 나뉜 곳은 여러 명이 나와요.</div>';
           bindRows(); if (near.length === 1) open(near[0]); else { reticle(LL[near[0].id]); map.flyTo(LL[near[0].id], 9, { duration: RM ? 0 : 0.9 }); }
           SFX.lock(); type(`우리 동네 의원 ${near.length}명 포착`);

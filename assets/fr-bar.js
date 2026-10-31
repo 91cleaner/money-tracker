@@ -32,7 +32,7 @@
       c.append(el("div", "font-size:18px;font-weight:700;margin:4px 0", EN ? b.easy_en : b.easy_ko));
       const tg = (b.sectors || []).map(s => SEC[s] && SEC[s][+EN]).filter(Boolean);
       if (tg.length || (b.tickers || []).length) c.append(el("div", "font-size:14px", T.tags + ": " + tg.concat(b.tickers || []).join(" · ")));
-      const sp = EN ? b.same_period_en : b.same_period_ko; if (sp) c.append(el("div", "font-size:15px;color:#ffe58a;margin-top:4px", "📈 " + sp));
+      const sp = EN ? b.same_period_en : b.same_period_ko; if (sp) c.append(el("div", "font-size:15px;color:#ffe58a;margin-top:4px", "▲ " + sp));
       const a = el("a", "display:inline-block;margin-top:6px;color:#5dff9e;font-size:15px", T.open); a.href = b.url; a.target = "_blank"; a.rel = "noopener noreferrer"; c.append(a);
       box.append(c);
     });

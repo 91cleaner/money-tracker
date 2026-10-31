@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>오늘의 브리핑 · 상황실 카드 | Money Tracker</title>
+<title>오늘의 브리핑 · 상황실 카드 | 미국주식추적단</title>
 <meta name="description" content="공개 자료로 매일 만드는 상황실 브리핑 카드. 같은 기간 ≠ 원인. 투자 조언 아님.">
 <style>
 *{box-sizing:border-box;margin:0}
@@ -68,10 +68,10 @@ footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-siz
 <body>
 <div class="top">
   <div class="nav"><a href="index.html" data-t="home">홈</a><a href="world-intelligence/" data-t="room">미국 관제실</a><a href="us.html" data-t="us">미국</a></div>
-  <div class="lang" role="group" aria-label="Language"><button type="button" data-l="ko" aria-pressed="true">KO</button><button type="button" data-l="en" aria-pressed="false">EN</button></div>
+  <div class="lang" role="group" aria-label="언어 선택"><button type="button" data-l="ko" aria-pressed="true">KO</button><button type="button" data-l="en" aria-pressed="false">EN</button></div>
 </div>
 <main>
-  <h1 data-t="h1">🛰️ 오늘의 브리핑</h1>
+  <h1 data-t="h1">오늘의 브리핑</h1>
   <p class="lead" id="lead"></p>
   <section id="today"></section>
   <section id="fixed"></section>
@@ -82,15 +82,15 @@ footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-siz
 (function () {
   var SITE = 'https://91cleaner.github.io/money-tracker/cards.html';
   var T = {
-    ko: { home: '홈', room: '미국 관제실', us: '미국', h1: '🛰️ 오늘의 브리핑', title: '오늘의 브리핑 · 상황실 카드 | Money Tracker',
+    ko: { home: '홈', room: '미국 관제실', us: '미국', h1: '오늘의 브리핑', title: '오늘의 브리핑 · 상황실 카드 | 미국주식추적단',
       lead: '공개 자료에서 매일 뽑은 눈에 띄는 기록이에요. 같은 기간에 일어난 일을 나란히 보여 줄 뿐, 이유는 말하지 않아요.',
-      today: '🔥 오늘의 브리핑 TOP', fixed: '🗂️ 상황실 카드', fixedLead: '매일 새로 만드는 단골 카드 4종이에요.',
-      share: 'X로 공유 (PNG 저장)', png: 'PNG 저장', src: '출처 열기', none: '오늘 보여줄 데이터가 아직 없어요.',
+      today: '오늘의 브리핑 주요 카드', fixed: '상황실 카드', fixedLead: '매일 새로 만드는 단골 카드 4종이에요.',
+      share: 'X로 공유 (그림 파일 저장)', png: '그림 파일로 저장', src: '출처 열기', none: '오늘 보여줄 데이터가 아직 없어요.',
       ok: 'PNG를 저장했어요', fail: 'PNG를 만들지 못했어요', asof: '기준',
       foot: '공개 자료 기반 · 같은 기간 ≠ 원인 · 투자 조언이 아니에요 · 기록이 있다고 잘못했다는 뜻은 아니에요.' },
-    en: { home: 'Home', room: 'US Situation Room', us: 'US', h1: "🛰️ Today's Briefing", title: "Today's Briefing · Situation Room Cards | Money Tracker",
+    en: { home: 'Home', room: 'US Situation Room', us: 'US', h1: "Today's Briefing", title: "Today's Briefing · Situation Room Cards | US Stock Trackers",
       lead: 'Notable records picked daily from public data. They show what happened in the same period, never why.',
-      today: "🔥 Today's top briefings", fixed: '🗂️ Situation room cards', fixedLead: 'Four standing cards, rebuilt daily.',
+      today: "Today's top briefings", fixed: 'Situation room cards', fixedLead: 'Four standing cards, rebuilt daily.',
       share: 'Share on X (saves PNG)', png: 'Save PNG', src: 'Open source', none: 'No data to show yet today.',
       ok: 'PNG saved', fail: 'Could not make the PNG', asof: 'as of',
       foot: 'Public data only · Same period ≠ cause · Not investment advice · A record is not proof of wrongdoing.' }
@@ -111,8 +111,8 @@ footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-siz
     root.appendChild(el('div', 'stripe'));
     var inn = el('div', 'in');
     inn.appendChild(el('span', 'badge', pick(c, 'badge')));
-    inn.appendChild(el('div', 'meta', 'BRIEFING ' + c.date));
-    inn.appendChild(el('div', 'stamp', c.stamp_en ? pick(c, 'stamp') : 'CLASSIFIED'));
+    inn.appendChild(el('div', 'meta', (lang === 'ko' ? '브리핑 ' : 'BRIEFING ') + c.date));
+    inn.appendChild(el('div', 'stamp', c.stamp_en ? pick(c, 'stamp') : (lang === 'ko' ? '공개 기록' : 'CLASSIFIED')));
     inn.appendChild(el('div', 'title', pick(c, 'title')));
     if (c.layout === 'versus') {
       var vs = el('div', 'vs');
@@ -120,11 +120,11 @@ footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-siz
         var pn = el('div', 'pn ' + p[0]);
         pn.appendChild(el('span', 'tg', pick(p[1], 'tag')));
         pn.appendChild(el('div', 'pt', pick(p[1], 'plain')));
-        pn.appendChild(el('div', 'po', p[1].title));
+        pn.appendChild(el('div', 'po', lang === 'ko' ? (p[1].title_ko || ('미국 ' + (p[1].type_ko || '대통령 문서') + ' · 원래 제목은 원문에서 볼 수 있어요')) : p[1].title));
         pn.appendChild(el('div', 'pd', p[1].date + (p[1].period ? ' · ' + p[1].period : '')));
         if (p[1].moves) {
           p[1].moves.slice(0, 2).forEach(function (m) {
-            pn.appendChild(el('div', 'mv', pick(m, 'name') + ' ' + (m.pct > 0 ? '+' : '') + m.pct.toFixed(1) + '% ' + (m.pct > 0 ? '📈' : '📉')));
+            pn.appendChild(el('div', 'mv', pick(m, 'name') + ' ' + (m.pct > 0 ? '+' : '') + m.pct.toFixed(1) + '% ' + (m.pct > 0 ? '▲' : '▼')));
           });
         }
         vs.appendChild(pn);
@@ -205,7 +205,7 @@ footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-siz
     var t = T[lang];
     document.documentElement.lang = lang; document.title = t.title;
     document.querySelectorAll('[data-t]').forEach(function (n) { n.textContent = t[n.dataset.t]; });
-    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.l === lang)); });
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.l === lang)); }); document.querySelector('.lang').setAttribute('aria-label', lang === 'en' ? 'Language' : '언어 선택');
     document.getElementById('lead').textContent = t.lead + (data ? ' (' + t.asof + ' ' + data.date + ')' : '');
     document.getElementById('foot').textContent = t.foot;
     var top = (data && data.top) || [];
@@ -224,5 +224,5 @@ footer{max-width:1240px;margin:0 auto;padding:0 14px 40px;color:#6f8799;font-siz
     .then(function (j) { data = j; render(); }).catch(function () { render(); });
 })();
 </script>
-</body>
+<script src="assets/mt-visits.js" defer></script></body>
 </html>

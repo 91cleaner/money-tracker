@@ -99,7 +99,7 @@
       box.style.cssText = 'margin-top:14px;padding:10px;border:1px dashed #8a7cff;border-radius:10px;background:#8a7cff14';
       var h = el('div', 'mtop-head');
       h.style.cssText = 'display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-weight:600';
-      h.append(el('span', null, '💬 ' + s.head));
+      h.append(el('span', null, '● ' + s.head));
       var b = el('span', 'mtop-badge', s.badge);
       b.style.cssText = 'font-size:11px;font-weight:400;padding:1px 7px;border:1px solid #8a7cff;border-radius:99px';
       h.append(b);

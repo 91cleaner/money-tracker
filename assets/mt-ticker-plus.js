@@ -38,7 +38,7 @@
     if (g.t === 'first') return E ? `This lawmaker\'s first trade in this stock that we have on record (since ${rg})` : `우리 기록(${rg}부터)에서 이 의원이 이 종목을 처음 거래했어요`;
     if (g.t === 'bill') return E ? `Within 30 days of a related bill action (${g.no}, ${md(g.bd)}, ${Math.abs(g.n)} days ${g.n >= 0 ? 'after' : 'before'} the trade)` : `관련 법안 일정 30일 이내 (${g.no}, ${g.bd}, 거래 ${Math.abs(g.n)}일 ${g.n >= 0 ? '후' : '전'})`;
     if (g.t === 'late') return E ? 'Filed after 45 days' : '45일 지나 신고';
-    if (g.t === '8k') return E ? `Within 30 days before an 8-K (filed ${md(g.kd)}, ${g.n} days later)` : `8-K 제출 30일 이내 전 거래 (${g.kd}, ${g.n}일 뒤)`;
+    if (g.t === '8k') return E ? `Within 30 days before an 8-K (filed ${md(g.kd)}, ${g.n} days later)` : `8-K(회사 중요 사건 공시) 제출 30일 이내 전 거래 (${g.kd}, ${g.n}일 뒤)`;
     return ''; }
   const tagShort = g => { const E = en(); return { first: E ? 'First trade' : '첫 거래', bill: E ? 'Bill near trade' : '법안과 가까움', late: E ? 'Reported late' : '늦게 신고', '8k': E ? 'Big news within 30 days' : '30일 안 큰 소식' }[g.t] || ''; };
   const tagChips = r => (r.tags || []).map(g => `<span class="mtTag" title="${esc(tagText(g))}">${esc(tagShort(g))}</span>`).join('');
@@ -49,9 +49,9 @@
     x.fillStyle = '#5dff9e'; x.font = '700 92px ui-monospace,monospace'; x.fillText(sym, 60, 140);
     x.fillStyle = party(r.p); x.fillRect(60, 180, 44, 44); x.fillStyle = '#111'; x.font = '700 30px ui-monospace,monospace'; x.fillText(r.p || '?', 71, 213);
     x.fillStyle = '#ffffff'; x.font = '700 46px system-ui,sans-serif'; x.fillText(r.who, 124, 218);
-    const ln = [[E ? 'Trade date' : '거래일', md(r.d)], [E ? 'Filing date' : '신고일', md(r.f)], [E ? 'Days apart' : '간격', r.late + (E ? ' days' : '일')], [E ? 'Type / amount' : '구분 / 금액', (r.ty === 'P' ? (E ? 'Buy' : '매수') : r.ty === 'S' ? (E ? 'Sell' : '매도') : r.ty) + ' · ' + (r.amt || '')], [E ? 'Source' : '출처', ((r.ch === 'S' ? 'Senate' : 'House') + ' PTR' + (r.doc ? ' · ' + String(r.doc).split('/').pop() : ''))]];
+    const ln = [[E ? 'Trade date' : '거래일', md(r.d)], [E ? 'Filing date' : '신고일', md(r.f)], [E ? 'Days apart' : '간격', r.late + (E ? ' days' : '일')], [E ? 'Type / amount' : '구분 / 금액', (r.ty === 'P' ? (E ? 'Buy' : '매수') : r.ty === 'S' ? (E ? 'Sell' : '매도') : r.ty) + ' · ' + (r.amt || '')], [E ? 'Source' : '출처', ((E ? (r.ch === 'S' ? 'Senate' : 'House') + ' PTR' : (r.ch === 'S' ? '미국 상원' : '미국 하원') + ' 거래 신고서') + (r.doc ? ' · ' + String(r.doc).split('/').pop() : ''))]];
     x.font = '32px system-ui,sans-serif'; ln.forEach((l, i) => { x.fillStyle = '#8fa89a'; x.fillText(l[0], 60, 300 + i * 52); x.fillStyle = l[0] === ln[2][0] ? (r.late > 45 ? '#ff453a' : r.late > 30 ? '#ff9f0a' : '#d8f5e3') : '#d8f5e3'; x.fillText(String(l[1]).slice(0, 60), 360, 300 + i * 52); });
-    x.fillStyle = '#68c7d0'; x.font = '24px ui-monospace,monospace'; x.fillText('https://91cleaner.github.io/money-tracker/world-intelligence/?lang=en&q=' + sym, 60, 590);
+    x.fillStyle = '#68c7d0'; x.font = '24px ui-monospace,monospace'; x.fillText('https://91cleaner.github.io/money-tracker/world-intelligence/?lang=' + (E ? 'en' : 'ko') + '&q=' + sym, 60, 590);
     c.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `${sym}-${r.who.replace(/\W+/g, '_')}-${r.d}.png`; document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); }, 'image/png');
     return c;
   }
@@ -77,7 +77,7 @@
       `<div class="r" style="margin-top:4px"><b>${E ? 'Bills this lawmaker wrote and introduced (newest first, from Congress.gov)' : '이 의원이 직접 내놓은 법안 (최신순, Congress.gov 자료)'}</b></div>` +
       (bills.length ? bills.map(b => `<div class="s">${lnk(b.u, b.no)} ${esc(String(b.n).slice(0, 80))} · ${esc(md(b.d))}</div>`).join('') : `<div class="s">${E ? 'None collected.' : '수집된 법안 없음.'}</div>`) +
       `<div class="r" style="margin-top:4px"><b>${E ? 'Trades in the stocks we follow' : '우리가 보는 종목의 거래'}</b> (${mine.length})</div>` +
-      mine.slice(0, 6).map(([k, r]) => `<div class="s" style="color:#d8f5e3"><b>${esc(k)}</b> ${side(r.ty)} · ${esc(r.amt)} · ${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)} ${lnk(r.doc, E ? 'PTR' : 'PTR(의원 거래 신고)')}</div>${pcLine(r)}`).join('') +
+      mine.slice(0, 6).map(([k, r]) => `<div class="s" style="color:#d8f5e3"><b>${esc(k)}</b> ${side(r.ty)} · ${esc(r.amt)} · ${E ? 'traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)} ${lnk(r.doc, E ? 'PTR' : 'PTR(의원 주식 거래 신고)')}</div>${pcLine(r)}`).join('') +
       `<div class="s"><a href="${esc(deep(S.sym || '', id))}">${E ? 'Link to this member card' : '이 의원 카드 링크'} ›</a></div><div class="s">${E ? 'Lawmakers only report a money range. The price change compares the closing price on the first and last day shown. It does not tell you why.' : '의원은 금액 범위만 신고해요. 주가 변화는 표시된 첫날과 마지막 날의 마감 가격을 비교한 거예요. 이유를 알려 주지는 않아요.'}</div>`;
   }
   function popup(html, ll) { const map = window.moneyTrackerMap, L = window.L; if (!map || !L) return;
@@ -130,7 +130,7 @@
     (S.rows || []).forEach(r => r.ll && ev.push({ d: r.d, k: E ? 'Trade' : '의원 거래', c: party(r.p), ll: r.ll, t: `${r.who} · ${side(r.ty)} ${r.amt || ''}`, r }));
     if (hq) ((e.f4 && e.f4.rows) || []).forEach(i => ev.push({ d: i.date, k: E ? 'Form 4' : 'Form 4(임원 주식 거래 신고)', c: '#c08cff', ll: hq, t: `${i.who} · ${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')} ${Number(i.shares).toLocaleString('en-US')}${E ? ' shares' : '주'}` }));
     (e.bills || []).forEach(b => ev.push({ d: b.d, k: E ? 'Bill' : '법안', c: '#ffd60a', ll: [38.8899, -77.0091], t: `${b.no} · ${String(b.n).slice(0, 60)}` }));
-    ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === sym)).forEach(z => ev.push({ d: String(z.date).slice(0, 10), k: E ? 'White House' : '백악관', c: '#e8e8e8', ll: [38.8977, -77.0365], t: String(z.title || '').slice(0, 70) }));
+    ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === sym)).forEach(z => ev.push({ d: String(z.date).slice(0, 10), k: E ? 'White House' : '백악관', c: '#e8e8e8', ll: [38.8977, -77.0365], t: E ? String(z.title || '').slice(0, 70) : ('미국 ' + (z.type || '대통령 문서') + (z.eo?' 제'+z.eo+'호':z.procl?' 제'+z.procl+'호':'')) }));
     if (hq) (e.k8 || []).forEach(f => ev.push({ d: f.d, k: E ? '8-K (big-news filing)' : '8-K(큰 소식 공시)', c: '#68c7d0', ll: hq, t: f.items && f.items.length ? (E ? 'Item ' : '항목 ') + f.items.join(', ') : '8-K' }));
     return ev.filter(v => v.d).sort((a, b) => a.d.localeCompare(b.d));
   }
@@ -148,7 +148,7 @@
     const E = en(), box = document.createElement('div'); box.innerHTML = `<h4>${E ? 'Playback' : '재생'}</h4><div style="display:flex;gap:6px;align-items:center"><button id="mtPBbtn" class="mtSave" style="margin:0">${E ? 'Play' : '재생'}</button><input id="mtPBsl" type="range" min="0" max="0" value="0" style="flex:1"></div><div id="mtPBcap" style="font:12px ui-monospace,monospace;color:#d8f5e3;min-height:16px"></div><small>${E ? 'Lawmaker trades, insider trades (Form 4), bills, White House actions and big-news filings (8-K) lined up by date.' : '의원 거래, 임원 거래(Form 4), 법안, 백악관 발표, 큰 소식 공시(8-K)를 날짜 순서대로 보여줘요.'}</small>`;
     events(sym).then(ev => { if (S.sym !== sym) return; PB.ev = ev; const sl = box.querySelector('#mtPBsl'); sl.max = Math.max(0, ev.length - 1); sl.oninput = () => { pbStop(); pbShow(+sl.value); }; });
     box.querySelector('#mtPBbtn').onclick = e => { e.stopPropagation(); if (PB.t) return pbStop(); if (!PB.ev.length) return; if (PB.i >= PB.ev.length - 1) PB.i = -1; e.target.textContent = en() ? 'Pause' : '일시정지';
-      const map = window.moneyTrackerMap; if (map && PB.i < 0) map.setView([38, -96], 4); PB.t = setInterval(() => { if (PB.i >= PB.ev.length - 1 || S.sym !== sym) return pbStop(); pbShow(PB.i + 1); }, 700); };
+      const map = window.moneyTrackerMap; if (map && innerWidth > innerHeight && innerHeight < 500) map.closePopup(); if (map && PB.i < 0) map.setView([38, -96], 4); PB.t = setInterval(() => { if (PB.i >= PB.ev.length - 1 || S.sym !== sym) return pbStop(); pbShow(PB.i + 1); }, 700); };
     return box;
   });
   // Trade table: filter by party and buy/sell, sort by filing date, filing delay or amount.
@@ -174,7 +174,7 @@
     Promise.all([getJ(`../data/markets/${sym.replace('.', '_')}.json`), getJ('../data/nps/kr_holdings.json')]).then(([m, n]) => {
       const el = box.querySelector('.mtKR'), out = [];
       if (m && m.c && m.c.length > 1) { const L = m.c.length, c = m.c[L - 1], p = m.c[L - 2], y = m.c.slice(-250), ch = ((c - p) / p * 100).toFixed(2);
-        out.push(`<div><b style="font-size:16px">${esc(m.name || sym)}</b> ${E ? 'close' : '종가'} <b>${Math.round(c).toLocaleString('en-US')} KRW</b> (${ch > 0 ? '+' : ''}${ch}% ${E ? 'vs prior close' : '전일 대비'}) · ${esc(md(m.d[L - 1]))}</div><div style="color:#8fa89a">${E ? '1-year range' : '1년 범위'} ${Math.round(Math.min(...y)).toLocaleString('en-US')} – ${Math.round(Math.max(...y)).toLocaleString('en-US')} KRW · ${esc(m.source || '')}</div>`); }
+        out.push(`<div><b style="font-size:16px">${esc(m.name || sym)}</b> ${E ? 'close' : '종가'} <b>${Math.round(c).toLocaleString('en-US')}${E ? ' KRW' : '원'}</b> (${ch > 0 ? '+' : ''}${ch}% ${E ? 'vs prior close' : '전일 대비'}) · ${esc(md(m.d[L - 1]))}</div><div style="color:#8fa89a">${E ? '1-year range' : '1년 범위'} ${Math.round(Math.min(...y)).toLocaleString('en-US')} – ${Math.round(Math.max(...y)).toLocaleString('en-US')}${E ? ' KRW' : '원'} · ${esc(E ? ({fsc:'Financial Services Commission (official)',yahoo:'Yahoo Finance (not official, temporary)',stooq:'Stooq (not official)'})[m.source] || m.source || '' : ({fsc:'금융위원회 공식 시세',yahoo:'야후 파이낸스(공식 아님, 임시)',stooq:'Stooq(공식 아님)'})[m.source] || m.source || '')}</div>`); }
       const h = n && (n.holdings || []).find(x => m && x.company === m.name);
       if (h) out.push(`<div style="margin-top:4px">${E ? 'NPS (National Pension Service)' : '국민연금'}: ${E ? 'stake' : '지분율'} <b>${h.stake_pct}%</b> · ${E ? 'value' : '평가액'} <b>${E ? (h.value_100m_krw / 1e4).toFixed(1) + 'T KRW' : Math.round(h.value_100m_krw).toLocaleString('en-US') + '억원'}</b> · ${E ? 'share of its Korean stock money' : '국민연금 국내 주식 돈 중 비중'} ${h.weight_pct}% · ${E ? 'rank' : '순위'} ${h.rank} · ${E ? 'as of' : '기준'} ${esc(h.as_of)} ${lnk(h.source_url || n.board_url, E ? 'NPS disclosure' : '국민연금 공시')}</div>`);
       else out.push(`<div style="color:#8fa89a">${E ? 'This stock is not on the National Pension Service\'s list of Korean stocks it owns.' : '국민연금이 가진 국내 주식 목록에 이 종목은 없어요.'}</div>`);
@@ -185,6 +185,10 @@
   // Ticker sub-tabs: the extras panel shows only on All / Lawmakers; Insiders and White House tabs get full lists.
   const KRR = { '회장': 'Chairman', '부회장': 'Vice Chairman', '사장': 'President', '부사장': 'Executive Vice President', '전무': 'Senior Vice President', '상무': 'Vice President', '상무보': 'Associate Vice President', '이사': 'Director', '사내이사': 'Inside director', '사외이사': 'Outside director', '독립이사': 'Independent director', '이사회의장': 'Board chair', '대표이사': 'CEO', '감사': 'Auditor', '고문': 'Adviser', '최대주주': 'Largest shareholder', '주요주주': 'Major shareholder', '미등기임원': 'Non-registered officer', '-': '' };
   const krRole = r => String(r || '').split(/\s*,\s*/).map(x => KRR[x] != null ? KRR[x] : x).filter(Boolean).join(', ');
+  // Korean screen: Form 4 job titles in Korean; a title we can't map is kept as filed and marked as the original.
+  const KOR = { 'director': '이사', '10% owner': '10% 이상 주주', 'ceo': '최고경영자(CEO)', 'chief executive officer': '최고경영자(CEO)', 'cfo': '최고재무책임자(CFO)', 'chief financial officer': '최고재무책임자(CFO)', 'coo': '최고운영책임자(COO)', 'chief operating officer': '최고운영책임자(COO)', 'cpo': '최고제품책임자(CPO)', 'chief product officer': '최고제품책임자(CPO)', 'cao': '최고회계책임자', 'chief accounting officer': '최고회계책임자', 'principal accounting officer': '최고회계책임자', 'chief legal officer': '최고법무책임자', 'chief human resources officer': '최고인사책임자', 'head of human resources': '인사 총괄', 'president': '사장', 'pres': '사장', 'pres.': '사장', 'chair': '회장', 'chairman': '회장', 'chairman of the board': '이사회 의장', 'cob': '이사회 의장', 'executive chair': '이사회 의장', 'vice chairman': '부회장', 'evp': '부사장', 'executive vice president': '부사장', 'sr. executive vice president': '선임 부사장', 'svp': '전무', 'senior vice president': '전무', 'vice president': '상무', 'general counsel': '법무 총괄', 'gc': '법무 총괄', 'secretary': '이사회 총무', 'secy': '이사회 총무', 'sec': '이사회 총무', 'see remarks': '공시 비고 참고' };
+  const koRole = r => { const out = [], raw = []; String(r || '').split(/\s*,\s*/).filter(Boolean).forEach(p => { const parts = p.split(/\s*(?:&| and )\s*/i).filter(Boolean), m = parts.map(x => KOR[x.toLowerCase()]); if (m.every(Boolean)) out.push(m.join('·')); else raw.push(p); });
+    return out.join(', ') + (raw.length ? (out.length ? ' · ' : '') + '공시 원문 직함: ' + raw.join(', ') : ''); };
   const tabNow = () => { const b = document.querySelector('#mtHub button.on'); return b ? b.dataset.k : 'all'; };
   const money2 = n => '$' + Math.round(n).toLocaleString('en-US');
   async function tabFill() {
@@ -198,18 +202,22 @@
     if (k === 'ins') { const x = await getTX(), e = x && x.tickers && x.tickers[S.sym], rows = (e && e.f4 && e.f4.rows) || [];
       lst.replaceChildren(); if (!rows.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'No company insider bought or sold this stock on the market in the last 90 days. (Form 4 = the report insiders file. US companies only. Stock given as pay is not counted.)' : '최근 90일 동안 이 회사 임원이 시장에서 이 주식을 사거나 판 기록이 없어요. (Form 4 = 임원이 내는 신고서. 미국 회사만 해당. 월급처럼 받은 주식은 빼고 셌어요.)'; lst.append(w); return; }
       const t = document.createElement('div'); t.className = 'mtTP'; t.style.cssText = 'font:11.5px/1.4 ui-monospace,monospace;color:#d8f5e3';
-      t.innerHTML = `<div style="color:#68c7d0;margin:2px 0">${rows.length} ${E ? 'Form 4 trades, newest first (Form 4 = a report company insiders file when they buy or sell their own company\'s stock)' : 'Form 4 거래, 최신순 (Form 4 = 회사 임원이 자기 회사 주식을 사고팔 때 내는 신고서)'}</div>` + rows.map(i => `<div style="border:1px solid #24493b;border-radius:4px;padding:3px 5px;margin:2px 0"><b>${esc(i.who)}</b> · ${esc(i.role || '')}<br>${esc(md(i.date))} · <b style="color:${i.code === 'P' ? '#5dff9e' : '#ff8a80'}">${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')}</b> ${Number(i.shares).toLocaleString('en-US')} @ $${Number(i.price).toFixed(2)} = ${money2(i.shares * i.price)}${i.plan ? (E ? ' · 10b5-1 (sale planned in advance)' : ' · 10b5-1 (미리 계획한 매도)') : ''} ${lnk(i.url, 'Form 4')}</div>`).join('');
+      t.innerHTML = `<div style="color:#68c7d0;margin:2px 0">${rows.length} ${E ? 'Form 4 trades, newest first (Form 4 = a report company insiders file when they buy or sell their own company\'s stock)' : 'Form 4 거래, 최신순 (Form 4 = 회사 임원이 자기 회사 주식을 사고팔 때 내는 신고서)'}</div>` + rows.map(i => `<div style="border:1px solid #24493b;border-radius:4px;padding:3px 5px;margin:2px 0"><b>${esc(i.who)}</b> · ${esc(E ? (i.role || '') : koRole(i.role))}<br>${esc(md(i.date))} · <b style="color:${i.code === 'P' ? '#5dff9e' : '#ff8a80'}">${i.code === 'P' ? (E ? 'Buy' : '매수') : (E ? 'Sell' : '매도')}</b> ${Number(i.shares).toLocaleString('en-US')} @ $${Number(i.price).toFixed(2)} = ${money2(i.shares * i.price)}${i.plan ? (E ? ' · 10b5-1 (sale planned in advance)' : ' · 10b5-1 (미리 계획한 매도)') : ''} ${lnk(i.url, 'Form 4')}</div>`).join('');
       lst.append(t); }
     if (k === 'wh') { const fr = await getJ('../data/fr/presidential.json'), it = ((fr && fr.items) || []).filter(z => (z.moves || []).some(m => m.sym === S.sym) || (z.tickers || []).includes(S.sym)).sort((a, b) => String(b.date).localeCompare(String(a.date)));
-      lst.replaceChildren(); if (!it.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'We have no White House action that names this company yet.' : '아직 이 회사를 언급한 백악관 발표는 없어요.'; lst.append(w); return; }
+      lst.replaceChildren(); if (!it.length) { const w = document.createElement('div'); w.className = 'why mtTP'; w.textContent = E ? 'We have no White House action that names this company yet. Actions about its industry are in "US president & government news" below.' : '아직 이 회사 이름이 나온 백악관 발표는 없어요. 업종 관련 발표는 아래 \'미국 대통령·정부 발표\'에 있어요.'; lst.append(w); return; }
       it.slice(0, 20).forEach(z => { const b = document.createElement('button'); b.type = 'button'; b.className = 'mtTP'; const ll = [38.8977, -77.0365], syms = [...new Set((z.moves || []).map(m => m.sym).concat(z.tickers || []))];
-        b.innerHTML = `${esc(md(String(z.date).slice(0, 10)))} · ${esc(String(z.title || '').slice(0, 110))}`;
-        b.onclick = ev => { ev.stopPropagation(); popup(`<div class="k">${E ? 'White House / Federal Register' : '백악관 / 연방관보'}</div><div class="h">${esc(z.title)}</div><div>${esc(md(String(z.date).slice(0, 10)))}${z.type_en ? ' · ' + esc(E ? z.type_en : z.type) : ''}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(syms.join(', '))}</b></div><div class="s">${lnk(z.url, E ? 'Read the official document' : '공식 원문 보기')}</div>`, ll); };
+        b.innerHTML = `${esc(md(String(z.date).slice(0, 10)))} · ${esc(E ? String(z.title || '').slice(0, 110) : '미국 ' + (z.type || '대통령 문서') + (z.eo?' 제'+z.eo+'호':z.procl?' 제'+z.procl+'호':''))}`;
+        b.onclick = ev => { ev.stopPropagation(); popup(`<div class="k">${E ? 'White House / Federal Register' : '백악관 / 연방관보'}</div><div class="h">${esc(E ? z.title : '미국 ' + (z.type || '대통령 문서') + (z.eo?' 제'+z.eo+'호':z.procl?' 제'+z.procl+'호':''))}</div><div>${esc(md(String(z.date).slice(0, 10)))}${z.type_en ? ' · ' + esc(E ? z.type_en : z.type) : ''}</div><div class="s">${E ? 'Linked tickers' : '연결 종목'}: <b>${esc(syms.join(', '))}</b></div><div class="s">${lnk(z.url, E ? 'Read the official document' : '원래 제목 보기(공식 원문)')}</div>`, ll); };
         lst.append(b); }); }
   }
   // Opening screen: 3 large cards with the latest notable filings; other controls stay behind Menu.
-  (async () => {
-    const qs = new URLSearchParams(location.search); if (qs.get('q') || qs.get('rec') || sessionStorage.getItem('mtOpenSeen')) return;
+  // Hidden by default; visitors turn it on from the menu (localStorage mt.recentCards = '1').
+  const recentOn = () => { try { return localStorage.getItem('mt.recentCards') === '1'; } catch (e) { return false; } };
+  window.mtOpenHide = () => { const o = $('mtOpen'); if (o) o.remove(); document.body.classList.remove('mtOpenOn'); };
+  window.mtOpenShow = async (force) => {
+    if (!recentOn() || $('mtOpen')) return;
+    const qs = new URLSearchParams(location.search); if (!force && (qs.get('q') || qs.get('rec') || sessionStorage.getItem('mtOpenSeen'))) return;
     const d = await getTT(); if (!d || !d.tickers) return; const E = en(), all = [];
     Object.entries(d.tickers).forEach(([k, v]) => v.forEach(r => all.push([k, r])));
     all.sort((a, b) => String(b[1].f).localeCompare(String(a[1].f)) || ((b[1].tags || []).length - (a[1].tags || []).length));
@@ -217,7 +225,7 @@
     if (!pick.length) return;
     const st = document.createElement('style'); st.textContent = `body.mtOpenOn #controls,body.mtOpenOn #topics,body.mtOpenOn #mtTicker,body.mtOpenOn #brief,body.mtOpenOn #mtOneDock{visibility:hidden}#mtOpen{position:fixed;inset:auto 0 90px 0;z-index:1500;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none}#mtOpen .cs{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;pointer-events:auto}#mtOpen .oc{width:300px;text-align:left;padding:14px 16px;background:rgba(6,19,14,.94);border:1px solid #5dff9e;border-radius:8px;color:#d8f5e3;font:14px/1.45 system-ui,sans-serif;cursor:pointer}#mtOpen .oc:hover{border-color:#ffd60a}#mtOpen .oc b.s{display:block;font:700 34px ui-monospace,monospace;color:#5dff9e}#mtOpen .bar{pointer-events:auto;display:flex;gap:8px}#mtOpen h3{margin:0;font:700 12px ui-monospace,monospace;letter-spacing:.08em;color:#68c7d0;background:rgba(6,19,14,.9);padding:3px 8px;border-radius:4px}`;
     document.head.append(st);
-    const o = document.createElement('div'); o.id = 'mtOpen'; o.innerHTML = `<h3>${E ? 'LATEST NOTABLE FILINGS' : '최근 눈에 띄는 신고'}</h3><div class="cs"></div><div class="bar"><button class="mtSave" id="mtOpenMenu" style="font-size:13px;padding:5px 14px">${E ? 'Menu' : '메뉴'}</button><button class="mtSave" id="mtOpenParty" type="button" onclick="window.mtParty&&window.mtParty.open()" style="font-size:13px;padding:5px 14px">🏛️ ${E ? 'Money by party (Korea)' : '정당별 돈 추적'}</button></div>`;
+    const o = document.createElement('div'); o.id = 'mtOpen'; o.innerHTML = `<h3>${E ? 'LATEST NOTABLE FILINGS' : '최근 눈에 띄는 신고'}</h3><div class="cs"></div><div class="bar"><button class="mtSave" id="mtOpenMenu" style="font-size:13px;padding:5px 14px">${E ? 'Menu' : '메뉴'}</button></div>`;
     pick.forEach(([k, r]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'oc';
       b.innerHTML = `<b class="s">${esc(k)}</b><span class="pp" style="display:inline-block;padding:0 4px;border-radius:3px;font:700 11px ui-monospace,monospace;color:#111;background:${party(r.p)}">${esc(r.p || '?')}</span> <b>${esc(r.who)}</b> · ${side(r.ty)}<br>${E ? 'Traded' : '거래'} ${esc(md(r.d))} · ${E ? 'filed' : '신고'} ${esc(md(r.f))} ${lateTag(r)}<br>${(r.tags || []).map(g => `<span class="mtTag">${esc(tagShort(g))}</span>`).join('')}`;
       b.onclick = () => { sessionStorage.setItem('mtOpenSeen', 1); location.search = `?lang=${E ? 'en' : 'ko'}&q=${encodeURIComponent(k)}${r.id ? '&m=' + encodeURIComponent(r.id) : ''}`; };
@@ -227,7 +235,8 @@
     o.querySelector('#mtOpenMenu').onclick = () => { close(); const mb = [...document.querySelectorAll('button')].find(x => /^\W*(Menu|메뉴)\s*$/.test(x.textContent.trim()) && x.id !== 'mtOpenMenu'); if (mb) mb.click(); };
     document.body.classList.add('mtOpenOn'); document.body.append(o);
     addEventListener('keydown', e => { if (e.key === 'Escape') close(); }, { once: true });
-  })();
+  };
+  window.mtOpenShow();
   let busy = false;
   async function render() {
     const s = cur(), hub = $('mtHub'); if (!s || !hub) { if (PB.lay) { PB.lay.clearLayers(); } pbStop(); { const ov = $('mtPBov'); if (ov) ov.remove(); } S.sym = null; S.rows = null; const b = $('mtPlus'); if (b) b.remove(); return; }
