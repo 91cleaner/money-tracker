@@ -42,6 +42,8 @@ jobs:
         run: python3 scripts/prepare-public-pages.py
       - name: Verify public artifact privacy and required assets
         run: python3 scripts/check-pages-artifact.py
+      - name: Validate entry-point content in public artifact
+        run: python3 scripts/check-pages-entry.py --local-dir .public-pages
       - name: Check excluded server files
         run: |
           test ! -e .public-pages/cloudflare/admin-worker.js
@@ -54,33 +56,6 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v4
       - name: Verify published entry and US command
-        shell: bash
         env:
           SITE_URL: ${{ steps.deployment.outputs.page_url }}
-        run: |
-          python3 - <<'PY'
-          import os, time, urllib.request
-          base = os.environ['SITE_URL'].rstrip('/') + '/'
-          checks = {
-            '': ['world-intelligence/', 'lang', 'korea.html', 'og-us.png'],
-            'korea.html': ['대한민국', 'href="world-intelligence/"'],
-            'usa-command-legacy.html': ['id="usCmd"', '실시간 시세 OFF', 'mt-map-only-controller'],
-            'assets/mt-command-ui.js': [],
-          }
-          for path, expected in checks.items():
-            error = None
-            for attempt in range(8):
-              try:
-                req = urllib.request.Request(base + path, headers={'Cache-Control': 'no-cache'})
-                with urllib.request.urlopen(req, timeout=20) as response:
-                  body = response.read().decode('utf-8')
-                  if response.status != 200 or any(marker not in body for marker in expected):
-                    raise AssertionError(f'Unexpected response for {path}: {response.status}')
-                print('PASS', base + path)
-                break
-              except Exception as exc:
-                error = exc
-                time.sleep(10)
-            else:
-              raise RuntimeError(f'Published page failed: {path}: {error}')
-          PY
+        run: python3 scripts/check-pages-entry.py --site-url "$SITE_URL"
