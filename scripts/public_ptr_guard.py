@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+"""Fail closed on invalid public House PTR chronology and official-source links.
+
+This operates on the generated Pages copy, never the collector's source ledger.
+"""
+import datetime as dt
+import json
+import re
+import sys
+from pathlib import Path
+
+OFFICIAL_PDF = re.compile(
+    r"https://disclosures-clerk\.house\.gov/public_disc/ptr-pdfs/\d{4}/\d+\.pdf"
+)
+
+
+def _date(value):
+    if not isinstance(value, str):
+        raise ValueError("missing ISO date")
+    return dt.date.fromisoformat(value)
+
+
+def invalid_rows(payload):
+    """Return (zero-based index, reason) for unsafe rows; malformed snapshots fail."""
+    if not isinstance(payload, dict):
+        raise ValueError("House PTR snapshot must be a JSON object")
+    updated = _date(payload.get("updated"))
+    rows = payload.get("trades")
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("House PTR snapshot must contain nonempty trades")
+    bad = []
+    for i, row in enumerate(rows):
+        try:
+            if not isinstance(row, dict):
+                raise ValueError("row is not an object")
+            traded, filed = _date(row.get("d")), _date(row.get("fd"))
+            if not traded <= filed <= updated:
+                raise ValueError("requires transaction <= filing <= snapshot date")
+            if not isinstance(row.get("doc"), str) or not OFFICIAL_PDF.fullmatch(row["doc"]):
+                raise ValueError("missing or nonofficial House Clerk PDF URL")
+        except (TypeError, ValueError) as exc:
+            bad.append((i, str(exc)))
+    return bad
+
+
+def sanitize_file(path):
+    """Quarantine invalid rows in the PUBLIC COPY; refuse to publish all-invalid data."""
+    path = Path(path)
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    bad = invalid_rows(payload)
+    if bad:
+        if len(bad) == len(payload["trades"]):
+            raise ValueError("All House PTR rows invalid; refusing empty public snapshot")
+        exclude = {i for i, _ in bad}
+        payload["trades"] = [r for i, r in enumerate(payload["trades"]) if i not in exclude]
+        payload["note"] = (str(payload.get("note") or "") +
+                           f" 공개 전 날짜·공식 원문 검증 불일치 {len(bad)}건 제외.").strip()
+        path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        for i, reason in bad:
+            print(f"WARNING: public House PTR row {i} excluded: {reason}", file=sys.stderr)
+    return len(payload["trades"]), len(bad)
