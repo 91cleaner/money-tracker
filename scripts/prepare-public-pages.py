@@ -52,9 +52,9 @@ from build_public_trades import build as build_public_trades
 build_public_trades(OUT / "data/us/trades_public.json")
 # Check the generated public trade summary before any workflow can publish it.
 # This catches nested private metadata even in workflows that only build the artifact.
-import json
-from public_ptr_guard import validate_public_trades
-validate_public_trades(json.loads((OUT / "data/us/trades_public.json").read_text(encoding="utf-8")))
+from public_ptr_guard import sanitize_public_trades_file
+summary_kept, summary_excluded = sanitize_public_trades_file(OUT / "data/us/trades_public.json")
+print(f"Public full trade summary: {summary_kept} chronology-screened rows, {summary_excluded} excluded")
 # Quarantine invalid House PTR chronology/official-source links in the PUBLIC COPY only.
 # The collector-owned source data remains unchanged for source reconciliation.
 from public_ptr_guard import sanitize_file
