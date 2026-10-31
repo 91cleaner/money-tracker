@@ -111,5 +111,41 @@ class PublicPtrGuardTests(unittest.TestCase):
                     self.assertEqual(path.read_text(), original)
 
 
+    def test_nested_or_markup_fields_are_quarantined(self):
+        # Allowed keys are not enough: values must not hide private objects
+        # or HTML that could be injected into a public map card.
+        unsafe = [
+            record(who={"private_email": "secret@example.test"}),
+            record(tk=["ABC"]),
+            record(ty="<img src=x onerror=alert(1)>"),
+            record(amt={"internal": "review"}),
+            record(who="A\nB"),
+            record(tk="A" * 33),
+            record(who=""),
+            record(tk=None),
+        ]
+        payload = {"updated": "2026-10-28", "trades": [record()] + unsafe}
+        self.assertEqual([i for i, _ in invalid_rows(payload)],
+                         list(range(1, len(unsafe) + 1)))
+        with tempfile.TemporaryDirectory() as td:
+            path = pathlib.Path(td) / "trades-recent.json"
+            path.write_text(json.dumps(payload))
+            self.assertEqual(sanitize_file(path), (1, len(unsafe)))
+            self.assertEqual(json.loads(path.read_text())["trades"], [record()])
+            self.assertNotIn("secret@example.test", path.read_text())
+
+    def test_official_pdf_archive_year_matches_filing_year(self):
+        mismatched = record(doc=PDF.replace("/2026/", "/2025/"))
+        errors = invalid_rows({"updated": "2026-10-28", "trades": [record(), mismatched]})
+        self.assertEqual([i for i, _ in errors], [1])
+        self.assertIn("archive year", errors[0][1])
+
+    def test_note_cannot_embed_markup_or_nested_metadata(self):
+        for note in ({"private": "secret"}, "<script>alert(1)</script>", "bad\x00text"):
+            with self.subTest(note=note), self.assertRaises(ValueError):
+                invalid_rows({"updated": "2026-10-28", "note": note, "trades": [record()]})
+
+
+
 if __name__ == "__main__":
     unittest.main()
