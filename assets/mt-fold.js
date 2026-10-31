@@ -14,6 +14,7 @@
     const kids = [...tl.childNodes].filter((n) => !(n.nodeType === 1 && n.matches('details.mtMore'))); const hold = document.createElement('div'); tl.prepend(hold);
     const d = document.createElement('details'); d.className = 'mtMore'; const s = document.createElement('summary'); s.textContent = en() ? 'Timeline' : '타임라인 자세히 보기'; d.append(s); const body = document.createElement('div'); kids.forEach((n) => body.append(n)); d.append(body); hold.replaceWith(d); }
   function foldPopup(root) { if (!root) return;
+    const caps = [...root.querySelectorAll('figcaption')].filter((f) => !f.closest('details')); if (caps.length) { const d = document.createElement('details'); d.className = 'mtMore'; d.innerHTML = `<summary>${en() ? 'Photo credits' : '사진 출처'}</summary>`; const fig = caps[0].closest('figure'); const row = fig && fig.parentNode; caps.forEach((f) => { const x = document.createElement('div'); x.className = 's'; x.style.fontSize = '11px'; x.append(...f.childNodes); f.remove(); d.append(x); }); if (row) row.after(d); }
     const long = [...root.querySelectorAll('.s, small')].filter((e) => !e.closest('details, figure, .mtSave') && !e.querySelector('a, b, details') && !(e.parentNode && e.parentNode.closest('.s, small')) && e.textContent.trim().length > 50);
     if (long.length) { const end = document.createElement('span'); root.append(end); wrap(long, end); end.remove(); } }
   function foldBrief() { const c = $('briefCaveat'); if (c && c.textContent.trim().length > 50 && !(c.parentNode && c.parentNode.matches('details.mtMore'))) wrap([c], c); }
