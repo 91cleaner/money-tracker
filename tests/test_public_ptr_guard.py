@@ -7,7 +7,8 @@ import tempfile
 import unittest
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "scripts"))
-from public_ptr_guard import invalid_rows, sanitize_file, validate_public_trades
+from public_ptr_guard import (invalid_rows, sanitize_file, validate_public_trades,
+                              invalid_public_trade_rows, sanitize_public_trades_file)
 
 PDF = "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035710.pdf"
 
@@ -209,6 +210,55 @@ class PublicPtrGuardTests(unittest.TestCase):
         ):
             with self.subTest(payload=payload), self.assertRaises(ValueError):
                 validate_public_trades(payload)
+
+
+    def test_full_public_summary_quarantines_bad_chronology_not_source(self):
+        good = {"who": "Example Member", "tk": "ABC", "d": "2026-10-20",
+                "fd": "2026-10-21", "filed": "2026-10-22", "doc": PDF}
+        bad = {**good, "d": "2026-10-25"}
+        payload = {"updated": "2026-10-28 13:36 UTC",
+                   "source": "U.S. House Clerk", "note": "Delayed filing",
+                   "trades": [good, bad]}
+        self.assertEqual([i for i, _ in invalid_public_trade_rows(
+            payload, today=dt.date(2026, 11, 1))], [1])
+        with tempfile.TemporaryDirectory() as td:
+            source = pathlib.Path(td) / "source.json"
+            public = pathlib.Path(td) / "public.json"
+            original = json.dumps(payload)
+            source.write_text(original)
+            public.write_text(original)
+            self.assertEqual(sanitize_public_trades_file(public), (1, 1))
+            result = json.loads(public.read_text())
+            self.assertEqual(result["trades"], [good])
+            self.assertIn("excluded 1 rows", result["note"])
+            self.assertEqual(source.read_text(), original)
+            self.assertEqual(invalid_public_trade_rows(result), [])
+
+    def test_full_public_summary_blocks_future_and_spoofed_documents(self):
+        good = {"who": "Example Member", "tk": "ABC", "d": "2026-10-20",
+                "fd": "2026-10-21", "filed": "2026-10-22", "doc": PDF}
+        bad = [
+            {**good, "d": "2026-12-26"},
+            {**good, "doc": "https://disclosures-clerk.house.gov.evil.test/public_disc/ptr-pdfs/2026/20035710.pdf"},
+            {**good, "doc": PDF.replace("/2026/", "/2025/")},
+            {**good, "fd": "2026-10-23"},
+            {**good, "filed": "2026-10-2"},
+        ]
+        payload = {"updated": "2026-10-28", "trades": [good] + bad}
+        errors = invalid_public_trade_rows(payload, today=dt.date(2026, 11, 1))
+        self.assertEqual([i for i, _ in errors], list(range(1, 6)))
+
+    def test_full_public_summary_future_snapshot_fails_without_write(self):
+        good = {"who": "Example Member", "tk": "ABC", "d": "2026-10-20",
+                "fd": "2026-10-21", "filed": "2026-10-22", "doc": PDF}
+        payload = {"updated": "2099-01-01 00:00 UTC", "trades": [good]}
+        with tempfile.TemporaryDirectory() as td:
+            public = pathlib.Path(td) / "public.json"
+            original = json.dumps(payload)
+            public.write_text(original)
+            with self.assertRaisesRegex(ValueError, "future"):
+                sanitize_public_trades_file(public)
+            self.assertEqual(public.read_text(), original)
 
 
 if __name__ == "__main__":
