@@ -57,7 +57,7 @@ recent_path = OUT / "data/us/trades-recent.json"
 if not recent_path.is_file():
     sys.exit("Missing public House PTR recent snapshot")
 kept, excluded = sanitize_file(recent_path)
-print(f"Public House PTR: {kept} verified-shape rows, {excluded} invalid rows excluded")
+print(f"Public House PTR: {kept} chronology-screened rows (not independently verified executions), {excluded} excluded")
 for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js", "data/national/countries-110m.geojson", "search.html", "assets/se.js", "data/search/se/core.json", "data/us/trades_public.json"):
     if not (OUT / required).exists():
         sys.exit(f"Missing required public file: {required}")
