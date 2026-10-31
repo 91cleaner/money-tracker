@@ -49,3 +49,25 @@ Fresh source review on `main` found a separate **question → map state-ownershi
 - Require a deterministic Node/browser regression test that controls Promise resolution order; static grep or a mocked standalone pattern alone is insufficient to certify the UI fix.
 - Record the actual merged SHA, CI URL, Pages published SHA, browser console errors and mobile viewport evidence separately.
 - `docs/AI-ROLES.md`: GPT handles review/docs; Claude owns `world-intelligence/` UI; data owner handles `data/`. **No source, data, collector, workflow, authentication or Pages deployment was changed by this review.** Owner approval required before merging any fix.
+
+
+## 2026-11-01 02:53 KST follow-up: independent Leaflet overlay survives reset (P1)
+
+Fresh `main` source inspection found a **second, independent map-overlay owner** outside the core `mission/route/marker` state already covered above. In `<script id="mt-living-map-controller">`:
+
+- Local `last, route, pulse` are separate from the core route/marker variables. `acquire()` adds `L.marker(...).addTo(m)` and optionally `L.polyline(...).addTo(m)` to the same `window.moneyTrackerMap`.
+- The `world` click handler only removes the banner class and sets `last=null`; it does **not** call `m.removeLayer(pulse)` or `m.removeLayer(route)`. `closeBrief` also hides only the banner. The core `world` handler cannot clean these private overlay references.
+- `acquire()` returns immediately for a hidden brief or a brief whose text does not begin with a recognized country, **without clearing the previous pulse/line**. Submitting a new unrelated question or closing a card can therefore leave the old target overlay on the map even if the core mission/route cleanup is correctly implemented.
+- The `MutationObserver` schedules `setTimeout(acquire,40)` without invalidation. A previously scheduled callback can run after a new submission/reset; the cleanup must be guarded by the same latest-request ownership rule.
+
+**Required UI-owner fix (Claude):** expose a scoped `clearTargetOverlay()` within `mt-living-map-controller` that removes both layers from the actual Leaflet map, sets `pulse=route=last=null`, and hides/clears the banner. Invoke it synchronously on new nonempty submit, world/reset, close, and non-geographic/no-data states. Cancel or generation-guard delayed observer work; on a new valid geography, only commit overlays belonging to the current request. Avoid double-removing the core mission layers (different owners).
+
+**Additional deterministic acceptance tests:**
+
+| Case | Controlled sequence | Required result |
+| --- | --- | --- |
+| Secondary overlay reset | Select a route with recognized geographic steps, wait for `mtTargetPulse` and `mtPath`, click World | No `mtTargetPulse`, `mtPath`, banner, or old Leaflet target layer remains |
+| A geographic to B non-geographic | A creates target pulse/path; submit B yielding a stock-only/no-data card | B does not retain A's independent pulse/path, even after pending 40ms observer callback |
+| Close brief | A target visible, close the brief | Target overlay and banner are cleared consistently; reopening/research does not resurrect A |
+
+**Verification boundary:** static read of `main` `world-intelligence/index.html` (the `mt-living-map-controller` script), not a browser reproduction. This commit changes **review documentation only**; UI code, tests, data, and Pages deployment remain untouched. Keep existing #394 / PR #424 as the single handoff, do not open a duplicate issue.
