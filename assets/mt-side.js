@@ -98,7 +98,7 @@
  #mtSide{background:#000!important}
  #mtSide>#controls button,#mtSide>#mtOneDock *,#mtSide>#mtBar button{opacity:.78}
 }
-#mtToday.tk .tdHd b{font-size:16px}
+#mtToday.tk .tdHd b{font-size:16px}#mtToday.tk,#mtTodayWho{position:static!important;inset:auto!important;transform:none!important;max-height:none!important;height:auto!important;overflow:visible!important;width:auto!important;margin:10px 0!important;z-index:auto!important}
 #briefCaveat,#mtSrcLine{display:none!important}`;
   document.head.append(css);
   let data = null;
@@ -125,10 +125,10 @@
       const br = $('brief'); if (!br) return;
       if (!hit.length) { box.remove(); return; }
       box.className = 'tk';
-      const nowBox = $('mtNow'); if (nowBox) { if (nowBox.nextSibling !== box) nowBox.after(box); } else if (br.firstChild !== box) br.prepend(box);
+      const nowBox = $('mtNow'); if (!matchMedia('(min-width:900px)').matches) { if (br.lastChild !== box) br.append(box); } else if (nowBox) { if (nowBox.nextSibling !== box) nowBox.after(box); } else if (br.firstChild !== box) br.prepend(box);
       box.innerHTML = `<div class="tdHd"><b>오늘 이 종목 기록</b><span>${esc(data.date)}</span></div>` + hit.map(([c, it]) => card(c, it)).join('');
     }
   }
   window.__tdR=()=>render();window.__tdWho=(txt)=>{if(!data)return '';const hit=data.cards.map((c)=>[c,c.items.filter((i)=>{if(!i.who)return false;const w=i.who.replace(/[.,]/g,'').split(/\s+/);return txt.includes(w[0])&&txt.includes(w[w.length-1])})]).filter((x)=>x[1].length);return hit.length?`<div id="mtToday" class="tk" style="margin-top:8px"><div class="tdHd"><b>오늘 이 의원 기록</b><span>${esc(data.date)}</span></div>${hit.map(([c,it])=>card(c,it)).join('')}</div>`:''};document.addEventListener('click', (e) => { const b = e.target.closest && e.target.closest('#mtToday button[data-tk]'); if (b) location.search = '?lang=ko&ticker=' + encodeURIComponent(b.dataset.tk); });
-  fetch('../data/us/daily/index.json', { cache: 'no-cache' }).then((r) => r.json()).then((ix) => fetch(`../data/us/daily/${ix.latest}.json`, { cache: 'no-cache' })).then((r) => r.json()).then((d) => { data = d; render(); setInterval(() => { const b = $('mtToday'); if (sym() && (!b || !b.isConnected)) render(); }, 1500); setTimeout(render, 2500); }).catch(() => {});
+  fetch('../data/us/daily/index.json', { cache: 'no-cache' }).then((r) => r.json()).then((ix) => fetch(`../data/us/daily/${ix.latest}.json`, { cache: 'no-cache' })).then((r) => r.json()).then((d) => { data = d; render(); setInterval(() => { const b = $('mtToday'); if (sym() && (!b || !b.isConnected || (!matchMedia('(min-width:900px)').matches && b.parentNode && b.parentNode.lastChild !== b))) render(); }, 1500); setTimeout(render, 2500); }).catch(() => {});
 })();
