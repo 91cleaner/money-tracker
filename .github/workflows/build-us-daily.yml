@@ -1,0 +1,28 @@
+name: Build US daily fact cards
+on:
+  schedule:
+    - cron: '10 22 * * *'   # 07:10 KST
+    - cron: '20 8 * * *'    # 17:20 KST, after collect-* jobs
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: us-daily
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build today's cards from our collected data (stdlib only, no network, no keys)
+        run: python scripts/build_us_daily.py
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/us/daily
+          git diff --staged --quiet || (git commit -m "data(us-daily): daily fact cards" && git pull --rebase origin main && git push)
