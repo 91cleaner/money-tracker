@@ -76,6 +76,9 @@ jobs:
           if-no-files-found: ignore
   deployed:
     name: GitHub Pages content check
+    # Feature branches are not deployed to Pages; verify production only on main.
+    # PR/branch correctness is covered by unit, Chromium and artifact smoke checks.
+    if: github.ref == 'refs/heads/main'
     needs: browser
     runs-on: ubuntu-latest
     steps:
