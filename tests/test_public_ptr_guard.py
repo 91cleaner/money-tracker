@@ -1,4 +1,5 @@
 """Release regression: impossible or unsourced PTR rows cannot reach public Pages."""
+import datetime as dt
 import json
 import pathlib
 import sys
@@ -64,6 +65,33 @@ class PublicPtrGuardTests(unittest.TestCase):
                 payload = {"updated": "2026-10-28",
                            "trades": [record(), record(fd=bad_date)]}
                 self.assertEqual([i for i, _ in invalid_rows(payload)], [1])
+
+    def test_future_snapshot_fails_closed_even_if_dates_are_ordered(self):
+        # A 2099 transaction/filing/snapshot used to satisfy d <= fd <= updated.
+        today = dt.date(2026, 11, 1)
+        payload = {"updated": "2099-01-03",
+                   "trades": [record(d="2099-01-01", fd="2099-01-02",
+                                     doc=PDF.replace("/2026/", "/2099/"))]}
+        with self.assertRaisesRegex(ValueError, "future"):
+            invalid_rows(payload, today=today)
+        with self.assertRaisesRegex(ValueError, "future"):
+            invalid_rows({"updated": "2099-01-03", "trades": [record()]},
+                         today=today)
+        # Boundary: an actual snapshot date equal to UTC today is allowed.
+        self.assertEqual(invalid_rows({"updated": "2026-11-01",
+                                       "trades": [record()]}, today=today), [])
+
+    def test_future_snapshot_sanitizer_preserves_original_file(self):
+        payload = {"updated": "2099-01-03",
+                   "trades": [record(d="2099-01-01", fd="2099-01-02",
+                                     doc=PDF.replace("/2026/", "/2099/"))]}
+        with tempfile.TemporaryDirectory() as td:
+            path = pathlib.Path(td) / "trades-recent.json"
+            original = json.dumps(payload)
+            path.write_text(original)
+            with self.assertRaisesRegex(ValueError, "future"):
+                sanitize_file(path)
+            self.assertEqual(path.read_text(), original)
 
     def test_all_invalid_or_missing_snapshot_fails_closed(self):
         with tempfile.TemporaryDirectory() as td:
