@@ -261,5 +261,32 @@ class PublicPtrGuardTests(unittest.TestCase):
             self.assertEqual(public.read_text(), original)
 
 
+    def test_full_public_summary_refuses_catastrophic_quarantine_without_writing(self):
+        # A collector regression that corrupts almost every row must not
+        # silently turn a multi-thousand-row public ledger into a tiny subset.
+        good = {"who": "Example Member", "tk": "ABC", "d": "2026-10-20",
+                "fd": "2026-10-21", "filed": "2026-10-22", "doc": PDF}
+        bad = {**good, "d": "2026-10-29"}
+        payload = {"updated": "2026-10-28", "trades": [good] + [bad] * 9}
+        with tempfile.TemporaryDirectory() as td:
+            public = pathlib.Path(td) / "public.json"
+            original = json.dumps(payload)
+            public.write_text(original)
+            with self.assertRaisesRegex(ValueError, "integrity collapse"):
+                sanitize_public_trades_file(public)
+            self.assertEqual(public.read_text(), original)
+
+    def test_full_public_summary_allows_quarantine_at_75_percent_boundary(self):
+        good = {"who": "Example Member", "tk": "ABC", "d": "2026-10-20",
+                "fd": "2026-10-21", "filed": "2026-10-22", "doc": PDF}
+        bad = {**good, "d": "2026-10-29"}
+        payload = {"updated": "2026-10-28", "trades": [good] + [bad] * 3}
+        with tempfile.TemporaryDirectory() as td:
+            public = pathlib.Path(td) / "public.json"
+            public.write_text(json.dumps(payload))
+            self.assertEqual(sanitize_public_trades_file(public), (1, 3))
+            self.assertEqual(json.loads(public.read_text())["trades"], [good])
+
+
 if __name__ == "__main__":
     unittest.main()
