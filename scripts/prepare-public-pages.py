@@ -50,6 +50,14 @@ for dirname in PUBLIC_DIRS:
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_public_trades import build as build_public_trades
 build_public_trades(OUT / "data/us/trades_public.json")
+# Quarantine invalid House PTR chronology/official-source links in the PUBLIC COPY only.
+# The collector-owned source data remains unchanged for source reconciliation.
+from public_ptr_guard import sanitize_file
+recent_path = OUT / "data/us/trades-recent.json"
+if not recent_path.is_file():
+    sys.exit("Missing public House PTR recent snapshot")
+kept, excluded = sanitize_file(recent_path)
+print(f"Public House PTR: {kept} verified-shape rows, {excluded} invalid rows excluded")
 for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js", "data/national/countries-110m.geojson", "search.html", "assets/se.js", "data/search/se/core.json", "data/us/trades_public.json"):
     if not (OUT / required).exists():
         sys.exit(f"Missing required public file: {required}")
