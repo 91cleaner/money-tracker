@@ -10,11 +10,95 @@
 ## Acquisition metrics
 Weekly dashboard should report provider-sourced visitors, country-entry clickthrough rate (entry events / landing pageviews), research start rate, member-to-bill trace rate, citation click rate, 7/30-day retention where consented measurement exists, collection freshness, evidence coverage, monthly infra cost, and incident count. Denominators and time zones must match.
 
-## Actual state at this change
-- Public member/bill exploration uses existing `data/us/members.json` and `data/us/bills/{bioguide}.json`, sourced from public legislative records.
-- There is no verified member transaction-to-bill-to-stock join. `data/us-disclosures.json` still states awaiting verified records; no stock signal is inferred.
-- Map animation depicts a conceptual relationship between an official's geographic office coordinates and US Capitol, not their travel or proof of corporate influence.
-- Proprietary linkage logic must remain server-side when built; static public files are not secret.
-- The new private Worker is **not** deployed and returns 501 even after valid authentication; it must not be advertised as a live private database.
-- A prior Cloudflare admin Worker exists at `cloudflare/admin-worker.js`. It must be audited separately; this change does not replace it.
-- A passing CI run, verified production URL, Cloudflare bindings and verified authorization tests are required before declaring stages fully shipped.
+## Verified release gates (2026-10-30 KST; not production certification)
+- **Public exposure:** GitHub reports the repository as `public`; GitHub Pages is public too. A separate authenticated Cloudflare Worker does not make static Pages HTML, JS or JSON private. Check the published artifact and direct anonymous asset URLs before any proprietary release. See `docs/public-ui-private-data-policy.md`.
+- **Pages publisher/source — release blocker until verified (2026-10-31):** The latest `main` SHA `e3f014348dd92c25ad20c3c1ab2910147d036c10` has a successful GitHub **`pages build and deployment`** run [#41188538074](https://github.com/91cleaner/money-tracker/actions/runs/41188538074). That result alone does **not** establish that `.github/workflows/deploy-pages.yml` published the filtered `.public-pages` artifact: the repository has two possible publication paths, and the Pages Source setting was **not** independently readable in this review. Before release, verify **Settings → Pages → Source = GitHub Actions** (see [PR #206](https://github.com/91cleaner/money-tracker/pull/206)), confirm only the sanitized artifact was deployed, and prove restricted server/collector paths are not served by the Pages URL (see [PR #213](https://github.com/91cleaner/money-tracker/pull/213)). Compare the published HTML/JS bytes with the uploaded artifact on the **merged main SHA** using the proposed [PR #403](https://github.com/91cleaner/money-tracker/pull/403) post-deploy check; its three green PR smoke workflows do not certify a live deployment. A public GitHub repository exposes committed content through GitHub regardless of Pages filtering; move genuinely proprietary data out of the public repository.
+- **Publication order and data quality:** [PR #403](https://github.com/91cleaner/money-tracker/pull/403) (entry/Pages checks) and [PR #412](https://github.com/91cleaner/money-tracker/pull/412) (public House PTR chronology/field guard) are still unmerged as of this review. Do not claim the invalid-date row is quarantined on production until the relevant guard is merged, the Pages artifact is rebuilt, the published JSON is inspected, and its official House Clerk PDF is independently reconciled. Record the exact published SHA, excluded-row count, source PDF, and test URLs. Do not merge these PRs without owner approval.
+- **Worker size — blocking:** On `main` `efa999c5b09082c59b2317a6eda3c965a15b0c1a`, the GitHub Contents API reports `cloudflare/admin-worker.js` at **1,051,223 UTF-8 bytes**, **2,647 bytes over** the `1,048,576`-byte guard in `scripts/check_world_intelligence.py`. The sync script already compacts bill actions and excludes the full trade ledger. Do not weaken the guard or remove official links. Data/infrastructure owner: [#289](https://github.com/91cleaner/money-tracker/issues/289).
+- **Worker acceptance:** Measure size before and after `python scripts/sync_command_worker.py`; run the sync twice to confirm stable output, then `python scripts/check_world_intelligence.py`. Preserve `COMMAND_DATA` lookup semantics, official House Clerk PDFs, `machine_parsed_requires_review` labels, and OAuth restrictions. Verify a real Wrangler deployment and both authorized and anonymous `/command` requests. A green GitHub Pages build **does not** verify Cloudflare.
+- **Disclosure integrity:** Public House PTRs are **delayed reports**, not verified real-time executions or proof of misconduct. A lawmaker → bill → company → stock join needs independently cited original official records and distinct transaction, filing, bill-event, price, and ingestion dates. When a link is missing, show **unverified / unavailable**; never infer a causal trade signal from proximity.
+- **Connection labels:** **Generative AI analysis: NOT CONNECTED. Live executed-trade feed: NOT CONNECTED.** Interactive maps and scripted public-data lookups must not be presented as connected AI or live trading intelligence.
+- **Functional release:** Run world-health, command, security and research checks on the **merged target commit**. Manually test question → choice → map trace, back/close, source links, keyboard behavior and no horizontal overflow at **375px and 390px**. Record merged SHA, CI URLs, Pages deployment, and separately verified Worker status. A PR-only green CI run is not production proof.
+- **Failure semantics:** Distinguish empty official results from a failed fetch, stale data, missing source and unverified joins. Never display a collection error as “zero records.”
+
+
+## P1: public trade summary is not yet source-verified (2026-10-31 code review)
+- **Separate the two outputs.** [PR #412](https://github.com/91cleaner/money-tracker/pull/412) validates `data/us/trades-recent.json` with `invalid_rows()` (calendar chronology and official House Clerk PDF URL shape). But its `validate_public_trades()` for the independently generated `data/us/trades_public.json` currently checks only allowed field names, primitive values and markup/control characters; it does **not** require `d <= fd <= updated`, a canonical date, or an official filing URL. `scripts/build_public_trades.py` copies `d`, `fd` and `doc` from the source ledger into that public summary. Thus the recent-PTR guard must not be described as covering **all** public trade rows.
+- **Reproduction scope:** A standalone Python reproduction of the current `validate_public_trades()` logic accepted `{d: '2026-10-29', fd: '2026-10-27', doc: 'https://example.invalid/not-official.pdf'}` in a permitted row. This demonstrates a **validation gap**, not evidence that a real source record has that malicious URL; the full repository CI and deployed artifact were not tested by this review.
+- **Data-owner release fix (not made by this GPT docs PR):** For each public summary row, require valid chronological dates and a source-type-aware official document URL, or mark the record **unverified** and suppress source-dependent claims. Do not apply the House-only URL regex to Senate or other disclosure types without an explicit source policy. Test reversed dates, malformed dates, spoofed hosts, missing links, mixed House/Senate records, and a valid source row. Verify actual `.public-pages/data/us/trades_public.json` and the published URL on the merged commit. Preserve the collector's source ledger and keep AI/live-execution labels **NOT CONNECTED**.
+- **Artifact default-deny follow-up:** `scripts/prepare-public-pages.py` recursively copies all allowed-extension files under `data/` except a short explicit denylist. A newly added JSON/CSV can therefore enter Pages without being reviewed. The release owner must enumerate every shipped `data/` path, approve a public allowlist, add a negative test with a newly introduced sensitive fixture, and verify that the actual deployed artifact matches the allowlisted manifest. This is not resolved by the three existing private-file exclusions or a green Pages build. The GitHub repository itself remains public.
+
+## Historical caveats
+- Public legislative records alone do not establish a verified member-transaction-to-bill-to-stock join.
+- Map lines depict evidence exploration, not a person's physical travel or proof of influence.
+- Proprietary linkage logic, if developed, must stay server-side; static Pages files are not secret.
+- This checklist does **not** change the Worker, authentication, data collector or deployment.
+
+## P1: incompatible public-trade publication contracts (2026-10-31 review)
+- **Verified cross-PR conflict (not fixed in production):** [PR #193](https://github.com/91cleaner/money-tracker/pull/193) removes `data/us/trades.json` from the Pages denylist and makes the *full ledger* a required published file because `member.html`/`company.html` fetch it. [PR #412](https://github.com/91cleaner/money-tracker/pull/412) does the opposite: retains `data/us/trades.json` in the denylist, requires a sanitized `data/us/trades_public.json`, and checks a separately filtered `trades-recent.json`. Their patches touch the same `scripts/prepare-public-pages.py` and `scripts/check-pages-artifact.py` policy lines. **Do not merge both as-is or silently resolve the conflict in favor of exposing the full ledger.** Approval to show reported trades does not automatically approve every source-ledger field.
+- **Third-PR compatibility:** [PR #228](https://github.com/91cleaner/money-tracker/pull/228) explicitly allows the raw `data/us/trades.json` in its artifact auditor and test. Its fixture builder also predates #412's mandatory public-summary validation and sanitized recent snapshot. A green isolated PR check therefore does not establish that the combined release pipeline is safe or even buildable.
+- **Owner/data lead decision required:** Choose one public contract: (A) sanitized `trades_public.json` (recommended until a field-by-field source review), with `member.html`/`company.html` migrated by the UI owner; or (B) a separately approved, validated full-ledger export with an explicit public field allowlist and official-source/date checks. Do not treat an unfiltered copy of `data/us/trades.json` as a reviewed export. Keep original collector data unchanged.
+- **Merge acceptance:** On the **combined branch/merged SHA**, run the real Pages builder, public PTR guard, artifact policy auditor and smoke tests; inspect the complete shipped `data/us/**` manifest; verify member/company requests return the intended public endpoint, valid disclosures render, invalid/unsourced rows are excluded or labelled unverified, and anonymous live Pages URLs cannot serve unapproved files. Record the chosen contract and PR/CI URLs before approval. Pages Source must not be legacy; a public GitHub repo remains independently readable even if Pages is filtered.
+- **Current status:** This is a code-review/release-contract correction only. No UI, builder, data, CI or deployed-site changes are made by this documentation PR. Generative AI analysis and real-time executed-trade feed remain **NOT CONNECTED**.
+
+
+## Measured public artifact inventory gate (2026-10-31 21:57 KST)
+
+- **Observed, not approved:** [security/research run #41198851690](https://github.com/91cleaner/money-tracker/actions/runs/41198851690) built **83,960 files** in `.public-pages` before failing on the obsolete `grep -q 'href="intel-lab.html"' .public-pages/index.html` assertion. The job completed **144 Python tests**, but its overall conclusion is **failure**. File count is not proof of a secret leak, and the failed grep is not evidence of a safe artifact. [PR #403](https://github.com/91cleaner/money-tracker/pull/403) proposes replacement entry-point checks; it is not merged.
+- **Fail-closed publication decision:** Treat the entire recursively copied `data/` tree as **unreviewed** until a generated, sorted manifest of all published relative paths (and sizes/hashes) is approved. The builder currently allows `.json`/`.csv` under `data/` by extension with only three named US-file exclusions and a history-directory exclusion; the artifact checker tests a short denylist, not every newly added dataset. A successful builder or Pages job must not be called a full confidentiality audit.
+- **Data owner action:** Inventory the 83,960-file output by top-level folder, extension, and total bytes; review every `data/**` path for public redistribution rights, identifiers, sensitive attributes and provenance; move any proprietary dataset outside this public GitHub repository **before** claiming privacy. Record the reviewed public manifest in a versioned release artifact, not in client JavaScript.
+- **CI owner acceptance:** Replace broad `data/` publication with an explicit reviewed allowlist or generated allowlist manifest. Add a negative fixture `data/should-never-publish.json` and require build failure or exclusion; test an unexpected nested JSON/CSV, symlink, private filename and newly introduced data directory. Compare actual uploaded artifact paths against the approved manifest on the **merged main SHA**, then verify anonymous production URLs. Keep the source ledger unchanged.
+- **Independent blockers:** The stale entry grep should be resolved via #403, the PTR field/date checks via #412, and the full-ledger-versus-summary contract conflict with #193/#228 via owner decision. None of those PRs, nor this documentation change, certifies that all 83,960 files are safe. **Generative AI: NOT CONNECTED. Real-time executed trades: NOT CONNECTED.**
+
+
+## Executable public-artifact manifest audit (2026-10-31 22:56 KST)
+
+This is an **operator-run, fail-closed release procedure**, not a CI implementation or proof that the previously observed 83,960 files are safe. It complements [issue #116](https://github.com/91cleaner/money-tracker/issues/116) and the data-owner allowlist work. Run against the **combined, owner-approved merge commit**, not an isolated PR. The GitHub repository remains **public** even if Pages filtering succeeds.
+
+1. On a trusted Linux runner, build and inspect the **actual** Pages artifact, never the repository root.
+2. Generate a deterministic path/size/SHA-256 manifest for **every** file. Store it in a protected review location, not in public Pages or committed `data/`.
+3. Require the data owner's independently approved manifest. **No baseline, extra file, changed hash, or symlink = block release.** Matching hashes do not replace provenance, privacy or redistribution-rights review.
+
+```bash
+set -euo pipefail
+python3 scripts/prepare-public-pages.py
+python3 scripts/check-pages-artifact.py
+python3 - <<'PY'
+from pathlib import Path
+import hashlib
+
+root = Path('.public-pages')
+if not root.is_dir():
+    raise SystemExit('BLOCK: missing public artifact')
+rows = []
+data_count = 0
+for path in root.rglob('*'):
+    if path.is_symlink():
+        raise SystemExit('BLOCK: symlink in public artifact')
+    if not path.is_file():
+        continue
+    rel = path.relative_to(root).as_posix()
+    data_count += rel.startswith('data/')
+    digest = hashlib.sha256()
+    with path.open('rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    rows.append((rel, path.stat().st_size, digest.hexdigest()))
+rows.sort()
+manifest = Path('/tmp/mt-pages-manifest.tsv')
+manifest.write_text(
+    ''.join(f'{name}\t{size}\t{sha}\n' for name, size, sha in rows),
+    encoding='utf-8',
+)
+print(f'files={len(rows)} data_files={data_count} manifest={manifest}')
+PY
+# Set APPROVED_MANIFEST to the protected, independently reviewed baseline.
+: "${APPROVED_MANIFEST:?BLOCK: approved manifest is required}"
+test -f "$APPROVED_MANIFEST" || { echo 'BLOCK: approved manifest missing'; exit 1; }
+cmp -s "$APPROVED_MANIFEST" /tmp/mt-pages-manifest.tsv ||
+  { echo 'BLOCK: Pages manifest changed; review before release'; exit 1; }
+```
+
+After the approved CI/deployment change, inspect **Settings → Pages → Source** and compare the merged SHA's uploaded artifact with the **live** site using PR #403's `check-pages-entry.py --site-url ... --expected-dir .public-pages` (only once that PR is merged). Check anonymous direct URLs for `data/us/trades.json`, `data/us/house-ptr-candidates.json`, `data/us/ptr-crosschecks.json`, and server files; unexpected HTTP 200 blocks release. A five-file smoke test is **not** a full JSON/CSV confidentiality audit. Do not silently resolve the #193/#412/#228 publication-contract conflict. Record manifest hash, reviewer approval, merged SHA, CI/deploy URLs and anonymous URL responses.
+
+**Generative AI analysis: NOT CONNECTED. Live executed-trade feed: NOT CONNECTED.**
