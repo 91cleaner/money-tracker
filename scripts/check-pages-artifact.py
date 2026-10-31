@@ -30,3 +30,18 @@ extra = sorted({k for t in pub.get("trades", []) for k in t} - allowed)
 if extra or set(pub) - {"updated", "source", "note", "trades"}:
     sys.exit("trades_public.json has non-public fields: " + ", ".join(extra or sorted(set(pub))))
 print("Pages artifact check passed.")
+
+# Public map's recent House PTR layer must never expose impossible filing dates
+# or links outside the official House Clerk PDF archive.
+from public_ptr_guard import invalid_rows
+recent_path = root / "data/us/trades-recent.json"
+if not recent_path.is_file():
+    sys.exit("Missing public House PTR recent snapshot")
+try:
+    recent = json.loads(recent_path.read_text(encoding="utf-8"))
+    rejected = invalid_rows(recent)
+except (OSError, ValueError) as exc:
+    sys.exit(f"Invalid public House PTR snapshot: {exc}")
+if rejected:
+    sys.exit(f"Unsafe public House PTR rows: {rejected[:5]}")
+print("Public House PTR chronology and official PDF source check passed.")
