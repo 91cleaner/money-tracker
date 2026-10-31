@@ -36,8 +36,11 @@ def _public_text(value, field, limit):
         raise ValueError(f"unsafe public text field: {field}")
 
 
-def invalid_rows(payload):
-    """Return (zero-based index, reason) for unsafe rows; malformed snapshots fail."""
+def invalid_rows(payload, *, today=None):
+    """Return (zero-based index, reason) for unsafe rows; malformed snapshots fail.
+
+    Reject future-dated snapshots against UTC today. `today` permits stable tests.
+    """
     if not isinstance(payload, dict):
         raise ValueError("House PTR snapshot must be a JSON object")
     unexpected = set(payload) - PUBLIC_TOP_FIELDS
@@ -49,6 +52,12 @@ def invalid_rows(payload):
         if payload["note"]:
             _public_text(payload["note"], "note", 2000)
     updated = _date(payload.get("updated"))
+    if today is None:
+        today = dt.datetime.now(dt.timezone.utc).date()
+    if not isinstance(today, dt.date) or isinstance(today, dt.datetime):
+        raise ValueError("today must be a calendar date")
+    if updated > today:
+        raise ValueError("House PTR snapshot updated date is in the future (UTC)")
     rows = payload.get("trades")
     if not isinstance(rows, list) or not rows:
         raise ValueError("House PTR snapshot must contain nonempty trades")
