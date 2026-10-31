@@ -18,9 +18,11 @@
   const fixedMap = (pg === 'city' && q.get('c')) ? ('city.html' + location.search + '#map') : addQ('./#map');
   const tabs = [
     ['map', fixedMap, '우리 동네 세금'],
+    ['cul', 'culture.html', '축제·영화'],
     ['nat', addQ('national.html'), '정부 지출'],
     ['nps', addQ('nps.html'), '국민연금 주식'],
     ['news', addQ('news.html'), '뉴스'],
+    ['exit', 'index.html', '나가기'],
   ];
   const act = (k) => {
     if (k === 'map') return pg === 'home' || pg === 'index' || pg === 'city';
