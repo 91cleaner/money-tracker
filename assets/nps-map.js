@@ -148,7 +148,7 @@
     const SH = window.mtSheet ? mtSheet(mapEl) : null; // 누르면 지도 위에 바로 뜨는 카드
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 11, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자',
-    }).addTo(map);
+    }).addTo(map); if (window.mtKoreaExtras) mtKoreaExtras(map);
 
     const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]);
     const US = L.latLngBounds(abroad.filter((a) => a.where === 'us').map((a) => [a.lat, a.lng]));

@@ -1,7 +1,7 @@
 (function(){
 var C={fest:'#f59e0b',fee:'#e11d48',film:'#2563eb'},HOME=[[33.0,125.0],[38.7,130.0]];
 var map=L.map('map',{zoomControl:true,preferCanvas:true});map.attributionControl.setPrefix(false);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'지도: &copy; OpenStreetMap 기여자'}).addTo(map);
+mtKoreaDark({maxZoom:18,maxNativeZoom:16}).addTo(map);mtKoreaExtras(map);
 function home(){map.fitBounds(HOME,innerWidth<600?{paddingBottomRight:[0,innerHeight*.4]}:{paddingBottomRight:[320,0]})}home();
 document.getElementById('reset').onclick=function(){map.closePopup();home()};
 function won(w){if(!w)return '0원';if(w>=1e8){var e=w/1e8;return (e>=10?Math.round(e).toLocaleString():e.toFixed(1).replace(/\.0$/,''))+'억원'}return Math.round(w/1e4).toLocaleString()+'만원'}

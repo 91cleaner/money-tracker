@@ -139,7 +139,7 @@
     else if (!coarse) L.control.zoom({ position: 'bottomleft' }).addTo(map);
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, © OpenStreetMap 기여자',
-    }).addTo(map);
+    }).addTo(map); if (window.mtKoreaExtras) mtKoreaExtras(map);
     const korea = L.latLngBounds([[33.05, 125.0], [38.7, 129.65]]);
     let fitted = false;
     const fit = () => {
