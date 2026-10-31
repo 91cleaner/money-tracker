@@ -172,8 +172,16 @@ def sanitize_public_trades_file(path):
     payload = json.loads(path.read_text(encoding="utf-8"))
     bad = invalid_public_trade_rows(payload)
     if bad:
-        if len(bad) == len(payload["trades"]):
+        total = len(payload["trades"])
+        if len(bad) == total:
             raise ValueError("All public summary trade rows invalid; refusing release")
+        # Quarantine isolated bad filings, but do not silently publish a nearly
+        # empty ledger when a collector/schema regression invalidates most rows.
+        # Keep at least 25% of the input records or fail before writing.
+        if len(bad) * 4 > total * 3:
+            raise ValueError(
+                f"Public summary integrity collapse: {len(bad)}/{total} rows invalid; refusing release"
+            )
         exclude = {i for i, _ in bad}
         payload["trades"] = [r for i, r in enumerate(payload["trades"])
                              if i not in exclude]
