@@ -3,7 +3,7 @@
  "source": "U.S. House Clerk financial disclosures · U.S. Senate eFD (STOCK Act periodic transaction reports)",
  "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
  "count": 177,
- "from": "2025-09-25",
+ "from": "2025-10-01",
  "to": "2026-10-23",
  "by_ticker": [
   {
@@ -31,12 +31,16 @@
    "n": 10
   },
   {
-   "tk": "ASML",
+   "tk": "INTC",
    "n": 9
   },
   {
-   "tk": "INTC",
-   "n": 9
+   "tk": "LRCX",
+   "n": 8
+  },
+  {
+   "tk": "ASML",
+   "n": 8
   },
   {
    "tk": "TXN",
@@ -44,10 +48,6 @@
   },
   {
    "tk": "QCOM",
-   "n": 7
-  },
-  {
-   "tk": "LRCX",
    "n": 7
   },
   {
