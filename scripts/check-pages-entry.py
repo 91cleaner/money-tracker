@@ -6,6 +6,7 @@ Usage:
   python3 scripts/check-pages-entry.py --site-url https://example.github.io/repo/
 """
 import argparse
+import hashlib
 from pathlib import Path
 import time
 from urllib.request import Request, urlopen
@@ -37,20 +38,41 @@ def check_local(directory):
         print('PASS artifact', file_path)
 
 
-def check_live(base, attempts=8, pause=10):
+def check_live(base, attempts=8, pause=10, expected_dir=None):
+    """Verify the published files, optionally against the exact uploaded artifact.
+
+    Marker-only checks can accept an older Pages deployment with identical
+    navigation. Comparing bytes and using a digest query avoids false success.
+    """
     base = base.rstrip('/') + '/'
-    for url_path, _, markers in CHECKS:
+    for url_path, file_path, markers in CHECKS:
+        expected = None
+        url = base + url_path
+        if expected_dir is not None:
+            artifact = Path(expected_dir) / file_path
+            if not artifact.is_file():
+                raise RuntimeError(f'Missing expected Pages artifact: {file_path}')
+            expected = artifact.read_bytes()
+            digest = hashlib.sha256(expected).hexdigest()
+            url += ('&' if '?' in url else '?') + 'mt_verify=' + digest[:16]
         last_error = None
         for attempt in range(attempts):
             try:
-                req = Request(base + url_path, headers={'Cache-Control': 'no-cache'})
+                req = Request(url, headers={'Cache-Control': 'no-cache'})
                 with urlopen(req, timeout=20) as response:
-                    body = response.read().decode('utf-8')
+                    published = response.read()
                     if response.status != 200:
                         raise RuntimeError(f'HTTP {response.status}')
+                body = published.decode('utf-8')
                 missing = missing_markers(body, markers)
                 if missing:
                     raise RuntimeError(f'missing {missing!r}')
+                if expected is not None and published != expected:
+                    actual_digest = hashlib.sha256(published).hexdigest()[:16]
+                    raise RuntimeError(
+                        f'published content does not match Pages artifact: '
+                        f'{file_path} (published sha256={actual_digest}, '
+                        f'expected sha256={digest[:16]})')
                 print('PASS published', base + url_path)
                 break
             except Exception as exc:
@@ -66,11 +88,15 @@ def main():
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument('--local-dir', type=Path)
     source.add_argument('--site-url')
+    parser.add_argument('--expected-dir', type=Path,
+                        help='Compare published bytes with uploaded Pages artifact')
     args = parser.parse_args()
     if args.local_dir is not None:
+        if args.expected_dir is not None:
+            parser.error('--expected-dir requires --site-url')
         check_local(args.local_dir)
     else:
-        check_live(args.site_url)
+        check_live(args.site_url, expected_dir=args.expected_dir)
 
 
 if __name__ == '__main__':

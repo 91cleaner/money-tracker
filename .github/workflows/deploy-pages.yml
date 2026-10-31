@@ -58,4 +58,4 @@ jobs:
       - name: Verify published entry and US command
         env:
           SITE_URL: ${{ steps.deployment.outputs.page_url }}
-        run: python3 scripts/check-pages-entry.py --site-url "$SITE_URL"
+        run: python3 scripts/check-pages-entry.py --site-url "$SITE_URL" --expected-dir .public-pages
