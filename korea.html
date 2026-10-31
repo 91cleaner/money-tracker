@@ -45,22 +45,18 @@ footer{text-align:center;color:#668675;font-size:11px;line-height:1.8}
 @media(prefers-reduced-motion:reduce){.country{transition:none}}
 .se-entry{display:flex;flex-direction:column;gap:7px;padding:13px 14px;border-radius:15px;background:#0d2216;border:1px solid #2f7a4c}.se-entry label{color:#ddffe7;font-weight:800;font-size:15px}.se-entry div{display:flex;gap:6px}.se-entry input{flex:1;min-width:0;font:600 16px Pretendard,system-ui,sans-serif;color:#eafff2;background:#06150c;border:1px solid #3d8a5c;border-radius:11px;padding:12px}.se-entry input:focus{outline:none;border-color:#5dff9e;box-shadow:0 0 0 3px #5dff9e26}.se-entry button{flex:none;min-width:60px;border:0;border-radius:11px;background:#5dff9e;color:#02110a;font:800 15px Pretendard,system-ui,sans-serif;cursor:pointer}.se-entry small{color:#8fc9a5;font-size:12px;line-height:1.5}
 .district-entry{display:flex;flex-direction:column;gap:5px;text-align:center;padding:14px;border-radius:15px;background:#193d27;border:1px solid #6acf8b;color:#ddffe7;text-decoration:none;font-size:14px}.district-entry strong{font-size:16px}.district-entry>span:last-child{color:#a7d9b7;font-size:12px}.district-entry:hover,.district-entry:focus-visible{outline:2px solid #91f6b1;outline-offset:2px}
+main{max-width:100vw;gap:18px}.choices{gap:10px}.country{min-height:76px;padding:14px 16px;grid-template-columns:28px 1fr 20px;min-width:0}.country>span{min-width:0}.country strong{font-size:19px}.country small{font-size:14px}.flag,.country.local .flag{width:28px;height:28px;font-size:16px;border-radius:8px}footer{font-size:13px}
+.k-exit{align-self:flex-start;order:-1;display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid #2f7a4c;border-radius:10px;color:#ddffe7;text-decoration:none;font-weight:800;font-size:14px}
 </style><link rel="stylesheet" href="assets/tap.css?v=tap-1">
 </head><body>
 <main>
  <div class="brand"><span class="logo">MT</span><span>세금추적단</span></div>
- <div class="intro"><div class="eyebrow">지역 고르기</div><h1>어느 곳을<br>살펴보시겠습니까?</h1><p>국가를 고르고 공개 기록을 살펴보세요.</p></div>
- <form class="se-entry" action="search.html" method="get" role="search"><label for="se-entry-q">무엇이든 검색</label><div><input id="se-entry-q" name="q" type="search" enterkeyhint="search" placeholder="업체 · 시 · 계약 · 의원 · 법안 · 종목" autocomplete="off" required><button type="submit">검색</button></div><small>계약 9만여 건 · 업체 4만여 곳 · 의원 299명 · 법안 · 국민연금 종목 — 돈의 흐름까지</small></form>
- <a href="my-region.html" class="district-entry"><span>● <strong>내 지역부터 찾아보기</strong></span><span>우리 동네 의원 · 예산 · 계약 알아보기 ›</span></a>
+ <div class="intro"><h1>무엇을<br>살펴볼까요?</h1><p>공개 자료로 세금이 어디에 쓰이는지 봐요.</p></div>
+ <a class="k-exit" href="index.html">나가기</a>
  <nav class="choices" aria-label="살펴보기 선택">
-  <a class="country kr" href="national.html"><span class="flag" aria-hidden="true">●</span><span><strong>대한민국</strong><small>국회의원 · 정당 · 국외활동<br>한국 국회 살펴보기</small></span><span class="arrow" aria-hidden="true">›</span></a>
-  <a class="country us" href="world-intelligence/"><span class="flag" aria-hidden="true">●</span><span><strong>미국 관제실</strong><small>세계 지도 · 공급망 · 로비 · 의원 거래<br>데이터상 연결 따라가기</small></span><span class="arrow" aria-hidden="true">›</span></a>
+  <a class="country kr" href="national.html"><span class="flag" aria-hidden="true">●</span><span><strong>의원</strong><small>국회의원 · 정당 · 해외 출장</small></span><span class="arrow" aria-hidden="true">›</span></a>
+  <a class="country local" href="contracts.html"><span class="flag" aria-hidden="true">●</span><span><strong>시 세금</strong><small>우리 시 계약 · 예산 · 축제</small></span><span class="arrow" aria-hidden="true">›</span></a>
  </nav>
- <a class="secondary" href="cards.html">오늘의 브리핑 · 상황실 카드</a>
- <a class="secondary" href="intel-lab.html">의원·법안 실제 데이터 추적 실험실 입장</a>
- <a class="country local" href="contracts.html"><span class="flag" aria-hidden="true">●</span><span><strong>지역 계약·예산</strong><small>전국 지자체 계약 · 예산 · 입찰<br>우리 동네 예산 살펴보기</small></span><span class="arrow" aria-hidden="true">›</span></a>
- <a class="country local" href="culture.html"><span class="flag" aria-hidden="true">●</span><span><strong>축제·영화 지원</strong><small>지역 축제 예산 · 영화 지원금<br>지도와 순위로 보기</small></span><span class="arrow" aria-hidden="true">›</span></a>
- <p style="margin:0;color:#8fa89a;font-size:12px">공개 자료만 써요. 없는 거래는 만들지 않아요.</p>
- <footer>공개 자료 기반 · 기록은 잘못의 증거가 아니에요.<br>© 세금추적단</footer>
+ <footer>공개 자료만 써요. 기록은 잘못의 증거가 아니에요.</footer>
 </main>
 <script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><script src="assets/mt-engagement.js"></script><script src="assets/fr-bar.js?v=20261029" defer></script><script src="assets/mt-visits.js" defer></script></body></html>
