@@ -1,3 +1,4 @@
+(function(){if(document.getElementById('mt-darksat-css'))return;var s=document.createElement('style');s.id='mt-darksat-css';s.textContent='.mt-darksat{filter:brightness(.42) saturate(.45) contrast(1.05)}';document.head.appendChild(s)})();
 // 돈의 흐름 지도 — 위성 지도(Leaflet + Esri 위성 타일) 위에 시 원과 돈의 흐름 선을 겹친다.
 // 타일을 못 받으면 가벼운 SVG 지도로 바뀐다. 검색어·주소는 어디에도 보내지 않는다(타일 요청은 좌표만).
 const NS = 'http://www.w3.org/2000/svg';
@@ -63,8 +64,8 @@ function satView(box, geo, cities, onPick) {
   const korea = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]);
   map.fitBounds(korea, {animate: false});
   let ok = false, errs = 0, failed = false;
-  const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자', crossOrigin: false});
+  const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {className:'mt-darksat',
+    maxZoom: 12, attribution: '지도: 지도: Esri, Maxar', crossOrigin: false});
   box.classList.add('loading');
   tiles.on('tileload', () => { ok = true; box.classList.remove('loading'); });
   tiles.on('tileerror', () => { if (++errs >= 4 && !ok && !failed) { failed = true; view.onfail && view.onfail(); } });

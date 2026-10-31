@@ -1,3 +1,4 @@
+(function(){if(document.getElementById('mt-darksat-css'))return;var s=document.createElement('style');s.id='mt-darksat-css';s.textContent='.mt-darksat{filter:brightness(.42) saturate(.45) contrast(1.05)}';document.head.appendChild(s)})();
 (async()=>{
 const D='data/national/',$=id=>document.getElementById(id);
 const G={"일반수당": "매달 받는 기본 월급이에요.", "입법활동비": "법을 만드는 일에 쓰라고 주는 돈이에요.", "특별활동비": "회의나 국정감사 같은 활동이 있을 때 더 주는 돈이에요.", "관리업무수당": "관리하는 일을 맡은 사람에게 월급에 더 얹어 주는 돈이에요.", "정근수당": "오래 일한 사람에게 1년에 두 번 주는 돈이에요.", "정액급식비": "밥값으로 매달 정해진 만큼 주는 돈이에요.", "명절휴가비": "설과 추석에 주는 돈이에요."};
@@ -62,7 +63,7 @@ const showC=c=>{const ids=[...(cnt[c]||[])];const box=$('cp');
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  requestAnimationFrame(()=>box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}));};
 try{const m=L.map('tmap',{zoomControl:false,worldCopyJump:false,zoomSnap:.25,minZoom:0,maxZoom:6});m.setMaxBounds(L.latLngBounds([[-60,-25],[78,335]]));m.options.maxBoundsViscosity=1;{const tb=document.getElementById('tmap');const sm=()=>m.setMinZoom(Math.ceil(Math.log2(((tb&&tb.clientWidth)||360)/256)*4)/4);sm();addEventListener('resize',sm);}
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{attribution:'© Esri',maxZoom:6}).addTo(m);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {className:'mt-darksat',attribution:'지도: Esri, Maxar',maxZoom:6}).addTo(m);
 const se=[37.5319,126.914];const cmax=Math.max(1,...Object.values(cnt).map(x=>x.size));
 const arc=(a,b)=>{const P=[],mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=b[1]-a[1],dy=b[0]-a[0],k=.18;const c=[mx+dx*k,my-dy*k];for(let i=0;i<=24;i++){const t=i/24,u=1-t;P.push([u*u*a[0]+2*u*t*c[0]+t*t*b[0],u*u*a[1]+2*u*t*c[1]+t*t*b[1]]);}return P;};
 const pts=[],labs=[],dots=[];

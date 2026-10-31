@@ -1,3 +1,4 @@
+(function(){if(document.getElementById('mt-darksat-css'))return;var s=document.createElement('style');s.id='mt-darksat-css';s.textContent='.mt-darksat{filter:brightness(.42) saturate(.45) contrast(1.05)}';document.head.appendChild(s)})();
 /* 탭 맨 위 큰 한국 지도. 시 위치는 flows.json, 금액은 그 페이지 자료만. */
 (() => {
   const root = document.getElementById('topmap');
@@ -137,8 +138,8 @@
     map.attributionControl.setPrefix(false);
     if (window.mtZoom) mtZoom(map, box); // 확대·축소는 우리 동네 세금 지도와 똑같이
     else if (!coarse) L.control.zoom({ position: 'bottomleft' }).addTo(map);
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, © OpenStreetMap 기여자',
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {className:'mt-darksat',
+      maxZoom: 12, attribution: '지도: 지도: Esri, Maxar',
     }).addTo(map); if (window.mtKoreaExtras) mtKoreaExtras(map);
     const korea = L.latLngBounds([[33.05, 125.0], [38.7, 129.65]]);
     let fitted = false;
