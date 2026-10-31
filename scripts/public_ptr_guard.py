@@ -129,6 +129,66 @@ def validate_public_trades(payload):
                 raise ValueError(f"non-finite public trade row {i} field: {key}")
 
 
+def invalid_public_trade_rows(payload, *, today=None):
+    """Find impossible chronology/unsafe official links in the full public summary.
+
+    The schema check is separate so the public *copy* can quarantine bad rows
+    without changing collector-owned source records.
+    """
+    validate_public_trades(payload)
+    if today is None:
+        today = dt.datetime.now(dt.timezone.utc).date()
+    if not isinstance(today, dt.date) or isinstance(today, dt.datetime):
+        raise ValueError("today must be a calendar date")
+    stamp = payload.get("updated")
+    if not isinstance(stamp, str) or not re.fullmatch(
+            r"\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2} UTC)?", stamp):
+        raise ValueError("public summary updated must be UTC date or timestamp")
+    updated = _date(stamp[:10])
+    if updated > today:
+        raise ValueError("public summary updated date is in the future (UTC)")
+    bad = []
+    for i, row in enumerate(payload["trades"]):
+        try:
+            traded = _date(row.get("d"))
+            disclosed = _date(row.get("fd"))
+            filed = _date(row.get("filed"))
+            if not traded <= disclosed <= filed <= updated:
+                raise ValueError("requires trade <= disclosure <= filed <= snapshot")
+            document = row.get("doc")
+            match = OFFICIAL_PDF.fullmatch(document) if isinstance(document, str) else None
+            if not match:
+                raise ValueError("missing or nonofficial House Clerk PDF URL")
+            if int(match.group(1)) != filed.year:
+                raise ValueError("House Clerk PDF archive year does not match filing year")
+        except (TypeError, ValueError) as exc:
+            bad.append((i, str(exc)))
+    return bad
+
+
+def sanitize_public_trades_file(path):
+    """Remove unsafe public summary rows in generated Pages copy only."""
+    path = Path(path)
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    bad = invalid_public_trade_rows(payload)
+    if bad:
+        if len(bad) == len(payload["trades"]):
+            raise ValueError("All public summary trade rows invalid; refusing release")
+        exclude = {i for i, _ in bad}
+        payload["trades"] = [r for i, r in enumerate(payload["trades"])
+                             if i not in exclude]
+        payload["note"] = (str(payload.get("note") or "") +
+                           f" Public chronology/official-source guard excluded {len(bad)} rows.").strip()
+        validate_public_trades(payload)
+        if invalid_public_trade_rows(payload):
+            raise ValueError("Public trade summary still contains invalid rows")
+        path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
+                        encoding="utf-8")
+        for i, reason in bad:
+            print(f"WARNING: public summary row {i} excluded: {reason}", file=sys.stderr)
+    return len(payload["trades"]), len(bad)
+
+
 def sanitize_file(path):
     """Quarantine invalid rows in the PUBLIC COPY; refuse to publish all-invalid data."""
     path = Path(path)
