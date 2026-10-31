@@ -29,8 +29,6 @@ allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "do
 extra = sorted({k for t in pub.get("trades", []) for k in t} - allowed)
 if extra or set(pub) - {"updated", "source", "note", "trades"}:
     sys.exit("trades_public.json has non-public fields: " + ", ".join(extra or sorted(set(pub))))
-print("Pages artifact check passed.")
-
 # Public map's recent House PTR layer must never expose impossible filing dates
 # or links outside the official House Clerk PDF archive.
 from public_ptr_guard import invalid_rows
@@ -44,4 +42,4 @@ except (OSError, ValueError) as exc:
     sys.exit(f"Invalid public House PTR snapshot: {exc}")
 if rejected:
     sys.exit(f"Unsafe public House PTR rows: {rejected[:5]}")
-print("Public House PTR chronology and official PDF source check passed.")
+print("Pages artifact check passed (privacy, PTR chronology and official PDF URL shape).")
