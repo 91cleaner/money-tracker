@@ -54,7 +54,7 @@ def sanitize_file(path):
         exclude = {i for i, _ in bad}
         payload["trades"] = [r for i, r in enumerate(payload["trades"]) if i not in exclude]
         payload["note"] = (str(payload.get("note") or "") +
-                           f" 공개 전 날짜·공식 원문 검증 불일치 {len(bad)}건 제외.").strip()
+                           f" 공개 전 날짜·공식 PDF URL 형식 검증 불일치 {len(bad)}건 제외.").strip()
         path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         for i, reason in bad:
             print(f"WARNING: public House PTR row {i} excluded: {reason}", file=sys.stderr)
