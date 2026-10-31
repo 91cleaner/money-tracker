@@ -34,4 +34,4 @@ jobs:
           test ! -e .public-pages/collector/collect.py
           # Root entry may redirect to the US map or offer country selection.
           # The research lab is checked as an artifact above, not a mandatory root link.
-          grep -Eq 'href="world-intelligence/(\?lang=en)?"' .public-pages/index.html
+          python3 scripts/check-pages-entry.py --local-dir .public-pages
