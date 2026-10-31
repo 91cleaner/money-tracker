@@ -1,6 +1,6 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>축제 예산·영화 지원금 지도 | 세금추적단</title>
+<title>여러분이 지역 축제 및 연예인에게 주는 세금 돈 | 세금추적단</title>
 <meta name="description" content="지역 축제 계획예산, 보도된 축제 출연료, 2026 영화진흥위원회 지원결정액을 지도로 봐요. 기사 속 출연료와 단위 확인이 필요한 자료는 미확인이에요.">
 <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -8,19 +8,21 @@
 <link rel="stylesheet" href="assets/culture.css?v=202610310900">
 <link rel="stylesheet" href="assets/tap.css?v=tap-1">
 </head><body>
-<header class="cm-top"><a href="contracts.html" class="cm-home">‹ 시 세금</a><h1>축제 예산 · 영화 지원금 지도</h1><a href="index.html" class="cm-exit">나가기</a></header>
+<header class="cm-top"><a href="contracts.html" class="cm-home">‹ 시 세금</a><h1>여러분이 지역 축제 및 연예인에게 주는 세금 돈</h1><a href="index.html" class="cm-exit">나가기</a></header>
 <div id="map" aria-label="축제와 영화 지원금 지도"></div>
 <aside class="cm-panel" id="panel">
  <div class="cm-sum" id="sum"></div>
- <button id="openStats" type="button">합계표 · 순위 보기</button>
- <p class="cm-warn">숫자는 팩트체크를 마쳤어요. 단, 기사 속 출연료와 단위 확인이 필요한 자료는 <b>미확인</b>이에요.</p>
- <label class="cm-ly"><input type="checkbox" data-l="fest" checked><i style="background:#f59e0b"></i>축제 계획예산 <span id="n-fest"></span></label>
+ <label class="cm-ly"><input type="checkbox" data-l="fest" checked><i style="background:#f59e0b"></i>축제에 쓴 돈 <span id="n-fest"></span></label>
  <select id="year" aria-label="연도"><option value="2026">2026년</option><option value="2024">2024년</option></select>
- <label class="cm-ly"><input type="checkbox" data-l="flow" checked><i style="background:#f97316;border-radius:2px;height:5px"></i>국비 흐름 선 <span id="n-flow"></span></label>
- <label class="cm-ly"><input type="checkbox" data-l="fee"><i style="background:#e11d48"></i>출연료 사례 '보도됨' <span id="n-fee"></span></label>
- <label class="cm-ly"><input type="checkbox" data-l="film" checked><i style="background:#2563eb"></i>영진위 지원결정액 <span id="n-film"></span></label>
+ <label class="cm-ly"><input type="checkbox" data-l="flow" checked><i style="background:#f97316;border-radius:2px;height:5px"></i>나라 돈 가는 길 <span id="n-flow"></span></label>
+ <label class="cm-ly"><input type="checkbox" data-l="fee"><i style="background:#e11d48"></i>기사에 나온 출연료 <b class="u">미확인</b> <span id="n-fee"></span></label>
+ <label class="cm-ly"><input type="checkbox" data-l="film" checked><i style="background:#2563eb"></i>영화 지원금 <span id="n-film"></span></label>
  <button id="reset" type="button">처음으로</button>
- <details class="cm-help"><summary>용어와 주의할 점</summary><ul>
+ <details class="cm-more" id="more"><summary>자세히 보기</summary>
+ <div id="sumMore"></div>
+ <p class="cm-warn">숫자는 팩트체크를 마쳤어요. 단, 기사 속 출연료와 단위 확인이 필요한 자료는 <b>미확인</b>이에요.</p>
+ <button id="openStats" type="button">합계표 · 순위 보기</button>
+ <div class="cm-help"><b>용어와 주의할 점</b><ul>
   <li><b>계획예산</b>: 축제 전에 쓰겠다고 세운 돈이에요. 실제로 쓴 돈(결산)과 다를 수 있어요.</li>
   <li><b>영진위</b>: 영화진흥위원회. 한국 영화를 돕는 공공기관이에요.</li>
   <li><b>지원결정액</b>: 주기로 정한 돈이에요. 실제로 준 돈과 다를 수 있어요.</li>
@@ -30,10 +32,11 @@
   <li><b>추경</b>: 추가경정예산. 한 해 중간에 예산을 더 짜서 늘린 거예요.</li><li><b>중예산 영화</b>: 제작비가 너무 크지도 작지도 않은 중간 규모 영화예요.</li><li><b>(가제)</b>: 아직 확정되지 않은 임시 제목이에요.</li><li><b>백만원</b>: 원자료가 쓰는 단위예요. 1백만원 = 100만원이에요.</li>
   <li>개인은 '개인'으로만 적어요.</li>
   <li><b>단위의심</b>: 숫자 단위가 잘못 들어간 것 같은 자료예요. 2024년 10건(예: 청룡문화제 30,000백만원, 원산도·효자도 붕장어 축제 20,000백만원)은 지도와 합계에서 뺐어요. 2026년 안성맞춤 남사당 바우덕이축제(21,826백만원)는 회색 점 '단위 확인 필요'로 보여 주고 합계에서는 뺐어요.</li><li>영화 최대 지원액: 30억원 (2026 추경 중예산 한국영화 제작지원 2건)</li><li>예산이 0이거나 비어 있는 축제는 점을 찍지 않았어요. 장성군·장흥군 축제는 군 중심점을 따로 찾아 넣었어요.</li><li>영진위 지원 98건 중 회사 위치를 못 찾은 28건은 지도에 없어요.</li>
- </ul></details>
+ </ul></div>
  <p class="cm-src">출처: 문화체육관광부 지역축제 개최계획, 영화진흥위원회 심사결과 공지, 남도일보·KBS강릉 보도</p>
+ </details>
 </aside>
 <section id="stats" class="cm-stats" hidden><div class="cm-stats-in"><button id="closeStats" type="button">지도로 돌아가기 ✕</button><div id="statsBody"></div></div></section>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
-<script src="assets/kr-basemap.js?v=202610310930"></script><script src="assets/culture.js?v=202610310930"></script>
+<script src="assets/kr-basemap.js?v=202610311440"></script><script src="assets/culture.js?v=202610311440"></script>
 <script src="assets/mt-visits.js" defer></script></body></html>
