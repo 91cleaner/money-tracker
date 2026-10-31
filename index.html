@@ -18,21 +18,21 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;background:rad
 body:after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0px,transparent 4px,#9fffba06 5px);opacity:.3}
 main{position:relative;z-index:1;width:min(100%,560px);min-height:100svh;padding:calc(32px + env(safe-area-inset-top,0px)) 20px calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;justify-content:center;gap:26px}
 .brand{display:flex;align-items:center;justify-content:center;gap:10px;color:#ecfff3;font-size:14px;font-weight:900;letter-spacing:.15em}
-.logo{width:40px;height:40px;display:grid;place-items:center;background:#123c25;border:1px solid #4dbe7c;border-radius:12px;color:#a6ffca;box-shadow:0 0 28px #2bfa7a24;letter-spacing:0;font-size:13px}
+.logo{width:44px;height:44px;display:block;filter:drop-shadow(0 0 14px #2bfa7a44)}
 .intro{text-align:center}
 .eyebrow{display:flex;align-items:center;justify-content:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:.2em;color:#7ee9a6}
 .eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:#5dff9e;box-shadow:0 0 10px #5dff9e}
 h1{font-size:clamp(28px,7vw,38px);letter-spacing:-.055em;margin:15px 0 10px;line-height:1.22}
 .intro p{color:#a1baa9;font-size:14px;line-height:1.7;margin:0}
 .choices{display:grid;gap:14px}
-.country{display:grid;grid-template-columns:66px 1fr 26px;align-items:center;gap:12px;min-height:124px;padding:18px;border-radius:20px;border:1px solid #28523a;text-decoration:none;color:#f0fff4;background:linear-gradient(115deg,#123721,#0a1b12);box-shadow:0 12px 32px #0007;transition:transform .15s,border-color .15s,background .15s}
+.country{display:grid;grid-template-columns:1fr 26px;position:relative;overflow:hidden;isolation:isolate;align-items:center;gap:12px;min-height:124px;padding:18px;border-radius:20px;border:1px solid #28523a;text-decoration:none;color:#f0fff4;background:linear-gradient(115deg,#123721,#0a1b12);box-shadow:0 12px 32px #0007;transition:transform .15s,border-color .15s,background .15s}
 .country:active{transform:scale(.985)}
 .country:focus-visible,.country:hover{outline:2px solid #7af4a2;outline-offset:2px;border-color:#79efaa}
 .country.local{background:linear-gradient(115deg,#302515,#171b12);border-color:#65522e}
 .country.local small{color:#d6c9ac}
 .country.local .arrow{color:#f2d38c}
 .country.local .flag{font-size:31px}
-.country.us{background:linear-gradient(115deg,#122b3d,#091c21);border-color:#315369}
+.country.kr,.country.us{background-size:cover;background-position:center;border-color:#ffffff55}.country.kr{background-image:linear-gradient(90deg,#000000e0 0%,#000000b8 55%,#00000090),url(assets/flags/Flag_of_South_Korea.svg);background-color:#fff}.country.us{background-image:linear-gradient(90deg,#000000e0 0%,#000000b8 55%,#00000090),url(assets/flags/Flag_of_the_United_States.svg)}.country strong,.country small{text-shadow:0 1px 3px #000}.country small,.country.us small{color:#e6efe9}.arrow,.country.us .arrow{color:#fff}
 .flag{width:60px;height:60px;display:grid;place-items:center;border-radius:16px;background:#ffffff12;font-size:36px}
 .country strong{display:block;font-size:23px;letter-spacing:-.04em;margin-bottom:5px}
 .country small{display:block;font-size:12px;color:#b1cdb9;line-height:1.5}
@@ -48,12 +48,12 @@ footer{text-align:center;color:#668675;font-size:11px;line-height:1.8}
 </style><link rel="stylesheet" href="assets/tap.css?v=tap-1">
 </head><body>
 <main>
- <div class="brand"><span class="logo">MT</span><span>세금추적단</span></div>
+ <div class="brand"><img class="logo" src="assets/logo.svg" alt="" width="44" height="44"><span>세금추적단</span></div>
  <div class="intro"><h1>어느 나라를<br>살펴볼까요?</h1><p>공개된 기록만 보여 줘요.</p></div>
  <nav class="choices" aria-label="나라 고르기">
-  <a class="country kr" href="korea.html"><span class="flag" aria-hidden="true">●</span><span><strong>대한민국</strong><small>세금추적단 · 의원과 시 세금</small></span><span class="arrow" aria-hidden="true">›</span></a>
-  <a class="country us" href="world-intelligence/"><span class="flag" aria-hidden="true">●</span><span><strong>미국</strong><small>미국주식추적단 · 의원 주식 거래</small></span><span class="arrow" aria-hidden="true">›</span></a>
+  <a class="country kr" href="korea.html"><span><strong>대한민국</strong><small>세금추적단 · 의원과 시 세금</small></span><span class="arrow" aria-hidden="true">›</span></a>
+  <a class="country us" href="world-intelligence/"><span><strong>미국</strong><small>미국주식추적단 · 의원 주식 거래</small></span><span class="arrow" aria-hidden="true">›</span></a>
  </nav>
  <footer>기록은 잘못의 증거가 아니에요.</footer>
 </main>
-<script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><script src="assets/mt-engagement.js"></script><script src="assets/fr-bar.js?v=20261029" defer></script><script src="assets/mt-visits.js" defer></script></body></html>
+<script data-goatcounter="https://moneytracker.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><script src="assets/mt-engagement.js"></script><script src="assets/mt-visits.js" defer></script></body></html>
