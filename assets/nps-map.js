@@ -1,3 +1,4 @@
+(function(){if(document.getElementById('mt-darksat-css'))return;var s=document.createElement('style');s.id='mt-darksat-css';s.textContent='.mt-darksat{filter:brightness(.42) saturate(.45) contrast(1.05)}';document.head.appendChild(s)})();
 /* 국민연금 주식 지도 하나: 국민연금공단(전주)에서 회사 본사가 있는 곳으로 선을 긋는다.
    국내는 시도(확대하면 시·군·구), 해외는 미국 주와 나라. 금액은 모두 원으로 바꿔 같은 굵기 기준을 쓴다.
    선은 '그 지역에 본사를 둔 회사의 주식을 산 금액'이다. 돈이 그 지역에 실제로 간 것은 아니다. 설명 카드는 지도 밖에만 둔다. */
@@ -146,8 +147,8 @@
     else if (!coarse) L.control.zoom({ position: 'bottomleft' }).addTo(map);
     const FX = window.mtFX ? mtFX(map, mapEl) : null; // 돈이 흐르는 방향으로 움직이는 빛
     const SH = window.mtSheet ? mtSheet(mapEl) : null; // 누르면 지도 위에 바로 뜨는 카드
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 11, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자',
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {className:'mt-darksat',
+      maxZoom: 11, attribution: '지도: 지도: Esri, Maxar',
     }).addTo(map); if (window.mtKoreaExtras) mtKoreaExtras(map);
 
     const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]);

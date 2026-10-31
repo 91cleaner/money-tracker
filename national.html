@@ -100,9 +100,9 @@
 </main>
 <script src="assets/vendor/leaflet/leaflet.js"></script><script src="assets/leaflet-ko.js"></script>
 <script src="assets/mapkit.js?v=202610251700"></script>
-<script src="assets/topmap.js?v=202610250900"></script>
-<script src="assets/national.js?v=202610251225"></script>
-<script src="assets/polgame.js?v=202610281630"></script>
+<script src="assets/topmap.js?v=202610312330"></script>
+<script src="assets/national.js?v=202610312330"></script>
+<script src="assets/polgame.js?v=202610312330"></script>
 <script src="assets/fun.js?v=202610302300"></script>
 
 <script src="assets/visits.js?v=202610251055" defer></script>
@@ -143,23 +143,31 @@ body[data-page="national"] .nw>h1,body[data-page="national"] .nw>.lede,body[data
 #mtCommandPanel{position:absolute;z-index:785;right:12px;top:75px;width:min(355px,calc(100% - 24px));max-height:50%;overflow:auto;background:#04120cf2;border:1px solid #438c5b;border-radius:10px;padding:14px;color:#d3ffe0;font:13px/1.65 system-ui;box-shadow:0 10px 28px #0009}
 #mtCommandPanel[hidden]{display:none!important}#mtCommandPanel h3{color:#88ffc0;margin:0 0 8px;font-size:15px}#mtCommandPanel button{background:#15482e;border:1px solid #499363;border-radius:6px;color:#dcffe5;padding:7px 10px;cursor:pointer;margin:4px 4px 0 0}
 #mtCommandPanel a{color:#90eab2}
+#mtAll{position:absolute;z-index:790;left:12px;top:128px;min-height:44px;padding:0 16px;border-radius:22px;border:2px solid #7af4a2;background:#0b2a1a;color:#eafff1;font:800 15px Pretendard,system-ui,sans-serif;box-shadow:0 4px 16px #000a;cursor:pointer}@media(max-width:600px){#mtAll{left:auto;right:8px;top:118px}}
 @media(max-width:600px){body[data-page="national"] #pg{height:calc(100dvh - var(--mt-room-header,65px))!important;min-height:350px!important}#mtCommand{left:8px;right:8px;width:auto;bottom:calc(77px + env(safe-area-inset-bottom,0px))}#mtCommandPanel{top:82px;right:8px;max-height:37%;font-size:12px}}
 </style>
 <script id="mt-single-command-controller">
 (function(){function init(){
 const root=document.getElementById('pg');if(!root)return;
-const form=document.createElement('form');form.id='mtCommand';form.innerHTML='<input aria-label="작전 명령" placeholder="미국, 대만 반도체, 금리, 관세, 세계사 추적" required><button>추적 ↵</button>';root.append(form);
-const panel=document.createElement('section');panel.id='mtCommandPanel';panel.hidden=true;root.append(panel);
-const missions=[
-{re:/대만|반도체|tsmc|엔비디아/i,title:'대만 반도체 공급망',stops:[['대만',23.7,121,'대만의 첨단 반도체 생산 집중도를 확인합니다.'],['미국',39,-98,'미국 기술주와 공급망 노출을 검토합니다.']],symbols:'NVDA · AMD · TSM · SOXX',url:'https://www.congress.gov/bill/117th-congress/house-bill/4346'},
-{re:/금리|연준|은행|물가/i,title:'미국 통화정책',stops:[['미국',39,-98,'금리·채권·성장주에 미치는 경로를 검토합니다.']],symbols:'XLF · QQQ · TLT',url:'https://www.federalreserve.gov/monetarypolicy.htm'},
-{re:/관세|중국|무역/i,title:'미중 무역과 관세',stops:[['중국',35,104,'관세 대상 공급망과 수출 구조를 살펴봅니다.'],['미국',39,-98,'미국 기업의 수입비용과 소비자 가격을 검토합니다.']],symbols:'XLI · XLY · SPY',url:'https://ustr.gov/'},
-{re:/에너지|유가|중동|석유/i,title:'에너지 안보',stops:[['사우디',24,45,'중동 공급과 수송 위험을 검토합니다.'],['미국',39,-98,'미국 에너지·항공업종 영향을 비교합니다.']],symbols:'XLE · XOM · CVX · JETS',url:'https://www.eia.gov/'},
-{re:/한국|국회|의원/i,title:'한국 국회 작전',stops:[['한국',36.4,127.8,'원래 관제실의 의원·법안·기록을 같은 지도에서 확인하세요.']],symbols:'국회 공개기록',url:'https://open.assembly.go.kr/'},
-{re:/세계사|역사|전쟁|방산|법안/i,title:'역사·정책 연계',stops:[['미국',39,-98,'역사적 사건과 법안의 시장 영향을 조사합니다. 사실·가설을 구분해야 합니다.']],symbols:'ITA · LMT · SPY',url:'https://www.congress.gov/'}
-];let current=null,index=0,route=null,pin=null;
-function show(){if(!current)return;const map=window.mtCommandMap;if(!map){panel.hidden=false;panel.textContent='기존 지도 엔진 준비 중이에요.';return}const stop=current.stops[index];if(route){map.removeLayer(route);route=null}if(pin){map.removeLayer(pin);pin=null}map.flyTo([stop[1],stop[2]],Math.max(4,Math.min(5,map.getZoom())),{duration:1.5});pin=L.circleMarker([stop[1],stop[2]],{radius:10,color:'#72ff9b',fillColor:'#1ee27e',fillOpacity:.65}).addTo(map);if(index>0){const prev=current.stops[index-1];route=L.polyline([[prev[1],prev[2]],[stop[1],stop[2]]],{color:'#77ffb5',weight:3,dashArray:'9 9'}).addTo(map)}panel.hidden=false;panel.replaceChildren();const h=document.createElement('h3');h.textContent='◉ '+current.title+' · '+(index+1)+'/'+current.stops.length;panel.append(h);const p=document.createElement('p');p.textContent=stop[0]+' — '+stop[3];panel.append(p);const q=document.createElement('p');q.textContent='조사 대상: '+current.symbols;panel.append(q);const caution=document.createElement('small');caution.textContent='공개자료 기반의 탐색 시나리오이며 실시간 매매 신호가 아니에요.';panel.append(caution);const row=document.createElement('div');const back=document.createElement('button');back.textContent='← 이전';back.disabled=index===0;back.onclick=()=>{index--;show()};const next=document.createElement('button');next.textContent='다음 지역 →';next.disabled=index===current.stops.length-1;next.onclick=()=>{index++;show()};const close=document.createElement('button');close.textContent='닫기';close.onclick=()=>{panel.hidden=true};row.append(back,next,close);panel.append(row);const a=document.createElement('a');a.href=current.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='공식 자료 확인 ↗';panel.append(a)}
-form.addEventListener('submit',e=>{e.preventDefault();const q=form.querySelector('input').value.trim();current=missions.find(m=>m.re.test(q));index=0;if(current)show();else{panel.hidden=false;panel.textContent='해당 질문은 현재 연결된 작전 범위 밖이에요. 미국·한국·대만·금리·관세·에너지·역사 등을 입력하세요.'}});
+const form=document.createElement('form');form.id='mtCommand';form.setAttribute('role','search');
+form.innerHTML='<input aria-label="의원 찾기" placeholder="의원 이름이나 지역을 찾아보세요" required><button>찾기</button>';root.append(form);
+form.addEventListener('submit',e=>{e.preventDefault();const q=form.querySelector('input').value.trim();if(!q)return;
+ const tab=[...document.querySelectorAll('#pg button,#pg a')].find(x=>x.textContent.trim()==='찾기');
+ if(tab){tab.click();setTimeout(()=>{const i=document.querySelector('#pg .q[aria-label="의원 찾기"]');if(i){i.value=q;i.dispatchEvent(new Event('input',{bubbles:true}));}},350);}
+ else location.href='search.html?q='+encodeURIComponent(q);});
+const KR=[[33.0,125.3],[38.7,129.7]];
+const all=document.createElement('button');all.type='button';all.id='mtAll';all.textContent='전체 보기';all.setAttribute('aria-label','지도 전체 보기');root.append(all);
+let base=null;
+function hook(){const m=window.mtCommandMap;if(!m){setTimeout(hook,200);return}
+ if(base==null)base=m.getZoom();const cap=()=>base+1.5;
+ const fT=m.flyTo.bind(m),sV=m.setView.bind(m),fB=m.flyToBounds.bind(m),ftB=m.fitBounds.bind(m);
+ m.flyTo=(ll,z,o)=>fT(ll,z==null?z:Math.min(z,cap()),o);
+ m.setView=(ll,z,o)=>sV(ll,z==null?z:Math.min(z,cap()),o);
+ m.flyToBounds=(bb,o)=>fB(bb,Object.assign({},o,{maxZoom:Math.min((o&&o.maxZoom)||99,cap())}));
+ m.fitBounds=(bb,o)=>ftB(bb,Object.assign({},o,{maxZoom:Math.min((o&&o.maxZoom)||99,cap())}));
+ all.onclick=()=>{m.closePopup&&m.closePopup();ftB(L.latLngBounds(KR),{padding:[70,20],paddingBottomRight:[20,90]});};
+}
+hook();
 }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
 </script><script src="assets/mt-visits.js" defer></script></body>
 </html>

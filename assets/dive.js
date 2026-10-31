@@ -1,3 +1,4 @@
+(function(){if(document.getElementById('mt-darksat-css'))return;var s=document.createElement('style');s.id='mt-darksat-css';s.textContent='.mt-darksat{filter:brightness(.42) saturate(.45) contrast(1.05)}';document.head.appendChild(s)})();
 // 홈 '세금 길' 다이브: 지도 → 지역 검색 시 비행 → 돈 흐름 선 → 바텀시트(총액 → 눈여겨볼 점 → 업체)
 (async () => {
   const root = document.getElementById('dive'); if (!root || !window.L) return;
@@ -25,7 +26,7 @@
   const touch = matchMedia('(pointer: coarse)').matches;
   const map = L.map(box, {zoomControl: false, attributionControl: false, dragging: true, tap: false, scrollWheelZoom: false, minZoom: 5, maxZoom: 12, zoomSnap: 0.25});
   L.control.attribution({position: 'bottomright', prefix: false}).addTo(map); if (!touch && innerWidth >= 900) L.control.zoom({position: 'bottomleft'}).addTo(map);
-  const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {maxZoom: 12, attribution: '지도: Esri, HERE, Garmin, &copy; OpenStreetMap 기여자'}).addTo(map);
+  const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {className:'mt-darksat',maxZoom: 12, attribution: '지도: 지도: Esri, Maxar'}).addTo(map);
   if (window.mtKoreaExtras) mtKoreaExtras(map);
   tiles.once('tileload', () => box.classList.remove('loading'));
   const KR = L.latLngBounds([[33.1, 125.0], [38.65, 129.6]]); const krPad = () => (innerWidth >= 900 ? {paddingTopLeft: [10, 10], paddingBottomRight: [10, 10]} : {paddingTopLeft: [10, 10], paddingBottomRight: [10, 10]}); map.fitBounds(KR, {...krPad(), animate: false});
