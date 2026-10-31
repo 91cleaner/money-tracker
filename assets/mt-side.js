@@ -182,4 +182,37 @@
   }
   window.__tdR=()=>render();window.__tdWho=(txt)=>{if(!data)return '';const hit=data.cards.map((c)=>[c,c.items.filter((i)=>{if(!i.who)return false;const w=i.who.replace(/[.,]/g,'').split(/\s+/);return txt.includes(w[0])&&txt.includes(w[w.length-1])})]).filter((x)=>x[1].length);return hit.length?`<div id="mtToday" class="tk" style="margin-top:8px"><div class="tdHd"><b>오늘 이 의원 기록</b><span>${esc(data.date)}</span></div>${hit.map(([c,it])=>card(c,it)).join('')}</div>`:''};document.addEventListener('click', (e) => { const b = e.target.closest && e.target.closest('#mtToday button[data-tk]'); if (b) location.search = '?lang=ko&ticker=' + encodeURIComponent(b.dataset.tk); });
   fetch('../data/us/daily/index.json', { cache: 'no-cache' }).then((r) => r.json()).then((ix) => fetch(`../data/us/daily/${ix.latest}.json`, { cache: 'no-cache' })).then((r) => r.json()).then((d) => { data = d; render(); setInterval(() => { const b = $('mtToday'); if (sym() && (!b || !b.isConnected || (!matchMedia('(min-width:900px), (orientation:landscape) and (min-width:640px)').matches && b.parentNode && b.parentNode.lastChild !== b))) render(); }, 1500); setTimeout(render, 2500); }).catch(() => {});
+
+  // Phone sideways (short screen): move the economy strip and the White House news bar into the side column so the map gets the full height.
+  (() => {
+    const lq = matchMedia('(orientation:landscape) and (max-height:500px) and (min-width:640px)');
+    const st = document.createElement('style');
+    st.textContent = `html.mtLand body{margin-top:0!important;height:100dvh!important}
+html.mtLand #mtTopBox #mtEcon .x{display:none!important}
+html.mtLand #mtTopBox #mtEcon .dex{position:static!important;font-size:10px!important}
+html.mtLand #mapFrame{top:48px!important;bottom:0!important;height:auto!important}
+html.mtLand #mtSide>#mtTopBox{flex:0 0 auto;display:flex;flex-direction:column;gap:6px}
+html.mtLand #mtTopBox #mtEcon{position:static!important;inset:auto!important;width:auto!important;height:auto!important;transform:none!important;margin:0!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important}
+html.mtLand #mtTopBox #mtEcon{display:flex!important;flex-direction:column!important;gap:2px!important}
+html.mtLand #mtTopBox #mtEcon .chips{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:4px!important;overflow:visible!important;width:100%!important}
+html.mtLand #mtTopBox #mtEcon>*:not(.chips){font-size:11px!important;padding:2px 6px!important;min-height:0!important;height:auto!important;width:auto!important;align-self:flex-start}
+html.mtLand #mtTopBox #mtEcon .chip{padding:2px 6px!important;font-size:10px!important;min-height:0!important;min-width:0!important;width:auto!important}
+html.mtLand #mtTopBox #mtEcon .chip *{font-size:12px!important;line-height:1.2!important}
+html.mtLand #mtTopBox #mtFrBar{position:static!important;inset:auto!important;width:auto!important;margin:0!important;font-size:12px!important;padding:4px 6px!important;min-height:0!important;height:auto!important;border-radius:8px}`;
+    document.head.append(st);
+    const ph = {};
+    const run = () => {
+      const side = $('mtSide'), on = lq.matches && side && getComputedStyle(side).display !== 'none';
+      document.documentElement.classList.toggle('mtLand', !!on);
+      ['mtEcon', 'mtFrBar'].forEach((id) => {
+        const e = $(id); if (!e) return;
+        if (on) {
+          let box = $('mtTopBox'); if (!box) { box = document.createElement('div'); box.id = 'mtTopBox'; }
+          if (side.firstChild !== box) side.prepend(box);
+          if (e.parentNode !== box) { if (!ph[id]) { ph[id] = document.createComment(id); e.before(ph[id]); } box.append(e); }
+        } else if (ph[id] && e.parentNode !== ph[id].parentNode) ph[id].after(e);
+      });
+    };
+    lq.addEventListener('change', () => setTimeout(run, 50)); addEventListener('resize', () => setTimeout(run, 50)); setInterval(run, 1000); run();
+  })();
 })();
