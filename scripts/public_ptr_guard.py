@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 OFFICIAL_PDF = re.compile(
-    r"https://disclosures-clerk\.house\.gov/public_disc/ptr-pdfs/\d{4}/\d+\.pdf"
+    r"https://disclosures-clerk\.house\.gov/public_disc/ptr-pdfs/(\d{4})/\d+\.pdf"
 )
 
 
@@ -18,6 +18,7 @@ OFFICIAL_PDF = re.compile(
 # Keep this contract deliberately narrower than the private trade ledger.
 PUBLIC_TOP_FIELDS = {"updated", "note", "trades"}
 PUBLIC_ROW_FIELDS = {"tk", "who", "ty", "amt", "d", "fd", "doc"}
+PUBLIC_TEXT_LIMITS = {"tk": 32, "who": 160, "ty": 32, "amt": 100}
 
 
 def _date(value):
@@ -28,6 +29,13 @@ def _date(value):
     return dt.date.fromisoformat(value)
 
 
+def _public_text(value, field, limit):
+    """Reject nested metadata, HTML markup and control chars in public text."""
+    if (not isinstance(value, str) or not value.strip() or len(value) > limit
+            or re.search(r"[<>\x00-\x1f\x7f]", value)):
+        raise ValueError(f"unsafe public text field: {field}")
+
+
 def invalid_rows(payload):
     """Return (zero-based index, reason) for unsafe rows; malformed snapshots fail."""
     if not isinstance(payload, dict):
@@ -35,8 +43,11 @@ def invalid_rows(payload):
     unexpected = set(payload) - PUBLIC_TOP_FIELDS
     if unexpected:
         raise ValueError(f"Non-public House PTR snapshot fields: {sorted(unexpected)}")
-    if "note" in payload and not isinstance(payload["note"], str):
-        raise ValueError("House PTR note must be text")
+    if "note" in payload:
+        if not isinstance(payload["note"], str):
+            raise ValueError("House PTR note must be text")
+        if payload["note"]:
+            _public_text(payload["note"], "note", 2000)
     updated = _date(payload.get("updated"))
     rows = payload.get("trades")
     if not isinstance(rows, list) or not rows:
@@ -49,11 +60,18 @@ def invalid_rows(payload):
             unexpected = set(row) - PUBLIC_ROW_FIELDS
             if unexpected:
                 raise ValueError(f"Non-public House PTR row fields: {sorted(unexpected)}")
+            for field, limit in PUBLIC_TEXT_LIMITS.items():
+                if field in row or field in ("who", "tk"):
+                    _public_text(row.get(field), field, limit)
             traded, filed = _date(row.get("d")), _date(row.get("fd"))
             if not traded <= filed <= updated:
                 raise ValueError("requires transaction <= filing <= snapshot date")
-            if not isinstance(row.get("doc"), str) or not OFFICIAL_PDF.fullmatch(row["doc"]):
+            document = row.get("doc")
+            match = OFFICIAL_PDF.fullmatch(document) if isinstance(document, str) else None
+            if not match:
                 raise ValueError("missing or nonofficial House Clerk PDF URL")
+            if int(match.group(1)) != filed.year:
+                raise ValueError("House Clerk PDF archive year does not match filing year")
         except (TypeError, ValueError) as exc:
             bad.append((i, str(exc)))
     return bad
