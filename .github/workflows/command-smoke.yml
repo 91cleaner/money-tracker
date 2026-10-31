@@ -22,7 +22,7 @@ jobs:
           const assert = require('node:assert/strict');
           const entry = fs.readFileSync('index.html','utf8');
           const us = fs.readFileSync('usa-command-legacy.html','utf8');
-          assert.match(entry,/href="national\.html"/);
+          assert.match(entry,/href="korea\.html"/);
           assert.match(entry,/href="world-intelligence\/"/);
           assert.match(entry,/대한민국/);
           assert.match(us,/AI 분석 OFF · 실시간 시세 OFF/);
