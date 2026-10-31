@@ -12,6 +12,16 @@ The existing issue already documents that the submit handler executes `await mtF
 
 These are source-level findings; actual Safari/iPhone or production race reproduction was **not** performed in this review.
 
+## Additional P1: stale route and clickable old choices during a new question
+
+Fresh source review on `main` found a separate **question → map state-ownership** defect, not merely a delayed-response race:
+
+- `start(c)` is the path that replaces `mission` and removes the old Leaflet `route`. The `ask` submit handler instead calls only `clearFirst()` before awaiting card/intent/index lookups; `clearFirst()` removes card content but **does not clear the existing mission, polyline, or map marker**. Successful `mtFirstCard(q)` / `mtIntentCard(q)`, and `showNone(q,r)` / `showCandidates(q)`, can display question B while the previously selected question A's map route remains visible. The old route visually implies an unsupported relationship with B.
+- The submit handler also does not immediately disable/hide the previous `#candidatePanel`. If A's choices are open when B is submitted, those **old A buttons remain actionable during B's async loading**; clicking one invokes `start(A)` even though B is the current question. This is independent of the Promise-resolution-order issue.
+- Evidence is the current source's `clearFirst`, `start`, `showCandidates`, `showNone`, `mtFirstCard`, `mtIntentCard` and `ask` submit paths. This is a **static control-flow finding**, not an observed production/iPhone screenshot.
+
+**UI-owner acceptance:** On each new nonempty submission, synchronously retire/disable prior candidate choices and explicitly clear or mark the prior mission, route, marker, and any pending auto-play as stale. Commit a new route **only** for the latest request, and never leave A's line/marker on screen beneath B's unrelated fact card or "no data" state. Preserve deliberate navigation back to the world map and the existing source/AI-offline disclosures. Cover both mobile orientations and keyboard/touch actions. Do not change `data/` or collector code.
+
 ## Implementation contract for UI owner (Claude)
 
 1. Allocate a monotonically increasing `requestId` **at every nonempty submit**, before clearing or loading anything. Pass `isCurrent = () => requestId === activeRequestId` into both card paths, `tickerRoute` handling, `showNone`, `showCandidates` and the route start callback. Recheck after **each** await and before **every** shared DOM/route mutation; return without rendering when stale.
@@ -31,6 +41,8 @@ These are source-level findings; actual Safari/iPhone or production race reprodu
 | True empty data | 200 with schema-valid empty results | Explicit 'no matching records', not network failure |
 | Shared in-flight request | Two concurrent reads of one URL, both successful | One fetch is reused, both receive the same valid data |
 | Mobile touch/keyboard | 375×667 and 844×390, open failure and retry | Retry and close controls visible, no map-blocking sheet or unintended zoom |
+| Route A then unrelated fact B | Start A's map journey; submit B and resolve a non-route fact card | A's polyline/marker/mission must not be shown as B's route |
+| Old choices while B loads | Show A's candidate buttons; submit B with delayed fetch; click an old A button | A's old button is disabled/removed and cannot start an obsolete route |
 
 ## Verification and ownership
 
