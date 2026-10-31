@@ -1,7 +1,61 @@
 {
-"updated": "2026-10-28",
+"updated": "2026-10-29",
 "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
 "trades": [
+{
+"tk": "T",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-15",
+"fd": "2026-10-29",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035727.pdf"
+},
+{
+"tk": "LRCX",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-15",
+"fd": "2026-10-29",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035727.pdf"
+},
+{
+"tk": "MPC",
+"who": "David J. Taylor",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-15",
+"fd": "2026-10-29",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035727.pdf"
+},
+{
+"tk": "PLD",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-15",
+"fd": "2026-10-29",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035727.pdf"
+},
+{
+"tk": "RPM",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-15",
+"fd": "2026-10-29",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035727.pdf"
+},
+{
+"tk": "V",
+"who": "David J. Taylor",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-15",
+"fd": "2026-10-29",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035727.pdf"
+},
 {
 "tk": "ASML",
 "who": "Kevin Hern",
@@ -125,60 +179,6 @@
 "ty": "S",
 "amt": "$1,001 - $15,000",
 "d": "2026-10-14",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "COST",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$100,001 - $250,000",
-"d": "2026-10-13",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "PG",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-08",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "ABT",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$50,001 - $100,000",
-"d": "2026-10-02",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "GOOG",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$100,001 - $250,000",
-"d": "2026-10-02",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "AMZN",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$100,001 - $250,000",
-"d": "2026-10-02",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "AAPL",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$250,001 - $500,000",
-"d": "2026-10-02",
 "fd": "2026-10-27",
 "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
 }
