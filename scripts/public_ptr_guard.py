@@ -14,6 +14,12 @@ OFFICIAL_PDF = re.compile(
 )
 
 
+# A valid date and official PDF link do not make arbitrary collector fields public.
+# Keep this contract deliberately narrower than the private trade ledger.
+PUBLIC_TOP_FIELDS = {"updated", "note", "trades"}
+PUBLIC_ROW_FIELDS = {"tk", "who", "ty", "amt", "d", "fd", "doc"}
+
+
 def _date(value):
     # date.fromisoformat also accepts compact (YYYYMMDD) and ISO week dates;
     # public PTR JSON requires one unambiguous calendar-date representation.
@@ -26,6 +32,11 @@ def invalid_rows(payload):
     """Return (zero-based index, reason) for unsafe rows; malformed snapshots fail."""
     if not isinstance(payload, dict):
         raise ValueError("House PTR snapshot must be a JSON object")
+    unexpected = set(payload) - PUBLIC_TOP_FIELDS
+    if unexpected:
+        raise ValueError(f"Non-public House PTR snapshot fields: {sorted(unexpected)}")
+    if "note" in payload and not isinstance(payload["note"], str):
+        raise ValueError("House PTR note must be text")
     updated = _date(payload.get("updated"))
     rows = payload.get("trades")
     if not isinstance(rows, list) or not rows:
@@ -35,6 +46,9 @@ def invalid_rows(payload):
         try:
             if not isinstance(row, dict):
                 raise ValueError("row is not an object")
+            unexpected = set(row) - PUBLIC_ROW_FIELDS
+            if unexpected:
+                raise ValueError(f"Non-public House PTR row fields: {sorted(unexpected)}")
             traded, filed = _date(row.get("d")), _date(row.get("fd"))
             if not traded <= filed <= updated:
                 raise ValueError("requires transaction <= filing <= snapshot date")
