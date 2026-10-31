@@ -24,11 +24,14 @@ exposed = [name for name in forbidden if (root / name).exists()] + (["data/us/hi
 if exposed:
     sys.exit("Unexpected files in public artifact: " + ", ".join(exposed))
 import json
-from public_ptr_guard import invalid_rows, validate_public_trades
+from public_ptr_guard import invalid_rows, invalid_public_trade_rows, validate_public_trades
 
 try:
     pub = json.loads((root / "data/us/trades_public.json").read_text(encoding="utf-8"))
     validate_public_trades(pub)
+    invalid_summary = invalid_public_trade_rows(pub)
+    if invalid_summary:
+        raise ValueError(f"Unsafe public summary chronology/source rows: {invalid_summary[:5]}")
 except (OSError, ValueError) as exc:
     sys.exit(f"Unsafe public trade summary: {exc}")
 # Public map's recent House PTR layer must never expose impossible filing dates
