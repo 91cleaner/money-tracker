@@ -126,7 +126,7 @@
   };
   var of = window.fetch.bind(window);
   var dictP = of('data/i18n/skysea_en.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (j) { for (var kk in j) if (MAP[kk] == null) MAP[kk] = j[kk]; }).catch(function () {});
-  var DATA = /data\/(worldhist\/[^?]+|scenarios\/[^?]+|usregime\.json|histphotos\.json)/;
+  var DATA = /data\/(worldhist\/[^?]+|scenarios\/[^?]+|usregime\.json|warrec\.json|histphotos\.json)/;
   window.fetch = function (u, o) {
     var s = typeof u === 'string' ? u : (u && u.url) || '';
     if (!DATA.test(s)) return of(u, o);
