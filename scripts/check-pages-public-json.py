@@ -59,6 +59,11 @@ def check_public_json(site_url, expected_dir, opener=urlopen, sleeper=time.sleep
             try:
                 request = Request(url, headers={"Cache-Control": "no-cache", "Accept-Encoding": "identity", "User-Agent": "money-tracker-pages-json-audit/1.0"})
                 with opener(request, timeout=25) as response:
+                    # urllib follows redirects by default. A 200 from another
+                    # path or host does not prove this Pages URL was published.
+                    geturl = getattr(response, "geturl", None)
+                    if callable(geturl) and geturl() != url:
+                        raise ValueError("unexpected redirect target (not the requested Pages JSON URL)")
                     if response.status != 200:
                         raise ValueError(f"HTTP {response.status}")
                     actual = response.read(MAX_BYTES + 1)
