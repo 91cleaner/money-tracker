@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Road to SpaceX</title>
+<meta name="description" content="Elon Musk, 1971–2002: from Pretoria to the founding of SpaceX, on a satellite map.">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<style>
+:root{--w:#f4f7fb;--mut:#9aa6b2;--acc:#ffffff;--hot:#ffb347}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#000;color:var(--w);font-family:system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;overflow:hidden}
+#map{position:fixed;inset:0;background:#000}
+.leaflet-container{background:#000}
+.sat{filter:brightness(.82) saturate(.8) contrast(1.08)}
+.leaflet-control-attribution{background:#0008!important;color:#8894a0!important;font-size:9px!important}.leaflet-control-attribution a{color:#8894a0!important}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+/* HUD */
+#vig{position:fixed;inset:0;pointer-events:none;z-index:400;background:radial-gradient(ellipse at 50% 50%,#0000 55%,#0008 100%)}
+#hud{position:fixed;left:0;right:0;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:flex-start;padding:calc(env(safe-area-inset-top) + 16px) 22px 0;pointer-events:none}
+#hud .brand{font-size:clamp(11px,1.4vw,14px);letter-spacing:.32em;color:var(--mut)}
+#hud .brand b{display:block;color:var(--w);font-size:clamp(16px,2.4vw,26px);letter-spacing:.18em;margin-top:4px;font-weight:800}
+#tele{text-align:right;font-size:clamp(10px,1.25vw,13px);letter-spacing:.14em;color:var(--mut);line-height:1.7}
+#tele b{color:var(--w);font-weight:700;letter-spacing:.06em}
+#card{position:fixed;left:22px;bottom:calc(env(safe-area-inset-bottom) + 26px);z-index:1000;width:min(460px,calc(100% - 44px));pointer-events:none;opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s}
+#card.on{opacity:1;transform:none}
+#card .st{font-size:clamp(10px,1.2vw,12px);letter-spacing:.3em;color:var(--mut)}
+#card .yr{font-size:clamp(40px,7vw,78px);font-weight:900;line-height:1;margin-top:4px;letter-spacing:-.02em}
+#card .pl{font-size:clamp(13px,1.7vw,18px);letter-spacing:.18em;font-weight:700;margin-top:6px}
+#card .tx{font-size:clamp(13px,1.6vw,17px);color:#d7dee6;margin-top:8px;line-height:1.45;border-left:2px solid var(--w);padding-left:10px}
+#bar{position:fixed;left:22px;right:22px;bottom:calc(env(safe-area-inset-bottom) + 10px);height:2px;background:#ffffff22;z-index:1000;pointer-events:none}
+#bar i{display:block;height:100%;width:0;background:var(--w);transition:width .6s}
+.pin{width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px #0008,0 0 14px #fff}
+.ring{position:absolute;left:-26px;top:-26px;width:52px;height:52px;border:2px solid #fff;border-radius:50%;opacity:0}
+.lab{position:absolute;left:14px;top:-9px;white-space:nowrap;font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#fff;text-shadow:0 0 4px #000,0 0 8px #000}
+#wm{position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom) + 18px);z-index:1003;font:700 12px system-ui,sans-serif;color:#fff;opacity:.6;text-shadow:0 1px 3px #000;pointer-events:none}
+/* liftoff */
+#lift{position:fixed;inset:0;z-index:1001;pointer-events:none;opacity:0;transition:opacity .4s}
+#lift.on{opacity:1}
+#rocket{position:absolute;left:50%;top:50%;width:26px;margin-left:-13px;transform:translateY(0)}
+#rocket svg{display:block;width:26px;filter:drop-shadow(0 0 6px #fff8)}
+#plume{position:absolute;left:50%;width:10px;margin-left:-5px;top:50%;height:0;background:linear-gradient(#ffd38a,#ff8a3d 40%,#ff8a3d00);border-radius:5px;filter:blur(1px)}
+#t0{position:fixed;left:0;right:0;top:64%;text-align:center;z-index:1002;opacity:0;transition:opacity .5s;pointer-events:none}
+#t0.on{opacity:1}
+#t0 .a{font-size:clamp(12px,1.5vw,15px);letter-spacing:.45em;color:var(--mut)}
+#t0 .b{font-size:clamp(34px,6vw,72px);font-weight:900;letter-spacing:.08em;margin-top:6px}
+#t0 .c{font-size:clamp(13px,1.7vw,18px);letter-spacing:.2em;margin-top:8px;color:#d7dee6}
+#end{position:fixed;inset:0;z-index:1002;display:flex;align-items:center;justify-content:center;background:#000d;opacity:0;pointer-events:none;transition:opacity .6s;text-align:center;padding:24px}
+#end.on{opacity:1}
+#end .a{font-size:clamp(12px,1.5vw,15px);letter-spacing:.4em;color:var(--mut)}
+#end .b{font-size:clamp(26px,4.4vw,52px);font-weight:900;letter-spacing:.06em;margin-top:8px}
+#end .c{font-size:clamp(13px,1.6vw,17px);color:#cdd5dd;margin-top:14px;line-height:1.6}
+#end .s{font-size:11px;color:#7d8894;margin-top:18px}
+#ctl{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 40px);z-index:1004;display:flex;justify-content:center;gap:8px;transition:opacity .4s}
+#ctl.hide{opacity:0;pointer-events:none}
+.btn{border:1px solid #fff;background:#000a;color:#fff;border-radius:2px;min-height:44px;padding:0 20px;font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.2em;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.btn.prime{background:#fff;color:#000}
+@media (max-width:700px){#hud{padding:calc(env(safe-area-inset-top) + 12px) 14px 0}#card{left:14px}#bar{left:14px;right:14px}}
+</style></head>
+<body>
+<div id="map" aria-label="Map"></div>
+<div id="vig"></div>
+<div id="hud"><div class="brand mono">MISSION LOG<b>THE ROAD TO SPACEX</b></div>
+ <div id="tele" class="mono">AGE <b id="tAge">—</b><br>DISTANCE <b id="tDist">0 km</b><br>STAGE <b id="tStage">00/10</b></div></div>
+<div id="card"><div class="st mono" id="cSt"></div><div class="yr mono" id="cYr"></div><div class="pl mono" id="cPl"></div><div class="tx" id="cTx"></div></div>
+<div id="bar"><i id="barI"></i></div>
+<div id="lift"><div id="plume"></div><div id="rocket"><svg viewBox="0 0 20 64"><path fill="#fff" d="M10 0c4 6 6 13 6 22v30l4 8H0l4-8V22C4 13 6 6 10 0z"/><rect x="7" y="18" width="6" height="3" fill="#000" opacity=".5"/></svg></div></div>
+<div id="t0"><div class="a mono">T-0 · MARCH 14, 2002 · EL SEGUNDO, CALIFORNIA</div><div class="b mono">SPACEX</div><div class="c mono">INCORPORATED</div></div>
+<div id="end"><div><div class="a mono">AGE 30 · 4 COUNTRIES · 9 STAGES</div><div class="b mono">FROM PRETORIA TO ORBIT</div>
+ <div class="c">Born in South Africa. Farm and lumber-mill jobs in Canada. Zip2 sold for $307M.<br>Later in 2002, eBay bought PayPal for $1.5B — his share: $175.8M.</div>
+ <div class="s mono">Facts: public records (Wikipedia: Elon Musk; History of SpaceX). Not affiliated with SpaceX.</div></div></div>
+<div id="wm">@청소부</div>
+<div id="ctl"><button class="btn prime" id="play" type="button">▶ LAUNCH</button><a class="btn" href="ww3.html">WW3 MAP</a></div>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script>
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  // 공개 기록(위키백과)으로 확인한 사실만. 좌표는 도시·대학 대략 위치.
+  const STOPS = [
+    { yr: '1971', age: 0, pl: 'PRETORIA, SOUTH AFRICA', ll: [-25.7479, 28.2293], z: 5, tx: 'Born June 28, 1971.' },
+    { yr: '1989', age: 17, pl: 'SASKATCHEWAN, CANADA', ll: [50.9, -106.5], z: 4.6, tx: 'Arrives in Canada at 17. Stays with a second cousin; works on a farm and at a lumber mill.' },
+    { yr: '1990', age: 19, pl: 'KINGSTON, ONTARIO', ll: [44.2253, -76.4951], z: 5, tx: "Enrolls at Queen's University." },
+    { yr: '1992', age: 21, pl: 'PHILADELPHIA, USA', ll: [39.9522, -75.1932], z: 5, tx: 'Transfers to the University of Pennsylvania: physics + economics (Wharton).' },
+    { yr: '1995', age: 24, pl: 'PALO ALTO, CALIFORNIA', ll: [37.4419, -122.143], z: 5, tx: 'Accepted to a Stanford grad program — never enrolls. Co-founds Zip2 with his brother Kimbal.' },
+    { yr: '1999', age: 27, pl: 'PALO ALTO, CALIFORNIA', ll: [37.4467, -122.1608], z: 5, tx: 'Compaq buys Zip2 for $307M in cash. His share: $22M. He starts X.com.' },
+    { yr: '2000', age: 28, pl: 'PALO ALTO, CALIFORNIA', ll: [37.4419, -122.143], z: 5, tx: 'X.com merges with Confinity → PayPal.' },
+    { yr: '2001', age: 30, pl: 'RUSSIA', ll: [55.7558, 37.6173], z: 4.4, tx: 'Two trips to Russia (Oct 2001, Feb 2002) to buy refurbished ICBMs for a Mars mission. Too expensive.' },
+    { yr: '2002', age: 30, pl: 'EL SEGUNDO, CALIFORNIA', ll: [33.9192, -118.4165], z: 5, tx: 'March 14, 2002: SpaceX is incorporated. First HQ: 1310 E Grand Ave.', final: true }
+  ];
+
+  const map = L.map('map', { zoomControl: false, zoomSnap: 0, minZoom: 1, maxZoom: 8, worldCopyJump: false });
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { className: 'sat', maxZoom: 18, attribution: 'Imagery: Esri, Maxar' }).addTo(map);
+  const WORLD = () => map.fitBounds([[-45, -130], [62, 45]], { animate: false });
+  WORLD();
+
+  const timers = [], fx = [];
+  const later = (ms, fn) => { const t = setTimeout(fn, ms); timers.push(t); return t; };
+  const R = 6371;
+  function hav(a, b) { const r = Math.PI / 180, dl = (b[0] - a[0]) * r, dn = (b[1] - a[1]) * r, x = Math.sin(dl / 2) ** 2 + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin(dn / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(x)); }
+  // 대권(지구 위 가장 짧은 길) 점들
+  function gc(a, b, n) {
+    const r = Math.PI / 180, toV = (p) => [Math.cos(p[0] * r) * Math.cos(p[1] * r), Math.cos(p[0] * r) * Math.sin(p[1] * r), Math.sin(p[0] * r)];
+    const A = toV(a), B = toV(b), d = Math.acos(Math.min(1, A[0] * B[0] + A[1] * B[1] + A[2] * B[2])), out = [];
+    if (d < 1e-6) return [a, b];
+    for (let i = 0; i <= n; i++) { const t = i / n, s1 = Math.sin((1 - t) * d) / Math.sin(d), s2 = Math.sin(t * d) / Math.sin(d), x = s1 * A[0] + s2 * B[0], y = s1 * A[1] + s2 * B[1], z = s1 * A[2] + s2 * B[2]; out.push([Math.atan2(z, Math.hypot(x, y)) / r, Math.atan2(y, x) / r]); }
+    for (let i = 1; i < out.length; i++) { while (out[i][1] - out[i - 1][1] > 180) out[i][1] -= 360; while (out[i][1] - out[i - 1][1] < -180) out[i][1] += 360; }
+    return out;
+  }
+  let dist = 0;
+  function travel(a, b, dur, onDone) {
+    const pts = gc(a, b, 80), km = hav(a, b), d0 = dist;
+    const glow = L.polyline([pts[0]], { color: '#ffffff', weight: 6, opacity: 0.18, interactive: false }).addTo(map);
+    const line = L.polyline([pts[0]], { color: '#ffffff', weight: 1.8, opacity: 0.95, interactive: false, dashArray: '2 5' }).addTo(map);
+    const head = L.circleMarker(pts[0], { radius: 4, color: '#fff', weight: 2, fillColor: '#ffb347', fillOpacity: 1, interactive: false }).addTo(map);
+    fx.push(glow, line, head);
+    const t0 = performance.now();
+    const step = (now) => {
+      if (!map.hasLayer(line)) return;
+      const k = Math.min(1, (now - t0) / dur), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, i = Math.max(1, Math.round(e * (pts.length - 1)));
+      line.setLatLngs(pts.slice(0, i + 1)); glow.setLatLngs(pts.slice(0, i + 1)); head.setLatLng(pts[i]);
+      dist = d0 + km * e; $('tDist').textContent = Math.round(dist).toLocaleString('en-US') + ' km';
+      if (k < 1) requestAnimationFrame(step); else { map.removeLayer(head); line.setStyle({ dashArray: null, opacity: 0.55 }); onDone && onDone(); }
+    };
+    requestAnimationFrame(step);
+  }
+  function pin(s) {
+    const icon = L.divIcon({ className: '', iconSize: [0, 0], html: '' });
+    const m = L.marker(s.ll, { icon, interactive: false, keyboard: false }).addTo(map); fx.push(m);
+    const el = m.getElement(); const p = document.createElement('div'); p.className = 'pin'; const ring = document.createElement('div'); ring.className = 'ring';
+    const lab = document.createElement('div'); lab.className = 'lab'; lab.textContent = s.yr;
+    p.appendChild(ring); el.append(p, lab);
+    const t0 = performance.now();
+    const step = (now) => { const k = ((now - t0) % 1400) / 1400; ring.style.opacity = String(1 - k); ring.style.transform = 'scale(' + (0.3 + k) + ')'; if (map.hasLayer(m) && now - t0 < 60000) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  function card(i, s) {
+    const c = $('card'); c.classList.remove('on');
+    later(160, () => {
+      $('cSt').textContent = 'STAGE ' + String(i + 1).padStart(2, '0') + ' / ' + String(STOPS.length).padStart(2, '0');
+      $('cYr').textContent = s.yr; $('cPl').textContent = s.pl; $('cTx').textContent = s.tx; c.classList.add('on');
+    });
+    $('tAge').textContent = s.age; $('tStage').textContent = String(i + 1).padStart(2, '0') + '/' + String(STOPS.length).padStart(2, '0');
+    $('barI').style.width = ((i + 1) / STOPS.length * 100).toFixed(1) + '%';
+  }
+  function liftoff() {
+    const lf = $('lift'), rk = $('rocket'), pl = $('plume'); lf.classList.add('on');
+    const t0 = performance.now(), H = innerHeight;
+    const step = (now) => {
+      const k = Math.min(1, (now - t0) / 3200), y = -Math.pow(k, 2.2) * (H * 0.75), shake = k < 0.15 ? Math.sin(now / 18) * 1.5 : 0;
+      rk.style.transform = 'translate(' + shake + 'px,' + y + 'px)';
+      pl.style.top = (H / 2 + 60 + y) + 'px'; pl.style.height = Math.min(H * 0.6, 20 + k * H * 0.7) + 'px'; pl.style.opacity = String(Math.min(1, k * 4));
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  function reset() {
+    timers.splice(0).forEach(clearTimeout); fx.splice(0).forEach((l) => map.hasLayer(l) && map.removeLayer(l));
+    dist = 0; $('tDist').textContent = '0 km'; $('tAge').textContent = '—'; $('tStage').textContent = '00/' + STOPS.length; $('barI').style.width = '0';
+    ['card', 'lift', 't0', 'end'].forEach((id) => $(id).classList.remove('on'));
+    const rk = $('rocket'); rk.style.transform = ''; $('plume').style.height = '0';
+    map.stop(); WORLD();
+  }
+  let playing = false;
+  function play() {
+    reset(); playing = true; $('ctl').classList.add('hide');
+    let t = 900;
+    STOPS.forEach((s, i) => {
+      const prev = STOPS[i - 1];
+      const same = prev && prev.ll[0] === s.ll[0] && prev.ll[1] === s.ll[1];
+      const fly = !prev ? 1800 : same ? 500 : Math.min(2600, 1300 + hav(prev.ll, s.ll) / 9);
+      later(t, () => {
+        map.flyTo(s.ll, s.z, { duration: fly / 1000, easeLinearity: 0.2 });
+        if (prev && !same) travel(prev.ll, s.ll, fly, () => pin(s)); else if (!prev) later(fly, () => pin(s));
+        later(fly * 0.55, () => card(i, s));
+      });
+      t += fly + (s.final ? 1200 : 1500);
+    });
+    later(t, () => { $('card').classList.remove('on'); liftoff(); later(900, () => $('t0').classList.add('on')); });
+    later(t + 4300, () => { $('t0').classList.remove('on'); $('end').classList.add('on'); });
+    later(t + 8500, () => { playing = false; $('ctl').classList.remove('hide'); $('play').textContent = '▶ RELAUNCH'; });
+  }
+  $('play').addEventListener('click', play);
+  document.addEventListener('click', (e) => { if (playing && !e.target.closest('#ctl')) { reset(); playing = false; $('ctl').classList.remove('hide'); } });
+  if (/[?&]auto=1/.test(location.search)) play();
+})();
+</script>
+</body></html>
