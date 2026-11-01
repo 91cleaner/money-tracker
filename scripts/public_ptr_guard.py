@@ -144,6 +144,13 @@ def invalid_public_trade_rows(payload, *, today=None):
     if not isinstance(stamp, str) or not re.fullmatch(
             r"\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2} UTC)?", stamp):
         raise ValueError("public summary updated must be UTC date or timestamp")
+    # The canonical regex alone accepts impossible clock values such as 99:99.
+    # Validate HH:MM without changing the existing UTC-day freshness contract.
+    if len(stamp) > 10:
+        try:
+            dt.time.fromisoformat(stamp[11:16])
+        except ValueError as exc:
+            raise ValueError("public summary updated contains invalid UTC clock time") from exc
     updated = _date(stamp[:10])
     if updated > today:
         raise ValueError("public summary updated date is in the future (UTC)")
