@@ -1,0 +1,30 @@
+name: Collect sky/sea ship presence (Global Fishing Watch)
+on:
+  schedule:
+    - cron: '30 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: skysea
+  cancel-in-progress: false
+jobs:
+  ships:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Vessel presence grid from GFW 4Wings (token from secret, server side only)
+        env:
+          GFW_TOKEN: ${{ secrets.GFW_TOKEN }}
+        run: python scripts/build_skysea_ships.py
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/skysea/ships.json
+          git diff --staged --quiet || (git commit -m "data(skysea): ship presence grid" && git pull --rebase origin main && git push && GH_TOKEN=${{ github.token }} gh workflow run deploy-pages.yml --ref main || true)
