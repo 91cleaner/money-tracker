@@ -35,12 +35,24 @@ def reject_overflowing_float(value):
     return number
 
 
+def reject_duplicate_keys(pairs):
+    # Python json.loads silently keeps the last duplicate key. Reject ambiguous
+    # trade and collector snapshots instead of trusting a last-wins value.
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
 def validate_json(path, body):
     if len(body) > MAX_BYTES:
         raise ValueError(f"{path}: JSON exceeds {MAX_BYTES} bytes")
     try:
         data = json.loads(body, parse_constant=reject_nonfinite,
-                          parse_float=reject_overflowing_float)
+                          parse_float=reject_overflowing_float,
+                          object_pairs_hook=reject_duplicate_keys)
     except (UnicodeDecodeError, ValueError) as exc:
         raise ValueError(f"{path}: invalid JSON") from exc
     if not isinstance(data, dict):
