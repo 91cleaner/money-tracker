@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'scripts/check-pages-public-json.py'
+      - 'scripts/check-pages-publish-step.py'
+      - 'scripts/test_pages_public_json_publish_step.py'
       - 'scripts/test_pages_public_json.py'
       - 'scripts/prepare-public-pages.py'
       - 'scripts/build_public_trades.py'
@@ -28,7 +30,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check JSON parity fail-closed behavior
-        run: python3 -m unittest discover -s scripts -p test_pages_public_json.py -v
+        run: python3 -m unittest discover -s scripts -p 'test_pages_public_json*.py' -v
 
   # A Pages publish may succeed even if a subsequent HTML smoke check fails.
   # Inspect the actual deploy-pages step, not only the workflow conclusion.
@@ -43,6 +45,9 @@ jobs:
     outputs:
       deployed: ${{ steps.detect.outputs.deployed }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Check whether Pages was actually published
         id: detect
         env:
@@ -51,12 +56,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          published="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/jobs?per_page=100&filter=latest" \
-            --jq '[.jobs[] | select(.name == "deploy") | .steps[] | select(.name == "Run actions/deploy-pages@v4") | .conclusion] | any(. == "success")')"
-          if [[ "$published" != "true" && "$published" != "false" ]]; then
-            echo "Unexpected Pages publication status: $published" >&2
-            exit 1
-          fi
+          published="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/jobs?per_page=100&filter=latest" |
+            python3 scripts/check-pages-publish-step.py)"
           echo "deployed=$published" >> "$GITHUB_OUTPUT"
           echo "Pages publish step succeeded: $published"
 
