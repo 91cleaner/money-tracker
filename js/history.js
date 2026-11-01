@@ -3,7 +3,7 @@
   const box = document.getElementById('hisBox'); if (!box) return;
   const css = `
 #hisBox{margin-top:8px}#hisBox .hint{font-size:12px;opacity:.7;margin-top:3px;text-align:center}
-#hisList[hidden]{display:none}#hisList .rg{font-size:12px;opacity:.7;margin:10px 0 4px}
+#hisList[hidden],#warList[hidden]{display:none}#warList .gr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:6px}#warList .gw{grid-template-columns:1fr 1fr}#warList button{min-height:44px;border:1px solid #2e6b4a;border-radius:10px;background:#04140b;color:#e8fff0;font:600 14px system-ui,sans-serif;text-align:left;padding:6px 10px}#warList button.on{background:#5dff9e;color:#02110a}#warList button:disabled{opacity:.4}#warList small{display:block;opacity:.65;font-weight:400;font-size:11px}.his-tz{animation:hisTz 1.2s ease-out}@keyframes hisTz{from{fill-opacity:0}}#hisP .fs a{color:#9effc0;font-size:12px;word-break:break-all}#hisList .rg{font-size:12px;opacity:.7;margin:10px 0 4px}
 #hisList .gr{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 #hisList button{min-height:44px;border:1px solid #2e6b4a;border-radius:10px;background:#04140b;color:#e8fff0;font:600 14px system-ui,sans-serif;text-align:left;padding:6px 10px}
 #hisList small{display:block;opacity:.65;font-weight:400;font-size:11px}
@@ -26,9 +26,9 @@
 @media (max-width:760px) and (orientation:portrait){#hisP{top:auto;bottom:0;left:0;width:auto;height:46dvh;padding:0}#hisP .in{border-radius:16px 16px 0 0;gap:6px;padding:10px 12px}#hisP .dt{font-size:28px}#hisP .cap{font-size:15px;min-height:0}}
 @media (orientation:landscape) and (max-height:500px){#hisP .in{gap:5px;padding:10px}#hisP .dt{font-size:24px}#hisP .cap{font-size:14px;min-height:0}#hisP .ctl button{height:40px}#hisP .x{height:44px}}`;
   const st = document.createElement('style'); st.textContent = css; document.head.append(st);
-  box.innerHTML = '<button type="button" class="btn prime" id="hisOpen" style="width:100%;min-height:44px">세계 역사 사건<span style="display:block;font-weight:400;font-size:11px;opacity:.75">눌러 보세요</span></button><div id="hisList" hidden></div>';
+  box.innerHTML = '<button type="button" class="btn prime" id="hisOpen" style="width:100%;min-height:44px">세계 역사 사건<span style="display:block;font-weight:400;font-size:11px;opacity:.75">눌러 보세요</span></button><div id="hisList" hidden></div><button type="button" class="btn prime" id="warOpen" style="width:100%;min-height:44px;margin-top:6px">역사: 나라별 전쟁<span style="display:block;font-weight:400;font-size:11px;opacity:.75">1850년 이후</span></button><div id="warList" hidden></div>';
   const P = document.createElement('div'); P.id = 'hisP'; P.hidden = true;
-  P.innerHTML = '<div class="in"><button type="button" class="x" id="hisX" aria-label="닫기">닫기</button><div><div class="tt" id="hisT"></div><div class="pp" id="hisPer"></div></div><div><div class="dt" id="hisD"></div><div class="tm" id="hisTm"></div></div><div class="cap" id="hisC"></div><div id="hisPh" hidden></div><div class="ctl"><button type="button" id="hisPrev">이전</button><button type="button" class="play" id="hisPlay">재생</button><button type="button" id="hisNext">다음</button></div><input type="range" id="hisR" min="0" max="0" step="1" aria-label="단계 이동"><div class="lg" id="hisL"></div><details><summary>자세히 보기</summary><p id="hisM"></p><p id="hisTo"></p><p><b>출처</b></p><ul id="hisS"></ul><p><b>사진</b></p><ul id="hisPS"></ul><p class="nt" id="hisN"></p><p class="nt">원, 화살표, 장소 표시는 이해를 돕기 위한 대략적인 그림이에요. 노란 점선 원은 넓이가 숫자에 비례해요(아주 큰 수는 크기를 줄였어요).</p></details></div>';
+  P.innerHTML = '<div class="in"><button type="button" class="x" id="hisX" aria-label="닫기">닫기</button><div><div class="tt" id="hisT"></div><div class="pp" id="hisPer"></div></div><div><div class="dt" id="hisD"></div><div class="tm" id="hisTm"></div></div><div class="cap" id="hisC"></div><div class="fs" id="hisFS"></div><div id="hisPh" hidden></div><div class="ctl"><button type="button" id="hisPrev">이전</button><button type="button" class="play" id="hisPlay">재생</button><button type="button" id="hisNext">다음</button></div><input type="range" id="hisR" min="0" max="0" step="1" aria-label="단계 이동"><div class="lg" id="hisL"></div><details><summary>자세히 보기</summary><p id="hisM"></p><p id="hisTo"></p><p><b>출처</b></p><ul id="hisS"></ul><p><b>사진</b></p><ul id="hisPS"></ul><p class="nt" id="hisN"></p><p class="nt">원, 화살표, 장소 표시는 이해를 돕기 위한 대략적인 그림이에요. 노란 점선 원은 넓이가 숫자에 비례해요(아주 큰 수는 크기를 줄였어요).</p></details></div>';
   document.body.append(P);
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -41,6 +41,14 @@
     $('hisList').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => open(b.dataset.id)));
   }).catch(() => { $('hisList').textContent = '불러오지 못했어요'; });
   $('hisOpen').addEventListener('click', () => { $('hisList').hidden = !$('hisList').hidden; });
+  fetch('data/worldhist/wars.json').then((r) => r.json()).then((j) => {
+    const wl = $('warList'), KO = ['미국', '중국', '러시아', '북한', '대한민국', '일본', '독일', '영국', '프랑스'];
+    wl.innerHTML = '<div class="gr">' + KO.map((c, k) => `<button type="button" data-c="${k}"${(j.wars[k] || []).length ? '' : ' disabled'}>${esc(j.order[k])}</button>`).join('') + '</div><div class="gr gw" id="warW"></div>';
+    wl.querySelectorAll('[data-c]').forEach((b) => b.addEventListener('click', () => { wl.querySelectorAll('[data-c]').forEach((x) => x.classList.toggle('on', x === b));
+      const ws = j.wars[+b.dataset.c] || []; $('warW').innerHTML = ws.map(([id, t, p]) => `<button type="button" data-id="${id}">${esc(t)}<small>${esc(p)}</small></button>`).join('');
+      $('warW').querySelectorAll('button').forEach((x) => x.addEventListener('click', () => open(x.dataset.id))); }));
+  }).catch(() => { $('warList').textContent = '불러오지 못했어요'; });
+  $('warOpen').addEventListener('click', () => { $('warList').hidden = !$('warList').hidden; });
   function open(id) {
     const m = getMap(); if (!m) return;
     fetch('data/worldhist/' + id + '.json').then((r) => r.json()).then((w) => {
@@ -75,6 +83,8 @@
   function show(fi) {
     const m = getMap(); i = Math.max(0, Math.min(W.frames.length - 1, fi)); const f = W.frames[i], col = (s) => (W.sides[s] || ['', '#ccc'])[1];
     clear(); lay = L.layerGroup().addTo(m);
+    (f.tz || []).forEach(([pts, s]) => L.polygon(pts, { pane: 'hisF', color: col(s), weight: 2, fillColor: col(s), fillOpacity: .32, className: 'his-tz', interactive: false }).addTo(lay));
+    $('hisFS').innerHTML = (f.src || []).map(([n, u]) => `<span>출처</span> <a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a>`).join('<br>');
     (f.ln || []).forEach((ln) => { L.polyline(ln, { pane: 'hisF', color: '#000', weight: 7, opacity: .5, interactive: false }).addTo(lay); L.polyline(ln, { pane: 'hisF', color: '#fff', weight: 3, interactive: false }).addTo(lay); });
     (f.cr || []).forEach(([la, lo, km, s]) => crowd(la, lo, km, col(s), lay));
     (f.ar || []).forEach(([a, b, c, d, s]) => arrow([a, b], [c, d], col(s), lay));
