@@ -108,6 +108,31 @@ class PublicPtrGuardTests(unittest.TestCase):
                 invalid_rows(data)
 
 
+    def test_recent_snapshot_refuses_catastrophic_quarantine_without_write(self):
+        # A broken collector must not publish one good row out of ten.
+        good = record()
+        bad = record(fd="2026-10-19")
+        payload = {"updated": "2026-10-28", "trades": [good] + [bad] * 9}
+        with tempfile.TemporaryDirectory() as td:
+            path = pathlib.Path(td) / "trades-recent.json"
+            original = json.dumps(payload)
+            path.write_text(original)
+            with self.assertRaisesRegex(ValueError, "snapshot integrity collapse"):
+                sanitize_file(path)
+            self.assertEqual(path.read_text(), original)
+
+    def test_recent_snapshot_allows_75_percent_quarantine_boundary(self):
+        good = record()
+        bad = record(fd="2026-10-19")
+        payload = {"updated": "2026-10-28", "trades": [good] + [bad] * 3}
+        with tempfile.TemporaryDirectory() as td:
+            path = pathlib.Path(td) / "trades-recent.json"
+            path.write_text(json.dumps(payload))
+            self.assertEqual(sanitize_file(path), (1, 3))
+            result = json.loads(path.read_text())
+            self.assertEqual(result["trades"], [good])
+            self.assertIn("3건 제외", result["note"])
+
     def test_nonpublic_fields_cannot_reach_public_snapshot(self):
         # A collector change must not silently publish private metadata just
         # because its trade dates and official PDF URL look legitimate.
