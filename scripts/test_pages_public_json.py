@@ -107,6 +107,28 @@ class PublicJsonParityTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
             self.check()
 
+    def test_overflowing_exponent_in_local_json_fails_closed(self):
+        # 1e999 is valid JSON number syntax, but Python float becomes inf.
+        path = audit.PUBLIC_JSON_PATHS[0]
+        for value in (b"1e999", b"-1e999"):
+            with self.subTest(value=value):
+                (self.root / path).write_bytes(b'{"trades":[{"r":' + value + b"}]}")
+                with self.assertRaisesRegex(ValueError, "invalid JSON"):
+                    self.check()
+
+    def test_overflowing_exponent_in_remote_json_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        self.docs[path] = b'{"collectors":{"house":{"value":1e999}}}'
+        with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
+            self.check()
+
+    def test_regular_fractional_json_number_still_passes(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        content = b'{"trades":[{"r":1.25}]}'
+        (self.root / path).write_bytes(content)
+        self.docs[path] = content
+        self.assertTrue(self.check())
+
     def test_exact_response_url_passes(self):
         class URLResponse(FakeResponse):
             def __init__(self, body, url):
