@@ -31,6 +31,10 @@ html,body{margin:0;height:100%;background:#000;color:var(--w);font-family:system
 .pin{width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px #0008,0 0 14px #fff}
 .ring{position:absolute;left:-26px;top:-26px;width:52px;height:52px;border:2px solid #fff;border-radius:50%;opacity:0}
 .lab{position:absolute;left:14px;top:-9px;white-space:nowrap;font:700 12px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#fff;text-shadow:0 0 4px #000,0 0 8px #000}
+#stamp{position:fixed;right:8%;top:30%;z-index:1001;pointer-events:none;font:900 clamp(22px,4vw,46px) ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#fff;border:4px solid #fff;padding:6px 18px;border-radius:6px;transform:rotate(-8deg) scale(1.6);opacity:0;text-shadow:0 0 12px #0008;box-shadow:0 0 30px #0006,inset 0 0 20px #0004}
+#stamp.bad{color:#ff5a4f;border-color:#ff5a4f}
+#cd{position:fixed;inset:0;z-index:1002;display:flex;align-items:center;justify-content:center;pointer-events:none;font:900 clamp(60px,14vw,170px) ui-monospace,Menlo,monospace;color:#fff;text-shadow:0 0 30px #000;opacity:0}
+.astro{width:38px;height:38px;margin:-19px 0 0 -19px;filter:drop-shadow(0 0 8px #fff9)}
 #wm{position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom) + 18px);z-index:1003;font:700 12px system-ui,sans-serif;color:#fff;opacity:.6;text-shadow:0 1px 3px #000;pointer-events:none}
 /* liftoff */
 #lift{position:fixed;inset:0;z-index:1001;pointer-events:none;opacity:0;transition:opacity .4s}
@@ -59,7 +63,7 @@ html,body{margin:0;height:100%;background:#000;color:var(--w);font-family:system
 <div id="map" aria-label="Map"></div>
 <div id="vig"></div>
 <div id="hud"><div class="brand mono">MISSION LOG<b>THE ROAD TO SPACEX</b></div>
- <div id="tele" class="mono">AGE <b id="tAge">—</b><br>DISTANCE <b id="tDist">0 km</b><br>STAGE <b id="tStage">00/10</b></div></div>
+ <div id="tele" class="mono">AGE <b id="tAge">—</b><br>DISTANCE <b id="tDist">0 km</b><br>CASH <b id="tCash">$0</b><br>STAGE <b id="tStage">00/10</b></div></div>
 <div id="card"><div class="st mono" id="cSt"></div><div class="yr mono" id="cYr"></div><div class="pl mono" id="cPl"></div><div class="tx" id="cTx"></div></div>
 <div id="bar"><i id="barI"></i></div>
 <div id="lift"><div id="plume"></div><div id="rocket"><svg viewBox="0 0 20 64"><path fill="#fff" d="M10 0c4 6 6 13 6 22v30l4 8H0l4-8V22C4 13 6 6 10 0z"/><rect x="7" y="18" width="6" height="3" fill="#000" opacity=".5"/></svg></div></div>
@@ -67,6 +71,7 @@ html,body{margin:0;height:100%;background:#000;color:var(--w);font-family:system
 <div id="end"><div><div class="a mono">AGE 30 · 4 COUNTRIES · 9 STAGES</div><div class="b mono">FROM PRETORIA TO ORBIT</div>
  <div class="c">Born in South Africa. Farm and lumber-mill jobs in Canada. Zip2 sold for $307M.<br>Later in 2002, eBay bought PayPal for $1.5B — his share: $175.8M.</div>
  <div class="s mono">Facts: public records (Wikipedia: Elon Musk; History of SpaceX). Not affiliated with SpaceX.</div></div></div>
+<div id="stamp"></div><div id="cd"></div>
 <div id="wm">@청소부</div>
 <div id="ctl"><button class="btn prime" id="play" type="button">▶ LAUNCH</button><a class="btn" href="ww3.html">WW3 MAP</a></div>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
@@ -76,15 +81,15 @@ html,body{margin:0;height:100%;background:#000;color:var(--w);font-family:system
   const $ = (id) => document.getElementById(id);
   // 공개 기록(위키백과)으로 확인한 사실만. 좌표는 도시·대학 대략 위치.
   const STOPS = [
-    { yr: '1971', age: 0, pl: 'PRETORIA, SOUTH AFRICA', ll: [-25.7479, 28.2293], z: 5, tx: 'Born June 28, 1971.' },
-    { yr: '1989', age: 17, pl: 'SASKATCHEWAN, CANADA', ll: [50.9, -106.5], z: 4.6, tx: 'Arrives in Canada at 17. Stays with a second cousin; works on a farm and at a lumber mill.' },
-    { yr: '1990', age: 19, pl: 'KINGSTON, ONTARIO', ll: [44.2253, -76.4951], z: 5, tx: "Enrolls at Queen's University." },
-    { yr: '1992', age: 21, pl: 'PHILADELPHIA, USA', ll: [39.9522, -75.1932], z: 5, tx: 'Transfers to the University of Pennsylvania: physics + economics (Wharton).' },
-    { yr: '1995', age: 24, pl: 'PALO ALTO, CALIFORNIA', ll: [37.4419, -122.143], z: 5, tx: 'Accepted to a Stanford grad program — never enrolls. Co-founds Zip2 with his brother Kimbal.' },
-    { yr: '1999', age: 27, pl: 'PALO ALTO, CALIFORNIA', ll: [37.4467, -122.1608], z: 5, tx: 'Compaq buys Zip2 for $307M in cash. His share: $22M. He starts X.com.' },
-    { yr: '2000', age: 28, pl: 'PALO ALTO, CALIFORNIA', ll: [37.4419, -122.143], z: 5, tx: 'X.com merges with Confinity → PayPal.' },
-    { yr: '2001', age: 30, pl: 'RUSSIA', ll: [55.7558, 37.6173], z: 4.4, tx: 'Two trips to Russia (Oct 2001, Feb 2002) to buy refurbished ICBMs for a Mars mission. Too expensive.' },
-    { yr: '2002', age: 30, pl: 'EL SEGUNDO, CALIFORNIA', ll: [33.9192, -118.4165], z: 5, tx: 'March 14, 2002: SpaceX is incorporated. First HQ: 1310 E Grand Ave.', final: true }
+    { yr: '1971', age: 0, pl: 'PRETORIA, SOUTH AFRICA', stamp: 'BORN',  ll: [-25.7479, 28.2293], z: 5, tx: 'Born June 28, 1971.' },
+    { yr: '1989', age: 17, pl: 'SASKATCHEWAN, CANADA', stamp: 'EMIGRATED',  ll: [50.9, -106.5], z: 4.6, tx: 'Arrives in Canada at 17. Stays with a second cousin; works on a farm and at a lumber mill.' },
+    { yr: '1990', age: 19, pl: 'KINGSTON, ONTARIO', stamp: 'ENROLLED',  ll: [44.2253, -76.4951], z: 5, tx: "Enrolls at Queen's University." },
+    { yr: '1992', age: 21, pl: 'PHILADELPHIA, USA', stamp: 'TRANSFERRED',  ll: [39.9522, -75.1932], z: 5, tx: 'Transfers to the University of Pennsylvania: physics + economics (Wharton).' },
+    { yr: '1995', age: 24, pl: 'PALO ALTO, CALIFORNIA', stamp: 'FOUNDED · ZIP2', ll: [37.4419, -122.143], z: 5, tx: 'Accepted to a Stanford grad program — never enrolls. Co-founds Zip2 with his brother Kimbal.' },
+    { yr: '1999', age: 27, pl: 'PALO ALTO, CALIFORNIA', stamp: 'SOLD · $307M', cash: 22, ll: [37.4467, -122.1608], z: 5, tx: 'Compaq buys Zip2 for $307M in cash. His share: $22M. He starts X.com.' },
+    { yr: '2000', age: 28, pl: 'PALO ALTO, CALIFORNIA', stamp: 'MERGED → PAYPAL', ll: [37.4419, -122.143], z: 5, tx: 'X.com merges with Confinity → PayPal.' },
+    { yr: '2001', age: 30, pl: 'RUSSIA', stamp: '✕ DEAL FAILED', bad: true, ll: [55.7558, 37.6173], z: 4.4, tx: 'Two trips to Russia (Oct 2001, Feb 2002) to buy refurbished ICBMs for a Mars mission. Too expensive.' },
+    { yr: '2002', age: 30, pl: 'EL SEGUNDO, CALIFORNIA', stamp: 'FOUNDED · SPACEX', ll: [33.9192, -118.4165], z: 5, tx: 'March 14, 2002: SpaceX is incorporated. First HQ: 1310 E Grand Ave.', final: true }
   ];
 
   const map = L.map('map', { zoomControl: false, zoomSnap: 0, minZoom: 1, maxZoom: 8, worldCopyJump: false });
@@ -106,21 +111,55 @@ html,body{margin:0;height:100%;background:#000;color:var(--w);font-family:system
     return out;
   }
   let dist = 0;
-  function travel(a, b, dur, onDone) {
-    const pts = gc(a, b, 80), km = hav(a, b), d0 = dist;
-    const glow = L.polyline([pts[0]], { color: '#ffffff', weight: 6, opacity: 0.18, interactive: false }).addTo(map);
-    const line = L.polyline([pts[0]], { color: '#ffffff', weight: 1.8, opacity: 0.95, interactive: false, dashArray: '2 5' }).addTo(map);
-    const head = L.circleMarker(pts[0], { radius: 4, color: '#fff', weight: 2, fillColor: '#ffb347', fillOpacity: 1, interactive: false }).addTo(map);
-    fx.push(glow, line, head);
-    const t0 = performance.now();
+  // 여행자 아이콘: 우주비행사 헬멧 (실존 인물 얼굴 아님)
+  const ASTRO = '<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#f4f7fb" stroke="#000" stroke-width="1.5"/><rect x="8" y="12" width="24" height="15" rx="7.5" fill="#0b1726"/><path d="M12 16c3-2.6 9-3 13-1" stroke="#7fb4ff" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="20" cy="34" r="3" fill="#ffb347"/></svg>';
+  let astro = null;
+  function avatar(ll) {
+    if (!astro || !map.hasLayer(astro)) { astro = L.marker(ll, { icon: L.divIcon({ className: '', iconSize: [0, 0], html: '<div class="astro">' + ASTRO + '</div>' }), interactive: false, keyboard: false, zIndexOffset: 1000 }).addTo(map); fx.push(astro); }
+    else astro.setLatLng(ll);
+  }
+  // 카메라가 선을 따라 함께 날아감 (멀면 중간에 살짝 멀어졌다가 도착지에서 다시 다가감)
+  function travel(a, b, dur, zA, zB, onDone) {
+    const pts = gc(a, b, 120), km = hav(a, b), d0 = dist, zT = Math.max(2, Math.min(4, Math.round(5 - km / 3000)));
+    // 1) 이동 높이로 살짝 올라감 → 2) 같은 높이로 선을 따라 미끄러짐(타일이 끊기지 않게 확대 단계 고정) → 3) 도착지로 내려감
+    map.flyTo(a, zT, { duration: 0.45 });
+    const glow = L.polyline([pts[0]], { color: '#ffffff', weight: 7, opacity: 0.2, interactive: false }).addTo(map);
+    const line = L.polyline([pts[0]], { color: '#ffffff', weight: 2.2, opacity: 0.95, interactive: false }).addTo(map);
+    fx.push(glow, line);
+    let t0 = 0;
+    later(470, () => { t0 = performance.now(); requestAnimationFrame(step); });
     const step = (now) => {
       if (!map.hasLayer(line)) return;
-      const k = Math.min(1, (now - t0) / dur), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, i = Math.max(1, Math.round(e * (pts.length - 1)));
-      line.setLatLngs(pts.slice(0, i + 1)); glow.setLatLngs(pts.slice(0, i + 1)); head.setLatLng(pts[i]);
+      const k = Math.min(1, (now - t0) / dur), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, f = e * (pts.length - 1), i = Math.floor(f), r = f - i;
+      const p0 = pts[i], p1 = pts[Math.min(i + 1, pts.length - 1)], pos = [p0[0] + (p1[0] - p0[0]) * r, p0[1] + (p1[1] - p0[1]) * r];
+      const sh = pts.slice(0, i + 1).concat([pos]);
+      line.setLatLngs(sh); glow.setLatLngs(sh); avatar(pos);
+      map.setView(pos, zT, { animate: false });
       dist = d0 + km * e; $('tDist').textContent = Math.round(dist).toLocaleString('en-US') + ' km';
-      if (k < 1) requestAnimationFrame(step); else { map.removeLayer(head); line.setStyle({ dashArray: null, opacity: 0.55 }); onDone && onDone(); }
+      if (k < 1) requestAnimationFrame(step); else { line.setStyle({ opacity: 0.6 }); map.flyTo(b, zB, { duration: 0.6 }); later(600, () => onDone && onDone()); }
+    };
+  }
+  function stamp(s) {
+    if (!s.stamp) return;
+    const el = $('stamp'); el.textContent = s.stamp; el.classList.toggle('bad', !!s.bad);
+    const t0 = performance.now();
+    const step = (now) => {
+      const k = (now - t0) / 1600;
+      const a = k < 0.12 ? k / 0.12 : k > 0.8 ? Math.max(0, (1 - k) / 0.2) : 1, sc = k < 0.12 ? 1.6 - 0.6 * (k / 0.12) : 1;
+      el.style.opacity = String(a); el.style.transform = 'rotate(-8deg) scale(' + sc + ')';
+      if (k < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
+  }
+  let cash = 0;
+  function cashTo(m) {
+    const from = cash, t0 = performance.now();
+    const step = (now) => { const k = Math.min(1, (now - t0) / 1200); cash = from + (m - from) * k; $('tCash').textContent = '$' + Math.round(cash * 1e6).toLocaleString('en-US'); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  function countdown(onGo) {
+    const el = $('cd'); ['T-3', 'T-2', 'T-1'].forEach((txt, i) => later(i * 700, () => { el.textContent = txt; el.style.opacity = '1'; later(520, () => { el.style.opacity = '0'; }); }));
+    later(2100, onGo);
   }
   function pin(s) {
     const icon = L.divIcon({ className: '', iconSize: [0, 0], html: '' });
@@ -142,6 +181,7 @@ html,body{margin:0;height:100%;background:#000;color:var(--w);font-family:system
     $('barI').style.width = ((i + 1) / STOPS.length * 100).toFixed(1) + '%';
   }
   function liftoff() {
+    if (astro && map.hasLayer(astro)) map.removeLayer(astro);
     const lf = $('lift'), rk = $('rocket'), pl = $('plume'); lf.classList.add('on');
     const t0 = performance.now(), H = innerHeight;
     const step = (now) => {
@@ -154,27 +194,39 @@ html,body{margin:0;height:100%;background:#000;color:var(--w);font-family:system
   }
   function reset() {
     timers.splice(0).forEach(clearTimeout); fx.splice(0).forEach((l) => map.hasLayer(l) && map.removeLayer(l));
-    dist = 0; $('tDist').textContent = '0 km'; $('tAge').textContent = '—'; $('tStage').textContent = '00/' + STOPS.length; $('barI').style.width = '0';
+    dist = 0; cash = 0; astro = null; $('tCash').textContent = '$0'; $('stamp').style.opacity = '0'; $('cd').style.opacity = '0'; $('tDist').textContent = '0 km'; $('tAge').textContent = '—'; $('tStage').textContent = '00/' + STOPS.length; $('barI').style.width = '0';
     ['card', 'lift', 't0', 'end'].forEach((id) => $(id).classList.remove('on'));
     const rk = $('rocket'); rk.style.transform = ''; $('plume').style.height = '0';
     map.stop(); WORLD();
   }
   let playing = false;
+  const PAD = () => ({ paddingTopLeft: [40, 100], paddingBottomRight: [40, Math.min(240, innerHeight * 0.3)], maxZoom: 5 });
+  function arrive(i, s) { pin(s); stamp(s); if (s.cash) cashTo(s.cash); }
   function play() {
     reset(); playing = true; $('ctl').classList.add('hide');
-    let t = 900;
+    let t = 600;
     STOPS.forEach((s, i) => {
       const prev = STOPS[i - 1];
       const same = prev && prev.ll[0] === s.ll[0] && prev.ll[1] === s.ll[1];
-      const fly = !prev ? 1800 : same ? 500 : Math.min(2600, 1300 + hav(prev.ll, s.ll) / 9);
-      later(t, () => {
-        map.flyTo(s.ll, s.z, { duration: fly / 1000, easeLinearity: 0.2 });
-        if (prev && !same) travel(prev.ll, s.ll, fly, () => pin(s)); else if (!prev) later(fly, () => pin(s));
-        later(fly * 0.55, () => card(i, s));
-      });
-      t += fly + (s.final ? 1200 : 1500);
+      if (!prev) {
+        later(t, () => { map.flyTo(s.ll, s.z, { duration: 1.4 }); later(1450, () => { avatar(s.ll); arrive(i, s); }); later(700, () => card(i, s)); });
+        t += 1450 + 1700;
+      } else if (same || hav(prev.ll, s.ll) < 50) {
+        later(t, () => { card(i, s); arrive(i, s); });
+        t += 2300;
+      } else {
+        const dur = Math.min(3200, 1300 + hav(prev.ll, s.ll) / 6);
+        later(t, () => { card(i, s); travel(prev.ll, s.ll, dur, map.getZoom(), s.z, () => arrive(i, s)); });
+        t += 470 + dur + 600 + 1500;
+      }
     });
-    later(t, () => { $('card').classList.remove('on'); liftoff(); later(900, () => $('t0').classList.add('on')); });
+    // 전체 경로 한눈에 → 엘세군도로 돌아와 카운트다운 → 발사
+    const last = STOPS[STOPS.length - 1];
+    later(t, () => { $('card').classList.remove('on'); map.flyToBounds(L.latLngBounds(STOPS.map((x) => x.ll).concat([[62, 37]])), Object.assign({ duration: 1.1 }, PAD())); });
+    later(t + 2600, () => map.flyTo(last.ll, last.z, { duration: 1.0 }));
+    t += 3700;
+    later(t, () => countdown(() => { liftoff(); later(900, () => $('t0').classList.add('on')); }));
+    t += 2100;
     later(t + 4300, () => { $('t0').classList.remove('on'); $('end').classList.add('on'); });
     later(t + 8500, () => { playing = false; $('ctl').classList.remove('hide'); $('play').textContent = '▶ RELAUNCH'; });
   }
