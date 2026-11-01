@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31",
+ "updated": "2026-11-01",
  "window_days": 30,
  "note": "Trades dated 1-30 days before a dated public event for the same company. Dates are placed side by side only; this does not show that anyone knew in advance or that one caused the other. House PTR amounts are reported ranges. Form 4 rows marked plan=true were under a 10b5-1 trading plan.",
  "coverage": {
@@ -12495,8 +12495,8 @@
    ]
   },
   "MSFT": {
-   "n": 66,
-   "n_ptr": 47,
+   "n": 65,
+   "n_ptr": 46,
    "n_form4": 19,
    "matches": [
     {
@@ -80280,8 +80280,8 @@
    ]
   },
   "WBI": {
-   "n": 6,
-   "n_ptr": 3,
+   "n": 5,
+   "n_ptr": 2,
    "n_form4": 3,
    "matches": [
     {
@@ -80346,21 +80346,6 @@
      "event_date": "2025-10-07",
      "event_url": "https://www.sec.gov/Archives/edgar/data/2064947/000119312525232163/wbi-20251006.htm",
      "days_before": 19
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$15,001 - $50,000",
-     "trade_date": "2025-09-26",
-     "filed": "2025-10-10",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20032248.pdf",
-     "event": "8-K: material agreement, new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2025-10-07",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/2064947/000119312525232163/wbi-20251006.htm",
-     "days_before": 11
     },
     {
      "src": "House PTR",
@@ -87858,51 +87843,6 @@
     }
    ]
   },
-  "ARIS": {
-   "n": 1,
-   "n_ptr": 1,
-   "n_form4": 0,
-   "matches": [
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$50,001 - $100,000",
-     "trade_date": "2025-04-08",
-     "filed": "2025-05-06",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030288.pdf",
-     "event": "Presidential order modifying reciprocal tariff rates (EO 14266, pause)",
-     "event_kind": "historical",
-     "event_date": "2025-04-09",
-     "event_url": "https://www.federalregister.gov/documents/2025/04/15/2025-06462/modifying-reciprocal-tariff-rates-to-reflect-trading-partner-retaliation-and-alignment",
-     "days_before": 1
-    }
-   ]
-  },
-  "USB": {
-   "n": 1,
-   "n_ptr": 0,
-   "n_form4": 1,
-   "matches": [
-    {
-     "src": "SEC Form 4",
-     "who": "Roy Arijit",
-     "role": "Sr. Exec. VP",
-     "side": "sell",
-     "amount": "2,237 shares at $43.68 (about $97,712)",
-     "plan": false,
-     "trade_date": "2025-03-07",
-     "filed": "2025-03-10",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/36104/000122520825003190/0001225208-25-003190-index.htm",
-     "event": "Presidential tariff order signed (EO 14257, reciprocal tariffs)",
-     "event_kind": "historical",
-     "event_date": "2025-04-02",
-     "event_url": "https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and",
-     "days_before": 26
-    }
-   ]
-  },
   "ODFL": {
    "n": 1,
    "n_ptr": 1,
@@ -88892,6 +88832,29 @@
      "event_date": "2025-04-02",
      "event_url": "https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and",
      "days_before": 20
+    }
+   ]
+  },
+  "USB": {
+   "n": 1,
+   "n_ptr": 0,
+   "n_form4": 1,
+   "matches": [
+    {
+     "src": "SEC Form 4",
+     "who": "Roy Arijit",
+     "role": "Sr. Exec. VP",
+     "side": "sell",
+     "amount": "2,237 shares at $43.68 (about $97,712)",
+     "plan": false,
+     "trade_date": "2025-03-07",
+     "filed": "2025-03-10",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/36104/000122520825003190/0001225208-25-003190-index.htm",
+     "event": "Presidential tariff order signed (EO 14257, reciprocal tariffs)",
+     "event_kind": "historical",
+     "event_date": "2025-04-02",
+     "event_url": "https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and",
+     "days_before": 26
     }
    ]
   },
@@ -92337,6 +92300,28 @@
      "event_date": "2025-04-09",
      "event_url": "https://www.federalregister.gov/documents/2025/04/15/2025-06462/modifying-reciprocal-tariff-rates-to-reflect-trading-partner-retaliation-and-alignment",
      "days_before": 2
+    }
+   ]
+  },
+  "ARIS": {
+   "n": 1,
+   "n_ptr": 1,
+   "n_form4": 0,
+   "matches": [
+    {
+     "src": "House PTR",
+     "who": "Gilbert Cisneros",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$50,001 - $100,000",
+     "trade_date": "2025-04-08",
+     "filed": "2025-05-06",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030288.pdf",
+     "event": "Presidential order modifying reciprocal tariff rates (EO 14266, pause)",
+     "event_kind": "historical",
+     "event_date": "2025-04-09",
+     "event_url": "https://www.federalregister.gov/documents/2025/04/15/2025-06462/modifying-reciprocal-tariff-rates-to-reflect-trading-partner-retaliation-and-alignment",
+     "days_before": 1
     }
    ]
   },
