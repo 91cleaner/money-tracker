@@ -5,11 +5,11 @@ var st=document.createElement('style');st.textContent=
 '#warList{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}#warList[hidden],#warSub[hidden]{display:none}'+
 '#warSub{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}'+
 '#warList button,#warSub button{min-height:44px;border:1px solid #2e6b4a;border-radius:10px;background:#04140b;color:#e8fff0;font:600 14px system-ui,sans-serif;text-align:left;padding:6px 10px;cursor:pointer}'+
-'#warList button.on{background:#0d3a22}#warSub small{display:block;opacity:.65;font-weight:400;font-size:11px}'+
+'#warList button.on{background:#0d3a22}#usP .x{min-width:76px;height:50px;font-size:17px;font-weight:800}#usP .hd{padding-right:90px}.wr-tz{animation:wrTz 1.2s ease-out}@keyframes wrTz{from{fill-opacity:0}}.wr-cr{animation:wrCr 2s ease-in-out infinite}@keyframes wrCr{50%{fill-opacity:.12}}#warSub small{display:block;opacity:.65;font-weight:400;font-size:11px}'+
 '#usP .lg{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;margin:4px 0}#usP .lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}#usP .ss a{font-size:12px;color:#0645ad;word-break:break-all}';
 document.head.appendChild(st);
 box.style.marginTop='8px';
-box.innerHTML='<button type="button" class="btn prime" id="warOpen" style="width:100%;min-height:44px">나라별 전쟁 기록<span style="display:block;font-weight:400;font-size:11px;opacity:.75">눌러 보세요</span></button><div id="warList" hidden></div><div id="warSub" hidden></div>';
+box.innerHTML='<button type="button" class="btn prime" id="warOpen" style="width:100%;min-height:44px">나라별 전쟁 기록<span style="display:block;font-weight:400;font-size:11px;opacity:.75">1850년 이후</span></button><div id="warList" hidden></div><div id="warSub" hidden></div>';
 var D,geo,map,P,lay,grp,c,i=0,tm=null,prev,SC={a:'#b03a2e',b:'#1f4e8c',c:'#d98a1a'};
 var dt=function(d){var a=d.split('-');return a[0]+'년 '+(+a[1])+'월'+(a[2]?' '+(+a[2])+'일':'')};
 function load(){return Promise.all([D||fetch('data/warrec.json').then(r=>r.json()).then(j=>D=j),geo||fetch('data/national/countries-110m.geojson').then(r=>r.json()).then(j=>geo=j)])}
@@ -35,7 +35,7 @@ function start(C,j){map=window.mtMap;if(!map)return;if(P)stop();var o=document.q
  P.querySelector('.x').onclick=stop;P.querySelector('.pv').onclick=function(){pause();show(i-1)};P.querySelector('.nx').onclick=function(){pause();show(i+1)};
  P.querySelector('.pp').onclick=function(){tm?pause():play()};P.querySelector('input').oninput=function(e){pause();show(+e.target.value)};
  P.querySelector('.mb').onclick=function(){var m=P.querySelector('.mo');m.style.display=m.style.display=='block'?'none':'block'};
- document.addEventListener('keydown',esc);var z=c.view[2];if(window.innerWidth<600)z--;map.setView([c.view[0],c.view[1]],z);show(0);play()}
+ document.addEventListener('keydown',esc);var z=c.view[2];if(window.innerWidth<600)z--;if(c.vb)map.fitBounds(c.vb,{padding:[10,10]});else map.setView([c.view[0],c.view[1]],z);show(0);play()}
 function esc(e){if(e.key=='Escape')stop()}
 function play(){if(i>=c.steps.length-1)show(0);tm=setInterval(function(){if(i>=c.steps.length-1){pause();return}show(i+1)},4500);P.querySelector('.pp').textContent='멈춤'}
 function pause(){clearInterval(tm);tm=null;if(P)P.querySelector('.pp').textContent='재생'}
@@ -49,9 +49,14 @@ function show(k){k=Math.max(0,Math.min(c.steps.length-1,k));i=k;grp.clearLayers(
   (s.p||[]).forEach(function(p){var key=p[0]+','+p[1];if(!cur&&seen[key])return;
    var m=L.circleMarker([p[0],p[1]],{pane:'usM',radius:cur?8:5,color:'#fff',weight:2,fillColor:cur?'#111':'#888',fillOpacity:op,interactive:false}).addTo(grp);
    if(cur)m.bindTooltip(p[2],{permanent:true,direction:'right',className:'usLbl',pane:'usM'});seen[key]=1})});
- var s=c.steps[k];if(window.HFX){(s.f||[]).forEach(function(f){HFX.fire(f[0],f[1],grp,'usM')});(s.c||[]).forEach(function(n){HFX.num(n[0],n[1],n[2],n[3],grp,'usM')})}
+ var s=c.steps[k];
+ (s.tz||[]).forEach(function(t){L.polygon(t[0],{pane:'usA',color:SC[t[1]],weight:2,fillColor:SC[t[1]],fillOpacity:.35,className:'wr-tz',interactive:false}).addTo(grp)});
+ (s.ln||[]).forEach(function(l){L.polyline(l,{pane:'usM',color:'#000',weight:7,opacity:.5,interactive:false}).addTo(grp);L.polyline(l,{pane:'usM',color:'#fff',weight:3,interactive:false}).addTo(grp)});
+ (s.cr||[]).forEach(function(r){L.circle([r[0],r[1]],{pane:'usA',radius:Math.max(r[2]*1000,30000),color:SC[r[3]],weight:2,fillColor:SC[r[3]],fillOpacity:.4,className:'wr-cr',interactive:false}).addTo(grp)});
+ if(s.v)map.flyToBounds(s.v,{duration:1.1,padding:[10,10]});else if(k>0&&c.steps[k-1].v)map.flyToBounds(c.vb||[[c.view[0]-5,c.view[1]-5],[c.view[0]+5,c.view[1]+5]],{duration:1.1,padding:[10,10]});
+ if(window.HFX){(s.f||[]).forEach(function(f){HFX.fire(f[0],f[1],grp,'usM')});(s.c||[]).forEach(function(n){HFX.num(n[0],n[1],n[2],n[3],grp,'usM')})}
  P.querySelector('.sd').textContent=(k+1)+'/'+c.steps.length+' 단계 · '+dt(s.d);P.querySelector('.cap').textContent=s.t;
- P.querySelector('.ss').innerHTML=s.s?'<span>출처</span> <a href="'+s.s[1]+'" target="_blank" rel="noopener">'+s.s[0]+'</a>':'';P.querySelector('input').value=k;
+ P.querySelector('.ss').innerHTML=s.s?'<span>출처</span> <a href="'+s.s[1]+'" target="_blank" rel="noopener">'+s.s[0]+'</a>'+(s.s2?'<br><span>출처</span> <a href="'+s.s2[1]+'" target="_blank" rel="noopener">'+s.s2[0]+'</a>':''):'';P.querySelector('input').value=k;
  if(window.HFX){HFX.thumb(P.querySelector('.ph'),'war:'+c.id+':'+k);HFX.tl(c.steps.map(function(x){return x.d}),k,function(j){pause();show(j)})}}
 function stop(){pause();window.HFX&&HFX.end();document.removeEventListener('keydown',esc);if(lay)map.removeLayer(lay);if(grp)map.removeLayer(grp);if(P)P.remove();P=null;document.body.classList.remove('us-on');if(prev)map.setView(prev.c,prev.z)}
 })();
