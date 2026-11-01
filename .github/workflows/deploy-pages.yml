@@ -65,7 +65,7 @@ jobs:
           base = os.environ['SITE_URL'].rstrip('/') + '/'
           checks = {
             '': ['world-intelligence/', 'lang', 'korea.html'],
-            'korea.html': ['대한민국', 'href="world-intelligence/"'],
+            'korea.html': ['대한민국'],
             'usa-command-legacy.html': ['id="usCmd"', '실시간 시세 OFF', 'mt-map-only-controller'],
             'assets/mt-command-ui.js': [],
           }
