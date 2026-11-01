@@ -40,7 +40,7 @@ try:
     last = fetch('https://data.gdeltproject.org/gdeltv2/lastupdate.txt', 30).decode().split()[2]
     ts = datetime.datetime.strptime(re.search(r'(\d{14})', last).group(1), '%Y%m%d%H%M%S')
     urls = [f"https://data.gdeltproject.org/gdeltv2/{(ts - datetime.timedelta(minutes=15 * i)).strftime('%Y%m%d%H%M%S')}.export.CSV.zip" for i in range(96)]
-    cells = {}; okf = 0
+    cells = {}; det = {}; okf = 0
     def one(u):
         try: return fetch(u, 40)
         except Exception: return None
@@ -54,9 +54,17 @@ try:
                 try: la, lo = float(row[56]), float(row[57])
                 except ValueError: continue
                 k = (round(la), round(lo)); cells[k] = cells.get(k, 0) + 1
-    conf = [[la, lo, n, country(la, lo)] for (la, lo), n in cells.items() if n >= 2]
+                d = det.setdefault(k, {'t': '', 'pl': {}, 'rc': {'18': 0, '19': 0, '20': 0}, 'u': ''})
+                d['rc'][row[28]] += 1; pl = row[52].strip()
+                if pl: d['pl'][pl] = d['pl'].get(pl, 0) + 1
+                if row[59] >= d['t'] and row[60].startswith('http'): d['t'], d['u'] = row[59], row[60]
+    def dt(t):
+        try: return datetime.datetime.strptime(t, '%Y%m%d%H%M%S').strftime('%Y-%m-%dT%H:%M:%SZ')
+        except ValueError: return ''
+    conf = [[la, lo, n, country(la, lo), dt(det[(la, lo)]['t']), max(det[(la, lo)]['pl'], key=det[(la, lo)]['pl'].get) if det[(la, lo)]['pl'] else '',
+             [det[(la, lo)]['rc'][c] for c in ('18', '19', '20')], det[(la, lo)]['u']] for (la, lo), n in cells.items() if n >= 2]
     out['conflict'] = {'source': 'GDELT 2.0 (gdeltproject.org)', 'hours': 24, 'files': okf, 'rule': 'EventRootCode 18,19,20; 1 degree cells, 2+ reports',
-                       'fields': ['lat', 'lon', 'reports', 'cc'], 'cells': sorted(conf, key=lambda x: -x[2])[:1500]}
+                       'fields': ['lat', 'lon', 'reports', 'cc', 'latest_utc', 'place', 'by_root_18_19_20', 'latest_url'], 'cells': sorted(conf, key=lambda x: -x[2])[:1500]}
 except Exception as e:
     print('gdelt failed', type(e).__name__); out['conflict'] = prev.get('conflict')
 # 2) FIRMS VIIRS 24h public CSV
