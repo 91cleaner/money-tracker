@@ -1,0 +1,47 @@
+name: Pages public JSON parity audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/check-pages-public-json.py'
+      - 'scripts/test_pages_public_json.py'
+      - '.github/workflows/pages-json-parity.yml'
+  workflow_run:
+    workflows: ['Deploy MONEY TRACKER Pages']
+    types: [completed]
+permissions:
+  contents: read
+jobs:
+  regression:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check JSON parity fail-closed behavior
+        run: python3 -m unittest discover -s scripts -p test_pages_public_json.py -v
+  deployed-json:
+    if: >-
+      github.event_name == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild public artifact from the deployed commit
+        run: python3 scripts/prepare-public-pages.py
+      - name: Validate public artifact files
+        run: python3 scripts/check-pages-artifact.py
+      - name: Compare deployed public JSON bytes against the same SHA
+        run: >-
+          python3 scripts/check-pages-public-json.py
+          --site-url https://91cleaner.github.io/money-tracker/
+          --expected-dir .public-pages
