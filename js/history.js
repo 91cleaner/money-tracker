@@ -23,12 +23,13 @@
 .his-cr{animation:hisPulse 2s ease-in-out infinite}@keyframes hisPulse{50%{fill-opacity:.15}}
 .his-lab{background:#000c;border:1px solid #fff5;color:#fff;font:600 12px system-ui,sans-serif;padding:2px 6px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-150%)}
 .his-head{width:0;height:0}
+.his-zn{animation:hisZn 1.2s ease-out}@keyframes hisZn{from{fill-opacity:0;stroke-opacity:0}}#hisFs a{color:#9effc0;word-break:break-all}
 @media (max-width:760px) and (orientation:portrait){#hisP{top:auto;bottom:0;left:0;width:auto;height:46dvh;padding:0}#hisP .in{border-radius:16px 16px 0 0;gap:6px;padding:10px 12px}#hisP .dt{font-size:28px}#hisP .cap{font-size:15px;min-height:0}}
 @media (orientation:landscape) and (max-height:500px){#hisP .in{gap:5px;padding:10px}#hisP .dt{font-size:24px}#hisP .cap{font-size:14px;min-height:0}#hisP .ctl button{height:40px}#hisP .x{height:44px}}`;
   const st = document.createElement('style'); st.textContent = css; document.head.append(st);
   box.innerHTML = '<button type="button" class="btn prime" id="hisOpen" style="width:100%;min-height:44px">세계 역사 사건<span style="display:block;font-weight:400;font-size:11px;opacity:.75">눌러 보세요</span></button><div id="hisList" hidden></div>';
   const P = document.createElement('div'); P.id = 'hisP'; P.hidden = true;
-  P.innerHTML = '<div class="in"><button type="button" class="x" id="hisX" aria-label="닫기">닫기</button><div><div class="tt" id="hisT"></div><div class="pp" id="hisPer"></div></div><div><div class="dt" id="hisD"></div><div class="tm" id="hisTm"></div></div><div class="cap" id="hisC"></div><div id="hisPh" hidden></div><div class="ctl"><button type="button" id="hisPrev">이전</button><button type="button" class="play" id="hisPlay">재생</button><button type="button" id="hisNext">다음</button></div><input type="range" id="hisR" min="0" max="0" step="1" aria-label="단계 이동"><div class="lg" id="hisL"></div><details><summary>자세히 보기</summary><p id="hisM"></p><p id="hisTo"></p><p><b>출처</b></p><ul id="hisS"></ul><p><b>사진</b></p><ul id="hisPS"></ul><p class="nt" id="hisN"></p><p class="nt">원, 화살표, 장소 표시는 이해를 돕기 위한 대략적인 그림이에요. 노란 점선 원은 넓이가 숫자에 비례해요(아주 큰 수는 크기를 줄였어요).</p></details></div>';
+  P.innerHTML = '<div class="in"><button type="button" class="x" id="hisX" aria-label="닫기">닫기</button><div><div class="tt" id="hisT"></div><div class="pp" id="hisPer"></div></div><div><div class="dt" id="hisD"></div><div class="tm" id="hisTm"></div></div><div class="cap" id="hisC"></div><div id="hisPh" hidden></div><div class="ctl"><button type="button" id="hisPrev">이전</button><button type="button" class="play" id="hisPlay">재생</button><button type="button" id="hisNext">다음</button></div><input type="range" id="hisR" min="0" max="0" step="1" aria-label="단계 이동"><div class="lg" id="hisL"></div><details><summary>자세히 보기</summary><p id="hisM"></p><p id="hisFs"></p><p id="hisTo"></p><p><b>출처</b></p><ul id="hisS"></ul><p><b>사진</b></p><ul id="hisPS"></ul><p class="nt" id="hisN"></p><p class="nt">원, 화살표, 장소 표시는 이해를 돕기 위한 대략적인 그림이에요. 노란 점선 원은 넓이가 숫자에 비례해요(아주 큰 수는 크기를 줄였어요).</p></details></div>';
   document.body.append(P);
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -41,6 +42,7 @@
     $('hisList').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => open(b.dataset.id)));
   }).catch(() => { $('hisList').textContent = '불러오지 못했어요'; });
   $('hisOpen').addEventListener('click', () => { $('hisList').hidden = !$('hisList').hidden; });
+  window.HIS = { open: (id) => open(id) };
   function open(id) {
     const m = getMap(); if (!m) return;
     fetch('data/worldhist/' + id + '.json').then((r) => r.json()).then((w) => {
@@ -75,6 +77,7 @@
   function show(fi) {
     const m = getMap(); i = Math.max(0, Math.min(W.frames.length - 1, fi)); const f = W.frames[i], col = (s) => (W.sides[s] || ['', '#ccc'])[1];
     clear(); lay = L.layerGroup().addTo(m);
+    (f.zn || []).forEach(([s, poly]) => L.polygon(poly, { pane: 'hisF', color: col(s), weight: 2, opacity: .9, fillColor: col(s), fillOpacity: .3, className: 'his-zn', interactive: false }).addTo(lay));
     (f.ln || []).forEach((ln) => { L.polyline(ln, { pane: 'hisF', color: '#000', weight: 7, opacity: .5, interactive: false }).addTo(lay); L.polyline(ln, { pane: 'hisF', color: '#fff', weight: 3, interactive: false }).addTo(lay); });
     (f.cr || []).forEach(([la, lo, km, s]) => crowd(la, lo, km, col(s), lay));
     (f.ar || []).forEach(([a, b, c, d, s]) => arrow([a, b], [c, d], col(s), lay));
@@ -82,7 +85,7 @@
       L.marker([la, lo], { pane: 'hisT2', interactive: false, icon: L.divIcon({ className: '', html: `<div class="his-lab">${esc(n)}</div>` }) }).addTo(lay); });
     (f.fx || []).forEach(([la, lo]) => HFX.fire(la, lo, lay, 'hisT2')); (f.nc || []).forEach(([la, lo, n, l]) => HFX.num(la, lo, n, l, lay, 'hisF', 'hisT2'));
     HFX.thumb($('hisPh'), 'his:' + W.id + ':' + i); HFX.tl(W.frames.map((x) => x.d), i, (k) => { stop(); show(k); });
-    $('hisD').textContent = D(f.d); $('hisTm').textContent = f.tm || ''; $('hisC').textContent = f.t; $('hisM').textContent = f.more || ''; $('hisR').value = i;
+    $('hisD').textContent = D(f.d); $('hisTm').textContent = f.tm || ''; $('hisC').textContent = f.t; $('hisM').textContent = f.more || ''; $('hisFs').innerHTML = f.src ? '이 장면 출처: <a href="' + esc(f.src[1]) + '" target="_blank" rel="noopener">' + esc(f.src[0]) + '</a>' : ''; $('hisR').value = i;
     const v = viewAt(i); if (f.v || (i > 0 && viewAt(i - 1) !== v)) m.flyToBounds(v, { duration: 1.2, padding: [10, 10] });
   }
   function stop() { clearInterval(timer); timer = null; $('hisPlay').textContent = '재생'; }
