@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>진영 지도 · 가상 시나리오</title>
+<meta name="description" content="3차 세계대전 가상 시나리오: 지금 맺은 방위 조약·협력 관계로 나눈 진영 지도. 예측 아님.">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<style>
+:root{--g:#5dff9e;--blue:#3d9bff;--blue2:#8cc6ff;--red:#ff4b4b;--red2:#ff9a7a;--mid:#f2f2e6}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#000;color:#eafff2;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;overflow:hidden}
+#map{position:fixed;inset:0;background:#02060a}
+.leaflet-container{background:#02060a}
+.sat{filter:brightness(.62) saturate(.7) contrast(1.08)}
+.leaflet-control-attribution{background:#000a!important;color:#9ab!important;font-size:9px!important}.leaflet-control-attribution a{color:#9ab!important}
+#top{position:fixed;left:0;right:0;top:0;z-index:1000;padding:calc(env(safe-area-inset-top) + 14px) 16px 26px;background:linear-gradient(#000e,#0000);pointer-events:none;text-align:center}
+#top .t{font-size:clamp(20px,6vw,34px);font-weight:900;letter-spacing:-.01em;text-shadow:0 2px 12px #000}
+#top .t small{font-size:.5em;font-weight:700;color:var(--g);margin-left:8px;vertical-align:.25em}
+#top .s{margin-top:4px;font-size:clamp(12px,3.4vw,15px);color:#cfe;opacity:.9}
+#cap{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom) + 78px);z-index:1000;display:flex;justify-content:center;pointer-events:none}
+#cap .box{max-width:560px;width:100%;background:#000c;border:1px solid #ffffff2a;border-radius:16px;padding:12px 16px;text-align:center;opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s}
+#cap .box.on{opacity:1;transform:none}
+#cap .h{font-size:clamp(18px,5.4vw,26px);font-weight:900}
+#cap .d{margin-top:4px;font-size:clamp(12px,3.5vw,15px);color:#d6e6dc;line-height:1.45}
+.dot{display:inline-block;width:.8em;height:.8em;border-radius:50%;margin-right:6px;vertical-align:-.05em}
+#ctl{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 14px);z-index:1001;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:0 12px;transition:opacity .4s}
+#ctl.hide{opacity:0;pointer-events:none}
+.btn{border:1px solid #2f7a4c;background:#03100acc;color:#d8f5e3;border-radius:999px;min-height:44px;padding:0 16px;font:700 15px system-ui,sans-serif;cursor:pointer}
+.btn.prime{background:var(--g);color:#02110a;border-color:var(--g)}
+#legend{position:fixed;right:10px;top:calc(env(safe-area-inset-top) + 96px);z-index:999;background:#000b;border:1px solid #ffffff22;border-radius:12px;padding:8px 10px;font-size:12px;line-height:1.7;opacity:0;transition:opacity .5s;pointer-events:none}
+#legend.on{opacity:1}
+.lab{color:#fff;font-weight:900;font-size:15px;white-space:nowrap;text-shadow:0 0 4px #000,0 0 10px #000,0 0 2px #000;transform:translate(-50%,-50%);opacity:0;transition:opacity .6s}
+.lab.on{opacity:1}
+.lab.b{color:#cfe6ff}.lab.r{color:#ffd0c8}.lab.m{color:#fff}
+#end{position:fixed;inset:0;z-index:1002;display:flex;align-items:center;justify-content:center;background:#000d;opacity:0;pointer-events:none;transition:opacity .6s;padding:24px}
+#end.on{opacity:1}
+#end .in{max-width:520px;text-align:center}
+#end .h{font-size:clamp(22px,6.4vw,32px);font-weight:900}
+#end .l{margin-top:14px;font-size:clamp(13px,3.6vw,16px);line-height:1.6;color:#d6e6dc;text-align:left}
+#end .src{margin-top:14px;font-size:11.5px;color:#9ab3a6;line-height:1.5;text-align:left}
+</style></head>
+<body>
+<div id="map" aria-label="진영 지도"></div>
+<div id="top"><div class="t" id="title">3차 세계대전이 일어난다면?<small>@청소부</small></div><div class="s" id="sub">가상 시나리오 · 지금 맺은 조약 기준 진영 지도 (예측 아님)</div></div>
+<div id="legend"></div>
+<div id="cap"><div class="box" id="capBox"><div class="h" id="capH"></div><div class="d" id="capD"></div></div></div>
+<div id="end"><div class="in"><div class="h">색은 '지금 맺은 약속'일 뿐이에요</div>
+ <div class="l" id="endL"></div>
+ <div class="src">출처: NATO 회원국 32개국(nato.int), 미·일, 미·한, 미·필리핀 상호방위조약, ANZUS(미·호주), 미국 대만관계법, 북·러 포괄적 전략동반자 조약(2024, 상호 지원 조항), 북·중 우호조약(1961), 러·벨라루스 연합국가, 러·이란 포괄적 전략동반자 조약(2025, 상호방위 조항 없음). 지도: Esri, Maxar 위성 사진 · 국경: Natural Earth 1:110m. 실제 전쟁 참여 여부를 예측하지 않아요.</div></div></div>
+<div id="ctl"><button class="btn prime" id="play" type="button">▶ 재생 (화면 녹화용)</button><button class="btn" id="step" type="button">다음 장면</button><a class="btn" href="skysea.html" style="display:inline-flex;align-items:center;text-decoration:none">세계 관제실</a></div>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script>
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  // 진영: 사실(조약·법)로만 나눔. 실제 참전 예측 아님.
+  const NATO = 'US CA GB FR DE IT ES PT NL BE LU DK NO IS PL CZ SK HU RO BG GR TR AL HR SI ME MK EE LV LT FI SE'.split(' ');
+  const G = {
+    blue: { cc: NATO.concat(['JP', 'KR', 'AU', 'PH']), color: '#3d9bff', name: '미국과 상호방위조약', icon: '🔵' },
+    blue2: { cc: ['TW'], color: '#8cc6ff', name: '미국 법으로 방어 지원(대만관계법, 조약 아님)', icon: '🔷' },
+    red: { cc: ['RU', 'CN', 'KP', 'BY'], color: '#ff4b4b', name: '러시아·중국과 상호 지원 조약', icon: '🔴' },
+    red2: { cc: ['IR'], color: '#ff9a7a', name: '러시아와 전략 협력(상호방위 조항 없음)', icon: '🔸' },
+    mid: { cc: ['IN', 'SA', 'AE', 'BR', 'ID', 'VN', 'PK', 'ZA', 'TH', 'EG'], color: '#f2f2e6', name: '어느 쪽 방위조약에도 없는 주요국(예)', icon: '⚪' }
+  };
+  const KO = { US: '미국', CA: '캐나다', GB: '영국', FR: '프랑스', DE: '독일', TR: '튀르키예', PL: '폴란드', JP: '일본', KR: '한국', AU: '호주', PH: '필리핀', TW: '대만', RU: '러시아', CN: '중국', KP: '북한', BY: '벨라루스', IR: '이란', IN: '인도', SA: '사우디', AE: 'UAE', BR: '브라질', ID: '인도네시아', VN: '베트남', PK: '파키스탄', ZA: '남아공', TH: '태국', EG: '이집트' };
+  const CENTER = { US: [39, -98], CA: [58, -105], RU: [61, 95], CN: [34, 103], KP: [40.2, 127.2], KR: [36.3, 127.9], JP: [36.5, 138.5], TW: [23.7, 121], PH: [12.5, 122.5], AU: [-25, 134], IN: [22, 79], IR: [32.5, 54], BY: [53.6, 28], GB: [53.5, -1.8], FR: [46.6, 2.4], DE: [51.1, 10.3], TR: [39, 35], PL: [52, 19.3], SA: [24, 45], BR: [-10, -53], ID: [-2.5, 117], VN: [15.5, 106.5], PK: [29.8, 69.5], ZA: [-29, 24.5], TH: [15.5, 101], EG: [26.5, 30], AE: [24, 54] };
+  const grp = {}; Object.keys(G).forEach((k) => G[k].cc.forEach((c) => { grp[c] = k; }));
+
+  const portrait = innerHeight > innerWidth;
+  const map = L.map('map', { zoomControl: false, attributionControl: true, zoomSnap: 0, zoomDelta: 0.25, minZoom: 0, maxZoom: 8, worldCopyJump: false, fadeAnimation: true });
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { className: 'sat', maxZoom: 18, attribution: '지도: Esri, Maxar' }).addTo(map);
+  const worldZoom = () => Math.log2(Math.max(innerWidth, 320) / 256) - 0.01; // 지구 한 바퀴가 화면 너비에 딱 맞게
+  const WORLD = () => map.setView([20, 12], worldZoom(), { animate: false });
+  WORLD();
+
+  const layers = {}; // cc -> path layer list
+  let geo = null;
+  const lab = {};
+  function labelFor(cc, cls) {
+    if (lab[cc] || !CENTER[cc]) return lab[cc];
+    const m = L.marker(CENTER[cc], { interactive: false, icon: L.divIcon({ className: '', html: '', iconSize: [0, 0] }) }).addTo(map);
+    const el = document.createElement('div'); el.className = 'lab ' + cls; el.textContent = KO[cc];
+    m.getElement().appendChild(el); lab[cc] = el; return el;
+  }
+  function showLabels(list, on) { list.forEach((cc) => { const g = grp[cc]; const el = labelFor(cc, g && g[0] === 'b' ? 'b' : g && g[0] === 'r' ? 'r' : 'm'); if (el) el.classList.toggle('on', on); }); }
+
+  fetch('data/national/countries-110m.geojson', { cache: 'force-cache' }).then((r) => r.json()).then((g) => {
+    geo = g;
+    L.geoJSON(g, {
+      interactive: false,
+      style: () => ({ color: '#ffffff', weight: 0.5, opacity: 0.28, fillOpacity: 0, fillColor: '#000' }),
+      onEachFeature: (f, ly) => { const p = f.properties; let c = p.ISO_A2 !== '-99' ? p.ISO_A2 : p.ISO_A2_EH; if (c === 'CN-TW') c = 'TW'; (layers[c] = layers[c] || []).push(ly); }
+    }).addTo(map);
+    ready = true; if (pending) { pending = false; play(); }
+  }).catch(() => { $('sub').textContent = '국경 자료를 불러오지 못했어요. 새로고침해 주세요.'; });
+
+  // 색 입히기: 기준점에서 가까운 나라부터 차례로
+  const timers = [];
+  const later = (ms, fn) => { const t = setTimeout(fn, ms); timers.push(t); return t; };
+  function paint(key, origin, spread) {
+    const g = G[key];
+    const list = g.cc.slice().sort((a, b) => dist(CENTER[a] || origin, origin) - dist(CENTER[b] || origin, origin));
+    list.forEach((cc, i) => later(Math.round(i * spread / Math.max(1, list.length - 1)), () => {
+      (layers[cc] || []).forEach((ly) => ly.setStyle({ fillColor: g.color, fillOpacity: key === 'mid' ? 0.42 : 0.5, color: g.color, weight: 1.6, opacity: 0.95 }));
+    }));
+  }
+  function dist(a, b) { const dx = Math.abs(a[1] - b[1]); return Math.hypot(a[0] - b[0], Math.min(dx, 360 - dx)); }
+  let blink = 0;
+  function blinkMid(on) {
+    clearInterval(blink); if (!on) return;
+    let k = 0; blink = setInterval(() => { k++; G.mid.cc.forEach((cc) => (layers[cc] || []).forEach((ly) => ly.setStyle({ fillOpacity: k % 2 ? 0.12 : 0.42 }))); }, 520);
+  }
+  function reset() {
+    timers.splice(0).forEach(clearTimeout); blinkMid(false);
+    Object.keys(layers).forEach((cc) => layers[cc].forEach((ly) => ly.setStyle({ color: '#ffffff', weight: 0.5, opacity: 0.28, fillOpacity: 0 })));
+    Object.keys(lab).forEach((cc) => lab[cc].classList.remove('on'));
+    $('legend').classList.remove('on'); $('end').classList.remove('on'); cap(null);
+    map.stop(); WORLD();
+  }
+  function cap(h, d) {
+    const b = $('capBox');
+    if (!h) { b.classList.remove('on'); return; }
+    b.classList.remove('on');
+    setTimeout(() => { $('capH').replaceChildren(); $('capH').append(h); $('capD').textContent = d || ''; b.classList.add('on'); }, 180);
+  }
+  function capTitle(key, text) { const f = document.createDocumentFragment(); const s = document.createElement('span'); s.className = 'dot'; s.style.background = G[key].color; f.append(s, text); return f; }
+  function legend() {
+    const L2 = $('legend'); L2.replaceChildren();
+    ['blue', 'blue2', 'red', 'red2', 'mid'].forEach((k) => { const r = document.createElement('div'); const s = document.createElement('span'); s.className = 'dot'; s.style.background = G[k].color; r.append(s, ({ blue: '미국 동맹', blue2: '대만', red: '러·중 조약', red2: '이란', mid: '중립 주요국' })[k]); L2.appendChild(r); });
+    L2.classList.add('on');
+  }
+  function endList() {
+    const el = $('endL'); el.replaceChildren();
+    [['blue', G.blue.icon + ' 미국 동맹 ' + G.blue.cc.length + '개국 — NATO 32개국 + 일본·한국·호주·필리핀'],
+     ['blue2', G.blue2.icon + ' 대만 — 조약은 없고 미국 법(대만관계법)으로 방어 지원'],
+     ['red', G.red.icon + ' 러시아·중국·북한·벨라루스 — 상호 지원 조약'],
+     ['red2', G.red2.icon + ' 이란 — 러시아와 전략 협력, 상호방위 조항 없음'],
+     ['mid', G.mid.icon + ' 인도·사우디·브라질 등 — 어느 쪽 방위조약에도 없음']].forEach((x) => { const d = document.createElement('div'); d.textContent = x[1]; el.appendChild(d); });
+  }
+
+  // 장면 (총 약 34초)
+  const SCENES = [
+    [0, () => { cap(document.createTextNode('지구 전체'), '나라마다 맺은 방위 약속으로 색을 칠해 볼게요'); }],
+    [3500, () => { paint('blue', [45, -40], 3200); cap(capTitle('blue', '미국과 상호방위조약 ' + G.blue.cc.length + '개국'), 'NATO 32개국 + 일본·한국·호주·필리핀'); }],
+    [8000, () => { paint('blue2', [23.7, 121], 0); cap(capTitle('blue2', '대만'), '조약은 없지만 미국 법(대만관계법)으로 방어 지원'); }],
+    [11000, () => { paint('red', [50, 100], 1600); cap(capTitle('red', '러시아·중국·북한·벨라루스'), '서로 돕기로 한 조약 (북·러 2024, 북·중 1961, 러·벨라루스 연합국가)'); }],
+    [15500, () => { paint('red2', [32.5, 54], 0); cap(capTitle('red2', '이란'), '러시아와 전략 협력 조약 · 상호방위 조항은 없음'); }],
+    [19000, () => { paint('mid', [20, 60], 1200); later(1400, () => blinkMid(true)); cap(capTitle('mid', '어느 쪽 방위조약에도 없는 나라들'), '인도·사우디·UAE·브라질·인도네시아·베트남 등 (예시)'); legend(); }],
+    [24500, () => { blinkMid(false); G.mid.cc.forEach((cc) => (layers[cc] || []).forEach((ly) => ly.setStyle({ fillOpacity: 0.3 }))); map.flyTo(portrait ? [33, 125] : [33, 124], portrait ? 4.2 : 4.6, { duration: 3.2 }); cap(document.createTextNode('그리고 한반도'), '조약이 맞닿는 곳: 한국·일본 ↔ 북한·중국 · 대만 해협'); later(3000, () => showLabels(['KR', 'KP', 'CN', 'JP', 'TW', 'RU', 'PH'], true)); }],
+    [32000, () => { cap(null); endList(); $('end').classList.add('on'); }]
+  ];
+  let ready = false, pending = false, idx = 0, playing = false;
+  function play() {
+    if (!ready) { pending = true; return; }
+    reset(); playing = true; $('ctl').classList.add('hide');
+    SCENES.forEach(([t, fn]) => later(t + 600, fn));
+    later(SCENES[SCENES.length - 1][0] + 6000, () => { playing = false; $('ctl').classList.remove('hide'); $('play').textContent = '▶ 다시 재생'; });
+  }
+  $('play').addEventListener('click', play);
+  $('step').addEventListener('click', () => {
+    if (!ready) return;
+    if (playing) { reset(); playing = false; idx = 0; }
+    if (idx === 0) reset();
+    if (idx >= SCENES.length) { reset(); idx = 0; return; }
+    SCENES[idx][1](); idx++;
+  });
+  // 재생 중 화면을 누르면 멈추고 버튼을 다시 보여 줌
+  document.addEventListener('click', (e) => { if (playing && !e.target.closest('#ctl')) { reset(); playing = false; $('ctl').classList.remove('hide'); $('play').textContent = '▶ 재생 (화면 녹화용)'; } });
+  if (/[?&]auto=1/.test(location.search)) play();
+})();
+</script>
+</body></html>
