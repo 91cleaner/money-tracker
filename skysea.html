@@ -22,7 +22,7 @@ h1{font-size:18px;margin:0;color:var(--g);letter-spacing:.04em}
 .btn.prime{background:var(--g);color:#02110a;border-color:var(--g);font-weight:800}
 #info{border:1px solid #1f4a33;border-left:3px solid var(--g);border-radius:10px;padding:10px 12px;background:#04140b;font-size:14px;line-height:1.5;min-height:60px}
 #info .h{font-weight:800;font-size:16px}
-.ship{display:flex;align-items:center;gap:8px;font-size:13px;opacity:.85}
+.ship{display:flex;align-items:flex-start;gap:8px;font-size:13px;opacity:.85;line-height:1.4}
 .ship input{width:18px;height:18px}
 details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
 .pl{width:22px;height:22px;margin:-11px 0 0 -11px}
@@ -44,10 +44,12 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
  <div class="grid" id="grid"></div>
  <div class="row"><button class="btn prime" id="all" type="button">전체 보기</button><a class="btn" href="index.html">나가기</a></div>
  <div id="info"><span style="opacity:.7">비행기를 누르면 편명, 등록 나라, 고도, 속도가 나와요.</span></div>
- <label class="ship"><input type="checkbox" disabled> 배 (준비 중) · Global Fishing Watch에서 가져올 예정이에요(배만, 늦게 들어와요).</label>
+ <label class="ship"><input type="checkbox" id="shipTg"> 배 보기 · <span id="shipNote">불러오는 중이에요</span></label>
+ <div class="grid" id="sgrid" hidden></div>
  <details><summary>자세히 보기</summary>
   <p>비행기 위치: adsb.lol 무료 공개 자료(ODbL)예요. 이 사이트가 10분마다 저장한 사진 한 장을 보여 줘요. adsb.lol은 브라우저에서 바로 부르는 것을 막아 두었어요.</p>
   <p>나라 구분: 비행기 고유 번호(ICAO 24비트 주소)의 나라별 배정 범위로 나눠요. 등록한 나라이고, 항공사 나라와 다를 수 있어요. 군용기 등 신호를 끈 비행기는 안 보여요.</p>
+  <p>배: Global Fishing Watch 자료(AIS 신호)예요. 며칠 늦게 들어와서 지금 위치가 아니에요. 하루 동안 0.5도 칸마다 지나간 배 수를 등록 나라(국기)별로 보여 줘요. 신호를 끈 배는 안 보여요.</p>
   <p>지도: Esri, Maxar 위성 사진이에요.</p>
  </details>
 </aside>
@@ -60,7 +62,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
   const HOME = L.latLngBounds([21.5, 117], [42.5, 133.5]);
   const map = L.map('map', { zoomControl: false, attributionControl: true, minZoom: 5, maxZoom: 10, maxBounds: HOME.pad(0.35), maxBoundsViscosity: 1, worldCopyJump: false, zoomSnap: 0.25 });
   map.attributionControl.setPrefix(false); L.control.zoom({ position: 'topleft' }).addTo(map);
-  window.mtKoreaDark({ noWrap: true }).addTo(map); window.mtKoreaExtras(map);
+  window.mtKoreaDark({ noWrap: true }).addTo(map); map.attributionControl.addAttribution('배: Global Fishing Watch · 비행기: adsb.lol'); window.mtKoreaExtras(map);
   const fit = () => map.fitBounds(HOME, { padding: [6, 6] });
   fit(); addEventListener('resize', () => { map.invalidateSize(); });
   const layer = L.layerGroup().addTo(map), off = new Set();
@@ -90,6 +92,23 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
   $('all').addEventListener('click', () => { off.clear(); fit(); draw(); $('info').innerHTML = '<span style="opacity:.7">비행기를 누르면 편명, 등록 나라, 고도, 속도가 나와요.</span>'; });
   const load = () => fetch('data/skysea/aircraft.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => { if (!last || j.updated !== last.updated) { last = j; draw(); } }).catch(() => { if (!last) $('upd').textContent = '자료를 불러오지 못했어요'; });
   load(); setInterval(load, 30000);
+  // Ships: Global Fishing Watch grid snapshot (delayed), drawn as dots per 0.5 degree cell.
+  const sl = L.layerGroup(); let ships = null;
+  const sdraw = () => {
+    sl.clearLayers(); if (!ships) return;
+    const cell = {};
+    ships.cells.forEach(([la, lo, cc, n]) => { const k = C[cc] ? cc : 'XX'; if (off.has(k)) return; const id = la + ',' + lo; (cell[id] = cell[id] || { la, lo, by: {} }).by[k] = (cell[id].by[k] || 0) + n; });
+    const rnd = L.canvas({ padding: .3 });
+    Object.values(cell).forEach(({ la, lo, by }) => {
+      const ks = Object.keys(by).sort((a, b) => by[b] - by[a]), top = ks[0], tot = ks.reduce((t, k) => t + by[k], 0);
+      L.circleMarker([la, lo], { renderer: rnd, radius: Math.min(9, 2 + Math.sqrt(tot) / 1.5), color: C[top][1], weight: 0, fillOpacity: .5 })
+        .on('click', () => { $('info').innerHTML = `<div class="h">배 ${tot.toLocaleString('ko-KR')}척 기록</div>${ks.map((k) => C[k][0] + ' ' + by[k].toLocaleString('ko-KR')).join(' · ')}<br>칸: 북위 ${la - .25}~${la + .25}도, 동경 ${lo - .25}~${lo + .25}도<br>날짜: ${ships.date_range[0]} (하루) · 색은 가장 많은 나라<br>출처: Global Fishing Watch`; }).addTo(sl);
+    });
+    $('sgrid').innerHTML = ORDER.map((k) => `<div class="cc"><div class="l"><span class="d" style="background:${C[k][1]}"></span>${C[k][0]} 배</div><div class="v">${(ships.counts[k] || 0).toLocaleString('ko-KR')}</div></div>`).join('');
+  };
+  fetch('data/skysea/ships.json', { cache: 'no-store' }).then((r) => r.json()).then((j) => { ships = j; $('shipNote').textContent = j.date_range[0] + ' 하루 기록 · Global Fishing Watch · 며칠 늦게 들어와요'; sdraw(); }).catch(() => { $('shipNote').textContent = '배 자료를 불러오지 못했어요'; $('shipTg').disabled = true; });
+  $('shipTg').addEventListener('change', (e) => { const on = e.target.checked; on ? sl.addTo(map) : map.removeLayer(sl); $('sgrid').hidden = !on; });
+  $('grid').addEventListener('click', () => setTimeout(sdraw, 0)); $('all').addEventListener('click', () => setTimeout(sdraw, 0));
 })();
 </script>
 </body></html>
