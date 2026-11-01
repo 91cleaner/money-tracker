@@ -6,11 +6,11 @@
   "usTradeControls": "ok: 400 docs (china 69)",
   "chinaMofcom": "ok: 9 items (export control 4)",
   "bisPolicyRates": "ok: KR,JP,CN,GB,US,XM",
-  "fdaApprovals": "ok: 237 approvals (novel 18)",
+  "fdaApprovals": "ok: 238 approvals (novel 18)",
   "qcewJobs": "ok: 3254@2026-Q1,3344@2026-Q1,3359@2026-Q1,3361@2026-Q1,3364@2026-Q1 · coords 180",
   "worldBankCountries": "ok: 7 indicators",
-  "ukCommonsVotes": "FAILED: The operation was aborted due to timeout",
+  "ukCommonsVotes": "ok: 200 divisions",
   "euParliamentVotes": "ok: 100 votes",
-  "krCustomsExports": "FAILED: customs fetch failed for HS 2710: TypeError"
+  "krCustomsExports": "ok: 2710@2026-09,8507@2026-09,8517@2026-09,8542@2026-09,8703@2026-09,8901@2026-09"
  }
 }
