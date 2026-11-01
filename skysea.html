@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>세계 관제실</title>
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<style>
+:root{--g:#5dff9e;--bg:#020a06;--line:#2bff8855;--sw:360px}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#000;color:#e8fff0;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+#map{position:fixed;left:0;top:0;bottom:0;right:var(--sw);background:#03080c}
+#side{position:fixed;right:0;top:0;bottom:0;width:var(--sw);background:var(--bg);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:10px;padding:14px;overflow:auto;z-index:1000}
+h1{font-size:18px;margin:0;color:var(--g);letter-spacing:.04em}
+.sub{font-size:12px;opacity:.75;margin-top:2px}
+.hero{border:1px solid #1f4a33;border-radius:14px;padding:12px 14px;background:#04140b}
+.hero .k{font-size:12px;opacity:.8}.hero .n{font-size:44px;font-weight:800;line-height:1.05;color:var(--g)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.cc{border:1px solid #1f4a33;border-radius:10px;padding:6px 6px 5px;background:#03100a;color:inherit;text-align:left;font:inherit;cursor:pointer}
+.cc .d{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:1px}
+.cc .l{font-size:11px;opacity:.9}.cc .v{font-size:22px;font-weight:800;line-height:1.1}
+.cc.off{opacity:.35}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid #2f7a4c;background:#03100a;color:#d8f5e3;border-radius:999px;padding:9px 14px;font:600 13px system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.btn.prime{background:var(--g);color:#02110a;border-color:var(--g);font-weight:800}
+#info{border:1px solid #1f4a33;border-left:3px solid var(--g);border-radius:10px;padding:10px 12px;background:#04140b;font-size:14px;line-height:1.5;min-height:60px}
+#info .h{font-weight:800;font-size:16px}
+.ship{display:flex;align-items:center;gap:8px;font-size:13px;opacity:.85}
+.ship input{width:18px;height:18px}
+details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
+.pl{width:22px;height:22px;margin:-11px 0 0 -11px}
+.pl svg{width:22px;height:22px;filter:drop-shadow(0 0 2px #000)}
+.leaflet-container{background:#03080c}
+@media (max-width:760px) and (orientation:portrait){
+ :root{--sw:0px}
+ #map{right:0;bottom:44dvh}
+ #side{top:auto;left:0;width:auto;height:44dvh;border-left:0;border-top:1px solid var(--line);border-radius:14px 14px 0 0;padding:10px 12px}
+ .hero .n{font-size:34px}.cc .v{font-size:19px}
+}
+@media (orientation:landscape) and (max-height:500px){:root{--sw:min(340px,44vw)}.hero .n{font-size:30px}#side{gap:6px;padding:8px}}
+</style></head>
+<body>
+<div id="map" aria-label="지도"></div>
+<aside id="side">
+ <div><h1>세계 관제실</h1><div class="sub" id="upd">불러오는 중이에요</div></div>
+ <div class="hero"><div class="k">지금 지도 안의 비행기</div><div class="n" id="tot">-</div></div>
+ <div class="grid" id="grid"></div>
+ <div class="row"><button class="btn prime" id="all" type="button">전체 보기</button><a class="btn" href="index.html">나가기</a></div>
+ <div id="info"><span style="opacity:.7">비행기를 누르면 편명, 등록 나라, 고도, 속도가 나와요.</span></div>
+ <label class="ship"><input type="checkbox" disabled> 배 (준비 중) · Global Fishing Watch에서 가져올 예정이에요(배만, 늦게 들어와요).</label>
+ <details><summary>자세히 보기</summary>
+  <p>비행기 위치: adsb.lol 무료 공개 자료(ODbL)예요. 이 사이트가 10분마다 저장한 사진 한 장을 보여 줘요. adsb.lol은 브라우저에서 바로 부르는 것을 막아 두었어요.</p>
+  <p>나라 구분: 비행기 고유 번호(ICAO 24비트 주소)의 나라별 배정 범위로 나눠요. 등록한 나라이고, 항공사 나라와 다를 수 있어요. 군용기 등 신호를 끈 비행기는 안 보여요.</p>
+  <p>지도: Esri, Maxar 위성 사진이에요.</p>
+ </details>
+</aside>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="assets/kr-basemap.js"></script>
+<script>
+(() => {
+  const C = { CN: ['중국', '#ff5a5a'], KR: ['한국', '#5dff9e'], JP: ['일본', '#ffffff'], KP: ['북한', '#ff9f1c'], TW: ['대만', '#4db8ff'], RU: ['러시아', '#c77dff'], US: ['미국', '#ffd60a'], XX: ['기타', '#8a9a90'] };
+  const ORDER = ['CN', 'KR', 'JP', 'KP', 'TW', 'RU', 'US', 'XX'];
+  const HOME = L.latLngBounds([21.5, 117], [42.5, 133.5]);
+  const map = L.map('map', { zoomControl: false, attributionControl: true, minZoom: 5, maxZoom: 10, maxBounds: HOME.pad(0.35), maxBoundsViscosity: 1, worldCopyJump: false, zoomSnap: 0.25 });
+  map.attributionControl.setPrefix(false); L.control.zoom({ position: 'topleft' }).addTo(map);
+  window.mtKoreaDark({ noWrap: true }).addTo(map); window.mtKoreaExtras(map);
+  const fit = () => map.fitBounds(HOME, { padding: [6, 6] });
+  fit(); addEventListener('resize', () => { map.invalidateSize(); });
+  const layer = L.layerGroup().addTo(map), off = new Set();
+  const svg = (col, deg) => `<svg viewBox="0 0 24 24" style="transform:rotate(${deg}deg)"><path fill="${col}" stroke="#000" stroke-width=".8" d="M12 2c.8 0 1.3.9 1.3 2v5.2l7.7 4.6v2l-7.7-2.4v4.4l2.2 1.7v1.6L12 20l-3.5 1.1v-1.6l2.2-1.7v-4.4L3 15.8v-2l7.7-4.6V4c0-1.1.5-2 1.3-2z"/></svg>`;
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => n == null ? '정보 없음' : n.toLocaleString('ko-KR');
+  let last = null;
+  const kst = (iso) => { const d = new Date(iso); return d.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }); };
+  const draw = () => {
+    if (!last) return; layer.clearLayers();
+    const cnt = {}; ORDER.forEach((k) => cnt[k] = 0);
+    last.ac.forEach((a) => {
+      const [hex, fl, reg, ty, lat, lon, tr, alt, gs, cc] = a; const k = C[cc] ? cc : 'XX'; cnt[k]++;
+      if (off.has(k)) return;
+      const m = L.marker([lat, lon], { icon: L.divIcon({ className: 'pl', html: svg(C[k][1], tr || 0), iconSize: [22, 22] }), keyboard: false });
+      m.on('click', () => {
+        $('info').innerHTML = `<div class="h">${fl || reg || hex.toUpperCase()}</div>등록 나라: ${C[k][0]}<br>고도: ${alt === 0 ? '지상' : fmt(alt) + (alt == null ? '' : ' ft')}<br>속도: ${fmt(gs)}${gs == null ? '' : ' kt'} · 방향 ${tr || 0}도<br>기체: ${ty || '정보 없음'}${reg ? ' · 등록 ' + reg : ''} · 고유 번호 ${hex.toUpperCase()}`;
+      });
+      m.addTo(layer);
+    });
+    const shown = last.ac.filter((a) => !off.has(C[a[9]] ? a[9] : 'XX')).length;
+    $('tot').textContent = shown.toLocaleString('ko-KR') + '대';
+    $('grid').innerHTML = ORDER.map((k) => `<button type="button" class="cc${off.has(k) ? ' off' : ''}" data-k="${k}" aria-pressed="${!off.has(k)}"><div class="l"><span class="d" style="background:${C[k][1]}"></span>${C[k][0]}</div><div class="v">${cnt[k]}</div></button>`).join('');
+    $('upd').textContent = kst(last.updated) + ' 기준 (한국 시간) · 10분마다 새로 받아요';
+  };
+  $('grid').addEventListener('click', (e) => { const b = e.target.closest('.cc'); if (!b) return; const k = b.dataset.k; off.has(k) ? off.delete(k) : off.add(k); draw(); });
+  $('all').addEventListener('click', () => { off.clear(); fit(); draw(); $('info').innerHTML = '<span style="opacity:.7">비행기를 누르면 편명, 등록 나라, 고도, 속도가 나와요.</span>'; });
+  const load = () => fetch('data/skysea/aircraft.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => { if (!last || j.updated !== last.updated) { last = j; draw(); } }).catch(() => { if (!last) $('upd').textContent = '자료를 불러오지 못했어요'; });
+  load(); setInterval(load, 30000);
+})();
+</script>
+</body></html>
