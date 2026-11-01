@@ -15,6 +15,7 @@ var st=document.createElement('style');st.textContent=
 '#usP .sd{font-size:12px;color:#555;margin-top:4px}#usP .cap{font-size:15px;margin:2px 0}'+
 '#usP .ctl{display:flex;gap:6px;align-items:center;margin-top:6px}#usP .ctl button,#usP .mb{font:14px sans-serif;padding:6px 11px;border-radius:8px;border:1px solid #888;background:#fff;cursor:pointer;color:#111}'+
 '#usP input{flex:1}#usP .mo{display:none;font-size:12px;margin-top:6px;line-height:1.5}#usP .mo a{color:#0645ad;word-break:break-all}#usP .mb{margin-top:6px;font-size:13px}'+
+'.us-arr{animation:usDash .8s linear infinite}@keyframes usDash{to{stroke-dashoffset:-20}}#usP .ph{margin:4px 0}#usP .ph span{color:#555}'+
 '.usLbl{background:#111d;color:#fff;border:0;box-shadow:none;font:600 12px sans-serif;padding:2px 6px}.usLbl:before{display:none}';
 document.head.appendChild(st);
 var H='<span style="display:block;font-weight:400;font-size:11px;opacity:.75">눌러 보세요</span>';
@@ -37,18 +38,18 @@ function start(k){map=window.mtMap;if(!map)return;if(P)stop();c=D.cases[k];
  var cr=[c.us,c.tg].filter(Boolean).map(function(x){var p=D.people[x];return '<div>· '+p.n+' 사진: '+p.lic+', '+p.by+' (<a href="'+p.url+'" target="_blank" rel="noopener">위키미디어 공용</a>)</div>'}).join('');
  P.innerHTML='<button class="x">닫기</button><div class="hd"><div class="yr">'+c.label.slice(-4)+'</div><div><div class="cn">'+c.n+'</div></div></div>'+
  '<div class="tg" style="background:'+col(c.tag)+'">'+c.tag+'</div><div class="pp2">'+ppl(c.us)+ppl(c.tg)+'</div>'+
- '<div class="sd"></div><div class="cap"></div>'+
+ '<div class="sd"></div><div class="cap"></div><div class="ph" hidden></div>'+
  '<div class="ctl"><button class="pv">이전</button><button class="pp">멈춤</button><button class="nx">다음</button><input type="range" min="0" max="'+(c.steps.length-1)+'" value="0"></div>'+
- '<button class="mb">자세히 보기</button><div class="mo"><div>'+c.more+'</div><div style="margin-top:4px">출처</div>'+c.src.map(function(s){return '<div>· <a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a></div>'}).join('')+'<div style="margin-top:4px">사진</div>'+cr+'<div style="margin-top:4px;color:#666">'+D.note+'</div></div>';
+ '<button class="mb">자세히 보기</button><div class="mo"><div>'+c.more+'</div><div style="margin-top:4px">출처</div>'+c.src.map(function(s){return '<div>· <a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a></div>'}).join('')+'<div style="margin-top:4px">사진</div>'+cr+'<ul class="hps" style="margin:2px 0;padding-left:16px"></ul>'+'<div style="margin-top:4px;color:#666">'+D.note+'</div></div>';
  P.querySelector('.x').onclick=stop;P.querySelector('.pv').onclick=function(){pause();show(i-1)};P.querySelector('.nx').onclick=function(){pause();show(i+1)};
  P.querySelector('.pp').onclick=function(){tm?pause():play()};P.querySelector('input').oninput=function(e){pause();show(+e.target.value)};
  P.querySelector('.mb').onclick=function(){var m=P.querySelector('.mo');m.style.display=m.style.display=='block'?'none':'block'};
- document.addEventListener('keydown',esc);var z=c.view[2];if(window.innerWidth<600)z--;map.setView([c.view[0],c.view[1]],z);show(0);play()}
+ window.HFX&&HFX.credits(P.querySelector('.hps'),'us:'+c.id);document.addEventListener('keydown',esc);var z=c.view[2];if(window.innerWidth<600)z--;map.setView([c.view[0],c.view[1]],z);show(0);play()}
 function esc(e){if(e.key=='Escape')stop()}
 function play(){if(i>=c.steps.length-1)show(0);tm=setInterval(function(){if(i>=c.steps.length-1){pause();return}show(i+1)},4000);P.querySelector('.pp').textContent='멈춤'}
 function pause(){clearInterval(tm);tm=null;if(P)P.querySelector('.pp').textContent='재생'}
-function arrow(a,b,cl,op){L.polyline([a,b],{pane:'usM',color:cl,weight:3,opacity:op,dashArray:'6 5',interactive:false}).addTo(grp);
- var pa=map.latLngToLayerPoint(a),pb=map.latLngToLayerPoint(b),an=Math.atan2(pb.y-pa.y,pb.x-pa.x),s=12;
+function arrow(a,b,cl,op){L.polyline([a,b],{pane:'usM',color:cl,weight:op<1?3:6,opacity:op,dashArray:'12 8',className:op<1?'':'us-arr',interactive:false}).addTo(grp);
+ var pa=map.latLngToLayerPoint(a),pb=map.latLngToLayerPoint(b),an=Math.atan2(pb.y-pa.y,pb.x-pa.x),s=op<1?12:18;
  var p1=L.point(pb.x-s*Math.cos(an-0.45),pb.y-s*Math.sin(an-0.45)),p2=L.point(pb.x-s*Math.cos(an+0.45),pb.y-s*Math.sin(an+0.45));
  L.polygon([b,map.layerPointToLatLng(p1),map.layerPointToLatLng(p2)],{pane:'usM',color:cl,fillColor:cl,fillOpacity:op,weight:1,opacity:op,interactive:false}).addTo(grp)}
 function show(k){k=Math.max(0,Math.min(c.steps.length-1,k));i=k;grp.clearLayers();var cl=col(c.tag),seen={};
@@ -57,6 +58,6 @@ function show(k){k=Math.max(0,Math.min(c.steps.length-1,k));i=k;grp.clearLayers(
   s.p.forEach(function(p){var key=p[0]+','+p[1];if(!cur&&seen[key])return;
    var m=L.circleMarker([p[0],p[1]],{pane:'usM',radius:cur?8:5,color:'#fff',weight:2,fillColor:cur?cl:'#888',fillOpacity:op,interactive:false}).addTo(grp);
    if(cur)m.bindTooltip(p[2],{permanent:true,direction:'right',className:'usLbl',pane:'usM'});seen[key]=1})});
- var s=c.steps[k];P.querySelector('.sd').textContent=(k+1)+'/'+c.steps.length+' 단계 · '+dt(s.d);P.querySelector('.cap').textContent=s.t;P.querySelector('input').value=k}
-function stop(){pause();document.removeEventListener('keydown',esc);if(lay)map.removeLayer(lay);if(grp)map.removeLayer(grp);if(P)P.remove();P=null;document.body.classList.remove('us-on');if(prev)map.setView(prev.c,prev.z)}
+ var s=c.steps[k];P.querySelector('.sd').textContent=(k+1)+'/'+c.steps.length+' 단계 · '+dt(s.d);P.querySelector('.cap').textContent=s.t;P.querySelector('input').value=k;if(window.HFX){HFX.thumb(P.querySelector('.ph'),k==c.steps.length-1?'us:'+c.id+':0':'-');HFX.tl(c.steps.map(function(x){return x.d}),k,function(j){pause();show(j)})}}
+function stop(){pause();window.HFX&&HFX.end();document.removeEventListener('keydown',esc);if(lay)map.removeLayer(lay);if(grp)map.removeLayer(grp);if(P)P.remove();P=null;document.body.classList.remove('us-on');if(prev)map.setView(prev.c,prev.z)}
 })();

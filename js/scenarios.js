@@ -26,7 +26,7 @@
   const st = document.createElement('style'); st.textContent = css; document.head.append(st);
   box.innerHTML = '<button type="button" class="btn prime" id="scnOpen" style="width:100%;min-height:44px">전쟁 시나리오<span style="display:block;font-weight:400;font-size:11px;opacity:.75">눌러 보세요</span></button><div class="scn-list" id="scnList" hidden></div>';
   const P = document.createElement('div'); P.id = 'scnP'; P.hidden = true;
-  P.innerHTML = '<div class="in"><button type="button" class="x" id="scnX" aria-label="시나리오 닫기">닫기</button><div><div class="tt" id="scnT"></div><div class="pp" id="scnPer"></div></div><div class="dt" id="scnD"></div><div class="cap" id="scnC"></div><div class="ctl"><button type="button" id="scnPrev" aria-label="이전">이전</button><button type="button" class="play" id="scnPlay">재생</button><button type="button" id="scnNext" aria-label="다음">다음</button></div><input type="range" id="scnR" min="0" max="0" step="1" aria-label="날짜 이동"><div class="lg" id="scnL"></div><div class="nt" id="scnN"></div><details><summary>자세히 보기</summary><p id="scnM"></p><p><b>출처</b></p><ul id="scnS"></ul><p class="nt">화살표와 전선은 이해를 돕기 위한 대략적인 그림이에요. 지도: Esri, Maxar 위성 사진, 나라 경계 Natural Earth.</p></details></div>';
+  P.innerHTML = '<div class="in"><button type="button" class="x" id="scnX" aria-label="시나리오 닫기">닫기</button><div><div class="tt" id="scnT"></div><div class="pp" id="scnPer"></div></div><div class="dt" id="scnD"></div><div class="cap" id="scnC"></div><div id="scnPh" hidden></div><div class="ctl"><button type="button" id="scnPrev" aria-label="이전">이전</button><button type="button" class="play" id="scnPlay">재생</button><button type="button" id="scnNext" aria-label="다음">다음</button></div><input type="range" id="scnR" min="0" max="0" step="1" aria-label="날짜 이동"><div class="lg" id="scnL"></div><div class="nt" id="scnN"></div><details><summary>자세히 보기</summary><p id="scnM"></p><p><b>출처</b></p><ul id="scnS"></ul><p><b>사진</b></p><ul id="scnPS"></ul><p class="nt">화살표와 전선은 이해를 돕기 위한 대략적인 그림이에요. 지도: Esri, Maxar 위성 사진, 나라 경계 Natural Earth.</p></details></div>';
   document.body.append(P);
   const $ = (id) => document.getElementById(id);
   let idx = [], W = null, geo = null, map = null, lay = null, i = 0, timer = null, saved = null;
@@ -46,7 +46,7 @@
       $('scnT').textContent = w.title; $('scnPer').textContent = w.period + ' · ' + w.frames.length + '개 장면';
       $('scnL').innerHTML = Object.values(w.sides).map(([n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join('');
       $('scnN').textContent = w.note || ''; $('scnS').innerHTML = w.sources.map((s) => `<li>${s}</li>`).join('');
-      $('scnR').max = w.frames.length - 1; m.flyToBounds(w.view, { duration: 1.2, padding: [10, 10] });
+      window.HFX && HFX.credits($('scnPS'), 'scn:' + id); $('scnR').max = w.frames.length - 1; m.flyToBounds(w.view, { duration: 1.2, padding: [10, 10] });
       show(0); play(true);
     });
   }
@@ -55,11 +55,11 @@
   function arrow(a, b, col, g) {
     const n = 16, pts = [], dx = b[1] - a[1], dy = b[0] - a[0], bend = 0.18;
     for (let k = 0; k <= n; k++) { const t = k / n, o = Math.sin(Math.PI * t) * bend; pts.push([a[0] + dy * t + dx * o, a[1] + dx * t - dy * o]); }
-    L.polyline(pts, { pane: 'scnM2', color: '#000', weight: 7, opacity: .45, interactive: false }).addTo(g);
-    L.polyline(pts, { pane: 'scnM2', color: col, weight: 4, className: 'scn-arr', interactive: false }).addTo(g);
+    L.polyline(pts, { pane: 'scnM2', color: '#000', weight: 11, opacity: .45, interactive: false }).addTo(g);
+    L.polyline(pts, { pane: 'scnM2', color: col, weight: 7, className: 'scn-arr', interactive: false }).addTo(g);
     const m = getMap(), p1 = m.latLngToLayerPoint(pts[n - 2]), p2 = m.latLngToLayerPoint(pts[n]); const ang = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
-    L.marker(b, { pane: 'scnM2', interactive: false, icon: L.divIcon({ className: 'scn-head', html: `<svg width="22" height="22" viewBox="-11 -11 22 22" style="transform:translate(-11px,-11px) rotate(${ang}deg);overflow:visible"><path d="M10 0 L-6 -7 L-3 0 L-6 7Z" fill="${col}" stroke="#000" stroke-width="1"/></svg>` }) }).addTo(g);
-    const dot = L.circleMarker(pts[0], { pane: 'scnM2', radius: 5, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false }).addTo(g);
+    L.marker(b, { pane: 'scnM2', interactive: false, icon: L.divIcon({ className: 'scn-head', html: `<svg width="32" height="32" viewBox="-11 -11 22 22" style="transform:translate(-16px,-16px) rotate(${ang}deg);overflow:visible"><path d="M10 0 L-6 -7 L-3 0 L-6 7Z" fill="${col}" stroke="#000" stroke-width="1"/></svg>` }) }).addTo(g);
+    const dot = L.circleMarker(pts[0], { pane: 'scnM2', radius: 7, color: '#fff', weight: 2, fillColor: col, fillOpacity: 1, interactive: false }).addTo(g);
     let t0 = performance.now(); const step = (t) => { if (!g._map) return; const k = (Math.max(0, t - t0) % 1800) / 1800, j = Math.min(n - 1, Math.floor(k * n)), f = k * n - j; dot.setLatLng([pts[j][0] + (pts[j + 1][0] - pts[j][0]) * f, pts[j][1] + (pts[j + 1][1] - pts[j][1]) * f]); requestAnimationFrame(step); }; requestAnimationFrame(step);
   }
   function show(fi) {
@@ -72,12 +72,13 @@
     (f.ar || []).forEach(([a, b, c, d, s]) => arrow([a, b], [c, d], col(s), lay));
     (f.bt || []).forEach(([la, lo, n]) => { L.circleMarker([la, lo], { pane: 'scnM2', radius: 9, color: '#fff', weight: 2, fillColor: '#ff9f1c', fillOpacity: .9, className: 'scn-bt', interactive: false }).addTo(lay);
       L.marker([la, lo], { pane: 'scnT2', interactive: false, icon: L.divIcon({ className: '', html: `<div class="scn-lab">${n}</div>` }) }).addTo(lay); });
+    if (window.HFX) { (f.bt || []).forEach(([la, lo]) => HFX.fire(la, lo, lay, 'scnT2')); HFX.thumb($('scnPh'), 'scn:' + W.id + ':' + i); HFX.tl(W.frames.map((x) => x.d), i, (k) => { stop(); show(k); }); }
     $('scnD').textContent = D(f.d); $('scnC').textContent = f.t; $('scnM').textContent = f.more || '이 장면의 추가 설명은 없어요.'; $('scnR').value = i;
     const v = viewAt(i); if (f.v || (i > 0 && viewAt(i - 1) !== v)) m.flyToBounds(v, { duration: 1.2, padding: [10, 10] });
   }
   function stop() { clearInterval(timer); timer = null; $('scnPlay').textContent = '재생'; }
   function play(on) { if (!on || timer) { stop(); return; } $('scnPlay').textContent = '멈춤'; if (i >= W.frames.length - 1) show(0); timer = setInterval(() => { if (i >= W.frames.length - 1) stop(); else show(i + 1); }, 3200); }
-  function close() { stop(); const m = getMap(); if (lay) m.removeLayer(lay); lay = null; W = null; P.hidden = true; document.body.classList.remove('scn-on'); if (saved) { m.flyTo(saved.c, saved.z, { duration: .8 }); saved = null; } }
+  function close() { stop(); window.HFX && HFX.end(); const m = getMap(); if (lay) m.removeLayer(lay); lay = null; W = null; P.hidden = true; document.body.classList.remove('scn-on'); if (saved) { m.flyTo(saved.c, saved.z, { duration: .8 }); saved = null; } }
   $('scnPlay').addEventListener('click', () => play(!timer)); $('scnX').addEventListener('click', close);
   $('scnPrev').addEventListener('click', () => { stop(); show(i - 1); }); $('scnNext').addEventListener('click', () => { stop(); show(i + 1); });
   $('scnR').addEventListener('input', (e) => { stop(); show(+e.target.value); });

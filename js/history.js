@@ -19,7 +19,7 @@
 #hisP .lg{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px}#hisP .lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 #hisP .nt{font-size:12px;opacity:.75}#hisP details{font-size:13px;opacity:.9}#hisP details p{margin:6px 0}#hisP details li{margin:3px 0}#hisP details a{color:#9effc0;word-break:break-all}
 .his-on .leaflet-overlay-pane,.his-on .leaflet-marker-pane,.his-on .leaflet-shadow-pane,.his-on .leaflet-tooltip-pane,.his-on .leaflet-popup-pane{visibility:hidden}.his-on #card{display:none}
-.his-arr{stroke-dasharray:10 8;animation:hisDash 1s linear infinite}@keyframes hisDash{to{stroke-dashoffset:-18}}
+.his-arr{stroke-dasharray:14 10;animation:hisDash .8s linear infinite}@keyframes hisDash{to{stroke-dashoffset:-24}}
 .his-cr{animation:hisPulse 2s ease-in-out infinite}@keyframes hisPulse{50%{fill-opacity:.15}}
 .his-lab{background:#000c;border:1px solid #fff5;color:#fff;font:600 12px system-ui,sans-serif;padding:2px 6px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-150%)}
 .his-head{width:0;height:0}
@@ -28,14 +28,14 @@
   const st = document.createElement('style'); st.textContent = css; document.head.append(st);
   box.innerHTML = '<button type="button" class="btn prime" id="hisOpen" style="width:100%;min-height:44px">세계 역사 사건<span style="display:block;font-weight:400;font-size:11px;opacity:.75">눌러 보세요</span></button><div id="hisList" hidden></div>';
   const P = document.createElement('div'); P.id = 'hisP'; P.hidden = true;
-  P.innerHTML = '<div class="in"><button type="button" class="x" id="hisX" aria-label="닫기">닫기</button><div><div class="tt" id="hisT"></div><div class="pp" id="hisPer"></div></div><div><div class="dt" id="hisD"></div><div class="tm" id="hisTm"></div></div><div class="cap" id="hisC"></div><div class="ctl"><button type="button" id="hisPrev">이전</button><button type="button" class="play" id="hisPlay">재생</button><button type="button" id="hisNext">다음</button></div><input type="range" id="hisR" min="0" max="0" step="1" aria-label="단계 이동"><div class="lg" id="hisL"></div><details><summary>자세히 보기</summary><p id="hisM"></p><p id="hisTo"></p><p><b>출처</b></p><ul id="hisS"></ul><p class="nt" id="hisN"></p><p class="nt">원, 화살표, 장소 표시는 이해를 돕기 위한 대략적인 그림이에요.</p></details></div>';
+  P.innerHTML = '<div class="in"><button type="button" class="x" id="hisX" aria-label="닫기">닫기</button><div><div class="tt" id="hisT"></div><div class="pp" id="hisPer"></div></div><div><div class="dt" id="hisD"></div><div class="tm" id="hisTm"></div></div><div class="cap" id="hisC"></div><div id="hisPh" hidden></div><div class="ctl"><button type="button" id="hisPrev">이전</button><button type="button" class="play" id="hisPlay">재생</button><button type="button" id="hisNext">다음</button></div><input type="range" id="hisR" min="0" max="0" step="1" aria-label="단계 이동"><div class="lg" id="hisL"></div><details><summary>자세히 보기</summary><p id="hisM"></p><p id="hisTo"></p><p><b>출처</b></p><ul id="hisS"></ul><p><b>사진</b></p><ul id="hisPS"></ul><p class="nt" id="hisN"></p><p class="nt">원, 화살표, 장소 표시는 이해를 돕기 위한 대략적인 그림이에요. 노란 점선 원은 넓이가 숫자에 비례해요(아주 큰 수는 크기를 줄였어요).</p></details></div>';
   document.body.append(P);
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   let W = null, lay = null, i = 0, timer = null, saved = null, raf = [];
   const D = (s) => { const [y, m, d] = s.split('-'); return `${y}년 ${+m}월 ${+d}일`; };
   const getMap = () => window.mtMap;
-  const REG = ['미국', '중국', '일본', '유럽', '중동·아프리카'];
+  const REG = ['미국', '중국', '일본', '아시아', '유럽', '중동·아프리카', '세계'];
   fetch('data/worldhist/index.json').then((r) => r.json()).then((j) => {
     $('hisList').innerHTML = REG.map((g) => { const e = j.filter((x) => x.reg === g); return e.length ? `<div class="rg">${g}</div><div class="gr">${e.map((w) => `<button type="button" data-id="${w.id}">${esc(w.title)}<small>${esc(w.period)}</small></button>`).join('')}</div>` : ''; }).join('');
     $('hisList').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => open(b.dataset.id)));
@@ -51,7 +51,7 @@
       $('hisL').innerHTML = Object.values(w.sides).map(([n, c]) => `<span><i style="background:${c}"></i>${esc(n)}</span>`).join('');
       $('hisN').textContent = w.note || ''; $('hisTo').textContent = w.toll ? '피해: ' + w.toll : '';
       $('hisS').innerHTML = w.sources.map(([n, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('');
-      $('hisR').max = w.frames.length - 1; m.flyToBounds(w.view, { duration: 1.2, padding: [10, 10] });
+      HFX.credits($('hisPS'), 'his:' + id); $('hisR').max = w.frames.length - 1; m.flyToBounds(w.view, { duration: 1.2, padding: [10, 10] });
       show(0); play(true);
     });
   }
@@ -60,11 +60,11 @@
   function arrow(a, b, col, g) {
     const n = 16, pts = [], dx = b[1] - a[1], dy = b[0] - a[0], bend = 0.15;
     for (let k = 0; k <= n; k++) { const t = k / n, o = Math.sin(Math.PI * t) * bend; pts.push([a[0] + dy * t + dx * o, a[1] + dx * t - dy * o]); }
-    L.polyline(pts, { pane: 'hisM2', color: '#000', weight: 7, opacity: .45, interactive: false }).addTo(g);
-    L.polyline(pts, { pane: 'hisM2', color: col, weight: 4, className: 'his-arr', interactive: false }).addTo(g);
+    L.polyline(pts, { pane: 'hisM2', color: '#000', weight: 11, opacity: .45, interactive: false }).addTo(g);
+    L.polyline(pts, { pane: 'hisM2', color: col, weight: 7, className: 'his-arr', interactive: false }).addTo(g);
     const m = getMap(), p1 = m.latLngToLayerPoint(pts[n - 2]), p2 = m.latLngToLayerPoint(pts[n]); const ang = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
-    L.marker(b, { pane: 'hisM2', interactive: false, icon: L.divIcon({ className: 'his-head', html: `<svg width="22" height="22" viewBox="-11 -11 22 22" style="transform:translate(-11px,-11px) rotate(${ang}deg);overflow:visible"><path d="M10 0 L-6 -7 L-3 0 L-6 7Z" fill="${col}" stroke="#000" stroke-width="1"/></svg>` }) }).addTo(g);
-    const dot = L.circleMarker(pts[0], { pane: 'hisM2', radius: 5, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1, interactive: false }).addTo(g);
+    L.marker(b, { pane: 'hisM2', interactive: false, icon: L.divIcon({ className: 'his-head', html: `<svg width="32" height="32" viewBox="-11 -11 22 22" style="transform:translate(-16px,-16px) rotate(${ang}deg);overflow:visible"><path d="M10 0 L-6 -7 L-3 0 L-6 7Z" fill="${col}" stroke="#000" stroke-width="1"/></svg>` }) }).addTo(g);
+    const dot = L.circleMarker(pts[0], { pane: 'hisM2', radius: 7, color: '#fff', weight: 2, fillColor: col, fillOpacity: 1, interactive: false }).addTo(g);
     const t0 = performance.now(); anim((t) => { const k = (Math.max(0, t - t0) % 1800) / 1800, j = Math.min(n - 1, Math.floor(k * n)), f = k * n - j; dot.setLatLng([pts[j][0] + (pts[j + 1][0] - pts[j][0]) * f, pts[j][1] + (pts[j + 1][1] - pts[j][1]) * f]); });
   }
   function crowd(la, lo, km, col, g) {
@@ -80,12 +80,14 @@
     (f.ar || []).forEach(([a, b, c, d, s]) => arrow([a, b], [c, d], col(s), lay));
     (f.bt || []).forEach(([la, lo, n]) => { L.circleMarker([la, lo], { pane: 'hisM2', radius: 8, color: '#fff', weight: 2, fillColor: '#ff9f1c', fillOpacity: .9, interactive: false }).addTo(lay);
       L.marker([la, lo], { pane: 'hisT2', interactive: false, icon: L.divIcon({ className: '', html: `<div class="his-lab">${esc(n)}</div>` }) }).addTo(lay); });
+    (f.fx || []).forEach(([la, lo]) => HFX.fire(la, lo, lay, 'hisT2')); (f.nc || []).forEach(([la, lo, n, l]) => HFX.num(la, lo, n, l, lay, 'hisF', 'hisT2'));
+    HFX.thumb($('hisPh'), 'his:' + W.id + ':' + i); HFX.tl(W.frames.map((x) => x.d), i, (k) => { stop(); show(k); });
     $('hisD').textContent = D(f.d); $('hisTm').textContent = f.tm || ''; $('hisC').textContent = f.t; $('hisM').textContent = f.more || ''; $('hisR').value = i;
     const v = viewAt(i); if (f.v || (i > 0 && viewAt(i - 1) !== v)) m.flyToBounds(v, { duration: 1.2, padding: [10, 10] });
   }
   function stop() { clearInterval(timer); timer = null; $('hisPlay').textContent = '재생'; }
   function play(on) { if (!on || timer) { stop(); return; } $('hisPlay').textContent = '멈춤'; if (i >= W.frames.length - 1) show(0); timer = setInterval(() => { if (i >= W.frames.length - 1) stop(); else show(i + 1); }, 3600); }
-  function close() { stop(); clear(); W = null; P.hidden = true; document.body.classList.remove('his-on'); const m = getMap(); if (saved && m) { m.flyTo(saved.c, saved.z, { duration: .8 }); saved = null; } }
+  function close() { stop(); clear(); HFX.end(); W = null; P.hidden = true; document.body.classList.remove('his-on'); const m = getMap(); if (saved && m) { m.flyTo(saved.c, saved.z, { duration: .8 }); saved = null; } }
   $('hisPlay').addEventListener('click', () => play(!timer)); $('hisX').addEventListener('click', close);
   $('hisPrev').addEventListener('click', () => { stop(); show(i - 1); }); $('hisNext').addEventListener('click', () => { stop(); show(i + 1); });
   $('hisR').addEventListener('input', (e) => { stop(); show(+e.target.value); });

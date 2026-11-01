@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>세계 관제실</title>
+<title>지상 최대의 역사 기록 관제실</title>
 <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
 <style>
 :root{--g:#5dff9e;--bg:#020a06;--line:#2bff8855;--sw:360px}
@@ -51,7 +51,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
 <body>
 <div id="map" aria-label="지도"></div>
 <aside id="side">
- <div><h1>세계 관제실</h1><div class="sub" id="upd">불러오는 중이에요</div></div>
+ <div><h1>지상 최대의 역사 기록 관제실</h1><div class="sub" id="upd">불러오는 중이에요</div></div>
  <div class="hero two"><div><div class="k">비행기 (지금)</div><div class="n" id="tot">-</div></div><div><div class="k">배 (하루 기록)</div><div class="n" id="stot">-</div></div></div>
  <div class="tg"><label><input type="checkbox" id="planeTg" checked> 비행기</label><label><input type="checkbox" id="shipTg" checked> 배</label><label><input type="checkbox" id="liveTg" checked> 실시간 배</label><label><input type="checkbox" id="milTg" checked> 군용기 따로 색칠</label></div>
  <div id="srch"><input id="q" type="search" placeholder="나라 찾기 (예: 미국, USA, US)" autocomplete="off" aria-label="나라 찾기"><button type="button" id="qx" aria-label="지우기">닫기</button><div id="qr" hidden></div></div>
@@ -245,6 +245,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
   fetch('data/skysea/ships.json', { cache: 'no-store' }).then((r) => r.json()).then((j) => { ships = j; legS = top(j.counts, 7); all(); $('shipNote').textContent = '배: ' + j.date_range[0] + ' 하루 기록이에요. Global Fishing Watch 자료라 며칠 늦게 들어와요.'; }).catch(() => { $('shipNote').textContent = '배 자료를 불러오지 못했어요'; });
 })();
 </script>
+<script src="js/histfx.js" defer></script>
 <script src="js/scenarios.js" defer></script>
 <script src="js/usregime.js" defer></script>
 <script src="js/history.js" defer></script>
