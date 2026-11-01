@@ -32,7 +32,7 @@ def cc(h):
         if a <= v <= b: return c
     return 'XX'
 
-DEADLINE = time.time() + 170
+DEADLINE = time.time() + 400
 def get(p):
     la, lo = p
     for t in range(2):
@@ -46,7 +46,7 @@ def get(p):
     return None
 
 P = points(); seen = {}; ok = 0; gps = {}
-with cf.ThreadPoolExecutor(8) as ex:
+with cf.ThreadPoolExecutor(2) as ex:
     for res in ex.map(get, P):
         if res is None: continue
         ok += 1
