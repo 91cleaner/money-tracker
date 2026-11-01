@@ -1,0 +1,31 @@
+name: Collect real-time ships near Korea (AISStream)
+on:
+  schedule:
+    - cron: '5-59/10 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: skysea-ais
+  cancel-in-progress: false
+jobs:
+  ais:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q websockets
+      - name: Listen to AIS stream (key from secret, server side only)
+        env:
+          AISSTREAM_KEY: ${{ secrets.AISSTREAM_KEY }}
+        run: python scripts/build_skysea_ais.py
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/skysea/ships_live.json 2>/dev/null || exit 0
+          git diff --staged --quiet || (git commit -m "data(skysea): live ships" && for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done && GH_TOKEN=${{ github.token }} gh workflow run deploy-pages.yml --ref main || true)
