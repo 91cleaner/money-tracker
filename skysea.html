@@ -60,6 +60,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
  <div class="sub"><span class="key"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="#9effc0" d="M12 1.5l4 6.5v12.5l-1.5 2h-5l-1.5-2V8z"/></svg> 배</span> · <span style="color:#ff3df2">비행기</span> 군용기 · 나라 이름을 누르면 그 나라 숫자가 나와요</div>
  <div class="gl">비행기 나라 (등록)</div><div class="grid" id="grid"></div>
  <div class="gl">배 나라 (국기)</div><div class="grid" id="sgrid"></div>
+ <div id="scnBox"></div>
  <div class="row"><button class="btn prime" id="all" type="button">전체 보기</button><a class="btn" href="index.html">나가기</a></div>
  <div id="info"><span style="opacity:.7">비행기나 배 점을 누르면 자세한 사실이 나와요.</span></div>
  <div class="sub" id="pnote"></div><div class="sub" id="shipNote"></div><div class="sub" id="liveNote"></div>
@@ -88,7 +89,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
   const $ = (id) => document.getElementById(id);
   const HOME = L.latLngBounds([15, 95], [50, 150]);
   const map = L.map('map', { zoomControl: false, minZoom: 1, maxZoom: 10, worldCopyJump: true, maxBounds: [[-85, -540], [85, 540]], maxBoundsViscosity: 1, zoomSnap: 0.25, preferCanvas: false });
-  map.attributionControl.setPrefix(false); L.control.zoom({ position: 'topleft' }).addTo(map);
+  window.mtMap = map; map.attributionControl.setPrefix(false); L.control.zoom({ position: 'topleft' }).addTo(map);
   window.mtKoreaDark({ noWrap: false }).addTo(map); map.attributionControl.addAttribution('배: Global Fishing Watch, AISStream · 비행기: adsb.lol'); window.mtKoreaExtras(map);
   /* lbl-1: 한국어 나라·바다 이름 */
   (function () {
@@ -232,4 +233,5 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
   fetch('data/skysea/ships.json', { cache: 'no-store' }).then((r) => r.json()).then((j) => { ships = j; legS = top(j.counts, 7); all(); $('shipNote').textContent = '배: ' + j.date_range[0] + ' 하루 기록이에요. Global Fishing Watch 자료라 며칠 늦게 들어와요.'; }).catch(() => { $('shipNote').textContent = '배 자료를 불러오지 못했어요'; });
 })();
 </script>
+<script src="js/scenarios.js" defer></script>
 </body></html>
