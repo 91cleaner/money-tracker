@@ -63,12 +63,18 @@ pos, stat = asyncio.run(main())
 if not pos:
     print('no ships received; keeping old file'); raise SystemExit(0)
 rows, counts = [], {}
+try: prevs = {r[0]: r for r in json.load(open(OUT)).get('ships', [])}
+except Exception: prevs = {}
 for mm, (la, lo, hd, sog, ts) in pos.items():
     c = MID.get(int(str(mm)[:3]), 'XX') if len(str(mm)) == 9 else 'XX'
     s = stat.get(mm, {}); counts[c] = counts.get(c, 0) + 1
-    rows.append([mm, la, lo, hd, sog, s.get('n', '')[:20], c, kind(s.get('t')), ts[11:16]])
+    o = prevs.get(mm); trk = []
+    if o:
+        trk = ((o[9] if len(o) > 9 else []) + [[o[1], o[2]]])[-5:]
+        if abs(o[1] - la) + abs(o[2] - lo) < 1e-4: trk = trk[:-1] + [[o[1], o[2]]]
+    rows.append([mm, la, lo, hd, sog, s.get('n', '')[:20], c, kind(s.get('t')), ts[11:16], trk])
 now = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 json.dump({'updated': now, 'seconds': SECS, 'source': 'AISStream (aisstream.io)', 'area': '한국 주변 바다 (서해, 동중국해, 동해)',
-           'fields': ['mmsi', 'lat', 'lon', 'heading', 'sog_kt', 'name', 'flag', 'type', 'time_utc_hhmm'], 'counts': counts, 'ships': rows},
+           'fields': ['mmsi', 'lat', 'lon', 'heading', 'sog_kt', 'name', 'flag', 'type', 'time_utc_hhmm', 'trail_lat_lon'], 'counts': counts, 'ships': rows},
           open(OUT, 'w'), ensure_ascii=False, separators=(',', ':'))
 print('ships', len(rows), 'bytes', os.path.getsize(OUT))

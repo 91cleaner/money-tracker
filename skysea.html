@@ -65,6 +65,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
  <div id="info"><span style="opacity:.7">비행기나 배 점을 누르면 자세한 사실이 나와요.</span></div>
  <div class="sub" id="pnote"></div><div class="sub" id="shipNote"></div><div class="sub" id="liveNote"></div>
  <details><summary>자세히 보기</summary><p>배 모양: 흰 테두리 배는 실시간 배, 작은 배는 Global Fishing Watch 하루 기록을 크게 확대했을 때 칸 안에 흩어 그린 것이라 실제 위치가 아니에요.</p>
+  <p>움직임: 지난 약 1시간(최근 6번 저장) 위치를 흐린 꼬리로 그려요. 저장 사이에는 속도와 방향으로 앞으로 옮겨 그리고(최대 15분), 새 자료가 오면 실제 위치로 돌아가요. 그래서 그림 위치는 추정이에요.</p>
   <p>군용기: adsb.lol의 군용 표시가 있는 비행기만 따로 색칠해요. 많은 군용기는 신호를 끄고 날아서 안 보여요.</p>
   <p>분쟁 사건: GDELT 자료예요. 최근 24시간 뉴스 기사에 나온 공격·충돌·대규모 폭력 사건을 1도 칸마다 기사 수로 세요. 기사에 나온 장소 기준이라 실제 사건 수나 위치와 다를 수 있어요.</p>
   <p>GPS 전파 방해 구역: adsb.lol 비행기 신호 중 위치 정확도가 낮게 보고된 비행기(NACp 8 미만 또는 NIC 7 미만)가 30% 이상인 1도 칸이에요. 원인은 알 수 없어요.</p>
@@ -125,25 +126,34 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
   const kstL = (u) => new Date(u).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric', hour: 'numeric', minute: '2-digit' });
   const rnd = L.canvas({ padding: .2 });
   const CAP = () => matchMedia('(max-width:760px)').matches ? 350 : 900;
+  let trk = null; const MVp = [], MVs = []; const mob2 = () => matchMedia('(max-width:760px)').matches;
+  const trail = (g, pts, c) => { if (pts.length < 2) return; const n = pts.length; if (n > 2) L.polyline(pts.slice(0, n - 1), { renderer: rnd, color: c, weight: 1.2, opacity: .18, interactive: false }).addTo(g); L.polyline(pts.slice(n - 2), { renderer: rnd, color: c, weight: 1.6, opacity: .55, interactive: false }).addTo(g); };
+  const fwd = (la, lo, deg, kt, sec) => { const d = kt * 0.514444 * sec, r = deg * Math.PI / 180; return [la + d * Math.cos(r) / 111320, lo + d * Math.sin(r) / (111320 * Math.max(.2, Math.cos(la * Math.PI / 180)))]; };
+  const tick = () => { if (document.hidden) return; const now = Date.now();
+    if (last) { const dt = Math.min(900, Math.max(0, (now - Date.parse(last.updated)) / 1000)); MVp.forEach((o) => o.m.setLatLng(fwd(o.la, o.lo, o.tr, o.gs, dt))); }
+    if (live) { const dt = Math.min(900, Math.max(0, (now - Date.parse(live.updated)) / 1000)); MVs.forEach((o) => o.m.setLatLng(fwd(o.la, o.lo, o.tr, o.gs, dt))); } };
+  setInterval(tick, mob2() ? 3000 : 2000);
   const drawP = () => {
-    pl.clearLayers(); if (!last || !$('planeTg').checked) return;
+    pl.clearLayers(); MVp.length = 0; if (!last || !$('planeTg').checked) return;
     const b = map.getBounds().pad(.05), inView = [];
     for (const a of last.ac) { const k = keyOf(a[8], legP); if (off.has(k)) continue; const lo = near(a[4]); if (b.contains([a[3], lo])) inView.push([a, lo, k]); }
-    const step = Math.max(1, Math.ceil(inView.length / CAP()));
+    const step = Math.max(1, Math.ceil(inView.length / CAP())); let nT = 0;
     for (let i = 0; i < inView.length; i += step) {
-      const [a, lo, k] = inView[i]; const [hex, fl, ty, la, , tr, alt, gs, cc, mil] = a; const isM = mil && $('milTg').checked;
-      L.marker([la, lo], { icon: L.divIcon({ className: 'pl', html: svg(isM ? MILC : colorOf(k), tr || 0), iconSize: [22, 22] }), keyboard: false, zIndexOffset: isM ? 500 : 0 })
-        .on('click', () => { $('info').innerHTML = `<div class="h">${fl || hex.toUpperCase()}</div>등록 나라: ${NM[cc] || '기타'}${mil ? '<br>군용기 표시가 있는 신호예요' : ''}<br>고도: ${fmt(alt)}${alt == null ? '' : ' ft'}<br>속도: ${fmt(gs)}${gs == null ? '' : ' kt'} · 방향 ${tr || 0}도<br>기체: ${ty || '정보 없음'} · 고유 번호 ${hex.toUpperCase()}`; }).addTo(pl);
+      const [a, lo, k] = inView[i]; const [hex, fl, ty, la, , tr, alt, gs, cc, mil] = a; const isM = mil && $('milTg').checked; const col = isM ? MILC : colorOf(k);
+      const tp = trk && trk.p[hex]; if (tp && nT++ < (mob2() ? 120 : 400)) trail(pl, tp.map((q) => [q[1], near(q[2])]).concat([[la, lo]]), col);
+      MVp.mk = L.marker([la, lo], { icon: L.divIcon({ className: 'pl', html: svg(col, tr || 0), iconSize: [22, 22] }), keyboard: false, zIndexOffset: isM ? 500 : 0 })
+        .on('click', () => { $('info').innerHTML = `<div class="h">${fl || hex.toUpperCase()}</div>등록 나라: ${NM[cc] || '기타'}${mil ? '<br>군용기 표시가 있는 신호예요' : ''}<br>고도: ${fmt(alt)}${alt == null ? '' : ' ft'}<br>속도: ${fmt(gs)}${gs == null ? '' : ' kt'} · 방향 ${tr || 0}도<br>기체: ${ty || '정보 없음'} · 고유 번호 ${hex.toUpperCase()}`; }).addTo(pl); if (gs > 30) MVp.push({ m: MVp.mk, la, lo, tr: tr || 0, gs });
     }
     $('pnote') && ($('pnote').textContent = step > 1 ? `지금 화면에 ${inView.length.toLocaleString('ko-KR')}대가 있어서 ${step}대 중 1대만 그려요. 확대하면 다 보여요.` : '');
   };
   const drawL = () => {
-    ll.clearLayers(); if (!live || !$('liveTg').checked) return;
+    ll.clearLayers(); MVs.length = 0; if (!live || !$('liveTg').checked) return;
     const b = map.getBounds().pad(.05);
-    for (const [mm, la, lo0, hd, sog, nm, cc, ty, hm] of live.ships) {
+    for (const [mm, la, lo0, hd, sog, nm, cc, ty, hm, tl] of live.ships) {
       const k = keyOf(cc, legS); if (off.has(k)) continue; const lo = near(lo0); if (!b.contains([la, lo])) continue;
-      L.marker([la, lo], { icon: L.divIcon({ className: 'sh', html: shp(colorOf(k), hd || 0, 1), iconSize: [18, 18] }), keyboard: false })
-        .on('click', () => { $('info').innerHTML = `<div class="h">${nm || '이름 없는 배'}</div>나라: ${cc === 'XX' ? '나라 기록 없음' : NM[cc] || '기타 나라'}<br>종류: ${ty}<br>속도: ${sog} kt · 방향 ${hd}도<br>수신: ${kstL(live.updated)} 무렵 (한국 시간)<br>출처: AISStream 실시간 배` ; }).addTo(ll);
+      if (tl && tl.length) trail(ll, tl.map((q) => [q[0], near(q[1])]).concat([[la, lo]]), colorOf(k));
+      MVs.mk = L.marker([la, lo], { icon: L.divIcon({ className: 'sh', html: shp(colorOf(k), hd || 0, 1), iconSize: [18, 18] }), keyboard: false })
+        .on('click', () => { $('info').innerHTML = `<div class="h">${nm || '이름 없는 배'}</div>나라: ${cc === 'XX' ? '나라 기록 없음' : NM[cc] || '기타 나라'}<br>종류: ${ty}<br>속도: ${sog} kt · 방향 ${hd}도<br>수신: ${kstL(live.updated)} 무렵 (한국 시간)<br>출처: AISStream 실시간 배` ; }).addTo(ll); if (sog > .5 && sog < 40) MVs.push({ m: MVs.mk, la, lo, tr: hd || 0, gs: sog });
     }
   };
   const drawS = () => {
@@ -176,7 +186,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
   $('planeTg').addEventListener('change', drawP); $('shipTg').addEventListener('change', drawS); $('liveTg').addEventListener('change', drawS);
   $('all').addEventListener('click', () => { off.clear(); $('planeTg').checked = $('shipTg').checked = $('liveTg').checked = true; map.fitBounds(HOME, { padding: [6, 6] }); all(); $('info').innerHTML = '<span style="opacity:.7">비행기나 배 점을 누르면 자세한 사실이 나와요.</span>'; });
   const kst = (iso) => new Date(iso).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-  const load = () => fetch('data/skysea/aircraft.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => { if (!last || j.updated !== last.updated) { last = j; legP = top(j.counts, 7); all(); drawE(); $('upd').textContent = '비행기 ' + kst(j.updated) + ' 기준 (한국 시간) · 10분마다 새로 받아요'; } }).catch(() => { if (!last) $('upd').textContent = '비행기 자료를 불러오지 못했어요'; });
+  const load = () => fetch('data/skysea/aircraft.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => { if (!last || j.updated !== last.updated) { last = j; legP = top(j.counts, 7); fetch('data/skysea/tracks.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.ok ? r.json() : null).then((t) => { trk = t; drawP(); }).catch(() => {}); all(); drawE(); $('upd').textContent = '비행기 ' + kst(j.updated) + ' 기준 (한국 시간) · 10분마다 새로 받아요'; } }).catch(() => { if (!last) $('upd').textContent = '비행기 자료를 불러오지 못했어요'; });
   load(); setInterval(load, 30000);
   const MILC = '#ff3df2'; const el = L.layerGroup().addTo(map); let ev = null, geo = null;
   const zoneC = {}; const ZXG = [[[23, 48], [23, 60], [30.5, 60], [30.5, 48]]];
