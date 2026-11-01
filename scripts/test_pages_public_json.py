@@ -93,6 +93,20 @@ class PublicJsonParityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing collectors object"):
             self.check()
 
+    def test_nonfinite_local_json_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        for constant in (b"NaN", b"Infinity", b"-Infinity"):
+            with self.subTest(constant=constant):
+                (self.root / path).write_bytes(b'{"trades":[{"r":' + constant + b"}]}")
+                with self.assertRaisesRegex(ValueError, "invalid JSON"):
+                    self.check()
+
+    def test_nonfinite_remote_json_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        self.docs[path] = b'{"trades":[{"r":NaN}]}'
+        with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
+            self.check()
+
     def test_plain_http_rejected(self):
         with self.assertRaisesRegex(ValueError, "HTTPS"):
             audit.check_public_json("http://example.com", self.root)
