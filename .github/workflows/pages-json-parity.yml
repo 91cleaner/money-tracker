@@ -10,6 +10,7 @@ on:
       - 'scripts/build_public_trades.py'
       - 'scripts/check-pages-artifact.py'
       - 'data/us/trades.json'
+      - 'data/us/members.json'
       - 'data/us/trades-recent.json'
       - 'data/search/collection-status.json'
       - '.github/workflows/deploy-pages.yml'
@@ -31,6 +32,12 @@ jobs:
           python-version: '3.12'
       - name: Check JSON parity fail-closed behavior
         run: python3 -m unittest discover -s scripts -p 'test_pages_public_json*.py' -v
+      # Unit mocks cannot catch changes to the real Pages artifact generator.
+      # Build and inspect the public snapshot on every relevant PR.
+      - name: Rebuild public artifact from PR sources
+        run: python3 scripts/prepare-public-pages.py
+      - name: Verify generated public artifact and excluded private files
+        run: python3 scripts/check-pages-artifact.py
 
   # A Pages publish may succeed even if a subsequent HTML smoke check fails.
   # Inspect the actual deploy-pages step, not only the workflow conclusion.
