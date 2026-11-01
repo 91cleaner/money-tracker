@@ -102,9 +102,9 @@ for h, v in seen.items():
     keep = [q for q in prevp if q[0] < len(ot) and ot[q[0]] in T]
     keep = [[T.index(ot[q[0]]), q[1], q[2]] for q in keep]
     P2[h] = keep + [[k0, v[3], v[4]]]
-P2 = {h: v for h, v in P2.items() if len(v) > 1}
-if len(P2) > 2500:
-    P2 = dict(sorted(P2.items(), key=lambda kv: -(seen[kv[0]][7] or 0))[:2500])
+# keep single points too so the next run can grow trails
+if len(P2) > 3000:
+    P2 = dict(sorted(P2.items(), key=lambda kv: -(seen[kv[0]][7] or 0))[:3000])
 tp.write_text(json.dumps({'t': T, 'fields': ['snap', 'lat', 'lon'], 'p': P2}, separators=(',', ':')))
 p = pathlib.Path('data/skysea/aircraft.json'); p.write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')))
 print('aircraft', len(seen), 'areas', ok, '/', len(P), 'bytes', p.stat().st_size, sorted(counts.items(), key=lambda x: -x[1])[:12])
