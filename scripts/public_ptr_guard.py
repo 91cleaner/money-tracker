@@ -224,6 +224,10 @@ def sanitize_file(path):
         payload["trades"] = [r for i, r in enumerate(payload["trades"]) if i not in exclude]
         payload["note"] = (str(payload.get("note") or "") +
                            f" 공개 전 날짜·공식 원문·공개 필드 검증 불일치 {len(bad)}건 제외.").strip()
+        # Quarantine changes the public note. Validate the FINAL payload before
+        # writing so a near-limit note cannot bypass the 2,000-char release gate.
+        if invalid_rows(payload):
+            raise ValueError("Sanitized House PTR snapshot still contains invalid rows")
         path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         for i, reason in bad:
             print(f"WARNING: public House PTR row {i} excluded: {reason}", file=sys.stderr)
