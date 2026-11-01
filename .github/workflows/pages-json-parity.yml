@@ -4,12 +4,20 @@ on:
     paths:
       - 'scripts/check-pages-public-json.py'
       - 'scripts/test_pages_public_json.py'
+      - 'scripts/prepare-public-pages.py'
+      - 'scripts/build_public_trades.py'
+      - 'scripts/check-pages-artifact.py'
+      - 'data/us/trades.json'
+      - 'data/us/trades-recent.json'
+      - 'data/search/collection-status.json'
+      - '.github/workflows/deploy-pages.yml'
       - '.github/workflows/pages-json-parity.yml'
   workflow_run:
     workflows: ['Deploy MONEY TRACKER Pages']
     types: [completed]
 permissions:
   contents: read
+  actions: read
 jobs:
   regression:
     if: github.event_name == 'pull_request'
@@ -21,12 +29,40 @@ jobs:
           python-version: '3.12'
       - name: Check JSON parity fail-closed behavior
         run: python3 -m unittest discover -s scripts -p test_pages_public_json.py -v
-  deployed-json:
+
+  # A Pages publish may succeed even if a subsequent HTML smoke check fails.
+  # Inspect the actual deploy-pages step, not only the workflow conclusion.
+  published:
     if: >-
       github.event_name == 'workflow_run' &&
-      github.event.workflow_run.conclusion == 'success' &&
+      (github.event.workflow_run.conclusion == 'success' ||
+       github.event.workflow_run.conclusion == 'failure') &&
       github.event.workflow_run.head_branch == 'main' &&
       github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    outputs:
+      deployed: ${{ steps.detect.outputs.deployed }}
+    steps:
+      - name: Check whether Pages was actually published
+        id: detect
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          published="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/jobs?per_page=100&filter=latest" \
+            --jq '[.jobs[] | select(.name == "deploy") | .steps[] | select(.name == "Run actions/deploy-pages@v4") | .conclusion] | any(. == "success")')"
+          if [[ "$published" != "true" && "$published" != "false" ]]; then
+            echo "Unexpected Pages publication status: $published" >&2
+            exit 1
+          fi
+          echo "deployed=$published" >> "$GITHUB_OUTPUT"
+          echo "Pages publish step succeeded: $published"
+
+  deployed-json:
+    needs: published
+    if: needs.published.outputs.deployed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
