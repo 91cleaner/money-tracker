@@ -50,7 +50,10 @@ def validate_json(path, body):
     if len(body) > MAX_BYTES:
         raise ValueError(f"{path}: JSON exceeds {MAX_BYTES} bytes")
     try:
-        data = json.loads(body, parse_constant=reject_nonfinite,
+        # Python json.loads(bytes) auto-detects UTF-16/32 and accepts UTF-8 BOM,
+        # but browser JSON.parse / response.json() expects UTF-8 JSON text.
+        # Decode strictly first so byte-identical, browser-unreadable files fail.
+        data = json.loads(body.decode("utf-8"), parse_constant=reject_nonfinite,
                           parse_float=reject_overflowing_float,
                           object_pairs_hook=reject_duplicate_keys)
     except (UnicodeDecodeError, ValueError) as exc:
