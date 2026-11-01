@@ -40,12 +40,12 @@ html,body{margin:0;height:100%;background:#000;color:#eafff2;font-family:system-
 </style></head>
 <body>
 <div id="map" aria-label="진영 지도"></div>
-<div id="top"><div class="t" id="title">3차 세계대전이 일어난다면?<small>@청소부</small></div><div class="s" id="sub">가상 시나리오 · 지금 맺은 조약 기준 진영 지도 (예측 아님)</div></div>
+<div id="top"><div class="t" id="title">3차 세계대전이 일어난다면?<small>@청소부</small></div><div class="s" id="sub">가상 시나리오 · 지금 맺은 조약 기준 진영 지도 · 공격 장면은 가상 연출 (예측 아님)</div></div>
 <div id="legend"></div>
 <div id="cap"><div class="box" id="capBox"><div class="h" id="capH"></div><div class="d" id="capD"></div></div></div>
 <div id="end"><div class="in"><div class="h">색은 '지금 맺은 약속'일 뿐이에요</div>
  <div class="l" id="endL"></div>
- <div class="src">출처: NATO 회원국 32개국(nato.int), 미·일, 미·한, 미·필리핀 상호방위조약, ANZUS(미·호주), 미국 대만관계법, 북·러 포괄적 전략동반자 조약(2024, 상호 지원 조항), 북·중 우호조약(1961), 러·벨라루스 연합국가, 러·이란 포괄적 전략동반자 조약(2025, 상호방위 조항 없음). 지도: Esri, Maxar 위성 사진 · 국경: Natural Earth 1:110m. 실제 전쟁 참여 여부를 예측하지 않아요.</div></div></div>
+ <div class="src">미사일 궤적은 이해를 돕기 위한 가상 연출이에요. 실제 작전·무기·표적과 관계없어요.<br>출처: NATO 회원국 32개국(nato.int), 미·일, 미·한, 미·필리핀 상호방위조약, ANZUS(미·호주), 미국 대만관계법, 북·러 포괄적 전략동반자 조약(2024, 상호 지원 조항), 북·중 우호조약(1961), 러·벨라루스 연합국가, 러·이란 포괄적 전략동반자 조약(2025, 상호방위 조항 없음). 지도: Esri, Maxar 위성 사진 · 국경: Natural Earth 1:110m. 실제 전쟁 참여 여부를 예측하지 않아요.</div></div></div>
 <div id="ctl"><button class="btn prime" id="play" type="button">▶ 재생 (화면 녹화용)</button><button class="btn" id="step" type="button">다음 장면</button><a class="btn" href="skysea.html" style="display:inline-flex;align-items:center;text-decoration:none">세계 관제실</a></div>
 <script src="assets/vendor/leaflet/leaflet.js"></script>
 <script>
@@ -61,8 +61,8 @@ html,body{margin:0;height:100%;background:#000;color:#eafff2;font-family:system-
     red2: { cc: ['IR'], color: '#ff9a7a', name: '러시아와 전략 협력(상호방위 조항 없음)', icon: '🔸' },
     mid: { cc: ['IN', 'SA', 'AE', 'BR', 'ID', 'VN', 'PK', 'ZA', 'TH', 'EG'], color: '#f2f2e6', name: '어느 쪽 방위조약에도 없는 주요국(예)', icon: '⚪' }
   };
-  const KO = { US: '미국', CA: '캐나다', GB: '영국', FR: '프랑스', DE: '독일', TR: '튀르키예', PL: '폴란드', JP: '일본', KR: '한국', AU: '호주', PH: '필리핀', TW: '대만', RU: '러시아', CN: '중국', KP: '북한', BY: '벨라루스', IR: '이란', IN: '인도', SA: '사우디', AE: 'UAE', BR: '브라질', ID: '인도네시아', VN: '베트남', PK: '파키스탄', ZA: '남아공', TH: '태국', EG: '이집트' };
-  const CENTER = { US: [39, -98], CA: [58, -105], RU: [61, 95], CN: [34, 103], KP: [40.2, 127.2], KR: [36.3, 127.9], JP: [36.5, 138.5], TW: [23.7, 121], PH: [12.5, 122.5], AU: [-25, 134], IN: [22, 79], IR: [32.5, 54], BY: [53.6, 28], GB: [53.5, -1.8], FR: [46.6, 2.4], DE: [51.1, 10.3], TR: [39, 35], PL: [52, 19.3], SA: [24, 45], BR: [-10, -53], ID: [-2.5, 117], VN: [15.5, 106.5], PK: [29.8, 69.5], ZA: [-29, 24.5], TH: [15.5, 101], EG: [26.5, 30], AE: [24, 54] };
+  const KO = { BY: '벨라루스', LT: '리투아니아', LV: '라트비아', EE: '에스토니아', UA: '우크라이나', US: '미국', CA: '캐나다', GB: '영국', FR: '프랑스', DE: '독일', TR: '튀르키예', PL: '폴란드', JP: '일본', KR: '한국', AU: '호주', PH: '필리핀', TW: '대만', RU: '러시아', CN: '중국', KP: '북한', BY: '벨라루스', IR: '이란', IN: '인도', SA: '사우디', AE: 'UAE', BR: '브라질', ID: '인도네시아', VN: '베트남', PK: '파키스탄', ZA: '남아공', TH: '태국', EG: '이집트' };
+  const CENTER = { LT: [55.3, 23.9], LV: [56.9, 25.4], EE: [58.7, 25.6], UA: [49.5, 31], US: [39, -98], CA: [58, -105], RU: [61, 95], CN: [34, 103], KP: [40.2, 127.2], KR: [36.3, 127.9], JP: [36.5, 138.5], TW: [23.7, 121], PH: [12.5, 122.5], AU: [-25, 134], IN: [22, 79], IR: [32.5, 54], BY: [53.6, 28], GB: [53.5, -1.8], FR: [46.6, 2.4], DE: [51.1, 10.3], TR: [39, 35], PL: [52, 19.3], SA: [24, 45], BR: [-10, -53], ID: [-2.5, 117], VN: [15.5, 106.5], PK: [29.8, 69.5], ZA: [-29, 24.5], TH: [15.5, 101], EG: [26.5, 30], AE: [24, 54] };
   const grp = {}; Object.keys(G).forEach((k) => G[k].cc.forEach((c) => { grp[c] = k; }));
 
   const portrait = innerHeight > innerWidth;
@@ -110,7 +110,7 @@ html,body{margin:0;height:100%;background:#000;color:#eafff2;font-family:system-
     let k = 0; blink = setInterval(() => { k++; G.mid.cc.forEach((cc) => (layers[cc] || []).forEach((ly) => ly.setStyle({ fillOpacity: k % 2 ? 0.12 : 0.42 }))); }, 520);
   }
   function reset() {
-    timers.splice(0).forEach(clearTimeout); blinkMid(false);
+    timers.splice(0).forEach(clearTimeout); blinkMid(false); clearFx();
     Object.keys(layers).forEach((cc) => layers[cc].forEach((ly) => ly.setStyle({ color: '#ffffff', weight: 0.5, opacity: 0.28, fillOpacity: 0 })));
     Object.keys(lab).forEach((cc) => lab[cc].classList.remove('on'));
     $('legend').classList.remove('on'); $('end').classList.remove('on'); cap(null);
@@ -137,7 +137,152 @@ html,body{margin:0;height:100%;background:#000;color:#eafff2;font-family:system-
      ['mid', G.mid.icon + ' 인도·사우디·브라질 등 — 어느 쪽 방위조약에도 없음']].forEach((x) => { const d = document.createElement('div'); d.textContent = x[1]; el.appendChild(d); });
   }
 
-  // 장면 (총 약 34초)
+  // 가상 연출: 미사일 궤적 (실제 작전·표적 아님, 지역 단위 대략 위치)
+  const fx = [];
+  function arcPts(a, b, bend) {
+    const pts = [], n = 48, mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, dx = b[1] - a[1], dy = b[0] - a[0];
+    const cx = mx + dx * bend, cy = my - dy * bend; // 위쪽으로 휘는 조절점
+    for (let i = 0; i <= n; i++) { const t = i / n, u = 1 - t; pts.push([u * u * a[0] + 2 * u * t * cx + t * t * b[0], u * u * a[1] + 2 * u * t * cy + t * t * b[1]]); }
+    return pts;
+  }
+  function launch(from, to, color, delay, dur) {
+    later(delay, () => {
+      const pts = arcPts(from, to, 0.28);
+      const glow = L.polyline([pts[0]], { color, weight: 9, opacity: 0.28, interactive: false, lineCap: 'round' }).addTo(map);
+      const line = L.polyline([pts[0]], { color: '#fff4e0', weight: 2.6, opacity: 1, interactive: false, lineCap: 'round' }).addTo(map);
+      const head = L.circleMarker(pts[0], { radius: 5.5, color: '#ffffff', weight: 2, fillColor: color, fillOpacity: 1, interactive: false }).addTo(map);
+      fx.push(glow, line, head);
+      const t0 = performance.now(), D = dur || 1500;
+      const step = (now) => {
+        if (!map.hasLayer(line)) return;
+        const k = Math.min(1, (now - t0) / D), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, i = Math.max(1, Math.round(e * (pts.length - 1)));
+        const seg = pts.slice(Math.max(0, i - 18), i + 1); // 꼬리만 남기고 앞으로
+        line.setLatLngs(seg); glow.setLatLngs(pts.slice(0, i + 1)); head.setLatLng(pts[i]);
+        if (k < 1) requestAnimationFrame(step); else { map.removeLayer(head); map.removeLayer(line); glow.setStyle({ opacity: 0.22, weight: 4 }); boom(to); }
+      };
+      requestAnimationFrame(step);
+    });
+  }
+  function boom(at) {
+    const ring = L.circleMarker(at, { radius: 3, color: '#ffe08a', weight: 3, fillColor: '#ff7b00', fillOpacity: 0.85, interactive: false }).addTo(map);
+    const core = L.circleMarker(at, { radius: 9, stroke: false, fillColor: '#fffbe8', fillOpacity: 1, interactive: false }).addTo(map);
+    fx.push(ring, core);
+    const t0 = performance.now();
+    const step = (now) => {
+      if (!map.hasLayer(ring)) return;
+      const k = Math.min(1, (now - t0) / 900);
+      ring.setRadius(3 + 30 * k); ring.setStyle({ opacity: 1 - k, fillOpacity: 0.85 * (1 - k) * (1 - k) });
+      core.setRadius(9 * (1 - k) + 2); core.setStyle({ fillOpacity: Math.max(0, 1 - k * 1.6) });
+      if (k < 1) requestAnimationFrame(step); else { ring.setStyle({ opacity: 0, fillOpacity: 0 }); core.setStyle({ fillOpacity: 0 }); }
+    };
+    requestAnimationFrame(step);
+  }
+  const RC = '#ff6a3d', BC = '#5fb6ff';
+  function worldStrikes() {
+    // 유럽 전선 (대략)
+    launch([55.5, 37.5], [52.5, 21], RC, 0); launch([54, 30], [56.9, 24.1], RC, 500); launch([52.2, 16], [54.7, 33], BC, 1200); launch([50.1, 14.4], [55.2, 37], BC, 1900);
+    // 중동 (대략)
+    launch([32.6, 51.7], [25.3, 51.2], RC, 900); launch([35.7, 51.4], [31.5, 34.9], RC, 1700); launch([26, 50.5], [33.5, 50.5], BC, 2500);
+    // 한반도·대만 해협 (대략)
+    launch([39.6, 125.9], [37.3, 127.2], RC, 1400); launch([36.9, 127.0], [39.3, 125.8], BC, 2200);
+    launch([25.5, 118.4], [24.2, 120.8], RC, 1800); launch([26.3, 127.8], [25.2, 119.5], BC, 2800);
+  }
+  function asiaStrikes() {
+    [[39.0, 125.7, 37.5, 127.0, RC], [40.1, 124.4, 36.6, 127.4, RC], [37.0, 127.1, 39.1, 125.8, BC], [35.9, 128.6, 40.3, 127.5, BC],
+     [26.0, 119.3, 24.1, 120.7, RC], [24.6, 118.1, 22.7, 120.3, RC], [24.3, 121.0, 25.9, 119.4, BC], [26.3, 127.8, 25.1, 120.2, BC],
+     [33.6, 130.4, 39.2, 125.7, BC], [43.1, 131.9, 38.3, 140.8, RC]]
+      .forEach((m, i) => { launch([m[0], m[1]], [m[2], m[3]], m[4], i * 380, 1300); launch([m[0], m[1]], [m[2] + 0.4, m[3] - 0.5], m[4], 4300 + i * 300, 1200); });
+  }
+  // 비행기·배 아이콘 (세계 관제실과 같은 모양)
+  const PLANE = 'M12 2c.8 0 1.3.9 1.3 2v5.2l7.7 4.6v2l-7.7-2.4v4.4l2.2 1.7v1.6L12 20l-3.5 1.1v-1.6l2.2-1.7v-4.4L3 15.8v-2l7.7-4.6V4c0-1.1.5-2 1.3-2z';
+  const SHIP = 'M12 1.5l4 6.5v12.5l-1.5 2h-5l-1.5-2V8z';
+  function mover(way, opt) {
+    // way: [[lat,lng],...] 경로를 dur 동안 따라감. 지나간 길은 옅은 선으로 남김
+    later(opt.delay || 0, () => {
+      const size = opt.size || 24, isShip = opt.kind === 'ship';
+      const icon = L.divIcon({ className: '', iconSize: [size, size], iconAnchor: [size / 2, size / 2], html: '<svg viewBox="0 0 24 24" width="' + size + '" height="' + size + '" style="filter:drop-shadow(0 0 3px #000)"><path fill="' + opt.color + '" stroke="' + (isShip ? '#fff' : '#000') + '" stroke-width="' + (isShip ? 1.3 : 0.9) + '" d="' + (isShip ? SHIP : PLANE) + '"/></svg>' });
+      const mk = L.marker(way[0], { icon, interactive: false, keyboard: false, zIndexOffset: 800 }).addTo(map);
+      const trail = L.polyline([way[0]], { color: opt.color, weight: isShip ? 3 : 2, opacity: 0.55, dashArray: isShip ? null : '4 6', interactive: false }).addTo(map);
+      fx.push(mk, trail);
+      const seg = []; let tot = 0;
+      for (let i = 1; i < way.length; i++) { const d = Math.hypot(way[i][0] - way[i - 1][0], way[i][1] - way[i - 1][1]); seg.push(d); tot += d; }
+      const t0 = performance.now(), D = opt.dur || 4000, done = [way[0]];
+      let last = 0;
+      const step = (now) => {
+        if (!map.hasLayer(mk)) return;
+        const k = Math.min(1, (now - t0) / D); let rem = k * tot, i = 0;
+        while (i < seg.length - 1 && rem > seg[i]) { rem -= seg[i]; i++; }
+        const f = seg[i] ? rem / seg[i] : 1, a = way[i], b = way[i + 1] || a;
+        const pos = [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+        while (last < i) { last++; done.push(way[last]); }
+        mk.setLatLng(pos); trail.setLatLngs(done.concat([pos]));
+        const pa = map.latLngToLayerPoint(a), pb = map.latLngToLayerPoint(b), el = mk.getElement() && mk.getElement().firstChild;
+        if (el && (pb.x !== pa.x || pb.y !== pa.y)) el.style.transform = 'rotate(' + (Math.atan2(pb.x - pa.x, -(pb.y - pa.y)) * 180 / Math.PI) + 'deg)';
+        if (k < 1) requestAnimationFrame(step); else { trail.setStyle({ opacity: 0.25 }); if (opt.fade !== false) map.removeLayer(mk); }
+      };
+      requestAnimationFrame(step);
+    });
+  }
+  function flight(base, target, color, delay, dur) { // 기지 → 목표 근처 → 기지
+    const mid = [(base[0] + target[0]) / 2 + (target[1] - base[1]) * 0.12, (base[1] + target[1]) / 2 - (target[0] - base[0]) * 0.12];
+    const back = [target[0] + (base[1] - target[1]) * 0.08, target[1] - (base[0] - target[0]) * 0.08];
+    mover([base, mid, target, back, base], { color, delay, dur: dur || 6500 });
+  }
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  function barrage(a, b, side, color, delay, n, span) { // 전선 a~b를 따라 짧은 포격
+    for (let i = 0; i < n; i++) {
+      const t = rnd(), lat = a[0] + (b[0] - a[0]) * t, lng = a[1] + (b[1] - a[1]) * t, d = 0.25 + rnd() * 0.35;
+      launchSmall([lat - side * d, lng + (rnd() - 0.5) * 0.3], [lat + side * (0.15 + rnd() * 0.35), lng + (rnd() - 0.5) * 0.3], color, delay + Math.round(rnd() * span));
+    }
+  }
+  function launchSmall(from, to, color, delay) {
+    later(delay, () => {
+      const pts = arcPts(from, to, 0.35), line = L.polyline([pts[0]], { color: '#ffe6b0', weight: 1.6, opacity: 0.95, interactive: false }).addTo(map);
+      fx.push(line);
+      const t0 = performance.now();
+      const step = (now) => {
+        if (!map.hasLayer(line)) return;
+        const k = Math.min(1, (now - t0) / 650), i = Math.max(1, Math.round(k * (pts.length - 1)));
+        line.setLatLngs(pts.slice(Math.max(0, i - 10), i + 1));
+        if (k < 1) requestAnimationFrame(step); else { map.removeLayer(line); flash(to, color); }
+      };
+      requestAnimationFrame(step);
+    });
+  }
+  function flash(at, color) {
+    const c = L.circleMarker(at, { radius: 2, color: '#ffd27a', weight: 2, fillColor: color, fillOpacity: 0.9, interactive: false }).addTo(map);
+    fx.push(c);
+    const t0 = performance.now();
+    const step = (now) => { if (!map.hasLayer(c)) return; const k = Math.min(1, (now - t0) / 600); c.setRadius(2 + 11 * k); c.setStyle({ opacity: 1 - k, fillOpacity: 0.9 * (1 - k) }); if (k < 1) requestAnimationFrame(step); else map.removeLayer(c); };
+    requestAnimationFrame(step);
+  }
+  function asiaBattle() {
+    // 휴전선 포격 (양쪽)
+    barrage([37.75, 126.1], [38.6, 128.35], 1, RC, 0, 26, 9000);
+    barrage([37.75, 126.1], [38.6, 128.35], -1, BC, 400, 26, 9000);
+    // 전투기 (기지 위치는 대략)
+    flight([37.09, 127.03], [38.9, 126.4], BC, 300, 6200); flight([35.9, 126.6], [39.4, 127.4], BC, 1500, 6400);
+    flight([39.1, 125.9], [37.4, 127.6], RC, 900, 6200); flight([26.35, 127.77], [24.9, 120.0], BC, 600, 7000);
+    flight([25.6, 119.0], [24.0, 122.2], RC, 1100, 6800); flight([24.6, 118.2], [23.0, 121.8], RC, 2600, 6800);
+    flight([35.0, 129.0], [36.8, 124.6], BC, 3200, 6000); flight([31.2, 121.6], [29.0, 126.5], RC, 2000, 6500);
+    // 함대 (느리게)
+    mover([[20.5, 129.5], [22.8, 126.5], [24.0, 123.6]], { kind: 'ship', color: BC, delay: 0, dur: 10500, size: 22, fade: false });
+    mover([[21.5, 131.5], [23.5, 128.0], [25.0, 125.0]], { kind: 'ship', color: BC, delay: 700, dur: 10500, size: 20, fade: false });
+    mover([[28.6, 122.4], [26.8, 121.2], [25.4, 120.4]], { kind: 'ship', color: RC, delay: 300, dur: 10500, size: 22, fade: false });
+    mover([[29.8, 123.2], [27.6, 122.6], [26.2, 121.6]], { kind: 'ship', color: RC, delay: 1200, dur: 10500, size: 20, fade: false });
+  }
+  function europeBattle() {
+    // 폴란드·발트 ↔ 벨라루스·러시아 국경을 따라 포격 (대략)
+    barrage([53.9, 23.5], [52.0, 23.6], -1, RC, 0, 16, 8000); barrage([53.9, 23.5], [52.0, 23.6], 1, BC, 300, 16, 8000);
+    barrage([55.9, 26.6], [56.9, 28.0], -1, RC, 500, 10, 8000); barrage([55.9, 26.6], [56.9, 28.0], 1, BC, 800, 10, 8000);
+    flight([52.4, 16.9], [53.7, 27.2], BC, 200, 6500); flight([54.4, 18.6], [55.0, 30.5], BC, 1200, 6500); flight([50.1, 19.9], [52.6, 29.5], BC, 2200, 6500);
+    flight([53.9, 27.6], [52.6, 20.2], RC, 700, 6500); flight([55.8, 37.6], [56.8, 24.4], RC, 1500, 7500); flight([54.7, 20.5], [54.3, 15.5], RC, 2600, 6000);
+    mover([[55.3, 13.6], [55.6, 17.0], [56.4, 19.2]], { kind: 'ship', color: BC, delay: 0, dur: 9500, size: 20, fade: false });
+    mover([[59.9, 28.0], [59.6, 24.8], [58.6, 21.6]], { kind: 'ship', color: RC, delay: 400, dur: 9500, size: 20, fade: false });
+  }
+  function clearFx() { fx.splice(0).forEach((l) => map.hasLayer(l) && map.removeLayer(l)); }
+
+  // 장면 (총 약 75초)
   const SCENES = [
     [0, () => { cap(document.createTextNode('지구 전체'), '나라마다 맺은 방위 약속으로 색을 칠해 볼게요'); }],
     [3500, () => { paint('blue', [45, -40], 3200); cap(capTitle('blue', '미국과 상호방위조약 ' + G.blue.cc.length + '개국'), 'NATO 32개국 + 일본·한국·호주·필리핀'); }],
@@ -145,8 +290,11 @@ html,body{margin:0;height:100%;background:#000;color:#eafff2;font-family:system-
     [11000, () => { paint('red', [50, 100], 1600); cap(capTitle('red', '러시아·중국·북한·벨라루스'), '서로 돕기로 한 조약 (북·러 2024, 북·중 1961, 러·벨라루스 연합국가)'); }],
     [15500, () => { paint('red2', [32.5, 54], 0); cap(capTitle('red2', '이란'), '러시아와 전략 협력 조약 · 상호방위 조항은 없음'); }],
     [19000, () => { paint('mid', [20, 60], 1200); later(1400, () => blinkMid(true)); cap(capTitle('mid', '어느 쪽 방위조약에도 없는 나라들'), '인도·사우디·UAE·브라질·인도네시아·베트남 등 (예시)'); legend(); }],
-    [24500, () => { blinkMid(false); G.mid.cc.forEach((cc) => (layers[cc] || []).forEach((ly) => ly.setStyle({ fillOpacity: 0.3 }))); map.flyTo(portrait ? [33, 125] : [33, 124], portrait ? 4.2 : 4.6, { duration: 3.2 }); cap(document.createTextNode('그리고 한반도'), '조약이 맞닿는 곳: 한국·일본 ↔ 북한·중국 · 대만 해협'); later(3000, () => showLabels(['KR', 'KP', 'CN', 'JP', 'TW', 'RU', 'PH'], true)); }],
-    [32000, () => { cap(null); endList(); $('end').classList.add('on'); }]
+    [24500, () => { blinkMid(false); G.mid.cc.forEach((cc) => (layers[cc] || []).forEach((ly) => ly.setStyle({ fillOpacity: 0.3 }))); cap(document.createTextNode('💥 가상 연출: 충돌이 시작된다면'), '진영이 맞닿은 곳: 유럽 동부 · 중동 · 한반도 · 대만 해협 (실제 작전·표적 아님)'); worldStrikes(); }],
+    [32500, () => { map.flyTo(portrait ? [31.5, 124.6] : [32.5, 124], portrait ? 4.9 : 4.9, { duration: 3.2 }); later(1500, () => Object.keys(layers).forEach((cc) => layers[cc].forEach((ly) => { if (ly.options.fillOpacity > 0.2) ly.setStyle({ fillOpacity: 0.26 }); }))); cap(document.createTextNode('그리고 한반도'), '조약이 맞닿는 곳: 한국·일본 ↔ 북한·중국 · 대만 해협'); later(3000, () => { showLabels(['KR', 'KP', 'CN', 'JP', 'TW', 'RU', 'PH'], true); asiaStrikes(); }); }],
+    [44000, () => { cap(document.createTextNode('✈️ 가상 연출: 하늘·바다·포격'), '전투기는 기지→전선→귀환, 함대는 대만 해협으로, 휴전선을 따라 포격 (실제 작전 아님)'); asiaBattle(); }],
+    [56000, () => { clearFx(); showLabels(['KR', 'KP', 'CN', 'JP', 'TW', 'RU', 'PH'], false); map.flyTo(portrait ? [54.2, 23.5] : [54, 24], portrait ? 5.0 : 5.2, { duration: 3.4 }); cap(document.createTextNode('유럽 동쪽 끝'), 'NATO(폴란드·발트 3국) ↔ 러시아·벨라루스가 맞닿은 곳'); later(3300, () => { showLabels(['PL', 'BY', 'LT', 'LV', 'EE', 'UA', 'DE', 'RU'], true); europeBattle(); }); }],
+    [69000, () => { cap(null); endList(); $('end').classList.add('on'); }]
   ];
   let ready = false, pending = false, idx = 0, playing = false;
   function play() {
