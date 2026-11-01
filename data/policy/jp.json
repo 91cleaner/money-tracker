@@ -1,10 +1,36 @@
 {
-"updated": "2026-10-31",
+"updated": "2026-11-01",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "kantei:3247a17e1a0a",
+"kind": "news",
+"t": "犯罪被害者月間　高市総理ビデオメッセージ",
+"d": "2026-11-01",
+"u": "https://www.kantei.go.jp/jp/105/discourse/20261101message2.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の発表",
+"tags": [],
+"lk": "일본 총리 발표",
+"le": "Statement by the Japanese PM"
+},
+{
+"id": "kantei:76061cab1458",
+"kind": "news",
+"t": "「オレンジリボン・児童虐待防止推進キャンペーン」に関する高市総理メッセージ",
+"d": "2026-11-01",
+"u": "https://www.kantei.go.jp/jp/105/discourse/20261101message.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の発表",
+"tags": [],
+"lk": "일본 총리 발표",
+"le": "Statement by the Japanese PM"
+},
 {
 "id": "egov:145210794",
 "kind": "pubcomment",
