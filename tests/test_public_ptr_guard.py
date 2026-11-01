@@ -277,6 +277,27 @@ class PublicPtrGuardTests(unittest.TestCase):
         errors = invalid_public_trade_rows(payload, today=dt.date(2026, 11, 1))
         self.assertEqual([i for i, _ in errors], list(range(1, 6)))
 
+    def test_full_public_summary_rejects_impossible_utc_clock_without_write(self):
+        # A YYYY-MM-DD HH:MM UTC regex alone accepts 24:00 and 23:60.
+        good = {"who": "Example Member", "tk": "ABC", "d": "2026-10-20",
+                "fd": "2026-10-21", "filed": "2026-10-22", "doc": PDF}
+        for stamp in ("2026-10-28 24:00 UTC", "2026-10-28 23:60 UTC",
+                      "2026-10-28 99:99 UTC"):
+            with self.subTest(updated=stamp):
+                payload = {"updated": stamp, "trades": [good]}
+                with self.assertRaisesRegex(ValueError, "invalid UTC clock time"):
+                    invalid_public_trade_rows(payload, today=dt.date(2026, 11, 1))
+                with tempfile.TemporaryDirectory() as td:
+                    path = pathlib.Path(td) / "public.json"
+                    original = json.dumps(payload)
+                    path.write_text(original)
+                    with self.assertRaisesRegex(ValueError, "invalid UTC clock time"):
+                        sanitize_public_trades_file(path)
+                    self.assertEqual(path.read_text(), original)
+        # Boundary: a valid UTC clock is accepted.
+        payload = {"updated": "2026-10-28 23:59 UTC", "trades": [good]}
+        self.assertEqual(invalid_public_trade_rows(payload, today=dt.date(2026, 11, 1)), [])
+
     def test_full_public_summary_future_snapshot_fails_without_write(self):
         good = {"who": "Example Member", "tk": "ABC", "d": "2026-10-20",
                 "fd": "2026-10-21", "filed": "2026-10-22", "doc": PDF}
