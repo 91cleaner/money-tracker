@@ -160,6 +160,23 @@ class PublicJsonParityTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
             self.check()
 
+    def test_browser_unsafe_decimal_and_exponent_fail_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        for number in ("9007199254740993.0", "9007199254740991.25",
+                       "1e16", "-1e16"):
+            with self.subTest(number=number):
+                content = ('{"trades":[{"id":' + number + '}]}').encode("ascii")
+                (self.root / path).write_bytes(content)
+                with self.assertRaisesRegex(ValueError, "invalid JSON"):
+                    self.check()
+
+    def test_browser_safe_decimal_boundary_still_passes(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        content = b'{"trades":[{"id":9007199254740991.0}]}'
+        (self.root / path).write_bytes(content)
+        self.docs[path] = content
+        self.assertTrue(self.check())
+
     def test_browser_safe_integer_boundary_still_passes(self):
         path = audit.PUBLIC_JSON_PATHS[0]
         for number in ("9007199254740991", "-9007199254740991"):
