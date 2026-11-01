@@ -3,7 +3,7 @@ var box=document.getElementById('usBox');if(!box)return;
 var st=document.createElement('style');st.textContent=
 '#usBox{margin-top:8px}#usList{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}#usList[hidden]{display:none}'+
 '#usList button{min-height:44px;border:1px solid #2e6b4a;border-radius:10px;background:#04140b;color:#e8fff0;font:600 14px system-ui,sans-serif;text-align:left;padding:6px 10px;cursor:pointer}'+
-'#usList small{display:block;opacity:.65;font-weight:400;font-size:11px}'+
+'#usList .usH{grid-column:1/-1;font:700 13px system-ui,sans-serif;color:#e8fff0;margin-top:6px;border-top:1px solid #2e6b4a;padding-top:6px}#usList small{display:block;opacity:.65;font-weight:400;font-size:11px}'+
 'body.us-on .leaflet-overlay-pane,body.us-on .leaflet-marker-pane,body.us-on .leaflet-shadow-pane,body.us-on .leaflet-tooltip-pane,body.us-on .leaflet-popup-pane,body.us-on #card,body.us-on #scnBox{display:none!important}'+
 '#usP{position:fixed;top:0;bottom:0;right:0;width:var(--sw,360px);box-sizing:border-box;overflow:auto;z-index:6000;background:#fff;color:#111;font:14px system-ui,sans-serif;padding:10px 14px 12px;box-shadow:0 -2px 10px #0003}'+
 '@media (max-width:760px) and (orientation:portrait){#usP{top:auto;left:0;width:auto;height:46dvh;padding:8px 12px}}'+
@@ -25,7 +25,7 @@ var col=function(t){return t.indexOf('직접')==0?'#b03a2e':(t.indexOf('CIA')==0
 var dt=function(d){var a=d.split('-');return a[0]+'년 '+(+a[1])+'월'+(a[2]?' '+(+a[2])+'일':'')};
 function load(){return Promise.all([D||fetch('data/usregime.json').then(r=>r.json()).then(j=>D=j),geo||fetch('data/national/countries-110m.geojson').then(r=>r.json()).then(j=>geo=j)])}
 document.getElementById('usOpen').onclick=function(){var l=document.getElementById('usList');if(!l.hidden){l.hidden=true;return}
- load().then(function(){l.innerHTML=D.cases.map(function(x,k){return '<button type="button" data-k="'+k+'">'+x.label+'<small>'+x.tag.split(' (')[0]+'</small></button>'}).join('');
+ load().then(function(){var bt=function(x,k){return '<button type="button" data-k="'+k+'">'+x.label+'<small>'+x.tag.split(' (')[0]+'</small></button>'},a='',b='';D.cases.forEach(function(x,k){if(x.sec=='recent')b+=bt(x,k);else a+=bt(x,k)});l.innerHTML=a+(b?'<div class="usH">최근 미군 작전</div>'+b:'');
   l.querySelectorAll('button').forEach(function(b){b.onclick=function(){l.hidden=true;start(+b.dataset.k)}});l.hidden=false})};
 function iso(f){var p=f.properties||{},a=p.ISO_A2;if(!a||a=='-99')a=p.ISO_A2_EH;return a=='CN-TW'?'TW':a}
 function ppl(k){var p=k&&D.people[k];return p?'<figure><img src="'+p.img+'" alt="'+p.n+'"><figcaption>'+p.n+'</figcaption></figure>':''}
@@ -58,6 +58,6 @@ function show(k){k=Math.max(0,Math.min(c.steps.length-1,k));i=k;grp.clearLayers(
   s.p.forEach(function(p){var key=p[0]+','+p[1];if(!cur&&seen[key])return;
    var m=L.circleMarker([p[0],p[1]],{pane:'usM',radius:cur?8:5,color:'#fff',weight:2,fillColor:cur?cl:'#888',fillOpacity:op,interactive:false}).addTo(grp);
    if(cur)m.bindTooltip(p[2],{permanent:true,direction:'right',className:'usLbl',pane:'usM'});seen[key]=1})});
- var s=c.steps[k];P.querySelector('.sd').textContent=(k+1)+'/'+c.steps.length+' 단계 · '+dt(s.d);P.querySelector('.cap').textContent=s.t;P.querySelector('input').value=k;if(window.HFX){HFX.thumb(P.querySelector('.ph'),k==c.steps.length-1?'us:'+c.id+':0':'-');HFX.tl(c.steps.map(function(x){return x.d}),k,function(j){pause();show(j)})}}
+ var s=c.steps[k];if(window.HFX&&s.f)s.f.forEach(function(f){HFX.fire(f[0],f[1],grp,'usM')});P.querySelector('.sd').textContent=(k+1)+'/'+c.steps.length+' 단계 · '+dt(s.d);P.querySelector('.cap').textContent=s.t;P.querySelector('input').value=k;if(window.HFX){HFX.thumb(P.querySelector('.ph'),k==c.steps.length-1?'us:'+c.id+':0':'-');HFX.tl(c.steps.map(function(x){return x.d}),k,function(j){pause();show(j)})}}
 function stop(){pause();window.HFX&&HFX.end();document.removeEventListener('keydown',esc);if(lay)map.removeLayer(lay);if(grp)map.removeLayer(grp);if(P)P.remove();P=null;document.body.classList.remove('us-on');if(prev)map.setView(prev.c,prev.z)}
 })();
