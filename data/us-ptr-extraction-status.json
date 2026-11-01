@@ -1,49 +1,49 @@
 {
-  "checked_at": "2026-10-31T05:54:27.210772+00:00",
+  "checked_at": "2026-11-01T05:58:08.615854+00:00",
   "attempted": 8,
-  "rows": 16,
+  "rows": 9,
   "filings": [
     {
-      "filing_id": "2026-20035365",
+      "filing_id": "2026-20035244",
+      "status": "parsed_needs_review",
+      "rows": 3
+    },
+    {
+      "filing_id": "2026-20035274",
       "status": "parsed_needs_review",
       "rows": 1
     },
     {
-      "filing_id": "2026-20035345",
+      "filing_id": "2026-20035143",
+      "status": "parsed_needs_review",
+      "rows": 3
+    },
+    {
+      "filing_id": "2026-9116311",
       "status": "no_verified_rows",
       "rows": 0
     },
     {
-      "filing_id": "2026-20035350",
-      "status": "parsed_needs_review",
-      "rows": 1
-    },
-    {
-      "filing_id": "2026-20035349",
-      "status": "parsed_needs_review",
-      "rows": 1
-    },
-    {
-      "filing_id": "2026-20035326",
-      "status": "parsed_needs_review",
-      "rows": 12
-    },
-    {
-      "filing_id": "2026-20035243",
-      "status": "parsed_needs_review",
-      "rows": 1
-    },
-    {
-      "filing_id": "2026-20035309",
+      "filing_id": "2026-20035291",
       "status": "no_verified_rows",
       "rows": 0
     },
     {
-      "filing_id": "2026-20035293",
+      "filing_id": "2026-20035289",
+      "status": "parsed_needs_review",
+      "rows": 2
+    },
+    {
+      "filing_id": "2026-9116308",
+      "status": "no_verified_rows",
+      "rows": 0
+    },
+    {
+      "filing_id": "2026-20035275",
       "status": "no_verified_rows",
       "rows": 0
     }
   ],
-  "last_attempted_filing_id": "2026-20035293",
+  "last_attempted_filing_id": "2026-20035275",
   "warning": "Digital text only. All extracted trades require source review. No OCR, no guessed rows."
 }
