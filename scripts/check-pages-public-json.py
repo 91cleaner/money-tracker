@@ -20,6 +20,7 @@ PUBLIC_JSON_PATHS = (
     "data/search/collection-status.json",
 )
 MAX_BYTES = 16 * 1024 * 1024
+MAX_SAFE_JSON_INTEGER = (1 << 53) - 1  # Largest integer JavaScript can represent exactly.
 
 
 def reject_nonfinite(value):
@@ -32,6 +33,16 @@ def reject_overflowing_float(value):
     number = float(value)
     if not math.isfinite(number):
         raise ValueError(f"non-finite JSON number: {value}")
+    return number
+
+
+def reject_unsafe_integer(value):
+    # Python preserves arbitrary-size JSON integers, but browser JSON.parse
+    # rounds integers outside IEEE-754 safe range. A parity match alone cannot
+    # prevent a silently corrupted trade ID or collector count in the UI.
+    number = int(value)
+    if abs(number) > MAX_SAFE_JSON_INTEGER:
+        raise ValueError(f"JSON integer exceeds browser-safe range: {value}")
     return number
 
 
@@ -55,6 +66,7 @@ def validate_json(path, body):
         # Decode strictly first so byte-identical, browser-unreadable files fail.
         data = json.loads(body.decode("utf-8"), parse_constant=reject_nonfinite,
                           parse_float=reject_overflowing_float,
+                          parse_int=reject_unsafe_integer,
                           object_pairs_hook=reject_duplicate_keys)
     except (UnicodeDecodeError, ValueError) as exc:
         raise ValueError(f"{path}: invalid JSON") from exc
