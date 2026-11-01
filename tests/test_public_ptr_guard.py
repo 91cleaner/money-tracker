@@ -133,6 +133,22 @@ class PublicPtrGuardTests(unittest.TestCase):
             self.assertEqual(result["trades"], [good])
             self.assertIn("3건 제외", result["note"])
 
+    def test_recent_snapshot_rejects_note_growth_before_writing(self):
+        # Input is valid at 1,990 chars, but the quarantine disclosure pushes
+        # the generated note beyond the 2,000-character public text limit.
+        payload = {"updated": "2026-10-28", "note": "a" * 1990,
+                   "trades": [record(), record(fd="2026-10-19")]}
+        self.assertEqual([i for i, _ in invalid_rows(payload)], [1])
+        with tempfile.TemporaryDirectory() as td:
+            path = pathlib.Path(td) / "trades-recent.json"
+            original = json.dumps(payload)
+            path.write_text(original)
+            with self.assertRaisesRegex(ValueError, "unsafe public text field: note"):
+                sanitize_file(path)
+            # Fail closed: never publish a generated snapshot that breaks its
+            # own release validator, and never overwrite the original bytes.
+            self.assertEqual(path.read_text(), original)
+
     def test_nonpublic_fields_cannot_reach_public_snapshot(self):
         # A collector change must not silently publish private metadata just
         # because its trade dates and official PDF URL look legitimate.
