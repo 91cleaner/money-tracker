@@ -32,19 +32,21 @@ def cc(h):
         if a <= v <= b: return c
     return 'XX'
 
+DEADLINE = time.time() + 170
 def get(p):
     la, lo = p
-    for t in range(3):
+    for t in range(2):
+        if time.time() > DEADLINE: return None
         try:
             req = urllib.request.Request(f'https://api.adsb.lol/v2/point/{la}/{lo}/250', headers={'User-Agent': 'money-tracker-skysea/1.0 (github.com/91cleaner/money-tracker)'})
-            with urllib.request.urlopen(req, timeout=40) as r:
+            with urllib.request.urlopen(req, timeout=15) as r:
                 return json.load(r).get('ac') or []
         except Exception:
-            time.sleep(2 + 2 * t)
+            time.sleep(1 + t)
     return None
 
-P = points(); seen = {}; ok = 0
-with cf.ThreadPoolExecutor(4) as ex:
+P = points(); seen = {}; ok = 0; gps = {}
+with cf.ThreadPoolExecutor(8) as ex:
     for res in ex.map(get, P):
         if res is None: continue
         ok += 1
@@ -53,16 +55,25 @@ with cf.ThreadPoolExecutor(4) as ex:
             if not h or a.get('lat') is None or a.get('lon') is None: continue
             alt = a.get('alt_baro'); alt = alt if isinstance(alt, (int, float)) else (0 if alt == 'ground' else None)
             if alt == 0: continue  # keep flying aircraft only, keeps the file small
+            nacp, nic = a.get('nac_p'), a.get('nic')
+            if isinstance(nacp, int) or isinstance(nic, int):
+                g = gps.setdefault((int(a['lat'] // 1), int(a['lon'] // 1), h), 0)
+                gps[(int(a['lat'] // 1), int(a['lon'] // 1), h)] = 1 if ((isinstance(nacp, int) and nacp < 8) or (isinstance(nic, int) and nic < 7)) else 0
             seen[h] = [h, (a.get('flight') or '').strip(), (a.get('t') or '').strip(), round(a['lat'], 2), round(a['lon'], 2),
                        round(a.get('track') or a.get('true_heading') or 0), alt,
-                       round(a['gs']) if isinstance(a.get('gs'), (int, float)) else None, 'XX' if h.startswith('~') else cc(h)]
+                       round(a['gs']) if isinstance(a.get('gs'), (int, float)) else None, 'XX' if h.startswith('~') else cc(h), 1 if (a.get('dbFlags') or 0) & 1 else 0]
 if ok < len(P) * .5:
     raise SystemExit(f'only {ok}/{len(P)} requests worked; keeping previous snapshot')
 counts = {}
-for v in seen.values(): counts[v[-1]] = counts.get(v[-1], 0) + 1
+gc = {}
+for (la, lo, _), bad in gps.items():
+    c = gc.setdefault((la, lo), [la + .5, lo + .5, 0, 0]); c[2] += 1; c[3] += bad
+gc = [c for c in gc.values() if c[2] >= 3]
+for v in seen.values(): counts[v[8]] = counts.get(v[8], 0) + 1
 out = {'updated': datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), 'source': 'adsb.lol (ODbL)',
        'source_url': 'https://www.adsb.lol/', 'coverage': f'{ok} of {len(P)} areas, 250 nm each, busy air regions only',
-       'fields': ['hex', 'flight', 'type', 'lat', 'lon', 'track', 'alt_ft', 'gs_kt', 'cc'], 'counts': counts, 'count': len(seen),
+       'fields': ['hex', 'flight', 'type', 'lat', 'lon', 'track', 'alt_ft', 'gs_kt', 'cc', 'mil'], 'counts': counts, 'count': len(seen), 'mil': sum(v[9] for v in seen.values()),
+       'gps_fields': ['lat', 'lon', 'planes', 'bad'], 'gps_rule': 'nac_p<8 or nic<7', 'gps': gc,
        'ac': sorted(seen.values())}
 p = pathlib.Path('data/skysea/aircraft.json'); p.write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')))
 print('aircraft', len(seen), 'areas', ok, '/', len(P), 'bytes', p.stat().st_size, sorted(counts.items(), key=lambda x: -x[1])[:12])
