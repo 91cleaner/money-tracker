@@ -15,9 +15,9 @@ h1{font-size:18px;margin:0;color:var(--g);letter-spacing:.04em}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .cc{border:1px solid #1f4a33;border-radius:10px;padding:6px 6px 5px;background:#03100a;color:inherit;text-align:left;font:inherit;cursor:pointer}
 .cc .d{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:1px}
-.cc .l{font-size:11px;opacity:.9}.cc .v{font-size:22px;font-weight:800;line-height:1.1}
+.cc .l{font-size:11px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cc .v{font-size:18px;font-weight:800;line-height:1.1;white-space:nowrap}.cc{min-width:0}
 .cc.off{opacity:.35}
-.hero.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hero.two .n{font-size:34px}
+.hero.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hero.two .n{font-size:28px;white-space:nowrap}
 .tg{display:flex;gap:16px;font-size:14px}.tg label{display:flex;align-items:center;gap:6px}.tg input{width:18px;height:18px;accent-color:#5dff9e}
 .gl{font-size:12px;opacity:.75;margin-bottom:-4px}
 .row{display:flex;gap:8px;flex-wrap:wrap}
@@ -62,7 +62,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
 <script>
 (() => {
   const NM = { US: '미국', CN: '중국', KR: '한국', KP: '북한', JP: '일본', TW: '대만', RU: '러시아', GB: '영국', DE: '독일', FR: '프랑스', IN: '인도', CA: '캐나다', AU: '호주', TR: '튀르키예', AE: '아랍에미리트', IT: '이탈리아', ES: '스페인', BR: '브라질', MX: '멕시코', SA: '사우디', PA: '파나마', LR: '라이베리아', MH: '마셜제도', HK: '홍콩', SG: '싱가포르', MT: '몰타', BS: '바하마', GR: '그리스', NO: '노르웨이', ID: '인도네시아', VN: '베트남', XX: '기타' };
-  const PAL = ['#ffd60a', '#ff5a5a', '#5dff9e', '#4db8ff', '#ffffff', '#c77dff', '#ff9f1c', '#2ee6d6'];
+  const PAL = ['#ff9f1c', '#2ee6d6', '#ff7eb6', '#a3e635', '#f97316', '#60a5fa', '#e879f9', '#facc15', '#14b8a6', '#fb7185', '#93c5fd', '#d9f99d', '#fda4af', '#67e8f9'];
   const FIX = { US: '#ffd60a', CN: '#ff5a5a', KR: '#5dff9e', JP: '#ffffff', TW: '#4db8ff', RU: '#c77dff', KP: '#ff9f1c' };
   const GRAY = '#8a9a90';
   const $ = (id) => document.getElementById(id);
@@ -106,7 +106,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
     for (const [la, lo0, cc, n] of ships.cells) { const k = keyOf(cc, legS); if (off.has(k)) continue; const lo = near(lo0); if (!b.contains([la, lo])) continue; const id = la + ',' + lo; (cell[id] = cell[id] || { la, lo, by: {} }).by[k] = (cell[id].by[k] || 0) + n; }
     Object.values(cell).forEach(({ la, lo, by }) => {
       const ks = Object.keys(by).sort((x, y) => by[y] - by[x]), t = ks.reduce((s, k) => s + by[k], 0);
-      L.circleMarker([la, lo], { renderer: rnd, radius: Math.min(10, 2 + Math.sqrt(t) / 2.5), color: colorOf(ks[0]), weight: 0, fillOpacity: .5 })
+      L.circleMarker([la, lo], { renderer: rnd, radius: Math.min(7, 1.5 + Math.sqrt(t) / 3), color: colorOf(ks[0]), weight: 0, fillOpacity: ks[0] === 'XX' ? .22 : .5 })
         .on('click', () => { $('info').innerHTML = `<div class="h">배 ${t.toLocaleString('ko-KR')}척 기록</div>${ks.map((k) => (NM[k] || '기타') + ' ' + by[k].toLocaleString('ko-KR')).join(' · ')}<br>칸: 위도 ${la - half}~${la + half}도, 경도 ${((lo + 540) % 360 - 180) - half}~${((lo + 540) % 360 - 180) + half}도<br>날짜: ${ships.date_range[0]} (하루) · 색은 가장 많은 나라<br>출처: Global Fishing Watch`; }).addTo(sl);
     });
   };
