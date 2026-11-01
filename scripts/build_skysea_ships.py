@@ -11,7 +11,8 @@ def box(a, b, c, d):
 TILES = [box(la, lo, la + 40, lo + 60) for la in range(-80, 80, 40) for lo in range(-180, 180, 60)]
 CELL = 2.0
 FLAG = {'CHN': 'CN', 'KOR': 'KR', 'JPN': 'JP', 'PRK': 'KP', 'TWN': 'TW', 'RUS': 'RU', 'USA': 'US', 'PAN': 'PA', 'LBR': 'LR', 'MHL': 'MH',
-        'HKG': 'HK', 'SGP': 'SG', 'MLT': 'MT', 'BHS': 'BS', 'GRC': 'GR', 'NOR': 'NO', 'GBR': 'GB', 'IDN': 'ID', 'ESP': 'ES', 'ITA': 'IT', 'VNM': 'VN', 'IND': 'IN', 'TUR': 'TR'}
+        'HKG': 'HK', 'SGP': 'SG', 'MLT': 'MT', 'BHS': 'BS', 'GRC': 'GR', 'NOR': 'NO', 'GBR': 'GB', 'IDN': 'ID', 'ESP': 'ES', 'ITA': 'IT', 'VNM': 'VN', 'IND': 'IN', 'TUR': 'TR',
+        'THA': 'TH', 'MYS': 'MY', 'PHL': 'PH', 'CYP': 'CY', 'PRT': 'PT', 'DNK': 'DK', 'NLD': 'NL', 'DEU': 'DE', 'FRA': 'FR', 'CAN': 'CA', 'AUS': 'AU', 'BRA': 'BR', 'MEX': 'MX', 'ARG': 'AR', 'CHL': 'CL', 'PER': 'PE', 'ECU': 'EC', 'NZL': 'NZ', 'SWE': 'SE', 'FIN': 'FI', 'ISL': 'IS', 'IRN': 'IR', 'ARE': 'AE', 'SAU': 'SA', 'EGY': 'EG', 'NGA': 'NG', 'BGD': 'BD', 'LKA': 'LK', 'PAK': 'PK', 'MMR': 'MM', 'KHM': 'KH', 'ATG': 'AG', 'VCT': 'VC', 'TGO': 'TG', 'CMR': 'CM', 'PLW': 'PW', 'VUT': 'VU', 'KIR': 'KI', 'FJI': 'FJ', 'BEL': 'BE', 'POL': 'PL', 'UKR': 'UA', 'HRV': 'HR', 'MAR': 'MA', 'SEN': 'SN', 'COL': 'CO', 'TZA': 'TZ', 'KEN': 'KE', 'ZAF': 'ZA', 'OMN': 'OM', 'QAT': 'QA', 'KWT': 'KW', 'URY': 'UY', 'VEN': 'VE', 'CUB': 'CU', 'BLZ': 'BZ', 'HND': 'HN', 'COM': 'KM', 'SLE': 'SL', 'TUV': 'TV', 'CHE': 'CH', 'IRL': 'IE', 'EST': 'EE', 'LVA': 'LV', 'LTU': 'LT', 'GEO': 'GE', 'ISR': 'IL', 'MDV': 'MV', 'BRN': 'BN', 'PNG': 'PG', 'SLB': 'SB', 'TON': 'TO', 'WSM': 'WS', 'NRU': 'NR', 'FSM': 'FM', 'MNG': 'MN', 'MOZ': 'MZ', 'MDG': 'MG', 'MUS': 'MU', 'SYC': 'SC', 'GHA': 'GH', 'CIV': 'CI', 'AGO': 'AO', 'NAM': 'NA', 'MRT': 'MR', 'DZA': 'DZ', 'TUN': 'TN', 'LBY': 'LY', 'ROU': 'RO', 'BGR': 'BG'}
 DS = 'public-global-presence:latest'
 
 def report(start, end, agg, poly):
