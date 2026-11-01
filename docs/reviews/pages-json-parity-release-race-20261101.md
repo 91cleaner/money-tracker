@@ -43,3 +43,16 @@ This is a **code-path risk, not a confirmed production incident**. High deployme
 4. A post-publish check cannot prevent initial public exposure or roll back already published bytes. Protect publication **before** `deploy-pages` with artifact allowlist/privacy validation; label a post-publish failure as an incident requiring remediation, not as proof no unsafe bytes were served.
 
 **Status:** Static workflow review plus GitHub job-step verification only. No CI, runtime code, Pages configuration, collector, or live site changed by this note. The repo is **public**; generative AI analysis and real-time executed-trade feeds are **NOT CONNECTED**.
+
+
+## P2 follow-up (2026-11-02 00:53 KST): PR path filter omits public-artifact producers
+
+**Verified workflow contract:** PR #458's `.github/workflows/pages-json-parity.yml` has a `pull_request.paths` filter with only `scripts/check-pages-public-json.py`, `scripts/test_pages_public_json.py`, and the workflow YAML itself. It does **not** match `scripts/prepare-public-pages.py`, `scripts/build_public_trades.py`, `scripts/check-pages-artifact.py`, or `data/us/trades-recent.json` / `data/search/collection-status.json`. A PR changing only one of these producer/input paths will therefore **not schedule the parity regression job**. This is an actual trigger-coverage gap confirmed from the workflow source, not evidence that a bad deployment occurred.
+
+**Owner action and reproducible acceptance:**
+1. Expand the PR path filter to include `scripts/prepare-public-pages.py`, `scripts/build_public_trades.py`, `scripts/check-pages-artifact.py`, and the relevant public JSON input paths (or remove the restrictive `paths` filter). Avoid blanket `data/**` triggering if cost is material; at minimum include every input consumed by the three audited outputs and the producer scripts.
+2. Add an artifact integration smoke in PR CI: run `python3 scripts/prepare-public-pages.py`, `python3 scripts/check-pages-artifact.py`, then validate the three generated JSON files with the same strict schema rules. The existing 12 unit tests use synthetic temporary fixtures and **do not prove** that a changed real builder still produces the expected files.
+3. On a throwaway PR branch, change only `scripts/build_public_trades.py` (or an allowed input JSON) and verify that **Pages public JSON parity audit** is scheduled. Restore the test change before merging. Also inject a malformed generated `trades_public.json` in an isolated fixture and require a nonzero job result.
+4. Keep the post-deploy live SHA parity gate separate from this PR build gate: a PR test is **not** production verification. Do not merge until the #403 / #412 integration and release-publisher ownership are agreed.
+
+**Scope/status:** Review finding documented only. No workflow, data, builder, test, Pages deployment or UI code was modified here. Repository **public**; generative AI analysis and real-time executed-trade feed **NOT CONNECTED**.
