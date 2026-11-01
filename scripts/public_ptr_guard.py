@@ -205,6 +205,13 @@ def sanitize_file(path):
     if bad:
         if len(bad) == len(payload["trades"]):
             raise ValueError("All House PTR rows invalid; refusing empty public snapshot")
+        # Match the full-summary integrity gate: a partial public snapshot must
+        # not silently discard over three quarters of its source records.
+        total = len(payload["trades"])
+        if len(bad) * 4 > total * 3:
+            raise ValueError(
+                f"House PTR snapshot integrity collapse: {len(bad)}/{total} rows invalid; refusing release"
+            )
         exclude = {i for i, _ in bad}
         payload["trades"] = [r for i, r in enumerate(payload["trades"]) if i not in exclude]
         payload["note"] = (str(payload.get("note") or "") +
