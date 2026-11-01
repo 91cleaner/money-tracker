@@ -142,6 +142,38 @@ class PublicJsonParityTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
             self.check()
 
+    def test_bom_and_non_utf8_local_json_fail_closed(self):
+        # json.loads(bytes) accepts these, but browser JSON parsers do not.
+        path = audit.PUBLIC_JSON_PATHS[0]
+        for content in (
+            b'\xef\xbb\xbf{"trades":[]}',
+            '{"trades":[]}'.encode("utf-16"),
+            '{"trades":[]}'.encode("utf-32"),
+        ):
+            with self.subTest(content=content[:8]):
+                (self.root / path).write_bytes(content)
+                with self.assertRaisesRegex(ValueError, "invalid JSON"):
+                    self.check()
+
+    def test_bom_and_non_utf8_remote_json_fail_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        for content in (
+            b'\xef\xbb\xbf{"trades":[]}',
+            '{"trades":[]}'.encode("utf-16"),
+            '{"trades":[]}'.encode("utf-32"),
+        ):
+            with self.subTest(content=content[:8]):
+                self.docs[path] = content
+                with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
+                    self.check()
+
+    def test_valid_utf8_unicode_json_still_passes(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        content = json.dumps({"trades": [{"who": "의원"}]}, ensure_ascii=False).encode("utf-8")
+        (self.root / path).write_bytes(content)
+        self.docs[path] = content
+        self.assertTrue(self.check())
+
     def test_regular_fractional_json_number_still_passes(self):
         path = audit.PUBLIC_JSON_PATHS[0]
         content = b'{"trades":[{"r":1.25}]}'
