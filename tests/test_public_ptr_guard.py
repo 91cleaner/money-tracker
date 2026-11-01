@@ -178,14 +178,18 @@ class PublicPtrGuardTests(unittest.TestCase):
             record(who=""),
             record(tk=None),
         ]
-        payload = {"updated": "2026-10-28", "trades": [record()] + unsafe}
+        # The separate integrity-collapse guard rejects >75% invalid rows.
+        # Keep this fixture below that threshold so it tests field quarantine,
+        # while the collapse regression tests cover fail-closed behavior.
+        valid = [record(), record(), record()]
+        payload = {"updated": "2026-10-28", "trades": valid + unsafe}
         self.assertEqual([i for i, _ in invalid_rows(payload)],
-                         list(range(1, len(unsafe) + 1)))
+                         list(range(len(valid), len(valid) + len(unsafe))))
         with tempfile.TemporaryDirectory() as td:
             path = pathlib.Path(td) / "trades-recent.json"
             path.write_text(json.dumps(payload))
-            self.assertEqual(sanitize_file(path), (1, len(unsafe)))
-            self.assertEqual(json.loads(path.read_text())["trades"], [record()])
+            self.assertEqual(sanitize_file(path), (len(valid), len(unsafe)))
+            self.assertEqual(json.loads(path.read_text())["trades"], valid)
             self.assertNotIn("secret@example.test", path.read_text())
 
     def test_official_pdf_archive_year_matches_filing_year(self):
