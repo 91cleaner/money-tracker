@@ -1,267 +1,1354 @@
 {
 "title": "미국 정권 교체 기록",
 "note": "미국 정부 공식 발표, 기밀 해제 문서, 공식 조사로 확인된 경우만 넣었어요",
+"people": {
+"eisenhower": {
+"n": "드와이트 아이젠하워",
+"img": "img/people/eisenhower.jpg",
+"lic": "Public domain",
+"by": "White House",
+"url": "https://commons.wikimedia.org/wiki/File:Dwight_D._Eisenhower,_official_photo_portrait,_May_29,_1959_(cropped)(3).jpg"
+},
+"kennedy": {
+"n": "존 F. 케네디",
+"img": "img/people/kennedy.jpg",
+"lic": "Public domain",
+"by": "Cecil W. Stoughton",
+"url": "https://commons.wikimedia.org/wiki/File:John_F._Kennedy,_White_House_color_photo_portrait.jpg"
+},
+"johnson": {
+"n": "린든 존슨",
+"img": "img/people/johnson.jpg",
+"lic": "Public domain",
+"by": "Arnold Newman",
+"url": "https://commons.wikimedia.org/wiki/File:Lyndon_B._Johnson,_photo_portrait,_color_(3x4_cropped)(2).jpg"
+},
+"nixon": {
+"n": "리처드 닉슨",
+"img": "img/people/nixon.jpg",
+"lic": "Public domain",
+"by": "Department of Defense. Department of the Army. Office of the Deputy Chief of Sta",
+"url": "https://commons.wikimedia.org/wiki/File:Richard_Nixon_presidential_portrait_(2).jpg"
+},
+"reagan": {
+"n": "로널드 레이건",
+"img": "img/people/reagan.jpg",
+"lic": "Public domain",
+"by": "Michael Evans",
+"url": "https://commons.wikimedia.org/wiki/File:Official_Portrait_of_President_Reagan_1981.jpg"
+},
+"bush41": {
+"n": "조지 H. W. 부시",
+"img": "img/people/bush41.jpg",
+"lic": "Public domain",
+"by": "David Valdez",
+"url": "https://commons.wikimedia.org/wiki/File:George_H._W._Bush_presidential_portrait_(cropped)_(2).jpg"
+},
+"bush43": {
+"n": "조지 W. 부시",
+"img": "img/people/bush43.jpg",
+"lic": "Public domain",
+"by": "Eric Draper",
+"url": "https://commons.wikimedia.org/wiki/File:George-W-Bush.jpeg"
+},
+"obama": {
+"n": "버락 오바마",
+"img": "img/people/obama.jpg",
+"lic": "Public domain",
+"by": "Official White House Photo by Pete Souza",
+"url": "https://commons.wikimedia.org/wiki/File:President_Barack_Obama.jpg"
+},
+"trump": {
+"n": "도널드 트럼프",
+"img": "img/people/trump.jpg",
+"lic": "Public domain",
+"by": "Daniel Torok",
+"url": "https://commons.wikimedia.org/wiki/File:Official_Presidential_Portrait_of_President_Donald_J._Trump_(2025).jpg"
+},
+"mosaddegh": {
+"n": "모하마드 모사데크",
+"img": "img/people/mosaddegh.jpg",
+"lic": "Public domain",
+"by": "International News Photos",
+"url": "https://commons.wikimedia.org/wiki/File:Dr_Mohammad_Mosaddeq.jpg"
+},
+"arbenz": {
+"n": "하코보 아르벤스",
+"img": "img/people/arbenz.jpg",
+"lic": "Public domain",
+"by": "Gobierno de Guatemala",
+"url": "https://commons.wikimedia.org/wiki/File:Retrato_de_Presidente_Jacobo_%C3%81rbenz.png"
+},
+"lumumba": {
+"n": "파트리스 루뭄바",
+"img": "img/people/lumumba.jpg",
+"lic": "CC BY 4.0",
+"by": "Harry Pot for Anefo )",
+"url": "https://commons.wikimedia.org/wiki/File:PatriceLumumba1960.jpg"
+},
+"trujillo": {
+"n": "라파엘 트루히요",
+"img": "img/people/trujillo.jpg",
+"lic": "Public domain",
+"by": "Unknown author.",
+"url": "https://commons.wikimedia.org/wiki/File:Rafael_L._Trujillo_en_la_silla_presidencial_(cropped).jpg"
+},
+"diem": {
+"n": "응오딘지엠",
+"img": "img/people/diem.jpg",
+"lic": "Public domain",
+"by": "Press and Information Office, Embassy of the Republic of Vietnam, Washington, D.",
+"url": "https://commons.wikimedia.org/wiki/File:President_NGO-DINH-DIEM_of_the_Republic_of_Viet-Nam.jpg"
+},
+"goulart": {
+"n": "주앙 굴라르",
+"img": "img/people/goulart.jpg",
+"lic": "Public domain",
+"by": "Governo do Brasil",
+"url": "https://commons.wikimedia.org/wiki/File:Jo%C3%A3o_%E2%80%9CJango%E2%80%9D_Goulart,_Presidente_do_Brasil,_foto_oficial,_1961.jpg"
+},
+"allende": {
+"n": "살바도르 아옌데",
+"img": "img/people/allende.jpg",
+"lic": "CC BY 3.0 cl",
+"by": "Biblioteca del Congreso Nacional de Chile",
+"url": "https://commons.wikimedia.org/wiki/File:Salvador_Allende_Gossens-.jpg"
+},
+"noriega": {
+"n": "마누엘 노리에가",
+"img": "img/people/noriega.jpg",
+"lic": "CC0",
+"by": "Unknown author",
+"url": "https://commons.wikimedia.org/wiki/File:MNoriega_1988.jpg"
+},
+"saddam": {
+"n": "사담 후세인",
+"img": "img/people/saddam.jpg",
+"lic": "Public domain",
+"by": "Iraqi News Agency",
+"url": "https://commons.wikimedia.org/wiki/File:Saddam_Hussein_in_1998.jpg"
+},
+"gaddafi": {
+"n": "무아마르 카다피",
+"img": "img/people/gaddafi.jpg",
+"lic": "CC BY-SA 3.0",
+"by": "Stevan Kragujević",
+"url": "https://commons.wikimedia.org/wiki/File:Moamer_el_Gadafi_(cropped).jpg"
+},
+"maduro": {
+"n": "니콜라스 마두로",
+"img": "img/people/maduro.jpg",
+"lic": "Public domain",
+"by": "Presidency of Bolivarian Republic of Venezuela",
+"url": "https://commons.wikimedia.org/wiki/File:Nicol%C3%A1s_Maduro_official_portrait_(cropped_2).png"
+}
+},
 "cases": [
 {
-"d": "1953-08-19",
+"id": "ir1953",
+"label": "이란 1953",
 "cc": "IR",
 "n": "이란",
-"ll": [
-32.4,
-53.7
-],
 "tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
-"t": "모사데크 총리 정부가 쿠데타로 무너졌어요",
-"more": "미 국무부 역사실의 기밀 해제 문서집은 CIA가 이 쿠데타로 이어진 비밀 공작을 했다고 기록해요.",
+"view": [
+34.5,
+49.5,
+5
+],
+"us": "eisenhower",
+"tg": "mosaddegh",
+"more": "CIA와 영국이 함께 계획한 TPAJAX 공작이에요. 국무부 문서집이 계획과 실행을 기록해요.",
 "src": [
 [
-"미 국무부 역사실 FRUS 1951–1954 이란 (회고편, 2017) 서문",
+"FRUS 1951–1954 이란 (회고편) 서문",
 "https://history.state.gov/historicaldocuments/frus1951-54Iran/preface"
+],
+[
+"FRUS 1952–1954 제10권 문서 362 (사건 경위 보고)",
+"https://history.state.gov/historicaldocuments/frus1952-54v10/d362"
+]
+],
+"steps": [
+{
+"d": "1953-08-15",
+"t": "밤, 나시리 대령이 국왕 해임령을 들고 총리 관저로 갔다가 체포됐어요",
+"p": [
+[
+35.69,
+51.39,
+"테헤란"
+]
+],
+"ar": []
+},
+{
+"d": "1953-08-16",
+"t": "정부가 쿠데타 실패를 발표했고, 국왕은 람사르에서 바그다드로 떠났어요",
+"p": [
+[
+35.69,
+51.39,
+"테헤란"
+],
+[
+36.9,
+50.66,
+"람사르"
+],
+[
+33.31,
+44.36,
+"바그다드"
+]
+],
+"ar": [
+[
+[
+36.9,
+50.66
+],
+[
+33.31,
+44.36
+]
+]
+]
+},
+{
+"d": "1953-08-19",
+"t": "시위대와 군이 움직여 라디오 방송국을 차지하고, 탱크가 모사데크 관저를 공격했어요",
+"p": [
+[
+35.69,
+51.39,
+"테헤란"
+]
+],
+"ar": []
+},
+{
+"d": "1953-08-22",
+"t": "국왕이 테헤란 공항으로 돌아왔어요",
+"p": [
+[
+35.69,
+51.39,
+"테헤란"
+]
+],
+"ar": [
+[
+[
+33.31,
+44.36
+],
+[
+35.69,
+51.39
+]
+]
+]
+}
+]
+},
+{
+"id": "gt1954",
+"label": "과테말라 1954",
+"cc": "GT",
+"n": "과테말라",
+"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
+"view": [
+15.0,
+-89.5,
+7
+],
+"us": "eisenhower",
+"tg": "arbenz",
+"more": "CIA 공작명 PBSUCCESS예요. 지원 거점은 온두라스와 니카라과에 있었고, 니카라과에 비밀 라디오 방송국이 세워졌어요.",
+"src": [
+[
+"FRUS 1952–1954 과테말라 서문",
+"https://history.state.gov/historicaldocuments/frus1952-54Guat/preface"
+],
+[
+"같은 책 문서 202 (6월 18일 편집자 주)",
+"https://history.state.gov/historicaldocuments/frus1952-54Guat/d202"
+],
+[
+"같은 책 문서 287 (CIA 역할 요약)",
+"https://history.state.gov/historicaldocuments/frus1952-54Guat/d287"
+]
+],
+"steps": [
+{
+"d": "1954-06-18",
+"t": "카스티요 아르마스 부대가 온두라스에서 넘어와 공격을 시작했어요",
+"p": [
+[
+14.9,
+-88.9,
+"온두라스 쪽"
+]
+],
+"ar": [
+[
+[
+14.9,
+-88.9
+],
+[
+14.63,
+-90.51
+]
 ]
 ]
 },
 {
 "d": "1954-06-27",
-"cc": "GT",
-"n": "과테말라",
-"ll": [
-15.6,
--90.3
-],
-"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
-"t": "아르벤스 대통령이 물러났어요",
-"more": "1990년대 초 CIA 국장이 이 비밀 공작을 공식 인정했고, 국무부 문서집에 기록됐어요.",
-"src": [
+"t": "아르벤스 대통령이 물러나고 군 지휘관 디아스에게 정권을 넘겼어요",
+"p": [
 [
-"미 국무부 역사실 FRUS 1952–1954 과테말라 (2003) 서문",
-"https://history.state.gov/historicaldocuments/frus1952-54Guat/preface"
+14.63,
+-90.51,
+"과테말라시티"
 ]
+],
+"ar": []
+}
 ]
 },
 {
-"d": "1960-09-14",
+"id": "cd1960",
+"label": "콩고 1960",
 "cc": "CD",
 "n": "콩고",
-"ll": [
--2.9,
-23.6
-],
 "tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
-"t": "루뭄바 총리가 권력에서 밀려났어요",
-"more": "9월 5일 해임 뒤 14일 모부투가 권력을 잡았어요. 처치 위원회는 CIA가 루뭄바 암살을 계획하고 독약을 보냈다고 확인했어요. 루뭄바는 1961년 1월 카탕가에서 살해됐고, 위원회는 CIA가 이 살해에 직접 관여한 증거는 없다고 했어요.",
+"view": [
+-4,
+22,
+5
+],
+"us": "eisenhower",
+"tg": "lumumba",
+"more": "처치 위원회는 CIA가 루뭄바 암살을 계획하고 독약을 보냈지만 쓰이지 않았고, 그의 죽음에 CIA가 관련됐다는 근거는 없다고 했어요.",
 "src": [
 [
-"미 국무부 역사실 FRUS 1964–1968 제23권 콩고 1960–1968 서문",
+"FRUS 1964–1968 제23권 콩고 서문",
 "https://history.state.gov/historicaldocuments/frus1964-68v23/preface"
 ],
 [
-"미 상원 처치 위원회 보고서 「Alleged Assassination Plots Involving Foreign Leaders」 (1975)",
+"처치 위원회 보고서 콩고 장 (AARC 사본)",
+"https://www.aarclibrary.org/publib/church/reports/ir/pdf/ChurchIR_3A_Congo.pdf"
+],
+[
+"미 상원 처치 위원회 중간 보고서 「Alleged Assassination Plots」 (1975)",
 "https://www.intelligence.senate.gov/wp-content/uploads/2024/08/sites-default-files-94465.pdf"
 ]
+],
+"steps": [
+{
+"d": "1960-09-05",
+"t": "카사부부 대통령이 루뭄바 총리를 해임했어요",
+"p": [
+[
+-4.32,
+15.31,
+"레오폴드빌"
 ]
+],
+"ar": []
+},
+{
+"d": "1960-09-14",
+"t": "모부투가 군 쿠데타로 권력을 잡았어요",
+"p": [
+[
+-4.32,
+15.31,
+"레오폴드빌"
+]
+],
+"ar": []
+},
+{
+"d": "1960-09-26",
+"t": "CIA 현지 요원이 본부에서 온 독약과 암살 지시를 받았어요",
+"p": [
+[
+-4.32,
+15.31,
+"레오폴드빌"
+]
+],
+"ar": []
+},
+{
+"d": "1960-11-27",
+"t": "루뭄바가 스탠리빌로 향했다가 12월 초 붙잡혔어요",
+"p": [
+[
+-4.32,
+15.31,
+"레오폴드빌"
+],
+[
+0.52,
+25.2,
+"스탠리빌"
+]
+],
+"ar": [
+[
+[
+-4.32,
+15.31
+],
+[
+0.52,
+25.2
+]
+]
+]
+},
+{
+"d": "1961-01-17",
+"t": "카탕가로 넘겨진 루뭄바가 살해됐어요",
+"p": [
+[
+-11.66,
+27.48,
+"카탕가"
+]
+],
+"ar": [
+[
+[
+-4.32,
+15.31
+],
+[
+-11.66,
+27.48
+]
+]
+]
+}
+]
+},
+{
+"id": "do1961",
+"label": "도미니카공화국 1961",
+"cc": "DO",
+"n": "도미니카공화국",
+"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
+"view": [
+18.8,
+-70.2,
+8
+],
+"us": "kennedy",
+"tg": "trujillo",
+"more": "처치 위원회에 따르면 미국 관리들이 반대 세력에게 권총 3정과 카빈 소총 3정을 건넸어요. 이 무기가 암살에 쓰였는지는 증거가 엇갈려요.",
+"src": [
+[
+"처치 위원회 보고서 트루히요 장 (AARC 사본)",
+"https://aarclibrary.org/publib/church/reports/ir/pdf/ChurchIR_3D_Trujillo.pdf"
+],
+[
+"미 상원 처치 위원회 중간 보고서 「Alleged Assassination Plots」 (1975)",
+"https://www.intelligence.senate.gov/wp-content/uploads/2024/08/sites-default-files-94465.pdf"
+]
+],
+"steps": [
+{
+"d": "1961-03",
+"t": "CIA 본부가 권총과 탄약을 외교 행낭으로 보냈어요",
+"p": [
+[
+18.47,
+-69.9,
+"시우다드트루히요"
+]
+],
+"ar": []
 },
 {
 "d": "1961-05-30",
-"cc": "DO",
-"n": "도미니카공화국",
-"ll": [
-18.8,
--70.3
-],
-"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
 "t": "트루히요 대통령이 반대 세력에 살해됐어요",
-"more": "처치 위원회는 미국 관리들이 트루히요 암살을 노린 반대 세력을 지원했다고 확인했어요.",
-"src": [
+"p": [
 [
-"미 상원 처치 위원회 보고서 「Alleged Assassination Plots Involving Foreign Leaders」 (1975)",
-"https://www.intelligence.senate.gov/wp-content/uploads/2024/08/sites-default-files-94465.pdf"
+18.47,
+-69.9,
+"시우다드트루히요"
 ]
+],
+"ar": []
+}
 ]
 },
 {
-"d": "1963-11-01",
+"id": "vn1963",
+"label": "남베트남 1963",
 "cc": "VN",
 "n": "남베트남",
-"ll": [
-12.5,
-108.0
-],
 "tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
-"t": "지엠 대통령 정부가 군 쿠데타로 무너졌어요",
-"more": "기밀 해제 전문에 따르면 미국 대사는 쿠데타를 막지 않기로 했고 CIA 요원이 장군들과 접촉했어요. 처치 위원회는 지엠 살해에는 미국이 관여하지 않았다고 했어요.",
+"view": [
+12,
+107,
+6
+],
+"us": "kennedy",
+"tg": "diem",
+"more": "미국 대사는 쿠데타를 막지 않기로 했어요. 처치 위원회는 지엠 형제 살해에 미국이 관여하지 않았다고 했어요.",
 "src": [
 [
-"미 국무부 역사실 FRUS 1961–1963 제4권 문서 216 (1963년 10월 25일 전문)",
+"FRUS 1961–1963 제4권 문서 216 (10월 25일 전문)",
 "https://history.state.gov/historicaldocuments/frus1961-63v04/d216"
 ],
 [
-"미 상원 처치 위원회 보고서 「Alleged Assassination Plots Involving Foreign Leaders」 (1975)",
-"https://www.intelligence.senate.gov/wp-content/uploads/2024/08/sites-default-files-94465.pdf"
+"처치 위원회 보고서 지엠 장 (AARC 사본)",
+"https://www.aarclibrary.org/publib/church/reports/ir/pdf/ChurchIR_3E_Diem.pdf"
+]
+],
+"steps": [
+{
+"d": "1963-10-03",
+"t": "CIA 요원 코닌이 쿠데타를 준비하던 민 장군과 접촉했어요",
+"p": [
+[
+10.78,
+106.7,
+"사이공"
+]
+],
+"ar": []
+},
+{
+"d": "1963-10-25",
+"t": "로지 대사가 쿠데타를 막지 않겠다는 뜻을 워싱턴에 보고했어요",
+"p": [
+[
+10.78,
+106.7,
+"사이공"
+]
+],
+"ar": []
+},
+{
+"d": "1963-11-02",
+"t": "장군들의 쿠데타 중 지엠 대통령과 동생 누가 살해됐어요",
+"p": [
+[
+10.78,
+106.7,
+"사이공"
+]
+],
+"ar": []
+}
+]
+},
+{
+"id": "br1964",
+"label": "브라질 1964",
+"cc": "BR",
+"n": "브라질",
+"tag": "미국 정부 지원 준비 (기밀 해제 문서로 확인)",
+"view": [
+-18,
+-50,
+4
+],
+"us": "johnson",
+"tg": "goulart",
+"more": "브라더 샘 작전이에요. 미국은 이 준비를 겉으로는 평범한 해군 훈련으로 보이게 하려 했어요. 쿠데타가 빨리 끝나 실제 지원은 필요 없었어요.",
+"src": [
+[
+"FRUS 1964–1968 제31권 문서 198 (3월 31일 전문)",
+"https://history.state.gov/historicaldocuments/frus1964-68v31/d198"
+]
+],
+"steps": [
+{
+"d": "1964-03-31",
+"t": "미국이 아루바에서 산투스 앞바다로 유조선을, 항공모함 함대를 보내기로 했어요",
+"p": [
+[
+12.52,
+-70.03,
+"아루바"
+],
+[
+-23.96,
+-46.33,
+"산투스"
+]
+],
+"ar": [
+[
+[
+12.52,
+-70.03
+],
+[
+-23.96,
+-46.33
+]
 ]
 ]
 },
 {
 "d": "1964-03-31",
-"cc": "BR",
-"n": "브라질",
-"ll": [
--12.0,
--51.0
-],
-"tag": "미국 정부 지원 준비 (기밀 해제 문서로 확인)",
-"t": "굴라르 대통령 정부가 군 쿠데타로 무너졌어요",
-"more": "미국은 반굴라르 세력을 도울 유조선과 해군 함대, 탄약 공수를 준비했어요(브라더 샘 작전). 실제 지원은 필요하지 않았어요.",
-"src": [
+"t": "탄약 약 110톤을 상파울루(캄피나스)로 공수할 준비를 했어요",
+"p": [
 [
-"미 국무부 역사실 FRUS 1964–1968 제31권 문서 198 (1964년 3월 31일 전문)",
-"https://history.state.gov/historicaldocuments/frus1964-68v31/d198"
+-22.91,
+-47.06,
+"캄피나스"
 ]
+],
+"ar": []
+},
+{
+"d": "1964-04-01",
+"t": "굴라르 정부가 군 쿠데타로 무너졌어요",
+"p": [
+[
+-15.79,
+-47.88,
+"브라질리아"
+]
+],
+"ar": []
+}
 ]
 },
 {
-"d": "1965-04-28",
+"id": "do1965",
+"label": "도미니카공화국 1965",
 "cc": "DO",
 "n": "도미니카공화국",
-"ll": [
-18.8,
--70.3
-],
 "tag": "직접 군사 개입",
-"t": "내전 중 미 해병대가 상륙했어요",
-"more": "정권 교체가 아니라 내전 개입이에요. 5월 중순 미군은 약 2만 1천 명이었고, 이후 미주기구 평화군이 맡았어요. 1966년 6월 선거에서 발라게르가 당선됐어요.",
+"view": [
+18.5,
+-69.9,
+10
+],
+"us": "johnson",
+"tg": null,
+"more": "정권 교체가 아니라 내전 개입이에요. 1966년 6월 선거에서 발라게르가 당선됐어요.",
 "src": [
 [
-"미 국무부 역사실 FRUS 1964–1968 제32권 문서 99",
+"FRUS 1964–1968 제32권 문서 99 (국방장관 보고)",
 "https://history.state.gov/historicaldocuments/frus1964-68v32/d99"
 ],
 [
 "같은 책 문서 179",
 "https://history.state.gov/historicaldocuments/frus1964-68v32/d179"
 ]
+],
+"steps": [
+{
+"d": "1965-04-24",
+"t": "산토도밍고에서 레이드 카브랄 정부에 맞선 봉기가 시작됐어요",
+"p": [
+[
+18.47,
+-69.9,
+"산토도밍고"
+]
+],
+"ar": []
+},
+{
+"d": "1965-04-28",
+"t": "미국 대사 요청으로 해병대가 상륙하기 시작했어요",
+"p": [
+[
+18.47,
+-69.9,
+"산토도밍고"
+]
+],
+"ar": [
+[
+[
+18.2,
+-69.95
+],
+[
+18.46,
+-69.94
+]
+]
 ]
 },
 {
-"d": "1973-09-11",
+"d": "1965-04-30",
+"t": "해병 1,500명이 상륙해 앰배서더 호텔 주변과 아이나 항 도로를 지켰어요",
+"p": [
+[
+18.46,
+-69.94,
+"앰배서더 호텔"
+],
+[
+18.42,
+-70.03,
+"아이나 항"
+]
+],
+"ar": []
+},
+{
+"d": "1965-05-01",
+"t": "육군 400명이 산이시드로에 내렸어요",
+"p": [
+[
+18.5,
+-69.67,
+"산이시드로"
+]
+],
+"ar": [
+[
+[
+18.2,
+-69.6
+],
+[
+18.5,
+-69.67
+]
+]
+]
+}
+]
+},
+{
+"id": "cl1973",
+"label": "칠레 1973",
 "cc": "CL",
 "n": "칠레",
-"ll": [
--33.5,
--70.7
-],
 "tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
-"t": "아옌데 대통령 정부가 군 쿠데타로 무너졌어요",
-"more": "CIA 보고서는 CIA가 1970년 쿠데타를 일으키려 했고, 1973년 쿠데타는 직접 일으키지 않았지만 계획을 알고도 막지 않았다고 밝혔어요.",
+"view": [
+-33.4,
+-70.6,
+8
+],
+"us": "nixon",
+"tg": "allende",
+"more": "CIA 보고서는 CIA가 1970년 쿠데타를 일으키려 했고, 1973년 쿠데타는 일으키지 않았지만 계획을 알고 막지 않았다고 했어요. 아옌데 죽음에 CIA가 관여한 증거는 없다고 했어요.",
 "src": [
 [
-"CIA 「CIA Activities in Chile」 의회 보고서 (2000, 힌치 보고서)",
+"CIA 「CIA Activities in Chile」 (2000)",
 "https://irp.fas.org/cia/product/chile/index.html"
+]
+],
+"steps": [
+{
+"d": "1970-09-04",
+"t": "아옌데가 대통령 선거에서 가장 많은 표를 얻었어요",
+"p": [
+[
+-33.44,
+-70.65,
+"산티아고"
+]
+],
+"ar": []
+},
+{
+"d": "1970-09-15",
+"t": "닉슨 대통령이 CIA에 아옌데 취임을 막으라고 지시했어요",
+"p": [
+[
+-33.44,
+-70.65,
+"산티아고"
+]
+],
+"ar": []
+},
+{
+"d": "1970-10",
+"t": "쿠데타 세력이 슈나이더 육군 사령관 납치를 시도해 그가 숨졌어요",
+"p": [
+[
+-33.44,
+-70.65,
+"산티아고"
+]
+],
+"ar": []
+},
+{
+"d": "1973-09-11",
+"t": "군 쿠데타로 라모네다 대통령궁이 공격받고 아옌데가 숨졌어요",
+"p": [
+[
+-33.44,
+-70.65,
+"라모네다 궁"
+]
+],
+"ar": []
+}
+]
+},
+{
+"id": "gd1983",
+"label": "그레나다 1983",
+"cc": "GD",
+"n": "그레나다",
+"tag": "직접 군사 개입",
+"view": [
+12.07,
+-61.7,
+11
+],
+"us": "reagan",
+"tg": null,
+"more": "10월 비숍 총리가 군에 쫓겨나 처형된 뒤였어요. 미군은 9일 동안 작전했어요.",
+"src": [
+[
+"레이건 대통령 발표 (1983년 10월 25일)",
+"https://www.reaganlibrary.gov/archives/speech/remarks-president-and-prime-minister-eugenia-charles-dominica-announcing-deployment"
+],
+[
+"미 합참 역사실 「Operation Urgent Fury」",
+"https://www.jcs.mil/portals/36/documents/history/monographs/urgent_fury.pdf"
+]
+],
+"steps": [
+{
+"d": "1983-10-25",
+"t": "새벽 해병대가 펄스 공항을 헬기로 공격했어요",
+"p": [
+[
+12.14,
+-61.62,
+"펄스 공항"
+]
+],
+"ar": [
+[
+[
+12.2,
+-61.5
+],
+[
+12.14,
+-61.62
+]
 ]
 ]
 },
 {
 "d": "1983-10-25",
-"cc": "GD",
-"n": "그레나다",
-"ll": [
-12.1,
--61.7
+"t": "36분 늦게 레인저가 포인트설린스 공항에 낙하산으로 내렸어요",
+"p": [
+[
+12.0,
+-61.79,
+"포인트설린스"
+]
 ],
+"ar": [
+[
+[
+11.9,
+-61.9
+],
+[
+12.0,
+-61.79
+]
+]
+]
+},
+{
+"d": "1983-10-25",
+"t": "레인저가 트루블루 캠퍼스에서 미국 학생 138명을 구했어요",
+"p": [
+[
+12.0,
+-61.77,
+"트루블루"
+]
+],
+"ar": []
+},
+{
+"d": "1983-10-26",
+"t": "레인저가 헬기로 그랜드앤스로 가 학생들을 구했어요",
+"p": [
+[
+12.03,
+-61.76,
+"그랜드앤스"
+]
+],
+"ar": [
+[
+[
+12.0,
+-61.79
+],
+[
+12.03,
+-61.76
+]
+]
+]
+}
+]
+},
+{
+"id": "pa1989",
+"label": "파나마 1989",
+"cc": "PA",
+"n": "파나마",
 "tag": "직접 군사 개입",
-"t": "미군과 카리브 국가 군대가 상륙했어요",
-"more": "10월 비숍 총리가 살해된 뒤였어요. 미국은 자국민 보호와 정부 기관 회복을 이유로 들었어요.",
+"view": [
+8.75,
+-79.8,
+8
+],
+"us": "bush41",
+"tg": "noriega",
+"more": "병력 약 2만 6천 명이 참가했어요. 72시간 안에 주요 전투가 끝났어요.",
 "src": [
 [
-"레이건 대통령 발표 (1983년 10월 25일), 레이건 도서관",
-"https://www.reaganlibrary.gov/archives/speech/remarks-president-and-prime-minister-eugenia-charles-dominica-announcing-deployment"
+"부시 대통령 대국민 연설 (1989년 12월 20일)",
+"https://www.presidency.ucsb.edu/documents/address-the-nation-announcing-united-states-military-action-panama"
+],
+[
+"미 합참 역사실 「Operation Just Cause」",
+"https://www.jcs.mil/Portals/36/Documents/History/Monographs/Just_Cause.pdf"
+],
+[
+"미 육군 역사센터 파나마 요약",
+"https://history.army.mil/Research/Reference-Topics/Army-Campaigns/Brief-Summaries/Armed-Forces-Expeditions/Panama/"
+]
+],
+"steps": [
+{
+"d": "1989-12-20",
+"t": "새벽 1시 직전, 특수부대가 주요 시설을 공격하며 시작됐어요",
+"p": [
+[
+8.95,
+-79.54,
+"파나마시티"
+]
+],
+"ar": []
+},
+{
+"d": "1989-12-20",
+"t": "레인저가 토리호스-토쿠멘 공항과 리오아토에 낙하산으로 내렸어요",
+"p": [
+[
+9.07,
+-79.38,
+"토쿠멘"
+],
+[
+8.37,
+-80.13,
+"리오아토"
+]
+],
+"ar": [
+[
+[
+9.4,
+-79.2
+],
+[
+9.07,
+-79.38
+]
+],
+[
+[
+8.0,
+-80.0
+],
+[
+8.37,
+-80.13
+]
 ]
 ]
 },
 {
 "d": "1989-12-20",
-"cc": "PA",
-"n": "파나마",
-"ll": [
-8.5,
--80.0
-],
-"tag": "직접 군사 개입",
-"t": "미군이 들어가 노리에가 정권이 무너졌어요",
-"more": "미국은 노리에가를 미국 법정에 세우겠다고 했고, 1989년 선거 당선자 엔다라가 대통령이 됐어요.",
-"src": [
+"t": "3시간 전투 끝에 국방군 본부 라코만단시아를 차지했어요",
+"p": [
 [
-"부시 대통령 대국민 연설 (1989년 12월 20일), American Presidency Project",
-"https://www.presidency.ucsb.edu/documents/address-the-nation-announcing-united-states-military-action-panama"
+8.95,
+-79.54,
+"라코만단시아"
 ]
+],
+"ar": []
+},
+{
+"d": "1989-12-24",
+"t": "노리에가가 바티칸 대사관으로 피신했어요",
+"p": [
+[
+8.98,
+-79.52,
+"바티칸 대사관"
+]
+],
+"ar": []
+},
+{
+"d": "1990-01-03",
+"t": "노리에가가 나와 미국 당국에 넘겨졌고 마이애미로 이송됐어요",
+"p": [
+[
+8.98,
+-79.52,
+"바티칸 대사관"
+]
+],
+"ar": []
+}
 ]
 },
 {
-"d": "2001-10-07",
+"id": "af2001",
+"label": "아프가니스탄 2001",
 "cc": "AF",
 "n": "아프가니스탄",
-"ll": [
-33.9,
-67.7
-],
 "tag": "직접 군사 개입",
-"t": "미군 공습이 시작되고 탈레반 정권이 무너졌어요",
-"more": "9·11 테러 뒤였어요. 11월 카불이 함락됐어요. 탈레반은 2021년 8월 다시 정권을 잡았어요.",
+"view": [
+34,
+67,
+6
+],
+"us": "bush43",
+"tg": null,
+"more": "미국 특수부대가 북부동맹과 함께 싸우고 공습을 이끌었어요. 탈레반은 2021년 다시 집권했어요.",
 "src": [
 [
-"부시 대통령 대국민 연설 (2001년 10월 7일), 백악관 기록",
+"부시 대통령 연설 (2001년 10월 7일)",
 "https://georgewbush-whitehouse.archives.gov/news/releases/2001/10/20011007-8.html"
+],
+[
+"미 국무부 「테러 보고서 2001」 부록 G",
+"https://2009-2017.state.gov/j/ct/rls/crt/2001/html/10262.htm"
+]
+],
+"steps": [
+{
+"d": "2001-10-07",
+"t": "미군 공습이 시작됐어요",
+"p": [
+[
+34.53,
+69.17,
+"카불"
+],
+[
+31.61,
+65.71,
+"칸다하르"
+]
+],
+"ar": []
+},
+{
+"d": "2001-11-10",
+"t": "북부동맹이 마자르이샤리프에 들어갔어요",
+"p": [
+[
+36.71,
+67.11,
+"마자르이샤리프"
+]
+],
+"ar": []
+},
+{
+"d": "2001-11-13",
+"t": "북부동맹이 저항 없이 카불에 들어갔어요",
+"p": [
+[
+34.53,
+69.17,
+"카불"
+]
+],
+"ar": [
+[
+[
+35.0,
+69.26
+],
+[
+34.53,
+69.17
+]
 ]
 ]
 },
 {
-"d": "2003-03-20",
+"d": "2001-11-26",
+"t": "미 해병대가 칸다하르 남서쪽에 기지를 세웠어요",
+"p": [
+[
+31.3,
+65.3,
+"해병 기지"
+]
+],
+"ar": []
+},
+{
+"d": "2001-12-06",
+"t": "탈레반의 마지막 도시 칸다하르가 무너졌어요",
+"p": [
+[
+31.61,
+65.71,
+"칸다하르"
+]
+],
+"ar": []
+}
+]
+},
+{
+"id": "iq2003",
+"label": "이라크 2003",
 "cc": "IQ",
 "n": "이라크",
-"ll": [
-33.2,
-43.7
-],
 "tag": "직접 군사 개입",
-"t": "미국 주도 연합군이 들어가 후세인 정권이 무너졌어요",
-"more": "4월 9일 바그다드가 함락됐어요. 미국이 내세운 대량살상무기는 찾지 못했어요.",
+"view": [
+32,
+45,
+6
+],
+"us": "bush43",
+"tg": "saddam",
+"more": "미국이 내세운 대량살상무기는 나오지 않았어요.",
 "src": [
 [
-"부시 대통령 대국민 연설 (2003년 3월 19일 미국 시간), 백악관 기록",
+"부시 대통령 연설 (2003년 3월 19일)",
 "https://georgewbush-whitehouse.archives.gov/news/releases/2003/03/20030319-17.html"
+],
+[
+"미 육군 「On Point」 3장",
+"https://www.globalsecurity.org/military/library/report/2004/onpoint/ch-3.htm"
+],
+[
+"같은 책 6장 (정권 붕괴)",
+"https://www.globalsecurity.org/military/library/report/2004/onpoint/ch-6.htm"
+]
+],
+"steps": [
+{
+"d": "2003-03-20",
+"t": "연합군이 쿠웨이트 국경 둑을 넘었어요",
+"p": [
+[
+30.1,
+47.4,
+"쿠웨이트 국경"
+]
+],
+"ar": [
+[
+[
+29.6,
+47.6
+],
+[
+30.3,
+47.2
+]
 ]
 ]
 },
 {
-"d": "2011-03-19",
+"d": "2003-03-23",
+"t": "미 3사단이 나시리야 서쪽 다리를 차지해 해병대에 넘겼어요",
+"p": [
+[
+31.04,
+46.26,
+"나시리야"
+]
+],
+"ar": [
+[
+[
+30.3,
+47.2
+],
+[
+31.04,
+46.26
+]
+]
+]
+},
+{
+"d": "2003-04-04",
+"t": "연합군이 바그다드 공항을 차지했어요",
+"p": [
+[
+33.26,
+44.23,
+"바그다드 공항"
+]
+],
+"ar": [
+[
+[
+31.04,
+46.26
+],
+[
+32.6,
+44.02
+]
+],
+[
+[
+32.6,
+44.02
+],
+[
+33.26,
+44.23
+]
+]
+]
+},
+{
+"d": "2003-04-07",
+"t": "기갑부대가 바그다드 정부 구역과 궁전 지역에 들어갔어요",
+"p": [
+[
+33.31,
+44.39,
+"바그다드"
+]
+],
+"ar": [
+[
+[
+33.26,
+44.23
+],
+[
+33.31,
+44.39
+]
+]
+]
+}
+]
+},
+{
+"id": "ly2011",
+"label": "리비아 2011",
 "cc": "LY",
 "n": "리비아",
-"ll": [
-27.0,
-17.0
-],
 "tag": "직접 군사 개입",
-"t": "미국 등 다국적군 공습 속에 카다피 정권이 무너졌어요",
-"more": "유엔 결의 1973호에 따른 민간인 보호 공습이었어요. 오바마 대통령은 군사 목표가 정권 교체는 아니라고 했어요. 반군이 8월 트리폴리를 차지했고 카다피는 10월 숨졌어요.",
+"view": [
+30.5,
+16,
+5
+],
+"us": "obama",
+"tg": "gaddafi",
+"more": "유엔 결의 1973호에 따른 민간인 보호 공습이었어요. 오바마 대통령은 군사 목표가 정권 교체는 아니라고 했어요.",
 "src": [
 [
-"오바마 대통령 리비아 연설 (2011년 3월 28일), 백악관 기록",
+"오바마 대통령 리비아 연설 (2011년 3월 28일)",
 "https://obamawhitehouse.archives.gov/the-press-office/2011/03/28/remarks-president-address-nation-libya"
+],
+[
+"나토 「NATO and Libya」",
+"https://www.nato.int/en/what-we-do/operations-and-missions/nato-and-libya-february-october-2011"
 ]
+],
+"steps": [
+{
+"d": "2011-03-19",
+"t": "벵가지로 다가오던 정부군을 미국 등이 공습했어요",
+"p": [
+[
+32.12,
+20.07,
+"벵가지"
+]
+],
+"ar": []
+},
+{
+"d": "2011-03-31",
+"t": "나토가 작전 지휘를 넘겨받았어요",
+"p": [
+[
+32.12,
+20.07,
+"벵가지"
+],
+[
+32.89,
+13.19,
+"트리폴리"
+]
+],
+"ar": []
+},
+{
+"d": "2011-10-20",
+"t": "반군이 마지막 거점 시르트를 차지했고 카다피가 숨졌어요",
+"p": [
+[
+31.2,
+16.59,
+"시르트"
+]
+],
+"ar": []
+},
+{
+"d": "2011-10-31",
+"t": "나토 작전이 끝났어요",
+"p": [],
+"ar": []
+}
 ]
 },
 {
-"d": "2026-01-03",
+"id": "ve2026",
+"label": "베네수엘라 2026",
 "cc": "VE",
 "n": "베네수엘라",
-"ll": [
-7.0,
--66.0
-],
 "tag": "직접 군사 개입",
-"t": "미군이 카라카스에서 마두로를 체포해 미국으로 데려갔어요",
-"more": "미국 정부는 마약 테러 혐의 기소에 따른 체포 작전이라고 의회에 보고했어요. 이후 델시 로드리게스 전 부통령이 대통령 대행을 맡고 있어요. 2026년 11월 1일 기준 선거 날짜는 정해지지 않았어요.",
+"view": [
+20,
+-70,
+4
+],
+"us": "trump",
+"tg": "maduro",
+"more": "미국 정부는 기소된 마두로 부부를 체포하는 작전이라고 의회에 보고했어요. 이후 델시 로드리게스가 대통령 대행을 맡고 있어요(2026년 11월 1일 기준 보도).",
 "src": [
 [
-"트럼프 대통령 의회 전쟁권한 보고 서한 (2026년 1월 5일), govinfo",
+"트럼프 대통령 의회 전쟁권한 보고 서한 (2026년 1월 5일)",
 "https://www.govinfo.gov/content/pkg/CDOC-119hdoc124/html/CDOC-119hdoc124.htm"
 ],
 [
@@ -272,6 +1359,48 @@
 "NPR (2026년 10월 29일)",
 "https://www.npr.org/2026/10/29/nx-s1-6019294/pressure-grows-for-venezuelas-authoritarian-regime-as-opposition-leader-machado-returns"
 ]
+],
+"steps": [
+{
+"d": "2026-01-03",
+"t": "미군이 카라카스에서 공습과 함께 마두로 부부를 체포했어요",
+"p": [
+[
+10.49,
+-66.88,
+"카라카스"
+]
+],
+"ar": []
+},
+{
+"d": "2026-01-03",
+"t": "두 사람을 재판을 받도록 미국 뉴욕으로 옮겼어요",
+"p": [
+[
+10.49,
+-66.88,
+"카라카스"
+],
+[
+40.71,
+-74.0,
+"뉴욕"
+]
+],
+"ar": [
+[
+[
+10.49,
+-66.88
+],
+[
+40.71,
+-74.0
+]
+]
+]
+}
 ]
 }
 ]
