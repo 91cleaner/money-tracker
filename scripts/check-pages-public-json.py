@@ -21,12 +21,16 @@ PUBLIC_JSON_PATHS = (
 MAX_BYTES = 16 * 1024 * 1024
 
 
+def reject_nonfinite(value):
+    raise ValueError(f"non-finite JSON constant: {value}")
+
+
 def validate_json(path, body):
     if len(body) > MAX_BYTES:
         raise ValueError(f"{path}: JSON exceeds {MAX_BYTES} bytes")
     try:
-        data = json.loads(body)
-    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        data = json.loads(body, parse_constant=reject_nonfinite)
+    except (UnicodeDecodeError, ValueError) as exc:
         raise ValueError(f"{path}: invalid JSON") from exc
     if not isinstance(data, dict):
         raise ValueError(f"{path}: expected JSON object")
