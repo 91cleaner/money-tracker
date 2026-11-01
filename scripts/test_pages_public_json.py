@@ -93,6 +93,26 @@ class PublicJsonParityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing collectors object"):
             self.check()
 
+    def test_duplicate_top_level_keys_in_local_json_fail_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        (self.root / path).write_bytes(b'{"trades":[],"trades":[{"id":"shadow"}]}')
+        with self.assertRaisesRegex(ValueError, "invalid JSON"):
+            self.check()
+
+    def test_duplicate_nested_collector_keys_in_local_json_fail_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        (self.root / path).write_bytes(
+            b'{"collectors":{"house":{"count":0,"count":42}}}'
+        )
+        with self.assertRaisesRegex(ValueError, "invalid JSON"):
+            self.check()
+
+    def test_duplicate_keys_in_remote_json_fail_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        self.docs[path] = b'{"trades":[],"trades":[{"id":"shadow"}]}'
+        with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
+            self.check()
+
     def test_nonfinite_local_json_fails_closed(self):
         path = audit.PUBLIC_JSON_PATHS[0]
         for constant in (b"NaN", b"Infinity", b"-Infinity"):
