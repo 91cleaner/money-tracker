@@ -1,0 +1,278 @@
+{
+"title": "미국 정권 교체 기록",
+"note": "미국 정부 공식 발표, 기밀 해제 문서, 공식 조사로 확인된 경우만 넣었어요",
+"cases": [
+{
+"d": "1953-08-19",
+"cc": "IR",
+"n": "이란",
+"ll": [
+32.4,
+53.7
+],
+"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
+"t": "모사데크 총리 정부가 쿠데타로 무너졌어요",
+"more": "미 국무부 역사실의 기밀 해제 문서집은 CIA가 이 쿠데타로 이어진 비밀 공작을 했다고 기록해요.",
+"src": [
+[
+"미 국무부 역사실 FRUS 1951–1954 이란 (회고편, 2017) 서문",
+"https://history.state.gov/historicaldocuments/frus1951-54Iran/preface"
+]
+]
+},
+{
+"d": "1954-06-27",
+"cc": "GT",
+"n": "과테말라",
+"ll": [
+15.6,
+-90.3
+],
+"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
+"t": "아르벤스 대통령이 물러났어요",
+"more": "1990년대 초 CIA 국장이 이 비밀 공작을 공식 인정했고, 국무부 문서집에 기록됐어요.",
+"src": [
+[
+"미 국무부 역사실 FRUS 1952–1954 과테말라 (2003) 서문",
+"https://history.state.gov/historicaldocuments/frus1952-54Guat/preface"
+]
+]
+},
+{
+"d": "1960-09-14",
+"cc": "CD",
+"n": "콩고",
+"ll": [
+-2.9,
+23.6
+],
+"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
+"t": "루뭄바 총리가 권력에서 밀려났어요",
+"more": "9월 5일 해임 뒤 14일 모부투가 권력을 잡았어요. 처치 위원회는 CIA가 루뭄바 암살을 계획하고 독약을 보냈다고 확인했어요. 루뭄바는 1961년 1월 카탕가에서 살해됐고, 위원회는 CIA가 이 살해에 직접 관여한 증거는 없다고 했어요.",
+"src": [
+[
+"미 국무부 역사실 FRUS 1964–1968 제23권 콩고 1960–1968 서문",
+"https://history.state.gov/historicaldocuments/frus1964-68v23/preface"
+],
+[
+"미 상원 처치 위원회 보고서 「Alleged Assassination Plots Involving Foreign Leaders」 (1975)",
+"https://www.intelligence.senate.gov/wp-content/uploads/2024/08/sites-default-files-94465.pdf"
+]
+]
+},
+{
+"d": "1961-05-30",
+"cc": "DO",
+"n": "도미니카공화국",
+"ll": [
+18.8,
+-70.3
+],
+"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
+"t": "트루히요 대통령이 반대 세력에 살해됐어요",
+"more": "처치 위원회는 미국 관리들이 트루히요 암살을 노린 반대 세력을 지원했다고 확인했어요.",
+"src": [
+[
+"미 상원 처치 위원회 보고서 「Alleged Assassination Plots Involving Foreign Leaders」 (1975)",
+"https://www.intelligence.senate.gov/wp-content/uploads/2024/08/sites-default-files-94465.pdf"
+]
+]
+},
+{
+"d": "1963-11-01",
+"cc": "VN",
+"n": "남베트남",
+"ll": [
+12.5,
+108.0
+],
+"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
+"t": "지엠 대통령 정부가 군 쿠데타로 무너졌어요",
+"more": "기밀 해제 전문에 따르면 미국 대사는 쿠데타를 막지 않기로 했고 CIA 요원이 장군들과 접촉했어요. 처치 위원회는 지엠 살해에는 미국이 관여하지 않았다고 했어요.",
+"src": [
+[
+"미 국무부 역사실 FRUS 1961–1963 제4권 문서 216 (1963년 10월 25일 전문)",
+"https://history.state.gov/historicaldocuments/frus1961-63v04/d216"
+],
+[
+"미 상원 처치 위원회 보고서 「Alleged Assassination Plots Involving Foreign Leaders」 (1975)",
+"https://www.intelligence.senate.gov/wp-content/uploads/2024/08/sites-default-files-94465.pdf"
+]
+]
+},
+{
+"d": "1964-03-31",
+"cc": "BR",
+"n": "브라질",
+"ll": [
+-12.0,
+-51.0
+],
+"tag": "미국 정부 지원 준비 (기밀 해제 문서로 확인)",
+"t": "굴라르 대통령 정부가 군 쿠데타로 무너졌어요",
+"more": "미국은 반굴라르 세력을 도울 유조선과 해군 함대, 탄약 공수를 준비했어요(브라더 샘 작전). 실제 지원은 필요하지 않았어요.",
+"src": [
+[
+"미 국무부 역사실 FRUS 1964–1968 제31권 문서 198 (1964년 3월 31일 전문)",
+"https://history.state.gov/historicaldocuments/frus1964-68v31/d198"
+]
+]
+},
+{
+"d": "1965-04-28",
+"cc": "DO",
+"n": "도미니카공화국",
+"ll": [
+18.8,
+-70.3
+],
+"tag": "직접 군사 개입",
+"t": "내전 중 미 해병대가 상륙했어요",
+"more": "정권 교체가 아니라 내전 개입이에요. 5월 중순 미군은 약 2만 1천 명이었고, 이후 미주기구 평화군이 맡았어요. 1966년 6월 선거에서 발라게르가 당선됐어요.",
+"src": [
+[
+"미 국무부 역사실 FRUS 1964–1968 제32권 문서 99",
+"https://history.state.gov/historicaldocuments/frus1964-68v32/d99"
+],
+[
+"같은 책 문서 179",
+"https://history.state.gov/historicaldocuments/frus1964-68v32/d179"
+]
+]
+},
+{
+"d": "1973-09-11",
+"cc": "CL",
+"n": "칠레",
+"ll": [
+-33.5,
+-70.7
+],
+"tag": "CIA 관여 (기밀 해제 문서 등으로 확인)",
+"t": "아옌데 대통령 정부가 군 쿠데타로 무너졌어요",
+"more": "CIA 보고서는 CIA가 1970년 쿠데타를 일으키려 했고, 1973년 쿠데타는 직접 일으키지 않았지만 계획을 알고도 막지 않았다고 밝혔어요.",
+"src": [
+[
+"CIA 「CIA Activities in Chile」 의회 보고서 (2000, 힌치 보고서)",
+"https://irp.fas.org/cia/product/chile/index.html"
+]
+]
+},
+{
+"d": "1983-10-25",
+"cc": "GD",
+"n": "그레나다",
+"ll": [
+12.1,
+-61.7
+],
+"tag": "직접 군사 개입",
+"t": "미군과 카리브 국가 군대가 상륙했어요",
+"more": "10월 비숍 총리가 살해된 뒤였어요. 미국은 자국민 보호와 정부 기관 회복을 이유로 들었어요.",
+"src": [
+[
+"레이건 대통령 발표 (1983년 10월 25일), 레이건 도서관",
+"https://www.reaganlibrary.gov/archives/speech/remarks-president-and-prime-minister-eugenia-charles-dominica-announcing-deployment"
+]
+]
+},
+{
+"d": "1989-12-20",
+"cc": "PA",
+"n": "파나마",
+"ll": [
+8.5,
+-80.0
+],
+"tag": "직접 군사 개입",
+"t": "미군이 들어가 노리에가 정권이 무너졌어요",
+"more": "미국은 노리에가를 미국 법정에 세우겠다고 했고, 1989년 선거 당선자 엔다라가 대통령이 됐어요.",
+"src": [
+[
+"부시 대통령 대국민 연설 (1989년 12월 20일), American Presidency Project",
+"https://www.presidency.ucsb.edu/documents/address-the-nation-announcing-united-states-military-action-panama"
+]
+]
+},
+{
+"d": "2001-10-07",
+"cc": "AF",
+"n": "아프가니스탄",
+"ll": [
+33.9,
+67.7
+],
+"tag": "직접 군사 개입",
+"t": "미군 공습이 시작되고 탈레반 정권이 무너졌어요",
+"more": "9·11 테러 뒤였어요. 11월 카불이 함락됐어요. 탈레반은 2021년 8월 다시 정권을 잡았어요.",
+"src": [
+[
+"부시 대통령 대국민 연설 (2001년 10월 7일), 백악관 기록",
+"https://georgewbush-whitehouse.archives.gov/news/releases/2001/10/20011007-8.html"
+]
+]
+},
+{
+"d": "2003-03-20",
+"cc": "IQ",
+"n": "이라크",
+"ll": [
+33.2,
+43.7
+],
+"tag": "직접 군사 개입",
+"t": "미국 주도 연합군이 들어가 후세인 정권이 무너졌어요",
+"more": "4월 9일 바그다드가 함락됐어요. 미국이 내세운 대량살상무기는 찾지 못했어요.",
+"src": [
+[
+"부시 대통령 대국민 연설 (2003년 3월 19일 미국 시간), 백악관 기록",
+"https://georgewbush-whitehouse.archives.gov/news/releases/2003/03/20030319-17.html"
+]
+]
+},
+{
+"d": "2011-03-19",
+"cc": "LY",
+"n": "리비아",
+"ll": [
+27.0,
+17.0
+],
+"tag": "직접 군사 개입",
+"t": "미국 등 다국적군 공습 속에 카다피 정권이 무너졌어요",
+"more": "유엔 결의 1973호에 따른 민간인 보호 공습이었어요. 오바마 대통령은 군사 목표가 정권 교체는 아니라고 했어요. 반군이 8월 트리폴리를 차지했고 카다피는 10월 숨졌어요.",
+"src": [
+[
+"오바마 대통령 리비아 연설 (2011년 3월 28일), 백악관 기록",
+"https://obamawhitehouse.archives.gov/the-press-office/2011/03/28/remarks-president-address-nation-libya"
+]
+]
+},
+{
+"d": "2026-01-03",
+"cc": "VE",
+"n": "베네수엘라",
+"ll": [
+7.0,
+-66.0
+],
+"tag": "직접 군사 개입",
+"t": "미군이 카라카스에서 마두로를 체포해 미국으로 데려갔어요",
+"more": "미국 정부는 마약 테러 혐의 기소에 따른 체포 작전이라고 의회에 보고했어요. 이후 델시 로드리게스 전 부통령이 대통령 대행을 맡고 있어요. 2026년 11월 1일 기준 선거 날짜는 정해지지 않았어요.",
+"src": [
+[
+"트럼프 대통령 의회 전쟁권한 보고 서한 (2026년 1월 5일), govinfo",
+"https://www.govinfo.gov/content/pkg/CDOC-119hdoc124/html/CDOC-119hdoc124.htm"
+],
+[
+"미 국방부(전쟁부) 발표 (2026년 1월 3일)",
+"https://www.war.gov/News/News-Stories/Article/Article/4370431/"
+],
+[
+"NPR (2026년 10월 29일)",
+"https://www.npr.org/2026/10/29/nx-s1-6019294/pressure-grows-for-venezuelas-authoritarian-regime-as-opposition-leader-machado-returns"
+]
+]
+}
+]
+}
