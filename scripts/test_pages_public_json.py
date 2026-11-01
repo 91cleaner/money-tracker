@@ -107,6 +107,42 @@ class PublicJsonParityTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
             self.check()
 
+    def test_exact_response_url_passes(self):
+        class URLResponse(FakeResponse):
+            def __init__(self, body, url):
+                super().__init__(body)
+                self.url = url
+
+            def geturl(self):
+                return self.url
+
+        def opener(request, timeout):
+            path = request.full_url.split("/money-tracker/", 1)[1]
+            return URLResponse(self.docs[path], request.full_url)
+
+        self.assertTrue(self.check(opener=opener))
+
+    def test_redirected_json_200_fails_closed(self):
+        class RedirectedResponse(FakeResponse):
+            def __init__(self, body, final_url):
+                super().__init__(body)
+                self.final_url = final_url
+
+            def geturl(self):
+                return self.final_url
+
+        for final_url in (
+            "https://elsewhere.example/data/us/trades_public.json",
+            "https://example.github.io/money-tracker/data/us/other.json",
+        ):
+            with self.subTest(final_url=final_url):
+                def opener(request, timeout):
+                    path = request.full_url.split("/money-tracker/", 1)[1]
+                    return RedirectedResponse(self.docs[path], final_url)
+
+                with self.assertRaisesRegex(RuntimeError, "unexpected redirect target"):
+                    self.check(opener=opener)
+
     def test_plain_http_rejected(self):
         with self.assertRaisesRegex(ValueError, "HTTPS"):
             audit.check_public_json("http://example.com", self.root)
