@@ -7,6 +7,7 @@ Run after the Pages deploy, using the same commit SHA that produced the artifact
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import sys
 import time
@@ -25,11 +26,21 @@ def reject_nonfinite(value):
     raise ValueError(f"non-finite JSON constant: {value}")
 
 
+def reject_overflowing_float(value):
+    # Valid JSON exponent syntax can overflow Python float to Infinity.
+    # parse_constant only catches literal NaN/Infinity, not 1e999.
+    number = float(value)
+    if not math.isfinite(number):
+        raise ValueError(f"non-finite JSON number: {value}")
+    return number
+
+
 def validate_json(path, body):
     if len(body) > MAX_BYTES:
         raise ValueError(f"{path}: JSON exceeds {MAX_BYTES} bytes")
     try:
-        data = json.loads(body, parse_constant=reject_nonfinite)
+        data = json.loads(body, parse_constant=reject_nonfinite,
+                          parse_float=reject_overflowing_float)
     except (UnicodeDecodeError, ValueError) as exc:
         raise ValueError(f"{path}: invalid JSON") from exc
     if not isinstance(data, dict):
