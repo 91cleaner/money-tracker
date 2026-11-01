@@ -142,6 +142,33 @@ class PublicJsonParityTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
             self.check()
 
+    def test_browser_unsafe_integer_local_json_fails_closed(self):
+        # Python accepts 2**53 exactly, but JSON.parse rounds integers beyond
+        # Number.MAX_SAFE_INTEGER and can misidentify trades or counts.
+        path = audit.PUBLIC_JSON_PATHS[0]
+        for number in ("9007199254740992", "-9007199254740992"):
+            with self.subTest(number=number):
+                (self.root / path).write_bytes(
+                    ('{"trades":[{"id":' + number + '}]}').encode("ascii")
+                )
+                with self.assertRaisesRegex(ValueError, "invalid JSON"):
+                    self.check()
+
+    def test_browser_unsafe_integer_remote_json_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        self.docs[path] = b'{"collectors":{"house":{"count":9007199254740992}}}'
+        with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
+            self.check()
+
+    def test_browser_safe_integer_boundary_still_passes(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        for number in ("9007199254740991", "-9007199254740991"):
+            with self.subTest(number=number):
+                content = ('{"trades":[{"id":' + number + '}]}').encode("ascii")
+                (self.root / path).write_bytes(content)
+                self.docs[path] = content
+                self.assertTrue(self.check())
+
     def test_bom_and_non_utf8_local_json_fail_closed(self):
         # json.loads(bytes) accepts these, but browser JSON parsers do not.
         path = audit.PUBLIC_JSON_PATHS[0]
