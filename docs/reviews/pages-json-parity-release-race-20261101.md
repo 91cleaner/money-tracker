@@ -28,3 +28,18 @@ This is a **code-path risk, not a confirmed production incident**. High deployme
 **Current status:** PR #458's 12 JSON regression tests and command-room CI succeeded on commit `e96711857dbc35bfb303bf099a35bec0af7bf142`; the security/research workflow failed. PR #403, #412 and #458 are open. This memo does not claim combined CI or live parity has passed.
 
 **Connections:** Generative AI analysis **NOT CONNECTED**. Real-time executed-trade feed **NOT CONNECTED**. Repository visibility **public**.
+
+
+## P1 follow-up (2026-11-01 23:55 KST): successful Pages publication can be invisible to a success-only workflow_run audit
+
+**Observed GitHub job evidence:** [Deploy run #41285843473](https://github.com/91cleaner/money-tracker/actions/runs/41285843473) reports `Build public-only artifact`, `Verify public artifact privacy and required assets`, `upload-pages-artifact@v3`, and `deploy-pages@v4` all **success**, but `Verify published entry and US command` **failure**, yielding an overall **failure** workflow. In contrast, [run #41313619264](https://github.com/91cleaner/money-tracker/actions/runs/41313619264) reports both deployment and final smoke **success**. These are observed step statuses; neither alone proves byte parity of all public JSON.
+
+**Cross-PR gap (hypothetical if #458 were merged unchanged):** PR #458's `pages-json-parity.yml` runs its production job only for `workflow_run.conclusion == 'success'`. Therefore, when the Pages publish step succeeds but the later entry smoke fails (as in run #41285843473), the standalone JSON parity job **will not run at all**, even though the deployment action has already published. A failed entry smoke is a release failure, but it should not silently suppress separate JSON-integrity evidence. PR #458 remains **unmerged**, so do not claim that this audit was actually skipped in the historical run.
+
+**Minimal owner fix (coordinate with #403, do not modify UI/data):**
+1. Put the JSON parity check **immediately after** `actions/deploy-pages@v4` in the *same* deploy job, before the entry smoke step, using the already uploaded `.public-pages` and `steps.deployment.outputs.page_url`. A successful publication will then receive a parity attempt regardless of the outcome of a later entry smoke. Keep both checks mandatory; either failure means **release unverified/failed**.
+2. Retire or de-duplicate the separate success-only `workflow_run` production audit to avoid stale-SHA and duplicate verdicts. If kept for diagnostics, report its coverage limits explicitly.
+3. Add a workflow integration regression with deploy-step success + entry-smoke failure and require a recorded parity attempt; also test deploy-step failure (no live parity), mismatched JSON (nonzero), and back-to-back SHAs (no stale false-positive).
+4. A post-publish check cannot prevent initial public exposure or roll back already published bytes. Protect publication **before** `deploy-pages` with artifact allowlist/privacy validation; label a post-publish failure as an incident requiring remediation, not as proof no unsafe bytes were served.
+
+**Status:** Static workflow review plus GitHub job-step verification only. No CI, runtime code, Pages configuration, collector, or live site changed by this note. The repo is **public**; generative AI analysis and real-time executed-trade feeds are **NOT CONNECTED**.
