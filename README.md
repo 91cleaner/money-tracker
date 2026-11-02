@@ -6,6 +6,7 @@ A public-source intelligence prototype connecting world history, legislation, ma
 - `index.html` — country selection
 - `world-intelligence/index.html` — flat world-map command center and guided country exploration
 - `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research
+- `skysea.html` — world flight and vessel observation map. Aircraft are sampled observations, vessel layers mix delayed daily grids and limited recent AIS reception; coverage is not complete or continuously live.
 - `us.html` — U.S. command entry
 
 ## Verified data and caveats
@@ -17,7 +18,7 @@ A public-source intelligence prototype connecting world history, legislation, ma
 - `data/index.json`, `data/city/` — legacy Korean municipal contract data.
 
 ## Map
-The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional Esri satellite imagery. **No map API key is required.** It depends on external tile/CDN availability; a simplified offline schematic is shown when providers cannot be reached. The satellite imagery is not a live satellite feed. The country-to-country lines show exploration paths, not proof of causation.
+The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional Esri satellite imagery. **No map API key is required.** It depends on external tile/CDN availability; a simplified offline schematic is shown when providers cannot be reached. The satellite imagery is not a live satellite feed. The country-to-country lines show exploration paths, not proof of causation. The `skysea.html` entry is a separate observation view; aircraft extrapolation and expanded ship-grid dots are visual estimates, not independently verified real-time positions.
 
 ## Authenticated command room
 - Cloudflare Worker `/command` is built from `world-intelligence/index.html`, rather than maintaining a separate schematic map. `/evidence.js` and `/data/us/*` routes require the existing GitHub OAuth administrator session.
