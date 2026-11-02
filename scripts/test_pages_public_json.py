@@ -37,7 +37,9 @@ class PublicJsonParityTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.docs = {}
         for path in audit.PUBLIC_JSON_PATHS:
-            body = {"collectors": {}} if "collection-status" in path else {"trades": []}
+            body = ({"collectors": {}} if "collection-status" in path else
+                    {"trades": [{"id": "fixture"}]} if path.endswith("trades_public.json") else
+                    {"trades": []})
             content = json.dumps(body).encode()
             self.docs[path] = content
             target = self.root / path
@@ -53,6 +55,24 @@ class PublicJsonParityTests(unittest.TestCase):
             return audit.check_public_json("https://example.github.io/money-tracker/", self.root, opener=opener or self.opener, sleeper=lambda _: None, attempts=attempts)
 
     def test_matching_json_passes(self):
+        self.assertTrue(self.check())
+
+    def test_empty_historical_public_summary_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        (self.root / path).write_bytes(b'{"trades":[]}')
+        with self.assertRaisesRegex(ValueError, "empty public trade summary"):
+            self.check()
+
+    def test_empty_deployed_public_summary_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[0]
+        self.docs[path] = b'{"trades":[]}'
+        with self.assertRaisesRegex(RuntimeError, "empty public trade summary"):
+            self.check()
+
+    def test_empty_recent_window_is_allowed(self):
+        # No recent filings is not the same as an empty historical ledger.
+        path = audit.PUBLIC_JSON_PATHS[1]
+        self.assertEqual(self.docs[path], b'{"trades": []}')
         self.assertTrue(self.check())
 
     def test_json_mismatch_fails_even_when_html_would_match(self):
