@@ -104,6 +104,10 @@ def validate_json(path, body):
         collectors = data.get("collectors")
         if not isinstance(collectors, dict):
             raise ValueError(f"{path}: missing collectors object")
+        # A status snapshot with no collectors hides a complete pipeline loss.
+        # Zero records for an individual collector are still valid.
+        if not collectors:
+            raise ValueError(f"{path}: empty collectors object")
         for name, status in collectors.items():
             if not isinstance(status, dict):
                 raise ValueError(f"{path}: collector {name} must be an object")
