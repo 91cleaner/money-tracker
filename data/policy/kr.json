@@ -6,6 +6,26 @@
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
 {
+"id": "msit:886de8a0bd5f",
+"kind": "press",
+"t": "표준과 지식재산(특허)으로 여는 피지컬 AI 시대, 글로벌 주도권 확보 나선다",
+"d": "2026-11-02",
+"dept": "정보통신방송기술정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187912",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:96f41d34f2ce",
+"kind": "press",
+"t": "국가 슈퍼컴퓨터 6호기 ‘한강’ 본격 가동",
+"d": "2026-11-02",
+"dept": "과학기술인공지능혁신과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187910",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
 "id": "msit:b3a27fce5046",
 "kind": "press",
 "t": "[연구행정 혁신+-⑨] “협력의 문은 넓게, 기술주권 수호는 확실하게”",
@@ -6069,30 +6089,6 @@
 "cmte": "국방위원회",
 "res": null,
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_6C1C9C69EEAE4989810098458E18E8&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_A805A73284B54D3184B7F01FED311E",
-"no": "2221877",
-"t": "해양수산생명자원의 확보·관리 및 이용 등에 관한 법률 일부개정법률안",
-"d": "2026-10-13",
-"by": "송옥주의원 등 10인",
-"cmte": "농림축산식품해양수산위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A805A73284B54D3184B7F01FED311E&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_7D48C07754364EDB86653E1C190ABF",
-"no": "2221876",
-"t": "해양생태계의 보전 및 관리에 관한 법률 일부개정법률안",
-"d": "2026-10-13",
-"by": "송옥주의원 등 10인",
-"cmte": "농림축산식품해양수산위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_7D48C07754364EDB86653E1C190ABF&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
 }
