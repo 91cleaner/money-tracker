@@ -55,3 +55,22 @@ This is a **separate client-side stale-state path**, not a repeat of the event c
 4. **Browser regression cases:** (a) first fetch fails; (b) first succeeds, second fails; (c) multiple HTTP 200 responses with identical old `updated`; (d) invalid/missing timestamp; (e) valid fresh recovery. Assert marker status, `#upd`/`#liveNote` copy, `#cardD` live count, and portrait/landscape visibility. Test aircraft and AIS independently; a green static/CI smoke without the failure-path fixture does not close this defect.
 
 **Verification boundary:** only the source branches and existing UI text were inspected. No collector, UI, browser test, or deployed Pages code was changed. The existing PR #471 remains a docs/review change; this note is an owner handoff, not a mitigation.
+
+
+## P1 AISStream partial-refresh gate — interrupted collection can publish incomplete ships as fresh (2026-11-03 KST)
+
+**New finding, separate from the client-side stale-marker issue above.** Reviewed against `main/scripts/build_skysea_ais.py` and `main/.github/workflows/collect-skysea-ais.yml`. Static source inspection only: no real AIS outage or partial production snapshot is asserted.
+
+- `main()` accumulates `pos` while listening to AISStream. If the stream sends an `error` after one or more positions, the loop `break`s. If `websockets.connect` or `ws.recv()` raises after some positions, the broad `except Exception` prints only an error category and still **returns the partial `pos, stat`**.
+- The caller tests only `if not pos`; **any nonempty partial result** is then written to `data/skysea/ships_live.json` with a new `updated=now`, even though the planned `AIS_SECS` observation interval may not have completed. This can replace a previously useful snapshot with an unexpectedly truncated sample, while the map calls it `실시간 배`. The precise expected ship count is inherently variable; a small count alone is not evidence of an outage.
+- Conversely, `if not pos: ... raise SystemExit(0)` reports success without refreshing the file. The workflow's `Listen to AIS stream` step therefore can be green even though no new observations were collected. If the file is unchanged, the commit step skips deployment, but an existing public snapshot remains and the UI currently has no reliable stale-state gate (reviewed above).
+- The workflow's `git add data/skysea/ships_live.json` and push/deploy path can publish the incomplete-but-newly-timestamped sample. This is **an unverified failure scenario**, not evidence that the latest deployment contains one.
+
+**Owner fix (lead/data, with Claude/UI freshness integration):**
+
+1. Distinguish a planned sampling-window completion from early `error`, unexpected WebSocket disconnect, or exception. On early failure **do not overwrite** the last successful snapshot; fail the collector job or emit an explicit `status=partial/unavailable` artifact with the original observation timestamp and no falsely fresh position claim. Do not print credentials or raw upstream payloads.
+2. For successful samples record `sample_started_at`, `sample_ended_at`, `observed_seconds`, `status`, and a safe error category when relevant. The `updated` timestamp must describe a successfully completed observation window, not just file-writing time. Keep expected regional coverage limits distinct from transport failure.
+3. On a zero-observation window, never silently mark the run healthy merely because `SystemExit(0)` preserved an old file. The UI must show last-success time and stale/unavailable state, not a fresh zero or apparently live positions. Do not set an arbitrary minimum ship-count threshold as a substitute for stream-health detection.
+4. **Executable regression gate:** mock (a) normal completion with observations, (b) upstream `error` after one position, (c) disconnect after one position, (d) immediate connect failure, and (e) zero positions in a full window. Assert only (a) produces a fresh successful snapshot; failures preserve previous bytes and return a failing/nonfresh status; no-data is visibly distinct from a verified zero; recovery clears the warning. Assert the workflow does not commit/publish a partial result and the map does not label retained positions `실시간`.
+
+**Verification boundary:** the source control flow and workflow publish path were read from GitHub. No collector, workflow, UI, test, data file or live deployment was modified or executed by this review. The owner must implement and test the fix before claiming resolution.
