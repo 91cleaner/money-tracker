@@ -100,6 +100,10 @@ def validate_json(path, body):
         for index, trade in enumerate(trades):
             if not isinstance(trade, dict):
                 raise ValueError(f"{path}: trade {index} must be an object")
+            # A non-empty array of blank placeholders is not usable filing data.
+            # Preserve partial historical rows, but reject records with no fields.
+            if not trade:
+                raise ValueError(f"{path}: trade {index} is empty")
     else:
         collectors = data.get("collectors")
         if not isinstance(collectors, dict):
@@ -109,6 +113,9 @@ def validate_json(path, body):
         if not collectors:
             raise ValueError(f"{path}: empty collectors object")
         for name, status in collectors.items():
+            # An empty collector key can mask a vanished registry entry.
+            if not isinstance(name, str) or not name.strip():
+                raise ValueError(f"{path}: collector name is blank")
             if not isinstance(status, dict):
                 raise ValueError(f"{path}: collector {name} must be an object")
             count = status.get("count")
