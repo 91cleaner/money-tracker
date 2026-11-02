@@ -45,7 +45,7 @@ class PagesPublishStepTests(unittest.TestCase):
         # silently disabling the post-deployment verification on main.
         root = Path(__file__).resolve().parents[1]
         deploy = (root / ".github/workflows/deploy-pages.yml").read_text(encoding="utf-8")
-        self.assertIn("\\n  deploy:\\n".replace("\\n", "\n"), deploy)
+        self.assertIn("\n  deploy:\n", deploy)
         self.assertEqual(deploy.count("uses: actions/deploy-pages@v4"), 1)
         self.assertEqual(audit.DEPLOY_STEP, "Run actions/deploy-pages@v4")
 
