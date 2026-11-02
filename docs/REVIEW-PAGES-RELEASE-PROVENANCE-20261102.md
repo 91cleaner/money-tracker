@@ -28,6 +28,18 @@
 | 연속 배포 A→B, A 감사가 B 게시 후 실행 | 오래된 감사 실행으로 분류하고 B 감사 결과 확인 |
 | Pages Source 미확인·릴리스 식별자 누락 | 릴리스 동일성 **미검증/FAIL-CLOSED** |
 
+## P1 추가 발견: 공개 JSON 구조 검증이 **게시 후** 실행됨 (배포 전 차단 공백)
+
+**코드 경로 확인 (2026-11-02):** `main`의 `.github/workflows/deploy-pages.yml`은 `prepare-public-pages.py` → `check-pages-artifact.py` → `upload-pages-artifact@v3` → `deploy-pages@v4` 순서다. #403 브랜치에서도 업로드 전 검사는 HTML/JS 진입점에 집중한다. #412의 `check-pages-artifact.py`는 미국 공개 거래/PTR 날짜·원문 링크를 검증하지만, `data/search/collection-status.json`의 `collectors.*.count/errors` 구조를 검증하지 않는다. #458의 `check-pages-public-json.py`는 이 구조를 검증하나, `deployed-json` 작업은 **게시 단계가 성공한 뒤**에 실행된다.
+
+**반례 (실제 운영 장애 발생 주장 아님):** `collection-status.json`의 한 수집기 `count`가 음수 또는 문자열이거나 `errors`가 문자열로 변질되어도, 현재 사전 검사 경로만으로는 업로드·게시를 차단하지 못할 수 있다. 사후 JSON 감사가 FAIL이어도 이미 잘못된 파일이 사용자에게 제공된 뒤다. 이 공백은 앞 절의 **릴리스 SHA 증명 공백과 별개**다.
+
+**담당자 수락 조건 (배포/데이터 담당, GPT는 코드 미수정):**
+1. `prepare-public-pages.py`와 `check-pages-artifact.py` 실행 직후, **`upload-pages-artifact` 전에** 세 공개 JSON을 모두 엄격한 UTF-8·JSON 구문·중복 키·숫자 안전성·필수 구조 기준으로 검증한다. #458의 `validate_json`을 재사용하거나 동등한 로컬 전용 검사기를 사용하며, 네트워크 요청 없이 실패 시 종료 코드 1을 반환한다.
+2. #412의 PTR 연대기·공식 PDF 링크 차단은 그대로 유지한다. JSON 구조 검사만으로 신고 사실의 진위·실거래·수집 성공을 증명하지 않는다.
+3. CI 수락 테스트: (a) `collection-status.json`의 음수 `count`, (b) 문자열 `errors`, (c) 파일 누락·깨진 JSON 각각에서 **업로드 단계에 도달하기 전에 실패**, (d) 정상 JSON은 통과. 사후 운영 바이트 감사도 별도로 유지한다.
+4. #403/#412/#458 병합 후 동일 병합 SHA의 배포 워크플로 실행에서 사전 검증 단계와 실제 게시 단계 순서를 확인한다. **검사 코드가 PR에 존재한다는 사실만으로 운영 보호 완료로 표시하지 않는다.**
+
 ## 병합·배포 인수인계
 
 - #403/#412/#458은 서로 다른 주요 파일을 변경하므로 개별 PR 성공만으로 통합 결과를 추정하지 않는다. 승인 후 동일한 병합 커밋에서 공개 산출물 생성, PTR 검증, 진입 화면 검사, JSON 감사, 실제 Pages 확인을 연속 수행한다.
