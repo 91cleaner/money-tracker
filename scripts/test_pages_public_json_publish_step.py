@@ -21,6 +21,13 @@ class PagesPublishStepTests(unittest.TestCase):
     def test_publish_success_even_when_later_smoke_fails(self):
         self.assertTrue(audit.was_pages_published(jobs_payload()))
 
+    def test_publish_success_even_if_job_was_cancelled_or_timed_out(self):
+        for conclusion in ("cancelled", "timed_out"):
+            with self.subTest(conclusion=conclusion):
+                payload = jobs_payload()
+                payload["jobs"][0]["conclusion"] = conclusion
+                self.assertTrue(audit.was_pages_published(payload))
+
     def test_publish_failure_does_not_trigger_audit(self):
         self.assertFalse(audit.was_pages_published(jobs_payload("failure")))
 
