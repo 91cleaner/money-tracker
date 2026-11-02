@@ -320,6 +320,33 @@ class PublicJsonParityTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "unexpected redirect target"):
                     self.check(opener=opener)
 
+    def test_blank_trade_placeholder_local_fails_closed(self):
+        # A one-element array containing an empty object is not valid filing data.
+        path = audit.PUBLIC_JSON_PATHS[0]
+        (self.root / path).write_bytes(b'{"trades":[{}]}')
+        with self.assertRaisesRegex(ValueError, "trade 0 is empty"):
+            self.check()
+
+    def test_blank_trade_placeholder_remote_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[1]
+        self.docs[path] = b'{"trades":[{}]}'
+        with self.assertRaisesRegex(RuntimeError, "trade 0 is empty"):
+            self.check()
+
+    def test_blank_collector_name_local_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        (self.root / path).write_bytes(
+            b'{"collectors":{" ":{"count":0,"errors":[]}}}'
+        )
+        with self.assertRaisesRegex(ValueError, "collector name is blank"):
+            self.check()
+
+    def test_blank_collector_name_remote_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        self.docs[path] = b'{"collectors":{"":{"count":0,"errors":[]}}}'
+        with self.assertRaisesRegex(RuntimeError, "collector name is blank"):
+            self.check()
+
     def test_non_object_trade_rows_fail_closed(self):
         for path in audit.PUBLIC_JSON_PATHS[:2]:
             with self.subTest(path=path):
