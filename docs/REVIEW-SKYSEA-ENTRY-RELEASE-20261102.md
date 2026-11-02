@@ -35,3 +35,23 @@ This is a **new, source-confirmed freshness-contract defect**, separate from the
 - **Executable regression gate:** mock a successful first run, then fail only GDELT on the second run while FIRMS/USGS/EASA succeed. Assert GDELT records are explicitly stale with the **first** successful timestamp, the other sections remain fresh, and the map displays both statuses correctly. Repeat with all four fetches failing and with no previous JSON; assert no fresh badge, no misleading zero count, and no silent success. A normal successful refresh must clear the stale status. Verify generated public JSON and the deployed UI after owner-approved merge.
 
 **Verification boundary:** inspected `main/scripts/build_skysea_events.py` and `main/skysea.html` (SkySea blob `c5eb5a12c6ea02759ce768fdd5af3de537e1982d`) and the `events.json` schema. No network failure was induced; no collector/UI/test code was modified; no browser or production remediation is claimed. This section extends the existing #471 review instead of creating a competing data/UI PR.
+
+
+## P1 UI freshness follow-up — aircraft and live AIS refresh failures retain map markers (2026-11-03 KST)
+
+This is a **separate client-side stale-state path**, not a repeat of the event collector's partial-fallback bug above. Static source review against `main/skysea.html` blob `c5eb5a12c6ea02759ce768fdd5af3de537e1982d`; no outage, stale production record, or browser reproduction is claimed.
+
+**Aircraft and AIS browser refresh can silently retain old markers:**
+
+- **Aircraft (`load()`, near line 308):** the first successful fetch assigns `last = j` and renders aircraft. On a later rejected fetch, `.catch(() => { if (!last) ... })` performs **no visible update** when `last` exists. The old aircraft records and icons remain in `drawP()`, while the heading still says `비행기 (지금)` and the status says `10분마다 새로 받아요`. A source timestamp is displayed, but there is no explicit stale/error badge. This is an error-path contract defect, not proof the data are currently stale.
+- **Recent AIS (`loadL()`, near line 393):** after a successful fetch sets `live = j` and `drawS()`, a subsequent rejection only changes `#liveNote`. It does not invalidate `live`, redraw `drawS()`, or hide/flag the existing `liveRec` icons. The layer toggle and country-card `실시간 배` count can still include the previous snapshot. If the server repeatedly returns the same `j.updated`, the early return prevents any age/status evaluation at all. A stale backend file can therefore remain presented as live even when HTTP requests succeed.
+- **HTTP and timestamp handling:** both paths call `r.json()` without first checking `r.ok`, and neither checks that `updated` is a parseable, reasonable observation timestamp. A valid JSON body with an old timestamp is not a fresh observation.
+
+**Owner implementation acceptance (Claude/UI; do not overlap with collector/data owner):**
+
+1. Track separate `last_success_at` / parsed source `updated` / last fetch error for aircraft and AIS. Use a documented freshness threshold based on the actual collection cadence (aircraft advertised 10 minutes; AIS sampled intermittently), not merely whether a request returned HTTP 200.
+2. After a failed fetch **even if a prior snapshot exists**, visibly mark that layer `stale` or `unavailable`, stop describing its positions as `지금` or `실시간`, and either suppress stale markers or clearly distinguish them. A successful request returning an unchanged old `updated` must not reset freshness. Preserve source timestamps; do not rewrite them to browser current time.
+3. In country cards and toggles, distinguish `unknown/unavailable` from a genuine zero; prevent the retained `live` snapshot from inflating an apparently current live count. Restore normal status only after a fresh valid snapshot.
+4. **Browser regression cases:** (a) first fetch fails; (b) first succeeds, second fails; (c) multiple HTTP 200 responses with identical old `updated`; (d) invalid/missing timestamp; (e) valid fresh recovery. Assert marker status, `#upd`/`#liveNote` copy, `#cardD` live count, and portrait/landscape visibility. Test aircraft and AIS independently; a green static/CI smoke without the failure-path fixture does not close this defect.
+
+**Verification boundary:** only the source branches and existing UI text were inspected. No collector, UI, browser test, or deployed Pages code was changed. The existing PR #471 remains a docs/review change; this note is an owner handoff, not a mitigation.
