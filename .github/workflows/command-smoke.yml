@@ -48,5 +48,9 @@ jobs:
           for file in assets/mt-intel-data.js assets/mt-command-ui.js assets/mt-query-engine.js assets/mt-research-ui.js; do
             node --check "$file"
           done
+      - name: Check stored-answer period accuracy
+        run: |
+          node --check assets/answers.js
+          node --test tests/answers-loader.test.cjs
       - name: Verify House PTR provenance and uncertainty labels
         run: node scripts/validate_us_trades.mjs
