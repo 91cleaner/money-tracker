@@ -20,6 +20,8 @@ A public-source intelligence prototype connecting world history, legislation, ma
 ## Map
 The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional Esri satellite imagery. **No map API key is required.** It depends on external tile/CDN availability; a simplified offline schematic is shown when providers cannot be reached. The satellite imagery is not a live satellite feed. The country-to-country lines show exploration paths, not proof of causation. The `skysea.html` entry is a separate observation view; aircraft extrapolation and expanded ship-grid dots are visual estimates, not independently verified real-time positions.
 
+**SkySea refresh-failure caveat (unfixed):** after a previously successful aircraft or recent-AIS fetch, a later failed refresh can leave old markers on the map. Repeated AIS responses with an unchanged old `updated` timestamp are also not flagged stale by the current UI. Treat displayed timestamps as last recorded observations, **not proof of a healthy live feed**. The UI still needs source-age/error indicators and browser regression tests; this documentation does not fix that behavior.
+
 ## Authenticated command room
 - Cloudflare Worker `/command` is built from `world-intelligence/index.html`, rather than maintaining a separate schematic map. `/evidence.js` and `/data/us/*` routes require the existing GitHub OAuth administrator session.
 - `python scripts/sync_command_worker.py` embeds a compact, source-linked Congress.gov bill snapshot and the current House PTR research candidates into `cloudflare/admin-worker.js`. Every bill remains available; long action descriptions are shortened in the Worker only. The original full data stays in `data/us/bills.json`.
