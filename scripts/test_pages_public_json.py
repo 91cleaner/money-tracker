@@ -261,6 +261,50 @@ class PublicJsonParityTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "unexpected redirect target"):
                     self.check(opener=opener)
 
+    def test_non_object_trade_rows_fail_closed(self):
+        for path in audit.PUBLIC_JSON_PATHS[:2]:
+            with self.subTest(path=path):
+                (self.root / path).write_bytes(b'{"trades":[null]}')
+                with self.assertRaisesRegex(ValueError, "trade 0 must be an object"):
+                    self.check()
+                (self.root / path).write_bytes(self.docs[path])
+
+    def test_remote_non_object_trade_rows_fail_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[1]
+        self.docs[path] = b'{"trades":[42]}'
+        with self.assertRaisesRegex(RuntimeError, "trade 0 must be an object"):
+            self.check()
+
+    def test_invalid_collector_count_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        for count in (True, -1, 1.5, "0", None):
+            with self.subTest(count=count):
+                (self.root / path).write_text(json.dumps({
+                    "collectors": {"house": {"count": count, "errors": []}}
+                }))
+                with self.assertRaisesRegex(ValueError, "invalid count"):
+                    self.check()
+
+    def test_invalid_collector_errors_fail_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        for errors in (None, "failed", [7], {}):
+            with self.subTest(errors=errors):
+                (self.root / path).write_text(json.dumps({
+                    "collectors": {"house": {"count": 0, "errors": errors}}
+                }))
+                with self.assertRaisesRegex(ValueError, "invalid errors list"):
+                    self.check()
+
+    def test_valid_collector_failures_are_preserved(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        content = json.dumps({"collectors": {
+            "taiwan_legislature": {"count": 0, "errors": ["members: fetch failed"]},
+            "us_sec": {"count": 74, "errors": []},
+        }}).encode()
+        (self.root / path).write_bytes(content)
+        self.docs[path] = content
+        self.assertTrue(self.check())
+
     def test_plain_http_rejected(self):
         with self.assertRaisesRegex(ValueError, "HTTPS"):
             audit.check_public_json("http://example.com", self.root)
