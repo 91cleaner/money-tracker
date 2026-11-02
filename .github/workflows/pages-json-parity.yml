@@ -42,10 +42,11 @@ jobs:
   # A Pages publish may succeed even if a subsequent HTML smoke check fails.
   # Inspect the actual deploy-pages step, not only the workflow conclusion.
   published:
+    # The workflow_run event is already limited to completed runs. A publish
+    # can succeed before a later step is cancelled or times out, so never
+    # exclude a completed run based on its overall conclusion.
     if: >-
       github.event_name == 'workflow_run' &&
-      (github.event.workflow_run.conclusion == 'success' ||
-       github.event.workflow_run.conclusion == 'failure') &&
       github.event.workflow_run.head_branch == 'main' &&
       github.event.workflow_run.head_repository.full_name == github.repository
     runs-on: ubuntu-latest
