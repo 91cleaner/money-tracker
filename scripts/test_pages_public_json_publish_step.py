@@ -21,6 +21,13 @@ class PagesPublishStepTests(unittest.TestCase):
     def test_publish_success_even_when_later_smoke_fails(self):
         self.assertTrue(audit.was_pages_published(jobs_payload()))
 
+    def test_completed_workflow_runs_are_not_filtered_by_conclusion(self):
+        workflow = (Path(__file__).resolve().parents[1] /
+                    ".github/workflows/pages-json-parity.yml").read_text(encoding="utf-8")
+        self.assertIn("types: [completed]", workflow)
+        self.assertIn("github.event.workflow_run.head_branch == 'main'", workflow)
+        self.assertNotIn("github.event.workflow_run.conclusion", workflow)
+
     def test_publish_success_even_if_job_was_cancelled_or_timed_out(self):
         for conclusion in ("cancelled", "timed_out"):
             with self.subTest(conclusion=conclusion):
