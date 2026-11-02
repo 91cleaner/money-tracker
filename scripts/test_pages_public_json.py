@@ -37,7 +37,7 @@ class PublicJsonParityTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.docs = {}
         for path in audit.PUBLIC_JSON_PATHS:
-            body = ({"collectors": {}} if "collection-status" in path else
+            body = ({"collectors": {"fixture": {"count": 0, "errors": []}}} if "collection-status" in path else
                     {"trades": [{"id": "fixture"}]} if path.endswith("trades_public.json") else
                     {"trades": []})
             content = json.dumps(body).encode()
@@ -112,6 +112,25 @@ class PublicJsonParityTests(unittest.TestCase):
         (self.root / audit.PUBLIC_JSON_PATHS[2]).write_text('{"collectors": []}')
         with self.assertRaisesRegex(ValueError, "missing collectors object"):
             self.check()
+
+    def test_empty_local_collector_status_fails_closed(self):
+        # A vanished collector registry must not look like a healthy run.
+        path = audit.PUBLIC_JSON_PATHS[2]
+        (self.root / path).write_bytes(b'{"collectors":{}}')
+        with self.assertRaisesRegex(ValueError, "empty collectors object"):
+            self.check()
+
+    def test_empty_deployed_collector_status_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        self.docs[path] = b'{"collectors":{}}'
+        with self.assertRaisesRegex(RuntimeError, "empty collectors object"):
+            self.check()
+
+    def test_zero_count_collector_is_valid(self):
+        # A legitimate zero-result run differs from missing all collectors.
+        path = audit.PUBLIC_JSON_PATHS[2]
+        self.assertIn(b'"count": 0', self.docs[path])
+        self.assertTrue(self.check())
 
     def test_duplicate_top_level_keys_in_local_json_fail_closed(self):
         path = audit.PUBLIC_JSON_PATHS[0]
