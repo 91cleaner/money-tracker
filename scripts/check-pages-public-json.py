@@ -87,6 +87,11 @@ def validate_json(path, body):
         trades = data.get("trades")
         if not isinstance(trades, list):
             raise ValueError(f"{path}: missing trades array")
+        # The historical public summary must not silently publish zero rows.
+        # A recent-filings window may legitimately be empty, so only enforce
+        # this on the full public summary generated from the US ledger.
+        if path.endswith("trades_public.json") and not trades:
+            raise ValueError(f"{path}: empty public trade summary")
         for index, trade in enumerate(trades):
             if not isinstance(trade, dict):
                 raise ValueError(f"{path}: trade {index} must be an object")
