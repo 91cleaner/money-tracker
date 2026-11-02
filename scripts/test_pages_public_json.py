@@ -190,6 +190,26 @@ class PublicJsonParityTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "invalid JSON"):
                     self.check()
 
+    def test_fractional_part_rounded_to_integer_local_fails_closed(self):
+        # These valid JSON decimals become exact integers after JS Number
+        # conversion, silently losing the reported fractional component.
+        path = audit.PUBLIC_JSON_PATHS[0]
+        for number in ("9007199254740990.1", "-9007199254740990.1",
+                       "9007199254740990.5", "1.0000000000000001",
+                       "0.99999999999999999"):
+            with self.subTest(number=number):
+                (self.root / path).write_bytes(
+                    ('{"trades":[{"r":' + number + '}]}').encode("ascii")
+                )
+                with self.assertRaisesRegex(ValueError, "invalid JSON"):
+                    self.check()
+
+    def test_fractional_part_rounded_to_integer_remote_fails_closed(self):
+        path = audit.PUBLIC_JSON_PATHS[2]
+        self.docs[path] = b'{"collectors":{"house":{"count":0,"errors":[],"ratio":9007199254740990.1}}}'
+        with self.assertRaisesRegex(RuntimeError, "invalid JSON"):
+            self.check()
+
     def test_browser_safe_decimal_boundary_still_passes(self):
         path = audit.PUBLIC_JSON_PATHS[0]
         content = b'{"trades":[{"id":9007199254740991.0}]}'
