@@ -79,10 +79,25 @@ def validate_json(path, body):
     if not isinstance(data, dict):
         raise ValueError(f"{path}: expected JSON object")
     if path.endswith("trades_public.json") or path.endswith("trades-recent.json"):
-        if not isinstance(data.get("trades"), list):
+        trades = data.get("trades")
+        if not isinstance(trades, list):
             raise ValueError(f"{path}: missing trades array")
-    elif not isinstance(data.get("collectors"), dict):
-        raise ValueError(f"{path}: missing collectors object")
+        for index, trade in enumerate(trades):
+            if not isinstance(trade, dict):
+                raise ValueError(f"{path}: trade {index} must be an object")
+    else:
+        collectors = data.get("collectors")
+        if not isinstance(collectors, dict):
+            raise ValueError(f"{path}: missing collectors object")
+        for name, status in collectors.items():
+            if not isinstance(status, dict):
+                raise ValueError(f"{path}: collector {name} must be an object")
+            count = status.get("count")
+            if type(count) is not int or count < 0:
+                raise ValueError(f"{path}: collector {name} has invalid count")
+            errors = status.get("errors")
+            if not isinstance(errors, list) or any(not isinstance(error, str) for error in errors):
+                raise ValueError(f"{path}: collector {name} has invalid errors list")
 
 
 def check_public_json(site_url, expected_dir, opener=urlopen, sleeper=time.sleep, attempts=4):
