@@ -34,10 +34,15 @@ def reject_overflowing_float(value):
     number = float(value)
     if not math.isfinite(number):
         raise ValueError(f"non-finite JSON number: {value}")
+    # Tiny nonzero ratios can silently underflow to +/-0.0 in both Python and
+    # JavaScript. Reject them rather than publishing a misleading zero.
+    exact = Decimal(value)
+    if exact != 0 and number == 0.0:
+        raise ValueError(f"JSON number underflows to zero: {value}")
     # Exponent and decimal forms (e.g. 9007199254740993.0 or 1e16)
     # also lose integer precision in JavaScript. Compare the original token,
     # not its already-rounded float representation.
-    if abs(Decimal(value)) > MAX_SAFE_JSON_INTEGER:
+    if abs(exact) > MAX_SAFE_JSON_INTEGER:
         raise ValueError(f"JSON number exceeds browser-safe range: {value}")
     return number
 
