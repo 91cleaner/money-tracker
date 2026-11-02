@@ -28,6 +28,27 @@ class PagesPublishStepTests(unittest.TestCase):
         self.assertIn("github.event.workflow_run.head_branch == 'main'", workflow)
         self.assertNotIn("github.event.workflow_run.conclusion", workflow)
 
+    def test_audit_trigger_tracks_deploy_workflow_name(self):
+        # workflow_run filters are matched by workflow name, not filename.
+        # If the deploy workflow is renamed, the live JSON audit silently
+        # stops triggering unless this filter changes in the same PR.
+        root = Path(__file__).resolve().parents[1]
+        deploy = (root / ".github/workflows/deploy-pages.yml").read_text(encoding="utf-8")
+        parity = (root / ".github/workflows/pages-json-parity.yml").read_text(encoding="utf-8")
+        deploy_name = next((line.partition(":")[2].strip()
+                            for line in deploy.splitlines() if line.startswith("name:")), None)
+        self.assertIsNotNone(deploy_name)
+        self.assertIn(f"workflows: ['{deploy_name}']", parity)
+
+    def test_publish_detector_tracks_actual_deploy_action(self):
+        # An action upgrade or job rename must fail in PR CI, rather than
+        # silently disabling the post-deployment verification on main.
+        root = Path(__file__).resolve().parents[1]
+        deploy = (root / ".github/workflows/deploy-pages.yml").read_text(encoding="utf-8")
+        self.assertIn("\\n  deploy:\\n".replace("\\n", "\n"), deploy)
+        self.assertEqual(deploy.count("uses: actions/deploy-pages@v4"), 1)
+        self.assertEqual(audit.DEPLOY_STEP, "Run actions/deploy-pages@v4")
+
     def test_publish_success_even_if_job_was_cancelled_or_timed_out(self):
         for conclusion in ("cancelled", "timed_out"):
             with self.subTest(conclusion=conclusion):
