@@ -44,6 +44,11 @@ def reject_overflowing_float(value):
     # not its already-rounded float representation.
     if abs(exact) > MAX_SAFE_JSON_INTEGER:
         raise ValueError(f"JSON number exceeds browser-safe range: {value}")
+    # A decimal token inside the safe integer range can still round to an
+    # integer in JavaScript (e.g. 9007199254740990.1 -> 9007199254740990).
+    # Do not silently erase a fractional part from public amounts/metrics.
+    if exact != exact.to_integral_value() and number.is_integer():
+        raise ValueError(f"JSON fractional part lost in browser: {value}")
     return number
 
 
