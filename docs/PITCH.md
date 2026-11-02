@@ -25,8 +25,12 @@
 
 **현재 연방계약 시범 데이터**: `data/us/federal-awards.json`(2026-11-02 스냅샷)에 [USAspending.gov](https://www.usaspending.gov/)의 계약 의무액(`obligations`) 집계가 존재합니다. 파일 메타데이터 기준 **기업 후보 250개 확인, 70개 매칭**, `DE:partial`·`GD:partial` 오류가 기록돼 있습니다. 이는 전체 미국 연방계약의 완전한 수집이나 기업별 실제 현금 지급액이 아니며, 수혜자 ID·명칭 일치와 일부 자회사 범위에 제한됩니다.
 
-**연결 로드맵**: 위 연방계약 시범 자료를 법안·의원·기업·산업 타임라인과 출처·기간·관계 유형별로 검증 연결하고, 로비 공개([LDA](https://lda.senate.gov/))와 정치 후원금([FEC](https://www.fec.gov/))을 추가 연계합니다. **데이터 파일 존재와 관제실 연결·운영 검증 완료는 별개**입니다.
+**현재 로비·정치후원금 시범 데이터**: `data/us/lobbying.json`(2026-11-02 스냅샷)은 [미국 LDA 공개 공시](https://lda.gov/api/)의 **2025~2026년 기업 후보 150개 조회·116개 매칭·파일상 오류 0건**을 기록합니다. 기업명으로 시작하는 의뢰인만 집계하므로 전수조사가 아니며, `total_usd`는 신고된 외부 로비 수입(`income`)과 자체 로비 비용(`expenses`)의 조건부 합계이지 기업이 직접 지출한 확정액이 아닙니다. `by_quarter`에는 `1A`·`1T`·`RR` 등 분기 외 신고 유형도 들어가므로 모든 항목을 분기 지출로 해석할 수 없습니다. 수정·중복 신고와 법안 번호의 회기 식별은 별도 원문 대조가 필요합니다.
+
+`data/us/pac-contributions.json`(2026-10-30 스냅샷)에는 [FEC 공개 PAC](https://www.fec.gov/data/) 집계가 이미 있으나 `rate_limited: true`가 기록되어 **수집 완전성은 미검증**입니다. 기업 연계 PAC는 회사의 직접 정치 기부금과 다르며 개별 후보별 관계까지 검증 연결됐다고 주장하지 않습니다.
+
+**연결 로드맵**: 위 연방계약·LDA·FEC **기존 시범 파일**을 법안→의원→기업→산업 타임라인에 공식 원문·기간·관계 유형과 함께 검증 연결하고, 중복·부분 수집·수정 신고·출처별 라이선스 검사를 보강합니다. **데이터 파일 존재와 관제실 연결·운영 검증 완료는 별개**입니다.
 
 **현재 상태 (2026-11-03)**: 제품은 개발·검증 단계. 저장소 및 GitHub Pages는 **공개(public)** 상태로, 기밀/회원전용 데이터 저장소로 간주할 수 없습니다. 미국 하원 PTR은 **사후 신고**이며 실시간 체결 데이터가 아닙니다. 생성형 AI 검색·분석 **미연결**. 법안→의원→기업의 전면적 검증 연결, 모바일 완성도, 배포·보안 게이트의 통합 검증은 **완료로 주장하지 않습니다**.
 
-*검증 기준: 저장소 README, `.github/workflows/us-data.yml`, `data/search/collection-status.json`, `data/us/federal-awards.json` (2026-11-02 스냅샷), `docs/AI-ROLES.md` (2026-11-03 확인). 수익·고객 수·독점권·매각가에 관한 검증되지 않은 숫자는 의도적으로 제외.*
+*검증 기준: 저장소 README, `.github/workflows/us-data.yml`, `data/search/collection-status.json`, `data/us/federal-awards.json`, `data/us/lobbying.json` (2026-11-02 스냅샷), `data/us/pac-contributions.json` (2026-10-30 스냅샷), `scripts/collect_lobbying.py`, `docs/AI-ROLES.md` (2026-11-03 확인). 수익·고객 수·독점권·매각가에 관한 검증되지 않은 숫자는 의도적으로 제외.*
