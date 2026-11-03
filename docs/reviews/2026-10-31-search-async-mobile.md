@@ -71,3 +71,25 @@ Fresh `main` source inspection found a **second, independent map-overlay owner**
 | Close brief | A target visible, close the brief | Target overlay and banner are cleared consistently; reopening/research does not resurrect A |
 
 **Verification boundary:** static read of `main` `world-intelligence/index.html` (the `mt-living-map-controller` script), not a browser reproduction. This commit changes **review documentation only**; UI code, tests, data, and Pages deployment remain untouched. Keep existing #394 / PR #424 as the single handoff, do not open a duplicate issue.
+
+
+## 2026-11-03 16:56 KST follow-up: stale House PTR and price widgets (P1)
+
+A new read of the current `main` `world-intelligence/index.html` (blob `9894f00a096ed5063c49f939e5e129f3bc12eb49`) found **two more independent async writers** that the search-handler and Leaflet-overlay fixes above would not cover. This extends the existing #394 / PR #424 handoff; **do not create another issue**.
+
+1. **House PTR table:** `<script id="mt-trades-js">` (around lines 533–537) chains `window.mtAfterShow`, captures `m = window.mtCur()`, then awaits `window.mtApi.loadIdx()` before appending rows to the shared `#mtTrades` box. A newer route or a World reset may have cleared that box while the old request is pending. When the older Promise resolves, it can append a table for the previous member/company to the current brief (or into a hidden brief). The code never checks that `window.mtCur()` is still the captured `m` after the await.
+2. **Price summary:** `<script id="mt-price-js">` (around lines 539–546) captures the old route `m`, awaits `fetch('../data/us/prices/summary.json')` when `P === null`, then writes the old ticker's price, chart and event text to the shared `#mtPrice`. It later awaits `window.mtApi.loadIdx()` and writes again. A subsequent route B can be shown during either await; `box.replaceChildren()` at the start of B's render does not prevent A's later writes. A no-price or non-company B route is especially vulnerable because it may return without replacing the stale A data.
+
+**Why this matters:** the user can see a real-looking House filing or price next to the **wrong map journey**. This is a data-attribution problem, not evidence that a trade or quote itself is incorrect. The current price text explicitly says Massive/Polygon is a **third-party** source; neither this widget nor the PTR table is a connected real-time executed-trade feed.
+
+**UI-owner fix contract:** assign a route/brief generation token at every `start(c)`, World reset, Close, and non-route question state. Capture that token in each `mtAfterShow` extension and recheck it **after every await and immediately before appending to the DOM**; also verify the expected ticker still matches `window.mtCur()?.ticker`. Clear stale widgets synchronously on route changes and resets. Avoid relying on comparing DOM text or on only checking the outer submit handler. If a request fails, render an explicit unavailable state instead of reusing old price/PTR content. Keep all source links and filing-date caveats.
+
+| Deterministic case | Sequence | Expected result |
+| --- | --- | --- |
+| Delayed PTR index | Open route A with PTR records; stall `loadIdx()`; open B with no PTR; resolve A | No A rows or A PTR heading in B's brief |
+| Delayed price fetch | Open company A; stall `summary.json`; open company B or a bill; resolve A | No A price, chart, or events under B |
+| Second price await | A price summary resolves; stall subsequent `loadIdx()`; open B; release A index | No A events appended to B |
+| Reset during pending data | Start A then click World/Close before either await completes | Old widgets stay cleared; no stale source/price appears |
+| Correct same-route load | Open A and resolve all valid data without switching routes | A's own PTR and price widgets render with source and date caveats |
+
+**Verification boundary:** this is a source-level control-flow review, not a reproduced browser exploit or a shipped code fix. Require controlled-Promise Chromium tests plus mobile portrait/landscape checks and a post-merge Pages artifact check. Per `docs/AI-ROLES.md`, GPT changes review docs only; Claude owns the screen code. No `data/`, collector, workflow or UI files were changed in this addendum.
