@@ -2,12 +2,14 @@
 
 A public-source intelligence prototype connecting world history, legislation, macroeconomic data, and U.S. congressional financial disclosures on a **flat world map**.
 
-## Entry points (verified against `main`, 2026-10-30)
-- `index.html` — **English U.S.-first redirect** to `world-intelligence/?lang=en`; existing query parameters and the URL fragment are preserved. It is **not** the country-selection screen.
-- `korea.html` — Korean-language country-selection page, with links to the Korean national view and the U.S. command room.
+## Entry points (source-checked against `main`, 2026-11-03)
+- `index.html` — **Korean-language country selector**, not an automatic U.S. redirect. Its three links are 대한민국 → `korea.html`, 미국 → `world-intelligence/`, and 세계 관제실 (aircraft/ships) → `skysea.html`.
+- `korea.html` — **Korean sub-menu**: 의원 → `national.html`, 시 세금 → `contracts.html`; its exit returns to `index.html`. It is not the U.S. command entry.
 - `world-intelligence/index.html` — flat world-map command center and guided country exploration.
 - `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research.
-- `us.html` — U.S. command entry.
+- `us.html` — **direct U.S. redirect** to `world-intelligence/` (preserves URL query parameters and fragment); unlike `index.html`, this page redirects.
+ 
+**Release note:** These routes were checked in the repository source on 2026-11-03, not verified in a newly deployed Pages build. An older entry-point description in this PR became stale after the root-page redesign; do not merge it as a statement that the root still redirects.
 
 **Connection status:** Public House PTR disclosures are delayed reports, not live executions. **Live executed-trade feed: NOT CONNECTED. Generative AI analysis: NOT CONNECTED.** The interactive map and scripted data lookups must not be described as live trading intelligence or a connected AI search engine. A successful GitHub Actions test is not evidence that the public Pages deployment or authenticated Cloudflare Worker is working.
 
