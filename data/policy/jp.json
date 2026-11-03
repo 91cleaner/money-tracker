@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-02",
+"updated": "2026-11-03",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
@@ -24,6 +24,58 @@
 "t": "高市総理は、防災庁の大臣・副大臣・政務官の任命を行いました",
 "d": "2026-11-03",
 "u": "https://www.kantei.go.jp/jp/105/actions/202611/02daijin_nimei.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "egov:495260248",
+"kind": "pubcomment",
+"t": "栄養士法施行規則の一部を改正する省令案に関する御意見の募集について",
+"d": "2026-11-03",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260248&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:145210791",
+"kind": "pubcomment",
+"t": "第一種指定電気通信設備接続料規則の一部を改正する省令案に対する意見募集",
+"d": "2026-11-03",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210791&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"tech_ai"
+],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
+},
+{
+"id": "kantei:9535a4f33bd7",
+"kind": "news",
+"t": "高市総理は防災士アンバサダー 野口絵子氏による表敬を受けました",
+"d": "2026-11-03",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/02hyoukei.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:d57ad97ed73f",
+"kind": "news",
+"t": "高市総理は防災庁発足式に出席しました",
+"d": "2026-11-03",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/02hossokushiki.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
 "cat": "総理の一日",
@@ -80,6 +132,94 @@
 "tags": [],
 "lk": "일본 총리 발표",
 "le": "Statement by the Japanese PM"
+},
+{
+"id": "egov:185001515",
+"kind": "pubcomment",
+"t": "「著作権法施行令の一部を改正する政令（案）」及び「著作権法施行規則の一部を改正する省令（案）」に関する意見募集の実施について",
+"d": "2026-11-02",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=185001515&Mode=0",
+"dept": "文化庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "egov:495260247",
+"kind": "pubcomment",
+"t": "「遺伝子治療等臨床研究に関する指針」を廃止する告示（案）に関する御意見の募集について",
+"d": "2026-11-02",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260247&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:155261034",
+"kind": "pubcomment",
+"t": "船舶安全法施行規則及び船舶設備規程等の一部を改正する省令の一部を改正する省令案に関する意見募集について",
+"d": "2026-11-02",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155261034&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"shipbuilding"
+],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
+{
+"id": "egov:141000244",
+"kind": "pubcomment",
+"t": "児童福祉施設の設備及び運営に関する基準の一部を改正する内閣府令案に関する御意見の募集について",
+"d": "2026-11-02",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=141000244&Mode=0",
+"dept": "こども家庭庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "egov:141000245",
+"kind": "pubcomment",
+"t": "幼保連携型認定こども園の学級の編制、職員、設備及び運営に関する基準の一部を改正する命令案に関する御意見の募集について",
+"d": "2026-11-02",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=141000245&Mode=0",
+"dept": "こども家庭庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "egov:141000246",
+"kind": "pubcomment",
+"t": "就学前の子どもに関する教育、保育等の総合的な提供の推進に関する法律第三条第二項及び第四項の規定に基づき内閣総理大臣及び文部科学大臣が定める施設の設備及び運営に関する基準の一部を改正する件案に関する御意見の募集について",
+"d": "2026-11-02",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=141000246&Mode=0",
+"dept": "こども家庭庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "egov:595320120",
+"kind": "pubcomment",
+"t": "高圧ガス保安法に基づく指定完成検査機関等の指定について等の一部を改正する規程（案）に対する意見募集",
+"d": "2026-11-02",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320120&Mode=0",
+"dept": "経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"energy"
+],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
 },
 {
 "id": "kantei:3247a17e1a0a",
