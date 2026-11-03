@@ -1,7 +1,97 @@
 {
-"updated": "2026-10-29",
+"updated": "2026-11-01",
 "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
 "trades": [
+{
+"tk": "MU",
+"who": "John J Mr McGuire",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-01",
+"fd": "2026-11-01",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035484.pdf"
+},
+{
+"tk": "MU",
+"who": "John J Mr McGuire",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-25",
+"fd": "2026-11-01",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035484.pdf"
+},
+{
+"tk": "AVGO",
+"who": "John J Mr McGuire",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-24",
+"fd": "2026-11-01",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035484.pdf"
+},
+{
+"tk": "MU",
+"who": "John J Mr McGuire",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-24",
+"fd": "2026-11-01",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035484.pdf"
+},
+{
+"tk": "JNJ",
+"who": "Thomas H. Kean",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-30",
+"fd": "2026-10-30",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+},
+{
+"tk": "SYK",
+"who": "Thomas H. Kean",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-30",
+"fd": "2026-10-30",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+},
+{
+"tk": "ESAB",
+"who": "Thomas H. Kean",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-29",
+"fd": "2026-10-30",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+},
+{
+"tk": "MDLZ",
+"who": "Thomas H. Kean",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-23",
+"fd": "2026-10-30",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+},
+{
+"tk": "ABT",
+"who": "Thomas H. Kean",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-17",
+"fd": "2026-10-30",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+},
+{
+"tk": "TXN",
+"who": "Thomas H. Kean",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-17",
+"fd": "2026-10-30",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+},
 {
 "tk": "T",
 "who": "David J. Taylor",
@@ -89,96 +179,6 @@
 "ty": "S",
 "amt": "$1,001 - $15,000",
 "d": "2026-10-28",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "AMZN",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$15,001 - $50,000",
-"d": "2026-10-27",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "MCD",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-27",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "HD",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-22",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "LOW",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$15,001 - $50,000",
-"d": "2026-10-22",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "PEP",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-21",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "SOLS",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-21",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "IBM",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "BRK.B",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$15,001 - $50,000",
-"d": "2026-10-15",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "CVX",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$15,001 - $50,000",
-"d": "2026-10-14",
-"fd": "2026-10-27",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
-},
-{
-"tk": "XOM",
-"who": "Pete Sessions",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
 "fd": "2026-10-27",
 "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
 }
