@@ -47,3 +47,22 @@
 5. `.github/workflows/deploy-pages.yml`의 `actions/upload-pages-artifact@v3` **이전**에 빌드 및 두 검사를 필수 실행하고, CI에서 실제 거부 테스트를 수행한다. [#458](https://github.com/91cleaner/money-tracker/pull/458)의 **배포 후 3개 JSON 비교**는 별도 단계로 유지한다.
 
 **판정:** 위 항목은 검증 로그를 바탕으로 구체화한 **구현 지시/수락 기준**이다. 현재 #469는 문서 PR이며 실제 allowlist 코드·거부 테스트·운영 Pages 재배포는 **미구현·미검증**이다. `main`에 이미 존재하는 공개 Git 기록의 비밀성은 별도로 다뤄야 한다.
+
+
+## 2026-11-03 20:56 KST 추가 발견 — 공개 루트·JS·assets 경로도 기본 허용 (P1 범위 확장)
+
+**기준:** `main`의 `scripts/prepare-public-pages.py` 및 `scripts/check-pages-artifact.py`를 다시 읽었다. 기존 검토는 `data/`에 초점을 맞췄지만, 같은 허용 방식이 **루트 파일과 `assets/`, `js/` 등에도 적용**된다. 이번에도 실제 비밀 유출이나 운영 장애를 재현한 것은 아니다.
+
+- 루트 복사 루프는 `ROOT.iterdir()`의 파일을 `safe(child)`와 허용 확장자로 판정한다. `PUBLIC_ROOT_FILES={".nojekyll"}`는 루트의 모든 허용 파일에 대한 **독점적 allowlist가 아니다**. 따라서 가상의 `review-only.txt` 또는 `notes.json`은 현재 이름·확장자 필터만으로는 복사 대상이다.
+- `PUBLIC_DIRS`에는 `assets`, `js`, `data`, `world-intelligence` 등이 포함되고 각 경로를 `rglob("*")`로 탐색한다. 새 `assets/review-only.txt` 같은 파일도 `safe(src)`가 참이면 복사된다.
+- `check-pages-artifact.py`는 필수 파일과 알려진 금지 파일 목록만 검사한다. 위의 **추가 루트·assets 파일**을 금지하는 전체 산출물 경로 비교가 없다. `deploy-pages.yml`은 이 검사를 통과하면 공개 업로드를 진행한다.
+- GitHub 저장소 자체가 `public`이므로 추적된 파일은 이미 GitHub에서 접근 가능하다. 여기서 추가로 지적하는 위험은 **Pages 공개 도메인으로 의도하지 않은 파일을 자동 게시**하고 이를 정상 빌드로 판정하는 배포 정책의 공백이다.
+
+### 데이터/배포 담당에게 추가할 정확한 수락 조건
+
+1. `data/`뿐 아니라 **루트, `assets/`, `js/` 및 나머지 `PUBLIC_DIRS`의 모든 배포 대상 경로**를 공개 승인 정책으로 관리한다. 89,000개가 넘는 생성 파일을 무작정 수동 열거하기보다는, 고정된 공개 자산 목록/명시적 생성 경로/파일별 승인 규칙을 조합하되 미승인 `*.json`·`*.txt`·`*.csv`는 실패 폐쇄한다.
+2. 임시 체크아웃에 가상의 `review-only.txt`(루트), `assets/review-only.txt`, `js/review-only.json`을 각각 추가한다. 빌드 **전** 공개 승인 검사 또는 빌드 **후** 산출물 검사가 각각 실패해야 한다. 테스트 파일은 GitHub에 커밋하지 않는다.
+3. 기존 `index.html`, `skysea.html`, `world-intelligence/`, `js/mobile.js`, Leaflet·지도 타일 및 공개 거래 JSON이 그대로 포함되는 정상 테스트를 함께 둔다. 공개 필수 자산을 무조건 차단해 문제를 덮지 않는다.
+4. 최종 `.public-pages/` 전체 경로 집합을 배포 매니페스트와 비교하고, 미등록 파일이 발견되면 `upload-pages-artifact` 전에 차단한다. `#403`의 HTML/JS URL 검사, `#412`의 PTR 유효성, `#458`의 JSON 바이트 감사와 **상호 보완적**이며 이들 PR의 코드를 여기서 중복 수정하지 않는다.
+
+**검증 범위:** GitHub `main`의 스크립트 정적 검토 및 기존 PR 중복 확인. 이번 PR에서 실제 빌드·부정 테스트·운영 배포는 실행하지 않았다. GPT는 `docs/AI-ROLES.md`에 따라 검토 문서만 수정한다.
