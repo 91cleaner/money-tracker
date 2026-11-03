@@ -2,9 +2,72 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-10-28T02:02:16.786Z",
- "count": 200,
+ "collected_at": "2026-11-03T23:45:17.432Z",
+ "count": 207,
  "divisions": [
+  {
+   "id": 2470,
+   "date": "2026-11-03",
+   "number": 112,
+   "title": "Budget Resolution No. 86: High value council tax surcharge",
+   "ayes": 327,
+   "noes": 161,
+   "url": "https://votes.parliament.uk/votes/commons/division/2470"
+  },
+  {
+   "id": 2469,
+   "date": "2026-11-03",
+   "number": 111,
+   "title": "Budget Resolution No. 76: Rates of alcohol duty",
+   "ayes": 331,
+   "noes": 181,
+   "url": "https://votes.parliament.uk/votes/commons/division/2469"
+  },
+  {
+   "id": 2468,
+   "date": "2026-11-03",
+   "number": 110,
+   "title": "Budget Resolution No. 55: Value added tax (electric vehicle charging)",
+   "ayes": 324,
+   "noes": 88,
+   "url": "https://votes.parliament.uk/votes/commons/division/2468"
+  },
+  {
+   "id": 2467,
+   "date": "2026-11-03",
+   "number": 109,
+   "title": "Budget Resolution No. 15: Charges in connection with employment visas ",
+   "ayes": 414,
+   "noes": 106,
+   "url": "https://votes.parliament.uk/votes/commons/division/2467"
+  },
+  {
+   "id": 2466,
+   "date": "2026-11-03",
+   "number": 108,
+   "title": "Budget Resolution No. 8: Capital gains tax (business asset disposal relief) ",
+   "ayes": 348,
+   "noes": 176,
+   "url": "https://votes.parliament.uk/votes/commons/division/2466"
+  },
+  {
+   "id": 2465,
+   "date": "2026-11-03",
+   "number": 107,
+   "title": "Budget Resolution No.7: Increase in rate of banking surcharge for temporary period",
+   "ayes": 420,
+   "noes": 105,
+   "url": "https://votes.parliament.uk/votes/commons/division/2465"
+  },
+  {
+   "id": 2464,
+   "date": "2026-11-03",
+   "number": 106,
+   "title": "Budget Resolution No. 3: Income tax (default, property and savings rates)",
+   "ayes": 337,
+   "noes": 180,
+   "url": "https://votes.parliament.uk/votes/commons/division/2464"
+  },
   {
    "id": 2463,
    "date": "2026-10-27",
