@@ -66,3 +66,26 @@ Then inspect the **same SHA** in GitHub Actions and confirm the Pages deployment
 - No trading recommendation, automatic buy/sell signal, insider misconduct allegation, or bill-to-stock causation should be inferred from the map.
 
 This runbook is operational guidance only; it does not modify collectors, UI, release scripts, or existing data.
+
+## 7. P1 evidence-link gate: bill → lawmaker → company (reviewed 2026-11-04 KST)
+
+**Source-level finding, not a reproduced UI failure.** The current public datasets expose different entity keys, so a map line connecting a bill, a legislator and a company must **not** be treated as a verified relationship just because names, tickers, sectors or dates are close.
+
+| Source examined | Actual join information visible | Evidence boundary |
+| --- | --- | --- |
+| `data/us/members.json` | `members[].id` is a legislator's Bioguide-style ID (e.g. `C000127`); also has name, chamber and state | A name or office coordinate alone does not identify a specific House PTR filing |
+| `data/us/bills/{bioguide}.json` | Files are keyed by legislator ID; each bill item includes `no`, `d`, `a`, `ad`, `u`, `law`, `pass` | This is sponsored-bill context, not evidence of a vote, committee action or financial benefit |
+| `data/us/trades-recent.json` | Rows include `who` (free-text name), `tk`, `ty`, `d` (transaction date), `fd` (filing date), `amt` (range), `doc` (House Clerk PDF) | The sampled row does **not** contain a Bioguide ID; a name-only join is ambiguous and must not be auto-promoted to a verified legislator match |
+| `data/us/ticker-routes.json` | `routes` is keyed by ticker, with sourced geographic/company/policy `stops` | A company or industry policy stop is contextual; it does not prove a legislator traded because of a bill |
+
+**Required join contract before displaying a factual bill → legislator → company relationship:**
+
+1. **Legislator identity:** resolve a filing's reported name to one Bioguide ID using a documented source-specific crosswalk with chamber, state/district and relevant term dates. Preserve the original `who` string and the crosswalk's source; reject ambiguous, unmatched, or time-inconsistent matches. Do not equate name similarity with identity.
+2. **Bill role:** distinguish sponsor, cosponsor, committee member, recorded vote, and unrelated legislative context. Link the specific Congress.gov bill number, Congress session, action date and original URL. A per-member sponsored-bill file does not establish the other roles.
+3. **Company identity:** separately resolve the disclosed asset to a verified issuer/security identifier (e.g. SEC CIK plus ticker as-of the relevant date); a ticker alone can be reused or changed. Distinguish individual stocks, ETFs, options, trusts and unknown assets. Do not infer a company match solely from a bill's sector keywords.
+4. **Temporal integrity:** retain transaction date, filing date, bill action date, source observation date and ingestion time separately. Reject impossible chronology; do not imply that filing date is execution time or that temporal proximity proves causation.
+5. **Presentation:** until all three edges are independently sourced, label the path **“공개 기록을 나란히 표시한 탐색 경로 · 관계 미검증”** (EN: **“Exploration path across public records · relationship unverified”**). Show the House Clerk PDF and Congress.gov bill URL separately, with missing/ambiguous links visibly marked. Never assign an insider-trading, profit or buy/sell conclusion from the map line.
+
+**Release acceptance tests (owner implementation required):** (a) one filing name matching two legislators must stay unresolved; (b) same ticker reused by another issuer must not join; (c) ETF or option must not silently become a direct operating-company holding; (d) bill sponsored by a different legislator must not be presented as the filing legislator's sponsored bill; (e) filing date before transaction date must be quarantined; (f) a valid source-backed crosswalk must show each edge and its citation; (g) absent source, stale feed and zero records must remain three distinct states. Test question → choice → map trace in desktop and mobile landscape, then verify the exact published artifact SHA.
+
+**Status:** This section fixes the **operator's evidence and release contract only**. It does not add a verified crosswalk, execute an entity join, repair the UI, or validate the current trade sample. Lead/data owner handles crosswalk and provenance; Claude/UI owner handles display; GPT does not edit their files. The repository and Pages are **PUBLIC**; real-time executed-trade feed and generative AI are **NOT CONNECTED**. PR approval and an integrated CI/deployment run remain required.
