@@ -135,3 +135,14 @@
 4. 두 PR이 아직 병합되지 않았으므로 소유자 승인 전 병합하지 말고, 동일 통합 SHA의 실제 공개 산출물·브라우저 표시까지 확인한다.
 
 **추가 확인:** 2026-11-03 조회한 `main/data/us/trades-recent.json`은 `updated: 2026-10-29`, 20행으로 **현재 빈 창은 아님**. 이 항목은 미래 정상 0건 또는 수집 실패에서 생길 수 있는 계약 충돌을 사전에 식별한 정적 리뷰다. 실시간 체결 데이터 및 생성형 AI 분석은 여전히 미연결이다.
+
+## P2 통합 검증 공백 (2026-11-03 18:55 KST): 구형 PR 브랜치에서 모바일 JS가 Pages 산출물에서 누락됨
+
+**확인된 코드 차이:** 현재 `main`의 `scripts/prepare-public-pages.py`는 `PUBLIC_DIRS`에 `"js"`를 포함하고, `.github/workflows/deploy-pages.yml`은 공개 산출물의 `.public-pages/js/mobile.js` 존재를 확인한다. `main/js/mobile.js`도 실제 존재한다. 그러나 아직 열린 [#403](https://github.com/91cleaner/money-tracker/pull/403)과 [#412](https://github.com/91cleaner/money-tracker/pull/412)의 **현재 브랜치 스냅샷**은 `PUBLIC_DIRS`에 `"js"`가 없고, 각각의 배포 워크플로에는 `.public-pages/js/mobile.js` 확인 단계도 없다. [#458](https://github.com/91cleaner/money-tracker/pull/458)은 `"js"` 포함 및 파일 확인을 유지한다. 이 차이는 PR 브랜치가 오래된 `main`에서 갈라진 결과로 보이며, **3-way 병합 후에도 파일이 사라진다는 뜻은 아니다.** 다만 #403/#412의 기존 브랜치 CI 성공은 모바일 JS가 포함된 최종 릴리스의 검증을 대신할 수 없다.
+
+**수락 조건 (클로드/배포 담당):**
+1. 최신 `main` 기반 통합 브랜치에서 `python3 scripts/prepare-public-pages.py`를 실행하고 `test -s .public-pages/js/mobile.js`로 공개 복사본이 비어 있지 않음을 확인한다. 실제 페이지에서 사용되는 다른 `js/` 자산도 참조 경로와 산출물 존재를 함께 확인한다.
+2. `python3 scripts/check-pages-artifact.py` 및 #403의 `check-pages-entry.py --local-dir .public-pages`를 실행한다. `js/mobile.js` 누락을 재현하는 음성 테스트를 추가해 **업로드 전에** 실패하도록 한다. #403/#412의 이전 성공 로그를 최종 통합 테스트 결과로 재사용하지 않는다.
+3. 최신 병합 결과의 `PUBLIC_DIRS`에 `"js"`가 남아 있는지, 최종 `deploy-pages.yml`에 파일 존재 확인이 남아 있는지 재확인한다. 모바일 가로/세로 실기기 검증과 Pages URL HTTP 200·정적 파일 내용 확인은 별도 수행한다.
+
+**검증 범위:** GitHub의 `main`, #403, #412, #458 파일 내용과 `main/js/mobile.js` 존재를 정적으로 대조했다. 실제 산출물 빌드·브라우저·모바일 테스트 및 운영 장애 재현은 수행하지 않았다. GPT 역할에 따라 검토 문서만 수정하며, 코드 소유자의 승인 전 병합하지 않는다.
