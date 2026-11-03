@@ -74,3 +74,22 @@ This is a **separate client-side stale-state path**, not a repeat of the event c
 4. **Executable regression gate:** mock (a) normal completion with observations, (b) upstream `error` after one position, (c) disconnect after one position, (d) immediate connect failure, and (e) zero positions in a full window. Assert only (a) produces a fresh successful snapshot; failures preserve previous bytes and return a failing/nonfresh status; no-data is visibly distinct from a verified zero; recovery clears the warning. Assert the workflow does not commit/publish a partial result and the map does not label retained positions `실시간`.
 
 **Verification boundary:** the source control flow and workflow publish path were read from GitHub. No collector, workflow, UI, test, data file or live deployment was modified or executed by this review. The owner must implement and test the fix before claiming resolution.
+
+
+## P1 SkySea flight-trail consistency — overlapping asynchronous loads (2026-11-03 KST)
+
+**Distinct from stale-marker and collector failure cases above.** Verified by static review of `main/skysea.html` blob `c5eb5a12c6ea02759ce768fdd5af3de537e1982d` and the `aircraft.json` / `tracks.json` schemas. The inspected snapshots both end at `2026-11-03T00:45:57Z`; **no actual mismatched production trail is claimed**.
+
+- `load()` (near line 308) updates `last = j` for a changed aircraft `updated`, starts an independent asynchronous `fetch('data/skysea/tracks.json?...')`, and immediately calls `all()`. The callback later assigns global `trk = t` and calls `drawP()` **without checking that the response still belongs to the current `last.updated`**.
+- Reproducible ordering by inspection: aircraft snapshot A starts tracks request A; newer snapshot B starts request B; request B completes first and paints B trails; request A completes last and replaces `trk` with A trails while `last` still points to B. A stale request can therefore overwrite newer history even if both HTTP requests succeeded.
+- `drawP()` caches a signature using `(trk && trk.t)` (the timestamps array coerced to a string), not a version of the full track payload. If a corrected `tracks.json` has the same `t` array but different `p` coordinates, `drawP()` can return early and leave old trails until another unrelated redraw trigger. This is a second, independent cache-invalidation gap.
+- The present `tracks.json` schema has `t` (six observation timestamps) and `p` (per-aircraft indexed coordinates); `aircraft.json` has `updated`. They have no explicit shared release ID. A timestamp check is necessary but not always sufficient to prove the two files were produced together.
+
+**Owner fix (Claude/UI, coordinated with lead/data):**
+
+1. Give each aircraft refresh a monotonically increasing request generation. On each tracks response, discard it unless its generation still matches the current aircraft snapshot; cancel superseded requests when practical. Do not clear a newer valid trail on a failed older request.
+2. Validate the tracks schema and last observation timestamp against the selected aircraft snapshot before publishing it to the renderer. If the pair cannot be established as coherent, show aircraft without a trail and a visible “이동 경로 확인 불가” status rather than connecting unrelated points. A collector-provided shared snapshot ID would make this stronger.
+3. Invalidate `drawP` whenever the **accepted tracks payload** changes, not only when `t` changes. A generation/version counter incremented on accepted replacement is preferable to expensive deep serialization.
+4. **Executable browser regression:** mock deferred A/B aircraft and tracks responses; resolve B tracks before A and assert B remains visible. Test a same-`t`, changed-`p` replacement, a malformed/mismatched tracks response, one failed tracks fetch with a valid aircraft snapshot, and normal recovery. Assert no cross-snapshot trail, no false live status, and no console errors in portrait 375×812 and landscape 844×390.
+
+**Verification boundary:** This is an additional actionable release-review contract committed to the existing #471 documentation PR. It does not change `skysea.html`, source JSON, collectors, CI or the deployed site. The race is source-level plausible; an instrumented browser reproduction and the actual fix remain with the UI/data owners. Do not mark the bug resolved by merging documentation alone.
