@@ -38,6 +38,12 @@ Use the **original House Clerk PDF** for a claim about a particular filing. Show
 
 These are open PRs, not implemented protections on `main` until explicitly merged, tested, and observed in a successful deployment. Do not merge without owner approval; coordinate with the UI, data, and CI owners.
 
+### 2026-11-03 22:58 UTC CI evidence — do not confuse test success with a green job
+
+- On [security/research run #41648957821](https://github.com/91cleaner/money-tracker/actions/runs/41648957821) for PR #475 commit `43acd97a`, **144 Python tests passed**, but the overall job **failed** in “Build and validate public artifact”. The log shows `prepare-public-pages.py` completed (94,372 generated files) and the next obsolete assertion `grep -q 'href="intel-lab.html"' .public-pages/index.html` returned exit code 1. The current country-selection `index.html` does not have that link. This is a **CI contract failure**, not evidence that the public artifact build itself failed or that Pages was safely released.
+- The same SHA's [command-room smoke #41648957860](https://github.com/91cleaner/money-tracker/actions/runs/41648957860) **passed**. These independent checks must not be collapsed into a single “CI passed” status.
+- [PR #403](https://github.com/91cleaner/money-tracker/pull/403) proposes replacing the obsolete grep with a shared entry smoke. Until owner-approved integration, the failing job remains **red**; do not bypass or mark it green by deleting assertions. After #403/#412/#458 integration, require the **same merged SHA** to pass security, generated-artifact privacy/PTR chronology, Pages HTML/JS smoke, and post-publish JSON parity. Check `js/mobile.js` in the generated artifact and on the live site. An Actions Pages success by itself does **not** prove those pending protections are deployed.
+
 ## 5. Read-only verification before announcing a release
 
 From the exact checkout to be deployed, use:
