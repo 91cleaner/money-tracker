@@ -93,3 +93,32 @@ A new read of the current `main` `world-intelligence/index.html` (blob `9894f00a
 | Correct same-route load | Open A and resolve all valid data without switching routes | A's own PTR and price widgets render with source and date caveats |
 
 **Verification boundary:** this is a source-level control-flow review, not a reproduced browser exploit or a shipped code fix. Require controlled-Promise Chromium tests plus mobile portrait/landscape checks and a post-merge Pages artifact check. Per `docs/AI-ROLES.md`, GPT changes review docs only; Claude owns the screen code. No `data/`, collector, workflow or UI files were changed in this addendum.
+
+
+## 2026-11-04 01:55 KST follow-up: four more asynchronous briefing widgets can attach evidence to the wrong map route (P1)
+
+**New, distinct source-level finding** on current `main/world-intelligence/index.html` blob `9894f00a096ed5063c49f939e5e129f3bc12eb49`. This extends issue #394 and this existing PR; it does **not** assert a reproduced iPhone bug, a corrupt source record, or an implemented mitigation.
+
+The earlier review covered `#mtTrades` and `#mtPrice`. Four *other* `window.mtAfterShow` extensions have the same route-ownership gap:
+
+1. **`mt-insight-js` / `#mtKey` (around lines 551–559):** captures `m = mtCur()`, awaits `../data/us/insights.json` on the first load, then appends `o.lines` and `o.flags` without verifying that `m` is still the active route. A slower company A insight can appear in company B's or a bill's briefing.
+2. **`mt-krpol-js` / `#mtKrPol` (around lines 560–567):** awaits the ticker-country lookup, Korean policy JSON, and `mtApi.loadIdx()` before inserting Korean legislation and government announcements. Switching to B or closing the briefing during any await does not cancel A's DOM writes.
+3. **`mt-wh-js` / `#mtWH` (around lines 584 onward):** awaits `ld()` and `mtApi.loadIdx()` before rendering U.S. presidential/Federal Register items. The shared box is cleared on entry, but the old A continuation can append after B clears it.
+4. **`mt-cpol-js` / `#mtCPol` (around lines 604 onward):** awaits ticker-country data, a country policy JSON and `mtApi.loadIdx()` before appending Japanese/Taiwanese/Chinese/EU government records. A's country/source/date label can consequently be shown alongside B's map journey.
+
+**Shared lifecycle cause:** each extension saves `const prev=window.mtAfterShow` and calls `prev&&prev()` **without awaiting the returned Promise**. Therefore nested async widgets may run concurrently, even when one `mtAfterShow` invocation appears sequential. `box.replaceChildren()` is only an initial clear, not an ownership barrier. A fix limited to the outer search-submit Promise, or to the already reviewed PTR/price widgets, leaves these four writers exposed.
+
+**UI-owner acceptance (Claude):** create one brief/route generation token shared by *every* `mtAfterShow` extension; advance it on route start, new question, World/reset and Close. Capture `ticker` and generation before loading, recheck after **each await** and immediately before every append, and return silently when stale. Keep asynchronous source loads parallel if desired, but explicitly define and enforce render ownership rather than relying on `await prev()` alone. Synchronously clear/retire all six boxes (`#mtTrades`, `#mtPrice`, `#mtKey`, `#mtKrPol`, `#mtWH`, `#mtCPol`) when route ownership changes. Failed loads must not be presented as verified zero records; preserve source URLs and disclosure-date caveats.
+
+**Deterministic regression gate (browser with controlled fetch/Promise resolution):**
+
+| Case | Sequence | Required result |
+| --- | --- | --- |
+| Delayed insights | Company A starts; stall insights JSON; switch to company B or bill; release A | No A insight, flags, or source links in B |
+| Delayed KR policy | Korean company A starts; stall `ticker-country` / policy / index at each await; switch to B | No A Korean bill or source label in B |
+| Delayed US government | A starts; stall `whitehouse.json` or index; switch to B | No A Federal Register entries under B |
+| Delayed foreign policy | Taiwan/Japan company A starts; stall country JSON or index; switch to unrelated B | No A foreign policy records or wrong-country attribution |
+| World/Close while pending | Start A, reset or close before each pending response resolves | All six boxes remain cleared and no stale content reappears |
+| Same-route success | All valid requests resolve for A without a route change | All eligible A widgets render with correct country, source and dates |
+
+Run the existing question→choice→map flow at mobile portrait 375×667 and landscape 844×390 as well as desktop. **Verification status:** inspected GitHub source and compared with this review; no production browser, iPhone, CI, UI code, data collector, or Pages release was changed by this addendum. The repository is public; real-time executed congressional trades and generative AI analysis remain **NOT CONNECTED**. Owner-approved UI fix, targeted test pass and deployed-SHA smoke are required before marking #394 resolved.
