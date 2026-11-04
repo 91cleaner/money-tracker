@@ -10,7 +10,7 @@ var st=document.createElement('style');st.textContent=
 document.head.appendChild(st);
 box.style.marginTop='8px';
 box.innerHTML='<button type="button" class="btn prime" id="warOpen" style="width:100%;min-height:44px">세계 역사 기록<span style="display:block;font-weight:400;font-size:11px;opacity:.75">전쟁 · 국경 · 대리전 · 핵실험 · 기지 · 재난</span></button><div id="warCat" hidden></div><div id="warList" hidden></div><div id="warSub" hidden></div>';
-var D,geo,map,P,lay,grp,c,i=0,tm=null,prev,SC={a:'#b03a2e',b:'#1f4e8c',c:'#d98a1a',d:'#8a8a8a'};
+var D,geo,map,P,lay,grp,c,i=0,tm=null,prev,SC={a:'#b03a2e',b:'#1f4e8c',c:'#d98a1a',d:'#8a8a8a',e:'#e0a39b',f:'#8fb0dc'};
 var dt=function(d){var a=d.split('-');if(!a[1])return a[0];return a[0]+'년 '+(+a[1])+'월'+(a[2]?' '+(+a[2])+'일':'')};
 var CATS=[['war','전쟁','data/warrec.json'],['border','국경 변화','data/hist_border.json'],['proxy','냉전 대리전','data/hist_proxy.json'],['nuke','핵실험','data/hist_nuke.json'],['base','군사기지','data/hist_base.json'],['disaster','재난','data/hist_disaster.json']],DS={},cat='war';
 function get(k){if(DS[k])return Promise.resolve(DS[k]);var u=CATS.filter(function(x){return x[0]==k})[0][2];return fetch(u).then(r=>r.json()).then(function(j){DS[k]=j;return j})}
