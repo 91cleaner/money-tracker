@@ -5,6 +5,7 @@ Only public-filing fields are kept: member name/id, party/state, ticker, asset, 
 amount range, trade date, filed date, original filing link, and price move since trade (r, rspy).
 The full data/us/trades.json stays private (never shipped to Pages)."""
 import json
+import math
 import os
 import sys
 import tempfile
@@ -12,6 +13,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 KEEP = ("id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "verification")
+# Public review states only. Never publish arbitrary internal reviewer notes.
+PUBLIC_VERIFICATION = frozenset({"machine_parsed_requires_review", "verified_against_original", "unknown"})
 
 
 def build(out_path):
@@ -31,6 +34,14 @@ def build(out_path):
         if not isinstance(t, dict):
             raise ValueError(f"Invalid trade row at index {index}; refusing to publish")
         row = {k: t[k] for k in KEEP if k in t and t[k] is not None}
+        # The public allowlist covers field names; reject nested values that
+        # could smuggle private ledger metadata under an approved key.
+        for key, value in row.items():
+            if (isinstance(value, bool) or not isinstance(value, (str, int, float))
+                    or (isinstance(value, float) and not math.isfinite(value))):
+                raise ValueError(f"Invalid public trade field {key!r} at index {index}; refusing to publish")
+        if "verification" in row and row["verification"] not in PUBLIC_VERIFICATION:
+            row["verification"] = "unknown"
         if isinstance(row.get("asset"), str) and len(row["asset"]) > 120:
             row["asset"] = row["asset"][:119] + "…"
         info = mem.get(t.get("id")) or {}
@@ -56,7 +67,7 @@ def build(out_path):
             prefix=f".{out.name}.", suffix=".tmp", delete=False,
         ) as handle:
             temporary = Path(handle.name)
-            json.dump(payload, handle, ensure_ascii=False, separators=(",", ":"))
+            json.dump(payload, handle, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temporary, out)
