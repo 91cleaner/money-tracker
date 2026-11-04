@@ -25,7 +25,9 @@ if exposed:
     sys.exit("Unexpected files in public artifact: " + ", ".join(exposed))
 import json
 pub = json.loads((root / "data/us/trades_public.json").read_text(encoding="utf-8"))
-allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
+# The public builder intentionally retains a source-review warning per trade.
+# Keep this in sync with scripts/build_public_trades.py KEEP.
+allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state", "verification"}
 extra = sorted({k for t in pub.get("trades", []) for k in t} - allowed)
 if extra or set(pub) - {"updated", "source", "note", "trades"}:
     sys.exit("trades_public.json has non-public fields: " + ", ".join(extra or sorted(set(pub))))
