@@ -9,11 +9,13 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-KEEP = ("id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy")
+KEEP = ("id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "verification")
 
 
 def build(out_path):
     src = json.loads((ROOT / "data/us/trades.json").read_text(encoding="utf-8"))
+    if not isinstance(src, dict) or not isinstance(src.get("trades"), list):
+        raise ValueError("trades.json must contain a trades array; refusing to publish an empty snapshot")
     mem = {}
     try:
         m = json.loads((ROOT / "data/us/members.json").read_text(encoding="utf-8")).get("members", [])
@@ -23,7 +25,9 @@ def build(out_path):
     except FileNotFoundError:
         pass
     rows = []
-    for t in src.get("trades", []):
+    for index, t in enumerate(src["trades"]):
+        if not isinstance(t, dict):
+            raise ValueError(f"Invalid trade row at index {index}; refusing to publish")
         row = {k: t[k] for k in KEEP if k in t and t[k] is not None}
         if isinstance(row.get("asset"), str) and len(row["asset"]) > 120:
             row["asset"] = row["asset"][:119] + "…"
