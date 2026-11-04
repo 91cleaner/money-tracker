@@ -38,8 +38,18 @@
 **규칙: 하나 끝나면 묻지 말고 바로 다음 항목 진행, 끝난 항목은 [x] 체크하고 한 줄 결과 적기, 목록이 다 끝나면 실장에게 보고.**
 GPT는 문서와 문구만 고칩니다. `data/`와 수집기는 건드리지 않습니다. 모든 작업은 브랜치 → PR로 합니다.
 
-- [ ] 1. usa-command / world-intelligence 화면 영어 문구 다듬기 제안 (PR)
-- [ ] 2. 투자 조언처럼 보일 수 있는 표현(사라/팔아라 등) 전체 점검 목록 만들기
-- [ ] 3. 최근 클로드 PR 코드 리뷰 메모
-- [ ] 4. 매각용 한 장 소개서 초안 (`docs/PITCH.md`)
-- [ ] 5. README 영어판
+- [x] 1. usa-command / world-intelligence 화면 영어 문구 다듬기 **제안 작성** — [PR #217](https://github.com/91cleaner/money-tracker/pull/217) (검토 대기; 실제 화면 반영과 별개).
+- [x] 2. 투자 조언처럼 보일 수 있는 표현 **점검 목록 작성** — [PR #217](https://github.com/91cleaner/money-tracker/pull/217), 후속 [PR #352](https://github.com/91cleaner/money-tracker/pull/352) (제안 단계).
+- [x] 3. 최근 클로드 PR **코드 리뷰 메모 작성** — [모바일 PR #363](https://github.com/91cleaner/money-tracker/pull/363), [데이터 기준일 PR #358](https://github.com/91cleaner/money-tracker/pull/358) (코드 수정·실기기 검증은 담당자 몫).
+- [x] 4. 매각용 한 장 소개서 **초안 작성** — [PR #266](https://github.com/91cleaner/money-tracker/pull/266)의 `docs/PITCH.md` (2026-10-30 기준 main에는 아직 없음).
+- [x] 5. README 영어판 **존재 확인 및 사실관계 수정안 작성** — [PR #299](https://github.com/91cleaner/money-tracker/pull/299) (main의 영문 README는 진입점 설명이 오래됨).
+
+**상태 기준 (2026-10-30 22:58 KST):** 위 [x]는 GPT 담당 **초안/리뷰 작업 완료**만 뜻합니다. 연결된 PR이 열려 있으면 **미병합·미배포**이고, 제품 기능·데이터 오류가 해결됐다는 뜻이 아닙니다. 같은 문서·기능의 새 PR을 반복 만들지 말고 해당 기존 PR을 먼저 확인하세요.
+
+### 현재 담당자 후속 작업 (GPT는 직접 수정하지 않음)
+
+- **실장 / FEC PAC 정확성 P1:** [#382](https://github.com/91cleaner/money-tracker/issues/382). 10/30 수집 로그 `updated 2 total 11 rate_limited True`인데, 커밋에서는 기업별 값이 그대로이고 `updated` 날짜만 전진했습니다. 429·부분 수집·실제 데이터 기준일을 구분해야 합니다.
+- **실장 / 미국 하원 PTR:** [PR #327](https://github.com/91cleaner/money-tracker/pull/327)의 수집 실패 차단 및 PDF 재시도 검증. 공식 공시는 지연 신고이며 실시간 체결 확인이 아닙니다.
+- **클로드 / 정당별 지도:** [PR #338](https://github.com/91cleaner/money-tracker/pull/338)은 개인정보·자료 권리 확인 전 **병합 금지**. 검토 [#344](https://github.com/91cleaner/money-tracker/pull/344).
+- **클로드 / 모바일:** [PR #363](https://github.com/91cleaner/money-tracker/pull/363)의 375/390px 가로모드 후보 패널 QA 및 닫기 동작 확인.
+- **실장 / 운영:** 저장소는 현재 `public`이며 Pages 성공은 비공개 인증 Worker 배포 검증이 아닙니다. 생성형 AI 분석 **미연결**, 실시간 체결 피드 **미연결**.
