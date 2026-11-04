@@ -11,7 +11,7 @@ A green **Deploy MONEY TRACKER Pages** workflow alone is **not** evidence that t
 | Identity | Record source commit SHA, Pages deployment run URL, artifact SHA/digest, and published URL. Compare published critical files with the **artifact from that run** (not just HTML text markers). | **NOT VERIFIED** if SHA/artifact parity is unknown |
 | Public exposure | Run `python3 scripts/prepare-public-pages.py` and `python3 scripts/check-pages-artifact.py`. Inspect the public output for private Worker code, credentials, unpublished trade ledgers, and newly added `data/` files; an allowlist is safer than an extension-only filter. | **BLOCK** on any unexpected exposure |
 | Syntax/security | Run `node --test worker/private-api.test.mjs` and `python3 -m unittest discover -s tests`; require the security/research GitHub Actions job on the candidate SHA to pass. | **BLOCK** on failure or skipped required checks |
-| Map/navigation | Run `python3 scripts/check_world_intelligence.py`. In a real browser verify country entry, the flat map, visible search input in KO and EN, question → candidates → selection → map fly-to, back/close, and a second query. | **NOT VERIFIED** if only static markers pass |
+| Map/navigation | Run `node --test tests/usa-map-smoke.test.cjs` for the active US command map. `python3 scripts/check_world_intelligence.py` also checks the world-intelligence redirect and data contracts, but does **not** test browser navigation. In a real browser verify country entry, the flat map, visible search input in KO and EN, question → candidates → selection → map fly-to, back/close, and a second query. | **NOT VERIFIED** if only static markers pass |
 | Mobile | In an iPhone-size landscape viewport verify keyboard focus does not zoom or cover the question field, map remains pan/zoomable, close/back remain visible, options can reopen, and no panels obscure the entire map. Repeat KO/EN. | **NOT VERIFIED** without browser evidence |
 | Public trade evidence | Validate JSON schema, impossible/future dates, empty/malformed response handling, original House Clerk PDF URLs, and date semantics (transaction date vs notice date vs filing date). A successful HTTP 200 with malformed JSON is **ERROR**, never zero trades. | **BLOCK** if data errors are presented as verified 0 |
 | Bill → member → company | Show the official bill identifier and status, separately sourced member and disclosed trade, and company identifier. A shared date or sector is **not** evidence of causation or misconduct. | **UNVERIFIED** when any link lacks a source |
@@ -22,6 +22,7 @@ A green **Deploy MONEY TRACKER Pages** workflow alone is **not** evidence that t
 
 ```sh
 node --test worker/private-api.test.mjs
+node --test tests/usa-map-smoke.test.cjs
 python3 -m unittest discover -s tests
 python3 scripts/check_world_intelligence.py
 python3 scripts/prepare-public-pages.py
@@ -29,6 +30,19 @@ python3 scripts/check-pages-artifact.py
 ```
 
 These commands exist on `main` as of 2026-11-04. They do **not** replace real browser tests, a public-file allowlist audit, or post-deploy parity checks. Do not run the artifact builder on a working tree with uncommitted data changes and then attribute the result to a different SHA.
+
+## Verified CI blockers — 2026-11-04 16:55 KST
+
+These are **observed failures**, not a new deployment claim. Candidate: [PR #479](https://github.com/91cleaner/money-tracker/pull/479), commit `3c5ea7bfe28a05d4ab4c09ba1aaf02cb6d8a9570`.
+
+| Workflow / run | Verified result | Concrete next action |
+| --- | --- | --- |
+| [Command room smoke](https://github.com/91cleaner/money-tracker/actions/runs/41788852981) | PASS | Keep the candidate SHA and evidence |
+| [Verify world intelligence](https://github.com/91cleaner/money-tracker/actions/runs/41788852863) | PASS; static checks only | Do not substitute for browser evidence |
+| [Map smoke](https://github.com/91cleaner/money-tracker/actions/runs/41788852904) | **FAIL**: 8/9 tests passed; country-selection assertion in `tests/usa-map-smoke.test.cjs:68` still checks `korea.html` for the old entry links | Update the test to read the **current** root `index.html` and assert its real `korea.html` / `world-intelligence/` links. Preserve a separate Korean-screen test if needed; do not weaken the route assertion |
+| [Security/research](https://github.com/91cleaner/money-tracker/actions/runs/41788852864) | **FAIL** after 147 Python tests passed: the artifact step still requires `href="intel-lab.html"` in `.public-pages/index.html`, which the current country chooser does not contain | Replace the stale grep with checks for the actual root entry links, then retain all private-file exclusion and artifact validation checks |
+
+The current `index.html` contains `href="korea.html"` and `href="world-intelligence/"`. These failures are reproducible **CI contract drift**, not evidence that the active browser experience works. PR #403 targets entry-check repair, but remains unmerged; avoid duplicating its implementation. After it is rebased, require **both failed workflows to pass on the merged candidate SHA**, then verify the published artifact and mobile KO/EN flow. Do not merge #479 on the strength of its two green checks alone.
 
 ## Outstanding integration, not yet a release claim
 
