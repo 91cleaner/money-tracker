@@ -60,6 +60,19 @@ The current `index.html` contains `href="korea.html"` and `href="world-intellige
 
 **Regression:** add a mixed-chamber fixture with one `c:'h'` and one `c:'s'` row plus a missing/unknown chamber row. Assert that A shows only the House row or B labels both chambers correctly, and unknown chamber data never silently becomes House. Run on the candidate SHA alongside existing malformed-JSON and empty-data tests. Per `docs/AI-ROLES.md`, UI implementation belongs to the UI owner; this is a review gate only.
 
+## P1 integration check — public PTR builder PR #504 (2026-11-04 22:55 KST)
+
+**Observed on [PR #504](https://github.com/91cleaner/money-tracker/pull/504), HEAD `3091675aa21c97c5ca5642138963a32947e13b65`:** the branch adds schema rejection for missing/non-array `trades`, rejects non-object trade rows, preserves the per-record `verification` field, and includes three Python regression cases. This is a **branch-only fix**, not an applied production protection. On `main`, `scripts/build_public_trades.py` still iterates `src.get("trades", [])` and omits `verification` from its public field allowlist.
+
+| Evidence on #504 HEAD | Outcome / interpretation |
+| --- | --- |
+| [Security/research run 41834035528](https://github.com/91cleaner/money-tracker/actions/runs/41834035528) | **FAIL** in artifact step: legacy `grep -q 'href="intel-lab.html"' .public-pages/index.html`; the preceding Python suite completed. Failure does **not** establish that the new PTR tests failed. |
+| [Map smoke run 41834035525](https://github.com/91cleaner/money-tracker/actions/runs/41834035525) | **FAIL**: country-entry assertion in `tests/usa-map-smoke.test.cjs`; 8/9 subtests passed. |
+| [Command room run 41834035569](https://github.com/91cleaner/money-tracker/actions/runs/41834035569) | **PASS**, but only its own check scope. |
+| GitHub PR status | Mergeability and check conclusions are separate: a branch can be mergeable yet **unstable/red**. Do not merge on mergeability alone. |
+
+**Actionable integration order (avoid duplicate patches):** (1) rebase/repair existing [#403](https://github.com/91cleaner/money-tracker/pull/403) for the two stale entry assertions and rerun both CI workflows; (2) rebase [#504](https://github.com/91cleaner/money-tracker/pull/504) on the accepted CI base and verify the *actual generated* `trades_public.json` preserves warnings while rejecting malformed input without overwriting the last good artifact; (3) integrate [#479](https://github.com/91cleaner/money-tracker/pull/479) with explicit House/Senate scoping and the same generated public fixture; (4) verify the merged SHA and published Pages artifact, then KO/EN mobile landscape. All merges require owner approval. **No live trade execution feed or generative AI connection has been verified.**
+
 ## Reporting vocabulary
 
 - **PASS**: tested on named SHA, evidence URL/log retained.
