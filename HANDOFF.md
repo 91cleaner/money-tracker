@@ -4,9 +4,13 @@
 
 작업 전 docs/AI-ROLES.md 먼저 읽기
 
-# 세금추적단 인수인계 (HANDOFF)
+# MONEY TRACKER 인수인계 (HANDOFF)
 
-다른 사람(또는 다른 AI)이 이 사이트를 이어서 고칠 때 먼저 읽는 문서. 2026-10-28 기준(10-25판을 현재 상태로 고침).
+다른 사람(또는 다른 AI)이 이 사이트를 이어서 고칠 때 먼저 읽는 문서. 2026-10-28 작성, 2026-10-31 진입점·역할·배포 위험 정정.
+
+> **최신 작업 규칙 우선:** [`docs/AI-ROLES.md`](docs/AI-ROLES.md)가 현재 역할 분담의 기준이다. 클로드=세계지도/UI, 실장=수집기·`data/`, GPT=문서·문구·제2 검토. 동일 파일 동시 수정 금지. **브랜치 → PR → 사용자 승인 전 병합 금지.** 아래의 과거 작업 이력은 현재 담당 권한을 뜻하지 않는다.
+>
+> **공개 상태:** GitHub 저장소와 GitHub Pages는 `public`이다(2026-10-31 GitHub 확인). 미국 관제실/JS/공개 JSON을 운영자 전용으로 보호했다고 주장하면 안 된다. 생성형 AI 분석·실시간 체결 데이터는 **미연결**. House PTR은 지연 공개 신고이며 실거래 체결 확인이 아니다.
 
 - 사이트: https://91cleaner.github.io/money-tracker/ (GitHub Pages, 공개 저장소 `main`)
 - 운영자 X: @KORROOFTOPARODY ("청소부"). 후원은 X 구독 링크만 씀(계좌번호·실명 노출 금지).
@@ -24,16 +28,18 @@
 - `main`에 직접 올리지 말고: 브랜치 → PR → squash merge. (10/25~27에는 PR 없이 직접 올린 커밋이 많았음)
 - 바꾼 JS/CSS는 HTML의 `?v=날짜시각` 숫자를 올려야 사람들 폰에 바로 반영됨.
 - 수집 결과(`data/`)는 각 워크플로가 직접 `main`에 커밋한다. 로컬에서 `git reset --hard origin/main` 하면 안 올린 수정이 날아가니 조심.
-- **배포가 두 가지 동시에 돈다**: GitHub 기본 "pages build and deployment"(봇 데이터 커밋도 배포) + `deploy-pages.yml`("Deploy MONEY TRACKER Pages", 사람 push 때만, `scripts/prepare-public-pages.py` 허용 목록). 나중에 끝난 쪽이 이긴다. 새 확장자·폴더를 쓰면 허용 목록에도 넣을 것(10/28 `.geojson`·`.csv` 누락으로 국회 지도 경계선이 사라지던 문제 수정). 어느 쪽을 남길지는 Settings → Pages → Source에서 운영자가 정할 일(봇 커밋은 기본 배포만 반영됨).
+- **공개 배포 보안 게이트:** GitHub 기본 `pages build and deployment`와 별도 `deploy-pages.yml`의 실행 기록이 공존한다. 기본 Pages 배포 성공만으로 `scripts/prepare-public-pages.py` 허용 목록이 적용되었다고 **판정하지 않는다**. Settings → Pages → Source 및 실제 배포 아티팩트/공개 URL을 확인하고, 허용 목록을 거치지 않는 배포 경로가 있다면 운영자가 차단해야 한다. 공개 금지 파일이 HTTP 200/206으로 제공되지 않는지 배포 후 검사한다. `.geojson`·`.csv` 등 허용 목록 누락은 지도 누락도 일으킬 수 있다. **배포 성공 ≠ 접근 통제 성공**.
 
 ## 화면(파일)
 | 파일 | 내용 |
 |---|---|
-| `index.html` | 첫 화면(국가 선택): 🔍 통합 검색, 내 지역, 🇰🇷 대한민국(national), 🇺🇸 미국(usa-command), 지역 계약·예산(contracts) |
+| `index.html` | **미국 우선 진입 리다이렉트**: `world-intelligence/?lang=en`으로 이동(명시적 `lang`·쿼리·해시 보존). 국가 선택 화면 아님. |
 | `search.html` + `assets/se-core.js`(로직), `assets/se.js`(화면) | **통합 검색**: 계약·업체·기관·시·의원·법안·국민연금 종목을 저장된 기록으로 검색, 돈을 낸 시/기관 → 받은 업체 흐름 그림, 주별 금액, 나라장터 원문 링크. 서버·AI 없음 |
 | `contracts.html` | 지역 계약 홈. 맨 위 `assets/hometrack.js`(검색창·🇰🇷 국회 추적실·🇺🇸 미국 관제실 입구), `today.js`(오늘의 영수증), 지도 |
 | `national.html` + `assets/polgame.js` | 🇰🇷 국회 추적실(게임형 지도). 의원·출장·레이더·순위·대통령·찾기, 팔로우, 1:1 비교, 확대 시 위성 사진. `?mp=이름`으로 의원 바로 열기 |
-| `usa-command.html` + `assets/mt-*.js` | 🇺🇸 미국 관제실 미리보기(한국어, AI·실시간 시세 OFF). `us.html`과 `world-intelligence/index.html`은 여기로 넘기기 |
+| `world-intelligence/index.html` | **현재 미국/세계지도 관제실 본 화면**. 질문→후보 선택→지도 추적, 지연 공개 자료. AI 분석·실시간 체결 미연결. | 
+| `us.html` | `world-intelligence/`로 리다이렉트. |
+| `usa-command.html` + `assets/mt-*.js` | 기존 미국 관제실 화면/자산. **현재 기본 진입점이 아니므로** 변경 전 실제 참조 경로 확인. |
 | `nps.html`, `bid.html`, `news.html`, `rank.html`, `spend.html`, `vendor.html`(`?v=업체ID`), `city.html`(`?c=시`) | 국민연금·입찰·뉴스·순위·업체·시 |
 | `assets/nav.js` | 아래(폰)·위(PC) 탭: 🇰🇷 국회 · 🇺🇸 USA · 우리 동네 · 국민연금 · 뉴스 · 더보기(🔍 통합 검색 포함) |
 | `sw.js`, `manifest.webmanifest`, `assets/pwa.js` | 홈 화면 앱(network-first) |
@@ -65,7 +71,7 @@
 - 미국: `data/us/members.json`, `trades.json`(공시 원장, `trades` 배열), `house-ptr-candidates.json`(기계 추출 후보, `records`), `ptr-crosschecks.json`, `bills.json`(+`fetched`)
 
 ## 남은 일
-1. **미국 비공개**: 운영자만 보게 하려면 GitHub Pages 밖(로그인 있는 호스팅)으로 옮겨야 함. 지금은 화면에서만 내림.
+1. **미국 비공개(P0)**: 저장소와 Pages 모두 공개. 운영자만 보게 하려면 인증된 별도 호스팅과 공개 Pages의 미국 경로 차단이 필요함. `docs/US_PRIVATE_ACCESS.md`의 익명·인증·기존 URL 접근 테스트 전에는 비공개 완료로 표시 금지.
 2. **상원 주식 거래**: 상원 eFD가 GitHub Actions 접속을 막음(403). 다른 출처 필요.
 3. **DART 키 등록** → 국민연금 대량보유 공시 칸이 켜짐.
 4. **배포 한 가지로 정리**(위 "배포가 두 가지" 참고).
