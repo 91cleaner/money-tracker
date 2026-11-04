@@ -24,13 +24,28 @@ exposed = [name for name in forbidden if (root / name).exists()] + (["data/us/hi
 if exposed:
     sys.exit("Unexpected files in public artifact: " + ", ".join(exposed))
 import json
-pub = json.loads((root / "data/us/trades_public.json").read_text(encoding="utf-8"))
+import math
+
+
+def reject_non_json_number(value):
+    raise ValueError(f"Non-standard JSON numeric constant: {value}")
+
+
+pub = json.loads(
+    (root / "data/us/trades_public.json").read_text(encoding="utf-8"),
+    parse_constant=reject_non_json_number,
+)
 if (not isinstance(pub, dict) or not isinstance(pub.get("trades"), list)
         or any(not isinstance(row, dict) for row in pub["trades"])):
     sys.exit("trades_public.json must contain a trades array of objects")
-if any("verification" in row and not isinstance(row["verification"], str)
+if any(any(isinstance(value, bool) or not isinstance(value, (str, int, float))
+           or (isinstance(value, float) and not math.isfinite(value))
+           for value in row.values()) for row in pub["trades"]):
+    sys.exit("trades_public.json rows must contain only finite scalar values")
+public_review_states = {"machine_parsed_requires_review", "verified_against_original", "unknown"}
+if any("verification" in row and row["verification"] not in public_review_states
        for row in pub["trades"]):
-    sys.exit("trades_public.json verification must be a string")
+    sys.exit("trades_public.json verification must be an approved public status")
 # The public builder intentionally retains a source-review warning per trade.
 # Keep this in sync with scripts/build_public_trades.py KEEP.
 allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state", "verification"}
