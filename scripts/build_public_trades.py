@@ -5,7 +5,9 @@ Only public-filing fields are kept: member name/id, party/state, ticker, asset, 
 amount range, trade date, filed date, original filing link, and price move since trade (r, rspy).
 The full data/us/trades.json stays private (never shipped to Pages)."""
 import json
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,7 +47,22 @@ def build(out_path):
     }
     out = Path(out_path)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    # Publish only after a complete, durable write. A disk/write failure must
+    # not truncate the last known-good public snapshot.
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=out.parent,
+            prefix=f".{out.name}.", suffix=".tmp", delete=False,
+        ) as handle:
+            temporary = Path(handle.name)
+            json.dump(payload, handle, ensure_ascii=False, separators=(",", ":"))
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, out)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
     return len(rows)
 
 
