@@ -6,6 +6,8 @@ amount range, trade date, filed date, original filing link, and price move since
 The full data/us/trades.json stays private (never shipped to Pages)."""
 import json
 import math
+import re
+from datetime import datetime
 import os
 import sys
 import tempfile
@@ -15,6 +17,22 @@ ROOT = Path(__file__).resolve().parents[1]
 KEEP = ("id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "verification")
 # Public review states only. Never publish arbitrary internal reviewer notes.
 PUBLIC_VERIFICATION = frozenset({"machine_parsed_requires_review", "verified_against_original", "unknown"})
+PUBLIC_SOURCE = "Official STOCK Act disclosures (see original filing links)"
+PUBLIC_NOTE = "Public summary of official STOCK Act filings. Amounts are ranges; r = stock price move since trade, not member profit."
+
+
+def validated_updated(value):
+    """Only bounded ISO dates/timestamps can leave the private ledger."""
+    if value is None:
+        return None
+    if (not isinstance(value, str) or len(value) > 40
+            or not re.fullmatch(r"\d{4}-\d{2}-\d{2}(?:[T ][0-9:.+\-]+Z?)?", value)):
+        raise ValueError("Invalid updated metadata; refusing to publish")
+    try:
+        datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ValueError("Invalid updated metadata; refusing to publish") from exc
+    return value
 
 
 def build(out_path):
@@ -51,9 +69,9 @@ def build(out_path):
             row["state"] = info["state"]
         rows.append(row)
     payload = {
-        "updated": src.get("updated"),
-        "source": src.get("source"),
-        "note": "Public summary of official STOCK Act filings. Amounts are ranges; r = stock price move since trade, not member profit.",
+        "updated": validated_updated(src.get("updated")),
+        "source": PUBLIC_SOURCE,
+        "note": PUBLIC_NOTE,
         "trades": rows,
     }
     out = Path(out_path)
