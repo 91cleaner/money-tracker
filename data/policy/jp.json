@@ -1,10 +1,70 @@
 {
-"updated": "2026-11-03",
+"updated": "2026-11-04",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "egov:550004441",
+"kind": "pubcomment",
+"t": "「肥料に係る安定供給確保を図るための取組方針の一部改正（案）」についての意見及び情報の募集について",
+"d": "2026-11-04",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=550004441&Mode=0",
+"dept": "農林水産省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 농림수산성(농업·수산 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Agriculture, Forestry and Fisheries: public comment request on a draft rule"
+},
+{
+"id": "egov:195260076",
+"kind": "pubcomment",
+"t": "環境物品等の調達の推進に関する基本方針（改定案）に対する意見募集（パブリック・コメント）について",
+"d": "2026-11-04",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260076&Mode=0",
+"dept": "環境省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
+},
+{
+"id": "egov:195260077",
+"kind": "pubcomment",
+"t": "「廃棄物の処理及び清掃に関する法律施行規則の一部を改正する省令案」に対する御意見の募集（パブリック・コメント）について",
+"d": "2026-11-04",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260077&Mode=0",
+"dept": "環境省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
+},
+{
+"id": "egov:395085002",
+"kind": "pubcomment",
+"t": "国家公務員等の旅費支給規程の一部を改正する省令案に対する意見募集について",
+"d": "2026-11-04",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=395085002&Mode=0",
+"dept": "財務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 재무성(나라 살림 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Finance: public comment request on a draft rule"
+},
+{
+"id": "egov:155260278",
+"kind": "pubcomment",
+"t": "「建築ライフサイクルDX戦略（案）」の策定に向けた意見募集",
+"d": "2026-11-04",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155260278&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
 {
 "id": "kantei:b1cffaec825b",
 "kind": "news",
