@@ -21,6 +21,9 @@
     for (i = 0; i < c.length; i++) a.push(L.latLng(lls[i].lat, c[i] + off));
     raw = true; try { pl.call(this, a, res, pb); } finally { raw = false; }
   };
+  /* 타일 격자는 원래 경도(-180~180) 기준으로 감싸야 해요 */
+  var rg = L.GridLayer.prototype._resetGrid;
+  L.GridLayer.prototype._resetGrid = function () { raw = true; try { return rg.apply(this, arguments); } finally { raw = false; } };
   var ct = L.LatLngBounds.prototype.contains;
   L.LatLngBounds.prototype.contains = function (o) {
     if (ct.call(this, o)) return true;
