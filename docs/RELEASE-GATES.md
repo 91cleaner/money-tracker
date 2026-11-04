@@ -101,3 +101,23 @@ The current `index.html` contains `href="korea.html"` and `href="world-intellige
 **Regression acceptance:** Mock 2025 success / 2026 failure and the reverse, with preexisting cached rows. Assert the public JSON retains an affected-year failure indicator and the browser visibly marks **partial coverage**, while valid records remain browseable with provenance. Verify both years succeed → no partial warning; both fail → collector exits nonzero and the prior file is not re-stamped; malformed response → explicit error. Exercise the **actual generated JSON** rather than a hand-written `records`-only fixture. Do not merge UI changes without the Claude owner and repository owner approval per `docs/AI-ROLES.md`.
 
 **Scope of this change:** Review/release documentation only; neither the collector nor the UI nor production has been modified or verified by this section.
+
+
+## P1 public PTR metadata escape hatch — 2026-11-05 02:54 KST
+
+**New review of [PR #504](https://github.com/91cleaner/money-tracker/pull/504), HEAD `332c45f`:** `scripts/build_public_trades.py` copies `src.get("updated")` and `src.get("source")` verbatim into the public top-level JSON. The tightened `scripts/check-pages-artifact.py` validates scalar values **only inside `trades[]`**, and checks top-level **field names**, not their value types or public provenance. Therefore a malformed source metadata object can pass the current public-artifact gate, even though nested private fields inside trade rows are now rejected.
+
+**Minimal synthetic reproduction for the data/security owner (not a claim that current production data contains secrets):**
+
+```json
+{"updated":"2026-11-05","source":{"private_notes":"DO_NOT_PUBLISH"},"trades":[]}
+```
+
+With this input, the branch builder serializes `source` as an object. The artifact checker sees an allowed top-level key and an empty valid `trades` list; none of its new scalar/verification checks rejects the nested `source.private_notes`. An ordinary `source` string is not itself evidence of a leak; this is a **fail-open schema boundary** that can expose future unexpected metadata in a public Pages artifact.
+
+**Required fix before merging #504 (data/security owner, not GPT's documentation branch):**
+1. Emit a fixed, reviewed public source label or strict enumerated source identifier; never copy arbitrary private source metadata. Validate `updated` as a bounded ISO date/time string (or publish an explicit unavailable state) rather than copying arbitrary JSON.
+2. At the Pages artifact gate, require `updated`, `source`, and `note` to have explicitly approved scalar types/values; reject nested top-level objects and arrays. Validate both producer **and** consumer so a manually modified artifact cannot bypass the builder.
+3. Add an end-to-end regression: source metadata object/array and an unexpectedly long/private source string must not be published; valid metadata and a legitimate empty `trades: []` remain accepted. Check the **generated artifact**, not a hand-crafted sanitized output.
+
+**Release decision:** **BLOCK #504** until the top-level metadata contract is tested on its latest head. The [security run on `332c45f`](https://github.com/91cleaner/money-tracker/actions/runs/41873674584) passed 152 Python tests but failed a separate legacy country-entry assertion; those tests do not cover this metadata case. [Command room](https://github.com/91cleaner/money-tracker/actions/runs/41873674419) passed, [map smoke](https://github.com/91cleaner/money-tracker/actions/runs/41873674359) failed. No live Pages artifact, iPhone landscape behavior, live executions, or generative AI connectivity was verified by this review. Keep #403's CI repair separate and do not merge any PR without owner approval.
