@@ -2,21 +2,25 @@
 (function(){
 var box=document.getElementById('warBox');if(!box)return;
 var st=document.createElement('style');st.textContent=
-'#warList{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}#warList[hidden],#warSub[hidden]{display:none}'+
+'#warList{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}#warList[hidden],#warSub[hidden],#warCat[hidden]{display:none}#warCat{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}#warCat button{min-height:40px;border:1px solid #6b5a2e;border-radius:10px;background:#141004;color:#fff6e0;font:700 14px system-ui,sans-serif;cursor:pointer}#warCat button.on{background:#3a300d}#usP .bk{font-size:12px;margin:4px 0;line-height:1.5}#usP .bk i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}'+
 '#warSub{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}'+
 '#warList button,#warSub button{min-height:44px;border:1px solid #2e6b4a;border-radius:10px;background:#04140b;color:#e8fff0;font:600 14px system-ui,sans-serif;text-align:left;padding:6px 10px;cursor:pointer}'+
 '#warList button.on{background:#0d3a22}#usP .x{min-width:76px;height:50px;font-size:17px;font-weight:800}#usP .hd{padding-right:90px}.wr-tz{filter:drop-shadow(0 0 3px rgba(0,0,0,.6))}.wr-bang{animation:wrBang 1.4s ease-out forwards}@keyframes wrBang{0%{stroke-opacity:1;fill-opacity:.8}100%{stroke-opacity:0;fill-opacity:0}}.wr-cr{animation:wrCr 2s ease-in-out infinite}@keyframes wrCr{50%{fill-opacity:.12}}#warSub small{display:block;opacity:.65;font-weight:400;font-size:11px}'+
 '#usP .lg{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;margin:4px 0}#usP .lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}#usP .ss a{font-size:12px;color:#0645ad;word-break:break-all}';
 document.head.appendChild(st);
 box.style.marginTop='8px';
-box.innerHTML='<button type="button" class="btn prime" id="warOpen" style="width:100%;min-height:44px">나라별 전쟁 기록<span style="display:block;font-weight:400;font-size:11px;opacity:.75">1850년 이후</span></button><div id="warList" hidden></div><div id="warSub" hidden></div>';
+box.innerHTML='<button type="button" class="btn prime" id="warOpen" style="width:100%;min-height:44px">세계 역사 기록<span style="display:block;font-weight:400;font-size:11px;opacity:.75">전쟁 · 국경 변화 · 냉전 대리전</span></button><div id="warCat" hidden></div><div id="warList" hidden></div><div id="warSub" hidden></div>';
 var D,geo,map,P,lay,grp,c,i=0,tm=null,prev,SC={a:'#b03a2e',b:'#1f4e8c',c:'#d98a1a'};
 var dt=function(d){var a=d.split('-');return a[0]+'년 '+(+a[1])+'월'+(a[2]?' '+(+a[2])+'일':'')};
-function load(){return Promise.all([D||fetch('data/warrec.json').then(r=>r.json()).then(j=>D=j),geo||fetch('data/national/countries-110m.geojson').then(r=>r.json()).then(j=>geo=j)])}
+var CATS=[['war','전쟁','data/warrec.json'],['border','국경 변화','data/hist_border.json'],['proxy','냉전 대리전','data/hist_proxy.json']],DS={},cat='war';
+function get(k){if(DS[k])return Promise.resolve(DS[k]);var u=CATS.filter(function(x){return x[0]==k})[0][2];return fetch(u).then(r=>r.json()).then(function(j){DS[k]=j;return j})}
+function load(){return Promise.all([get('war').then(function(W){var by={};W.countries.forEach(function(x){x.wars.forEach(function(w){by[w.id]=w})});return get(cat).then(function(j){j.countries.forEach(function(x){x.wars=x.wars.map(function(w){if(!w.ref)return w;var o=Object.assign({},by[w.ref]);o.bk=w.bk;o.bks=w.bks;return o})});D=j})}),geo||fetch('data/national/countries-110m.geojson').then(r=>r.json()).then(j=>geo=j)])}
 var L1=document.getElementById('warList'),L2=document.getElementById('warSub');
-document.getElementById('warOpen').onclick=function(){if(!L1.hidden){L1.hidden=true;L2.hidden=true;return}
- load().then(function(){L1.innerHTML=D.countries.map(function(x,k){return '<button type="button" data-k="'+k+'">'+x.n+'</button>'}).join('');
-  L1.querySelectorAll('button').forEach(function(b){b.onclick=function(){L1.querySelectorAll('button').forEach(function(o){o.classList.toggle('on',o==b)});sub(+b.dataset.k)}});L1.hidden=false})};
+document.getElementById('warOpen').onclick=function(){if(!L1.hidden){L1.hidden=true;L2.hidden=true;document.getElementById('warCat').hidden=true;return}
+ var K=document.getElementById('warCat');K.innerHTML=CATS.map(function(x){return '<button type="button" data-c="'+x[0]+'"'+(x[0]==cat?' class="on"':'')+'>'+x[1]+'</button>'}).join('');K.hidden=false;
+ K.querySelectorAll('button').forEach(function(b){b.onclick=function(){cat=b.dataset.c;K.querySelectorAll('button').forEach(function(o){o.classList.toggle('on',o==b)});L2.hidden=true;fill()}});fill()};
+function fill(){load().then(function(){L1.innerHTML=D.countries.map(function(x,k){return '<button type="button" data-k="'+k+'">'+x.n+'</button>'}).join('');
+  L1.querySelectorAll('button').forEach(function(b){b.onclick=function(){L1.querySelectorAll('button').forEach(function(o){o.classList.toggle('on',o==b)});sub(+b.dataset.k)}});L1.hidden=false})}
 function sub(k){var C=D.countries[k];L2.innerHTML=C.wars.length?C.wars.map(function(w,j){return '<button type="button" data-j="'+j+'">'+w.label+'<small>'+w.yr+'</small></button>'}).join(''):'<div class="sub">준비 중이에요</div>';
  L2.querySelectorAll('button').forEach(function(b){b.onclick=function(){start(C,+b.dataset.j)}});L2.hidden=false}
 function iso(f){var p=f.properties||{},a=p.ISO_A2;if(!a||a=='-99')a=p.ISO_A2_EH;return a=='CN-TW'?'TW':a}
@@ -29,7 +33,7 @@ function start(C,j){map=window.mtMap;if(!map)return;if(P)stop();var o=document.q
  P=document.createElement('div');P.id='usP';document.body.appendChild(P);
  var lg=c.sides.map(function(s){return '<span><i style="background:'+SC[s[0]]+'"></i>'+s[1]+'</span>'}).join('');
  P.innerHTML='<button class="x">닫기</button><div class="hd"><div class="yr">'+c.yr.slice(0,4)+'</div><div><div class="cn">'+c.n+'</div><div style="font-size:12px;color:#555">'+c.yr+'</div></div></div>'+
- '<div class="lg">'+lg+'</div><div class="sd"></div><div class="cap"></div><div class="ss"></div><div class="ph" hidden></div>'+
+ '<div class="lg">'+lg+'</div>'+(c.bk?'<div class="bk"><b>지원 세력</b>'+c.bk.map(function(s){return '<div><i style="background:'+SC[s[0]]+'"></i>'+s[1]+'</div>'}).join('')+(c.bks||[]).map(function(s){return '<div>출처: <a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a></div>'}).join('')+'</div>':'')+'<div class="sd"></div><div class="cap"></div><div class="ss"></div><div class="ph" hidden></div>'+
  '<div class="ctl"><button class="pv">이전</button><button class="pp">멈춤</button><button class="nx">다음</button><input type="range" min="0" max="'+(c.steps.length-1)+'" value="0"></div>'+
  '<button class="mb">자세히 보기</button><div class="mo"><div>'+c.more+'</div><div style="margin-top:4px">출처</div>'+c.src.map(function(s){return '<div>· <a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a></div>'}).join('')+'<div style="margin-top:4px;color:#666">'+D.note+'</div></div>';
  P.querySelector('.x').onclick=stop;P.querySelector('.pv').onclick=function(){pause();show(i-1)};P.querySelector('.nx').onclick=function(){pause();show(i+1)};
