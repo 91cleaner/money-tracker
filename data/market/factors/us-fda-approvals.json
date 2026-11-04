@@ -2,11 +2,25 @@
  "source": "U.S. FDA · openFDA Drugs@FDA API",
  "source_url": "https://open.fda.gov/apis/drug/drugsfda/",
  "note": "최근 약 13개월 신규 허가(ORIG·AP). novel=true는 신규 분자(제출 분류 TYPE 1). 기업·주가 영향은 단정하지 않음. openFDA는 FDA 공식 웹사이트와 지연·차이가 있을 수 있음.",
- "collected_at": "2026-11-03T23:45:04.932Z",
- "since": "2025-09-29",
- "count": 247,
- "novel_count": 17,
+ "collected_at": "2026-11-04T23:47:09.555Z",
+ "since": "2025-09-30",
+ "count": 239,
+ "novel_count": 23,
  "items": [
+  {
+   "application": "ANDA214747",
+   "sponsor": "ALEMBIC",
+   "brand": [
+    "VENETOCLAX"
+   ],
+   "ingredients": [
+    "VENETOCLAX"
+   ],
+   "date": "2026-10-28",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214747"
+  },
   {
    "application": "ANDA221213",
    "sponsor": "ZYDUS LIFESCIENCES",
@@ -120,6 +134,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218930"
   },
   {
+   "application": "ANDA219542",
+   "sponsor": "AJANTA PHARMA LTD",
+   "brand": [
+    "TOFACITINIB CITRATE"
+   ],
+   "ingredients": [
+    "TOFACITINIB CITRATE"
+   ],
+   "date": "2026-10-19",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219542"
+  },
+  {
    "application": "NDA219455",
    "sponsor": "FRESENIUS MEDCL CARE",
    "brand": [
@@ -146,20 +174,6 @@
    "novel": false,
    "class_code": "TYPE 2",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219456"
-  },
-  {
-   "application": "NDA221033",
-   "sponsor": "ROSEMONT PHARMS",
-   "brand": [
-    "YULZETY"
-   ],
-   "ingredients": [
-    "RIVAROXABAN"
-   ],
-   "date": "2026-10-16",
-   "novel": false,
-   "class_code": "TYPE 3",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=221033"
   },
   {
    "application": "ANDA220010",
@@ -232,20 +246,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220139"
   },
   {
-   "application": "ANDA221049",
-   "sponsor": "HUMANWELL PURACAP",
-   "brand": [
-    "LUBIPROSTONE"
-   ],
-   "ingredients": [
-    "LUBIPROSTONE"
-   ],
-   "date": "2026-10-14",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=221049"
-  },
-  {
    "application": "NDA221154",
    "sponsor": "AICURIS ANTI-INFECT",
    "brand": [
@@ -274,6 +274,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219007"
   },
   {
+   "application": "ANDA220181",
+   "sponsor": "GLAND",
+   "brand": [
+    "LEVOCARNITINE"
+   ],
+   "ingredients": [
+    "LEVOCARNITINE"
+   ],
+   "date": "2026-09-30",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220181"
+  },
+  {
    "application": "ANDA212778",
    "sponsor": "UPSHER SMITH LABS",
    "brand": [
@@ -286,20 +300,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=212778"
-  },
-  {
-   "application": "NDA220963",
-   "sponsor": "RARE THYROID",
-   "brand": [
-    "EMCITATE"
-   ],
-   "ingredients": [
-    "TIRATRICOL"
-   ],
-   "date": "2026-09-28",
-   "novel": true,
-   "class_code": "TYPE 1",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220963"
   },
   {
    "application": "ANDA213131",
@@ -328,20 +328,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218485"
-  },
-  {
-   "application": "ANDA221041",
-   "sponsor": "ANTHEA PHARMA",
-   "brand": [
-    "KETOROLAC TROMETHAMINE"
-   ],
-   "ingredients": [
-    "KETOROLAC TROMETHAMINE"
-   ],
-   "date": "2026-09-25",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=221041"
   },
   {
    "application": "BLA761481",
@@ -414,6 +400,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=222000"
   },
   {
+   "application": "ANDA218560",
+   "sponsor": "ZYDUS LIFESCIENCES",
+   "brand": [
+    "TRETINOIN"
+   ],
+   "ingredients": [
+    "TRETINOIN"
+   ],
+   "date": "2026-09-15",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218560"
+  },
+  {
    "application": "NDA218525",
    "sponsor": "CURIUM",
    "brand": [
@@ -442,20 +442,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761463"
   },
   {
-   "application": "ANDA220136",
-   "sponsor": "ZHEJIANG JUTAI PHARM",
-   "brand": [
-    "BRIVARACETAM"
-   ],
-   "ingredients": [
-    "BRIVARACETAM"
-   ],
-   "date": "2026-09-08",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220136"
-  },
-  {
    "application": "ANDA219478",
    "sponsor": "BPI LABS",
    "brand": [
@@ -468,6 +454,20 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219478"
+  },
+  {
+   "application": "NDA220210",
+   "sponsor": "IONIS PHARMS INC",
+   "brand": [
+    "ZANVASTRO"
+   ],
+   "ingredients": [
+    "ZILGANERSEN SODIUM"
+   ],
+   "date": "2026-09-03",
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220210"
   },
   {
    "application": "ANDA219429",
@@ -498,22 +498,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219037"
-  },
-  {
-   "application": "ANDA220938",
-   "sponsor": "ORBICULAR PHARM TECH",
-   "brand": [
-    "NEOMYCIN AND POLYMYXIN B SULFATES AND HYDROCORTISONE"
-   ],
-   "ingredients": [
-    "HYDROCORTISONE",
-    "NEOMYCIN SULFATE",
-    "POLYMYXIN B SULFATE"
-   ],
-   "date": "2026-08-27",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220938"
   },
   {
    "application": "NDA220106",
@@ -574,20 +558,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219519"
   },
   {
-   "application": "ANDA218869",
-   "sponsor": "PHARMOBEDIENT",
-   "brand": [
-    "TICAGRELOR"
-   ],
-   "ingredients": [
-    "TICAGRELOR"
-   ],
-   "date": "2026-08-20",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218869"
-  },
-  {
    "application": "ANDA220118",
    "sponsor": "BIOCON PHARMA",
    "brand": [
@@ -602,6 +572,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220118"
   },
   {
+   "application": "BLA761508",
+   "sponsor": "REGENERON PHARMACEUTICALS, INC",
+   "brand": [
+    "PASATRU"
+   ],
+   "ingredients": [
+    "GARETOSMAB-GRTS"
+   ],
+   "date": "2026-08-19",
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761508"
+  },
+  {
    "application": "ANDA213878",
    "sponsor": "MSN",
    "brand": [
@@ -614,20 +598,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=213878"
-  },
-  {
-   "application": "ANDA218873",
-   "sponsor": "MSN",
-   "brand": [
-    "PITOLISANT HYDROCHLORIDE"
-   ],
-   "ingredients": [
-    "PITOLISANT HYDROCHLORIDE"
-   ],
-   "date": "2026-08-14",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218873"
   },
   {
    "application": "ANDA219460",
@@ -658,20 +628,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218524"
   },
   {
-   "application": "NDA221075",
-   "sponsor": "BRISTOL MYERS SQUIBB",
-   "brand": [
-    "ZENBEXUS"
-   ],
-   "ingredients": [
-    "IBERDOMIDE HYDROCHLORIDE"
-   ],
-   "date": "2026-08-13",
-   "novel": true,
-   "class_code": "TYPE 1",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=221075"
-  },
-  {
    "application": "ANDA220110",
    "sponsor": "AUROBINDO PHARMA LTD",
    "brand": [
@@ -698,20 +654,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=221892"
-  },
-  {
-   "application": "ANDA219996",
-   "sponsor": "GLAND",
-   "brand": [
-    "ATROPINE SULFATE"
-   ],
-   "ingredients": [
-    "ATROPINE SULFATE"
-   ],
-   "date": "2026-07-31",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219996"
   },
   {
    "application": "ANDA220017",
@@ -840,6 +782,34 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214338"
   },
   {
+   "application": "ANDA214364",
+   "sponsor": "GLAND",
+   "brand": [
+    "SUGAMMADEX SODIUM"
+   ],
+   "ingredients": [
+    "SUGAMMADEX SODIUM"
+   ],
+   "date": "2026-07-28",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214364"
+  },
+  {
+   "application": "ANDA214368",
+   "sponsor": "MSN",
+   "brand": [
+    "SUGAMMADEX SODIUM"
+   ],
+   "ingredients": [
+    "SUGAMMADEX SODIUM"
+   ],
+   "date": "2026-07-28",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214368"
+  },
+  {
    "application": "ANDA215575",
    "sponsor": "QILU PHARM HAINAN",
    "brand": [
@@ -868,21 +838,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219448"
   },
   {
-   "application": "NDA219990",
-   "sponsor": "VIATRIS SPECIALTY",
-   "brand": [
-    "GWYN LO"
-   ],
-   "ingredients": [
-    "ETHINYL ESTRADIOL",
-    "NORELGESTROMIN"
-   ],
-   "date": "2026-07-28",
-   "novel": false,
-   "class_code": "TYPE 5",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219990"
-  },
-  {
    "application": "ANDA213087",
    "sponsor": "CIPLA",
    "brand": [
@@ -896,6 +851,34 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=213087"
+  },
+  {
+   "application": "BLA761497",
+   "sponsor": "EMERGE BIOSCIENCE PTE. LTD.",
+   "brand": [
+    "GARZULYS"
+   ],
+   "ingredients": [
+    "INSULIN ASPART-FSAN"
+   ],
+   "date": "2026-07-24",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761497"
+  },
+  {
+   "application": "ANDA220196",
+   "sponsor": "HISUN PHARM HANGZHOU",
+   "brand": [
+    "FLUDARABINE PHOSPHATE"
+   ],
+   "ingredients": [
+    "FLUDARABINE PHOSPHATE"
+   ],
+   "date": "2026-07-23",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220196"
   },
   {
    "application": "ANDA220076",
@@ -912,18 +895,18 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220076"
   },
   {
-   "application": "ANDA220943",
-   "sponsor": "BIOCON PHARMA",
+   "application": "NDA220185",
+   "sponsor": "NUVALENT",
    "brand": [
-    "TOPIRAMATE"
+    "JIDEYTRO"
    ],
    "ingredients": [
-    "TOPIRAMATE"
+    "ZIDESAMTINIB"
    ],
    "date": "2026-07-22",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220943"
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220185"
   },
   {
    "application": "ANDA218495",
@@ -954,6 +937,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=221805"
   },
   {
+   "application": "ANDA210725",
+   "sponsor": "APOTEX",
+   "brand": [
+    "AFATINIB DIMALEATE"
+   ],
+   "ingredients": [
+    "AFATINIB DIMALEATE"
+   ],
+   "date": "2026-07-14",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210725"
+  },
+  {
    "application": "ANDA218472",
    "sponsor": "HUMANWELL PURACAP",
    "brand": [
@@ -968,34 +965,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218472"
-  },
-  {
-   "application": "BLA761445",
-   "sponsor": "SANOFI-AVENTIS U.S. LLC",
-   "brand": [
-    "SARCLISA ESCENA"
-   ],
-   "ingredients": [
-    "ISATUXIMAB-IRFC"
-   ],
-   "date": "2026-07-09",
-   "novel": false,
-   "class_code": "TYPE 3",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761445"
-  },
-  {
-   "application": "ANDA216740",
-   "sponsor": "BAXTER HLTHCARE CORP",
-   "brand": [
-    "EPHEDRINE SULFATE"
-   ],
-   "ingredients": [
-    "EPHEDRINE SULFATE"
-   ],
-   "date": "2026-07-08",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216740"
   },
   {
    "application": "ANDA213892",
@@ -1024,6 +993,20 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220173"
+  },
+  {
+   "application": "BLA761486",
+   "sponsor": "VERA THERAPEUTICS INC.",
+   "brand": [
+    "TRUTAKNA"
+   ],
+   "ingredients": [
+    "ATACICEPT-VYMJ"
+   ],
+   "date": "2026-07-07",
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761486"
   },
   {
    "application": "ANDA219464",
@@ -1068,18 +1051,18 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218035"
   },
   {
-   "application": "ANDA220972",
-   "sponsor": "SCIEGEN PHARMS",
+   "application": "BLA761530",
+   "sponsor": "VIRIDIAN THERAPEUTICS INC",
    "brand": [
-    "TOFACITINIB CITRATE"
+    "LUMVOA"
    ],
    "ingredients": [
-    "TOFACITINIB CITRATE"
+    "VELIGROTUG-VVZE"
    ],
-   "date": "2026-06-25",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220972"
+   "date": "2026-06-26",
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761530"
   },
   {
    "application": "ANDA217238",
@@ -1152,18 +1135,18 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219470"
   },
   {
-   "application": "ANDA218875",
-   "sponsor": "PHARMAZONE",
+   "application": "NDA215960",
+   "sponsor": "GLAXOSMITHKLINE",
    "brand": [
-    "ATOMOXETINE HYDROCHLORIDE"
+    "UTEBZI"
    ],
    "ingredients": [
-    "ATOMOXETINE HYDROCHLORIDE"
+    "TEBIPENEM PIVOXIL HYDROBROMIDE"
    ],
-   "date": "2026-06-16",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218875"
+   "date": "2026-06-17",
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215960"
   },
   {
    "application": "ANDA213155",
@@ -1194,19 +1177,32 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217596"
   },
   {
-   "application": "ANDA209624",
-   "sponsor": "MSN",
+   "application": "ANDA219052",
+   "sponsor": "TARO",
    "brand": [
-    "BOSUTINIB",
-    "BOSUTINIB MONOHYDRATE"
+    "PERAMPANEL"
    ],
    "ingredients": [
-    "BOSUTINIB MONOHYDRATE"
+    "PERAMPANEL"
    ],
-   "date": "2026-06-12",
+   "date": "2026-06-15",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=209624"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219052"
+  },
+  {
+   "application": "ANDA215552",
+   "sponsor": "YAOPHARMA CO LTD",
+   "brand": [
+    "TOFACITINIB CITRATE"
+   ],
+   "ingredients": [
+    "TOFACITINIB CITRATE"
+   ],
+   "date": "2026-06-09",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215552"
   },
   {
    "application": "ANDA218900",
@@ -1223,20 +1219,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218900"
   },
   {
-   "application": "ANDA211000",
-   "sponsor": "AMNEAL",
-   "brand": [
-    "MACITENTAN"
-   ],
-   "ingredients": [
-    "MACITENTAN"
-   ],
-   "date": "2026-06-08",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=211000"
-  },
-  {
    "application": "ANDA216410",
    "sponsor": "RADIOMEDIX",
    "brand": [
@@ -1249,34 +1231,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216410"
-  },
-  {
-   "application": "ANDA215485",
-   "sponsor": "ADAPTIS",
-   "brand": [
-    "RAMELTEON"
-   ],
-   "ingredients": [
-    "RAMELTEON"
-   ],
-   "date": "2026-06-04",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215485"
-  },
-  {
-   "application": "ANDA209633",
-   "sponsor": "BRECKENRIDGE",
-   "brand": [
-    "TOFACITINIB CITRATE"
-   ],
-   "ingredients": [
-    "TOFACITINIB CITRATE"
-   ],
-   "date": "2026-06-03",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=209633"
   },
   {
    "application": "ANDA218096",
@@ -1293,20 +1247,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218096"
   },
   {
-   "application": "ANDA219395",
-   "sponsor": "SPECGX LLC",
-   "brand": [
-    "TOFACITINIB CITRATE"
-   ],
-   "ingredients": [
-    "TOFACITINIB CITRATE"
-   ],
-   "date": "2026-06-03",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219395"
-  },
-  {
    "application": "ANDA219530",
    "sponsor": "MACLEODS PHARMS",
    "brand": [
@@ -1319,20 +1259,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219530"
-  },
-  {
-   "application": "ANDA220137",
-   "sponsor": "SOMERSET THERAPS LLC",
-   "brand": [
-    "TOFACITINIB CITRATE"
-   ],
-   "ingredients": [
-    "TOFACITINIB CITRATE"
-   ],
-   "date": "2026-06-03",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220137"
   },
   {
    "application": "ANDA213511",
@@ -1361,6 +1287,34 @@
    "novel": false,
    "class_code": "TYPE 2",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761480"
+  },
+  {
+   "application": "ANDA218566",
+   "sponsor": "NEOCUBES PHARMA",
+   "brand": [
+    "MYCOPHENOLATE MOFETIL"
+   ],
+   "ingredients": [
+    "MYCOPHENOLATE MOFETIL"
+   ],
+   "date": "2026-06-01",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218566"
+  },
+  {
+   "application": "ANDA209020",
+   "sponsor": "MSN",
+   "brand": [
+    "OXCARBAZEPINE"
+   ],
+   "ingredients": [
+    "OXCARBAZEPINE"
+   ],
+   "date": "2026-05-29",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=209020"
   },
   {
    "application": "ANDA219529",
@@ -1431,6 +1385,20 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216370"
+  },
+  {
+   "application": "ANDA220104",
+   "sponsor": "MICRO LABS",
+   "brand": [
+    "MIRTAZAPINE"
+   ],
+   "ingredients": [
+    "MIRTAZAPINE"
+   ],
+   "date": "2026-05-19",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220104"
   },
   {
    "application": "ANDA210329",
@@ -1516,6 +1484,20 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217191"
+  },
+  {
+   "application": "ANDA218558",
+   "sponsor": "MICRO LABS",
+   "brand": [
+    "BRIMONIDINE TARTRATE"
+   ],
+   "ingredients": [
+    "BRIMONIDINE TARTRATE"
+   ],
+   "date": "2026-05-07",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218558"
   },
   {
    "application": "ANDA212068",
@@ -1616,20 +1598,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761412"
   },
   {
-   "application": "ANDA213919",
-   "sponsor": "SUN PHARMA CANADA",
-   "brand": [
-    "DOXEPIN HYDROCHLORIDE"
-   ],
-   "ingredients": [
-    "DOXEPIN HYDROCHLORIDE"
-   ],
-   "date": "2026-04-28",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=213919"
-  },
-  {
    "application": "BLA761451",
    "sponsor": "ASTRAZENECA AB",
    "brand": [
@@ -1670,20 +1638,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219409"
-  },
-  {
-   "application": "ANDA219973",
-   "sponsor": "SHUANGCHENG",
-   "brand": [
-    "PANTOPRAZOLE SODIUM"
-   ],
-   "ingredients": [
-    "PANTOPRAZOLE SODIUM"
-   ],
-   "date": "2026-04-22",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219973"
   },
   {
    "application": "ANDA210671",
@@ -1731,18 +1685,46 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220147"
   },
   {
-   "application": "ANDA219013",
-   "sponsor": "EDENBRIDGE PHARMS",
+   "application": "ANDA210386",
+   "sponsor": "AUROBINDO PHARMA LTD",
    "brand": [
-    "ATROPINE SULFATE"
+    "CANAGLIFLOZIN"
    ],
    "ingredients": [
-    "ATROPINE SULFATE"
+    "CANAGLIFLOZIN"
+   ],
+   "date": "2026-04-20",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210386"
+  },
+  {
+   "application": "ANDA219540",
+   "sponsor": "MSN",
+   "brand": [
+    "GLYCEROL PHENYLBUTYRATE"
+   ],
+   "ingredients": [
+    "GLYCEROL PHENYLBUTYRATE"
    ],
    "date": "2026-04-15",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219013"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219540"
+  },
+  {
+   "application": "ANDA220225",
+   "sponsor": "ALEMBIC",
+   "brand": [
+    "METHOTREXATE SODIUM"
+   ],
+   "ingredients": [
+    "METHOTREXATE SODIUM"
+   ],
+   "date": "2026-04-15",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220225"
   },
   {
    "application": "ANDA206371",
@@ -1791,6 +1773,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216363"
   },
   {
+   "application": "ANDA218557",
+   "sponsor": "MICRO LABS",
+   "brand": [
+    "OFLOXACIN"
+   ],
+   "ingredients": [
+    "OFLOXACIN"
+   ],
+   "date": "2026-04-08",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218557"
+  },
+  {
    "application": "ANDA220033",
    "sponsor": "HIKMA",
    "brand": [
@@ -1817,20 +1813,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218509"
-  },
-  {
-   "application": "ANDA211312",
-   "sponsor": "SANDOZ",
-   "brand": [
-    "DAPAGLIFLOZIN"
-   ],
-   "ingredients": [
-    "DAPAGLIFLOZIN"
-   ],
-   "date": "2026-04-06",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=211312"
   },
   {
    "application": "ANDA220016",
@@ -1904,6 +1886,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219489"
   },
   {
+   "application": "BLA761485",
+   "sponsor": "DENALI THERAPEUTICS INC.",
+   "brand": [
+    "AVLAYAH"
+   ],
+   "ingredients": [
+    "TIVIDENOFUSP ALFA-EKNM"
+   ],
+   "date": "2026-03-24",
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761485"
+  },
+  {
    "application": "ANDA217607",
    "sponsor": "AUROBINDO PHARMA LTD",
    "brand": [
@@ -1916,20 +1912,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217607"
-  },
-  {
-   "application": "ANDA219987",
-   "sponsor": "MACLEODS PHARMS",
-   "brand": [
-    "MEXILETINE HYDROCHLORIDE"
-   ],
-   "ingredients": [
-    "MEXILETINE HYDROCHLORIDE"
-   ],
-   "date": "2026-03-23",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219987"
   },
   {
    "application": "ANDA208959",
@@ -1958,20 +1940,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=212430"
-  },
-  {
-   "application": "ANDA219991",
-   "sponsor": "FRESENIUS KABI USA",
-   "brand": [
-    "EPHEDRINE SULFATE"
-   ],
-   "ingredients": [
-    "EPHEDRINE SULFATE"
-   ],
-   "date": "2026-03-19",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219991"
   },
   {
    "application": "ANDA220071",
@@ -2016,32 +1984,32 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220149"
   },
   {
-   "application": "ANDA219985",
-   "sponsor": "AUROBINDO PHARMA LTD",
+   "application": "ANDA218984",
+   "sponsor": "SOMERSET THERAPS LLC",
    "brand": [
-    "CITALOPRAM HYDROBROMIDE"
+    "ACAMPROSATE CALCIUM"
    ],
    "ingredients": [
-    "CITALOPRAM HYDROBROMIDE"
+    "ACAMPROSATE CALCIUM"
    ],
-   "date": "2026-03-13",
+   "date": "2026-03-16",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219985"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218984"
   },
   {
-   "application": "ANDA219997",
-   "sponsor": "SANDOZ",
+   "application": "ANDA219054",
+   "sponsor": "XGEN PHARMS",
    "brand": [
-    "MESALAMINE"
+    "ERIBULIN MESYLATE"
    ],
    "ingredients": [
-    "MESALAMINE"
+    "ERIBULIN MESYLATE"
    ],
-   "date": "2026-03-10",
+   "date": "2026-03-16",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219997"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219054"
   },
   {
    "application": "ANDA216808",
@@ -2100,32 +2068,18 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220124"
   },
   {
-   "application": "ANDA218427",
-   "sponsor": "APOTEX",
+   "application": "ANDA219556",
+   "sponsor": "EPIC PHARMA LLC",
    "brand": [
-    "RIVAROXABAN"
+    "OXCARBAZEPINE"
    ],
    "ingredients": [
-    "RIVAROXABAN"
+    "OXCARBAZEPINE"
    ],
    "date": "2026-03-02",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218427"
-  },
-  {
-   "application": "ANDA219981",
-   "sponsor": "CAPLIN",
-   "brand": [
-    "DESMOPRESSIN ACETATE"
-   ],
-   "ingredients": [
-    "DESMOPRESSIN ACETATE"
-   ],
-   "date": "2026-02-27",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219981"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219556"
   },
   {
    "application": "NDA220092",
@@ -2157,6 +2111,48 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216852"
+  },
+  {
+   "application": "ANDA216863",
+   "sponsor": "ZYDUS LIFESCIENCES",
+   "brand": [
+    "IVERMECTIN"
+   ],
+   "ingredients": [
+    "IVERMECTIN"
+   ],
+   "date": "2026-02-26",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216863"
+  },
+  {
+   "application": "ANDA220103",
+   "sponsor": "ZYDUS LIFESCIENCES",
+   "brand": [
+    "DAPSONE"
+   ],
+   "ingredients": [
+    "DAPSONE"
+   ],
+   "date": "2026-02-26",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220103"
+  },
+  {
+   "application": "ANDA217278",
+   "sponsor": "ALEMBIC",
+   "brand": [
+    "LAMOTRIGINE"
+   ],
+   "ingredients": [
+    "LAMOTRIGINE"
+   ],
+   "date": "2026-02-25",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217278"
   },
   {
    "application": "ANDA219533",
@@ -2257,6 +2253,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220164"
   },
   {
+   "application": "NDA220201",
+   "sponsor": "AVYXA HOLDINGS",
+   "brand": [
+    "FAVLYXA"
+   ],
+   "ingredients": [
+    "FLUOROURACIL"
+   ],
+   "date": "2026-02-20",
+   "novel": false,
+   "class_code": "TYPE 5",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220201"
+  },
+  {
    "application": "ANDA203276",
    "sponsor": "AVET LIFESCIENCES",
    "brand": [
@@ -2283,90 +2293,74 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=221337"
   },
   {
-   "application": "ANDA210633",
-   "sponsor": "MACLEODS PHARMS",
+   "application": "ANDA220095",
+   "sponsor": "ZYDUS LIFESCIENCES",
    "brand": [
-    "COLCHICINE"
+    "METRONIDAZOLE"
    ],
    "ingredients": [
-    "COLCHICINE"
+    "METRONIDAZOLE"
    ],
    "date": "2026-02-13",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210633"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220095"
   },
   {
-   "application": "ANDA205057",
-   "sponsor": "HIKMA",
+   "application": "BLA761484",
+   "sponsor": "JANSSEN BIOTECH",
    "brand": [
-    "TAPENTADOL HYDROCHLORIDE"
+    "RYBREVANT FASPRO"
    ],
    "ingredients": [
-    "TAPENTADOL HYDROCHLORIDE"
+    "AMIVANTAMAB AND HYALURONIDASE-LPUJ"
    ],
-   "date": "2026-02-10",
+   "date": "2026-02-13",
    "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=205057"
+   "class_code": "TYPE 5",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761484"
   },
   {
-   "application": "ANDA207059",
-   "sponsor": "INVAGEN PHARMS",
+   "application": "NDA220200",
+   "sponsor": "AVYXA HOLDINGS",
    "brand": [
-    "LIDOCAINE"
+    "AVOPEF"
    ],
    "ingredients": [
-    "LIDOCAINE"
+    "ETOPOSIDE"
    ],
-   "date": "2026-02-09",
+   "date": "2026-02-13",
    "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=207059"
+   "class_code": "TYPE 3",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220200"
   },
   {
-   "application": "ANDA207069",
-   "sponsor": "HIKMA",
+   "application": "NDA219474",
+   "sponsor": "ACROTECH BIOPHARMA",
    "brand": [
-    "AZTREONAM"
+    "ADQUEY"
    ],
    "ingredients": [
-    "AZTREONAM"
+    "DIFAMILAST"
    ],
-   "date": "2026-02-05",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=207069"
+   "date": "2026-02-12",
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219474"
   },
   {
-   "application": "ANDA218535",
-   "sponsor": "ALEMBIC",
+   "application": "ANDA217679",
+   "sponsor": "MANKIND PHARMA",
    "brand": [
-    "CARBIDOPA, LEVODOPA AND ENTACAPONE"
+    "TICAGRELOR"
    ],
    "ingredients": [
-    "CARBIDOPA",
-    "ENTACAPONE",
-    "LEVODOPA"
+    "TICAGRELOR"
    ],
-   "date": "2026-02-05",
+   "date": "2026-02-06",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218535"
-  },
-  {
-   "application": "ANDA219984",
-   "sponsor": "GLAND",
-   "brand": [
-    "ZOLEDRONIC ACID"
-   ],
-   "ingredients": [
-    "ZOLEDRONIC ACID"
-   ],
-   "date": "2026-02-05",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219984"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217679"
   },
   {
    "application": "ANDA219999",
@@ -2381,6 +2375,48 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219999"
+  },
+  {
+   "application": "ANDA219472",
+   "sponsor": "EMERGE BIOSCIENCE",
+   "brand": [
+    "SELENIOUS ACID"
+   ],
+   "ingredients": [
+    "SELENIOUS ACID"
+   ],
+   "date": "2026-02-03",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219472"
+  },
+  {
+   "application": "ANDA213165",
+   "sponsor": "CIPLA",
+   "brand": [
+    "LENALIDOMIDE"
+   ],
+   "ingredients": [
+    "LENALIDOMIDE"
+   ],
+   "date": "2026-02-02",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=213165"
+  },
+  {
+   "application": "ANDA215096",
+   "sponsor": "PADAGIS US",
+   "brand": [
+    "ESTRADIOL"
+   ],
+   "ingredients": [
+    "ESTRADIOL"
+   ],
+   "date": "2026-02-02",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215096"
   },
   {
    "application": "NDA221287",
@@ -2426,6 +2462,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=203279"
   },
   {
+   "application": "ANDA217287",
+   "sponsor": "AMNEAL",
+   "brand": [
+    "CUPRIC CHLORIDE"
+   ],
+   "ingredients": [
+    "CUPRIC CHLORIDE"
+   ],
+   "date": "2026-01-26",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217287"
+  },
+  {
    "application": "NDA216395",
    "sponsor": "SOLUBIOMIX",
    "brand": [
@@ -2440,18 +2490,18 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216395"
   },
   {
-   "application": "ANDA213437",
-   "sponsor": "UPSHER SMITH LABS",
+   "application": "ANDA219048",
+   "sponsor": "OMNIVIUM PHARMS",
    "brand": [
-    "OSELTAMIVIR PHOSPHATE"
+    "OLANZAPINE"
    ],
    "ingredients": [
-    "OSELTAMIVIR PHOSPHATE"
+    "OLANZAPINE"
    ],
-   "date": "2026-01-22",
+   "date": "2026-01-23",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=213437"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219048"
   },
   {
    "application": "ANDA210379",
@@ -2468,19 +2518,18 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210379"
   },
   {
-   "application": "ANDA219983",
-   "sponsor": "SOMERSET THERAPS LLC",
+   "application": "BLA761498",
+   "sponsor": "CELLTRION INC",
    "brand": [
-    "SACUBITRIL AND VALSARTAN"
+    "AVTOZMA"
    ],
    "ingredients": [
-    "SACUBITRIL",
-    "VALSARTAN"
+    "TOCILIZUMAB-ANOH"
    ],
-   "date": "2026-01-20",
+   "date": "2026-01-21",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219983"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761498"
   },
   {
    "application": "BLA761027",
@@ -2495,20 +2544,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761027"
-  },
-  {
-   "application": "ANDA217590",
-   "sponsor": "ORBICULAR",
-   "brand": [
-    "LIRAGLUTIDE"
-   ],
-   "ingredients": [
-    "LIRAGLUTIDE"
-   ],
-   "date": "2026-01-14",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217590"
   },
   {
    "application": "ANDA215090",
@@ -2537,6 +2572,20 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217216"
+  },
+  {
+   "application": "ANDA218985",
+   "sponsor": "UMEDICA",
+   "brand": [
+    "VARENICLINE TARTRATE"
+   ],
+   "ingredients": [
+    "VARENICLINE TARTRATE"
+   ],
+   "date": "2026-01-09",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218985"
   },
   {
    "application": "ANDA219511",
@@ -2581,6 +2630,21 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=213514"
   },
   {
+   "application": "ANDA219053",
+   "sponsor": "TARO",
+   "brand": [
+    "ACETAMINOPHEN AND IBUPROFEN"
+   ],
+   "ingredients": [
+    "ACETAMINOPHEN",
+    "IBUPROFEN"
+   ],
+   "date": "2026-01-02",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219053"
+  },
+  {
    "application": "ANDA214741",
    "sponsor": "SCINOPHARM TAIWAN",
    "brand": [
@@ -2623,6 +2687,34 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220152"
   },
   {
+   "application": "ANDA215593",
+   "sponsor": "CIVICA",
+   "brand": [
+    "EPHEDRINE SULFATE"
+   ],
+   "ingredients": [
+    "EPHEDRINE SULFATE"
+   ],
+   "date": "2025-12-23",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215593"
+  },
+  {
+   "application": "ANDA219550",
+   "sponsor": "CHENGDU SHUODE",
+   "brand": [
+    "METHYLENE BLUE"
+   ],
+   "ingredients": [
+    "METHYLENE BLUE"
+   ],
+   "date": "2025-12-23",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219550"
+  },
+  {
    "application": "ANDA220062",
    "sponsor": "BIONPHARMA",
    "brand": [
@@ -2663,20 +2755,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761457"
-  },
-  {
-   "application": "ANDA219401",
-   "sponsor": "ASCENT PHARMS INC",
-   "brand": [
-    "BUPRENORPHINE HYDROCHLORIDE"
-   ],
-   "ingredients": [
-    "BUPRENORPHINE HYDROCHLORIDE"
-   ],
-   "date": "2025-12-18",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219401"
   },
   {
    "application": "BLA761473",
@@ -2735,34 +2813,18 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761458"
   },
   {
-   "application": "ANDA218532",
-   "sponsor": "TORRENT",
+   "application": "BLA761427",
+   "sponsor": "LIB THERAPEUTICS, INC.",
    "brand": [
-    "NILOTINIB",
-    "NILOTINIB HYDROCHLORIDE"
+    "LEROCHOL"
    ],
    "ingredients": [
-    "NILOTINIB",
-    "NILOTINIB HYDROCHLORIDE"
-   ],
-   "date": "2025-12-15",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218532"
-  },
-  {
-   "application": "ANDA217173",
-   "sponsor": "AMNEAL",
-   "brand": [
-    "DEFLAZACORT"
-   ],
-   "ingredients": [
-    "DEFLAZACORT"
+    "LERODALCIBEP-LIGA"
    ],
    "date": "2025-12-12",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217173"
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761427"
   },
   {
    "application": "NDA219491",
@@ -2779,33 +2841,19 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219491"
   },
   {
-   "application": "ANDA220126",
-   "sponsor": "LNK INTL INC",
+   "application": "ANDA214696",
+   "sponsor": "MICRO LABS",
    "brand": [
-    "ACETAMINOPHEN AND IBUPROFEN"
+    "LOPINAVIR AND RITONAVIR"
    ],
    "ingredients": [
-    "ACETAMINOPHEN",
-    "IBUPROFEN"
+    "LOPINAVIR",
+    "RITONAVIR"
    ],
    "date": "2025-12-11",
    "novel": false,
    "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220126"
-  },
-  {
-   "application": "ANDA220132",
-   "sponsor": "PHARMAZONE",
-   "brand": [
-    "DEFERIPRONE"
-   ],
-   "ingredients": [
-    "DEFERIPRONE"
-   ],
-   "date": "2025-12-11",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220132"
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214696"
   },
   {
    "application": "ANDA217597",
@@ -2851,20 +2899,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=211026"
   },
   {
-   "application": "ANDA215465",
-   "sponsor": "KNACK",
-   "brand": [
-    "LEVETIRACETAM"
-   ],
-   "ingredients": [
-    "LEVETIRACETAM"
-   ],
-   "date": "2025-12-02",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215465"
-  },
-  {
    "application": "ANDA218929",
    "sponsor": "KINDOS",
    "brand": [
@@ -2893,64 +2927,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761434"
   },
   {
-   "application": "ANDA207437",
-   "sponsor": "MICRO LABS",
-   "brand": [
-    "OLMESARTAN MEDOXOMIL, AMLODIPINE AND HYDROCHLOROTHIAZIDE"
-   ],
-   "ingredients": [
-    "AMLODIPINE BESYLATE",
-    "HYDROCHLOROTHIAZIDE",
-    "OLMESARTAN MEDOXOMIL"
-   ],
-   "date": "2025-11-24",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=207437"
-  },
-  {
-   "application": "ANDA218425",
-   "sponsor": "APOTEX",
-   "brand": [
-    "CLADRIBINE"
-   ],
-   "ingredients": [
-    "CLADRIBINE"
-   ],
-   "date": "2025-11-24",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218425"
-  },
-  {
-   "application": "ANDA218080",
-   "sponsor": "ADAPTIS",
-   "brand": [
-    "LEVETIRACETAM"
-   ],
-   "ingredients": [
-    "LEVETIRACETAM"
-   ],
-   "date": "2025-11-21",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218080"
-  },
-  {
-   "application": "ANDA210638",
-   "sponsor": "XIROMED",
-   "brand": [
-    "CLOBETASOL PROPIONATE"
-   ],
-   "ingredients": [
-    "CLOBETASOL PROPIONATE"
-   ],
-   "date": "2025-11-20",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210638"
-  },
-  {
    "application": "ANDA209651",
    "sponsor": "HETERO LABS LTD V",
    "brand": [
@@ -2965,6 +2941,20 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=209651"
+  },
+  {
+   "application": "ANDA211418",
+   "sponsor": "MACLEODS PHARMS",
+   "brand": [
+    "DOXYCYCLINE HYCLATE"
+   ],
+   "ingredients": [
+    "DOXYCYCLINE HYCLATE"
+   ],
+   "date": "2025-11-19",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=211418"
   },
   {
    "application": "ANDA218544",
@@ -3009,20 +2999,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220153"
   },
   {
-   "application": "ANDA208579",
-   "sponsor": "APOTEX",
-   "brand": [
-    "RIVAROXABAN"
-   ],
-   "ingredients": [
-    "RIVAROXABAN"
-   ],
-   "date": "2025-11-14",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=208579"
-  },
-  {
    "application": "ANDA217608",
    "sponsor": "AUROBINDO PHARMA LTD",
    "brand": [
@@ -3051,20 +3027,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217633"
   },
   {
-   "application": "ANDA218872",
-   "sponsor": "ACCORD HLTHCARE",
-   "brand": [
-    "LENALIDOMIDE"
-   ],
-   "ingredients": [
-    "LENALIDOMIDE"
-   ],
-   "date": "2025-11-14",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218872"
-  },
-  {
    "application": "ANDA220043",
    "sponsor": "HAINAN POLY PHARM",
    "brand": [
@@ -3077,34 +3039,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220043"
-  },
-  {
-   "application": "BLA761450",
-   "sponsor": "SHANGHAI HENLIUS BIOTECH",
-   "brand": [
-    "POHERDY"
-   ],
-   "ingredients": [
-    "PERTUZUMAB-DPZB"
-   ],
-   "date": "2025-11-13",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761450"
-  },
-  {
-   "application": "ANDA217591",
-   "sponsor": "FRESENIUS KABI USA",
-   "brand": [
-    "DALBAVANCIN HYDROCHLORIDE"
-   ],
-   "ingredients": [
-    "DALBAVANCIN HYDROCHLORIDE"
-   ],
-   "date": "2025-11-10",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=217591"
   },
   {
    "application": "ANDA213518",
@@ -3133,6 +3067,34 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218543"
+  },
+  {
+   "application": "ANDA219046",
+   "sponsor": "RISING",
+   "brand": [
+    "SULFASALAZINE"
+   ],
+   "ingredients": [
+    "SULFASALAZINE"
+   ],
+   "date": "2025-11-04",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219046"
+  },
+  {
+   "application": "ANDA219539",
+   "sponsor": "MSN",
+   "brand": [
+    "IRBESARTAN"
+   ],
+   "ingredients": [
+    "IRBESARTAN"
+   ],
+   "date": "2025-11-04",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219539"
   },
   {
    "application": "BLA761392",
@@ -3181,6 +3143,21 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761404"
   },
   {
+   "application": "BLA761424",
+   "sponsor": "ACCORD BIOPHARMA INC.",
+   "brand": [
+    "OSVYRTI",
+    "JUBEREQ"
+   ],
+   "ingredients": [
+    "denosumab-desu"
+   ],
+   "date": "2025-10-29",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761424"
+  },
+  {
    "application": "BLA761436",
    "sponsor": "BIOCON BIOLOGICS INC",
    "brand": [
@@ -3209,49 +3186,6 @@
    "novel": false,
    "class_code": "EFFICACY",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761439"
-  },
-  {
-   "application": "BLA761444",
-   "sponsor": "SHANGHAI HENLIUS BIOTECH",
-   "brand": [
-    "BILPREVDA",
-    "BILDYOS"
-   ],
-   "ingredients": [
-    "DENOSUMAB-NXXP"
-   ],
-   "date": "2025-10-29",
-   "novel": false,
-   "class_code": "EFFICACY",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761444"
-  },
-  {
-   "application": "ANDA208576",
-   "sponsor": "ALEMBIC",
-   "brand": [
-    "TICAGRELOR"
-   ],
-   "ingredients": [
-    "TICAGRELOR"
-   ],
-   "date": "2025-10-28",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=208576"
-  },
-  {
-   "application": "ANDA208584",
-   "sponsor": "APOTEX",
-   "brand": [
-    "TICAGRELOR"
-   ],
-   "ingredients": [
-    "TICAGRELOR"
-   ],
-   "date": "2025-10-28",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=208584"
   },
   {
    "application": "ANDA208596",
@@ -3295,20 +3229,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218962"
-  },
-  {
-   "application": "NDA221021",
-   "sponsor": "ROBERTS OXYGEN CO INC",
-   "brand": [
-    "CARBON DIOXIDE, USP"
-   ],
-   "ingredients": [
-    "CARBON DIOXIDE"
-   ],
-   "date": "2025-10-25",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=221021"
   },
   {
    "application": "NDA219469",
@@ -3381,6 +3301,16 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215582"
   },
   {
+   "application": "BLA761495",
+   "sponsor": "MERCK SHARP AND DOHME LLC",
+   "brand": [],
+   "ingredients": [],
+   "date": "2025-10-15",
+   "novel": false,
+   "class_code": "TYPE 9- BLA",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=761495"
+  },
+  {
    "application": "ANDA216792",
    "sponsor": "L PERRIGO CO",
    "brand": [
@@ -3396,20 +3326,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216792"
   },
   {
-   "application": "ANDA219406",
-   "sponsor": "ACCORD HLTHCARE",
-   "brand": [
-    "CLOMIPHENE CITRATE"
-   ],
-   "ingredients": [
-    "CLOMIPHENE CITRATE"
-   ],
-   "date": "2025-10-03",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219406"
-  },
-  {
    "application": "ANDA220042",
    "sponsor": "ZYDUS LIFESCIENCES",
    "brand": [
@@ -3422,20 +3338,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220042"
-  },
-  {
-   "application": "ANDA218870",
-   "sponsor": "AMNEAL",
-   "brand": [
-    "LABETALOL HYDROCHLORIDE"
-   ],
-   "ingredients": [
-    "LABETALOL HYDROCHLORIDE"
-   ],
-   "date": "2025-10-02",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218870"
   },
   {
    "application": "BLA761377",
@@ -3466,20 +3368,6 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219477"
   },
   {
-   "application": "ANDA219978",
-   "sponsor": "AIPING PHARM INC",
-   "brand": [
-    "DOXYCYCLINE"
-   ],
-   "ingredients": [
-    "DOXYCYCLINE"
-   ],
-   "date": "2025-10-01",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219978"
-  },
-  {
    "application": "ANDA216001",
    "sponsor": "SINOTHERAPEUTICS INC",
    "brand": [
@@ -3492,20 +3380,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216001"
-  },
-  {
-   "application": "NDA218436",
-   "sponsor": "NOVARTIS",
-   "brand": [
-    "RHAPSIDO"
-   ],
-   "ingredients": [
-    "REMIBRUTINIB"
-   ],
-   "date": "2025-09-30",
-   "novel": true,
-   "class_code": "TYPE 1",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218436"
   }
  ]
 }

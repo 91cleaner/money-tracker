@@ -2,9 +2,45 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-11-03T23:45:17.432Z",
- "count": 207,
+ "collected_at": "2026-11-04T23:47:55.914Z",
+ "count": 211,
  "divisions": [
+  {
+   "id": 2476,
+   "date": "2026-11-04",
+   "number": 118,
+   "title": "Railways Bill: Carry-over extension (Motion)",
+   "ayes": 279,
+   "noes": 139,
+   "url": "https://votes.parliament.uk/votes/commons/division/2476"
+  },
+  {
+   "id": 2475,
+   "date": "2026-11-04",
+   "number": 117,
+   "title": "Sporting Events Bill [Lords] Report: Amendment 8",
+   "ayes": 93,
+   "noes": 287,
+   "url": "https://votes.parliament.uk/votes/commons/division/2475"
+  },
+  {
+   "id": 2474,
+   "date": "2026-11-04",
+   "number": 116,
+   "title": "Sporting Events Bill [Lords] Report: Amendment 6",
+   "ayes": 91,
+   "noes": 298,
+   "url": "https://votes.parliament.uk/votes/commons/division/2474"
+  },
+  {
+   "id": 2473,
+   "date": "2026-11-04",
+   "number": 115,
+   "title": "Sporting Events Bill [Lords] Report: New Clause 1",
+   "ayes": 62,
+   "noes": 286,
+   "url": "https://votes.parliament.uk/votes/commons/division/2473"
+  },
   {
    "id": 2470,
    "date": "2026-11-03",
