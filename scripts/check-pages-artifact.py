@@ -25,6 +25,12 @@ if exposed:
     sys.exit("Unexpected files in public artifact: " + ", ".join(exposed))
 import json
 pub = json.loads((root / "data/us/trades_public.json").read_text(encoding="utf-8"))
+if (not isinstance(pub, dict) or not isinstance(pub.get("trades"), list)
+        or any(not isinstance(row, dict) for row in pub["trades"])):
+    sys.exit("trades_public.json must contain a trades array of objects")
+if any("verification" in row and not isinstance(row["verification"], str)
+       for row in pub["trades"]):
+    sys.exit("trades_public.json verification must be a string")
 # The public builder intentionally retains a source-review warning per trade.
 # Keep this in sync with scripts/build_public_trades.py KEEP.
 allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state", "verification"}
