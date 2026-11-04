@@ -132,3 +132,24 @@ With this input, the branch builder serializes `source` as an object. The artifa
 **Required remediation and regression before release:** validate/sanitize **after all enrichment**, or restrict `party` and `state` to documented enumerations (for example, party `D/R/I` and valid U.S. jurisdiction codes, including an explicit unknown state); reject invalid inputs before replacing the last-good public file. Test the actual builder with malformed `members.json`, assert no private marker appears in the output and no prior snapshot is overwritten, then separately test the artifact checker against tampered public `party`/`state`. Coordinate with the data owner; **GPT did not edit collector, builder, UI, or data files**.
 
 **Latest #504 HEAD CI evidence:** [command room #41892768515](https://github.com/91cleaner/money-tracker/actions/runs/41892768515) **PASS**; [map #41892768698](https://github.com/91cleaner/money-tracker/actions/runs/41892768698) **FAIL**; [security/research #41892768627](https://github.com/91cleaner/money-tracker/actions/runs/41892768627) **FAIL**. The known country-entry CI drift is separately addressed in unmerged [#403](https://github.com/91cleaner/money-tracker/pull/403), whose own last-head checks passed but whose PR remains unmergeable. **Do not infer #504 release readiness from #403 checks**; verify the final combined SHA and published Pages. iPhone landscape and real AI/live trade execution feed remain **NOT VERIFIED / DISCONNECTED**.
+
+
+## P1 impossible transaction dates and incomplete public trade rows — 2026-11-05 05:54 KST
+
+**New, independent source-to-artifact contract review** of draft [#504](https://github.com/91cleaner/money-tracker/pull/504), HEAD `bae09900721e92aa5ca510234154db22794f7b3c` (not merged/deployed). In `scripts/build_public_trades.py`, public trade rows are checked for scalar/finite **types**, but there is no validation that `d` is a real calendar date or that a published trade row has the required identity/date/provenance fields. `scripts/check-pages-artifact.py` likewise checks allowed keys and scalar types, not transaction-date semantics. Draft [#479](https://github.com/91cleaner/money-tracker/pull/479) checks `d` using only `/^\\d{4}-\\d{2}-\\d{2}$/` before display, which accepts nonexistent dates such as February 30. This is a **code-path finding from static review**, not evidence of an invalid current disclosure.
+
+**Minimal synthetic fixtures (do not add these to real `data/`):**
+
+```json
+{"updated":"2026-11-05","trades":[{"id":"M1","who":"Example","c":"h","d":"2026-02-30","doc":"https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/123.pdf"}]}
+```
+
+`d` is a string, so it satisfies #504's producer and artifact scalar checks; it also matches #479's date regex and is earlier than the current date, so the proposed UI can display an impossible transaction date. Independently, `{"trades":[{}]}` passes #504's array/object validation and can publish one unusable row; #479 then rejects the whole loaded archive because the row lacks a string `d`. A successful HTTP 200 is therefore not sufficient proof of valid records.
+
+**Release-blocking fix for data/security owner (no GPT changes to data/collector/UI):**
+1. At the producer boundary, require each exported row's essential transaction-date and original-source fields, validate `d` as a **real ISO calendar day** (not regex alone), and quarantine/reject malformed rows without overwriting the last-good public snapshot. Distinguish invalid rows from a legitimately empty source.
+2. Revalidate the same minimum schema in the independent Pages artifact checker so a hand-edited artifact cannot bypass the producer; define chamber `c` and official `doc` provenance policy explicitly, coordinated with #479's House-only view.
+3. Add a producer-to-artifact-to-view regression using a real generated fixture: invalid `2026-02-30`, missing `d`, missing `doc`, and a valid empty array. Require an **ERROR / UNVERIFIED** state for bad data, never "verified zero"; confirm the prior public file survives failed builds.
+4. UI owner should replace the date regex with a calendar-validity check and keep unknown/missing chamber records out of a House-only archive.
+
+**Status:** Review gate only, no production fix or executable regression added. #504 and #479 remain draft; #403's separate stale-entry CI failures still block release. Latest checked #504 workflows: [command room PASS](https://github.com/91cleaner/money-tracker/actions/runs/41892768515), [map FAIL](https://github.com/91cleaner/money-tracker/actions/runs/41892768698), [security FAIL](https://github.com/91cleaner/money-tracker/actions/runs/41892768627). No same-SHA Pages deployment, real iPhone verification, live execution feed, or generative AI connection verified.
