@@ -9,10 +9,10 @@ var st=document.createElement('style');st.textContent=
 '#usP .lg{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;margin:4px 0}#usP .lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}#usP .ss a{font-size:12px;color:#0645ad;word-break:break-all}';
 document.head.appendChild(st);
 box.style.marginTop='8px';
-box.innerHTML='<button type="button" class="btn prime" id="warOpen" style="width:100%;min-height:44px">세계 역사 기록<span style="display:block;font-weight:400;font-size:11px;opacity:.75">전쟁 · 국경 변화 · 냉전 대리전</span></button><div id="warCat" hidden></div><div id="warList" hidden></div><div id="warSub" hidden></div>';
+box.innerHTML='<button type="button" class="btn prime" id="warOpen" style="width:100%;min-height:44px">세계 역사 기록<span style="display:block;font-weight:400;font-size:11px;opacity:.75">전쟁 · 국경 · 대리전 · 핵실험 · 기지 · 재난</span></button><div id="warCat" hidden></div><div id="warList" hidden></div><div id="warSub" hidden></div>';
 var D,geo,map,P,lay,grp,c,i=0,tm=null,prev,SC={a:'#b03a2e',b:'#1f4e8c',c:'#d98a1a',d:'#8a8a8a'};
-var dt=function(d){var a=d.split('-');return a[0]+'년 '+(+a[1])+'월'+(a[2]?' '+(+a[2])+'일':'')};
-var CATS=[['war','전쟁','data/warrec.json'],['border','국경 변화','data/hist_border.json'],['proxy','냉전 대리전','data/hist_proxy.json']],DS={},cat='war';
+var dt=function(d){var a=d.split('-');if(!a[1])return a[0];return a[0]+'년 '+(+a[1])+'월'+(a[2]?' '+(+a[2])+'일':'')};
+var CATS=[['war','전쟁','data/warrec.json'],['border','국경 변화','data/hist_border.json'],['proxy','냉전 대리전','data/hist_proxy.json'],['nuke','핵실험','data/hist_nuke.json'],['base','군사기지','data/hist_base.json'],['disaster','재난','data/hist_disaster.json']],DS={},cat='war';
 function get(k){if(DS[k])return Promise.resolve(DS[k]);var u=CATS.filter(function(x){return x[0]==k})[0][2];return fetch(u).then(r=>r.json()).then(function(j){DS[k]=j;return j})}
 function load(){return Promise.all([get('war').then(function(W){var by={};W.countries.forEach(function(x){x.wars.forEach(function(w){by[w.id]=w})});return get(cat).then(function(j){j.countries.forEach(function(x){x.wars=x.wars.map(function(w){if(!w.ref)return w;var o=Object.assign({},by[w.ref]);o.bk=w.bk;o.bks=w.bks;return o})});D=j})}),geo||fetch('data/national/countries-110m.geojson').then(r=>r.json()).then(j=>geo=j)])}
 var L1=document.getElementById('warList'),L2=document.getElementById('warSub');
