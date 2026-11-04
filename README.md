@@ -2,15 +2,24 @@
 
 A public-source intelligence prototype connecting world history, legislation, macroeconomic data, and U.S. congressional financial disclosures on a **flat world map**.
 
+## Release and connection status (checked 2026-11-04)
+- **Public access:** this GitHub repository and its GitHub Pages site are public. An OAuth-protected Cloudflare command route is a separate deployment and does not make Pages private.
+- **Live executed-trade feed: NOT CONNECTED.** House Periodic Transaction Reports (PTRs) are delayed *self-reported disclosures*, not independently confirmed exchange executions. Their amounts are disclosed ranges, not exact prices or returns.
+- **Generative AI analysis/search: NOT CONNECTED.** Guided map journeys and locally stored evidence should not be described as live AI responses.
+- **Missing or failed data ≠ zero events.** A failed HTTP request, invalid JSON schema, stale snapshot, or absent collection must be labeled **UNAVAILABLE / ERROR / STALE**, not presented as a verified zero. [Issue #478](https://github.com/91cleaner/money-tracker/issues/478) tracks this UI risk.
+- **Unmerged fixes are not deployed protections:** [#403](https://github.com/91cleaner/money-tracker/pull/403) (Pages/CI entry checks), [#412](https://github.com/91cleaner/money-tracker/pull/412) (PTR chronology quarantine), [#458](https://github.com/91cleaner/money-tracker/pull/458) (public JSON parity), and [#479](https://github.com/91cleaner/money-tracker/pull/479) (US signals JavaScript repair) were open proposals when checked. Do not infer production readiness from their branch tests.
+
+
 ## Entry points
 - `index.html` — country selection
 - `world-intelligence/index.html` — flat world-map command center and guided country exploration
 - `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research
 - `us.html` — U.S. command entry
 
-## Verified data and caveats
+## Data sources and verification limits
 - `data/us/bills.json` — U.S. congressional legislation summary from Congress.gov. The **Congress.gov API requires a key** for its collection workflow; this is separate from the map.
-- `data/us/trades.json` — parsed public U.S. House PTR transactions, linked to House Clerk source PDFs. Transaction amounts are ranges; records are not investment advice or evidence of misconduct. The Senate index has reported HTTP 403 errors; do not imply complete Senate coverage.
+- `data/us/trades.json` — extracted House PTR **reported transactions** with links to House Clerk PDFs. Extraction and source linking do not independently verify execution, ownership, ticker identity, or transaction chronology. Amounts are reported ranges, not exact trade values. These records are neither investment advice nor evidence of misconduct. Senate coverage is incomplete (HTTP 403 reported).
+- `data/us/trades-recent.json` — a limited recent PTR snapshot, **not a complete or real-time feed**. A reported transaction/filing-date reversal remains subject to original-PDF reconciliation; proposed public-artifact quarantine is in unmerged [#412](https://github.com/91cleaner/money-tracker/pull/412). Never treat its 20-row sample as total congressional activity.
 - `data/us-events.json` — curated historical milestones with source URLs, not causal investment signals.
 - `data/us-macro.json` — generated only after a successful FRED data collection run; it may be absent.
 - `data/us-house-filings.json` — generated only after successful House Clerk index collection; it may be absent.
