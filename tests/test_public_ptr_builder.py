@@ -153,6 +153,18 @@ class PublicPtrBuilderTests(unittest.TestCase):
             rejected = check()
             self.assertNotEqual(rejected.returncode, 0)
             self.assertIn("non-public fields", rejected.stdout + rejected.stderr)
+            snapshot["trades"][0].pop("private_notes")
+            snapshot["trades"][0]["verification"] = {"private_notes": "nested secret"}
+            published.write_text(json.dumps(snapshot), encoding="utf-8")
+            nested = check()
+            self.assertNotEqual(nested.returncode, 0)
+            self.assertIn("verification must be a string", nested.stdout + nested.stderr)
+
+            snapshot["trades"] = None
+            published.write_text(json.dumps(snapshot), encoding="utf-8")
+            malformed = check()
+            self.assertNotEqual(malformed.returncode, 0)
+            self.assertIn("trades array of objects", malformed.stdout + malformed.stderr)
 
 
 if __name__ == "__main__":
