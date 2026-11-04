@@ -68,6 +68,37 @@ class PublicPtrBuilderTests(unittest.TestCase):
                             builder.build(target)
                     self.assertEqual(target.read_text(encoding="utf-8"), sentinel)
 
+    def test_publish_failure_keeps_previous_snapshot_and_cleans_temp_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = self._setup(root, {
+                "updated": "2026-11-04",
+                "trades": [{"id": "M1", "d": "2026-11-01"}],
+            })
+            target.parent.mkdir(parents=True)
+            previous = '{"trades":[{"who":"last known good"}]}'
+            target.write_text(previous, encoding="utf-8")
+            with patch.object(builder, "ROOT", root):
+                with patch.object(builder.os, "replace", side_effect=OSError("disk failure")):
+                    with self.assertRaisesRegex(OSError, "disk failure"):
+                        builder.build(target)
+            self.assertEqual(target.read_text(encoding="utf-8"), previous)
+            self.assertEqual(list(target.parent.glob(".trades_public.json.*.tmp")), [])
+
+    def test_successful_publish_replaces_previous_snapshot_atomically(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = self._setup(root, {
+                "updated": "2026-11-04",
+                "trades": [{"id": "M1", "d": "2026-11-01"}],
+            })
+            target.parent.mkdir(parents=True)
+            target.write_text('{"trades":[]}', encoding="utf-8")
+            with patch.object(builder, "ROOT", root):
+                self.assertEqual(builder.build(target), 1)
+            self.assertEqual(len(json.loads(target.read_text(encoding="utf-8"))["trades"]), 1)
+            self.assertEqual(list(target.parent.glob(".trades_public.json.*.tmp")), [])
+
     def test_explicit_empty_list_is_not_mistaken_for_broken_schema(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
