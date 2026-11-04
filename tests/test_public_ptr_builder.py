@@ -4,6 +4,8 @@ A broken input ledger must not silently become a published zero-trade file.
 """
 import importlib.util
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -106,6 +108,51 @@ class PublicPtrBuilderTests(unittest.TestCase):
             with patch.object(builder, "ROOT", root):
                 self.assertEqual(builder.build(target), 0)
             self.assertEqual(json.loads(target.read_text(encoding="utf-8"))["trades"], [])
+
+
+    def test_pages_artifact_gate_accepts_verification_and_rejects_private_fields(self):
+        """The generated public PTR snapshot must pass the real Pages privacy gate."""
+        checker = SCRIPT.parent / "check-pages-artifact.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._setup(root, {
+                "updated": "2026-11-04",
+                "source": "House Clerk PTR",
+                "trades": [{
+                    "id": "M1", "who": "Example Member",
+                    "verification": "machine_parsed_requires_review",
+                }],
+            })
+            artifact = root / "public"
+            published = artifact / "data/us/trades_public.json"
+            published.parent.mkdir(parents=True)
+            with patch.object(builder, "ROOT", root):
+                builder.build(published)
+            for name in (
+                "index.html", "search.html", "national.html", "usa-command.html",
+                "assets/se.js", "assets/mt-command-ui.js",
+                "data/search/se/core.json", "data/national/countries-110m.geojson",
+            ):
+                file = artifact / name
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_text("fixture", encoding="utf-8")
+
+            def check():
+                return subprocess.run(
+                    [sys.executable, str(checker), str(artifact)],
+                    capture_output=True, text=True, check=False,
+                )
+
+            accepted = check()
+            self.assertEqual(accepted.returncode, 0, accepted.stdout + accepted.stderr)
+            snapshot = json.loads(published.read_text(encoding="utf-8"))
+            self.assertEqual(snapshot["trades"][0]["verification"],
+                             "machine_parsed_requires_review")
+            snapshot["trades"][0]["private_notes"] = "must not be published"
+            published.write_text(json.dumps(snapshot), encoding="utf-8")
+            rejected = check()
+            self.assertNotEqual(rejected.returncode, 0)
+            self.assertIn("non-public fields", rejected.stdout + rejected.stderr)
 
 
 if __name__ == "__main__":
