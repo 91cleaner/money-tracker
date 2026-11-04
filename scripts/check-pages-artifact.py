@@ -25,6 +25,8 @@ if exposed:
     sys.exit("Unexpected files in public artifact: " + ", ".join(exposed))
 import json
 import math
+import re
+from datetime import datetime
 
 
 def reject_non_json_number(value):
@@ -52,4 +54,18 @@ allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "do
 extra = sorted({k for t in pub.get("trades", []) for k in t} - allowed)
 if extra or set(pub) - {"updated", "source", "note", "trades"}:
     sys.exit("trades_public.json has non-public fields: " + ", ".join(extra or sorted(set(pub))))
+
+# Validate top-level metadata independently of the builder: a hand-edited
+# artifact must not bypass the trade-row privacy allowlist.
+if pub.get("source") != "Official STOCK Act disclosures (see original filing links)" or pub.get("note") != "Public summary of official STOCK Act filings. Amounts are ranges; r = stock price move since trade, not member profit.":
+    sys.exit("trades_public.json contains unapproved public metadata")
+updated = pub.get("updated")
+if updated is not None:
+    if (not isinstance(updated, str) or len(updated) > 40
+            or not re.fullmatch(r"\d{4}-\d{2}-\d{2}(?:[T ][0-9:.+\-]+Z?)?", updated)):
+        sys.exit("trades_public.json has invalid updated metadata")
+    try:
+        datetime.fromisoformat(updated.replace("Z", "+00:00"))
+    except ValueError:
+        sys.exit("trades_public.json has invalid updated metadata")
 print("Pages artifact check passed.")
