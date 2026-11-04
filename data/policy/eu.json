@@ -6,6 +6,34 @@
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
 {
+"id": "ec:IP/26/2281",
+"kind": "press",
+"t": "Commission strengthens Europe's position as the world's leading tourism destination",
+"d": "2026-11-04",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2281",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:QANDA/26/2282",
+"kind": "press",
+"t": "Questions and answers on the EU Sustainable Tourism Strategy",
+"d": "2026-11-04",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/qanda_26_2282",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:IP/26/2324",
 "kind": "press",
 "t": "Commission takes new steps to prepare Europeans for growing crisis risks",
@@ -60,6 +88,40 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026R2490",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2490 of 3 November 2026 amending for the 364th time Council Regulation (EC) No 881/2002 imposing certain specific restrictive measures directed against certain persons and entities associated with the ISIL (Da'esh) and Al-Qaida organisations",
+"d": "2026-11-03",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2490",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2413",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2413 of 3 November 2026 on setting up the European Digital Infrastructure Consortium on Education (EDU-EDIC)",
+"d": "2026-11-03",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2413",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"tech_ai"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:STATEMENT/26/2317",
@@ -345,6 +407,34 @@
 "t": "Commission Decision (EU) 2026/2404 of 29 October 2026 amending Decision (EU) 2021/2147 as regards the approval of civil aviation security equipment with EU Stamp marking",
 "d": "2026-10-29",
 "u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2404",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2482",
+"kind": "decision",
+"t": "Council Implementing Decision (EU) 2026/2482 of 29 October 2026 amending Implementing Decision (EU) 2018/485 as regards an extension of the authorisation for Denmark to apply a special measure derogating from Article 75 of Directive 2006/112/EC on the common system of value added tax",
+"d": "2026-10-29",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2482",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2484",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2484 of 29 October 2026 authorising the opening of negotiations for agreements between the European Union and Bolivia, Canada, Chile, Costa Rica, Ecuador, Panama, Peru and the United Arab Emirates on cooperation between the European Union Agency for Criminal Justice Cooperation (Eurojust) and the competent authorities for judicial cooperation in criminal matters of those",
+"d": "2026-10-29",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2484",
 "dept": "EU 관보(Official Journal)",
 "src": "EUR-Lex/Publications Office SPARQL",
 "tags": [],
@@ -935,6 +1025,38 @@
 "le": "EU decision"
 },
 {
+"id": "celex:32026D2469",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2469 of 26 October 2026 establishing the position to be taken on behalf of the European Union within the Joint Committee established by the Agreement on the withdrawal of the United Kingdom of Great Britain and Northern Ireland from the European Union and the European Atomic Energy Community as regards the adoption of a decision adding a newly adopted Union act to Annex ",
+"d": "2026-10-26",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2469",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"energy"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2475",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2475 of 26 October 2026 establishing the position to be taken on behalf of the European Union within the Joint Committee established by the Agreement on the withdrawal of the United Kingdom of Great Britain and Northern Ireland from the European Union and the European Atomic Energy Community as regards the adoption of a decision adding a newly adopted Union act to Annex ",
+"d": "2026-10-26",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2475",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"energy"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
 "id": "celex:32026D2347",
 "kind": "decision",
 "t": "Commission Implementing Decision (EU) 2026/2347 of 23 October 2026 amending Implementing Decision 2012/715/EU as regards the inclusion of the Republic of Singapore in the list of third countries established by that Decision",
@@ -1404,6 +1526,20 @@
 "tags": [
 "defense"
 ],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2473",
+"kind": "regulation",
+"t": "Regulation (EU) 2026/2473 of the European Parliament and of the Council of 21 October 2026 amending Regulation (EU) 2023/2124 on certain provisions for fishing in the General Fisheries Commission for the Mediterranean (GFCM) Agreement area",
+"d": "2026-10-21",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2473",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
 "focus": [],
 "focus_ko": [],
 "lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
