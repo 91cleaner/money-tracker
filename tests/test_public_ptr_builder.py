@@ -224,5 +224,77 @@ class PublicPtrBuilderTests(unittest.TestCase):
             self.assertIn("trades array of objects", malformed.stdout + malformed.stderr)
 
 
+    def test_public_metadata_never_copies_private_source(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = self._setup(root, {
+                "updated": "2026-11-05T03:58:33+09:00",
+                "source": {"private_notes": "DO_NOT_PUBLISH"},
+                "trades": [],
+            })
+            with patch.object(builder, "ROOT", root):
+                self.assertEqual(builder.build(target), 0)
+            published = json.loads(target.read_text(encoding="utf-8"))
+            self.assertEqual(published["source"], builder.PUBLIC_SOURCE)
+            self.assertEqual(published["note"], builder.PUBLIC_NOTE)
+            self.assertNotIn("DO_NOT_PUBLISH", target.read_text(encoding="utf-8"))
+            self.assertEqual(published["updated"], "2026-11-05T03:58:33+09:00")
+
+    def test_invalid_updated_metadata_cannot_replace_previous_snapshot(self):
+        for invalid in ({"private_notes": "secret"}, ["secret"], "bad date",
+                        "2026-02-30", "2026-11-05" + "x" * 100):
+            with self.subTest(invalid=invalid):
+                with tempfile.TemporaryDirectory() as tmp:
+                    root = Path(tmp)
+                    target = self._setup(root, {
+                        "updated": invalid, "source": "private@example.com", "trades": [],
+                    })
+                    target.parent.mkdir(parents=True)
+                    sentinel = '{"trades":[{"who":"last good"}]}'
+                    target.write_text(sentinel, encoding="utf-8")
+                    with patch.object(builder, "ROOT", root):
+                        with self.assertRaisesRegex(ValueError, "Invalid updated metadata"):
+                            builder.build(target)
+                    self.assertEqual(target.read_text(encoding="utf-8"), sentinel)
+
+    def test_artifact_gate_rejects_top_level_metadata_tampering(self):
+        checker = SCRIPT.parent / "check-pages-artifact.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = self._setup(root, {"updated": "2026-11-05", "trades": []})
+            artifact = root / "public"
+            published = artifact / "data/us/trades_public.json"
+            published.parent.mkdir(parents=True)
+            with patch.object(builder, "ROOT", root):
+                builder.build(published)
+            for name in (
+                "index.html", "search.html", "national.html", "usa-command.html",
+                "assets/se.js", "assets/mt-command-ui.js",
+                "data/search/se/core.json", "data/national/countries-110m.geojson",
+            ):
+                path = artifact / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("fixture", encoding="utf-8")
+
+            def check():
+                return subprocess.run(
+                    [sys.executable, str(checker), str(artifact)],
+                    capture_output=True, text=True, check=False,
+                )
+            self.assertEqual(check().returncode, 0)
+            original = json.loads(published.read_text(encoding="utf-8"))
+            for field, value in (
+                ("source", {"private_notes": "DO_NOT_PUBLISH"}),
+                ("source", "private analyst@example.com"),
+                ("note", ["private memo"]),
+                ("updated", {"private_notes": "DO_NOT_PUBLISH"}),
+                ("updated", "2026-02-30"),
+            ):
+                with self.subTest(field=field, value=value):
+                    mutated = dict(original)
+                    mutated[field] = value
+                    published.write_text(json.dumps(mutated), encoding="utf-8")
+                    self.assertNotEqual(check().returncode, 0)
+
 if __name__ == "__main__":
     unittest.main()
