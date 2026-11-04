@@ -52,7 +52,7 @@ class PublicPtrBuilderTests(unittest.TestCase):
             self.assertEqual(published["trades"][0]["state"], "CA")
             self.assertNotIn("private_notes", published["trades"][0])
             self.assertNotIn("account_number", published["trades"][0])
-            self.assertEqual(published["source"], "House Clerk PTR")
+            self.assertEqual(published["source"], builder.PUBLIC_SOURCE)
 
     def test_malformed_ledger_does_not_overwrite_last_good_public_snapshot(self):
         for invalid in ({}, {"trades": None}, {"trades": {}},
@@ -239,6 +239,20 @@ class PublicPtrBuilderTests(unittest.TestCase):
             self.assertEqual(published["note"], builder.PUBLIC_NOTE)
             self.assertNotIn("DO_NOT_PUBLISH", target.read_text(encoding="utf-8"))
             self.assertEqual(published["updated"], "2026-11-05T03:58:33+09:00")
+
+    def test_unreviewed_long_source_text_is_not_published(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = self._setup(root, {
+                "updated": "2026-11-05",
+                "source": "internal analyst@example.com " * 100,
+                "trades": [],
+            })
+            with patch.object(builder, "ROOT", root):
+                self.assertEqual(builder.build(target), 0)
+            published = json.loads(target.read_text(encoding="utf-8"))
+            self.assertEqual(published["source"], builder.PUBLIC_SOURCE)
+            self.assertNotIn("analyst@example.com", target.read_text(encoding="utf-8"))
 
     def test_invalid_updated_metadata_cannot_replace_previous_snapshot(self):
         for invalid in ({"private_notes": "secret"}, ["secret"], "bad date",
