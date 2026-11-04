@@ -110,6 +110,43 @@ class PublicPtrBuilderTests(unittest.TestCase):
             self.assertEqual(json.loads(target.read_text(encoding="utf-8"))["trades"], [])
 
 
+    def test_nested_or_nonfinite_values_cannot_overwrite_public_snapshot(self):
+        for invalid_field in (
+            {"asset": {"private_notes": "do not publish"}},
+            {"who": ["private", "data"]},
+            {"r": float("nan")},
+            {"rspy": float("inf")},
+            {"verification": {"reviewer": "private"}},
+        ):
+            with self.subTest(invalid_field=invalid_field):
+                with tempfile.TemporaryDirectory() as tmp:
+                    root = Path(tmp)
+                    target = self._setup(root, {
+                        "trades": [{"id": "M1", "d": "2026-10-10", **invalid_field}],
+                    })
+                    target.parent.mkdir(parents=True)
+                    previous = '{"trades":[{"who":"last good"}]}'
+                    target.write_text(previous, encoding="utf-8")
+                    with patch.object(builder, "ROOT", root):
+                        with self.assertRaisesRegex(ValueError, "Invalid public trade field"):
+                            builder.build(target)
+                    self.assertEqual(target.read_text(encoding="utf-8"), previous)
+
+    def test_unapproved_review_text_is_not_published(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = self._setup(root, {
+                "trades": [{
+                    "id": "M1", "d": "2026-10-10",
+                    "verification": "Reviewed by private analyst@example.com",
+                }],
+            })
+            with patch.object(builder, "ROOT", root):
+                self.assertEqual(builder.build(target), 1)
+            row = json.loads(target.read_text(encoding="utf-8"))["trades"][0]
+            self.assertEqual(row["verification"], "unknown")
+            self.assertNotIn("analyst@example.com", target.read_text(encoding="utf-8"))
+
     def test_pages_artifact_gate_accepts_verification_and_rejects_private_fields(self):
         """The generated public PTR snapshot must pass the real Pages privacy gate."""
         checker = SCRIPT.parent / "check-pages-artifact.py"
@@ -158,7 +195,27 @@ class PublicPtrBuilderTests(unittest.TestCase):
             published.write_text(json.dumps(snapshot), encoding="utf-8")
             nested = check()
             self.assertNotEqual(nested.returncode, 0)
-            self.assertIn("verification must be a string", nested.stdout + nested.stderr)
+            self.assertIn("rows must contain only finite scalar values", nested.stdout + nested.stderr)
+
+            snapshot["trades"][0]["verification"] = "private analyst@example.com"
+            published.write_text(json.dumps(snapshot), encoding="utf-8")
+            unapproved = check()
+            self.assertNotEqual(unapproved.returncode, 0)
+            self.assertIn("approved public status", unapproved.stdout + unapproved.stderr)
+
+            snapshot["trades"][0]["verification"] = "unknown"
+            snapshot["trades"][0]["asset"] = {"private_notes": "nested leak"}
+            published.write_text(json.dumps(snapshot), encoding="utf-8")
+            nested_asset = check()
+            self.assertNotEqual(nested_asset.returncode, 0)
+            self.assertIn("rows must contain only finite scalar values", nested_asset.stdout + nested_asset.stderr)
+
+            snapshot["trades"][0].pop("asset")
+            snapshot["trades"][0]["r"] = float("nan")
+            published.write_text(json.dumps(snapshot), encoding="utf-8")
+            nonfinite = check()
+            self.assertNotEqual(nonfinite.returncode, 0)
+            self.assertIn("Non-standard JSON numeric constant", nonfinite.stdout + nonfinite.stderr)
 
             snapshot["trades"] = None
             published.write_text(json.dumps(snapshot), encoding="utf-8")
