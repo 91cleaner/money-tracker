@@ -1,12 +1,23 @@
 {
- "updated": "2026-11-03",
+ "updated": "2026-11-04",
  "source": "SEC EDGAR company_tickers.json + data.sec.gov submissions + 8-K 표지(Trading Symbol)",
  "note": "자동으로 찾은 '확인 필요' 목록. 공시를 사람이 읽고 확인하기 전까지 화면 숫자는 바꾸지 않음.",
  "days": 45,
  "checked": 795,
- "covers_read": 584,
+ "covers_read": 619,
  "confirmed": [
   "SATS"
  ],
- "flags": []
+ "flags": [
+  {
+   "tk": "SUPN",
+   "cik": 1356576,
+   "name": "SUPERNUS PHARMACEUTICALS, INC.",
+   "kind": "SEC 티커 목록에서 이 티커의 회사가 바뀜",
+   "sec_ciks": [
+    1625297
+   ],
+   "url": "https://www.sec.gov/files/company_tickers.json"
+  }
+ ]
 }
