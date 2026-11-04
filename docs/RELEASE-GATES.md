@@ -52,6 +52,14 @@ The current `index.html` contains `href="korea.html"` and `href="world-intellige
 - [PR #479](https://github.com/91cleaner/money-tracker/pull/479): US disclosure view syntax repair. Recheck malformed JSON, zero vs error, and iPhone behavior after merge.
 - [PR #495](https://github.com/91cleaner/money-tracker/pull/495): provenance review for new history layers. Replace secondary references with authoritative evidence before claiming verification.
 
+## P1 chamber scope in US disclosure view — 2026-11-04 18:59 KST
+
+**Observed in [PR #479](https://github.com/91cleaner/money-tracker/pull/479), HEAD `3c5ea7b`:** `world-intelligence/us-signals.html` titles its archive “미국 하원 공개 거래 기록”, yet fetches `data/us/trades_public.json` and displays all `data.trades` without checking the chamber field `c`. The JSON source metadata names **both U.S. House Clerk and U.S. Senate eFD**, and `scripts/build_public_trades.py` preserves `c`. If any Senate entries exist, they can appear as House disclosures. This is a demonstrated missing filter, **not** a verified count of Senate rows in today's snapshot.
+
+**Merge gate:** either (A) keep a House-only archive and explicitly filter to `r.c === 'h'`, validating House Clerk original links, or (B) rename to a House/Senate archive, label the chamber per row, and apply chamber-appropriate official source links. A generic “상원 수집 미확인” footer is insufficient.
+
+**Regression:** add a mixed-chamber fixture with one `c:'h'` and one `c:'s'` row plus a missing/unknown chamber row. Assert that A shows only the House row or B labels both chambers correctly, and unknown chamber data never silently becomes House. Run on the candidate SHA alongside existing malformed-JSON and empty-data tests. Per `docs/AI-ROLES.md`, UI implementation belongs to the UI owner; this is a review gate only.
+
 ## Reporting vocabulary
 
 - **PASS**: tested on named SHA, evidence URL/log retained.
