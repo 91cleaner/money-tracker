@@ -52,16 +52,34 @@
   TABS.forEach(([id, l]) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.t = id; b.textContent = l; b.onclick = () => show(id); bar.append(b); });
   const clk = () => { const e = root.querySelector('#tbClk'); if (e) e.textContent = new Date().toLocaleTimeString('ko-KR', { timeZone: 'America/New_York', hour12: false }); };
   setInterval(clk, 1000); clk();
-  let D = null, TR = null, WH = null, showSeq = 0;
-  const row = (href, l, s, r, cls) => `<a class="tbRow" href="${esc(href)}"${/^https?:/.test(href) ? ' target="_blank" rel="noopener noreferrer"' : ''}><span class="l">${esc(l)}<small>${esc(s)}</small></span>${r ? `<span class="r ${cls || ''}">${esc(r)}</span>` : ''}</a>`;
+  let D = null, TR = null, WH = null, showSeq = 0, activeTab = 'today', dailyStatus = 'loading', todayNode = null;
+  // Untrusted filing/White House URLs must never become executable links.
+  // Only verified official disclosure origins may be clickable external sources.
+  // Exact host matches prevent lookalikes (official.gov.evil.example); HTTPS only.
+  const SOURCE_HOSTS = new Set(['disclosures-clerk.house.gov', 'www.federalregister.gov', 'www.whitehouse.gov']);
+  const safeHref = (href) => {
+    if (typeof href !== 'string') return null;
+    if (/^\?lang=ko&ticker=[A-Za-z0-9._%~-]+$/.test(href)) return href;
+    try {
+      const u = new URL(href);
+      return u.protocol === 'https:' && SOURCE_HOSTS.has(u.hostname) &&
+        !u.username && !u.password && !u.port ? u.href : null;
+    } catch (_) { return null; }
+  };
+  const row = (href, l, s, r, cls) => {
+    const url = safeHref(href);
+    const tag = url ? 'a' : 'div';
+    const attrs = url ? ` href="${esc(url)}"${/^https?:/i.test(url) ? ' target="_blank" rel="noopener noreferrer"' : ''}` : '';
+    return `<${tag} class="tbRow"${attrs}><span class="l">${esc(l)}<small>${esc(s)}</small></span>${r ? `<span class="r ${cls || ''}">${esc(r)}</span>` : ''}</${tag}>`;
+  };
   async function show(id) {
     bar.querySelectorAll('button').forEach((b) => b.setAttribute('aria-selected', b.dataset.t === id));
-    const P = root.querySelector('#tbPanel'); const ticket = ++showSeq; let h = '';
+    const P = root.querySelector('#tbPanel'); const ticket = ++showSeq; activeTab = id; let h = '';
     if ((id === 'mem' && !TR) || (id === 'wh' && !WH)) {
       P.innerHTML = '<div class="tbH" role="status">공개 자료를 불러오는 중입니다…</div>';
     }
     if (id === 'today') {
-      const box = $('mtToday'); if (box) { box.className = 'home'; P.replaceChildren(box); return; }
+      const box = todayNode || $('mtToday'); if (box) { todayNode = box; box.className = 'home'; P.replaceChildren(box); return; }
       h = '<div class="tbH">오늘의 기록을 불러오는 중이에요.</div>';
     } else if (id === 'mem') {
       try {
@@ -72,7 +90,7 @@
         }
         const t = TR.trades;
         h = `<div class="tbH">최근 의원 주식 신고 ${t.length}건 · 누르면 그 종목으로 가요</div>` + t.map((x) => row(x.tk ? go(x.tk) : x.doc, `${x.who} · ${x.tk || '종목'}`, `거래 ${x.d} · 신고 ${x.fd} · ${x.amt}`, SIDE[x.ty] || x.ty, x.ty === 'P' ? 'up' : 'dn')).join('');
-      } catch (_) { h = loadFailure('의원 신고'); }
+      } catch (_) { TR = null; h = loadFailure('의원 신고'); }
     } else if (id === 'wh') {
       try {
         if (!WH) {
@@ -82,11 +100,14 @@
         }
         const w = WH.items.filter((x) => x.kind === 'presdoc').sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 12);
         h = `<div class="tbH">최근 대통령 문서 ${w.length}건 · 누르면 관보 원문이 열려요</div>` + w.map((x) => row(x.u, `${x.type || '대통령 문서'}${x.procl ? ' 제' + x.procl + '호' : ''}${x.eo ? ' 제' + x.eo + '호' : ''}`, `${x.date} · ${x.ko || ''}`, '', '')).join('');
-      } catch (_) { h = loadFailure('대통령 문서'); }
+      } catch (_) { WH = null; h = loadFailure('대통령 문서'); }
     } else if (id === 'rank') {
       const s = (D && D.snap) || {};
       const blk = (f, lab) => { const e = Object.entries(s[f] || {}).filter((x) => x[1]).sort((a, b) => b[1] - a[1]).slice(0, 5); return e.length ? `<div class="tbH">${lab} 큰 순서 5곳</div>` + e.map(([t, v], i) => row(go(t), `${i + 1}. ${t}`, lab, money(v), 'up')).join('') : ''; };
-      h = blk('federal-awards.json', '정부 계약 금액') + blk('lobbying.json', '로비 신고 금액') + blk('pac-contributions.json', '후보 후원금(PAC)');
+      h = dailyStatus === 'loading' ? '<div class="tbH" role="status">순위 자료를 불러오는 중입니다…</div>'
+        : dailyStatus === 'error' ? '<div class="tbH" role="alert">순위 자료를 불러오지 못했습니다.</div>'
+        : blk('federal-awards.json', '정부 계약 금액') + blk('lobbying.json', '로비 신고 금액') + blk('pac-contributions.json', '후보 후원금(PAC)');
+      if (!h) h = '<div class="tbH">표시할 순위 자료가 없습니다.</div>';
     } else if (id === 'find') {
       h = `<form class="tbFind" id="tbFind"><input id="tbQ" placeholder="종목 기호 (예: NVDA)" autocomplete="off" aria-label="종목 기호"><button>보기</button></form><div class="tbH">많이 찾는 종목</div>` + ['NVDA', 'AAPL', 'MSFT', 'GOOGL', 'TSLA', 'AMZN'].map((t) => row(go(t), t, '이 종목 기록 지도', '', '')).join('');
     }
@@ -105,9 +126,15 @@
     if (!ix || typeof ix.latest !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(ix.latest)) throw new Error('Invalid daily index');
     return J(`../data/us/daily/${ix.latest}.json`);
   }).then((d) => {
-    D = d; const c = d && d.cards && d.cards.find((x) => x.id === 'ptr');
+    if (!d || !d.snap || typeof d.snap !== 'object' || Array.isArray(d.snap)) throw new Error('Invalid daily summary');
+    D = d; dailyStatus = 'ready'; const c = d && d.cards && d.cards.find((x) => x.id === 'ptr');
     if (c && c.n && c.n[0]) { root.querySelector('#tbHeroN').textContent = c.n[0].v; root.querySelector('#tbHeroL').textContent = c.h.split(' 하원')[0] + ' 의원 주식 신고'; }
-  }).catch(() => { root.querySelector('#tbHeroL').textContent = '일일 요약 자료를 불러오지 못했습니다'; });
+    if (activeTab === 'rank') show('rank');
+  }).catch(() => {
+    dailyStatus = 'error';
+    root.querySelector('#tbHeroL').textContent = '일일 요약 자료를 불러오지 못했습니다';
+    if (activeTab === 'rank') show('rank');
+  });
   const boot = () => { place(); show(tk ? 'mem' : 'today'); setTimeout(() => { if (!tk && $('mtToday') && !root.contains($('mtToday'))) show('today'); }, 2500); };
   if (document.readyState === 'complete') setTimeout(boot, 400); else addEventListener('load', () => setTimeout(boot, 400));
 })();
