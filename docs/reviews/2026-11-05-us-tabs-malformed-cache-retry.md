@@ -76,3 +76,26 @@ The same destructive assignment is shared by the other non-today tabs. This repr
 2. Add a regression test to \`tests/mt-tabs-load.test.cjs\`: boot with a populated \`#mtToday\`; navigate \`today → mem → today → wh → today → find → today\`; assert the **same node identity**, retained content and listeners, no permanent loading fallback, and no false \`0건\`.
 3. Exercise the same sequence in real desktop Chromium and iPhone portrait/landscape. Confirm the fixed bottom tab panel remains usable, and verify the deployed Pages version only **after** merge and same-SHA release checks.
 4. Keep #513 in Draft pending Claude/실장 UI review. No UI, tests, \`data/\`, collectors, or production code was changed by this review. House PTR is delayed disclosure; live executions and generative AI remain **DISCONNECTED**.
+
+
+## Additional P1/P2 data-visibility regression — ranking tab stays blank after late daily summary (2026-11-06 00:55 KST)
+
+**New, distinct issue verified against the exact `assets/mt-tabs.js` source at #513 head `4fc5495`.** This is an executed V8 mocked-DOM/async-fetch reproduction, not a live browser or production incident.
+
+### Reproduction
+
+The daily summary is fetched asynchronously in the separate `J('../data/us/daily/index.json').then(...).then(d => { D = d; ... })` chain. The `rank` branch of `show(id)` renders synchronously from `(D && D.snap) || {}` and assigns `P.innerHTML = h` **without a loading or unavailable state**. When the user opens `순위` before the daily summary resolves, `h` is an empty string. Once `D` arrives, only the hero text is updated; `show('rank')` is never re-invoked.
+
+Executed scenario with the actual PR JavaScript, mocked document/tab buttons and a deferred HTTP-200 daily JSON:
+1. Open `rank` while `data/us/daily/2026-11-05.json` is pending → `#tbPanel.innerHTML === ''`.
+2. Resolve valid daily payload `{cards: [], snap: {'federal-awards.json': {NVDA: 1234567}}}`; flush microtasks → panel **still empty**, despite `D` being populated.
+3. Click `rank` a second time → panel now displays `NVDA` and `$1.2M`.
+
+**Impact:** A slow network/mobile session can silently show a blank ranking panel even though valid data arrived; the existing tab tests cover delayed PTR and White House requests, not this daily-summary/ranking race. A failed daily request likewise leaves an unexplained empty ranking rather than `자료를 불러오지 못했습니다`.
+
+### UI-owner fix / acceptance tests
+
+1. Track daily summary loading/error/ready separately from genuine empty ranking data. Show an accessible `순위 자료 불러오는 중` status while pending; show an unavailable/retry state on HTTP, JSON or schema failure, **never imply verified zero**.
+2. On daily completion, update the ranking panel **only if `rank` is still the selected tab**. Preserve `showSeq`/active-tab guards so an older daily completion never overwrites a newer tab. Prefer a state-based render over an unconditional `show('rank')`.
+3. Add deterministic `tests/mt-tabs-load.test.cjs` cases for delayed valid daily summary (renders without a second click), rejected daily summary (visible error), legitimate empty snapshot (explicit empty state), and switch `rank → mem` before daily resolution (no stale repaint). Verify in mobile portrait/landscape Chromium.
+4. No UI/test/data/CI files were changed here under `docs/AI-ROLES.md`; Claude/실장 should implement in #513 or an explicitly owned follow-up. #513 remains Draft/unmerged; live trades and generative AI remain **DISCONNECTED**.
