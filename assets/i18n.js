@@ -177,7 +177,7 @@
     [/티커가 없는 신고\(국채·채권·비상장 자산 등\) (\d+)건은 종목 집계에서 뺐습니다\./, "$1 reported transaction entries without a ticker (Treasuries, bonds, unlisted assets, etc.) are excluded from the ticker tally."],
     [/거래일과 신고일이 모두 있는 (\d+)건 기준\./, "Based on $1 reported transaction entries with both a trade date and a filing date."],
     [/금액은 신고서의 구간이라 합계를 내지 않고 건수로만 셉니다\./, "Amounts are ranges from the filings, so they are counted, not summed."],
-    [/전체 신고 \((.+)\)/, "All filings ($1)"],
+    [/전체 신고 \((.+)\)/, "Reported transaction entries ($1)"],
     [/ — 연결 업종 중 거래 신고가 있는 것: /, " — linked sectors with trade filings: "],
     [/^(.+) 의원$/, "$1"],
     [/(\d{4})년부터 의회 활동/, "In Congress since $1"], [/(\d+)번째 임기/, "Term $1"], [/의원 ID (\S+)/, "Member ID $1"],
