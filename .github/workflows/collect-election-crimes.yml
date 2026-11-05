@@ -1,0 +1,28 @@
+name: Collect election crime charges (DOJ press releases)
+on:
+  schedule:
+    - cron: '35 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: election-crimes
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: justice.gov press-release API, no keys
+        run: python scripts/build_election_crimes.py
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/elcrime.json
+          git diff --staged --quiet || (git commit -m "data: election crime charges" && for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done && GH_TOKEN=${{ github.token }} gh workflow run deploy-pages.yml --ref main || true)
