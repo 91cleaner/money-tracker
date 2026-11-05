@@ -25,7 +25,8 @@
 #mtTabs .tbRow .r.up{color:#5dff9e}#mtTabs .tbRow .r.dn{color:#ff7a7a}
 #mtTabs .tbH{font-size:13px;font-weight:700;color:#8fb59d;margin:4px 2px 8px}
 #mtTabs .tbFind{display:flex;gap:6px;margin:4px 0 10px}#mtTabs .tbFind input{flex:1;min-width:0;font:600 16px Pretendard,system-ui,sans-serif;color:#eafff2;background:#06150c;border:1px solid #2f7a4c;border-radius:12px;padding:12px}
-#mtTabs .tbFind button{border:0;border-radius:12px;padding:0 16px;background:#5dff9e;color:#02110a;font:800 15px Pretendard,system-ui,sans-serif}\n#mtTabs .tbRetry{margin:6px 2px;padding:10px 14px;border:1px solid #5dff9e;border-radius:10px;background:#123923;color:#eafff2;font:700 14px Pretendard,system-ui,sans-serif;cursor:pointer}
+#mtTabs .tbFind button{border:0;border-radius:12px;padding:0 16px;background:#5dff9e;color:#02110a;font:800 15px Pretendard,system-ui,sans-serif}
+#mtTabs .tbRetry{margin:6px 2px;padding:10px 14px;border:1px solid #5dff9e;border-radius:10px;background:#123923;color:#eafff2;font:700 14px Pretendard,system-ui,sans-serif;cursor:pointer}
 #mtTabBar{display:flex;gap:4px;padding:6px;border-radius:18px;background:#07110b;border:1px solid #1e3a2a;margin-top:8px}
 #mtTabBar button{flex:1;min-width:0;padding:9px 2px;border:0;border-radius:12px;background:none;color:#9fc7ad;font:700 13px Pretendard,system-ui,sans-serif;cursor:pointer}
 #mtTabBar button[aria-selected=true]{background:#5dff9e;color:#02110a}
