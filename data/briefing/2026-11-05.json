@@ -1,0 +1,513 @@
+{
+ "date": "2026-11-05",
+ "generated_at": "2026-11-05T08:41Z",
+ "site": "https://91cleaner.github.io/money-tracker/cards.html",
+ "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
+ "top": [
+  {
+   "id": "insider",
+   "kind": "insider",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-04",
+   "badge_ko": "내부자 워치",
+   "badge_en": "INSIDER WATCH",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-04까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-04",
+   "rows": [
+    {
+     "label_ko": "Berkshire Hathaway Inc · 큰 주주",
+     "label_en": "Berkshire Hathaway Inc · 10% owner",
+     "value_ko": "~$69.0M",
+     "value_en": "~$69.0M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
+    {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$45.9M",
+     "value_en": "~$45.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000256/0001596532-26-000256-index.htm"
+    },
+    {
+     "label_ko": "American Express Co · 임원",
+     "label_en": "American Express Co · Chief Legal Officer",
+     "value_ko": "~$22.9M",
+     "value_en": "~$22.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000424/0000004962-26-000424-index.htm"
+    },
+    {
+     "label_ko": "Walmart Inc. · 임원",
+     "label_en": "Walmart Inc. · Chief Technology Officer",
+     "value_ko": "~$20.5M",
+     "value_en": "~$20.5M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/104169/000178119826000008/0001781198-26-000008-index.htm"
+    },
+    {
+     "label_ko": "American Express Co · 회사 내부자",
+     "label_en": "American Express Co · Group Pres.",
+     "value_ko": "~$14.7M",
+     "value_en": "~$14.7M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000422/0000004962-26-000422-index.htm"
+    }
+   ],
+   "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
+   "note_en": "Some are pre-scheduled sales (10b5-1). The reason for a sale is unknown. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
+   "source_en": "Source: SEC insider-trade records (Form 4)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $173.0M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $173.0M on record · Money Tracker"
+  },
+  {
+   "id": "movers",
+   "kind": "movers",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-03",
+   "badge_ko": "큰 움직임",
+   "badge_en": "BIG MOVERS",
+   "title_ko": "어제 가장 크게 움직인 회사들",
+   "title_en": "Companies that moved most at the last close",
+   "sub_ko": "2026-11-02 → 2026-11-03 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-11-02 → 2026-11-03 (among companies we track)",
+   "rows": [
+    {
+     "label_ko": "Fabrinet",
+     "label_en": "Fabrinet",
+     "value_ko": "+15.5%",
+     "value_en": "+15.5%",
+     "tone": "green",
+     "mark": "▲"
+    },
+    {
+     "label_ko": "Dynatrace, Inc.",
+     "label_en": "Dynatrace, Inc.",
+     "value_ko": "-14.7%",
+     "value_en": "-14.7%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Gartner Inc",
+     "label_en": "Gartner Inc",
+     "value_ko": "-13.2%",
+     "value_en": "-13.2%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Fiserv Inc",
+     "label_en": "Fiserv Inc",
+     "value_ko": "+12.5%",
+     "value_en": "+12.5%",
+     "tone": "green",
+     "mark": "▲"
+    },
+    {
+     "label_ko": "Regal Rexnord Corp",
+     "label_en": "Regal Rexnord Corp",
+     "value_ko": "+11.8%",
+     "value_en": "+11.8%",
+     "tone": "green",
+     "mark": "▲"
+    }
+   ],
+   "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
+   "note_en": "Shows what moved, not why. Not investment advice.",
+   "source_ko": "출처: 일별 마감 가격 기록",
+   "source_en": "Source: daily closing prices",
+   "source_url": "https://91cleaner.github.io/money-tracker/us.html",
+   "share_ko": "2026-11-03 마감 기준 가장 크게 움직인 회사: Fabrinet +15.5% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-11-03 close: Fabrinet +15.5% · Money Tracker"
+  },
+  {
+   "id": "filings",
+   "kind": "filings",
+   "icon": "●",
+   "score": 72.0,
+   "layout": "list",
+   "date": "2026-11-04",
+   "badge_ko": "새 공시",
+   "badge_en": "NEW FILINGS",
+   "title_ko": "2026-11-04 회사들이 낸 '큰 소식' 신고서 8건",
+   "title_en": "8 'big news' notices companies filed on 2026-11-04",
+   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
+   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
+   "rows": [
+    {
+     "label_ko": "Jones Lang Lasalle Inc",
+     "label_en": "Jones Lang Lasalle Inc",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1037976/000103797626000193/jll-20261103.htm"
+    },
+    {
+     "label_ko": "Kraft Heinz Co",
+     "label_en": "Kraft Heinz Co",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1637459/000163745926000079/khc-20261031.htm"
+    },
+    {
+     "label_ko": "Service Corp International",
+     "label_en": "Service Corp International",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/89089/000008908926000106/sci-20261103.htm"
+    },
+    {
+     "label_ko": "Uber Technologies, Inc",
+     "label_en": "Uber Technologies, Inc",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1543151/000154315126000039/uber-20261104.htm"
+    },
+    {
+     "label_ko": "AeroVironment Inc",
+     "label_en": "AeroVironment Inc",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926122416/tm2628954d1_8k.htm"
+    }
+   ],
+   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
+   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
+   "source_en": "Source: SEC 8-K notices (EDGAR)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "2026-11-04 회사들이 낸 '큰 소식' 신고서 8건 · 머니트래커",
+   "share_en": "8 'big news' notices companies filed on 2026-11-04 · Money Tracker"
+  },
+  {
+   "id": "president-2026-22385",
+   "kind": "president",
+   "icon": "",
+   "score": 55.2,
+   "layout": "versus",
+   "date": "2026-11-02",
+   "badge_ko": "대통령 조치",
+   "badge_en": "PRESIDENTIAL ACTION",
+   "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
+   "title_en": "Last similar move: what happened in the same period?",
+   "now": {
+    "tag_ko": "지금",
+    "tag_en": "NOW",
+    "title": "Adjusting Imports of Robotics, Industrial Machinery, and Their Parts and Components Into the United States",
+    "title_ko": "미국 포고문 제11077호 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-11-02",
+    "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
+    "plain_en": "An action under the law for taxing imports for national security reasons (Sec. 232)",
+    "type_en": "Proclamation",
+    "type_ko": "포고문",
+    "url": "https://www.federalregister.gov/documents/2026/11/02/2026-22385/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united"
+   },
+   "then": {
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
+    "title": "Adjusting Imports of Wind Turbines and Their Parts and Components Into the United States",
+    "title_ko": "미국 포고문 제11074호 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-10-28",
+    "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
+    "plain_en": "An action under the law for taxing imports for national security reasons (Sec. 232)",
+    "moves": [
+     {
+      "name_ko": "글로벌 청정에너지 ETF",
+      "name_en": "ICLN",
+      "pct": -3.0
+     }
+    ],
+    "period": "2026-10-22 → 2026-10-29",
+    "url": "https://www.federalregister.gov/documents/2026/10/28/2026-22049/adjusting-imports-of-wind-turbines-and-their-parts-and-components-into-the-united-states"
+   },
+   "stamp_ko": "같은 기간 ≠ 원인",
+   "stamp_en": "Same period ≠ cause",
+   "note_ko": "같은 기간 일어난 움직임일 뿐 이유를 말하는 게 아니에요. 투자 조언 아님.",
+   "note_en": "Moves shown only as what happened in the same period, not a reason. Not investment advice.",
+   "source_ko": "출처: 미국 관보 · 백악관 · 종가 기록 (2026-10-29)",
+   "source_en": "Source: Federal Register · White House · closing prices (2026-10-29)",
+   "source_url": "https://www.federalregister.gov/documents/2026/11/02/2026-22385/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united",
+   "share_ko": "지난번 비슷한 조치 때 같은 기간엔 글로벌 청정에너지 ETF -3.0% 움직임이 있었어요 (원인 아님) · 머니트래커",
+   "share_en": "Last similar move, same period: ICLN -3.0% (not a cause) · Money Tracker"
+  },
+  {
+   "id": "late",
+   "kind": "late",
+   "icon": "●",
+   "score": 48.2,
+   "layout": "list",
+   "date": "2026-11-01",
+   "badge_ko": "늦은 신고 클럽",
+   "badge_en": "LATE CLUB",
+   "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
+   "title_en": "US lawmakers who handed in their stock homework late",
+   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
+   "rows": [
+    {
+     "mark": "1.",
+     "label_ko": "Thomas H. Kean 의원 · Abbott Laboratories",
+     "label_en": "Rep. Thomas H. Kean · Abbott Laboratories",
+     "value_ko": "43일 걸림",
+     "value_en": "43 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+    },
+    {
+     "mark": "2.",
+     "label_ko": "Thomas H. Kean 의원 · Texas Instruments Inc",
+     "label_en": "Rep. Thomas H. Kean · Texas Instruments Inc",
+     "value_ko": "43일 걸림",
+     "value_en": "43 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+    },
+    {
+     "mark": "3.",
+     "label_ko": "John J Mr McGuire 의원 · Broadcom Inc.",
+     "label_en": "Rep. John J Mr McGuire · Broadcom Inc.",
+     "value_ko": "38일 걸림",
+     "value_en": "38 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035484.pdf"
+    }
+   ],
+   "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
+   "note_en": "A record, not proof of wrongdoing. Not investment advice.",
+   "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
+   "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Thomas H. Kean 의원 43일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Thomas H. Kean, 43 days / we get a call if rent is 1 day late  · Money Tracker"
+  }
+ ],
+ "cards": {
+  "late": {
+   "id": "late",
+   "kind": "late",
+   "icon": "●",
+   "score": 48.2,
+   "layout": "list",
+   "date": "2026-11-01",
+   "badge_ko": "늦은 신고 클럽",
+   "badge_en": "LATE CLUB",
+   "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
+   "title_en": "US lawmakers who handed in their stock homework late",
+   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
+   "rows": [
+    {
+     "mark": "1.",
+     "label_ko": "Thomas H. Kean 의원 · Abbott Laboratories",
+     "label_en": "Rep. Thomas H. Kean · Abbott Laboratories",
+     "value_ko": "43일 걸림",
+     "value_en": "43 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+    },
+    {
+     "mark": "2.",
+     "label_ko": "Thomas H. Kean 의원 · Texas Instruments Inc",
+     "label_en": "Rep. Thomas H. Kean · Texas Instruments Inc",
+     "value_ko": "43일 걸림",
+     "value_en": "43 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+    },
+    {
+     "mark": "3.",
+     "label_ko": "John J Mr McGuire 의원 · Broadcom Inc.",
+     "label_en": "Rep. John J Mr McGuire · Broadcom Inc.",
+     "value_ko": "38일 걸림",
+     "value_en": "38 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035484.pdf"
+    }
+   ],
+   "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
+   "note_en": "A record, not proof of wrongdoing. Not investment advice.",
+   "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
+   "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Thomas H. Kean 의원 43일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Thomas H. Kean, 43 days / we get a call if rent is 1 day late  · Money Tracker"
+  },
+  "president": {
+   "id": "president-2026-22385",
+   "kind": "president",
+   "icon": "",
+   "score": 55.2,
+   "layout": "versus",
+   "date": "2026-11-02",
+   "badge_ko": "대통령 조치",
+   "badge_en": "PRESIDENTIAL ACTION",
+   "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
+   "title_en": "Last similar move: what happened in the same period?",
+   "now": {
+    "tag_ko": "지금",
+    "tag_en": "NOW",
+    "title": "Adjusting Imports of Robotics, Industrial Machinery, and Their Parts and Components Into the United States",
+    "title_ko": "미국 포고문 제11077호 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-11-02",
+    "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
+    "plain_en": "An action under the law for taxing imports for national security reasons (Sec. 232)",
+    "type_en": "Proclamation",
+    "type_ko": "포고문",
+    "url": "https://www.federalregister.gov/documents/2026/11/02/2026-22385/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united"
+   },
+   "then": {
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
+    "title": "Adjusting Imports of Wind Turbines and Their Parts and Components Into the United States",
+    "title_ko": "미국 포고문 제11074호 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-10-28",
+    "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
+    "plain_en": "An action under the law for taxing imports for national security reasons (Sec. 232)",
+    "moves": [
+     {
+      "name_ko": "글로벌 청정에너지 ETF",
+      "name_en": "ICLN",
+      "pct": -3.0
+     }
+    ],
+    "period": "2026-10-22 → 2026-10-29",
+    "url": "https://www.federalregister.gov/documents/2026/10/28/2026-22049/adjusting-imports-of-wind-turbines-and-their-parts-and-components-into-the-united-states"
+   },
+   "stamp_ko": "같은 기간 ≠ 원인",
+   "stamp_en": "Same period ≠ cause",
+   "note_ko": "같은 기간 일어난 움직임일 뿐 이유를 말하는 게 아니에요. 투자 조언 아님.",
+   "note_en": "Moves shown only as what happened in the same period, not a reason. Not investment advice.",
+   "source_ko": "출처: 미국 관보 · 백악관 · 종가 기록 (2026-10-29)",
+   "source_en": "Source: Federal Register · White House · closing prices (2026-10-29)",
+   "source_url": "https://www.federalregister.gov/documents/2026/11/02/2026-22385/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united",
+   "share_ko": "지난번 비슷한 조치 때 같은 기간엔 글로벌 청정에너지 ETF -3.0% 움직임이 있었어요 (원인 아님) · 머니트래커",
+   "share_en": "Last similar move, same period: ICLN -3.0% (not a cause) · Money Tracker"
+  },
+  "insider": {
+   "id": "insider",
+   "kind": "insider",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-04",
+   "badge_ko": "내부자 워치",
+   "badge_en": "INSIDER WATCH",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-04까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-04",
+   "rows": [
+    {
+     "label_ko": "Berkshire Hathaway Inc · 큰 주주",
+     "label_en": "Berkshire Hathaway Inc · 10% owner",
+     "value_ko": "~$69.0M",
+     "value_en": "~$69.0M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
+    {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$45.9M",
+     "value_en": "~$45.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000256/0001596532-26-000256-index.htm"
+    },
+    {
+     "label_ko": "American Express Co · 임원",
+     "label_en": "American Express Co · Chief Legal Officer",
+     "value_ko": "~$22.9M",
+     "value_en": "~$22.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000424/0000004962-26-000424-index.htm"
+    },
+    {
+     "label_ko": "Walmart Inc. · 임원",
+     "label_en": "Walmart Inc. · Chief Technology Officer",
+     "value_ko": "~$20.5M",
+     "value_en": "~$20.5M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/104169/000178119826000008/0001781198-26-000008-index.htm"
+    },
+    {
+     "label_ko": "American Express Co · 회사 내부자",
+     "label_en": "American Express Co · Group Pres.",
+     "value_ko": "~$14.7M",
+     "value_en": "~$14.7M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000422/0000004962-26-000422-index.htm"
+    }
+   ],
+   "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
+   "note_en": "Some are pre-scheduled sales (10b5-1). The reason for a sale is unknown. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
+   "source_en": "Source: SEC insider-trade records (Form 4)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $173.0M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $173.0M on record · Money Tracker"
+  },
+  "debt": {
+   "id": "debt",
+   "kind": "debt",
+   "icon": "●",
+   "score": 30.0,
+   "layout": "big",
+   "date": "2026-11-03",
+   "badge_ko": "국가 채무",
+   "badge_en": "NATIONAL DEBT",
+   "title_ko": "미국 정부가 지금까지 진 빚 (총 채무)",
+   "title_en": "How much the US government owes (total public debt)",
+   "big": {
+    "value": "$40,547,403,570,985",
+    "short_ko": "$40.55조",
+    "short_en": "$40.55 trillion"
+   },
+   "sub_ko": "2026-11-03 기준",
+   "sub_en": "As of 2026-11-03",
+   "rows": [
+    {
+     "label_ko": "1년 전 같은 날엔",
+     "label_en": "Same day last year",
+     "value_ko": "$38.00조",
+     "value_en": "$38.00 T",
+     "tone": "white"
+    },
+    {
+     "label_ko": "1년 사이 불어난 빚",
+     "label_en": "Debt added in one year",
+     "value_ko": "+$2.54조",
+     "value_en": "+$2.54 T",
+     "tone": "red"
+    },
+    {
+     "label_ko": "1초마다 늘어난 빚 (최근 30일 평균)",
+     "label_en": "Added every second (30-day avg)",
+     "value_ko": "+$119,053",
+     "value_en": "+$119,053",
+     "tone": "amber"
+    }
+   ],
+   "note_ko": "공식 집계 숫자예요. 앞으로 얼마가 될지는 말하지 않아요. 투자 조언 아님.",
+   "note_en": "Official reported figure. No forecast. Not investment advice.",
+   "source_ko": "출처: 미 재무부 재정 데이터 (FiscalData)",
+   "source_en": "Source: U.S. Treasury FiscalData",
+   "source_url": "https://fiscaldata.treasury.gov/",
+   "share_ko": "미국 정부가 지금까지 진 빚 $40.55조 (2026-11-03 기준) · 머니트래커",
+   "share_en": "How much the US government owes: $40.55 trillion (as of 2026-11-03) · Money Tracker"
+  }
+ }
+}

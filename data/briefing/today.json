@@ -1,6 +1,6 @@
 {
- "date": "2026-11-04",
- "generated_at": "2026-11-04T08:40Z",
+ "date": "2026-11-05",
+ "generated_at": "2026-11-05T08:41Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -10,13 +10,13 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-11-03",
+   "date": "2026-11-04",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-03까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-03",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-04까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-04",
    "rows": [
     {
      "label_ko": "Berkshire Hathaway Inc · 큰 주주",
@@ -25,6 +25,14 @@
      "value_en": "~$69.0M",
      "tone": "red",
      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
+    {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$45.9M",
+     "value_en": "~$45.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000256/0001596532-26-000256-index.htm"
     },
     {
      "label_ko": "American Express Co · 임원",
@@ -49,14 +57,6 @@
      "value_en": "~$14.7M",
      "tone": "white",
      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000422/0000004962-26-000422-index.htm"
-    },
-    {
-     "label_ko": "Visa Inc. · 사장",
-     "label_en": "Visa Inc. · PRESIDENT",
-     "value_ko": "~$14.6M",
-     "value_en": "~$14.6M",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000130/0001403161-26-000130-index.htm"
     }
    ],
    "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
@@ -64,8 +64,8 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $141.8M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $141.8M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $173.0M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $173.0M on record · Money Tracker"
   },
   {
    "id": "movers",
@@ -73,53 +73,53 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "badge_ko": "큰 움직임",
    "badge_en": "BIG MOVERS",
    "title_ko": "어제 가장 크게 움직인 회사들",
    "title_en": "Companies that moved most at the last close",
-   "sub_ko": "2026-10-30 → 2026-11-02 마감 가격 비교 (우리가 지켜보는 회사 중)",
-   "sub_en": "Closing price 2026-10-30 → 2026-11-02 (among companies we track)",
+   "sub_ko": "2026-11-02 → 2026-11-03 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-11-02 → 2026-11-03 (among companies we track)",
    "rows": [
     {
-     "label_ko": "Idexx Laboratories Inc",
-     "label_en": "Idexx Laboratories Inc",
-     "value_ko": "+21.8%",
-     "value_en": "+21.8%",
+     "label_ko": "Fabrinet",
+     "label_en": "Fabrinet",
+     "value_ko": "+15.5%",
+     "value_en": "+15.5%",
      "tone": "green",
      "mark": "▲"
     },
     {
-     "label_ko": "Lumentum Holdings Inc.",
-     "label_en": "Lumentum Holdings Inc.",
-     "value_ko": "-18.6%",
-     "value_en": "-18.6%",
+     "label_ko": "Dynatrace, Inc.",
+     "label_en": "Dynatrace, Inc.",
+     "value_ko": "-14.7%",
+     "value_en": "-14.7%",
      "tone": "red",
      "mark": "▼"
     },
     {
-     "label_ko": "Newell Brands Inc.",
-     "label_en": "Newell Brands Inc.",
-     "value_ko": "+15.1%",
-     "value_en": "+15.1%",
+     "label_ko": "Gartner Inc",
+     "label_en": "Gartner Inc",
+     "value_ko": "-13.2%",
+     "value_en": "-13.2%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Fiserv Inc",
+     "label_en": "Fiserv Inc",
+     "value_ko": "+12.5%",
+     "value_en": "+12.5%",
      "tone": "green",
      "mark": "▲"
     },
     {
-     "label_ko": "Vuzix Corp",
-     "label_en": "Vuzix Corp",
-     "value_ko": "-14.9%",
-     "value_en": "-14.9%",
-     "tone": "red",
-     "mark": "▼"
-    },
-    {
-     "label_ko": "Venture Global, Inc.",
-     "label_en": "Venture Global, Inc.",
-     "value_ko": "-13.0%",
-     "value_en": "-13.0%",
-     "tone": "red",
-     "mark": "▼"
+     "label_ko": "Regal Rexnord Corp",
+     "label_en": "Regal Rexnord Corp",
+     "value_ko": "+11.8%",
+     "value_en": "+11.8%",
+     "tone": "green",
+     "mark": "▲"
     }
    ],
    "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
@@ -127,8 +127,8 @@
    "source_ko": "출처: 일별 마감 가격 기록",
    "source_en": "Source: daily closing prices",
    "source_url": "https://91cleaner.github.io/money-tracker/us.html",
-   "share_ko": "2026-11-02 마감 기준 가장 크게 움직인 회사: Idexx Laboratories Inc +21.8% · 머니트래커",
-   "share_en": "Biggest mover at the 2026-11-02 close: Idexx Laboratories Inc +21.8% · Money Tracker"
+   "share_ko": "2026-11-03 마감 기준 가장 크게 움직인 회사: Fabrinet +15.5% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-11-03 close: Fabrinet +15.5% · Money Tracker"
   },
   {
    "id": "filings",
@@ -136,53 +136,53 @@
    "icon": "●",
    "score": 72.0,
    "layout": "list",
-   "date": "2026-11-03",
+   "date": "2026-11-04",
    "badge_ko": "새 공시",
    "badge_en": "NEW FILINGS",
-   "title_ko": "2026-11-03 회사들이 낸 '큰 소식' 신고서 8건",
-   "title_en": "8 'big news' notices companies filed on 2026-11-03",
+   "title_ko": "2026-11-04 회사들이 낸 '큰 소식' 신고서 8건",
+   "title_en": "8 'big news' notices companies filed on 2026-11-04",
    "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
    "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
    "rows": [
     {
-     "label_ko": "Beacon Financial Corp",
-     "label_en": "Beacon Financial Corp",
+     "label_ko": "Jones Lang Lasalle Inc",
+     "label_en": "Jones Lang Lasalle Inc",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1108134/000117184326007057/f8k_110326.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1037976/000103797626000193/jll-20261103.htm"
     },
     {
-     "label_ko": "Erie Indemnity Co",
-     "label_en": "Erie Indemnity Co",
+     "label_ko": "Kraft Heinz Co",
+     "label_en": "Kraft Heinz Co",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/922621/000162828026069468/erie-20261102.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1637459/000163745926000079/khc-20261031.htm"
     },
     {
-     "label_ko": "Guardant Health, Inc.",
-     "label_en": "Guardant Health, Inc.",
+     "label_ko": "Service Corp International",
+     "label_en": "Service Corp International",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1576280/000119312526444416/d457424d8k.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/89089/000008908926000106/sci-20261103.htm"
     },
     {
-     "label_ko": "Sysco Corp",
-     "label_en": "Sysco Corp",
+     "label_ko": "Uber Technologies, Inc",
+     "label_en": "Uber Technologies, Inc",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/96021/000009602126000046/syy-20261103.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1543151/000154315126000039/uber-20261104.htm"
     },
     {
-     "label_ko": "Trimble Inc.",
-     "label_en": "Trimble Inc.",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
+     "label_ko": "AeroVironment Inc",
+     "label_en": "AeroVironment Inc",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/864749/000086474926000115/trmb-20261102.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926122416/tm2628954d1_8k.htm"
     }
    ],
    "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
@@ -190,14 +190,14 @@
    "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
    "source_en": "Source: SEC 8-K notices (EDGAR)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "2026-11-03 회사들이 낸 '큰 소식' 신고서 8건 · 머니트래커",
-   "share_en": "8 'big news' notices companies filed on 2026-11-03 · Money Tracker"
+   "share_ko": "2026-11-04 회사들이 낸 '큰 소식' 신고서 8건 · 머니트래커",
+   "share_en": "8 'big news' notices companies filed on 2026-11-04 · Money Tracker"
   },
   {
    "id": "president-2026-22385",
    "kind": "president",
    "icon": "",
-   "score": 65.0,
+   "score": 55.2,
    "layout": "versus",
    "date": "2026-11-02",
    "badge_ko": "대통령 조치",
@@ -248,7 +248,7 @@
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 58.5,
+   "score": 48.2,
    "layout": "list",
    "date": "2026-11-01",
    "badge_ko": "늦은 신고 클럽",
@@ -300,7 +300,7 @@
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 58.5,
+   "score": 48.2,
    "layout": "list",
    "date": "2026-11-01",
    "badge_ko": "늦은 신고 클럽",
@@ -350,7 +350,7 @@
    "id": "president-2026-22385",
    "kind": "president",
    "icon": "",
-   "score": 65.0,
+   "score": 55.2,
    "layout": "versus",
    "date": "2026-11-02",
    "badge_ko": "대통령 조치",
@@ -403,13 +403,13 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-11-03",
+   "date": "2026-11-04",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-03까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-03",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-04까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-04",
    "rows": [
     {
      "label_ko": "Berkshire Hathaway Inc · 큰 주주",
@@ -418,6 +418,14 @@
      "value_en": "~$69.0M",
      "tone": "red",
      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
+    {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$45.9M",
+     "value_en": "~$45.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000256/0001596532-26-000256-index.htm"
     },
     {
      "label_ko": "American Express Co · 임원",
@@ -442,14 +450,6 @@
      "value_en": "~$14.7M",
      "tone": "white",
      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000422/0000004962-26-000422-index.htm"
-    },
-    {
-     "label_ko": "Visa Inc. · 사장",
-     "label_en": "Visa Inc. · PRESIDENT",
-     "value_ko": "~$14.6M",
-     "value_en": "~$14.6M",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000130/0001403161-26-000130-index.htm"
     }
    ],
    "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
@@ -457,8 +457,8 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $141.8M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $141.8M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $173.0M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $173.0M on record · Money Tracker"
   },
   "debt": {
    "id": "debt",
@@ -466,18 +466,18 @@
    "icon": "●",
    "score": 30.0,
    "layout": "big",
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "badge_ko": "국가 채무",
    "badge_en": "NATIONAL DEBT",
    "title_ko": "미국 정부가 지금까지 진 빚 (총 채무)",
    "title_en": "How much the US government owes (total public debt)",
    "big": {
-    "value": "$40,502,080,966,097",
-    "short_ko": "$40.50조",
-    "short_en": "$40.50 trillion"
+    "value": "$40,547,403,570,985",
+    "short_ko": "$40.55조",
+    "short_en": "$40.55 trillion"
    },
-   "sub_ko": "2026-11-02 기준",
-   "sub_en": "As of 2026-11-02",
+   "sub_ko": "2026-11-03 기준",
+   "sub_en": "As of 2026-11-03",
    "rows": [
     {
      "label_ko": "1년 전 같은 날엔",
@@ -489,15 +489,15 @@
     {
      "label_ko": "1년 사이 불어난 빚",
      "label_en": "Debt added in one year",
-     "value_ko": "+$2.50조",
-     "value_en": "+$2.50 T",
+     "value_ko": "+$2.54조",
+     "value_en": "+$2.54 T",
      "tone": "red"
     },
     {
      "label_ko": "1초마다 늘어난 빚 (최근 30일 평균)",
      "label_en": "Added every second (30-day avg)",
-     "value_ko": "+$104,570",
-     "value_en": "+$104,570",
+     "value_ko": "+$119,053",
+     "value_en": "+$119,053",
      "tone": "amber"
     }
    ],
@@ -506,8 +506,8 @@
    "source_ko": "출처: 미 재무부 재정 데이터 (FiscalData)",
    "source_en": "Source: U.S. Treasury FiscalData",
    "source_url": "https://fiscaldata.treasury.gov/",
-   "share_ko": "미국 정부가 지금까지 진 빚 $40.50조 (2026-11-02 기준) · 머니트래커",
-   "share_en": "How much the US government owes: $40.50 trillion (as of 2026-11-02) · Money Tracker"
+   "share_ko": "미국 정부가 지금까지 진 빚 $40.55조 (2026-11-03 기준) · 머니트래커",
+   "share_en": "How much the US government owes: $40.55 trillion (as of 2026-11-03) · Money Tracker"
   }
  }
 }
