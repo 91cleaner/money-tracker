@@ -232,3 +232,38 @@ test('ranking tab refreshes when the delayed daily snapshot arrives', async () =
   assert.match(app.panel.html, /NVDA/);
   assert.match(app.panel.html, /정부 계약 금액/);
 });
+
+
+test('official-source HTTPS hostnames are exact; lookalikes and insecure URLs are non-clickable', async () => {
+  const app = mount(async (url) => url.includes('whitehouse')
+    ? ok({ items: [
+      { kind: 'presdoc', date: '2026-11-05', u: 'https://www.federalregister.gov.evil.example/doc', type: 'Fake subdomain' },
+      { kind: 'presdoc', date: '2026-11-05', u: 'https://www.whitehouse.gov@evil.example/doc', type: 'Credential spoof' },
+      { kind: 'presdoc', date: '2026-11-05', u: 'http://www.federalregister.gov/doc', type: 'Plain HTTP' },
+      { kind: 'presdoc', date: '2026-11-05', u: 'https://www.federalregister.gov:8443/doc', type: 'Unexpected port' },
+      { kind: 'presdoc', date: '2026-11-05', u: 'https://evil.example/doc', type: 'Non-government host' },
+      { kind: 'presdoc', date: '2026-11-05', u: 'https://www.federalregister.gov/doc', type: 'Federal Register original' },
+      { kind: 'presdoc', date: '2026-11-05', u: 'https://www.whitehouse.gov/briefing-room/', type: 'White House original' }
+    ] })
+    : daily(url));
+  await app.click('wh');
+  for (const label of ['Fake subdomain', 'Credential spoof', 'Plain HTTP', 'Unexpected port', 'Non-government host']) {
+    assert.ok(app.panel.html.includes('<div class="tbRow"><span class="l">' + label), label + ' must be non-clickable');
+  }
+  assert.equal((app.panel.html.match(/<a class="tbRow" href=/g) || []).length, 2, 'only official HTTPS rows link');
+  assert.match(app.panel.html, /href="https:\/\/www\.federalregister\.gov\/doc"/);
+  assert.match(app.panel.html, /href="https:\/\/www\.whitehouse\.gov\/briefing-room\/"/);
+});
+
+test('House PTR original links accept only the official Clerk HTTPS origin', async () => {
+  const app = mount(async (url) => url.includes('trades-recent')
+    ? ok({ trades: [
+      { who: 'Fake', tk: '', d: '2026-11-01', fd: '2026-11-05', amt: '$1', ty: 'P', doc: 'https://disclosures-clerk.house.gov.evil.example/public_disc/ptr.pdf' },
+      { who: 'Official', tk: '', d: '2026-11-01', fd: '2026-11-05', amt: '$1', ty: 'P', doc: 'https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/example.pdf' }
+    ] })
+    : daily(url));
+  await app.click('mem');
+  assert.match(app.panel.html, /<div class="tbRow"><span class="l">Fake/);
+  assert.match(app.panel.html, /href="https:\/\/disclosures-clerk\.house\.gov\/public_disc\/ptr-pdfs\/2026\/example\.pdf"/);
+  assert.equal((app.panel.html.match(/<a class="tbRow" href=/g) || []).length, 1);
+});
