@@ -43,7 +43,7 @@
   function pad(n) { return String(n).padStart(2, "0"); }
   function dateEn(iso) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); return m && +m[2] >= 1 && +m[2] <= 12 ? MON[+m[2] - 1] + " " + (+m[3]) + ", " + m[1] : iso; }
   function date(iso) { return isEn ? dateEn(iso) : iso; }
-  function usd(v) { if (v == null || !isFinite(v)) return "-"; var a = Math.abs(v); return "$" + (a >= 1e9 ? (v / 1e9).toFixed(2) + "B" : a >= 1e6 ? (v / 1e6).toFixed(2) + "M" : a >= 1e3 ? Math.round(v / 1e3).toLocaleString("en-US") + "K" : Math.round(v).toLocaleString("en-US")); }
+  function usd(v) { if (v == null || !isFinite(v)) return "-"; var a = Math.abs(v); return "$" + (a >= 1e9 ? (v / 1e9).toFixed(2) + "B" : a >= 1e6 ? (v / 1e6).toFixed(2) + "M" : a >= 1e3 ? (v / 1e3).toFixed(2) + "K" : Math.round(v).toLocaleString("en-US")); }
   function krw(v) { // KRW amount: 억/만원 in KO, $-free "KRW 1.2B" style in EN
     if (v == null || !isFinite(v)) return "-"; var a = Math.abs(v);
     if (!isEn) return a >= 1e8 ? (v / 1e8).toFixed(1).replace(/\.0$/, "") + "억원" : a >= 1e4 ? Math.round(v / 1e4).toLocaleString("ko-KR") + "만원" : Math.round(v).toLocaleString("ko-KR") + "원";
