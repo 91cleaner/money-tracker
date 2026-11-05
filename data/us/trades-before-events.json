@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04",
+ "updated": "2026-11-05",
  "window_days": 30,
  "note": "Trades dated 1-30 days before a dated public event for the same company. Dates are placed side by side only; this does not show that anyone knew in advance or that one caused the other. House PTR amounts are reported ranges. Form 4 rows marked plan=true were under a 10b5-1 trading plan.",
  "coverage": {
@@ -151,9 +151,9 @@
    ]
   },
   "LRCX": {
-   "n": 18,
+   "n": 17,
    "n_ptr": 12,
-   "n_form4": 6,
+   "n_form4": 5,
    "matches": [
     {
      "src": "House PTR",
@@ -169,22 +169,6 @@
      "event_date": "2026-10-21",
      "event_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000052/lrcx-20261021.htm",
      "days_before": 6
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "ARCHER TIMOTHY",
-     "role": "President and CEO",
-     "side": "sell",
-     "amount": "30,000 shares at $300.00 (about $9,000,000)",
-     "plan": true,
-     "trade_date": "2026-08-06",
-     "filed": "2026-08-07",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/707549/000134360026000011/0001343600-26-000011-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2026-08-27",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000043/lrcx-20260824.htm",
-     "days_before": 21
     },
     {
      "src": "House PTR",
@@ -3292,6 +3276,104 @@
      "event_date": "2026-01-30",
      "event_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000006/ibm-20260127.htm",
      "days_before": 22
+    }
+   ]
+  },
+  "FMAO": {
+   "n": 6,
+   "n_ptr": 5,
+   "n_form4": 1,
+   "matches": [
+    {
+     "src": "House PTR",
+     "who": "Robert E. Latta",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2026-10-20",
+     "filed": "2026-11-03",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035763.pdf",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-10-22",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000119312526429065/fmao-20261022.htm",
+     "days_before": 2
+    },
+    {
+     "src": "House PTR",
+     "who": "Robert E. Latta",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2026-07-20",
+     "filed": "2026-07-24",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035065.pdf",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-07-27",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000119312526318198/fmao-20260727.htm",
+     "days_before": 7
+    },
+    {
+     "src": "House PTR",
+     "who": "Robert E. Latta",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2026-04-20",
+     "filed": "2026-04-24",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034401.pdf",
+     "event": "8-K: shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2026-04-21",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000119312526167045/fmao-20260420.htm",
+     "days_before": 1
+    },
+    {
+     "src": "House PTR",
+     "who": "Robert E. Latta",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2026-01-20",
+     "filed": "2026-01-23",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033857.pdf",
+     "event": "8-K: other event",
+     "event_kind": "8-K",
+     "event_date": "2026-01-27",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000119312526024773/fmao-20260127.htm",
+     "days_before": 7
+    },
+    {
+     "src": "House PTR",
+     "who": "Robert E. Latta",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2025-10-20",
+     "filed": "2025-10-27",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033346.pdf",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2025-10-27",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000119312525250828/fmao-20251027.htm",
+     "days_before": 7
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Boyce Ian D",
+     "role": "Director",
+     "side": "buy",
+     "amount": "210 shares at $24.06 (about $5,053)",
+     "plan": false,
+     "trade_date": "2025-05-29",
+     "filed": "2025-05-30",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/792966/000095017025079392/0000950170-25-079392-index.htm",
+     "event": "8-K: executive or director change, other event",
+     "event_kind": "8-K",
+     "event_date": "2025-06-25",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000095017025089887/fmao-20250624.htm",
+     "days_before": 27
     }
    ]
   },
@@ -6700,8 +6782,8 @@
    ]
   },
   "HALO": {
-   "n": 5,
-   "n_ptr": 2,
+   "n": 4,
+   "n_ptr": 1,
    "n_form4": 3,
    "matches": [
     {
@@ -6718,21 +6800,6 @@
      "event_date": "2026-09-30",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000128/halo-20260928.htm",
      "days_before": 1
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-03-09",
-     "filed": "2026-04-07",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034285.pdf",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2026-03-12",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000035/halo-20260312.htm",
-     "days_before": 3
     },
     {
      "src": "SEC Form 4",
@@ -6784,33 +6851,27 @@
     }
    ]
   },
-  "ITT": {
-   "n": 1,
-   "n_ptr": 1,
-   "n_form4": 0,
-   "matches": [
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-11-06",
-     "filed": "2025-12-15",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033619.pdf",
-     "event": "8-K: material agreement, unregistered share sale, executive or director change, Reg FD disclosure, other event",
-     "event_kind": "8-K",
-     "event_date": "2025-12-05",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/216228/000119312525308605/d25498d8k.htm",
-     "days_before": 29
-    }
-   ]
-  },
   "MTSI": {
    "n": 75,
    "n_ptr": 5,
    "n_form4": 70,
    "matches": [
+    {
+     "src": "SEC Form 4",
+     "who": "Kober John",
+     "role": "Senior VP and CFO",
+     "side": "sell",
+     "amount": "1,027 shares at $236.60 (about $242,988)",
+     "plan": true,
+     "trade_date": "2026-10-26",
+     "filed": "2026-10-27",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1493594/000090445426000549/0000904454-26-000549-index.htm",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-11-05",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359426000041/mtsi-20261105.htm",
+     "days_before": 10
+    },
     {
      "src": "House PTR",
      "who": "Gilbert Cisneros",
@@ -7102,22 +7163,6 @@
      "role": "President and CEO",
      "side": "sell",
      "amount": "536 shares at $172.93 (about $92,690)",
-     "plan": false,
-     "trade_date": "2025-11-10",
-     "filed": "2025-11-13",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1493594/000090445425000593/0000904454-25-000593-index.htm",
-     "event": "8-K: executive or director change, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-11-25",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000057/mtsi-20251125.htm",
-     "days_before": 15
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Daly Stephen G",
-     "role": "President and CEO",
-     "side": "sell",
-     "amount": "2,408 shares at $178.29 (about $429,322)",
      "plan": false,
      "trade_date": "2025-11-10",
      "filed": "2025-11-13",
@@ -10075,11 +10120,11 @@
      "trade_date": "2025-11-18",
      "filed": "2025-12-15",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033619.pdf",
-     "event": "8-K: other event",
+     "event": "8-K: Reg FD disclosure",
      "event_kind": "8-K",
-     "event_date": "2025-12-02",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1555280/000155528025000280/zts-20251202.htm",
-     "days_before": 14
+     "event_date": "2025-12-11",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1555280/000155528025000282/zts-20251211.htm",
+     "days_before": 23
     },
     {
      "src": "House PTR",
@@ -10435,8 +10480,8 @@
    ]
   },
   "PTC": {
-   "n": 13,
-   "n_ptr": 10,
+   "n": 12,
+   "n_ptr": 9,
    "n_form4": 3,
    "matches": [
     {
@@ -10560,21 +10605,6 @@
      "event_date": "2025-12-04",
      "event_url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525308126/ptc-20251130.htm",
      "days_before": 2
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-09-30",
-     "filed": "2025-10-10",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20032248.pdf",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-10-14",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525237840/ptc-20251010.htm",
-     "days_before": 14
     },
     {
      "src": "House PTR",
@@ -13145,9 +13175,9 @@
    ]
   },
   "MSFT": {
-   "n": 62,
-   "n_ptr": 43,
-   "n_form4": 19,
+   "n": 55,
+   "n_ptr": 42,
+   "n_form4": 13,
    "matches": [
     {
      "src": "House PTR",
@@ -16665,9 +16695,9 @@
    ]
   },
   "ROK": {
-   "n": 27,
+   "n": 16,
    "n_ptr": 4,
-   "n_form4": 23,
+   "n_form4": 12,
    "matches": [
     {
      "src": "House PTR",
@@ -16876,115 +16906,50 @@
     },
     {
      "src": "SEC Form 4",
-     "who": "Fordenwalt Matthew W.",
-     "role": "SVP Lifecycle Services",
-     "side": "sell",
-     "amount": "500 shares at $295.01 (about $147,505)",
-     "plan": false,
-     "trade_date": "2025-05-09",
-     "filed": "2025-05-09",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000040/0001024478-25-000040-index.htm",
-     "event": "8-K: other event",
-     "event_kind": "8-K",
-     "event_date": "2025-06-04",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1024478/000119312525134874/d36774d8k.htm",
-     "days_before": 26
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "House Rebecca W",
-     "role": "SVP, CLO and Secretary",
-     "side": "sell",
-     "amount": "5,000 shares at $295.01 (about $1,475,050)",
-     "plan": false,
-     "trade_date": "2025-05-09",
-     "filed": "2025-05-09",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000038/0001024478-25-000038-index.htm",
-     "event": "8-K: other event",
-     "event_kind": "8-K",
-     "event_date": "2025-06-04",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1024478/000119312525134874/d36774d8k.htm",
-     "days_before": 26
-    },
-    {
-     "src": "SEC Form 4",
      "who": "Bulho Matheus De A G Viera",
      "role": "SVP Software and Control",
      "side": "sell",
-     "amount": "939 shares at $304.24 (about $285,681)",
+     "amount": "293 shares at $257.68 (about $75,500)",
      "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000046/0001024478-25-000046-index.htm",
-     "event": "8-K: other event",
-     "event_kind": "8-K",
-     "event_date": "2025-06-04",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1024478/000119312525134874/d36774d8k.htm",
-     "days_before": 23
+     "trade_date": "2025-04-02",
+     "filed": "2025-04-07",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000030/0001024478-25-000030-index.htm",
+     "event": "Presidential order modifying reciprocal tariff rates (EO 14266, pause)",
+     "event_kind": "historical",
+     "event_date": "2025-04-09",
+     "event_url": "https://www.federalregister.gov/documents/2025/04/15/2025-06462/modifying-reciprocal-tariff-rates-to-reflect-trading-partner-retaliation-and-alignment",
+     "days_before": 7
+    },
+    {
+     "src": "House PTR",
+     "who": "Rob Bresnahan",
+     "role": "House member",
+     "side": "sell",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2025-04-08",
+     "filed": "2025-04-28",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030238.pdf",
+     "event": "Presidential order modifying reciprocal tariff rates (EO 14266, pause)",
+     "event_kind": "historical",
+     "event_date": "2025-04-09",
+     "event_url": "https://www.federalregister.gov/documents/2025/04/15/2025-06462/modifying-reciprocal-tariff-rates-to-reflect-trading-partner-retaliation-and-alignment",
+     "days_before": 1
     },
     {
      "src": "SEC Form 4",
-     "who": "Buttermore Robert L.",
-     "role": "SVP,Chief Supply Chain Officer",
+     "who": "GENEREUX SCOTT",
+     "role": "Sr.VP, Chief Revenue Officer",
      "side": "sell",
-     "amount": "1,704 shares at $304.37 (about $518,646)",
+     "amount": "500 shares at $290.14 (about $145,070)",
      "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000047/0001024478-25-000047-index.htm",
-     "event": "8-K: other event",
-     "event_kind": "8-K",
-     "event_date": "2025-06-04",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1024478/000119312525134874/d36774d8k.htm",
-     "days_before": 23
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "House Rebecca W",
-     "role": "SVP, CLO and Secretary",
-     "side": "sell",
-     "amount": "500 shares at $305.47 (about $152,735)",
-     "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000045/0001024478-25-000045-index.htm",
-     "event": "8-K: other event",
-     "event_kind": "8-K",
-     "event_date": "2025-06-04",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1024478/000119312525134874/d36774d8k.htm",
-     "days_before": 23
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "House Rebecca W",
-     "role": "SVP, CLO and Secretary",
-     "side": "sell",
-     "amount": "4,700 shares at $304.04 (about $1,428,988)",
-     "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000045/0001024478-25-000045-index.htm",
-     "event": "8-K: other event",
-     "event_kind": "8-K",
-     "event_date": "2025-06-04",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1024478/000119312525134874/d36774d8k.htm",
-     "days_before": 23
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Riesterer Terry L.",
-     "role": "Vice President and Controller",
-     "side": "sell",
-     "amount": "600 shares at $304.12 (about $182,472)",
-     "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000048/0001024478-25-000048-index.htm",
-     "event": "8-K: other event",
-     "event_kind": "8-K",
-     "event_date": "2025-06-04",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1024478/000119312525134874/d36774d8k.htm",
-     "days_before": 23
+     "trade_date": "2025-03-03",
+     "filed": "2025-03-03",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000021/0001024478-25-000021-index.htm",
+     "event": "Presidential tariff order signed (EO 14257, reciprocal tariffs)",
+     "event_kind": "historical",
+     "event_date": "2025-04-02",
+     "event_url": "https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and",
+     "days_before": 30
     }
    ]
   },
@@ -17524,9 +17489,9 @@
    ]
   },
   "GH": {
-   "n": 18,
+   "n": 15,
    "n_ptr": 0,
-   "n_form4": 18,
+   "n_form4": 15,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -17626,6 +17591,70 @@
     },
     {
      "src": "SEC Form 4",
+     "who": "Joyce Meghan V.",
+     "role": "Director",
+     "side": "sell",
+     "amount": "100 shares at $65.84 (about $6,584)",
+     "plan": false,
+     "trade_date": "2025-09-02",
+     "filed": "2025-09-03",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000177074925000003/0001770749-25-000003-index.htm",
+     "event": "8-K: Reg FD disclosure",
+     "event_kind": "8-K",
+     "event_date": "2025-09-24",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000269/gh-20250924.htm",
+     "days_before": 22
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Eltoukhy Helmy",
+     "role": "Co-Chief Executive Officer",
+     "side": "sell",
+     "amount": "294,723 shares at $59.44 (about $17,518,335)",
+     "plan": false,
+     "trade_date": "2025-09-09",
+     "filed": "2025-09-11",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000175296825000005/0001752968-25-000005-index.htm",
+     "event": "8-K: Reg FD disclosure",
+     "event_kind": "8-K",
+     "event_date": "2025-09-24",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000269/gh-20250924.htm",
+     "days_before": 15
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Eltoukhy Helmy",
+     "role": "Co-Chief Executive Officer",
+     "side": "sell",
+     "amount": "5,277 shares at $59.93 (about $316,251)",
+     "plan": false,
+     "trade_date": "2025-09-09",
+     "filed": "2025-09-11",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000175296825000005/0001752968-25-000005-index.htm",
+     "event": "8-K: Reg FD disclosure",
+     "event_kind": "8-K",
+     "event_date": "2025-09-24",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000269/gh-20250924.htm",
+     "days_before": 15
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Hidalgo Medina Manuel",
+     "role": "Director",
+     "side": "sell",
+     "amount": "2,165 shares at $54.16 (about $117,256)",
+     "plan": false,
+     "trade_date": "2025-09-12",
+     "filed": "2025-09-15",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000186552525000004/0001865525-25-000004-index.htm",
+     "event": "8-K: Reg FD disclosure",
+     "event_kind": "8-K",
+     "event_date": "2025-09-24",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000269/gh-20250924.htm",
+     "days_before": 12
+    },
+    {
+     "src": "SEC Form 4",
      "who": "POTTER MYRTLE S",
      "role": "Director",
      "side": "sell",
@@ -17655,118 +17684,6 @@
      "event_date": "2025-09-24",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000269/gh-20250924.htm",
      "days_before": 7
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "POTTER MYRTLE S",
-     "role": "Director",
-     "side": "sell",
-     "amount": "26 shares at $59.02 (about $1,535)",
-     "plan": false,
-     "trade_date": "2025-08-19",
-     "filed": "2025-08-20",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000260/0001576280-25-000260-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-09-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000267/gh-20250912.htm",
-     "days_before": 27
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Tariq Musa",
-     "role": "Director",
-     "side": "sell",
-     "amount": "116 shares at $59.02 (about $6,846)",
-     "plan": false,
-     "trade_date": "2025-08-19",
-     "filed": "2025-08-20",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000262/0001576280-25-000262-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-09-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000267/gh-20250912.htm",
-     "days_before": 27
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Kalia Kumud",
-     "role": "Chief Information Officer",
-     "side": "sell",
-     "amount": "2,000 shares at $61.76 (about $123,520)",
-     "plan": false,
-     "trade_date": "2025-08-21",
-     "filed": "2025-08-22",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000264/0001576280-25-000264-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-09-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000267/gh-20250912.htm",
-     "days_before": 25
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Joyce Meghan V.",
-     "role": "Director",
-     "side": "sell",
-     "amount": "100 shares at $65.84 (about $6,584)",
-     "plan": false,
-     "trade_date": "2025-09-02",
-     "filed": "2025-09-03",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000177074925000003/0001770749-25-000003-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-09-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000267/gh-20250912.htm",
-     "days_before": 13
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Eltoukhy Helmy",
-     "role": "Co-Chief Executive Officer",
-     "side": "sell",
-     "amount": "294,723 shares at $59.44 (about $17,518,335)",
-     "plan": false,
-     "trade_date": "2025-09-09",
-     "filed": "2025-09-11",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000175296825000005/0001752968-25-000005-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-09-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000267/gh-20250912.htm",
-     "days_before": 6
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Eltoukhy Helmy",
-     "role": "Co-Chief Executive Officer",
-     "side": "sell",
-     "amount": "5,277 shares at $59.93 (about $316,251)",
-     "plan": false,
-     "trade_date": "2025-09-09",
-     "filed": "2025-09-11",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000175296825000005/0001752968-25-000005-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-09-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000267/gh-20250912.htm",
-     "days_before": 6
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Hidalgo Medina Manuel",
-     "role": "Director",
-     "side": "sell",
-     "amount": "2,165 shares at $54.16 (about $117,256)",
-     "plan": false,
-     "trade_date": "2025-09-12",
-     "filed": "2025-09-15",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1576280/000186552525000004/0001865525-25-000004-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-09-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628025000267/gh-20250912.htm",
-     "days_before": 3
     },
     {
      "src": "SEC Form 4",
@@ -19056,9 +18973,9 @@
    ]
   },
   "GS": {
-   "n": 9,
+   "n": 8,
    "n_ptr": 8,
-   "n_form4": 1,
+   "n_form4": 0,
    "matches": [
     {
      "src": "House PTR",
@@ -19074,22 +18991,6 @@
      "event_date": "2026-10-13",
      "event_url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000529/gs-20261013.htm",
      "days_before": 19
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "GOLDMAN SACHS GROUP INC",
-     "role": "insider",
-     "side": "buy",
-     "amount": "500,000 shares at $17.00 (about $8,500,000)",
-     "plan": false,
-     "trade_date": "2026-08-06",
-     "filed": "2026-08-13",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000495/0000886982-26-000495-index.htm",
-     "event": "8-K: item 5.03",
-     "event_kind": "8-K",
-     "event_date": "2026-08-11",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526344912/d179572d8k.htm",
-     "days_before": 5
     },
     {
      "src": "House PTR",
@@ -22738,9 +22639,9 @@
    ]
   },
   "STE": {
-   "n": 16,
+   "n": 11,
    "n_ptr": 10,
-   "n_form4": 6,
+   "n_form4": 1,
    "matches": [
     {
      "src": "House PTR",
@@ -22907,86 +22808,6 @@
      "event_date": "2025-11-05",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1757898/000175789825000011/ste-20251105.htm",
      "days_before": 30
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Carestio Daniel A",
-     "role": "President and CEO",
-     "side": "sell",
-     "amount": "7,520 shares at $241.85 (about $1,818,712)",
-     "plan": false,
-     "trade_date": "2025-06-05",
-     "filed": "2025-06-06",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1757898/000162828025030023/0001628280-25-030023-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-07-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1757898/000119312525155509/d98166d8k.htm",
-     "days_before": 28
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Carestio Daniel A",
-     "role": "President and CEO",
-     "side": "sell",
-     "amount": "5,126 shares at $243.49 (about $1,248,130)",
-     "plan": false,
-     "trade_date": "2025-06-05",
-     "filed": "2025-06-06",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1757898/000162828025030023/0001628280-25-030023-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-07-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1757898/000119312525155509/d98166d8k.htm",
-     "days_before": 28
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Carestio Daniel A",
-     "role": "President and CEO",
-     "side": "sell",
-     "amount": "4,980 shares at $242.67 (about $1,208,497)",
-     "plan": false,
-     "trade_date": "2025-06-05",
-     "filed": "2025-06-06",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1757898/000162828025030023/0001628280-25-030023-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-07-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1757898/000119312525155509/d98166d8k.htm",
-     "days_before": 28
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Zangerle John Adam",
-     "role": "Sr. VP, Gen Counsel, and Sec.",
-     "side": "sell",
-     "amount": "1,648 shares at $241.61 (about $398,173)",
-     "plan": false,
-     "trade_date": "2025-06-13",
-     "filed": "2025-06-17",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1757898/000162828025031870/0001628280-25-031870-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-07-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1757898/000119312525155509/d98166d8k.htm",
-     "days_before": 20
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Zangerle John Adam",
-     "role": "Sr. VP, Gen Counsel, and Sec.",
-     "side": "sell",
-     "amount": "330 shares at $240.63 (about $79,408)",
-     "plan": false,
-     "trade_date": "2025-06-13",
-     "filed": "2025-06-17",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1757898/000162828025031870/0001628280-25-031870-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-07-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1757898/000119312525155509/d98166d8k.htm",
-     "days_before": 20
     }
    ]
   },
@@ -25580,9 +25401,9 @@
    ]
   },
   "DASH": {
-   "n": 256,
+   "n": 255,
    "n_ptr": 14,
-   "n_form4": 242,
+   "n_form4": 241,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -26540,9 +26361,9 @@
    ]
   },
   "AGIO": {
-   "n": 29,
+   "n": 28,
    "n_ptr": 0,
-   "n_form4": 29,
+   "n_form4": 28,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -26951,6 +26772,38 @@
     },
     {
      "src": "SEC Form 4",
+     "who": "Stanton Marshall S.",
+     "role": "SVP, Clinical & MD Affair",
+     "side": "sell",
+     "amount": "4,811 shares at $29.13 (about $140,144)",
+     "plan": false,
+     "trade_date": "2025-05-09",
+     "filed": "2025-05-12",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000076/0000784199-25-000076-index.htm",
+     "event": "8-K: unregistered share sale, other event",
+     "event_kind": "8-K",
+     "event_date": "2025-05-29",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000129/aort-20250528.htm",
+     "days_before": 20
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Stanton Marshall S.",
+     "role": "SVP, Clinical & MD Affair",
+     "side": "sell",
+     "amount": "5,737 shares at $29.13 (about $167,119)",
+     "plan": false,
+     "trade_date": "2025-05-09",
+     "filed": "2025-05-12",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000076/0000784199-25-000076-index.htm",
+     "event": "8-K: unregistered share sale, other event",
+     "event_kind": "8-K",
+     "event_date": "2025-05-29",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000129/aort-20250528.htm",
+     "days_before": 20
+    },
+    {
+     "src": "SEC Form 4",
      "who": "Holloway Jean F",
      "role": "SVP, General Counsel",
      "side": "sell",
@@ -27012,38 +26865,6 @@
      "event_date": "2025-05-29",
      "event_url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000129/aort-20250528.htm",
      "days_before": 2
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Stanton Marshall S.",
-     "role": "SVP, Clinical & MD Affair",
-     "side": "sell",
-     "amount": "4,811 shares at $29.13 (about $140,144)",
-     "plan": false,
-     "trade_date": "2025-05-09",
-     "filed": "2025-05-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000076/0000784199-25-000076-index.htm",
-     "event": "8-K: shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-05-16",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000083/aort-20250513.htm",
-     "days_before": 7
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Stanton Marshall S.",
-     "role": "SVP, Clinical & MD Affair",
-     "side": "sell",
-     "amount": "5,737 shares at $29.13 (about $167,119)",
-     "plan": false,
-     "trade_date": "2025-05-09",
-     "filed": "2025-05-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000076/0000784199-25-000076-index.htm",
-     "event": "8-K: shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-05-16",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/784199/000078419925000083/aort-20250513.htm",
-     "days_before": 7
     },
     {
      "src": "SEC Form 4",
@@ -27429,8 +27250,8 @@
    ]
   },
   "CSGP": {
-   "n": 10,
-   "n_ptr": 8,
+   "n": 9,
+   "n_ptr": 7,
    "n_form4": 2,
    "matches": [
     {
@@ -27522,21 +27343,6 @@
      "event_kind": "8-K",
      "event_date": "2026-01-07",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1057352/000105735226000004/csgp-20260107.htm",
-     "days_before": 28
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-09-30",
-     "filed": "2025-10-10",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20032248.pdf",
-     "event": "8-K: earnings results, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-10-28",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1057352/000105735225000116/csgp-20251028.htm",
      "days_before": 28
     },
     {
@@ -29307,6 +29113,22 @@
      "who": "Shavel Lee",
      "role": "director, Chief Executive Officer",
      "side": "sell",
+     "amount": "3,535 shares at $194.74 (about $688,406)",
+     "plan": true,
+     "trade_date": "2026-11-02",
+     "filed": "2026-11-03",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1442145/000119312526445675/0001193125-26-445675-index.htm",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-11-05",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1442145/000143774926035082/vrsk20260820_8k.htm",
+     "days_before": 3
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Shavel Lee",
+     "role": "director, Chief Executive Officer",
+     "side": "sell",
      "amount": "3,535 shares at $170.70 (about $603,424)",
      "plan": true,
      "trade_date": "2026-10-01",
@@ -29456,22 +29278,6 @@
      "event_date": "2025-12-29",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1442145/000119312525332544/d98951d8k.htm",
      "days_before": 10
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Mann Elizabeth",
-     "role": "Chief Financial Officer",
-     "side": "sell",
-     "amount": "300 shares at $242.23 (about $72,669)",
-     "plan": false,
-     "trade_date": "2025-10-15",
-     "filed": "2025-10-15",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1442145/000119312525240577/0001193125-25-240577-index.htm",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-10-29",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1442145/000143774925032072/vrsk20250821_8k.htm",
-     "days_before": 14
     },
     {
      "src": "SEC Form 4",
@@ -29882,48 +29688,10 @@
     }
    ]
   },
-  "SHAK": {
-   "n": 2,
-   "n_ptr": 1,
-   "n_form4": 1,
-   "matches": [
-    {
-     "src": "SEC Form 4",
-     "who": "Sentell Stephanie Ann",
-     "role": "Chief Operations Officer",
-     "side": "sell",
-     "amount": "200 shares at $85.78 (about $17,156)",
-     "plan": false,
-     "trade_date": "2025-12-19",
-     "filed": "2025-12-22",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1620533/000202906825000004/0002029068-25-000004-index.htm",
-     "event": "8-K: earnings results, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2026-01-12",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1620533/000162053326000008/shak-20260112.htm",
-     "days_before": 24
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-01-05",
-     "filed": "2026-02-13",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033983.pdf",
-     "event": "8-K: earnings results, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2026-01-12",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1620533/000162053326000008/shak-20260112.htm",
-     "days_before": 7
-    }
-   ]
-  },
   "TXRH": {
-   "n": 8,
+   "n": 6,
    "n_ptr": 1,
-   "n_form4": 7,
+   "n_form4": 5,
    "matches": [
     {
      "src": "House PTR",
@@ -29971,38 +29739,6 @@
      "event_date": "2025-12-31",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1289460/000110465925125598/tm2534451d1_8k.htm",
      "days_before": 27
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "MOORE GREGORY N",
-     "role": "Director",
-     "side": "sell",
-     "amount": "1,000 shares at $187.62 (about $187,620)",
-     "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-13",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1289460/000141588925012832/0001415889-25-012832-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-06-10",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1289460/000110465925058022/tm2517564d1_8k.htm",
-     "days_before": 29
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "EPPS DONNA E",
-     "role": "Director",
-     "side": "sell",
-     "amount": "800 shares at $186.52 (about $149,216)",
-     "plan": false,
-     "trade_date": "2025-05-23",
-     "filed": "2025-05-23",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1289460/000141588925014555/0001415889-25-014555-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-06-10",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1289460/000110465925058022/tm2517564d1_8k.htm",
-     "days_before": 18
     },
     {
      "src": "SEC Form 4",
@@ -32381,9 +32117,9 @@
    ]
   },
   "LH": {
-   "n": 11,
+   "n": 12,
    "n_ptr": 5,
-   "n_form4": 6,
+   "n_form4": 7,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -32400,6 +32136,22 @@
      "event_date": "2026-11-04",
      "event_url": "https://www.sec.gov/Archives/edgar/data/920148/000092014826000227/lh-20261104.htm",
      "days_before": 5
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Vaughn Bryan T",
+     "role": "EVP and President, Diagnostics",
+     "side": "sell",
+     "amount": "306 shares at $353.70 (about $108,232)",
+     "plan": true,
+     "trade_date": "2026-11-03",
+     "filed": "2026-11-05",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/920148/000092014826000228/0000920148-26-000228-index.htm",
+     "event": "8-K: Reg FD disclosure",
+     "event_kind": "8-K",
+     "event_date": "2026-11-04",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/920148/000092014826000227/lh-20261104.htm",
+     "days_before": 1
     },
     {
      "src": "SEC Form 4",
@@ -34433,11 +34185,11 @@
      "trade_date": "2026-05-01",
      "filed": "2026-06-05",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034718.pdf",
-     "event": "8-K: Reg FD disclosure",
+     "event": "8-K: executive or director change",
      "event_kind": "8-K",
-     "event_date": "2026-05-11",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/769520/000119312526215753/d123662d8k.htm",
-     "days_before": 10
+     "event_date": "2026-05-26",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/769520/000119312526239449/d91692d8k.htm",
+     "days_before": 25
     },
     {
      "src": "House PTR",
@@ -34448,11 +34200,11 @@
      "trade_date": "2026-05-07",
      "filed": "2026-06-05",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034718.pdf",
-     "event": "8-K: Reg FD disclosure",
+     "event": "8-K: executive or director change",
      "event_kind": "8-K",
-     "event_date": "2026-05-11",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/769520/000119312526215753/d123662d8k.htm",
-     "days_before": 4
+     "event_date": "2026-05-26",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/769520/000119312526239449/d91692d8k.htm",
+     "days_before": 19
     },
     {
      "src": "SEC Form 4",
@@ -34473,8 +34225,8 @@
    ]
   },
   "TSCO": {
-   "n": 13,
-   "n_ptr": 13,
+   "n": 12,
+   "n_ptr": 12,
    "n_form4": 0,
    "matches": [
     {
@@ -34641,21 +34393,6 @@
      "event_date": "2026-04-21",
      "event_url": "https://www.sec.gov/Archives/edgar/data/916365/000091636526000020/tsco-20260421.htm",
      "days_before": 12
-    },
-    {
-     "src": "House PTR",
-     "who": "April McClain Delaney",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-02-10",
-     "filed": "2026-03-10",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034159.pdf",
-     "event": "8-K: executive or director change, other event",
-     "event_kind": "8-K",
-     "event_date": "2026-02-11",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/916365/000091636526000009/tsco-20260210.htm",
-     "days_before": 1
     },
     {
      "src": "House PTR",
@@ -35267,10 +35004,90 @@
    ]
   },
   "WAB": {
-   "n": 82,
+   "n": 72,
    "n_ptr": 4,
-   "n_form4": 78,
+   "n_form4": 68,
    "matches": [
+    {
+     "src": "SEC Form 4",
+     "who": "Santana Rafael",
+     "role": "director, President and CEO",
+     "side": "sell",
+     "amount": "66 shares at $289.79 (about $19,126)",
+     "plan": true,
+     "trade_date": "2026-11-03",
+     "filed": "2026-11-04",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000007/0001767799-26-000007-index.htm",
+     "event": "8-K: material agreement, new financial obligation",
+     "event_kind": "8-K",
+     "event_date": "2026-11-04",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000114036126041966/ef20084907_8k.htm",
+     "days_before": 1
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Santana Rafael",
+     "role": "director, President and CEO",
+     "side": "sell",
+     "amount": "131 shares at $291.10 (about $38,134)",
+     "plan": true,
+     "trade_date": "2026-11-03",
+     "filed": "2026-11-04",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000007/0001767799-26-000007-index.htm",
+     "event": "8-K: material agreement, new financial obligation",
+     "event_kind": "8-K",
+     "event_date": "2026-11-04",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000114036126041966/ef20084907_8k.htm",
+     "days_before": 1
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Santana Rafael",
+     "role": "director, President and CEO",
+     "side": "sell",
+     "amount": "398 shares at $291.88 (about $116,168)",
+     "plan": true,
+     "trade_date": "2026-11-03",
+     "filed": "2026-11-04",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000007/0001767799-26-000007-index.htm",
+     "event": "8-K: material agreement, new financial obligation",
+     "event_kind": "8-K",
+     "event_date": "2026-11-04",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000114036126041966/ef20084907_8k.htm",
+     "days_before": 1
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Santana Rafael",
+     "role": "director, President and CEO",
+     "side": "sell",
+     "amount": "334 shares at $292.91 (about $97,833)",
+     "plan": true,
+     "trade_date": "2026-11-03",
+     "filed": "2026-11-04",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000007/0001767799-26-000007-index.htm",
+     "event": "8-K: material agreement, new financial obligation",
+     "event_kind": "8-K",
+     "event_date": "2026-11-04",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000114036126041966/ef20084907_8k.htm",
+     "days_before": 1
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Santana Rafael",
+     "role": "director, President and CEO",
+     "side": "sell",
+     "amount": "158 shares at $293.71 (about $46,407)",
+     "plan": true,
+     "trade_date": "2026-11-03",
+     "filed": "2026-11-04",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000007/0001767799-26-000007-index.htm",
+     "event": "8-K: material agreement, new financial obligation",
+     "event_kind": "8-K",
+     "event_date": "2026-11-04",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000114036126041966/ef20084907_8k.htm",
+     "days_before": 1
+    },
     {
      "src": "SEC Form 4",
      "who": "Santana Rafael",
@@ -35510,86 +35327,6 @@
      "event_date": "2026-10-21",
      "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000094345226000017/wab-20261021.htm",
      "days_before": 15
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Santana Rafael",
-     "role": "director, President and CEO",
-     "side": "sell",
-     "amount": "194 shares at $278.93 (about $54,113)",
-     "plan": true,
-     "trade_date": "2026-09-01",
-     "filed": "2026-09-03",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000003/0001767799-26-000003-index.htm",
-     "event": "8-K: new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-10-01",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000094345226000013/wab-20261001.htm",
-     "days_before": 30
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Santana Rafael",
-     "role": "director, President and CEO",
-     "side": "sell",
-     "amount": "590 shares at $279.87 (about $165,124)",
-     "plan": true,
-     "trade_date": "2026-09-01",
-     "filed": "2026-09-03",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000003/0001767799-26-000003-index.htm",
-     "event": "8-K: new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-10-01",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000094345226000013/wab-20261001.htm",
-     "days_before": 30
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Santana Rafael",
-     "role": "director, President and CEO",
-     "side": "sell",
-     "amount": "194 shares at $280.86 (about $54,487)",
-     "plan": true,
-     "trade_date": "2026-09-01",
-     "filed": "2026-09-03",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000003/0001767799-26-000003-index.htm",
-     "event": "8-K: new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-10-01",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000094345226000013/wab-20261001.htm",
-     "days_before": 30
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Santana Rafael",
-     "role": "director, President and CEO",
-     "side": "sell",
-     "amount": "118 shares at $281.74 (about $33,246)",
-     "plan": true,
-     "trade_date": "2026-09-01",
-     "filed": "2026-09-03",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000003/0001767799-26-000003-index.htm",
-     "event": "8-K: new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-10-01",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000094345226000013/wab-20261001.htm",
-     "days_before": 30
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Santana Rafael",
-     "role": "director, President and CEO",
-     "side": "sell",
-     "amount": "370 shares at $279.21 (about $103,306)",
-     "plan": true,
-     "trade_date": "2026-09-02",
-     "filed": "2026-09-03",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/943452/000176779926000003/0001767799-26-000003-index.htm",
-     "event": "8-K: new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-10-01",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/943452/000094345226000013/wab-20261001.htm",
-     "days_before": 29
     }
    ]
   },
@@ -35995,8 +35732,8 @@
    ]
   },
   "PH": {
-   "n": 31,
-   "n_ptr": 10,
+   "n": 30,
+   "n_ptr": 9,
    "n_form4": 21,
    "matches": [
     {
@@ -37976,26 +37713,10 @@
    ]
   },
   "WAT": {
-   "n": 4,
+   "n": 3,
    "n_ptr": 3,
-   "n_form4": 1,
+   "n_form4": 0,
    "matches": [
-    {
-     "src": "SEC Form 4",
-     "who": "KUEBLER CHRISTOPHER A",
-     "role": "director",
-     "side": "sell",
-     "amount": "3,626 shares at $397.94 (about $1,442,930)",
-     "plan": false,
-     "trade_date": "2026-08-06",
-     "filed": "2026-08-07",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1000697/000100069726000127/0001000697-26-000127-index.htm",
-     "event": "8-K: executive or director change, other event",
-     "event_kind": "8-K",
-     "event_date": "2026-08-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526360081/d144683d8k.htm",
-     "days_before": 15
-    },
     {
      "src": "House PTR",
      "who": "Kevin Hern",
@@ -39136,8 +38857,8 @@
    ]
   },
   "KVUE": {
-   "n": 9,
-   "n_ptr": 8,
+   "n": 6,
+   "n_ptr": 5,
    "n_form4": 1,
    "matches": [
     {
@@ -39214,51 +38935,6 @@
      "event_date": "2026-01-16",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1944048/000114036126001522/ef20063257_8k.htm",
      "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: material agreement, executive or director change, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-11-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1944048/000110465925105216/tm2529895d1_8k.htm",
-     "days_before": 4
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: material agreement, executive or director change, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-11-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1944048/000110465925105216/tm2529895d1_8k.htm",
-     "days_before": 4
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-31",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: material agreement, executive or director change, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-11-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1944048/000110465925105216/tm2529895d1_8k.htm",
-     "days_before": 3
     },
     {
      "src": "SEC Form 4",
@@ -40396,10 +40072,10 @@
      "trade_date": "2025-12-12",
      "filed": "2025-12-16",
      "trade_url": "https://www.sec.gov/Archives/edgar/data/1563190/000156319025000210/0001563190-25-000210-index.htm",
-     "event": "8-K: earnings results, other event",
+     "event": "8-K: shareholder vote, Reg FD disclosure",
      "event_kind": "8-K",
      "event_date": "2026-01-07",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1563190/000156319026000005/comp-20260107.htm",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1563190/000156319026000007/comp-20260107.htm",
      "days_before": 26
     },
     {
@@ -40412,10 +40088,10 @@
      "trade_date": "2025-12-17",
      "filed": "2025-12-19",
      "trade_url": "https://www.sec.gov/Archives/edgar/data/1563190/000156319025000212/0001563190-25-000212-index.htm",
-     "event": "8-K: earnings results, other event",
+     "event": "8-K: shareholder vote, Reg FD disclosure",
      "event_kind": "8-K",
      "event_date": "2026-01-07",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1563190/000156319026000005/comp-20260107.htm",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1563190/000156319026000007/comp-20260107.htm",
      "days_before": 21
     },
     {
@@ -42475,9 +42151,9 @@
    ]
   },
   "ABNB": {
-   "n": 149,
+   "n": 139,
    "n_ptr": 2,
-   "n_form4": 147,
+   "n_form4": 137,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -46639,89 +46315,6 @@
     }
    ]
   },
-  "FMAO": {
-   "n": 5,
-   "n_ptr": 4,
-   "n_form4": 1,
-   "matches": [
-    {
-     "src": "House PTR",
-     "who": "Robert E. Latta",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-07-20",
-     "filed": "2026-07-24",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035065.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2026-07-27",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000119312526318198/fmao-20260727.htm",
-     "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "Robert E. Latta",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-04-20",
-     "filed": "2026-04-24",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034401.pdf",
-     "event": "8-K: shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2026-04-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000119312526167045/fmao-20260420.htm",
-     "days_before": 1
-    },
-    {
-     "src": "House PTR",
-     "who": "Robert E. Latta",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-01-20",
-     "filed": "2026-01-23",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033857.pdf",
-     "event": "8-K: other event",
-     "event_kind": "8-K",
-     "event_date": "2026-01-27",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000119312526024773/fmao-20260127.htm",
-     "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "Robert E. Latta",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-20",
-     "filed": "2025-10-27",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033346.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-10-27",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000119312525250828/fmao-20251027.htm",
-     "days_before": 7
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Boyce Ian D",
-     "role": "Director",
-     "side": "buy",
-     "amount": "210 shares at $24.06 (about $5,053)",
-     "plan": false,
-     "trade_date": "2025-05-29",
-     "filed": "2025-05-30",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/792966/000095017025079392/0000950170-25-079392-index.htm",
-     "event": "8-K: executive or director change, other event",
-     "event_kind": "8-K",
-     "event_date": "2025-06-25",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/792966/000095017025089887/fmao-20250624.htm",
-     "days_before": 27
-    }
-   ]
-  },
   "SPGI": {
    "n": 4,
    "n_ptr": 4,
@@ -46790,9 +46383,9 @@
    ]
   },
   "ANET": {
-   "n": 252,
+   "n": 257,
    "n_ptr": 13,
-   "n_form4": 239,
+   "n_form4": 244,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -48465,8 +48058,8 @@
    ]
   },
   "UPS": {
-   "n": 5,
-   "n_ptr": 5,
+   "n": 4,
+   "n_ptr": 4,
    "n_form4": 0,
    "matches": [
     {
@@ -48498,21 +48091,6 @@
      "event_date": "2026-01-27",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026003510/ups-20260127.htm",
      "days_before": 18
-    },
-    {
-     "src": "House PTR",
-     "who": "Marjorie Taylor Greene",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-09",
-     "filed": "2025-10-20",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033314.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-10-28",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828025046550/ups-20251028.htm",
-     "days_before": 19
     },
     {
      "src": "House PTR",
@@ -50563,8 +50141,8 @@
    ]
   },
   "GDDY": {
-   "n": 55,
-   "n_ptr": 12,
+   "n": 54,
+   "n_ptr": 11,
    "n_form4": 43,
    "matches": [
     {
@@ -50644,21 +50222,6 @@
      "event_date": "2026-02-24",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971126000008/gddy-20260224.htm",
      "days_before": 14
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-09-30",
-     "filed": "2025-10-10",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20032248.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-10-30",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971125000206/gddy-20251030.htm",
-     "days_before": 30
     },
     {
      "src": "SEC Form 4",
@@ -50878,6 +50441,22 @@
      "event_date": "2025-06-10",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971125000124/gddy-20250604.htm",
      "days_before": 26
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "McCaffrey Mark",
+     "role": "Chief Financial Officer",
+     "side": "sell",
+     "amount": "16 shares at $190.43 (about $3,047)",
+     "plan": false,
+     "trade_date": "2025-05-16",
+     "filed": "2025-05-19",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971125000092/0001609711-25-000092-index.htm",
+     "event": "8-K: item 5.03, shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2025-06-10",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1609711/000160971125000124/gddy-20250604.htm",
+     "days_before": 25
     }
    ]
   },
@@ -55893,8 +55472,8 @@
    ]
   },
   "FLEX": {
-   "n": 12,
-   "n_ptr": 4,
+   "n": 9,
+   "n_ptr": 1,
    "n_form4": 8,
    "matches": [
     {
@@ -55982,60 +55561,15 @@
      "who": "Gilbert Cisneros",
      "role": "House member",
      "side": "sell",
-     "amount": "$15,001 - $50,000",
-     "trade_date": "2026-05-07",
-     "filed": "2026-06-08",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034713.pdf",
-     "event": "8-K: material agreement, new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-06-02",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/866374/000110465926069463/tm2615696d1_8k.htm",
-     "days_before": 26
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$50,001 - $100,000",
-     "trade_date": "2026-05-11",
-     "filed": "2026-06-08",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034713.pdf",
-     "event": "8-K: material agreement, new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-06-02",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/866374/000110465926069463/tm2615696d1_8k.htm",
-     "days_before": 22
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-05-12",
-     "filed": "2026-06-08",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034713.pdf",
-     "event": "8-K: material agreement, new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-06-02",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/866374/000110465926069463/tm2615696d1_8k.htm",
-     "days_before": 21
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "sell",
      "amount": "$1,001 - $15,000",
      "trade_date": "2026-05-14",
      "filed": "2026-06-08",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034713.pdf",
-     "event": "8-K: material agreement, new financial obligation",
+     "event": "8-K: executive or director change",
      "event_kind": "8-K",
-     "event_date": "2026-06-02",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/866374/000110465926069463/tm2615696d1_8k.htm",
-     "days_before": 19
+     "event_date": "2026-06-12",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000016/flex-20260611.htm",
+     "days_before": 29
     },
     {
      "src": "SEC Form 4",
@@ -56574,26 +56108,10 @@
    ]
   },
   "SARO": {
-   "n": 7,
+   "n": 6,
    "n_ptr": 3,
-   "n_form4": 4,
+   "n_form4": 3,
    "matches": [
-    {
-     "src": "SEC Form 4",
-     "who": "Ford Russell Wayne",
-     "role": "director, Chief Executive Officer",
-     "side": "sell",
-     "amount": "40,000 shares at $31.42 (about $1,256,672)",
-     "plan": true,
-     "trade_date": "2026-08-06",
-     "filed": "2026-08-07",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/2025410/000119312526340372/0001193125-26-340372-index.htm",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2026-08-07",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/2025410/000202541026000013/saro-20260806.htm",
-     "days_before": 1
-    },
     {
      "src": "House PTR",
      "who": "Gilbert Cisneros",
@@ -58077,26 +57595,10 @@
    ]
   },
   "MORN": {
-   "n": 86,
+   "n": 85,
    "n_ptr": 6,
-   "n_form4": 80,
+   "n_form4": 79,
    "matches": [
-    {
-     "src": "SEC Form 4",
-     "who": "Mansueto Joseph D",
-     "role": "director, Executive Chairman, 10% owner",
-     "side": "sell",
-     "amount": "2,272 shares at $198.38 (about $450,730)",
-     "plan": true,
-     "trade_date": "2026-08-06",
-     "filed": "2026-08-07",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1289419/000132406926000035/0001324069-26-000035-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2026-08-25",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941926000044/morn-20260825.htm",
-     "days_before": 19
-    },
     {
      "src": "SEC Form 4",
      "who": "Mansueto Joseph D",
@@ -58400,6 +57902,22 @@
      "event_date": "2026-08-25",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941926000044/morn-20260825.htm",
      "days_before": 12
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Mansueto Joseph D",
+     "role": "director, Executive Chairman, 10% owner",
+     "side": "sell",
+     "amount": "3,924 shares at $206.28 (about $809,449)",
+     "plan": true,
+     "trade_date": "2026-08-14",
+     "filed": "2026-08-14",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1289419/000132406926000039/0001324069-26-000039-index.htm",
+     "event": "8-K: Reg FD disclosure",
+     "event_kind": "8-K",
+     "event_date": "2026-08-25",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941926000044/morn-20260825.htm",
+     "days_before": 11
     }
    ]
   },
@@ -61116,8 +60634,8 @@
    ]
   },
   "EPAM": {
-   "n": 15,
-   "n_ptr": 3,
+   "n": 14,
+   "n_ptr": 2,
    "n_form4": 12,
    "matches": [
     {
@@ -61311,21 +60829,6 @@
      "days_before": 4
     },
     {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-08-04",
-     "filed": "2025-09-12",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030932.pdf",
-     "event": "8-K: executive or director change, item 5.03",
-     "event_kind": "8-K",
-     "event_date": "2025-09-02",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201025000044/epam-20250827.htm",
-     "days_before": 29
-    },
-    {
      "src": "SEC Form 4",
      "who": "Fejes Balazs",
      "role": "EVP/Co-Head of Global Business",
@@ -61444,9 +60947,9 @@
    ]
   },
   "FICO": {
-   "n": 212,
+   "n": 153,
    "n_ptr": 4,
-   "n_form4": 208,
+   "n_form4": 149,
    "matches": [
     {
      "src": "House PTR",
@@ -62204,11 +61707,11 @@
      "trade_date": "2025-12-19",
      "filed": "2026-01-12",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033762.pdf",
-     "event": "8-K: material agreement, acquisition or sale completed, unregistered share sale, Reg FD disclosure",
+     "event": "8-K: executive or director change",
      "event_kind": "8-K",
-     "event_date": "2026-01-12",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1123360/000110465926002705/tm262856d1_8k.htm",
-     "days_before": 24
+     "event_date": "2026-01-14",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1123360/000110465926003734/tm263158d1_8k.htm",
+     "days_before": 26
     },
     {
      "src": "House PTR",
@@ -64879,25 +64382,10 @@
    ]
   },
   "IONQ": {
-   "n": 8,
-   "n_ptr": 1,
+   "n": 7,
+   "n_ptr": 0,
    "n_form4": 7,
    "matches": [
-    {
-     "src": "House PTR",
-     "who": "Greg Steube",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-03-18",
-     "filed": "2026-04-14",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034345.pdf",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2026-03-25",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526124402/ionq-20260319.htm",
-     "days_before": 7
-    },
     {
      "src": "SEC Form 4",
      "who": "Alameddine Rima",
@@ -65112,43 +64600,6 @@
      "event_date": "2024-10-09",
      "event_url": "https://www.sec.gov/Archives/edgar/data/726958/000095014224002538/eh240541790_8k.htm",
      "days_before": 21
-    }
-   ]
-  },
-  "SNDA": {
-   "n": 2,
-   "n_ptr": 2,
-   "n_form4": 0,
-   "matches": [
-    {
-     "src": "House PTR",
-     "who": "Rick Larsen",
-     "role": "House member",
-     "side": "E",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-03-31",
-     "filed": "2026-04-15",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034351.pdf",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2026-04-22",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1043000/000119312526168968/d264033d8k.htm",
-     "days_before": 22
-    },
-    {
-     "src": "House PTR",
-     "who": "Rick Larsen",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-04-07",
-     "filed": "2026-04-15",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034351.pdf",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2026-04-22",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1043000/000119312526168968/d264033d8k.htm",
-     "days_before": 15
     }
    ]
   },
@@ -66276,11 +65727,11 @@
      "trade_date": "2025-10-03",
      "filed": "2025-10-07",
      "trade_url": "https://www.sec.gov/Archives/edgar/data/1739940/000173994025000032/0001739940-25-000032-index.htm",
-     "event": "8-K: executive or director change",
+     "event": "8-K: earnings results",
      "event_kind": "8-K",
-     "event_date": "2025-10-20",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036125038670/ef20057405_8k.htm",
-     "days_before": 17
+     "event_date": "2025-10-30",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1739940/000114036125039777/ef20057735_8k.htm",
+     "days_before": 27
     },
     {
      "src": "SEC Form 4",
@@ -68589,6 +68040,21 @@
     },
     {
      "src": "House PTR",
+     "who": "Bruce Westerman",
+     "role": "House member",
+     "side": "sell",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2025-04-21",
+     "filed": "2025-05-12",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030332.pdf",
+     "event": "8-K: other event",
+     "event_kind": "8-K",
+     "event_date": "2025-05-07",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/26172/000110465925045241/tm2513958d5_8k.htm",
+     "days_before": 16
+    },
+    {
+     "src": "House PTR",
      "who": "Marjorie Taylor Greene",
      "role": "House member",
      "side": "buy",
@@ -68601,21 +68067,6 @@
      "event_date": "2025-05-07",
      "event_url": "https://www.sec.gov/Archives/edgar/data/26172/000110465925045241/tm2513958d5_8k.htm",
      "days_before": 2
-    },
-    {
-     "src": "House PTR",
-     "who": "Bruce Westerman",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-04-21",
-     "filed": "2025-05-12",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030332.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-05-05",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/26172/000002617225000010/cmi-20250505.htm",
-     "days_before": 14
     },
     {
      "src": "House PTR",
@@ -68650,9 +68101,9 @@
    ]
   },
   "ORCL": {
-   "n": 23,
-   "n_ptr": 13,
-   "n_form4": 10,
+   "n": 15,
+   "n_ptr": 10,
+   "n_form4": 5,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -68809,131 +68260,6 @@
      "days_before": 16
     },
     {
-     "src": "SEC Form 4",
-     "who": "Smith Maria",
-     "role": "EVP, Chief  Accounting Officer",
-     "side": "sell",
-     "amount": "5,000 shares at $280.62 (about $1,403,100)",
-     "plan": false,
-     "trade_date": "2025-10-23",
-     "filed": "2025-10-23",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1341439/000134143925000053/0001341439-25-000053-index.htm",
-     "event": "8-K: executive or director change, shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-11-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525291441/d43173d8k.htm",
-     "days_before": 29
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "BERG JEFFREY",
-     "role": "Director",
-     "side": "sell",
-     "amount": "9,042 shares at $281.58 (about $2,546,046)",
-     "plan": false,
-     "trade_date": "2025-10-28",
-     "filed": "2025-10-30",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1341439/000134143925000072/0001341439-25-000072-index.htm",
-     "event": "8-K: executive or director change, shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-11-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525291441/d43173d8k.htm",
-     "days_before": 24
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "BERG JEFFREY",
-     "role": "Director",
-     "side": "sell",
-     "amount": "13,373 shares at $282.56 (about $3,778,675)",
-     "plan": false,
-     "trade_date": "2025-10-28",
-     "filed": "2025-10-30",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1341439/000134143925000072/0001341439-25-000072-index.htm",
-     "event": "8-K: executive or director change, shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-11-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525291441/d43173d8k.htm",
-     "days_before": 24
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "BERG JEFFREY",
-     "role": "Director",
-     "side": "sell",
-     "amount": "4,226 shares at $284.31 (about $1,201,494)",
-     "plan": false,
-     "trade_date": "2025-10-28",
-     "filed": "2025-10-30",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1341439/000134143925000072/0001341439-25-000072-index.htm",
-     "event": "8-K: executive or director change, shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-11-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525291441/d43173d8k.htm",
-     "days_before": 24
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "BERG JEFFREY",
-     "role": "Director",
-     "side": "sell",
-     "amount": "22,724 shares at $283.63 (about $6,445,208)",
-     "plan": false,
-     "trade_date": "2025-10-28",
-     "filed": "2025-10-30",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1341439/000134143925000072/0001341439-25-000072-index.htm",
-     "event": "8-K: executive or director change, shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-11-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525291441/d43173d8k.htm",
-     "days_before": 24
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: executive or director change, shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-11-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525291441/d43173d8k.htm",
-     "days_before": 22
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: executive or director change, shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-11-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525291441/d43173d8k.htm",
-     "days_before": 22
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-31",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: executive or director change, shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-11-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525291441/d43173d8k.htm",
-     "days_before": 21
-    },
-    {
      "src": "House PTR",
      "who": "Gilbert Cisneros",
      "role": "House member",
@@ -68942,11 +68268,11 @@
      "trade_date": "2025-11-18",
      "filed": "2025-12-15",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033619.pdf",
-     "event": "8-K: executive or director change, shareholder vote",
+     "event": "8-K: earnings results, other event",
      "event_kind": "8-K",
-     "event_date": "2025-11-21",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525291441/d43173d8k.htm",
-     "days_before": 3
+     "event_date": "2025-12-10",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525314207/orcl-20251210.htm",
+     "days_before": 22
     },
     {
      "src": "SEC Form 4",
@@ -68963,6 +68289,51 @@
      "event_date": "2025-04-09",
      "event_url": "https://www.federalregister.gov/documents/2025/04/15/2025-06462/modifying-reciprocal-tariff-rates-to-reflect-trading-partner-retaliation-and-alignment",
      "days_before": 7
+    },
+    {
+     "src": "House PTR",
+     "who": "Jared Moskowitz",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2025-04-07",
+     "filed": "2025-05-09",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030282.pdf",
+     "event": "Presidential order modifying reciprocal tariff rates (EO 14266, pause)",
+     "event_kind": "historical",
+     "event_date": "2025-04-09",
+     "event_url": "https://www.federalregister.gov/documents/2025/04/15/2025-06462/modifying-reciprocal-tariff-rates-to-reflect-trading-partner-retaliation-and-alignment",
+     "days_before": 2
+    },
+    {
+     "src": "House PTR",
+     "who": "Bruce Westerman",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2025-03-03",
+     "filed": "2025-04-16",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030146.pdf",
+     "event": "Presidential tariff order signed (EO 14257, reciprocal tariffs)",
+     "event_kind": "historical",
+     "event_date": "2025-04-02",
+     "event_url": "https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and",
+     "days_before": 30
+    },
+    {
+     "src": "House PTR",
+     "who": "Jefferson Shreve",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$15,001 - $50,000",
+     "trade_date": "2025-03-05",
+     "filed": "2025-04-11",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20029038.pdf",
+     "event": "Presidential tariff order signed (EO 14257, reciprocal tariffs)",
+     "event_kind": "historical",
+     "event_date": "2025-04-02",
+     "event_url": "https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and",
+     "days_before": 28
     }
    ]
   },
@@ -69131,25 +68502,10 @@
    ]
   },
   "DMLP": {
-   "n": 2,
-   "n_ptr": 1,
+   "n": 1,
+   "n_ptr": 0,
    "n_form4": 1,
    "matches": [
-    {
-     "src": "House PTR",
-     "who": "August Lee Pfluger",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$15,001 - $50,000",
-     "trade_date": "2026-03-13",
-     "filed": "2026-04-15",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034348.pdf",
-     "event": "8-K: Reg FD disclosure, other event",
-     "event_kind": "8-K",
-     "event_date": "2026-03-16",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1172358/000143774926008396/dmlp20260312_8k.htm",
-     "days_before": 3
-    },
     {
      "src": "SEC Form 4",
      "who": "EHRMAN BRADLEY J",
@@ -69252,8 +68608,8 @@
    ]
   },
   "DNUT": {
-   "n": 6,
-   "n_ptr": 6,
+   "n": 5,
+   "n_ptr": 5,
    "n_form4": 0,
    "matches": [
     {
@@ -69321,30 +68677,15 @@
      "who": "Tim Moore",
      "role": "House member",
      "side": "buy",
-     "amount": "$15,001 - $50,000",
-     "trade_date": "2025-07-30",
-     "filed": "2025-08-05",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030824.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-08-07",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1857154/000185715425000125/dnut-20250807.htm",
-     "days_before": 8
-    },
-    {
-     "src": "House PTR",
-     "who": "Tim Moore",
-     "role": "House member",
-     "side": "buy",
      "amount": "$1,001 - $15,000",
      "trade_date": "2025-08-04",
      "filed": "2025-09-03",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20031020.pdf",
-     "event": "8-K: earnings results",
+     "event": "8-K: executive or director change",
      "event_kind": "8-K",
-     "event_date": "2025-08-07",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1857154/000185715425000125/dnut-20250807.htm",
-     "days_before": 3
+     "event_date": "2025-09-03",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1857154/000185715425000136/dnut-20250828.htm",
+     "days_before": 30
     }
    ]
   },
@@ -69779,9 +69120,9 @@
    ]
   },
   "PAR": {
-   "n": 3,
+   "n": 2,
    "n_ptr": 2,
-   "n_form4": 1,
+   "n_form4": 0,
    "matches": [
     {
      "src": "House PTR",
@@ -69797,22 +69138,6 @@
      "event_date": "2026-02-26",
      "event_url": "https://www.sec.gov/Archives/edgar/data/708821/000070882126000024/par-20260226.htm",
      "days_before": 8
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Rauch Douglas Gregory",
-     "role": "Director",
-     "side": "sell",
-     "amount": "1,000 shares at $69.98 (about $69,980)",
-     "plan": false,
-     "trade_date": "2025-05-20",
-     "filed": "2025-05-22",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/708821/000070882125000069/0000708821-25-000069-index.htm",
-     "event": "8-K: item 3.03, item 5.03, shareholder vote",
-     "event_kind": "8-K",
-     "event_date": "2025-06-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/708821/000070882125000077/par-20250602.htm",
-     "days_before": 14
     },
     {
      "src": "House PTR",
@@ -71356,9 +70681,9 @@
    ]
   },
   "VST": {
-   "n": 15,
+   "n": 13,
    "n_ptr": 2,
-   "n_form4": 13,
+   "n_form4": 11,
    "matches": [
     {
      "src": "House PTR",
@@ -71389,38 +70714,6 @@
      "event_date": "2026-01-27",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1692819/000119312526024837/d102638d8k.htm",
      "days_before": 11
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "BURKE JAMES A",
-     "role": "President and CEO",
-     "side": "sell",
-     "amount": "22,251 shares at $162.05 (about $3,605,775)",
-     "plan": false,
-     "trade_date": "2025-12-11",
-     "filed": "2025-12-16",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1692819/000126840625000047/0001268406-25-000047-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2026-01-09",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1692819/000119312526008508/d20785d8k.htm",
-     "days_before": 29
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "BURKE JAMES A",
-     "role": "President and CEO",
-     "side": "sell",
-     "amount": "22,251 shares at $162.05 (about $3,605,775)",
-     "plan": false,
-     "trade_date": "2025-12-11",
-     "filed": "2025-12-15",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1692819/000126840625000045/0001268406-25-000045-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2026-01-09",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1692819/000119312526008508/d20785d8k.htm",
-     "days_before": 29
     },
     {
      "src": "SEC Form 4",
@@ -72796,8 +72089,8 @@
    ]
   },
   "APA": {
-   "n": 3,
-   "n_ptr": 2,
+   "n": 2,
+   "n_ptr": 1,
    "n_form4": 1,
    "matches": [
     {
@@ -72814,21 +72107,6 @@
      "event_date": "2026-01-20",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1841666/000184166626000003/apa8k-20260120.htm",
      "days_before": 11
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-08-05",
-     "filed": "2025-09-12",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20031022.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-08-07",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1841666/000184166625000012/apa8k-20250806.htm",
-     "days_before": 2
     },
     {
      "src": "SEC Form 4",
@@ -72898,28 +72176,6 @@
      "event_date": "2025-04-02",
      "event_url": "https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and",
      "days_before": 26
-    }
-   ]
-  },
-  "CF": {
-   "n": 1,
-   "n_ptr": 1,
-   "n_form4": 0,
-   "matches": [
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-01-09",
-     "filed": "2026-02-13",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033983.pdf",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2026-01-13",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1324404/000110465926003338/tm263052d1_8ka.htm",
-     "days_before": 4
     }
    ]
   },
@@ -73175,6 +72431,134 @@
     },
     {
      "src": "SEC Form 4",
+     "who": "Craine Patrick K.",
+     "role": "CLAO and Corp Secretary",
+     "side": "sell",
+     "amount": "1,000 shares at $194.57 (about $194,570)",
+     "plan": false,
+     "trade_date": "2025-05-12",
+     "filed": "2025-05-14",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025531/0001628280-25-025531-index.htm",
+     "event": "8-K: item 5.03, shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2025-05-23",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025047335/ea0243340-8k_gulfport.htm",
+     "days_before": 11
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Craine Patrick K.",
+     "role": "CLAO and Corp Secretary",
+     "side": "sell",
+     "amount": "1,800 shares at $193.55 (about $348,390)",
+     "plan": false,
+     "trade_date": "2025-05-12",
+     "filed": "2025-05-14",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025531/0001628280-25-025531-index.htm",
+     "event": "8-K: item 5.03, shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2025-05-23",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025047335/ea0243340-8k_gulfport.htm",
+     "days_before": 11
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Craine Patrick K.",
+     "role": "CLAO and Corp Secretary",
+     "side": "sell",
+     "amount": "2,000 shares at $196.59 (about $393,180)",
+     "plan": false,
+     "trade_date": "2025-05-12",
+     "filed": "2025-05-14",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025531/0001628280-25-025531-index.htm",
+     "event": "8-K: item 5.03, shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2025-05-23",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025047335/ea0243340-8k_gulfport.htm",
+     "days_before": 11
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Willrath Matthew",
+     "role": "VP & CAO",
+     "side": "sell",
+     "amount": "230 shares at $194.10 (about $44,643)",
+     "plan": false,
+     "trade_date": "2025-05-12",
+     "filed": "2025-05-14",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025532/0001628280-25-025532-index.htm",
+     "event": "8-K: item 5.03, shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2025-05-23",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025047335/ea0243340-8k_gulfport.htm",
+     "days_before": 11
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Wolf David D",
+     "role": "Director",
+     "side": "sell",
+     "amount": "1,927 shares at $194.00 (about $373,838)",
+     "plan": false,
+     "trade_date": "2025-05-12",
+     "filed": "2025-05-14",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025530/0001628280-25-025530-index.htm",
+     "event": "8-K: item 5.03, shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2025-05-23",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025047335/ea0243340-8k_gulfport.htm",
+     "days_before": 11
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Craine Patrick K.",
+     "role": "CLAO and Corp Secretary",
+     "side": "sell",
+     "amount": "200 shares at $197.37 (about $39,474)",
+     "plan": false,
+     "trade_date": "2025-05-13",
+     "filed": "2025-05-14",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025531/0001628280-25-025531-index.htm",
+     "event": "8-K: item 5.03, shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2025-05-23",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025047335/ea0243340-8k_gulfport.htm",
+     "days_before": 10
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "MULE EDWARD A",
+     "role": "Director,TenPercentOwner",
+     "side": "sell",
+     "amount": "686,986 shares at $194.84 (about $133,852,352)",
+     "plan": false,
+     "trade_date": "2025-05-13",
+     "filed": "2025-05-15",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000095017025072680/0000950170-25-072680-index.htm",
+     "event": "8-K: item 5.03, shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2025-05-23",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025047335/ea0243340-8k_gulfport.htm",
+     "days_before": 10
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "SLUITER MICHAEL",
+     "role": "SVP of Reservoir Engineering",
+     "side": "sell",
+     "amount": "2,571 shares at $198.00 (about $509,058)",
+     "plan": false,
+     "trade_date": "2025-05-14",
+     "filed": "2025-05-14",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025533/0001628280-25-025533-index.htm",
+     "event": "8-K: item 5.03, shareholder vote",
+     "event_kind": "8-K",
+     "event_date": "2025-05-23",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025047335/ea0243340-8k_gulfport.htm",
+     "days_before": 9
+    },
+    {
+     "src": "SEC Form 4",
      "who": "Zitkus Lester",
      "role": "SVP, Land",
      "side": "sell",
@@ -73188,134 +72572,6 @@
      "event_date": "2025-05-23",
      "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025047335/ea0243340-8k_gulfport.htm",
      "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Craine Patrick K.",
-     "role": "CLAO and Corp Secretary",
-     "side": "sell",
-     "amount": "1,000 shares at $194.57 (about $194,570)",
-     "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-14",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025531/0001628280-25-025531-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025044395/ea0242294-8k_gulfport.htm",
-     "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Craine Patrick K.",
-     "role": "CLAO and Corp Secretary",
-     "side": "sell",
-     "amount": "1,800 shares at $193.55 (about $348,390)",
-     "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-14",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025531/0001628280-25-025531-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025044395/ea0242294-8k_gulfport.htm",
-     "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Craine Patrick K.",
-     "role": "CLAO and Corp Secretary",
-     "side": "sell",
-     "amount": "2,000 shares at $196.59 (about $393,180)",
-     "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-14",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025531/0001628280-25-025531-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025044395/ea0242294-8k_gulfport.htm",
-     "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Willrath Matthew",
-     "role": "VP & CAO",
-     "side": "sell",
-     "amount": "230 shares at $194.10 (about $44,643)",
-     "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-14",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025532/0001628280-25-025532-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025044395/ea0242294-8k_gulfport.htm",
-     "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Wolf David D",
-     "role": "Director",
-     "side": "sell",
-     "amount": "1,927 shares at $194.00 (about $373,838)",
-     "plan": false,
-     "trade_date": "2025-05-12",
-     "filed": "2025-05-14",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025530/0001628280-25-025530-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025044395/ea0242294-8k_gulfport.htm",
-     "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Craine Patrick K.",
-     "role": "CLAO and Corp Secretary",
-     "side": "sell",
-     "amount": "200 shares at $197.37 (about $39,474)",
-     "plan": false,
-     "trade_date": "2025-05-13",
-     "filed": "2025-05-14",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025531/0001628280-25-025531-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025044395/ea0242294-8k_gulfport.htm",
-     "days_before": 2
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "MULE EDWARD A",
-     "role": "Director,TenPercentOwner",
-     "side": "sell",
-     "amount": "686,986 shares at $194.84 (about $133,852,352)",
-     "plan": false,
-     "trade_date": "2025-05-13",
-     "filed": "2025-05-15",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000095017025072680/0000950170-25-072680-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025044395/ea0242294-8k_gulfport.htm",
-     "days_before": 2
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "SLUITER MICHAEL",
-     "role": "SVP of Reservoir Engineering",
-     "side": "sell",
-     "amount": "2,571 shares at $198.00 (about $509,058)",
-     "plan": false,
-     "trade_date": "2025-05-14",
-     "filed": "2025-05-14",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/874499/000162828025025533/0001628280-25-025533-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/874499/000121390025044395/ea0242294-8k_gulfport.htm",
-     "days_before": 1
     },
     {
      "src": "SEC Form 4",
@@ -77543,76 +76799,6 @@
     }
    ]
   },
-  "FIX": {
-   "n": 4,
-   "n_ptr": 1,
-   "n_form4": 3,
-   "matches": [
-    {
-     "src": "SEC Form 4",
-     "who": "Lane Brian E.",
-     "role": "PRESIDENT/CHIEF EXECUTIVE OFF.",
-     "side": "sell",
-     "amount": "7,158 shares at $947.98 (about $6,785,641)",
-     "plan": false,
-     "trade_date": "2025-11-24",
-     "filed": "2025-11-25",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1035983/000144824025000008/0001448240-25-000008-index.htm",
-     "event": "8-K: executive or director change, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-12-19",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1035983/000110465925123112/tm2533853d1_8k.htm",
-     "days_before": 25
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "GEORGE WILLIAM III",
-     "role": "CHIEF FINANCIAL OFFICER",
-     "side": "sell",
-     "amount": "4,370 shares at $958.88 (about $4,190,306)",
-     "plan": false,
-     "trade_date": "2025-12-01",
-     "filed": "2025-12-03",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1035983/000120507325000005/0001205073-25-000005-index.htm",
-     "event": "8-K: executive or director change, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-12-19",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1035983/000110465925123112/tm2533853d1_8k.htm",
-     "days_before": 18
-    },
-    {
-     "src": "House PTR",
-     "who": "Byron Donalds",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-12-04",
-     "filed": "2026-01-07",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033747.pdf",
-     "event": "8-K: executive or director change, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-12-19",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1035983/000110465925123112/tm2533853d1_8k.htm",
-     "days_before": 15
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Howell Laura Finley",
-     "role": "SVP & GENERAL COUNSEL",
-     "side": "sell",
-     "amount": "1,000 shares at $996.16 (about $996,160)",
-     "plan": false,
-     "trade_date": "2025-12-04",
-     "filed": "2025-12-05",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1035983/000176366725000004/0001763667-25-000004-index.htm",
-     "event": "8-K: executive or director change, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-12-19",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1035983/000110465925123112/tm2533853d1_8k.htm",
-     "days_before": 15
-    }
-   ]
-  },
   "KD": {
    "n": 1,
    "n_ptr": 1,
@@ -78672,11 +77858,11 @@
      "trade_date": "2025-11-18",
      "filed": "2025-12-15",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033619.pdf",
-     "event": "8-K: shareholder vote",
+     "event": "8-K: Reg FD disclosure",
      "event_kind": "8-K",
-     "event_date": "2025-12-05",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1792044/000114036125044544/ef20060767_8k.htm",
-     "days_before": 17
+     "event_date": "2025-12-08",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1792044/000114036125044706/ef20060770_8k.htm",
+     "days_before": 20
     }
    ]
   },
@@ -80029,9 +79215,9 @@
    ]
   },
   "DOCS": {
-   "n": 19,
+   "n": 14,
    "n_ptr": 0,
-   "n_form4": 19,
+   "n_form4": 14,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -80208,86 +79394,6 @@
      "event_date": "2025-06-13",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000065/docs-20250610.htm",
      "days_before": 11
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Bryson Anna",
-     "role": "Chief Financial Officer",
-     "side": "sell",
-     "amount": "22,759 shares at $57.65 (about $1,312,056)",
-     "plan": false,
-     "trade_date": "2025-05-01",
-     "filed": "2025-05-02",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000040/0001516513-25-000040-index.htm",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000044/docs-20250515.htm",
-     "days_before": 14
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Bryson Anna",
-     "role": "Chief Financial Officer",
-     "side": "sell",
-     "amount": "22,241 shares at $56.80 (about $1,263,289)",
-     "plan": false,
-     "trade_date": "2025-05-01",
-     "filed": "2025-05-02",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000040/0001516513-25-000040-index.htm",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000044/docs-20250515.htm",
-     "days_before": 14
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Wampler Kira Scherer",
-     "role": "Director",
-     "side": "sell",
-     "amount": "1,589 shares at $56.74 (about $90,160)",
-     "plan": false,
-     "trade_date": "2025-05-01",
-     "filed": "2025-05-02",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000041/0001516513-25-000041-index.htm",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000044/docs-20250515.htm",
-     "days_before": 14
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Wampler Kira Scherer",
-     "role": "Director",
-     "side": "sell",
-     "amount": "411 shares at $57.64 (about $23,690)",
-     "plan": false,
-     "trade_date": "2025-05-01",
-     "filed": "2025-05-02",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000041/0001516513-25-000041-index.htm",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000044/docs-20250515.htm",
-     "days_before": 14
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Bryson Anna",
-     "role": "Chief Financial Officer",
-     "side": "sell",
-     "amount": "50,000 shares at $60.00 (about $3,000,000)",
-     "plan": false,
-     "trade_date": "2025-05-02",
-     "filed": "2025-05-02",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000040/0001516513-25-000040-index.htm",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-05-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651325000044/docs-20250515.htm",
-     "days_before": 13
     },
     {
      "src": "SEC Form 4",
@@ -81038,11 +80144,11 @@
      "trade_date": "2025-05-12",
      "filed": "2025-05-12",
      "trade_url": "https://www.sec.gov/Archives/edgar/data/935036/000195233325000032/0001952333-25-000032-index.htm",
-     "event": "8-K: shareholder vote",
+     "event": "8-K: executive or director change",
      "event_kind": "8-K",
-     "event_date": "2025-06-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/935036/000119312525134174/d16967d8k.htm",
-     "days_before": 22
+     "event_date": "2025-06-09",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/935036/000119312525137808/d927691d8k.htm",
+     "days_before": 28
     },
     {
      "src": "SEC Form 4",
@@ -81696,10 +80802,70 @@
      "trade_date": "2025-10-27",
      "filed": "2025-10-28",
      "trade_url": "https://www.sec.gov/Archives/edgar/data/1666134/000166613425000047/0001666134-25-000047-index.htm",
-     "event": "8-K: earnings results",
+     "event": "8-K: other event",
      "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000117184325007093/f8k_110625.htm",
+     "event_date": "2025-11-10",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000119312525273394/d202959d8k.htm",
+     "days_before": 14
+    },
+    {
+     "src": "House PTR",
+     "who": "Lisa McClain",
+     "role": "House member",
+     "side": "sell",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2025-10-30",
+     "filed": "2025-11-21",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
+     "event": "8-K: other event",
+     "event_kind": "8-K",
+     "event_date": "2025-11-10",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000119312525273394/d202959d8k.htm",
+     "days_before": 11
+    },
+    {
+     "src": "House PTR",
+     "who": "Lisa McClain",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2025-10-30",
+     "filed": "2025-11-21",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
+     "event": "8-K: other event",
+     "event_kind": "8-K",
+     "event_date": "2025-11-10",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000119312525273394/d202959d8k.htm",
+     "days_before": 11
+    },
+    {
+     "src": "House PTR",
+     "who": "Lisa McClain",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2025-10-30",
+     "filed": "2025-11-21",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
+     "event": "8-K: other event",
+     "event_kind": "8-K",
+     "event_date": "2025-11-10",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000119312525273394/d202959d8k.htm",
+     "days_before": 11
+    },
+    {
+     "src": "House PTR",
+     "who": "Lisa McClain",
+     "role": "House member",
+     "side": "sell",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2025-10-31",
+     "filed": "2025-11-21",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
+     "event": "8-K: other event",
+     "event_kind": "8-K",
+     "event_date": "2025-11-10",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000119312525273394/d202959d8k.htm",
      "days_before": 10
     },
     {
@@ -81708,74 +80874,14 @@
      "role": "House member",
      "side": "sell",
      "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000117184325007093/f8k_110625.htm",
-     "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000117184325007093/f8k_110625.htm",
-     "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000117184325007093/f8k_110625.htm",
-     "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
      "trade_date": "2025-10-31",
      "filed": "2025-11-21",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
+     "event": "8-K: other event",
      "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000117184325007093/f8k_110625.htm",
-     "days_before": 6
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-31",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000117184325007093/f8k_110625.htm",
-     "days_before": 6
+     "event_date": "2025-11-10",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1666134/000119312525273394/d202959d8k.htm",
+     "days_before": 10
     }
    ]
   },
@@ -82303,26 +81409,10 @@
    ]
   },
   "HOMB": {
-   "n": 2,
+   "n": 1,
    "n_ptr": 1,
-   "n_form4": 1,
+   "n_form4": 0,
    "matches": [
-    {
-     "src": "SEC Form 4",
-     "who": "TIPTON JOHN STEPHEN",
-     "role": "Centennial Bank CEO",
-     "side": "sell",
-     "amount": "24,159 shares at $27.52 (about $664,856)",
-     "plan": false,
-     "trade_date": "2025-06-20",
-     "filed": "2025-06-20",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1331520/000133152025000126/0001331520-25-000126-index.htm",
-     "event": "8-K: earnings results, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-07-16",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1331520/000133152025000129/homb-20250716.htm",
-     "days_before": 26
-    },
     {
      "src": "House PTR",
      "who": "Jefferson Shreve",
@@ -84209,58 +83299,6 @@
      "event_kind": "historical",
      "event_date": "2025-04-02",
      "event_url": "https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and",
-     "days_before": 5
-    }
-   ]
-  },
-  "SBCF": {
-   "n": 3,
-   "n_ptr": 3,
-   "n_form4": 0,
-   "matches": [
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-11-05",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/730708/000073070825000217/sbcf-20251105.htm",
-     "days_before": 6
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-11-05",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/730708/000073070825000217/sbcf-20251105.htm",
-     "days_before": 6
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-31",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-11-05",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/730708/000073070825000217/sbcf-20251105.htm",
      "days_before": 5
     }
    ]
@@ -86271,28 +85309,6 @@
     }
    ]
   },
-  "FTV": {
-   "n": 1,
-   "n_ptr": 1,
-   "n_form4": 0,
-   "matches": [
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$15,001 - $50,000",
-     "trade_date": "2025-09-30",
-     "filed": "2025-10-10",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20032248.pdf",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-10-16",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1659166/000165916625000125/ftv-20251013.htm",
-     "days_before": 16
-    }
-   ]
-  },
   "ODFL": {
    "n": 1,
    "n_ptr": 1,
@@ -87570,11 +86586,11 @@
      "trade_date": "2025-09-23",
      "filed": "2025-10-10",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20032211.pdf",
-     "event": "8-K: earnings results, other event",
+     "event": "8-K: new financial obligation",
      "event_kind": "8-K",
-     "event_date": "2025-10-14",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/72741/000110465925098981/tm2528570d1_8k.htm",
-     "days_before": 21
+     "event_date": "2025-10-17",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/72741/000110465925100405/tm2528952d1_8k.htm",
+     "days_before": 24
     },
     {
      "src": "House PTR",
@@ -87616,9 +86632,9 @@
    ]
   },
   "USFD": {
-   "n": 2,
+   "n": 1,
    "n_ptr": 0,
-   "n_form4": 2,
+   "n_form4": 1,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -87635,22 +86651,6 @@
      "event_date": "2025-11-24",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591825000148/usfd-20251124.htm",
      "days_before": 13
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Locascio Dirk J.",
-     "role": "EVP, Chief Financial Officer",
-     "side": "sell",
-     "amount": "7,500 shares at $80.00 (about $600,000)",
-     "plan": false,
-     "trade_date": "2025-07-10",
-     "filed": "2025-07-14",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591825000105/0001665918-25-000105-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-08-07",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591825000123/usfd-20250807.htm",
-     "days_before": 28
     }
    ]
   },
@@ -88814,9 +87814,9 @@
    ]
   },
   "NTRA": {
-   "n": 195,
+   "n": 167,
    "n_ptr": 0,
-   "n_form4": 195,
+   "n_form4": 167,
    "matches": [
     {
      "src": "SEC Form 4",
