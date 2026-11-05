@@ -54,12 +54,16 @@
   setInterval(clk, 1000); clk();
   let D = null, TR = null, WH = null, showSeq = 0, activeTab = 'today', dailyStatus = 'loading', todayNode = null;
   // Untrusted filing/White House URLs must never become executable links.
+  // Only verified official disclosure origins may be clickable external sources.
+  // Exact host matches prevent lookalikes (official.gov.evil.example); HTTPS only.
+  const SOURCE_HOSTS = new Set(['disclosures-clerk.house.gov', 'www.federalregister.gov', 'www.whitehouse.gov']);
   const safeHref = (href) => {
     if (typeof href !== 'string') return null;
     if (/^\?lang=ko&ticker=[A-Za-z0-9._%~-]+$/.test(href)) return href;
     try {
       const u = new URL(href);
-      return (['https:', 'http:'].includes(u.protocol) && u.hostname && !u.username && !u.password) ? u.href : null;
+      return u.protocol === 'https:' && SOURCE_HOSTS.has(u.hostname) &&
+        !u.username && !u.password && !u.port ? u.href : null;
     } catch (_) { return null; }
   };
   const row = (href, l, s, r, cls) => {
