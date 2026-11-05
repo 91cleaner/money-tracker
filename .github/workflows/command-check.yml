@@ -37,6 +37,7 @@ jobs:
           node --check cloudflare/admin-worker.js
           node --check assets/mt-open-research.js
           node --check assets/mt-news-discovery.js
+          node --check assets/mt-tabs.js
           node --check tests/mt-command.test.cjs
           node --check tests/mt-research.test.cjs
           node --check tests/mt-open-research.test.cjs
@@ -46,10 +47,11 @@ jobs:
           node --check tests/mt-grok.test.cjs
           node --check tests/mt-browser-smoke.cjs
           node --check tests/mt-zoom-browser.cjs
+          node --check tests/mt-tabs-load.test.cjs
       - name: Verify world law passage dates
         run: python3 -m unittest discover -s tests -p 'test_world_flow_dates.py'
       - name: Unit tests
-        run: node --test tests/mt-command.test.cjs tests/mt-research.test.cjs tests/mt-open-research.test.cjs tests/mt-spacex-research.test.cjs tests/mt-backend.test.cjs tests/mt-admin-ai.test.cjs tests/mt-grok.test.cjs
+        run: node --test tests/mt-command.test.cjs tests/mt-research.test.cjs tests/mt-open-research.test.cjs tests/mt-spacex-research.test.cjs tests/mt-backend.test.cjs tests/mt-admin-ai.test.cjs tests/mt-grok.test.cjs tests/mt-tabs-load.test.cjs
   browser:
     name: Real Chromium smoke (desktop and mobile)
     needs: unit
