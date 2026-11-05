@@ -33,6 +33,7 @@ function mount(fetcher, options = {}) {
   const hero = { textContent: '' };
   const root = {
     setAttribute() {},
+    contains(element) { return !!(todayNode && element === todayNode && todayNode.attached); },
     querySelector(selector) {
       if (selector === '#mtTabBar') return bar;
       if (selector === '#tbPanel') return panel;
