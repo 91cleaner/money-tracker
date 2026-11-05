@@ -53,7 +53,7 @@ function mount(fetcher) {
     addEventListener() {}, fetch: fetcher
   }, { filename: 'mt-tabs.js' });
   return {
-    panel,
+    panel, hero,
     click(id) {
       const button = buttons.find((b) => b.dataset.t === id);
       assert.ok(button, 'tab ' + id + ' exists');
@@ -121,4 +121,48 @@ test('late previous tab response cannot overwrite the current tab', async () => 
   await first;
   assert.match(app.panel.html, /대통령 문서 1건/);
   assert.doesNotMatch(app.panel.html, /의원 주식 신고/);
+});
+
+
+test('pending loads show a visible status, not stale data or zero', async () => {
+  let resolvePTR;
+  const pendingPTR = new Promise((resolve) => { resolvePTR = resolve; });
+  const app = mount((url) => url.includes('trades-recent')
+    ? pendingPTR : Promise.resolve(daily(url)));
+  const loading = app.click('mem');
+  assert.match(app.panel.html, /공개 자료를 불러오는 중/);
+  assert.doesNotMatch(app.panel.html, /신고 0건/);
+  resolvePTR(ok({ trades: [{ who: 'Example', tk: 'AAPL', d: '2026-11-01', fd: '2026-11-04', amt: '$100', ty: 'P' }] }));
+  await loading;
+  assert.match(app.panel.html, /신고 1건/);
+  assert.doesNotMatch(app.panel.html, /공개 자료를 불러오는 중/);
+});
+
+test('HTTP 404 is unavailable, and retry after a tab switch cannot replace the active view', async () => {
+  let rejectOld;
+  const oldRequest = new Promise((_, reject) => { rejectOld = reject; });
+  const app = mount((url) => url.includes('trades-recent')
+    ? oldRequest : Promise.resolve(daily(url)));
+  const pending = app.click('mem');
+  await app.click('find');
+  assert.match(app.panel.html, /많이 찾는 종목/);
+  rejectOld(new Error('offline'));
+  await pending;
+  assert.match(app.panel.html, /많이 찾는 종목/);
+  assert.doesNotMatch(app.panel.html, /불러오지 못했습니다/);
+
+  const failed = mount(async (url) => url.includes('whitehouse')
+    ? { ok: false, status: 404, json: async () => ({ items: [] }) }
+    : daily(url));
+  await failed.click('wh');
+  assert.match(failed.panel.html, /불러오지 못했습니다/);
+  assert.doesNotMatch(failed.panel.html, /대통령 문서 0건/);
+});
+
+test('malformed daily index shows unavailable instead of a fabricated summary', async () => {
+  const app = mount(async (url) => url.includes('/daily/index.json')
+    ? ok({ latest: '../private' }) : daily(url));
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.match(app.hero.textContent, /일일 요약 자료를 불러오지 못했습니다/);
+  assert.doesNotMatch(app.hero.textContent, /의원 주식 신고/);
 });
