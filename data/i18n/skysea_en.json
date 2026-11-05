@@ -2166,5 +2166,11 @@
 "정당 명부로 뽑은 의회가 없어요.": "There is no legislature elected from party lists.",
 "정당 없는 의회": "No-party legislature",
 "좌우 점수: 유럽은 CHES 2024를 먼저, 없으면 ParlGov(전문가 점수), 다른 나라는 ParlGov, 없으면 V-Party(경제 좌우, 0~6)를 써요. 0~10 점수는 5±0.5 안이면 가운데로 보고 다음 자료를 봐요. V-Party는 가장 가까운 단계로 읽어 2.5 미만은 좌파, 3.5 초과는 우파, 그 사이는 분류 안 함이에요. 점수로 정할 수 없으면 계보·국제 연대·연합으로 정해요.": "Left-right scores: in Europe CHES 2024 first, then ParlGov (expert scores); elsewhere ParlGov, then V-Party (economic left-right, 0–6). A 0–10 score within 5±0.5 counts as centre and the next source is checked. V-Party is read to the nearest step: under 2.5 is left, over 3.5 is right. When no score decides, lineage, international affiliation or coalition is used.",
-"탈레반 정권은 의회가 없어요.": "The Taliban regime has no legislature."
+"탈레반 정권은 의회가 없어요.": "The Taliban regime has no legislature.",
+"계보 우선: 민주당(키프로스)은(는) Progressive Alliance 소속이라 좌파로 넣었어요(CHES·V-Party 점수보다 계보를 따름).": "Lineage first: Democratic Party (Cyprus) is a member of Progressive Alliance, so it counts as left (lineage overrides the CHES/V-Party score).",
+"계보 우선: ANO 2011은(는) Patriots for Europe 소속이라 우파로 넣었어요(CHES·V-Party 점수보다 계보를 따름).": "Lineage first: ANO (political party) is a member of Patriots for Europe, so it counts as right (lineage overrides the CHES/V-Party score).",
+"계보 우선: 주권 권력은(는) European Christian Political Party 소속이라 우파로 넣었어요(CHES·V-Party 점수보다 계보를 따름).": "Lineage first: Sovereign Power (Latvia) is a member of European Christian Political Party, so it counts as right (lineage overrides the CHES/V-Party score).",
+"계보 우선: 노동당은(는) Party of European Socialists 소속이라 좌파로 넣었어요(CHES·V-Party 점수보다 계보를 따름).": "Lineage first: Labour Party (Malta) is a member of Party of European Socialists, so it counts as left (lineage overrides the CHES/V-Party score).",
+"계보 우선: 제도혁명당은(는) Socialist International 소속이라 좌파로 넣었어요(CHES·V-Party 점수보다 계보를 따름).": "Lineage first: Institutional Revolutionary Party is a member of Socialist International, so it counts as left (lineage overrides the CHES/V-Party score).",
+"계보 우선: 말라위 의회당은(는) Centrist Democrat International 소속이라 우파로 넣었어요(CHES·V-Party 점수보다 계보를 따름).": "Lineage first: Malawi Congress Party is a member of Centrist Democrat International, so it counts as right (lineage overrides the CHES/V-Party score)."
 }
