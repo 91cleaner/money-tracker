@@ -40,10 +40,10 @@ class USDailyCopyTest(unittest.TestCase):
             ]})
             # Two transaction rows from one reporter and URL are NOT two filings.
             put("insider-form4.json", {"companies": {"META": {"trades": [
-                {"filed": today, "date": today, "who": "Director", "code": "S",
-                 "shares": 3, "price": 10, "url": "https://www.sec.gov/Archives/edgar/data/example"},
-                {"filed": today, "date": today, "who": "Director", "code": "S",
-                 "shares": 2, "price": 11, "url": "https://www.sec.gov/Archives/edgar/data/example"}
+                {"filed": today, "date": (dt.date.fromisoformat(today) - dt.timedelta(days=1)).isoformat(), "who": "Director", "code": "S",
+                 "shares": 3, "price": 10, "plan": True, "url": "https://www.sec.gov/Archives/edgar/data/example"},
+                {"filed": today, "date": (dt.date.fromisoformat(today) - dt.timedelta(days=2)).isoformat(), "who": "Director", "code": "S",
+                 "shares": 2, "price": 11, "plan": False, "url": "https://www.sec.gov/Archives/edgar/data/example"}
             ]}}})
 
             run = subprocess.run(
@@ -68,6 +68,13 @@ class USDailyCopyTest(unittest.TestCase):
             self.assertIn("SEC Form 4 거래 항목 2건", form4["h"])
             self.assertEqual(form4["n"][0], {"l": "거래 항목", "v": "2건"})
             self.assertNotIn("임원 거래 신고", form4["h"])
+            # Same filing day can cover different transaction dates and plan statuses.
+            # Do not assign the combined shares to the first trade date or claim all
+            # transactions were under a prearranged 10b5-1 plan.
+            self.assertIn(f"{today}에 신고된 공개시장 매도 거래 항목 2건", form4["items"][0]["t"])
+            self.assertIn("수량 합계 5주", form4["items"][0]["t"])
+            self.assertIn("거래일과 10b5-1 계획 여부는 개별 공시", form4["items"][0]["t"])
+            self.assertNotIn("미리 정한 계획에 따른 거래예요", form4["items"][0]["t"])
 
 
 if __name__ == "__main__":
