@@ -418,7 +418,7 @@
       out = out.replace(/약 ?([\d,.]+)(억|만) ?달러/g, function (m, n, u) { return "approx. " + koUsd(n, u); }).replace(/([\d,.]+)(억|만) ?달러/g, function (m, n, u) { return koUsd(n, u); }).replace(/(\d[\d,]*)달러/g, function (m, n) { return usd(parseFloat(n.replace(/,/g, ""))); });
       if (HANGUL.test(out)) for (var j = 0; j < PHS.length; j++) if (out.indexOf(PHS[j][0]) >= 0) out = out.split(PHS[j][0]).join(PHS[j][1]);
       // leftover count suffixes (numbers followed by Korean units)
-      out = out.replace(/(\d)건/g, function (m, d, i, str) { return /(^|[^\d,.])1$/.test(str.slice(0, i + 1)) ? d + " filing" : d + " filings"; }).replace(/(\d)곳/g, function (m, d, i, str) { return /(^|[^\d,.])1$/.test(str.slice(0, i + 1)) ? d + " company" : d + " companies"; }).replace(/(\d)일(?![가-힣])/g, "$1 days").replace(/(\d)명/g, "$1 members").replace(/(\d)개월/g, "$1 months");
+      out = out.replace(/(\d[\d,]*)건/g, function (m, n) { return n + (Number(n.replace(/,/g, "")) === 1 ? " record" : " records"); }).replace(/(\d)곳/g, function (m, d, i, str) { return /(^|[^\d,.])1$/.test(str.slice(0, i + 1)) ? d + " company" : d + " companies"; }).replace(/(\d)일(?![가-힣])/g, "$1 days").replace(/(\d)명/g, "$1 members").replace(/(\d)개월/g, "$1 months");
       out = datesEn(out);
       out = out.replace(/^US 회사 (.+)의 거래처$/, "Supplier of US company $1").replace(/엔비디아/g, "NVIDIA").replace(/테슬라/g, "Tesla").replace(/삼성전자/g, "Samsung Electronics").replace(/([가-힣])Member 등 (\d+)인/g, "$1 and $2 others").replace(/([가-힣])Member/g, "$1");
       out = out.replace(/\u0001(\d+)\u0001/g, function (m, i) { return keep[+i]; });
