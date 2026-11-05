@@ -4,7 +4,7 @@
    Language: ?lang=en|ko (shareable; also saved) > localStorage "mt.lang" > ko.
    EN formats: dates "MMM D, YYYY", amounts in $ with K/M/B. KO keeps its own formats (억/만원 for KRW amounts).
    US source data stays as published (English titles etc.); Korean tags ("ko") are not shown in EN.
-   Wording stays neutral: "Based on filings", "data shows", "Not investment advice", PTR = "Disclosed (PTR), up to 45-day lag".
+   Wording stays neutral: "Based on filings", "data shows", "Not investment advice", PTR deadline = earlier of 30 days after notice or 45 days after trade; late filings possible.
    Untranslated Korean (rare data strings) is left as is rather than guessed. */
 (function () {
   "use strict";
@@ -107,7 +107,7 @@
     [/^이 사이트가 직접 묶은 거라 공식 담당 위원회는 아닐 수 있어요\. (상원|하원) 위원 (\d+)명이 있어요\./, "Grouped by this site, so it may not be the official committee. $2 members in the $1."],
     // insights.json lines
     [new RegExp("하원 PTR 신고 최근 (\\d+)일\\(" + D + "~" + D + "\\) (\\d+)건\\(구입 (\\d+)·처분 (\\d+),? 의원 (\\d+)명\\), 직전 (\\d+)일 (\\d+)건\\. 신고 기준, 거래일→신고일 최대 (\\d+)일 차이 가능\\."),
-      "House PTR reported transaction entries, last $1 days ($2~$3): $4 (buys $5 · sales $6, $7 members); prior $8 days: $9. Based on filings; disclosed (PTR), up to $10-day lag."],
+      "House PTR reported transaction entries, last $1 days ($2~$3): $4 (buys $5 · sales $6, $7 members); prior $8 days: $9. Based on filings; disclosed (PTR), deadline of $10 days after trade or earlier after notice; late filings possible."],
     [/연방 계약 의무액 (.+?) 상위 (\d+)% \((\d+)\/(\d+), 데이터상\)/, "Federal contract obligations: top $2% in $1 (rank $3 of $4; data shows)"],
     [/^(.+?)(?:에 언급된)? (생산시설|생산 거점 지역|공급사) (\d+)곳(?:\(본사 제외\))?(?: 중|:) (.*?)[(,] ?(?:공급사 소재지 )?좌표 기준 대략\)\.$/, function (m, doc, kind, n, list) { list = list.replace(/^[:, ]+/, ""); if ((list.match(/\(/g) || []).length > (list.match(/\)/g) || []).length) list += ")"; return doc + ": " + n + " " + ({ "생산시설": "production facilities (HQ excluded)", "생산 거점 지역": "production regions mentioned", "공급사": "suppliers mentioned" }[kind]) + " — " + list.replace(/^[:, ]+/, "") + " (approx., by coordinates)."; }],
     [/의원 PTR 신고 최근 (\d+)일 (\d+)건\(직전 (\d+)건\)/, "Member PTR reported transaction entries, last $1 days: $2 (prior: $3)"],
@@ -133,10 +133,10 @@
     // company chart (company.html)
     [/^(1주|1달|1년|전체) 종가 추이 (\S+) ~ (\S+)$/, function (m, r, a, b) { return RNG[r] + " closing-price trend " + a + " ~ " + b; }],
     [/^(1주|1달|1년|전체) 종가 (\S+) ~ (\S+) · 범위 (\S+) ~ (\S+)(?: · 출처: (.+?))? · 핀 (\d+)건\. 핀은 같은 기간 공개 기록의 날짜일 뿐 주가 변동의 원인을 뜻하지 않습니다\. 의원 거래는 신고일 기준이며 실제 거래는 최대 45일 앞설 수 있습니다\. 연방 계약은 날짜별 자료가 없어 핀으로 표시하지 않습니다\.$/,
-      function (m, r, a, b, lo, hi, src, n) { return RNG[r] + " closing prices " + a + " ~ " + b + " · range " + lo + " ~ " + hi + (src ? " · Source: " + src : "") + " · " + n + " pin" + (n === "1" ? "" : "s") + ". Pins are only the dates of public records in the same period and do not mean they caused price moves. Member trades are by filing date (Disclosed (PTR), up to 45-day lag), so actual trades can be up to 45 days earlier. Federal contracts have no per-date data and are not shown as pins. Not investment advice."; }],
+      function (m, r, a, b, lo, hi, src, n) { return RNG[r] + " closing prices " + a + " ~ " + b + " · range " + lo + " ~ " + hi + (src ? " · Source: " + src : "") + " · " + n + " pin" + (n === "1" ? "" : "s") + ". Pins are only the dates of public records in the same period and do not mean they caused price moves. Member-trade pins use filing dates, not execution dates. House PTRs are due by the earlier of 30 days after notice or 45 days after trade; late filings can occur. Federal contracts have no per-date data and are not shown as pins. Not investment advice."; }],
     [/ 외 (\d+)건 — 아래 목록 참고$/, " and $1 more — see list below"], [/ 외 (\d+)건$/, " and $1 more"],
     [/ · 회사·제품명 언급 기준, 영향 단정 아님$/, " · Based on company / product-name mentions; no impact implied"],
-    [/^신고 기준( · 거래일 (\S+))?( · 신고까지 (\d+)일\(법정 최대 45일\))?$/, function (m, a, td, b, n) { return "Based on filings" + (td ? " · Traded " + td : "") + (n ? " · Lag " + n + " days (statutory max 45)" : ""); }],
+    [/^신고 기준( · 거래일 (\S+))?( · 신고까지 (\d+)일\(법정 최대 45일\))?$/, function (m, a, td, b, n) { return "Based on filings" + (td ? " · Traded " + td : "") + (n ? " · Lag " + n + " days (45-day deadline; late filings possible)" : ""); }],
     // company / member / sector pages
     [/(\S.*?) 회사 상세$/, "$1 · Company file"], [/(\S.*?) 의원 상세$/, "$1 · Member file"], [/(\S.*?) 업종 상세$/, "$1 · Sector file"],
     [/(\S.*?) 회사 파일$/, "$1 · Company file"], [/(\S.*?) 의원 파일$/, "$1 · Member file"], [/(\S.*?) 업종 파일$/, "$1 · Sector file"],
@@ -165,7 +165,7 @@
     [/데이터상 이 업종으로 분류된 회사 (\d+)곳 \(종가 자료 있는 곳 (\d+)곳\)\. 업종은 data\/search-index\.json의 자체 분류이며 공식 산업 분류가 아닙니다\./, "Data shows $1 companies classified in this sector ($2 with closing-price data). Sectors are this site's own classification in data/search-index.json, not an official industry classification."],
     [/최근 (\d+)일 의원 거래 신고/, "Reported member transaction entries, last $1 days"],
     [/종가는 수정종가\(adjusted\) 기준 (\S+) · 등락은 종가 대비 변화율이며 사거나 팔라는 뜻이 아닙니다\./, "Adjusted closing prices as of $1 · changes are percent change in close; not a suggestion to buy or sell."],
-    [/신고일 기준\((\S+) ~ (\S+)\)입니다\. 거래 후 최대 45일 안에 신고하므로 실제 거래일과 차이가 있을 수 있습니다\. 공개 기록일 뿐 잘잘못 판단이 아니며 투자 조언이 아닙니다\./, "Based on filings, by filing date ($1 ~ $2). Disclosed (PTR), up to 45-day lag, so actual trade dates can differ. Public records only — not a judgment of wrongdoing and not investment advice."],
+    [/신고일 기준\((\S+) ~ (\S+)\)입니다\. 거래 후 최대 45일 안에 신고하므로 실제 거래일과 차이가 있을 수 있습니다\. 공개 기록일 뿐 잘잘못 판단이 아니며 투자 조언이 아닙니다\./, "Based on filings, by filing date ($1 ~ $2). Trade and filing dates can differ; the House PTR deadline is the earlier of 30 days after notice or 45 days after trade, and late filings can occur. Public records only — not a judgment of wrongdoing and not investment advice."],
     [/ · 교환 (\d+)건 포함/, " · incl. $1 exchanges"],
     [/연방 계약 합계 \((\d+)곳\)/, "Federal contracts total ($1 companies)"], [/로비 보고 금액 합계 \((\d+)곳\)/, "Reported lobbying total ($1 companies)"],
     [/연방 계약 회사 순위 · /, "Federal contracts by company · "], [/로비 보고 금액 회사 순위 · /, "Reported lobbying by company · "],
@@ -201,7 +201,7 @@
     [/"(.+)"와 딱 맞는 항목은 없지만 가까운 항목이 있어요\./, "No exact match for \"$1\", but there are close ones."],
     [/^(?!◉)(.+) 경로$/, "$1 route"], [/ 경로 시작$/, " · start route"],
     [/(\d+)곳\. 공개 기록 경로를 따라가세요\./, "$1 stops. Follow the public-record route."], [/ · 정류장 /, " · stops "],
-    [/의원 주식 거래 · 하원 PTR 신고 기준 (\d+)건 중 최근 (\d+)건 · 거래일→신고일 최대 (\d+)일 차이 가능 · 투자 조언 아님/, "Reported member transactions · $2 most recent of $1 House PTR entries · Disclosed (PTR), up to $3-day lag · Not investment advice"],
+    [/의원 주식 거래 · 하원 PTR 신고 기준 (\d+)건 중 최근 (\d+)건 · 거래일→신고일 최대 (\d+)일 차이 가능 · 투자 조언 아님/, "Reported member transactions · $2 most recent of $1 House PTR entries · House PTR deadline: $3 days after trade or earlier after notice; late filings possible · Not investment advice"],
     [/하원 PTR 신고 · /, "House PTR filings · "],
     [/미 의회 법안 (\S+) 수집/, "U.S. Congress bills: $1 collected"],
     [/ · 소관위 /, " · committee "],
@@ -210,7 +210,7 @@
     [/자체 분류, 공식 관할 아님\. 데이터상 (상원|하원) 위원 (\d+)명\(members\.json\)\./, function (m, c, n) { return "Own classification, not official jurisdiction. Data shows " + n + " " + (c === "상원" ? "Senate" : "House") + " members (members.json)."; }],
     [/(?:연관 )?위원회\((상원|하원)\): (.+?)(?=$|\s·\s|\n)/, function (m, c, w) { var C = {"군사위원회": "Armed Services", "은행·주택·도시 위원회": "Banking, Housing, and Urban Affairs", "상무·과학·교통 위원회": "Commerce, Science, and Transportation", "에너지·천연자원 위원회": "Energy and Natural Resources", "환경·공공사업 위원회": "Environment and Public Works", "보건·교육·노동·연금 위원회": "Health, Education, Labor, and Pensions", "에너지·상무 위원회": "Energy and Commerce", "금융서비스 위원회": "Financial Services", "미중 전략 경쟁 특별위원회": "House Select Committee on the Strategic Competition Between the United States and the Chinese Communist Party", "교통·인프라 위원회": "Transportation and Infrastructure"}; w = w.trim(); return "Related committee (" + (c === "상원" ? "Senate" : "House") + "): " + (C[w] || w); }],
     [/(?:연관 )?위원회\((상원|하원)\): /, function (m, c) { return "Related committee (" + (c === "상원" ? "Senate" : "House") + "): "; }],
-    [/데이터상 하원 PTR 신고 (\d+)건, 최근 신고일 (\S+?)\. 신고 기준이며 거래일→신고일 최대 (\d+)일 차이 가능\. 투자 조언 아님\./, "Data shows $1 House PTR transaction entries, most recent filing date $2. Based on filings; disclosed (PTR), up to $3-day lag. Not investment advice."],
+    [/데이터상 하원 PTR 신고 (\d+)건, 최근 신고일 (\S+?)\. 신고 기준이며 거래일→신고일 최대 (\d+)일 차이 가능\. 투자 조언 아님\./, "Data shows $1 House PTR transaction entries, most recent filing date $2. Based on filings; House PTR deadline: $3 days after trade or earlier after notice; late filings possible. Not investment advice."],
     [/데이터상 (.+?) 의원 (\S+) 거래 신고 (\d+)건\. 최근: (구입|처분|교환)\((.)\) (.+?), 거래일 (\S+), 신고일 (\S+)\. 신고 기준, 투자 조언 아님\./,
       function (m, who, tk, n, ty, c, amt, td, fd) { return "Data shows " + n + " reported transaction entries by " + who + " for " + tk + ". Latest: " + { "구입": "Purchase", "처분": "Sale", "교환": "Exchange" }[ty] + " (" + c + ") " + amt + ", traded " + td + ", filed " + fd + ". Based on filings; not investment advice."; }],
     [/데이터상 SEC 제출 서류 사업장 주소가 (.+?)임\./, "Data shows the business address in SEC filings is $1."],
@@ -272,12 +272,12 @@
     ["산업재·기계", "Industrials & machinery"], ["소비재·명품·유통", "Consumer, luxury & retail"], ["가상자산", "Crypto assets"], ["전체 수집 기업", "all tracked companies"], ["신주 본사", "Hsinchu HQ"], ["타이중", "Taichung"], ["타이난", "Tainan"], ["각 ", "each "], ["미국", "US"], ["한국", "Korea"], ["중국", "China"], ["일본", "Japan"], ["독일", "Germany"], ["증설 언급 포함, 팹 수 아님", "incl. mentioned expansions, not a fab count"], ["안전자산(금·채권)", "Safe havens (gold & bonds)"], ["반도체", "Semiconductors"], ["자동차", "Autos"], ["관세·통상", "tariffs & trade"], ["무역·관세", "trade & tariffs"],
     // shared disclaimers
     ["신고 기준입니다. STOCK Act상 의원은 거래 후 최대 45일 안에 신고하므로 거래일과 신고일 사이에 차이가 있을 수 있고, 최근 거래는 아직 신고되지 않았을 수 있습니다. 금액은 신고서에 적힌 구간입니다. 공개 기록일 뿐 잘잘못 판단이 아니며, 투자 조언이 아닙니다.",
-      "Based on filings. Under the STOCK Act, members disclose within 45 days of a trade, so trade and filing dates can differ (Disclosed (PTR), up to 45-day lag) and recent trades may not be filed yet. Amounts are the ranges stated on the filing. Public records only — not a judgment of wrongdoing, and not investment advice."],
+      "Based on filings. House PTRs are due by the earlier of 30 days after notice or 45 days after trade; late filings may occur, so trade and filing dates can differ and recent trades may not be filed yet. Amounts are the ranges stated on the filing. Public records only — not a judgment of wrongdoing, and not investment advice."],
     ["신고 기준입니다. STOCK Act상 의원은 거래 후 최대 45일 안에 신고하므로 거래일과 신고일 사이에 차이가 있을 수 있습니다. 금액은 신고서에 적힌 구간입니다. 공개 기록일 뿐 잘잘못 판단이 아니며, 투자 조언이 아닙니다.",
-      "Based on filings. Under the STOCK Act, members disclose within 45 days of a trade, so trade and filing dates can differ (Disclosed (PTR), up to 45-day lag). Amounts are the ranges stated on the filing. Public records only — not a judgment of wrongdoing, and not investment advice."],
+      "Based on filings. House PTRs are due by the earlier of 30 days after notice or 45 days after trade; late filings may occur, so trade and filing dates can differ. Amounts are the ranges stated on the filing. Public records only — not a judgment of wrongdoing, and not investment advice."],
     ["데이터상 공개 기록을 정리한 화면입니다. 사거나 팔라는 뜻이 아니며 거래의 이유나 원인 관계를 단정하지 않습니다.", "This page organizes public records as the data shows them. It is not a suggestion to buy or sell and does not claim reasons or causes for any trade."],
     ["데이터상 공개 기록을 정리한 화면입니다. 사거나 팔라는 뜻이 아니며 원인 관계를 단정하지 않습니다.", "This page organizes public records as the data shows them. It is not a suggestion to buy or sell and makes no causal claim."],
-    ["브라우저에만 저장(로그인 없음). 하원 PTR 신고 기준이며 거래일→신고일 최대 45일 차이가 있을 수 있습니다. 공개 기록일 뿐 잘잘못 판단이 아니며 투자 조언 아님.", "Saved in this browser only (no login). Based on House PTR filings; disclosed (PTR), up to 45-day lag between trade and filing. Public records only — not a judgment of wrongdoing; not investment advice."],
+    ["브라우저에만 저장(로그인 없음). 하원 PTR 신고 기준이며 거래일→신고일 최대 45일 차이가 있을 수 있습니다. 공개 기록일 뿐 잘잘못 판단이 아니며 투자 조언 아님.", "Saved in this browser only (no login). Based on House PTR filings; the filing deadline is the earlier of 30 days after notice or 45 days after trade; late filings are possible. Public records only — not a judgment of wrongdoing; not investment advice."],
     ["같은 기간 있었던 공개 기록을 날짜순으로 나열한 것입니다. 서로의 원인 관계를 뜻하지 않습니다.", "Public records from the same period, listed by date. No causal link between them is implied."],
     ["위원회와 업종의 연결은 이 사이트의 자체 분류이며 공식 관할이 아닙니다. 겹침은 두 기록이 같은 업종에 걸쳐 있다는 뜻일 뿐, 거래 이유나 잘잘못을 뜻하지 않습니다.", "Links between committees and sectors are this site's own classification, not official jurisdiction. An overlap only means two records fall in the same sector — it says nothing about reasons or wrongdoing."],
     ["데이터상 수령자·의뢰인 이름이 회사명으로 시작하는 기록만 합산한 값입니다. 자회사·동명 법인이 빠지거나 섞일 수 있어 원문 확인이 필요합니다.", "Sums only records where the recipient / client name starts with the company name. Subsidiaries may be missing and same-name entities may be mixed in, so check the source."],
