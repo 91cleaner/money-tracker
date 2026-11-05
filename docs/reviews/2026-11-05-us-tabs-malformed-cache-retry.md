@@ -48,3 +48,31 @@ This is **separate from the malformed-row cache bug** above and from the SkySea 
 2. On rejected or missing \`doc\`/\`u\`, show a **non-clickable '원문 링크 확인 불가'** state, preserving the record's status rather than silently removing the entire row or fabricating a source. For accepted external links, keep \`rel="noopener noreferrer"\`.
 3. Add deterministic \`tests/mt-tabs-load.test.cjs\` cases for both tabs with synthetic \`javascript:\`/\`data:\`/missing URLs and valid official HTTPS URLs. Assert that unsafe schemes never appear as clickable \`href\`; no \`0건\` fallback for malformed records. Test real Chromium click behavior and mobile before merge.
 4. This review **does not edit UI code** because \`docs/AI-ROLES.md\` assigns it to Claude. The existing #513 Draft remains unmerged; require Claude/실장 review. Public repository, delayed House PTR, live executed trades **DISCONNECTED**, generative AI **DISCONNECTED**.
+
+
+## Additional P1 mobile/tab navigation regression — "오늘" widget disappears after leaving tab (2026-11-05 22:55 KST)
+
+**New finding, separate from the retry-cache and unsafe-link findings above.** Reproduced by executing the exact \`assets/mt-tabs.js\` from #513 head \`4fc5495\` (blob \`4e0b1a7\`) in a V8 mocked-DOM/fetch harness with an initially connected \`#mtToday\` node. This is **not** a real Chromium/iPhone or deployed Pages verification.
+
+### Root cause
+
+- On \`show('today')\`, \`P.replaceChildren(box)\` moves the sole \`#mtToday\` node into \`#tbPanel\`.
+- On switching to another tab (\`mem\`, \`wh\`, \`rank\`, or \`find\`), \`P.innerHTML = h\` destroys that child and detaches \`#mtToday\` from the document. No persistent reference or parking host is kept.
+- On returning to \`today\`, \`$('mtToday')\` returns \`null\`, so the tab renders the fallback \`오늘의 기록을 불러오는 중이에요.\` indefinitely rather than restoring the daily widget. A network success cannot repair the lost DOM node.
+
+### Executed deterministic reproduction
+
+| Action | Panel content | \`#mtToday\` connected? |
+| --- | --- | --- |
+| Boot with existing \`#mtToday\` | Original today widget | Yes |
+| Click \`의원\` (valid empty \`trades: []\`) | \`최근 의원 주식 신고 0건\` | No |
+| Click \`오늘\` again | \`오늘의 기록을 불러오는 중이에요.\` | No |
+
+The same destructive assignment is shared by the other non-today tabs. This reproduces **a local DOM lifecycle defect**, not a claim about current production users. The mocked environment explicitly modeled DOM detachment on \`innerHTML\` replacement.
+
+### Required UI-owner fix and acceptance gate
+
+1. **Preserve the original \`#mtToday\` element and its state/listeners** when changing tabs. Keep a stable reference after the widget exists and park/reparent it safely outside the replaced panel (or use separate persistent tab panels). Do not recreate it as static HTML or merely replace the fallback text.
+2. Add a regression test to \`tests/mt-tabs-load.test.cjs\`: boot with a populated \`#mtToday\`; navigate \`today → mem → today → wh → today → find → today\`; assert the **same node identity**, retained content and listeners, no permanent loading fallback, and no false \`0건\`.
+3. Exercise the same sequence in real desktop Chromium and iPhone portrait/landscape. Confirm the fixed bottom tab panel remains usable, and verify the deployed Pages version only **after** merge and same-SHA release checks.
+4. Keep #513 in Draft pending Claude/실장 UI review. No UI, tests, \`data/\`, collectors, or production code was changed by this review. House PTR is delayed disclosure; live executions and generative AI remain **DISCONNECTED**.
