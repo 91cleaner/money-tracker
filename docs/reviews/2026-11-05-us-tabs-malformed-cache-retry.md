@@ -28,3 +28,23 @@ Both cases reproduced: first error displayed, retry still displayed error, retry
 For PR #513 commit `4fc5495`: [Command smoke](https://github.com/91cleaner/money-tracker/actions/runs/42014625444) succeeded; [map smoke](https://github.com/91cleaner/money-tracker/actions/runs/42014625438) failed on the old country-entry assertion in `tests/usa-map-smoke.test.cjs:68`; [security](https://github.com/91cleaner/money-tracker/actions/runs/42014625472) failed on the obsolete `href="intel-lab.html"` check. These last two are already addressed in **unmerged PR #403**, so this review does **not** duplicate that work.
 
 The new malformed-row cache defect is distinct from #513's existing HTTP/JSON rejection and late-response tests. **Do not mark #513 production-verified or merge without UI owner review.** Repository and Pages are currently **public**, not private.
+
+
+## Additional P1 security review — unsafe document-link schemes (2026-11-05 21:54 KST)
+
+This is **separate from the malformed-row cache bug** above and from the SkySea DOM-injection review in #472. Checked the exact \`assets/mt-tabs.js\` source on #513 head \`4fc5495\`. **Source-level reproduction only; no live malicious record or browser exploit was observed.**
+
+- The shared \`row(href, ...)\` template inserts \`esc(href)\` into \`<a href="...">\`. HTML escaping protects the attribute syntax but **does not validate the URL scheme**. The \`/^https?:/\` test only controls \`target\`/\`rel\`; it does not reject other schemes.
+- \`mem\` passes \`x.doc\` directly when \`x.tk\` is absent; \`wh\` always passes \`x.u\` directly. Thus an untrusted/synthetic JSON item with \`doc: "javascript:alert(1)"\` or \`u: "javascript:alert(1)"\` generates an active \`href="javascript:alert(1)"\` anchor. A \`data:\` URL also survives. **No evidence that current production JSON contains such a value.**
+- Isolated reproduction using the source's exact \`esc\` and \`row\` expressions produced:
+  - Input \`javascript:alert(1)\` → \`<a class="tbRow" href="javascript:alert(1)">...\`
+  - Input \`data:text/html,hello\` → \`<a class="tbRow" href="data:text/html,hello">...\`
+  - A valid \`https://www.federalregister.gov/...\` remains a normal external link.
+- This is a **potential click-triggered script-navigation/injection boundary**, not a claim of an observed exploit. Browser CSP, data provenance and user interaction affect exploitability.
+
+**UI owner fix / acceptance criteria**
+
+1. Before rendering any data-derived \`href\`, use a single URL policy: internal ticker navigation only from the app-generated \`go(ticker)\` route; external original-source links must parse as \`https:\` (prefer a documented official-source host allowlist). Reject \`javascript:\`, \`data:\`, \`vbscript:\`, protocol-relative and malformed URLs; don't replace them with misleading \`#\` links.
+2. On rejected or missing \`doc\`/\`u\`, show a **non-clickable '원문 링크 확인 불가'** state, preserving the record's status rather than silently removing the entire row or fabricating a source. For accepted external links, keep \`rel="noopener noreferrer"\`.
+3. Add deterministic \`tests/mt-tabs-load.test.cjs\` cases for both tabs with synthetic \`javascript:\`/\`data:\`/missing URLs and valid official HTTPS URLs. Assert that unsafe schemes never appear as clickable \`href\`; no \`0건\` fallback for malformed records. Test real Chromium click behavior and mobile before merge.
+4. This review **does not edit UI code** because \`docs/AI-ROLES.md\` assigns it to Claude. The existing #513 Draft remains unmerged; require Claude/실장 review. Public repository, delayed House PTR, live executed trades **DISCONNECTED**, generative AI **DISCONNECTED**.
