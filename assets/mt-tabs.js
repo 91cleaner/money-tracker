@@ -57,6 +57,9 @@
   async function show(id) {
     bar.querySelectorAll('button').forEach((b) => b.setAttribute('aria-selected', b.dataset.t === id));
     const P = root.querySelector('#tbPanel'); const ticket = ++showSeq; let h = '';
+    if ((id === 'mem' && !TR) || (id === 'wh' && !WH)) {
+      P.innerHTML = '<div class="tbH" role="status">공개 자료를 불러오는 중입니다…</div>';
+    }
     if (id === 'today') {
       const box = $('mtToday'); if (box) { box.className = 'home'; P.replaceChildren(box); return; }
       h = '<div class="tbH">오늘의 기록을 불러오는 중이에요.</div>';
