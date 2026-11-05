@@ -389,7 +389,7 @@
   var HANGUL = /[가-힣]/;
   var ISO = /(\d{4})-(\d{2})-(\d{2})/g, YM = /(\d{4})-(\d{2})(?![\d-])/g;
   function datesEn(s) {
-    return s.replace(ISO, function (m, y, mo, d) { return +mo >= 1 && +mo <= 12 && +d >= 1 && +d <= 31 ? MON[+mo - 1] + " " + (+d) + ", " + y : m; })
+    return s.replace(ISO, function (m) { return dateEn(m); })
       .replace(YM, function (m, y, mo) { return +mo >= 1 && +mo <= 12 && +y > 1990 ? MON[+mo - 1] + " " + y : m; });
   }
   var cache = Object.create(null), cacheN = 0;
