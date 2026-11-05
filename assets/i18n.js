@@ -185,13 +185,13 @@
     [/의원 명부\(members\.json\)에 없는 이름입니다\. 신고서에 적힌 이름: /, "Not in the member roster (members.json). Name on the filing: "],
     // commander
     [/가장 최근 신고일\((\S+)\)에 신고한 의원 (.+) 기록 확인/, "Check the record of $2, who filed on the latest filing date ($1)"],
-    [/최근 30일 신고가 많은 종목 중 (\S+) 회사 카드 열람 \(신고 (\d+)건\)/, "Open the company card for $1, one of the tickers with the most reported entries in the last 30 days ($2 entries)"],
+    [/최근 30일 신고가 많은 종목 중 (\S+) 회사 카드 열람 \(신고 (\d+)건\)/, "Open the company card for $1, one of the tickers with the most reported entries in the 30 days before the latest stored filing date ($2 entries)"],
     [/업종 '(.+)' 살펴보기/, "Explore the sector '$1'"], [/종목 (\S+) 회사 카드 열람/, "Open the company card for $1"],
     [/조사한 카드 (\d+)개 · 다음 '(.+)'까지 (\d+)개/, "$1 cards opened · $3 more to '$2'"], [/조사한 카드 (\d+)개 · 최고 계급/, "$1 cards opened · top rank"],
     [/ 연속 임무 완료 (\d+)일/, "$1-day mission streak"],
-    [/(\d+) \/ (\d+) 완료 · 매일 실제 신고 자료로 새로 정해짐 \((\S+)\)/, "$1 / $2 done · refreshed daily from real filings ($3)"],
+    [/(\d+) \/ (\d+) 완료 · 매일 실제 신고 자료로 새로 정해짐 \((\S+)\)/, "$1 / $2 complete · missions rotate daily using stored PTR disclosures ($3); source freshness not verified"],
     [/^(회사|의원|업종) (?!거래|주식|상세|파일|선택|미분류)(\S.*)$/, function (m, k, v) { return { "회사": "Company ", "의원": "Member ", "업종": "Sector " }[k] + v; }],
-    [/지난 확인 이후 새 신고 (\d+)건/, "$1 new filings since last check"], [/ · 기준 신고일 /, " · baseline filing date "], [/ · 추적 시작 /, " · tracking since "],
+    [/지난 확인 이후 새 신고 (\d+)건/, "$1 newer reported transaction entries in loaded disclosures"], [/ · 기준 신고일 /, " · baseline filing date "], [/ · 추적 시작 /, " · tracking since "],
     [/ · 지난 방문 이후 새 신고/, " · new since last visit"], [/신고 (\S+) · 거래 (\S+)/, "Filed $1 · Traded $2"],
     // world command room
     [/기준일 (\S+) · 출처: /, "As of $1 · Source: "], [/미국 종목·ETF 조사 대상: /, "US tickers / ETFs to research: "],
@@ -337,9 +337,9 @@
     ["한국 국회 발의 법률안", "Korean National Assembly bills"],
     // commander
     ["대장 모드 패널", "Commander mode panel"], ["대장 모드", "Commander mode"], ["신입 요원", "Rookie Agent"], ["정보 분석관", "Intelligence Analyst"], ["현장 추적관", "Field Tracker"], ["수석 조사관", "Senior Investigator"], ["작전 지휘관", "Operations Commander"], ["관제실 대장 기록", "Commander log"], ["관제실 대장", "Control Room Commander"],
-    ["★ 추적 중", "★ Tracking"], ["☆ 추적", "☆ Track"], ["추적 목록에서 빼기", "Remove from tracking list"], ["추적 목록에 넣기", "Add to tracking list"], ["추적 임무", "Missions"], ["추적 목록", "Watchlist"], ["새 신고", "New filings"], ["닫기", "Close"],
-    ["오늘 만들 임무 자료가 없습니다.", "No mission data available today."], ["아직 추적 중인 카드가 없습니다. 회사·의원·업종 페이지에서 ☆ 추적을 누르세요.", "Nothing tracked yet. Press ☆ Track on a company, member or sector page."],
-    ["지난 확인 이후 새 신고 없음", "No new filings since last check"], ["신고 자료가 없습니다.", "No filing data."], ["신고일 순(같은 날은 거래일 순). 신고 시각은 원문에 없어 날짜까지만 표시합니다.", "Sorted by filing date (same day by trade date). Filing times are not in the source, so only dates are shown."],
+    ["★ 추적 중", "★ Tracking"], ["☆ 추적", "☆ Track"], ["추적 목록에서 빼기", "Remove from tracking list"], ["추적 목록에 넣기", "Add to tracking list"], ["추적 임무", "Missions"], ["추적 목록", "Watchlist"], ["새 신고", "New disclosure entries"], ["닫기", "Close"],
+    ["오늘 만들 임무 자료가 없습니다.", "No missions generated from available PTR records today."], ["아직 추적 중인 카드가 없습니다. 회사·의원·업종 페이지에서 ☆ 추적을 누르세요.", "Nothing tracked yet. Press ☆ Track on a company, member or sector page."],
+    ["지난 확인 이후 새 신고 없음", "No newer disclosures confirmed (check data availability)"], ["신고 자료가 없습니다.", "No filing data."], ["신고일 순(같은 날은 거래일 순). 신고 시각은 원문에 없어 날짜까지만 표시합니다.", "Sorted by filing date (same day by trade date). Filing times are not in the source, so only dates are shown."],
     [" · 신고 ", " · Filed "], [" · 거래 ", " · Traded "],
     // world command room
     ["오프라인 개략 세계지도", "Offline rough world map"], ["실제 좌표 기반 세계지도", "World map based on real coordinates"], ["세계지도 준비 중 · 지도를 직접 이동할 수 있습니다", "World map loading · you can pan the map yourself"], ["관제실 조작", "Command room controls"], ["경로 조작", "Route controls"],
