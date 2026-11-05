@@ -47,7 +47,7 @@ try:
         for _, tk, t in new:
             k = (tk, t['who'], t['code']); a = g.setdefault(k, {'sh': 0, 'v': 0, 'n': 0, 'd': t['date'], 'u': t.get('url'), 'plan': t.get('plan')})
             a['sh'] += t.get('shares') or 0; a['v'] += (t.get('shares') or 0) * (t.get('price') or 0); a['n'] += 1
-        items = [{'t': f"{tk} 신고자 {who}: {a['d']}에 {int(a['sh']):,}주를 {'샀어요' if c=='P' else '팔았어요'}, 약 ${round(a['v']):,} ({a['n']}건)" + (". 미리 정한 계획에 따른 거래예요." if a['plan'] else '.'), 'tk': tk, 'u': a['u']} for (tk, who, c), a in sorted(g.items(), key=lambda x: -x[1]['v'])[:4]]
+        items = [{'t': f"{tk} 신고자 {who}: {last}에 신고된 공개시장 {'매수' if c=='P' else '매도'} 거래 항목 {a['n']}건, 수량 합계 {int(a['sh']):,}주. 기록된 가격·수량 기준 계산 금액 합계 약 ${round(a['v']):,}. 거래일과 10b5-1 계획 여부는 개별 공시를 확인하세요.", 'tk': tk, 'u': a['u']} for (tk, who, c), a in sorted(g.items(), key=lambda x: -x[1]['v'])[:4]]
         cards.append({'id': 'f4', 'k': 'SEC Form 4 내부자 거래', 'h': f"{last} SEC Form 4 거래 항목 {len(new)}건 · {len(tks)}개 회사", 'n': [{'l': '거래 항목', 'v': f'{len(new)}건'}, {'l': '회사', 'v': f'{len(tks)}곳'}], 'items': items})
 except Exception as e: print('f4', e)
 # 4) totals: contracts / lobbying / PAC — show change vs previous saved day
