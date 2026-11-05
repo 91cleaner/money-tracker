@@ -136,7 +136,7 @@
       function (m, r, a, b, lo, hi, src, n) { return RNG[r] + " closing prices " + a + " ~ " + b + " · range " + lo + " ~ " + hi + (src ? " · Source: " + src : "") + " · " + n + " pin" + (n === "1" ? "" : "s") + ". Pins are only the dates of public records in the same period and do not mean they caused price moves. Member-trade pins use filing dates, not execution dates. House PTRs are due by the earlier of 30 days after notice or 45 days after trade; late filings can occur. Federal contracts have no per-date data and are not shown as pins. Not investment advice."; }],
     [/ 외 (\d+)건 — 아래 목록 참고$/, " and $1 more — see list below"], [/ 외 (\d+)건$/, " and $1 more"],
     [/ · 회사·제품명 언급 기준, 영향 단정 아님$/, " · Based on company / product-name mentions; no impact implied"],
-    [/^신고 기준( · 거래일 (\S+))?( · 신고까지 (\d+)일\(법정 최대 45일\))?$/, function (m, a, td, b, n) { return "Based on filings" + (td ? " · Traded " + td : "") + (n ? " · Lag " + n + " days (45-day deadline; late filings possible)" : ""); }],
+    [/^신고 기준( · 거래일 (\S+))?( · 신고까지 (\d+)일\(법정 최대 45일\))?$/, function (m, a, td, b, n) { return "Based on filings" + (td ? " · Traded " + td : "") + (n ? " · Reported trade-to-filing interval " + n + " days (House PTR deadline: earlier of 30 days after notice or 45 days after trade; late filings possible)" : ""); }],
     // company / member / sector pages
     [/(\S.*?) 회사 상세$/, "$1 · Company file"], [/(\S.*?) 의원 상세$/, "$1 · Member file"], [/(\S.*?) 업종 상세$/, "$1 · Sector file"],
     [/(\S.*?) 회사 파일$/, "$1 · Company file"], [/(\S.*?) 의원 파일$/, "$1 · Member file"], [/(\S.*?) 업종 파일$/, "$1 · Sector file"],
