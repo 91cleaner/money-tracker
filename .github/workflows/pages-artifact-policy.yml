@@ -1,0 +1,40 @@
+name: Public Pages artifact privacy policy
+on:
+  pull_request:
+    paths:
+      - 'data/**'
+      - 'scripts/prepare-public-pages.py'
+      - 'scripts/check-pages-artifact.py'
+      - 'scripts/audit-pages-artifact-policy.py'
+      - 'tests/test_pages_artifact_policy.py'
+      - '.github/workflows/pages-artifact-policy.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/**'
+      - 'scripts/prepare-public-pages.py'
+      - 'scripts/check-pages-artifact.py'
+      - 'scripts/audit-pages-artifact-policy.py'
+      - '.github/workflows/pages-artifact-policy.yml'
+  schedule:
+    - cron: '20 0 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unit test path policy
+        run: python -m unittest discover -s tests -p 'test_pages_artifact_policy.py' -v
+      - name: Build public artifact (no deployment)
+        run: python scripts/prepare-public-pages.py
+      - name: Verify required and explicitly forbidden files
+        run: python scripts/check-pages-artifact.py
+      - name: Audit all published paths for private/source files
+        run: python scripts/audit-pages-artifact-policy.py
