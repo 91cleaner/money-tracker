@@ -84,6 +84,19 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 item["created_at"] = stamp
                 self.assert_rejected(item)
 
+    def test_future_timestamp_rejected(self):
+        for stamp in ("2099-01-01T00:00:00Z", "2099-01-01T00:00:00+14:00"):
+            with self.subTest(stamp=stamp):
+                item = status()
+                item["created_at"] = stamp
+                self.assert_rejected(item)
+
+    def test_equivalent_timezone_offset_accepted(self):
+        item = status()
+        item["created_at"] = "2026-11-06T20:21:53.450+01:00"
+        result = self.run_check(item)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_wrong_pipeline_rejected(self):
         item = status()
         item["pipeline"] = "ai-live"
