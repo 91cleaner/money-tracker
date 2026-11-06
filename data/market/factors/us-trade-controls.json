@@ -2,11 +2,33 @@
  "source": "Federal Register API (BIS, USTR)",
  "source_url": "https://www.federalregister.gov/developers/documentation/api/v1",
  "note": "공식 고시 제목·날짜·원문 링크만 저장. china/entity_list/tariff 표시는 제목·요약의 단어로 자동 분류한 것이라 원문 확인 필요.",
- "collected_at": "2026-10-31T23:39:43.516Z",
+ "collected_at": "2026-11-06T23:44:03.483Z",
  "count": 400,
  "china_count": 69,
  "entity_list_count": 15,
  "documents": [
+  {
+   "id": "2026-22725",
+   "date": "2026-11-06",
+   "type": "Notice",
+   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
+   "title": "Agency Information Collection Activities; Submission to the Office of Management and Budget (OMB) for Review and Approval; Comment Request; Section 232 National Security Adjustments to Imports of Specialty Pharmaceuticals and Associated Ingredients",
+   "url": "https://www.federalregister.gov/documents/2026/11/06/2026-22725/agency-information-collection-activities-submission-to-the-office-of-management-and-budget-omb-for",
+   "china": false,
+   "entity_list": false,
+   "tariff": false
+  },
+  {
+   "id": "2026-22726",
+   "date": "2026-11-06",
+   "type": "Notice",
+   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
+   "title": "Agency Information Collection Activities; Submission to the Office of Management and Budget (OMB) for Review and Approval; Comment Request; Application Process To Waive the Import Qualification Criteria Measures To Restrict Stockpiling of Polysilicon and Polysilicon Derivatives",
+   "url": "https://www.federalregister.gov/documents/2026/11/06/2026-22726/agency-information-collection-activities-submission-to-the-office-of-management-and-budget-omb-for",
+   "china": false,
+   "entity_list": false,
+   "tariff": false
+  },
   {
    "id": "2026-22251",
    "date": "2026-11-02",
@@ -3154,34 +3176,12 @@
    "tariff": false
   },
   {
-   "id": "2024-25164",
-   "date": "2024-10-30",
-   "type": "Notice",
-   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
-   "title": "Transportation and Related Equipment Technical Advisory Committee; Notice of Partially Closed Meeting",
-   "url": "https://www.federalregister.gov/documents/2024/10/30/2024-25164/transportation-and-related-equipment-technical-advisory-committee-notice-of-partially-closed-meeting",
-   "china": false,
-   "entity_list": false,
-   "tariff": false
-  },
-  {
    "id": "2024-25111",
    "date": "2024-10-29",
    "type": "Notice",
    "agency": "USTR (관세·무역)",
    "title": "Request for Applications From Individuals Interested in Serving as an Indigenous Peoples' Representative on the Observer Delegation From the United States to the Partnership Council of the Indigenous Peoples Economic and Trade Cooperation Arrangement",
    "url": "https://www.federalregister.gov/documents/2024/10/29/2024-25111/request-for-applications-from-individuals-interested-in-serving-as-an-indigenous-peoples",
-   "china": false,
-   "entity_list": false,
-   "tariff": false
-  },
-  {
-   "id": "2024-24779",
-   "date": "2024-10-25",
-   "type": "Notice",
-   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
-   "title": "Materials and Equipment Technical Advisory Committee; Notice of Partially Closed Meeting",
-   "url": "https://www.federalregister.gov/documents/2024/10/25/2024-24779/materials-and-equipment-technical-advisory-committee-notice-of-partially-closed-meeting",
    "china": false,
    "entity_list": false,
    "tariff": false

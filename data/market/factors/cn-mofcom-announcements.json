@@ -2,10 +2,31 @@
  "source": "中华人民共和国商务部 · 政策发布",
  "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html",
  "note": "공고 제목·번호·원문 링크만 저장(본문 저장 안 함). export_control·targets는 제목 단어 기준 자동 분류라 원문 확인 필요. 이전 수집분은 누적 보관.",
- "collected_at": "2026-10-30T23:41:37.913Z",
- "count": 9,
+ "collected_at": "2026-11-06T23:44:05.099Z",
+ "count": 12,
  "export_control_count": 4,
  "items": [
+  {
+   "title": "商务部公告2026年第57号 公布对原产于欧盟的进口对位芳纶长丝发起反倾销立案调查",
+   "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_e6c3b466b3c24b698a9fc6a649e2db94.html",
+   "date": null,
+   "number": "2026-57",
+   "export_control": false,
+   "targets": [
+    "欧盟"
+   ]
+  },
+  {
+   "title": "商务部公告2026年第56号 公布对原产于欧盟、日本的进口乙叉降冰片烯发起反倾销立案调查",
+   "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_f587eac1695442ba86f2db6135b943b9.html",
+   "date": null,
+   "number": "2026-56",
+   "export_control": false,
+   "targets": [
+    "日本",
+    "欧盟"
+   ]
+  },
   {
    "title": "商务部公告2026年第53号 公布2027年货物出口配额总量",
    "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_45feaf534cb7410c880c1b4ca04a90b9.html",
@@ -73,6 +94,14 @@
   {
    "title": "商务部 国家发展改革委 生态环境部 海关总署关于进一步提高海南自由贸易港贸易自由化便利化水平的通知",
    "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_1396cc6581da478ebc9f3ee08b72a96b.html",
+   "date": null,
+   "number": null,
+   "export_control": false,
+   "targets": []
+  },
+  {
+   "title": "金融监管总局 交通运输部 国家发展改革委 财政部 商务部 中国人民银行 国务院国资委关于加快航运保险高质量发展的指导意见",
+   "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_f05c91916ac14a50ae6b8f626c2b126c.html",
    "date": null,
    "number": null,
    "export_control": false,
