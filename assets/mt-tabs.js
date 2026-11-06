@@ -135,6 +135,6 @@
     root.querySelector('#tbHeroL').textContent = '일일 요약 자료를 불러오지 못했습니다';
     if (activeTab === 'rank') show('rank');
   });
-  const boot = () => { place(); show(tk ? 'mem' : 'today'); setTimeout(() => { if (!tk && $('mtToday') && !root.contains($('mtToday'))) show('today'); }, 2500); };
+  const boot = () => { place(); show(tk ? 'mem' : 'today'); setTimeout(() => { if (!tk && activeTab === 'today' && $('mtToday') && !root.contains($('mtToday'))) show('today'); }, 2500); };
   if (document.readyState === 'complete') setTimeout(boot, 400); else addEventListener('load', () => setTimeout(boot, 400));
 })();
