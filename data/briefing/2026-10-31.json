@@ -1,0 +1,519 @@
+{
+ "date": "2026-10-31",
+ "generated_at": "2026-10-31T08:27Z",
+ "site": "https://91cleaner.github.io/money-tracker/cards.html",
+ "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
+ "top": [
+  {
+   "id": "insider",
+   "kind": "insider",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-10-30",
+   "badge_ko": "내부자 워치",
+   "badge_en": "INSIDER WATCH",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-30까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-30",
+   "rows": [
+    {
+     "label_ko": "Berkshire Hathaway Inc · 큰 주주",
+     "label_en": "Berkshire Hathaway Inc · 10% owner",
+     "value_ko": "~$69.0M",
+     "value_en": "~$69.0M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
+    {
+     "label_ko": "Datadog, Inc. · 이사",
+     "label_en": "Datadog, Inc. · director",
+     "value_ko": "~$12.1M",
+     "value_en": "~$12.1M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000326/0001561550-26-000326-index.htm"
+    },
+    {
+     "label_ko": "Goldman Sachs Group Inc · 이사",
+     "label_en": "Goldman Sachs Group Inc · director",
+     "value_ko": "~$10.9M",
+     "value_en": "~$10.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/886982/000169370926000011/0001693709-26-000011-index.htm"
+    },
+    {
+     "label_ko": "Lam Research Corp · 최고경영자(CEO)",
+     "label_en": "Lam Research Corp · President and CEO",
+     "value_ko": "~$7.1M",
+     "value_en": "~$7.1M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/707549/000134360026000015/0001343600-26-000015-index.htm"
+    },
+    {
+     "label_ko": "PROCTER & GAMBLE Co · 이사",
+     "label_en": "PROCTER & GAMBLE Co · director",
+     "value_ko": "~$5.7M",
+     "value_en": "~$5.7M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000263/0000080424-26-000263-index.htm"
+    }
+   ],
+   "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
+   "note_en": "Some are pre-scheduled sales (10b5-1). The reason for a sale is unknown. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
+   "source_en": "Source: SEC insider-trade records (Form 4)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $104.8M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $104.8M on record · Money Tracker"
+  },
+  {
+   "id": "movers",
+   "kind": "movers",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-10-29",
+   "badge_ko": "큰 움직임",
+   "badge_en": "BIG MOVERS",
+   "title_ko": "어제 가장 크게 움직인 회사들",
+   "title_en": "Companies that moved most at the last close",
+   "sub_ko": "2026-10-28 → 2026-10-29 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-10-28 → 2026-10-29 (among companies we track)",
+   "rows": [
+    {
+     "label_ko": "ServiceNow, Inc.",
+     "label_en": "ServiceNow, Inc.",
+     "value_ko": "-26.9%",
+     "value_en": "-26.9%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Sprouts Farmers Market, Inc.",
+     "label_en": "Sprouts Farmers Market, Inc.",
+     "value_ko": "-22.6%",
+     "value_en": "-22.6%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Fortinet, Inc.",
+     "label_en": "Fortinet, Inc.",
+     "value_ko": "-20.1%",
+     "value_en": "-20.1%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Alkami Technology, Inc.",
+     "label_en": "Alkami Technology, Inc.",
+     "value_ko": "-18.3%",
+     "value_en": "-18.3%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "FTAI Aviation Ltd.",
+     "label_en": "FTAI Aviation Ltd.",
+     "value_ko": "+17.3%",
+     "value_en": "+17.3%",
+     "tone": "green",
+     "mark": "▲"
+    }
+   ],
+   "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
+   "note_en": "Shows what moved, not why. Not investment advice.",
+   "source_ko": "출처: 일별 마감 가격 기록",
+   "source_en": "Source: daily closing prices",
+   "source_url": "https://91cleaner.github.io/money-tracker/us.html",
+   "share_ko": "2026-10-29 마감 기준 가장 크게 움직인 회사: ServiceNow, Inc. -26.9% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-10-29 close: ServiceNow, Inc. -26.9% · Money Tracker"
+  },
+  {
+   "id": "president-2026-22292",
+   "kind": "president",
+   "icon": "",
+   "score": 65.0,
+   "layout": "versus",
+   "date": "2026-10-30",
+   "badge_ko": "대통령 조치",
+   "badge_en": "PRESIDENTIAL ACTION",
+   "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
+   "title_en": "Last similar move: what happened in the same period?",
+   "now": {
+    "tag_ko": "지금",
+    "tag_en": "NOW",
+    "title": "Further Modifying the Scope of Products of Canada Subject to the Additional Duties Imposed To Offset Canadian Discrimination Against the Commerce of the United States With Respect to Motor Vehicles",
+    "title_ko": "미국 포고문 제11076호 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-10-30",
+    "plain_ko": "수입품에 매기는 세금(관세)을 바꾸는 조치",
+    "plain_en": "An action changing the tax on imported goods (tariffs)",
+    "type_en": "Proclamation",
+    "type_ko": "포고문",
+    "url": "https://www.federalregister.gov/documents/2026/10/30/2026-22292/further-modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset"
+   },
+   "then": {
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
+    "title": "Modifying the Scope of Products of Canada Subject to the Additional Duties Imposed To Offset Canadian Discrimination Against the Commerce of the United States With Respect to Motor Vehicles",
+    "title_ko": "미국 포고문 제11065호 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-09-14",
+    "plain_ko": "수입품에 매기는 세금(관세)을 바꾸는 조치",
+    "plain_en": "An action changing the tax on imported goods (tariffs)",
+    "moves": [
+     {
+      "name_ko": "테슬라",
+      "name_en": "Tesla, Inc.",
+      "pct": -3.1
+     }
+    ],
+    "period": "2026-09-08 → 2026-09-15",
+    "url": "https://www.federalregister.gov/documents/2026/09/14/2026-18839/modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset"
+   },
+   "stamp_ko": "같은 기간 ≠ 원인",
+   "stamp_en": "Same period ≠ cause",
+   "note_ko": "같은 기간 일어난 움직임일 뿐 이유를 말하는 게 아니에요. 투자 조언 아님.",
+   "note_en": "Moves shown only as what happened in the same period, not a reason. Not investment advice.",
+   "source_ko": "출처: 미국 관보 · 백악관 · 종가 기록 (2026-09-15)",
+   "source_en": "Source: Federal Register · White House · closing prices (2026-09-15)",
+   "source_url": "https://www.federalregister.gov/documents/2026/10/30/2026-22292/further-modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset",
+   "share_ko": "지난번 비슷한 조치 때 같은 기간엔 테슬라 -3.1% 움직임이 있었어요 (원인 아님) · 머니트래커",
+   "share_en": "Last similar move, same period: Tesla, Inc. -3.1% (not a cause) · Money Tracker"
+  },
+  {
+   "id": "filings",
+   "kind": "filings",
+   "icon": "●",
+   "score": 60.0,
+   "layout": "list",
+   "date": "2026-10-30",
+   "badge_ko": "새 공시",
+   "badge_en": "NEW FILINGS",
+   "title_ko": "2026-10-30 회사들이 낸 '큰 소식' 신고서 5건",
+   "title_en": "5 'big news' notices companies filed on 2026-10-30",
+   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
+   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
+   "rows": [
+    {
+     "label_ko": "Thermo Fisher Scientific Inc.",
+     "label_en": "Thermo Fisher Scientific Inc.",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/97745/000009774526000181/tmo-20261027.htm"
+    },
+    {
+     "label_ko": "Utz Brands, Inc.",
+     "label_en": "Utz Brands, Inc.",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1739566/000119312526441801/d237502d8k.htm"
+    },
+    {
+     "label_ko": "Azenta, Inc.",
+     "label_en": "Azenta, Inc.",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/933974/000162828026068443/azta-20261028.htm"
+    },
+    {
+     "label_ko": "Norwegian Cruise Line Holdings Ltd.",
+     "label_en": "Norwegian Cruise Line Holdings Ltd.",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1513761/000110465926120680/tm2628552d1_8k.htm"
+    },
+    {
+     "label_ko": "Public Storage",
+     "label_en": "Public Storage",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1393311/000119312526441763/d90432d8k.htm"
+    }
+   ],
+   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
+   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
+   "source_en": "Source: SEC 8-K notices (EDGAR)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "2026-10-30 회사들이 낸 '큰 소식' 신고서 5건 · 머니트래커",
+   "share_en": "5 'big news' notices companies filed on 2026-10-30 · Money Tracker"
+  },
+  {
+   "id": "president-adjusting-imports-of-robotics-industrial",
+   "kind": "president",
+   "icon": "",
+   "score": 46.8,
+   "layout": "versus",
+   "date": "2026-10-28",
+   "badge_ko": "대통령 조치",
+   "badge_en": "PRESIDENTIAL ACTION",
+   "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
+   "title_en": "Last similar move: what happened in the same period?",
+   "now": {
+    "tag_ko": "지금",
+    "tag_en": "NOW",
+    "title": "Adjusting Imports Of Robotics, Industrial Machinery, And Their Parts And Components Into The United States",
+    "title_ko": "미국 대통령 조치 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-10-28",
+    "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
+    "plain_en": "An action under the law for taxing imports for national security reasons (Sec. 232)",
+    "type_en": "Presidential action",
+    "type_ko": "대통령 조치",
+    "url": "https://www.whitehouse.gov/presidential-actions/2026/10/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united-states/"
+   },
+   "then": {
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
+    "title": "Adjusting Imports of Polysilicon and Its Derivatives Into the United States",
+    "title_ko": "미국 포고문 제11052호 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-08-11",
+    "plain_ko": "나라 안보를 이유로 수입품에 세금 매기는 법 (Sec. 232)에 따른 조치",
+    "plain_en": "An action under the law for taxing imports for national security reasons (Sec. 232)",
+    "moves": [
+     {
+      "name_ko": "인텔",
+      "name_en": "Intel Corp",
+      "pct": 4.8
+     },
+     {
+      "name_ko": "마이크론",
+      "name_en": "Micron Technology Inc",
+      "pct": 7.8
+     }
+    ],
+    "period": "2026-08-06 → 2026-08-13",
+    "url": "https://www.federalregister.gov/documents/2026/08/11/2026-16400/adjusting-imports-of-polysilicon-and-its-derivatives-into-the-united-states"
+   },
+   "stamp_ko": "같은 기간 ≠ 원인",
+   "stamp_en": "Same period ≠ cause",
+   "note_ko": "같은 기간 일어난 움직임일 뿐 이유를 말하는 게 아니에요. 투자 조언 아님.",
+   "note_en": "Moves shown only as what happened in the same period, not a reason. Not investment advice.",
+   "source_ko": "출처: 미국 관보 · 백악관 · 종가 기록 (2026-08-13)",
+   "source_en": "Source: Federal Register · White House · closing prices (2026-08-13)",
+   "source_url": "https://www.whitehouse.gov/presidential-actions/2026/10/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united-states/",
+   "share_ko": "지난번 비슷한 조치 때 같은 기간엔 인텔 +4.8%, 마이크론 +7.8% 움직임이 있었어요 (원인 아님) · 머니트래커",
+   "share_en": "Last similar move, same period: Intel Corp +4.8%, Micron Technology Inc +7.8% (not a cause) · Money Tracker"
+  }
+ ],
+ "cards": {
+  "late": {
+   "id": "late",
+   "kind": "late",
+   "icon": "●",
+   "score": 28.0,
+   "layout": "list",
+   "date": "2026-10-27",
+   "badge_ko": "늦은 신고 클럽",
+   "badge_en": "LATE CLUB",
+   "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
+   "title_en": "US lawmakers who handed in their stock homework late",
+   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
+   "rows": [
+    {
+     "mark": "1.",
+     "label_ko": "Pete Sessions 의원 · Abbott Laboratories",
+     "label_en": "Rep. Pete Sessions · Abbott Laboratories",
+     "value_ko": "25일 걸림",
+     "value_en": "25 days",
+     "tone": "yellow",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
+    },
+    {
+     "mark": "2.",
+     "label_ko": "Pete Sessions 의원 · Alphabet Inc.",
+     "label_en": "Rep. Pete Sessions · Alphabet Inc.",
+     "value_ko": "25일 걸림",
+     "value_en": "25 days",
+     "tone": "yellow",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
+    },
+    {
+     "mark": "3.",
+     "label_ko": "Pete Sessions 의원 · 아마존",
+     "label_en": "Rep. Pete Sessions · Amazon Com Inc",
+     "value_ko": "25일 걸림",
+     "value_en": "25 days",
+     "tone": "yellow",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf"
+    }
+   ],
+   "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
+   "note_en": "A record, not proof of wrongdoing. Not investment advice.",
+   "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
+   "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Pete Sessions 의원 25일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Pete Sessions, 25 days / we get a call if rent is 1 day late  · Money Tracker"
+  },
+  "president": {
+   "id": "president-2026-22292",
+   "kind": "president",
+   "icon": "",
+   "score": 65.0,
+   "layout": "versus",
+   "date": "2026-10-30",
+   "badge_ko": "대통령 조치",
+   "badge_en": "PRESIDENTIAL ACTION",
+   "title_ko": "지난번 비슷한 조치 때 같은 기간엔?",
+   "title_en": "Last similar move: what happened in the same period?",
+   "now": {
+    "tag_ko": "지금",
+    "tag_en": "NOW",
+    "title": "Further Modifying the Scope of Products of Canada Subject to the Additional Duties Imposed To Offset Canadian Discrimination Against the Commerce of the United States With Respect to Motor Vehicles",
+    "title_ko": "미국 포고문 제11076호 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-10-30",
+    "plain_ko": "수입품에 매기는 세금(관세)을 바꾸는 조치",
+    "plain_en": "An action changing the tax on imported goods (tariffs)",
+    "type_en": "Proclamation",
+    "type_ko": "포고문",
+    "url": "https://www.federalregister.gov/documents/2026/10/30/2026-22292/further-modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset"
+   },
+   "then": {
+    "tag_ko": "지난번 ",
+    "tag_en": "LAST TIME ",
+    "title": "Modifying the Scope of Products of Canada Subject to the Additional Duties Imposed To Offset Canadian Discrimination Against the Commerce of the United States With Respect to Motor Vehicles",
+    "title_ko": "미국 포고문 제11065호 · 원래 제목은 원문에서 볼 수 있어요",
+    "date": "2026-09-14",
+    "plain_ko": "수입품에 매기는 세금(관세)을 바꾸는 조치",
+    "plain_en": "An action changing the tax on imported goods (tariffs)",
+    "moves": [
+     {
+      "name_ko": "테슬라",
+      "name_en": "Tesla, Inc.",
+      "pct": -3.1
+     }
+    ],
+    "period": "2026-09-08 → 2026-09-15",
+    "url": "https://www.federalregister.gov/documents/2026/09/14/2026-18839/modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset"
+   },
+   "stamp_ko": "같은 기간 ≠ 원인",
+   "stamp_en": "Same period ≠ cause",
+   "note_ko": "같은 기간 일어난 움직임일 뿐 이유를 말하는 게 아니에요. 투자 조언 아님.",
+   "note_en": "Moves shown only as what happened in the same period, not a reason. Not investment advice.",
+   "source_ko": "출처: 미국 관보 · 백악관 · 종가 기록 (2026-09-15)",
+   "source_en": "Source: Federal Register · White House · closing prices (2026-09-15)",
+   "source_url": "https://www.federalregister.gov/documents/2026/10/30/2026-22292/further-modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset",
+   "share_ko": "지난번 비슷한 조치 때 같은 기간엔 테슬라 -3.1% 움직임이 있었어요 (원인 아님) · 머니트래커",
+   "share_en": "Last similar move, same period: Tesla, Inc. -3.1% (not a cause) · Money Tracker"
+  },
+  "insider": {
+   "id": "insider",
+   "kind": "insider",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-10-30",
+   "badge_ko": "내부자 워치",
+   "badge_en": "INSIDER WATCH",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-10-30까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-10-30",
+   "rows": [
+    {
+     "label_ko": "Berkshire Hathaway Inc · 큰 주주",
+     "label_en": "Berkshire Hathaway Inc · 10% owner",
+     "value_ko": "~$69.0M",
+     "value_en": "~$69.0M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm"
+    },
+    {
+     "label_ko": "Datadog, Inc. · 이사",
+     "label_en": "Datadog, Inc. · director",
+     "value_ko": "~$12.1M",
+     "value_en": "~$12.1M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1561550/000156155026000326/0001561550-26-000326-index.htm"
+    },
+    {
+     "label_ko": "Goldman Sachs Group Inc · 이사",
+     "label_en": "Goldman Sachs Group Inc · director",
+     "value_ko": "~$10.9M",
+     "value_en": "~$10.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/886982/000169370926000011/0001693709-26-000011-index.htm"
+    },
+    {
+     "label_ko": "Lam Research Corp · 최고경영자(CEO)",
+     "label_en": "Lam Research Corp · President and CEO",
+     "value_ko": "~$7.1M",
+     "value_en": "~$7.1M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/707549/000134360026000015/0001343600-26-000015-index.htm"
+    },
+    {
+     "label_ko": "PROCTER & GAMBLE Co · 이사",
+     "label_en": "PROCTER & GAMBLE Co · director",
+     "value_ko": "~$5.7M",
+     "value_en": "~$5.7M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000263/0000080424-26-000263-index.htm"
+    }
+   ],
+   "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
+   "note_en": "Some are pre-scheduled sales (10b5-1). The reason for a sale is unknown. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
+   "source_en": "Source: SEC insider-trade records (Form 4)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $104.8M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $104.8M on record · Money Tracker"
+  },
+  "debt": {
+   "id": "debt",
+   "kind": "debt",
+   "icon": "●",
+   "score": 30.0,
+   "layout": "big",
+   "date": "2026-10-29",
+   "badge_ko": "국가 채무",
+   "badge_en": "NATIONAL DEBT",
+   "title_ko": "미국 정부가 지금까지 진 빚 (총 채무)",
+   "title_en": "How much the US government owes (total public debt)",
+   "big": {
+    "value": "$40,593,637,262,883",
+    "short_ko": "$40.59조",
+    "short_en": "$40.59 trillion"
+   },
+   "sub_ko": "2026-10-29 기준",
+   "sub_en": "As of 2026-10-29",
+   "rows": [
+    {
+     "label_ko": "1년 전 같은 날엔",
+     "label_en": "Same day last year",
+     "value_ko": "$38.08조",
+     "value_en": "$38.08 T",
+     "tone": "white"
+    },
+    {
+     "label_ko": "1년 사이 불어난 빚",
+     "label_en": "Debt added in one year",
+     "value_ko": "+$2.52조",
+     "value_en": "+$2.52 T",
+     "tone": "red"
+    },
+    {
+     "label_ko": "1초마다 늘어난 빚 (최근 30일 평균)",
+     "label_en": "Added every second (30-day avg)",
+     "value_ko": "+$191,621",
+     "value_en": "+$191,621",
+     "tone": "amber"
+    }
+   ],
+   "note_ko": "공식 집계 숫자예요. 앞으로 얼마가 될지는 말하지 않아요. 투자 조언 아님.",
+   "note_en": "Official reported figure. No forecast. Not investment advice.",
+   "source_ko": "출처: 미 재무부 재정 데이터 (FiscalData)",
+   "source_en": "Source: U.S. Treasury FiscalData",
+   "source_url": "https://fiscaldata.treasury.gov/",
+   "share_ko": "미국 정부가 지금까지 진 빚 $40.59조 (2026-10-29 기준) · 머니트래커",
+   "share_en": "How much the US government owes: $40.59 trillion (as of 2026-10-29) · Money Tracker"
+  }
+ }
+}

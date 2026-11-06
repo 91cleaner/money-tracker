@@ -1,3 +1,4 @@
+(function(){if(document.getElementById('mt-darksat-css'))return;var s=document.createElement('style');s.id='mt-darksat-css';s.textContent='.mt-darksat{filter:brightness(.42) saturate(.45) contrast(1.05)}';document.head.appendChild(s)})();
 /* 정부 지출 '국회 돈 살펴보기': 화면 전체가 지도인 게임 화면.
    아래 도구 칸(1~5)을 바꿔 끼우면 지도가 바뀐다. 의원을 누르면 공식 사진이 들어간 '기록 파일'이 열리고, 다녀온 나라로 비행 경로가 그려진다.
    공개 기록을 보기 쉽게 모은 것일 뿐, 잘잘못을 따지지 않는다(문구도 그렇게 쓴다). */
@@ -231,12 +232,12 @@
   map.setMaxBounds(WORLD); map.options.maxBoundsViscosity = 1;
   const setMin = () => { const w = (root.querySelector('.pg-map') || root).clientWidth || 360; map.setMinZoom(Math.ceil(Math.log2(w / 256) * 4) / 4); };
   setMin();
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 11, attribution: '지도: Esri · 위성: Esri, Maxar, Earthstar Geographics · 자료: 열린국회정보' }).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {className:'mt-darksat', maxZoom: 11, attribution: '지도: 지도·위성: Esri, Maxar, Earthstar Geographics · 자료: 열린국회정보' }).addTo(map);
   // 확대할수록 진짜 위성 사진으로: 줌 6.5부터 서서히 겹쳐 8에서 완전히(어둡게 눌러 추적실 느낌 유지), 지명은 위에 얹는다
   map.createPane('sat'); map.getPane('sat').style.zIndex = 250; map.getPane('sat').style.filter = 'brightness(.72) contrast(1.12) saturate(.75)';
   map.createPane('satlab'); map.getPane('satlab').style.zIndex = 260; map.getPane('satlab').style.pointerEvents = 'none';
   const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { pane: 'sat', maxZoom: 11, minZoom: 6, opacity: 0 }).addTo(map);
-  const satLab = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', { pane: 'satlab', maxZoom: 11, minZoom: 7, opacity: 0 }).addTo(map);
+  const satLab = { setOpacity() {} }; // 영어 지명 겹침 없음(한 화면 한 언어)
   let satOn = false;
   const satFade = () => {
     const z = map.getZoom(), o = Math.max(0, Math.min(1, (z - 6.5) / 1.5));

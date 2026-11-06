@@ -9,7 +9,7 @@ permissions:
   id-token: write
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   deploy:
     environment:
@@ -34,6 +34,7 @@ jobs:
           node --check assets/mt-query-engine.js
           node --check assets/mt-intel-lab.js
           test -f intel-lab.html
+          test -f js/mobile.js
           grep -q 'href="world-intelligence/' index.html
           grep -q '실시간 시세 OFF' usa-command-legacy.html
       - name: Run private API fail-closed tests
@@ -50,6 +51,7 @@ jobs:
           test ! -e .public-pages/worker/private-api.js
           test ! -e .public-pages/wrangler.jsonc
           test -f .public-pages/intel-lab.html
+          test -f .public-pages/js/mobile.js
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .public-pages

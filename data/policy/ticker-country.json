@@ -1,5 +1,5 @@
 {
-"updated": "2026-10-30",
+"updated": "2026-11-06",
 "v": 2,
 "source": "SEC EDGAR submissions API (business address) + exchange suffix",
 "map": {
@@ -325,7 +325,7 @@
 },
 "company:TSM": {
 "cc": "tw",
-"how": "SEC EDGAR 20-F business address: No. 8, Li-Hsin Road 6, Hsinchu Science Park, Hsinchu, Taiwan"
+"how": "SEC 20-F 2025 cover address (Hsinchu, Taiwan) https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm"
 }
 }
 }

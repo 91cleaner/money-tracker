@@ -2,11 +2,22 @@
  "source": "Federal Register API (BIS, USTR)",
  "source_url": "https://www.federalregister.gov/developers/documentation/api/v1",
  "note": "공식 고시 제목·날짜·원문 링크만 저장. china/entity_list/tariff 표시는 제목·요약의 단어로 자동 분류한 것이라 원문 확인 필요.",
- "collected_at": "2026-10-28T01:35:32.959Z",
+ "collected_at": "2026-10-31T23:39:43.516Z",
  "count": 400,
  "china_count": 69,
  "entity_list_count": 15,
  "documents": [
+  {
+   "id": "2026-22251",
+   "date": "2026-11-02",
+   "type": "Notice",
+   "agency": "USTR (관세·무역)",
+   "title": "Performance Review Board Membership",
+   "url": "https://www.federalregister.gov/documents/2026/11/02/2026-22251/performance-review-board-membership",
+   "china": false,
+   "entity_list": false,
+   "tariff": false
+  },
   {
    "id": "2026-21840",
    "date": "2026-10-27",
@@ -4392,17 +4403,6 @@
    "agency": "USTR (관세·무역)",
    "title": "Notice of Continuation and Request for Nominations for the Industry Trade Advisory Committees",
    "url": "https://www.federalregister.gov/documents/2022/04/12/2022-07743/notice-of-continuation-and-request-for-nominations-for-the-industry-trade-advisory-committees",
-   "china": false,
-   "entity_list": false,
-   "tariff": false
-  },
-  {
-   "id": "2022-07264",
-   "date": "2022-04-06",
-   "type": "Notice",
-   "agency": "USTR (관세·무역)",
-   "title": "Notice of Continuation and Request for Nominations for the Intergovernmental Policy Advisory Committee on Trade",
-   "url": "https://www.federalregister.gov/documents/2022/04/06/2022-07264/notice-of-continuation-and-request-for-nominations-for-the-intergovernmental-policy-advisory",
    "china": false,
    "entity_list": false,
    "tariff": false

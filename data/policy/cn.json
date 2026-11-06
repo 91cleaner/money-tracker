@@ -1,10 +1,112 @@
 {
-"updated": "2026-10-30",
+"updated": "2026-11-06",
 "country": "cn",
 "source": "中国政府网 最新政策 + 商务部 政策发布",
 "source_url": "https://www.gov.cn/zhengce/zuixin/",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "govcn:b40fbfa47223",
+"kind": "policy",
+"t": "国家统计局职能配置、内设机构和人员编制规定",
+"d": "2026-11-06",
+"u": "https://www.gov.cn/zhengce/202611/content_7085350.htm",
+"dept": "国务院",
+"src": "中国政府网 最新政策",
+"tags": [],
+"lk": "중국 국무원(중앙 정부) 정책 문서",
+"le": "China State Council policy document"
+},
+{
+"id": "mofcom:d59d4737c969",
+"kind": "notice",
+"t": "金融监管总局 交通运输部 国家发展改革委 财政部 商务部 中国人民银行 国务院国资委关于加快航运保险高质量发展的指导意见",
+"d": "2026-11-06",
+"u": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_f05c91916ac14a50ae6b8f626c2b126c.html",
+"dept": "商务部",
+"src": "商务部 政策发布",
+"tags": [
+"finance"
+],
+"lk": "중국 상무부(무역 담당 부처) 정책 공고",
+"le": "China Ministry of Commerce policy notice"
+},
+{
+"id": "mofcom:deadafc9513a",
+"kind": "notice",
+"t": "商务部公告2026年第56号 公布对原产于欧盟、日本的进口乙叉降冰片烯发起反倾销立案调查",
+"d": "2026-11-06",
+"u": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_f587eac1695442ba86f2db6135b943b9.html",
+"dept": "商务部",
+"src": "商务部 政策发布",
+"tags": [
+"trade"
+],
+"lk": "중국 상무부(무역 담당 부처) 정책 공고",
+"le": "China Ministry of Commerce policy notice"
+},
+{
+"id": "mofcom:858baa0f645d",
+"kind": "notice",
+"t": "商务部公告2026年第57号 公布对原产于欧盟的进口对位芳纶长丝发起反倾销立案调查",
+"d": "2026-11-06",
+"u": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_e6c3b466b3c24b698a9fc6a649e2db94.html",
+"dept": "商务部",
+"src": "商务部 政策发布",
+"tags": [
+"trade"
+],
+"lk": "중국 상무부(무역 담당 부처) 정책 공고",
+"le": "China Ministry of Commerce policy notice"
+},
+{
+"id": "govcn:9dec851c1a50",
+"kind": "policy",
+"t": "国务院关于辽宁等9省区国家级自然保护区和国家级风景名胜区整合优化方案的批复",
+"d": "2026-11-05",
+"u": "https://www.gov.cn/zhengce/content/202611/content_7085109.htm",
+"dept": "国务院",
+"src": "中国政府网 最新政策",
+"tags": [],
+"lk": "중국 국무원(중앙 정부) 정책 문서",
+"le": "China State Council policy document"
+},
+{
+"id": "govcn:6b6043b9033e",
+"kind": "policy",
+"t": "国务院办公厅关于2027年部分节假日安排的通知",
+"d": "2026-11-05",
+"u": "https://www.gov.cn/zhengce/content/202611/content_7085101.htm",
+"dept": "国务院",
+"src": "中国政府网 最新政策",
+"tags": [],
+"lk": "중국 국무원(중앙 정부) 정책 문서",
+"le": "China State Council policy document"
+},
+{
+"id": "govcn:3c8779b58226",
+"kind": "policy",
+"t": "国务院关于修改和废止部分行政法规的决定",
+"d": "2026-11-05",
+"u": "https://www.gov.cn/zhengce/content/202611/content_7085098.htm",
+"dept": "国务院",
+"src": "中国政府网 最新政策",
+"tags": [],
+"lk": "중국 국무원(중앙 정부) 정책 문서",
+"le": "China State Council policy document"
+},
+{
+"id": "govcn:a4c0126e0b4b",
+"kind": "policy",
+"t": "中共中央关于持之以恒推进全面从严治党若干重大问题的决定",
+"d": "2026-11-01",
+"u": "https://www.gov.cn/zhengce/202611/content_7084690.htm",
+"dept": "国务院",
+"src": "中国政府网 最新政策",
+"tags": [],
+"lk": "중국 국무원(중앙 정부) 정책 문서",
+"le": "China State Council policy document"
+},
 {
 "id": "mofcom:2e9e5b0c7632",
 "kind": "notice",
@@ -288,7 +390,7 @@
 {
 "id": "govcn:8200ddd6d451",
 "kind": "policy",
-"t": "中办国办印发《文化遗产保护传承“十五五”规划》",
+"t": "中共中央办公厅 国务院办公厅印发《文化遗产保护传承“十五五”规划》",
 "d": "2026-09-29",
 "u": "https://www.gov.cn/zhengce/202609/content_7082364.htm",
 "dept": "国务院",
@@ -9626,102 +9728,6 @@
 "t": "国务院办公厅关于同意建立推动道路货运行业高质量发展部际联席会议制度的函",
 "d": "2021-10-13",
 "u": "https://www.gov.cn/zhengce/content/2021-10/13/content_5642272.htm",
-"dept": "国务院",
-"src": "中国政府网 最新政策",
-"tags": [],
-"lk": "중국 국무원(중앙 정부) 정책 문서",
-"le": "China State Council policy document"
-},
-{
-"id": "govcn:aaa267e2db7d",
-"kind": "policy",
-"t": "中共中央办公厅 国务院办公厅印发《关于推动现代职业教育高质量发展的意见》",
-"d": "2021-10-12",
-"u": "https://www.gov.cn/zhengce/2021-10/12/content_5642120.htm",
-"dept": "国务院",
-"src": "中国政府网 最新政策",
-"tags": [],
-"lk": "중국 국무원(중앙 정부) 정책 문서",
-"le": "China State Council policy document"
-},
-{
-"id": "govcn:1b906cddc053",
-"kind": "policy",
-"t": "国务院办公厅关于进一步支持大学生创新创业的指导意见",
-"d": "2021-10-12",
-"u": "https://www.gov.cn/zhengce/content/2021-10/12/content_5642037.htm",
-"dept": "国务院",
-"src": "中国政府网 最新政策",
-"tags": [],
-"lk": "중국 국무원(중앙 정부) 정책 문서",
-"le": "China State Council policy document"
-},
-{
-"id": "govcn:5fdce5b0d820",
-"kind": "policy",
-"t": "中共中央 国务院印发《国家标准化发展纲要》",
-"d": "2021-10-10",
-"u": "https://www.gov.cn/zhengce/2021-10/10/content_5641727.htm",
-"dept": "国务院",
-"src": "中国政府网 最新政策",
-"tags": [],
-"lk": "중국 국무원(중앙 정부) 정책 문서",
-"le": "China State Council policy document"
-},
-{
-"id": "govcn:2ab5b8dadb81",
-"kind": "policy",
-"t": "国务院关于同意在全面深化服务贸易创新发展试点地区暂时调整实施有关行政法规和国务院文件规定的批复",
-"d": "2021-10-09",
-"u": "https://www.gov.cn/zhengce/content/2021-10/09/content_5641577.htm",
-"dept": "国务院",
-"src": "中国政府网 最新政策",
-"tags": [],
-"lk": "중국 국무원(중앙 정부) 정책 문서",
-"le": "China State Council policy document"
-},
-{
-"id": "govcn:675176a3e387",
-"kind": "policy",
-"t": "中共中央 国务院印发《黄河流域生态保护和高质量发展规划纲要》",
-"d": "2021-10-08",
-"u": "https://www.gov.cn/zhengce/2021-10/08/content_5641438.htm",
-"dept": "国务院",
-"src": "中国政府网 最新政策",
-"tags": [],
-"lk": "중국 국무원(중앙 정부) 정책 문서",
-"le": "China State Council policy document"
-},
-{
-"id": "govcn:ed9d497db884",
-"kind": "policy",
-"t": "国务院关于“十四五”特殊类型地区振兴发展规划的批复",
-"d": "2021-10-08",
-"u": "https://www.gov.cn/zhengce/content/2021-10/08/content_5641325.htm",
-"dept": "国务院",
-"src": "中国政府网 最新政策",
-"tags": [],
-"lk": "중국 국무원(중앙 정부) 정책 문서",
-"le": "China State Council policy document"
-},
-{
-"id": "govcn:bfc20dc6be0b",
-"kind": "policy",
-"t": "国务院办公厅关于印发“十四五”全民医疗保障规划的通知",
-"d": "2021-09-29",
-"u": "https://www.gov.cn/zhengce/content/2021-09/29/content_5639967.htm",
-"dept": "国务院",
-"src": "中国政府网 最新政策",
-"tags": [],
-"lk": "중국 국무원(중앙 정부) 정책 문서",
-"le": "China State Council policy document"
-},
-{
-"id": "govcn:88f9545656f6",
-"kind": "policy",
-"t": "国务院办公厅关于对“十三五”时期实行最严格水资源管理制度成绩突出的省级人民政府给予表扬的通报",
-"d": "2021-09-28",
-"u": "https://www.gov.cn/zhengce/content/2021-09/28/content_5639842.htm",
 "dept": "国务院",
 "src": "中国政府网 最新政策",
 "tags": [],

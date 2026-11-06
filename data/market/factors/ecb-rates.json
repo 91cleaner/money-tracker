@@ -1,36 +1,12 @@
 {
  "source": "European Central Bank · ECB Data Portal",
  "source_url": "https://data.ecb.europa.eu/",
- "collected_at": "2026-10-30T01:45:54.523Z",
+ "collected_at": "2026-11-05T23:49:26.052Z",
  "series": {
   "DFR": {
    "label": "ECB deposit facility rate (%)",
    "url": "https://data-api.ecb.europa.eu/service/data/FM/D.U2.EUR.4F.KR.DFR.LEV?format=csvdata&lastNObservations=400",
    "points": [
-    {
-     "date": "2025-09-26",
-     "value": 2
-    },
-    {
-     "date": "2025-09-27",
-     "value": 2
-    },
-    {
-     "date": "2025-09-28",
-     "value": 2
-    },
-    {
-     "date": "2025-09-29",
-     "value": 2
-    },
-    {
-     "date": "2025-09-30",
-     "value": 2
-    },
-    {
-     "date": "2025-10-01",
-     "value": 2
-    },
     {
      "date": "2025-10-02",
      "value": 2
@@ -1606,10 +1582,34 @@
     {
      "date": "2026-10-30",
      "value": 2.5
+    },
+    {
+     "date": "2026-10-31",
+     "value": 2.5
+    },
+    {
+     "date": "2026-11-01",
+     "value": 2.5
+    },
+    {
+     "date": "2026-11-02",
+     "value": 2.5
+    },
+    {
+     "date": "2026-11-03",
+     "value": 2.5
+    },
+    {
+     "date": "2026-11-04",
+     "value": 2.5
+    },
+    {
+     "date": "2026-11-05",
+     "value": 2.5
     }
    ],
    "latest": {
-    "date": "2026-10-30",
+    "date": "2026-11-05",
     "value": 2.5
    }
   },
@@ -1618,30 +1618,6 @@
    "url": "https://data-api.ecb.europa.eu/service/data/FM/D.U2.EUR.4F.KR.MRR_FR.LEV?format=csvdata&lastNObservations=400",
    "points": [
     {
-     "date": "2025-09-26",
-     "value": 2.15
-    },
-    {
-     "date": "2025-09-27",
-     "value": 2.15
-    },
-    {
-     "date": "2025-09-28",
-     "value": 2.15
-    },
-    {
-     "date": "2025-09-29",
-     "value": 2.15
-    },
-    {
-     "date": "2025-09-30",
-     "value": 2.15
-    },
-    {
-     "date": "2025-10-01",
-     "value": 2.15
-    },
-    {
      "date": "2025-10-02",
      "value": 2.15
     },
@@ -3216,10 +3192,34 @@
     {
      "date": "2026-10-30",
      "value": 2.65
+    },
+    {
+     "date": "2026-10-31",
+     "value": 2.65
+    },
+    {
+     "date": "2026-11-01",
+     "value": 2.65
+    },
+    {
+     "date": "2026-11-02",
+     "value": 2.65
+    },
+    {
+     "date": "2026-11-03",
+     "value": 2.65
+    },
+    {
+     "date": "2026-11-04",
+     "value": 2.65
+    },
+    {
+     "date": "2026-11-05",
+     "value": 2.65
     }
    ],
    "latest": {
-    "date": "2026-10-30",
+    "date": "2026-11-05",
     "value": 2.65
    }
   }
