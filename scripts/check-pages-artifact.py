@@ -26,15 +26,8 @@ exposed = [name for name in forbidden if (root / name).exists()] + (["data/us/hi
 if exposed:
     sys.exit("Unexpected files in public artifact: " + ", ".join(exposed))
 
-pub = json.loads((root / "data/us/trades_public.json").read_text(encoding="utf-8"))
-allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
-extra = sorted({k for t in pub.get("trades", []) for k in t} - allowed)
-if extra or set(pub) - {"updated", "source", "note", "trades"}:
-    sys.exit("trades_public.json has non-public fields: " + ", ".join(extra or sorted(set(pub))))
-
-# This status is displayed to explain failed official-data collections. A missing
-# or malformed errors array must never silently look like a verified zero count.
-status_path = root / "data/search/collection-status.json"
+# Fail closed if the public PTR ledger is missing or malformed. A missing
+# "trades" key used to be treated as an empty array, silently publishing zero.
 def unique_keys(pairs):
     obj = {}
     for key, value in pairs:
@@ -46,6 +39,24 @@ def unique_keys(pairs):
 def reject_constant(value):
     raise ValueError("non-finite JSON value: " + value)
 
+try:
+    pub = json.loads((root / "data/us/trades_public.json").read_text(encoding="utf-8"),
+                     object_pairs_hook=unique_keys, parse_constant=reject_constant)
+    if not isinstance(pub, dict) or not isinstance(pub.get("trades"), list):
+        raise ValueError("trades must be an explicit array")
+    if any(not isinstance(t, dict) for t in pub["trades"]):
+        raise ValueError("every trade must be an object")
+    extra_top = sorted(set(pub) - {"updated", "source", "note", "trades"})
+    allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
+    extra_rows = sorted({k for t in pub["trades"] for k in t} - allowed)
+    if extra_top or extra_rows:
+        raise ValueError("non-public fields: " + ", ".join(extra_top + extra_rows))
+except (OSError, UnicodeError, ValueError, TypeError) as exc:
+    sys.exit("Invalid public trades_public.json: " + str(exc))
+
+# This status is displayed to explain failed official-data collections. A missing
+# or malformed errors array must never silently look like a verified zero count.
+status_path = root / "data/search/collection-status.json"
 try:
     status = json.loads(status_path.read_text(encoding="utf-8"),
                         object_pairs_hook=unique_keys, parse_constant=reject_constant)
