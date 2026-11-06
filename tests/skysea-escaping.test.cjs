@@ -135,3 +135,30 @@ test('country card escapes external zone metadata and ship date', () => {
   });
   assertHostileEscaped(output);
 });
+
+
+test('delayed ship ghost detail escapes external date and bounds numeric count', () => {
+  const countLine = html.split('\n').find(s => s.trim().startsWith('const safeCount ='));
+  assert.ok(countLine);
+  const safeCount = vm.runInNewContext(countLine + '\nsafeCount');
+  const output = vm.runInNewContext(detailTemplate('ghostRec.push({'), {
+    esc: escapeHtml, safeCount, kk: 'US', NM: { US: '미국' },
+    t: hostile, per: 1, ships: { date_range: [hostile] }
+  });
+  assertHostileEscaped(output);
+  assert.match(output, /이 칸 배 0척/);
+});
+
+test('delayed ship cell detail escapes external date and numeric counts', () => {
+  const countLine = html.split('\n').find(s => s.trim().startsWith('const safeCount ='));
+  assert.ok(countLine);
+  const safeCount = vm.runInNewContext(countLine + '\nsafeCount');
+  const output = vm.runInNewContext(detailTemplate('const rec = { la, lo, t, r:'), {
+    esc: escapeHtml, safeCount, ks: ['US'], NM: { US: '미국' },
+    t: hostile, by: { US: hostile }, la: 0, lo: 0, half: 1,
+    ships: { date_range: [hostile] }
+  });
+  assertHostileEscaped(output);
+  assert.match(output, /배 0척 기록/);
+  assert.match(output, /미국 0/);
+});
