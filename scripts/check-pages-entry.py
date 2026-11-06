@@ -13,8 +13,13 @@ from urllib.request import Request, urlopen
 
 # (public URL path, local artifact path, required content markers)
 CHECKS = (
-    ('', 'index.html', ('href="korea.html"', 'href="world-intelligence/"')),
+    ('', 'index.html', ('href="korea.html"', 'href="world-intelligence/"',
+                        'href="skysea.html"')),
     ('korea.html', 'korea.html', ('대한민국', 'href="national.html"')),
+    # The third country-selector entry must survive both artifact packaging and
+    # the published deployment, not merely exist as a link on the root page.
+    ('skysea.html', 'skysea.html',
+     ('id="map"', 'id="side"', 'id="q"', 'href="index.html"')),
     ('world-intelligence/', 'world-intelligence/index.html',
      ('id="map"', 'id="ask"', 'AI 분석 미연결 · 실시간 거래 데이터 미연결')),
     ('usa-command-legacy.html', 'usa-command-legacy.html',
