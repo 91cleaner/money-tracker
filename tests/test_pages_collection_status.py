@@ -81,6 +81,34 @@ class PublicCollectionStatusTests(unittest.TestCase):
     def test_malformed_public_trade_json_is_rejected(self):
         self.assert_trades_rejected('{"trades":')
 
+    def test_nested_public_trade_values_cannot_smuggle_private_fields(self):
+        for bad in (
+            '{"trades":[{"who":{"name":"test","private_email":"hidden"}}]}',
+            '{"trades":[{"doc":["https://example.org/filing"]}]}',
+        ):
+            with self.subTest(bad=bad):
+                self.assert_trades_rejected(bad)
+
+    def test_boolean_and_null_public_trade_values_are_rejected(self):
+        for bad in (
+            '{"trades":[{"r":true}]}',
+            '{"trades":[{"who":null}]}',
+        ):
+            with self.subTest(bad=bad):
+                self.assert_trades_rejected(bad)
+
+    def test_nested_public_ledger_metadata_is_rejected(self):
+        self.assert_trades_rejected('{"source":{"private_note":"hidden"},"trades":[]}')
+
+    def test_scalar_public_trade_values_are_accepted(self):
+        self.trades.write_text(
+            '{"source":"official-filing","updated":null,"trades":'
+            '[{"who":"Test","ty":"Purchase","r":1.25,"amt":"$1,001-$15,000"}]}',
+            encoding="utf-8",
+        )
+        result = self.run_check(status())
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_sec_not_configured_is_explicit_not_a_successful_zero(self):
         item = status()
         item["collectors"]["us_sec"] = {"status": "not-configured", "count": 0}
