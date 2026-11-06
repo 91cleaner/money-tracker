@@ -19,6 +19,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # Fail before building/uploading if legacy branch publishing can bypass
+      # the public-only artifact. This does not disable legacy Pages itself.
+      - name: Require GitHub Actions Pages source before deployment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/check_pages_source.py
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
