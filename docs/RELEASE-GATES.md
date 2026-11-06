@@ -1,6 +1,21 @@
 # Release decision gates — MONEY TRACKER
 
-> Operational acceptance checklist, not a claim that these gates are implemented in CI. Last reviewed: 2026-11-04 (KST). Applies to the public GitHub Pages build and the separately deployed authenticated Cloudflare Worker.
+> Operational acceptance checklist, not a claim that these gates are implemented in CI. Last reviewed: 2026-11-07 (KST). Applies to the public GitHub Pages build and the separately deployed authenticated Cloudflare Worker.
+
+## Integration decision update — 2026-11-07 01:54 KST
+
+This section supersedes **historical PR status statements below**; those dated observations remain as an audit trail. GitHub checks are branch-SHA-specific and do not establish deployment.
+
+| PR / exact head | GitHub check evidence | Merge/deploy disposition |
+| --- | --- | --- |
+| [#403](https://github.com/91cleaner/money-tracker/pull/403) `bcb46ed` (base: `main`) | [Map PASS](https://github.com/91cleaner/money-tracker/actions/runs/42248421435), [Command PASS](https://github.com/91cleaner/money-tracker/actions/runs/42248421361), [Security PASS](https://github.com/91cleaner/money-tracker/actions/runs/42248421316) | Open, not merged. Owner must review and approve the shared entry/deployment checks. |
+| [#522](https://github.com/91cleaner/money-tracker/pull/522) `cd4aa1e` (**base: #403 branch**, not `main`) | [Map PASS](https://github.com/91cleaner/money-tracker/actions/runs/42248519412), [Command PASS](https://github.com/91cleaner/money-tracker/actions/runs/42248519445), [Security PASS](https://github.com/91cleaner/money-tracker/actions/runs/42248518910) | Draft; SkySea artifact/live-entry checks are **stacked** on #403. After #403 lands, retarget #522 to `main`, inspect its diff, and rerun checks on the final SHA. |
+| [#523](https://github.com/91cleaner/money-tracker/pull/523) `bf311da` (base: `main`) | [Map FAIL](https://github.com/91cleaner/money-tracker/actions/runs/42238453357), [Command PASS](https://github.com/91cleaner/money-tracker/actions/runs/42238453125), [Security FAIL](https://github.com/91cleaner/money-tracker/actions/runs/42238453180) | Draft; HTML-escaping security fix **not deployed**. Rebase on accepted CI base, investigate the failed jobs and rerun the complete suite before owner/UI review. |
+| [#521](https://github.com/91cleaner/money-tracker/pull/521) `3e24717` (**base: #517**, which is based on #513) | [Map FAIL](https://github.com/91cleaner/money-tracker/actions/runs/42198956536), [Command PASS](https://github.com/91cleaner/money-tracker/actions/runs/42198956483), [Security FAIL](https://github.com/91cleaner/money-tracker/actions/runs/42198956668) | Draft; do **not** merge directly into main without the #513 → #517 dependency and UI-owner review. Retest tab persistence and late widget mounting on iPhone landscape. |
+
+**Release sequence / no duplicate implementation:** obtain owner approval for #403; then retarget and review #522; then integrate/retest #523 and the #513 → #517 → #521 tab stack against the accepted base. Recheck the **combined** SHA, not the previously green branch SHAs. Keep the older #503 data/PTR gates, especially #412/#504/#479, separate until their owners address them. Do not report that all fixes are in production merely because individual PR checks passed.
+
+**Current evidence boundary:** the repository is **public**, not private. These PRs remain unmerged as checked; production Pages parity, authenticated Worker, actual iPhone landscape navigation, and question → candidate → map fly-to have **NOT BEEN VERIFIED** by this review. Independently confirmed real-time executed-trade data and generative AI are **DISCONNECTED**. No UI, collector, data, workflow, or production changes were made by this documentation update.
 
 ## Non-negotiable release rule
 
