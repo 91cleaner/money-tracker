@@ -53,6 +53,34 @@ class PublicCollectionStatusTests(unittest.TestCase):
         result = self.run_check(status())
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def assert_trades_rejected(self, content):
+        self.trades.write_text(content, encoding="utf-8")
+        result = self.run_check(status())
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertIn("Invalid public trades_public.json", result.stderr)
+
+    def test_missing_public_trades_array_is_not_reported_as_zero(self):
+        self.assert_trades_rejected("{}")
+
+    def test_wrong_public_trades_type_is_rejected(self):
+        for bad in ('{"trades":null}', '{"trades":{}}', '{"trades":"none"}'):
+            with self.subTest(bad=bad):
+                self.assert_trades_rejected(bad)
+
+    def test_non_object_public_trade_rows_are_rejected(self):
+        for bad in ('{"trades":[null]}', '{"trades":[42]}', '{"trades":["fake"]}'):
+            with self.subTest(bad=bad):
+                self.assert_trades_rejected(bad)
+
+    def test_unapproved_public_trade_fields_are_rejected(self):
+        self.assert_trades_rejected('{"trades":[{"who":"test","private_note":"not public"}]}')
+
+    def test_duplicate_public_trade_keys_cannot_hide_a_ledger(self):
+        self.assert_trades_rejected('{"trades":[{"who":"test"}],"trades":[]}')
+
+    def test_malformed_public_trade_json_is_rejected(self):
+        self.assert_trades_rejected('{"trades":')
+
     def test_sec_not_configured_is_explicit_not_a_successful_zero(self):
         item = status()
         item["collectors"]["us_sec"] = {"status": "not-configured", "count": 0}
