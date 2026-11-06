@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-05",
+"updated": "2026-11-06",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
@@ -17,6 +17,57 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:120260029",
+"kind": "pubcomment",
+"t": "「風俗営業等の規制及び業務の適正化等に関する法律施行令の一部を改正する政令案」に対する意見の募集について",
+"d": "2026-11-06",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=120260029&Mode=0",
+"dept": "警察庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "kantei:4afbd48f6ecf",
+"kind": "news",
+"t": "閣議の概要／中東地域における自衛隊の活動／沖縄政策協議会の開催について",
+"d": "2026-11-06",
+"u": "https://www.kantei.go.jp/jp/tyoukanpress/202611/6_a.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "長官会見",
+"tags": [],
+"lk": "일본 관방장관(정부 대변인) 기자회견",
+"le": "Japan Chief Cabinet Secretary press conference"
+},
+{
+"id": "kantei:0c6ee60017e7",
+"kind": "news",
+"t": "高市総理はフランス共和国のエマニュエル・マクロン大統領と電話会談を行いました。",
+"d": "2026-11-06",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/05tel_kaidan.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:a1d85a4a9d18",
+"kind": "news",
+"t": "高市総理はマクロン・フランス共和国大統領との電話会談等についての会見を行いました",
+"d": "2026-11-06",
+"u": "https://www.kantei.go.jp/jp/105/statement/2026/1105kaiken.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理会見",
+"tags": [],
+"lk": "일본 총리 기자회견",
+"le": "Japanese PM's press conference"
 },
 {
 "id": "kantei:0e170a29357c",
@@ -144,6 +195,18 @@
 "tags": [],
 "lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
 "le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:595320121",
+"kind": "pubcomment",
+"t": "情報処理の促進に関する法律施行令の一部を改正する政令（案）に対する意見募集について",
+"d": "2026-11-05",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320121&Mode=0",
+"dept": "経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
 },
 {
 "id": "egov:550004441",
