@@ -70,7 +70,23 @@ try:
     for name, item in collectors.items():
         if not isinstance(name, str) or not name or not isinstance(item, dict):
             raise ValueError("invalid collector entry")
-        count, errors = item.get("count"), item.get("errors")
+        # The actual collector emits three explicit exceptional states. Preserve
+        # those errors instead of treating an upstream failure as a missing row.
+        state = item.get("status")
+        if state == "failed":
+            if set(item) != {"status", "error"} or not isinstance(item["error"], str) or not item["error"].strip():
+                raise ValueError(name + ": failed status requires a nonempty error")
+            continue
+        if state in ("not-configured", "invalid-term"):
+            expected = "us_sec" if state == "not-configured" else "taiwan_legislature"
+            if name != expected or set(item) != {"status", "count"} or type(item["count"]) is not int or item["count"] != 0:
+                raise ValueError(name + ": invalid " + state + " status")
+            continue
+        if state is not None:
+            raise ValueError(name + ": unknown collector status")
+        if set(item) != {"count", "errors"}:
+            raise ValueError(name + ": normal status requires count and errors only")
+        count, errors = item["count"], item["errors"]
         if type(count) is not int or count < 0:
             raise ValueError(name + ": count must be a nonnegative integer")
         if not isinstance(errors, list) or any(not isinstance(e, str) or not e.strip() for e in errors):
