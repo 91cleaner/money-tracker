@@ -53,6 +53,40 @@ class PublicCollectionStatusTests(unittest.TestCase):
         result = self.run_check(status())
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_sec_not_configured_is_explicit_not_a_successful_zero(self):
+        item = status()
+        item["collectors"]["us_sec"] = {"status": "not-configured", "count": 0}
+        result = self.run_check(item)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_invalid_taiwan_term_is_explicit_not_a_successful_zero(self):
+        item = status()
+        item["collectors"]["taiwan_legislature"] = {"status": "invalid-term", "count": 0}
+        result = self.run_check(item)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_fatal_upstream_failure_keeps_error_visible(self):
+        item = status()
+        item["collectors"]["taiwan_legislature"] = {"status": "failed", "error": "HTTP 503"}
+        result = self.run_check(item)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_fatal_failure_without_meaningful_error_rejected(self):
+        for bad in ({"status": "failed"}, {"status": "failed", "error": ""}):
+            with self.subTest(bad=bad):
+                item = status()
+                item["collectors"]["us_sec"] = bad
+                self.assert_rejected(item)
+
+    def test_invalid_or_mismatched_explicit_state_rejected(self):
+        for bad in ({"status": "unknown", "count": 0},
+                    {"status": "not-configured", "count": 1},
+                    {"status": "invalid-term", "count": 0}):
+            with self.subTest(bad=bad):
+                item = status()
+                item["collectors"]["us_sec"] = bad
+                self.assert_rejected(item)
+
     def test_missing_status_is_not_silent(self):
         self.path.unlink()
         result = subprocess.run([sys.executable, str(CHECK), str(self.root)],
