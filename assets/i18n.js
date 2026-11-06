@@ -98,7 +98,7 @@
     [/^(.+?)(?:은|는) 한국 대표 (.+?) 회사예요\. 최근 석 달 미국이 (?:.+?) 관련 문서를 (\d+)번 냈어요\. 제목 말을 보고 같은 분야로 묶은 것이라, 이 회사와 직접 관계가 있다는 뜻은 아니에요\./,
       "$1 is a major Korean $2 company. In the last three months the US issued $3 documents about $2. They were grouped by words in the titles, so this does not mean they are directly about this company."],
     [/^(.+?)의 마지막 종가는 ([\d,]+)원이에요\((\S+)\)\.(?: 한 달쯤 전\((\S+)\)에는 ([\d,]+)원이었어요\.)? 장이 끝날 때 값이고 실시간이 아니에요\./,
-      "$1 last closed at KRW $2 ($3).$4 This is the end-of-day price, not live."],
+      function (m, company, last, asof, prevDate, prevPrice) { return company + " last closed at KRW " + last + " (" + asof + ")." + (prevDate && prevPrice ? " About a month earlier (" + prevDate + "), it closed at KRW " + prevPrice + "." : "") + " Closing prices are end-of-day, not live."; }],
     [/^미국에서 (\S+)에 (.+?) 분야 문서가 나왔어요: /, "A US document on $2 came out on $1: "],
     [/^국회에 '(.+)' 법안이 올라왔어요\((\S+)\)\. 낸 사람: (.+?)\. 이름만 보고 같은 분야로 묶었어요\./, "A bill was filed in the Korean National Assembly ($2): '$1'. Filed by: $3. Grouped into this field by its title only."],
     [/^(대만|중국|일본) 정부가 (\S+)에 (.+?) 분야로 보이는 글을 올렸어요: (.+) \(원문 언어 그대로예요\. 제목 말만 보고 묶었어요\.\)$/, "The $1 government posted this on $2, which looks related to $3: $4 (original language; grouped by title words only)."],
@@ -141,7 +141,7 @@
     // company / member / sector pages
     [/(\S.*?) 회사 상세$/, "$1 · Company file"], [/(\S.*?) 의원 상세$/, "$1 · Member file"], [/(\S.*?) 업종 상세$/, "$1 · Sector file"],
     [/(\S.*?) 회사 파일$/, "$1 · Company file"], [/(\S.*?) 의원 파일$/, "$1 · Member file"], [/(\S.*?) 업종 파일$/, "$1 · Sector file"],
-    [/^SEC 등록명 (.+?) · 업종 코드 SIC (.*?) · 본사\(SEC 주소\) (.*?) ·$/, "SEC registered name $1 · SIC code $2 · HQ (SEC address) $3 ·"],
+    [/^SEC 등록명 (.+?) · 업종 코드 SIC (.*?) · 본사\(SEC 주소\) (.*?) ·$/, "SEC registered name $1 · SIC code $2 · SEC-reported business address $3 ·"],
     [/종가 \((\d{4}-\d{2}-\d{2})\)/, "Close ($1)"],
     [/최근 (\d+)거래일 종가 추이 (\S+) ~ (\S+)/, "Closing-price trend, last $1 trading days, $2 ~ $3"],
     [/최근 (\d+)거래일 종가 (\S+) ~ (\S+) · 범위 (\S+) ~ (\S+)/, "Closing prices, last $1 trading days, $2 ~ $3 · range $4 ~ $5"],
@@ -376,7 +376,7 @@
     ["CHIPS and Science Act(H.R.4346, 117대 의회)가 법으로 제정됨. 업계 전반 대상 법률임.", "The CHIPS and Science Act (H.R.4346, 117th Congress) was enacted into law. It applies to the industry as a whole."],
     // indicators, names and places in route data (NVDA etc.)
     ["대만달러/달러 환율", "TWD/USD exchange rate"], ["엔/달러 환율", "JPY/USD exchange rate"], ["위안/달러 환율", "CNY/USD exchange rate"], ["달러 환율", "USD exchange rate"], ["국채 금리", "Treasury yield"], ["미 의회 법안", "U.S. Congress bills"],
-    ["업종 코드", "industry code"], ["SEC 등록명", "SEC registered name"], ["SEC 등록 업종", "SEC-registered industry"], ["본사(SEC 주소)", "HQ (SEC address)"], ["(좌표는 대략 위치)", "(coordinates are approximate)"], ["원문: ", "Source text: "],
+    ["업종 코드", "industry code"], ["SEC 등록명", "SEC registered name"], ["SEC 등록 업종", "SEC-registered industry"], ["본사(SEC 주소)", "SEC-reported business address"], ["(좌표는 대략 위치)", "(coordinates are approximate)"], ["원문: ", "Source text: "],
     ["미국 워싱턴 D.C.", "Washington, D.C."], ["워싱턴 D.C.", "Washington, D.C."], ["캘리포니아", "California"], ["샌타클래라", "Santa Clara"], ["산타클라라", "Santa Clara"], ["신주", "Hsinchu"], ["이천", "Icheon"], ["아이다호", "Idaho"],
     ["삼성전자", "Samsung Electronics"], ["SK하이닉스", "SK Hynix"], ["마이크론", "Micron"], ["파운드리", "foundry"], ["메모리", "memory"],
     ["스페이스X", "SpaceX"], ["오픈AI", "OpenAI"], ["앤트로픽", "Anthropic"], ["스트라이프", "Stripe"], ["바이트댄스", "ByteDance"], ["데이터브릭스", "Databricks"], ["쉬인", "Shein"],
