@@ -1,0 +1,92 @@
+name: Pages public JSON parity audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/check-pages-public-json.py'
+      - 'scripts/check-pages-publish-step.py'
+      - 'scripts/test_pages_public_json_publish_step.py'
+      - 'scripts/test_pages_public_json.py'
+      - 'scripts/prepare-public-pages.py'
+      - 'scripts/build_public_trades.py'
+      - 'scripts/check-pages-artifact.py'
+      - 'data/us/trades.json'
+      - 'data/us/members.json'
+      - 'data/us/trades-recent.json'
+      - 'data/search/collection-status.json'
+      - '.github/workflows/deploy-pages.yml'
+      - '.github/workflows/pages-json-parity.yml'
+  workflow_run:
+    workflows: ['Deploy MONEY TRACKER Pages']
+    types: [completed]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  regression:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check JSON parity fail-closed behavior
+        run: python3 -m unittest discover -s scripts -p 'test_pages_public_json*.py' -v
+      # Unit mocks cannot catch changes to the real Pages artifact generator.
+      # Build and inspect the public snapshot on every relevant PR.
+      - name: Rebuild public artifact from PR sources
+        run: python3 scripts/prepare-public-pages.py
+      - name: Verify generated public artifact and excluded private files
+        run: python3 scripts/check-pages-artifact.py
+
+  # A Pages publish may succeed even if a subsequent HTML smoke check fails.
+  # Inspect the actual deploy-pages step, not only the workflow conclusion.
+  published:
+    # The workflow_run event is already limited to completed runs. A publish
+    # can succeed before a later step is cancelled or times out, so never
+    # exclude a completed run based on its overall conclusion.
+    if: >-
+      github.event_name == 'workflow_run' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    outputs:
+      deployed: ${{ steps.detect.outputs.deployed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check whether Pages was actually published
+        id: detect
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          published="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/jobs?per_page=100&filter=latest" |
+            python3 scripts/check-pages-publish-step.py)"
+          echo "deployed=$published" >> "$GITHUB_OUTPUT"
+          echo "Pages publish step succeeded: $published"
+
+  deployed-json:
+    needs: published
+    if: needs.published.outputs.deployed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild public artifact from the deployed commit
+        run: python3 scripts/prepare-public-pages.py
+      - name: Validate public artifact files
+        run: python3 scripts/check-pages-artifact.py
+      - name: Compare deployed public JSON bytes against the same SHA
+        run: >-
+          python3 scripts/check-pages-public-json.py
+          --site-url https://91cleaner.github.io/money-tracker/
+          --expected-dir .public-pages
