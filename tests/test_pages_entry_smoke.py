@@ -17,9 +17,29 @@ class PagesEntrySmokeTests(unittest.TestCase):
                 self.assertEqual(CONTRACT['missing_markers']('\n'.join(markers), markers), [])
 
     def test_missing_marker_is_detected(self):
-        self.assertEqual(CONTRACT['missing_markers']('href="korea.html"',
-                         ('href="korea.html"', 'href="world-intelligence/"')),
+        self.assertEqual(CONTRACT['missing_markers']('href="korea.html" href="skysea.html"',
+                         ('href="korea.html"', 'href="world-intelligence/"',
+                          'href="skysea.html"')),
                          ['href="world-intelligence/"'])
+
+    def test_skysea_entry_is_required_in_both_artifact_and_live_contract(self):
+        checks = {path: (url, markers) for url, path, markers in CONTRACT['CHECKS']}
+        self.assertIn('href="skysea.html"', checks['index.html'][1])
+        self.assertEqual(checks['skysea.html'][0], 'skysea.html')
+        for marker in ('id="map"', 'id="side"', 'id="q"', 'href="index.html"'):
+            self.assertIn(marker, checks['skysea.html'][1])
+
+    def test_missing_skysea_page_fails_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for _, file_path, markers in CONTRACT['CHECKS']:
+                if file_path == 'skysea.html':
+                    continue
+                path = root / file_path
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('\n'.join(markers), encoding='utf-8')
+            with self.assertRaisesRegex(RuntimeError, 'Missing Pages artifact: skysea.html'):
+                CONTRACT['check_local'](root)
 
     def test_missing_artifact_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -59,7 +79,7 @@ class PagesEntrySmokeTests(unittest.TestCase):
             for _, file_path, markers in CONTRACT['CHECKS']:
                 path = root / file_path
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text('\\n'.join(markers), encoding='utf-8')
+                path.write_text('\n'.join(markers), encoding='utf-8')
             requested = []
 
             def fake_urlopen(request, timeout):
@@ -87,12 +107,12 @@ class PagesEntrySmokeTests(unittest.TestCase):
                 return False
 
             def read(self):
-                return b'href="korea.html" href="world-intelligence/"\\n'
+                return b'href="korea.html" href="world-intelligence/" href="skysea.html"\n'
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'index.html').write_text(
-                'href="korea.html" href="world-intelligence/"', encoding='utf-8')
+                'href="korea.html" href="world-intelligence/" href="skysea.html"', encoding='utf-8')
             with patch.dict(CONTRACT['check_live'].__globals__,
                             {'urlopen': lambda request, timeout: Response()}):
                 with self.assertRaisesRegex(RuntimeError,
