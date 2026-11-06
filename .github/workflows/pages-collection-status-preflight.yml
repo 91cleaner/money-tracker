@@ -1,0 +1,28 @@
+name: Public collector status preflight
+on:
+  pull_request:
+    paths:
+      - 'scripts/check-pages-artifact.py'
+      - 'tests/test_pages_collection_status.py'
+      - 'data/search/collection-status.json'
+      - '.github/workflows/pages-collection-status-preflight.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/check-pages-artifact.py'
+      - 'tests/test_pages_collection_status.py'
+      - 'data/search/collection-status.json'
+      - '.github/workflows/pages-collection-status-preflight.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reject malformed public collector status before deployment
+        run: python3 -m unittest discover -s tests -p 'test_pages_collection_status.py' -v
