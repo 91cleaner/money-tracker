@@ -1,31 +1,30 @@
 {
- "start": "2026-10-24",
- "end": "2026-10-30",
+ "start": "2026-10-31",
+ "end": "2026-11-06",
  "fallback": false,
- "generated": "2026-10-30",
- "trades": 38,
- "members": 5,
+ "generated": "2026-11-06",
+ "trades": 13,
+ "members": 7,
  "summary": {
   "R": {
-   "m": 4,
-   "n": 36,
-   "b": 1,
-   "s": 35,
+   "m": 6,
+   "n": 12,
+   "b": 7,
+   "s": 5,
    "top": [
-    "AMZN",
-    "MCD",
-    "COST",
-    "DIS"
+    "MU",
+    "NVDA",
+    "Fairfax Cnty VA",
+    "North Carolina Hsg"
    ]
   },
   "D": {
    "m": 1,
-   "n": 2,
+   "n": 1,
    "b": 1,
-   "s": 1,
+   "s": 0,
    "top": [
-    "Black Belt Energy",
-    "Tennessee Energy"
+    "California CMNTY"
    ]
   }
  },
@@ -33,268 +32,132 @@
  "problems": [],
  "rows": [
   {
-   "name": "Pete Sessions",
+   "name": "John McGuire",
    "party": "R",
-   "district": "TX-17",
+   "district": "VA-5",
    "trades": [
     {
-     "a": "DIS",
+     "a": "MU",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "10/01"
+    },
+    {
+     "a": "MU",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "09/25"
+    },
+    {
+     "a": "AVGO",
      "s": "SELL",
      "amt": "$1K-$15K",
-     "d": "10/28"
+     "d": "09/24"
     },
     {
-     "a": "AMZN",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/27"
-    },
+     "a": "MU",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "09/24"
+    }
+   ]
+  },
+  {
+   "name": "Maria Salazar",
+   "party": "R",
+   "district": "FL-27",
+   "trades": [
     {
-     "a": "MCD",
+     "a": "CSCO",
      "s": "SELL",
      "amt": "$1K-$15K",
-     "d": "10/27"
-    },
-    {
-     "a": "HD",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/22"
-    },
-    {
-     "a": "LOW",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/22"
-    },
-    {
-     "a": "PEP",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/21"
-    },
-    {
-     "a": "SOLS",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/21"
-    },
-    {
-     "a": "IBM",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "BRK.B",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/15"
-    },
-    {
-     "a": "CVX",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/14"
-    },
-    {
-     "a": "XOM",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/14"
-    },
-    {
-     "a": "COST",
-     "s": "SELL",
-     "amt": "$100K-$250K",
-     "d": "10/13"
-    },
-    {
-     "a": "PG",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/08"
-    },
-    {
-     "a": "ABT",
-     "s": "SELL",
-     "amt": "$50K-$100K",
-     "d": "10/02"
-    },
-    {
-     "a": "GOOG",
-     "s": "SELL",
-     "amt": "$100K-$250K",
-     "d": "10/02"
-    },
-    {
-     "a": "AMZN",
-     "s": "SELL",
-     "amt": "$100K-$250K",
-     "d": "10/02"
-    },
-    {
-     "a": "AAPL",
-     "s": "SELL",
-     "amt": "$250K-$500K",
-     "d": "10/02"
-    },
-    {
-     "a": "CMG",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/02"
-    },
-    {
-     "a": "COST",
-     "s": "SELL",
-     "amt": "$250K-$500K",
-     "d": "10/02"
-    },
-    {
-     "a": "MA",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/02"
-    },
-    {
-     "a": "MCD",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/02"
-    },
-    {
-     "a": "MSFT",
-     "s": "SELL",
-     "amt": "$250K-$500K",
-     "d": "10/02"
-    },
-    {
-     "a": "SBUX",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/02"
-    },
-    {
-     "a": "TSLA",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/02"
-    },
-    {
-     "a": "TJX",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/02"
-    },
-    {
-     "a": "VZ",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/02"
-    },
-    {
-     "a": "V",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/02"
-    },
-    {
-     "a": "WMT",
-     "s": "SELL",
-     "amt": "$50K-$100K",
-     "d": "10/02"
+     "d": "10/23"
     },
     {
      "a": "NVDA",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/02"
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "10/23"
     },
     {
-     "a": "HON",
-     "s": "SELL",
+     "a": "PG",
+     "s": "BUY",
      "amt": "$1K-$15K",
+     "d": "10/23"
+    }
+   ]
+  },
+  {
+   "name": "Mike Kelly",
+   "party": "R",
+   "district": "PA-16",
+   "trades": [
+    {
+     "a": "Fairfax Cnty VA",
+     "s": "SELL",
+     "amt": "$50K-$100K",
+     "d": "10/15"
+    },
+    {
+     "a": "North Carolina Hsg",
+     "s": "BUY",
+     "amt": "$50K-$100K",
      "d": "10/01"
     }
    ]
   },
   {
-   "name": "Kevin Hern",
-   "party": "R",
-   "district": "OK-1",
-   "trades": [
-    {
-     "a": "ASML",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/23"
-    },
-    {
-     "a": "STX",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/23"
-    },
-    {
-     "a": "TXN",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/14"
-    }
-   ]
-  },
-  {
-   "name": "Max Miller",
-   "party": "R",
-   "district": "OH-7",
-   "trades": [
-    {
-     "a": "AIX Ventures II",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/01"
-    },
-    {
-     "a": "Mercato Partners",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "09/30"
-    }
-   ]
-  },
-  {
-   "name": "Suzan DelBene",
+   "name": "Donald Beyer",
    "party": "D",
-   "district": "WA-1",
+   "district": "VA-8",
    "trades": [
     {
-     "a": "Black Belt Energy",
+     "a": "California CMNTY",
      "s": "BUY",
-     "amt": "$250K-$500K",
-     "d": "10/14"
-    },
-    {
-     "a": "Tennessee Energy",
-     "s": "SELL",
-     "amt": "$250K-$500K",
-     "d": "10/14"
+     "amt": "$15K-$50K",
+     "d": "10/07"
     }
    ]
   },
   {
-   "name": "Sheri Biggs",
+   "name": "Ann Wagner",
    "party": "R",
-   "district": "SC-3",
+   "district": "MO-2",
    "trades": [
     {
-     "a": "Oaktree Strategic",
+     "a": "American Expr Natl",
+     "s": "SELL",
+     "amt": "$100K-$250K",
+     "d": "10/20"
+    }
+   ]
+  },
+  {
+   "name": "Robert Latta",
+   "party": "R",
+   "district": "OH-5",
+   "trades": [
+    {
+     "a": "FMAO",
      "s": "BUY",
      "amt": "$1K-$15K",
-     "d": "09/30"
+     "d": "10/20"
+    }
+   ]
+  },
+  {
+   "name": "Daniel Meuser",
+   "party": "R",
+   "district": "PA-9",
+   "trades": [
+    {
+     "a": "NVDA",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "09/25"
     }
    ]
   }
  ],
- "image": "congress-trades-2026-10-30.png"
+ "image": "congress-trades-2026-11-06.png"
 }

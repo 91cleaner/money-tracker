@@ -1,0 +1,163 @@
+{
+ "start": "2026-10-31",
+ "end": "2026-11-06",
+ "fallback": false,
+ "generated": "2026-11-06",
+ "trades": 13,
+ "members": 7,
+ "summary": {
+  "R": {
+   "m": 6,
+   "n": 12,
+   "b": 7,
+   "s": 5,
+   "top": [
+    "MU",
+    "NVDA",
+    "Fairfax Cnty VA",
+    "North Carolina Hsg"
+   ]
+  },
+  "D": {
+   "m": 1,
+   "n": 1,
+   "b": 1,
+   "s": 0,
+   "top": [
+    "California CMNTY"
+   ]
+  }
+ },
+ "hidden_members": 0,
+ "problems": [],
+ "rows": [
+  {
+   "name": "John McGuire",
+   "party": "R",
+   "district": "VA-5",
+   "trades": [
+    {
+     "a": "MU",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "10/01"
+    },
+    {
+     "a": "MU",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "09/25"
+    },
+    {
+     "a": "AVGO",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "09/24"
+    },
+    {
+     "a": "MU",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "09/24"
+    }
+   ]
+  },
+  {
+   "name": "Maria Salazar",
+   "party": "R",
+   "district": "FL-27",
+   "trades": [
+    {
+     "a": "CSCO",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/23"
+    },
+    {
+     "a": "NVDA",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "10/23"
+    },
+    {
+     "a": "PG",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "10/23"
+    }
+   ]
+  },
+  {
+   "name": "Mike Kelly",
+   "party": "R",
+   "district": "PA-16",
+   "trades": [
+    {
+     "a": "Fairfax Cnty VA",
+     "s": "SELL",
+     "amt": "$50K-$100K",
+     "d": "10/15"
+    },
+    {
+     "a": "North Carolina Hsg",
+     "s": "BUY",
+     "amt": "$50K-$100K",
+     "d": "10/01"
+    }
+   ]
+  },
+  {
+   "name": "Donald Beyer",
+   "party": "D",
+   "district": "VA-8",
+   "trades": [
+    {
+     "a": "California CMNTY",
+     "s": "BUY",
+     "amt": "$15K-$50K",
+     "d": "10/07"
+    }
+   ]
+  },
+  {
+   "name": "Ann Wagner",
+   "party": "R",
+   "district": "MO-2",
+   "trades": [
+    {
+     "a": "American Expr Natl",
+     "s": "SELL",
+     "amt": "$100K-$250K",
+     "d": "10/20"
+    }
+   ]
+  },
+  {
+   "name": "Robert Latta",
+   "party": "R",
+   "district": "OH-5",
+   "trades": [
+    {
+     "a": "FMAO",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "10/20"
+    }
+   ]
+  },
+  {
+   "name": "Daniel Meuser",
+   "party": "R",
+   "district": "PA-9",
+   "trades": [
+    {
+     "a": "NVDA",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "09/25"
+    }
+   ]
+  }
+ ],
+ "image": "congress-trades-2026-11-06.png"
+}
