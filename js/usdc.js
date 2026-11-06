@@ -2,7 +2,6 @@
 (function(){
 var after=document.getElementById('ecBox')||document.getElementById('seatBox')||document.getElementById('warBox');if(!after)return;
 var box=document.createElement('div');box.id='usdcBox';box.style.marginTop='8px';after.parentNode.insertBefore(box,after.nextSibling);
-var CRIME_COL='#e67e22';
 var st=document.createElement('style');st.textContent=
 '#usdcPanel[hidden]{display:none}#usdcPanel{margin-top:6px;font:12px/1.6 system-ui,sans-serif;color:#ddd}'+
 '#usdcPanel .row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}'+
@@ -11,10 +10,10 @@ var st=document.createElement('style');st.textContent=
 '#usdcPanel label.chk{display:flex;align-items:center;gap:6px;margin-top:6px;cursor:pointer}'+
 '#usdcLeg{margin-top:6px;background:rgba(255,255,255,.06);border-radius:8px;padding:6px 8px;line-height:1.5}'+
 '#usdcLeg i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:4px;vertical-align:-1px}'+
-'#usdcLeg i.dot{border-radius:50%;background:'+CRIME_COL+';box-sizing:border-box}'+
-'#usdcLeg i.dot.d{border:3px solid #1f4e8c}'+
-'#usdcLeg i.dot.r{border:3px solid #b03a2e}'+
-'#usdcLeg i.dot.i{border:3px solid #888}'+
+'#usdcLeg i.dot{border-radius:50%;box-sizing:border-box;border:2px solid #fff}'+
+'#usdcLeg i.dot.d{background:#1565c0}'+
+'#usdcLeg i.dot.r{background:#c62828}'+
+'#usdcLeg i.dot.i{background:#757575}'+
 '.usdcLab{background:transparent;border:0}'+
 '.usdcLab span{display:block;width:16px;height:16px;line-height:16px;text-align:center;font:800 11px/16px system-ui,sans-serif;color:#fff;text-shadow:0 0 2px #000,0 1px 2px #000;-webkit-text-stroke:0.4px #000}'+
 '#usdcSum{margin-top:6px;background:rgba(255,255,255,.06);border-radius:8px;padding:6px 8px}'+
@@ -33,6 +32,7 @@ box.innerHTML='<button type="button" class="btn prime" id="usdcOpen" style="widt
 var CD=null,CT=null,ly=null,mode=null,SV=null;
 var TG=['planeTg','shipTg','cableTg','liveTg','confTg','gpsTg','zoneTg','fireTg','quakeTg'];
 var C={D:'#1f4e8c',R:'#b03a2e',I:'#888',V:'#666'};
+var CP={D:'#1565c0',R:'#c62828',I:'#757575',V:'#666'};
 var EN=function(){return (window.mtLang||document.documentElement.lang)==='en'};
 function T(ko,en){return EN()?en:ko}
 function hidePts(){if(SV)return;SV={};TG.forEach(function(i){var e=document.getElementById(i);if(!e)return;SV[i]=e.checked;if(e.checked){e.checked=false;e.dispatchEvent(new Event('change',{bubbles:true}))}})}
@@ -85,8 +85,8 @@ function legend(){
     '<i style="background:#b03a2e"></i>'+T('공화당','Republican')+' · '+
     '<i style="background:#666"></i>'+T('공석·기타','Vacant/other')+'</div>'+
     '<div style="margin-top:4px" data-noi18n="1"><b>'+T('도시 범죄율','City crime rates')+'</b> — '+
-    '<i class="dot d"></i><i class="dot r"></i> '+T('주황 채움: 폭력범죄 / 10만 명 (FBI UCR 2024). 크기 = 비율.','Orange fill: violent crime / 100k (FBI UCR 2024). Size = rate.')+'</div>'+
-    '<div data-noi18n="1">'+T('테두리 색·글자 D/R: 시장 정당 (파랑 D, 빨강 R, 회색 무소속). 지구 칠과 다름.','Ring colour and D/R letter: mayor party (blue D, red R, grey independent). Separate from district fill.')+'</div>';
+    '<i class="dot d"></i><i class="dot r"></i><i class="dot i"></i> '+T('원 색: 시장 정당 (파랑 D, 빨강 R, 회색 무소속). 흰 테두리.','Circle colour: mayor party (blue D, red R, grey independent). White outline.')+'</div>'+
+    '<div data-noi18n="1">'+T('원 크기: 폭력범죄 / 10만 명 (FBI UCR 2024). 글자 D/R/I = 시장 정당. 지구 칠과 다름.','Circle size: violent crime / 100k (FBI UCR 2024). Letter D/R/I = mayor party. Separate from district fill.')+'</div>';
 }
 function summary(){
   if(!CT)return;var s=CT.summary,el=document.getElementById('usdcSum');
@@ -123,9 +123,9 @@ function drawCities(race){
       L.marker([c.la,c.lo],{pane:'usdc',icon:L.divIcon({className:'',html:'<div class="usdcPie" style="background:'+pie(c)+';transform:translate(-50%,-50%)"></div>',iconSize:[0,0]})}).on('click',function(){cityCard(c,true)}).addTo(ly);
     }else{
       var r=Math.min(22,6+Math.sqrt(c.violent)/4);
-      var stroke=C[c.mparty]||'#888';
+      var fill=CP[c.mparty]||'#888';
       var letter=(c.mparty==='D'||c.mparty==='R')?c.mparty:(c.mparty==='I'?'I':'');
-      L.circleMarker([c.la,c.lo],{pane:'usdc',radius:r,color:stroke,weight:3.5,fillColor:CRIME_COL,fillOpacity:.85}).on('click',function(){cityCard(c,false)}).addTo(ly);
+      L.circleMarker([c.la,c.lo],{pane:'usdc',radius:r,color:'#fff',weight:2.5,fillColor:fill,fillOpacity:.9}).on('click',function(){cityCard(c,false)}).addTo(ly);
       if(letter){
         L.marker([c.la,c.lo],{pane:'usdc',interactive:false,keyboard:false,icon:L.divIcon({className:'usdcLab',html:'<span style="color:#fff">'+letter+'</span>',iconSize:[16,16],iconAnchor:[8,8]})}).addTo(ly);
       }
