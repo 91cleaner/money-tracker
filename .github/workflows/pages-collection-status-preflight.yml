@@ -11,7 +11,6 @@ on:
     paths:
       - 'scripts/check-pages-artifact.py'
       - 'tests/test_pages_collection_status.py'
-      - 'data/search/collection-status.json'
       - '.github/workflows/pages-collection-status-preflight.yml'
   workflow_dispatch:
 permissions:
@@ -26,3 +25,7 @@ jobs:
           python-version: '3.11'
       - name: Reject malformed public collector status before deployment
         run: python3 -m unittest discover -s tests -p 'test_pages_collection_status.py' -v
+      - name: Build actual public Pages artifact
+        run: python3 scripts/prepare-public-pages.py
+      - name: Validate actual public artifact and collector status
+        run: python3 scripts/check-pages-artifact.py
