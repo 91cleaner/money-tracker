@@ -6,6 +6,38 @@
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
 {
+"id": "msit:92c6ac4b2829",
+"kind": "press",
+"t": "한-네덜란드, 첫 과학기술공동위 개최  첨단 과학기술 협력 본격화",
+"d": "2026-11-06",
+"dept": "구주아프리카협력담당관",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187932",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:4011ba3ab827",
+"kind": "press",
+"t": "과기정통부, 자율형 인공지능 이용 환경에서 철통 인증을 적용할 수 있는 안내서 발간",
+"d": "2026-11-06",
+"dept": "정보보호산업과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187929",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "msit:aec0699aee74",
+"kind": "press",
+"t": "과학관으로 온 첨단기술 원정대 아이들의 손끝에서 미래기술 만난다",
+"d": "2026-11-06",
+"dept": "국립중앙과학관 산업기술팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187933",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
 "id": "msit:18ed3166d6a7",
 "kind": "press",
 "t": "핵융합, 해양용 용융염원자로 등 예타 통과로 7대 시드(SEED) 프로젝트 뒷받침",
@@ -517,6 +549,48 @@
 "res": null,
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_FEBA737D16294817B5F7600D5E6F11&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
+"tags": []
+},
+{
+"id": "msit:287178ac320b",
+"kind": "press",
+"t": "핵융합, 해양용 용융염원자로 등 예타 통과로 7대 미래 전략기술 사업(7대 시드(SEED) 프로젝트) 뒷받침",
+"d": "2026-11-05",
+"dept": "연구개발타당성심사팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187931",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:dd78821c5c2d",
+"kind": "press",
+"t": "유망 심층 기술 창업 초기 기업, 정부와 민간이 함께 키운다",
+"d": "2026-11-05",
+"dept": "지역과학기술진흥과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187930",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:40795cb242c4",
+"kind": "press",
+"t": "정보통신기술 고급인재양성 연구센터 신규 개소 및 공동 현판증정식 개최",
+"d": "2026-11-05",
+"dept": "소프트웨어정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187927",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "msit:4e29c98dca0c",
+"kind": "press",
+"t": "대한민국 미래 성장동력을 뒷받침할  7대 미래 전략기솔(7대 SEED) 등 심층기술 창업‧사업화 축제 개최",
+"d": "2026-11-05",
+"dept": "연구 성과혁신정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187926",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
 "tags": []
 },
 {
@@ -5968,94 +6042,6 @@
 "cmte": "보건복지위원회",
 "res": null,
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_BDEA8A988DB249A99D3AA578B22D1C&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_A2Z6Z0H9I1G5E1F0D0Z1A1Z5X1Y4W1",
-"no": "2222066",
-"t": "국민건강보험법 일부개정법률안",
-"d": "2026-10-23",
-"by": "이인영의원 등 11인",
-"cmte": "보건복지위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Z6Z0H9I1G5E1F0D0Z1A1Z5X1Y4W1&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": [
-"finance"
-]
-},
-{
-"id": "PRC_256ABCA24B8F4E8D8902F122D733A8",
-"no": "2222065",
-"t": "경찰관 직무집행법 일부개정법률안",
-"d": "2026-10-23",
-"by": "이상식의원 등 11인",
-"cmte": "행정안전위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_256ABCA24B8F4E8D8902F122D733A8&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_34D86913223F4978BA23B9B18691C3",
-"no": "2222064",
-"t": "소득세법 일부개정법률안",
-"d": "2026-10-23",
-"by": "윤영석의원 등 10인",
-"cmte": "재정경제기획위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_34D86913223F4978BA23B9B18691C3&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_3565AC15028E499EAC1BE9E2B7CF56",
-"no": "2222063",
-"t": "식품·의약품분야 시험·검사 등에 관한 법률 일부개정법률안",
-"d": "2026-10-23",
-"by": "허종식의원 등 10인",
-"cmte": "보건복지위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_3565AC15028E499EAC1BE9E2B7CF56&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": [
-"health"
-]
-},
-{
-"id": "PRC_A2B6A0A7Y1X6Y1F6G2F7F4D2C1C3K0",
-"no": "2222062",
-"t": "노인복지법 일부개정법률안",
-"d": "2026-10-23",
-"by": "허종식의원 등 11인",
-"cmte": "보건복지위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2B6A0A7Y1X6Y1F6G2F7F4D2C1C3K0&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_G2H6F0G9E1C5D1K8L1K6K5J2H6I8P3",
-"no": "2222061",
-"t": "지방공무원법 일부개정법률안",
-"d": "2026-10-23",
-"by": "이해식의원 등 11인",
-"cmte": "행정안전위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2H6F0G9E1C5D1K8L1K6K5J2H6I8P3&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_C3EFF177DB6D487BBC6A6B44D52C00",
-"no": "2222060",
-"t": "가사소송법 일부개정법률안",
-"d": "2026-10-23",
-"by": "채현일의원 등 12인",
-"cmte": "법제사법위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C3EFF177DB6D487BBC6A6B44D52C00&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
 }

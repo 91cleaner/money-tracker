@@ -1,7 +1,43 @@
 {
-"updated": "2026-11-03",
+"updated": "2026-11-05",
 "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
 "trades": [
+{
+"tk": "CSCO",
+"who": "Maria Elvira Salazar",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-23",
+"fd": "2026-11-05",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf"
+},
+{
+"tk": "NVDA",
+"who": "Maria Elvira Salazar",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-23",
+"fd": "2026-11-05",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf"
+},
+{
+"tk": "PG",
+"who": "Maria Elvira Salazar",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-23",
+"fd": "2026-11-05",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf"
+},
+{
+"tk": "NVDA",
+"who": "Daniel Meuser",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-09-25",
+"fd": "2026-11-05",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035662.pdf"
+},
 {
 "tk": "FMAO",
 "who": "Robert E. Latta",
@@ -145,42 +181,6 @@
 "d": "2026-10-15",
 "fd": "2026-10-29",
 "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035727.pdf"
-},
-{
-"tk": "V",
-"who": "David J. Taylor",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-15",
-"fd": "2026-10-29",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035727.pdf"
-},
-{
-"tk": "ASML",
-"who": "Kevin Hern",
-"ty": "S",
-"amt": "$15,001 - $50,000",
-"d": "2026-10-23",
-"fd": "2026-10-28",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035710.pdf"
-},
-{
-"tk": "STX",
-"who": "Kevin Hern",
-"ty": "S",
-"amt": "$15,001 - $50,000",
-"d": "2026-10-23",
-"fd": "2026-10-28",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035710.pdf"
-},
-{
-"tk": "TXN",
-"who": "Kevin Hern",
-"ty": "S",
-"amt": "$15,001 - $50,000",
-"d": "2026-10-14",
-"fd": "2026-10-28",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035710.pdf"
 }
 ]
 }
