@@ -51,6 +51,16 @@ try:
     extra_rows = sorted({k for t in pub["trades"] for k in t} - allowed)
     if extra_top or extra_rows:
         raise ValueError("non-public fields: " + ", ".join(extra_top + extra_rows))
+    # Allowlisted names alone do not make nested values public. A malformed
+    # ledger could hide private objects under a permitted key such as "who".
+    # The public builder emits only scalar filing values (or null metadata).
+    def public_scalar(value):
+        return value is None or type(value) in (str, int, float)
+    if any(not public_scalar(value) for key, value in pub.items() if key != "trades"):
+        raise ValueError("public ledger metadata must be scalar")
+    if any(value is None or not public_scalar(value)
+           for trade in pub["trades"] for value in trade.values()):
+        raise ValueError("public trade values must be non-null scalars")
 except (OSError, UnicodeError, ValueError, TypeError) as exc:
     sys.exit("Invalid public trades_public.json: " + str(exc))
 
