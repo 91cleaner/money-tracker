@@ -91,3 +91,47 @@ test('rendered country-search button escapes hostile GeoJSON labels', () => {
   });
   assertHostileEscaped(output);
 });
+
+
+test('unsafe article protocols never become clickable GDELT links', () => {
+  const urlLine = html.split('\n').find(s => s.trim().startsWith('const safeHttpUrl ='));
+  const articleLine = html.split('\n').find(s => s.trim().startsWith('const articleLink ='));
+  assert.ok(urlLine && articleLine, 'URL allowlist and link helper exist');
+  const link = vm.runInNewContext(urlLine + '\n' + articleLine + '\narticleLink', {
+    URL, esc: escapeHtml
+  });
+  for (const unsafe of [
+    'javascript:alert(1)', 'JaVaScRiPt:alert(1)', 'data:text/html,<svg onload=alert(1)>',
+    'vbscript:msgbox(1)', '//example.com/path', 'not-a-url'
+  ]) {
+    assert.equal(link(unsafe), '', 'reject unsafe URL: ' + unsafe);
+  }
+  assert.match(link('https://example.org/article?id=1&lang=en'),
+    /href="https:\/\/example\.org\/article\?id=1&amp;lang=en"/);
+  assert.match(link('http://example.org/a'), /rel="noopener noreferrer"/);
+  assert.ok(html.includes('${articleLink(u)}'), 'GDELT renderer uses the validated helper');
+});
+
+test('country legend escapes feed-derived keys, labels and count values', () => {
+  assert.ok(html.includes('data-k="${esc(k)}"'));
+  assert.ok(html.includes('${esc(NM[k] || k)}'));
+  assert.ok(html.includes('${safeCount(o[k])}'));
+  const countLine = html.split('\n').find(s => s.trim().startsWith('const safeCount ='));
+  assert.ok(countLine);
+  const count = vm.runInNewContext(countLine + '\nsafeCount');
+  assert.equal(count(1234), '1,234');
+  assert.equal(count('<img src=x onerror=alert(1)>'), '0');
+  assert.equal(count(Infinity), '0');
+});
+
+test('country card escapes external zone metadata and ship date', () => {
+  const line = html.split('\n').find(s => s.includes("$('cardD').innerHTML = `실시간 배"));
+  assert.ok(line, 'country card renderer exists');
+  const match = line.match(/innerHTML = (\x60[^\x60]*\x60);/);
+  assert.ok(match, 'country card template found');
+  const output = vm.runInNewContext(match[1], {
+    esc: escapeHtml, lv: 1, zn: [{ id: hostile, valid_until: hostile }],
+    ships: { date_range: [hostile] }, last: null, kstL: () => '21:00'
+  });
+  assertHostileEscaped(output);
+});
