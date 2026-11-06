@@ -1,31 +1,45 @@
-# MONEY TRACKER: US command access-control requirement
+# MONEY TRACKER — US access boundary and release gate
 
-Status: **NOT SECURE / NOT ENFORCED** as of 2026-10-27.
+**Reviewed: 2026-11-03 KST. Enforcement status: NOT VERIFIED / NOT PRIVATE.**
 
-## Required policy
+GitHub reports `91cleaner/money-tracker` visibility as **public**. Its GitHub Pages content is publicly reachable; a hidden navigation link, `noindex`, a client-side password, a GitHub OAuth button, or an IP allowlist in browser code cannot make those files private. This document is an access **requirement**, not evidence of deployed protection.
 
-- Public: entry screen (`index.html`), Korean command (`national.html`), their specifically public assets.
-- Private: American command (`usa-command.html`), global research engine, privileged APIs, related assets and admin routes.
-- Allowed principals: one operator, on the operator's Windows PC and personal phone. Identity authentication is mandatory; optionally require enrolled device posture. Do not use IP geoblocking alone (mobile IP changes; VPNs evade region blocks).
-- Deny all anonymous users, including anyone knowing the direct URL or requesting static JavaScript, JSON, service workers, or source maps.
-- Neither a JavaScript PIN prompt nor hidden entry button is a security boundary.
+## Resolve the two different meanings of “US private”
 
-## Current blocking issue
+The product has two separate surfaces. Do not use the word “private” for both:
 
-The site is served from `https://91cleaner.github.io/money-tracker/`. GitHub Pages is publicly reachable even if its source repository is private, except for enterprise-specific private Pages hosting. The US HTML and script files are presently public by direct URL. **Do not claim 'owner-only' until server-side authorization is verified.**
+| Surface | Current classification / requirement | What to verify |
+| --- | --- | --- |
+| Public entry, Korean pages and public-source research (including any US/World/SkySea files still on GitHub Pages) | **PUBLIC**. This matches `docs/public-ui-private-data-policy.md`; these files must contain no privileged records or secrets. | Anonymous direct URL access is expected; review the public artifact allowlist and data fields. |
+| Owner-only US **admin/command** functions, private research notes, credentials and privileged API responses | **PROTECTED TARGET, NOT YET CERTIFIED**. The owner wants access from their Windows PC and phone only. | Every private HTML, JS, JSON, API and export route must be denied before authentication and authorized on the server after authentication. |
 
-## Recommended protected deployment
+**Unresolved product decision:** If *all* US research pages, not only admin/privileged functions, must be owner-only, they must be removed from the public Pages artifact **and** served behind the protected hostname. Until that migration is completed and tested, the public US pages remain public regardless of the intended label. Do not silently treat the public research surface as protected.
 
-1. Create a private deployment target for the US command using Cloudflare Pages with Cloudflare Access or an equivalent access-controlled server. The GitHub repository can remain private.
-2. Configure the entire US site hostname to require an identity policy permitting ONLY the operator's verified email (OTP or passkey backed identity); enable 2FA and short sessions, and optionally require known devices.
-3. Build/deploy only the private US command and dependencies to that target. Do not expose those files through public GitHub Pages, including `usa-command.html`, `us.html`, `world-intelligence/`, JavaScript query engines, JSON feeds or source maps. Public Pages deployment should use an explicit allowlist of public files. Do not point a Cloudflare Access-protected custom URL at a still-public GitHub Pages upstream route.
-4. Change the US entry link on the public entrance to the protected hostname. Korean entry remains public. Keep a user-visible "관리자 전용" label, but rely on server-side authentication rather than the label.
-5. Verify unauthenticated access to **every** US route returns 401/403 or an authentication challenge. Verify authenticated access works from the operator's PC and phone; verify a third-party browser cannot retrieve HTML, JS, JSON, or API responses. Verify legacy GitHub Pages US paths return 404.
-6. If storing market-data keys or AI credentials, keep them server-side and never bundle them into public JavaScript.
+`docs/owner-only-access-gate.md` describes the desired protected rollout; `docs/public-ui-private-data-policy.md` describes what may remain public. The older blanket “US HTML is private” statement is a **target**, not a statement about current deployment.
 
-## Deployment gate
+## Owner-only implementation requirements (deployment owner)
 
-US_PRIVATE_ENFORCED = false
-Do not mark this true without observing the access tests above.
+1. Deploy the privileged command surface to a separate authenticated host (for example, Cloudflare Access + Worker). Permit only the owner's verified identity; use MFA, short sessions and optionally enrolled-device posture. Identity alone is **not** proof that access is limited to exactly two devices.
+2. Apply the same server-side policy to **all** protected HTML, JS, JSON, API, image, source-map, service-worker and export paths. Validate the Access JWT's signature, issuer, audience and expiration server-side; reject missing or invalid credentials before reading private data. Never trust a browser flag or CORS as authentication.
+3. Keep privileged data in a server-side store. Explicitly allowlist public fields. Never ship private data, API keys or owner annotations in GitHub commits, Pages artifacts, JS bundles, build logs or public snapshots. Changing repository visibility later does **not** retract already published Pages content or commit history.
+4. Decide and document whether the public US research UI remains public. If it must be private, remove *every* corresponding public Pages route and dependency, not only the landing-page link; point the US entry at the protected hostname **only after** the new deployment works.
+5. Verify GitHub Actions success, the exact deployed commit/artifact, and the real production URLs **separately**. A green build or a working OAuth login is not a verified access boundary.
 
-Official reference: https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site
+## Mandatory release checks (record HTTP status and final URL)
+
+- Anonymous/incognito: direct protected page, static JS, JSON, API, export and guessed deep links must return 401/403 or an Access login challenge **without privileged bytes**.
+- Allowed owner: Windows browser and phone can authenticate, open the command room and load protected API data.
+- Unauthorized identity: another account is denied on every protected path, including direct file URLs.
+- Expired/revoked session: private content cannot be fetched again; test logout and token expiry.
+- Public GitHub Pages: inspect direct legacy US routes and source artifacts. If all-US-private was chosen, these routes must no longer expose the private app (404 or a non-sensitive public stub). If public research was chosen, its data must be explicitly non-secret and its status must be labeled **public**.
+- Verify that the public repo and prior Git history do not contain credentials or private assets. Any exposed secret requires rotation; simply deleting a file in a later commit is insufficient.
+
+## Reporting contract
+
+Until every applicable negative and positive test passes against the **actual deployed hostname**, report:
+- Repository: **PUBLIC**.
+- Owner-only US command: **NOT VERIFIED** (do not claim device-only enforcement).
+- Public House PTR disclosures: **delayed filings, not real-time executed-trade data**.
+- Generative AI analysis: **NOT CONNECTED** unless a production backend is independently verified.
+
+**No authentication, hosting, repository-visibility, Pages or Cloudflare settings were changed by this documentation update.** Owner approval is required before merging or changing access behavior.
