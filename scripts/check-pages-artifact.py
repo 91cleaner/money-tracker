@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Check generated GitHub Pages artifact for expected public files."""
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import json
 import sys
@@ -57,6 +57,10 @@ try:
     created = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
     if created.tzinfo is None or created.utcoffset() is None:
         raise ValueError("created_at must include a timezone")
+    # A future-dated collection can falsely appear fresher than the source.
+    # Allow minor clock skew, but never publish implausible future timestamps.
+    if created > datetime.now(timezone.utc) + timedelta(minutes=10):
+        raise ValueError("created_at is in the future")
     collectors = status.get("collectors")
     if not isinstance(collectors, dict):
         raise ValueError("collectors must be an object")
