@@ -235,7 +235,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
       const [a, lo, k] = inView[i]; const [hex, fl, ty, la, , tr, alt, gs, cc, mil] = a; const isM = !!(mil && $('milTg').checked); const col = isM ? MILC : colorOf(k);
       const tp = trk && trk.p[hex]; if (tp && nT < capT) { nT++; trailRec.push({ live: false, col, pts: tp.map((q) => [q[1], near(q[2])]).concat([[la, lo]]) }); }
       const name = fl || String(hex).toUpperCase();
-      planeRec.push({ la, lo, tr: tr || 0, gs: gs || 0, move: gs > 30, mil: isM ? 1 : 0, col, kind: 'pl', key: String(hex), tip: esc(name) + (mil ? ' · 군용기 표시' : ''), open: () => { $('info').innerHTML = `<div class="h">${name}</div>등록 나라: ${NM[cc] || '기타'}${mil ? '<br>군용기 표시가 있는 신호예요' : ''}<br>고도: ${fmt(alt)}${alt == null ? '' : ' ft'}<br>속도: ${fmt(gs)}${gs == null ? '' : ' kt'} · 방향 ${tr || 0}도<br>기체: ${ty || '정보 없음'} · 고유 번호 ${String(hex).toUpperCase()}`; } });
+      planeRec.push({ la, lo, tr: tr || 0, gs: gs || 0, move: gs > 30, mil: isM ? 1 : 0, col, kind: 'pl', key: String(hex), tip: esc(name) + (mil ? ' · 군용기 표시' : ''), open: () => { $('info').innerHTML = `<div class="h">${esc(name)}</div>등록 나라: ${NM[cc] || '기타'}${mil ? '<br>군용기 표시가 있는 신호예요' : ''}<br>고도: ${esc(fmt(alt))}${alt == null ? '' : ' ft'}<br>속도: ${esc(fmt(gs))}${gs == null ? '' : ' kt'} · 방향 ${esc(tr || 0)}도<br>기체: ${esc(ty || '정보 없음')} · 고유 번호 ${esc(String(hex).toUpperCase())}`; } });
     }
     if (note) note.textContent = step > 1 ? `지금 화면에 ${inView.length.toLocaleString('ko-KR')}대가 있어서 ${step}대 중 1대만 그려요. 확대하면 다 보여요.` : '';
     perf.planes = performance.now() - t0; schedule(true, true);
@@ -267,7 +267,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
       for (const [mm, la, lo0, hd, sog, nm, cc, ty, hm, tl] of live.ships) {
         const k = keyOf(cc, legS); if (off.has(k)) continue; const lo = near(lo0); if (!b.contains([la, lo])) continue; const col = colorOf(k);
         if (tl && tl.length) trailRec.push({ live: true, col, pts: tl.map((q) => [q[0], near(q[1])]).concat([[la, lo]]) });
-        liveRec.push({ la, lo, tr: hd || 0, gs: sog || 0, move: sog > .5 && sog < 40, mil: 0, col, kind: 'sh', open: () => { $('info').innerHTML = `<div class="h">${nm || '이름 없는 배'}</div>나라: ${cc === 'XX' ? '나라 기록 없음' : NM[cc] || '기타 나라'}<br>종류: ${ty}<br>속도: ${sog} kt · 방향 ${hd}도<br>수신: ${kstL(live.updated)} 무렵 (한국 시간)<br>출처: AISStream 실시간 배`; } });
+        liveRec.push({ la, lo, tr: hd || 0, gs: sog || 0, move: sog > .5 && sog < 40, mil: 0, col, kind: 'sh', open: () => { $('info').innerHTML = `<div class="h">${esc(nm || '이름 없는 배')}</div>나라: ${cc === 'XX' ? '나라 기록 없음' : NM[cc] || '기타 나라'}<br>종류: ${esc(ty)}<br>속도: ${esc(sog)} kt · 방향 ${esc(hd)}도<br>수신: ${kstL(live.updated)} 무렵 (한국 시간)<br>출처: AISStream 실시간 배`; } });
       }
     }
     perf.ships = performance.now() - t0; schedule(true, true);
@@ -363,7 +363,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
     return ix.map((e) => [sc(e), e]).filter(([v]) => v < 9).sort((a, b) => a[0] - b[0] || a[1].ko.localeCompare(b[1].ko, 'ko')).slice(0, 6).map(([, e]) => e); };
   const pick = (e) => { $('qr').hidden = true; $('q').value = e.ko; $('q').blur(); const c = e.b.getCenter(); const lab = (window.mtLbl || []).find((r) => r[1] === e.ko);
     const z = Math.min(5, Math.max(map.getMinZoom(), map.getBoundsZoom(e.b, false, [40, 40]))); map.flyTo(lab ? [lab[2], lab[3]] : c, z, { duration: .9 }); window.mtCard(lab ? lab[2] : c.lat, lab ? lab[3] : c.lng, e.ko, e.cc); };
-  $('q').addEventListener('input', () => { const r = find($('q').value.trim()); $('qr').innerHTML = r.length ? r.map((e, i) => `<button type="button" data-i="${i}">${e.ko} <span style="opacity:.6">${e.cc}</span></button>`).join('') : '<div class="sub" style="padding:10px">찾는 나라가 없어요</div>'; $('qr').hidden = !$('q').value.trim(); $('qr').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => pick(r[+b.dataset.i]))); });
+  $('q').addEventListener('input', () => { const r = find($('q').value.trim()); $('qr').innerHTML = r.length ? r.map((e, i) => `<button type="button" data-i="${i}">${esc(e.ko)} <span style="opacity:.6">${esc(e.cc)}</span></button>`).join('') : '<div class="sub" style="padding:10px">찾는 나라가 없어요</div>'; $('qr').hidden = !$('q').value.trim(); $('qr').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => pick(r[+b.dataset.i]))); });
   $('q').addEventListener('keydown', (ev2) => { if (ev2.key === 'Enter') { const r = find($('q').value.trim()); if (r[0]) pick(r[0]); } });
   $('qx').addEventListener('click', () => { $('q').value = ''; $('qr').hidden = true; });
   $('cardX').addEventListener('click', () => { $('card').hidden = true; }); 
