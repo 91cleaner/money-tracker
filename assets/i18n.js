@@ -57,7 +57,7 @@
   var EXACT = {
     "의원 이름 입력": "Enter member name", "의원 이름": "Member name", "업종 히트맵": "Sector heatmap", "언어 선택": "Language",
     "한눈에 보기": "At a glance", "주가 기록(종가)": "Closing price record", "국회에 올라온 법안": "Bill filed in the National Assembly", "대만 정부 발표": "Taiwan government announcement", "중국 정부 발표": "Chinese government announcement", "일본 정부 발표": "Japanese government announcement",
-    "의원": "Member", "종목": "Asset", "구분": "Type", "신고일": "Filed", "거래일": "Traded", "금액": "Amount", "금액 구간": "Amount range", "신고까지": "Lag", "원문": "Source",
+    "의원": "Member", "종목": "Asset", "구분": "Type", "신고일": "Filing date", "거래일": "Reported trade date", "금액": "Amount", "금액 구간": "Amount range", "신고까지": "Lag", "원문": "Source",
     "티커": "Ticker", "회사": "Company", "종가": "Close", "1일": "1D", "1주": "1W", "1달": "1M", "최근 21거래일": "Past 21 trading days", "최근 흐름": "Trend", "열기": "Open", "연초 대비": "YTD",
     "구입": "Buy", "처분": "Sale", "교환": "Exchange", "구입(P)": "Purchase (P)", "처분(S)": "Sale (S)", "교환(E)": "Exchange (E)",
     "법안": "Bills", "규제": "Regulation", "위원회": "Committee", "연방 계약": "Federal contracts", "로비": "Lobbying", "후원": "PAC", "의원 거래": "Reported member transactions", "임원 거래": "Reported insider transactions", "보조금·대출": "Grants & loans", "리콜": "Recalls", "발표 전 거래": "Reported transactions dated before announcements", "본사·공장": "HQ & plants", "기타 지표": "Other indicators",
@@ -69,13 +69,13 @@
     "미국주식추적단 — 회사 상세": "MONEY TRACKER — Company details", "미국주식추적단 — 미국 회사 파일": "MONEY TRACKER — US Company File",
     "아래 링크": "Link below", "내부 데이터 분류": "Internal data classification", "유형(신고대로)": "Type (as filed)", "당-주": "Party-State", "법안 상세 페이지 ›": "Bill detail page ›", "수정종가": "Adjusted close", "기준": "Basis",
     // NVDA hand-written route stops (data/us/ticker-routes.json)
-    "본사 위치 확인됨": "HQ location confirmed", "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 산타클라라임.": "Data shows the business address in SEC filings is Santa Clara, California.",
+    "본사 위치 확인됨": "SEC-reported business address", "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 산타클라라임.": "Data shows the business address in SEC filings is Santa Clara, California.",
     "칩 생산은 외부 파운드리 의존": "Chip production relies on external foundries", "10-K에서 자체 공장 없이 TSMC·삼성전자 등 파운드리에 칩 생산을 맡긴다고 밝힘.": "The 10-K says it has no fabs of its own and outsources chip production to foundries such as TSMC and Samsung Electronics.",
     "중국 등 수출 허가 요건 공시": "Disclosure of export license requirement for China and others", "반도체 지원법 제정": "CHIPS Act enacted", "CHIPS and Science Act(H.R.4346, 117대 의회)가 법으로 제정됨. 업계 전반 대상 법률임.": "The CHIPS and Science Act (H.R.4346, 117th Congress) was enacted into law. It applies to the whole industry.",
     "미 정부가 H20 칩을 중국 등(홍콩·마카오, D:5 국가 포함)으로 수출할 때 허가가 필요하다고 2025-04-09 통보했다고 8-K로 공시함(제출 2025-04-15).": "The 8-K discloses that on Apr 9, 2025 the US government notified the company that a license is required to export H20 chips to China and others (incl. Hong Kong, Macau and D:5 countries) (filed Apr 15, 2025).",
     // MSFT / META route stops (data/us/ticker-routes.json)
     "미국 워싱턴주 레드먼드": "Redmond, Washington, USA", "미국 캘리포니아 멘로파크": "Menlo Park, California, USA", "미국 워싱턴 D.C.(의회)": "Washington, D.C. (U.S. Congress)", "미국 워싱턴 D.C.": "Washington, D.C., USA",
-    "MS 본사 위치 확인됨": "Microsoft HQ location confirmed", "데이터상 SEC 제출 서류의 사업장 주소가 워싱턴주 레드먼드(One Microsoft Way)임.": "Data shows the business address in SEC filings is Redmond, Washington (One Microsoft Way).",
+    "MS 본사 위치 확인됨": "Microsoft business address (SEC filing)", "데이터상 SEC 제출 서류의 사업장 주소가 워싱턴주 레드먼드(One Microsoft Way)임.": "Data shows the business address in SEC filings is Redmond, Washington (One Microsoft Way).",
     "MS 연방 계약 약 11억 달러": "Microsoft federal contracts: approx. $1.10B", "데이터상 2024-10-01~2026-10-28 USAspending 연방 계약 합계 약 11.0억 달러. 최다 발주 기관은 국방부(약 8.4억 달러).": "Data shows approx. $1.10B in federal contracts on USAspending from Oct 1, 2024 to Oct 28, 2026. Top awarding agency: Department of Defense (approx. $838M).",
     "MS 로비 공시 148건": "Microsoft: 148 lobbying filings", "데이터상 2025~2026 MS 로비 공시(LDA) 148건, 보고 금액 합계 약 2,322만 달러.": "Data shows 148 Microsoft lobbying disclosure (LDA) filings in 2025–2026, reported total approx. $23.2M.",
     "메타 본사 위치 확인됨": "Meta HQ location confirmed", "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 멘로파크(1 Meta Way)임.": "Data shows the business address in SEC filings is Menlo Park, California (1 Meta Way).",
