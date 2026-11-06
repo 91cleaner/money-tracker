@@ -38,6 +38,8 @@ jobs:
           node-version: '22'
       - name: World question data retry and cache regression
         run: node --test tests/world-question-cache.test.cjs
+      - name: World question response-order regression
+        run: node --test tests/world-question-race.test.cjs
       - name: Verify syntax, map flow, satellite layers, and honest data status
         run: node --test tests/usa-map-smoke.test.cjs
       - name: Sector-factor map and official market calendar integrity
