@@ -11,7 +11,12 @@ var st=document.createElement('style');st.textContent=
 '#usdcPanel label.chk{display:flex;align-items:center;gap:6px;margin-top:6px;cursor:pointer}'+
 '#usdcLeg{margin-top:6px;background:rgba(255,255,255,.06);border-radius:8px;padding:6px 8px;line-height:1.5}'+
 '#usdcLeg i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:4px;vertical-align:-1px}'+
-'#usdcLeg i.dot{border-radius:50%;background:'+CRIME_COL+';border:1px solid #fff}'+
+'#usdcLeg i.dot{border-radius:50%;background:'+CRIME_COL+';box-sizing:border-box}'+
+'#usdcLeg i.dot.d{border:3px solid #1f4e8c}'+
+'#usdcLeg i.dot.r{border:3px solid #b03a2e}'+
+'#usdcLeg i.dot.i{border:3px solid #888}'+
+'.usdcLab{background:transparent;border:0}'+
+'.usdcLab span{display:block;width:16px;height:16px;line-height:16px;text-align:center;font:800 11px/16px system-ui,sans-serif;color:#fff;text-shadow:0 0 2px #000,0 1px 2px #000;-webkit-text-stroke:0.4px #000}'+
 '#usdcSum{margin-top:6px;background:rgba(255,255,255,.06);border-radius:8px;padding:6px 8px}'+
 '#usdcSum a,#usdcLeg a{color:#9cf}'+
 '#usdcCard{position:fixed;left:12px;bottom:70px;z-index:1200;width:300px;max-width:calc(100vw - 24px);max-height:50vh;overflow:auto;background:#fff;color:#111;border-radius:12px;padding:10px 12px;font:13px/1.5 system-ui,sans-serif;box-shadow:0 4px 18px rgba(0,0,0,.4)}'+
@@ -75,10 +80,13 @@ function cityCard(c,showRace){
 function legend(){
   var el=document.getElementById('usdcLeg');el.hidden=false;
   el.innerHTML='<b data-noi18n="1">'+T('범례','Legend')+'</b><br>'+
-    '<i style="background:#1f4e8c"></i><span data-noi18n="1">'+T('지구 칠: 민주당','District fill: Democratic')+'</span> · '+
-    '<i style="background:#b03a2e"></i><span data-noi18n="1">'+T('공화당','Republican')+'</span> · '+
-    '<i style="background:#666"></i><span data-noi18n="1">'+T('공석·기타','Vacant/other')+'</span><br>'+
-    '<i class="dot"></i><span data-noi18n="1">'+T('주황 원: 폭력범죄 / 10만 명 (FBI UCR 2024). 크기 = 비율. 정당 색 아님.','Orange circle: violent crime / 100k (FBI UCR 2024). Size = rate. Not a party colour.')+'</span>';
+    '<div data-noi18n="1"><b>'+T('하원 지구','House districts')+'</b> — '+
+    '<i style="background:#1f4e8c"></i>'+T('칠: 민주당','fill: Democratic')+' · '+
+    '<i style="background:#b03a2e"></i>'+T('공화당','Republican')+' · '+
+    '<i style="background:#666"></i>'+T('공석·기타','Vacant/other')+'</div>'+
+    '<div style="margin-top:4px" data-noi18n="1"><b>'+T('도시 범죄율','City crime rates')+'</b> — '+
+    '<i class="dot d"></i><i class="dot r"></i> '+T('주황 채움: 폭력범죄 / 10만 명 (FBI UCR 2024). 크기 = 비율.','Orange fill: violent crime / 100k (FBI UCR 2024). Size = rate.')+'</div>'+
+    '<div data-noi18n="1">'+T('테두리 색·글자 D/R: 시장 정당 (파랑 D, 빨강 R, 회색 무소속). 지구 칠과 다름.','Ring colour and D/R letter: mayor party (blue D, red R, grey independent). Separate from district fill.')+'</div>';
 }
 function summary(){
   if(!CT)return;var s=CT.summary,el=document.getElementById('usdcSum');
@@ -114,8 +122,13 @@ function drawCities(race){
     if(race){
       L.marker([c.la,c.lo],{pane:'usdc',icon:L.divIcon({className:'',html:'<div class="usdcPie" style="background:'+pie(c)+';transform:translate(-50%,-50%)"></div>',iconSize:[0,0]})}).on('click',function(){cityCard(c,true)}).addTo(ly);
     }else{
-      var r=6+Math.sqrt(c.violent)/4;
-      L.circleMarker([c.la,c.lo],{pane:'usdc',radius:Math.min(22,r),color:'#fff',weight:1.2,fillColor:CRIME_COL,fillOpacity:.8}).on('click',function(){cityCard(c,false)}).addTo(ly);
+      var r=Math.min(22,6+Math.sqrt(c.violent)/4);
+      var stroke=C[c.mparty]||'#888';
+      var letter=(c.mparty==='D'||c.mparty==='R')?c.mparty:(c.mparty==='I'?'I':'');
+      L.circleMarker([c.la,c.lo],{pane:'usdc',radius:r,color:stroke,weight:3.5,fillColor:CRIME_COL,fillOpacity:.85}).on('click',function(){cityCard(c,false)}).addTo(ly);
+      if(letter){
+        L.marker([c.la,c.lo],{pane:'usdc',interactive:false,keyboard:false,icon:L.divIcon({className:'usdcLab',html:'<span style="color:#fff">'+letter+'</span>',iconSize:[16,16],iconAnchor:[8,8]})}).addTo(ly);
+      }
     }
   });
   ly.addTo(m);m.setView([38,-97],window.innerWidth<600?3:4);summary()}
