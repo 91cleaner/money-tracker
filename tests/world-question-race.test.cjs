@@ -87,6 +87,7 @@ test('async renderers and manual map navigation honor question generation', () =
   assert.match(html, /async function mtIntentCard\(q,isCurrent\)/);
   assert.match(html, /let a=await A\.get\(pl\.symbol,pl\.intent,pl\.period\);if\(!isCurrent\(\)\|\|!a\)return false/);
   assert.match(html, /if\(c&&isCurrent\(\)\)\{window\.MTMood\.render/);
+  assert.match(html, /window\.MTMood\.show\(moodSlot,/);
   assert.match(html, /MTOpinions\.render\(opinionSlot,/);
   assert.match(html, /function start\(c\)\{\+\+mtQueryEpoch;/);
   assert.match(html, /\$\('world'\)\.onclick=\(\)=>\{\+\+mtQueryEpoch;/);
