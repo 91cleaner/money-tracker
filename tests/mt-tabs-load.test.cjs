@@ -14,18 +14,20 @@ const daily = (url) => url.includes('/daily/index.json')
 
 function mount(fetcher, options = {}) {
   const buttons = [];
-  const todayNode = options.today ? { className: '', attached: true } : null;
+  const todayNode = options.today ? { className: '', attached: true, inPanel: false } : null;
+  let todayAvailable = !!(todayNode && !options.delayTodayRetry);
+  let lateTodayTimer = null;
   const panel = {
     html: '', retry: null,
     set innerHTML(value) {
       this.html = value;
-      if (todayNode) todayNode.attached = false;
+      if (todayNode && todayNode.inPanel) { todayNode.attached = false; todayNode.inPanel = false; }
       this.retry = value.includes('id="tbRetry"') ? {} : null;
     },
     get innerHTML() { return this.html; },
     querySelector(selector) { return selector === '#tbRetry' ? this.retry : null; },
     replaceChildren(child) {
-      if (todayNode && child === todayNode) { todayNode.attached = true; this.html = 'TODAY_WIDGET'; }
+      if (todayNode && child === todayNode) { todayNode.attached = true; todayNode.inPanel = true; this.html = 'TODAY_WIDGET'; }
       this.retry = null;
     }
   };
@@ -33,7 +35,7 @@ function mount(fetcher, options = {}) {
   const hero = { textContent: '' };
   const root = {
     setAttribute() {},
-    contains(element) { return !!(todayNode && element === todayNode && todayNode.attached); },
+    contains(element) { return !!(todayNode && element === todayNode && todayNode.attached && todayNode.inPanel); },
     querySelector(selector) {
       if (selector === '#mtTabBar') return bar;
       if (selector === '#tbPanel') return panel;
@@ -49,17 +51,25 @@ function mount(fetcher, options = {}) {
       if (tag === 'button') return { dataset: {}, setAttribute() {} };
       return { textContent: '' };
     },
-    getElementById(id) { return id === 'mtToday' && todayNode && todayNode.attached ? todayNode : null; }
+    getElementById(id) { return id === 'mtToday' && todayNode && todayNode.attached && todayAvailable ? todayNode : null; }
   };
   vm.runInNewContext(source, {
     window: { MTI18N: { isEn: false } }, document,
     location: { search: '' }, URLSearchParams, URL,
     matchMedia: () => ({ matches: false }),
-    setInterval() {}, setTimeout(callback) { callback(); },
+    setInterval() {}, setTimeout(callback, delay) {
+      if (options.delayTodayRetry && delay === 2500) { lateTodayTimer = callback; return; }
+      callback();
+    },
     addEventListener() {}, fetch: fetcher
   }, { filename: 'mt-tabs.js' });
   return {
     panel, hero,
+    revealToday() {
+      assert.ok(todayNode && lateTodayTimer, 'late Today widget and boot retry are configured');
+      todayAvailable = true;
+      lateTodayTimer();
+    },
     click(id) {
       const button = buttons.find((b) => b.dataset.t === id);
       assert.ok(button, 'tab ' + id + ' exists');
@@ -266,4 +276,23 @@ test('House PTR original links accept only the official Clerk HTTPS origin', asy
   assert.match(app.panel.html, /<div class="tbRow"><span class="l">Fake/);
   assert.match(app.panel.html, /href="https:\/\/disclosures-clerk\.house\.gov\/public_disc\/ptr-pdfs\/2026\/example\.pdf"/);
   assert.equal((app.panel.html.match(/<a class="tbRow" href=/g) || []).length, 1);
+});
+
+
+test('late Today widget must not override a tab chosen by the user', async () => {
+  const app = mount(async (url) => daily(url), { today: true, delayTodayRetry: true });
+  await app.click('find');
+  assert.match(app.panel.html, /많이 찾는 종목/);
+  app.revealToday(); // simulates the delayed 2.5-second boot check
+  assert.match(app.panel.html, /많이 찾는 종목/, 'late widget must not force the Today tab');
+  assert.doesNotMatch(app.panel.html, /TODAY_WIDGET/);
+  await app.click('today');
+  assert.equal(app.panel.html, 'TODAY_WIDGET', 'widget is still available on explicit return');
+});
+
+test('late Today widget is restored when Today remains selected', async () => {
+  const app = mount(async (url) => daily(url), { today: true, delayTodayRetry: true });
+  assert.match(app.panel.html, /오늘의 기록을 불러오는 중/);
+  app.revealToday();
+  assert.equal(app.panel.html, 'TODAY_WIDGET');
 });
