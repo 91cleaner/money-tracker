@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>지상 최대의 역사 기록 관제실</title>
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<script src="js/i18n.js"></script>
+<style>
+:root{--g:#5dff9e;--bg:#020a06;--line:#2bff8855;--sw:360px}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#000;color:#e8fff0;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+#map{position:fixed;left:0;top:0;bottom:0;right:var(--sw);background:#03080c}
+#side{position:fixed;right:0;top:0;bottom:0;width:var(--sw);background:var(--bg);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:10px;padding:14px;overflow:auto;z-index:1000}
+h1{font-size:18px;margin:0;color:var(--g);letter-spacing:.04em}
+.sub{font-size:12px;opacity:.75;margin-top:2px}
+.hero{border:1px solid #1f4a33;border-radius:14px;padding:12px 14px;background:#04140b}
+.hero .k{font-size:12px;opacity:.8}.hero .n{font-size:44px;font-weight:800;line-height:1.05;color:var(--g)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.cc{border:1px solid #1f4a33;border-radius:10px;padding:6px 6px 5px;background:#03100a;color:inherit;text-align:left;font:inherit;cursor:pointer}
+.cc .d{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:1px}
+.cc .l{font-size:11px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cc .v{font-size:18px;font-weight:800;line-height:1.1;white-space:nowrap}.cc{min-width:0}
+.cc.off{opacity:.35}
+.hero.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hero.two .n{font-size:28px;white-space:nowrap}
+.tg{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:14px}.tg label{display:flex;align-items:center;gap:6px;white-space:nowrap;min-height:30px}.tg input{width:18px;height:18px;accent-color:#5dff9e}
+.gl{font-size:12px;opacity:.75;margin-bottom:-4px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid #2f7a4c;background:#03100a;color:#d8f5e3;border-radius:999px;padding:9px 14px;font:600 13px system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.btn.prime{background:var(--g);color:#02110a;border-color:var(--g);font-weight:800}
+#info{border:1px solid #1f4a33;border-left:3px solid var(--g);border-radius:10px;padding:10px 12px;background:#04140b;font-size:14px;line-height:1.5;min-height:60px}
+#card .evb{grid-column:1/-1;font-size:14px;line-height:1.6;border:0!important;background:none!important}#card .evb a,#info a{color:#7fd4ff}.mtTip{font:600 12px system-ui,sans-serif}
+#info .h{font-weight:800;font-size:16px}
+.ship{display:flex;align-items:flex-start;gap:8px;font-size:13px;opacity:.85;line-height:1.4}
+.ship input{width:18px;height:18px}
+details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
+.pl{width:22px;height:22px;margin:-11px 0 0 -11px}
+.sh{width:18px;height:18px;margin:-9px 0 0 -9px}.sh svg{width:18px;height:18px;filter:drop-shadow(0 0 2px #000)}.sh.g{opacity:.8}.sh.g svg{width:14px;height:14px}.pl svg{width:22px;height:22px;filter:drop-shadow(0 0 2px #000)}
+.leaflet-container{background:#03080c}
+@media (max-width:760px) and (orientation:portrait){
+ :root{--sw:0px}
+ #map{right:0;bottom:44dvh}
+ #side{top:auto;left:0;width:auto;height:44dvh;border-left:0;border-top:1px solid var(--line);border-radius:14px 14px 0 0;padding:10px 12px}
+ .hero .n,.hero.two .n{font-size:26px}.cc .v{font-size:17px}
+}
+@media (orientation:landscape) and (max-height:500px){:root{--sw:min(340px,44vw)}.hero .n{font-size:30px}#side{gap:6px;padding:8px}}
+#card{position:fixed;top:0;right:0;width:var(--sw);max-height:100dvh;z-index:3000;padding:8px;box-sizing:border-box}#card[hidden]{display:none}
+.cin{background:#04140b;border:1px solid #2e6b4a;border-radius:16px;padding:14px;max-height:calc(100dvh - 16px);overflow:auto;position:relative;box-shadow:0 8px 30px #000}
+@media (max-width:760px) and (orientation:portrait){#card{top:auto;bottom:0;left:0;width:auto;padding:0}.cin{max-height:40dvh;border-radius:16px 16px 0 0}.cg .v{font-size:22px}.ct{font-size:20px;margin-bottom:8px}}
+#srch{position:relative}#q{width:100%;box-sizing:border-box;height:44px;border-radius:10px;border:1px solid #2e6b4a;background:#04140b;color:#e8fff0;font-size:16px;padding:0 56px 0 12px}
+#qx{position:absolute;right:4px;top:4px;height:36px;min-width:48px;border-radius:8px;border:1px solid #2e6b4a;background:#0b2a19;color:#e8fff0;font-size:15px;font-weight:700}
+#qr{margin-top:4px;border:1px solid #1f4a33;border-radius:10px;overflow:auto;max-height:min(40dvh,260px)}#qr[hidden]{display:none}#qr button{display:block;width:100%;text-align:left;min-height:44px;padding:0 12px;background:#04140b;color:#e8fff0;border:0;border-bottom:1px solid #12301f;font-size:16px}#qr button:last-child{border-bottom:0}
+.cx{position:absolute;top:10px;right:10px;min-width:64px;height:48px;border-radius:12px;border:1px solid #2e6b4a;background:#0b2a19;color:#e8fff0;font-size:17px;font-weight:800}
+.ct{font-size:24px;font-weight:800;margin:6px 80px 12px 0}.cg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cg>div{border:1px solid #1f4a33;border-radius:10px;padding:8px 10px}.cg .l{font-size:12px;opacity:.8}.cg .v{font-size:28px;font-weight:800;color:#5dff9e;white-space:nowrap}
+.key svg{vertical-align:-2px}
+</style></head>
+<body>
+<div id="map" aria-label="지도"></div>
+<aside id="side">
+ <div><h1>지상 최대의 역사 기록 관제실</h1><div class="sub" id="upd">불러오는 중이에요</div></div>
+ <div class="hero two"><div><div class="k">비행기 (지금)</div><div class="n" id="tot">-</div></div><div><div class="k">배 (하루 기록)</div><div class="n" id="stot">-</div></div></div>
+ <div class="tg"><label><input type="checkbox" id="planeTg" checked> 비행기</label><label><input type="checkbox" id="shipTg" checked> 배</label><label><input type="checkbox" id="cableTg"> 해저 케이블</label><label><input type="checkbox" id="liveTg" checked> 실시간 배</label><label><input type="checkbox" id="milTg" checked> 군용기 따로 색칠</label></div>
+ <div id="srch"><input id="q" type="search" placeholder="나라 찾기 (예: 미국, USA, US)" autocomplete="off" aria-label="나라 찾기"><button type="button" id="qx" aria-label="지우기">닫기</button><div id="qr" hidden></div></div>
+ <div class="gl">더 보기</div><div class="tg"><label><input type="checkbox" class="ev" id="confTg"> 분쟁 사건</label><label><input type="checkbox" class="ev" id="gpsTg"> GPS 전파 방해 구역</label><label><input type="checkbox" class="ev" id="zoneTg"> 비행 회피 구역</label><label><input type="checkbox" class="ev" id="fireTg"> 위성 화재</label><label><input type="checkbox" class="ev" id="quakeTg"> 지진·폭발</label></div>
+ <div class="sub" id="evNote"></div>
+ <div class="sub"><span class="key"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="#9effc0" d="M12 1.5l4 6.5v12.5l-1.5 2h-5l-1.5-2V8z"/></svg> 배</span> · <span style="color:#ff3df2">비행기</span> 군용기 · 나라 이름을 누르면 그 나라 숫자가 나와요</div>
+ <div class="gl">비행기 나라 (등록)</div><div class="grid" id="grid"></div>
+ <div class="gl">배 나라 (국기)</div><div class="grid" id="sgrid"></div>
+ <div id="scnBox"></div>
+<div id="usBox"></div>
+<div id="warBox"></div>
+<div id="hisBox"></div>
+ <div class="row"><button class="btn prime" id="all" type="button">전체 보기</button><a class="btn" href="index.html">나가기</a></div>
+ <div id="info"><span style="opacity:.7">비행기나 배 점을 누르면 자세한 사실이 나와요.</span></div>
+ <div class="sub" id="pnote"></div><div class="sub" id="shipNote"></div><div class="sub" id="liveNote"></div>
+ <details><summary>자세히 보기</summary><p>배 모양: 흰 테두리 배는 실시간 배, 작은 배는 Global Fishing Watch 하루 기록을 크게 확대했을 때 칸 안에 흩어 그린 것이라 실제 위치가 아니에요.</p>
+  <p>움직임: 지난 약 1시간(최근 6번 저장) 위치를 흐린 꼬리로 그려요. 저장 사이에는 속도와 방향으로 앞으로 옮겨 그리고(최대 15분), 새 자료가 오면 실제 위치로 돌아가요. 그래서 그림 위치는 추정이에요.</p>
+  <p>군용기: adsb.lol의 군용 표시가 있는 비행기만 따로 색칠해요. 많은 군용기는 신호를 끄고 날아서 안 보여요.</p>
+  <p>분쟁 사건: GDELT 자료예요. 최근 24시간 뉴스 기사에 나온 공격·충돌·대규모 폭력 사건을 1도 칸마다 기사 수로 세요. 기사에 나온 장소 기준이라 실제 사건 수나 위치와 다를 수 있어요.</p>
+  <p>GPS 전파 방해 구역: adsb.lol 비행기 신호 중 위치 정확도가 낮게 보고된 비행기(NACp 8 미만 또는 NIC 7 미만)가 30% 이상인 1도 칸이에요. 원인은 알 수 없어요.</p>
+  <p>비행 회피 구역: 유럽항공안전청(EASA) 분쟁 지역 안내(CZIB) 중 지금 유효한 것을 나라 단위로 칠해요. 실제 구역은 나라 일부일 수 있어요.</p>
+  <p>위성 화재: NASA FIRMS VIIRS 위성이 최근 24시간 잡은 열점을 1도 칸마다 세요. 산불, 농사 불, 공장 열도 들어가요.</p>
+  <p>지진·폭발: 미국 지질조사국(USGS) 최근 7일 규모 2.5 이상 기록이에요. 종류가 폭발이면 폭발로 보여 줘요.</p><p>흰 테두리 점은 실시간 배예요. AISStream이 10분마다 약 1분 동안 받은 배 위치이고, 바닷가 수신기 근처 배만 잡혀요. 배 이름과 나라는 배가 보낸 신호(MMSI) 기준이에요.</p>
+  <p>비행기: adsb.lol 무료 공개 자료(ODbL)예요. 전 세계를 한 번에 주는 무료 자료가 없어서, 비행기가 많은 지역을 반경 250해리씩 나눠 10분마다 저장해요. 먼 바다 위와 수신기가 없는 곳은 비어 있어요. 땅 위에 서 있는 비행기는 빼요.</p>
+  <p>비행기 나라: 고유 번호(ICAO 24비트 주소)의 나라별 배정 범위로 나눠요. 등록한 나라라서 항공사 나라와 다를 수 있어요. 신호를 끈 비행기는 안 보여요.</p>
+  <p>배: Global Fishing Watch 자료(AIS 신호)예요. 며칠 늦게 들어와서 지금 위치가 아니에요. 하루 동안 2도 칸마다 지나간 배 수를 국기별로 세요. 지구를 24칸으로 나눠 받아서, 칸 경계를 지난 배는 두 번 셀 수 있어요. 신호를 끈 배는 안 보여요.</p>
+  <p>지도: Esri, Maxar 위성 사진이에요.</p>
+ </details>
+</aside>
+<div id="card" hidden><div class="cin"><button type="button" id="cardX" class="cx" aria-label="닫기">닫기</button><div class="ct" id="cardT"></div><div class="cg" id="cardG"></div><details><summary>자세히 보기</summary><div id="cardD" class="sub"></div></details></div></div>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
+<script src="js/pacific.js"></script>
+<script src="assets/kr-basemap.js"></script>
+<script>
+(() => {
+  const NM = { US: '미국', CN: '중국', KR: '한국', KP: '북한', JP: '일본', TW: '대만', RU: '러시아', GB: '영국', DE: '독일', FR: '프랑스', IN: '인도', CA: '캐나다', AU: '호주', TR: '튀르키예', AE: '아랍에미리트', IT: '이탈리아', ES: '스페인', BR: '브라질', MX: '멕시코', SA: '사우디', PA: '파나마', LR: '라이베리아', MH: '마셜제도', HK: '홍콩', SG: '싱가포르', MT: '몰타', BS: '바하마', GR: '그리스', NO: '노르웨이', ID: '인도네시아', VN: '베트남', TH: '태국', MY: '말레이시아', PH: '필리핀', CY: '키프로스', PT: '포르투갈', DK: '덴마크', NL: '네덜란드', AR: '아르헨티나', CL: '칠레', PE: '페루', EC: '에콰도르', NZ: '뉴질랜드', SE: '스웨덴', FI: '핀란드', IS: '아이슬란드', IR: '이란', EG: '이집트', NG: '나이지리아', BD: '방글라데시', LK: '스리랑카', PK: '파키스탄', MM: '미얀마', KH: '캄보디아', AG: '앤티가바부다', VC: '세인트빈센트그레나딘', TG: '토고', CM: '카메룬', PW: '팔라우', VU: '바누아투', KI: '키리바시', FJ: '피지', BE: '벨기에', PL: '폴란드', UA: '우크라이나', HR: '크로아티아', MA: '모로코', SN: '세네갈', CO: '콜롬비아', TZ: '탄자니아', KE: '케냐', ZA: '남아프리카공화국', OM: '오만', QA: '카타르', KW: '쿠웨이트', UY: '우루과이', VE: '베네수엘라', CU: '쿠바', BZ: '벨리즈', HN: '온두라스', KM: '코모로', SL: '시에라리온', TV: '투발루', CH: '스위스', IE: '아일랜드', EE: '에스토니아', LV: '라트비아', LT: '리투아니아', GE: '조지아', IL: '이스라엘', MV: '몰디브', BN: '브루나이', PG: '파푸아뉴기니', SB: '솔로몬제도', TO: '통가', WS: '사모아', NR: '나우루', FM: '미크로네시아', MN: '몽골', MZ: '모잠비크', MG: '마다가스카르', MU: '모리셔스', SC: '세이셸', GH: '가나', CI: '코트디부아르', AO: '앙골라', NA: '나미비아', MR: '모리타니', DZ: '알제리', TN: '튀니지', LY: '리비아', RO: '루마니아', BG: '불가리아', XX: '기타' };
+  const PAL = ['#ff9f1c', '#2ee6d6', '#ff7eb6', '#a3e635', '#f97316', '#60a5fa', '#e879f9', '#facc15', '#14b8a6', '#fb7185', '#93c5fd', '#d9f99d', '#fda4af', '#67e8f9'];
+  const FIX = { US: '#ffd60a', CN: '#ff5a5a', KR: '#5dff9e', JP: '#ffffff', TW: '#4db8ff', RU: '#c77dff', KP: '#ff9f1c' };
+  const GRAY = '#8a9a90';
+  const $ = (id) => document.getElementById(id);
+  const HOME = L.latLngBounds([15, 95], [50, 150]);
+  const map = L.map('map', { zoomControl: false, minZoom: 1, maxZoom: 10, worldCopyJump: false, maxBounds: [[-85.06, -30], [85.06, 329.99]], maxBoundsViscosity: 1, zoomSnap: 0.25, preferCanvas: false });
+  window.mtMap = map; map.attributionControl.setPrefix(false); L.control.zoom({ position: 'topleft' }).addTo(map);
+  window.mtKoreaDark({ noWrap: false }).addTo(map); map.attributionControl.addAttribution('배: Global Fishing Watch, AISStream · 비행기: adsb.lol'); window.mtKoreaExtras(map);
+  /* lbl-1: 한국어 나라·바다 이름 */
+  (function () {
+    const C = [[1, "러시아", 61, 96], [1, "중국", 35, 103], [1, "미국", 39, -98], [1, "캐나다", 58, -105], [1, "브라질", -10, -53], [1, "호주", -25, 134], [1, "인도", 22, 79], [1, "아르헨티나", -35, -65], [1, "그린란드", 73, -41], [1, "카자흐스탄", 48, 67], [1, "알제리", 28, 2], [1, "콩고민주공화국", -3, 23], [1, "사우디아라비아", 24, 45], [1, "남극", -80, 30], [2, "멕시코", 23, -102], [2, "인도네시아", -2, 118], [2, "일본", 36.5, 138.5], [2, "한국", 36.3, 127.8], [2, "이란", 32, 54], [2, "몽골", 46.5, 104], [2, "리비아", 27, 17], [2, "수단", 15, 30], [2, "이집트", 26.5, 30], [2, "남아프리카공화국", -30, 24], [2, "나이지리아", 9.5, 8], [2, "에티오피아", 8.5, 39.5], [2, "페루", -9.5, -75], [2, "콜롬비아", 4, -73], [2, "튀르키예", 39, 35], [2, "프랑스", 46.5, 2.5], [2, "영국", 53, -2], [2, "독일", 51, 10], [2, "스페인", 40, -3.7], [2, "파키스탄", 30, 69], [2, "칠레", -30, -71], [2, "베네수엘라", 7, -66], [2, "우크라이나", 49, 32], [2, "앙골라", -12, 17.5], [2, "말리", 17, -4], [2, "차드", 15, 19], [2, "니제르", 17, 9], [2, "볼리비아", -17, -64], [2, "탄자니아", -6.5, 35], [2, "마다가스카르", -19.5, 46.7], [2, "뉴질랜드", -42, 173], [3, "북한", 40.2, 127], [3, "대만", 23.7, 121], [3, "필리핀", 12.5, 122], [3, "베트남", 15, 107.5], [3, "태국", 15.5, 101], [3, "미얀마", 21, 96], [3, "말레이시아", 3.8, 102], [3, "이탈리아", 42.8, 12.5], [3, "폴란드", 52, 19.4], [3, "스웨덴", 62, 15.5], [3, "노르웨이", 64, 12], [3, "핀란드", 63, 26], [3, "이라크", 33, 43.7], [3, "아프가니스탄", 34, 66], [3, "우즈베키스탄", 41.5, 64], [3, "투르크메니스탄", 39, 59], [3, "예멘", 15.8, 47.5], [3, "오만", 21, 57], [3, "아랍에미리트", 24, 54], [3, "케냐", 0.5, 38], [3, "소말리아", 5, 46], [3, "모로코", 31.8, -7], [3, "모리타니", 20, -10.5], [3, "잠비아", -14, 27.5], [3, "모잠비크", -17.5, 35.5], [3, "나미비아", -22, 17], [3, "보츠와나", -22.3, 24], [3, "짐바브웨", -19, 29.8], [3, "카메룬", 5.7, 12.5], [3, "가봉", -0.8, 11.6], [3, "콩고", -0.7, 15.2], [3, "중앙아프리카공화국", 6.6, 20.9], [3, "남수단", 7.5, 30], [3, "에콰도르", -1.5, -78.3], [3, "파라과이", -23.3, -58], [3, "우루과이", -32.8, -56], [3, "쿠바", 21.8, -79], [3, "아이슬란드", 65, -18.5], [3, "파푸아뉴기니", -6.5, 145], [3, "네팔", 28.3, 84], [3, "방글라데시", 23.8, 90.3], [3, "스리랑카", 7.8, 80.7], [3, "시리아", 35, 38.5], [3, "요르단", 31, 36.5], [3, "벨라루스", 53.6, 28], [3, "루마니아", 45.9, 25], [3, "그리스", 39.3, 22], [3, "포르투갈", 39.6, -8], [3, "키르기스스탄", 41.4, 74.6], [3, "타지키스탄", 38.8, 71], [3, "라오스", 19.5, 102.5], [3, "캄보디아", 12.7, 104.9], [4, "싱가포르", 1.35, 103.8], [4, "홍콩", 22.35, 114.15], [4, "브루나이", 4.5, 114.7], [4, "동티모르", -8.8, 125.9], [4, "네덜란드", 52.2, 5.5], [4, "벨기에", 50.6, 4.6], [4, "스위스", 46.8, 8.2], [4, "오스트리아", 47.6, 14.5], [4, "체코", 49.8, 15.4], [4, "헝가리", 47.1, 19.4], [4, "덴마크", 56, 9.3], [4, "아일랜드", 53.2, -8], [4, "불가리아", 42.7, 25.3], [4, "세르비아", 44, 20.8], [4, "이스라엘", 31.2, 34.9], [4, "레바논", 33.9, 35.9], [4, "쿠웨이트", 29.3, 47.6], [4, "카타르", 25.3, 51.2], [4, "바레인", 26.05, 50.55], [4, "튀니지", 34, 9.5], [4, "가나", 7.9, -1.1], [4, "코트디부아르", 7.6, -5.5], [4, "세네갈", 14.4, -14.5], [4, "기니", 10.4, -10.9], [4, "부르키나파소", 12.3, -1.7], [4, "우간다", 1.3, 32.4], [4, "에리트레아", 15.3, 39], [4, "과테말라", 15.6, -90.3], [4, "온두라스", 14.8, -86.6], [4, "니카라과", 12.9, -85], [4, "파나마", 8.5, -80.1], [4, "코스타리카", 9.9, -84.2], [4, "도미니카공화국", 18.8, -70.5], [4, "아이티", 19, -72.6], [4, "자메이카", 18.1, -77.3], [4, "가이아나", 5, -59], [4, "수리남", 4.1, -55.9], [4, "아제르바이잔", 40.3, 47.7], [4, "조지아", 42.2, 43.5], [4, "아르메니아", 40.2, 45], [4, "리투아니아", 55.3, 23.9], [4, "라트비아", 56.9, 24.9], [4, "에스토니아", 58.7, 25.5], [4, "몰도바", 47.2, 28.5], [4, "슬로바키아", 48.7, 19.5], [4, "크로아티아", 45.3, 15.9], [4, "부탄", 27.4, 90.4], [4, "피지", -17.8, 178], [4, "몰디브", 3.2, 73.2], [4, "말라위", -13.2, 34.3], [4, "르완다", -2, 29.9], [4, "베냉", 9.6, 2.3], [4, "토고", 8.6, 1], [4, "시에라리온", 8.5, -11.8], [4, "라이베리아", 6.4, -9.4]], S = [[1, "태평양", 10, -150], [1, "태평양", 5, 170], [1, "대서양", 25, -40], [1, "대서양", -25, -15], [1, "인도양", -20, 80], [1, "남극해", -62, 40], [1, "북극해", 82, 0], [3, "동해", 39.5, 133], [3, "서해", 35.5, 124], [3, "동중국해", 29, 125.5], [3, "남중국해", 13, 114], [3, "필리핀해", 20, 132], [3, "지중해", 35, 18], [3, "아라비아해", 15, 64], [3, "벵골만", 15, 88], [3, "카리브해", 15, -75], [3, "멕시코만", 25.5, -90.5], [3, "북해", 56.5, 3], [3, "오호츠크해", 55, 148], [3, "베링해", 58, -178], [3, "산호해", -17, 155], [3, "태즈먼해", -38, 162], [3, "홍해", 20, 38.5], [3, "흑해", 43.3, 34], [3, "발트해", 57.5, 19.5], [3, "페르시아만", 27, 51]];
+    window.mtLbl = C;
+    map.createPane('lbl'); const lp = map.getPane('lbl'); lp.style.zIndex = 650; lp.style.pointerEvents = 'none';
+    const st = document.createElement('style'); st.textContent = '.mtLb{white-space:nowrap;transform:translate(-50%,-50%);font-weight:700;color:#f2f6f3;text-shadow:0 0 3px #000,0 0 6px #000,0 0 2px #000;letter-spacing:.5px;opacity:.78;pointer-events:none}.mtLb.t1{font-size:14px}.mtLb.t2{font-size:12px}.mtLb.t3,.mtLb.t4{font-size:11px;opacity:.7}.mtLb.ctry{pointer-events:auto;cursor:pointer}.mtLb.sea{color:#9fd8ff;font-style:italic;font-weight:500;opacity:.6;font-size:12px;letter-spacing:2px}'; document.head.appendChild(st);
+    const g = L.layerGroup().addTo(map), items = [];
+    const mk = (t, n, la, lo, sea) => [0].forEach((o) => items.push({ t, m: (() => { const m = L.marker([la, lo + o], { pane: 'lbl', interactive: !sea, keyboard: false, bubblingMouseEvents: false, icon: L.divIcon({ className: '', iconSize: [0, 0], html: `<div class="mtLb t${t}${sea ? ' sea' : ' ctry'}">${n}</div>` }) }); if (!sea) m.on('click', () => window.mtCard && window.mtCard(la, lo, n)); return m; })() }));
+    C.forEach((a) => mk(...a, 0)); S.forEach((a) => mk(...a, 1));
+    const lv = () => { const z = map.getZoom(); return z < 2.75 ? 1 : z < 3.75 ? 2 : z < 4.75 ? 3 : 4; };
+    let cur = 0; const upd = () => { const l = lv(); if (l === cur) return; cur = l; g.clearLayers(); items.forEach((i) => { if (i.t <= l) g.addLayer(i.m); }); };
+    map.on('zoomend', upd); upd();
+  })();
+  const minZ = () => { const s = map.getSize(); map.setMinZoom(Math.max(0, Math.log2(Math.max(s.x, s.y * 0.9, 256) / 256))); };
+  minZ(); map.fitBounds(HOME, { padding: [6, 6] });
+  addEventListener('resize', () => { map.invalidateSize(); minZ(); });
+  const off = new Set(); let last = null, ships = null, legP = [], legS = [];
+  const col = {}; // one color per country, same for planes and ships
+  const colorOf = (k) => col[k] || GRAY;
+  const assign = () => {
+    const keys = []; [legP, legS].forEach((l) => l.forEach((k) => { if (k !== 'XX' && !keys.includes(k)) keys.push(k); }));
+    const used = new Set(); keys.forEach((k) => { if (FIX[k]) { col[k] = FIX[k]; used.add(FIX[k]); } });
+    const free = PAL.filter((c) => !used.has(c)); keys.forEach((k) => { if (!col[k]) col[k] = free.shift() || GRAY; });
+  };
+  const top = (counts, n) => Object.keys(counts).filter((k) => k !== 'XX').sort((a, b) => counts[b] - counts[a]).slice(0, n);
+  const keyOf = (k, leg) => leg.includes(k) ? k : 'XX';
+  const fmt = (n) => n == null ? '정보 없음' : n.toLocaleString('ko-KR');
+  const near = (lon) => window.mtW(lon);
+  let live = null;
+  const kstL = (u) => new Date(u).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  const rnd = L.canvas({ padding: .2 });
+  const mob2 = () => matchMedia('(max-width:760px)').matches;
+  /* 낮은 배율에서는 예전과 같이 솎고, 확대하면 화면에 들어온 비행기를 거의 다 그린다. */
+  const CAP = () => { const z = map.getZoom(); if (z >= 5) return mob2() ? 1600 : 5000; if (z >= 3.5) return mob2() ? 700 : 1800; return mob2() ? 350 : 900; };
+  let trk = null;
+  const fwd = (la, lo, deg, kt, sec) => { const d = kt * 0.514444 * sec, r = deg * Math.PI / 180; return [la + d * Math.cos(r) / 111320, lo + d * Math.sin(r) / (111320 * Math.max(.2, Math.cos(la * Math.PI / 180)))]; };
+  const planePath = new Path2D('M12 2c.8 0 1.3.9 1.3 2v5.2l7.7 4.6v2l-7.7-2.4v4.4l2.2 1.7v1.6L12 20l-3.5 1.1v-1.6l2.2-1.7v-4.4L3 15.8v-2l7.7-4.6V4c0-1.1.5-2 1.3-2z');
+  const shipPath = new Path2D('M12 1.5l4 6.5v12.5l-1.5 2h-5l-1.5-2V8z');
+  const perf = (window.mtPerf = { planes: 0, ships: 0, icons: 0, dots: 0, iconN: 0, dotN: 0, step: 1 });
+  let planeRec = [], liveRec = [], ghostRec = [], dotRec = [], trailRec = [], iconHits = [], dotGrid = new Map();
+  let sigP = '', sigS = '', tipLayer = null, tipKey = null, raf = 0, wantD = false, wantI = false;
+  const glyphCache = new Map();
+  const mkCanvas = (pane, under) => { const c = document.createElement('canvas'); c.style.pointerEvents = 'none'; const ctx = c.getContext('2d', { alpha: true }); const host = map.getPane(pane); under ? host.insertBefore(c, host.firstChild) : host.appendChild(c); return { c, ctx, st: null }; };
+  const dotLayer = mkCanvas('overlayPane', true), iconLayer = mkCanvas('markerPane', false);
+  const place = (layer) => {
+    const pad = .3, size = map.getSize(); if (!size.x || !size.y) return false;
+    const origin = map.containerPointToLayerPoint(size.multiplyBy(-pad)).round();
+    const end = origin.add(size.multiplyBy(1 + 2 * pad)).round();
+    const w = Math.max(1, end.x - origin.x), h = Math.max(1, end.y - origin.y);
+    const dpr = Math.min(mob2() ? 1 : 2, window.devicePixelRatio || 1);
+    const c = layer.c, ctx = layer.ctx, bw = Math.round(w * dpr), bh = Math.round(h * dpr);
+    if (c.width !== bw || c.height !== bh) { c.width = bw; c.height = bh; } else { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, bw, bh); }
+    c.style.width = w + 'px'; c.style.height = h + 'px';
+    L.DomUtil.setPosition(c, origin);
+    ctx.setTransform(dpr, 0, 0, dpr, -origin.x * dpr, -origin.y * dpr);
+    layer.st = { center: map.getCenter(), zoom: map.getZoom(), pad, origin };
+    return true;
+  };
+  const animCanvas = (layer, e) => {
+    const st = layer.st; if (!st || !map._getNewPixelOrigin) return;
+    const scale = map.getZoomScale(e.zoom, st.zoom), p = map.getSize().multiplyBy(.5 + st.pad), o = map.project(st.center, e.zoom);
+    L.DomUtil.setTransform(layer.c, p.multiplyBy(-scale).add(o).subtract(map._getNewPixelOrigin(e.center, e.zoom)), scale);
+  };
+  map.on('zoomanim', (e) => { animCanvas(dotLayer, e); animCanvas(iconLayer, e); });
+  const drawGlyph = (ctx, x, y, deg, color, kind) => {
+    const size = kind === 'pl' ? 22 : kind === 'sh' ? 18 : 14, sc = size / 24;
+    ctx.save(); ctx.translate(x, y); ctx.rotate((deg || 0) * Math.PI / 180); ctx.scale(sc, sc); ctx.translate(-12, -12);
+    ctx.globalAlpha = kind === 'g' ? .8 : 1; ctx.shadowColor = '#000'; ctx.shadowBlur = 2 / sc;
+    ctx.fillStyle = color; ctx.strokeStyle = kind === 'sh' ? '#fff' : '#000'; ctx.lineWidth = kind === 'pl' ? .8 : kind === 'sh' ? 1.4 : .9;
+    const path = kind === 'pl' ? planePath : shipPath; ctx.fill(path); ctx.shadowColor = 'transparent'; ctx.stroke(path);
+    if (kind !== 'pl') { ctx.globalAlpha *= .45; ctx.fillStyle = '#000'; ctx.fillRect(10.4, 12, 3.2, 4); }
+    ctx.restore();
+  };
+  const blit = (ctx, x, y, deg, color, kind) => {
+    const d = Math.round(deg || 0), key = kind + color + d;
+    let s = glyphCache.get(key);
+    if (!s) {
+      const size = kind === 'pl' ? 22 : kind === 'sh' ? 18 : 14, pad = 6, dpr = Math.min(mob2() ? 1 : 2, window.devicePixelRatio || 1);
+      const cv = document.createElement('canvas'); cv.width = Math.ceil((size + pad * 2) * dpr); cv.height = cv.width;
+      const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); drawGlyph(g, pad + size / 2, pad + size / 2, d, color, kind);
+      s = { cv, pad, size }; glyphCache.set(key, s);
+      if (glyphCache.size > 4000) glyphCache.delete(glyphCache.keys().next().value);
+    }
+    const w = s.size + s.pad * 2; ctx.drawImage(s.cv, x - w / 2, y - w / 2, w, w);
+  };
+  const strokeTrail = (ctx, pts, color) => {
+    if (!pts || pts.length < 2) return; const xy = [];
+    for (let i = 0; i < pts.length; i++) xy.push(map.latLngToLayerPoint(pts[i]));
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = color;
+    if (xy.length > 2) { ctx.globalAlpha = .18; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(xy[0].x, xy[0].y); for (let i = 1; i < xy.length - 1; i++) ctx.lineTo(xy[i].x, xy[i].y); ctx.stroke(); }
+    const a = xy[xy.length - 2], b = xy[xy.length - 1]; ctx.globalAlpha = .55; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); ctx.globalAlpha = 1;
+  };
+  const moved = (rec, updated) => { if (!rec.move || !updated) return [rec.la, rec.lo]; const dt = Math.min(900, Math.max(0, (Date.now() - Date.parse(updated)) / 1000)); return fwd(rec.la, rec.lo, rec.tr, rec.gs, dt); };
+  const cellOf = (v) => Math.floor(v / 16);
+  const paintDots = () => {
+    const t0 = performance.now(); if (!place(dotLayer)) return; const ctx = dotLayer.ctx; dotGrid = new Map();
+    for (let i = 0; i < trailRec.length; i++) if (!trailRec[i].live) strokeTrail(ctx, trailRec[i].pts, trailRec[i].col);
+    for (let i = 0; i < dotRec.length; i++) {
+      const d = dotRec[i], p = map.latLngToLayerPoint([d.la, d.lo]);
+      ctx.globalAlpha = d.a; ctx.fillStyle = d.col; ctx.beginPath(); ctx.arc(p.x, p.y, d.r, 0, Math.PI * 2); ctx.fill();
+      const k = cellOf(p.x) + ',' + cellOf(p.y); let arr = dotGrid.get(k); if (!arr) dotGrid.set(k, arr = []); arr.push({ x: p.x, y: p.y, r: d.r, open: d.open });
+    }
+    ctx.globalAlpha = 1;
+    for (let i = 0; i < trailRec.length; i++) if (trailRec[i].live) strokeTrail(ctx, trailRec[i].pts, trailRec[i].col);
+    perf.dots = performance.now() - t0; perf.dotN = dotRec.length;
+  };
+  const paintIcons = () => {
+    const t0 = performance.now(); if (!place(iconLayer)) return; const ctx = iconLayer.ctx;
+    const list = ghostRec.concat(planeRec, liveRec); list.sort((a, b) => (a.la + a.mil * 500) - (b.la + b.mil * 500));
+    iconHits = []; const updP = last && last.updated, updS = live && live.updated;
+    for (let i = 0; i < list.length; i++) {
+      const r = list[i], ll = r.kind === 'sh' ? moved(r, updS) : r.kind === 'pl' ? moved(r, updP) : [r.la, r.lo];
+      const p = map.latLngToLayerPoint(ll), ox = r.kind === 'g' ? -2 : 0, oy = r.kind === 'g' ? -2 : 0;
+      blit(ctx, p.x + ox, p.y + oy, r.tr, r.col, r.kind);
+      iconHits.push({ x: p.x + ox, y: p.y + oy, r: r.kind === 'pl' ? 11 : r.kind === 'sh' ? 9 : 7, open: r.open, tip: r.tip || '', key: r.key || '', ll });
+    }
+    if (tipLayer && tipKey) { const h = iconHits.find((x) => x.key === tipKey); if (h) tipLayer.setLatLng(h.ll); else { map.closeTooltip(tipLayer); tipLayer = null; tipKey = null; } }
+    perf.icons = performance.now() - t0; perf.iconN = list.length;
+  };
+  const schedule = (d, i) => { wantD = wantD || d; wantI = wantI || i; if (raf) return; raf = requestAnimationFrame(() => { raf = 0; const dd = wantD, ii = wantI; wantD = wantI = false; if (dd) paintDots(); if (ii || dd) paintIcons(); }); };
+  const tick = () => { if (document.hidden || map._animatingZoom || (map.dragging && map.dragging.moving())) return; if (!planeRec.some((p) => p.move) && !liveRec.some((p) => p.move)) return; schedule(false, true); };
+  setInterval(tick, mob2() ? 3000 : 2000);
+  const viewKey = () => { const b = map.getBounds(); return map.getZoom().toFixed(2) + '|' + b.getWest().toFixed(2) + '|' + b.getSouth().toFixed(2) + '|' + b.getEast().toFixed(2) + '|' + b.getNorth().toFixed(2); };
+  const offKey = () => Array.from(off).sort().join(',');
+  const drawP = () => {
+    const s = viewKey() + '|' + (last && last.updated) + '|' + (trk && trk.t) + '|' + $('planeTg').checked + '|' + $('milTg').checked + '|' + offKey();
+    if (s === sigP) return; sigP = s; const t0 = performance.now();
+    planeRec = []; trailRec = trailRec.filter((t) => t.live);
+    const note = $('pnote');
+    if (!last || !$('planeTg').checked) { if (note) note.textContent = ''; perf.step = 1; perf.planes = performance.now() - t0; schedule(true, true); return; }
+    const b = map.getBounds().pad(.05), pS = b.getSouth(), pN = b.getNorth(), pW = b.getWest(), pE = b.getEast(), inView = [];
+    for (const a of last.ac) { const k = keyOf(a[8], legP); if (off.has(k)) continue; let lo = a[4]; lo = window.mtW(lo); if (a[3] < pS || a[3] > pN || lo < pW || lo > pE) continue; inView.push([a, lo, k]); }
+    const step = Math.max(1, Math.ceil(inView.length / CAP())); perf.step = step; let nT = 0; const capT = mob2() ? 120 : 400;
+    for (let i = 0; i < inView.length; i += step) {
+      const [a, lo, k] = inView[i]; const [hex, fl, ty, la, , tr, alt, gs, cc, mil] = a; const isM = !!(mil && $('milTg').checked); const col = isM ? MILC : colorOf(k);
+      const tp = trk && trk.p[hex]; if (tp && nT < capT) { nT++; trailRec.push({ live: false, col, pts: tp.map((q) => [q[1], near(q[2])]).concat([[la, lo]]) }); }
+      const name = fl || String(hex).toUpperCase();
+      planeRec.push({ la, lo, tr: tr || 0, gs: gs || 0, move: gs > 30, mil: isM ? 1 : 0, col, kind: 'pl', key: String(hex), tip: esc(name) + (mil ? ' · 군용기 표시' : ''), open: () => { $('info').innerHTML = `<div class="h">${name}</div>등록 나라: ${NM[cc] || '기타'}${mil ? '<br>군용기 표시가 있는 신호예요' : ''}<br>고도: ${fmt(alt)}${alt == null ? '' : ' ft'}<br>속도: ${fmt(gs)}${gs == null ? '' : ' kt'} · 방향 ${tr || 0}도<br>기체: ${ty || '정보 없음'} · 고유 번호 ${String(hex).toUpperCase()}`; } });
+    }
+    if (note) note.textContent = step > 1 ? `지금 화면에 ${inView.length.toLocaleString('ko-KR')}대가 있어서 ${step}대 중 1대만 그려요. 확대하면 다 보여요.` : '';
+    perf.planes = performance.now() - t0; schedule(true, true);
+  };
+  const drawS = () => {
+    const s = viewKey() + '|' + (ships && ships.updated) + '|' + (live && live.updated) + '|' + $('shipTg').checked + '|' + $('liveTg').checked + '|' + offKey();
+    if (s === sigS) return; sigS = s; const t0 = performance.now();
+    liveRec = []; ghostRec = []; dotRec = []; trailRec = trailRec.filter((t) => !t.live);
+    const b = map.getBounds().pad(.05), sS = b.getSouth(), sN = b.getNorth(), sW = b.getWest(), sE = b.getEast();
+    if (ships && $('shipTg').checked) {
+      const cell = {}, half = (ships.cell_deg || 2) / 2;
+      for (const [la, lo0, cc, n] of ships.cells) { const k = keyOf(cc, legS); if (off.has(k)) continue; let lo = lo0; lo = window.mtW(lo); if (la < sS || la > sN || lo < sW || lo > sE) continue; const id = la + ',' + lo; (cell[id] = cell[id] || { la, lo, by: {} }).by[cc] = (cell[id].by[cc] || 0) + n; }
+      const cs = Object.values(cell), zoomIn = map.getZoom() >= 6 && cs.length <= 60; let left = mob2() ? 250 : 600;
+      const thin = map.getZoom() < 4 && !zoomIn, bins = thin ? new Map() : null;
+      cs.forEach(({ la, lo, by }) => {
+        const ks = Object.keys(by).sort((x, y) => by[y] - by[x]), t = ks.reduce((sum, k) => sum + by[k], 0);
+        if (zoomIn) { let sd = Math.abs(Math.round(la * 1000 + lo * 7)) + 1; const rn = () => (sd = (sd * 16807) % 2147483647) / 2147483647; const per = Math.min(t, 12, Math.max(1, Math.floor(left / cs.length)));
+          for (let i = 0; i < per; i++) { const kk = ks[Math.min(ks.length - 1, Math.floor(rn() * ks.length * .999))]; const kc = keyOf(kk, legS); const gla = la - half + rn() * half * 2, glo = lo - half + rn() * half * 2, hd = Math.floor(rn() * 360);
+            ghostRec.push({ la: gla, lo: glo, tr: hd, move: false, mil: 0, col: colorOf(kc), kind: 'g', open: () => { $('info').innerHTML = `<div class="h">기록 위치 (하루 기록)</div>나라: ${kk === 'XX' ? '나라 기록 없음' : NM[kk] || '기타 나라'}<br>이 칸 배 ${t.toLocaleString('ko-KR')}척 중 ${per}척만 칸 안에 흩어 그렸어요. 실제 위치가 아니에요.<br>날짜: ${ships.date_range[0]} · 출처: Global Fishing Watch`; } }); }
+          left -= per; return; }
+        const rec = { la, lo, t, r: Math.min(7, 1.5 + Math.sqrt(t) / 3), col: colorOf(keyOf(ks[0], legS)), a: keyOf(ks[0], legS) === 'XX' ? .22 : .5, open: () => { $('info').innerHTML = `<div class="h">배 ${t.toLocaleString('ko-KR')}척 기록</div>${ks.map((k) => (k === 'XX' ? '나라 기록 없음' : NM[k] || '기타 나라') + ' ' + by[k].toLocaleString('ko-KR')).join(' · ')}<br>칸: 위도 ${la - half}~${la + half}도, 경도 ${((lo + 540) % 360 - 180) - half}~${((lo + 540) % 360 - 180) + half}도<br>날짜: ${ships.date_range[0]} (하루) · 색은 가장 많은 나라<br>출처: Global Fishing Watch`; } };
+        if (!thin) { dotRec.push(rec); return; }
+        const p = map.latLngToContainerPoint([la, lo]), bk = Math.floor(p.x / 8) + ',' + Math.floor(p.y / 8), prev = bins.get(bk);
+        if (!prev || rec.t > prev.t) bins.set(bk, rec);
+      });
+      if (thin) bins.forEach((rec) => dotRec.push(rec));
+    }
+    if (live && $('liveTg').checked) {
+      for (const [mm, la, lo0, hd, sog, nm, cc, ty, hm, tl] of live.ships) {
+        const k = keyOf(cc, legS); if (off.has(k)) continue; const lo = near(lo0); if (!b.contains([la, lo])) continue; const col = colorOf(k);
+        if (tl && tl.length) trailRec.push({ live: true, col, pts: tl.map((q) => [q[0], near(q[1])]).concat([[la, lo]]) });
+        liveRec.push({ la, lo, tr: hd || 0, gs: sog || 0, move: sog > .5 && sog < 40, mil: 0, col, kind: 'sh', open: () => { $('info').innerHTML = `<div class="h">${nm || '이름 없는 배'}</div>나라: ${cc === 'XX' ? '나라 기록 없음' : NM[cc] || '기타 나라'}<br>종류: ${ty}<br>속도: ${sog} kt · 방향 ${hd}도<br>수신: ${kstL(live.updated)} 무렵 (한국 시간)<br>출처: AISStream 실시간 배`; } });
+      }
+    }
+    perf.ships = performance.now() - t0; schedule(true, true);
+  };
+  const pickIcon = (p) => { let best = null; for (let i = 0; i < iconHits.length; i++) { const h = iconHits[i], dx = p.x - h.x, dy = p.y - h.y; if (dx * dx + dy * dy <= h.r * h.r) best = h; } return best; };
+  const pickDot = (p) => { const gx = cellOf(p.x), gy = cellOf(p.y); let best = null; for (let y = gy - 1; y <= gy + 1; y++) for (let x = gx - 1; x <= gx + 1; x++) { const arr = dotGrid.get(x + ',' + y); if (!arr) continue; for (let i = 0; i < arr.length; i++) { const h = arr[i], dx = p.x - h.x, dy = p.y - h.y; if (dx * dx + dy * dy <= h.r * h.r) best = h; } } return best; };
+  const uiHit = (ev) => ev.target.closest && ev.target.closest('.mtLb, .leaflet-control, a, button, input');
+  map.getContainer().addEventListener('mousemove', (ev) => {
+    if (uiHit(ev) || (map.dragging && map.dragging.moving())) return;
+    const p = map.mouseEventToLayerPoint(ev), icon = pickIcon(p), dot = icon ? null : pickDot(p);
+    map.getContainer().style.cursor = (icon || dot) ? 'pointer' : '';
+    if (!icon || !icon.tip) { if (tipLayer) { map.closeTooltip(tipLayer); tipLayer = null; tipKey = null; } return; }
+    if (tipKey !== icon.key) { tipKey = icon.key; if (tipLayer) map.closeTooltip(tipLayer); tipLayer = L.tooltip({ direction: 'top', className: 'mtTip', opacity: 1, offset: [0, -12] }).setContent(icon.tip); map.openTooltip(tipLayer, icon.ll); }
+    else if (tipLayer) tipLayer.setLatLng(icon.ll);
+  });
+  map.on('movestart', () => { if (tipLayer) { map.closeTooltip(tipLayer); tipLayer = null; tipKey = null; } map.getContainer().style.cursor = ''; });
+  map.getContainer().addEventListener('click', (ev) => {
+    if (uiHit(ev)) return; const hit = pickIcon(map.mouseEventToLayerPoint(ev)); if (!hit) return; L.DomEvent.stop(ev); hit.open();
+  }, true);
+  const openDot = (p) => {
+    let covered = false;
+    const walk = (l) => { if (covered) return; if (l._containsPoint && l._containsPoint(p)) { covered = true; return; } if (l.eachLayer) l.eachLayer(walk); };
+    el.eachLayer(walk); if (covered) return; const dot = pickDot(p); if (dot) dot.open();
+  };
+  map.on('click', (e) => { if (e.originalEvent && uiHit(e.originalEvent)) return; openDot(e.layerPoint); });
+  const legend = () => {
+    const g = (id, leg, counts, unit) => { const o = {}; Object.keys(counts).forEach((k) => { const kk = keyOf(k, leg); o[kk] = (o[kk] || 0) + counts[k]; });
+      $(id).innerHTML = [...leg, 'XX'].map((k) => `<button type="button" class="cc${off.has(k) ? ' off' : ''}" data-k="${k}"><div class="l"><span class="d" style="background:${colorOf(k)}"></span>${NM[k] || k}</div><div class="v">${(o[k] || 0).toLocaleString('ko-KR')}</div></button>`).join(''); };
+    if (last) g('grid', legP, last.counts, '대'); if (ships) g('sgrid', legS, ships.counts, '척');
+    const vis = (cnt, leg) => Object.keys(cnt).reduce((s, k) => s + (off.has(keyOf(k, leg)) ? 0 : cnt[k]), 0);
+    if (last) $('tot').textContent = vis(last.counts, legP).toLocaleString('ko-KR') + '대';
+    if (ships) $('stot').textContent = vis(ships.counts, legS).toLocaleString('ko-KR') + '척';
+  };
+  const all = () => { assign(); legend(); drawP(); drawS(); };
+  let tmr; map.on('moveend zoomend', () => { clearTimeout(tmr); tmr = setTimeout(() => { drawP(); drawS(); }, 120); });
+  document.addEventListener('click', (e) => { const b = e.target.closest('.cc'); if (!b) return; const k = b.dataset.k; off.has(k) ? off.delete(k) : off.add(k); all(); });
+  $('planeTg').addEventListener('change', drawP); $('shipTg').addEventListener('change', drawS); $('liveTg').addEventListener('change', drawS);
+  $('all').addEventListener('click', () => { off.clear(); $('planeTg').checked = $('shipTg').checked = $('liveTg').checked = true; map.fitBounds(HOME, { padding: [6, 6] }); all(); $('info').innerHTML = '<span style="opacity:.7">비행기나 배 점을 누르면 자세한 사실이 나와요.</span>'; });
+  const kst = (iso) => new Date(iso).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  const load = () => fetch('data/skysea/aircraft.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => { if (!last || j.updated !== last.updated) { last = j; legP = top(j.counts, 7); fetch('data/skysea/tracks.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.ok ? r.json() : null).then((t) => { trk = t; drawP(); }).catch(() => {}); all(); if ($('gpsTg').checked) drawE(); $('upd').textContent = '비행기 ' + kst(j.updated) + ' 기준 (한국 시간) · 10분마다 새로 받아요'; } }).catch(() => { if (!last) $('upd').textContent = '비행기 자료를 불러오지 못했어요'; });
+  load(); setInterval(load, 30000);
+  const MILC = '#ff3df2'; const el = L.layerGroup().addTo(map); let ev = null, geo = null;
+  const zoneC = {}; const ZXG = [[[23, 48], [23, 60], [30.5, 60], [30.5, 48]]];
+  const esc = (x) => String(x == null ? '' : x).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  const tip = (l, t) => l.bindTooltip(t, { direction: 'top', sticky: true, opacity: .95, className: 'mtTip' });
+  const evCard = (t, h) => { $('info').innerHTML = `<div class="h">${esc(t)}</div>${h}`; $('cardT').textContent = t; $('cardG').innerHTML = `<div class="evb">${h}</div>`; $('cardD').innerHTML = ''; $('cardD').closest('details').hidden = true; $('card').hidden = false; };
+  const zc = (c) => { const zs = ev.zones.items.filter((z) => z.cc.includes(c)); evCard('비행 회피 구역', `${esc(c === 'XG' ? '페르시아만' : NM[c] || c)}<br>${zs.map((z) => `${esc(z.id)} · ${esc(z.valid_until)}까지`).join('<br>')}<br>출처: <a href="https://www.easa.europa.eu/en/domains/air-operations/czibs" target="_blank" rel="noopener">EASA 안내문</a>`); };
+  const drawE = () => {
+    const mob = matchMedia('(max-width:760px)').matches, view = map.getBounds();
+    const sig = [$('confTg').checked, $('gpsTg').checked, $('zoneTg').checked, $('fireTg').checked, $('quakeTg').checked, ev && ev.updated, $('gpsTg').checked ? (last && last.updated) : 0, geo ? 1 : 0, mob, mob ? view.getWest().toFixed(2) + ',' + view.getSouth().toFixed(2) + ',' + view.getEast().toFixed(2) + ',' + view.getNorth().toFixed(2) : 'full'].join('|');
+    if (drawE.sig === sig) return; drawE.sig = sig;
+    const b = mob ? view.pad(.05) : L.latLngBounds([-90, -180], [90, 180]);
+    el.clearLayers();
+    if (ev && $('zoneTg').checked && ev.zones) { const cs = new Set(); ev.zones.items.forEach((z) => z.cc.forEach((c) => cs.add(c)));
+      if (geo) [0].forEach((o) => geo.features.forEach((f) => { if (cs.has(f.cc)) L.geoJSON(f, { coordsToLatLng: (c) => L.latLng(c[1], c[0] + o), style: { color: '#ff5a5a', weight: 1.5, dashArray: '5 4', fillColor: '#ff5a5a', fillOpacity: .14 } }).on('click', () => zc(f.cc)).bindTooltip('비행 회피 구역 · ' + esc(NM[f.cc] || f.cc), { sticky: true, className: 'mtTip' }).addTo(el); }));
+      if (cs.has('XG')) L.polygon(ZXG[0], { color: '#ff5a5a', weight: 1.5, dashArray: '5 4', fillOpacity: .14 }).on('click', () => zc('XG')).bindTooltip('비행 회피 구역 · 페르시아만', { sticky: true, className: 'mtTip' }).addTo(el); }
+    if (last && last.gps && $('gpsTg').checked) last.gps.forEach(([la, lo, n, bad]) => { if (bad / n < .3) return; const l2 = near(lo); if (!b.contains([la, l2])) return; L.rectangle([[la - .5, l2 - .5], [la + .5, l2 + .5]], { renderer: rnd, color: '#b388ff', weight: 0, fillOpacity: .25 + .4 * bad / n })
+      .bindTooltip(`GPS 전파 방해 구역 (추정) · 비행기 ${n}대 중 ${bad}대`, { sticky: true, className: 'mtTip' }).on('click', () => evCard('GPS 전파 방해 구역 (추정)', `비행기 ${n}대 중 ${bad}대가 위치 정확도가 낮게 보고됐어요.<br>위치: 위도 ${la}, 경도 ${lo} 근처<br>시간: ${kstL(last.updated)} (한국 시간)<br>원인은 알 수 없어요 · 출처: adsb.lol, adsb.fi`)).addTo(el); });
+    if (!ev) return;
+    if ($('fireTg').checked && ev.fires) { let k = 0; for (const [la, lo, n, cc] of ev.fires.cells) { const l2 = near(lo); if (!b.contains([la, l2])) continue; if (++k > (mob ? 1200 : 4000)) break; L.circleMarker([la, l2], { renderer: rnd, radius: Math.min(6, 1.5 + Math.sqrt(n) / 3), color: '#ff7a1a', weight: 0, fillOpacity: .6 })
+      .bindTooltip(`위성 화재 · 열점 ${n.toLocaleString('ko-KR')}곳`, { sticky: true, className: 'mtTip' }).on('click', () => evCard('위성 화재', `${esc(NM[cc] || '')} 열점 ${n.toLocaleString('ko-KR')}곳 (1도 칸, 최근 24시간)<br>위치: 위도 ${la}, 경도 ${lo} 근처<br>자료 시간: ${kstL(ev.updated)} (한국 시간)<br>출처: <a href="https://firms.modaps.eosdis.nasa.gov/map/#d:24hrs;@${lo},${la},7z" target="_blank" rel="noopener">NASA FIRMS 지도</a>`)).addTo(el); } }
+    if ($('confTg').checked && ev.conflict) for (const [la, lo, n, cc, t, pl, rc, u] of ev.conflict.cells) { const l2 = near(lo); if (!b.contains([la, l2])) continue; L.circleMarker([la, l2], { renderer: rnd, radius: Math.min(11, 3 + Math.sqrt(n)), color: '#ffd60a', weight: 1.5, fillColor: '#ff3b30', fillOpacity: .55 })
+      .bindTooltip(`분쟁 사건 기사 ${n.toLocaleString('ko-KR')}건${pl ? ' · ' + esc(pl) : ''}`, { sticky: true, className: 'mtTip' }).on('click', () => evCard('분쟁 사건 기사', `장소: ${esc(pl || NM[cc] || '위도 ' + la + ', 경도 ' + lo)}<br>최근 24시간 기사 ${n.toLocaleString('ko-KR')}건 (1도 칸)${rc ? `<br>종류: 공격 ${rc[0]} · 무력 충돌 ${rc[1]} · 대량 폭력 ${rc[2]}` : ''}<br>마지막 기사: ${t ? kstL(t) + ' (한국 시간)' : '정보 없음'}${u ? `<br><a href="${esc(u)}" target="_blank" rel="noopener">기사 원문 보기</a>` : ''}<br>기사에 나온 장소 기준이에요 · 출처: GDELT`)).addTo(el); }
+    if ($('quakeTg').checked && ev.quakes) for (const [la, lo, m, t, ty, cc, dp] of ev.quakes.items) { const l2 = near(lo); if (!b.contains([la, l2])) continue; const ex = ty !== 'earthquake'; L.circleMarker([la, l2], { renderer: rnd, radius: Math.max(2.5, (m || 2.5) * 1.6 - 2), color: ex ? '#ffffff' : '#ffe14d', weight: 1.2, fillOpacity: ex ? .5 : .08 })
+      .bindTooltip(`${ex ? '폭발' : '지진'} 규모 ${m}`, { sticky: true, className: 'mtTip' }).on('click', () => evCard(`${ex ? '폭발' : '지진'} 규모 ${m}`, `장소: ${esc(cc ? NM[cc] || cc : '바다')} (위도 ${la}, 경도 ${lo})<br>깊이 ${dp}km<br>시간: ${kstL(t)} (한국 시간)<br>출처: <a href="https://earthquake.usgs.gov/earthquakes/map/?extent=${la - 3},${lo - 3}&extent=${la + 3},${lo + 3}" target="_blank" rel="noopener">USGS 지도</a>`)).addTo(el); }
+  };
+  document.querySelectorAll('.ev').forEach((e) => e.addEventListener('change', drawE)); $('milTg').addEventListener('change', drawP);
+  map.on('moveend', () => setTimeout(drawE, 150));
+  fetch('data/national/countries-110m.geojson', { cache: 'force-cache' }).then((r) => r.json()).then((g) => { g.features.forEach((f) => { const p = f.properties; let c = p.ISO_A2 !== '-99' ? p.ISO_A2 : p.ISO_A2_EH; f.cc = c === 'CN-TW' ? 'TW' : c; }); geo = g; drawE(); }).catch(() => {});
+  const evLoad = () => fetch('data/skysea/events.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => { ev = j; drawE(); $('evNote').textContent = '더 보기 자료: ' + kstL(j.updated) + ' (한국 시간) · GDELT, NASA FIRMS, USGS, EASA'; }).catch(() => {});
+  evLoad(); setInterval(evLoad, 600000);
+  const pip = (x, y, ring) => { let a = false; for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) { const [xi, yi] = ring[i], [xj, yj] = ring[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi + 1e-12) + xi) a = !a; } return a; };
+  const ccAt = (la, lo) => { if (!geo) return ''; for (const f of geo.features) { const g = f.geometry, ps = g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]; if (ps.some((p) => pip(lo, la, p[0]))) return f.cc; } return ''; };
+  const countUp = (el2, v) => { const t0 = performance.now(), d = 700; const f = (t) => { const k = Math.min(1, (t - t0) / d); el2.textContent = Math.round(v * (1 - Math.pow(1 - k, 3))).toLocaleString('ko-KR'); if (k < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); };
+  window.mtCard = (la, lo, name, cc0) => {
+    const cc = cc0 || ccAt(la, lo); const sum = (arr, i) => (arr || []).filter((r) => r[3] === cc).reduce((s, r) => s + r[2], 0);
+    const pa = last ? last.counts[cc] || 0 : 0, mi = last ? last.ac.filter((a) => a[8] === cc && a[9]).length : 0, sh = ships ? ships.counts[cc] || 0 : 0;
+    const lv = live ? live.ships.filter((r) => r[6] === cc).length : 0, cf = sum(ev && ev.conflict && ev.conflict.cells), fi = sum(ev && ev.fires && ev.fires.cells);
+    const qk = ev && ev.quakes ? ev.quakes.items.filter((q) => q[5] === cc).length : 0, zn = ev && ev.zones ? ev.zones.items.filter((z) => z.cc.includes(cc)) : [];
+    const rows = [['배 (국기, 하루)', sh], ['비행기 (등록)', pa], ['군용기 표시', mi], ['분쟁 사건 기사', cf], ['위성 화재 열점', fi], ['지진·폭발', qk]];
+    $('cardT').textContent = name; $('cardG').innerHTML = rows.map(([l]) => `<div><div class="l">${l}</div><div class="v">0</div></div>`).join('');
+    $('cardG').querySelectorAll('.v').forEach((e, i) => countUp(e, rows[i][1]));
+    $('cardD').innerHTML = `실시간 배 (연안 수신 기준) ${lv}척<br>비행 회피 구역 안내: ${zn.length ? zn.map((z) => z.id + ', ' + z.valid_until + '까지').join(' / ') : '없음'}<br>배: Global Fishing Watch ${ships ? ships.date_range[0] : ''} 하루 기록 · 비행기: adsb.lol ${last ? kstL(last.updated) : ''}<br>분쟁 사건·위성 화재: 최근 24시간 · 지진·폭발: 최근 7일 (USGS)<br>나라 경계: 바다 위 기록은 나라 숫자에 안 들어가요.`;
+    $('cardD').closest('details').hidden = false; $('card').hidden = false;
+  };
+  const AL = { US: ['USA', 'America', '미합중국', '미 국'], GB: ['UK', 'Britain', 'England', '잉글랜드'], KR: ['South Korea', 'Korea', '대한민국', '남한'], KP: ['North Korea', 'DPRK', '조선'], CN: ['PRC', '중화인민공화국'], TW: ['Taiwan', 'ROC'], RU: ['Russia'], AE: ['UAE'], CD: ['DR Congo', 'DRC'], CZ: ['Czechia'], TR: ['Turkey', '터키'], IR: ['Persia'], VN: ['Viet Nam'], LA: ['Laos'], SY: ['Syria'], NL: ['Holland'], CI: ['Ivory Coast'], MM: ['Burma', '버마'] };
+  let IDX = null;
+  const buildIdx = () => { if (IDX || !geo) return IDX; const ko = {}; (window.mtLbl || []).forEach(([, n, la, lo]) => { const c = ccAt(la, lo); if (c && !ko[c]) ko[c] = [n, la, lo]; });
+    IDX = geo.features.filter((f) => f.cc && f.cc !== '-99').map((f) => { const p = f.properties, k = ko[f.cc] || [NM[f.cc] || p.ADMIN]; const b = L.geoJSON(f).getBounds();
+      return { cc: f.cc, ko: k[0], en: p.ADMIN, f, b, keys: [k[0], p.ADMIN, p.NAME, p.NAME_LONG, p.FORMAL_EN, f.cc, p.ISO_A3, p.ADM0_A3, ...(AL[f.cc] || [])].filter(Boolean).map((x) => String(x).toLowerCase().replace(/\s+/g, '')) }; }); return IDX; };
+  const norm = (x) => x.toLowerCase().replace(/\s+/g, '');
+  const find = (q) => { const ix = buildIdx(); if (!ix || !q) return []; const n = norm(q); const sc = (e) => e.keys.some((k) => k === n) ? 0 : e.keys.some((k) => k.startsWith(n)) ? 1 : e.keys.some((k) => k.includes(n)) ? 2 : 9;
+    return ix.map((e) => [sc(e), e]).filter(([v]) => v < 9).sort((a, b) => a[0] - b[0] || a[1].ko.localeCompare(b[1].ko, 'ko')).slice(0, 6).map(([, e]) => e); };
+  const pick = (e) => { $('qr').hidden = true; $('q').value = e.ko; $('q').blur(); const c = e.b.getCenter(); const lab = (window.mtLbl || []).find((r) => r[1] === e.ko);
+    const z = Math.min(5, Math.max(map.getMinZoom(), map.getBoundsZoom(e.b, false, [40, 40]))); map.flyTo(lab ? [lab[2], lab[3]] : c, z, { duration: .9 }); window.mtCard(lab ? lab[2] : c.lat, lab ? lab[3] : c.lng, e.ko, e.cc); };
+  $('q').addEventListener('input', () => { const r = find($('q').value.trim()); $('qr').innerHTML = r.length ? r.map((e, i) => `<button type="button" data-i="${i}">${e.ko} <span style="opacity:.6">${e.cc}</span></button>`).join('') : '<div class="sub" style="padding:10px">찾는 나라가 없어요</div>'; $('qr').hidden = !$('q').value.trim(); $('qr').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => pick(r[+b.dataset.i]))); });
+  $('q').addEventListener('keydown', (ev2) => { if (ev2.key === 'Enter') { const r = find($('q').value.trim()); if (r[0]) pick(r[0]); } });
+  $('qx').addEventListener('click', () => { $('q').value = ''; $('qr').hidden = true; });
+  $('cardX').addEventListener('click', () => { $('card').hidden = true; }); 
+  const loadL = () => fetch('data/skysea/ships_live.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => { if (live && j.updated === live.updated) return; live = j; drawS(); $('liveNote').textContent = '실시간 배 (연안 수신 기준): ' + j.ships.length.toLocaleString('ko-KR') + '척 · ' + kstL(j.updated) + ' (한국 시간) · 한국 주변 바다만'; }).catch(() => { $('liveNote').textContent = '실시간 배 자료를 아직 못 받았어요.'; });
+  loadL(); setInterval(loadL, 120000);
+  fetch('data/skysea/ships.json', { cache: 'no-store' }).then((r) => r.json()).then((j) => { ships = j; legS = top(j.counts, 7); all(); $('shipNote').textContent = '배: ' + j.date_range[0] + ' 하루 기록이에요. Global Fishing Watch 자료라 며칠 늦게 들어와요.'; }).catch(() => { $('shipNote').textContent = '배 자료를 불러오지 못했어요'; });
+})();
+</script>
+<script src="js/histfx.js" defer></script>
+<script src="js/scenarios.js" defer></script>
+<script src="js/usregime.js" defer></script>
+<script src="js/warrec.js" defer></script>
+<script src="js/cables.js" defer></script>
+<script src="js/seats.js" defer></script>
+<script src="js/elcrime.js" defer></script>
+<script src="js/usdc.js" defer></script>
+<script src="js/usrel.js" defer></script>
+<script src="js/history.js" defer></script>
+<script src="js/mobile.js" defer></script>
+</body></html>

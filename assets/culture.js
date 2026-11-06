@@ -1,7 +1,7 @@
 (function(){
 var C={fest:'#f59e0b',fee:'#e11d48',film:'#2563eb'},HOME=[[33.0,125.0],[38.7,130.0]];
 var map=L.map('map',{zoomControl:true,preferCanvas:true});map.attributionControl.setPrefix(false);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'지도: &copy; OpenStreetMap 기여자'}).addTo(map);
+mtKoreaDark({maxZoom:18,maxNativeZoom:16}).addTo(map);mtKoreaExtras(map);
 function home(){map.fitBounds(HOME,innerWidth<600?{paddingBottomRight:[0,innerHeight*.4]}:{paddingBottomRight:[320,0]})}home();
 document.getElementById('reset').onclick=function(){map.closePopup();home()};
 function won(w){if(!w)return '0원';if(w>=1e8){var e=w/1e8;return (e>=10?Math.round(e).toLocaleString():e.toFixed(1).replace(/\.0$/,''))+'억원'}return Math.round(w/1e4).toLocaleString()+'만원'}
@@ -26,7 +26,7 @@ fetch('data/culture/culture_map.json?v=202610310010').then(function(r){return r.
  d.fee.forEach(function(x){dot(x[0],x[1],x[5],C.fee,4000,'<b>'+esc(x[3])+'</b><br>'+esc(x[4])+(x[2]?' · '+x[2]+'년':'')+'<br>기사 속 출연료: '+esc(x[6])+U+'<br><small>기사에 나온 숫자예요. 공식 통계가 아니에요.'+(x[8]?'<br>'+esc(x[8]):'')+'</small>'+src(x[7],'기사 보기')).addTo(G.fee)});
  d.film.sort(function(a,b){return b[5]-a[5]}).forEach(function(x){dot(x[0]+(Math.random()-.5)*.02,x[1]+(Math.random()-.5)*.02,x[5],C.film,4000,'<b>'+esc(x[4])+'</b><br>받은 곳: '+esc(x[3])+'<br>'+esc(x[2])+'<br>지원결정액: '+won(x[5])+'<br><small>회사 주소 시군구('+esc(x[6])+') 중심점</small>'+src(x[7],'영화진흥위원회 심사결과 공지')).addTo(G.film)});
  document.getElementById('n-fee').textContent=d.fee.length+'건';document.getElementById('n-film').textContent=d.film.length+'건';
- Object.keys(G).forEach(function(k){G[k].addTo(map)});
+ Object.keys(G).forEach(function(k){if(k!='fee')G[k].addTo(map)});
 });
 window.__cmOn=function(k){return map.hasLayer(G[k])};window.__cm=function(k){var l=G[k||'film'].getLayers();if(l[0])l[0].openPopup();return l.length};
 document.getElementById('year').onchange=drawFest;
@@ -39,7 +39,8 @@ function placeLabels(){L2.clearLayers();var used=[],z=map.getZoom(),max=z<=7?(in
   L.marker(b.ll,{icon:L.divIcon({className:'cm-lbl'+(b.k=='film'?' f':''),html:'<span>'+b.t+'</span>',iconSize:[0,0]}),interactive:false,keyboard:false}).addTo(L2)})}
 fetch('data/culture/culture_stats.json?v=202610310850').then(function(r){return r.json()}).then(function(S){
  var u='<span class="u">미확인</span>',F=S.fest,FL=S.film;
- document.getElementById('sum').innerHTML='<h2>2026 축제 계획예산 합계</h2><div class="big">'+eok(F.w)+'원</div><small>축제 '+F.n.toLocaleString()+'건 · 국비 '+eok(F.g)+' · 지방비 '+eok(F.l)+' · 기타 '+eok(F.e)+'</small><small>예산 없음('+F.z+'건): 예산이 0원이거나 비어 있어 건수와 합계에서 뺐어요.</small><small>안성 바우덕이축제(21,826백만원)는 단위가 잘못된 것 같아 합계·표·순위에서 뺐어요. 지도에는 회색 점으로만 보여요.</small><hr><h2>2026 영진위 지원결정액 합계</h2><div class="big">'+(FL.w/1e8).toFixed(1)+'억원</div><small>'+FL.n+'건</small>';
+ document.getElementById('sum').innerHTML='<div class="cm-big"><h2>축제에 쓴 세금</h2><div class="big">'+eok(F.w)+'원</div><small>2026년 전국 지역 축제 '+F.n.toLocaleString()+'곳에 쓰려고 정한 돈이에요.</small></div><div class="cm-big"><h2>영화 지원</h2><div class="big">'+(FL.w/1e8).toFixed(1)+'억원</div><small>2026년 영화진흥위원회가 영화 지원 '+FL.n+'건에 주기로 한 돈이에요.</small></div>';
+ document.getElementById('sumMore').innerHTML='<ul class="cm-mini"><li>축제 돈 나눔: 국비 '+eok(F.g)+' · 지방비 '+eok(F.l)+' · 기타 '+eok(F.e)+'</li><li>예산 없음('+F.z+'건): 예산이 0원이거나 비어 있어 건수와 합계에서 뺐어요.</li><li>안성 바우덕이축제(21,826백만원)는 단위가 잘못된 것 같아 합계·표·순위에서 뺐어요. 지도에는 회색 점으로만 보여요.</li></ul>';
  var t=function(head,rows){return '<table><tr>'+head.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr>'+rows.join('')+'</table>'},td=function(a){return '<tr>'+a.map(function(x,i){return '<td'+(i&&typeof x!='string'||/억|건$/.test(x)?' class="n"':'')+'>'+x+'</td>'}).join('')+'</tr>'};
  document.getElementById('statsBody').innerHTML='<p>모든 숫자는 2026년 계획·결정 금액이에요. 팩트체크를 마친 숫자예요. 예산 없음(28건)과 안성 바우덕이축제(단위 확인 필요)는 뺐어요. 개인은 이름 없이 \'개인\'으로만 적어요.</p>'+
  '<h2>시도별 축제 예산 합계</h2>'+t(['순위','시도','축제 수','예산','국비'],S.sido.map(function(a,i){return td([i+1,a[0],a[1]+'건',eok(a[2]),eok(a[3])])}))+

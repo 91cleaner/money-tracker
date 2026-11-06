@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-29",
+ "updated": "2026-11-02",
  "source": "USAspending.gov API v2 (assistance: grants 02-05, loans 07-08)",
  "source_url": "https://api.usaspending.gov/",
  "period": [
   "2024-10-01",
-  "2026-10-29"
+  "2026-11-02"
  ],
  "note": "Obligations, not payments. Exact recipient-name match after removing legal suffixes; subsidiaries under other names are not included. Loans: obligated amount (subsidy cost) shown; face value kept separately.",
  "checked": 250,
@@ -216,9 +216,19 @@
     "LAJJQWA1PF31",
     "MF2LE5RK6L84"
    ],
-   "grants_usd": 100615999.31,
+   "grants_usd": 100898169.74,
    "loans_usd": 0.0,
    "awards": [
+    {
+     "type": "grant",
+     "id": "W56KGU262A106",
+     "date": "2026-09-21",
+     "usd": 282170.43,
+     "loan_face_usd": null,
+     "agency": "Department of Defense",
+     "desc": "TO SUPPORT DOW OSBP IN THE MENTOR PROTEGE PROGRAM (MPP) TO HELP SMALL BUSINESSES AND NEW ENTRANTS DEVELOP DIVERSE SOLUTIONS TO SOME OF THE G",
+     "url": "https://www.usaspending.gov/award/ASST_NON_W56KGU262A106_097"
+    },
     {
      "type": "grant",
      "id": "W56KGU262A097",
@@ -288,20 +298,10 @@
      "agency": "National Aeronautics and Space Administration",
      "desc": "1. P1.TPC.IMP: THERMOPLASTICS - INTEGRATED MASTER SCHEDULE & PLAN DEVELOPMENT  2. RESIN INFUSION - INTEGRATED MASTER SCHEDULE & PLAN DEVELOP",
      "url": "https://www.usaspending.gov/award/ASST_NON_80NSSC22M0152_080"
-    },
-    {
-     "type": "grant",
-     "id": "N000142021002",
-     "date": "2020-08-01",
-     "usd": 1450804.8,
-     "loan_face_usd": null,
-     "agency": "Department of Defense",
-     "desc": "TURBULENCE MODEL VALIDATION THROUGH JOINT EXPERIMENTAL/ COMPUTATIONAL STUDIES OF SEPARATED FLOW OVER A THREE-DIMENSIONAL TAPERED BUMP",
-     "url": "https://www.usaspending.gov/award/ASST_NON_N000142021002_097"
     }
    ],
-   "n": 15,
-   "source_url": "https://www.usaspending.gov/award/ASST_NON_W56KGU262A097_097"
+   "n": 16,
+   "source_url": "https://www.usaspending.gov/award/ASST_NON_W56KGU262A106_097"
   },
   "ADI": {
    "match_key": "ANALOG DEVICES",

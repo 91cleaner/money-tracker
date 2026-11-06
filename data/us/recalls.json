@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-29",
- "since": "2023-10-29",
+ "updated": "2026-11-02",
+ "since": "2023-11-02",
  "source": "NHTSA Recalls API, openFDA enforcement reports (drug, device, food)",
  "source_url": "https://api.nhtsa.gov/ , https://open.fda.gov/apis/",
  "note": "Strict manufacturer / recalling-firm name match; recalls filed under subsidiaries or other names are not included. Date = NHTSA report received date or FDA report date. Facts only, not investment advice.",
@@ -545,12 +545,20 @@
   },
   "TSLA": {
    "match_key": "TESLA",
-   "n": 21,
+   "n": 27,
    "by_source": {
-    "NHTSA": 21
+    "NHTSA": 27
    },
-   "latest": "2026-08-05",
+   "latest": "2026-09-01",
    "items": [
+    {
+     "src": "NHTSA",
+     "id": "26V558000",
+     "date": "2026-09-01",
+     "what": "SUSPENSION:CRITICAL FASTENERS",
+     "units": null,
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=26V558000"
+    },
     {
      "src": "NHTSA",
      "id": "26V507000",
@@ -562,7 +570,7 @@
     {
      "src": "NHTSA",
      "id": "26V445000",
-     "date": "2026-07-08",
+     "date": "2026-07-07",
      "what": "STRUCTURE:BODY:BUMPERS",
      "units": null,
      "url": "https://www.nhtsa.gov/recalls?nhtsaId=26V445000"
@@ -609,46 +617,38 @@
     },
     {
      "src": "NHTSA",
-     "id": "25V170000",
-     "date": "2025-03-19",
-     "what": "STRUCTURE:BODY",
+     "id": "25V690000",
+     "date": "2025-10-10",
+     "what": "ELECTRICAL SYSTEM:PROPULSION SYSTEM:FUSES, RELAYS, CONTACTS, AND SHUNTS",
      "units": null,
-     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V170000"
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V690000"
     },
     {
      "src": "NHTSA",
-     "id": "25V092000",
-     "date": "2025-02-15",
-     "what": "STEERING:ELECTRIC POWER ASSIST SYSTEM",
+     "id": "25V658000",
+     "date": "2025-10-02",
+     "what": "ELECTRICAL SYSTEM:WIRING",
      "units": null,
-     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V092000"
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V658000"
     },
     {
      "src": "NHTSA",
-     "id": "25V002000",
-     "date": "2025-01-07",
-     "what": "BACK OVER PREVENTION:SOFTWARE",
+     "id": "25V490000",
+     "date": "2025-07-28",
+     "what": "ELECTRICAL SYSTEM:HORN",
      "units": null,
-     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V002000"
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V490000"
     },
     {
      "src": "NHTSA",
-     "id": "24V935000",
-     "date": "2024-12-17",
-     "what": "TIRES:PRESSURE MONITORING AND REGULATING SYSTEMS",
+     "id": "25V410000",
+     "date": "2025-06-18",
+     "what": "SEATS:CRITICAL FASTENERS",
      "units": null,
-     "url": "https://www.nhtsa.gov/recalls?nhtsaId=24V935000"
-    },
-    {
-     "src": "NHTSA",
-     "id": "24V832000",
-     "date": "2024-11-05",
-     "what": "ELECTRICAL SYSTEM:PROPULSION SYSTEM:INVERTER",
-     "units": null,
-     "url": "https://www.nhtsa.gov/recalls?nhtsaId=24V832000"
+     "url": "https://www.nhtsa.gov/recalls?nhtsaId=25V410000"
     }
    ],
-   "source_url": "https://www.nhtsa.gov/recalls?nhtsaId=26V507000"
+   "source_url": "https://www.nhtsa.gov/recalls?nhtsaId=26V558000"
   },
   "AMGN": {
    "match_key": "AMGEN",
@@ -719,9 +719,9 @@
   },
   "KR": {
    "match_key": "KROGER",
-   "n": 9,
+   "n": 8,
    "by_source": {
-    "openFDA food": 9
+    "openFDA food": 8
    },
    "latest": "2025-10-29",
    "items": [
@@ -788,14 +788,6 @@
      "what": "Home Chef Chicken Street Taco, Net Wt. 9.93 oz, packaged in a plastic tray with clear plas",
      "class": "Class II",
      "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0130-2025%22"
-    },
-    {
-     "src": "openFDA food",
-     "id": "F-0300-2024",
-     "date": "2023-11-01",
-     "what": "Kroger Collard Greens packaged in plastic 16oz bag - 8 bags per case",
-     "class": "Class I",
-     "url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22F-0300-2024%22"
     }
    ],
    "source_url": "https://api.fda.gov/food/enforcement.json?search=recall_number:%22H-0094-2026%22"
@@ -1014,9 +1006,9 @@
   },
   "MDT": {
    "match_key": "MEDTRONIC",
-   "n": 21,
+   "n": 22,
    "by_source": {
-    "openFDA device": 21
+    "openFDA device": 22
    },
    "latest": "2026-05-06",
    "items": [
@@ -1027,6 +1019,14 @@
      "what": "Medtronic Sphere-9 Catheter, Model Number AFR-00001; catheter, percutaneous, cardiac ablat",
      "class": "Class II",
      "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1948-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0726-2026",
+     "date": "2025-12-10",
+     "what": "Aurora EV-ICD and Clinical EV-ICD, single chamber, extravascular implantable cardioverter ",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0726-2026%22"
     },
     {
      "src": "openFDA device",
@@ -1107,14 +1107,6 @@
      "what": "COBALT XT VR MRI SureScan, Model Number DVPA2D1, Implantable Cardioverter Defibrillator",
      "class": "Class II",
      "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2210-2024%22"
-    },
-    {
-     "src": "openFDA device",
-     "id": "Z-2205-2024",
-     "date": "2024-07-03",
-     "what": "MIRRO MRI VR SureScan, Model Number DVME3D4, Implantable Cardioverter Defibrillator",
-     "class": "Class II",
-     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2205-2024%22"
     }
    ],
    "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1948-2026%22"
