@@ -37,7 +37,7 @@ class PagesEntrySmokeTests(unittest.TestCase):
                     continue
                 path = root / file_path
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text('\\n'.join(markers), encoding='utf-8')
+                path.write_text('\n'.join(markers), encoding='utf-8')
             with self.assertRaisesRegex(RuntimeError, 'Missing Pages artifact: skysea.html'):
                 CONTRACT['check_local'](root)
 
@@ -79,7 +79,7 @@ class PagesEntrySmokeTests(unittest.TestCase):
             for _, file_path, markers in CONTRACT['CHECKS']:
                 path = root / file_path
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text('\\n'.join(markers), encoding='utf-8')
+                path.write_text('\n'.join(markers), encoding='utf-8')
             requested = []
 
             def fake_urlopen(request, timeout):
@@ -107,7 +107,7 @@ class PagesEntrySmokeTests(unittest.TestCase):
                 return False
 
             def read(self):
-                return b'href="korea.html" href="world-intelligence/" href="skysea.html"\\n'
+                return b'href="korea.html" href="world-intelligence/" href="skysea.html"\n'
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
