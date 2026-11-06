@@ -57,7 +57,7 @@
   var EXACT = {
     "의원 이름 입력": "Enter member name", "의원 이름": "Member name", "업종 히트맵": "Sector heatmap", "언어 선택": "Language",
     "한눈에 보기": "At a glance", "주가 기록(종가)": "Closing price record", "국회에 올라온 법안": "Bill filed in the National Assembly", "대만 정부 발표": "Taiwan government announcement", "중국 정부 발표": "Chinese government announcement", "일본 정부 발표": "Japanese government announcement",
-    "의원": "Member", "종목": "Asset", "구분": "Type", "신고일": "Filing date", "거래일": "Reported trade date", "금액": "Amount", "금액 구간": "Amount range", "신고까지": "Lag", "원문": "Source",
+    "의원": "Member", "종목": "Asset", "구분": "Type", "신고일": "Filing date", "거래일": "Reported trade date", "금액": "Amount", "금액 구간": "Amount range", "신고까지": "Filing lag", "원문": "Source",
     "티커": "Ticker", "회사": "Company", "종가": "Close", "1일": "1D", "1주": "1W", "1달": "1M", "최근 21거래일": "Past 21 trading days", "최근 흐름": "Trend", "열기": "Open", "연초 대비": "YTD",
     "구입": "Buy", "처분": "Sale", "교환": "Exchange", "구입(P)": "Purchase (P)", "처분(S)": "Sale (S)", "교환(E)": "Exchange (E)",
     "법안": "Bills", "규제": "Regulation", "위원회": "Committee", "연방 계약": "Federal contracts", "로비": "Lobbying", "후원": "PAC", "의원 거래": "Reported member transactions", "임원 거래": "Reported insider transactions", "보조금·대출": "Grants & loans", "리콜": "Recalls", "발표 전 거래": "Reported transactions dated before announcements", "본사·공장": "HQ & plants", "기타 지표": "Other indicators",
@@ -78,7 +78,7 @@
     "MS 본사 위치 확인됨": "Microsoft business address (SEC filing)", "데이터상 SEC 제출 서류의 사업장 주소가 워싱턴주 레드먼드(One Microsoft Way)임.": "Data shows the business address in SEC filings is Redmond, Washington (One Microsoft Way).",
     "MS 연방 계약 약 11억 달러": "Microsoft federal contracts: approx. $1.10B", "데이터상 2024-10-01~2026-10-28 USAspending 연방 계약 합계 약 11.0억 달러. 최다 발주 기관은 국방부(약 8.4억 달러).": "Data shows approx. $1.10B in federal contracts on USAspending from Oct 1, 2024 to Oct 28, 2026. Top awarding agency: Department of Defense (approx. $838M).",
     "MS 로비 공시 148건": "Microsoft: 148 lobbying filings", "데이터상 2025~2026 MS 로비 공시(LDA) 148건, 보고 금액 합계 약 2,322만 달러.": "Data shows 148 Microsoft lobbying disclosure (LDA) filings in 2025–2026, reported total approx. $23.2M.",
-    "메타 본사 위치 확인됨": "Meta HQ location confirmed", "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 멘로파크(1 Meta Way)임.": "Data shows the business address in SEC filings is Menlo Park, California (1 Meta Way).",
+    "메타 본사 위치 확인됨": "Meta business address (SEC filing)", "데이터상 SEC 제출 서류의 사업장 주소가 캘리포니아주 멘로파크(1 Meta Way)임.": "Data shows the business address in SEC filings is Menlo Park, California (1 Meta Way).",
     "메타 로비 공시 163건": "Meta: 163 lobbying filings", "데이터상 2025~2026 메타 로비 공시(LDA) 163건, 보고 금액 합계 약 5,794만 달러.": "Data shows 163 Meta lobbying disclosure (LDA) filings in 2025–2026, reported total approx. $57.9M.",
     "메타 PAC 후보 기부": "Meta PAC giving to candidates", "데이터상 2026 선거주기 META PLATFORMS, INC. PAC의 연방 후보 기부 합계 34.85만 달러(~2026-10-14). 임직원 자발 기부 PAC이며 회사 자금 아님.": "Data shows the 2026 election cycle: META PLATFORMS, INC. PAC gave a total of $348,500 to federal candidate committees (through Oct 14, 2026). The PAC is funded by voluntary employee contributions, not company money.",
     // command-room demo routes
@@ -310,7 +310,7 @@
     ["임직원 자발 기부로 운영되는 PAC이며 회사 자금이 아님 · 개별 후보 미표시", "A PAC funded by voluntary employee contributions, not company funds · individual candidates not shown"],
     ["데이터상 의뢰인 이름이 회사명으로 시작하는 공시 합산", "Data shows: filings summed where the client name starts with the company name"],
     ["소속 위원회", "Committees"], ["데이터에 위원회 정보가 없습니다.", "No committee information in the data."], ["정당 미상", "Party unknown"],
-    ["거래 신고 요약 · 신고 기준", "Reported transaction summary · based on PTR disclosures"], ["신고까지 중앙값", "Median lag"], ["주식 숙제 늦게 낸 것 (45일 넘김)", "Reported filing lag over 45 days (review source)"], ["가장 최근 신고일", "Most recent filing date"], ["기록 없음", "no records"], ["전체 신고", "All reported entries"],
+    ["거래 신고 요약 · 신고 기준", "Reported transaction summary · based on PTR disclosures"], ["신고까지 중앙값", "Median filing lag"], ["주식 숙제 늦게 낸 것 (45일 넘김)", "Reported filing lag over 45 days (review source)"], ["가장 최근 신고일", "Most recent filing date"], ["기록 없음", "no records"], ["전체 신고", "All reported entries"],
     ["많이 거래한 종목 · 건수 기준", "Tickers most often reported · by entry count"], ["티커가 있는 거래 신고가 없습니다", "No reported transactions with a ticker in this dataset"], ["업종별 · 건수 기준", "By sector · by entry count"], ["업종으로 묶을 거래가 없습니다", "No reported transaction entries to group by sector"], ["업종 미분류", "Unclassified sector"],
     ["업종은 data/search-index.json의 자체 분류입니다.", "Sectors are this site's own classification in data/search-index.json."],
     ["위원회와 거래 업종 · 데이터상 겹침", "Committees and sectors with reported transactions · overlap in the data"], ["데이터상 겹침이 없습니다 (위원회에 연결된 업종에서 거래 신고가 없거나, 위원회에 연결된 업종 분류가 아직 없음)", "No overlap in the data (no reported transaction entries in sectors linked to the committees, or no sector classification linked to the committees yet)"], ["위원회 정보가 없어 비교하지 않았습니다", "No committee information, so no comparison was made"],
