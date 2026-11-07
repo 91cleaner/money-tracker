@@ -493,6 +493,34 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 }
                 self.assert_rejected(item)
 
+    def test_json_quoted_credentials_cannot_be_published(self):
+        # Upstream HTTP exceptions can include JSON bodies. Quoted keys (and
+        # escaped JSON in a nested error) previously bypassed key=value rules.
+        leaked = (
+            '{"api_key":"synthetic_private_123456"}',
+            r'{\"client_secret\":\"synthetic_private_123456\"}',
+            '{"Authorization":"synthetic_private_123456"}',
+        )
+        for message in leaked:
+            with self.subTest(message=message):
+                item = status()
+                item["collectors"]["taiwan_legislature"]["errors"] = [message]
+                self.assert_rejected(item)
+                item["collectors"]["taiwan_legislature"] = {
+                    "status": "failed", "error": message,
+                }
+                self.assert_rejected(item)
+                self.assert_trades_rejected(json.dumps({
+                    "note": message, "trades": [],
+                }))
+        # Ordinary non-secret JSON diagnostic text remains usable.
+        item = status()
+        item["collectors"]["taiwan_legislature"]["errors"] = [
+            '{"error":"upstream unavailable"}',
+        ]
+        result = self.run_check(item)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_public_trade_metadata_query_token_rejected(self):
         self.assert_trades_rejected(json.dumps({
             "note": "GET https://api.example.org/?token=private_token_123",
