@@ -745,6 +745,25 @@ class PublicCollectionStatusTests(unittest.TestCase):
                     payload["trades"][0][field] = value
                 self.assert_trades_rejected(json.dumps(payload))
 
+    def test_deeply_encoded_secrets_and_markup_are_rejected(self):
+        # More than three nested URL encodings used to bypass the release gate.
+        # Check both collector errors and the published filing text.
+        for raw in ("token%3Dsynthetic_secret_123456789", "%3Cscript%3E"):
+            for depth in (4, 8, 14):
+                encoded = raw
+                for _ in range(depth):
+                    encoded = encoded.replace("%", "%25")
+                with self.subTest(raw=raw, depth=depth):
+                    item = status()
+                    item["collectors"]["taiwan_legislature"]["errors"] = [
+                        "fetch failed: " + encoded
+                    ]
+                    self.assert_rejected(item)
+                    self.assert_trades_rejected(json.dumps({
+                        "trades": [public_trade(who="Member " + encoded)]
+                    }))
+                    self.trades.write_text('{"trades":[]}', encoding="utf-8")
+
     def test_benign_encoded_diagnostics_remain_public(self):
         item = status()
         item["collectors"]["taiwan_legislature"]["errors"] = [
