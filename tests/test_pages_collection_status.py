@@ -402,6 +402,33 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 }
                 self.assert_rejected(item)
 
+    def test_collector_error_query_and_header_tokens_rejected(self):
+        # Upstream HTTP errors can echo URL query credentials and auth headers.
+        # These variants were not covered by the original API-key-only filter.
+        leaked = (
+            "GET https://api.example.org/?token=very_private_value_123",
+            "GET https://api.example.org/?key=very_private_value_123",
+            "GET https://api.example.org/?apiKey=very_private_value_123",
+            "X-Auth-Token: very_private_value_123",
+            "session_token=very_private_value_123",
+            "GET https://service_user:password123@api.example.org/failed",
+        )
+        for message in leaked:
+            with self.subTest(message=message):
+                item = status()
+                item["collectors"]["taiwan_legislature"]["errors"] = [message]
+                self.assert_rejected(item)
+                item["collectors"]["taiwan_legislature"] = {
+                    "status": "failed", "error": message,
+                }
+                self.assert_rejected(item)
+
+    def test_public_trade_metadata_query_token_rejected(self):
+        self.assert_trades_rejected(json.dumps({
+            "note": "GET https://api.example.org/?token=private_token_123",
+            "trades": [],
+        }))
+
     def test_unknown_top_level_status_fields_cannot_publish_credentials(self):
         # Only created_at, pipeline and collectors belong in public status.
         item = status()
