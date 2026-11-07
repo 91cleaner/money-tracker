@@ -61,8 +61,16 @@ SECRET_IN_ERROR = re.compile(
 )
 
 
+def has_unsafe_controls(value):
+    # Prevent terminal escape sequences, log-line injection, and Unicode
+    # bidirectional overrides in public collector errors and filing text.
+    # This also blocks control characters inside JSON-escaped strings.
+    return bool(re.search(r"[\\x00-\\x1f\\x7f-\\x9f\\u202a-\\u202e\\u2066-\\u2069]", value))
+
+
 def safe_public_error(value):
     return (isinstance(value, str) and bool(value.strip())
+            and not has_unsafe_controls(value)
             and "<" not in value and ">" not in value
             and not SECRET_IN_ERROR.search(value))
 
@@ -138,6 +146,7 @@ try:
     def safe_public_text(value):
         return (not isinstance(value, str)
                 or ("<" not in value and ">" not in value
+                    and not has_unsafe_controls(value)
                     and not SECRET_IN_ERROR.search(value)))
     if any(not safe_public_text(value) for key, value in pub.items() if key != "trades"):
         raise ValueError("unsafe public ledger metadata")
