@@ -76,6 +76,11 @@ try:
             return False
         if any(ch.isspace() or ord(ch) < 32 or ord(ch) == 127 for ch in value):
             return False
+        # A valid URL can still contain raw markup delimiters. Several views
+        # insert filing links into HTML attributes, so reject delimiter-based
+        # attribute/markup injection before the public artifact is released.
+        if any(ch in value for ch in ('"', "'", "<", ">", chr(96))):
+            return False
         try:
             url = urlsplit(value)
             return (url.scheme in ("http", "https") and bool(url.hostname)
