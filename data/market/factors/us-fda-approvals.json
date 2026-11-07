@@ -2,9 +2,9 @@
  "source": "U.S. FDA · openFDA Drugs@FDA API",
  "source_url": "https://open.fda.gov/apis/drug/drugsfda/",
  "note": "최근 약 13개월 신규 허가(ORIG·AP). novel=true는 신규 분자(제출 분류 TYPE 1). 기업·주가 영향은 단정하지 않음. openFDA는 FDA 공식 웹사이트와 지연·차이가 있을 수 있음.",
- "collected_at": "2026-11-06T23:44:06.471Z",
- "since": "2025-10-02",
- "count": 264,
+ "collected_at": "2026-11-07T23:40:55.466Z",
+ "since": "2025-10-03",
+ "count": 263,
  "novel_count": 17,
  "items": [
   {
@@ -2391,6 +2391,20 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214875"
   },
   {
+   "application": "ANDA214880",
+   "sponsor": "MICRO LABS",
+   "brand": [
+    "BRIVARACETAM"
+   ],
+   "ingredients": [
+    "BRIVARACETAM"
+   ],
+   "date": "2026-02-23",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=214880"
+  },
+  {
    "application": "ANDA218249",
    "sponsor": "HAINAN POLY",
    "brand": [
@@ -3710,34 +3724,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216504"
-  },
-  {
-   "application": "ANDA215324",
-   "sponsor": "STERISCIENCE",
-   "brand": [
-    "VANCOMYCIN HYDROCHLORIDE"
-   ],
-   "ingredients": [
-    "VANCOMYCIN HYDROCHLORIDE"
-   ],
-   "date": "2025-10-02",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=215324"
-  },
-  {
-   "application": "ANDA219152",
-   "sponsor": "BIONPHARMA",
-   "brand": [
-    "ETRAVIRINE"
-   ],
-   "ingredients": [
-    "ETRAVIRINE"
-   ],
-   "date": "2025-10-02",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219152"
   }
  ]
 }
