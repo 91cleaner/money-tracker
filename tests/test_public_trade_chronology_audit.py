@@ -49,6 +49,17 @@ class PublicTradeChronologyAuditTests(unittest.TestCase):
         self.assertEqual(problems["invalid-filing-url"], [1])
         self.assertEqual(problems["invalid-transaction-date"], [2])
 
+    def test_filing_urls_rejected_before_urlsplit_normalizes_controls(self):
+        house = trade()["doc"]
+        senate = "https://efdsearch.senate.gov/search/view/ptr/example/"
+        bad_urls = [
+            "\n" + house, "\t" + senate, house + "\r", house + " ",
+            house + "`", house.replace("https://", "https://user:secret@"),
+        ]
+        problems = audit.audit_rows([trade(doc=url) for url in bad_urls],
+                                    date(2026, 11, 8))
+        self.assertEqual(problems["invalid-filing-url"], list(range(len(bad_urls))))
+
     def test_cli_reports_only_indices_not_secret_or_member_text(self):
         secret = "api_key=DO_NOT_ECHO_123456789"
         with tempfile.TemporaryDirectory() as directory:
