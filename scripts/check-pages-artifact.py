@@ -184,8 +184,12 @@ try:
     stamp = status.get("created_at")
     if not isinstance(stamp, str):
         raise ValueError("missing created_at timestamp")
-    # datetime.fromisoformat includes the untrusted input in ValueError.
-    # This is a public Actions log: never echo a credential-bearing timestamp.
+    # fromisoformat also accepts a space/X separator and timezone offsets
+    # with seconds. Require the documented RFC 3339 wire format so malformed
+    # collector timestamps cannot be treated as trustworthy release metadata.
+    # Never include the untrusted timestamp in public Actions diagnostics.
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})", stamp):
+        raise ValueError("invalid created_at timestamp")
     try:
         created = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
     except ValueError:
