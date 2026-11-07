@@ -8,6 +8,8 @@ on:
       - 'data/us/trades_public.json'
       - 'scripts/prepare-public-pages.py'
       - 'scripts/build_public_trades.py'
+      - 'scripts/audit-public-trade-chronology.py'
+      - 'tests/test_public_trade_chronology_audit.py'
       - '.github/workflows/pages-collection-status-preflight.yml'
   push:
     branches: [main]
@@ -18,6 +20,8 @@ on:
       - 'data/us/trades_public.json'
       - 'scripts/prepare-public-pages.py'
       - 'scripts/build_public_trades.py'
+      - 'scripts/audit-public-trade-chronology.py'
+      - 'tests/test_public_trade_chronology_audit.py'
       - '.github/workflows/pages-collection-status-preflight.yml'
   workflow_dispatch:
 permissions:
@@ -32,7 +36,13 @@ jobs:
           python-version: '3.11'
       - name: Reject malformed public collector status before deployment
         run: python3 -m unittest discover -s tests -p 'test_pages_collection_status.py' -v
+      - name: Test read-only PTR chronology audit
+        run: python3 -m unittest discover -s tests -p 'test_public_trade_chronology_audit.py' -v
       - name: Build actual public Pages artifact
         run: python3 scripts/prepare-public-pages.py
       - name: Validate actual public artifact and collector status
         run: python3 scripts/check-pages-artifact.py
+      - name: Summarize all PTR date anomalies (diagnostic only)
+        if: always()
+        continue-on-error: true
+        run: python3 scripts/audit-public-trade-chronology.py
