@@ -90,9 +90,10 @@ try:
             trade_date = date.fromisoformat(trade["d"])
         except ValueError:
             raise ValueError(f"trade {index}: invalid transaction date") from None
-        # A future-dated trade is not a completed historical STOCK Act trade.
-        # Allow one UTC calendar day for source timezone/clock differences.
-        if trade_date > datetime.now(timezone.utc).date() + timedelta(days=1):
+        # House/Senate PTR transaction dates are US-local calendar dates.
+        # US local time is never ahead of UTC's calendar day, so allowing
+        # tomorrow here can publish an uncompleted trade as historical.
+        if trade_date > datetime.now(timezone.utc).date():
             raise ValueError(f"trade {index}: future transaction date")
     extra_top = sorted(set(pub) - {"updated", "source", "note", "trades"})
     allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
