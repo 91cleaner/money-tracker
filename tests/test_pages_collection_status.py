@@ -1,5 +1,6 @@
 """Pre-publish regression tests for the public collector status file."""
 import json
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import subprocess
 import sys
@@ -149,6 +150,30 @@ class PublicCollectionStatusTests(unittest.TestCase):
 
     def test_unapproved_public_trade_fields_are_rejected(self):
         self.assert_trades_rejected('{"trades":[{"who":"test","private_note":"not public"}]}')
+
+    def test_unknown_public_trade_key_names_never_echo_credentials(self):
+        # Rejected object keys are untrusted just like duplicate keys.
+        # The CI diagnostic must not reveal their contents.
+        secret = "api_key=do_not_echo_123456789"
+        for payload in (
+            {"trades": [], secret: "private"},
+            {"trades": [public_trade(**{secret: "private"})]},
+        ):
+            with self.subTest(top_level=secret in payload):
+                self.trades.write_text(json.dumps(payload), encoding="utf-8")
+                result = self.run_check(status())
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertIn("Invalid public trades_public.json", result.stderr)
+                self.assertNotIn(secret, result.stderr)
+
+    def test_future_dated_trade_is_not_a_historical_filing(self):
+        # A syntactically valid future date must not be published as a
+        # completed historical transaction.
+        future = (datetime.now(timezone.utc).date() + timedelta(days=2)).isoformat()
+        for bad in (future, "2099-01-01"):
+            with self.subTest(date=bad):
+                self.assert_trades_rejected(
+                    json.dumps({"trades": [public_trade(d=bad)]}))
 
     def test_duplicate_public_trade_keys_cannot_hide_a_ledger(self):
         self.assert_trades_rejected('{"trades":[{"who":"test"}],"trades":[]}')
