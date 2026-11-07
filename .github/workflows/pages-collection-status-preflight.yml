@@ -7,12 +7,17 @@ on:
       - 'data/search/collection-status.json'
       - 'data/us/trades_public.json'
       - 'scripts/prepare-public-pages.py'
+      - 'scripts/build_public_trades.py'
       - '.github/workflows/pages-collection-status-preflight.yml'
   push:
     branches: [main]
     paths:
       - 'scripts/check-pages-artifact.py'
       - 'tests/test_pages_collection_status.py'
+      - 'data/search/collection-status.json'
+      - 'data/us/trades_public.json'
+      - 'scripts/prepare-public-pages.py'
+      - 'scripts/build_public_trades.py'
       - '.github/workflows/pages-collection-status-preflight.yml'
   workflow_dispatch:
 permissions:
