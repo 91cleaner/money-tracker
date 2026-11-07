@@ -368,6 +368,26 @@ class PublicCollectionStatusTests(unittest.TestCase):
         item["pipeline"] = "ai-live"
         self.assert_rejected(item)
 
+    def test_duplicate_keys_never_echo_secrets_in_ci_logs(self):
+        # GitHub Actions logs are readable for this public repository. Even a
+        # rejected malicious JSON key must never be echoed into those logs.
+        secret = "api_key=do_not_echo_123456789"
+        raw = json.dumps(status()).replace(
+            '"pipeline":', f'"{secret}": 1, "{secret}": 2, "pipeline":', 1)
+        result = self.run_check(raw, raw=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Invalid public collection-status.json", result.stderr)
+        self.assertNotIn(secret, result.stderr)
+
+        self.trades.write_text(
+            f'{{"trades": [], "{secret}": 1, "{secret}": 2}}',
+            encoding="utf-8",
+        )
+        result = self.run_check(status())
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Invalid public trades_public.json", result.stderr)
+        self.assertNotIn(secret, result.stderr)
+
     def test_duplicate_error_keys_cannot_hide_outage(self):
         raw = json.dumps(status()).replace('"errors": ["members: fetch failed"]',
                                           '"errors": ["members: fetch failed"], "errors": []')
