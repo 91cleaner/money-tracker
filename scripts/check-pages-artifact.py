@@ -156,7 +156,7 @@ try:
         if submitted > datetime.now(timezone.utc).date():
             raise ValueError(f"trade {index}: future submission date")
     extra_top = sorted(set(pub) - {"updated", "source", "note", "trades"})
-    allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
+    allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state", "verification"}
     extra_rows = sorted({k for t in pub["trades"] for k in t} - allowed)
     if extra_top or extra_rows:
         # Rejected JSON key names are untrusted and can contain API secrets.
@@ -176,6 +176,19 @@ try:
     if any(value is None or not public_scalar(value)
            for trade in pub["trades"] for value in trade.values()):
         raise ValueError("public trade values must be non-null scalars")
+    # The pending public PTR builder (#504) preserves a source-review flag.
+    # Accept only its documented public states; arbitrary reviewer notes must
+    # never become public data merely because the field is allowlisted.
+    approved_verification = {
+        "machine_parsed_requires_review", "verified_against_original", "unknown",
+    }
+    for index, trade in enumerate(pub["trades"]):
+        if "verification" in trade and (
+            not isinstance(trade["verification"], str)
+            or trade["verification"] not in approved_verification
+        ):
+            raise ValueError(f"trade {index}: verification must be an approved public status")
+
     # The allowlisted public fields are still displayed in HTML. Prevent
     # upstream filing text/metadata from carrying raw markup or credentials
     # into the published JSON even if a particular view escapes its output.
