@@ -138,6 +138,30 @@ class PublicCollectionStatusTests(unittest.TestCase):
             with self.subTest(raw=raw):
                 self.assert_trades_rejected(raw)
 
+    def test_unsafe_filing_urls_are_rejected_before_publication(self):
+        # The doc field becomes a clickable source link in US views.
+        for bad in (
+            "javascript:alert(1)", "data:text/html,unsafe", "file:///etc/passwd",
+            "//disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/a.pdf",
+            "https://user:pass@example.org/filing.pdf",
+            "https://example.org\\\\@evil.example/filing.pdf",
+            "https://example.org/with space.pdf",
+            "https://example.org/line\\nfeed.pdf",
+            "https://",
+        ):
+            with self.subTest(doc=bad):
+                self.assert_trades_rejected(
+                    json.dumps({"trades": [{"who": "Test", "doc": bad}]})
+                )
+
+    def test_official_https_filing_url_and_absent_doc_are_allowed(self):
+        self.trades.write_text(json.dumps({"trades": [
+            {"who": "Test", "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf"},
+            {"who": "Unlinked filing"},
+        ]}), encoding="utf-8")
+        result = self.run_check(status())
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_scalar_public_trade_values_are_accepted(self):
         self.trades.write_text(
             '{"source":"official-filing","updated":null,"trades":'
