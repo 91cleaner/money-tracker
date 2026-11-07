@@ -258,6 +258,25 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 self.assert_trades_rejected(
                     json.dumps({"trades": [public_trade(doc=bad)]}))
 
+    def test_official_host_without_actual_ptr_filing_is_rejected(self):
+        # An official domain alone is insufficient: homepages, unrelated
+        # pages and nonstandard ports cannot verify a transaction.
+        for bad in (
+            "https://disclosures-clerk.house.gov/",
+            "https://disclosures-clerk.house.gov/public_disc/",
+            "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/",
+            "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/not-a-pdf",
+            "https://efdsearch.senate.gov/",
+            "https://efdsearch.senate.gov/search/",
+            "https://disclosures-clerk.house.gov:4443/public_disc/ptr-pdfs/2026/20035778.pdf",
+            "https://disclosures-clerk.house.gov:bad/public_disc/ptr-pdfs/2026/20035778.pdf",
+            "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf?token=x",
+            "https://efdsearch.senate.gov/search/view/ptr/example/#unverified",
+        ):
+            with self.subTest(doc=bad):
+                self.assert_trades_rejected(
+                    json.dumps({"trades": [public_trade(doc=bad)]}))
+
     def test_scalar_public_trade_values_are_accepted(self):
         self.trades.write_text(json.dumps({
             "source": "official-filing", "updated": None,
