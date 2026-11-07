@@ -183,7 +183,12 @@ try:
     stamp = status.get("created_at")
     if not isinstance(stamp, str):
         raise ValueError("missing created_at timestamp")
-    created = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    # datetime.fromisoformat includes the untrusted input in ValueError.
+    # This is a public Actions log: never echo a credential-bearing timestamp.
+    try:
+        created = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    except ValueError:
+        raise ValueError("invalid created_at timestamp") from None
     if created.tzinfo is None or created.utcoffset() is None:
         raise ValueError("created_at must include a timezone")
     # A future-dated collection can falsely appear fresher than the source.
