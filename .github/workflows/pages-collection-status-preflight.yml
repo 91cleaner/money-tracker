@@ -5,6 +5,8 @@ on:
       - 'scripts/check-pages-artifact.py'
       - 'tests/test_pages_collection_status.py'
       - 'data/search/collection-status.json'
+      - 'data/us/trades_public.json'
+      - 'scripts/prepare-public-pages.py'
       - '.github/workflows/pages-collection-status-preflight.yml'
   push:
     branches: [main]
