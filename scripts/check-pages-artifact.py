@@ -119,6 +119,26 @@ try:
                 raise ValueError(f"trade {index}: filing date predates transaction")
             if filing_date > datetime.now(timezone.utc).date():
                 raise ValueError(f"trade {index}: future filing date")
+    # "fd" (notification/record date) and "filed" (filing submission date)
+    # are distinct public fields. Validating only fd leaves an actual filing
+    # dated before its reported transaction looking like a completed report.
+    # Do not require filed >= fd: those two dates have different semantics.
+    for index, trade in enumerate(pub["trades"]):
+        if "filed" not in trade:
+            continue
+        filed_text = trade["filed"]
+        if (not isinstance(filed_text, str)
+                or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", filed_text)):
+            raise ValueError(f"trade {index}: invalid submission date")
+        try:
+            submitted = date.fromisoformat(filed_text)
+        except ValueError:
+            raise ValueError(f"trade {index}: invalid submission date") from None
+        transaction = date.fromisoformat(trade["d"])
+        if submitted < transaction:
+            raise ValueError(f"trade {index}: submission predates transaction")
+        if submitted > datetime.now(timezone.utc).date():
+            raise ValueError(f"trade {index}: future submission date")
     extra_top = sorted(set(pub) - {"updated", "source", "note", "trades"})
     allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
     extra_rows = sorted({k for t in pub["trades"] for k in t} - allowed)
