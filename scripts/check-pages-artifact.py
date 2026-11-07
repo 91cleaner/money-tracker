@@ -166,6 +166,19 @@ try:
     if any("doc" in trade and not safe_filing_url(trade["doc"])
            for trade in pub["trades"]):
         raise ValueError("filing doc must be a safe absolute HTTP(S) URL")
+
+    # An official House PTR PDF archive cannot predate the transaction it
+    # reports, nor can a future-year archive already contain a filed report.
+    # This checks the full public ledger, independently of the recent-PTR
+    # quarantine guard; do not infer a corrected trade date from the URL.
+    for index, trade in enumerate(pub["trades"]):
+        filing = urlsplit(trade["doc"])
+        if filing.hostname == "disclosures-clerk.house.gov":
+            archive_year = int(filing.path.split("/")[3])
+            if archive_year < int(trade["d"][:4]):
+                raise ValueError(f"trade {index}: filing archive predates transaction")
+            if archive_year > datetime.now(timezone.utc).year:
+                raise ValueError(f"trade {index}: future filing archive")
 except (OSError, UnicodeError, ValueError, TypeError) as exc:
     sys.exit("Invalid public trades_public.json: " + str(exc))
 
