@@ -311,6 +311,27 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 self.assert_trades_rejected(
                     json.dumps({"trades": [public_trade(doc=bad)]}))
 
+    def test_house_ptr_archive_chronology_is_verified(self):
+        # A House PDF archive year is the filing year, not a substitute for
+        # the transaction date. A report cannot be filed before its trade.
+        for archive_year in ("2025", "2099"):
+            with self.subTest(archive_year=archive_year):
+                self.assert_trades_rejected(json.dumps({
+                    "trades": [public_trade(
+                        d="2026-10-20",
+                        doc=("https://disclosures-clerk.house.gov/"
+                             f"public_disc/ptr-pdfs/{archive_year}/20035778.pdf"),
+                    )]
+                }))
+
+    def test_house_ptr_late_filing_archive_remains_valid(self):
+        # A 2025 trade may legitimately appear in a 2026 filing archive.
+        self.trades.write_text(json.dumps({
+            "trades": [public_trade(d="2025-10-20")]
+        }), encoding="utf-8")
+        result = self.run_check(status())
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_scalar_public_trade_values_are_accepted(self):
         self.trades.write_text(json.dumps({
             "source": "official-filing", "updated": None,
