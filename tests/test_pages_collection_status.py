@@ -352,6 +352,31 @@ class PublicCollectionStatusTests(unittest.TestCase):
         result = self.run_check(status())
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_submission_date_cannot_precede_transaction(self):
+        # filed is the actual submission date, distinct from fd. A plausible
+        # fd must not mask a report supposedly filed before its transaction.
+        self.assert_trades_rejected(json.dumps({
+            "trades": [public_trade(
+                d="2026-10-20", fd="2026-10-20", filed="2026-10-19")]
+        }))
+
+    def test_invalid_or_future_submission_date_is_rejected(self):
+        for bad in ("2026-02-30", "2026-1-2", "2099-01-01", 20261105):
+            with self.subTest(filed=bad):
+                self.assert_trades_rejected(json.dumps({
+                    "trades": [public_trade(filed=bad)]
+                }))
+
+    def test_valid_submission_does_not_require_ordering_against_fd(self):
+        # The two filing-related fields have different meanings; do not
+        # mistake an fd later than filed for an invalid submission.
+        self.trades.write_text(json.dumps({
+            "trades": [public_trade(
+                d="2026-10-20", fd="2026-11-05", filed="2026-10-21")]
+        }), encoding="utf-8")
+        result = self.run_check(status())
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_house_ptr_archive_chronology_is_verified(self):
         # A House PDF archive year is the filing year, not a substitute for
         # the transaction date. A report cannot be filed before its trade.
