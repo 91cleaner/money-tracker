@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Check generated GitHub Pages artifact for expected public files."""
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 import json
 import math
@@ -68,8 +68,21 @@ try:
         raise ValueError("every trade must be an object")
     # A malformed object must not be counted as a reported transaction.
     # An actually empty ledger is represented by trades: [] instead.
-    if any(not trade for trade in pub["trades"]):
-        raise ValueError("empty trade objects are not public transaction records")
+    # A published transaction needs enough filing context to be verifiable.
+    # In the current official House PTR snapshot all 4,647 rows contain
+    # these six fields; sparse/blank records must not inflate trade counts.
+    core_fields = ("who", "asset", "ty", "d", "amt", "doc")
+    for index, trade in enumerate(pub["trades"]):
+        if any(not isinstance(trade.get(key), str) or not trade[key].strip()
+               for key in core_fields):
+            raise ValueError(f"trade {index}: missing or blank filing identity, transaction, or source")
+        # Do not accept plausible-looking but impossible calendar dates.
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", trade["d"]):
+            raise ValueError(f"trade {index}: invalid transaction date")
+        try:
+            date.fromisoformat(trade["d"])
+        except ValueError:
+            raise ValueError(f"trade {index}: invalid transaction date") from None
     extra_top = sorted(set(pub) - {"updated", "source", "note", "trades"})
     allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
     extra_rows = sorted({k for t in pub["trades"] for k in t} - allowed)
@@ -117,7 +130,10 @@ try:
             return False
         try:
             url = urlsplit(value)
-            return (url.scheme in ("http", "https") and bool(url.hostname)
+            # Public STOCK Act records must link to the original official
+            # House Clerk / Senate eFD filing, not a third-party lookalike.
+            return (url.scheme == "https"
+                    and url.hostname in ("disclosures-clerk.house.gov", "efdsearch.senate.gov")
                     and url.username is None and url.password is None)
         except ValueError:
             return False
