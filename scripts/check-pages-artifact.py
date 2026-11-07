@@ -35,7 +35,9 @@ def unique_keys(pairs):
     obj = {}
     for key, value in pairs:
         if key in obj:
-            raise ValueError("duplicate key: " + key)
+            # The rejected key can itself contain a credential. Never echo it
+            # into public GitHub Actions logs or release diagnostics.
+            raise ValueError("duplicate JSON object key")
         obj[key] = value
     return obj
 
