@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import json
 import math
+import re
 import sys
 from urllib.parse import urlsplit
 
@@ -40,6 +41,23 @@ def unique_keys(pairs):
 
 def reject_constant(value):
     raise ValueError("non-finite JSON value: " + value)
+
+
+# Collector errors are published verbatim. Keep useful outage diagnostics,
+# but never ship credentials or raw HTML from an upstream exception.
+SECRET_IN_ERROR = re.compile(
+    r"(?i)(?:\\b(?:authorization|x-api-key)\\s*[:=]\\s*\\S+"
+    r"|\\b(?:api[_-]?key|access[_-]?token|refresh[_-]?token|client[_-]?secret|password)"
+    r"\\s*[:=]\\s*\\S+"
+    r"|\\b(?:gh[pousr]_|github_pat_|sk-)[A-Za-z0-9_-]{12,}"
+    r"|\\bAKIA[0-9A-Z]{16}\\b)"
+)
+
+
+def safe_public_error(value):
+    return (isinstance(value, str) and bool(value.strip())
+            and "<" not in value and ">" not in value
+            and not SECRET_IN_ERROR.search(value))
 
 try:
     pub = json.loads((root / "data/us/trades_public.json").read_text(encoding="utf-8"),
@@ -125,7 +143,7 @@ try:
         # those errors instead of treating an upstream failure as a missing row.
         state = item.get("status")
         if state == "failed":
-            if set(item) != {"status", "error"} or not isinstance(item["error"], str) or not item["error"].strip():
+            if set(item) != {"status", "error"} or not safe_public_error(item["error"]):
                 raise ValueError(name + ": failed status requires a nonempty error")
             continue
         if state in ("not-configured", "invalid-term"):
@@ -140,7 +158,7 @@ try:
         count, errors = item["count"], item["errors"]
         if type(count) is not int or count < 0:
             raise ValueError(name + ": count must be a nonnegative integer")
-        if not isinstance(errors, list) or any(not isinstance(e, str) or not e.strip() for e in errors):
+        if not isinstance(errors, list) or any(not safe_public_error(e) for e in errors):
             raise ValueError(name + ": errors must be an array of nonempty strings")
 except (OSError, UnicodeError, ValueError, TypeError) as exc:
     sys.exit("Invalid public collection-status.json: " + str(exc))
