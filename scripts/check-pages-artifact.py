@@ -74,16 +74,20 @@ def unsafe_public_text(value):
 
     Upstream HTTP exceptions may percent-encode query parameter names or
     HTML-encode markup. Check decoded forms too; never print rejected text.
-    Limit decoding rounds to keep malformed input bounded.
+    Bound decoding work, but fail closed if nested encoding still changes
+    after the limit rather than accepting a hidden fourth-layer secret.
     """
     decoded = value
-    for _ in range(3):
+    for _ in range(12):
+        if (has_unsafe_controls(decoded) or "<" in decoded or ">" in decoded
+                or SECRET_IN_ERROR.search(decoded)):
+            return True
         expanded = html_unescape(unquote(decoded))
         if expanded == decoded:
-            break
+            return False
         decoded = expanded
-    return (has_unsafe_controls(decoded) or "<" in decoded or ">" in decoded
-            or bool(SECRET_IN_ERROR.search(decoded)))
+    # Fail closed if an attacker layers more encodings than our bounded scan.
+    return True
 
 
 def safe_public_error(value):
