@@ -375,6 +375,22 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 item["created_at"] = stamp
                 self.assert_rejected(item)
 
+    def test_invalid_timestamp_never_echoes_credentials_to_ci_logs(self):
+        # datetime.fromisoformat includes its input in ValueError; public CI
+        # must not echo a token hidden in malformed upstream timestamps.
+        for secret in (
+            "api_key=do_not_echo_123456789",
+            "Authorization: Bearer test_secret_1234567890",
+        ):
+            with self.subTest(secret=secret):
+                item = status()
+                item["created_at"] = secret
+                result = self.run_check(item)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertIn("Invalid public collection-status.json", result.stderr)
+                self.assertIn("invalid created_at timestamp", result.stderr)
+                self.assertNotIn(secret, result.stderr)
+
     def test_future_timestamp_rejected(self):
         for stamp in ("2099-01-01T00:00:00Z", "2099-01-01T00:00:00+14:00"):
             with self.subTest(stamp=stamp):
