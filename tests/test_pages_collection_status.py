@@ -154,6 +154,18 @@ class PublicCollectionStatusTests(unittest.TestCase):
                     json.dumps({"trades": [{"who": "Test", "doc": bad}]})
                 )
 
+    def test_filing_urls_cannot_break_out_of_html_attributes(self):
+        # URL parsing alone accepts raw HTML/JS delimiters. These links may
+        # be interpolated into quoted attributes by downstream public views.
+        for bad in (
+            'https://disclosures-clerk.house.gov/a"onclick=alert(1)',
+            "https://disclosures-clerk.house.gov/a'onclick=alert(1)",
+            "https://disclosures-clerk.house.gov/<svg/onload=alert(1)>",
+            "https://disclosures-clerk.house.gov/a" + chr(96) + "onload=alert(1)",
+        ):
+            with self.subTest(doc=bad):
+                self.assert_trades_rejected(json.dumps({"trades": [{"doc": bad}]}))
+
     def test_official_https_filing_url_and_absent_doc_are_allowed(self):
         self.trades.write_text(json.dumps({"trades": [
             {"who": "Test", "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf"},
