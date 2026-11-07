@@ -167,13 +167,22 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 self.assertNotIn(secret, result.stderr)
 
     def test_future_dated_trade_is_not_a_historical_filing(self):
-        # A syntactically valid future date must not be published as a
-        # completed historical transaction.
-        future = (datetime.now(timezone.utc).date() + timedelta(days=2)).isoformat()
+        # House/Senate filing dates are US-local, never a calendar day ahead
+        # of UTC. Tomorrow must not be treated as a completed trade.
+        future = (datetime.now(timezone.utc).date() + timedelta(days=1)).isoformat()
         for bad in (future, "2099-01-01"):
             with self.subTest(date=bad):
                 self.assert_trades_rejected(
                     json.dumps({"trades": [public_trade(d=bad)]}))
+
+    def test_current_utc_day_trade_is_not_rejected_as_future(self):
+        # Preserve valid same-day US PTR records at the UTC date boundary.
+        today = datetime.now(timezone.utc).date().isoformat()
+        self.trades.write_text(json.dumps({
+            "trades": [public_trade(d=today)]
+        }), encoding="utf-8")
+        result = self.run_check(status())
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_duplicate_public_trade_keys_cannot_hide_a_ledger(self):
         self.assert_trades_rejected('{"trades":[{"who":"test"}],"trades":[]}')
