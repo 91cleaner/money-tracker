@@ -146,7 +146,7 @@ class PublicCollectionStatusTests(unittest.TestCase):
             "https://user:pass@example.org/filing.pdf",
             "https://example.org\\\\@evil.example/filing.pdf",
             "https://example.org/with space.pdf",
-            "https://example.org/line\\nfeed.pdf",
+            "https://example.org/line\nfeed.pdf",
             "https://",
         ):
             with self.subTest(doc=bad):
