@@ -65,7 +65,7 @@ def has_unsafe_controls(value):
     # Prevent terminal escape sequences, log-line injection, and Unicode
     # bidirectional overrides in public collector errors and filing text.
     # This also blocks control characters inside JSON-escaped strings.
-    return bool(re.search(r"[\\x00-\\x1f\\x7f-\\x9f\\u202a-\\u202e\\u2066-\\u2069]", value))
+    return bool(re.search(r"[\x00-\x1f\x7f-\x9f\u202a-\u202e\u2066-\u2069]", value))
 
 
 def safe_public_error(value):
