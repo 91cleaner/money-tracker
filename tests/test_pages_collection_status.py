@@ -100,6 +100,26 @@ class PublicCollectionStatusTests(unittest.TestCase):
     def test_nested_public_ledger_metadata_is_rejected(self):
         self.assert_trades_rejected('{"source":{"private_note":"hidden"},"trades":[]}')
 
+    def test_numeric_overflow_is_not_a_public_trade_value(self):
+        # Python json.loads turns 1e309 into float('inf') without invoking
+        # parse_constant. The published ledger must contain finite numbers.
+        for raw in (
+            '{"trades":[{"r":1e309}]}',
+            '{"trades":[{"rspy":-1e309}]}',
+            '{"source":1e309,"trades":[]}',
+        ):
+            with self.subTest(raw=raw):
+                self.assert_trades_rejected(raw)
+
+    def test_nonstandard_numeric_constants_are_not_public_json(self):
+        for raw in (
+            '{"trades":[{"r":NaN}]}',
+            '{"trades":[{"r":Infinity}]}',
+            '{"trades":[{"rspy":-Infinity}]}',
+        ):
+            with self.subTest(raw=raw):
+                self.assert_trades_rejected(raw)
+
     def test_scalar_public_trade_values_are_accepted(self):
         self.trades.write_text(
             '{"source":"official-filing","updated":null,"trades":'
