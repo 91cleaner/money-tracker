@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-06",
+"updated": "2026-11-07",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
@@ -11,6 +11,60 @@
 "t": "高市総理はＡＰＥＣビジネス諮問委員会（ＡＢＡＣ）による提言書を受け取りました",
 "d": "2026-11-07",
 "u": "https://www.kantei.go.jp/jp/105/actions/202611/06teigen.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "egov:860202606",
+"kind": "pubcomment",
+"t": "危険物の規制に関する規則の一部を改正する省令（案）等に対する意見公募について",
+"d": "2026-11-07",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=860202606&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
+},
+{
+"id": "egov:145210795",
+"kind": "pubcomment",
+"t": "「移動系通信事業者が提供するインターネット接続サービスの実効速度計測手法及び利用者への情報提供手法等に関するガイドライン」の改正案に対する意見募集",
+"d": "2026-11-07",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210795&Mode=0",
+"dept": null,
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"tech_ai"
+],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "kantei:4ad9f1e77d9d",
+"kind": "news",
+"t": "高市総理は第２回サイバーセキュリティに関する関係閣僚会議を開催しました",
+"d": "2026-11-07",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/06kaigi_cyber.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [
+"tech_ai"
+],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:b65c6137f01e",
+"kind": "news",
+"t": "高市総理は第９回日本成長戦略会議を開催しました",
+"d": "2026-11-07",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/06seichyou.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
 "cat": "総理の一日",
@@ -94,6 +148,44 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:495260255",
+"kind": "pubcomment",
+"t": "予防接種法施行規則及び予防接種実施規則の一部を改正する省令案に関する御意見の募集について",
+"d": "2026-11-06",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260255&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:495260253",
+"kind": "pubcomment",
+"t": "再生医療等の安全性の確保等に関する法律施行令の一部を改正する政令案に関する御意見の募集について",
+"d": "2026-11-06",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260253&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:595320122",
+"kind": "pubcomment",
+"t": "電気工事士法施行令の一部を改正する政令（案）に対する意見公募について",
+"d": "2026-11-06",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320122&Mode=0",
+"dept": "経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
 },
 {
 "id": "kantei:0e170a29357c",
