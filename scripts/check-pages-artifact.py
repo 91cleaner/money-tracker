@@ -95,6 +95,22 @@ try:
         # tomorrow here can publish an uncompleted trade as historical.
         if trade_date > datetime.now(timezone.utc).date():
             raise ValueError(f"trade {index}: future transaction date")
+        # A reported filing date cannot precede the transaction it reports.
+        # Keep fd optional for older records, but reject impossible or
+        # future filing dates instead of publishing misleading chronology.
+        if "fd" in trade:
+            filing_date_text = trade["fd"]
+            if (not isinstance(filing_date_text, str)
+                    or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", filing_date_text)):
+                raise ValueError(f"trade {index}: invalid filing date")
+            try:
+                filing_date = date.fromisoformat(filing_date_text)
+            except ValueError:
+                raise ValueError(f"trade {index}: invalid filing date") from None
+            if filing_date < trade_date:
+                raise ValueError(f"trade {index}: filing date predates transaction")
+            if filing_date > datetime.now(timezone.utc).date():
+                raise ValueError(f"trade {index}: future filing date")
     extra_top = sorted(set(pub) - {"updated", "source", "note", "trades"})
     allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
     extra_rows = sorted({k for t in pub["trades"] for k in t} - allowed)
