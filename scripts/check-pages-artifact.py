@@ -46,11 +46,11 @@ def reject_constant(value):
 # Collector errors are published verbatim. Keep useful outage diagnostics,
 # but never ship credentials or raw HTML from an upstream exception.
 SECRET_IN_ERROR = re.compile(
-    r"(?i)(?:\\b(?:authorization|x-api-key)\\s*[:=]\\s*\\S+"
-    r"|\\b(?:api[_-]?key|access[_-]?token|refresh[_-]?token|client[_-]?secret|password)"
-    r"\\s*[:=]\\s*\\S+"
-    r"|\\b(?:gh[pousr]_|github_pat_|sk-)[A-Za-z0-9_-]{12,}"
-    r"|\\bAKIA[0-9A-Z]{16}\\b)"
+    r"(?i)(?:\b(?:authorization|x-api-key)\s*[:=]\s*\S+"
+    r"|\b(?:api[_-]?key|access[_-]?token|refresh[_-]?token|client[_-]?secret|password)"
+    r"\s*[:=]\s*\S+"
+    r"|\b(?:gh[pousr]_|github_pat_|sk-)[A-Za-z0-9_-]{12,}"
+    r"|\bAKIA[0-9A-Z]{16}\b)"
 )
 
 
