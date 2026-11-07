@@ -398,6 +398,30 @@ class PublicCollectionStatusTests(unittest.TestCase):
         result = self.run_check(status())
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_only_approved_public_ptr_review_states_are_published(self):
+        # Pending builder #504 retains these source-review labels. A release
+        # gate must preserve them rather than reject all verification fields.
+        rows = [public_trade(verification=value) for value in (
+            "machine_parsed_requires_review",
+            "verified_against_original",
+            "unknown",
+        )]
+        self.trades.write_text(json.dumps({"trades": rows}), encoding="utf-8")
+        result = self.run_check(status())
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_public_ptr_review_field_cannot_publish_internal_notes(self):
+        for bad in (
+            "verified by private analyst@example.com",
+            "approved",
+            "",
+            {"reviewer": "private"},
+        ):
+            with self.subTest(verification=bad):
+                self.assert_trades_rejected(json.dumps({
+                    "trades": [public_trade(verification=bad)]
+                }))
+
     def test_scalar_public_trade_values_are_accepted(self):
         self.trades.write_text(json.dumps({
             "source": "official-filing", "updated": None,
