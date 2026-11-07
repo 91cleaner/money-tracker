@@ -300,6 +300,32 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 }
                 self.assert_rejected(item)
 
+    def test_unknown_top_level_status_fields_cannot_publish_credentials(self):
+        # Only created_at, pipeline and collectors belong in public status.
+        item = status()
+        item["access_token"] = "secret-not-for-publication"
+        self.assert_rejected(item)
+
+    def test_collector_names_cannot_smuggle_credentials_or_markup(self):
+        # An arbitrary collector key is public JSON just like an error value.
+        for name in (
+            "Authorization: Bearer secret123456789",
+            "api_key=secret123456789",
+            "<img src=x onerror=alert(1)>",
+            "taiwan-legislature",
+        ):
+            with self.subTest(name=name):
+                item = status()
+                item["collectors"][name] = {"count": 0, "errors": []}
+                self.assert_rejected(item)
+
+    def test_new_well_formed_collector_name_remains_allowed(self):
+        # Keep future official sources extensible without arbitrary keys.
+        item = status()
+        item["collectors"]["korea_national_assembly"] = {"count": 0, "errors": []}
+        result = self.run_check(item)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_collector_errors_cannot_publish_raw_html(self):
         item = status()
         item["collectors"]["taiwan_legislature"]["errors"] = [
