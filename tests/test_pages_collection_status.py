@@ -123,6 +123,26 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 self.assert_trades_rejected(
                     json.dumps({"trades": [public_trade(**{key: value})]}))
 
+    def test_public_ptr_text_rejects_terminal_and_bidi_controls(self):
+        # Filing fields are rendered in public pages; escaped JSON controls
+        # must not become terminal escapes or misleading display text.
+        for bad in ("\x00", "\x1b[31m", "\n", "\u202e", "\u2066"):
+            with self.subTest(control=repr(bad)):
+                self.assert_trades_rejected(json.dumps({
+                    "trades": [public_trade(who="Member" + bad + "Name")]
+                }))
+
+    def test_public_status_errors_reject_terminal_and_bidi_controls(self):
+        # Prevent multiline/ANSI log injection and bidirectional text spoofing
+        # while preserving ordinary non-ASCII diagnostics.
+        for bad in ("\x00", "\x1b[31m", "\r", "\u202e", "\u2066"):
+            with self.subTest(control=repr(bad)):
+                item = status()
+                item["collectors"]["taiwan_legislature"]["errors"] = [
+                    "members: fetch failed" + bad
+                ]
+                self.assert_rejected(item)
+
     def test_public_ledger_metadata_cannot_ship_credentials(self):
         for field, value in (
             ("source", "client_secret=private123456"),
