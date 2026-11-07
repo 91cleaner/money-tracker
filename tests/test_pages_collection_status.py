@@ -384,6 +384,32 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 item["created_at"] = stamp
                 self.assert_rejected(item)
 
+    def test_non_rfc3339_timestamps_are_rejected(self):
+        # Python datetime.fromisoformat accepts these, but the collector
+        # contract requires a T separator and minute-precision UTC offset.
+        for stamp in (
+            "2026-11-06X19:21:53+00:00",
+            "2026-11-06 19:21:53Z",
+            "2026-11-06T19:21:53+00:00:30",
+            "2026-11-06T19:21:53+00:00:00",
+        ):
+            with self.subTest(stamp=stamp):
+                item = status()
+                item["created_at"] = stamp
+                self.assert_rejected(item)
+
+    def test_rfc3339_timestamp_with_fraction_and_offset_is_accepted(self):
+        for stamp in (
+            "2026-11-06T19:21:53Z",
+            "2026-11-06T19:21:53.450Z",
+            "2026-11-06T20:21:53.450+01:00",
+        ):
+            with self.subTest(stamp=stamp):
+                item = status()
+                item["created_at"] = stamp
+                result = self.run_check(item)
+                self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_invalid_timestamp_never_echoes_credentials_to_ci_logs(self):
         # datetime.fromisoformat includes its input in ValueError; public CI
         # must not echo a token hidden in malformed upstream timestamps.
