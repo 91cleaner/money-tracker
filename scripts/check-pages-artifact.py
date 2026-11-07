@@ -66,6 +66,10 @@ try:
         raise ValueError("trades must be an explicit array")
     if any(not isinstance(t, dict) for t in pub["trades"]):
         raise ValueError("every trade must be an object")
+    # A malformed object must not be counted as a reported transaction.
+    # An actually empty ledger is represented by trades: [] instead.
+    if any(not trade for trade in pub["trades"]):
+        raise ValueError("empty trade objects are not public transaction records")
     extra_top = sorted(set(pub) - {"updated", "source", "note", "trades"})
     allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
     extra_rows = sorted({k for t in pub["trades"] for k in t} - allowed)
@@ -85,6 +89,18 @@ try:
     if any(value is None or not public_scalar(value)
            for trade in pub["trades"] for value in trade.values()):
         raise ValueError("public trade values must be non-null scalars")
+    # The allowlisted public fields are still displayed in HTML. Prevent
+    # upstream filing text/metadata from carrying raw markup or credentials
+    # into the published JSON even if a particular view escapes its output.
+    def safe_public_text(value):
+        return (not isinstance(value, str)
+                or ("<" not in value and ">" not in value
+                    and not SECRET_IN_ERROR.search(value)))
+    if any(not safe_public_text(value) for key, value in pub.items() if key != "trades"):
+        raise ValueError("unsafe public ledger metadata")
+    if any(not safe_public_text(value)
+           for trade in pub["trades"] for value in trade.values()):
+        raise ValueError("unsafe public trade text")
 
     # Filing links are rendered as clickable provenance in several US views.
     # A scalar "doc" value can still be a javascript:/data: URL. Reject unsafe
