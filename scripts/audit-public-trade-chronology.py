@@ -53,6 +53,12 @@ def audit_rows(rows, today):
         doc = row.get("doc")
         if not isinstance(doc, str):
             reasons.add("invalid-filing-url")
+        elif ("\\" in doc
+              or any(ch.isspace() or ord(ch) < 32 or ord(ch) == 127 for ch in doc)
+              or any(ch in doc for ch in ('"', "'", "<", ">", "`"))):
+            # urlsplit silently strips leading C0 controls and embedded tabs.
+            # Match the public release gate before parsing the filing URL.
+            reasons.add("invalid-filing-url")
         else:
             try:
                 url = urlsplit(doc)
