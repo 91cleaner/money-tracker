@@ -26,6 +26,19 @@ def status():
         },
     }
 
+def public_trade(**overrides):
+    row = {
+        "who": "Example Member",
+        "asset": "Example Holdings",
+        "ty": "P",
+        "d": "2026-10-20",
+        "amt": "$1,001 - $15,000",
+        "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf",
+    }
+    row.update(overrides)
+    return row
+
+
 class PublicCollectionStatusTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -103,11 +116,11 @@ class PublicCollectionStatusTests(unittest.TestCase):
             ("who", "<img src=x onerror=alert(1)>"),
             ("asset", "Example <script>alert(1)</script>"),
             ("amt", "Authorization: Bearer test_secret_1234567890"),
-            ("doc", "https://example.org/?api_key=secret123456789"),
+            ("doc", "https://disclosures-clerk.house.gov/?api_key=secret123456789"),
         ):
             with self.subTest(field=key):
                 self.assert_trades_rejected(
-                    json.dumps({"trades": [{key: value}]}))
+                    json.dumps({"trades": [public_trade(**{key: value})]}))
 
     def test_public_ledger_metadata_cannot_ship_credentials(self):
         for field, value in (
@@ -126,6 +139,7 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 "who": "Example & Co.",
                 "asset": "Example Holdings (Class A)",
                 "ty": "Purchase",
+                "d": "2026-10-20",
                 "amt": "$1,001-$15,000",
                 "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf"
             }]
@@ -194,7 +208,7 @@ class PublicCollectionStatusTests(unittest.TestCase):
         ):
             with self.subTest(doc=bad):
                 self.assert_trades_rejected(
-                    json.dumps({"trades": [{"who": "Test", "doc": bad}]})
+                    json.dumps({"trades": [public_trade(doc=bad)]})
                 )
 
     def test_filing_urls_cannot_break_out_of_html_attributes(self):
@@ -207,22 +221,48 @@ class PublicCollectionStatusTests(unittest.TestCase):
             "https://disclosures-clerk.house.gov/a" + chr(96) + "onload=alert(1)",
         ):
             with self.subTest(doc=bad):
-                self.assert_trades_rejected(json.dumps({"trades": [{"doc": bad}]}))
+                self.assert_trades_rejected(json.dumps({"trades": [public_trade(doc=bad)]}))
 
-    def test_official_https_filing_url_and_absent_doc_are_allowed(self):
+    def test_official_house_and_senate_filing_links_are_accepted(self):
         self.trades.write_text(json.dumps({"trades": [
-            {"who": "Test", "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf"},
-            {"who": "Unlinked filing"},
+            public_trade(),
+            public_trade(doc="https://efdsearch.senate.gov/search/view/ptr/example/"),
         ]}), encoding="utf-8")
         result = self.run_check(status())
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_trade_requires_verifiable_core_filing_fields(self):
+        for field in ("who", "asset", "ty", "d", "amt", "doc"):
+            with self.subTest(missing=field):
+                row = public_trade()
+                del row[field]
+                self.assert_trades_rejected(json.dumps({"trades": [row]}))
+            with self.subTest(blank=field):
+                self.assert_trades_rejected(
+                    json.dumps({"trades": [public_trade(**{field: "   "})]}))
+
+    def test_invalid_transaction_calendar_dates_are_rejected(self):
+        for bad in ("2026-02-30", "2026-13-01", "10/20/2026", "2026-1-2"):
+            with self.subTest(date=bad):
+                self.assert_trades_rejected(
+                    json.dumps({"trades": [public_trade(d=bad)]}))
+
+    def test_unofficial_and_insecure_filing_sources_are_rejected(self):
+        for bad in (
+            "https://disclosures-clerk.house.gov.evil.example/ptr.pdf",
+            "https://third-party.example/ptr.pdf",
+            "http://disclosures-clerk.house.gov/ptr.pdf",
+            "https://efdsearch.senate.gov.evil.example/ptr.pdf",
+        ):
+            with self.subTest(doc=bad):
+                self.assert_trades_rejected(
+                    json.dumps({"trades": [public_trade(doc=bad)]}))
+
     def test_scalar_public_trade_values_are_accepted(self):
-        self.trades.write_text(
-            '{"source":"official-filing","updated":null,"trades":'
-            '[{"who":"Test","ty":"Purchase","r":1.25,"amt":"$1,001-$15,000"}]}',
-            encoding="utf-8",
-        )
+        self.trades.write_text(json.dumps({
+            "source": "official-filing", "updated": None,
+            "trades": [public_trade(r=1.25)],
+        }), encoding="utf-8")
         result = self.run_check(status())
         self.assertEqual(result.returncode, 0, result.stderr)
 
