@@ -503,6 +503,9 @@ class PublicCollectionStatusTests(unittest.TestCase):
         )
         for message in leaked:
             with self.subTest(message=message):
+                # Each subtest must start with a valid ledger: the previous
+                # trade-metadata rejection leaves a deliberately bad fixture.
+                self.trades.write_text('{"trades":[]}', encoding="utf-8")
                 item = status()
                 item["collectors"]["taiwan_legislature"]["errors"] = [message]
                 self.assert_rejected(item)
@@ -513,6 +516,7 @@ class PublicCollectionStatusTests(unittest.TestCase):
                 self.assert_trades_rejected(json.dumps({
                     "note": message, "trades": [],
                 }))
+        self.trades.write_text('{"trades":[]}', encoding="utf-8")
         # Ordinary non-secret JSON diagnostic text remains usable.
         item = status()
         item["collectors"]["taiwan_legislature"]["errors"] = [
