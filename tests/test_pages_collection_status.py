@@ -279,5 +279,42 @@ class PublicCollectionStatusTests(unittest.TestCase):
         item["collectors"]["us_sec"]["errors"] = [""]
         self.assert_rejected(item)
 
+    def test_collector_errors_never_publish_credentials(self):
+        # The collector status JSON is public. Upstream exception strings can
+        # accidentally include request headers, URL query keys or credentials.
+        leaked = (
+            "Authorization: Bearer test_secret_1234567890",
+            "GET https://api.example.org/?api_key=secret123456",
+            "password=not-for-publication",
+            "request failed ghp_1234567890abcdefghijkl",
+            "client_secret=very-private-value",
+        )
+        for message in leaked:
+            with self.subTest(message=message):
+                item = status()
+                item["collectors"]["taiwan_legislature"]["errors"] = [message]
+                self.assert_rejected(item)
+                item = status()
+                item["collectors"]["taiwan_legislature"] = {
+                    "status": "failed", "error": message,
+                }
+                self.assert_rejected(item)
+
+    def test_collector_errors_cannot_publish_raw_html(self):
+        item = status()
+        item["collectors"]["taiwan_legislature"]["errors"] = [
+            "upstream 503 <img src=x onerror=alert(1)>",
+        ]
+        self.assert_rejected(item)
+
+    def test_plaintext_outage_diagnostics_remain_allowed(self):
+        item = status()
+        item["collectors"]["taiwan_legislature"]["errors"] = [
+            "members: fetch failed", "HTTP 503: upstream unavailable",
+            "API key not configured",
+        ]
+        result = self.run_check(item)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
 if __name__ == "__main__":
     unittest.main()
