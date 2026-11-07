@@ -73,6 +73,41 @@ class PublicTradeChronologyAuditTests(unittest.TestCase):
         self.assertIn("future-transaction-date: 1", result.stdout)
         self.assertNotIn(secret, result.stdout + result.stderr)
 
+    def test_duplicate_json_keys_are_not_silently_audited(self):
+        # json.loads normally keeps the last value. That could report zero
+        # anomalies for a ledger rejected by the actual Pages release gate.
+        secret = "api_key=DO_NOT_ECHO_123456789"
+        payloads = (
+            '{"trades":[{"d":"2099-01-01"}],"trades":[]}',
+            '{"trades":[],"' + secret + '":1,"' + secret + '":2}',
+        )
+        for payload in payloads:
+            with self.subTest(payload_length=len(payload)):
+                with tempfile.TemporaryDirectory() as directory:
+                    path = Path(directory) / "ledger.json"
+                    path.write_text(payload, encoding="utf-8")
+                    result = subprocess.run([sys.executable, str(SCRIPT), str(path)],
+                                            capture_output=True, text=True, check=False)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn("invalid or missing ledger", result.stderr)
+                self.assertNotIn(secret, result.stdout + result.stderr)
+                self.assertNotIn("0 anomalous rows", result.stdout)
+
+    def test_nonfinite_json_numbers_are_not_accepted(self):
+        # JSON NaN/Infinity and overflowing exponents are not valid finite
+        # public numbers, even if Python's decoder accepts them by default.
+        for number in ("NaN", "Infinity", "-Infinity", "1e309"):
+            with self.subTest(number=number):
+                with tempfile.TemporaryDirectory() as directory:
+                    path = Path(directory) / "ledger.json"
+                    path.write_text('{"trades":[],"updated":' + number + '}',
+                                    encoding="utf-8")
+                    result = subprocess.run([sys.executable, str(SCRIPT), str(path)],
+                                            capture_output=True, text=True, check=False)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn("invalid or missing ledger", result.stderr)
+                self.assertNotIn(number, result.stdout + result.stderr)
+
     def test_missing_file_fails_without_echoing_path(self):
         result = subprocess.run([sys.executable, str(SCRIPT), "/tmp/not-found-public-ptr-audit.json"],
                                 capture_output=True, text=True, check=False)
