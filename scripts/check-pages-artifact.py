@@ -87,14 +87,20 @@ try:
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", trade["d"]):
             raise ValueError(f"trade {index}: invalid transaction date")
         try:
-            date.fromisoformat(trade["d"])
+            trade_date = date.fromisoformat(trade["d"])
         except ValueError:
             raise ValueError(f"trade {index}: invalid transaction date") from None
+        # A future-dated trade is not a completed historical STOCK Act trade.
+        # Allow one UTC calendar day for source timezone/clock differences.
+        if trade_date > datetime.now(timezone.utc).date() + timedelta(days=1):
+            raise ValueError(f"trade {index}: future transaction date")
     extra_top = sorted(set(pub) - {"updated", "source", "note", "trades"})
     allowed = {"id", "who", "c", "tk", "asset", "ty", "d", "fd", "filed", "amt", "doc", "r", "rspy", "party", "state"}
     extra_rows = sorted({k for t in pub["trades"] for k in t} - allowed)
     if extra_top or extra_rows:
-        raise ValueError("non-public fields: " + ", ".join(extra_top + extra_rows))
+        # Rejected JSON key names are untrusted and can contain API secrets.
+        # Do not print those names into public Actions logs.
+        raise ValueError("non-public fields in public trade ledger")
     # Allowlisted names alone do not make nested values public. A malformed
     # ledger could hide private objects under a permitted key such as "who".
     # The public builder emits only scalar filing values (or null metadata).
