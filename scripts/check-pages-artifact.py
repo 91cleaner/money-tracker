@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Check generated GitHub Pages artifact for expected public files."""
 from datetime import date, datetime, timedelta, timezone
+from html import unescape as html_unescape
 from pathlib import Path
 import json
 import math
 import re
 import sys
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else ".public-pages")
 required = (
@@ -68,11 +69,26 @@ def has_unsafe_controls(value):
     return bool(re.search(r"[\x00-\x1f\x7f-\x9f\u202a-\u202e\u2066-\u2069]", value))
 
 
+def unsafe_public_text(value):
+    """Inspect encoded error/filing text before publishing it verbatim.
+
+    Upstream HTTP exceptions may percent-encode query parameter names or
+    HTML-encode markup. Check decoded forms too; never print rejected text.
+    Limit decoding rounds to keep malformed input bounded.
+    """
+    decoded = value
+    for _ in range(3):
+        expanded = html_unescape(unquote(decoded))
+        if expanded == decoded:
+            break
+        decoded = expanded
+    return (has_unsafe_controls(decoded) or "<" in decoded or ">" in decoded
+            or bool(SECRET_IN_ERROR.search(decoded)))
+
+
 def safe_public_error(value):
     return (isinstance(value, str) and bool(value.strip())
-            and not has_unsafe_controls(value)
-            and "<" not in value and ">" not in value
-            and not SECRET_IN_ERROR.search(value))
+            and not unsafe_public_text(value))
 
 try:
     pub = json.loads((root / "data/us/trades_public.json").read_text(encoding="utf-8"),
@@ -164,10 +180,7 @@ try:
     # upstream filing text/metadata from carrying raw markup or credentials
     # into the published JSON even if a particular view escapes its output.
     def safe_public_text(value):
-        return (not isinstance(value, str)
-                or ("<" not in value and ">" not in value
-                    and not has_unsafe_controls(value)
-                    and not SECRET_IN_ERROR.search(value)))
+        return not isinstance(value, str) or not unsafe_public_text(value)
     if any(not safe_public_text(value) for key, value in pub.items() if key != "trades"):
         raise ValueError("unsafe public ledger metadata")
     if any(not safe_public_text(value)
