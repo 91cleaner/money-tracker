@@ -8,6 +8,7 @@ authoritative; the audit helps the data owner resolve all failures at once.
 from collections import defaultdict
 from datetime import date, datetime, timezone
 import json
+import math
 from pathlib import Path
 import re
 import sys
@@ -15,6 +16,27 @@ from urllib.parse import urlsplit
 
 DATE_RE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}\Z")
 HOUSE_PATH = re.compile(r"/public_disc/ptr-pdfs/([0-9]{4})/[A-Za-z0-9_-]+\.pdf\Z", re.I)
+
+def unique_object_keys(pairs):
+    """Reject duplicate keys instead of auditing an attacker-selected last value."""
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate JSON object key")
+        result[key] = value
+    return result
+
+
+def reject_nonfinite_constant(_value):
+    raise ValueError("non-finite JSON constant")
+
+
+def finite_json_float(value):
+    number = float(value)
+    if not math.isfinite(number):
+        raise ValueError("non-finite JSON number")
+    return number
+
 
 
 def calendar_day(value):
@@ -94,7 +116,10 @@ def main(argv=None):
         return 2
     path = Path(args[0] if args else ".public-pages/data/us/trades_public.json")
     try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
+        payload = json.loads(path.read_text(encoding="utf-8"),
+                             object_pairs_hook=unique_object_keys,
+                             parse_constant=reject_nonfinite_constant,
+                             parse_float=finite_json_float)
         if not isinstance(payload, dict) or not isinstance(payload.get("trades"), list):
             raise ValueError("invalid public ledger")
     except (OSError, UnicodeError, ValueError, TypeError):
