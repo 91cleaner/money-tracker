@@ -7,7 +7,8 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const read = name => fs.readFileSync(path.join(root, name), 'utf8');
 const usa = read('usa-command-legacy.html');
-const index = read('korea.html');
+const index = read('index.html');
+const korea = read('korea.html');
 const command = read('assets/mt-command-ui.js');
 
 test('US command inline JavaScript parses', () => {
@@ -64,9 +65,11 @@ test('public preview labels disconnected AI, real-time prices and signals honest
 });
 
 test('country selection remains intentional, without a redirect into the US map', () => {
-  assert.match(index, /href="national\.html"/);
+  assert.match(index, /href="korea\.html"/);
   assert.match(index, /href="world-intelligence\/"/);
   assert.match(index, /<strong>대한민국<\/strong>/);
+  assert.match(korea, /href="national\.html"/);
+  assert.match(korea, /href="contracts\.html"/);
   assert.doesNotMatch(index, /location\.replace\('usa-command\.html'/);
 });
 
