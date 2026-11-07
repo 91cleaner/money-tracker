@@ -118,7 +118,11 @@ status_path = root / "data/search/collection-status.json"
 try:
     status = json.loads(status_path.read_text(encoding="utf-8"),
                         object_pairs_hook=unique_keys, parse_constant=reject_constant)
-    if not isinstance(status, dict) or status.get("pipeline") != "official-public-no-ai":
+    # The entire status JSON is copied to public Pages. Unknown top-level
+    # fields can expose tokens even when individual error strings are clean.
+    if not isinstance(status, dict) or set(status) != {"created_at", "pipeline", "collectors"}:
+        raise ValueError("unexpected or missing public collection status fields")
+    if status.get("pipeline") != "official-public-no-ai":
         raise ValueError("missing official-public-no-ai pipeline")
     stamp = status.get("created_at")
     if not isinstance(stamp, str):
@@ -137,7 +141,9 @@ try:
     if missing_collectors := sorted(required_collectors - collectors.keys()):
         raise ValueError("missing collectors: " + ", ".join(missing_collectors))
     for name, item in collectors.items():
-        if not isinstance(name, str) or not name or not isinstance(item, dict):
+        # Future collectors are allowed, but arbitrary JSON object keys are
+        # not: a credential could otherwise be published as a collector name.
+        if not isinstance(name, str) or not re.fullmatch(r"[a-z][a-z0-9_]*", name) or not isinstance(item, dict):
             raise ValueError("invalid collector entry")
         # The actual collector emits three explicit exceptional states. Preserve
         # those errors instead of treating an upstream failure as a missing row.
