@@ -3,6 +3,7 @@
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import json
+import math
 import sys
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else ".public-pages")
@@ -55,7 +56,11 @@ try:
     # ledger could hide private objects under a permitted key such as "who".
     # The public builder emits only scalar filing values (or null metadata).
     def public_scalar(value):
-        return value is None or type(value) in (str, int, float)
+        # json.loads accepts 1e309 as float('inf') even with parse_constant
+        # rejecting NaN/Infinity tokens. Only finite JSON numbers are safe.
+        if type(value) is float:
+            return math.isfinite(value)
+        return value is None or type(value) in (str, int)
     if any(not public_scalar(value) for key, value in pub.items() if key != "trades"):
         raise ValueError("public ledger metadata must be scalar")
     if any(value is None or not public_scalar(value)
