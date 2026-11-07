@@ -217,7 +217,16 @@ const box=$('briefStocks');box.replaceChildren();r.sug.forEach(id=>{const e=sear
 $('briefCaveat').textContent='AI 미연결 · 수집된 데이터만 검색합니다.';$('source').removeAttribute('href');$('previous').disabled=true;$('next').disabled=true}
 $('ask').addEventListener('submit',async e=>{e.preventDefault();const q=$('question').value.trim();if(!q)return;clearFirst();if(await mtFirstCard(q))return;if(await mtIntentCard(q))return;const tr=await tickerRoute(q);if(tr&&tr.none){showNone(q,tr);return}if(tr){start(tr);return}showCandidates(q)});
 const mtJson={};
-function mtGet(p){return mtJson[p]||(mtJson[p]=fetch('../data/'+p).then(r=>r.ok?r.json():null).catch(()=>null))}
+// Keep successful responses deduplicated, but never cache a failed fetch or invalid JSON.
+// A later question can retry the same source after a transient outage.
+function mtGet(p){
+  if(mtJson[p])return mtJson[p];
+  const request=fetch('../data/'+p)
+    .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+    .catch(()=>{if(mtJson[p]===request)delete mtJson[p];return null});
+  mtJson[p]=request;
+  return request;
+}
 function mtNames(ix,sym){const ent=ix.entities['company:'+sym]||{},al=(ent.aliases||[]).slice().sort((a,b)=>b.length-a.length);
 const legal=al.filter(x=>/^[\x00-\x7f]+$/.test(x)&&/\b(corp|corporation|inc|co|ltd|plc|holdings)\b/i.test(x))[0];let en=null;try{en=legal?window.MTI18N.name({name:ent.name,symbol:ent.symbol,aliases:[legal]}):window.MTI18N.name(ent)}catch(e){}
 if(!en||/[가-힣]/.test(en))en=sym;return window.MTFirst.namesFor(ix,sym,en)}
