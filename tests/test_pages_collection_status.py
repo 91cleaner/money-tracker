@@ -90,6 +90,49 @@ class PublicCollectionStatusTests(unittest.TestCase):
             with self.subTest(bad=bad):
                 self.assert_trades_rejected(bad)
 
+    def test_empty_trade_object_is_not_a_reported_transaction(self):
+        # A zero-row ledger is legitimate; an object with no transaction
+        # fields must not be counted as one reported transaction.
+        self.assert_trades_rejected('{"trades":[{}]}')
+        self.trades.write_text('{"trades":[]}', encoding="utf-8")
+        result = self.run_check(status())
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_public_trade_text_cannot_ship_markup_or_credentials(self):
+        for key, value in (
+            ("who", "<img src=x onerror=alert(1)>"),
+            ("asset", "Example <script>alert(1)</script>"),
+            ("amt", "Authorization: Bearer test_secret_1234567890"),
+            ("doc", "https://example.org/?api_key=secret123456789"),
+        ):
+            with self.subTest(field=key):
+                self.assert_trades_rejected(
+                    json.dumps({"trades": [{key: value}]}))
+
+    def test_public_ledger_metadata_cannot_ship_credentials(self):
+        for field, value in (
+            ("source", "client_secret=private123456"),
+            ("note", "<svg/onload=alert(1)>"),
+        ):
+            with self.subTest(field=field):
+                self.assert_trades_rejected(
+                    json.dumps({field: value, "trades": []}))
+
+    def test_legitimate_public_filing_text_still_passes(self):
+        self.trades.write_text(json.dumps({
+            "source": "Official STOCK Act filings",
+            "note": "Amounts are reported ranges, not profits.",
+            "trades": [{
+                "who": "Example & Co.",
+                "asset": "Example Holdings (Class A)",
+                "ty": "Purchase",
+                "amt": "$1,001-$15,000",
+                "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035778.pdf"
+            }]
+        }), encoding="utf-8")
+        result = self.run_check(status())
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_unapproved_public_trade_fields_are_rejected(self):
         self.assert_trades_rejected('{"trades":[{"who":"test","private_note":"not public"}]}')
 
