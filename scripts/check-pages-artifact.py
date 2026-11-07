@@ -5,6 +5,7 @@ from pathlib import Path
 import json
 import math
 import sys
+from urllib.parse import urlsplit
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else ".public-pages")
 required = (
@@ -66,6 +67,25 @@ try:
     if any(value is None or not public_scalar(value)
            for trade in pub["trades"] for value in trade.values()):
         raise ValueError("public trade values must be non-null scalars")
+
+    # Filing links are rendered as clickable provenance in several US views.
+    # A scalar "doc" value can still be a javascript:/data: URL. Reject unsafe
+    # schemes at the release gate even when the UI also validates links.
+    def safe_filing_url(value):
+        if not isinstance(value, str) or not value or "\\" in value:
+            return False
+        if any(ch.isspace() or ord(ch) < 32 or ord(ch) == 127 for ch in value):
+            return False
+        try:
+            url = urlsplit(value)
+            return (url.scheme in ("http", "https") and bool(url.hostname)
+                    and url.username is None and url.password is None)
+        except ValueError:
+            return False
+
+    if any("doc" in trade and not safe_filing_url(trade["doc"])
+           for trade in pub["trades"]):
+        raise ValueError("filing doc must be a safe absolute HTTP(S) URL")
 except (OSError, UnicodeError, ValueError, TypeError) as exc:
     sys.exit("Invalid public trades_public.json: " + str(exc))
 
