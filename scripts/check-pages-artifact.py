@@ -132,9 +132,20 @@ try:
             url = urlsplit(value)
             # Public STOCK Act records must link to the original official
             # House Clerk / Senate eFD filing, not a third-party lookalike.
-            return (url.scheme == "https"
-                    and url.hostname in ("disclosures-clerk.house.gov", "efdsearch.senate.gov")
-                    and url.username is None and url.password is None)
+            if (url.scheme != "https"
+                    or url.hostname not in ("disclosures-clerk.house.gov", "efdsearch.senate.gov")
+                    or url.username is not None or url.password is not None
+                    or url.port not in (None, 443)
+                    or url.query or url.fragment):
+                return False
+            # An official hostname alone does not prove a filing. Reject
+            # homepages and unrelated pages masquerading as PTR provenance.
+            if url.hostname == "disclosures-clerk.house.gov":
+                return bool(re.fullmatch(
+                    r"/public_disc/ptr-pdfs/[0-9]{4}/[A-Za-z0-9_-]+\.pdf",
+                    url.path, flags=re.IGNORECASE))
+            return bool(re.fullmatch(
+                r"/search/view/ptr/[A-Za-z0-9_-]+/?", url.path))
         except ValueError:
             return False
 
