@@ -686,5 +686,49 @@ class PublicCollectionStatusTests(unittest.TestCase):
         result = self.run_check(item)
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_encoded_credentials_and_markup_in_status_errors_are_rejected(self):
+        # An upstream exception can hide sensitive query keys behind URL/HTML
+        # escaping; the public JSON is copied verbatim into Pages.
+        for bad in (
+            "fetch failed: api%5Fkey%3Ddo_not_echo_123456789",
+            "fetch failed: api%255Fkey%253Ddo_not_echo_123456789",
+            "fetch failed: api&#95;key&#61;do_not_echo_123456789",
+            "fetch failed: %3Cscript%3Ealert(1)%3C/script%3E",
+            "fetch failed: &#x3C;img src=x onerror=alert(1)&#x3E;",
+            "fetch failed: line%0Abreak",
+        ):
+            with self.subTest(encoded_error=bad[:32]):
+                item = status()
+                item["collectors"]["taiwan_legislature"]["errors"] = [bad]
+                self.assert_rejected(item)
+                item["collectors"]["taiwan_legislature"] = {
+                    "status": "failed", "error": bad,
+                }
+                self.assert_rejected(item)
+
+    def test_encoded_credentials_and_markup_in_public_trade_are_rejected(self):
+        for field, value in (
+            ("who", "Member%3Cscript%3Ealert(1)%3C/script%3E"),
+            ("asset", "Company api%255Fkey%253Ddo_not_echo_123456789"),
+            ("amt", "Amount &#x3C;img onerror=alert(1)&#x3E;"),
+            ("source", "Official?token%3Ddo_not_echo_123456789"),
+        ):
+            with self.subTest(field=field):
+                payload = {"trades": [public_trade()]}
+                if field == "source":
+                    payload[field] = value
+                else:
+                    payload["trades"][0][field] = value
+                self.assert_trades_rejected(json.dumps(payload))
+
+    def test_benign_encoded_diagnostics_remain_public(self):
+        item = status()
+        item["collectors"]["taiwan_legislature"]["errors"] = [
+            "HTTP 404 path%2Fmissing", "timeout while reading &amp; retrying",
+        ]
+        result = self.run_check(item)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()
