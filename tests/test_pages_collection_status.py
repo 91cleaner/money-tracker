@@ -49,6 +49,24 @@ class PublicCollectionStatusTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0, result.stdout)
         self.assertIn("Invalid public collection-status.json", result.stderr)
 
+    def test_preflight_watches_public_data_and_builder_changes(self):
+        # A PR or direct main push changing public data or its builder must
+        # run the standalone preflight, not only changes to the validator.
+        workflow = (Path(__file__).resolve().parents[1]
+                    / ".github/workflows/pages-collection-status-preflight.yml").read_text(encoding="utf-8")
+        pr_paths = workflow.split("  pull_request:\n", 1)[1].split("  push:\n", 1)[0]
+        push_paths = workflow.split("  push:\n", 1)[1].split("  workflow_dispatch:", 1)[0]
+        for path in (
+            "data/search/collection-status.json",
+            "data/us/trades_public.json",
+            "scripts/prepare-public-pages.py",
+            "scripts/build_public_trades.py",
+        ):
+            with self.subTest(path=path):
+                marker = "      - '" + path + "'"
+                self.assertIn(marker, pr_paths)
+                self.assertIn(marker, push_paths)
+
     def test_valid_snapshot_preserves_taiwan_failure(self):
         result = self.run_check(status())
         self.assertEqual(result.returncode, 0, result.stderr)
