@@ -235,7 +235,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
       const [a, lo, k] = inView[i]; const [hex, fl, ty, la, , tr, alt, gs, cc, mil] = a; const isM = !!(mil && $('milTg').checked); const col = isM ? MILC : colorOf(k);
       const tp = trk && trk.p[hex]; if (tp && nT < capT) { nT++; trailRec.push({ live: false, col, pts: tp.map((q) => [q[1], near(q[2])]).concat([[la, lo]]) }); }
       const name = fl || String(hex).toUpperCase();
-      planeRec.push({ la, lo, tr: tr || 0, gs: gs || 0, move: gs > 30, mil: isM ? 1 : 0, col, kind: 'pl', key: String(hex), tip: esc(name) + (mil ? ' · 군용기 표시' : ''), open: () => { $('info').innerHTML = `<div class="h">${name}</div>등록 나라: ${NM[cc] || '기타'}${mil ? '<br>군용기 표시가 있는 신호예요' : ''}<br>고도: ${fmt(alt)}${alt == null ? '' : ' ft'}<br>속도: ${fmt(gs)}${gs == null ? '' : ' kt'} · 방향 ${tr || 0}도<br>기체: ${ty || '정보 없음'} · 고유 번호 ${String(hex).toUpperCase()}`; } });
+      planeRec.push({ la, lo, tr: tr || 0, gs: gs || 0, move: gs > 30, mil: isM ? 1 : 0, col, kind: 'pl', key: String(hex), tip: esc(name) + (mil ? ' · 군용기 표시' : ''), open: () => { $('info').innerHTML = `<div class="h">${esc(name)}</div>등록 나라: ${NM[cc] || '기타'}${mil ? '<br>군용기 표시가 있는 신호예요' : ''}<br>고도: ${esc(fmt(alt))}${alt == null ? '' : ' ft'}<br>속도: ${esc(fmt(gs))}${gs == null ? '' : ' kt'} · 방향 ${esc(tr || 0)}도<br>기체: ${esc(ty || '정보 없음')} · 고유 번호 ${esc(String(hex).toUpperCase())}`; } });
     }
     if (note) note.textContent = step > 1 ? `지금 화면에 ${inView.length.toLocaleString('ko-KR')}대가 있어서 ${step}대 중 1대만 그려요. 확대하면 다 보여요.` : '';
     perf.planes = performance.now() - t0; schedule(true, true);
@@ -254,9 +254,9 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
         const ks = Object.keys(by).sort((x, y) => by[y] - by[x]), t = ks.reduce((sum, k) => sum + by[k], 0);
         if (zoomIn) { let sd = Math.abs(Math.round(la * 1000 + lo * 7)) + 1; const rn = () => (sd = (sd * 16807) % 2147483647) / 2147483647; const per = Math.min(t, 12, Math.max(1, Math.floor(left / cs.length)));
           for (let i = 0; i < per; i++) { const kk = ks[Math.min(ks.length - 1, Math.floor(rn() * ks.length * .999))]; const kc = keyOf(kk, legS); const gla = la - half + rn() * half * 2, glo = lo - half + rn() * half * 2, hd = Math.floor(rn() * 360);
-            ghostRec.push({ la: gla, lo: glo, tr: hd, move: false, mil: 0, col: colorOf(kc), kind: 'g', open: () => { $('info').innerHTML = `<div class="h">기록 위치 (하루 기록)</div>나라: ${kk === 'XX' ? '나라 기록 없음' : NM[kk] || '기타 나라'}<br>이 칸 배 ${t.toLocaleString('ko-KR')}척 중 ${per}척만 칸 안에 흩어 그렸어요. 실제 위치가 아니에요.<br>날짜: ${ships.date_range[0]} · 출처: Global Fishing Watch`; } }); }
+            ghostRec.push({ la: gla, lo: glo, tr: hd, move: false, mil: 0, col: colorOf(kc), kind: 'g', open: () => { $('info').innerHTML = `<div class="h">기록 위치 (하루 기록)</div>나라: ${kk === 'XX' ? '나라 기록 없음' : NM[kk] || '기타 나라'}<br>이 칸 배 ${safeCount(t)}척 중 ${per}척만 칸 안에 흩어 그렸어요. 실제 위치가 아니에요.<br>날짜: ${esc(ships.date_range[0])} · 출처: Global Fishing Watch`; } }); }
           left -= per; return; }
-        const rec = { la, lo, t, r: Math.min(7, 1.5 + Math.sqrt(t) / 3), col: colorOf(keyOf(ks[0], legS)), a: keyOf(ks[0], legS) === 'XX' ? .22 : .5, open: () => { $('info').innerHTML = `<div class="h">배 ${t.toLocaleString('ko-KR')}척 기록</div>${ks.map((k) => (k === 'XX' ? '나라 기록 없음' : NM[k] || '기타 나라') + ' ' + by[k].toLocaleString('ko-KR')).join(' · ')}<br>칸: 위도 ${la - half}~${la + half}도, 경도 ${((lo + 540) % 360 - 180) - half}~${((lo + 540) % 360 - 180) + half}도<br>날짜: ${ships.date_range[0]} (하루) · 색은 가장 많은 나라<br>출처: Global Fishing Watch`; } };
+        const rec = { la, lo, t, r: Math.min(7, 1.5 + Math.sqrt(t) / 3), col: colorOf(keyOf(ks[0], legS)), a: keyOf(ks[0], legS) === 'XX' ? .22 : .5, open: () => { $('info').innerHTML = `<div class="h">배 ${safeCount(t)}척 기록</div>${ks.map((k) => (k === 'XX' ? '나라 기록 없음' : NM[k] || '기타 나라') + ' ' + safeCount(by[k])).join(' · ')}<br>칸: 위도 ${la - half}~${la + half}도, 경도 ${((lo + 540) % 360 - 180) - half}~${((lo + 540) % 360 - 180) + half}도<br>날짜: ${esc(ships.date_range[0])} (하루) · 색은 가장 많은 나라<br>출처: Global Fishing Watch`; } };
         if (!thin) { dotRec.push(rec); return; }
         const p = map.latLngToContainerPoint([la, lo]), bk = Math.floor(p.x / 8) + ',' + Math.floor(p.y / 8), prev = bins.get(bk);
         if (!prev || rec.t > prev.t) bins.set(bk, rec);
@@ -267,7 +267,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
       for (const [mm, la, lo0, hd, sog, nm, cc, ty, hm, tl] of live.ships) {
         const k = keyOf(cc, legS); if (off.has(k)) continue; const lo = near(lo0); if (!b.contains([la, lo])) continue; const col = colorOf(k);
         if (tl && tl.length) trailRec.push({ live: true, col, pts: tl.map((q) => [q[0], near(q[1])]).concat([[la, lo]]) });
-        liveRec.push({ la, lo, tr: hd || 0, gs: sog || 0, move: sog > .5 && sog < 40, mil: 0, col, kind: 'sh', open: () => { $('info').innerHTML = `<div class="h">${nm || '이름 없는 배'}</div>나라: ${cc === 'XX' ? '나라 기록 없음' : NM[cc] || '기타 나라'}<br>종류: ${ty}<br>속도: ${sog} kt · 방향 ${hd}도<br>수신: ${kstL(live.updated)} 무렵 (한국 시간)<br>출처: AISStream 실시간 배`; } });
+        liveRec.push({ la, lo, tr: hd || 0, gs: sog || 0, move: sog > .5 && sog < 40, mil: 0, col, kind: 'sh', open: () => { $('info').innerHTML = `<div class="h">${esc(nm || '이름 없는 배')}</div>나라: ${cc === 'XX' ? '나라 기록 없음' : NM[cc] || '기타 나라'}<br>종류: ${esc(ty)}<br>속도: ${esc(sog)} kt · 방향 ${esc(hd)}도<br>수신: ${kstL(live.updated)} 무렵 (한국 시간)<br>출처: AISStream 실시간 배`; } });
       }
     }
     perf.ships = performance.now() - t0; schedule(true, true);
@@ -295,7 +295,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
   map.on('click', (e) => { if (e.originalEvent && uiHit(e.originalEvent)) return; openDot(e.layerPoint); });
   const legend = () => {
     const g = (id, leg, counts, unit) => { const o = {}; Object.keys(counts).forEach((k) => { const kk = keyOf(k, leg); o[kk] = (o[kk] || 0) + counts[k]; });
-      $(id).innerHTML = [...leg, 'XX'].map((k) => `<button type="button" class="cc${off.has(k) ? ' off' : ''}" data-k="${k}"><div class="l"><span class="d" style="background:${colorOf(k)}"></span>${NM[k] || k}</div><div class="v">${(o[k] || 0).toLocaleString('ko-KR')}</div></button>`).join(''); };
+      $(id).innerHTML = [...leg, 'XX'].map((k) => `<button type="button" class="cc${off.has(k) ? ' off' : ''}" data-k="${esc(k)}"><div class="l"><span class="d" style="background:${colorOf(k)}"></span>${esc(NM[k] || k)}</div><div class="v">${safeCount(o[k])}</div></button>`).join(''); };
     if (last) g('grid', legP, last.counts, '대'); if (ships) g('sgrid', legS, ships.counts, '척');
     const vis = (cnt, leg) => Object.keys(cnt).reduce((s, k) => s + (off.has(keyOf(k, leg)) ? 0 : cnt[k]), 0);
     if (last) $('tot').textContent = vis(last.counts, legP).toLocaleString('ko-KR') + '대';
@@ -312,6 +312,9 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
   const MILC = '#ff3df2'; const el = L.layerGroup().addTo(map); let ev = null, geo = null;
   const zoneC = {}; const ZXG = [[[23, 48], [23, 60], [30.5, 60], [30.5, 48]]];
   const esc = (x) => String(x == null ? '' : x).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  const safeHttpUrl = (x) => { try { const u = new URL(String(x)); return u.protocol === 'https:' || u.protocol === 'http:' ? u.href : ''; } catch { return ''; } };
+  const articleLink = (x) => { const href = safeHttpUrl(x); return href ? `<br><a href="${esc(href)}" target="_blank" rel="noopener noreferrer">기사 원문 보기</a>` : ''; };
+  const safeCount = (x) => Number.isFinite(Number(x)) ? Number(x).toLocaleString('ko-KR') : '0';
   const tip = (l, t) => l.bindTooltip(t, { direction: 'top', sticky: true, opacity: .95, className: 'mtTip' });
   const evCard = (t, h) => { $('info').innerHTML = `<div class="h">${esc(t)}</div>${h}`; $('cardT').textContent = t; $('cardG').innerHTML = `<div class="evb">${h}</div>`; $('cardD').innerHTML = ''; $('cardD').closest('details').hidden = true; $('card').hidden = false; };
   const zc = (c) => { const zs = ev.zones.items.filter((z) => z.cc.includes(c)); evCard('비행 회피 구역', `${esc(c === 'XG' ? '페르시아만' : NM[c] || c)}<br>${zs.map((z) => `${esc(z.id)} · ${esc(z.valid_until)}까지`).join('<br>')}<br>출처: <a href="https://www.easa.europa.eu/en/domains/air-operations/czibs" target="_blank" rel="noopener">EASA 안내문</a>`); };
@@ -330,7 +333,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
     if ($('fireTg').checked && ev.fires) { let k = 0; for (const [la, lo, n, cc] of ev.fires.cells) { const l2 = near(lo); if (!b.contains([la, l2])) continue; if (++k > (mob ? 1200 : 4000)) break; L.circleMarker([la, l2], { renderer: rnd, radius: Math.min(6, 1.5 + Math.sqrt(n) / 3), color: '#ff7a1a', weight: 0, fillOpacity: .6 })
       .bindTooltip(`위성 화재 · 열점 ${n.toLocaleString('ko-KR')}곳`, { sticky: true, className: 'mtTip' }).on('click', () => evCard('위성 화재', `${esc(NM[cc] || '')} 열점 ${n.toLocaleString('ko-KR')}곳 (1도 칸, 최근 24시간)<br>위치: 위도 ${la}, 경도 ${lo} 근처<br>자료 시간: ${kstL(ev.updated)} (한국 시간)<br>출처: <a href="https://firms.modaps.eosdis.nasa.gov/map/#d:24hrs;@${lo},${la},7z" target="_blank" rel="noopener">NASA FIRMS 지도</a>`)).addTo(el); } }
     if ($('confTg').checked && ev.conflict) for (const [la, lo, n, cc, t, pl, rc, u] of ev.conflict.cells) { const l2 = near(lo); if (!b.contains([la, l2])) continue; L.circleMarker([la, l2], { renderer: rnd, radius: Math.min(11, 3 + Math.sqrt(n)), color: '#ffd60a', weight: 1.5, fillColor: '#ff3b30', fillOpacity: .55 })
-      .bindTooltip(`분쟁 사건 기사 ${n.toLocaleString('ko-KR')}건${pl ? ' · ' + esc(pl) : ''}`, { sticky: true, className: 'mtTip' }).on('click', () => evCard('분쟁 사건 기사', `장소: ${esc(pl || NM[cc] || '위도 ' + la + ', 경도 ' + lo)}<br>최근 24시간 기사 ${n.toLocaleString('ko-KR')}건 (1도 칸)${rc ? `<br>종류: 공격 ${rc[0]} · 무력 충돌 ${rc[1]} · 대량 폭력 ${rc[2]}` : ''}<br>마지막 기사: ${t ? kstL(t) + ' (한국 시간)' : '정보 없음'}${u ? `<br><a href="${esc(u)}" target="_blank" rel="noopener">기사 원문 보기</a>` : ''}<br>기사에 나온 장소 기준이에요 · 출처: GDELT`)).addTo(el); }
+      .bindTooltip(`분쟁 사건 기사 ${n.toLocaleString('ko-KR')}건${pl ? ' · ' + esc(pl) : ''}`, { sticky: true, className: 'mtTip' }).on('click', () => evCard('분쟁 사건 기사', `장소: ${esc(pl || NM[cc] || '위도 ' + la + ', 경도 ' + lo)}<br>최근 24시간 기사 ${n.toLocaleString('ko-KR')}건 (1도 칸)${rc ? `<br>종류: 공격 ${rc[0]} · 무력 충돌 ${rc[1]} · 대량 폭력 ${rc[2]}` : ''}<br>마지막 기사: ${t ? kstL(t) + ' (한국 시간)' : '정보 없음'}${articleLink(u)}<br>기사에 나온 장소 기준이에요 · 출처: GDELT`)).addTo(el); }
     if ($('quakeTg').checked && ev.quakes) for (const [la, lo, m, t, ty, cc, dp] of ev.quakes.items) { const l2 = near(lo); if (!b.contains([la, l2])) continue; const ex = ty !== 'earthquake'; L.circleMarker([la, l2], { renderer: rnd, radius: Math.max(2.5, (m || 2.5) * 1.6 - 2), color: ex ? '#ffffff' : '#ffe14d', weight: 1.2, fillOpacity: ex ? .5 : .08 })
       .bindTooltip(`${ex ? '폭발' : '지진'} 규모 ${m}`, { sticky: true, className: 'mtTip' }).on('click', () => evCard(`${ex ? '폭발' : '지진'} 규모 ${m}`, `장소: ${esc(cc ? NM[cc] || cc : '바다')} (위도 ${la}, 경도 ${lo})<br>깊이 ${dp}km<br>시간: ${kstL(t)} (한국 시간)<br>출처: <a href="https://earthquake.usgs.gov/earthquakes/map/?extent=${la - 3},${lo - 3}&extent=${la + 3},${lo + 3}" target="_blank" rel="noopener">USGS 지도</a>`)).addTo(el); }
   };
@@ -350,7 +353,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
     const rows = [['배 (국기, 하루)', sh], ['비행기 (등록)', pa], ['군용기 표시', mi], ['분쟁 사건 기사', cf], ['위성 화재 열점', fi], ['지진·폭발', qk]];
     $('cardT').textContent = name; $('cardG').innerHTML = rows.map(([l]) => `<div><div class="l">${l}</div><div class="v">0</div></div>`).join('');
     $('cardG').querySelectorAll('.v').forEach((e, i) => countUp(e, rows[i][1]));
-    $('cardD').innerHTML = `실시간 배 (연안 수신 기준) ${lv}척<br>비행 회피 구역 안내: ${zn.length ? zn.map((z) => z.id + ', ' + z.valid_until + '까지').join(' / ') : '없음'}<br>배: Global Fishing Watch ${ships ? ships.date_range[0] : ''} 하루 기록 · 비행기: adsb.lol ${last ? kstL(last.updated) : ''}<br>분쟁 사건·위성 화재: 최근 24시간 · 지진·폭발: 최근 7일 (USGS)<br>나라 경계: 바다 위 기록은 나라 숫자에 안 들어가요.`;
+    $('cardD').innerHTML = `실시간 배 (연안 수신 기준) ${lv}척<br>비행 회피 구역 안내: ${zn.length ? zn.map((z) => esc(z.id) + ', ' + esc(z.valid_until) + '까지').join(' / ') : '없음'}<br>배: Global Fishing Watch ${ships ? esc(ships.date_range[0]) : ''} 하루 기록 · 비행기: adsb.lol ${last ? kstL(last.updated) : ''}<br>분쟁 사건·위성 화재: 최근 24시간 · 지진·폭발: 최근 7일 (USGS)<br>나라 경계: 바다 위 기록은 나라 숫자에 안 들어가요.`;
     $('cardD').closest('details').hidden = false; $('card').hidden = false;
   };
   const AL = { US: ['USA', 'America', '미합중국', '미 국'], GB: ['UK', 'Britain', 'England', '잉글랜드'], KR: ['South Korea', 'Korea', '대한민국', '남한'], KP: ['North Korea', 'DPRK', '조선'], CN: ['PRC', '중화인민공화국'], TW: ['Taiwan', 'ROC'], RU: ['Russia'], AE: ['UAE'], CD: ['DR Congo', 'DRC'], CZ: ['Czechia'], TR: ['Turkey', '터키'], IR: ['Persia'], VN: ['Viet Nam'], LA: ['Laos'], SY: ['Syria'], NL: ['Holland'], CI: ['Ivory Coast'], MM: ['Burma', '버마'] };
@@ -363,7 +366,7 @@ details{font-size:12px;opacity:.85}details summary{cursor:pointer;color:#9effc0}
     return ix.map((e) => [sc(e), e]).filter(([v]) => v < 9).sort((a, b) => a[0] - b[0] || a[1].ko.localeCompare(b[1].ko, 'ko')).slice(0, 6).map(([, e]) => e); };
   const pick = (e) => { $('qr').hidden = true; $('q').value = e.ko; $('q').blur(); const c = e.b.getCenter(); const lab = (window.mtLbl || []).find((r) => r[1] === e.ko);
     const z = Math.min(5, Math.max(map.getMinZoom(), map.getBoundsZoom(e.b, false, [40, 40]))); map.flyTo(lab ? [lab[2], lab[3]] : c, z, { duration: .9 }); window.mtCard(lab ? lab[2] : c.lat, lab ? lab[3] : c.lng, e.ko, e.cc); };
-  $('q').addEventListener('input', () => { const r = find($('q').value.trim()); $('qr').innerHTML = r.length ? r.map((e, i) => `<button type="button" data-i="${i}">${e.ko} <span style="opacity:.6">${e.cc}</span></button>`).join('') : '<div class="sub" style="padding:10px">찾는 나라가 없어요</div>'; $('qr').hidden = !$('q').value.trim(); $('qr').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => pick(r[+b.dataset.i]))); });
+  $('q').addEventListener('input', () => { const r = find($('q').value.trim()); $('qr').innerHTML = r.length ? r.map((e, i) => `<button type="button" data-i="${i}">${esc(e.ko)} <span style="opacity:.6">${esc(e.cc)}</span></button>`).join('') : '<div class="sub" style="padding:10px">찾는 나라가 없어요</div>'; $('qr').hidden = !$('q').value.trim(); $('qr').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => pick(r[+b.dataset.i]))); });
   $('q').addEventListener('keydown', (ev2) => { if (ev2.key === 'Enter') { const r = find($('q').value.trim()); if (r[0]) pick(r[0]); } });
   $('qx').addEventListener('click', () => { $('q').value = ''; $('qr').hidden = true; });
   $('cardX').addEventListener('click', () => { $('card').hidden = true; }); 
