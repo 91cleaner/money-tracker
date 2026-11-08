@@ -1,6 +1,6 @@
 {
- "date": "2026-11-07",
- "generated_at": "2026-11-07T08:30Z",
+ "date": "2026-11-08",
+ "generated_at": "2026-11-08T08:29Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -71,7 +71,7 @@
    "id": "movers",
    "kind": "movers",
    "icon": "●",
-   "score": 100.0,
+   "score": 85.0,
    "layout": "list",
    "date": "2026-11-05",
    "badge_ko": "큰 움직임",
@@ -131,10 +131,73 @@
    "share_en": "Biggest mover at the 2026-11-05 close: AppLovin Corp +31.0% · Money Tracker"
   },
   {
+   "id": "filings",
+   "kind": "filings",
+   "icon": "●",
+   "score": 80.0,
+   "layout": "list",
+   "date": "2026-11-06",
+   "badge_ko": "새 공시",
+   "badge_en": "NEW FILINGS",
+   "title_ko": "2026-11-06 회사들이 낸 '큰 소식' 신고서 12건",
+   "title_en": "12 'big news' notices companies filed on 2026-11-06",
+   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
+   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
+   "rows": [
+    {
+     "label_ko": "Ametek Inc/",
+     "label_en": "Ametek Inc/",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1037868/000103786826000199/ame-20261106.htm"
+    },
+    {
+     "label_ko": "Enbridge Inc",
+     "label_en": "Enbridge Inc",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/895728/000110465926123587/tm2629103d1_8ka.htm"
+    },
+    {
+     "label_ko": "Fox Corp",
+     "label_en": "Fox Corp",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1754301/000119312526451888/d141597d8k.htm"
+    },
+    {
+     "label_ko": "Realty Income Corp",
+     "label_en": "Realty Income Corp",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000063/o-20261103.htm"
+    },
+    {
+     "label_ko": "Rpm International Inc",
+     "label_en": "Rpm International Inc",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/110621/000119312526451945/d100289d8k.htm"
+    }
+   ],
+   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
+   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
+   "source_en": "Source: SEC 8-K notices (EDGAR)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "2026-11-06 회사들이 낸 '큰 소식' 신고서 12건 · 머니트래커",
+   "share_en": "12 'big news' notices companies filed on 2026-11-06 · Money Tracker"
+  },
+  {
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 68.8,
+   "score": 58.5,
    "layout": "list",
    "date": "2026-11-05",
    "badge_ko": "늦은 신고 클럽",
@@ -184,7 +247,7 @@
    "id": "president-2026-22686",
    "kind": "president",
    "icon": "",
-   "score": 55.0,
+   "score": 46.8,
    "layout": "versus",
    "date": "2026-11-05",
    "badge_ko": "대통령 조치",
@@ -235,53 +298,6 @@
    "source_url": "https://www.federalregister.gov/documents/2026/11/05/2026-22686/continuation-of-the-national-emergency-with-respect-to-the-proliferation-of-weapons-of-mass",
    "share_ko": "지난번 비슷한 조치 때 같은 기간엔 미국 항공우주·방산 ETF +2.1%, 록히드마틴 +2.9% 움직임이 있었어요 (원인 아님) · 머니트래커",
    "share_en": "Last similar move, same period: ITA +2.1%, Lockheed Martin Corp +2.9% (not a cause) · Money Tracker"
-  },
-  {
-   "id": "filings",
-   "kind": "filings",
-   "icon": "●",
-   "score": 52.0,
-   "layout": "list",
-   "date": "2026-11-06",
-   "badge_ko": "새 공시",
-   "badge_en": "NEW FILINGS",
-   "title_ko": "2026-11-06 회사들이 낸 '큰 소식' 신고서 3건",
-   "title_en": "3 'big news' notices companies filed on 2026-11-06",
-   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
-   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
-   "rows": [
-    {
-     "label_ko": "Enbridge Inc",
-     "label_en": "Enbridge Inc",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/895728/000110465926123587/tm2629103d1_8ka.htm"
-    },
-    {
-     "label_ko": "Public Storage",
-     "label_en": "Public Storage",
-     "value_ko": "큰 계약을 맺음",
-     "value_en": "material agreement",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1393311/000119312526451826/d191331d8k.htm"
-    },
-    {
-     "label_ko": "Repligen Corp",
-     "label_en": "Repligen Corp",
-     "value_ko": "큰 계약을 맺음",
-     "value_en": "material agreement",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/730272/000162828026071650/rgen-20261106.htm"
-    }
-   ],
-   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
-   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
-   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
-   "source_en": "Source: SEC 8-K notices (EDGAR)",
-   "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "2026-11-06 회사들이 낸 '큰 소식' 신고서 3건 · 머니트래커",
-   "share_en": "3 'big news' notices companies filed on 2026-11-06 · Money Tracker"
   }
  ],
  "cards": {
@@ -289,7 +305,7 @@
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 68.8,
+   "score": 58.5,
    "layout": "list",
    "date": "2026-11-05",
    "badge_ko": "늦은 신고 클럽",
@@ -339,7 +355,7 @@
    "id": "president-2026-22686",
    "kind": "president",
    "icon": "",
-   "score": 55.0,
+   "score": 46.8,
    "layout": "versus",
    "date": "2026-11-05",
    "badge_ko": "대통령 조치",
@@ -458,7 +474,7 @@
    "id": "debt",
    "kind": "debt",
    "icon": "●",
-   "score": 30.0,
+   "score": 25.5,
    "layout": "big",
    "date": "2026-11-05",
    "badge_ko": "국가 채무",
