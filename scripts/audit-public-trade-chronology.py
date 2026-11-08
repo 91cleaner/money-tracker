@@ -109,6 +109,33 @@ def audit_rows(rows, today):
     return dict(problems)
 
 
+
+def public_house_ptr_id(row):
+    """Return only a numeric official House filing ID, never untrusted URL text.
+
+    Generated ledger indices differ from committed snapshots; a stable filing
+    reference lets the data owner reconcile anomalies with original PDFs.
+    """
+    doc = row.get("doc") if isinstance(row, dict) else None
+    if not isinstance(doc, str) or "\\" in doc:
+        return None
+    if any(ch.isspace() or ord(ch) < 32 or ord(ch) == 127
+           or ch in ('"', "'", "<", ">", "`") for ch in doc):
+        return None
+    try:
+        url = urlsplit(doc)
+        if (url.scheme != "https" or url.hostname != "disclosures-clerk.house.gov"
+                or url.username is not None or url.password is not None
+                or url.port not in (None, 443) or url.query or url.fragment):
+            return None
+        match = re.fullmatch(
+            r"/public_disc/ptr-pdfs/[0-9]{4}/([0-9]{6,12})\.pdf",
+            url.path, flags=re.IGNORECASE)
+        return match.group(1) if match else None
+    except ValueError:
+        return None
+
+
 def main(argv=None):
     args = sys.argv[1:] if argv is None else argv
     if len(args) > 1:
@@ -133,6 +160,13 @@ def main(argv=None):
         preview = ",".join(str(i) for i in indices[:12])
         suffix = ",..." if len(indices) > 12 else ""
         print(f"  {reason}: {len(indices)} (zero-based rows: {preview}{suffix})")
+        # Row positions can shift after regeneration. Print only vetted,
+        # numeric official House PDF IDs for the same preview rows; never
+        # echo arbitrary filing URLs, names, or collector credentials.
+        filing_ids = sorted({identifier for i in indices[:12]
+                             if (identifier := public_house_ptr_id(rows[i]))})
+        if filing_ids:
+            print("    official House PTR IDs: " + ", ".join(filing_ids))
     if problems:
         print("Review official filing originals; no dates were modified.")
         return 1
