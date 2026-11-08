@@ -157,3 +157,44 @@ test('missing or malformed source collection does not hide the answer', async ()
     assert.ok(h.elements.briefStocks.children.some(x => /검증 대기/.test(x.textContent || '')));
   }
 });
+
+
+test('lookalike HTTPS hosts never become clickable official or market sources', async () => {
+  const h = intentSourceHarness([
+    'https://disclosures-clerk.house.gov.evil.example/public_disc/ptr.pdf',
+    'https://finance.yahoo.com.evil.example/quote/NVDA',
+    'https://example.com/pretend-official',
+    'https://www.congress.gov:8443/bill/1'
+  ]);
+  assert.equal(await h.run(), true);
+  assert.equal(h.elements.briefText.textContent, 'Valid answer stays visible');
+  assert.equal(h.elements.briefStocks.children.filter(x => x.tag === 'a').length, 0);
+  assert.ok(h.elements.briefStocks.children.some(x => /검증 대기/.test(x.textContent || '')));
+});
+
+test('official-domain and third-party price sources are labeled distinctly', async () => {
+  const official = 'https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033889.pdf';
+  const yahoo = 'https://finance.yahoo.com/quote/NVDA';
+  const h = intentSourceHarness([official, yahoo]);
+  assert.equal(await h.run(), true);
+  const links = h.elements.briefStocks.children.filter(x => x.tag === 'a');
+  assert.equal(links.length, 2);
+  assert.deepEqual(links.map(x => x.href), [official, yahoo]);
+  assert.match(links[0].textContent, /정부기관 도메인 참고.*내용 미검증/);
+  assert.match(links[1].textContent, /민간 시세 참고/);
+  assert.ok(links.every(x => x.rel === 'noopener noreferrer'));
+});
+
+test('mixed valid and spoofed sources keep valid answer and flag unverified links', async () => {
+  const h = intentSourceHarness([
+    'https://finance.yahoo.com/quote/NVDA',
+    'https://www.whitehouse.gov.evil.example/briefing',
+    'https://user:password@www.congress.gov/bill/1'
+  ]);
+  assert.equal(await h.run(), true);
+  assert.equal(h.elements.briefText.textContent, 'Valid answer stays visible');
+  const links = h.elements.briefStocks.children.filter(x => x.tag === 'a');
+  assert.equal(links.length, 1);
+  assert.match(links[0].textContent, /민간 시세 참고/);
+  assert.ok(h.elements.briefStocks.children.some(x => /검증 대기/.test(x.textContent || '')));
+});
