@@ -55,7 +55,7 @@ SECRET_IN_ERROR = re.compile(
     r"(?i)(?:\b(?:authorization|x-api-key|x-auth-token|x-access-token)(?:\\?[\"'])?\s*[:=]\s*(?:\\?[\"'])?\s*\S+"
     r"|\b(?:api[_-]?key|access[_-]?token|refresh[_-]?token|auth[_-]?token|session[_-]?token"
     r"|client[_-]?secret|private[_-]?key|password|secret|token|key)(?:\\?[\"'])?\s*[:=]\s*(?:\\?[\"'])?\s*\S+"
-    r"|\b(?:set-cookie|cookie)\s*:\s*\S+"
+    r"|\b(?:set-cookie|cookie)(?:\\?[\"\x27])?\s*:\s*(?:\\?[\"\x27])?\s*\S+"
     r"|\bBearer\s+[A-Za-z0-9._~+/-]{8,}"
     r"|https?://[^\s/@]+@"
     r"|\b(?:gh[pousr]_|github_pat_|sk-)[A-Za-z0-9_-]{12,}"
