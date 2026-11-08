@@ -57,3 +57,36 @@ Reviewed the actual **unmerged #523** `skysea.html` load handlers, separate from
 ## Verification and release status
 
 Reviewed the actual [#523 diff](https://github.com/91cleaner/money-tracker/pull/523) and comments, and ran the exact formatter in Node.js with the inputs above. **No current malicious or malformed live records were confirmed.** This review does not alter UI, data, collector, tests or deployment. PR #523 remains unmerged; its SkySea security regressions were reported 12/12 passing, while broader map/security jobs failed old entry assertions. The repository is **public**; real-time **executed stock trade feed is not connected**, and **generative AI is not connected**.
+
+
+## Additional P1 accuracy defect — Out-of-order refresh can roll back a newer map (2026-11-09 KST)
+
+**Fresh code-path check:** PR #523 HEAD \`bf311da\`, \`skysea.html\` around lines 310, 340 and 370. This is independent of the invalid-count/schema failures above.
+
+- \`load()\` is scheduled every 30 seconds. It accepts an aircraft response whenever \`j.updated !== last.updated\`; it does **not** require \`j.updated\` to be newer. An earlier request can finish after a later request and overwrite the newer \`last\` snapshot, country totals, and on-screen timestamp.
+- \`loadL()\` for live ships is scheduled every 120 seconds and likewise checks only \`j.updated === live.updated\` before replacing \`live\`; it can roll back the ship layer.
+- \`evLoad()\` is scheduled every 600 seconds and unconditionally assigns \`ev = j\`, so the same issue applies to event overlays. Its catch silently suppresses refresh failures.
+- The nested \`tracks.json\` fetch in \`load()\` unconditionally sets \`trk = t\` when it finishes. Even if aircraft state is guarded, a late track response can pair tracks from an older fetch with a newer aircraft snapshot.
+
+**Isolated Node.js reproduction** (synthetic out-of-order responses; not a claim of an observed production rollback):
+
+\`\`\`js
+let last = {updated: '2026-11-08T15:00:00Z'};
+const accept = (j) => { if (!last || j.updated !== last.updated) last = j; };
+accept({updated: '2026-11-08T15:30:00Z'}); // newer response resolves first
+accept({updated: '2026-11-08T15:10:00Z'}); // older response resolves last
+console.assert(last.updated === '2026-11-08T15:10:00Z'); // rollback reproduced
+\`\`\`
+
+The same check with the \`loadL()\` equality-only guard also finishes at 15:10 instead of 15:30.
+
+**Required correction (Claude screen owner):**
+
+1. Validate the entire response schema and parse \`updated\` as a finite, timezone-aware timestamp before publishing state; a malformed timestamp must never replace a validated snapshot.
+2. Use a monotonically increasing request-generation token to prevent an older request's response from overwriting a newer accepted request, **and** a monotonic source-\`updated\` comparison so that an older source snapshot never replaces a newer one even when its request started later. Handle clock skew explicitly rather than relying on lexicographic comparison of arbitrary date strings.
+3. Apply the guard independently to aircraft, live ships, and event overlays. Tie track results to the accepted aircraft generation (or verify compatible track timestamp); late tracks must not repaint a newer map.
+4. On failed or rejected refresh, keep the last **validated** snapshot and timestamp, with a separate refresh-error/stale indicator; do not replace it with \`0\` or silently claim current data.
+
+**Behavioral regression cases:** delayed A/B responses resolved B→A; a later request containing an older source \`updated\`; same timestamp; invalid timestamp; rejected refresh followed by valid recovery; late \`tracks.json\` after a newer aircraft update; aircraft, ship and event paths separately. Assert that timestamps, country totals, marker layers and track generation never regress. Test PR HEAD and deployment independently.
+
+**Scope:** Node.js synthetic guard reproduction only; no network manipulation, observed live rollback, or browser exploit. No screen, collector, data, or test code was changed by GPT.
