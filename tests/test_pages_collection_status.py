@@ -773,5 +773,35 @@ class PublicCollectionStatusTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
 
 
+    def test_cookie_headers_are_not_published_in_collector_errors_or_trade_metadata(self):
+        # Upstream HTTP errors may include session cookies without using the
+        # words token/password. Reject raw and URL-encoded Cookie headers.
+        bad_messages = (
+            "HTTP 503 Set-Cookie: sid=private_session_123456; Path=/",
+            "HTTP 401 Cookie: sessionid=private_session_123456",
+            "HTTP 503 Set%2DCookie%3A%20sid%3Dprivate_session_123456",
+        )
+        for message in bad_messages:
+            with self.subTest(message=message[:24]):
+                self.trades.write_text('{"trades":[]}', encoding="utf-8")
+                item = status()
+                item["collectors"]["taiwan_legislature"]["errors"] = [message]
+                self.assert_rejected(item)
+                item["collectors"]["taiwan_legislature"] = {
+                    "status": "failed", "error": message,
+                }
+                self.assert_rejected(item)
+                self.assert_trades_rejected(json.dumps({
+                    "note": message, "trades": [],
+                }))
+        self.trades.write_text('{"trades":[]}', encoding="utf-8")
+        item = status()
+        item["collectors"]["taiwan_legislature"]["errors"] = [
+            "HTTP 503: cookies disabled by upstream",
+        ]
+        result = self.run_check(item)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()
