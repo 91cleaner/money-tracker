@@ -251,7 +251,14 @@ const en=!!(window.MTI18N&&window.MTI18N.isEn);let L=(en&&a.en&&a.en.length?a.en
 if(en){const ent=ix.entities['company:'+pl.symbol]||{},legal=(ent.aliases||[]).filter(x=>/^[\x00-\x7f]+$/.test(x)&&/\b(corp|corporation|inc|co|ltd|plc|holdings)\b/i.test(x))[0];
 let nm=legal?window.MTI18N.name({name:ent.name,symbol:ent.symbol,aliases:[legal]}):window.MTI18N.name(ent);nm=nm||pl.symbol;if(/[가-힣]/.test(nm))nm=pl.symbol;if(a.name)L=L.map(s=>s.split(a.name).join(nm));a=Object.assign({},a,{name:nm})}
 $('candidatePanel').hidden=true;$('brief').hidden=false;$('closeBrief').hidden=false;$('briefTitle').textContent='◉ '+(a.name||pl.symbol)+' ('+pl.symbol+') · '+(en?'recent price, explained':'최근 주가 설명');$('briefText').textContent=L.join(' ');
-const box=$('briefStocks');box.replaceChildren();(a.src||[]).forEach(u=>{if(!/^https:/.test(u))return;const l=document.createElement('a');l.href=u;l.target='_blank';l.rel='noopener noreferrer';l.textContent=(en?'Source ↗ ':'출처 ↗ ')+new URL(u).hostname;l.style.cssText='display:block;color:#5dff9e';box.append(l)});
+const box=$('briefStocks');box.replaceChildren();let validSources=0;
+(Array.isArray(a.src)?a.src:[]).forEach(u=>{
+  if(typeof u!=='string')return;
+  let parsed;try{parsed=new URL(u)}catch(e){return}
+  if(parsed.protocol!=='https:'||!parsed.hostname||parsed.username||parsed.password)return;
+  const l=document.createElement('a');l.href=parsed.href;l.target='_blank';l.rel='noopener noreferrer';l.textContent=(en?'Source ↗ ':'출처 ↗ ')+parsed.hostname;l.style.cssText='display:block;color:#5dff9e';box.append(l);validSources++;
+});
+if(!validSources){const note=document.createElement('div');note.textContent=en?'Source unavailable · verification pending':'출처 확인 불가 · 검증 대기';note.style.cssText='color:#ffce74';box.append(note)}
 const go=document.createElement('button');go.className='mtSug';go.textContent=en?'▶ See the full route':'▶ 전체 경로 보기';go.onclick=()=>{const r=routeOf('company:'+pl.symbol);if(r)start(r)};box.append(go);
 {const mc=$('moodCard');mc.hidden=true;if(window.MTMood)A.load(pl.symbol).then(d=>{const pr=d&&d.periods&&d.periods[pl.period];return window.MTMood.load('../',pl.symbol,{asof:d&&d.asof,drop:pr&&typeof pr.ret==='number'?pr.ret:undefined,events:a.events})}).then(c=>{if(c&&isCurrent()){window.MTMood.render(mc,c,en);mc.hidden=false}}).catch(()=>{})}
 if(window.MTOpinions){const opinionSlot=document.createElement('div');box.append(opinionSlot);window.MTOpinions.render(opinionSlot,pl.symbol,{en:en,base:'../data/opinions/',asof:a.asof,period:pl.period}).catch(()=>{})}
