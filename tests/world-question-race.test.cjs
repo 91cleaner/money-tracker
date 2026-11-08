@@ -92,3 +92,68 @@ test('async renderers and manual map navigation honor question generation', () =
   assert.match(html, /function start\(c\)\{\+\+mtQueryEpoch;/);
   assert.match(html, /\$\('world'\)\.onclick=\(\)=>\{\+\+mtQueryEpoch;/);
 });
+
+
+// Exercise the real precomputed-answer renderer, not a stand-in URL filter.
+function intentSourceHarness(src) {
+  const begin = html.indexOf('async function mtIntentCard(');
+  const end = html.indexOf("\n$('previous').onclick=", begin);
+  assert.ok(begin >= 0 && end > begin, 'intent answer handler must exist');
+  const elements = {};
+  const $ = id => {
+    if (!elements[id]) elements[id] = {
+      children: [],
+      append(child) { this.children.push(child); },
+      replaceChildren() { this.children = []; },
+      removeAttribute() {}
+    };
+    return elements[id];
+  };
+  const context = {
+    $,
+    URL,
+    document: { createElement: tag => ({ tag, style: {} }) },
+    loadIdx: async () => ({ entities: { 'company:NVDA': { aliases: [] } } }),
+    window: {
+      mtLex: {},
+      MTIntent: { build: () => ({}), parse: () => ({}) },
+      MTAnswers: {
+        setBase() {},
+        plan: () => ({ symbol: 'NVDA', intent: 'why', period: '1m' }),
+        get: async () => ({ name: 'NVIDIA', ko: ['Valid answer stays visible'], src })
+      }
+    },
+    routeOf: () => null,
+    start() {}
+  };
+  vm.runInNewContext(html.slice(begin, end) + '\nthis.runIntent=mtIntentCard;', context, { timeout: 1000 });
+  return { elements, run: () => context.runIntent('NVIDIA why', () => true) };
+}
+
+test('malformed source URLs cannot discard a valid world-search answer', async () => {
+  const official = 'https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033889.pdf';
+  const h = intentSourceHarness(['https:', 'https://[', 'javascript:alert(1)', 'https://user:secret@sec.gov/x', null, official]);
+  assert.equal(await h.run(), true);
+  assert.equal(h.elements.briefText.textContent, 'Valid answer stays visible');
+  const links = h.elements.briefStocks.children.filter(x => x.tag === 'a');
+  assert.equal(links.length, 1);
+  assert.equal(links[0].href, official);
+  assert.equal(links[0].rel, 'noopener noreferrer');
+});
+
+test('all-invalid sources preserve answer with visible verification-pending label', async () => {
+  const h = intentSourceHarness(['https:', 'http://example.com', 'https://user:pw@example.com']);
+  assert.equal(await h.run(), true);
+  assert.equal(h.elements.briefText.textContent, 'Valid answer stays visible');
+  assert.equal(h.elements.briefStocks.children.filter(x => x.tag === 'a').length, 0);
+  assert.ok(h.elements.briefStocks.children.some(x => /검증 대기/.test(x.textContent || '')));
+});
+
+test('missing or malformed source collection does not hide the answer', async () => {
+  for (const src of [undefined, 'https://example.com', { href: 'https://example.com' }]) {
+    const h = intentSourceHarness(src);
+    assert.equal(await h.run(), true);
+    assert.equal(h.elements.briefText.textContent, 'Valid answer stays visible');
+    assert.ok(h.elements.briefStocks.children.some(x => /검증 대기/.test(x.textContent || '')));
+  }
+});
