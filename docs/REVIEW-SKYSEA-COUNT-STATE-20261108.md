@@ -32,6 +32,20 @@ The existing `tests/skysea-escaping.test.cjs` **asserts** that a malicious count
 3. Validate the upstream `ships.counts`, `last.counts`, `by[k]` and `t` schema before computing totals or marker sizes. A display formatter cannot repair `NaN` already introduced during aggregation. Do not silently substitute zero in the source JSON.
 4. Preserve the security fix: never interpolate raw invalid count text into `innerHTML`, even when showing an error state.
 
+## Additional P1 failure path — malformed snapshots become cached as loaded (2026-11-08 22:56 KST)
+
+Reviewed the actual **unmerged #523** `skysea.html` load handlers, separate from the count formatter:
+
+- **Aircraft:** `load()` assigns `last = j` **before** `top(j.counts, 7)`. If the response is valid JSON but lacks `counts`, `Object.keys(undefined)` throws. The `.catch` sets an error message **only when `!last`**, so the malformed object remains truthy and the UI can keep its initial "불러오는 중이에요" (or stale previous text) rather than report failure.
+- **Daily ships:** the `ships.json` handler assigns `ships = j` before the same `top(j.counts, 7)` validation. Its catch displays "배 자료를 불러오지 못했어요", but `ships` remains truthy and can cause later `legend()`, `drawS()` and country-card reads to fail.
+- **Aggregate type drift:** `legend()` uses `(o[kk] || 0) + counts[k]` and `vis()` uses `s + cnt[k]` without numeric validation. A count of string `'5'` yields string `'05'` from zero; mixed counts `'5'` and `2` yield `'052'` rather than 7. This can corrupt totals even if the final display formatter is safe.
+
+**Isolated Node.js reproduction:** `{updated:'...', counts: undefined}` causes `TypeError` after `last` / `ships` have been set; `last` stays truthy and the aircraft error message is suppressed. `{US:'5', KR:2}` yields concatenated total `'052'`. These are **synthetic malformed inputs**, not a claim that current published JSON is malformed.
+
+**Required behavior (UI owner):** validate `response.ok`, `updated`, `counts` object shape and every count (finite, nonnegative integer) **before** assigning to `last` / `ships`. Keep the last *validated* snapshot separately from error/loading state; on invalid refresh show "자료 갱신 실패 · 이전 정상 자료 표시" with last successful timestamp, and on initial failure show "자료 확인 불가 · 다시 시도". Reject type drift or explicitly normalize permitted numeric strings **before summing**, never through implicit `+` coercion. If the data cannot be validated, skip aggregate/marker rendering rather than fabricating a zero.
+
+**Regression cases:** HTTP 500, JSON parse error, missing `counts`, `counts: null`, `counts: []`, `counts: {US:'5',KR:2}`, negative/fractional/non-finite count, valid empty `counts: {}`, recovery on the next successful refresh, and stale-but-valid snapshot after a failed refresh. Assert that a bad snapshot does not replace the last good one, that a failed initial load never stays on "불러오는 중", and that a verified `US:5, KR:2` totals **7**. Test both airplane and daily-ship paths.
+
 ## Regression acceptance
 
 - Real `0` and `'0'` display zero **only after successful load and valid schema**; positive integer counts format with locale grouping.
