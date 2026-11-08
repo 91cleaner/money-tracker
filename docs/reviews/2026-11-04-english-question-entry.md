@@ -41,3 +41,18 @@ Reviewed 2026-11-04 06:55 KST against `main`. This is a **source-level reproduci
 ## Ownership and release status
 
 Per `docs/AI-ROLES.md`, Claude owns screen files; GPT is review/docs only. **No UI, data, collector, workflow, deployment or test code was modified in this review.** This document does not prove the fix, CI pass, live deployment, or browser behavior. GitHub repository/Pages are **PUBLIC** (not private). Generative AI analysis and real-time independently verified congressional executions are **NOT CONNECTED**; House PTR is delayed public disclosure data. Merge only after owner approval.
+
+## Additional P1 iPhone landscape focus-zoom regression — 2026-11-09 02:55 KST
+
+**New, concrete CSS breakpoint mismatch (source-level confirmed on main):**
+
+- The main question input is `#ask input` in `world-intelligence/index.html`. Its default rule (line ~25) sets `font-size:15px`.
+- The only explicit `font-size:16px` override for that input is inside `@media(max-width:650px)` (line ~27). An iPhone-sized **844×390 landscape CSS viewport is wider than 650px**, so the 15px default remains. Other `#ask input` rules in the file adjust color, background or border, not font size.
+- `assets/mt-landscape.css` targets `(orientation:landscape) and (max-height:500px)` but does not increase the question input's font size. `assets/mt-tabs.js` sets its *separate ticker-only* `#mtTabs .tbFind input` to 16px, which does not correct `#question`.
+- iOS Safari may auto-zoom when focusing a text input whose computed font is below 16px. **This is a plausible root cause of the user's landscape keyboard-zoom report, not a verified Safari reproduction.** Currently `#ask` is also hidden by the later `#mt-clean` rule; simply restoring visibility without fixing the landscape font size would leave the focus-zoom risk.
+
+**Owner action:** When making the real free-form question control visible, set the computed font size to at least **16 CSS px for every phone orientation** (including widths 651–899px), and preserve the 16px minimum if the input is moved into a bottom sheet. Prefer a targeted rule for the actual question field over global `user-scalable=no` or `maximum-scale=1`, which would remove accessibility zoom.
+
+**Acceptance test:** On real iPhone Safari in 844×390 and 390×844, inspect the *visible, focusable* question input's computed font size (>=16px), focus and type into it, assert no unexpected visual-viewport zoom or unreturnable pan, submit, choose a result, close the briefing, and reset to the map. Check English and Korean. Also test at 667×375 and 852×393 because both are above the 650px cutoff. Keep `visualViewport.scale` / before-and-after screenshots as evidence; viewport values alone cannot substitute for an actual iOS Safari test.
+
+**Verification:** Compared exact current-main CSS selectors and `mt-landscape.css` / `mt-tabs.js` from GitHub. The media-query arithmetic (844 > 650) and missing 16px landscape override are statically established. **Not performed:** live iPhone/browser reproduction, UI code change, automated browser test, CI pass or deployment. This addendum only refines the existing #477 handoff, avoiding a duplicate PR.
