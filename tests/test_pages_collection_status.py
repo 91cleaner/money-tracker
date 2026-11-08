@@ -780,6 +780,8 @@ class PublicCollectionStatusTests(unittest.TestCase):
             "HTTP 503 Set-Cookie: sid=private_session_123456; Path=/",
             "HTTP 401 Cookie: sessionid=private_session_123456",
             "HTTP 503 Set%2DCookie%3A%20sid%3Dprivate_session_123456",
+            '{"Set-Cookie":"sid=private_session_123456"}',
+            r'{\"Set-Cookie\":\"sid=private_session_123456\"}',
         )
         for message in bad_messages:
             with self.subTest(message=message[:24]):
