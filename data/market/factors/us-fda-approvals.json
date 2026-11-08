@@ -2,10 +2,10 @@
  "source": "U.S. FDA · openFDA Drugs@FDA API",
  "source_url": "https://open.fda.gov/apis/drug/drugsfda/",
  "note": "최근 약 13개월 신규 허가(ORIG·AP). novel=true는 신규 분자(제출 분류 TYPE 1). 기업·주가 영향은 단정하지 않음. openFDA는 FDA 공식 웹사이트와 지연·차이가 있을 수 있음.",
- "collected_at": "2026-11-07T23:40:55.466Z",
- "since": "2025-10-03",
- "count": 263,
- "novel_count": 17,
+ "collected_at": "2026-11-08T23:42:30.192Z",
+ "since": "2025-10-04",
+ "count": 264,
+ "novel_count": 18,
  "items": [
   {
    "application": "ANDA203421",
@@ -321,6 +321,21 @@
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=218687"
   },
   {
+   "application": "NDA220415",
+   "sponsor": "ABBVIE",
+   "brand": [
+    "JUVMO",
+    "JUVMO (COPACKAGED)"
+   ],
+   "ingredients": [
+    "TAVAPADON"
+   ],
+   "date": "2026-09-25",
+   "novel": true,
+   "class_code": "TYPE 1",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=220415"
+  },
+  {
    "application": "ANDA215268",
    "sponsor": "NEPHRON",
    "brand": [
@@ -558,6 +573,20 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=213234"
+  },
+  {
+   "application": "ANDA219718",
+   "sponsor": "CIPLA",
+   "brand": [
+    "POMALIDOMIDE"
+   ],
+   "ingredients": [
+    "POMALIDOMIDE"
+   ],
+   "date": "2026-08-31",
+   "novel": false,
+   "class_code": "UNKNOWN",
+   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219718"
   },
   {
    "application": "NDA213225",
@@ -3710,20 +3739,6 @@
    "novel": false,
    "class_code": "UNKNOWN",
    "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216484"
-  },
-  {
-   "application": "ANDA216504",
-   "sponsor": "AUROBINDO PHARMA",
-   "brand": [
-    "NAPROXEN"
-   ],
-   "ingredients": [
-    "NAPROXEN"
-   ],
-   "date": "2025-10-03",
-   "novel": false,
-   "class_code": "UNKNOWN",
-   "url": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216504"
   }
  ]
 }

@@ -2,11 +2,22 @@
  "source": "Federal Register API (BIS, USTR)",
  "source_url": "https://www.federalregister.gov/developers/documentation/api/v1",
  "note": "공식 고시 제목·날짜·원문 링크만 저장. china/entity_list/tariff 표시는 제목·요약의 단어로 자동 분류한 것이라 원문 확인 필요.",
- "collected_at": "2026-11-06T23:44:03.483Z",
+ "collected_at": "2026-11-08T23:42:27.101Z",
  "count": 400,
- "china_count": 69,
- "entity_list_count": 15,
+ "china_count": 68,
+ "entity_list_count": 14,
  "documents": [
+  {
+   "id": "2026-22793",
+   "date": "2026-11-09",
+   "type": "Rule",
+   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
+   "title": "Extension of the Suspension of Expansion of End-User Controls for Affiliates of Certain Listed Entities",
+   "url": "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed",
+   "china": false,
+   "entity_list": false,
+   "tariff": false
+  },
   {
    "id": "2026-22725",
    "date": "2026-11-06",
@@ -3140,17 +3151,6 @@
    "url": "https://www.federalregister.gov/documents/2024/11/05/2024-25715/public-briefing-on-revisions-to-space-related-export-controls-under-export-administration",
    "china": false,
    "entity_list": false,
-   "tariff": false
-  },
-  {
-   "id": "2024-25411",
-   "date": "2024-11-01",
-   "type": "Rule",
-   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
-   "title": "Additions and Revisions of Entities to the Entity List",
-   "url": "https://www.federalregister.gov/documents/2024/11/01/2024-25411/additions-and-revisions-of-entities-to-the-entity-list",
-   "china": true,
-   "entity_list": true,
    "tariff": false
   },
   {
