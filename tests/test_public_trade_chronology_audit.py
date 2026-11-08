@@ -73,6 +73,37 @@ class PublicTradeChronologyAuditTests(unittest.TestCase):
         self.assertIn("future-transaction-date: 1", result.stdout)
         self.assertNotIn(secret, result.stdout + result.stderr)
 
+    def test_audit_reports_stable_official_house_id_for_anomalies(self):
+        # Rebuilt Pages ledgers can reorder rows; official PDF identifiers
+        # make the same anomaly traceable without logging member details.
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "ledger.json"
+            path.write_text(json.dumps({"trades": [
+                trade(d="2099-01-01"),
+                trade(d="2099-01-01", doc="javascript:api_key=DO_NOT_ECHO_123456"),
+            ]}), encoding="utf-8")
+            result = subprocess.run([sys.executable, str(SCRIPT), str(path)],
+                                    capture_output=True, text=True, check=False)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("official House PTR IDs: 20035778", result.stdout)
+        self.assertNotIn("DO_NOT_ECHO", result.stdout + result.stderr)
+        self.assertNotIn("javascript:", result.stdout + result.stderr)
+
+    def test_official_id_preview_rejects_credential_bearing_filing_urls(self):
+        official = trade()["doc"]
+        bad = (
+            official + "?api_key=DO_NOT_ECHO_123456",
+            official.replace("https://", "https://user:secret@"),
+            official.replace("https://", "http://"),
+            official.replace("20035778.pdf", "api_key_DO_NOT_ECHO.pdf"),
+            "\\n" + official,
+            official.replace("https://", "https://disclosures-clerk.house.gov.evil.example/"),
+        )
+        self.assertEqual(audit.public_house_ptr_id(trade()), "20035778")
+        for url in bad:
+            with self.subTest(url_length=len(url)):
+                self.assertIsNone(audit.public_house_ptr_id(trade(doc=url)))
+
     def test_duplicate_json_keys_are_not_silently_audited(self):
         # json.loads normally keeps the last value. That could report zero
         # anomalies for a ledger rejected by the actual Pages release gate.
