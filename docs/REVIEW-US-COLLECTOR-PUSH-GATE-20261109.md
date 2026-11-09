@@ -65,3 +65,24 @@ The owner should consider whether a failed rebase must be recovered with a clean
 5. Workflow/data owner should implement and test in a separate branch/PR. Do not merge or deploy without owner approval.
 
 **Coordination:** GPT did not edit `data/`, collectors, UI, workflow YAML, tests, or production. The repository is currently **public**, despite references to a private repository in task wording.
+
+
+## 2026-11-10 04:54 KST — P1 daily-card source freshness and partial-data delta risk
+
+**New source-level finding, not a claim of an already published bad card.** This is separate from the push-retry defect above and from [#506](https://github.com/91cleaner/money-tracker/pull/506), which corrects Form 4/White House wording but does not change contracts/lobbying/PAC delta calculation.
+
+- On current main, scripts/build_us_daily.py builds snapshots from each source's company totals, but drops updated, period, errors, and source completeness metadata. It compares with the most recent saved daily JSON and labels any difference "어제보다 금액이 바뀐 회사 N곳" even when collection periods differ or a source is partial. It does not establish an actual previous-day financial change.
+- The current data/us/federal-awards.json snapshot is updated 2026-11-09, period 2024-10-01..2026-11-09, with errors ["FDX:partial", "GD:partial"]. Its total for GD is **$25,233,816,611.18**; the saved data/us/daily/2026-11-09.json snapshot for GD is **$20,144,072,571.92**. A subsequent build comparing those snapshots would calculate **+$5,089,744,039.26** for an explicitly partial source. This is **not evidence of $5.09B newly awarded on one day**.
+- The same snapshot comparison has **23 changed companies**. LMT changes from **$120,773,983,798.97** in the saved daily snapshot to **$140,501,053,087.43** in the current source (+$19,727,069,288.46). These are cumulative/period-dependent totals, not verified day-over-day new obligations.
+- data/us/lobbying.json is marked updated 2026-11-02 and data/us/pac-contributions.json updated 2026-11-03; the 2026-11-09 daily card presents their highest-company values without source-as-of dates. A fresh card date does not imply fresh source data.
+- The existing 2026-11-09 daily JSON still contains the older contract snapshot, so **do not assert** the hypothetical next-build delta has already been published. This review compared repository source JSON and generator logic only.
+
+**Owner acceptance / negative tests (not implemented here):**
+
+1. Preserve source_updated, exact period, partial/error flags, previous snapshot date, and provenance per daily card. Show **stale / partial / unavailable** explicitly. Do not display an unqualified "어제보다" or imply new awards from cumulative snapshot revisions.
+2. Fixture: previous GD=20,144,072,571.92, current GD=25,233,816,611.18, errors=["GD:partial"]. Assert the result is **not** an ordinary day-over-day change or new-award signal; suppress the comparison or label it a non-comparable source refresh with the partial flag.
+3. Fixture: previous daily snapshot older than one calendar day. The output must not say "어제보다". Fixture: source updated unchanged over several daily builds. The card must not imply the source refreshed.
+4. Compare only like-for-like period, filter, and source completeness. For non-comparable snapshots, show "비교 불가" and link to the official USAspending/LDA/FEC source instead of manufacturing a daily movement.
+5. Data owner implements in scripts/build_us_daily.py and adds offline regression tests; release owner ensures corrected generator and source-status checks are in the same-SHA Pages gate. Per docs/AI-ROLES.md, this GPT review does **not** modify generator, data/, UI, CI, or deployment.
+
+**Status:** confirmed current source/schema and arithmetic; downstream 2026-11-10 output, CI, browser, and production **not verified**. Repo public; live executed-trade feed **NOT CONNECTED**; generative AI **NOT CONNECTED**.
