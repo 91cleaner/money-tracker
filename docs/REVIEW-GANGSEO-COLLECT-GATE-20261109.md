@@ -43,3 +43,40 @@ Compare the deduplicated contracts feeding `g.collect()` by `no`, `ord`, `src`, 
 5. Data/collector owner implements the fix in a separate branch/PR; GPT review PR must remain unmerged until owner approval.
 
 **Connectivity disclosure:** GitHub repository is currently **public**. A live executed-stock-trade feed is **not connected**; generative AI is **not connected**. Korean public contract collection is separate from those two capabilities.
+
+
+## 2026-11-09 15:32 KST follow-up — failure persists; contract-level attribution
+
+- [Scheduled run #42572785586](https://github.com/91cleaner/money-tracker/actions/runs/42572785586) (created 06:24 UTC; test output 06:32 UTC) **failed again** at \`데이터 검증 게이트\` on \`main\`. The preceding \`나라장터 계약 수집\` step succeeded; \`바뀐 데이터 저장\` was skipped. The suite ran **144 tests / 1 failure**.
+- The **same** \`test_main_contract_regions\` assertion at line 33 remains: calculated Jeonju Deokjin-gu \`130192831110\` vs expected \`64914674760\`. This establishes a **persistent collection blocker**, not a one-off timeout, but does not prove a duplicate or a valid contract amendment.
+- A successful Pages deploy [#42573192672](https://github.com/91cleaner/money-tracker/actions/runs/42573192672) later in the hour is **not** evidence that this failed contract collection was committed; the collection job skipped its commit step. Keep these statuses separate.
+
+To attribute the region aggregate **without modifying files or exposing company names**, run the following on a clean checkout with the failed-run inputs. The first three columns identify a contract record and its revision/source; the final columns show contract amount, contribution to the target region, and all allocated parts. Compare the per-record amounts and part sums against the official contract/revision before changing the test:
+
+\`\`\`bash
+python - <<'PY'
+from scripts import build_gangseo_flow as g
+
+regions, locator = g.Regions(), g.Locator()
+target = "전북 전주시 덕진구"
+rows = []
+for rec in g.collect().values():
+    amount = g.amount_of(rec)
+    parts = g.split(rec)
+    allocated = sum(part for _, _, part, _ in parts if part > 0)
+    for cid, name, part, inline in parts:
+        if part <= 0:
+            continue
+        region = regions.of(cid, name, inline)
+        if not region:
+            continue
+        label, coords = locator(region)
+        if label == target and coords:
+            rows.append((rec["no"], rec["ord"], rec["src"], amount, part, allocated))
+for row in sorted(rows, key=lambda x: str(x[0])):
+    print(*row)
+print("TARGET_REGION_SUM", sum(row[4] for row in rows))
+PY
+\`\`\`
+
+**Release condition:** data owner reconciles each contributing contract/revision and verifies \`sum(part)\` against the authoritative amount (especially search-index joint-venture \`jvs\`), fixes the underlying cause or source-backed expectation, and reruns the scheduled collection with a green gate **before** claiming fresh Korean contract data. This appendix is a read-only triage improvement, **not** a data or workflow fix.
