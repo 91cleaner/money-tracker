@@ -6,6 +6,37 @@
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
 {
+"id": "ec:STATEMENT/26/2374",
+"kind": "press",
+"t": "Statement by President von der Leyen following her call with President Zelenskyy and ahead of her visit to the Black Sea Region, in Romania and Bulgaria",
+"d": "2026-11-09",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2374",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2343",
+"kind": "press",
+"t": "EU emissions continue to fall as clean energy gains ground",
+"d": "2026-11-09",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2343",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [
+"energy",
+"clean_energy"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:QANDA/26/2366",
 "kind": "press",
 "t": "Questions and answers on the second Annual Migration Management Cycle",
@@ -120,6 +151,34 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026R2476",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2476 of 6 November 2026 cancelling the registration of the protected designation of origin Graves supérieures (PDO)",
+"d": "2026-11-06",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2476",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2474",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2474 of 6 November 2026 granting a Union authorisation for the biocidal product Product 3 in accordance with Regulation (EU) No 528/2012 of the European Parliament and of the Council",
+"d": "2026-11-06",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2474",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
 },
 {
 "id": "ec:QANDA/26/2354",
