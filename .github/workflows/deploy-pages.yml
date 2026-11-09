@@ -64,11 +64,32 @@ jobs:
           test ! -e .public-pages/wrangler.jsonc
           test -f .public-pages/intel-lab.html
           test -f .public-pages/js/mobile.js
+      - name: Refuse stale main candidate before artifact upload
+        shell: bash
+        run: |
+          # A queued push may no longer be main's tip by the time validation ends.
+          current_sha="$(git ls-remote --exit-code origin refs/heads/main | cut -f1)"
+          if [ -z "$current_sha" ] || [ "$current_sha" != "$GITHUB_SHA" ]; then
+            echo "::error::Pages candidate is stale or main could not be verified; refusing publication"
+            exit 1
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .public-pages
+      - name: Refuse stale main candidate before deployment
+        shell: bash
+        run: |
+          # Recheck after artifact upload; a newer main push may have arrived.
+          current_sha="$(git ls-remote --exit-code origin refs/heads/main | cut -f1)"
+          if [ -z "$current_sha" ] || [ "$current_sha" != "$GITHUB_SHA" ]; then
+            echo "::error::Pages candidate is stale or main could not be verified; refusing publication"
+            exit 1
+          fi
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # Pages sync has repeatedly reached the action's default 600s limit.
+          timeout: '1200000'
       - name: Verify published entry and US command
         env:
           SITE_URL: ${{ steps.deployment.outputs.page_url }}
