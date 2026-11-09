@@ -4649,11 +4649,11 @@
      "trade_date": "2025-10-10",
      "filed": "2025-11-22",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033421.pdf",
-     "event": "8-K: executive or director change, Reg FD disclosure",
+     "event": "8-K: earnings results",
      "event_kind": "8-K",
-     "event_date": "2025-10-16",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/97476/000095010325013275/dp235861_8k.htm",
-     "days_before": 6
+     "event_date": "2025-10-21",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747625000056/txn-20251021.htm",
+     "days_before": 11
     },
     {
      "src": "House PTR",
@@ -4664,11 +4664,11 @@
      "trade_date": "2025-10-10",
      "filed": "2025-11-22",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033421.pdf",
-     "event": "8-K: executive or director change, Reg FD disclosure",
+     "event": "8-K: earnings results",
      "event_kind": "8-K",
-     "event_date": "2025-10-16",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/97476/000095010325013275/dp235861_8k.htm",
-     "days_before": 6
+     "event_date": "2025-10-21",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747625000056/txn-20251021.htm",
+     "days_before": 11
     },
     {
      "src": "House PTR",
@@ -4679,11 +4679,11 @@
      "trade_date": "2025-10-10",
      "filed": "2025-11-22",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033421.pdf",
-     "event": "8-K: executive or director change, Reg FD disclosure",
+     "event": "8-K: earnings results",
      "event_kind": "8-K",
-     "event_date": "2025-10-16",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/97476/000095010325013275/dp235861_8k.htm",
-     "days_before": 6
+     "event_date": "2025-10-21",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747625000056/txn-20251021.htm",
+     "days_before": 11
     },
     {
      "src": "House PTR",
@@ -4694,11 +4694,11 @@
      "trade_date": "2025-10-10",
      "filed": "2025-11-22",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033421.pdf",
-     "event": "8-K: executive or director change, Reg FD disclosure",
+     "event": "8-K: earnings results",
      "event_kind": "8-K",
-     "event_date": "2025-10-16",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/97476/000095010325013275/dp235861_8k.htm",
-     "days_before": 6
+     "event_date": "2025-10-21",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747625000056/txn-20251021.htm",
+     "days_before": 11
     },
     {
      "src": "House PTR",
@@ -7002,10 +7002,89 @@
    ]
   },
   "BRK.B": {
-   "n": 27,
-   "n_ptr": 25,
-   "n_form4": 2,
+   "n": 32,
+   "n_ptr": 26,
+   "n_form4": 6,
    "matches": [
+    {
+     "src": "House PTR",
+     "who": "Pete Sessions",
+     "role": "House member",
+     "side": "sell",
+     "amount": "$15,001 - $50,000",
+     "trade_date": "2026-10-15",
+     "filed": "2026-10-27",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035563.pdf",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-11-09",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526452530/brka-20261107.htm",
+     "days_before": 25
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "BERKSHIRE HATHAWAY INC",
+     "role": "10% owner",
+     "side": "sell",
+     "amount": "382,563 shares at $180.43 (about $69,026,033)",
+     "plan": false,
+     "trade_date": "2026-10-27",
+     "filed": "2026-10-29",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526438090/0001193125-26-438090-index.htm",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-11-09",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526452530/brka-20261107.htm",
+     "days_before": 13
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "BERKSHIRE HATHAWAY INC",
+     "role": "10% owner",
+     "side": "buy",
+     "amount": "743,965 shares at $28.89 (about $21,494,116)",
+     "plan": false,
+     "trade_date": "2026-10-30",
+     "filed": "2026-11-03",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526445930/0001193125-26-445930-index.htm",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-11-09",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526452530/brka-20261107.htm",
+     "days_before": 10
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "BERKSHIRE HATHAWAY INC",
+     "role": "10% owner",
+     "side": "buy",
+     "amount": "66,968 shares at $29.47 (about $1,973,279)",
+     "plan": false,
+     "trade_date": "2026-11-02",
+     "filed": "2026-11-03",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526445930/0001193125-26-445930-index.htm",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-11-09",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526452530/brka-20261107.htm",
+     "days_before": 7
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "BERKSHIRE HATHAWAY INC",
+     "role": "10% owner",
+     "side": "buy",
+     "amount": "113,348 shares at $30.23 (about $3,426,850)",
+     "plan": false,
+     "trade_date": "2026-11-03",
+     "filed": "2026-11-03",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526445930/0001193125-26-445930-index.htm",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-11-09",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526452530/brka-20261107.htm",
+     "days_before": 6
+    },
     {
      "src": "House PTR",
      "who": "Maria Elvira Salazar",
@@ -7230,81 +7309,6 @@
      "event_date": "2025-11-21",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525290864/d45429d8k.htm",
      "days_before": 2
-    },
-    {
-     "src": "House PTR",
-     "who": "Eleanor Holmes Norton",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$15,001 - $50,000",
-     "trade_date": "2025-10-14",
-     "filed": "2025-10-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033318.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525262260/d22917d8k.htm",
-     "days_before": 20
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-17",
-     "filed": "2025-11-18",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033455.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525262260/d22917d8k.htm",
-     "days_before": 17
-    },
-    {
-     "src": "House PTR",
-     "who": "Gilbert Cisneros",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-17",
-     "filed": "2025-11-18",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033455.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525262260/d22917d8k.htm",
-     "days_before": 17
-    },
-    {
-     "src": "House PTR",
-     "who": "Marjorie Taylor Greene",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-24",
-     "filed": "2025-10-28",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033360.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525262260/d22917d8k.htm",
-     "days_before": 10
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-03",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312525262260/d22917d8k.htm",
-     "days_before": 4
     }
    ]
   },
@@ -12858,11 +12862,11 @@
      "trade_date": "2026-04-14",
      "filed": "2026-05-08",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034500.pdf",
-     "event": "8-K: material agreement, new financial obligation",
+     "event": "8-K: earnings results",
      "event_kind": "8-K",
-     "event_date": "2026-04-20",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000038/ttd-20260414.htm",
-     "days_before": 6
+     "event_date": "2026-05-07",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000053/ttd-20260507.htm",
+     "days_before": 23
     },
     {
      "src": "House PTR",
@@ -34392,9 +34396,9 @@
    ]
   },
   "LTH": {
-   "n": 33,
+   "n": 28,
    "n_ptr": 14,
-   "n_form4": 19,
+   "n_form4": 14,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -34598,86 +34602,6 @@
      "days_before": 6
     },
     {
-     "src": "SEC Form 4",
-     "who": "Galashan John Kristofer",
-     "role": "director",
-     "side": "sell",
-     "amount": "5,119,099 shares at $43.16 (about $220,940,313)",
-     "plan": false,
-     "trade_date": "2026-08-10",
-     "filed": "2026-08-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1869198/000119312526347333/0001193125-26-347333-index.htm",
-     "event": "8-K: material agreement, new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-08-13",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000045/lth-20260812.htm",
-     "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "DANHAKL JOHN G",
-     "role": "director",
-     "side": "sell",
-     "amount": "5,119,099 shares at $43.16 (about $220,940,313)",
-     "plan": false,
-     "trade_date": "2026-08-10",
-     "filed": "2026-08-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1869198/000119312526347311/0001193125-26-347311-index.htm",
-     "event": "8-K: material agreement, new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-08-13",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000045/lth-20260812.htm",
-     "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Green LTF Holdings II LP",
-     "role": "director",
-     "side": "sell",
-     "amount": "5,025,751 shares at $43.16 (about $216,911,413)",
-     "plan": false,
-     "trade_date": "2026-08-10",
-     "filed": "2026-08-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1869198/000119312526347303/0001193125-26-347303-index.htm",
-     "event": "8-K: material agreement, new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-08-13",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000045/lth-20260812.htm",
-     "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Green LTF Holdings II LP",
-     "role": "director",
-     "side": "sell",
-     "amount": "8,512 shares at $43.16 (about $367,378)",
-     "plan": false,
-     "trade_date": "2026-08-10",
-     "filed": "2026-08-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1869198/000119312526347303/0001193125-26-347303-index.htm",
-     "event": "8-K: material agreement, new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-08-13",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000045/lth-20260812.htm",
-     "days_before": 3
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Green LTF Holdings II LP",
-     "role": "director",
-     "side": "sell",
-     "amount": "84,836 shares at $43.16 (about $3,661,522)",
-     "plan": false,
-     "trade_date": "2026-08-10",
-     "filed": "2026-08-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1869198/000119312526347303/0001193125-26-347303-index.htm",
-     "event": "8-K: material agreement, new financial obligation",
-     "event_kind": "8-K",
-     "event_date": "2026-08-13",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000045/lth-20260812.htm",
-     "days_before": 3
-    },
-    {
      "src": "House PTR",
      "who": "April McClain Delaney",
      "role": "House member",
@@ -34706,6 +34630,81 @@
      "event_date": "2026-07-30",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000041/lth-20260730.htm",
      "days_before": 10
+    },
+    {
+     "src": "House PTR",
+     "who": "April McClain Delaney",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2026-07-21",
+     "filed": "2026-08-03",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-07-30",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000041/lth-20260730.htm",
+     "days_before": 9
+    },
+    {
+     "src": "House PTR",
+     "who": "April McClain Delaney",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$15,001 - $50,000",
+     "trade_date": "2026-07-24",
+     "filed": "2026-08-03",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-07-30",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000041/lth-20260730.htm",
+     "days_before": 6
+    },
+    {
+     "src": "House PTR",
+     "who": "April McClain Delaney",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2026-07-27",
+     "filed": "2026-08-03",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-07-30",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000041/lth-20260730.htm",
+     "days_before": 3
+    },
+    {
+     "src": "House PTR",
+     "who": "April McClain Delaney",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2026-07-28",
+     "filed": "2026-08-03",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-07-30",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000041/lth-20260730.htm",
+     "days_before": 2
+    },
+    {
+     "src": "House PTR",
+     "who": "April McClain Delaney",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$1,001 - $15,000",
+     "trade_date": "2026-07-29",
+     "filed": "2026-08-03",
+     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf",
+     "event": "8-K: earnings results",
+     "event_kind": "8-K",
+     "event_date": "2026-07-30",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000041/lth-20260730.htm",
+     "days_before": 1
     }
    ]
   },
@@ -35807,8 +35806,8 @@
    ]
   },
   "SGI": {
-   "n": 6,
-   "n_ptr": 4,
+   "n": 4,
+   "n_ptr": 2,
    "n_form4": 2,
    "matches": [
     {
@@ -35840,36 +35839,6 @@
      "event_date": "2026-08-06",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1206264/000120626426000111/sgi-20260806.htm",
      "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "April McClain Delaney",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-03-16",
-     "filed": "2026-04-06",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034299.pdf",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2026-04-13",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1206264/000114036126014337/ef20070363_8k.htm",
-     "days_before": 28
-    },
-    {
-     "src": "House PTR",
-     "who": "April McClain Delaney",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2026-03-31",
-     "filed": "2026-04-06",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034299.pdf",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2026-04-13",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1206264/000114036126014337/ef20070363_8k.htm",
-     "days_before": 13
     },
     {
      "src": "SEC Form 4",
@@ -56494,9 +56463,9 @@
    ]
   },
   "MCK": {
-   "n": 14,
+   "n": 13,
    "n_ptr": 9,
-   "n_form4": 5,
+   "n_form4": 4,
    "matches": [
     {
      "src": "SEC Form 4",
@@ -56529,22 +56498,6 @@
      "event_date": "2026-10-06",
      "event_url": "https://www.sec.gov/Archives/edgar/data/927653/000092765326000253/mck-20261006.htm",
      "days_before": 28
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "Lerman Bradley E",
-     "role": "director",
-     "side": "sell",
-     "amount": "301 shares at $892.33 (about $268,590)",
-     "plan": false,
-     "trade_date": "2026-08-10",
-     "filed": "2026-08-11",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/927653/000092765326000239/0000927653-26-000239-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2026-08-28",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/927653/000092765326000247/mck-20260825.htm",
-     "days_before": 18
     },
     {
      "src": "House PTR",
@@ -64003,85 +63956,10 @@
    ]
   },
   "AKAM": {
-   "n": 20,
-   "n_ptr": 6,
+   "n": 15,
+   "n_ptr": 1,
    "n_form4": 14,
    "matches": [
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622225000252/akam-20251106.htm",
-     "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622225000252/akam-20251106.htm",
-     "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-30",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622225000252/akam-20251106.htm",
-     "days_before": 7
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-31",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622225000252/akam-20251106.htm",
-     "days_before": 6
-    },
-    {
-     "src": "House PTR",
-     "who": "Lisa McClain",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-31",
-     "filed": "2025-11-21",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033446.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-06",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622225000252/akam-20251106.htm",
-     "days_before": 6
-    },
     {
      "src": "SEC Form 4",
      "who": "Karon Adam",
@@ -70763,26 +70641,10 @@
    ]
   },
   "MORN": {
-   "n": 80,
+   "n": 79,
    "n_ptr": 6,
-   "n_form4": 74,
+   "n_form4": 73,
    "matches": [
-    {
-     "src": "SEC Form 4",
-     "who": "Mansueto Joseph D",
-     "role": "director, Executive Chairman, 10% owner",
-     "side": "sell",
-     "amount": "7,250 shares at $201.84 (about $1,463,370)",
-     "plan": true,
-     "trade_date": "2026-08-10",
-     "filed": "2026-08-12",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1289419/000132406926000037/0001324069-26-000037-index.htm",
-     "event": "8-K: Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2026-08-25",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941926000044/morn-20260825.htm",
-     "days_before": 15
-    },
     {
      "src": "SEC Form 4",
      "who": "Mansueto Joseph D",
@@ -71086,6 +70948,22 @@
      "event_date": "2026-08-25",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941926000044/morn-20260825.htm",
      "days_before": 8
+    },
+    {
+     "src": "SEC Form 4",
+     "who": "Mansueto Joseph D",
+     "role": "director, Executive Chairman, 10% owner",
+     "side": "sell",
+     "amount": "913 shares at $208.13 (about $190,022)",
+     "plan": true,
+     "trade_date": "2026-08-18",
+     "filed": "2026-08-19",
+     "trade_url": "https://www.sec.gov/Archives/edgar/data/1289419/000132406926000041/0001324069-26-000041-index.htm",
+     "event": "8-K: Reg FD disclosure",
+     "event_kind": "8-K",
+     "event_date": "2026-08-25",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941926000044/morn-20260825.htm",
+     "days_before": 7
     }
    ]
   },
@@ -72401,9 +72279,9 @@
    ]
   },
   "SSNC": {
-   "n": 9,
+   "n": 8,
    "n_ptr": 4,
-   "n_form4": 5,
+   "n_form4": 4,
    "matches": [
     {
      "src": "House PTR",
@@ -72528,22 +72406,6 @@
      "event_date": "2025-05-22",
      "event_url": "https://www.sec.gov/Archives/edgar/data/1402436/000095017025076481/ssnc-20250521.htm",
      "days_before": 9
-    },
-    {
-     "src": "SEC Form 4",
-     "who": "ZAMKOW MICHAEL JAY",
-     "role": "Director",
-     "side": "sell",
-     "amount": "23,000 shares at $88.39 (about $2,032,970)",
-     "plan": false,
-     "trade_date": "2025-02-25",
-     "filed": "2025-02-27",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1402436/000095017025029425/0000950170-25-029425-index.htm",
-     "event": "8-K: executive or director change",
-     "event_kind": "8-K",
-     "event_date": "2025-03-26",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1402436/000095017025045308/ssnc-20250324.htm",
-     "days_before": 29
     }
    ]
   },
@@ -78176,8 +78038,8 @@
    ]
   },
   "OXY": {
-   "n": 4,
-   "n_ptr": 3,
+   "n": 3,
+   "n_ptr": 2,
    "n_form4": 1,
    "matches": [
     {
@@ -78209,21 +78071,6 @@
      "event_kind": "8-K",
      "event_date": "2026-01-02",
      "event_url": "https://www.sec.gov/Archives/edgar/data/797468/000162828026000153/oxy-20260102.htm",
-     "days_before": 17
-    },
-    {
-     "src": "House PTR",
-     "who": "Marjorie Taylor Greene",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2025-10-24",
-     "filed": "2025-10-28",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033360.pdf",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2025-11-10",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/797468/000162828025051056/oxy-20251110.htm",
      "days_before": 17
     },
     {
@@ -78294,11 +78141,11 @@
      "trade_date": "2026-01-13",
      "filed": "2026-02-11",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033920.pdf",
-     "event": "8-K: executive or director change, Reg FD disclosure",
+     "event": "8-K: earnings results, Reg FD disclosure",
      "event_kind": "8-K",
-     "event_date": "2026-01-29",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/908937/000110465926007737/tm264347d1_8k.htm",
-     "days_before": 16
+     "event_date": "2026-02-05",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/908937/000090893726000003/siri-20260205.htm",
+     "days_before": 23
     }
    ]
   },
@@ -86472,9 +86319,9 @@
    ]
   },
   "QLYS": {
-   "n": 97,
+   "n": 82,
    "n_ptr": 3,
-   "n_form4": 94,
+   "n_form4": 79,
    "matches": [
     {
      "src": "SEC Form 4",
