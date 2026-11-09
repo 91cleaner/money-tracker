@@ -6,6 +6,68 @@
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
 {
+"id": "msit:ee6a6fefb77b",
+"kind": "press",
+"t": "배경훈 부총리, 국제전기통신연합 전권회의에서 국제 디지털 협력 강화",
+"d": "2026-11-09",
+"dept": "다자협력담당관",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187937",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:43ef6dfd490d",
+"kind": "press",
+"t": "국산 NPU, 엔비디아 시스템과 연계해 글로벌 AI 인프라 시장 진출 길 연다",
+"d": "2026-11-09",
+"dept": "정보통신방송기술정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187936",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:eb717ebbf056",
+"kind": "press",
+"t": "과기정통부, 전직급 인공지능 대화형 코딩으로 행정혁신 앞당긴다",
+"d": "2026-11-09",
+"dept": "정보화담당관",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187934",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "msit:84a574b51beb",
+"kind": "press",
+"t": "’26년 11월 ‘대한민국 엔지니어 상’ 수상자 선정",
+"d": "2026-11-09",
+"dept": "연구 성과혁신정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187938",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:44cabb7c7920",
+"kind": "press",
+"t": "100만 명이 찾은 과학의 즐거움, 국립중앙과학관 연간 관람객 2년 연속 100만 명 돌파",
+"d": "2026-11-09",
+"dept": "국립중앙과학관 전시운영정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187941",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:6dd944f6108f",
+"kind": "press",
+"t": "에스케이브로드밴드(주) 분할에 대한의견수렴 시행",
+"d": "2026-11-09",
+"dept": "통신정책기획과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187935",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
 "id": "msit:92c6ac4b2829",
 "kind": "press",
 "t": "한-네덜란드, 첫 과학기술공동위 개최  첨단 과학기술 협력 본격화",
@@ -5977,78 +6039,6 @@
 "tags": [
 "housing"
 ]
-},
-{
-"id": "PRC_8B10828E928D4FD69CB33A377B1792",
-"no": "2222118",
-"t": "형의 집행 및 수용자의 처우에 관한 법률 일부개정법률안",
-"d": "2026-10-27",
-"by": "서영교의원 등 13인",
-"cmte": "법제사법위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_8B10828E928D4FD69CB33A377B1792&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_A3D6236C537648BA9DA595B31892CB",
-"no": "2222117",
-"t": "소득세법 일부개정법률안",
-"d": "2026-10-27",
-"by": "최은석의원 등 10인",
-"cmte": "재정경제기획위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A3D6236C537648BA9DA595B31892CB&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_B2C6A0B9J2H2H1G4H0F2F4B8A2A7Y6",
-"no": "2222116",
-"t": "국회법 일부개정법률안",
-"d": "2026-10-27",
-"by": "서천호의원 등 17인",
-"cmte": "국회운영위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2C6A0B9J2H2H1G4H0F2F4B8A2A7Y6&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_8D5F61F326094DCC98476D1FC2A3BE",
-"no": "2222115",
-"t": "조세특례제한법 일부개정법률안",
-"d": "2026-10-27",
-"by": "주진우의원 등 10인",
-"cmte": "재정경제기획위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_8D5F61F326094DCC98476D1FC2A3BE&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "msit:ba7cfd13a58b",
-"kind": "press",
-"t": "과기정통부, 국제 원자력기구(IAEA) 원자력 장관회의 한국 첫 개최",
-"d": "2026-10-27",
-"dept": "원자력연구협력팀",
-"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187891",
-"src": "과학기술정보통신부 보도자료(공공데이터포털)",
-"tags": [
-"energy"
-]
-},
-{
-"id": "PRC_1E3B8E6E7C204DFDBF8546C5575BAD",
-"no": "2222114",
-"t": "조세특례제한법 일부개정법률안",
-"d": "2026-10-26",
-"by": "안도걸의원 등 12인",
-"cmte": "재정경제기획위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_1E3B8E6E7C204DFDBF8546C5575BAD&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
 }
 ]
 }
