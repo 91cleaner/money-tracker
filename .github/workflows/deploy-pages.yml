@@ -39,6 +39,13 @@ jobs:
           grep -q '실시간 시세 OFF' usa-command-legacy.html
       - name: Run private API fail-closed tests
         run: node --test worker/private-api.test.mjs
+      # Fail closed before uploading or publishing a Pages artifact. The separate
+      # security workflow can fail independently and is not a deployment gate.
+      - name: Gate publication on full security and data regression suite
+        run: |
+          node --check worker/private-api.js
+          node --check assets/mt-engagement.js
+          python3 -m unittest discover -s tests
       - name: Build public-only artifact
         run: python3 scripts/prepare-public-pages.py
       - name: Verify public artifact privacy and required assets
