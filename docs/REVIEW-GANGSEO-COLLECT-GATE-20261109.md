@@ -109,3 +109,21 @@ PY
 - Run the per-contract contribution diagnostic in the preceding section and **filter for `amount_of(rec) == 127996385000` or target-region contribution `part == 65278156350`**. Check contract number, amendment sequence, source, and joint-venture allocation. If no single matching record exists, reconcile the sum of multiple contributions; do not assume one extra row. Compare authoritative contract records privately before deduplicating or changing expectations.
 - Additional code-review safeguard: `split()` accepts search-index `jvs` monetary parts without enforcing `sum(parts) == amount_of(rec)`, so the owner should assert this balance **per contract** and inspect any exceptions; the aggregate `mapped + unmapped == total` test may catch only net imbalance and does not attribute a specific contract. This is a potential error path, **not** a demonstrated explanation for the present failure.
 - Acceptance: record the specific source-backed contract/revision explanation, preserve the red gate until a data-owner fix and full tests pass, and verify a new committed data snapshot on main. This GPT review updates only this document in existing PR #539.
+
+## 2026-11-09 19:00 KST — revision ordering can be wrong for variable-width ord values
+
+- Independent code review of current `main` `scripts/build_gangseo_flow.py::better()`: the revision `ord` is compared as a **string** with `>`. Python lexical ordering picks `"9"` over `"10"` and `"2"` over `"11"`. A **variable-width** revision sequence would therefore select an older contract revision, affecting amount and joint-venture attribution. Fixed-width values such as `"09"`/`"10"` sort correctly; the actual affected source records have **not** been established. This is a conditional, source-level correctness risk, **not** a confirmed cause of the Jeonju amount discrepancy.
+- Deterministic reproduction of the current comparison (no repository data or writes):
+
+```bash
+python - <<'PY'
+for previous, incoming in [('9', '10'), ('09', '10'), ('2', '11')]:
+    print(previous, incoming, 'selected', max(previous, incoming))
+# 9 10 selected 9
+# 09 10 selected 10
+# 2 11 selected 2
+PY
+```
+
+- **Data-owner next step:** inspect the `ord` field types and widths in both `data/past/` and the search-index `ct-YYYY-MM.json` inputs, especially contracts contributing to `전북 전주시 덕진구`. If mixed-width decimal sequences exist, normalize them to validated numeric revision keys before comparison, define handling of missing/non-decimal values, and add a regression fixture for `9 → 10`, `2 → 11`, equal revision with `past` precedence, and invalid revision input. Preserve `no`-based deduplication and the original full-suite release gate. If all revisions are fixed-width, document that evidence and do **not** attribute the observed collection failure to this comparison.
+- Verification boundary: synthetic comparison reproduced; live input distribution, collector correction, full CI, and deployed data **not verified**. No collector, data, UI, workflow or test file changed by this review.
