@@ -122,3 +122,23 @@ This follow-up resolves the **specific files and invariants** behind the previou
 **Owner action / regression contract:** In the existing PTR validation work (#412/#504), require exact `YYYY-MM-DD` round-trip validation with real calendar bounds; reject or explicitly quarantine **any** `transaction > filed` row before it is represented as verified. Do not let the generic parsing-anomaly tolerance mask impossible chronology. Add isolated negative fixtures for 20/20 reversed dates, 1/20 reversed dates, Feb 30 and Nov 31; assert failure or quarantine plus a visible unverified status. Then add `node scripts/validate_us_trades.mjs` (or equivalent strict guard) to #545's pre-upload Pages gate **after** its validator semantics are fixed. Keep the original official PDF evidence for reconciliation rather than silently rewriting source dates.
 
 This is a review-only documentation commit per `docs/AI-ROLES.md`; no data, collector, UI, validator, workflow, test code, merge or deployment changed. GitHub repo is **public**. Independently confirmed real-time executions **NOT CONNECTED**; generative AI **NOT CONNECTED**.
+
+
+## 2026-11-10 06:54 KST — two more Pages timeouts after a same-footprint success
+
+**Fresh production evidence (GitHub Actions job logs, not inferred from workflow status):**
+
+| Run (main candidate) | Public files | Uploaded artifact | Deploy outcome |
+| --- | ---: | ---: | --- |
+| [#42699618665](https://github.com/91cleaner/money-tracker/actions/runs/42699618665) (`6c600fd3`) | 106,213 | 92,406,265 B | **Success**, post-deploy entry smoke passed |
+| [#42700289083](https://github.com/91cleaner/money-tracker/actions/runs/42700289083) (`f85ac073`) | 106,213 | 92,416,561 B | **Failure**, `syncing_files` until default 600 s timeout |
+| [#42701176029](https://github.com/91cleaner/money-tracker/actions/runs/42701176029) (`adfc482d`) | 106,213 | 92,406,375 B | **Failure**, `syncing_files` until default 600 s timeout |
+
+- All three passed public artifact build, privacy check and upload. The two failures occurred in `actions/deploy-pages@v4`, **before** post-deploy HTTP smoke, so a successful artifact upload must not be reported as a successful deployment.
+- The successful run used **a different SHA** with the **same file count** and a comparably sized artifact. Neither the ~106k-file count nor the ~92 MB archive is established as the sole root cause. GitHub Pages backend sync, overlapping deployments, and deployment-source competition remain hypotheses requiring provider-side evidence.
+- Current main tip at review was `c9487053` (2026-11-10 06:48 KST), **newer than all three candidates**. No same-SHA production success for this tip was established.
+- The stacked [#545](https://github.com/91cleaner/money-tracker/pull/545) already proposes 1,200,000 ms deployment timeout and two pre-deploy remote-main SHA checks, with green map/Command/security CI on head `a289b3a`. **It is draft and unmerged**. The main workflow still has the default 600 s timeout and no full prepublish release gate. Do not claim #545 has resolved the live incident.
+
+**CI/release owner action (no duplicate workflow implementation in this review PR):** after owner-approved #403 → #522 → #545 integration, record the candidate SHA, artifact ID, file count, archive bytes, deployment ID and elapsed `syncing_files` time for each attempt. Test the **same immutable SHA** with a bounded retry only if the first deployment times out; verify the published asset hashes and all entry routes before marking success. Avoid a blind retry of a stale SHA. Investigate which public directories contribute the file count before proposing safe, usage-tested pruning; do not delete source datasets or weaken privacy checks to speed deployment. If the 20-minute timeout also expires, escalate with those IDs rather than increasing it indefinitely.
+
+**Review boundary:** No deployment workflow, UI, collector, `data/`, test code or live Pages deployment changed in this review. The repository is **public**. Independently verified real-time executed trades **NOT CONNECTED**; generative AI **NOT CONNECTED**.
