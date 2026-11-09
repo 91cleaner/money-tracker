@@ -12,6 +12,16 @@ DEPLOY = ROOT / ".github" / "workflows" / "deploy-pages.yml"
 
 
 class PagesReleaseGateTests(unittest.TestCase):
+    def test_manual_dispatch_cannot_publish_non_main_ref(self):
+        workflow = DEPLOY.read_text(encoding="utf-8")
+        self.assertIn("  workflow_dispatch:", workflow)
+        self.assertIn(
+            "  deploy:\n    # workflow_dispatch can target a non-main ref; never publish that ref to production.\n"
+            "    if: github.ref == 'refs/heads/main'\n",
+            workflow,
+            "Manual dispatch from a PR branch must not reach production Pages",
+        )
+
     def test_full_suite_runs_before_upload_and_publish(self):
         workflow = DEPLOY.read_text(encoding="utf-8")
         suite = workflow.index("python3 -m unittest discover -s tests")
