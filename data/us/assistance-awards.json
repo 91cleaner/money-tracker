@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-02",
+ "updated": "2026-11-09",
  "source": "USAspending.gov API v2 (assistance: grants 02-05, loans 07-08)",
  "source_url": "https://api.usaspending.gov/",
  "period": [
   "2024-10-01",
-  "2026-11-02"
+  "2026-11-09"
  ],
  "note": "Obligations, not payments. Exact recipient-name match after removing legal suffixes; subsidiaries under other names are not included. Loans: obligated amount (subsidy cost) shown; face value kept separately.",
  "checked": 250,

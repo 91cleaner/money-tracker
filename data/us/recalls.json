@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-02",
- "since": "2023-11-02",
+ "updated": "2026-11-09",
+ "since": "2023-11-09",
  "source": "NHTSA Recalls API, openFDA enforcement reports (drug, device, food)",
  "source_url": "https://api.nhtsa.gov/ , https://open.fda.gov/apis/",
  "note": "Strict manufacturer / recalling-firm name match; recalls filed under subsidiaries or other names are not included. Date = NHTSA report received date or FDA report date. Facts only, not investment advice.",
@@ -226,9 +226,9 @@
   },
   "BSX": {
    "match_key": "BOSTON SCIENTIFIC",
-   "n": 93,
+   "n": 85,
    "by_source": {
-    "openFDA device": 93
+    "openFDA device": 85
    },
    "latest": "2026-09-09",
    "items": [
@@ -314,19 +314,19 @@
     },
     {
      "src": "openFDA device",
-     "id": "Z-2628-2026",
-     "date": "2026-07-08",
-     "what": "CRE Pro Wireguided 10-12mm 240cm",
-     "class": "Class II",
-     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2628-2026%22"
-    },
-    {
-     "src": "openFDA device",
      "id": "Z-2580-2026",
      "date": "2026-07-01",
      "what": "Intera Oncology INTERA 3000 Hepatic Artery Infusion Pump, AP-0300H, implantable drug deliv",
      "class": "Class II",
      "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2580-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1771-2026",
+     "date": "2026-05-06",
+     "what": "Boston Scientific Cardiac Resynchronization Therapy (CRT)labeled as:    1. VALITUDE CRT-P ",
+     "class": "Class I",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1771-2026%22"
     }
    ],
    "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-3081-2026%22"
@@ -1006,9 +1006,9 @@
   },
   "MDT": {
    "match_key": "MEDTRONIC",
-   "n": 22,
+   "n": 21,
    "by_source": {
-    "openFDA device": 22
+    "openFDA device": 21
    },
    "latest": "2026-05-06",
    "items": [
@@ -1019,14 +1019,6 @@
      "what": "Medtronic Sphere-9 Catheter, Model Number AFR-00001; catheter, percutaneous, cardiac ablat",
      "class": "Class II",
      "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1948-2026%22"
-    },
-    {
-     "src": "openFDA device",
-     "id": "Z-0726-2026",
-     "date": "2025-12-10",
-     "what": "Aurora EV-ICD and Clinical EV-ICD, single chamber, extravascular implantable cardioverter ",
-     "class": "Class II",
-     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0726-2026%22"
     },
     {
      "src": "openFDA device",
@@ -1107,18 +1099,42 @@
      "what": "COBALT XT VR MRI SureScan, Model Number DVPA2D1, Implantable Cardioverter Defibrillator",
      "class": "Class II",
      "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2210-2024%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-2205-2024",
+     "date": "2024-07-03",
+     "what": "MIRRO MRI VR SureScan, Model Number DVME3D4, Implantable Cardioverter Defibrillator",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2205-2024%22"
     }
    ],
    "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1948-2026%22"
   },
   "PFE": {
    "match_key": "PFIZER",
-   "n": 16,
+   "n": 18,
    "by_source": {
-    "openFDA drug": 16
+    "openFDA drug": 18
    },
-   "latest": "2026-09-23",
+   "latest": "2026-10-28",
    "items": [
+    {
+     "src": "openFDA drug",
+     "id": "D-0052-2027",
+     "date": "2026-10-28",
+     "what": "Levoxyl (levothyroxine sodium tablets, USP), tablets, 175 mcg, 100 tablet bottle, Rx only,",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0052-2027%22"
+    },
+    {
+     "src": "openFDA drug",
+     "id": "D-0051-2027",
+     "date": "2026-10-28",
+     "what": "Levoxyl (levothyroxine sodium tablets, USP), tablets, 175 mcg, 1000-count bottle, Rx only,",
+     "class": "Class II",
+     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0051-2027%22"
+    },
     {
      "src": "openFDA drug",
      "id": "D-0853-2026",
@@ -1198,25 +1214,9 @@
      "what": "Bleomycin for Injection, USP, 15 units per vial, 1 single dose glass fliptop vial, Rx Only",
      "class": "Class I",
      "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0261-2024%22"
-    },
-    {
-     "src": "openFDA drug",
-     "id": "D-0233-2024",
-     "date": "2024-01-24",
-     "what": "4.2% Sodium Bicarbonate Injection, USP 5 mEq/10 mL (0.5 mEq/mL), Glass ABBOJECT Unit of Us",
-     "class": "Class I",
-     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0233-2024%22"
-    },
-    {
-     "src": "openFDA drug",
-     "id": "D-0234-2024",
-     "date": "2024-01-24",
-     "what": "8.4 % Sodium Bicarbonate Injection, USP 50 mEq/50 mL (1 mEq/mL), Lifeshield, Glass ABBOJEC",
-     "class": "Class I",
-     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0234-2024%22"
     }
    ],
-   "source_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0853-2026%22"
+   "source_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0052-2027%22"
   },
   "SFM": {
    "match_key": "SPROUTS FARMERS MARKET",
