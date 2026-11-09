@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-02",
+ "updated": "2026-11-09",
  "source": "Lobbying Disclosure Act filings (lda.gov API v1)",
  "source_url": "https://lda.gov/api/",
  "note": "데이터상 의뢰인 이름이 회사명으로 시작하는 공시만 합산. 외부 로비회사 보고는 수입(income), 자체 로비는 지출(expenses). 법안 번호는 활동 설명에서 자동 추출(회기 미표기) — 원문 확인 필요. 로비스트 개인 이름 미저장.",
@@ -1098,7 +1098,7 @@
   },
   "AMD": {
    "query": "ADVANCED MICRO DEVICES",
-   "filings": 45,
+   "filings": 46,
    "total_usd": 10010000.0,
    "by_quarter": {
     "2025-4T": 45000.0,
@@ -1120,7 +1120,7 @@
     ],
     [
      "Computer Industry",
-     26
+     27
     ],
     [
      "Taxation/Internal Revenue Code",
@@ -2229,8 +2229,8 @@
   },
   "T": {
    "query": "AT&T",
-   "filings": 159,
-   "total_usd": 25372500.0,
+   "filings": 161,
+   "total_usd": 25432500.0,
    "by_quarter": {
     "2025-1@": 0.0,
     "2025-1A": 10000.0,
@@ -2243,17 +2243,17 @@
     "2026-1T": 10000.0,
     "2026-Q1": 4107500.0,
     "2026-Q2": 3567500.0,
-    "2026-Q3": 3517500.0,
+    "2026-Q3": 3577500.0,
     "2026-RR": 0.0
    },
    "top_issues": [
     [
      "Telecommunications",
-     140
+     141
     ],
     [
      "Taxation/Internal Revenue Code",
-     34
+     35
     ],
     [
      "Communications/Broadcasting/Radio/TV",
@@ -2261,7 +2261,7 @@
     ],
     [
      "Trade (domestic/foreign)",
-     14
+     15
     ],
     [
      "Copyright/Patent/Trademark",
@@ -2275,51 +2275,51 @@
    "bills_mentioned": [
     [
      "HR 7386",
-     16
+     17
     ],
     [
      "HR 651",
      15
     ],
     [
+     "HR 1519",
+     15
+    ],
+    [
      "S 259",
-     13
+     14
     ],
     [
      "S 323",
-     13
+     14
     ],
     [
      "HR 1343",
-     13
-    ],
-    [
-     "HR 1519",
-     13
+     14
     ],
     [
      "HR 1975",
-     13
+     14
     ],
     [
      "HR 2449",
-     13
+     14
     ],
     [
      "S 1137",
-     13
+     14
     ],
     [
      "S 674",
-     13
+     14
     ],
     [
      "S 866",
-     12
+     13
     ],
     [
      "HR 4518",
-     12
+     13
     ]
    ],
    "source_url": "https://lda.gov/filings/public/filing/search/?client=AT%26T"
@@ -3228,8 +3228,8 @@
   },
   "VZ": {
    "query": "VERIZON COMMUNICATIONS",
-   "filings": 135,
-   "total_usd": 27605000.0,
+   "filings": 136,
+   "total_usd": 27625000.0,
    "by_quarter": {
     "2025-1T": 0.0,
     "2025-4T": 30000.0,
@@ -3241,17 +3241,17 @@
     "2026-2T": 0.0,
     "2026-Q1": 4355000.0,
     "2026-Q2": 3855000.0,
-    "2026-Q3": 3625000.0,
+    "2026-Q3": 3645000.0,
     "2026-RR": 0.0
    },
    "top_issues": [
     [
      "Telecommunications",
-     119
+     120
     ],
     [
      "Taxation/Internal Revenue Code",
-     70
+     71
     ],
     [
      "Budget/Appropriations",
@@ -3277,47 +3277,47 @@
     ],
     [
      "HR 651",
-     18
+     19
     ],
     [
      "S 98",
-     14
+     16
     ],
     [
      "HR 46",
-     13
+     14
     ],
     [
      "HR 278",
-     13
+     14
     ],
     [
      "HR 791",
-     13
+     14
     ],
     [
      "HR 1870",
-     13
+     14
     ],
     [
      "HR 2399",
-     13
+     14
     ],
     [
      "HR 2449",
-     13
+     14
     ],
     [
      "HR 2482",
-     13
+     14
     ],
     [
      "S 792",
-     13
+     14
     ],
     [
      "S 836",
-     13
+     14
     ]
    ],
    "source_url": "https://lda.gov/filings/public/filing/search/?client=VERIZON%20COMMUNICATIONS"
@@ -3571,8 +3571,8 @@
   },
   "ORCL": {
    "query": "ORACLE",
-   "filings": 159,
-   "total_usd": 25050000.0,
+   "filings": 160,
+   "total_usd": 25110000.0,
    "by_quarter": {
     "2025-1T": 20000.0,
     "2025-2T": 90000.0,
@@ -3586,12 +3586,12 @@
     "2026-3A": 60000.0,
     "2026-Q1": 3370000.0,
     "2026-Q2": 3230000.0,
-    "2026-Q3": 4060000.0
+    "2026-Q3": 4120000.0
    },
    "top_issues": [
     [
      "Veterans",
-     80
+     81
     ],
     [
      "Computer Industry",
@@ -4419,13 +4419,14 @@
   },
   "HY": {
    "query": "HYSTER-YALE",
-   "filings": 7,
-   "total_usd": 550000.0,
+   "filings": 8,
+   "total_usd": 630000.0,
    "by_quarter": {
     "2025-Q1": 70000.0,
     "2025-Q2": 80000.0,
     "2025-Q3": 80000.0,
     "2025-Q4": 80000.0,
+    "2026-2A": 80000.0,
     "2026-Q1": 80000.0,
     "2026-Q2": 80000.0,
     "2026-Q3": 80000.0
@@ -4433,7 +4434,7 @@
    "top_issues": [
     [
      "Trade (domestic/foreign)",
-     7
+     8
     ],
     [
      "Taxation/Internal Revenue Code",
@@ -4614,7 +4615,7 @@
   },
   "WDAY": {
    "query": "WORKDAY",
-   "filings": 52,
+   "filings": 53,
    "total_usd": 4140000.0,
    "by_quarter": {
     "2025-1A": 360000.0,
@@ -4627,6 +4628,7 @@
     "2025-Q4": 530000.0,
     "2025-RR": 0.0,
     "2026-1T": 70000.0,
+    "2026-4T": 0.0,
     "2026-Q1": 490000.0,
     "2026-Q2": 370000.0,
     "2026-Q3": 330000.0,
@@ -5145,8 +5147,8 @@
   },
   "GE": {
    "query": "GENERAL ELECTRIC",
-   "filings": 38,
-   "total_usd": 8816000.0,
+   "filings": 39,
+   "total_usd": 8837000.0,
    "by_quarter": {
     "2025-1A": 1500000.0,
     "2025-1T": 0.0,
@@ -5159,23 +5161,23 @@
     "2026-1T": 0.0,
     "2026-Q1": 1381000.0,
     "2026-Q2": 891000.0,
-    "2026-Q3": 870000.0
+    "2026-Q3": 891000.0
    },
    "top_issues": [
     [
      "Defense",
-     28
+     29
     ],
     [
      "Taxation/Internal Revenue Code",
      18
     ],
     [
-     "Aviation/Airlines/Airports",
-     15
+     "Budget/Appropriations",
+     16
     ],
     [
-     "Budget/Appropriations",
+     "Aviation/Airlines/Airports",
      15
     ],
     [
@@ -7880,8 +7882,8 @@
   },
   "AEP": {
    "query": "AMERICAN ELECTRIC POWER",
-   "filings": 59,
-   "total_usd": 6408000.0,
+   "filings": 60,
+   "total_usd": 6423000.0,
    "by_quarter": {
     "2025-1@": 20000.0,
     "2025-1A": 1044000.0,
@@ -7895,14 +7897,14 @@
     "2026-3T": 0.0,
     "2026-Q1": 1474000.0,
     "2026-Q2": 665000.0,
-    "2026-Q3": 660000.0,
+    "2026-Q3": 675000.0,
     "2026-RA": 0.0,
     "2026-RR": 0.0
    },
    "top_issues": [
     [
      "Energy/Nuclear",
-     34
+     35
     ],
     [
      "Environment/Superfund",
