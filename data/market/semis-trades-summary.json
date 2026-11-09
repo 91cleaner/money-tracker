@@ -2,57 +2,57 @@
  "about": "미국 하원의원이 공시한 반도체 종목 거래 건수(공개 PTR 기록). 거래 사실의 기록일 뿐 잘잘못 판단 아님.",
  "source": "U.S. House Clerk financial disclosures · U.S. Senate eFD (STOCK Act periodic transaction reports)",
  "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
- "count": 184,
+ "count": 227,
  "from": "2025-10-10",
  "to": "2026-10-26",
  "by_ticker": [
   {
    "tk": "NVDA",
-   "n": 40
+   "n": 52
   },
   {
    "tk": "AVGO",
-   "n": 24
+   "n": 27
   },
   {
    "tk": "AMD",
-   "n": 21
+   "n": 22
+  },
+  {
+   "tk": "MU",
+   "n": 20
   },
   {
    "tk": "TSM",
    "n": 20
   },
   {
-   "tk": "MU",
+   "tk": "ADI",
    "n": 13
   },
   {
-   "tk": "ADI",
+   "tk": "LRCX",
+   "n": 12
+  },
+  {
+   "tk": "INTC",
+   "n": 12
+  },
+  {
+   "tk": "AMAT",
+   "n": 10
+  },
+  {
+   "tk": "ASML",
    "n": 10
   },
   {
    "tk": "TXN",
-   "n": 9
-  },
-  {
-   "tk": "INTC",
-   "n": 9
-  },
-  {
-   "tk": "LRCX",
-   "n": 8
-  },
-  {
-   "tk": "ASML",
-   "n": 8
-  },
-  {
-   "tk": "AMAT",
-   "n": 7
+   "n": 10
   },
   {
    "tk": "QCOM",
-   "n": 7
+   "n": 8
   },
   {
    "tk": "MRVL",
@@ -60,11 +60,11 @@
   },
   {
    "tk": "KLAC",
-   "n": 2
+   "n": 3
   },
   {
    "tk": "SMCI",
-   "n": 1
+   "n": 3
   },
   {
    "tk": "ARM",

@@ -2,10 +2,18 @@
  "source": "中华人民共和国商务部 · 政策发布",
  "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/index.html",
  "note": "공고 제목·번호·원문 링크만 저장(본문 저장 안 함). export_control·targets는 제목 단어 기준 자동 분류라 원문 확인 필요. 이전 수집분은 누적 보관.",
- "collected_at": "2026-11-06T23:44:05.099Z",
- "count": 12,
+ "collected_at": "2026-11-09T23:46:15.122Z",
+ "count": 14,
  "export_control_count": 4,
  "items": [
+  {
+   "title": "商务部、海关总署公告2026年第58号 公布继续暂停实施商务部、海关总署公告2025年第55号、56号、57号、58号及商务部公告2025年第61号、62号的决定",
+   "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_91466027f465467985942a639a9485f4.html",
+   "date": null,
+   "number": "2026-58",
+   "export_control": false,
+   "targets": []
+  },
   {
    "title": "商务部公告2026年第57号 公布对原产于欧盟的进口对位芳纶长丝发起反倾销立案调查",
    "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_e6c3b466b3c24b698a9fc6a649e2db94.html",
@@ -106,6 +114,16 @@
    "number": null,
    "export_control": false,
    "targets": []
+  },
+  {
+   "title": "中华人民共和国商务部令二〇二六年第4号 关于继续暂停对韩华海洋株式会社5家美国相关子公司实施反制措施2个月的决定",
+   "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_41f0892910554f57af175883b35ca360.html",
+   "date": null,
+   "number": null,
+   "export_control": false,
+   "targets": [
+    "美国"
+   ]
   }
  ]
 }
