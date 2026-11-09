@@ -13,6 +13,18 @@ A public-source intelligence prototype connecting world history, legislation, ma
 
 **Connection status:** Public House PTR disclosures are delayed reports, not live executions. **Live executed-trade feed: NOT CONNECTED. Generative AI analysis: NOT CONNECTED.** The interactive map and scripted data lookups must not be described as live trading intelligence or a connected AI search engine. A successful GitHub Actions test is not evidence that the public Pages deployment or authenticated Cloudflare Worker is working.
 
+## Feature readiness (source-level, reviewed 2026-11-09)
+
+| Capability | What the source currently supports | What is **not** verified |
+| --- | --- | --- |
+| One-screen world-map command room | `world-intelligence/index.html` renders a map, question field, route steps and candidate choices. | Successful current Pages/Worker deployment and iPhone landscape behavior. |
+| Question → choice → map route | `assets/intent.js` uses local rules and `data/search-index.json`; `assets/answers.js` reads precomputed static JSON. Fallback choices include demonstration routes. | A connected generative AI search engine, complete coverage of arbitrary questions, or reliable recovery from every failed request. |
+| Legislation → member → company | The search index and route metadata can **present** public-record associations for exploration. | A proven causal link, independently validated ownership/benefit, or comprehensive relationship coverage. |
+| U.S. congressional transactions | House PTR rows are **delayed self-reported disclosures** linked to original filings. | Live executions, exact execution prices, complete Senate coverage, or chronology correctness while [#527](https://github.com/91cleaner/money-tracker/issues/527) is open. |
+| Release and administrator access | GitHub Actions and a Cloudflare Worker implementation exist. | Same-commit end-to-end CI + published Pages/Worker verification; private Pages access or device-only authorization. |
+
+**Do not use a green Pages deployment or a visually connected route as evidence that a source was freshly collected, an official filing was corrected, a member influenced a bill, or a trade was executed.** Live executed-trade feed: **NOT CONNECTED**. Generative AI: **NOT CONNECTED**. This matrix describes inspected repository code, not a successful live browser test.
+
 ## Public datasets and verification limits
 - `data/us/bills.json` — U.S. congressional legislation summary from Congress.gov. The **Congress.gov API requires a key** for its collection workflow; this is separate from the map.
 - `data/us/trades.json` — parsed, self-reported U.S. House PTR transaction entries with House Clerk PDF links. These are delayed disclosures, **not independently verified executions**. Amounts are ranges, and temporal proximity to a bill is not proof of influence or misconduct. The Senate index has reported HTTP 403 errors; do not imply complete Senate coverage.
