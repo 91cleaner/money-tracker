@@ -12,6 +12,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   deploy:
+    # workflow_dispatch can target a non-main ref; never publish that ref to production.
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
