@@ -60,5 +60,33 @@ class PagesReleaseGateTests(unittest.TestCase):
         self.assertNotIn("|| true", gate, "A red map smoke must block release")
 
 
+    def test_stale_main_sha_blocks_upload_and_deployment(self):
+        workflow = DEPLOY.read_text(encoding="utf-8")
+        before_upload = workflow.index("      - name: Refuse stale main candidate before artifact upload")
+        upload = workflow.index("uses: actions/upload-pages-artifact@")
+        before_deploy = workflow.index("      - name: Refuse stale main candidate before deployment")
+        deploy = workflow.index("uses: actions/deploy-pages@")
+        self.assertLess(before_upload, upload)
+        self.assertLess(upload, before_deploy)
+        self.assertLess(before_deploy, deploy)
+        for gate in (
+            workflow[before_upload:upload],
+            workflow[before_deploy:deploy],
+        ):
+            with self.subTest(gate=gate.splitlines()[0]):
+                self.assertIn("git ls-remote --exit-code origin refs/heads/main", gate)
+                self.assertIn('"$current_sha" != "$GITHUB_SHA"', gate)
+                self.assertIn('exit 1', gate)
+                self.assertNotIn("|| true", gate)
+
+    def test_pages_sync_timeout_is_bounded_above_default(self):
+        workflow = DEPLOY.read_text(encoding="utf-8")
+        deployment = workflow.split("uses: actions/deploy-pages@v4", 1)[1].split(
+            "      - name: Verify published entry", 1
+        )[0]
+        # deploy-pages@v4 default is 600000ms; the latest large artifacts
+        # have timed out in syncing_files at exactly that default.
+        self.assertIn("timeout: '1200000'", deployment)
+
 if __name__ == "__main__":
     unittest.main()
