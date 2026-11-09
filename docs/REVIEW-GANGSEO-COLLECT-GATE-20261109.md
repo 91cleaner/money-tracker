@@ -80,3 +80,24 @@ PY
 ```
 
 **Release condition:** data owner reconciles each contributing contract/revision and verifies `sum(part)` against the authoritative amount (especially search-index joint-venture `jvs`), fixes the underlying cause or source-backed expectation, and reruns the scheduled collection with a green gate **before** claiming fresh Korean contract data. This appendix is a read-only triage improvement, **not** a data or workflow fix.
+
+
+## 2026-11-09 17:15 KST follow-up — November search-index coverage gap
+
+- On current `main`, `scripts/build_gangseo_flow.py` hard-codes `MONTHS = ("2026-07", "2026-08", "2026-09", "2026-10")`, and `collect()` iterates only those values when reading `data/search/se/ct-*.json`.
+- The GitHub directory listing independently confirms that `data/search/se/ct-2026-11.json` **exists** (1,111,916 bytes). Therefore the **November search-index file is not read by this focus builder**, even though it is available. This is a source-coverage/freshness gap, not evidence that any specific November record meets the Gangseo filters; `data/past/` is a separate input. It also **does not explain** the previously observed near-doubling in the October-based regional assertion.
+- Read-only owner check, after checkout at a known SHA:
+
+```bash
+python - <<'PY'
+from pathlib import Path
+from scripts import build_gangseo_flow as g
+available = {p.stem.removeprefix('ct-') for p in
+             (Path('data/search/se')).glob('ct-????-??.json')}
+print('available_months', sorted(available))
+print('builder_months', list(g.MONTHS))
+print('available_but_unread', sorted(available - set(g.MONTHS)))
+PY
+```
+
+**Additional data-owner acceptance criterion:** determine whether November contains matching Gangseo records before claiming any missing amount; if yes, extend the builder's source window with a bounded, deterministic month-selection rule (project start through latest validated index month), reconcile revisions/allocations against official records, and add a regression check ensuring newly published month files cannot be silently skipped. If no matching November records exist, document that result and still establish a freshness/coverage test. Keep the original failed-run amount investigation and fail-closed collection gate separate; do not adjust the 51% expectation without primary-source evidence. GPT has not changed the collector, test, data, or published site.
