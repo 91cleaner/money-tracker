@@ -32,5 +32,23 @@ class PagesReleaseGateTests(unittest.TestCase):
                 self.assertIn(command, workflow[:upload])
 
 
+    def test_question_choice_map_contracts_are_a_fail_closed_release_gate(self):
+        workflow = DEPLOY.read_text(encoding="utf-8")
+        gate = workflow.split(
+            "      - name: Gate publication on full security and data regression suite", 1
+        )[1].split("      - name: Build public-only artifact", 1)[0]
+        for suite in (
+            "tests/usa-map-smoke.test.cjs",
+            "tests/mt-command.test.cjs",
+            "tests/mt-research.test.cjs",
+            "tests/world-command-smoke.test.mjs",
+        ):
+            with self.subTest(suite=suite):
+                self.assertIn(suite, gate, "Critical map/search smoke must gate Pages")
+        self.assertIn("node --test ", gate)
+        self.assertNotIn("continue-on-error", gate, "A red map smoke must block release")
+        self.assertNotIn("|| true", gate, "A red map smoke must block release")
+
+
 if __name__ == "__main__":
     unittest.main()
