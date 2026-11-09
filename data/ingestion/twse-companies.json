@@ -4,7 +4,7 @@
   "source": "Taiwan Stock Exchange OpenAPI",
   "endpoint": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
   "status": "ingested",
-  "fetched_at": "2026-11-06T03:02:17.081Z",
+  "fetched_at": "2026-11-09T03:00:49.687Z",
   "record_count": 1099,
   "records": [
     {
@@ -228,7 +228,7 @@
       "company_name": "台灣塑膠工業股份有限公司",
       "company_abbreviation": "台塑",
       "industry": "03",
-      "address": "高雄市仁武區水管路100號",
+      "address": "台北市內湖區南京東路六段380號 (台塑企業內湖大樓A1棟11樓)",
       "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L"
     },
     {
@@ -1556,7 +1556,7 @@
       "company_name": "潤隆建設股份有限公司",
       "company_abbreviation": "潤隆",
       "industry": "14",
-      "address": "台北市中山區樂群二路267號8樓",
+      "address": "台北市信義區松仁路277號14樓",
       "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L"
     },
     {
