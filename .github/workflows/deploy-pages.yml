@@ -12,6 +12,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   deploy:
+    # workflow_dispatch can target a non-main ref; never publish that ref to production.
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -39,6 +41,16 @@ jobs:
           grep -q '실시간 시세 OFF' usa-command-legacy.html
       - name: Run private API fail-closed tests
         run: node --test worker/private-api.test.mjs
+      # Fail closed before uploading or publishing a Pages artifact. The separate
+      # security workflow can fail independently and is not a deployment gate.
+      - name: Gate publication on full security and data regression suite
+        run: |
+          node --check worker/private-api.js
+          node --check assets/mt-engagement.js
+          python3 -m unittest discover -s tests
+          # Deployment must also pass the critical question -> choice -> map contracts.
+          # Separate PR smoke workflows do not gate a main-branch Pages push.
+          node --test tests/usa-map-smoke.test.cjs tests/mt-command.test.cjs tests/mt-research.test.cjs tests/world-command-smoke.test.mjs
       - name: Build public-only artifact
         run: python3 scripts/prepare-public-pages.py
       - name: Verify public artifact privacy and required assets
@@ -52,11 +64,32 @@ jobs:
           test ! -e .public-pages/wrangler.jsonc
           test -f .public-pages/intel-lab.html
           test -f .public-pages/js/mobile.js
+      - name: Refuse stale main candidate before artifact upload
+        shell: bash
+        run: |
+          # A queued push may no longer be main's tip by the time validation ends.
+          current_sha="$(git ls-remote --exit-code origin refs/heads/main | cut -f1)"
+          if [ -z "$current_sha" ] || [ "$current_sha" != "$GITHUB_SHA" ]; then
+            echo "::error::Pages candidate is stale or main could not be verified; refusing publication"
+            exit 1
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .public-pages
+      - name: Refuse stale main candidate before deployment
+        shell: bash
+        run: |
+          # Recheck after artifact upload; a newer main push may have arrived.
+          current_sha="$(git ls-remote --exit-code origin refs/heads/main | cut -f1)"
+          if [ -z "$current_sha" ] || [ "$current_sha" != "$GITHUB_SHA" ]; then
+            echo "::error::Pages candidate is stale or main could not be verified; refusing publication"
+            exit 1
+          fi
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # Pages sync has repeatedly reached the action's default 600s limit.
+          timeout: '1200000'
       - name: Verify published entry and US command
         env:
           SITE_URL: ${{ steps.deployment.outputs.page_url }}
