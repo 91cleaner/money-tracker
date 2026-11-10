@@ -1,3 +1,18 @@
+# AI·시장 데이터 연결 — 실제 운영 검증 게이트 (2026-10-31)
+
+> **현재 판정: 생성형 AI 분석 미연결 · 실시간 체결 데이터 미연결 · 관리자 전용 운영 접근 미검증.** 이 문서는 구현·설정 방법이지, Cloudflare에 배포되었거나 API 키·사용료·인증이 작동한다는 증거가 아니다. GitHub 저장소와 GitHub Pages는 현재 **public**이며, 공개 `github.io`의 미국 HTML/JS/JSON은 GitHub OAuth Worker 로그인만으로 보호되지 않는다.
+>
+> **코드 검증 ≠ 배포 검증 ≠ API 실호출 검증 ≠ 접근 통제 검증.** 각 단계를 별도로 확인하고, 확인 전에는 화면·매각 문서·운영 보고에서 연결 완료/운영자 전용/실시간 시세로 표기하지 않는다.
+
+## 실제 연결 완료 판정 절차
+
+1. [수동 Worker 배포 워크플로](https://github.com/91cleaner/money-tracker/actions/workflows/deploy-private-worker.yml)의 **해당 커밋 실행**이 성공했는지 확인한다. 이 워크플로의 `node --check`·모의 테스트·Wrangler 성공만으로 AI 키 존재나 실서비스 인증 성공은 확인되지 않는다. Pages 빌드 성공과 Worker 배포는 별개다.
+2. 배포된 **정확한 Worker 주소**에서 익명 요청·다른 계정의 `/command`, `/api/analyze`, `/api/health` 접근이 거부되는지, 운영자 로그인만 허용되는지 검증한다. `/api/health`가 의도적으로 공개되는 설계라면 비밀값/개인정보를 반환하지 않는지도 확인한다. Cloudflare Access는 추가 보안 수단이지만, 기존 OAuth가 충분한지는 실제 서버 측 검증과 차단 테스트로 판정한다.
+3. 운영자 로그인 후 `/api/health`에서 **AI·시세 연결 상태**를 확인하고, 실제 분석 질문 1건에 대해 응답·공식 원문 링크·오류 처리·호출 비용을 확인한다. Secret의 **값은 절대 채팅·로그·프런트 코드에 출력하지 않는다**. 성공이 없으면 미연결 상태를 유지한다.
+4. 시세가 연결되더라도 공급자 계약상 **실시간 제공·공개 재배포·상업 이용** 권한과 지연 시간을 별도 확인한다. 하원 PTR은 지연 공개 신고이며 실시간 체결 데이터가 아니다. 공개 GitHub Pages 미국 경로를 운영자 전용이라고 부르려면 별도 접근 차단/제외와 익명 URL 테스트가 선행돼야 한다.
+
+---
+
 ## 그록(Grok) API도 선택 가능 — 2026-10-27 추가
 
 - xAI 개발자 Console: https://console.x.ai/ → API Keys → XAI_API_KEY 발급. Grok 앱/X Premium 구독과 API 결제는 별개.
@@ -18,18 +33,18 @@
 - 신규 AI API: 기존 Worker의 /api/analyze에 통합, 로그인을 검증한 다음 server/worker.mjs의 createResult 호출.
 - 인증된 기존 /command 화면에 **AI 조사** 창과 /api/health 상태 확인, 시세/뉴스/AI 브리핑 창을 추가.
 - 필요한 실행 조건: 기존 Worker 재배포, xAI 또는 OpenAI API 키를 Cloudflare Secret으로 설정. FINNHUB_API_TOKEN은 시세 기능용 선택 사항.
-- 기존 GitHub OAuth 관리자는 API 호출 인증 경계로 사용. 별도 Cloudflare Access 추가는 보안 강화 옵션이며 이 관리자 OAuth 경로에서 필수는 아님.
+- 기존 GitHub OAuth는 **서버 측 세션·권한 검증이 실제 배포에서 통과할 때에만** Worker API의 인증 경계가 될 수 있다. Cloudflare Access는 추가 보안 옵션이며, 어느 방식도 공개 GitHub Pages의 HTML/JS/JSON을 자동으로 비공개로 만들지 않는다. 익명·타 계정 차단 테스트 전에는 관리자 전용으로 표기 금지.
 - **코드 커밋은 완료. 실제 Cloudflare 배포 및 API 키 설정 확인 전에는 AI 라이브 연결은 미완료**.
 - 현재 공개 GitHub Pages 미국 프리뷰는 여전히 외부에 공개되므로 공개 HTML/JS에 비밀키나 내부 데이터 업로드 금지.
 - 기존 Worker가 이미 제공하는 관리자 관제실과 공개 Pages 미국 관제실은 서로 다른 화면. /command 에 먼저 AI 연결을 붙였으며 Pages 미국 프리뷰는 의도적으로 백엔드 차단 상태.
 
-### 운영자가 마지막으로 해야 할 일
-Cloudflare에서 기존 Worker의 OPENAI_API_KEY를 Secret으로 추가하고, 현재 wrangler.jsonc의 main=cloudflare/admin-worker.js 설정대로 배포. secrets를 이 채팅·GitHub·프런트엔드에 절대 붙여넣지 말 것.
+### 운영 단계 (키 등록만으로 완료되지 않음)
+운영자가 선택한 AI 공급자 키를 Cloudflare Worker Secret에 등록하고, `wrangler.jsonc`의 배포 대상을 확인한 뒤 **수동 Worker 배포 → 로그인/익명 차단 확인 → 실제 분석 호출 → 비용·데이터 권리 확인** 순서로 검증한다. GitHub Pages의 공개 미국 경로는 별도로 보호하거나 배포에서 제외해야 한다. Secret 값은 채팅·GitHub·프런트엔드에 절대 붙여넣지 않는다.
 
 ---
 # MONEY TRACKER — AI·시장 데이터 서버 연결 상태
 
-기준일 2026-10-27: 서버 코드와 프런트엔드 연결 코드는 구현했으나, **실제 서버 배포·인증·API 키는 미설정**. 실시간 데이터/AI를 연결 완료라고 표시하지 않는다.
+2026-10-27 당시 서버·프런트 연결 코드는 작성되었으나 **현재 실제 Worker 배포·인증·API 키 설정 상태는 독립적으로 검증되지 않았다**. 설정이 없다고 단정하지도, 연결 완료라고 표시하지도 않는다. 위 2026-10-31 운영 검증 게이트를 따른다.
 
 ## 준비된 코드
 - server/worker.mjs : POST /api/analyze, GET /health
