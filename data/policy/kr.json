@@ -6,6 +6,38 @@
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
 {
+"id": "msit:526dd95512f0",
+"kind": "press",
+"t": "‘K-문샷 정책 세미나’ 개최, 국가 과학 난제 해결을 위한 과학 인공지능 혁신을 논의하다.",
+"d": "2026-11-10",
+"dept": "미래전략기술정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187943",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "msit:5f1d8f01be3a",
+"kind": "press",
+"t": "양자 플래그십 프로젝트, 양자컴퓨팅·통신·센싱 핵심기술 개발 성과 가시화  - 「양자과학기술 플래그십 프로젝트 연례회의(애뉴얼 미팅, Annual Meeting)」 개최 -",
+"d": "2026-11-10",
+"dept": "양자혁신기술개발과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187942",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:ba44894fdd63",
+"kind": "press",
+"t": "K-사이언스의 기틀을 만든 과학기술 이야기, 국가중요과학기술자료 23건 신규 등록",
+"d": "2026-11-10",
+"dept": "국립중앙과학관 한국과학기술사과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187944",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
 "id": "msit:ee6a6fefb77b",
 "kind": "press",
 "t": "배경훈 부총리, 국제전기통신연합 전권회의에서 국제 디지털 협력 강화",
@@ -6003,44 +6035,6 @@
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E8CFF11A60704DB19F0D2519AF6AC9&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
-},
-{
-"id": "PRC_M2K6I0J9H1I7Q1R4P1P4O0M0N1U9V7",
-"no": "2222154",
-"t": "지방세법 일부개정법률안",
-"d": "2026-10-27",
-"by": "강명구의원 등 12인",
-"cmte": "행정안전위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2K6I0J9H1I7Q1R4P1P4O0M0N1U9V7&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_A4C45244337A4BC8B41881C3F4BD7D",
-"no": "2222153",
-"t": "가맹사업거래의 공정화에 관한 법률 일부개정법률안",
-"d": "2026-10-27",
-"by": "김용만의원 등 12인",
-"cmte": "정무위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A4C45244337A4BC8B41881C3F4BD7D&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_T2R6R0Q8Q2P4P1X0W0W0U0V7U3U6C6",
-"no": "2222152",
-"t": "대외무역법 일부개정법률안",
-"d": "2026-10-27",
-"by": "최수진의원 등 10인",
-"cmte": "산업통상자원중소벤처기업위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2R6R0Q8Q2P4P1X0W0W0U0V7U3U6C6&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": [
-"trade"
-]
 }
 ]
 }
