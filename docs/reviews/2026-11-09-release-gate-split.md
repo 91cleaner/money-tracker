@@ -156,3 +156,23 @@ This is a review-only documentation commit per `docs/AI-ROLES.md`; no data, coll
 **Concrete release decision for the CI owner:** run #42715310159 is now conclusively **failed and canceled after the 600 s Pages sync timeout**; do not re-run its stale SHA or equate its successful artifact upload with publication. On completion, capture the deployment SHA, deployment ID, exact post-deploy URLs and public asset hashes, and compare them to the latest main SHA. If a newer main push overtook an older candidate, ensure the newest **fully gated** candidate gets a separate verified deployment; do not blindly re-run the older workflow. Add a concurrency/race regression that pushes B after A has entered the deployment step and asserts the eventual published site is B (or explicitly reports A as temporarily published and not current). This scenario is more stringent than the existing pre-deploy SHA tests.
 
 **Ownership and limits:** Observation and review documentation only. No UI, collectors, `data/`, workflow, test code, merge or live deployment changed. Repository **public**; independently verified live executed-stock trades **NOT CONNECTED**; generative AI **NOT CONNECTED**.
+
+## 2026-11-10 09:54 KST — P1 Pages sync: measured small-file concentration and safe remediation boundary
+
+This is a **new, quantified artifact-topology finding**, not a claim that a GitHub Pages platform timeout has a single proven cause. GitHub tree data for current `main` shows:
+
+| Source subtree copied by `scripts/prepare-public-pages.py` | Tracked JSON files | Uncompressed blob bytes | Browser dependency |
+| --- | ---: | ---: | --- |
+| `data/past/` | **66,116** | **119,072,222** | `assets/app.js` loads `data/past/<id>.json` and `_meta.json` for older vendor contracts |
+| `data/vendor/` | **34,859** | **67,902,919** | `assets/app.js` and `assets/se.js` fetch `data/vendor/<id>.json` on demand |
+| **Combined** | **100,975** | **186,975,141** | Both are currently runtime routes; do **not** simply delete/exclude |
+
+Both directories are inside the builder's recursively copied `data/` allowlist; all counted files are `.json`. They account for **95.07%** of the **106,215** public files in each of the two checked deployment logs. These counts are a structural contributor to the very large number of individual Pages paths; they are **not** proof that reducing the paths will by itself cure a GitHub-side timeout.
+
+- [Main Pages success #42725171215](https://github.com/91cleaner/money-tracker/actions/runs/42725171215), SHA `ad2f274`: 106,215 files, 92,399,030-byte uploaded artifact, deployment and four HTTP smoke checks passed.
+- [Main Pages failure #42729900774](https://github.com/91cleaner/money-tracker/actions/runs/42729900774), SHA `f39ba2e`: **the same 106,215 files**, 92,395,660-byte uploaded artifact; `deploy-pages@v4` remained at `syncing_files` until the 600-second timeout. Post-deploy HTTP smoke was skipped. These are different commits, so they are not a controlled A/B test.
+- The current `.gitignore` does not ignore `.public-pages/`, and a tracked `.public-pages` tree exists in `main`. The builder deletes/rebuilds this directory during CI. Separately audit tracked build outputs and ignore future generated copies; **untracking it alone does not reduce the new published artifact**, since the builder regenerates it.
+
+**Proposed release/UI owner fix (not implemented here):** Preserve the existing vendor/older-contract detail behavior while moving the two per-ID JSON directories to versioned, prefix-sharded lookup bundles or another tested on-demand storage mechanism. Update the two consumers and metadata together; provide a temporary compatibility path, confirm unknown IDs and partial/missing shards fail visibly, and keep per-vendor lazy loading rather than downloading the full corpus on mobile. Measure emitted file count, bytes, build time, Pages sync completion rate and real vendor/search browser behavior on the *same* candidate SHA before removing legacy paths. Require a rollback plan; avoid breaking existing shared links. Keep the #403 → #522 → #545 release-gate work and PTR validation independent of this optimization.
+
+**Boundary:** GitHub tree, source readers and actual Actions job logs verified. No artifact pruning, UI, collector, workflow, test, merge, or live deployment was changed. Repository remains **public**; live executed-stock trade feed **NOT CONNECTED**; generative AI **NOT CONNECTED**.
