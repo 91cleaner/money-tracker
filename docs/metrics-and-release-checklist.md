@@ -18,3 +18,21 @@ Weekly dashboard should report provider-sourced visitors, country-entry clickthr
 - The new private Worker is **not** deployed and returns 501 even after valid authentication; it must not be advertised as a live private database.
 - A prior Cloudflare admin Worker exists at `cloudflare/admin-worker.js`. It must be audited separately; this change does not replace it.
 - A passing CI run, verified production URL, Cloudflare bindings and verified authorization tests are required before declaring stages fully shipped.
+
+## Release telemetry: distinguish CI success from published freshness (2026-11-10 KST)
+
+A collector run, a Pages deployment, a production smoke test, and an authenticated Worker test are **different events**. A green collector must never make the release badge green. Record the following fields in the operator's release report, using GitHub Actions/API evidence rather than guessed status:
+
+| Field | Meaning / release rule |
+| --- | --- |
+| `main_sha` | GitHub `refs/heads/main` SHA at verification time, not the SHA at workflow start |
+| `pages_attempt_sha`, `pages_attempt_conclusion`, `pages_attempt_url` | Latest Pages attempt, including failures; do not select only successful runs |
+| `pages_success_sha`, `pages_success_url` | Latest *successful* Pages workflow; success alone is not evidence of published asset parity |
+| `same_sha_deployed` | `true` only when the current `main_sha` equals the deployed candidate **and** live asset/content hash checks for that candidate pass; otherwise `false` or `unknown` |
+| `security_suite`, `question_choice_map_smoke`, `mobile_iphone` | Independently `pass` / `fail` / `not_run`; a PR-only test is not a production gate |
+| `ptr_freshness`, `ptr_chronology`, `source_coverage` | Evidence-based disclosure date/source checks; distinguish missing data from zero trades |
+| `live_execution_feed`, `generative_ai`, `private_access` | Independently `connected_verified` / `disconnected` / `unverified`; a delayed public House PTR filing is **not** a live execution feed |
+
+**Observed incident example, 2026-11-10 13:53 KST:** current `main` was `3d44a575` (13:37 data refresh). The later Pages attempt for `518e0310` [#42755930926](https://github.com/91cleaner/money-tracker/actions/runs/42755930926) **failed** in `actions/deploy-pages@v4` after repeated `syncing_files` and a timeout; the earlier attempt for `c6558f4c` [#42755398495](https://github.com/91cleaner/money-tracker/actions/runs/42755398495) **succeeded**. Therefore `same_sha_deployed` is **unverified**, not `true`; do not infer a site outage from this evidence. The repository API reported `visibility: public` and `main.protected: false`. Public Pages cannot be called device-only private access. Existing full-suite release gate [PR #545](https://github.com/91cleaner/money-tracker/pull/545) is still open, not merged.
+
+**Release acceptance:** mark a release ready only after the exact production candidate has (1) all required security/data and question→selection→map checks green **before** publication, (2) successful same-SHA Pages publication and verified live assets, (3) actual mobile browser/landscape navigation checks, (4) explicit source/transaction freshness and unavailable-state labels, and (5) verified server-side authorization for any owner-only path. Until independently tested, show real-time executed trades and generative AI as **미연결 / disconnected**. This is a measurement contract, not an assertion that the missing CI, deployment, or access controls were implemented.
