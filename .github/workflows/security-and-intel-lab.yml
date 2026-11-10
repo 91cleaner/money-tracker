@@ -32,4 +32,6 @@ jobs:
           test ! -e .public-pages/worker/private-api.js
           test ! -e .public-pages/wrangler.jsonc
           test ! -e .public-pages/collector/collect.py
-          grep -q 'href="intel-lab.html"' .public-pages/index.html
+          # Root entry may redirect to the US map or offer country selection.
+          # The research lab is checked as an artifact above, not a mandatory root link.
+          python3 scripts/check-pages-entry.py --local-dir .public-pages
