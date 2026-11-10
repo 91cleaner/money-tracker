@@ -2,6 +2,13 @@
 
 A public-source intelligence prototype connecting world history, legislation, macroeconomic data, and U.S. congressional financial disclosures on a **flat world map**.
 
+## Release and connection status (reviewed 2026-11-02; not production certification)
+- **Repository visibility: PUBLIC**, not private. The static GitHub Pages site is public as well. A Cloudflare OAuth-protected route does **not** protect files committed to this repository or published as static Pages assets.
+- **Generative AI analysis: NOT CONNECTED. Real-time executed-trade feed: NOT CONNECTED.** House PTR entries are delayed *reported disclosures*; map routes and derived price comparisons are research visualizations, not verified live executions or investment signals.
+- **Public data release is not yet verified:** [PR #403](https://github.com/91cleaner/money-tracker/pull/403) repairs Pages entry/deployment checks; [PR #412](https://github.com/91cleaner/money-tracker/pull/412) adds public PTR chronology and field guards; [PR #458](https://github.com/91cleaner/money-tracker/pull/458) adds public JSON byte-parity checks. These PRs were open at review time. Isolated green PR checks are **not** proof of a merged, verified live deployment. The Pages publisher/source setting and exact published SHA still need independent verification.
+- **Collection health is per-source, not a universal success flag.** A collector returning zero rows *with fetch errors* is a failure/unknown result, not proof that zero records exist. Surface the error, collection timestamp and official source; never silently replace failures with zero.
+- **Merge/release decision:** follow [measurable release gates](docs/metrics-and-release-checklist.md), test the combined approved SHA, verify the full public artifact/anonymous URLs and live Pages bytes, and separately test the Worker. No PR is merged by this README change.
+
 ## Entry points
 - `index.html` — country selection
 - `world-intelligence/index.html` — flat world-map command center and guided country exploration
@@ -10,7 +17,7 @@ A public-source intelligence prototype connecting world history, legislation, ma
 
 ## Verified data and caveats
 - `data/us/bills.json` — U.S. congressional legislation summary from Congress.gov. The **Congress.gov API requires a key** for its collection workflow; this is separate from the map.
-- `data/us/trades.json` — parsed public U.S. House PTR transactions, linked to House Clerk source PDFs. Transaction amounts are ranges; records are not investment advice or evidence of misconduct. The Senate index has reported HTTP 403 errors; do not imply complete Senate coverage.
+- `data/us/trades.json` — parsed U.S. House PTR disclosure ledger, linked to House Clerk source PDFs. The repository currently exposes this committed file publicly even when a Pages build excludes it; do **not** treat the source ledger as confidential because of a static-site denylist. Transaction amounts are ranges; records are not investment advice or evidence of misconduct. The Senate index has reported HTTP 403 errors; do not imply complete Senate coverage.
 - `data/us-events.json` — curated historical milestones with source URLs, not causal investment signals.
 - `data/us-macro.json` — generated only after a successful FRED data collection run; it may be absent.
 - `data/us-house-filings.json` — generated only after successful House Clerk index collection; it may be absent.
