@@ -1,0 +1,32 @@
+name: Pages entry asset references
+on:
+  pull_request:
+    paths:
+      - '**/*.html'
+      - 'assets/**'
+      - 'scripts/prepare-public-pages.py'
+      - 'scripts/check-pages-entry-assets.py'
+      - 'tests/test_pages_entry_assets.py'
+      - '.github/workflows/pages-entry-assets.yml'
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'assets/**'
+      - 'scripts/prepare-public-pages.py'
+      - 'scripts/check-pages-entry-assets.py'
+      - 'tests/test_pages_entry_assets.py'
+      - '.github/workflows/pages-entry-assets.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regression tests for link resolver
+        run: python3 -m unittest discover -s tests -p 'test_pages_entry_assets.py'
+      - name: Build public Pages artifact
+        run: python3 scripts/prepare-public-pages.py
+      - name: Check published HTML references
+        run: python3 scripts/check-pages-entry-assets.py
