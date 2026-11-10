@@ -2,11 +2,44 @@
  "source": "Federal Register API (BIS, USTR)",
  "source_url": "https://www.federalregister.gov/developers/documentation/api/v1",
  "note": "공식 고시 제목·날짜·원문 링크만 저장. china/entity_list/tariff 표시는 제목·요약의 단어로 자동 분류한 것이라 원문 확인 필요.",
- "collected_at": "2026-11-08T23:42:27.101Z",
+ "collected_at": "2026-11-10T23:42:00.734Z",
  "count": 400,
- "china_count": 68,
+ "china_count": 70,
  "entity_list_count": 14,
  "documents": [
+  {
+   "id": "2026-22867",
+   "date": "2026-11-10",
+   "type": "Notice",
+   "agency": "USTR (관세·무역)",
+   "title": "Notice of Modification of Section 301 Action: China's Targeting of the Maritime, Logistics, and Shipbuilding Sectors for Dominance",
+   "url": "https://www.federalregister.gov/documents/2026/11/10/2026-22867/notice-of-modification-of-section-301-action-chinas-targeting-of-the-maritime-logistics-and",
+   "china": true,
+   "entity_list": false,
+   "tariff": true
+  },
+  {
+   "id": "2026-22868",
+   "date": "2026-11-10",
+   "type": "Notice",
+   "agency": "USTR (관세·무역)",
+   "title": "Notice of Determination To Extend Section 301 Investigation of Vietnam's Acts, Policies, and Practices Related to Intellectual Property Protection and Enforcement",
+   "url": "https://www.federalregister.gov/documents/2026/11/10/2026-22868/notice-of-determination-to-extend-section-301-investigation-of-vietnams-acts-policies-and-practices",
+   "china": false,
+   "entity_list": false,
+   "tariff": true
+  },
+  {
+   "id": "2026-22925",
+   "date": "2026-11-10",
+   "type": "Notice",
+   "agency": "USTR (관세·무역)",
+   "title": "Notice of Product Exclusion Extensions: China's Acts, Policies, and Practices Related to Technology Transfer, Intellectual Property, and Innovation",
+   "url": "https://www.federalregister.gov/documents/2026/11/10/2026-22925/notice-of-product-exclusion-extensions-chinas-acts-policies-and-practices-related-to-technology",
+   "china": true,
+   "entity_list": false,
+   "tariff": true
+  },
   {
    "id": "2026-22793",
    "date": "2026-11-09",
@@ -4373,39 +4406,6 @@
    "china": true,
    "entity_list": false,
    "tariff": true
-  },
-  {
-   "id": "2022-08246",
-   "date": "2022-04-18",
-   "type": "Notice",
-   "agency": "USTR (관세·무역)",
-   "title": "Reallocation of Unused Fiscal Year 2022 Tariff-Rate Quota Volume for Raw Cane Sugar",
-   "url": "https://www.federalregister.gov/documents/2022/04/18/2022-08246/reallocation-of-unused-fiscal-year-2022-tariff-rate-quota-volume-for-raw-cane-sugar",
-   "china": false,
-   "entity_list": false,
-   "tariff": true
-  },
-  {
-   "id": "2022-07895",
-   "date": "2022-04-13",
-   "type": "Notice",
-   "agency": "USTR (관세·무역)",
-   "title": "Notification of U.S.-Korea Free Trade Agreement Labor Council Meeting",
-   "url": "https://www.federalregister.gov/documents/2022/04/13/2022-07895/notification-of-us-korea-free-trade-agreement-labor-council-meeting",
-   "china": false,
-   "entity_list": false,
-   "tariff": false
-  },
-  {
-   "id": "2022-07743",
-   "date": "2022-04-12",
-   "type": "Notice",
-   "agency": "USTR (관세·무역)",
-   "title": "Notice of Continuation and Request for Nominations for the Industry Trade Advisory Committees",
-   "url": "https://www.federalregister.gov/documents/2022/04/12/2022-07743/notice-of-continuation-and-request-for-nominations-for-the-industry-trade-advisory-committees",
-   "china": false,
-   "entity_list": false,
-   "tariff": false
   }
  ]
 }

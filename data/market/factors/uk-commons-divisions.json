@@ -2,8 +2,8 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-11-04T23:47:55.914Z",
- "count": 211,
+ "collected_at": "2026-11-10T23:42:22.231Z",
+ "count": 213,
  "divisions": [
   {
    "id": 2476,
@@ -40,6 +40,24 @@
    "ayes": 62,
    "noes": 286,
    "url": "https://votes.parliament.uk/votes/commons/division/2473"
+  },
+  {
+   "id": 2472,
+   "date": "2026-11-04",
+   "number": 114,
+   "title": "Draft Private Rented Sector Database Regulations 2026",
+   "ayes": 316,
+   "noes": 149,
+   "url": "https://votes.parliament.uk/votes/commons/division/2472"
+  },
+  {
+   "id": 2471,
+   "date": "2026-11-04",
+   "number": 113,
+   "title": " Draft Housing (Tenancy Deposit Schemes) Order 2026",
+   "ayes": 310,
+   "noes": 104,
+   "url": "https://votes.parliament.uk/votes/commons/division/2471"
   },
   {
    "id": 2470,
