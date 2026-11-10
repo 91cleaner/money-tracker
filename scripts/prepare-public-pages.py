@@ -50,6 +50,19 @@ for dirname in PUBLIC_DIRS:
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_public_trades import build as build_public_trades
 build_public_trades(OUT / "data/us/trades_public.json")
+# Check the generated public trade summary before any workflow can publish it.
+# This catches nested private metadata even in workflows that only build the artifact.
+from public_ptr_guard import sanitize_public_trades_file
+summary_kept, summary_excluded = sanitize_public_trades_file(OUT / "data/us/trades_public.json")
+print(f"Public full trade summary: {summary_kept} chronology-screened rows, {summary_excluded} excluded")
+# Quarantine invalid House PTR chronology/official-source links in the PUBLIC COPY only.
+# The collector-owned source data remains unchanged for source reconciliation.
+from public_ptr_guard import sanitize_file
+recent_path = OUT / "data/us/trades-recent.json"
+if not recent_path.is_file():
+    sys.exit("Missing public House PTR recent snapshot")
+kept, excluded = sanitize_file(recent_path)
+print(f"Public House PTR: {kept} chronology-screened rows (not independently verified executions), {excluded} excluded")
 for required in ("index.html", "usa-command.html", "national.html", "assets/mt-command-ui.js", "data/national/countries-110m.geojson", "search.html", "assets/se.js", "data/search/se/core.json", "data/us/trades_public.json"):
     if not (OUT / required).exists():
         sys.exit(f"Missing required public file: {required}")
