@@ -6,18 +6,22 @@ A public-source intelligence prototype connecting world history, legislation, ma
 - `index.html` — country selection
 - `world-intelligence/index.html` — flat world-map command center and guided country exploration
 - `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research
+- `skysea.html` — world flight and vessel observation map. Aircraft are sampled observations, vessel layers mix delayed daily grids and limited recent AIS reception; coverage is not complete or continuously live.
 - `us.html` — U.S. command entry
 
-## Verified data and caveats
+## Data inventory and limitations (not an independently verified live feed)
 - `data/us/bills.json` — U.S. congressional legislation summary from Congress.gov. The **Congress.gov API requires a key** for its collection workflow; this is separate from the map.
-- `data/us/trades.json` — parsed public U.S. House PTR transactions, linked to House Clerk source PDFs. Transaction amounts are ranges; records are not investment advice or evidence of misconduct. The Senate index has reported HTTP 403 errors; do not imply complete Senate coverage.
+- `data/us/trades.json` — repository source ledger of parsed U.S. House PTR **disclosures**, linked to House Clerk PDFs. These are delayed filings, not independently verified executed trades or real-time positions; amounts are ranges. The Senate index has reported HTTP 403 errors, so coverage is incomplete. The file is excluded from the generated Pages artifact, **but remains readable in GitHub while this repository is public**. Do not treat a Pages exclusion as access control.
+- `data/us/trades_public.json` — generated Pages-facing public summary, not a completeness certificate. The proposed chronology/source quarantine and rejection reporting in [PR #412](https://github.com/91cleaner/money-tracker/pull/412) are **not an active release safeguard until merged, tested, and deployed**. Missing or rejected records must not be represented as zero filings.
 - `data/us-events.json` — curated historical milestones with source URLs, not causal investment signals.
 - `data/us-macro.json` — generated only after a successful FRED data collection run; it may be absent.
 - `data/us-house-filings.json` — generated only after successful House Clerk index collection; it may be absent.
 - `data/index.json`, `data/city/` — legacy Korean municipal contract data.
 
 ## Map
-The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional Esri satellite imagery. **No map API key is required.** It depends on external tile/CDN availability; a simplified offline schematic is shown when providers cannot be reached. The satellite imagery is not a live satellite feed. The country-to-country lines show exploration paths, not proof of causation.
+The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional Esri satellite imagery. **No map API key is required.** It depends on external tile/CDN availability; a simplified offline schematic is shown when providers cannot be reached. The satellite imagery is not a live satellite feed. The country-to-country lines show exploration paths, not proof of causation. The `skysea.html` entry is a separate observation view; aircraft extrapolation and expanded ship-grid dots are visual estimates, not independently verified real-time positions.
+
+**SkySea refresh-failure caveat (unfixed):** after a previously successful aircraft or recent-AIS fetch, a later failed refresh can leave old markers on the map. Repeated AIS responses with an unchanged old `updated` timestamp are also not flagged stale by the current UI. Treat displayed timestamps as last recorded observations, **not proof of a healthy live feed**. The UI still needs source-age/error indicators and browser regression tests; this documentation does not fix that behavior.
 
 ## Authenticated command room
 - Cloudflare Worker `/command` is built from `world-intelligence/index.html`, rather than maintaining a separate schematic map. `/evidence.js` and `/data/us/*` routes require the existing GitHub OAuth administrator session.
@@ -37,7 +41,7 @@ The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional
 - `.github/workflows/world-intelligence-health.yml` — static map and data integrity checks.
 - `python scripts/check_world_intelligence.py` — local read-only health check. With Node.js installed, also checks inline JavaScript syntax.
 
-**Important:** GitHub Pages is public. `noindex`, hidden links, or client-side controls are not authentication and do not restrict access to specific devices. Proper device-only access requires an authenticated gateway or private hosting.
+**Access and integration status (2026-11-03):** The **GitHub repository is public** and GitHub Pages is public. Any file committed to this public repository can be read on GitHub even if it is excluded from Pages. `noindex`, hidden links, and client-side controls are not authentication. Device-only access requires an authenticated gateway or private hosting. The real-time executed-trade feed is **NOT CONNECTED**; generative AI analysis is **NOT CONNECTED**. A successful GitHub Pages deployment does not verify Cloudflare Worker OAuth access or activate either integration.
 
 ## Principles
 1. Cite original official public sources and distinguish source dates, event dates, transaction dates, and ingestion times.
