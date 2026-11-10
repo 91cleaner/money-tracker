@@ -6,6 +6,92 @@
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
 {
+"id": "ec:STATEMENT/26/2392",
+"kind": "press",
+"t": "Statement by President von der Leyen with Bulgarian Prime Minister Radev",
+"d": "2026-11-10",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2392",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2391",
+"kind": "press",
+"t": "Updated Action Plan brings a total of 30 actions in one year under the Pact for the Mediterranean",
+"d": "2026-11-10",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2391",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:STATEMENT/26/2390",
+"kind": "press",
+"t": "Statement on today's meeting in Abu Dhabi between the EU, France, Germany, Italy, United Kingdom, Ukraine, United States and NATO",
+"d": "2026-11-10",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2390",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2388",
+"kind": "press",
+"t": "Commission greenlights Luxembourg's final payment request for €59 million under NextGenerationEU  ",
+"d": "2026-11-10",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2388",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2387",
+"kind": "press",
+"t": "Commission greenlights Estonia's final payment request for €190.6 million under NextGenerationEU",
+"d": "2026-11-10",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2387",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2373",
+"kind": "press",
+"t": "Commission approves €2 billion Belgian State aid to support offshore wind energy",
+"d": "2026-11-10",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2373",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [
+"energy"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:STATEMENT/26/2374",
 "kind": "press",
 "t": "Statement by President von der Leyen following her call with President Zelenskyy and ahead of her visit to the Black Sea Region, in Romania and Bulgaria",
@@ -93,6 +179,66 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026R2523",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2523 of 9 November 2026 amending Annexes IV, V and XIV to Implementing Regulation (EU) 2021/404 as regards the entries for South Africa, Canada, the United Kingdom and the United States in the lists of third countries, territories, or zones thereof authorised for the entry into the Union of consignments of certain animals and products of animal origin",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2523",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2480",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2480 of 9 November 2026 amending Implementing Decision (EU) 2022/1668 as regards the harmonised standard on equipment protection by type of protection n",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2480",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2479",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2479 of 9 November 2026 amending Implementing Decision (EU) 2021/1182 as regards harmonised standards for sterilization of health care products, clinical investigation of medical devices for human subjects, natural rubber latex male condoms, biological evaluation of medical devices, washer-disinfectors, medical electrical equipment and small-bore connecto",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2479",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"health"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2481",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2481 of 9 November 2026 amending Implementing Decision (EU) 2021/1195 as regards the harmonised standard for sterilization of health care products",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2481",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"health"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:QANDA/26/2366",
