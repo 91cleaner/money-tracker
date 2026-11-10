@@ -8,6 +8,7 @@ on:
       - 'usa-command-legacy.html'
       - 'usa-command-legacy.html'
       - 'index.html'
+      - 'skysea.html'
       - 'tests/**'
       - 'data/market/**'
       - '.github/workflows/usa-map-smoke.yml'
@@ -17,6 +18,7 @@ on:
       - 'usa-command-legacy.html'
       - 'usa-command-legacy.html'
       - 'index.html'
+      - 'skysea.html'
       - 'tests/**'
       - 'data/market/**'
       - '.github/workflows/usa-map-smoke.yml'
@@ -34,6 +36,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Verify SkySea telemetry HTML escaping and inline syntax
+        run: node --test tests/skysea-escaping.test.cjs
       - name: Verify syntax, map flow, satellite layers, and honest data status
         run: node --test tests/usa-map-smoke.test.cjs
       - name: Sector-factor map and official market calendar integrity
