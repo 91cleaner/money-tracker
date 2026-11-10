@@ -1,10 +1,35 @@
 {
-"updated": "2026-11-09",
+"updated": "2026-11-10",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "egov:550004445",
+"kind": "pubcomment",
+"t": "魚類の鮮度（K値）試験方法 －高速液体クロマトグラフ法の日本農林規格の確認案についての意見・情報の募集について",
+"d": "2026-11-10",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=550004445&Mode=0",
+"dept": "農林水産省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 농림수산성(농업·수산 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Agriculture, Forestry and Fisheries: public comment request on a draft rule"
+},
+{
+"id": "kantei:709ccf094f87",
+"kind": "news",
+"t": "閣議の概要／ヒルダ・ハイネ・マーシャル諸島共和国大統領及び同夫君の訪日について",
+"d": "2026-11-10",
+"u": "https://www.kantei.go.jp/jp/tyoukanpress/202611/10_a.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "長官会見",
+"tags": [],
+"lk": "일본 관방장관(정부 대변인) 기자회견",
+"le": "Japan Chief Cabinet Secretary press conference"
+},
 {
 "id": "kantei:2feb0d4ab15a",
 "kind": "news",
@@ -17,6 +42,82 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:155260820",
+"kind": "pubcomment",
+"t": "京成電鉄株式会社の鉄道事業の旅客運賃の上限変更認可申請に関する意見募集について",
+"d": "2026-11-09",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155260820&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
+{
+"id": "egov:300080359",
+"kind": "pubcomment",
+"t": "「特定個人情報保護評価書（全項目評価書）（案）」に関する意見公募",
+"d": "2026-11-09",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=300080359&Mode=0",
+"dept": "法務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 법무성(법 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Justice: public comment request on a draft rule"
+},
+{
+"id": "egov:225026068",
+"kind": "pubcomment",
+"t": "「経済価値ベースのソルベンシー規制に関する告示の一部改正（案）」の公表について",
+"d": "2026-11-09",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=225026068&Mode=0",
+"dept": "金融庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"finance"
+],
+"lk": "일본 금융청(금융 감독 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Financial Services Agency: public comment request on a draft rule"
+},
+{
+"id": "egov:141000247",
+"kind": "pubcomment",
+"t": "学校設置者等及び民間教育保育等事業者による児童対象性暴力等の防止等のための措置に関する法律施行規則の一部を改正する内閣府令（案）に関する御意見の募集について",
+"d": "2026-11-09",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=141000247&Mode=0",
+"dept": "こども家庭庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "egov:595320046",
+"kind": "pubcomment",
+"t": "産業技術力強化法施行令及び経済施策を一体的に講ずることによる安全保障の確保の推進に関する法律施行令の一部を改正する政令案等に対する意見募集について",
+"d": "2026-11-09",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320046&Mode=0",
+"dept": "経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
+},
+{
+"id": "egov:495260250",
+"kind": "pubcomment",
+"t": "医療法施行規則の一部を改正する省令案に関する御意見の募集について",
+"d": "2026-11-09",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260250&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
 },
 {
 "id": "kantei:47599020119e",
