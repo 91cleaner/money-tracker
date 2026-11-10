@@ -25,14 +25,14 @@ try:
             t = next((x for x in ts if x.get('tk')), ts[0]); nm = t.get('tk') or (t.get('asset') or '종목')[:40]
             items.append({'t': f"{who} 의원이 {nm} 주식을 {SIDE.get(t['ty'], '거래했다고')} 신고했어요. 거래일 {t['d']}, 금액 범위 {t['amt']}." + (f" 다른 거래 {len(ts)-1}건도 함께 신고했어요." if len(ts) > 1 else ''),
                           'tk': t['tk'], 'who': who, 'u': t.get('doc')})
-        cards.append({'id': 'ptr', 'k': '의원 주식 신고', 'h': f"{lo}~{last} 하원 신고 {len(new)}건 · 의원 {len(by)}명", 'n': [{'l': '신고', 'v': f'{len(new)}건'}, {'l': '의원', 'v': f'{len(by)}명'}], 'items': items})
+        cards.append({'id': 'ptr', 'k': '의원 주식 신고', 'h': f"{lo}~{last} 의원 공개 거래 항목 {len(new)}건 · 의원 {len(by)}명", 'n': [{'l': '거래 항목', 'v': f'{len(new)}건'}, {'l': '의원', 'v': f'{len(by)}명'}], 'items': items})
 except Exception as e: print('ptr', e)
 # 2) White House / presidential documents
 try:
     w = [x for x in J('whitehouse.json')['items'] if x.get('kind') == 'presdoc']
     last = max(x['date'] for x in w); new = [x for x in w if x['date'] == last]
     if recent([last], 7):
-        cards.append({'id': 'wh', 'k': '백악관 조치', 'h': f"{last} 관보에 대통령 문서 {len(new)}건이 실렸어요", 'n': [{'l': '문서', 'v': f'{len(new)}건'}],
+        cards.append({'id': 'wh', 'k': '백악관 조치', 'h': f"{last} 백악관에 대통령 문서 {len(new)}건이 공개됐어요", 'n': [{'l': '문서', 'v': f'{len(new)}건'}],
                       'items': [{'t': f"{x.get('type') or '대통령 문서'}" + (f" 제{x['procl']}호" if x.get('procl') else '') + (f" 제{x['eo']}호" if x.get('eo') else '') + f": {x.get('ko') or x['t'][:80]}", 'u': x.get('u'), 'tk': ','.join(x.get('tickers') or [])} for x in new[:4]]})
 except Exception as e: print('wh', e)
 # 3) company insiders (Form 4), newest filing day
@@ -47,8 +47,8 @@ try:
         for _, tk, t in new:
             k = (tk, t['who'], t['code']); a = g.setdefault(k, {'sh': 0, 'v': 0, 'n': 0, 'd': t['date'], 'u': t.get('url'), 'plan': t.get('plan')})
             a['sh'] += t.get('shares') or 0; a['v'] += (t.get('shares') or 0) * (t.get('price') or 0); a['n'] += 1
-        items = [{'t': f"{tk} 신고자 {who}: {a['d']}에 {int(a['sh']):,}주를 {'샀어요' if c=='P' else '팔았어요'}, 약 ${round(a['v']):,} ({a['n']}건)" + (". 미리 정한 계획에 따른 거래예요." if a['plan'] else '.'), 'tk': tk, 'u': a['u']} for (tk, who, c), a in sorted(g.items(), key=lambda x: -x[1]['v'])[:4]]
-        cards.append({'id': 'f4', 'k': '회사 임원 거래', 'h': f"{last} 임원 거래 신고 {len(new)}건 · {len(tks)}개 회사", 'n': [{'l': '신고', 'v': f'{len(new)}건'}, {'l': '회사', 'v': f'{len(tks)}곳'}], 'items': items})
+        items = [{'t': f"{tk} 신고자 {who}: {last}에 신고된 공개시장 {'매수' if c=='P' else '매도'} 거래 항목 {a['n']}건, 수량 합계 {int(a['sh']):,}주. 기록된 가격·수량 기준 계산 금액 합계 약 ${round(a['v']):,}. 거래일과 10b5-1 계획 여부는 개별 공시를 확인하세요.", 'tk': tk, 'u': a['u']} for (tk, who, c), a in sorted(g.items(), key=lambda x: -x[1]['v'])[:4]]
+        cards.append({'id': 'f4', 'k': 'SEC Form 4 내부자 거래', 'h': f"{last} SEC Form 4 거래 항목 {len(new)}건 · {len(tks)}개 회사", 'n': [{'l': '거래 항목', 'v': f'{len(new)}건'}, {'l': '회사', 'v': f'{len(tks)}곳'}], 'items': items})
 except Exception as e: print('f4', e)
 # 4) totals: contracts / lobbying / PAC — show change vs previous saved day
 snap = {}
