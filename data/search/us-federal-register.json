@@ -1,10 +1,279 @@
 {
   "version": 1,
   "source": "Official Federal Register JSON API",
-  "retrieved_at": "2026-11-08T15:57:54.677Z",
+  "retrieved_at": "2026-11-10T16:16:20.859Z",
   "status": "ok",
   "errors": [],
   "records": [
+    {
+      "id": "2026-22838",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22838/notice-of-intent-to-reorganize-hud-and-revise-headquarters-and-field-operating-model",
+      "date": "2026-11-10",
+      "title": "Notice of Intent To Reorganize HUD and Revise Headquarters and Field Operating Model",
+      "type": "Notice",
+      "agency": [
+        "Housing and Urban Development Department"
+      ],
+      "search_terms": [
+        "artificial intelligence"
+      ],
+      "retrieved_at": "2026-11-10T16:16:18.541Z"
+    },
+    {
+      "id": "2026-22842",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22842/adjustment-to-the-2026-aggregate-production-quota-for-dl-amphetamine-d-amphetamine-for-sale",
+      "date": "2026-11-10",
+      "title": "Adjustment to the 2026 Aggregate Production Quota for d,l-Amphetamine, d-Amphetamine (for Sale), Hydromorphone and Methylphenidate (for Sale) Pursuant to 21 U.S.C. 826(h)",
+      "type": "Notice",
+      "agency": [
+        "Justice Department",
+        "Drug Enforcement Administration"
+      ],
+      "search_terms": [
+        "export controls"
+      ],
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
+    },
+    {
+      "id": "2026-22843",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22843/proposed-aggregate-production-quotas-for-schedule-i-and-ii-controlled-substances-and-assessment-of",
+      "date": "2026-11-10",
+      "title": "Proposed Aggregate Production Quotas for Schedule I and II Controlled Substances and Assessment of Annual Needs for the List I Chemicals Ephedrine, Pseudoephedrine, and Phenylpropanolamine for 2027",
+      "type": "Notice",
+      "agency": [
+        "Justice Department",
+        "Drug Enforcement Administration"
+      ],
+      "search_terms": [
+        "export controls"
+      ],
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
+    },
+    {
+      "id": "2026-22856",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22856/notice-of-open-public-event",
+      "date": "2026-11-10",
+      "title": "Notice of Open Public Event",
+      "type": "Notice",
+      "agency": [
+        "U.S.-China Economic and Security Review Commission"
+      ],
+      "search_terms": [
+        "Taiwan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
+    },
+    {
+      "id": "2026-22888",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22888/modification-of-significant-new-uses-of-certain-chemical-substances-23-1m",
+      "date": "2026-11-10",
+      "title": "Modification of Significant New Uses of Certain Chemical Substances (23-1.M)",
+      "type": "Rule",
+      "agency": [
+        "Environmental Protection Agency"
+      ],
+      "search_terms": [
+        "export controls"
+      ],
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
+    },
+    {
+      "id": "2026-22898",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22898/notice-of-intent-to-prepare-a-programmatic-environmental-impact-statement-peis-open-public-scoping",
+      "date": "2026-11-10",
+      "title": "Notice of Intent To Prepare a Programmatic Environmental Impact Statement (PEIS), Open Public Scoping Period, and Hold Public Scoping Meetings on the Proposed SpaceX Starship-Super Heavy Launch and Landing Operations at the Boca C",
+      "type": "Notice",
+      "agency": [
+        "Transportation Department",
+        "Federal Aviation Administration"
+      ],
+      "search_terms": [
+        "SpaceX"
+      ],
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
+    },
+    {
+      "id": "2026-22904",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22904/notice-of-receipt-of-complaint-solicitation-of-comments-relating-to-the-public-interest",
+      "date": "2026-11-10",
+      "title": "Notice of Receipt of Complaint; Solicitation of Comments Relating to the Public Interest",
+      "type": "Notice",
+      "agency": [
+        "International Trade Commission"
+      ],
+      "search_terms": [
+        "Taiwan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
+    },
+    {
+      "id": "2026-22910",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22910/notice-pursuant-to-the-national-cooperative-research-and-production-act-of-1993-the-open-group-llc",
+      "date": "2026-11-10",
+      "title": "Notice Pursuant to the National Cooperative Research and Production Act of 1993-The Open Group, L.L.C.",
+      "type": "Notice",
+      "agency": [
+        "Justice Department",
+        "Antitrust Division"
+      ],
+      "search_terms": [
+        "Japan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:16.950Z"
+    },
+    {
+      "id": "2026-22913",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22913/notice-pursuant-to-the-national-cooperative-research-and-production-act-of-1993-opengmsl-association",
+      "date": "2026-11-10",
+      "title": "Notice Pursuant to the National Cooperative Research and Production Act of 1993-OpenGMSL Association",
+      "type": "Notice",
+      "agency": [
+        "Justice Department",
+        "Antitrust Division"
+      ],
+      "search_terms": [
+        "semiconductor",
+        "Taiwan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
+    },
+    {
+      "id": "2026-22915",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22915/notice-pursuant-to-the-national-cooperative-research-and-production-act-of-1993-rust-foundation",
+      "date": "2026-11-10",
+      "title": "Notice Pursuant to the National Cooperative Research and Production Act of 1993-Rust Foundation",
+      "type": "Notice",
+      "agency": [
+        "Justice Department",
+        "Antitrust Division"
+      ],
+      "search_terms": [
+        "Japan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:16.950Z"
+    },
+    {
+      "id": "2026-22937",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22937/tin-mill-products-from-the-republic-of-trkiye-preliminary-affirmative-determination-of-sales-at-less",
+      "date": "2026-11-10",
+      "title": "Tin Mill Products From the Republic of Türkiye: Preliminary Affirmative Determination of Sales at Less Than Fair Value, and Preliminary Affirmative Determination of Critical Circumstances, in Part",
+      "type": "Notice",
+      "agency": [
+        "Commerce Department",
+        "International Trade Administration"
+      ],
+      "search_terms": [
+        "Taiwan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
+    },
+    {
+      "id": "2026-22938",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22938/tin-mill-products-from-taiwan-preliminary-affirmative-determination-of-sales-at-less-than-fair-value",
+      "date": "2026-11-10",
+      "title": "Tin Mill Products From Taiwan: Preliminary Affirmative Determination of Sales at Less Than Fair Value, Postponement of Final Determination, and Extension of Provisional Measures",
+      "type": "Notice",
+      "agency": [
+        "Commerce Department",
+        "International Trade Administration"
+      ],
+      "search_terms": [
+        "Taiwan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
+    },
+    {
+      "id": "2026-22939",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22939/polytetramethylene-ether-glycol-from-the-socialist-republic-of-vietnam-preliminary-affirmative",
+      "date": "2026-11-10",
+      "title": "Polytetramethylene Ether Glycol From the Socialist Republic of Vietnam: Preliminary Affirmative Determination of Sales at Less Than Fair Value, Postponement of Final Determination, and Extension of Provisional Measures",
+      "type": "Notice",
+      "agency": [
+        "Commerce Department",
+        "International Trade Administration"
+      ],
+      "search_terms": [
+        "Taiwan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
+    },
+    {
+      "id": "2026-22940",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22940/polytetramethylene-ether-glycol-from-taiwan-preliminary-affirmative-determination-of-sales-at-less",
+      "date": "2026-11-10",
+      "title": "Polytetramethylene Ether Glycol From Taiwan: Preliminary Affirmative Determination of Sales at Less Than Fair Value, Postponement of Final Determination, and Extension of Provisional Measures",
+      "type": "Notice",
+      "agency": [
+        "Commerce Department",
+        "International Trade Administration"
+      ],
+      "search_terms": [
+        "Taiwan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
+    },
+    {
+      "id": "2026-22941",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22941/polytetramethylene-ether-glycol-from-the-republic-of-korea-preliminary-affirmative-determination-of",
+      "date": "2026-11-10",
+      "title": "Polytetramethylene Ether Glycol From the Republic of Korea: Preliminary Affirmative Determination of Sales at Less Than Fair Value, Postponement of Final Determination, and Extension of Provisional Measures",
+      "type": "Notice",
+      "agency": [
+        "Commerce Department",
+        "International Trade Administration"
+      ],
+      "search_terms": [
+        "Taiwan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
+    },
+    {
+      "id": "2026-22942",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22942/polytetramethylene-ether-glycol-from-the-peoples-republic-of-china-preliminary-affirmative",
+      "date": "2026-11-10",
+      "title": "Polytetramethylene Ether Glycol From the People's Republic of China: Preliminary Affirmative Determination of Sales at Less Than Fair Value",
+      "type": "Notice",
+      "agency": [
+        "Commerce Department",
+        "International Trade Administration"
+      ],
+      "search_terms": [
+        "Taiwan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
+    },
+    {
+      "id": "2026-22962",
+      "source": "Federal Register",
+      "source_url": "https://www.federalregister.gov/documents/2026/11/10/2026-22962/imposition-of-special-measure-prohibiting-the-transmittal-of-funds-involving-mexc-global",
+      "date": "2026-11-10",
+      "title": "Imposition of Special Measure Prohibiting the Transmittal of Funds Involving MEXC Global",
+      "type": "Rule",
+      "agency": [
+        "Treasury Department",
+        "Financial Crimes Enforcement Network"
+      ],
+      "search_terms": [
+        "Japan"
+      ],
+      "retrieved_at": "2026-11-10T16:16:16.949Z"
+    },
     {
       "id": "2026-22743",
       "source": "Federal Register",
@@ -20,7 +289,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.180Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-22744",
@@ -36,7 +305,7 @@
       "search_terms": [
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:51.519Z"
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
     },
     {
       "id": "2026-22750",
@@ -53,7 +322,7 @@
         "export controls",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.180Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-22763",
@@ -69,7 +338,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-11-08T15:57:50.732Z"
+      "retrieved_at": "2026-11-10T16:16:16.950Z"
     },
     {
       "id": "2026-22764",
@@ -85,7 +354,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-11-08T15:57:50.732Z"
+      "retrieved_at": "2026-11-10T16:16:16.950Z"
     },
     {
       "id": "2026-22769",
@@ -100,7 +369,7 @@
       "search_terms": [
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:51.519Z"
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
     },
     {
       "id": "2026-22786",
@@ -115,7 +384,7 @@
       "search_terms": [
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:51.519Z"
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
     },
     {
       "id": "2026-22792",
@@ -131,7 +400,7 @@
       "search_terms": [
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.180Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-22793",
@@ -147,7 +416,7 @@
       "search_terms": [
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:51.519Z"
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
     },
     {
       "id": "2026-22799",
@@ -162,7 +431,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-11-08T15:57:52.343Z"
+      "retrieved_at": "2026-11-10T16:16:18.541Z"
     },
     {
       "id": "2026-22825",
@@ -179,7 +448,7 @@
         "Taiwan",
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:51.519Z"
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
     },
     {
       "id": "2026-22664",
@@ -210,7 +479,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-11-08T15:57:48.401Z"
+      "retrieved_at": "2026-11-10T16:16:14.616Z"
     },
     {
       "id": "2026-22680",
@@ -225,7 +494,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-11-08T15:57:52.343Z"
+      "retrieved_at": "2026-11-10T16:16:18.541Z"
     },
     {
       "id": "2026-22682",
@@ -241,7 +510,7 @@
       "search_terms": [
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:51.519Z"
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
     },
     {
       "id": "2026-22728",
@@ -257,7 +526,7 @@
       "search_terms": [
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:51.519Z"
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
     },
     {
       "id": "2026-22735",
@@ -275,7 +544,7 @@
         "Japan",
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:51.519Z"
+      "retrieved_at": "2026-11-10T16:16:17.732Z"
     },
     {
       "id": "2026-22739",
@@ -292,7 +561,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.180Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-22576",
@@ -308,7 +577,7 @@
         "semiconductor",
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:48.401Z"
+      "retrieved_at": "2026-11-10T16:16:14.616Z"
     },
     {
       "id": "2026-22593",
@@ -324,7 +593,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-11-08T15:57:52.343Z"
+      "retrieved_at": "2026-11-10T16:16:18.541Z"
     },
     {
       "id": "2026-22598",
@@ -354,7 +623,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.965Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-22615",
@@ -369,7 +638,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-11-08T15:57:52.343Z"
+      "retrieved_at": "2026-11-10T16:16:18.541Z"
     },
     {
       "id": "2026-22617",
@@ -402,7 +671,7 @@
         "Taiwan",
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:51.519Z"
+      "retrieved_at": "2026-11-10T16:16:15.373Z"
     },
     {
       "id": "2026-22438",
@@ -527,7 +796,7 @@
       "search_terms": [
         "Japan"
       ],
-      "retrieved_at": "2026-11-08T15:57:50.732Z"
+      "retrieved_at": "2026-11-10T16:16:16.950Z"
     },
     {
       "id": "2026-22531",
@@ -560,7 +829,7 @@
         "Taiwan",
         "Japan"
       ],
-      "retrieved_at": "2026-11-08T15:57:50.732Z"
+      "retrieved_at": "2026-11-10T16:16:16.950Z"
     },
     {
       "id": "2026-22534",
@@ -577,7 +846,7 @@
         "Taiwan",
         "Japan"
       ],
-      "retrieved_at": "2026-11-08T15:57:50.732Z"
+      "retrieved_at": "2026-11-10T16:16:16.950Z"
     },
     {
       "id": "2026-22356",
@@ -610,7 +879,7 @@
         "export controls",
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-11-08T15:57:52.343Z"
+      "retrieved_at": "2026-11-10T16:16:18.541Z"
     },
     {
       "id": "2026-22443",
@@ -627,7 +896,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.180Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-22280",
@@ -657,7 +926,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-11-08T15:57:48.401Z"
+      "retrieved_at": "2026-11-10T16:16:14.616Z"
     },
     {
       "id": "2026-22285",
@@ -689,7 +958,7 @@
         "semiconductor",
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:48.401Z"
+      "retrieved_at": "2026-11-10T16:16:14.616Z"
     },
     {
       "id": "2026-22302",
@@ -705,7 +974,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-11-08T15:57:48.401Z"
+      "retrieved_at": "2026-11-10T16:16:14.616Z"
     },
     {
       "id": "2026-22337",
@@ -720,7 +989,7 @@
       "search_terms": [
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.180Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-22345",
@@ -737,7 +1006,7 @@
         "Taiwan",
         "Japan"
       ],
-      "retrieved_at": "2026-11-08T15:57:50.732Z"
+      "retrieved_at": "2026-11-10T16:16:16.950Z"
     },
     {
       "id": "2026-22351",
@@ -800,7 +1069,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.180Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-22187",
@@ -831,7 +1100,7 @@
       "search_terms": [
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.180Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-22208",
@@ -862,7 +1131,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-11-08T15:57:52.343Z"
+      "retrieved_at": "2026-11-10T16:16:18.541Z"
     },
     {
       "id": "2026-22094",
@@ -878,7 +1147,7 @@
         "semiconductor",
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:48.401Z"
+      "retrieved_at": "2026-11-10T16:16:14.616Z"
     },
     {
       "id": "2026-22112",
@@ -894,7 +1163,7 @@
       "search_terms": [
         "artificial intelligence"
       ],
-      "retrieved_at": "2026-11-08T15:57:52.343Z"
+      "retrieved_at": "2026-11-10T16:16:18.541Z"
     },
     {
       "id": "2026-21929",
@@ -928,7 +1197,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.181Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-21943",
@@ -946,7 +1215,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.180Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-21948",
@@ -1058,7 +1327,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.181Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-21896",
@@ -1074,7 +1343,7 @@
         "semiconductor",
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:48.401Z"
+      "retrieved_at": "2026-11-10T16:16:14.616Z"
     },
     {
       "id": "2026-21920",
@@ -1155,7 +1424,7 @@
         "artificial intelligence",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.181Z"
+      "retrieved_at": "2026-11-10T16:16:19.379Z"
     },
     {
       "id": "2026-21794",
@@ -1172,7 +1441,7 @@
         "Japan",
         "export controls"
       ],
-      "retrieved_at": "2026-11-08T15:57:50.732Z"
+      "retrieved_at": "2026-11-10T16:16:16.950Z"
     },
     {
       "id": "2026-21818",
@@ -1188,7 +1457,7 @@
         "export controls",
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.965Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-21658",
@@ -1220,7 +1489,7 @@
       "search_terms": [
         "semiconductor"
       ],
-      "retrieved_at": "2026-11-08T15:57:48.401Z"
+      "retrieved_at": "2026-11-10T16:16:14.616Z"
     },
     {
       "id": "2026-21701",
@@ -1301,7 +1570,7 @@
         "Taiwan",
         "South Korea"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-21578",
@@ -1503,7 +1772,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-21319",
@@ -1597,7 +1866,7 @@
         "advanced computing",
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.965Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-21028",
@@ -1816,7 +2085,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.965Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-20982",
@@ -1846,7 +2115,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-20993",
@@ -1891,7 +2160,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-20705",
@@ -1907,7 +2176,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-20614",
@@ -1922,7 +2191,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-20673",
@@ -1937,7 +2206,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-20526",
@@ -2004,7 +2273,7 @@
         "South Korea",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-20489",
@@ -2036,7 +2305,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-20384",
@@ -2067,7 +2336,7 @@
       "search_terms": [
         "South Korea"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-20281",
@@ -2084,7 +2353,7 @@
         "South Korea",
         "advanced computing"
       ],
-      "retrieved_at": "2026-11-08T15:57:49.962Z"
+      "retrieved_at": "2026-11-10T16:16:16.172Z"
     },
     {
       "id": "2026-20160",
@@ -2163,7 +2432,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.965Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-19132",
@@ -2178,7 +2447,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.965Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-19139",
@@ -2193,7 +2462,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.965Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-18855",
@@ -2209,7 +2478,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.965Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-18778",
@@ -2224,7 +2493,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.965Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-18282",
@@ -2239,7 +2508,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.966Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-18135",
@@ -2255,7 +2524,7 @@
       "search_terms": [
         "SpaceX"
       ],
-      "retrieved_at": "2026-11-08T15:57:53.966Z"
+      "retrieved_at": "2026-11-10T16:16:20.146Z"
     },
     {
       "id": "2026-16615",

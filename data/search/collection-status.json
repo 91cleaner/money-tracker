@@ -1,13 +1,13 @@
 {
-  "created_at": "2026-11-09T19:22:14.208Z",
+  "created_at": "2026-11-10T16:16:14.406Z",
   "pipeline": "official-public-no-ai",
   "collectors": {
     "us_federal_register": {
-      "count": 144,
+      "count": 161,
       "errors": []
     },
     "japan_diet": {
-      "count": 47,
+      "count": 48,
       "errors": []
     },
     "taiwan_legislature": {
@@ -24,7 +24,7 @@
       ]
     },
     "us_sec": {
-      "count": 81,
+      "count": 82,
       "errors": []
     }
   }
