@@ -191,3 +191,22 @@ The successful candidate was the **current `main` tip at inspection**, confirmed
 **Practical release status and owner action:** Treat the latest Pages run as **deployed and HTTP-smoke-passed for that SHA**, not as a fully certified product release. The current `main` `.github/workflows/deploy-pages.yml` still executes only the private API test plus static checks before publication; the full Python/Node suite, strict PTR chronology gate, and stale-SHA guards in stacked draft [#545](https://github.com/91cleaner/money-tracker/pull/545) are **not yet on main**. Existing [#403](https://github.com/91cleaner/money-tracker/pull/403) remains non-mergeable; resolve and retest #403 → #522 → #545 with owner approval. For future incidents, distinguish (a) artifact uploaded, (b) Pages deployed, (c) HTTP smoke passed, and (d) full data/browser/mobile release accepted; log candidate SHA and artifact ID at each stage. Do not blindly rerun a timed-out older SHA after main advances.
 
 **Scope:** Review documentation only, per `docs/AI-ROLES.md`. No workflow, source, UI, data, collector, tests, merge or production change. GitHub repository **public**; independently verified live executed-stock-trade feed **NOT CONNECTED**; generative AI **NOT CONNECTED**.
+
+
+## 2026-11-10 11:54 KST — fresh main Pages failure after a successful deploy (release state regressed)
+
+**Verified against GitHub Actions job logs for the exact main candidate SHAs, not inferred from an upload success:**
+
+| Main candidate | Pages run | Public files | Uploaded artifact | Result |
+| --- | --- | ---: | --- | --- |
+| `9c768f490a722cb1aab0215b7fb44a465ec60088` | [#42742835638](https://github.com/91cleaner/money-tracker/actions/runs/42742835638) | 106,215 | ID `13729698775`, 92,368,859 B | **Success**: deploy completed and root, Korea, US legacy, and command JS HTTP checks passed at 02:29:55 UTC |
+| `b26c74ea86cb03e51ea76dc68fa4597a1901d3ee` | [#42744553321](https://github.com/91cleaner/money-tracker/actions/runs/42744553321) | 106,215 | ID `13730737094`, 92,341,242 B, SHA-256 `2c407aa6d127850ad3bc97111d0e1d272e7ba99143eeb3819a2597048fbb7a10` | **Failure**: artifact uploaded; `actions/deploy-pages@v4` stayed at `syncing_files` and hit 600 s timeout at 02:53:35 UTC; HTTP checks skipped |
+
+The newer failed candidate is the latest observed `main` commit, a SkySea aircraft data refresh. **The latest main SHA has no confirmed successful Pages publication in these runs**; a prior green deployment on a different SHA does not certify it. The same file count and similar compressed sizes with opposite outcomes again rule out asserting size alone as the demonstrated root cause. The log confirms a deployment-service timeout, not a failure in the artifact privacy, private API, or entry syntax checks. It does not prove the public site's exact currently served SHA.
+
+**Immediate operational release handoff (no duplicate CI implementation):**
+1. Mark `b26c74e` **not deployed / not HTTP-verified** in the release record; do not claim the 02:29 UTC green run validates the 02:42 UTC candidate. Check any newer main head before retrying and do not publish a superseded candidate blindly.
+2. CI owner: integrate the existing #403 → #522 → #545 release-gate stack **after resolving #403 conflicts and re-testing against current main**. #545 already contains a proposed 20-minute timeout and stale-head checks; neither is active on main. Preserve its full test gate and add the strict PTR validator after the chronology semantics are corrected.
+3. Hosting/data/UI owners: measure a reversible vendor/past JSON route bundling prototype, preserving per-ID lookup and lazy mobile fetching. Collect deployment ID, candidate SHA, artifact digest, Pages sync duration, actual HTTP content hashes and mobile question→choice→map result before declaring the incident resolved. Do not delete `data/vendor/` or `data/past/` outright.
+
+**Verification boundary:** This updates only the existing review document under `docs/AI-ROLES.md`. No workflow, application code, data, collector, tests, PR merge or production deployment changed. Repository **public**; independently verified live stock executions **NOT CONNECTED**; generative AI **NOT CONNECTED**.
