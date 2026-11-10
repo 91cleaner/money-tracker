@@ -2,15 +2,34 @@
 
 A public-source intelligence prototype connecting world history, legislation, macroeconomic data, and U.S. congressional financial disclosures on a **flat world map**.
 
-## Entry points
-- `index.html` — country selection
-- `world-intelligence/index.html` — flat world-map command center and guided country exploration
-- `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research
-- `us.html` — U.S. command entry
+## Entry points (source-checked against `main`, 2026-11-03)
+- `index.html` — **Korean-language country selector**, not an automatic U.S. redirect. Its three links are 대한민국 → `korea.html`, 미국 → `world-intelligence/`, and 세계 관제실 (aircraft/ships) → `skysea.html`.
+- `korea.html` — **Korean sub-menu**: 의원 → `national.html`, 시 세금 → `contracts.html`; its exit returns to `index.html`. It is not the U.S. command entry.
+- `world-intelligence/index.html` — flat world-map command center and guided country exploration.
+- `world-intelligence/us-signals.html` — U.S. macro, history, and House PTR disclosure research.
+- `us.html` — **direct U.S. redirect** to `world-intelligence/` (preserves URL query parameters and fragment); unlike `index.html`, this page redirects.
+ 
+**Release note:** These routes were checked in the repository source on 2026-11-03, not verified in a newly deployed Pages build. An older entry-point description in this PR became stale after the root-page redesign; do not merge it as a statement that the root still redirects.
 
-## Verified data and caveats
+**Connection status:** Public House PTR disclosures are delayed reports, not live executions. **Live executed-trade feed: NOT CONNECTED. Generative AI analysis: NOT CONNECTED.** The interactive map and scripted data lookups must not be described as live trading intelligence or a connected AI search engine. A successful GitHub Actions test is not evidence that the public Pages deployment or authenticated Cloudflare Worker is working.
+
+## Feature readiness (source-level, reviewed 2026-11-09)
+
+| Capability | What the source currently supports | What is **not** verified |
+| --- | --- | --- |
+| One-screen world-map command room | `world-intelligence/index.html` renders a map, question field, route steps and candidate choices. | Successful current Pages/Worker deployment and iPhone landscape behavior. |
+| Question → choice → map route | `assets/intent.js` uses local rules and `data/search-index.json`; `assets/answers.js` reads precomputed static JSON. Fallback choices include demonstration routes. | A connected generative AI search engine, complete coverage of arbitrary questions, or reliable recovery from every failed request. |
+| Legislation → member → company | The search index and route metadata can **present** public-record associations for exploration. | A proven causal link, independently validated ownership/benefit, or comprehensive relationship coverage. |
+| U.S. congressional transactions | House PTR rows are **delayed self-reported disclosures** linked to original filings. | Live executions, exact execution prices, complete Senate coverage, or chronology correctness while [#527](https://github.com/91cleaner/money-tracker/issues/527) is open. |
+| Release and administrator access | GitHub Actions and a Cloudflare Worker implementation exist. | Same-commit end-to-end CI + published Pages/Worker verification; private Pages access or device-only authorization. |
+
+**Do not use a green Pages deployment or a visually connected route as evidence that a source was freshly collected, an official filing was corrected, a member influenced a bill, or a trade was executed.** Live executed-trade feed: **NOT CONNECTED**. Generative AI: **NOT CONNECTED**. This matrix describes inspected repository code, not a successful live browser test.
+
+## Public datasets and verification limits
 - `data/us/bills.json` — U.S. congressional legislation summary from Congress.gov. The **Congress.gov API requires a key** for its collection workflow; this is separate from the map.
-- `data/us/trades.json` — parsed public U.S. House PTR transactions, linked to House Clerk source PDFs. Transaction amounts are ranges; records are not investment advice or evidence of misconduct. The Senate index has reported HTTP 403 errors; do not imply complete Senate coverage.
+- `data/us/trades.json` — parsed, self-reported U.S. House PTR transaction entries with House Clerk PDF links. These are delayed disclosures, **not independently verified executions**. Amounts are ranges, and temporal proximity to a bill is not proof of influence or misconduct. The Senate index has reported HTTP 403 errors; do not imply complete Senate coverage.
+- **Confirmed source-level PTR chronology conflict ([#527](https://github.com/91cleaner/money-tracker/issues/527), official PDF visually checked 2026-11-09):** House Clerk [filing #20033889, page 1](https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033889.pdf) itself prints a Sony (SONY) **transaction date of 12/26/2026**, a **notification date of 01/21/2026**, and a **digital signature dated 02/09/2026**. The transaction date is later than both notification and signature, so this record is internally inconsistent **in the original disclosure**, not merely a proven parser typo. Do **not** invent a corrected date, treat the row as a verified execution, or include it in chronological statistics without a clearly marked quarantine/exception and source provenance. The upstream ledger, generated public artifact, and any amended House filing still need reconciliation. Pending [release-guard PR #526](https://github.com/91cleaner/money-tracker/pull/526) is **unmerged**. A green Pages deployment is not a chronology audit.
+- `data/us/insider-form4.json` — **separate SEC EDGAR Form 4 corporate-insider filings** (officers/directors/other reporting persons at tracked issuers), with filing date (`filed`), reported transaction date (`date`), P/S code, shares, reported price and SEC filing link where available. This is **not** a congressional House PTR feed, does **not** identify a lawmaker's trades, and is not a real-time execution feed. Read `updated`, `since`, and `days` from the snapshot at review time: these are collector metadata, **not proof that every SEC filing was collected**. Coverage is limited to tracked issuers and the collector's supported transaction codes. Do not combine Form 4 and House PTR rows or imply a member-to-company relationship without independently verified identifiers and original sources.
 - `data/us-events.json` — curated historical milestones with source URLs, not causal investment signals.
 - `data/us-macro.json` — generated only after a successful FRED data collection run; it may be absent.
 - `data/us-house-filings.json` — generated only after successful House Clerk index collection; it may be absent.
@@ -24,6 +43,7 @@ The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional
 - `python scripts/sync_command_worker.py` embeds a compact, source-linked Congress.gov bill snapshot and the current House PTR research candidates into `cloudflare/admin-worker.js`. Every bill remains available; long action descriptions are shortened in the Worker only. The original full data stays in `data/us/bills.json`.
 - `.github/workflows/sync-command.yml` regenerates the Worker when map or evidence data changes. `us-data.yml` also regenerates it after scheduled collection.
 - **Source synchronization is not a Cloudflare deployment.** The Worker still requires a successful Wrangler deployment, and live `/command` functionality must be tested after deployment. GitHub OAuth access is not device-only access.
+- **Blocking release issue (checked 2026-10-30):** The generated Worker exceeded the repository's 1 MiB GitHub Contents API health-check limit (1,051,223 bytes versus 1,048,576 bytes; [#289](https://github.com/91cleaner/money-tracker/issues/289)). A passing Pages build or a successful Worker source-sync commit does **not** mean the authenticated command room was deployed. Re-measure the generated file and verify the live authenticated route before marking it operational.
 - `data/us/ptr-crosschecks.json` records field-level comparison with original House Clerk PDFs. It verifies what a disclosure **reported**, not independently executed trades, ownership, or any connection to legislation.
 
 ## Collection and validation
@@ -37,7 +57,9 @@ The map uses Leaflet with keyless OpenStreetMap/CARTO basemap tiles and optional
 - `.github/workflows/world-intelligence-health.yml` — static map and data integrity checks.
 - `python scripts/check_world_intelligence.py` — local read-only health check. With Node.js installed, also checks inline JavaScript syntax.
 
-**Important:** GitHub Pages is public. `noindex`, hidden links, or client-side controls are not authentication and do not restrict access to specific devices. Proper device-only access requires an authenticated gateway or private hosting.
+**Important:** The GitHub repository and GitHub Pages site are currently **public**, despite the intended private-development workflow. `noindex`, hidden links, or client-side controls are not authentication and do not restrict access to specific devices. Do not place secrets, unpublished research, or private datasets in the repository or Pages artifacts. Proper device-only access requires an authenticated gateway or private hosting; the Cloudflare OAuth session described above does not make GitHub Pages private.
+
+**Owner-only studio warning ([#543](https://github.com/91cleaner/money-tracker/issues/543), checked 2026-11-09):** the public Pages packaging path includes root `studio.html` even though its copy implies owner-only use. This is **source-level exposure evidence**, not a confirmed private-data leak or live anonymous HTTP test. Until server-side protection and public-artifact exclusion are verified (or the owner explicitly chooses a public studio), do not describe this page as private or place sensitive drafts there. [Review PR #544](https://github.com/91cleaner/money-tracker/pull/544) remains unmerged.
 
 ## Principles
 1. Cite original official public sources and distinguish source dates, event dates, transaction dates, and ingestion times.
