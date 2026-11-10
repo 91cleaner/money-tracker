@@ -1,0 +1,101 @@
+"""Offline regression tests for strict Pages publication-step detection."""
+import importlib.util
+from pathlib import Path
+import unittest
+
+SCRIPT = Path(__file__).with_name("check-pages-publish-step.py")
+spec = importlib.util.spec_from_file_location("pages_publish_step", SCRIPT)
+audit = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(audit)
+
+
+def jobs_payload(conclusion="success"):
+    return {"jobs": [{"name": "deploy", "conclusion": "failure", "steps": [
+        {"name": "Run actions/upload-pages-artifact@v3", "conclusion": "success"},
+        {"name": audit.DEPLOY_STEP, "conclusion": conclusion},
+        {"name": "Verify published entry and US command", "conclusion": "failure"},
+    ]}]}
+
+
+class PagesPublishStepTests(unittest.TestCase):
+    def test_publish_success_even_when_later_smoke_fails(self):
+        self.assertTrue(audit.was_pages_published(jobs_payload()))
+
+    def test_completed_workflow_runs_are_not_filtered_by_conclusion(self):
+        workflow = (Path(__file__).resolve().parents[1] /
+                    ".github/workflows/pages-json-parity.yml").read_text(encoding="utf-8")
+        self.assertIn("types: [completed]", workflow)
+        self.assertIn("github.event.workflow_run.head_branch == 'main'", workflow)
+        self.assertNotIn("github.event.workflow_run.conclusion", workflow)
+
+    def test_audit_trigger_tracks_deploy_workflow_name(self):
+        # workflow_run filters are matched by workflow name, not filename.
+        # If the deploy workflow is renamed, the live JSON audit silently
+        # stops triggering unless this filter changes in the same PR.
+        root = Path(__file__).resolve().parents[1]
+        deploy = (root / ".github/workflows/deploy-pages.yml").read_text(encoding="utf-8")
+        parity = (root / ".github/workflows/pages-json-parity.yml").read_text(encoding="utf-8")
+        deploy_name = next((line.partition(":")[2].strip()
+                            for line in deploy.splitlines() if line.startswith("name:")), None)
+        self.assertIsNotNone(deploy_name)
+        self.assertIn(f"workflows: ['{deploy_name}']", parity)
+
+    def test_publish_detector_tracks_actual_deploy_action(self):
+        # An action upgrade or job rename must fail in PR CI, rather than
+        # silently disabling the post-deployment verification on main.
+        root = Path(__file__).resolve().parents[1]
+        deploy = (root / ".github/workflows/deploy-pages.yml").read_text(encoding="utf-8")
+        self.assertIn("\n  deploy:\n", deploy)
+        self.assertEqual(deploy.count("uses: actions/deploy-pages@v4"), 1)
+        self.assertEqual(audit.DEPLOY_STEP, "Run actions/deploy-pages@v4")
+
+    def test_publish_success_even_if_job_was_cancelled_or_timed_out(self):
+        for conclusion in ("cancelled", "timed_out"):
+            with self.subTest(conclusion=conclusion):
+                payload = jobs_payload()
+                payload["jobs"][0]["conclusion"] = conclusion
+                self.assertTrue(audit.was_pages_published(payload))
+
+    def test_publish_failure_does_not_trigger_audit(self):
+        self.assertFalse(audit.was_pages_published(jobs_payload("failure")))
+
+    def test_publish_skipped_does_not_trigger_audit(self):
+        self.assertFalse(audit.was_pages_published(jobs_payload("skipped")))
+
+    def test_missing_deploy_job_is_error_not_false(self):
+        with self.assertRaisesRegex(ValueError, "exactly one deploy job"):
+            audit.was_pages_published({"jobs": [{"name": "test", "steps": []}]})
+
+    def test_duplicate_deploy_jobs_are_error(self):
+        payload = jobs_payload()
+        payload["jobs"].append(payload["jobs"][0].copy())
+        with self.assertRaisesRegex(ValueError, "exactly one deploy job"):
+            audit.was_pages_published(payload)
+
+    def test_missing_or_renamed_step_is_error(self):
+        payload = jobs_payload()
+        payload["jobs"][0]["steps"][1]["name"] = "Deploy Pages renamed"
+        with self.assertRaisesRegex(ValueError, "exactly one"):
+            audit.was_pages_published(payload)
+
+    def test_duplicate_publish_steps_are_error(self):
+        payload = jobs_payload()
+        payload["jobs"][0]["steps"].append({"name": audit.DEPLOY_STEP, "conclusion": "success"})
+        with self.assertRaisesRegex(ValueError, "exactly one"):
+            audit.was_pages_published(payload)
+
+    def test_missing_jobs_array_is_error(self):
+        with self.assertRaisesRegex(ValueError, "jobs array"):
+            audit.was_pages_published({})
+
+    def test_missing_steps_array_is_error(self):
+        with self.assertRaisesRegex(ValueError, "steps array"):
+            audit.was_pages_published({"jobs": [{"name": "deploy"}]})
+
+    def test_incomplete_step_is_error(self):
+        with self.assertRaisesRegex(ValueError, "incomplete"):
+            audit.was_pages_published(jobs_payload(None))
+
+
+if __name__ == "__main__":
+    unittest.main()
