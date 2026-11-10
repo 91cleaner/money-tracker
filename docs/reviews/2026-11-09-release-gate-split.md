@@ -1,5 +1,21 @@
 # P1 release-gate review — Pages can publish while the security suite is red
 
+## 2026-11-10 12:54 KST — P1 release governance: unprotected main and latest-SHA gap
+
+**New control-plane finding (verified from GitHub API, not inferred from CI color):**
+- `GET /repos/91cleaner/money-tracker/branches/main` returned `protected: false` for current `main` at `67c2d9b7422d6e7e2b9ad7c919f0d13d7c0c9838`. `GET /repos/91cleaner/money-tracker/rulesets` returned `[]`. No branch protection or repository ruleset is visible for `main`. The separate branch-protection detail endpoint returned 403 to the GitHub App, so individual protection settings could not be inspected; do not infer who can push or claim a bypass was exploited.
+- [Pages #42747525063](https://github.com/91cleaner/money-tracker/actions/runs/42747525063) on `0be8d512`, [#42748771631](https://github.com/91cleaner/money-tracker/actions/runs/42748771631) on `a3818083`, and [#42750017038](https://github.com/91cleaner/money-tracker/actions/runs/42750017038) on `dcad2d9a` **all succeeded**, including `actions/deploy-pages@v4` and the four configured post-deploy HTTP checks. This is a recovery from the earlier intermittent timeout, not a proof of permanent reliability.
+- The latest checked `main` SHA `67c2d9b7` is **newer than the latest successful deployment candidate** `dcad2d9a`. No same-SHA deployment or live asset hash parity for `67c2d9b7` was established. The public site is **not claimed down**; it is simply not certified to reflect the latest data commit.
+- [Security/research #42746070476](https://github.com/91cleaner/money-tracker/actions/runs/42746070476) on the separate review PR head `2ddfd6a`: **144 Python tests OK**, then `Build and validate public artifact` failed on the obsolete `href="intel-lab.html"` grep. This red PR run is **not** the same SHA as the successful Pages candidates. Current `main` still contains that obsolete grep. Existing #403 fixes it, and stacked draft #545 adds a Pages full-suite gate; neither is merged.
+
+**Owner-ready remediation (do not duplicate existing PR code):**
+1. Repository owner: configure a branch protection rule or active repository ruleset for `main`, requiring PR review and relevant status checks for the candidate SHA, restricting force-push/deletion and unintended direct pushes. Verify the resulting `protected`/ruleset API state and an attempted unauthorized update; account for the intended bot/data-commit workflow without silently bypassing required checks.
+2. CI owner: resolve conflicts and integrate [#403](https://github.com/91cleaner/money-tracker/pull/403) → [#522](https://github.com/91cleaner/money-tracker/pull/522) → [#545](https://github.com/91cleaner/money-tracker/pull/545) only after approval and re-running checks on the merged SHA. Preserve fail-closed behavior for malformed PTR dates and security tests. Main-branch release checks must not depend solely on an independently red workflow.
+3. Release owner: for the **latest** `main` SHA, record Pages run/deployment ID, artifact digest and exact HTTP asset hashes, then separately validate KO/EN question → choice → map and iPhone landscape. Never label an earlier SHA's green Pages run as latest-data verification.
+
+**Scope:** Review document only. No branch settings, workflow, test, UI, collector, `data/`, merge or live deployment changed. Repository is **public**, not private. Real-time independently verified stock executions **NOT CONNECTED**; generative AI **NOT CONNECTED**.
+
+
 Reviewed: 2026-11-09 03:56 KST. Scope: current `main` source and GitHub Actions evidence. This is a **source/workflow review**, not a claim of a browser exploit or a completed fix.
 
 ## Reproduced failing assertion (not an opinions-import failure)
