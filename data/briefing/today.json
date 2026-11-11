@@ -1,6 +1,6 @@
 {
- "date": "2026-11-10",
- "generated_at": "2026-11-10T08:39Z",
+ "date": "2026-11-11",
+ "generated_at": "2026-11-11T08:39Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -10,13 +10,13 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-11-09",
+   "date": "2026-11-10",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-09까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-09",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-10까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-10",
    "rows": [
     {
      "label_ko": "Stryker Corp · 이사",
@@ -35,14 +35,6 @@
      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000429/0000004962-26-000429-index.htm"
     },
     {
-     "label_ko": "Arista Networks, Inc. · 큰 주주",
-     "label_en": "Arista Networks, Inc. · 10% owner",
-     "value_ko": "~$45.9M",
-     "value_en": "~$45.9M",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000256/0001596532-26-000256-index.htm"
-    },
-    {
      "label_ko": "Linde Plc · 재무 책임자(CFO)",
      "label_en": "Linde Plc · Chief Financial Officer",
      "value_ko": "~$45.3M",
@@ -51,12 +43,20 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026071528/0001628280-26-071528-index.htm"
     },
     {
-     "label_ko": "Visa Inc. · 사장",
-     "label_en": "Visa Inc. · PRESIDENT",
-     "value_ko": "~$29.3M",
-     "value_en": "~$29.3M",
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$43.0M",
+     "value_en": "~$43.0M",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000136/0001403161-26-000136-index.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000260/0001596532-26-000260-index.htm"
+    },
+    {
+     "label_ko": "Illinois Tool Works Inc · 이사",
+     "label_en": "Illinois Tool Works Inc · director",
+     "value_ko": "~$17.6M",
+     "value_en": "~$17.6M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/49826/000004982626000061/0000049826-26-000061-index.htm"
     }
    ],
    "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
@@ -64,62 +64,62 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $398.8M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $398.8M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $384.2M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $384.2M on record · Money Tracker"
   },
   {
    "id": "movers",
    "kind": "movers",
    "icon": "●",
-   "score": 70.0,
+   "score": 100.0,
    "layout": "list",
-   "date": "2026-11-06",
+   "date": "2026-11-09",
    "badge_ko": "큰 움직임",
    "badge_en": "BIG MOVERS",
    "title_ko": "어제 가장 크게 움직인 회사들",
    "title_en": "Companies that moved most at the last close",
-   "sub_ko": "2026-11-05 → 2026-11-06 마감 가격 비교 (우리가 지켜보는 회사 중)",
-   "sub_en": "Closing price 2026-11-05 → 2026-11-06 (among companies we track)",
+   "sub_ko": "2026-11-06 → 2026-11-09 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-11-06 → 2026-11-09 (among companies we track)",
    "rows": [
     {
-     "label_ko": "Quantinuum Inc.",
-     "label_en": "Quantinuum Inc.",
-     "value_ko": "+26.0%",
-     "value_en": "+26.0%",
+     "label_ko": "Praxis Precision Medicines, Inc.",
+     "label_en": "Praxis Precision Medicines, Inc.",
+     "value_ko": "+19.9%",
+     "value_en": "+19.9%",
      "tone": "green",
      "mark": "▲"
     },
     {
-     "label_ko": "IonQ, Inc.",
-     "label_en": "IonQ, Inc.",
-     "value_ko": "+23.4%",
-     "value_en": "+23.4%",
+     "label_ko": "Ceco Environmental Corp",
+     "label_en": "Ceco Environmental Corp",
+     "value_ko": "+19.0%",
+     "value_en": "+19.0%",
      "tone": "green",
      "mark": "▲"
     },
     {
-     "label_ko": "Blackline, Inc.",
-     "label_en": "Blackline, Inc.",
-     "value_ko": "-23.1%",
-     "value_en": "-23.1%",
+     "label_ko": "ImmunityBio, Inc.",
+     "label_en": "ImmunityBio, Inc.",
+     "value_ko": "-17.7%",
+     "value_en": "-17.7%",
      "tone": "red",
      "mark": "▼"
     },
     {
-     "label_ko": "Opendoor Technologies Inc.",
-     "label_en": "Opendoor Technologies Inc.",
-     "value_ko": "-21.8%",
-     "value_en": "-21.8%",
-     "tone": "red",
-     "mark": "▼"
+     "label_ko": "Coherent Corp.",
+     "label_en": "Coherent Corp.",
+     "value_ko": "+16.8%",
+     "value_en": "+16.8%",
+     "tone": "green",
+     "mark": "▲"
     },
     {
-     "label_ko": "Artivion, Inc.",
-     "label_en": "Artivion, Inc.",
-     "value_ko": "-20.2%",
-     "value_en": "-20.2%",
-     "tone": "red",
-     "mark": "▼"
+     "label_ko": "Monolithic Power Systems, Inc.",
+     "label_en": "Monolithic Power Systems, Inc.",
+     "value_ko": "+16.6%",
+     "value_en": "+16.6%",
+     "tone": "green",
+     "mark": "▲"
     }
    ],
    "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
@@ -127,77 +127,14 @@
    "source_ko": "출처: 일별 마감 가격 기록",
    "source_en": "Source: daily closing prices",
    "source_url": "https://91cleaner.github.io/money-tracker/us.html",
-   "share_ko": "2026-11-06 마감 기준 가장 크게 움직인 회사: Quantinuum Inc. +26.0% · 머니트래커",
-   "share_en": "Biggest mover at the 2026-11-06 close: Quantinuum Inc. +26.0% · Money Tracker"
-  },
-  {
-   "id": "filings",
-   "kind": "filings",
-   "icon": "●",
-   "score": 68.0,
-   "layout": "list",
-   "date": "2026-11-09",
-   "badge_ko": "새 공시",
-   "badge_en": "NEW FILINGS",
-   "title_ko": "2026-11-09 회사들이 낸 '큰 소식' 신고서 7건",
-   "title_en": "7 'big news' notices companies filed on 2026-11-09",
-   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
-   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
-   "rows": [
-    {
-     "label_ko": "Fortune Brands Innovations, Inc.",
-     "label_en": "Fortune Brands Innovations, Inc.",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1519751/000119312526453599/fbin-20261106.htm"
-    },
-    {
-     "label_ko": "Newell Brands Inc.",
-     "label_en": "Newell Brands Inc.",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/814453/000081445326000043/nwl-20261104.htm"
-    },
-    {
-     "label_ko": "Sirius Xm Holdings Inc.",
-     "label_en": "Sirius Xm Holdings Inc.",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/908937/000110465926124177/tm2629270d1_8k.htm"
-    },
-    {
-     "label_ko": "Akamai Technologies Inc",
-     "label_en": "Akamai Technologies Inc",
-     "value_ko": "큰 계약을 맺음",
-     "value_en": "material agreement",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1086222/000119312526452631/d137487d8k.htm"
-    },
-    {
-     "label_ko": "FTAI Aviation Ltd.",
-     "label_en": "FTAI Aviation Ltd.",
-     "value_ko": "큰 계약을 맺음",
-     "value_en": "material agreement",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1590364/000114036126042548/ef20085046_8k.htm"
-    }
-   ],
-   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
-   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
-   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
-   "source_en": "Source: SEC 8-K notices (EDGAR)",
-   "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "2026-11-09 회사들이 낸 '큰 소식' 신고서 7건 · 머니트래커",
-   "share_en": "7 'big news' notices companies filed on 2026-11-09 · Money Tracker"
+   "share_ko": "2026-11-09 마감 기준 가장 크게 움직인 회사: Praxis Precision Medicines, Inc. +19.9% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-11-09 close: Praxis Precision Medicines, Inc. +19.9% · Money Tracker"
   },
   {
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 37.8,
+   "score": 27.5,
    "layout": "list",
    "date": "2026-11-05",
    "badge_ko": "늦은 신고 클럽",
@@ -247,7 +184,7 @@
    "id": "president-2026-22686",
    "kind": "president",
    "icon": "",
-   "score": 30.3,
+   "score": 22.0,
    "layout": "versus",
    "date": "2026-11-05",
    "badge_ko": "대통령 조치",
@@ -305,7 +242,7 @@
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 37.8,
+   "score": 27.5,
    "layout": "list",
    "date": "2026-11-05",
    "badge_ko": "늦은 신고 클럽",
@@ -355,7 +292,7 @@
    "id": "president-2026-22686",
    "kind": "president",
    "icon": "",
-   "score": 30.3,
+   "score": 22.0,
    "layout": "versus",
    "date": "2026-11-05",
    "badge_ko": "대통령 조치",
@@ -413,13 +350,13 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-11-09",
+   "date": "2026-11-10",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-09까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-09",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-10까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-10",
    "rows": [
     {
      "label_ko": "Stryker Corp · 이사",
@@ -438,14 +375,6 @@
      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000429/0000004962-26-000429-index.htm"
     },
     {
-     "label_ko": "Arista Networks, Inc. · 큰 주주",
-     "label_en": "Arista Networks, Inc. · 10% owner",
-     "value_ko": "~$45.9M",
-     "value_en": "~$45.9M",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000256/0001596532-26-000256-index.htm"
-    },
-    {
      "label_ko": "Linde Plc · 재무 책임자(CFO)",
      "label_en": "Linde Plc · Chief Financial Officer",
      "value_ko": "~$45.3M",
@@ -454,12 +383,20 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026071528/0001628280-26-071528-index.htm"
     },
     {
-     "label_ko": "Visa Inc. · 사장",
-     "label_en": "Visa Inc. · PRESIDENT",
-     "value_ko": "~$29.3M",
-     "value_en": "~$29.3M",
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$43.0M",
+     "value_en": "~$43.0M",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000136/0001403161-26-000136-index.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000260/0001596532-26-000260-index.htm"
+    },
+    {
+     "label_ko": "Illinois Tool Works Inc · 이사",
+     "label_en": "Illinois Tool Works Inc · director",
+     "value_ko": "~$17.6M",
+     "value_en": "~$17.6M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/49826/000004982626000061/0000049826-26-000061-index.htm"
     }
    ],
    "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
@@ -467,33 +404,33 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $398.8M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $398.8M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $384.2M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $384.2M on record · Money Tracker"
   },
   "debt": {
    "id": "debt",
    "kind": "debt",
    "icon": "●",
-   "score": 21.0,
+   "score": 30.0,
    "layout": "big",
-   "date": "2026-11-06",
+   "date": "2026-11-09",
    "badge_ko": "국가 채무",
    "badge_en": "NATIONAL DEBT",
    "title_ko": "미국 정부가 지금까지 진 빚 (총 채무)",
    "title_en": "How much the US government owes (total public debt)",
    "big": {
-    "value": "$40,552,751,019,093",
-    "short_ko": "$40.55조",
-    "short_en": "$40.55 trillion"
+    "value": "$40,559,796,589,243",
+    "short_ko": "$40.56조",
+    "short_en": "$40.56 trillion"
    },
-   "sub_ko": "2026-11-06 기준",
-   "sub_en": "As of 2026-11-06",
+   "sub_ko": "2026-11-09 기준",
+   "sub_en": "As of 2026-11-09",
    "rows": [
     {
      "label_ko": "1년 전 같은 날엔",
      "label_en": "Same day last year",
-     "value_ko": "$38.12조",
-     "value_en": "$38.12 T",
+     "value_ko": "$38.13조",
+     "value_en": "$38.13 T",
      "tone": "white"
     },
     {
@@ -506,8 +443,8 @@
     {
      "label_ko": "1초마다 늘어난 빚 (최근 30일 평균)",
      "label_en": "Added every second (30-day avg)",
-     "value_ko": "+$103,671",
-     "value_en": "+$103,671",
+     "value_ko": "+$92,557",
+     "value_en": "+$92,557",
      "tone": "amber"
     }
    ],
@@ -516,8 +453,8 @@
    "source_ko": "출처: 미 재무부 재정 데이터 (FiscalData)",
    "source_en": "Source: U.S. Treasury FiscalData",
    "source_url": "https://fiscaldata.treasury.gov/",
-   "share_ko": "미국 정부가 지금까지 진 빚 $40.55조 (2026-11-06 기준) · 머니트래커",
-   "share_en": "How much the US government owes: $40.55 trillion (as of 2026-11-06) · Money Tracker"
+   "share_ko": "미국 정부가 지금까지 진 빚 $40.56조 (2026-11-09 기준) · 머니트래커",
+   "share_en": "How much the US government owes: $40.56 trillion (as of 2026-11-09) · Money Tracker"
   }
  }
 }
