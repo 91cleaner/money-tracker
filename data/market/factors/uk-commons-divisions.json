@@ -2,9 +2,36 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-11-10T23:42:22.231Z",
- "count": 213,
+ "collected_at": "2026-11-11T23:55:07.569Z",
+ "count": 216,
  "divisions": [
+  {
+   "id": 2480,
+   "date": "2026-11-11",
+   "number": 121,
+   "title": "Opposition day: Employers",
+   "ayes": 105,
+   "noes": 293,
+   "url": "https://votes.parliament.uk/votes/commons/division/2480"
+  },
+  {
+   "id": 2479,
+   "date": "2026-11-11",
+   "number": 120,
+   "title": "Government Amendment to Opposition day debate on Welfare",
+   "ayes": 268,
+   "noes": 93,
+   "url": "https://votes.parliament.uk/votes/commons/division/2479"
+  },
+  {
+   "id": 2478,
+   "date": "2026-11-11",
+   "number": 119,
+   "title": "Opposition day: Welfare",
+   "ayes": 92,
+   "noes": 279,
+   "url": "https://votes.parliament.uk/votes/commons/division/2478"
+  },
   {
    "id": 2476,
    "date": "2026-11-04",
