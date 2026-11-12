@@ -4,7 +4,7 @@
   "source": "Taiwan Stock Exchange OpenAPI",
   "endpoint": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
   "status": "ingested",
-  "fetched_at": "2026-11-10T03:00:51.177Z",
+  "fetched_at": "2026-11-12T03:03:58.191Z",
   "record_count": 1099,
   "records": [
     {
@@ -372,7 +372,7 @@
       "company_name": "台灣化學纖維股份有限公司",
       "company_abbreviation": "台化",
       "industry": "03",
-      "address": "彰化市中山路3段359號",
+      "address": "台北市內湖區南京東路六段380號(A2棟)10樓",
       "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L"
     },
     {
@@ -5652,7 +5652,7 @@
       "company_name": "望隼科技股份有限公司",
       "company_abbreviation": "望隼",
       "industry": "22",
-      "address": "苗栗縣竹南鎮公義里友義路66號3樓",
+      "address": "苗栗縣竹南鎮頂埔里科專路6號",
       "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L"
     },
     {
