@@ -3,15 +3,11 @@
  "source_url": "https://data.bis.org/topics/CBPOL",
  "api_url": "https://stats.bis.org/api/v1/data/WS_CBPOL/M.KR+JP+CN+TW+GB+US+XM/all?format=csv&startPeriod=2015-01",
  "note": "월말 기준 BIS 집계값. 각 중앙은행 발표 직후에는 반영이 늦을 수 있음.",
- "collected_at": "2026-11-05T23:49:30.770Z",
+ "collected_at": "2026-11-12T23:48:53.117Z",
  "series": {
   "KR": {
    "label": "한국은행 기준금리 (%)",
    "points": [
-    {
-     "date": "2015-02",
-     "value": 2
-    },
     {
      "date": "2015-03",
      "value": 1.75
@@ -567,10 +563,14 @@
     {
      "date": "2026-09",
      "value": 3
+    },
+    {
+     "date": "2026-10",
+     "value": 3
     }
    ],
    "latest": {
-    "date": "2026-09",
+    "date": "2026-10",
     "value": 3
    }
   },
