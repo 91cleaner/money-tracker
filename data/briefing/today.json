@@ -1,6 +1,6 @@
 {
- "date": "2026-11-11",
- "generated_at": "2026-11-11T08:39Z",
+ "date": "2026-11-12",
+ "generated_at": "2026-11-12T08:42Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -35,20 +35,20 @@
      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000429/0000004962-26-000429-index.htm"
     },
     {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$86.9M",
+     "value_en": "~$86.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000262/0001596532-26-000262-index.htm"
+    },
+    {
      "label_ko": "Linde Plc · 재무 책임자(CFO)",
      "label_en": "Linde Plc · Chief Financial Officer",
      "value_ko": "~$45.3M",
      "value_en": "~$45.3M",
      "tone": "white",
      "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026071528/0001628280-26-071528-index.htm"
-    },
-    {
-     "label_ko": "Arista Networks, Inc. · 큰 주주",
-     "label_en": "Arista Networks, Inc. · 10% owner",
-     "value_ko": "~$43.0M",
-     "value_en": "~$43.0M",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000260/0001596532-26-000260-index.htm"
     },
     {
      "label_ko": "Illinois Tool Works Inc · 이사",
@@ -64,8 +64,8 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $384.2M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $384.2M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $428.1M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $428.1M on record · Money Tracker"
   },
   {
    "id": "movers",
@@ -73,53 +73,53 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-11-09",
+   "date": "2026-11-10",
    "badge_ko": "큰 움직임",
    "badge_en": "BIG MOVERS",
    "title_ko": "어제 가장 크게 움직인 회사들",
    "title_en": "Companies that moved most at the last close",
-   "sub_ko": "2026-11-06 → 2026-11-09 마감 가격 비교 (우리가 지켜보는 회사 중)",
-   "sub_en": "Closing price 2026-11-06 → 2026-11-09 (among companies we track)",
+   "sub_ko": "2026-11-09 → 2026-11-10 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-11-09 → 2026-11-10 (among companies we track)",
    "rows": [
     {
-     "label_ko": "Praxis Precision Medicines, Inc.",
-     "label_en": "Praxis Precision Medicines, Inc.",
-     "value_ko": "+19.9%",
-     "value_en": "+19.9%",
-     "tone": "green",
-     "mark": "▲"
-    },
-    {
-     "label_ko": "Ceco Environmental Corp",
-     "label_en": "Ceco Environmental Corp",
-     "value_ko": "+19.0%",
-     "value_en": "+19.0%",
-     "tone": "green",
-     "mark": "▲"
-    },
-    {
-     "label_ko": "ImmunityBio, Inc.",
-     "label_en": "ImmunityBio, Inc.",
-     "value_ko": "-17.7%",
-     "value_en": "-17.7%",
+     "label_ko": "Novanta Inc",
+     "label_en": "Novanta Inc",
+     "value_ko": "-15.3%",
+     "value_en": "-15.3%",
      "tone": "red",
      "mark": "▼"
     },
     {
-     "label_ko": "Coherent Corp.",
-     "label_en": "Coherent Corp.",
-     "value_ko": "+16.8%",
-     "value_en": "+16.8%",
+     "label_ko": "Qualys, Inc.",
+     "label_en": "Qualys, Inc.",
+     "value_ko": "-13.5%",
+     "value_en": "-13.5%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Charter Communications, Inc.",
+     "label_en": "Charter Communications, Inc.",
+     "value_ko": "+10.6%",
+     "value_en": "+10.6%",
      "tone": "green",
      "mark": "▲"
     },
     {
-     "label_ko": "Monolithic Power Systems, Inc.",
-     "label_en": "Monolithic Power Systems, Inc.",
-     "value_ko": "+16.6%",
-     "value_en": "+16.6%",
-     "tone": "green",
-     "mark": "▲"
+     "label_ko": "Icon Energy Corp",
+     "label_en": "Icon Energy Corp",
+     "value_ko": "-10.2%",
+     "value_en": "-10.2%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Novagold Resources Inc",
+     "label_en": "Novagold Resources Inc",
+     "value_ko": "-9.3%",
+     "value_en": "-9.3%",
+     "tone": "red",
+     "mark": "▼"
     }
    ],
    "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
@@ -127,64 +127,77 @@
    "source_ko": "출처: 일별 마감 가격 기록",
    "source_en": "Source: daily closing prices",
    "source_url": "https://91cleaner.github.io/money-tracker/us.html",
-   "share_ko": "2026-11-09 마감 기준 가장 크게 움직인 회사: Praxis Precision Medicines, Inc. +19.9% · 머니트래커",
-   "share_en": "Biggest mover at the 2026-11-09 close: Praxis Precision Medicines, Inc. +19.9% · Money Tracker"
+   "share_ko": "2026-11-10 마감 기준 가장 크게 움직인 회사: Novanta Inc -15.3% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-11-10 close: Novanta Inc -15.3% · Money Tracker"
   },
   {
-   "id": "late",
-   "kind": "late",
+   "id": "filings",
+   "kind": "filings",
    "icon": "●",
-   "score": 27.5,
+   "score": 64.0,
    "layout": "list",
-   "date": "2026-11-05",
-   "badge_ko": "늦은 신고 클럽",
-   "badge_en": "LATE CLUB",
-   "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
-   "title_en": "US lawmakers who handed in their stock homework late",
-   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
-   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
+   "date": "2026-11-10",
+   "badge_ko": "새 공시",
+   "badge_en": "NEW FILINGS",
+   "title_ko": "2026-11-10 회사들이 낸 '큰 소식' 신고서 6건",
+   "title_en": "6 'big news' notices companies filed on 2026-11-10",
+   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
+   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
    "rows": [
     {
-     "mark": "1.",
-     "label_ko": "Thomas H. Kean 의원 · Abbott Laboratories",
-     "label_en": "Rep. Thomas H. Kean · Abbott Laboratories",
-     "value_ko": "43일 걸림",
-     "value_en": "43 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+     "label_ko": "Costco Wholesale Corp /New",
+     "label_en": "Costco Wholesale Corp /New",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000134/cost-20261107.htm"
     },
     {
-     "mark": "2.",
-     "label_ko": "Thomas H. Kean 의원 · Texas Instruments Inc",
-     "label_en": "Rep. Thomas H. Kean · Texas Instruments Inc",
-     "value_ko": "43일 걸림",
-     "value_en": "43 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+     "label_ko": "Dollar General Corp",
+     "label_en": "Dollar General Corp",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/29534/000110465926125204/tm2629262d1_8k.htm"
     },
     {
-     "mark": "3.",
-     "label_ko": "Daniel Meuser 의원 · 엔비디아",
-     "label_en": "Rep. Daniel Meuser · Nvidia Corp",
-     "value_ko": "41일 걸림",
-     "value_en": "41 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035662.pdf"
+     "label_ko": "Concentra Group Holdings Parent, Inc.",
+     "label_en": "Concentra Group Holdings Parent, Inc.",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/2014596/000201459626000085/cghp-20261106.htm"
+    },
+    {
+     "label_ko": "Duke Energy CORP",
+     "label_en": "Duke Energy CORP",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1326160/000110465926124699/tm2629239d1_8k.htm"
+    },
+    {
+     "label_ko": "EPAM Systems, Inc.",
+     "label_en": "EPAM Systems, Inc.",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1352010/000135201026000057/epam-20261109.htm"
     }
    ],
-   "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
-   "note_en": "A record, not proof of wrongdoing. Not investment advice.",
-   "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
-   "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
-   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Thomas H. Kean 의원 43일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
-   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Thomas H. Kean, 43 days / we get a call if rent is 1 day late  · Money Tracker"
+   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
+   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
+   "source_en": "Source: SEC 8-K notices (EDGAR)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "2026-11-10 회사들이 낸 '큰 소식' 신고서 6건 · 머니트래커",
+   "share_en": "6 'big news' notices companies filed on 2026-11-10 · Money Tracker"
   },
   {
    "id": "president-2026-22686",
    "kind": "president",
    "icon": "",
-   "score": 22.0,
+   "score": 18.8,
    "layout": "versus",
    "date": "2026-11-05",
    "badge_ko": "대통령 조치",
@@ -235,14 +248,12 @@
    "source_url": "https://www.federalregister.gov/documents/2026/11/05/2026-22686/continuation-of-the-national-emergency-with-respect-to-the-proliferation-of-weapons-of-mass",
    "share_ko": "지난번 비슷한 조치 때 같은 기간엔 미국 항공우주·방산 ETF +2.1%, 록히드마틴 +2.9% 움직임이 있었어요 (원인 아님) · 머니트래커",
    "share_en": "Last similar move, same period: ITA +2.1%, Lockheed Martin Corp +2.9% (not a cause) · Money Tracker"
-  }
- ],
- "cards": {
-  "late": {
+  },
+  {
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 27.5,
+   "score": 17.2,
    "layout": "list",
    "date": "2026-11-05",
    "badge_ko": "늦은 신고 클럽",
@@ -263,21 +274,73 @@
     },
     {
      "mark": "2.",
-     "label_ko": "Thomas H. Kean 의원 · Texas Instruments Inc",
-     "label_en": "Rep. Thomas H. Kean · Texas Instruments Inc",
-     "value_ko": "43일 걸림",
-     "value_en": "43 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
-    },
-    {
-     "mark": "3.",
      "label_ko": "Daniel Meuser 의원 · 엔비디아",
      "label_en": "Rep. Daniel Meuser · Nvidia Corp",
      "value_ko": "41일 걸림",
      "value_en": "41 days",
      "tone": "amber",
      "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035662.pdf"
+    },
+    {
+     "mark": "3.",
+     "label_ko": "John J Mr McGuire 의원 · Broadcom Inc.",
+     "label_en": "Rep. John J Mr McGuire · Broadcom Inc.",
+     "value_ko": "38일 걸림",
+     "value_en": "38 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035484.pdf"
+    }
+   ],
+   "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
+   "note_en": "A record, not proof of wrongdoing. Not investment advice.",
+   "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
+   "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Thomas H. Kean 의원 43일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Thomas H. Kean, 43 days / we get a call if rent is 1 day late  · Money Tracker"
+  }
+ ],
+ "cards": {
+  "late": {
+   "id": "late",
+   "kind": "late",
+   "icon": "●",
+   "score": 17.2,
+   "layout": "list",
+   "date": "2026-11-05",
+   "badge_ko": "늦은 신고 클럽",
+   "badge_en": "LATE CLUB",
+   "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
+   "title_en": "US lawmakers who handed in their stock homework late",
+   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
+   "rows": [
+    {
+     "mark": "1.",
+     "label_ko": "Thomas H. Kean 의원 · Abbott Laboratories",
+     "label_en": "Rep. Thomas H. Kean · Abbott Laboratories",
+     "value_ko": "43일 걸림",
+     "value_en": "43 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035591.pdf"
+    },
+    {
+     "mark": "2.",
+     "label_ko": "Daniel Meuser 의원 · 엔비디아",
+     "label_en": "Rep. Daniel Meuser · Nvidia Corp",
+     "value_ko": "41일 걸림",
+     "value_en": "41 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035662.pdf"
+    },
+    {
+     "mark": "3.",
+     "label_ko": "John J Mr McGuire 의원 · Broadcom Inc.",
+     "label_en": "Rep. John J Mr McGuire · Broadcom Inc.",
+     "value_ko": "38일 걸림",
+     "value_en": "38 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035484.pdf"
     }
    ],
    "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
@@ -292,7 +355,7 @@
    "id": "president-2026-22686",
    "kind": "president",
    "icon": "",
-   "score": 22.0,
+   "score": 18.8,
    "layout": "versus",
    "date": "2026-11-05",
    "badge_ko": "대통령 조치",
@@ -375,20 +438,20 @@
      "url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000429/0000004962-26-000429-index.htm"
     },
     {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$86.9M",
+     "value_en": "~$86.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000262/0001596532-26-000262-index.htm"
+    },
+    {
      "label_ko": "Linde Plc · 재무 책임자(CFO)",
      "label_en": "Linde Plc · Chief Financial Officer",
      "value_ko": "~$45.3M",
      "value_en": "~$45.3M",
      "tone": "white",
      "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026071528/0001628280-26-071528-index.htm"
-    },
-    {
-     "label_ko": "Arista Networks, Inc. · 큰 주주",
-     "label_en": "Arista Networks, Inc. · 10% owner",
-     "value_ko": "~$43.0M",
-     "value_en": "~$43.0M",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000260/0001596532-26-000260-index.htm"
     },
     {
      "label_ko": "Illinois Tool Works Inc · 이사",
@@ -404,14 +467,14 @@
    "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
    "source_en": "Source: SEC insider-trade records (Form 4)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $384.2M어치 팔았다는 기록 · 머니트래커",
-   "share_en": "5 company insiders' own-stock sales this week add up to about $384.2M on record · Money Tracker"
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $428.1M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $428.1M on record · Money Tracker"
   },
   "debt": {
    "id": "debt",
    "kind": "debt",
    "icon": "●",
-   "score": 30.0,
+   "score": 25.5,
    "layout": "big",
    "date": "2026-11-09",
    "badge_ko": "국가 채무",
