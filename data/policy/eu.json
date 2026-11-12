@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-11",
+"updated": "2026-11-12",
 "country": "eu",
 "source": "EUR-Lex/Publications Office SPARQL(규칙·결정·지침) + European Commission Press corner",
 "source_url": "https://op.europa.eu/en/web/webtools/linked-data-and-sparql",
@@ -164,6 +164,134 @@
 "le": "European Commission press release"
 },
 {
+"id": "celex:32026R2512",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2512 of 10 November 2026 imposing provisional anti-dumping duties on imports of certain acrylic esters originating in the People’s Republic of China, the Kingdom of Saudi Arabia, the Republic of South Africa and the United States of America",
+"d": "2026-11-10",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2512",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2485",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2485 of 10 November 2026 authorising an exemption pursuant to Regulation (EU) 2024/573 of the European Parliament and of the Council, with regards to the use of fluorinated greenhouse gases in certain stationary chillers used for (re)cooling and temperature control for machine tools",
+"d": "2026-11-10",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2485",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2486",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2486 of 10 November 2026 authorising an exemption pursuant to Regulation (EU) 2024/573 of the European Parliament and of the Council, with regard to the placing on the market of fluorinated greenhouse gases in certain types of indoor-installed monoblock heat pumps",
+"d": "2026-11-10",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2486",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2491",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2491 of 10 November 2026 authorising an exemption pursuant to Regulation (EU) 2024/573 of the European Parliament and of the Council with regard to the use of fluorinated greenhouse gases in certain medical stationary chillers",
+"d": "2026-11-10",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2491",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"health"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2488",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2488 of 10 November 2026 laying down rules for the application of Directive (EU) 2024/2881 of the European Parliament and of the Council as regards technical details for demonstration and subtraction of exceedances attributable to natural sources",
+"d": "2026-11-10",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2488",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2487",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2487 of 10 November 2026 laying down rules for the application of Regulation (EU) 2024/1689 of the European Parliament and of the Council as regards the establishment, development, implementation, operation and supervision of AI regulatory sandboxes",
+"d": "2026-11-10",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2487",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"tech_ai"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2489",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2489 of 10 November 2026 on granting a time-limited derogation, pursuant to Article 9(4) of Regulation (EU) 2024/590 of the European Parliament and of the Council on substances that deplete the ozone layer, from the end date for the critical use of portable fire extinguishers containing halon-1211 or halon-2402 for the protection of cabins and crew comp",
+"d": "2026-11-10",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2489",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2497",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2497 of 10 November 2026 imposing a provisional anti-dumping duty on imports of copper tubes originating in the People’s Republic of China, Mexico, Vietnam and Uzbekistan",
+"d": "2026-11-10",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2497",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
 "id": "ec:STATEMENT/26/2374",
 "kind": "press",
 "t": "Statement by President von der Leyen following her call with President Zelenskyy and ahead of her visit to the Black Sea Region, in Romania and Bulgaria",
@@ -313,6 +441,48 @@
 "le": "EU decision"
 },
 {
+"id": "celex:32026D2508",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2508 of 9 November 2026 amending Decision (CFSP) 2022/1968 on a European Union Military Assistance Mission in support of Ukraine (EUMAM Ukraine)",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2508",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2507",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2507 of 9 November 2026 amending Decision (CFSP) 2024/2840 on an assistance measure under the European Peace Facility to strengthen the capacities of the Navy of the Republic of the Congo in the framework of the Yaoundé Architecture",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2507",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2478",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2478 of 9 November 2026 rejecting an application for protection of a geographical indication in accordance with Article 21(1) of Regulation (EU) 2024/1143 of the European Parliament and of the Council Kale Biberi (PDO) (notified under document C(2026) 7838)",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2478",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
 "id": "ec:QANDA/26/2366",
 "kind": "press",
 "t": "Questions and answers on the second Annual Migration Management Cycle",
@@ -455,6 +625,20 @@
 "focus_ko": [],
 "lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
 "le": "EU regulation"
+},
+{
+"id": "celex:32026D2522",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2522 of 6 November 2026 pursuant to Article 11 of Regulation (EU) 2024/1351 of the European Parliament and the Council",
+"d": "2026-11-06",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2522",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:QANDA/26/2354",
