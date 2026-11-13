@@ -3,9 +3,9 @@
  "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap05_L",
  "unit": "TWD thousand (as published)",
  "note": "공시된 값 그대로. 월매출은 회사별 공시일이 달라 일부 회사는 전월 자료일 수 있음.",
- "collected_at": "2026-11-12T23:48:49.211Z",
+ "collected_at": "2026-11-13T23:45:30.469Z",
  "latest_month": "2026-10",
- "count": 1076,
+ "count": 1077,
  "watch": [
   "2330",
   "2454",
@@ -5928,6 +5928,18 @@
    "ytd": 91165761
   },
   {
+   "code": "2891",
+   "name": "中信金",
+   "industry": "金融保險業",
+   "month": "2026-10",
+   "revenue": 17632633,
+   "prev_month": 21331939,
+   "last_year": 27299478,
+   "mom_pct": -17.341630313118745,
+   "yoy_pct": -35.41036572201124,
+   "ytd": 200009853
+  },
+  {
    "code": "2897",
    "name": "王道銀行",
    "industry": "金融保險業",
@@ -7469,9 +7481,9 @@
    "industry": "電子零組件業",
    "month": "2026-10",
    "revenue": 60250,
-   "prev_month": 58289,
+   "prev_month": 64458,
    "last_year": 69502,
-   "mom_pct": 3.3642711317744345,
+   "mom_pct": -6.528281982065842,
    "yoy_pct": -13.311847141089466,
    "ytd": 561252
   },
@@ -9929,9 +9941,9 @@
    "industry": "其他電子業",
    "month": "2026-10",
    "revenue": 93922,
-   "prev_month": 102256,
+   "prev_month": 110865,
    "last_year": 119005,
-   "mom_pct": -8.15013299953059,
+   "mom_pct": -15.282550850133045,
    "yoy_pct": -21.077265661106676,
    "ytd": 1280665
   },
