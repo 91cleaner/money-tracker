@@ -1,7 +1,25 @@
 {
-"updated": "2026-11-10",
+"updated": "2026-11-11",
 "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
 "trades": [
+{
+"tk": "SHW",
+"who": "Richard W. Allen",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-09",
+"fd": "2026-11-11",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035821.pdf"
+},
+{
+"tk": "KO",
+"who": "Lloyd Doggett",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-01",
+"fd": "2026-11-11",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035826.pdf"
+},
 {
 "tk": "BBIO",
 "who": "Gilbert Cisneros",
@@ -159,24 +177,6 @@
 "tk": "CINF",
 "who": "Gilbert Cisneros",
 "ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "CSCO",
-"who": "Gilbert Cisneros",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "CMS",
-"who": "Gilbert Cisneros",
-"ty": "P",
 "amt": "$1,001 - $15,000",
 "d": "2026-10-20",
 "fd": "2026-11-10",
