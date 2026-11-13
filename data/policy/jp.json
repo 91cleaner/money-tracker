@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-12",
+"updated": "2026-11-13",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
@@ -19,6 +19,59 @@
 "le": "Japan PM's daily activities"
 },
 {
+"id": "egov:550004446",
+"kind": "pubcomment",
+"t": "外国人漁業の規制に関する法律施行規則及び排他的経済水域における漁業等に関する主権的権利の行使等に関する法律施行規則の一部改正案及び外国人漁業の規制に関する法律第2条第7項の農林水産大臣の指定する船舶を定める件の制定案についての意見・情報の募集について",
+"d": "2026-11-13",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=550004446&Mode=0",
+"dept": "水産庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"shipbuilding"
+],
+"lk": "일본 수산청(수산 담당 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Fisheries Agency: public comment request on a draft rule"
+},
+{
+"id": "egov:195260075",
+"kind": "pubcomment",
+"t": "「自動車騒音の大きさの許容限度」の一部を改正する案に対する御意見の募集（パブリック・コメント）について",
+"d": "2026-11-13",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260075&Mode=0",
+"dept": "環境省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"auto"
+],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
+},
+{
+"id": "egov:145210801",
+"kind": "pubcomment",
+"t": "地方公共団体の手数料の標準に関する政令の一部を改正する政令案及び地方公共団体の手数料の標準に関する政令に規定する総務省令で定める金額等を定める省令の一部を改正する省令案に対する意見募集",
+"d": "2026-11-13",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210801&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
+},
+{
+"id": "kantei:eeecc9e92577",
+"kind": "news",
+"t": "閣議の概要／高市総理のＡＳＥＡＮ関連首脳会議及びＡＰＥＣ首脳会議出席／カスト・チリ共和国大統領夫妻及びフジモリ・ペルー共和国大統領の訪日／中東情勢等対応予備費の使用について",
+"d": "2026-11-13",
+"u": "https://www.kantei.go.jp/jp/tyoukanpress/202611/13_a.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "長官会見",
+"tags": [],
+"lk": "일본 관방장관(정부 대변인) 기자회견",
+"le": "Japan Chief Cabinet Secretary press conference"
+},
+{
 "id": "egov:290610301",
 "kind": "pubcomment",
 "t": "公的給付の支給等の迅速かつ確実な実施のための預貯金口座の登録等に関する法律施行規則の一部を改正する庁令案について",
@@ -33,7 +86,7 @@
 {
 "id": "egov:290610302",
 "kind": "pubcomment",
-"t": "貯金者の意思に基づく個人番号の利用による預貯金口座の管理等に関する法律施行規則の一部を改正する命令案について",
+"t": "預貯金者の意思に基づく個人番号の利用による預貯金口座の管理等に関する法律施行規則の一部を改正する命令案について",
 "d": "2026-11-12",
 "u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=290610302&Mode=0",
 "dept": "デジタル庁",
@@ -147,6 +200,57 @@
 "tags": [],
 "lk": "일본 총리 관저 새 소식",
 "le": "News from the Japanese PM's office"
+},
+{
+"id": "egov:195260078",
+"kind": "pubcomment",
+"t": "絶滅のおそれのある野生動植物の種の保存に関する法律 に基づく生息地等保護区及び管理地区の指定案に対する意見の募集 （パブリック・コメント）について",
+"d": "2026-11-12",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260078&Mode=0",
+"dept": "環境省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
+},
+{
+"id": "egov:195260079",
+"kind": "pubcomment",
+"t": "「絶滅のおそれのある野生動植物の種の保存につき講ずべき措置について（答申案）」に対する意見募集（パブリック・コメント）について",
+"d": "2026-11-12",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260079&Mode=0",
+"dept": "環境省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
+},
+{
+"id": "egov:300090078",
+"kind": "pubcomment",
+"t": "「情報通信技術の進展等に対応するための刑事訴訟法等の一部を改正する法律の施行に伴う関係政令の整備及び経過措置に関する政令案」について（意見募集）",
+"d": "2026-11-12",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=300090078&Mode=0",
+"dept": "法務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"tech_ai"
+],
+"lk": "일본 법무성(법 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Justice: public comment request on a draft rule"
+},
+{
+"id": "kantei:4900e4c5ca2e",
+"kind": "news",
+"t": "高市総理はフィジカルＡＩ関連企業との意見交換会を行いました",
+"d": "2026-11-12",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/12ikenkoukan.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
 },
 {
 "id": "kantei:b19a37afd700",
