@@ -1,39 +1,39 @@
 {
-  "checked_at": "2026-11-13T06:15:56.222070+00:00",
+  "checked_at": "2026-11-14T06:02:55.897058+00:00",
   "datasets": {
     "congress_bills": {
       "path": "data/us/bills.json",
       "status": "present",
       "records": 3176,
       "members": 539,
-      "source_updated": "2026-11-13 02:07 UTC"
+      "source_updated": "2026-11-14 01:59 UTC"
     },
     "congress_trades": {
       "path": "data/us/trades.json",
       "status": "present",
-      "records": 5938,
+      "records": 5917,
       "data_kind": "reported_disclosures_not_verified_executions",
-      "source_updated": "2026-11-13 02:23 UTC"
+      "source_updated": "2026-11-14 01:45 UTC"
     },
     "house_ptr_candidates": {
       "path": "data/us/house-ptr-candidates.json",
       "status": "present",
-      "records": 438,
+      "records": 454,
       "data_kind": "machine_parsed_candidates_require_review",
-      "source_updated": "2026-11-13T06:15:56.128875+00:00"
+      "source_updated": "2026-11-14T06:02:55.754700+00:00"
     },
     "house_filings": {
       "path": "data/us-house-filings.json",
       "status": "present",
-      "records": 4828,
-      "source_updated": "2026-11-13T06:15:48.353696+00:00"
+      "records": 4829,
+      "source_updated": "2026-11-14T06:02:49.799094+00:00"
     },
     "us_macro": {
       "path": "data/us-macro.json",
       "status": "present",
       "records": 1825,
       "series": 5,
-      "source_updated": "2026-11-13T06:15:48.002896+00:00"
+      "source_updated": "2026-11-14T06:02:49.057214+00:00"
     },
     "historical_events": {
       "path": "data/us-events.json",
