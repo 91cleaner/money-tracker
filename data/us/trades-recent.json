@@ -1,7 +1,115 @@
 {
-"updated": "2026-11-11",
+"updated": "2026-11-12",
 "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
 "trades": [
+{
+"tk": "AVGO",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-05",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "HD",
+"who": "David J. Taylor",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-05",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "LRCX",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-05",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "PG",
+"who": "David J. Taylor",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-05",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "GOOGL",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-03",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "AMGN",
+"who": "David J. Taylor",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-03",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "T",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-03",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "ETN",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-03",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "LLY",
+"who": "David J. Taylor",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-03",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "IBP",
+"who": "David J. Taylor",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-03",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "KR",
+"who": "David J. Taylor",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-03",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
+{
+"tk": "V",
+"who": "David J. Taylor",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-03",
+"fd": "2026-11-12",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
+},
 {
 "tk": "SHW",
 "who": "Richard W. Allen",
@@ -71,114 +179,6 @@
 "ty": "P",
 "amt": "$1,001 - $15,000",
 "d": "2026-10-27",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "PTC",
-"who": "Gilbert Cisneros",
-"ty": "S",
-"amt": "$15,001 - $50,000",
-"d": "2026-10-27",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "RVTY",
-"who": "Gilbert Cisneros",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-27",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "TOELF",
-"who": "Gilbert Cisneros",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-23",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "CIEN",
-"who": "Gilbert Cisneros",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-21",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "MICR",
-"who": "Gilbert Cisneros",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-21",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "NOW",
-"who": "Gilbert Cisneros",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-21",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "ARE",
-"who": "Gilbert Cisneros",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "LNT",
-"who": "Gilbert Cisneros",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "APP",
-"who": "Gilbert Cisneros",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "CF",
-"who": "Gilbert Cisneros",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "CMG",
-"who": "Gilbert Cisneros",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-11-10",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
-},
-{
-"tk": "CINF",
-"who": "Gilbert Cisneros",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
 "fd": "2026-11-10",
 "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
 }
