@@ -1,6 +1,6 @@
 {
- "date": "2026-11-14",
- "generated_at": "2026-11-14T08:30Z",
+ "date": "2026-11-15",
+ "generated_at": "2026-11-15T08:31Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -71,7 +71,7 @@
    "id": "movers",
    "kind": "movers",
    "icon": "●",
-   "score": 100.0,
+   "score": 85.0,
    "layout": "list",
    "date": "2026-11-12",
    "badge_ko": "큰 움직임",
@@ -134,13 +134,13 @@
    "id": "filings",
    "kind": "filings",
    "icon": "●",
-   "score": 76.0,
+   "score": 80.0,
    "layout": "list",
    "date": "2026-11-13",
    "badge_ko": "새 공시",
    "badge_en": "NEW FILINGS",
-   "title_ko": "2026-11-13 회사들이 낸 '큰 소식' 신고서 9건",
-   "title_en": "9 'big news' notices companies filed on 2026-11-13",
+   "title_ko": "2026-11-13 회사들이 낸 '큰 소식' 신고서 19건",
+   "title_en": "19 'big news' notices companies filed on 2026-11-13",
    "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
    "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
    "rows": [
@@ -153,36 +153,36 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1169561/000116956126000041/cvlt-20261109.htm"
     },
     {
+     "label_ko": "Dolby Laboratories, Inc.",
+     "label_en": "Dolby Laboratories, Inc.",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1308547/000119312526461010/d101237d8k.htm"
+    },
+    {
+     "label_ko": "H&R Block Inc",
+     "label_en": "H&R Block Inc",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/12659/000001265926000042/hrb-20261110.htm"
+    },
+    {
+     "label_ko": "iShares Bitcoin Trust ETF",
+     "label_en": "iShares Bitcoin Trust ETF",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1980994/000143774926036917/ibit20261112_8k.htm"
+    },
+    {
      "label_ko": "Independent Bank Corp",
      "label_en": "Independent Bank Corp",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
      "url": "https://www.sec.gov/Archives/edgar/data/776901/000077690126000171/indb-20261113.htm"
-    },
-    {
-     "label_ko": "Moderna, Inc.",
-     "label_en": "Moderna, Inc.",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000205/mrna-20261113.htm"
-    },
-    {
-     "label_ko": "Sirius Xm Holdings Inc.",
-     "label_en": "Sirius Xm Holdings Inc.",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/908937/000090893726000030/siri-20261109.htm"
-    },
-    {
-     "label_ko": "Skyworks Solutions, Inc.",
-     "label_en": "Skyworks Solutions, Inc.",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412726000058/swks-20261111.htm"
     }
    ],
    "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
@@ -190,14 +190,14 @@
    "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
    "source_en": "Source: SEC 8-K notices (EDGAR)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "2026-11-13 회사들이 낸 '큰 소식' 신고서 9건 · 머니트래커",
-   "share_en": "9 'big news' notices companies filed on 2026-11-13 · Money Tracker"
+   "share_ko": "2026-11-13 회사들이 낸 '큰 소식' 신고서 19건 · 머니트래커",
+   "share_en": "19 'big news' notices companies filed on 2026-11-13 · Money Tracker"
   },
   {
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 55.8,
+   "score": 45.9,
    "layout": "list",
    "date": "2026-11-11",
    "badge_ko": "늦은 신고 클럽",
@@ -227,10 +227,10 @@
     },
     {
      "mark": "3.",
-     "label_ko": "Gilbert Cisneros 의원 · Alexandria Real Estate Equities, Inc.",
-     "label_en": "Rep. Gilbert Cisneros · Alexandria Real Estate Equities, Inc.",
-     "value_ko": "21일 걸림",
-     "value_en": "21 days",
+     "label_ko": "Gilbert Cisneros 의원 · ARGX",
+     "label_en": "Rep. Gilbert Cisneros · ARGX",
+     "value_ko": "14일 걸림",
+     "value_en": "14 days",
      "tone": "yellow",
      "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
     }
@@ -305,7 +305,7 @@
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 55.8,
+   "score": 45.9,
    "layout": "list",
    "date": "2026-11-11",
    "badge_ko": "늦은 신고 클럽",
@@ -335,10 +335,10 @@
     },
     {
      "mark": "3.",
-     "label_ko": "Gilbert Cisneros 의원 · Alexandria Real Estate Equities, Inc.",
-     "label_en": "Rep. Gilbert Cisneros · Alexandria Real Estate Equities, Inc.",
-     "value_ko": "21일 걸림",
-     "value_en": "21 days",
+     "label_ko": "Gilbert Cisneros 의원 · ARGX",
+     "label_en": "Rep. Gilbert Cisneros · ARGX",
+     "value_ko": "14일 걸림",
+     "value_en": "14 days",
      "tone": "yellow",
      "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035788.pdf"
     }
@@ -474,7 +474,7 @@
    "id": "debt",
    "kind": "debt",
    "icon": "●",
-   "score": 30.0,
+   "score": 25.5,
    "layout": "big",
    "date": "2026-11-12",
    "badge_ko": "국가 채무",
