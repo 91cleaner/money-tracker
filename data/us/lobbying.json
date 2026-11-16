@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09",
+ "updated": "2026-11-16",
  "source": "Lobbying Disclosure Act filings (lda.gov API v1)",
  "source_url": "https://lda.gov/api/",
  "note": "데이터상 의뢰인 이름이 회사명으로 시작하는 공시만 합산. 외부 로비회사 보고는 수입(income), 자체 로비는 지출(expenses). 법안 번호는 활동 설명에서 자동 추출(회기 미표기) — 원문 확인 필요. 로비스트 개인 이름 미저장.",
@@ -2175,8 +2175,8 @@
   },
   "PWR": {
    "query": "QUANTA SERVICES",
-   "filings": 25,
-   "total_usd": 740000.0,
+   "filings": 27,
+   "total_usd": 800000.0,
    "by_quarter": {
     "2025-3T": 0.0,
     "2025-Q1": 90000.0,
@@ -2186,43 +2186,43 @@
     "2025-RR": 0.0,
     "2026-Q1": 140000.0,
     "2026-Q2": 140000.0,
-    "2026-Q3": 80000.0,
+    "2026-Q3": 140000.0,
     "2026-RR": 0.0
    },
    "top_issues": [
     [
      "Energy/Nuclear",
-     24
+     26
     ],
     [
      "Taxation/Internal Revenue Code",
-     7
+     9
     ],
     [
      "Agriculture",
-     6
+     7
     ],
     [
      "Aviation/Airlines/Airports",
-     6
+     7
     ],
     [
      "Natural Resources",
-     6
+     7
     ]
    ],
    "bills_mentioned": [
     [
      "HR 471",
-     18
+     21
     ],
     [
      "S 160",
-     12
+     14
     ],
     [
      "HR 4776",
-     3
+     4
     ]
    ],
    "source_url": "https://lda.gov/filings/public/filing/search/?client=QUANTA%20SERVICES"
@@ -6507,8 +6507,8 @@
   },
   "LRCX": {
    "query": "LAM RESEARCH",
-   "filings": 27,
-   "total_usd": 1190000.0,
+   "filings": 28,
+   "total_usd": 1230000.0,
    "by_quarter": {
     "2025-Q1": 110000.0,
     "2025-Q2": 110000.0,
@@ -6517,20 +6517,20 @@
     "2025-RR": 0.0,
     "2026-Q1": 170000.0,
     "2026-Q2": 280000.0,
-    "2026-Q3": 160000.0
+    "2026-Q3": 200000.0
    },
    "top_issues": [
     [
      "Science/Technology",
-     20
+     21
     ],
     [
      "Trade (domestic/foreign)",
-     13
+     14
     ],
     [
      "Defense",
-     13
+     14
     ],
     [
      "Budget/Appropriations",
@@ -7147,8 +7147,8 @@
   },
   "AZN": {
    "query": "ASTRAZENECA",
-   "filings": 37,
-   "total_usd": 12010000.0,
+   "filings": 38,
+   "total_usd": 13520000.0,
    "by_quarter": {
     "2025-1T": 0.0,
     "2025-Q1": 1490000.0,
@@ -7156,6 +7156,7 @@
     "2025-Q3": 1680000.0,
     "2025-Q4": 1000000.0,
     "2025-RA": 0.0,
+    "2026-2A": 1510000.0,
     "2026-Q1": 2600000.0,
     "2026-Q2": 2000000.0,
     "2026-Q3": 1150000.0,
@@ -7164,53 +7165,53 @@
    "top_issues": [
     [
      "Medicare/Medicaid",
-     34
+     35
     ],
     [
      "Health Issues",
-     26
+     27
     ],
     [
      "Pharmacy",
-     9
+     10
     ],
     [
      "Copyright/Patent/Trademark",
+     9
+    ],
+    [
+     "Taxation/Internal Revenue Code",
      8
     ],
     [
      "Budget/Appropriations",
-     7
-    ],
-    [
-     "Taxation/Internal Revenue Code",
      7
     ]
    ],
    "bills_mentioned": [
     [
      "HR 946",
-     22
+     23
     ],
     [
      "S 1862",
-     11
+     12
     ],
     [
      "HR 1414",
-     8
+     10
     ],
     [
      "HR 591",
-     7
+     9
     ],
     [
      "HR 1990",
-     7
+     9
     ],
     [
      "S 1605",
-     7
+     9
     ],
     [
      "HR 1",
@@ -7233,8 +7234,8 @@
      5
     ],
     [
-     "HR 2423",
-     3
+     "HR 3521",
+     4
     ]
    ],
    "source_url": "https://lda.gov/filings/public/filing/search/?client=ASTRAZENECA"
