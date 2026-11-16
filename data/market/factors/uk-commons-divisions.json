@@ -2,9 +2,18 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-11-11T23:55:07.569Z",
- "count": 216,
+ "collected_at": "2026-11-16T23:49:23.400Z",
+ "count": 217,
  "divisions": [
+  {
+   "id": 2481,
+   "date": "2026-11-16",
+   "number": 122,
+   "title": "Visitor Levy (England) Bill Second Reading",
+   "ayes": 296,
+   "noes": 96,
+   "url": "https://votes.parliament.uk/votes/commons/division/2481"
+  },
   {
    "id": 2480,
    "date": "2026-11-11",
