@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-09",
- "since": "2023-11-09",
+ "updated": "2026-11-16",
+ "since": "2023-11-16",
  "source": "NHTSA Recalls API, openFDA enforcement reports (drug, device, food)",
  "source_url": "https://api.nhtsa.gov/ , https://open.fda.gov/apis/",
  "note": "Strict manufacturer / recalling-firm name match; recalls filed under subsidiaries or other names are not included. Date = NHTSA report received date or FDA report date. Facts only, not investment advice.",
@@ -118,10 +118,9 @@
   },
   "ABT": {
    "match_key": "ABBOTT LABORATORIES",
-   "n": 15,
+   "n": 14,
    "by_source": {
-    "openFDA device": 14,
-    "openFDA food": 1
+    "openFDA device": 14
    },
    "latest": "2025-12-24",
    "items": [
@@ -837,9 +836,9 @@
   },
   "ABBV": {
    "match_key": "ABBVIE",
-   "n": 4,
+   "n": 3,
    "by_source": {
-    "openFDA drug": 4
+    "openFDA drug": 3
    },
    "latest": "2026-06-03",
    "items": [
@@ -866,14 +865,6 @@
      "what": "Refresh LACRI-LUBE, (42.5% Mineral Oil, 57.3% White Petrolatum) Lubricant Eye Ointment, Ne",
      "class": "Class II",
      "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0665-2024%22"
-    },
-    {
-     "src": "openFDA drug",
-     "id": "D-0088-2024",
-     "date": "2023-11-15",
-     "what": "Synthroid, Levothyroxine Sodium Tablets, USP 125mcg (0.125mg), 100-count bottle, Rx Only A",
-     "class": "Class III",
-     "url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0088-2024%22"
     }
    ],
    "source_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0551-2026%22"
@@ -899,9 +890,9 @@
   },
   "SYK": {
    "match_key": "STRYKER",
-   "n": 51,
+   "n": 42,
    "by_source": {
-    "openFDA device": 51
+    "openFDA device": 42
    },
    "latest": "2026-08-12",
    "items": [
@@ -936,6 +927,14 @@
      "what": "Thermedx FluidSmart Urology Tube Set REF LL0006  UDI-DI code: 00860936000365    The FluidS",
      "class": "Class II",
      "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2166-2026%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-1427-2026",
+     "date": "2026-02-25",
+     "what": "MOLLI 2 System  System includes:  MM1000 (Pack of 10) - MOLLI Introducer (8cm, 14G) and MO",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1427-2026%22"
     },
     {
      "src": "openFDA device",
@@ -992,26 +991,50 @@
      "what": "Hemopore 8cm nasal/sinus temporary wound dressing, Catalog Numbers 5400-020-208 and 5400-0",
      "class": "Class II",
      "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1477-2025%22"
-    },
-    {
-     "src": "openFDA device",
-     "id": "Z-1482-2025",
-     "date": "2025-04-09",
-     "what": "Hemopore 2PK nasal/sinus temporary wound dressing, Catalog Number 5400-222-208S",
-     "class": "Class II",
-     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1482-2025%22"
     }
    ],
    "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2864-2026%22"
   },
   "MDT": {
    "match_key": "MEDTRONIC",
-   "n": 21,
+   "n": 25,
    "by_source": {
-    "openFDA device": 21
+    "openFDA device": 25
    },
-   "latest": "2026-05-06",
+   "latest": "2026-11-04",
    "items": [
+    {
+     "src": "openFDA device",
+     "id": "Z-0285-2027",
+     "date": "2026-11-04",
+     "what": "OmniaSecure Model 3930M,    LEAD 3930M74 74 CM DF4 MR  3930M74    LEAD 3930M79 79 CM DF4 M",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0285-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0302-2027",
+     "date": "2026-11-04",
+     "what": "CareLink SmartSync Programmer, Model 24970A, Pulse generator, permanent, implantable",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0302-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0303-2027",
+     "date": "2026-11-04",
+     "what": "CareLink SmartSync, RF Head Patient Connector, Model 24967, Pulse generator, permanent, im",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0303-2027%22"
+    },
+    {
+     "src": "openFDA device",
+     "id": "Z-0304-2027",
+     "date": "2026-11-04",
+     "what": "CareLink SmartSync Device Manager App, Model M01A02, Pulse generator, permanent, implantab",
+     "class": "Class II",
+     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0304-2027%22"
+    },
     {
      "src": "openFDA device",
      "id": "Z-1948-2026",
@@ -1075,47 +1098,15 @@
      "what": "COBALT DR MRI SureScan, Model Number DDPB3D1, Implantable Cardioverter Defibrillator",
      "class": "Class II",
      "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2206-2024%22"
-    },
-    {
-     "src": "openFDA device",
-     "id": "Z-2190-2024",
-     "date": "2024-07-03",
-     "what": "COBALT HF QUAD CRT-D MRI SureScan, Model Number DTPB2QQ, Implantable Cardioverter Defibril",
-     "class": "Class II",
-     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2190-2024%22"
-    },
-    {
-     "src": "openFDA device",
-     "id": "Z-2209-2024",
-     "date": "2024-07-03",
-     "what": "Cobalt XT DR MRI SureScan, Model Number DDPA2D1, Implantable Cardioverter Defibrillator",
-     "class": "Class II",
-     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2209-2024%22"
-    },
-    {
-     "src": "openFDA device",
-     "id": "Z-2210-2024",
-     "date": "2024-07-03",
-     "what": "COBALT XT VR MRI SureScan, Model Number DVPA2D1, Implantable Cardioverter Defibrillator",
-     "class": "Class II",
-     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2210-2024%22"
-    },
-    {
-     "src": "openFDA device",
-     "id": "Z-2205-2024",
-     "date": "2024-07-03",
-     "what": "MIRRO MRI VR SureScan, Model Number DVME3D4, Implantable Cardioverter Defibrillator",
-     "class": "Class II",
-     "url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2205-2024%22"
     }
    ],
-   "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-1948-2026%22"
+   "source_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-0285-2027%22"
   },
   "PFE": {
    "match_key": "PFIZER",
-   "n": 18,
+   "n": 15,
    "by_source": {
-    "openFDA drug": 18
+    "openFDA drug": 15
    },
    "latest": "2026-10-28",
    "items": [

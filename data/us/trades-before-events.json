@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15",
+ "updated": "2026-11-16",
  "window_days": 30,
  "note": "Trades dated 1-30 days before a dated public event for the same company. Dates are placed side by side only; this does not show that anyone knew in advance or that one caused the other. House PTR amounts are reported ranges. Form 4 rows marked plan=true were under a 10b5-1 trading plan.",
  "coverage": {
@@ -27582,8 +27582,8 @@
    ]
   },
   "ABBV": {
-   "n": 14,
-   "n_ptr": 6,
+   "n": 12,
+   "n_ptr": 4,
    "n_form4": 8,
    "matches": [
     {
@@ -27773,36 +27773,6 @@
      "event_date": "2024-10-02",
      "event_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0664-2024%22",
      "days_before": 28
-    },
-    {
-     "src": "House PTR",
-     "who": "Greg Stanton",
-     "role": "House member",
-     "side": "sell",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2023-10-24",
-     "filed": "2023-11-09",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2023/20023892.pdf",
-     "event": "Recall (openFDA drug) D-0088-2024",
-     "event_kind": "recall",
-     "event_date": "2023-11-15",
-     "event_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0088-2024%22",
-     "days_before": 22
-    },
-    {
-     "src": "House PTR",
-     "who": "John James",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$1,001 - $15,000",
-     "trade_date": "2023-11-10",
-     "filed": "2024-09-02",
-     "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2024/20025719.pdf",
-     "event": "Recall (openFDA drug) D-0088-2024",
-     "event_kind": "recall",
-     "event_date": "2023-11-15",
-     "event_url": "https://api.fda.gov/drug/enforcement.json?search=recall_number:%22D-0088-2024%22",
-     "days_before": 5
     }
    ]
   },
@@ -41566,10 +41536,10 @@
      "trade_date": "2024-06-07",
      "filed": "2024-06-11",
      "trade_url": "https://www.sec.gov/Archives/edgar/data/1613103/000161310324000067/0001613103-24-000067-index.htm",
-     "event": "Recall (openFDA device) Z-2190-2024",
+     "event": "Recall (openFDA device) Z-2197-2024",
      "event_kind": "recall",
      "event_date": "2024-07-03",
-     "event_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2190-2024%22",
+     "event_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2197-2024%22",
      "days_before": 26
     },
     {
@@ -41582,10 +41552,10 @@
      "trade_date": "2024-06-07",
      "filed": "2024-06-11",
      "trade_url": "https://www.sec.gov/Archives/edgar/data/1613103/000161310324000067/0001613103-24-000067-index.htm",
-     "event": "Recall (openFDA device) Z-2190-2024",
+     "event": "Recall (openFDA device) Z-2197-2024",
      "event_kind": "recall",
      "event_date": "2024-07-03",
-     "event_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2190-2024%22",
+     "event_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2197-2024%22",
      "days_before": 26
     },
     {
@@ -41597,10 +41567,10 @@
      "trade_date": "2024-06-18",
      "filed": "2024-09-02",
      "trade_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2024/20025719.pdf",
-     "event": "Recall (openFDA device) Z-2190-2024",
+     "event": "Recall (openFDA device) Z-2197-2024",
      "event_kind": "recall",
      "event_date": "2024-07-03",
-     "event_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2190-2024%22",
+     "event_url": "https://api.fda.gov/device/enforcement.json?search=recall_number:%22Z-2197-2024%22",
      "days_before": 15
     }
    ]
