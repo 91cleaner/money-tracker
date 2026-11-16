@@ -1,10 +1,42 @@
 {
-"updated": "2026-11-15",
+"updated": "2026-11-16",
 "country": "kr",
 "source": "열린국회정보 open.assembly.go.kr 국회의원 발의법률안(22대) + 과학기술정보통신부 보도자료(공공데이터포털)",
 "source_url": "https://open.assembly.go.kr/portal/data/service/selectAPIServicePage.do/OOWY4R001216HX11439",
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
+{
+"id": "msit:a792eb014d84",
+"kind": "press",
+"t": "국내 최고의 대학생 프로그래밍 대결 펼쳐져",
+"d": "2026-11-16",
+"dept": "소프트웨어 기반 조성팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187965",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:a74eef5e7ae2",
+"kind": "press",
+"t": "과기정통부, MS365 서비스 장애 관련 국내 이용자 불편 최소화에 나서",
+"d": "2026-11-16",
+"dept": "디지털 기반 안전과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187964",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:d949bd9d9458",
+"kind": "press",
+"t": "「2026 무선전력전송 콘퍼런스」 개최",
+"d": "2026-11-16",
+"dept": "국립전파연구원 기술기준과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187966",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"energy"
+]
+},
 {
 "id": "msit:dad8d138bccf",
 "kind": "press",
@@ -6001,44 +6033,6 @@
 "cmte": "법제사법위원회",
 "res": null,
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_BC41BCAEA1C64683BD5E8EA79B6575&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_8107517D822D47B2B57FBFA2672612",
-"no": "2222377",
-"t": "금융소비자 보호에 관한 법률 일부개정법률안",
-"d": "2026-11-02",
-"by": "민병덕의원 등 18인",
-"cmte": "정무위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_8107517D822D47B2B57FBFA2672612&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": [
-"finance"
-]
-},
-{
-"id": "PRC_DAFD5F622B8743A59B540D3A040E63",
-"no": "2222376",
-"t": "즉결심판에 관한 절차법 일부개정법률안",
-"d": "2026-11-02",
-"by": "박지원의원 등 11인",
-"cmte": "법제사법위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_DAFD5F622B8743A59B540D3A040E63&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_CECEA288D5FC416E9056CBD4B54511",
-"no": "2222375",
-"t": "조세특례제한법 일부개정법률안",
-"d": "2026-11-02",
-"by": "오기형의원 등 10인",
-"cmte": "재정경제기획위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_CECEA288D5FC416E9056CBD4B54511&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
 }
