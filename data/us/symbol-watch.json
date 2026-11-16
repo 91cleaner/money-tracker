@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13",
+ "updated": "2026-11-16",
  "source": "SEC EDGAR company_tickers.json + data.sec.gov submissions + 8-K 표지(Trading Symbol)",
  "note": "자동으로 찾은 '확인 필요' 목록. 공시를 사람이 읽고 확인하기 전까지 화면 숫자는 바꾸지 않음.",
  "days": 45,
@@ -9,6 +9,30 @@
   "SATS"
  ],
  "flags": [
+  {
+   "tk": "CBZ",
+   "cik": 944148,
+   "name": "CBIZ, Inc.",
+   "kind": "SEC 티커 목록에서 이 티커의 회사가 바뀜",
+   "sec_ciks": [],
+   "url": "https://www.sec.gov/files/company_tickers.json"
+  },
+  {
+   "tk": "KVUE",
+   "cik": 1944048,
+   "name": "Kenvue Inc.",
+   "kind": "SEC 티커 목록에서 이 티커의 회사가 바뀜",
+   "sec_ciks": [],
+   "url": "https://www.sec.gov/files/company_tickers.json"
+  },
+  {
+   "tk": "MGPI",
+   "cik": 835011,
+   "name": "MGP INGREDIENTS INC",
+   "kind": "SEC 티커 목록에서 이 티커의 회사가 바뀜",
+   "sec_ciks": [],
+   "url": "https://www.sec.gov/files/company_tickers.json"
+  },
   {
    "tk": "SUPN",
    "cik": 1356576,
