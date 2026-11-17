@@ -6,6 +6,28 @@
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
 {
+"id": "msit:c79ab34306fe",
+"kind": "press",
+"t": "과기정통부, 인공지능 시대 국가지식정보 활용 혁신 방안 논의",
+"d": "2026-11-17",
+"dept": "인공지능 데이터정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187971",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "msit:f67cb9466472",
+"kind": "press",
+"t": "과기정통부, ‘팀 코리아’로  K-블록체인 아시아 시장 진출 지원",
+"d": "2026-11-17",
+"dept": "디지털사회기획과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187972",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
 "id": "msit:a792eb014d84",
 "kind": "press",
 "t": "국내 최고의 대학생 프로그래밍 대결 펼쳐져",
@@ -6015,32 +6037,6 @@
 "src": "국회 의안(열린국회정보)",
 "tags": [
 "auto"
-]
-},
-{
-"id": "PRC_D62D6312E8E84F74AEAD29016BBF73",
-"no": "2222406",
-"t": "농산어촌 늘봄학교 지원에 관한 법률안",
-"d": "2026-11-03",
-"by": "박덕흠의원 등 10인",
-"cmte": "교육위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D62D6312E8E84F74AEAD29016BBF73&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_EC05DEF171F44E9F83C61649FF472C",
-"no": "2222405",
-"t": "학용품의 탄소발자국 표시 의무화에 관한 법률안",
-"d": "2026-11-03",
-"by": "박덕흠의원 등 11인",
-"cmte": "기후에너지환경노동위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_EC05DEF171F44E9F83C61649FF472C&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": [
-"clean_energy"
 ]
 }
 ]
