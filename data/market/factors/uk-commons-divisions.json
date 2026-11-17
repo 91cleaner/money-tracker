@@ -2,9 +2,54 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-11-16T23:49:23.400Z",
- "count": 217,
+ "collected_at": "2026-11-17T23:59:02.917Z",
+ "count": 222,
  "divisions": [
+  {
+   "id": 2486,
+   "date": "2026-11-17",
+   "number": 127,
+   "title": "Immigration and Asylum Bill: Third Reading",
+   "ayes": 290,
+   "noes": 94,
+   "url": "https://votes.parliament.uk/votes/commons/division/2486"
+  },
+  {
+   "id": 2485,
+   "date": "2026-11-17",
+   "number": 126,
+   "title": "Immigration and Asylum Bill Report Stage: New Clause 62",
+   "ayes": 44,
+   "noes": 368,
+   "url": "https://votes.parliament.uk/votes/commons/division/2485"
+  },
+  {
+   "id": 2484,
+   "date": "2026-11-17",
+   "number": 125,
+   "title": "Immigration and Asylum Bill Report Stage: New Clause 54",
+   "ayes": 99,
+   "noes": 384,
+   "url": "https://votes.parliament.uk/votes/commons/division/2484"
+  },
+  {
+   "id": 2483,
+   "date": "2026-11-17",
+   "number": 124,
+   "title": "Immigration and Asylum Bill Report Stage: New Clause 50",
+   "ayes": 102,
+   "noes": 382,
+   "url": "https://votes.parliament.uk/votes/commons/division/2483"
+  },
+  {
+   "id": 2482,
+   "date": "2026-11-17",
+   "number": 123,
+   "title": "Immigration and Asylum Bill Report Stage: New Clause 18",
+   "ayes": 60,
+   "noes": 410,
+   "url": "https://votes.parliament.uk/votes/commons/division/2482"
+  },
   {
    "id": 2481,
    "date": "2026-11-16",
