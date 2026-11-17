@@ -6,6 +6,69 @@
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
 {
+"id": "ec:IP/26/2438",
+"kind": "press",
+"t": "Autumn 2026 Economic Forecast shows continued growth amid higher inflation",
+"d": "2026-11-17",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2438",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2456",
+"kind": "press",
+"t": "Commission approves amended German State aid schemes for energy-intensive companies ",
+"d": "2026-11-17",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2456",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [
+"energy"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2463",
+"kind": "press",
+"t": "Commission preliminarily finds Temu in breach of the Digital Services Act for failure to tackle the sale of illegal products",
+"d": "2026-11-17",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2463",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [
+"tech_ai"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2457",
+"kind": "press",
+"t": "Commission approves €9.5 billion Dutch State aid to support offshore wind energy",
+"d": "2026-11-17",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2457",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [
+"energy",
+"clean_energy"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:IP/26/2452",
 "kind": "press",
 "t": "Commission disburses another €1.71 billion to Ukraine for drones, ammunition and air defence systems ",
@@ -264,6 +327,100 @@
 "le": "European Commission press release"
 },
 {
+"id": "celex:32026R2532",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2532 of 16 November 2026 making imports of polyvinylidene fluoride originating in the People’s Republic of China, India and Japan subject to registration with a view to allowing the levy of anti-dumping duties on the imports subject to registration",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2532",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2530",
+"kind": "regulation",
+"t": "Commission Regulation (EU) 2026/2530 of 16 November 2026 amending Annex XVII to Regulation (EC) No 1907/2006 of the European Parliament and of the Council concerning the Registration, Evaluation, Authorisation and Restriction of Chemicals (REACH) as regards lead in gunshot",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2530",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2554",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2554 of 16 November 2026 amending Decision (CFSP) 2023/2682 on an assistance measure under the European Peace Facility to support military actors and navies of coastal states involved in maritime security operations in the Gulf of Guinea",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2554",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"shipbuilding"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2527",
+"kind": "regulation",
+"t": "Commission Regulation (EU) 2026/2527 of 16 November 2026 amending Annexes IV, VI and VIII to Regulation (EU) No 142/2011 as regards the list of Member States authorised to use certain animal by-products to feed certain species of necrophagous birds, and the disposal, use and marking of certain renewable fuels",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2527",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"clean_energy"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "ec:IP/26/2447",
+"kind": "press",
+"t": "Commission partially greenlights Cyprus' final payment request for €391 million under NextGenerationEU ",
+"d": "2026-11-16",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2447",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2445",
+"kind": "press",
+"t": "Commission greenlights Lithuania's seventh and final payment request for €993 million under NextGenerationEU",
+"d": "2026-11-16",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2445",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:STATEMENT/26/2431",
 "kind": "press",
 "t": "Doorstep by President von der Leyen ahead of the informal meeting of the European Council of 13 November ",
@@ -369,6 +526,20 @@
 ],
 "lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
 "le": "EU regulation"
+},
+{
+"id": "celex:32026D2580",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2580 of 13 November 2026 amending Implementing Decision (EU) 2025/1160 concerning certain emergency measures relating to sheep pox and goat pox in Bulgaria (notified under document C(2026) 8218)",
+"d": "2026-11-13",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2580",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:STATEMENT/26/2421",
