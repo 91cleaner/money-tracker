@@ -1,10 +1,34 @@
 {
-"updated": "2026-11-16",
+"updated": "2026-11-17",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "egov:195260083",
+"kind": "pubcomment",
+"t": "「水道水中における従属栄養細菌の目標値見直し（案）」に関する御意見の募集について",
+"d": "2026-11-17",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260083&Mode=0",
+"dept": "環境省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
+},
+{
+"id": "egov:495260265",
+"kind": "pubcomment",
+"t": "職業能力開発促進法施行規則の一部を改正する省令案に関する御意見の募集について",
+"d": "2026-11-17",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260265&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
 {
 "id": "kantei:05b7c9792045",
 "kind": "news",
@@ -43,6 +67,70 @@
 "tags": [],
 "lk": "일본 총리 기자회견",
 "le": "Japanese PM's press conference"
+},
+{
+"id": "egov:495260267",
+"kind": "pubcomment",
+"t": "歯科技工士法施行規則等の一部を改正する省令案に関する御意見の募集について",
+"d": "2026-11-16",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260267&Mode=0",
+"dept": null,
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "egov:155261242",
+"kind": "pubcomment",
+"t": "航空法施行規則の一部改正（案）に関する意見募集について",
+"d": "2026-11-16",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155261242&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
+{
+"id": "egov:495260268",
+"kind": "pubcomment",
+"t": "医療法施行令等の一部を改正する政令案に関する御意見の募集について",
+"d": "2026-11-16",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260268&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:495260266",
+"kind": "pubcomment",
+"t": "高齢者の医療の確保に関する法律施行令の一部を改正する政令案に関する意見募集について",
+"d": "2026-11-16",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260266&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:291260010",
+"kind": "pubcomment",
+"t": "東日本大震災に対処するための特別の財政援助及び助成に関する法律の厚生労働省関係規定の施行等に関する政令の一部を改正する政令案に関する御意見募集（パブリックコメント）について",
+"d": "2026-11-16",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=291260010&Mode=0",
+"dept": "防災庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
 },
 {
 "id": "kantei:3c7a5d0f2d64",

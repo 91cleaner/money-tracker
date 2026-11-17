@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-16",
+"updated": "2026-11-17",
 "country": "eu",
 "source": "EUR-Lex/Publications Office SPARQL(규칙·결정·지침) + European Commission Press corner",
 "source_url": "https://op.europa.eu/en/web/webtools/linked-data-and-sparql",
@@ -66,6 +66,204 @@
 "le": "European Commission press release"
 },
 {
+"id": "celex:32026D2546",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2546 of 16 November 2026 amending Decision (CFSP) 2019/797 concerning restrictive measures against cyber-attacks threatening the Union or its Member States",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2546",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"tech_ai"
+],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2550",
+"kind": "regulation",
+"t": "Council Implementing Regulation (EU) 2026/2550 of 16 November 2026 implementing Regulation (EU) 2019/796 concerning restrictive measures against cyber-attacks threatening the Union or its Member States",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2550",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"tech_ai"
+],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2568",
+"kind": "regulation",
+"t": "Council Implementing Regulation (EU) 2026/2568 of 16 November 2026 implementing Regulation (EU) 2024/386 establishing restrictive measures against Hamas and Palestinian Islamic Jihad and those who support, facilitate or enable their violent actions",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2568",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2570",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2570 of 16 November 2026 amending Decision (CFSP) 2024/385 establishing restrictive measures against Hamas and the Palestinian Islamic Jihad and those who support, facilitate or enable their violent actions",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2570",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2558",
+"kind": "regulation",
+"t": "Council Implementing Regulation (EU) 2026/2558 of 16 November 2026 implementing Regulation (EU) 2024/2642 concerning restrictive measures in view of Russia’s destabilising activities",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2558",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2556",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2556 of 16 November 2026 amending Decision (CFSP) 2024/2643 concerning restrictive measures in view of Russia’s destabilising activities",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2556",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2569",
+"kind": "regulation",
+"t": "Council Implementing Regulation (EU) 2026/2569 of 16 November 2026 implementing Regulation (EU) 2020/1998 concerning restrictive measures against serious human rights violations and abuses",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2569",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2574",
+"kind": "regulation",
+"t": "Council Implementing Regulation (EU) 2026/2574 of 16 November 2026 implementing Regulation (EU) No 269/2014 concerning restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2574",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2575",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2575 of 16 November 2026 amending Decision 2014/145/CFSP concerning restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2575",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2571",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2571 of 16 November 2026 amending Decision (CFSP) 2020/1999 concerning restrictive measures against serious human rights violations and abuses",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2571",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "ec:IP/26/2451",
+"kind": "press",
+"t": "Ministers from EU, Black Sea, South Caucasus and Central Asia advance cooperation on cross-regional security and connectivity",
+"d": "2026-11-16",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2451",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:STATEMENT/26/2431",
 "kind": "press",
 "t": "Doorstep by President von der Leyen ahead of the informal meeting of the European Council of 13 November ",
@@ -122,6 +320,55 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026R2526",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2526 of 13 November 2026 cancelling the Union authorisation for the single biocidal product Manorapid express GEL in accordance with Regulation (EU) No 528/2012 of the European Parliament and of the Council and repealing Commission Implementing Regulation (EU) 2023/1106",
+"d": "2026-11-13",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2526",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2520",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2520 of 13 November 2026 authorising an exemption pursuant to Regulation (EU) 2024/573 of the European Parliament and of the Council with regard to the use of fluorinated greenhouse gases in certain commercial laundry equipment with heat pumps",
+"d": "2026-11-13",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2520",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2547",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2547 of 13 November 2026 imposing a definitive anti-dumping duty on imports of certain cold-rolled flat steel products originating in India, Japan, Taiwan, Türkiye and Vietnam",
+"d": "2026-11-13",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2547",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade",
+"industrial"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
 },
 {
 "id": "ec:STATEMENT/26/2421",
@@ -1328,6 +1575,26 @@
 "tags": [],
 "focus": [],
 "focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2498",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2498 of 5 November 2026 laying down rules for the application of Regulation (EU) 2023/956 of the European Parliament and of the Council as regards the conversion of the carbon price paid in a third country into a corresponding reduction in the number of CBAM certificates to be surrendered, the evidence of payment of that carbon price, the qualifications",
+"d": "2026-11-05",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2498",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"clean_energy"
+],
+"focus": [
+"cbam"
+],
+"focus_ko": [
+"탄소국경조정(CBAM)"
+],
 "lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
 "le": "EU regulation"
 },
