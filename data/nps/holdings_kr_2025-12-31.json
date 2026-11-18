@@ -1,18 +1,18 @@
 {
- "updated": "2026-11-18 07:32",
+ "updated": "2026-11-18 19:34",
  "as_of": "2025-12-31",
  "unit": "억원, %",
  "columns": [
   "번호",
-  "종목명",
-  "평가액(억 원)",
   "자산군 내 비중(퍼센트)",
-  "지분율(퍼센트)"
+  "종목명",
+  "지분율(퍼센트)",
+  "평가액(억 원)"
  ],
  "source": "국민연금공단_국내주식 투자정보(공공데이터포털)",
  "source_url": "https://www.data.go.kr/data/3070507/fileData.do",
- "file_url": "https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId=FILE_000000007701374&fileDetailSn=1",
- "via": "data.go.kr 파일 다운로드",
+ "file_url": "https://api.odcloud.kr/api/3070507/v1/uddi:b32185ed-8e1a-4468-9222-892713bab04a",
+ "via": "api.odcloud.kr",
  "also": "https://fund.nps.or.kr/oprtprcn/ivsmprcn/getOHED0003M0.do",
  "count": 1206,
  "total_value_100m_krw": 2616354,
