@@ -2,9 +2,45 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-11-17T23:59:02.917Z",
- "count": 222,
+ "collected_at": "2026-11-18T23:55:48.535Z",
+ "count": 226,
  "divisions": [
+  {
+   "id": 2490,
+   "date": "2026-11-18",
+   "number": 131,
+   "title": "Government Amendment to Opposition day debate on Rosebank oil field",
+   "ayes": 253,
+   "noes": 0,
+   "url": "https://votes.parliament.uk/votes/commons/division/2490"
+  },
+  {
+   "id": 2489,
+   "date": "2026-11-18",
+   "number": 130,
+   "title": "Opposition Day: Rosebank oilfield: Opposition motion",
+   "ayes": 90,
+   "noes": 270,
+   "url": "https://votes.parliament.uk/votes/commons/division/2489"
+  },
+  {
+   "id": 2488,
+   "date": "2026-11-18",
+   "number": 129,
+   "title": "Opposition day: UK-EU relations",
+   "ayes": 103,
+   "noes": 274,
+   "url": "https://votes.parliament.uk/votes/commons/division/2488"
+  },
+  {
+   "id": 2487,
+   "date": "2026-11-18",
+   "number": 128,
+   "title": "Draft Employment Rights Act 2025 (Unfair Dismissal) (Removal of Limit on  Compensation) (Consequential Amendments) Regulations 2026",
+   "ayes": 299,
+   "noes": 159,
+   "url": "https://votes.parliament.uk/votes/commons/division/2487"
+  },
   {
    "id": 2486,
    "date": "2026-11-17",

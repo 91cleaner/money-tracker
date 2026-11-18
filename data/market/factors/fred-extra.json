@@ -1,16 +1,12 @@
 {
  "source": "Federal Reserve Bank of St. Louis · FRED",
  "source_url": "https://fred.stlouisfed.org/",
- "collected_at": "2026-11-16T23:49:02.136Z",
+ "collected_at": "2026-11-18T23:55:31.365Z",
  "series": {
   "HOUST": {
    "label": "US housing starts (thousands, SAAR)",
    "url": "https://fred.stlouisfed.org/series/HOUST",
    "points": [
-    {
-     "date": "2006-10-01",
-     "value": 1491
-    },
     {
      "date": "2006-11-01",
      "value": 1570
@@ -961,16 +957,20 @@
     },
     {
      "date": "2026-08-01",
-     "value": 1288
+     "value": 1280
     },
     {
      "date": "2026-09-01",
-     "value": 1221
+     "value": 1191
+    },
+    {
+     "date": "2026-10-01",
+     "value": 1309
     }
    ],
    "latest": {
-    "date": "2026-09-01",
-    "value": 1221
+    "date": "2026-10-01",
+    "value": 1309
    }
   },
   "PCOPPUSDM": {
