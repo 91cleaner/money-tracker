@@ -1,10 +1,62 @@
 {
-"updated": "2026-11-17",
+"updated": "2026-11-18",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "egov:155261241",
+"kind": "pubcomment",
+"t": "「バーティポート整備指針」及び「地方航空局における場外離着陸許可の事務処理基準」等の一部改正（案）に関する意見公募について",
+"d": "2026-11-18",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155261241&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
+{
+"id": "egov:155261036",
+"kind": "pubcomment",
+"t": "船舶安全法施行規則の一部を改正する省令案に関する意見募集について",
+"d": "2026-11-18",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155261036&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"shipbuilding"
+],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
+{
+"id": "kantei:f2f350982ec7",
+"kind": "news",
+"t": "高市総理はＡＳＥＡＮ（東南アジア諸国連合）関連首脳会議等に出席しました（３）",
+"d": "2026-11-18",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/17asean2.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:27b2a4cbe136",
+"kind": "news",
+"t": "高市総理はＡＳＥＡＮ（東南アジア諸国連合）関連首脳会議等に出席しました（２）",
+"d": "2026-11-18",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/17asean.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
 {
 "id": "egov:195260083",
 "kind": "pubcomment",
