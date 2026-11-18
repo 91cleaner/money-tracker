@@ -6,6 +6,82 @@
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
 {
+"id": "ec:STATEMENT/26/2493",
+"kind": "press",
+"t": "Remarks by Commissioners Dombrovskis and Kubilius on an Instrument for Coordinated Support to Ukraine",
+"d": "2026-11-18",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2493",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:STATEMENT/26/2487",
+"kind": "press",
+"t": "Press point by President von der Leyen together with Commissioners Dombrovskis and Kubilius on an Instrument for Coordinated Support to Ukraine ",
+"d": "2026-11-18",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2487",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2450",
+"kind": "press",
+"t": "Commission welcomes political agreement on faster and simpler permitting for grids, clean energy projects",
+"d": "2026-11-18",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2450",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [
+"energy"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2454",
+"kind": "press",
+"t": "Commission proposes €45 billion in additional financial support for Ukraine in 2027",
+"d": "2026-11-18",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2454",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [
+"finance"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:QANDA/26/2455",
+"kind": "press",
+"t": "Questions and answers on new financial support package for Ukraine for 2027",
+"d": "2026-11-18",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/qanda_26_2455",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [
+"finance"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:IP/26/2438",
 "kind": "press",
 "t": "Autumn 2026 Economic Forecast shows continued growth amid higher inflation",
@@ -123,6 +199,55 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026R2538",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2538 of 17 November 2026 correcting Implementing Regulation (EU) 2025/1919 imposing a definitive anti-dumping duty and definitively collecting the provisional duty imposed on imports of certain hot-rolled flat products of iron, non-alloy or other alloy steel originating in Egypt, Japan and Vietnam, and terminating the investigation on imports thereof or",
+"d": "2026-11-17",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2538",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade",
+"industrial"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2539",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2539 of 17 November 2026 amending Implementing Decision (EU) 2024/2103 as regards harmonised standards for unmanned aircraft drafted in support of Delegated Regulation (EU) 2019/945",
+"d": "2026-11-17",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2539",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2537",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2537 of 17 November 2026 establishing the standard data communication form in accordance with Article 29 of Directive (EU) 2019/1023 of the European Parliament and of the Council",
+"d": "2026-11-17",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2537",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
 },
 {
 "id": "ec:IP/26/2452",
@@ -475,6 +600,20 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026D2582",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2582 of 16 November 2026 amending the Annex to Implementing Decision (EU) 2023/2447 concerning emergency measures in relation to outbreaks of highly pathogenic avian influenza in certain Member States (notified under document C(2026) 8277)",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2582",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:STATEMENT/26/2431",
@@ -1388,6 +1527,66 @@
 "t": "Council Implementing Decision (EU) 2026/2551 of 9 November 2026 authorising Slovenia to apply reduced rates of excise duty to unleaded petrol and gas oil used as motor fuels, pursuant to Article 19 of Directive 2003/96/EC",
 "d": "2026-11-09",
 "u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2551",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2553",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2553 of 9 November 2026 on the position to be adopted on behalf of the European Union within the EEA Joint Committee concerning an amendment to Annex IX (Financial services) to the EEA Agreement (EMIR CCP) (Text with EEA relevance)",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2553",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"finance"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2552",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2552 of 9 November 2026 on the position to be taken on behalf of the European Union within the Committee on Customs established under the Free Trade Agreement between the European Union and the Republic of Singapore concerning the mutual recognition of the Secure Trade Partnership Plus Programme of Singapore and the Authorised Economic Operator Programme of the European ",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2552",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2542",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2542 of 9 November 2026 on the position to be taken on behalf of the European Union within the World Forum for Harmonization of Vehicle Regulations of the United Nations Economic Commission for Europe concerning the November 2026 proposals for UN regulations",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2542",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2555",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2555 of 9 November 2026 on the position to be taken on behalf of the European Union within the EU-Central America Association Council concerning an amendment to Decision No 2/2020 of the EU-Central America Association Council to replace the Explanatory Note to Article 19 of Annex II to the Agreement establishing an Association between the European Union and its Member St",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2555",
 "dept": "EU 관보(Official Journal)",
 "src": "EUR-Lex/Publications Office SPARQL",
 "tags": [],
