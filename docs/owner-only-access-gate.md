@@ -18,3 +18,19 @@ The public GitHub Pages URL and its static assets are accessible to anyone. Hidi
 
 ## Non-negotiable
 Never label the US room 'private' or 'owner-only' until unauthorized direct URL and API requests are actually denied.
+
+## 2026-11-09: content studio is **not** owner-only by hiding its link
+
+[Security review #543](https://github.com/91cleaner/money-tracker/issues/543) identifies a separate public-artifact mismatch:
+
+- Root `studio.html` is described in source as `청소부 전용` and uses `noindex,nofollow`, but these do **not** authenticate a visitor.
+- `scripts/prepare-public-pages.py` copies every eligible root `.html` file into `.public-pages`; `studio.html` is not excluded by the builder or artifact checker. This means the **build path includes the studio**, even though it is not in the site navigation.
+- The studio appears to generate X drafts/images from public data. **No secret, private API operation, or unauthorized live request was demonstrated** in this review. Live HTTP behavior still requires an independent anonymous check.
+
+**Owner decision required before changing production behavior:**
+
+1. If studio is private: move its hosting behind verified server-side identity, exclude `studio.html` from public Pages packaging, and add a negative artifact test (`test ! -e .public-pages/studio.html`). Confirm direct anonymous Pages URL returns 404, protected URL challenges login, and old service-worker/CDN caches do not retain the page.
+2. If studio is public: explicitly describe it as a public draft helper and remove wording that could imply access control. `robots` metadata and an unlinked URL are not security.
+3. Keep the existing public Korea/USA records accessible as designed; do not infer a credential leak from a public page alone. UI/CI/data owners must implement any behavior changes under `docs/AI-ROLES.md`, with owner approval before merge.
+
+**Verification:** source file and packaging path reviewed at main `f93af017`. This is a documentation/owner handoff, **not** a live authorization test, a packaging fix, or a production deployment.
