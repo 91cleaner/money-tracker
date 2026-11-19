@@ -1,6 +1,6 @@
 {
- "date": "2026-11-18",
- "generated_at": "2026-11-18T08:43Z",
+ "date": "2026-11-19",
+ "generated_at": "2026-11-19T08:45Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -10,13 +10,13 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-11-17",
+   "date": "2026-11-18",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-17까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-17",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-18까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-18",
    "rows": [
     {
      "label_ko": "Life Time Group Holdings, Inc. · 이사",
@@ -51,12 +51,12 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1560385/000122520826008894/0001225208-26-008894-index.htm"
     },
     {
-     "label_ko": "Live Nation Entertainment, Inc. · 이사",
-     "label_en": "Live Nation Entertainment, Inc. · director",
-     "value_ko": "~$35.4M",
-     "value_en": "~$35.4M",
+     "label_ko": "Advanced Micro Devices Inc · 이사",
+     "label_en": "Advanced Micro Devices Inc · director",
+     "value_ko": "~$35.5M",
+     "value_en": "~$35.5M",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133704126000023/0001337041-26-000023-index.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000213/0000002488-26-000213-index.htm"
     }
    ],
    "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
@@ -73,51 +73,51 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-11-16",
+   "date": "2026-11-17",
    "badge_ko": "큰 움직임",
    "badge_en": "BIG MOVERS",
    "title_ko": "어제 가장 크게 움직인 회사들",
    "title_en": "Companies that moved most at the last close",
-   "sub_ko": "2026-11-13 → 2026-11-16 마감 가격 비교 (우리가 지켜보는 회사 중)",
-   "sub_en": "Closing price 2026-11-13 → 2026-11-16 (among companies we track)",
+   "sub_ko": "2026-11-16 → 2026-11-17 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-11-16 → 2026-11-17 (among companies we track)",
    "rows": [
     {
-     "label_ko": "Full House Resorts Inc",
-     "label_en": "Full House Resorts Inc",
-     "value_ko": "-13.6%",
-     "value_en": "-13.6%",
-     "tone": "red",
-     "mark": "▼"
-    },
-    {
-     "label_ko": "Molina Healthcare, Inc.",
-     "label_en": "Molina Healthcare, Inc.",
-     "value_ko": "+11.3%",
-     "value_en": "+11.3%",
+     "label_ko": "Glass House Brands Inc.",
+     "label_en": "Glass House Brands Inc.",
+     "value_ko": "+28.7%",
+     "value_en": "+28.7%",
      "tone": "green",
      "mark": "▲"
     },
     {
-     "label_ko": "Vuzix Corp",
-     "label_en": "Vuzix Corp",
-     "value_ko": "-10.8%",
-     "value_en": "-10.8%",
+     "label_ko": "Full House Resorts Inc",
+     "label_en": "Full House Resorts Inc",
+     "value_ko": "-14.4%",
+     "value_en": "-14.4%",
      "tone": "red",
      "mark": "▼"
     },
     {
-     "label_ko": "Quantinuum Inc.",
-     "label_en": "Quantinuum Inc.",
-     "value_ko": "-10.3%",
-     "value_en": "-10.3%",
+     "label_ko": "Genprex, Inc.",
+     "label_en": "Genprex, Inc.",
+     "value_ko": "-12.1%",
+     "value_en": "-12.1%",
      "tone": "red",
      "mark": "▼"
     },
     {
-     "label_ko": "IREN Ltd",
-     "label_en": "IREN Ltd",
-     "value_ko": "-9.8%",
-     "value_en": "-9.8%",
+     "label_ko": "Icon Energy Corp",
+     "label_en": "Icon Energy Corp",
+     "value_ko": "-10.0%",
+     "value_en": "-10.0%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Salesforce, Inc.",
+     "label_en": "Salesforce, Inc.",
+     "value_ko": "-9.5%",
+     "value_en": "-9.5%",
      "tone": "red",
      "mark": "▼"
     }
@@ -127,62 +127,62 @@
    "source_ko": "출처: 일별 마감 가격 기록",
    "source_en": "Source: daily closing prices",
    "source_url": "https://91cleaner.github.io/money-tracker/us.html",
-   "share_ko": "2026-11-16 마감 기준 가장 크게 움직인 회사: Full House Resorts Inc -13.6% · 머니트래커",
-   "share_en": "Biggest mover at the 2026-11-16 close: Full House Resorts Inc -13.6% · Money Tracker"
+   "share_ko": "2026-11-17 마감 기준 가장 크게 움직인 회사: Glass House Brands Inc. +28.7% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-11-17 close: Glass House Brands Inc. +28.7% · Money Tracker"
   },
   {
    "id": "filings",
    "kind": "filings",
    "icon": "●",
-   "score": 80.0,
+   "score": 72.0,
    "layout": "list",
-   "date": "2026-11-17",
+   "date": "2026-11-18",
    "badge_ko": "새 공시",
    "badge_en": "NEW FILINGS",
-   "title_ko": "2026-11-17 회사들이 낸 '큰 소식' 신고서 14건",
-   "title_en": "14 'big news' notices companies filed on 2026-11-17",
+   "title_ko": "2026-11-18 회사들이 낸 '큰 소식' 신고서 8건",
+   "title_en": "8 'big news' notices companies filed on 2026-11-18",
    "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
    "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
    "rows": [
     {
-     "label_ko": "Boston Scientific Corp",
-     "label_en": "Boston Scientific Corp",
+     "label_ko": "Aci Worldwide, Inc.",
+     "label_en": "Aci Worldwide, Inc.",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/885725/000088572526000073/bsx-20261117.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/935036/000119312526466273/d197838d8k.htm"
     },
     {
-     "label_ko": "Ford Motor Co",
-     "label_en": "Ford Motor Co",
+     "label_ko": "CAMPBELL'S Co",
+     "label_en": "CAMPBELL'S Co",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000193/f-20261117.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/16732/000001673226000034/cpb-20261117.htm"
     },
     {
-     "label_ko": "Home Depot, Inc.",
-     "label_en": "Home Depot, Inc.",
+     "label_ko": "Hewlett Packard Enterprise Co",
+     "label_en": "Hewlett Packard Enterprise Co",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/354950/000035495026000182/hd-20261113.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559026000092/hpe-20261118.htm"
     },
     {
-     "label_ko": "JP모건",
-     "label_en": "Jpmorgan Chase & Co",
+     "label_ko": "Nasdaq, Inc.",
+     "label_en": "Nasdaq, Inc.",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1120193/000119312526467087/d61921d8k.htm"
     },
     {
-     "label_ko": "Lowes Companies Inc",
-     "label_en": "Lowes Companies Inc",
-     "value_ko": "임원·이사가 바뀜",
-     "value_en": "officer / director change",
+     "label_ko": "Compass Diversified Holdings",
+     "label_en": "Compass Diversified Holdings",
+     "value_ko": "큰 계약을 맺음",
+     "value_en": "material agreement",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/60667/000006066726000122/low-20261113.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/1345126/000134512626000074/codi-20261116.htm"
     }
    ],
    "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
@@ -190,16 +190,16 @@
    "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
    "source_en": "Source: SEC 8-K notices (EDGAR)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "2026-11-17 회사들이 낸 '큰 소식' 신고서 14건 · 머니트래커",
-   "share_en": "14 'big news' notices companies filed on 2026-11-17 · Money Tracker"
+   "share_ko": "2026-11-18 회사들이 낸 '큰 소식' 신고서 8건 · 머니트래커",
+   "share_en": "8 'big news' notices companies filed on 2026-11-18 · Money Tracker"
   },
   {
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 37.8,
+   "score": 61.2,
    "layout": "list",
-   "date": "2026-11-13",
+   "date": "2026-11-16",
    "badge_ko": "늦은 신고 클럽",
    "badge_en": "LATE CLUB",
    "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
@@ -209,30 +209,30 @@
    "rows": [
     {
      "mark": "1.",
-     "label_ko": "Jonathan Jackson 의원 · Bp Plc",
-     "label_en": "Rep. Jonathan Jackson · Bp Plc",
-     "value_ko": "43일 걸림",
-     "value_en": "43 days",
+     "label_ko": "Byron Donalds 의원 · ADSK",
+     "label_en": "Rep. Byron Donalds · ADSK",
+     "value_ko": "45일 걸림",
+     "value_en": "45 days",
      "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035757.pdf"
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035811.pdf"
     },
     {
      "mark": "2.",
-     "label_ko": "Lloyd Doggett 의원 · Coca Cola Co",
-     "label_en": "Rep. Lloyd Doggett · Coca Cola Co",
-     "value_ko": "41일 걸림",
-     "value_en": "41 days",
+     "label_ko": "Byron Donalds 의원 · Interactive Brokers Group, Inc.",
+     "label_en": "Rep. Byron Donalds · Interactive Brokers Group, Inc.",
+     "value_ko": "45일 걸림",
+     "value_en": "45 days",
      "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035826.pdf"
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035811.pdf"
     },
     {
      "mark": "3.",
-     "label_ko": "Richard W. Allen 의원 · Sherwin Williams Co",
-     "label_en": "Rep. Richard W. Allen · Sherwin Williams Co",
-     "value_ko": "33일 걸림",
-     "value_en": "33 days",
+     "label_ko": "Byron Donalds 의원 · Netflix Inc",
+     "label_en": "Rep. Byron Donalds · Netflix Inc",
+     "value_ko": "45일 걸림",
+     "value_en": "45 days",
      "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035821.pdf"
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035811.pdf"
     }
    ],
    "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
@@ -240,8 +240,8 @@
    "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
    "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
    "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Jonathan Jackson 의원 43일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
-   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Jonathan Jackson, 43 days / we get a call if rent is 1 day late  · Money Tracker"
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Byron Donalds 의원 45일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Byron Donalds, 45 days / we get a call if rent is 1 day late  · Money Tracker"
   },
   {
    "id": "president-2026-22686",
@@ -305,9 +305,9 @@
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 37.8,
+   "score": 61.2,
    "layout": "list",
-   "date": "2026-11-13",
+   "date": "2026-11-16",
    "badge_ko": "늦은 신고 클럽",
    "badge_en": "LATE CLUB",
    "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
@@ -317,30 +317,30 @@
    "rows": [
     {
      "mark": "1.",
-     "label_ko": "Jonathan Jackson 의원 · Bp Plc",
-     "label_en": "Rep. Jonathan Jackson · Bp Plc",
-     "value_ko": "43일 걸림",
-     "value_en": "43 days",
+     "label_ko": "Byron Donalds 의원 · ADSK",
+     "label_en": "Rep. Byron Donalds · ADSK",
+     "value_ko": "45일 걸림",
+     "value_en": "45 days",
      "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035757.pdf"
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035811.pdf"
     },
     {
      "mark": "2.",
-     "label_ko": "Lloyd Doggett 의원 · Coca Cola Co",
-     "label_en": "Rep. Lloyd Doggett · Coca Cola Co",
-     "value_ko": "41일 걸림",
-     "value_en": "41 days",
+     "label_ko": "Byron Donalds 의원 · Interactive Brokers Group, Inc.",
+     "label_en": "Rep. Byron Donalds · Interactive Brokers Group, Inc.",
+     "value_ko": "45일 걸림",
+     "value_en": "45 days",
      "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035826.pdf"
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035811.pdf"
     },
     {
      "mark": "3.",
-     "label_ko": "Richard W. Allen 의원 · Sherwin Williams Co",
-     "label_en": "Rep. Richard W. Allen · Sherwin Williams Co",
-     "value_ko": "33일 걸림",
-     "value_en": "33 days",
+     "label_ko": "Byron Donalds 의원 · Netflix Inc",
+     "label_en": "Rep. Byron Donalds · Netflix Inc",
+     "value_ko": "45일 걸림",
+     "value_en": "45 days",
      "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035821.pdf"
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035811.pdf"
     }
    ],
    "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
@@ -348,8 +348,8 @@
    "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
    "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
    "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Jonathan Jackson 의원 43일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
-   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Jonathan Jackson, 43 days / we get a call if rent is 1 day late  · Money Tracker"
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Byron Donalds 의원 45일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Byron Donalds, 45 days / we get a call if rent is 1 day late  · Money Tracker"
   },
   "president": {
    "id": "president-2026-22686",
@@ -413,13 +413,13 @@
    "icon": "●",
    "score": 100.0,
    "layout": "list",
-   "date": "2026-11-17",
+   "date": "2026-11-18",
    "badge_ko": "내부자 워치",
    "badge_en": "INSIDER WATCH",
    "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
    "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
-   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-17까지 7일",
-   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-17",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-18까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-18",
    "rows": [
     {
      "label_ko": "Life Time Group Holdings, Inc. · 이사",
@@ -454,12 +454,12 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1560385/000122520826008894/0001225208-26-008894-index.htm"
     },
     {
-     "label_ko": "Live Nation Entertainment, Inc. · 이사",
-     "label_en": "Live Nation Entertainment, Inc. · director",
-     "value_ko": "~$35.4M",
-     "value_en": "~$35.4M",
+     "label_ko": "Advanced Micro Devices Inc · 이사",
+     "label_en": "Advanced Micro Devices Inc · director",
+     "value_ko": "~$35.5M",
+     "value_en": "~$35.5M",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1335258/000133704126000023/0001337041-26-000023-index.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000213/0000002488-26-000213-index.htm"
     }
    ],
    "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
@@ -476,18 +476,18 @@
    "icon": "●",
    "score": 30.0,
    "layout": "big",
-   "date": "2026-11-16",
+   "date": "2026-11-17",
    "badge_ko": "국가 채무",
    "badge_en": "NATIONAL DEBT",
    "title_ko": "미국 정부가 지금까지 진 빚 (총 채무)",
    "title_en": "How much the US government owes (total public debt)",
    "big": {
-    "value": "$40,662,417,395,617",
-    "short_ko": "$40.66조",
-    "short_en": "$40.66 trillion"
+    "value": "$40,714,946,316,573",
+    "short_ko": "$40.71조",
+    "short_en": "$40.71 trillion"
    },
-   "sub_ko": "2026-11-16 기준",
-   "sub_en": "As of 2026-11-16",
+   "sub_ko": "2026-11-17 기준",
+   "sub_en": "As of 2026-11-17",
    "rows": [
     {
      "label_ko": "1년 전 같은 날엔",
@@ -499,15 +499,15 @@
     {
      "label_ko": "1년 사이 불어난 빚",
      "label_en": "Debt added in one year",
-     "value_ko": "+$2.48조",
-     "value_en": "+$2.48 T",
+     "value_ko": "+$2.53조",
+     "value_en": "+$2.53 T",
      "tone": "red"
     },
     {
      "label_ko": "1초마다 늘어난 빚 (최근 30일 평균)",
      "label_en": "Added every second (30-day avg)",
-     "value_ko": "+$109,960",
-     "value_en": "+$109,960",
+     "value_ko": "+$127,133",
+     "value_en": "+$127,133",
      "tone": "amber"
     }
    ],
@@ -516,8 +516,8 @@
    "source_ko": "출처: 미 재무부 재정 데이터 (FiscalData)",
    "source_en": "Source: U.S. Treasury FiscalData",
    "source_url": "https://fiscaldata.treasury.gov/",
-   "share_ko": "미국 정부가 지금까지 진 빚 $40.66조 (2026-11-16 기준) · 머니트래커",
-   "share_en": "How much the US government owes: $40.66 trillion (as of 2026-11-16) · Money Tracker"
+   "share_ko": "미국 정부가 지금까지 진 빚 $40.71조 (2026-11-17 기준) · 머니트래커",
+   "share_en": "How much the US government owes: $40.71 trillion (as of 2026-11-17) · Money Tracker"
   }
  }
 }
