@@ -2,11 +2,22 @@
  "source": "Federal Register API (BIS, USTR)",
  "source_url": "https://www.federalregister.gov/developers/documentation/api/v1",
  "note": "공식 고시 제목·날짜·원문 링크만 저장. china/entity_list/tariff 표시는 제목·요약의 단어로 자동 분류한 것이라 원문 확인 필요.",
- "collected_at": "2026-11-18T23:55:32.019Z",
+ "collected_at": "2026-11-19T23:50:46.894Z",
  "count": 400,
- "china_count": 69,
+ "china_count": 70,
  "entity_list_count": 14,
  "documents": [
+  {
+   "id": "2026-23529",
+   "date": "2026-11-19",
+   "type": "Rule",
+   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
+   "title": "Addressing Remote Access to Advanced Semiconductors",
+   "url": "https://www.federalregister.gov/documents/2026/11/19/2026-23529/addressing-remote-access-to-advanced-semiconductors",
+   "china": true,
+   "entity_list": false,
+   "tariff": false
+  },
   {
    "id": "2026-23412",
    "date": "2026-11-18",
@@ -3193,17 +3204,6 @@
    "agency": "Commerce · Bureau of Industry and Security (수출통제)",
    "title": "Public Briefing on Revisions to Space-Related Export Controls Under Export Administration Regulations and International Traffic in Arms Regulations",
    "url": "https://www.federalregister.gov/documents/2024/11/05/2024-25715/public-briefing-on-revisions-to-space-related-export-controls-under-export-administration",
-   "china": false,
-   "entity_list": false,
-   "tariff": false
-  },
-  {
-   "id": "2024-25445",
-   "date": "2024-11-01",
-   "type": "Rule",
-   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
-   "title": "Implementation of Additional Export Controls Against Russia and Belarus Under the Export Administration Regulations (EAR); and Clarifications",
-   "url": "https://www.federalregister.gov/documents/2024/11/01/2024-25445/implementation-of-additional-export-controls-against-russia-and-belarus-under-the-export",
    "china": false,
    "entity_list": false,
    "tariff": false
