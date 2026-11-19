@@ -6,6 +6,90 @@
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
 {
+"id": "ec:STATEMENT/26/2503",
+"kind": "press",
+"t": "Statement by Executive Vice-President Mînzatu and Commissioner Lahbib ahead of European Equal Pay Day",
+"d": "2026-11-19",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2503",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2508",
+"kind": "press",
+"t": "EU and Jordan advance strategic partnership backed by €3 billion to boost investment, create jobs and strengthen regional stability",
+"d": "2026-11-19",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2508",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2427",
+"kind": "press",
+"t": "Commission decides to refer Greece to the Court of Justice of the European Union for the non-implementation of individual aircraft identification in the field of civil aviation",
+"d": "2026-11-19",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2427",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2356",
+"kind": "press",
+"t": "Almost €24 billion mobilised and 614 projects awarded for their support to critical technologies in Europe, according to Commission report",
+"d": "2026-11-19",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2356",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2372",
+"kind": "press",
+"t": "Commission decides to refer Austria to the Court of Justice of the European Union for incorrectly applying the European arrest warrant",
+"d": "2026-11-19",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2372",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
+"id": "ec:IP/26/2436",
+"kind": "press",
+"t": "Commission decides to refer Poland to the Court of Justice of the European Union for failing to align its rules with the Seveso III Directive ",
+"d": "2026-11-19",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2436",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:STATEMENT/26/2493",
 "kind": "press",
 "t": "Remarks by Commissioners Dombrovskis and Kubilius on an Instrument for Coordinated Support to Ukraine",
@@ -290,6 +374,34 @@
 "focus_ko": [],
 "lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
 "le": "EU regulation"
+},
+{
+"id": "celex:32026D2584",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2584 of 17 November 2026 excluding from European Union financing certain expenditure incurred by certain Member States under the European Agricultural Guarantee Fund (EAGF) and under the European Agricultural Fund for Rural Development (EAFRD) (notified under document C(2026) 8075)",
+"d": "2026-11-17",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2584",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2540",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2540 of 17 November 2026 on the harmonised standards for refrigerating appliances with a direct sales function drafted in support of Delegated Regulation (EU) 2019/2018 and Regulation (EU) 2019/2024, and repealing Implementing Decision (EU) 2024/2397 and Implementing Decision (EU) 2025/533",
+"d": "2026-11-17",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2540",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:IP/26/2452",
@@ -8622,6 +8734,27 @@
 "tags": [],
 "focus": [],
 "focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2288",
+"kind": "regulation",
+"t": "Commission Delegated Regulation (EU) 2026/2288 of 14 September 2026 amending Regulation (EU) 2021/821 of the European Parliament and of the Council as regards the list of dual-use items subject to controls on export",
+"d": "2026-09-14",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2288",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"defense",
+"trade"
+],
+"focus": [
+"dual_use"
+],
+"focus_ko": [
+"이중용도·수출통제"
+],
 "lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
 "le": "EU regulation"
 },
