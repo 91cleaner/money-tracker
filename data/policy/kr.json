@@ -6,6 +6,36 @@
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
 {
+"id": "msit:a8f443a18a8a",
+"kind": "press",
+"t": "과기정통부, 생활현장 밀접형 전파규제 3건 개선",
+"d": "2026-11-19",
+"dept": "주파수정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187978",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:7e967192655c",
+"kind": "press",
+"t": "과기정통부, 공중케이블 정비 지원  중소도시까지 확대",
+"d": "2026-11-19",
+"dept": "통신자원정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187977",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:43c1f52533fc",
+"kind": "press",
+"t": "국립과천과학관, 수능 마친 학생들에게 ‘7가지 특별한 선물’ 선사",
+"d": "2026-11-19",
+"dept": "국립과천과학관 과학문화전략과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187979",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
 "id": "msit:91fc39bf2fc7",
 "kind": "press",
 "t": "과기정통부, 자바(Java) 보안 취약점 관련  긴급 점검 및 보안조치 당부",
@@ -6021,42 +6051,6 @@
 "tags": [
 "energy"
 ]
-},
-{
-"id": "PRC_5BA5ECB2804C41BC8964E2A1F24727",
-"no": "2222508",
-"t": "군인의 지위 및 복무에 관한 기본법 일부개정법률안",
-"d": "2026-11-05",
-"by": "김은혜의원 등 12인",
-"cmte": "국방위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_5BA5ECB2804C41BC8964E2A1F24727&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_873B8B26DC574ED1BF967C75BE9735",
-"no": "2222507",
-"t": "재외국민보호를 위한 영사조력법 일부개정법률안",
-"d": "2026-11-05",
-"by": "정청래의원 등 11인",
-"cmte": "외교통일위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_873B8B26DC574ED1BF967C75BE9735&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_V2V6U0S8T1R1S1N0O2N0L4L9J8L9S4",
-"no": "2222506",
-"t": "형의 집행 및 수용자의 처우에 관한 법률 일부개정법률안",
-"d": "2026-11-05",
-"by": "김남희의원 등 10인",
-"cmte": "법제사법위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2V6U0S8T1R1S1N0O2N0L4L9J8L9S4&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
 }
 ]
 }
