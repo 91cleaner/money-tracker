@@ -1,10 +1,60 @@
 {
-"updated": "2026-11-18",
+"updated": "2026-11-19",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "egov:860202607",
+"kind": "pubcomment",
+"t": "非常勤消防団員等に係る損害補償の基準を定める政令の一部を改正する政令案に対する意見募集",
+"d": "2026-11-19",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=860202607&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
+},
+{
+"id": "egov:145210802",
+"kind": "pubcomment",
+"t": "電気通信事業法施行規則等の一部改正に対する意見募集",
+"d": "2026-11-19",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210802&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"tech_ai"
+],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
+},
+{
+"id": "egov:550004447",
+"kind": "pubcomment",
+"t": "組換えDNA技術応用飼料の安全性確認申請案件についての意見・情報の募集について",
+"d": "2026-11-19",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=550004447&Mode=0",
+"dept": "農林水産省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 농림수산성(농업·수산 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Agriculture, Forestry and Fisheries: public comment request on a draft rule"
+},
+{
+"id": "egov:550004448",
+"kind": "pubcomment",
+"t": "米穀の出荷販売事業者が遵守すべき事項を定める省令の一部を改正する省令案についての意見・情報の募集について",
+"d": "2026-11-19",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=550004448&Mode=0",
+"dept": "農林水産省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 농림수산성(농업·수산 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Agriculture, Forestry and Fisheries: public comment request on a draft rule"
+},
 {
 "id": "egov:155261241",
 "kind": "pubcomment",
@@ -69,6 +119,32 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:225026070",
+"kind": "pubcomment",
+"t": "「銀行法施行規則」等、「自己資本比率規制（第１の柱・第３の柱）に関する告示」等及び「主要行等向けの総合的な監督指針」等の一部改正（案）の公表について",
+"d": "2026-11-18",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=225026070&Mode=0",
+"dept": "金融庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"finance"
+],
+"lk": "일본 금융청(금융 감독 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Financial Services Agency: public comment request on a draft rule"
+},
+{
+"id": "egov:095260950",
+"kind": "pubcomment",
+"t": "フルペンチオフェノックスに係る食品健康影響評価に関する審議結果（案）についての意見・情報の募集について",
+"d": "2026-11-18",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=095260950&Mode=0",
+"dept": null,
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
 },
 {
 "id": "egov:195260083",
