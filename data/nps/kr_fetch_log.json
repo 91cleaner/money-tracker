@@ -1,5 +1,11 @@
 {
- "updated": "2026-11-19 19:32",
- "log": [],
+ "updated": "2026-11-20 07:29",
+ "log": [
+  "https://infuser.odcloud.kr/oas/docs 시도1: HTTPError HTTP Error 503: Service Unavailable",
+  "https://infuser.odcloud.kr/oas/docs 시도2: HTTPError HTTP Error 503: Service Unavailable",
+  "https://infuser.odcloud.kr/oas/docs 시도3: HTTPError HTTP Error 503: Service Unavailable",
+  "https://infuser.odcloud.kr/oas/docs 시도4: HTTPError HTTP Error 503: Service Unavailable",
+  "odcloud 실패: RuntimeError"
+ ],
  "manual_download": "https://www.data.go.kr/data/3070507/fileData.do"
 }
