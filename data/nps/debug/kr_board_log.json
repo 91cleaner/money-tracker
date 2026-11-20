@@ -1,6 +1,7 @@
 {
- "updated": "2026-11-20T07:28:32.513519+09:00",
+ "updated": "2026-11-20T19:34:01.129680+09:00",
  "log": [
+  "ERR https://fund.nps.or.kr/impa/edwmpblnt/getOHEF0001M0.do?cat=YEA URLError <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of ",
   "OK https://fund.nps.or.kr/impa/edwmpblnt/getOHEF0001M0.do?cat=YEA 117034B text/html; charset=UTF-8",
   "OK https://fund.nps.or.kr/impa/edwmpblnt/getOHEF0006M0.do 110401B text/html; charset=UTF-8",
   "detail sn=5931 files=[('FL26004229', '1'), ('FL26004229', '1')]",
