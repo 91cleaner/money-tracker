@@ -1,32 +1,31 @@
 {
- "start": "2026-11-07",
- "end": "2026-11-13",
+ "start": "2026-11-14",
+ "end": "2026-11-20",
  "fallback": false,
- "generated": "2026-11-13",
- "trades": 73,
- "members": 6,
+ "generated": "2026-11-20",
+ "trades": 17,
+ "members": 5,
  "summary": {
   "R": {
-   "m": 2,
-   "n": 4,
-   "b": 2,
-   "s": 2,
+   "m": 3,
+   "n": 15,
+   "b": 3,
+   "s": 12,
    "top": [
-    "T-Note",
-    "SHW",
-    "WBD"
+    "MSFT",
+    "COST",
+    "GOOGL",
+    "LLY"
    ]
   },
   "D": {
-   "m": 4,
-   "n": 69,
-   "b": 38,
-   "s": 31,
+   "m": 2,
+   "n": 2,
+   "b": 0,
+   "s": 2,
    "top": [
-    "ARGX",
-    "BBIO",
-    "TOELF",
-    "APP"
+    "WBD",
+    "TPR"
    ]
   }
  },
@@ -34,450 +33,120 @@
  "problems": [],
  "rows": [
   {
-   "name": "Gilbert Cisneros",
-   "party": "D",
-   "district": "CA-31",
+   "name": "Michael Rulli",
+   "party": "R",
+   "district": "OH-6",
    "trades": [
     {
-     "a": "San Ramon Valley",
-     "s": "BUY",
-     "amt": "$250K-$500K",
+     "a": "COST",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "11/12"
+    },
+    {
+     "a": "GOOGL",
+     "s": "SELL",
+     "amt": "$1K-$15K",
      "d": "11/04"
     },
     {
-     "a": "BBIO",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "11/02"
-    },
-    {
-     "a": "TOELF",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/30"
-    },
-    {
-     "a": "ARGX",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/27"
-    },
-    {
-     "a": "BBIO",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/27"
-    },
-    {
-     "a": "ILMN",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/27"
-    },
-    {
-     "a": "MTSI",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/27"
-    },
-    {
-     "a": "PTC",
-     "s": "SELL",
-     "amt": "$15K-$50K",
-     "d": "10/27"
-    },
-    {
-     "a": "RVTY",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/27"
-    },
-    {
-     "a": "San Mateo Foster",
-     "s": "SELL",
-     "amt": "$100K-$250K",
-     "d": "10/27"
-    },
-    {
-     "a": "California Health",
-     "s": "BUY",
-     "amt": "$250K-$500K",
-     "d": "10/23"
-    },
-    {
-     "a": "TOELF",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/23"
-    },
-    {
-     "a": "CIEN",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/21"
-    },
-    {
-     "a": "MICR",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/21"
-    },
-    {
-     "a": "NOW",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/21"
-    },
-    {
-     "a": "ARE",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "LNT",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "APP",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "CF",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "CMG",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "CINF",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "CSCO",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "CMS",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "CMCSA",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "EIX",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
      "a": "LLY",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "FIS",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "FOXA",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "GIS",
      "s": "SELL",
      "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "PODD",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
+     "d": "11/04"
     },
     {
      "a": "LITE",
-     "s": "BUY",
+     "s": "SELL",
      "amt": "$1K-$15K",
-     "d": "10/20"
+     "d": "11/04"
     },
     {
-     "a": "MRNA",
+     "a": "MSFT",
      "s": "BUY",
      "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "Norwegian Cruise",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
+     "d": "11/04"
     },
     {
      "a": "NVDA",
      "s": "SELL",
      "amt": "$1K-$15K",
-     "d": "10/20"
-    },
+     "d": "10/28"
+    }
+   ]
+  },
+  {
+   "name": "Thomas Kean",
+   "party": "R",
+   "district": "NJ-7",
+   "trades": [
     {
-     "a": "O",
+     "a": "JNJ",
      "s": "SELL",
      "amt": "$1K-$15K",
-     "d": "10/20"
+     "d": "10/27"
     },
     {
-     "a": "CPB",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "TTD",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "UBER",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "WFC",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/20"
-    },
-    {
-     "a": "California",
-     "s": "BUY",
-     "amt": "$250K-$500K",
-     "d": "10/19"
-    },
-    {
-     "a": "TXRH",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/16"
-    },
-    {
-     "a": "ARGX",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/15"
-    },
-    {
-     "a": "LNTH",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/15"
-    },
-    {
-     "a": "MBGL",
-     "s": "BUY",
-     "amt": "$50K-$100K",
-     "d": "10/15"
-    },
-    {
-     "a": "STRC",
-     "s": "SELL",
-     "amt": "$50K-$100K",
-     "d": "10/15"
-    },
-    {
-     "a": "APP",
+     "a": "MSFT",
      "s": "SELL",
      "amt": "$15K-$50K",
-     "d": "10/14"
+     "d": "10/27"
     },
     {
-     "a": "ARGX",
+     "a": "SYK",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/27"
+    },
+    {
+     "a": "T-Note",
      "s": "BUY",
-     "amt": "$15K-$50K",
-     "d": "10/14"
-    },
-    {
-     "a": "CTVA",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/14"
-    },
-    {
-     "a": "LNTH",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/14"
-    },
-    {
-     "a": "ON",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/14"
-    },
-    {
-     "a": "SNEJF",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/14"
-    },
-    {
-     "a": "SARO",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/14"
-    },
-    {
-     "a": "COO",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/14"
-    },
-    {
-     "a": "BNPQF",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/13"
-    },
-    {
-     "a": "ENGQF",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/13"
-    },
-    {
-     "a": "Milwaukee",
-     "s": "SELL",
-     "amt": "$100K-$250K",
-     "d": "10/13"
-    },
-    {
-     "a": "New York Liberty",
-     "s": "SELL",
      "amt": "$50K-$100K",
-     "d": "10/13"
-    },
-    {
-     "a": "BNS",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/09"
-    },
-    {
-     "a": "META",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/09"
-    },
-    {
-     "a": "Wisconsin State",
-     "s": "SELL",
-     "amt": "$250K-$500K",
-     "d": "10/09"
-    },
-    {
-     "a": "MRAAF",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/08"
+     "d": "10/20"
     },
     {
      "a": "WBD",
      "s": "SELL",
      "amt": "$1K-$15K",
      "d": "10/07"
-    },
-    {
-     "a": "HD",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/06"
-    },
-    {
-     "a": "TKO",
-     "s": "SELL",
-     "amt": "$1K-$15K",
-     "d": "10/06"
-    },
-    {
-     "a": "STRC",
-     "s": "BUY",
-     "amt": "$15K-$50K",
-     "d": "06/05"
     }
    ]
   },
   {
-   "name": "Rick Allen",
+   "name": "Byron Donalds",
    "party": "R",
-   "district": "GA-12",
+   "district": "FL-19",
    "trades": [
     {
-     "a": "SHW",
+     "a": "ADSK",
      "s": "SELL",
      "amt": "$1K-$15K",
-     "d": "10/09"
-    },
-    {
-     "a": "T-Note",
-     "s": "BUY",
-     "amt": "$15K-$50K",
      "d": "10/02"
     },
     {
-     "a": "T-Note",
+     "a": "IBKR",
      "s": "BUY",
-     "amt": "$15K-$50K",
+     "amt": "$1K-$15K",
+     "d": "10/02"
+    },
+    {
+     "a": "NFLX",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/02"
+    },
+    {
+     "a": "ZTS",
+     "s": "SELL",
+     "amt": "$1K-$15K",
      "d": "10/02"
     }
    ]
   },
   {
-   "name": "Thomas Suozzi",
+   "name": "Steve Cohen",
    "party": "D",
-   "district": "NY-3",
-   "trades": [
-    {
-     "a": "T-Bill",
-     "s": "BUY",
-     "amt": "$15K-$50K",
-     "d": "10/15"
-    },
-    {
-     "a": "T-Bill",
-     "s": "BUY",
-     "amt": "$15K-$50K",
-     "d": "10/13"
-    }
-   ]
-  },
-  {
-   "name": "Julie Johnson",
-   "party": "D",
-   "district": "TX-32",
+   "district": "TN-9",
    "trades": [
     {
      "a": "WBD",
@@ -488,31 +157,18 @@
    ]
   },
   {
-   "name": "Lloyd Doggett",
+   "name": "Terri Sewell",
    "party": "D",
-   "district": "TX-37",
+   "district": "AL-7",
    "trades": [
     {
-     "a": "KO",
-     "s": "BUY",
-     "amt": "$1K-$15K",
-     "d": "10/01"
-    }
-   ]
-  },
-  {
-   "name": "David Kustoff",
-   "party": "R",
-   "district": "TN-8",
-   "trades": [
-    {
-     "a": "WBD",
+     "a": "TPR",
      "s": "SELL",
      "amt": "$1K-$15K",
-     "d": "10/07"
+     "d": "11/05"
     }
    ]
   }
  ],
- "image": "congress-trades-2026-11-13.png"
+ "image": "congress-trades-2026-11-20.png"
 }

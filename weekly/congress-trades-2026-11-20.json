@@ -1,0 +1,174 @@
+{
+ "start": "2026-11-14",
+ "end": "2026-11-20",
+ "fallback": false,
+ "generated": "2026-11-20",
+ "trades": 17,
+ "members": 5,
+ "summary": {
+  "R": {
+   "m": 3,
+   "n": 15,
+   "b": 3,
+   "s": 12,
+   "top": [
+    "MSFT",
+    "COST",
+    "GOOGL",
+    "LLY"
+   ]
+  },
+  "D": {
+   "m": 2,
+   "n": 2,
+   "b": 0,
+   "s": 2,
+   "top": [
+    "WBD",
+    "TPR"
+   ]
+  }
+ },
+ "hidden_members": 0,
+ "problems": [],
+ "rows": [
+  {
+   "name": "Michael Rulli",
+   "party": "R",
+   "district": "OH-6",
+   "trades": [
+    {
+     "a": "COST",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "11/12"
+    },
+    {
+     "a": "GOOGL",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "11/04"
+    },
+    {
+     "a": "LLY",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "11/04"
+    },
+    {
+     "a": "LITE",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "11/04"
+    },
+    {
+     "a": "MSFT",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "11/04"
+    },
+    {
+     "a": "NVDA",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/28"
+    }
+   ]
+  },
+  {
+   "name": "Thomas Kean",
+   "party": "R",
+   "district": "NJ-7",
+   "trades": [
+    {
+     "a": "JNJ",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/27"
+    },
+    {
+     "a": "MSFT",
+     "s": "SELL",
+     "amt": "$15K-$50K",
+     "d": "10/27"
+    },
+    {
+     "a": "SYK",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/27"
+    },
+    {
+     "a": "T-Note",
+     "s": "BUY",
+     "amt": "$50K-$100K",
+     "d": "10/20"
+    },
+    {
+     "a": "WBD",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/07"
+    }
+   ]
+  },
+  {
+   "name": "Byron Donalds",
+   "party": "R",
+   "district": "FL-19",
+   "trades": [
+    {
+     "a": "ADSK",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/02"
+    },
+    {
+     "a": "IBKR",
+     "s": "BUY",
+     "amt": "$1K-$15K",
+     "d": "10/02"
+    },
+    {
+     "a": "NFLX",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/02"
+    },
+    {
+     "a": "ZTS",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/02"
+    }
+   ]
+  },
+  {
+   "name": "Steve Cohen",
+   "party": "D",
+   "district": "TN-9",
+   "trades": [
+    {
+     "a": "WBD",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "10/07"
+    }
+   ]
+  },
+  {
+   "name": "Terri Sewell",
+   "party": "D",
+   "district": "AL-7",
+   "trades": [
+    {
+     "a": "TPR",
+     "s": "SELL",
+     "amt": "$1K-$15K",
+     "d": "11/05"
+    }
+   ]
+  }
+ ],
+ "image": "congress-trades-2026-11-20.png"
+}
