@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-19",
+"updated": "2026-11-20",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
@@ -30,6 +30,70 @@
 "tags": [],
 "lk": "일본 총리 관저 새 소식",
 "le": "News from the Japanese PM's office"
+},
+{
+"id": "egov:620340104",
+"kind": "pubcomment",
+"t": "特定放射性廃棄物の最終処分に関する法律第十一条第三項の単位数量当たりの第一種最終処分業務に必要な金額及び同法第十一条の二第三項の単位数量当たりの第二種最終処分業務に必要な金額を定める省令の一部を改正する省令（案）に対する意見募集について",
+"d": "2026-11-20",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=620340104&Mode=0",
+"dept": "経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
+},
+{
+"id": "egov:145210797",
+"kind": "pubcomment",
+"t": "携帯音声通信事業者による契約者等の本人確認等及び携帯音声通信役務の不正な利用の防止に関する法律の一部を改正する法律の施行に伴う関係政令の整備に関する政令案に対する意見募集",
+"d": "2026-11-20",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210797&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"tech_ai"
+],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
+},
+{
+"id": "egov:195260084",
+"kind": "pubcomment",
+"t": "「水質汚濁防止法施行規則等の一部を改正する省令の一部を改正する省令案」に関する意見募集（パブリック・コメント）について",
+"d": "2026-11-20",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=195260084&Mode=0",
+"dept": "環境省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 환경성(환경 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of the Environment: public comment request on a draft rule"
+},
+{
+"id": "kantei:4b881fcf0766",
+"kind": "news",
+"t": "高市総理はトランプ米国大統領との電話会談についての会見を行いました",
+"d": "2026-11-20",
+"u": "https://www.kantei.go.jp/jp/105/statement/2026/1119kaiken.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理会見",
+"tags": [],
+"lk": "일본 총리 기자회견",
+"le": "Japanese PM's press conference"
+},
+{
+"id": "kantei:8d7d2b41a43f",
+"kind": "news",
+"t": "高市総理はアメリカ合衆国のドナルド・トランプ大統領と電話会談を行いました",
+"d": "2026-11-20",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/19tel_kaidan.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
 },
 {
 "id": "egov:860202607",
@@ -119,6 +183,58 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:155260936",
+"kind": "pubcomment",
+"t": "道路運送車両の保安基準等の一部を改正する省令案、道路運送車両の保安基準の細目を定める告示等の一部を改正する告示案及び走行環境条件の付与の実施要領について（依命通達）の一部を改正する案について",
+"d": "2026-11-19",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155260936&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
+{
+"id": "egov:141000248",
+"kind": "pubcomment",
+"t": "母子保健法施行規則の一部を改正する内閣府令（案）に関する御意見の募集について",
+"d": "2026-11-19",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=141000248&Mode=0",
+"dept": "こども家庭庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
+},
+{
+"id": "egov:495260270",
+"kind": "pubcomment",
+"t": "医薬品、医療機器等の品質、有効性及び安全性の確保等に関する法律第二十三条の二の二十三第一項の規定により厚生労働大臣が基準を定めて指定する医療機器の一部を改正する件（案）に係る御意見の募集について",
+"d": "2026-11-19",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260270&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
+},
+{
+"id": "egov:495260269",
+"kind": "pubcomment",
+"t": "地域における医療及び介護の総合的な確保の促進に関する法律施行規則の一部を改正する省令案について",
+"d": "2026-11-19",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260269&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
 },
 {
 "id": "egov:155261241",
