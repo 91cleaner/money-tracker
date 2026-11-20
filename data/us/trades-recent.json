@@ -1,7 +1,115 @@
 {
-"updated": "2026-11-16",
+"updated": "2026-11-19",
 "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
 "trades": [
+{
+"tk": "JNJ",
+"who": "Thomas H. Kean",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-27",
+"fd": "2026-11-19",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036844.pdf"
+},
+{
+"tk": "MSFT",
+"who": "Thomas H. Kean",
+"ty": "S",
+"amt": "$15,001 - $50,000",
+"d": "2026-10-27",
+"fd": "2026-11-19",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036844.pdf"
+},
+{
+"tk": "SYK",
+"who": "Thomas H. Kean",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-27",
+"fd": "2026-11-19",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036844.pdf"
+},
+{
+"tk": "WBD",
+"who": "Thomas H. Kean",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-07",
+"fd": "2026-11-19",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036844.pdf"
+},
+{
+"tk": "COST",
+"who": "Michael Rulli",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-12",
+"fd": "2026-11-18",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036855.pdf"
+},
+{
+"tk": "TPR",
+"who": "Terri A. Sewell",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-05",
+"fd": "2026-11-18",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036864.pdf"
+},
+{
+"tk": "GOOGL",
+"who": "Michael Rulli",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-04",
+"fd": "2026-11-18",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036855.pdf"
+},
+{
+"tk": "LLY",
+"who": "Michael Rulli",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-04",
+"fd": "2026-11-18",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036855.pdf"
+},
+{
+"tk": "LITE",
+"who": "Michael Rulli",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-04",
+"fd": "2026-11-18",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036855.pdf"
+},
+{
+"tk": "MSFT",
+"who": "Michael Rulli",
+"ty": "P",
+"amt": "$1,001 - $15,000",
+"d": "2026-11-04",
+"fd": "2026-11-18",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036855.pdf"
+},
+{
+"tk": "NVDA",
+"who": "Michael Rulli",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-28",
+"fd": "2026-11-18",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036855.pdf"
+},
+{
+"tk": "WBD",
+"who": "Steve Cohen",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-07",
+"fd": "2026-11-18",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036849.pdf"
+},
 {
 "tk": "ADSK",
 "who": "Byron Donalds",
@@ -73,114 +181,6 @@
 "d": "2026-10-12",
 "fd": "2026-11-13",
 "doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035757.pdf"
-},
-{
-"tk": "BP",
-"who": "Jonathan Jackson",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-01",
-"fd": "2026-11-13",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035757.pdf"
-},
-{
-"tk": "AVGO",
-"who": "David J. Taylor",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-05",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "HD",
-"who": "David J. Taylor",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-05",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "LRCX",
-"who": "David J. Taylor",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-05",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "PG",
-"who": "David J. Taylor",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-05",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "GOOGL",
-"who": "David J. Taylor",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-03",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "AMGN",
-"who": "David J. Taylor",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-03",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "T",
-"who": "David J. Taylor",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-03",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "ETN",
-"who": "David J. Taylor",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-03",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "LLY",
-"who": "David J. Taylor",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-03",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "IBP",
-"who": "David J. Taylor",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-03",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
-},
-{
-"tk": "KR",
-"who": "David J. Taylor",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-11-03",
-"fd": "2026-11-12",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035831.pdf"
 }
 ]
 }
