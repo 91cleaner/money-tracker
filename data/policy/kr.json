@@ -6,6 +6,28 @@
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
 {
+"id": "msit:b5a493be1d60",
+"kind": "press",
+"t": "우리 사회의 인공지능을 생각하고 토론하는 축제의 장, ｢AI 인사이트 페스티벌 시상식｣ 개최",
+"d": "2026-11-21",
+"dept": "인공지능안전신뢰지원과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187987",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "msit:c17f88ca6619",
+"kind": "press",
+"t": "미래의 피지컬 AI 전문가 발굴!  「2026 청소년 로보틱스 챌린지」 결선 개최",
+"d": "2026-11-21",
+"dept": "소프트웨어기반조성팀",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187986",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
 "id": "msit:f5094b22a33a",
 "kind": "press",
 "t": "배경훈 부총리 겸 과기정통부 장관, 아랍에미리트 건국 55주년 국경일 기념행사 참석",
@@ -6060,30 +6082,6 @@
 "cmte": "외교통일위원회",
 "res": null,
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_954EF75103E74651A663366006F8C2&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_3101FDE7BC314F6A858DE836A0C4E8",
-"no": "2222640",
-"t": "남녀고용평등과 일·가정 양립 지원에 관한 법률 일부개정법률안",
-"d": "2026-11-10",
-"by": "남인순의원 등 13인",
-"cmte": "기후에너지환경노동위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_3101FDE7BC314F6A858DE836A0C4E8&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_0D9E2A8F37ED4B5CBFEC29A8B23C7F",
-"no": "2222639",
-"t": "수상에서의 수색·구조 등에 관한 법률 일부개정법률안",
-"d": "2026-11-10",
-"by": "김용태의원 등 10인",
-"cmte": "농림축산식품해양수산위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_0D9E2A8F37ED4B5CBFEC29A8B23C7F&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
 }
