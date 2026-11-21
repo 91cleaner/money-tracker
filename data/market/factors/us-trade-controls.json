@@ -2,11 +2,22 @@
  "source": "Federal Register API (BIS, USTR)",
  "source_url": "https://www.federalregister.gov/developers/documentation/api/v1",
  "note": "공식 고시 제목·날짜·원문 링크만 저장. china/entity_list/tariff 표시는 제목·요약의 단어로 자동 분류한 것이라 원문 확인 필요.",
- "collected_at": "2026-11-19T23:50:46.894Z",
+ "collected_at": "2026-11-21T23:45:22.751Z",
  "count": 400,
  "china_count": 70,
  "entity_list_count": 14,
  "documents": [
+  {
+   "id": "2026-23758",
+   "date": "2026-11-23",
+   "type": "Notice",
+   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
+   "title": "Agency Information Collection Activities; Submission to the Office of Management and Budget (OMB) for Review and Approval; Comment Request; Additional Protocol Report Forms",
+   "url": "https://www.federalregister.gov/documents/2026/11/23/2026-23758/agency-information-collection-activities-submission-to-the-office-of-management-and-budget-omb-for",
+   "china": false,
+   "entity_list": false,
+   "tariff": false
+  },
   {
    "id": "2026-23529",
    "date": "2026-11-19",
@@ -3204,17 +3215,6 @@
    "agency": "Commerce · Bureau of Industry and Security (수출통제)",
    "title": "Public Briefing on Revisions to Space-Related Export Controls Under Export Administration Regulations and International Traffic in Arms Regulations",
    "url": "https://www.federalregister.gov/documents/2024/11/05/2024-25715/public-briefing-on-revisions-to-space-related-export-controls-under-export-administration",
-   "china": false,
-   "entity_list": false,
-   "tariff": false
-  },
-  {
-   "id": "2024-25471",
-   "date": "2024-11-01",
-   "type": "Notice",
-   "agency": "Commerce · Bureau of Industry and Security (수출통제)",
-   "title": "Order Renewing Order Temporarily Denying Export Privileges",
-   "url": "https://www.federalregister.gov/documents/2024/11/01/2024-25471/order-renewing-order-temporarily-denying-export-privileges",
    "china": false,
    "entity_list": false,
    "tariff": false
