@@ -1,6 +1,6 @@
 {
- "date": "2026-11-21",
- "generated_at": "2026-11-21T08:32Z",
+ "date": "2026-11-22",
+ "generated_at": "2026-11-22T08:33Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -71,7 +71,7 @@
    "id": "movers",
    "kind": "movers",
    "icon": "●",
-   "score": 100.0,
+   "score": 85.0,
    "layout": "list",
    "date": "2026-11-19",
    "badge_ko": "큰 움직임",
@@ -134,16 +134,32 @@
    "id": "filings",
    "kind": "filings",
    "icon": "●",
-   "score": 68.0,
+   "score": 80.0,
    "layout": "list",
    "date": "2026-11-20",
    "badge_ko": "새 공시",
    "badge_en": "NEW FILINGS",
-   "title_ko": "2026-11-20 회사들이 낸 '큰 소식' 신고서 7건",
-   "title_en": "7 'big news' notices companies filed on 2026-11-20",
+   "title_ko": "2026-11-20 회사들이 낸 '큰 소식' 신고서 13건",
+   "title_en": "13 'big news' notices companies filed on 2026-11-20",
    "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
    "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
    "rows": [
+    {
+     "label_ko": "Agilent Technologies, Inc.",
+     "label_en": "Agilent Technologies, Inc.",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1090872/000119312526470278/a-20261116.htm"
+    },
+    {
+     "label_ko": "LyondellBasell Industries N.V.",
+     "label_en": "LyondellBasell Industries N.V.",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1489393/000148939326000072/lyb-20261118.htm"
+    },
     {
      "label_ko": "Insulet Corp",
      "label_en": "Insulet Corp",
@@ -161,28 +177,12 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1633917/000119312526469335/d196713d8k.htm"
     },
     {
-     "label_ko": "Utz Brands, Inc.",
-     "label_en": "Utz Brands, Inc.",
-     "value_ko": "증시 상장 유지 관련 통지",
-     "value_en": "listing notice",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1739566/000119312526470261/d165801d8k.htm"
-    },
-    {
-     "label_ko": "Westinghouse Air Brake Technologies Corp",
-     "label_en": "Westinghouse Air Brake Technologies Corp",
+     "label_ko": "Tyson Foods, Inc.",
+     "label_en": "Tyson Foods, Inc.",
      "value_ko": "임원·이사가 바뀜",
      "value_en": "officer / director change",
      "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/943452/000114036126045007/ef20086022_8k.htm"
-    },
-    {
-     "label_ko": "Ametek Inc/",
-     "label_en": "Ametek Inc/",
-     "value_ko": "큰 계약을 맺음",
-     "value_en": "material agreement",
-     "tone": "white",
-     "url": "https://www.sec.gov/Archives/edgar/data/1037868/000110465926130589/tm2629569d11_8k.htm"
+     "url": "https://www.sec.gov/Archives/edgar/data/100493/000010049326000085/tsn-20261119.htm"
     }
    ],
    "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
@@ -190,14 +190,14 @@
    "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
    "source_en": "Source: SEC 8-K notices (EDGAR)",
    "source_url": "https://www.sec.gov/edgar/search/",
-   "share_ko": "2026-11-20 회사들이 낸 '큰 소식' 신고서 7건 · 머니트래커",
-   "share_en": "7 'big news' notices companies filed on 2026-11-20 · Money Tracker"
+   "share_ko": "2026-11-20 회사들이 낸 '큰 소식' 신고서 13건 · 머니트래커",
+   "share_en": "13 'big news' notices companies filed on 2026-11-20 · Money Tracker"
   },
   {
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 39.6,
+   "score": 28.8,
    "layout": "list",
    "date": "2026-11-16",
    "badge_ko": "늦은 신고 클럽",
@@ -249,7 +249,7 @@
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 39.6,
+   "score": 28.8,
    "layout": "list",
    "date": "2026-11-16",
    "badge_ko": "늦은 신고 클럽",
@@ -362,7 +362,7 @@
    "id": "debt",
    "kind": "debt",
    "icon": "●",
-   "score": 30.0,
+   "score": 25.5,
    "layout": "big",
    "date": "2026-11-19",
    "badge_ko": "국가 채무",
