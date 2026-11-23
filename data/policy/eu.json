@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-22",
+"updated": "2026-11-23",
 "country": "eu",
 "source": "EUR-Lex/Publications Office SPARQL(규칙·결정·지침) + European Commission Press corner",
 "source_url": "https://op.europa.eu/en/web/webtools/linked-data-and-sparql",
@@ -246,6 +246,68 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026D2579",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2579 of 20 November 2026 terminating the anti-dumping investigation concerning imports of urea originating in Russia",
+"d": "2026-11-20",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2579",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2618",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2618 of 20 November 2026 on an assistance measure under the European Peace Facility to support the Armed Forces of Ukraine through the joint procurement of military equipment not designed to deliver lethal force",
+"d": "2026-11-20",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2618",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2578",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2578 of 20 November 2026 amending Implementing Regulation (EU) 2025/1977 as regards an administrative change to the Union authorisation for the single biocidal product Aqua-Clean",
+"d": "2026-11-20",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2578",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2620",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2620 of 20 November 2026 on an assistance measure under the European Peace Facility to support the Armed Forces of Ukraine through the joint procurement of military equipment designed to deliver lethal force",
+"d": "2026-11-20",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2620",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:STATEMENT/26/2503",
@@ -819,6 +881,36 @@
 "le": "EU decision"
 },
 {
+"id": "celex:32026D2606",
+"kind": "decision",
+"t": "Council Implementing Decision (EU) 2026/2606 of 17 November 2026 amending Implementing Decision (EU) 2026/410 on making the financial assistance under Regulation (EU) 2025/1106 available to Italy",
+"d": "2026-11-17",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2606",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"finance"
+],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2609",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2609 of 17 November 2026 authorising the opening of negotiations for an agreement between the European Union and the Arab Republic of Egypt and an agreement between the European Union and the Hashemite Kingdom of Jordan on sustainable investment facilitation",
+"d": "2026-11-17",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2609",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
 "id": "ec:IP/26/2452",
 "kind": "press",
 "t": "Commission disburses another €1.71 billion to Ukraine for drones, ammunition and air defence systems ",
@@ -1190,6 +1282,20 @@
 "t": "Council Decision (EU) 2026/2598 of 16 November 2026 appointing a member, proposed by the Kingdom of Spain, of the Committee of the Regions",
 "d": "2026-11-16",
 "u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2598",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2596",
+"kind": "decision",
+"t": "Council Implementing Decision (EU) 2026/2596 of 16 November 2026 establishing the satisfactory fulfilment of the conditions for the partial payment of the ninth instalment under the Ukraine Plan of the Ukraine Facility",
+"d": "2026-11-16",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2596",
 "dept": "EU 관보(Official Journal)",
 "src": "EUR-Lex/Publications Office SPARQL",
 "tags": [],
@@ -2184,6 +2290,20 @@
 "t": "Council Decision (EU) 2026/2555 of 9 November 2026 on the position to be taken on behalf of the European Union within the EU-Central America Association Council concerning an amendment to Decision No 2/2020 of the EU-Central America Association Council to replace the Explanatory Note to Article 19 of Annex II to the Agreement establishing an Association between the European Union and its Member St",
 "d": "2026-11-09",
 "u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2555",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2608",
+"kind": "decision",
+"t": "Council Decision (EU) 2026/2608 of 9 November 2026 on the position to be taken on behalf of the European Union within the World Customs Organization with regard to a Recommendation concerning the amendment of the Nomenclature appended as an Annex to the Harmonized System Convention and the approval of Explanatory Notes, Classification Opinions or other advice on the interpretation of the Harmonize",
+"d": "2026-11-09",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2608",
 "dept": "EU 관보(Official Journal)",
 "src": "EUR-Lex/Publications Office SPARQL",
 "tags": [],
