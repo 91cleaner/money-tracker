@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16",
+ "updated": "2026-11-23",
  "source": "Lobbying Disclosure Act filings (lda.gov API v1)",
  "source_url": "https://lda.gov/api/",
  "note": "데이터상 의뢰인 이름이 회사명으로 시작하는 공시만 합산. 외부 로비회사 보고는 수입(income), 자체 로비는 지출(expenses). 법안 번호는 활동 설명에서 자동 추출(회기 미표기) — 원문 확인 필요. 로비스트 개인 이름 미저장.",
@@ -714,7 +714,7 @@
   },
   "META": {
    "query": "META PLATFORMS",
-   "filings": 163,
+   "filings": 164,
    "total_usd": 57943750.0,
    "by_quarter": {
     "2025-1T": 30000.0,
@@ -2548,7 +2548,7 @@
   },
   "V": {
    "query": "VISA",
-   "filings": 96,
+   "filings": 97,
    "total_usd": 27480000.0,
    "by_quarter": {
     "2025-1A": 2310000.0,
@@ -2569,7 +2569,7 @@
    "top_issues": [
     [
      "Financial Institutions/Investments/Securities",
-     68
+     69
     ],
     [
      "Taxation/Internal Revenue Code",
@@ -2577,7 +2577,7 @@
     ],
     [
      "Banking",
-     35
+     36
     ],
     [
      "Trade (domestic/foreign)",
@@ -2923,7 +2923,7 @@
   },
   "FLEX": {
    "query": "FLEX",
-   "filings": 79,
+   "filings": 80,
    "total_usd": 4781525.56,
    "by_quarter": {
     "2025-1T": 60000.0,
@@ -4207,8 +4207,8 @@
   },
   "AMGN": {
    "query": "AMGEN",
-   "filings": 196,
-   "total_usd": 32680000.0,
+   "filings": 197,
+   "total_usd": 32695000.0,
    "by_quarter": {
     "2025-2A": 2580000.0,
     "2025-Q1": 4766500.0,
@@ -4220,7 +4220,7 @@
     "2026-2T": 5000.0,
     "2026-Q1": 3774000.0,
     "2026-Q2": 3654000.0,
-    "2026-Q3": 4375000.0,
+    "2026-Q3": 4390000.0,
     "2026-RR": 0.0
    },
    "top_issues": [
