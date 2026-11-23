@@ -1,10 +1,57 @@
 {
-"updated": "2026-11-22",
+"updated": "2026-11-23",
 "country": "kr",
 "source": "열린국회정보 open.assembly.go.kr 국회의원 발의법률안(22대) + 과학기술정보통신부 보도자료(공공데이터포털)",
 "source_url": "https://open.assembly.go.kr/portal/data/service/selectAPIServicePage.do/OOWY4R001216HX11439",
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
+{
+"id": "msit:d642c18b197e",
+"kind": "press",
+"t": "국가 과학 인공지능 역량 결집해 초지능 과학 혁신을 선도한다",
+"d": "2026-11-23",
+"dept": "과학기술인공지능혁신과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187990",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"tech_ai"
+]
+},
+{
+"id": "msit:9772ab604e02",
+"kind": "press",
+"t": "[관계부처 합동] (보도참고) 제31차 유엔기후변화협약 당사국총회 폐막",
+"d": "2026-11-23",
+"dept": "핵융합에너지환경기술과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187989",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"clean_energy"
+]
+},
+{
+"id": "msit:a54505b5d3ee",
+"kind": "press",
+"t": "한-아세안 과학기술 협력의 미래를 이끌 차세대 연구자 선정",
+"d": "2026-11-23",
+"dept": "다자협력담당관",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187985",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
+"id": "msit:aa7a9cd506f0",
+"kind": "press",
+"t": "과기정통부, 인공지능 반도체 업계 현안 점검...국제 협력·공급망 대응 모색",
+"d": "2026-11-23",
+"dept": "정보통신방송기술정책과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187984",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": [
+"semiconductor",
+"tech_ai"
+]
+},
 {
 "id": "msit:b5a493be1d60",
 "kind": "press",
@@ -6034,54 +6081,6 @@
 "cmte": "법제사법위원회",
 "res": null,
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_DFB12EC5AF6B44A3B67F26F31F9945&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_9D2167FBB9B34C558C9C8D8AE9D7D9",
-"no": "2222644",
-"t": "특정범죄신고자 등 보호법 일부개정법률안",
-"d": "2026-11-10",
-"by": "윤상현의원 등 10인",
-"cmte": "법제사법위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_9D2167FBB9B34C558C9C8D8AE9D7D9&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_A55F57460BCE46D2BD0F8CFC35A3BA",
-"no": "2222643",
-"t": "헤이그 국제아동탈취협약 이행에 관한 법률 일부개정법률안",
-"d": "2026-11-10",
-"by": "윤상현의원 등 10인",
-"cmte": "법제사법위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A55F57460BCE46D2BD0F8CFC35A3BA&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_F7219052DEB6432B9685FE08D55CF5",
-"no": "2222642",
-"t": "특별검사의 임명 등에 관한 법률 일부개정법률안",
-"d": "2026-11-10",
-"by": "윤상현의원 등 10인",
-"cmte": "법제사법위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F7219052DEB6432B9685FE08D55CF5&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_954EF75103E74651A663366006F8C2",
-"no": "2222641",
-"t": "겨레말큰사전남북공동편찬사업회법 일부개정법률안",
-"d": "2026-11-10",
-"by": "송석준의원 등 21인",
-"cmte": "외교통일위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_954EF75103E74651A663366006F8C2&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
 }
