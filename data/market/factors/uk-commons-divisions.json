@@ -2,9 +2,27 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-11-18T23:55:48.535Z",
- "count": 226,
+ "collected_at": "2026-11-24T06:57:47.301Z",
+ "count": 228,
  "divisions": [
+  {
+   "id": 2493,
+   "date": "2026-11-23",
+   "number": 133,
+   "title": "Finance Bill: Second Reading",
+   "ayes": 311,
+   "noes": 164,
+   "url": "https://votes.parliament.uk/votes/commons/division/2493"
+  },
+  {
+   "id": 2492,
+   "date": "2026-11-23",
+   "number": 132,
+   "title": "Finance Bill: Reasoned Amendment to Second Reading",
+   "ayes": 98,
+   "noes": 317,
+   "url": "https://votes.parliament.uk/votes/commons/division/2492"
+  },
   {
    "id": 2490,
    "date": "2026-11-18",
