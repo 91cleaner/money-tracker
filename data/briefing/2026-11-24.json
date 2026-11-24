@@ -1,0 +1,361 @@
+{
+ "date": "2026-11-24",
+ "generated_at": "2026-11-24T19:07Z",
+ "site": "https://91cleaner.github.io/money-tracker/cards.html",
+ "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
+ "top": [
+  {
+   "id": "insider",
+   "kind": "insider",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-23",
+   "badge_ko": "내부자 워치",
+   "badge_en": "INSIDER WATCH",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-23까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-23",
+   "rows": [
+    {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$56.1M",
+     "value_en": "~$56.1M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000269/0001596532-26-000269-index.htm"
+    },
+    {
+     "label_ko": "Advanced Micro Devices Inc · 이사",
+     "label_en": "Advanced Micro Devices Inc · director",
+     "value_ko": "~$35.5M",
+     "value_en": "~$35.5M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000213/0000002488-26-000213-index.htm"
+    },
+    {
+     "label_ko": "애플 · 이사",
+     "label_en": "Apple Inc. · director",
+     "value_ko": "~$31.8M",
+     "value_en": "~$31.8M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126044773/0001140361-26-044773-index.htm"
+    },
+    {
+     "label_ko": "Cisco Systems, Inc. · 이사",
+     "label_en": "Cisco Systems, Inc. · director",
+     "value_ko": "~$27.3M",
+     "value_en": "~$27.3M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000197/0000858877-26-000197-index.htm"
+    },
+    {
+     "label_ko": "Cisco Systems, Inc. · 부사장급",
+     "label_en": "Cisco Systems, Inc. · EVP and Chief Legal Officer",
+     "value_ko": "~$7.9M",
+     "value_en": "~$7.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000194/0000858877-26-000194-index.htm"
+    }
+   ],
+   "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
+   "note_en": "Some are pre-scheduled sales (10b5-1). The reason for a sale is unknown. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
+   "source_en": "Source: SEC insider-trade records (Form 4)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $158.6M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $158.6M on record · Money Tracker"
+  },
+  {
+   "id": "filings",
+   "kind": "filings",
+   "icon": "●",
+   "score": 80.0,
+   "layout": "list",
+   "date": "2026-11-23",
+   "badge_ko": "새 공시",
+   "badge_en": "NEW FILINGS",
+   "title_ko": "2026-11-23 회사들이 낸 '큰 소식' 신고서 15건",
+   "title_en": "15 'big news' notices companies filed on 2026-11-23",
+   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
+   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
+   "rows": [
+    {
+     "label_ko": "Bristol Myers Squibb Co",
+     "label_en": "Bristol Myers Squibb Co",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/14272/000114036126045300/ef20086209_8k.htm"
+    },
+    {
+     "label_ko": "Walt Disney Co",
+     "label_en": "Walt Disney Co",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000069/dis-20261123.htm"
+    },
+    {
+     "label_ko": "Ingredion Inc",
+     "label_en": "Ingredion Inc",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1046257/000104625726000270/ingr-20261120.htm"
+    },
+    {
+     "label_ko": "Coca Cola Co",
+     "label_en": "Coca Cola Co",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm"
+    },
+    {
+     "label_ko": "엔비디아",
+     "label_en": "Nvidia Corp",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm"
+    }
+   ],
+   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
+   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
+   "source_en": "Source: SEC 8-K notices (EDGAR)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "2026-11-23 회사들이 낸 '큰 소식' 신고서 15건 · 머니트래커",
+   "share_en": "15 'big news' notices companies filed on 2026-11-23 · Money Tracker"
+  },
+  {
+   "id": "movers",
+   "kind": "movers",
+   "icon": "●",
+   "score": 70.0,
+   "layout": "list",
+   "date": "2026-11-20",
+   "badge_ko": "큰 움직임",
+   "badge_en": "BIG MOVERS",
+   "title_ko": "어제 가장 크게 움직인 회사들",
+   "title_en": "Companies that moved most at the last close",
+   "sub_ko": "2026-11-19 → 2026-11-20 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-11-19 → 2026-11-20 (among companies we track)",
+   "rows": [
+    {
+     "label_ko": "IREN Ltd",
+     "label_en": "IREN Ltd",
+     "value_ko": "-18.0%",
+     "value_en": "-18.0%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Sandisk Corp",
+     "label_en": "Sandisk Corp",
+     "value_ko": "-16.1%",
+     "value_en": "-16.1%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Celestica Inc",
+     "label_en": "Celestica Inc",
+     "value_ko": "-16.0%",
+     "value_en": "-16.0%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Bloom Energy Corp",
+     "label_en": "Bloom Energy Corp",
+     "value_ko": "-15.3%",
+     "value_en": "-15.3%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Credo Technology Group Holding Ltd",
+     "label_en": "Credo Technology Group Holding Ltd",
+     "value_ko": "-15.2%",
+     "value_en": "-15.2%",
+     "tone": "red",
+     "mark": "▼"
+    }
+   ],
+   "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
+   "note_en": "Shows what moved, not why. Not investment advice.",
+   "source_ko": "출처: 일별 마감 가격 기록",
+   "source_en": "Source: daily closing prices",
+   "source_url": "https://91cleaner.github.io/money-tracker/us.html",
+   "share_ko": "2026-11-20 마감 기준 가장 크게 움직인 회사: IREN Ltd -18.0% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-11-20 close: IREN Ltd -18.0% · Money Tracker"
+  }
+ ],
+ "cards": {
+  "late": {
+   "id": "late",
+   "kind": "late",
+   "icon": "●",
+   "score": 14.4,
+   "layout": "list",
+   "date": "2026-11-16",
+   "badge_ko": "늦은 신고 클럽",
+   "badge_en": "LATE CLUB",
+   "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
+   "title_en": "US lawmakers who handed in their stock homework late",
+   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
+   "rows": [
+    {
+     "mark": "1.",
+     "label_ko": "Byron Donalds 의원 · ADSK",
+     "label_en": "Rep. Byron Donalds · ADSK",
+     "value_ko": "45일 걸림",
+     "value_en": "45 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035811.pdf"
+    },
+    {
+     "mark": "2.",
+     "label_ko": "Byron Donalds 의원 · Interactive Brokers Group, Inc.",
+     "label_en": "Rep. Byron Donalds · Interactive Brokers Group, Inc.",
+     "value_ko": "45일 걸림",
+     "value_en": "45 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035811.pdf"
+    },
+    {
+     "mark": "3.",
+     "label_ko": "Byron Donalds 의원 · Netflix Inc",
+     "label_en": "Rep. Byron Donalds · Netflix Inc",
+     "value_ko": "45일 걸림",
+     "value_en": "45 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035811.pdf"
+    }
+   ],
+   "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
+   "note_en": "A record, not proof of wrongdoing. Not investment advice.",
+   "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
+   "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Byron Donalds 의원 45일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Byron Donalds, 45 days / we get a call if rent is 1 day late  · Money Tracker"
+  },
+  "insider": {
+   "id": "insider",
+   "kind": "insider",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-23",
+   "badge_ko": "내부자 워치",
+   "badge_en": "INSIDER WATCH",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-23까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-23",
+   "rows": [
+    {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$56.1M",
+     "value_en": "~$56.1M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000269/0001596532-26-000269-index.htm"
+    },
+    {
+     "label_ko": "Advanced Micro Devices Inc · 이사",
+     "label_en": "Advanced Micro Devices Inc · director",
+     "value_ko": "~$35.5M",
+     "value_en": "~$35.5M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000213/0000002488-26-000213-index.htm"
+    },
+    {
+     "label_ko": "애플 · 이사",
+     "label_en": "Apple Inc. · director",
+     "value_ko": "~$31.8M",
+     "value_en": "~$31.8M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126044773/0001140361-26-044773-index.htm"
+    },
+    {
+     "label_ko": "Cisco Systems, Inc. · 이사",
+     "label_en": "Cisco Systems, Inc. · director",
+     "value_ko": "~$27.3M",
+     "value_en": "~$27.3M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000197/0000858877-26-000197-index.htm"
+    },
+    {
+     "label_ko": "Cisco Systems, Inc. · 부사장급",
+     "label_en": "Cisco Systems, Inc. · EVP and Chief Legal Officer",
+     "value_ko": "~$7.9M",
+     "value_en": "~$7.9M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000194/0000858877-26-000194-index.htm"
+    }
+   ],
+   "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
+   "note_en": "Some are pre-scheduled sales (10b5-1). The reason for a sale is unknown. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
+   "source_en": "Source: SEC insider-trade records (Form 4)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $158.6M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $158.6M on record · Money Tracker"
+  },
+  "debt": {
+   "id": "debt",
+   "kind": "debt",
+   "icon": "●",
+   "score": 21.0,
+   "layout": "big",
+   "date": "2026-11-20",
+   "badge_ko": "국가 채무",
+   "badge_en": "NATIONAL DEBT",
+   "title_ko": "미국 정부가 지금까지 진 빚 (총 채무)",
+   "title_en": "How much the US government owes (total public debt)",
+   "big": {
+    "value": "$40,710,417,158,680",
+    "short_ko": "$40.71조",
+    "short_en": "$40.71 trillion"
+   },
+   "sub_ko": "2026-11-20 기준",
+   "sub_en": "As of 2026-11-20",
+   "rows": [
+    {
+     "label_ko": "1년 전 같은 날엔",
+     "label_en": "Same day last year",
+     "value_ko": "$38.33조",
+     "value_en": "$38.33 T",
+     "tone": "white"
+    },
+    {
+     "label_ko": "1년 사이 불어난 빚",
+     "label_en": "Debt added in one year",
+     "value_ko": "+$2.38조",
+     "value_en": "+$2.38 T",
+     "tone": "red"
+    },
+    {
+     "label_ko": "1초마다 늘어난 빚 (최근 30일 평균)",
+     "label_en": "Added every second (30-day avg)",
+     "value_ko": "+$114,498",
+     "value_en": "+$114,498",
+     "tone": "amber"
+    }
+   ],
+   "note_ko": "공식 집계 숫자예요. 앞으로 얼마가 될지는 말하지 않아요. 투자 조언 아님.",
+   "note_en": "Official reported figure. No forecast. Not investment advice.",
+   "source_ko": "출처: 미 재무부 재정 데이터 (FiscalData)",
+   "source_en": "Source: U.S. Treasury FiscalData",
+   "source_url": "https://fiscaldata.treasury.gov/",
+   "share_ko": "미국 정부가 지금까지 진 빚 $40.71조 (2026-11-20 기준) · 머니트래커",
+   "share_en": "How much the US government owes: $40.71 trillion (as of 2026-11-20) · Money Tracker"
+  }
+ }
+}
