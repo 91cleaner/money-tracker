@@ -1,10 +1,30 @@
 {
-"updated": "2026-11-23",
+"updated": "2026-11-24",
 "country": "eu",
 "source": "EUR-Lex/Publications Office SPARQL(규칙·결정·지침) + European Commission Press corner",
 "source_url": "https://op.europa.eu/en/web/webtools/linked-data-and-sparql",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "ec:IP/26/2564",
+"kind": "press",
+"t": "Commission imposes provisional import quotas on hybrid passenger vehicles",
+"d": "2026-11-24",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2564",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [
+"trade"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
 {
 "id": "celex:32026D2605",
 "kind": "decision",
@@ -113,6 +133,114 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026R2614",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2614 of 23 November 2026 imposing a provisional safeguard measure with regard to imports of certain new hybrid vehicles designed for the transport of persons",
+"d": "2026-11-23",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2614",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"trade"
+],
+"focus": [
+"anti_dumping"
+],
+"focus_ko": [
+"반덤핑·상계관세"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2619",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2619 of 23 November 2026 in support of enhancing the operational effectiveness of the Organisation for the Prohibition of Chemical Weapons (OPCW)",
+"d": "2026-11-23",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2619",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2600",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2600 of 23 November 2026 amending Decision (CFSP) 2021/1143 on a European Union Military Assistance Mission in Mozambique (EUMAM Mozambique)",
+"d": "2026-11-23",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2600",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2633",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2633 of 23 November 2026 amending Decision (CFSP) 2024/1472 on a European Union Diplomatic Academy",
+"d": "2026-11-23",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2633",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2615",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2615 of 23 November 2026 on Union support for the activities of the Preparatory Commission for the Comprehensive Nuclear-Test-Ban Treaty Organization (CTBTO) in order to strengthen its monitoring and verification capabilities",
+"d": "2026-11-23",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2615",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2621",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2621 of 23 November 2026 amending Decision (CFSP) 2019/1894 concerning restrictive measures in view of Türkiye’s unauthorised drilling activities in the Eastern Mediterranean",
+"d": "2026-11-23",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2621",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2607",
+"kind": "decision",
+"t": "Council Decision (EU, Euratom) 2026/2607 of 23 November 2026 amending the Council’s Rules of Procedure",
+"d": "2026-11-23",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2607",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:STATEMENT/26/2556",
@@ -419,6 +547,48 @@
 "le": "EU decision"
 },
 {
+"id": "celex:32026D2576",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2576 of 20 November 2026 on the non-approval of 1,3-Bis(hydroxymethyl)-5,5-dimethylimidazolidine-2,4-dione (DMDMH) as an existing active substance for use in biocidal products of product-types 6 and 13 in accordance with Regulation (EU) No 528/2012 of the European Parliament and of the Council",
+"d": "2026-11-20",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2576",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2624",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2624 of 20 November 2026 amending Annexes V and XIV to Implementing Regulation (EU) 2021/404 as regards the entries for Canada, the United Kingdom and the United States in the lists of third countries, territories, or zones thereof authorised for the entry into the Union of consignments of poultry and germinal products of poultry, and of fresh meat of p",
+"d": "2026-11-20",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2624",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2581",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2581 of 20 November 2026 postponing the expiry date of the approval of Bacillus thuringiensis subsp. kurstaki, serotype 3a3b, strain ABTS-351 for use in biocidal products of product-type 18 in accordance with Regulation (EU) No 528/2012 of the European Parliament and of the Council",
+"d": "2026-11-20",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2581",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
 "id": "ec:STATEMENT/26/2503",
 "kind": "press",
 "t": "Statement by Executive Vice-President Mînzatu and Commissioner Lahbib ahead of European Equal Pay Day",
@@ -674,6 +844,20 @@
 "focus_ko": [],
 "lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
 "le": "EU regulation"
+},
+{
+"id": "celex:32026D06168",
+"kind": "decision",
+"t": "Council Decision of 19 November 2026 replacing an alternate member of the Management Board of the European Foundation for the improvement of living and working conditions for Portugal",
+"d": "2026-11-19",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D06168",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:STATEMENT/26/2493",
@@ -2613,6 +2797,20 @@
 "t": "Commission Implementing Regulation (EU) 2026/2529 of 6 November 2026 on the registration of the geographical indication Mazzit / Mazzita (PGI) in the Union register of geographical indications pursuant to Regulation (EU) 2024/1143 of the European Parliament and of the Council",
 "d": "2026-11-06",
 "u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2529",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2594",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2594 of 6 November 2026 granting a Union authorisation for the biocidal product family BPF_H2O2_AB in accordance with Regulation (EU) No 528/2012 of the European Parliament and of the Council",
+"d": "2026-11-06",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2594",
 "dept": "EU 관보(Official Journal)",
 "src": "EUR-Lex/Publications Office SPARQL",
 "tags": [],
