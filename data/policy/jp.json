@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-24",
+"updated": "2026-11-25",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
@@ -24,6 +24,59 @@
 "t": "高市総理は赤根国際刑事裁判所（ＩＣＣ）所長による表敬を受けました",
 "d": "2026-11-25",
 "u": "https://www.kantei.go.jp/jp/105/actions/202611/24hyoukei2.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "egov:145210793",
+"kind": "pubcomment",
+"t": "経済構造実態調査規則の一部を改正する省令案に関する意見募集",
+"d": "2026-11-25",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210793&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
+},
+{
+"id": "egov:145210798",
+"kind": "pubcomment",
+"t": "「高周波利用設備の条件の特例を定める件」の一部改正案に対する意見募集－走行中無線給電の公道実証実験に対応するための告示改正－",
+"d": "2026-11-25",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210798&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"tech_ai"
+],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
+},
+{
+"id": "egov:155260940",
+"kind": "pubcomment",
+"t": "「自動車特定整備事業者が事業場以外の場所において特定整備を行う場合の実施規程」の一部を改正する告示案・通達案について",
+"d": "2026-11-25",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=155260940&Mode=0",
+"dept": "国土交通省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"auto"
+],
+"lk": "일본 국토교통성(국토·교통 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Land, Infrastructure, Transport and Tourism: public comment request on a draft rule"
+},
+{
+"id": "kantei:0a02884bb546",
+"kind": "news",
+"t": "高市総理は令和８年第１７回経済財政諮問会議を開催しました",
+"d": "2026-11-25",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/24keizai.html",
 "dept": "首相官邸",
 "src": "首相官邸 新着情報",
 "cat": "総理の一日",
@@ -69,6 +122,21 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:620340106",
+"kind": "pubcomment",
+"t": "次世代電力・ガス事業基盤構築小委員会　電力安定供給ワーキンググループ　長期脱炭素電源オークションの第４回募集に向けて（改定案）　長期脱炭素電源オークションガイドライン（改定案）についての意見公募",
+"d": "2026-11-24",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=620340106&Mode=0",
+"dept": "資源エネルギー庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"energy",
+"clean_energy"
+],
+"lk": "일본 자원에너지청(에너지 담당 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Agency for Natural Resources and Energy: public comment request on a draft rule"
 },
 {
 "id": "kantei:681e8ecea1f5",

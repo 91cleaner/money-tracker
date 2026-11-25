@@ -1,10 +1,22 @@
 {
-"updated": "2026-11-24",
+"updated": "2026-11-25",
 "country": "cn",
 "source": "中国政府网 最新政策 + 商务部 政策发布",
 "source_url": "https://www.gov.cn/zhengce/zuixin/",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "mofcom:fe69242d1ce2",
+"kind": "notice",
+"t": "公布继续调整实施商务部公告2024年第46号的决定",
+"d": "2026-11-24",
+"u": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_69b3633579184af38198463be8116ebf.html",
+"dept": "商务部",
+"src": "商务部 政策发布",
+"tags": [],
+"lk": "중국 상무부(무역 담당 부처) 정책 공고",
+"le": "China Ministry of Commerce policy notice"
+},
 {
 "id": "mofcom:86f997cb914a",
 "kind": "notice",
@@ -9724,18 +9736,6 @@
 "tags": [
 "clean_energy"
 ],
-"lk": "중국 국무원(중앙 정부) 정책 문서",
-"le": "China State Council policy document"
-},
-{
-"id": "govcn:17a1f81d6703",
-"kind": "policy",
-"t": "中共中央 国务院印发《成渝地区双城经济圈建设规划纲要》",
-"d": "2021-10-21",
-"u": "https://www.gov.cn/zhengce/2021-10/21/content_5643875.htm",
-"dept": "国务院",
-"src": "中国政府网 最新政策",
-"tags": [],
 "lk": "중국 국무원(중앙 정부) 정책 문서",
 "le": "China State Council policy document"
 }

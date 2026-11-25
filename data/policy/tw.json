@@ -1,10 +1,34 @@
 {
-"updated": "2026-11-24",
+"updated": "2026-11-25",
 "country": "tw",
 "source": "行政院 本院新聞 RSS + 經濟部國際貿易署",
 "source_url": "https://www.ey.gov.tw/RSS_Content.aspx?ModuleType=3",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "ey:f11cbc06685a",
+"kind": "news",
+"t": "表揚全國績優志工 卓揆：為社會注入更多愛與信任 形成善的循環",
+"d": "2026-11-25",
+"u": "https://www.ey.gov.tw/Page/9277F759E41CCD91//e682d316-b46d-4167-8fc2-57dd01bca7bc",
+"dept": "行政院",
+"src": "行政院 本院新聞 RSS",
+"tags": [],
+"lk": "대만 행정원(중앙 정부) 소식",
+"le": "Taiwan Executive Yuan news"
+},
+{
+"id": "ey:40bbccbe8373",
+"kind": "news",
+"t": "參拜新北市八里開台天后宮 卓揆：積極推動新北交通路網建設與產業發展 全力帶動地方繁榮發展",
+"d": "2026-11-24",
+"u": "https://www.ey.gov.tw/Page/9277F759E41CCD91//44bb27e2-b925-4707-ae9a-8a4ef83f270b",
+"dept": "行政院",
+"src": "行政院 本院新聞 RSS",
+"tags": [],
+"lk": "대만 행정원(중앙 정부) 소식",
+"le": "Taiwan Executive Yuan news"
+},
 {
 "id": "trade:822462",
 "kind": "notice",
