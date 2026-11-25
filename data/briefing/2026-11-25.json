@@ -1,0 +1,505 @@
+{
+ "date": "2026-11-25",
+ "generated_at": "2026-11-25T18:12Z",
+ "site": "https://91cleaner.github.io/money-tracker/cards.html",
+ "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
+ "top": [
+  {
+   "id": "insider",
+   "kind": "insider",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-24",
+   "badge_ko": "내부자 워치",
+   "badge_en": "INSIDER WATCH",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-24까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-24",
+   "rows": [
+    {
+     "label_ko": "Palantir Technologies Inc. · 이사",
+     "label_en": "Palantir Technologies Inc. · director",
+     "value_ko": "~$75.1M",
+     "value_en": "~$75.1M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1321655/000182395126000013/0001823951-26-000013-index.htm"
+    },
+    {
+     "label_ko": "Palantir Technologies Inc. · 회사 내부자",
+     "label_en": "Palantir Technologies Inc. · See Remarks",
+     "value_ko": "~$57.5M",
+     "value_en": "~$57.5M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000021/0001824159-26-000021-index.htm"
+    },
+    {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$56.1M",
+     "value_en": "~$56.1M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000269/0001596532-26-000269-index.htm"
+    },
+    {
+     "label_ko": "Advanced Micro Devices Inc · 이사",
+     "label_en": "Advanced Micro Devices Inc · director",
+     "value_ko": "~$35.5M",
+     "value_en": "~$35.5M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000213/0000002488-26-000213-index.htm"
+    },
+    {
+     "label_ko": "애플 · 이사",
+     "label_en": "Apple Inc. · director",
+     "value_ko": "~$31.8M",
+     "value_en": "~$31.8M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126044773/0001140361-26-044773-index.htm"
+    }
+   ],
+   "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
+   "note_en": "Some are pre-scheduled sales (10b5-1). The reason for a sale is unknown. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
+   "source_en": "Source: SEC insider-trade records (Form 4)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $256.0M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $256.0M on record · Money Tracker"
+  },
+  {
+   "id": "latemove",
+   "kind": "latemove",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-23",
+   "badge_ko": "늦은 신고 + 큰 변동",
+   "badge_en": "LATE + BIG MOVE",
+   "title_ko": "45일 넘게 걸린 신고, 그 사이 주가는?",
+   "title_en": "Filed after 45 days: what did the price do meanwhile?",
+   "sub_ko": "하원 신고 중 45일 초과 · 거래일 종가 대비 최근 종가 변동(수정종가)",
+   "sub_en": "House filings past 45 days · latest close vs trade-date close (adjusted)",
+   "rows": [
+    {
+     "mark": "●",
+     "label": "Hageman ABNB",
+     "value_ko": "272일 · 산 뒤 +38.0%",
+     "value_en": "272d · +38.0% since buy",
+     "tone": "green",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "●",
+     "label": "Hageman WDAY",
+     "value_ko": "272일 · 판 뒤 +37.6%",
+     "value_en": "272d · +37.6% since sale",
+     "tone": "green",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "●",
+     "label": "Hageman NOW",
+     "value_ko": "313일 · 판 뒤 -31.8%",
+     "value_en": "313d · -31.8% since sale",
+     "tone": "red",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    }
+   ],
+   "note_ko": "같은 기간 비교일 뿐 이유를 말하지 않아요. 금액은 구간이라 손익은 계산하지 않아요. 투자 조언 아님.",
+   "note_en": "Same-period comparison only, not a reason. Amounts are ranges, so no profit is computed. Not investment advice.",
+   "source_ko": "출처: 하원 PTR(의원 주식 거래 신고) · 일별 수정종가 기준",
+   "source_en": "Source: House PTRs · daily adjusted closes",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "45일 넘겨 신고된 거래 중 Harriet Hageman ABNB: 거래일 대비 +38.0% · 머니트래커",
+   "share_en": "Filed past 45 days: Harriet Hageman ABNB, +38.0% since the trade date · Money Tracker"
+  },
+  {
+   "id": "movers",
+   "kind": "movers",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-24",
+   "badge_ko": "큰 움직임",
+   "badge_en": "BIG MOVERS",
+   "title_ko": "어제 가장 크게 움직인 회사들",
+   "title_en": "Companies that moved most at the last close",
+   "sub_ko": "2026-11-23 → 2026-11-24 마감 가격 비교 (우리가 지켜보는 회사 중)",
+   "sub_en": "Closing price 2026-11-23 → 2026-11-24 (among companies we track)",
+   "rows": [
+    {
+     "label_ko": "Dycom Industries Inc",
+     "label_en": "Dycom Industries Inc",
+     "value_ko": "-18.0%",
+     "value_en": "-18.0%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Analog Devices Inc",
+     "label_en": "Analog Devices Inc",
+     "value_ko": "-17.4%",
+     "value_en": "-17.4%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Semtech Corp",
+     "label_en": "Semtech Corp",
+     "value_ko": "-17.0%",
+     "value_en": "-17.0%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Hewlett Packard Enterprise Co",
+     "label_en": "Hewlett Packard Enterprise Co",
+     "value_ko": "-16.3%",
+     "value_en": "-16.3%",
+     "tone": "red",
+     "mark": "▼"
+    },
+    {
+     "label_ko": "Dick's Sporting Goods, Inc.",
+     "label_en": "Dick's Sporting Goods, Inc.",
+     "value_ko": "+14.6%",
+     "value_en": "+14.6%",
+     "tone": "green",
+     "mark": "▲"
+    }
+   ],
+   "note_ko": "무슨 일이 있었는지만 보여줘요. 이유는 말하지 않아요. 투자 조언 아님.",
+   "note_en": "Shows what moved, not why. Not investment advice.",
+   "source_ko": "출처: 일별 마감 가격 기록",
+   "source_en": "Source: daily closing prices",
+   "source_url": "https://91cleaner.github.io/money-tracker/us.html",
+   "share_ko": "2026-11-24 마감 기준 가장 크게 움직인 회사: Dycom Industries Inc -18.0% · 머니트래커",
+   "share_en": "Biggest mover at the 2026-11-24 close: Dycom Industries Inc -18.0% · Money Tracker"
+  },
+  {
+   "id": "filings",
+   "kind": "filings",
+   "icon": "●",
+   "score": 80.0,
+   "layout": "list",
+   "date": "2026-11-24",
+   "badge_ko": "새 공시",
+   "badge_en": "NEW FILINGS",
+   "title_ko": "2026-11-24 회사들이 낸 '큰 소식' 신고서 13건",
+   "title_en": "13 'big news' notices companies filed on 2026-11-24",
+   "sub_ko": "큰 일이 생기면 바로 내는 서류 (8-K) 중 일부 · 우리가 지켜보는 회사",
+   "sub_en": "Some of the notices companies file right after big events (8-K) · companies we track",
+   "rows": [
+    {
+     "label_ko": "Azenta, Inc.",
+     "label_en": "Azenta, Inc.",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/933974/000162828026075782/azta-20261124.htm"
+    },
+    {
+     "label_ko": "Farmers & Merchants Bancorp Inc",
+     "label_en": "Farmers & Merchants Bancorp Inc",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/792966/000119312526475192/fmao-20261123.htm"
+    },
+    {
+     "label_ko": "Insulet Corp",
+     "label_en": "Insulet Corp",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1145197/000119312526475638/d167441d8k.htm"
+    },
+    {
+     "label_ko": "PayPal Holdings, Inc.",
+     "label_en": "PayPal Holdings, Inc.",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1633917/000119312526476056/d182608d8ka.htm"
+    },
+    {
+     "label_ko": "Qualcomm Inc",
+     "label_en": "Qualcomm Inc",
+     "value_ko": "임원·이사가 바뀜",
+     "value_en": "officer / director change",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000138/qcom-20261120.htm"
+    }
+   ],
+   "note_ko": "낸 목록 그대로예요. 해석은 없어요. 투자 조언 아님.",
+   "note_en": "Filing list as submitted. No interpretation. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 8-K(회사 중요 사건 공시) 신고서",
+   "source_en": "Source: SEC 8-K notices (EDGAR)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "2026-11-24 회사들이 낸 '큰 소식' 신고서 13건 · 머니트래커",
+   "share_en": "13 'big news' notices companies filed on 2026-11-24 · Money Tracker"
+  },
+  {
+   "id": "late",
+   "kind": "late",
+   "icon": "●",
+   "score": 64.0,
+   "layout": "list",
+   "date": "2026-11-23",
+   "badge_ko": "늦은 신고 클럽",
+   "badge_en": "LATE CLUB",
+   "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
+   "title_en": "US lawmakers who handed in their stock homework late",
+   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
+   "rows": [
+    {
+     "mark": "1.",
+     "label_ko": "Harriet Hageman 의원 · Advanced Micro Devices Inc",
+     "label_en": "Rep. Harriet Hageman · Advanced Micro Devices Inc",
+     "value_ko": "40일 걸림",
+     "value_en": "40 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "2.",
+     "label_ko": "Harriet Hageman 의원 · Air Products & Chemicals, Inc.",
+     "label_en": "Rep. Harriet Hageman · Air Products & Chemicals, Inc.",
+     "value_ko": "40일 걸림",
+     "value_en": "40 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "3.",
+     "label_ko": "Harriet Hageman 의원 · Amgen Inc",
+     "label_en": "Rep. Harriet Hageman · Amgen Inc",
+     "value_ko": "40일 걸림",
+     "value_en": "40 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    }
+   ],
+   "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
+   "note_en": "A record, not proof of wrongdoing. Not investment advice.",
+   "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
+   "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Harriet Hageman 의원 40일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Harriet Hageman, 40 days / we get a call if rent is 1 day late  · Money Tracker"
+  }
+ ],
+ "cards": {
+  "late": {
+   "id": "late",
+   "kind": "late",
+   "icon": "●",
+   "score": 64.0,
+   "layout": "list",
+   "date": "2026-11-23",
+   "badge_ko": "늦은 신고 클럽",
+   "badge_en": "LATE CLUB",
+   "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
+   "title_en": "US lawmakers who handed in their stock homework late",
+   "sub_ko": "주식 숙제 제출 기한 (45일) · 우리는 월세 하루만 늦어도 연락 오는데 ",
+   "sub_en": "Stock-homework deadline (45 days) · We get a call if rent is 1 day late ",
+   "rows": [
+    {
+     "mark": "1.",
+     "label_ko": "Harriet Hageman 의원 · Advanced Micro Devices Inc",
+     "label_en": "Rep. Harriet Hageman · Advanced Micro Devices Inc",
+     "value_ko": "40일 걸림",
+     "value_en": "40 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "2.",
+     "label_ko": "Harriet Hageman 의원 · Air Products & Chemicals, Inc.",
+     "label_en": "Rep. Harriet Hageman · Air Products & Chemicals, Inc.",
+     "value_ko": "40일 걸림",
+     "value_en": "40 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "3.",
+     "label_ko": "Harriet Hageman 의원 · Amgen Inc",
+     "label_en": "Rep. Harriet Hageman · Amgen Inc",
+     "value_ko": "40일 걸림",
+     "value_en": "40 days",
+     "tone": "amber",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    }
+   ],
+   "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
+   "note_en": "A record, not proof of wrongdoing. Not investment advice.",
+   "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
+   "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Harriet Hageman 의원 40일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Harriet Hageman, 40 days / we get a call if rent is 1 day late  · Money Tracker"
+  },
+  "latemove": {
+   "id": "latemove",
+   "kind": "latemove",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-23",
+   "badge_ko": "늦은 신고 + 큰 변동",
+   "badge_en": "LATE + BIG MOVE",
+   "title_ko": "45일 넘게 걸린 신고, 그 사이 주가는?",
+   "title_en": "Filed after 45 days: what did the price do meanwhile?",
+   "sub_ko": "하원 신고 중 45일 초과 · 거래일 종가 대비 최근 종가 변동(수정종가)",
+   "sub_en": "House filings past 45 days · latest close vs trade-date close (adjusted)",
+   "rows": [
+    {
+     "mark": "●",
+     "label": "Hageman ABNB",
+     "value_ko": "272일 · 산 뒤 +38.0%",
+     "value_en": "272d · +38.0% since buy",
+     "tone": "green",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "●",
+     "label": "Hageman WDAY",
+     "value_ko": "272일 · 판 뒤 +37.6%",
+     "value_en": "272d · +37.6% since sale",
+     "tone": "green",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "●",
+     "label": "Hageman NOW",
+     "value_ko": "313일 · 판 뒤 -31.8%",
+     "value_en": "313d · -31.8% since sale",
+     "tone": "red",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    }
+   ],
+   "note_ko": "같은 기간 비교일 뿐 이유를 말하지 않아요. 금액은 구간이라 손익은 계산하지 않아요. 투자 조언 아님.",
+   "note_en": "Same-period comparison only, not a reason. Amounts are ranges, so no profit is computed. Not investment advice.",
+   "source_ko": "출처: 하원 PTR(의원 주식 거래 신고) · 일별 수정종가 기준",
+   "source_en": "Source: House PTRs · daily adjusted closes",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "45일 넘겨 신고된 거래 중 Harriet Hageman ABNB: 거래일 대비 +38.0% · 머니트래커",
+   "share_en": "Filed past 45 days: Harriet Hageman ABNB, +38.0% since the trade date · Money Tracker"
+  },
+  "insider": {
+   "id": "insider",
+   "kind": "insider",
+   "icon": "●",
+   "score": 100.0,
+   "layout": "list",
+   "date": "2026-11-24",
+   "badge_ko": "내부자 워치",
+   "badge_en": "INSIDER WATCH",
+   "title_ko": "회사 높은 사람들이 이번 주 판 자기 회사 주식, 큰 순서로 5개",
+   "title_en": "Company bigwigs' own-stock sales this week: top 5 ",
+   "sub_ko": "회사 높은 사람이 자기 회사 주식 판 기록 (Form 4) · 2026-11-24까지 7일",
+   "sub_en": "Record of company insiders selling their own stock (Form 4) · 7 days to 2026-11-24",
+   "rows": [
+    {
+     "label_ko": "Palantir Technologies Inc. · 이사",
+     "label_en": "Palantir Technologies Inc. · director",
+     "value_ko": "~$75.1M",
+     "value_en": "~$75.1M",
+     "tone": "red",
+     "url": "https://www.sec.gov/Archives/edgar/data/1321655/000182395126000013/0001823951-26-000013-index.htm"
+    },
+    {
+     "label_ko": "Palantir Technologies Inc. · 회사 내부자",
+     "label_en": "Palantir Technologies Inc. · See Remarks",
+     "value_ko": "~$57.5M",
+     "value_en": "~$57.5M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000021/0001824159-26-000021-index.htm"
+    },
+    {
+     "label_ko": "Arista Networks, Inc. · 큰 주주",
+     "label_en": "Arista Networks, Inc. · 10% owner",
+     "value_ko": "~$56.1M",
+     "value_en": "~$56.1M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000269/0001596532-26-000269-index.htm"
+    },
+    {
+     "label_ko": "Advanced Micro Devices Inc · 이사",
+     "label_en": "Advanced Micro Devices Inc · director",
+     "value_ko": "~$35.5M",
+     "value_en": "~$35.5M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000213/0000002488-26-000213-index.htm"
+    },
+    {
+     "label_ko": "애플 · 이사",
+     "label_en": "Apple Inc. · director",
+     "value_ko": "~$31.8M",
+     "value_en": "~$31.8M",
+     "tone": "white",
+     "url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126044773/0001140361-26-044773-index.htm"
+    }
+   ],
+   "note_ko": "일부는 미리 예약해둔 판매 (10b5-1)예요. 판 이유는 알 수 없어요. 투자 조언 아님.",
+   "note_en": "Some are pre-scheduled sales (10b5-1). The reason for a sale is unknown. Not investment advice.",
+   "source_ko": "출처: 미 증권위원회(SEC) 임원 거래 기록 (Form 4)",
+   "source_en": "Source: SEC insider-trade records (Form 4)",
+   "source_url": "https://www.sec.gov/edgar/search/",
+   "share_ko": "회사 높은 사람 5명이 이번 주 자기 회사 주식을 약 $256.0M어치 팔았다는 기록 · 머니트래커",
+   "share_en": "5 company insiders' own-stock sales this week add up to about $256.0M on record · Money Tracker"
+  },
+  "debt": {
+   "id": "debt",
+   "kind": "debt",
+   "icon": "●",
+   "score": 30.0,
+   "layout": "big",
+   "date": "2026-11-23",
+   "badge_ko": "국가 채무",
+   "badge_en": "NATIONAL DEBT",
+   "title_ko": "미국 정부가 지금까지 진 빚 (총 채무)",
+   "title_en": "How much the US government owes (total public debt)",
+   "big": {
+    "value": "$40,727,354,329,920",
+    "short_ko": "$40.73조",
+    "short_en": "$40.73 trillion"
+   },
+   "sub_ko": "2026-11-23 기준",
+   "sub_en": "As of 2026-11-23",
+   "rows": [
+    {
+     "label_ko": "1년 전 같은 날엔",
+     "label_en": "Same day last year",
+     "value_ko": "$38.34조",
+     "value_en": "$38.34 T",
+     "tone": "white"
+    },
+    {
+     "label_ko": "1년 사이 불어난 빚",
+     "label_en": "Debt added in one year",
+     "value_ko": "+$2.39조",
+     "value_en": "+$2.39 T",
+     "tone": "red"
+    },
+    {
+     "label_ko": "1초마다 늘어난 빚 (최근 30일 평균)",
+     "label_en": "Added every second (30-day avg)",
+     "value_ko": "+$82,257",
+     "value_en": "+$82,257",
+     "tone": "amber"
+    }
+   ],
+   "note_ko": "공식 집계 숫자예요. 앞으로 얼마가 될지는 말하지 않아요. 투자 조언 아님.",
+   "note_en": "Official reported figure. No forecast. Not investment advice.",
+   "source_ko": "출처: 미 재무부 재정 데이터 (FiscalData)",
+   "source_en": "Source: U.S. Treasury FiscalData",
+   "source_url": "https://fiscaldata.treasury.gov/",
+   "share_ko": "미국 정부가 지금까지 진 빚 $40.73조 (2026-11-23 기준) · 머니트래커",
+   "share_en": "How much the US government owes: $40.73 trillion (as of 2026-11-23) · Money Tracker"
+  }
+ }
+}
