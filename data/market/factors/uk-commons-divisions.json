@@ -2,9 +2,45 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-11-24T06:57:47.301Z",
- "count": 228,
+ "collected_at": "2026-11-25T05:26:05.159Z",
+ "count": 232,
  "divisions": [
+  {
+   "id": 2497,
+   "date": "2026-11-24",
+   "number": 137,
+   "title": "Cyber Security and Resilience (Network and Information Systems): Amendment (a) to Lords Amendment 33 ",
+   "ayes": 93,
+   "noes": 278,
+   "url": "https://votes.parliament.uk/votes/commons/division/2497"
+  },
+  {
+   "id": 2496,
+   "date": "2026-11-24",
+   "number": 136,
+   "title": "Cyber Security and Resilience (Network and Information Systems) Bill: Motion to disagree with Lords Amendment 108",
+   "ayes": 260,
+   "noes": 98,
+   "url": "https://votes.parliament.uk/votes/commons/division/2496"
+  },
+  {
+   "id": 2495,
+   "date": "2026-11-24",
+   "number": 135,
+   "title": "Armed Forces Bill: Motion to disagree with Lords Amendments 11 and 25 and to propose amendments to the words so restored to the Bill",
+   "ayes": 296,
+   "noes": 171,
+   "url": "https://votes.parliament.uk/votes/commons/division/2495"
+  },
+  {
+   "id": 2494,
+   "date": "2026-11-24",
+   "number": 134,
+   "title": "Armed Forces Bill: Motion to disagree with Lords Amendment 2",
+   "ayes": 299,
+   "noes": 87,
+   "url": "https://votes.parliament.uk/votes/commons/division/2494"
+  },
   {
    "id": 2493,
    "date": "2026-11-23",
