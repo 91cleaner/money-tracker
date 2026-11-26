@@ -1,7 +1,16 @@
 {
-"updated": "2026-11-23",
+"updated": "2026-11-24",
 "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
 "trades": [
+{
+"tk": "NVDA",
+"who": "Daniel Meuser",
+"ty": "S",
+"amt": "$1,001 - $15,000",
+"d": "2026-10-27",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036848.pdf"
+},
 {
 "tk": "FLEX",
 "who": "Harriet Hageman",
@@ -166,15 +175,6 @@
 },
 {
 "tk": "TGT",
-"who": "Harriet Hageman",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-},
-{
-"tk": "TXN",
 "who": "Harriet Hageman",
 "ty": "S",
 "amt": "$1,001 - $15,000",
