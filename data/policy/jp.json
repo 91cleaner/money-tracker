@@ -1,10 +1,62 @@
 {
-"updated": "2026-11-25",
+"updated": "2026-11-26",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "kantei:af71cded189b",
+"kind": "news",
+"t": "高市総理はノーベル化学賞受賞者硤合憲三東京理科大学栄誉教授による表敬を受けました",
+"d": "2026-11-27",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/26hyoukei.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:3aea38548b85",
+"kind": "news",
+"t": "高市総理は第９回地域未来戦略に関する関係副大臣等会議・地域未来戦略に関する総理報告に出席しました",
+"d": "2026-11-26",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/26chiikimirai.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:fd3e2f62767b",
+"kind": "news",
+"t": "高市総理は日ＡＳＥＡＮヤング・将来世代ビジネスリーダーズサミット２０２６による提言を受け取りしました",
+"d": "2026-11-26",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/26teigen.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
+{
+"id": "kantei:4b4fc759e842",
+"kind": "news",
+"t": "高市総理は山下真奈良県知事、平岡清司五條市長等による「奈良の柿」ＰＲ表敬を受けました",
+"d": "2026-11-26",
+"u": "https://www.kantei.go.jp/jp/105/actions/202611/26zoutei.html",
+"dept": "首相官邸",
+"src": "首相官邸 新着情報",
+"cat": "総理の一日",
+"tags": [],
+"lk": "일본 총리의 하루 일정 소식",
+"le": "Japan PM's daily activities"
+},
 {
 "id": "kantei:9f64fd14f072",
 "kind": "news",
@@ -83,6 +135,58 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:620340105",
+"kind": "pubcomment",
+"t": "ベースロード市場ガイドライン（案）に対する意見募集について",
+"d": "2026-11-25",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=620340105&Mode=0",
+"dept": "資源エネルギー庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 자원에너지청(에너지 담당 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Agency for Natural Resources and Energy: public comment request on a draft rule"
+},
+{
+"id": "egov:670000140",
+"kind": "pubcomment",
+"t": "港則法施行規則第十一条第一項の規定による進路を他の船舶に知らせるために船舶自動識別装置の目的地に関する情報として送信する記号の一部を改正する告示案に関するパブリックコメントの募集について",
+"d": "2026-11-25",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=670000140&Mode=0",
+"dept": "海上保安庁",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"shipbuilding"
+],
+"lk": "일본 해상보안청(바다 경비 기관)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japan Coast Guard: public comment request on a draft rule"
+},
+{
+"id": "egov:595320124",
+"kind": "pubcomment",
+"t": "電気事業法第５２条に基づく火力設備に対する溶接自主検査ガイド（２０２３０３１０保局第２号）等 の一部を改正する規程に対する意見公募について",
+"d": "2026-11-25",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=595320124&Mode=0",
+"dept": "経済産業省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [],
+"lk": "일본 경제산업성(산업·무역 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Economy, Trade and Industry: public comment request on a draft rule"
+},
+{
+"id": "egov:495260272",
+"kind": "pubcomment",
+"t": "「医薬品、医療機器等の品質、有効性及び安全性の確保等に関する法律施行令第二条の十三各号の規定に基づき厚生労働大臣が指定する医薬品（案）」に関する御意見の募集について",
+"d": "2026-11-25",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=495260272&Mode=0",
+"dept": "厚生労働省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"health"
+],
+"lk": "일본 후생노동성(보건·노동 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Health, Labour and Welfare: public comment request on a draft rule"
 },
 {
 "id": "kantei:a4de6d7d80d2",

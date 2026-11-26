@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-25",
+"updated": "2026-11-26",
 "country": "eu",
 "source": "EUR-Lex/Publications Office SPARQL(규칙·결정·지침) + European Commission Press corner",
 "source_url": "https://op.europa.eu/en/web/webtools/linked-data-and-sparql",
@@ -91,6 +91,98 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026R2593",
+"kind": "regulation",
+"t": "Commission Regulation (EU) 2026/2593 of 25 November 2026 amending Annex XVII to Regulation (EC) No 1907/2006 of the European Parliament and the Council as regards creosote and creosote-related substances",
+"d": "2026-11-25",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2593",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2637",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2637 of 25 November 2026 amending the Annex to Implementing Decision (EU) 2023/2447 concerning emergency measures in relation to outbreaks of highly pathogenic avian influenza in certain Member States (notified under document C(2026) 8666)",
+"d": "2026-11-25",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2637",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2626",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2626 of 25 November 2026 cancelling the Union authorisation for the single biocidal product Septihol IPA products in accordance with Regulation (EU) No 528/2012 of the European Parliament and of the Council and repealing Commission Implementing Regulation (EU) 2025/1876",
+"d": "2026-11-25",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2626",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026R2636",
+"kind": "regulation",
+"t": "Commission Implementing Regulation (EU) 2026/2636 of 25 November 2026 correcting Implementing Regulation (EU) 2025/2347 on the fees and charges levied by the European Union Aviation Safety Agency",
+"d": "2026-11-25",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2636",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
+},
+{
+"id": "celex:32026D2622",
+"kind": "decision",
+"t": "Council Decision (CFSP) 2026/2622 of 25 November 2026 amending Decision 2014/512/CFSP concerning restrictive measures in view of Russia’s actions destabilising the situation in Ukraine",
+"d": "2026-11-25",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2622",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026R2632",
+"kind": "regulation",
+"t": "Council Regulation (EU) 2026/2632 of 25 November 2026 amending Regulation (EU) No 833/2014 concerning restrictive measures in view of Russia’s actions destabilising the situation in Ukraine",
+"d": "2026-11-25",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2632",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [
+"sanctions"
+],
+"focus_ko": [
+"제재(제한조치)"
+],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
 },
 {
 "id": "ec:IP/26/2564",
@@ -1081,6 +1173,22 @@
 "dept": "EU 관보(Official Journal)",
 "src": "EUR-Lex/Publications Office SPARQL",
 "tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
+"id": "celex:32026D2638",
+"kind": "decision",
+"t": "Decision (EU) 2026/2638 of the European Central Bank of 19 November 2026 on authorising the signature of legal instruments in cases of unavailability of the President (ECB/2026/30)",
+"d": "2026-11-19",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2638",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [
+"finance"
+],
 "focus": [],
 "focus_ko": [],
 "lk": "EU 결정(정해진 대상에 적용되는 법)",
