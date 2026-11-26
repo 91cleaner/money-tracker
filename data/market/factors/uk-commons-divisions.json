@@ -2,9 +2,18 @@
  "source": "UK Parliament · Commons Votes API",
  "source_url": "https://commonsvotes-api.parliament.uk/swagger/ui/index",
  "note": "하원 표결(division) 제목·날짜·찬반 수와 원문 링크. 의원별 표는 원문 링크에서 확인(다음 단계에서 저장 예정). 매일 누적.",
- "collected_at": "2026-11-25T05:26:05.159Z",
- "count": 232,
+ "collected_at": "2026-11-26T04:59:52.824Z",
+ "count": 233,
  "divisions": [
+  {
+   "id": 2498,
+   "date": "2026-11-25",
+   "number": 138,
+   "title": "Opposition day: Restoration and renewal of the Palace of Westminster",
+   "ayes": 102,
+   "noes": 291,
+   "url": "https://votes.parliament.uk/votes/commons/division/2498"
+  },
   {
    "id": 2497,
    "date": "2026-11-24",
