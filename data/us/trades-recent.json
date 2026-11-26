@@ -3,184 +3,184 @@
 "note": "하원 PTR(의원 주식 거래 신고) 기준 최신 20건(trades.json 요약). 거래일→신고일 최대 45일 차이 가능. 투자 조언 아님.",
 "trades": [
 {
-"tk": "NVDA",
-"who": "Daniel Meuser",
+"tk": "ROK",
+"who": "Kevin Hern",
 "ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-27",
+"amt": "$50,001 - $100,000",
+"d": "2026-11-17",
 "fd": "2026-11-24",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036848.pdf"
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036875.pdf"
 },
 {
-"tk": "FLEX",
-"who": "Harriet Hageman",
+"tk": "CMI",
+"who": "Kevin Hern",
+"ty": "S",
+"amt": "$15,001 - $50,000",
+"d": "2026-11-16",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036875.pdf"
+},
+{
+"tk": "ROK",
+"who": "Kevin Hern",
+"ty": "S",
+"amt": "$100,001 - $250,000",
+"d": "2026-11-16",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036875.pdf"
+},
+{
+"tk": "ACLLY",
+"who": "Kevin Hern",
 "ty": "S",
 "amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"d": "2026-11-10",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036875.pdf"
 },
 {
-"tk": "NOW",
-"who": "Harriet Hageman",
-"ty": "P",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-20",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"tk": "ETN",
+"who": "Kevin Hern",
+"ty": "S",
+"amt": "$15,001 - $50,000",
+"d": "2026-11-10",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036875.pdf"
 },
 {
-"tk": "AMD",
-"who": "Harriet Hageman",
+"tk": "PSX",
+"who": "Kevin Hern",
+"ty": "S",
+"amt": "$15,001 - $50,000",
+"d": "2026-11-10",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036875.pdf"
+},
+{
+"tk": "STX",
+"who": "Kevin Hern",
+"ty": "S",
+"amt": "$15,001 - $50,000",
+"d": "2026-11-10",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036875.pdf"
+},
+{
+"tk": "ASML",
+"who": "Kevin Hern",
+"ty": "S",
+"amt": "$15,001 - $50,000",
+"d": "2026-11-09",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036875.pdf"
+},
+{
+"tk": "INTC",
+"who": "Kevin Hern",
+"ty": "S",
+"amt": "$15,001 - $50,000",
+"d": "2026-11-09",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036875.pdf"
+},
+{
+"tk": "AMP",
+"who": "Robert For Onder",
 "ty": "S",
 "amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "APD",
-"who": "Harriet Hageman",
+"tk": "CMCSA",
+"who": "Robert For Onder",
 "ty": "S",
 "amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "AMGN",
-"who": "Harriet Hageman",
+"tk": "DUK",
+"who": "Robert For Onder",
 "ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"amt": "$15,001 - $50,000",
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "AAPL",
-"who": "Harriet Hageman",
+"tk": "GEHCV",
+"who": "Robert For Onder",
 "ty": "S",
 "amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "CSCO",
-"who": "Harriet Hageman",
+"tk": "HPQ",
+"who": "Robert For Onder",
 "ty": "S",
 "amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "KO",
-"who": "Harriet Hageman",
+"tk": "MDT",
+"who": "Robert For Onder",
 "ty": "S",
 "amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "CRWD",
-"who": "Harriet Hageman",
+"tk": "MDLZ",
+"who": "Robert For Onder",
 "ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"amt": "$15,001 - $50,000",
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "CVS",
-"who": "Harriet Hageman",
+"tk": "PEP",
+"who": "Robert For Onder",
 "ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"amt": "$15,001 - $50,000",
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "LLY",
-"who": "Harriet Hageman",
+"tk": "PG",
+"who": "Robert For Onder",
 "ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"amt": "$15,001 - $50,000",
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "XOM",
-"who": "Harriet Hageman",
+"tk": "VZ",
+"who": "Robert For Onder",
 "ty": "S",
 "amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 },
 {
-"tk": "LYB",
-"who": "Harriet Hageman",
+"tk": "DIS",
+"who": "Robert For Onder",
 "ty": "S",
 "amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-},
-{
-"tk": "MRK",
-"who": "Harriet Hageman",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-},
-{
-"tk": "MSFT",
-"who": "Harriet Hageman",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-},
-{
-"tk": "NVDA",
-"who": "Harriet Hageman",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-},
-{
-"tk": "PANW",
-"who": "Harriet Hageman",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-},
-{
-"tk": "SNOW",
-"who": "Harriet Hageman",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-},
-{
-"tk": "TGT",
-"who": "Harriet Hageman",
-"ty": "S",
-"amt": "$1,001 - $15,000",
-"d": "2026-10-14",
-"fd": "2026-11-23",
-"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+"d": "2026-10-29",
+"fd": "2026-11-24",
+"doc": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
 }
 ]
 }

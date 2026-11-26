@@ -6,6 +6,16 @@
 "note": "항목별 src에 출처 표시. kind 없음=법안, kind=press=보도자료. 법안명·발의일·소관위원회·원문 링크만. 섹터 태그는 법안명 키워드 기준, 영향 단정 아님. 투자 조언 아님.",
 "items": [
 {
+"id": "msit:82fbdf56b071",
+"kind": "press",
+"t": "땅속 광섬유로 ‘작은 지진’의 파열 순간을 1000분의 1초 단위로 포착",
+"d": "2026-11-27",
+"dept": "기초연구진흥과",
+"u": "https://www.msit.go.kr/bbs/view.do?sCode=user&mId=307&mPid=208&bbsSeqNo=94&nttSeqNo=3187996",
+"src": "과학기술정보통신부 보도자료(공공데이터포털)",
+"tags": []
+},
+{
 "id": "msit:0f2e08b36491",
 "kind": "press",
 "t": "과기정통부, 2026년 적극 행정 우수사례 경진대회 대상(대통령상) 수상",
@@ -6044,18 +6054,6 @@
 "cmte": "외교통일위원회",
 "res": null,
 "u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_FCE0C9EAE7F047448F079737DED5E0&ageFrom=22&ageTo=22",
-"src": "국회 의안(열린국회정보)",
-"tags": []
-},
-{
-"id": "PRC_32359648FF5C46ACAD41417394CC50",
-"no": "2222793",
-"t": "통합발전회사 설립 및 지원에 관한 특별법안",
-"d": "2026-11-13",
-"by": "이헌승의원 등 13인",
-"cmte": "기후에너지환경노동위원회",
-"res": null,
-"u": "http://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_32359648FF5C46ACAD41417394CC50&ageFrom=22&ageTo=22",
 "src": "국회 의안(열린국회정보)",
 "tags": []
 }
