@@ -20,6 +20,20 @@
 "le": "European Commission press release"
 },
 {
+"id": "ec:IP/26/2592",
+"kind": "press",
+"t": "Commission unconditionally approves Deutsche Börse's acquisition of Allfunds",
+"d": "2026-11-27",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2592",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
+{
 "id": "ec:IP/26/2594",
 "kind": "press",
 "t": "Temu commits to complying with EU consumer protection rules following action by national authorities",
@@ -12158,29 +12172,6 @@
 ],
 "lk": "EU 결정(정해진 대상에 적용되는 법)",
 "le": "EU decision"
-},
-{
-"id": "celex:32024R2754",
-"kind": "regulation",
-"t": "Commission Implementing Regulation (EU) 2024/2754 of 29 October 2024 imposing a definitive countervailing duty on imports of new battery electric vehicles designed for the transport of persons originating in the People’s Republic of China",
-"d": "2024-10-29",
-"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2754",
-"dept": "EU 관보(Official Journal)",
-"src": "EUR-Lex/Publications Office SPARQL",
-"tags": [
-"battery_ev",
-"trade"
-],
-"focus": [
-"anti_dumping",
-"batteries"
-],
-"focus_ko": [
-"반덤핑·상계관세",
-"배터리"
-],
-"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
-"le": "EU regulation"
 }
 ]
 }
