@@ -1,10 +1,24 @@
 {
-"updated": "2026-11-26",
+"updated": "2026-11-27",
 "country": "eu",
 "source": "EUR-Lex/Publications Office SPARQL(규칙·결정·지침) + European Commission Press corner",
 "source_url": "https://op.europa.eu/en/web/webtools/linked-data-and-sparql",
 "note": "항목별 src에 출처. 제목 키워드 태그(영향 단정 아님). 투자 조언 아님.",
 "items": [
+{
+"id": "ec:STATEMENT/26/2603",
+"kind": "press",
+"t": "Statement by President von der Leyen with President Costa following the Special European Council meeting of November 2026",
+"d": "2026-11-27",
+"u": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2603",
+"dept": "EU 집행위원회",
+"src": "European Commission Press corner",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 집행위원회 보도자료",
+"le": "European Commission press release"
+},
 {
 "id": "ec:IP/26/2594",
 "kind": "press",
@@ -18,6 +32,20 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026D2611",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2611 of 26 November 2026 amending Implementing Decision (EU) 2024/2944 as regards harmonised standards for domestic cooking appliances burning gas and automatic shut-off valves for gas burners and gas appliances, drafted in support of Regulation (EU) 2016/426 of the European Parliament and of the Council",
+"d": "2026-11-26",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2611",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "ec:STATEMENT/26/2583",
@@ -199,6 +227,34 @@
 "le": "EU regulation"
 },
 {
+"id": "celex:32026L2610",
+"kind": "directive",
+"t": "Directive (EU) 2026/2610 of the European Parliament and of the Council of 25 November 2026 amending Directive 1999/62/EC as regards the variation of charges for heavy-duty vehicles based on their CO2 emissions and to clarify and simplify certain provisions (Text with EEA relevance)",
+"d": "2026-11-25",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026L2610",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 지침(회원국이 따라서 자기 법을 만들어야 해요)",
+"le": "EU directive"
+},
+{
+"id": "celex:32026D2602",
+"kind": "decision",
+"t": "Commission Implementing Decision (EU) 2026/2602 of 25 November 2026 renewing the authorisation for placing on the market of products containing, consisting of or produced from genetically modified soybean MON 87769 pursuant to Regulation (EC) No 1829/2003 of the European Parliament and of the Council (notified under document C(2026) 8329)",
+"d": "2026-11-25",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2602",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
+},
+{
 "id": "ec:IP/26/2564",
 "kind": "press",
 "t": "Commission imposes provisional import quotas on hybrid passenger vehicles",
@@ -301,6 +357,20 @@
 "focus_ko": [],
 "lk": "EU 집행위원회 보도자료",
 "le": "European Commission press release"
+},
+{
+"id": "celex:32026D2642",
+"kind": "decision",
+"t": "Political and Security Committee Decision (CFSP) 2026/2642 of 24 November 2026 on the reconfirmation of the authorisation of the European Union military operation in the Mediterranean (EUNAVFOR MED IRINI) (EUNAVFOR MED IRINI/5/2026)",
+"d": "2026-11-24",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2642",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 결정(정해진 대상에 적용되는 법)",
+"le": "EU decision"
 },
 {
 "id": "celex:32026D2605",
@@ -5222,6 +5292,20 @@
 "focus_ko": [],
 "lk": "EU 결정(정해진 대상에 적용되는 법)",
 "le": "EU decision"
+},
+{
+"id": "celex:32026R2534",
+"kind": "regulation",
+"t": "Regulation (EU) 2026/2534 of the European Parliament and of the Council of 21 October 2026 amending Regulation (EU) 2017/2107 laying down management, conservation and control measures applicable in the Convention area of the International Commission for the Conservation of Atlantic Tunas (ICCAT), Regulation (EU) 2018/975 laying down management, conservation and control measures applicable in the S",
+"d": "2026-10-21",
+"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R2534",
+"dept": "EU 관보(Official Journal)",
+"src": "EUR-Lex/Publications Office SPARQL",
+"tags": [],
+"focus": [],
+"focus_ko": [],
+"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
+"le": "EU regulation"
 },
 {
 "id": "ec:STATEMENT/26/2221",
@@ -12097,126 +12181,6 @@
 ],
 "lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
 "le": "EU regulation"
-},
-{
-"id": "celex:32024R2649",
-"kind": "regulation",
-"t": "Commission Implementing Regulation (EU) 2024/2649 of 10 October 2024 correcting the Swedish language version of Implementing Regulation (EU) 2023/1773 laying down the rules for the application of Regulation (EU) 2023/956 of the European Parliament and of the Council as regards reporting obligations for the purposes of the carbon border adjustment mechanism during the transitional period",
-"d": "2024-10-10",
-"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2649",
-"dept": "EU 관보(Official Journal)",
-"src": "EUR-Lex/Publications Office SPARQL",
-"tags": [
-"clean_energy"
-],
-"focus": [
-"cbam"
-],
-"focus_ko": [
-"탄소국경조정(CBAM)"
-],
-"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
-"le": "EU regulation"
-},
-{
-"id": "celex:32024R2547",
-"kind": "regulation",
-"t": "Commission Delegated Regulation (EU) 2024/2547 of 5 September 2024 amending Regulation (EU) 2021/821 of the European Parliament and of the Council as regards the list of dual-use items",
-"d": "2024-09-05",
-"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2547",
-"dept": "EU 관보(Official Journal)",
-"src": "EUR-Lex/Publications Office SPARQL",
-"tags": [
-"defense"
-],
-"focus": [
-"dual_use"
-],
-"focus_ko": [
-"이중용도·수출통제"
-],
-"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
-"le": "EU regulation"
-},
-{
-"id": "celex:32024R1866",
-"kind": "regulation",
-"t": "Commission Implementing Regulation (EU) 2024/1866 of 3 July 2024 imposing a provisional countervailing duty on imports of new battery electric vehicles designed for the transport of persons originating in the People’s Republic of China",
-"d": "2024-07-03",
-"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1866",
-"dept": "EU 관보(Official Journal)",
-"src": "EUR-Lex/Publications Office SPARQL",
-"tags": [
-"battery_ev",
-"trade"
-],
-"focus": [
-"anti_dumping",
-"batteries"
-],
-"focus_ko": [
-"반덤핑·상계관세",
-"배터리"
-],
-"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
-"le": "EU regulation"
-},
-{
-"id": "celex:32024R1257",
-"kind": "regulation",
-"t": "Regulation (EU) 2024/1257 of the European Parliament and of the Council of 24 April 2024 on type-approval of motor vehicles and engines and of systems, components and separate technical units intended for such vehicles, with respect to their emissions and battery durability (Euro 7), amending Regulation (EU) 2018/858 of the European Parliament and of the Council and repealing Regulations (EC) No 7",
-"d": "2024-04-24",
-"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1257",
-"dept": "EU 관보(Official Journal)",
-"src": "EUR-Lex/Publications Office SPARQL",
-"tags": [
-"battery_ev",
-"auto"
-],
-"focus": [
-"batteries"
-],
-"focus_ko": [
-"배터리"
-],
-"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
-"le": "EU regulation"
-},
-{
-"id": "celex:32024R1252",
-"kind": "regulation",
-"t": "Regulation (EU) 2024/1252 of the European Parliament and of the Council of 11 April 2024 establishing a framework for ensuring a secure and sustainable supply of critical raw materials and amending Regulations (EU) No 168/2013, (EU) 2018/858, (EU) 2018/1724 and (EU) 2019/1020 (Text with EEA relevance)",
-"d": "2024-04-11",
-"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1252",
-"dept": "EU 관보(Official Journal)",
-"src": "EUR-Lex/Publications Office SPARQL",
-"tags": [
-"industrial"
-],
-"focus": [],
-"focus_ko": [],
-"lk": "EU 규칙(모든 회원국에 바로 적용되는 법)",
-"le": "EU regulation"
-},
-{
-"id": "celex:32024L1416",
-"kind": "directive",
-"t": "Commission Delegated Directive (EU) 2024/1416 of 13 March 2024 amending Directive 2011/65/EU of the European Parliament and of the Council as regards an exemption for cadmium in downshifting quantum dots directly deposited on LED semiconductor chips",
-"d": "2024-03-13",
-"u": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L1416",
-"dept": "EU 관보(Official Journal)",
-"src": "EUR-Lex/Publications Office SPARQL",
-"tags": [
-"semiconductor"
-],
-"focus": [
-"chips"
-],
-"focus_ko": [
-"반도체법·반도체"
-],
-"lk": "EU 지침(회원국이 따라서 자기 법을 만들어야 해요)",
-"le": "EU directive"
 }
 ]
 }
