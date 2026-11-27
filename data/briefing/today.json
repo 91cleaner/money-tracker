@@ -1,6 +1,6 @@
 {
- "date": "2026-11-26",
- "generated_at": "2026-11-26T17:54Z",
+ "date": "2026-11-27",
+ "generated_at": "2026-11-27T17:40Z",
  "site": "https://91cleaner.github.io/money-tracker/cards.html",
  "scoring": "score = base(0-100) * freshness; see scripts/build_briefing.py",
  "top": [
@@ -131,53 +131,6 @@
    "share_en": "Biggest mover at the 2026-11-25 close: Glass House Brands Inc. +14.8% · Money Tracker"
   },
   {
-   "id": "latemove",
-   "kind": "latemove",
-   "icon": "●",
-   "score": 85.0,
-   "layout": "list",
-   "date": "2026-11-23",
-   "badge_ko": "늦은 신고 + 큰 변동",
-   "badge_en": "LATE + BIG MOVE",
-   "title_ko": "45일 넘게 걸린 신고, 그 사이 주가는?",
-   "title_en": "Filed after 45 days: what did the price do meanwhile?",
-   "sub_ko": "하원 신고 중 45일 초과 · 거래일 종가 대비 최근 종가 변동(수정종가)",
-   "sub_en": "House filings past 45 days · latest close vs trade-date close (adjusted)",
-   "rows": [
-    {
-     "mark": "●",
-     "label": "Hageman WDAY",
-     "value_ko": "272일 · 판 뒤 +38.6%",
-     "value_en": "272d · +38.6% since sale",
-     "tone": "green",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-    },
-    {
-     "mark": "●",
-     "label": "Hageman ABNB",
-     "value_ko": "272일 · 산 뒤 +37.0%",
-     "value_en": "272d · +37.0% since buy",
-     "tone": "green",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-    },
-    {
-     "mark": "●",
-     "label": "Hageman NOW",
-     "value_ko": "313일 · 판 뒤 -31.5%",
-     "value_en": "313d · -31.5% since sale",
-     "tone": "red",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
-    }
-   ],
-   "note_ko": "같은 기간 비교일 뿐 이유를 말하지 않아요. 금액은 구간이라 손익은 계산하지 않아요. 투자 조언 아님.",
-   "note_en": "Same-period comparison only, not a reason. Amounts are ranges, so no profit is computed. Not investment advice.",
-   "source_ko": "출처: 하원 PTR(의원 주식 거래 신고) · 일별 수정종가 기준",
-   "source_en": "Source: House PTRs · daily adjusted closes",
-   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "45일 넘겨 신고된 거래 중 Harriet Hageman WDAY: 거래일 대비 +38.6% · 머니트래커",
-   "share_en": "Filed past 45 days: Harriet Hageman WDAY, +38.6% since the trade date · Money Tracker"
-  },
-  {
    "id": "filings",
    "kind": "filings",
    "icon": "●",
@@ -241,12 +194,59 @@
    "share_en": "11 'big news' notices companies filed on 2026-11-25 · Money Tracker"
   },
   {
+   "id": "latemove",
+   "kind": "latemove",
+   "icon": "●",
+   "score": 70.0,
+   "layout": "list",
+   "date": "2026-11-23",
+   "badge_ko": "늦은 신고 + 큰 변동",
+   "badge_en": "LATE + BIG MOVE",
+   "title_ko": "45일 넘게 걸린 신고, 그 사이 주가는?",
+   "title_en": "Filed after 45 days: what did the price do meanwhile?",
+   "sub_ko": "하원 신고 중 45일 초과 · 거래일 종가 대비 최근 종가 변동(수정종가)",
+   "sub_en": "House filings past 45 days · latest close vs trade-date close (adjusted)",
+   "rows": [
+    {
+     "mark": "●",
+     "label": "Hageman WDAY",
+     "value_ko": "272일 · 판 뒤 +38.6%",
+     "value_en": "272d · +38.6% since sale",
+     "tone": "green",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "●",
+     "label": "Hageman ABNB",
+     "value_ko": "272일 · 산 뒤 +37.0%",
+     "value_en": "272d · +37.0% since buy",
+     "tone": "green",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    },
+    {
+     "mark": "●",
+     "label": "Hageman NOW",
+     "value_ko": "313일 · 판 뒤 -31.5%",
+     "value_en": "313d · -31.5% since sale",
+     "tone": "red",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+    }
+   ],
+   "note_ko": "같은 기간 비교일 뿐 이유를 말하지 않아요. 금액은 구간이라 손익은 계산하지 않아요. 투자 조언 아님.",
+   "note_en": "Same-period comparison only, not a reason. Amounts are ranges, so no profit is computed. Not investment advice.",
+   "source_ko": "출처: 하원 PTR(의원 주식 거래 신고) · 일별 수정종가 기준",
+   "source_en": "Source: House PTRs · daily adjusted closes",
+   "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
+   "share_ko": "45일 넘겨 신고된 거래 중 Harriet Hageman WDAY: 거래일 대비 +38.6% · 머니트래커",
+   "share_en": "Filed past 45 days: Harriet Hageman WDAY, +38.6% since the trade date · Money Tracker"
+  },
+  {
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 54.4,
+   "score": 35.4,
    "layout": "list",
-   "date": "2026-11-23",
+   "date": "2026-11-24",
    "badge_ko": "늦은 신고 클럽",
    "badge_en": "LATE CLUB",
    "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
@@ -256,30 +256,30 @@
    "rows": [
     {
      "mark": "1.",
-     "label_ko": "Harriet Hageman 의원 · Advanced Micro Devices Inc",
-     "label_en": "Rep. Harriet Hageman · Advanced Micro Devices Inc",
-     "value_ko": "40일 걸림",
-     "value_en": "40 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+     "label_ko": "Robert For Onder 의원 · Ameriprise Financial Inc",
+     "label_en": "Rep. Robert For Onder · Ameriprise Financial Inc",
+     "value_ko": "26일 걸림",
+     "value_en": "26 days",
+     "tone": "yellow",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
     },
     {
      "mark": "2.",
-     "label_ko": "Harriet Hageman 의원 · Air Products & Chemicals, Inc.",
-     "label_en": "Rep. Harriet Hageman · Air Products & Chemicals, Inc.",
-     "value_ko": "40일 걸림",
-     "value_en": "40 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+     "label_ko": "Robert For Onder 의원 · Comcast Corp",
+     "label_en": "Rep. Robert For Onder · Comcast Corp",
+     "value_ko": "26일 걸림",
+     "value_en": "26 days",
+     "tone": "yellow",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
     },
     {
      "mark": "3.",
-     "label_ko": "Harriet Hageman 의원 · Amgen Inc",
-     "label_en": "Rep. Harriet Hageman · Amgen Inc",
-     "value_ko": "40일 걸림",
-     "value_en": "40 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+     "label_ko": "Robert For Onder 의원 · Duke Energy CORP",
+     "label_en": "Rep. Robert For Onder · Duke Energy CORP",
+     "value_ko": "26일 걸림",
+     "value_en": "26 days",
+     "tone": "yellow",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
     }
    ],
    "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
@@ -287,8 +287,8 @@
    "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
    "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
    "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Harriet Hageman 의원 40일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
-   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Harriet Hageman, 40 days / we get a call if rent is 1 day late  · Money Tracker"
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Robert For Onder 의원 26일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Robert For Onder, 26 days / we get a call if rent is 1 day late  · Money Tracker"
   }
  ],
  "cards": {
@@ -296,9 +296,9 @@
    "id": "late",
    "kind": "late",
    "icon": "●",
-   "score": 54.4,
+   "score": 35.4,
    "layout": "list",
-   "date": "2026-11-23",
+   "date": "2026-11-24",
    "badge_ko": "늦은 신고 클럽",
    "badge_en": "LATE CLUB",
    "title_ko": "미국 국회의원 주식 숙제 늦게 낸 사람들",
@@ -308,30 +308,30 @@
    "rows": [
     {
      "mark": "1.",
-     "label_ko": "Harriet Hageman 의원 · Advanced Micro Devices Inc",
-     "label_en": "Rep. Harriet Hageman · Advanced Micro Devices Inc",
-     "value_ko": "40일 걸림",
-     "value_en": "40 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+     "label_ko": "Robert For Onder 의원 · Ameriprise Financial Inc",
+     "label_en": "Rep. Robert For Onder · Ameriprise Financial Inc",
+     "value_ko": "26일 걸림",
+     "value_en": "26 days",
+     "tone": "yellow",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
     },
     {
      "mark": "2.",
-     "label_ko": "Harriet Hageman 의원 · Air Products & Chemicals, Inc.",
-     "label_en": "Rep. Harriet Hageman · Air Products & Chemicals, Inc.",
-     "value_ko": "40일 걸림",
-     "value_en": "40 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+     "label_ko": "Robert For Onder 의원 · Comcast Corp",
+     "label_en": "Rep. Robert For Onder · Comcast Corp",
+     "value_ko": "26일 걸림",
+     "value_en": "26 days",
+     "tone": "yellow",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
     },
     {
      "mark": "3.",
-     "label_ko": "Harriet Hageman 의원 · Amgen Inc",
-     "label_en": "Rep. Harriet Hageman · Amgen Inc",
-     "value_ko": "40일 걸림",
-     "value_en": "40 days",
-     "tone": "amber",
-     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035776.pdf"
+     "label_ko": "Robert For Onder 의원 · Duke Energy CORP",
+     "label_en": "Rep. Robert For Onder · Duke Energy CORP",
+     "value_ko": "26일 걸림",
+     "value_en": "26 days",
+     "tone": "yellow",
+     "url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20036908.pdf"
     }
    ],
    "note_ko": "기록일 뿐 잘못의 증거가 아니에요. 투자 조언 아님.",
@@ -339,14 +339,14 @@
    "source_ko": "출처: 미 하원 사무처 주식 거래 신고서 (PTR) · 거래일→제출일",
    "source_en": "Source: House Clerk stock-trade reports (PTR) · trade → filing",
    "source_url": "https://disclosures-clerk.house.gov/FinancialDisclosure",
-   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Harriet Hageman 의원 40일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
-   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Harriet Hageman, 40 days / we get a call if rent is 1 day late  · Money Tracker"
+   "share_ko": "미국 국회의원 주식 숙제 늦게 낸 1위: Robert For Onder 의원 26일 / 우리는 월세 하루만 늦어도 연락 오는데  · 머니트래커",
+   "share_en": "US lawmaker stock homework, latest hand-in #1: Rep. Robert For Onder, 26 days / we get a call if rent is 1 day late  · Money Tracker"
   },
   "latemove": {
    "id": "latemove",
    "kind": "latemove",
    "icon": "●",
-   "score": 85.0,
+   "score": 70.0,
    "layout": "list",
    "date": "2026-11-23",
    "badge_ko": "늦은 신고 + 큰 변동",
@@ -456,7 +456,7 @@
    "id": "debt",
    "kind": "debt",
    "icon": "●",
-   "score": 30.0,
+   "score": 25.5,
    "layout": "big",
    "date": "2026-11-24",
    "badge_ko": "국가 채무",
