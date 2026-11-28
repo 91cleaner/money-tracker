@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27",
+ "updated": "2026-11-28",
  "window_days": 30,
  "note": "Trades dated 1-30 days before a dated public event for the same company. Dates are placed side by side only; this does not show that anyone knew in advance or that one caused the other. House PTR amounts are reported ranges. Form 4 rows marked plan=true were under a 10b5-1 trading plan.",
  "coverage": {
@@ -28394,6 +28394,21 @@
     },
     {
      "src": "House PTR",
+     "who": "Markwayne Mullin",
+     "role": "House member",
+     "side": "buy",
+     "amount": "$15,001 - $50,000",
+     "trade_date": "2026-01-05",
+     "filed": "2026-02-04",
+     "trade_url": "https://efdsearch.senate.gov/search/view/ptr/98b3317b-2632-48c3-b636-d5555c4680ca/",
+     "event": "8-K: item 5.03",
+     "event_kind": "8-K",
+     "event_date": "2026-02-03",
+     "event_url": "https://www.sec.gov/Archives/edgar/data/831001/000119312526035604/d56362d8k.htm",
+     "days_before": 29
+    },
+    {
+     "src": "House PTR",
      "who": "Jonathan Jackson",
      "role": "House member",
      "side": "buy",
@@ -28406,21 +28421,6 @@
      "event_date": "2026-02-03",
      "event_url": "https://www.sec.gov/Archives/edgar/data/831001/000119312526035604/d56362d8k.htm",
      "days_before": 4
-    },
-    {
-     "src": "House PTR",
-     "who": "Markwayne Mullin",
-     "role": "House member",
-     "side": "buy",
-     "amount": "$15,001 - $50,000",
-     "trade_date": "2026-01-05",
-     "filed": "2026-02-04",
-     "trade_url": "https://efdsearch.senate.gov/search/view/ptr/98b3317b-2632-48c3-b636-d5555c4680ca/",
-     "event": "8-K: earnings results",
-     "event_kind": "8-K",
-     "event_date": "2026-01-14",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/831001/000110465926003604/c-20260114x8k.htm",
-     "days_before": 9
     },
     {
      "src": "House PTR",
@@ -82568,26 +82568,10 @@
    ]
   },
   "OPEN": {
-   "n": 7,
+   "n": 6,
    "n_ptr": 0,
-   "n_form4": 7,
+   "n_form4": 6,
    "matches": [
-    {
-     "src": "SEC Form 4",
-     "who": "Schwartz Christina",
-     "role": "See Remarks",
-     "side": "sell",
-     "amount": "73,951 shares at $7.90 (about $584,213)",
-     "plan": false,
-     "trade_date": "2025-11-17",
-     "filed": "2025-11-18",
-     "trade_url": "https://www.sec.gov/Archives/edgar/data/1801169/000180116925000097/0001801169-25-000097-index.htm",
-     "event": "8-K: executive or director change, Reg FD disclosure",
-     "event_kind": "8-K",
-     "event_date": "2025-12-15",
-     "event_url": "https://www.sec.gov/Archives/edgar/data/1801169/000114036125045459/ef20061208_8k.htm",
-     "days_before": 28
-    },
     {
      "src": "SEC Form 4",
      "who": "Schaub Sydney",
