@@ -1,5 +1,5 @@
 {
-"updated": "2026-11-27",
+"updated": "2026-11-28",
 "country": "jp",
 "source": "e-Gov パブリックコメント RSS + 首相官邸 新着情報 RSS",
 "source_url": "https://public-comment.e-gov.go.jp/rss/pcm_list.xml",
@@ -56,6 +56,20 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:145210803",
+"kind": "pubcomment",
+"t": "無線局の免許等関連手続の電子申請義務化に係る制度改正案に対する意見募集（電波法施行規則の一部を改正する省令案）",
+"d": "2026-11-28",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=145210803&Mode=0",
+"dept": "総務省",
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"tech_ai"
+],
+"lk": "일본 총무성(행정·통신 담당 부처)의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Ministry of Internal Affairs and Communications: public comment request on a draft rule"
 },
 {
 "id": "kantei:af71cded189b",
@@ -158,6 +172,20 @@
 "tags": [],
 "lk": "일본 총리의 하루 일정 소식",
 "le": "Japan PM's daily activities"
+},
+{
+"id": "egov:225026072",
+"kind": "pubcomment",
+"t": "「金融庁関係国家戦略特別区域法第二十六条に規定する政令等規制事業に係る内閣府令の特例に関する措置を定める内閣府令の一部を改正する内閣府令（案）」に対するパブリックコメントの実施について",
+"d": "2026-11-27",
+"u": "https://public-comment.e-gov.go.jp/servlet/Public?CLASSNAME=PCMMSTDETAIL&id=225026072&Mode=0",
+"dept": null,
+"src": "e-Gov パブリックコメント(意見募集)",
+"tags": [
+"finance"
+],
+"lk": "일본 일본 정부 부처의 의견 모집 공고(새 규칙 초안에 국민 의견을 받아요)",
+"le": "Japanese government ministry: public comment request on a draft rule"
 },
 {
 "id": "kantei:3aea38548b85",
